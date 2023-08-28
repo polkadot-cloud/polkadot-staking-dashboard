@@ -11,7 +11,7 @@ import type {
   PoolMembershipsContextState,
 } from 'contexts/Pools/types';
 import type { AnyApi, Fn } from 'types';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import * as defaults from './defaults';
@@ -25,18 +25,18 @@ export const PoolMembershipsProvider = ({
   const { api, network, isReady } = useApi();
   const { accounts: connectAccounts, activeAccount } = useConnect();
 
-  // stores pool membership
+  // Stores pool memberships for the imported accounts.
   const [poolMemberships, setPoolMemberships] = useState<PoolMembership[]>([]);
   const poolMembershipsRef = useRef(poolMemberships);
 
-  // stores pool subscription objects
-  const poolMembershipUnsubs = useRef<AnyApi[]>([]);
+  // Stores pool membership unsubs.
+  const unsubs = useRef<AnyApi[]>([]);
 
   useEffectIgnoreInitial(() => {
     if (isReady) {
       (() => {
         setStateWithRef([], setPoolMemberships, poolMembershipsRef);
-        unsubscribeAll();
+        unsubAll();
         getPoolMemberships();
       })();
     }
@@ -45,21 +45,21 @@ export const PoolMembershipsProvider = ({
   // subscribe to account pool memberships
   const getPoolMemberships = async () => {
     Promise.all(
-      connectAccounts.map((a) => subscribeToPoolMembership(a.address))
+      connectAccounts.map(({ address }) => subscribeToPoolMembership(address))
     );
   };
 
   // unsubscribe from pool memberships on unmount
   useEffect(
     () => () => {
-      unsubscribeAll();
+      unsubAll();
     },
     []
   );
 
   // unsubscribe from all pool memberships
-  const unsubscribeAll = () => {
-    Object.values(poolMembershipUnsubs.current).forEach((v: Fn) => v());
+  const unsubAll = () => {
+    Object.values(unsubs.current).forEach((v: Fn) => v());
   };
 
   // subscribe to an account's pool membership
@@ -76,7 +76,10 @@ export const PoolMembershipsProvider = ({
       }
     );
 
-    const handleMembership = (poolMember: AnyApi, claimPermission?: AnyApi) => {
+    const handleMembership = async (
+      poolMember: AnyApi,
+      claimPermission?: AnyApi
+    ) => {
       let membership = poolMember?.unwrapOr(undefined)?.toHuman();
 
       if (membership) {
@@ -92,8 +95,18 @@ export const PoolMembershipsProvider = ({
         membership.points = membership.points
           ? rmCommas(membership.points)
           : '0';
+
+        const balance =
+          (
+            await api.call.nominationPoolsApi.pointsToBalance(
+              membership.poolId,
+              membership.points
+            )
+          )?.toString() || '0';
+
         membership = {
           ...membership,
+          balance: new BigNumber(balance),
           address,
           unlocking,
           claimPermission: claimPermission?.toString() || 'Permissioned',
@@ -119,7 +132,7 @@ export const PoolMembershipsProvider = ({
       }
     };
 
-    poolMembershipUnsubs.current = poolMembershipUnsubs.current.concat(unsub);
+    unsubs.current = unsubs.current.concat(unsub);
     return unsub;
   };
 

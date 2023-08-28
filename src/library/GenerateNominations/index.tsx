@@ -15,7 +15,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useValidators } from 'contexts/Validators';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { SelectableWrapper } from 'library/List';
 import { SelectItems } from 'library/SelectItems';
@@ -23,7 +23,8 @@ import { SelectItem } from 'library/SelectItems/Item';
 import { ValidatorList } from 'library/ValidatorList';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
 import { useStaking } from 'contexts/Staking';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import type {
   GenerateNominationsInnerProps,
   Nominations,
@@ -36,11 +37,12 @@ export const GenerateNominations = ({
   batchKey,
 }: GenerateNominationsInnerProps) => {
   const { t } = useTranslation('library');
-  const { openModal } = useOverlay().modal;
   const { isReady, consts } = useApi();
+  const { openModal } = useOverlay().modal;
   const { isFastUnstaking } = useUnstaking();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { stakers } = useStaking().eraStakers;
+  const { favoritesList } = useFavoriteValidators();
+  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { validators, validatorIdentities, validatorSupers } = useValidators();
   const {
     fetch: fetchFromMethod,
@@ -49,10 +51,6 @@ export const GenerateNominations = ({
   } = useFetchMehods();
   const { maxNominations } = consts;
 
-  let { favoritesList } = useValidators();
-  if (favoritesList === null) {
-    favoritesList = [];
-  }
   // store the method of fetching validators
   const [method, setMethod] = useState<string | null>(
     defaultNominations.length ? 'Manual' : null

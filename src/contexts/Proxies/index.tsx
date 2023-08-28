@@ -17,7 +17,7 @@ import { isSupportedProxy } from 'config/proxies';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import type { AnyApi, MaybeAccount } from 'types';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import * as defaults from './defaults';
 import type {
   Delegates,

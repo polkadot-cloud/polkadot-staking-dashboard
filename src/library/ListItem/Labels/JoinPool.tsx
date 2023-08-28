@@ -4,7 +4,7 @@
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const JoinPool = ({
   id,
@@ -27,7 +27,7 @@ export const JoinPool = ({
               id,
               setActiveTab,
             },
-            size: 'small',
+            size: 'sm',
           });
         }}
       >

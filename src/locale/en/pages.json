@@ -41,6 +41,7 @@
       "notNominating": "Not Nominating",
       "payoutDestination": "Payout Destination",
       "payoutDestinationSubtitle": "Choose how payouts will be received. Payouts can either be compounded or sent to an account as free balance.",
+      "pendingPayouts": "Pending Payouts",
       "poolDestroy": "Pool is being destroyed and nominating is no longer possible.",
       "poolNominations": "Pool Nominations",
       "proxyprompt": "Staking dashboard will soon remove support for controller accounts in favour of proxies. Switch your controller account to your stash account to continue using the dashboard and to help in the transition to a better",

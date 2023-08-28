@@ -12,7 +12,6 @@ import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useValidators } from 'contexts/Validators';
 import type { Validator } from 'contexts/Validators/types';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
@@ -21,7 +20,8 @@ import { Title } from 'library/Modal/Title';
 import { SubmitTx } from 'library/SubmitTx';
 import { ValidatorList } from 'library/ValidatorList';
 import { useTxMeta } from 'contexts/TxMeta';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavorites = () => {
@@ -30,7 +30,7 @@ export const NominateFromFavorites = () => {
   const { activeAccount } = useConnect();
   const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
-  const { favoritesList } = useValidators();
+  const { favoritesList } = useFavoriteValidators();
   const { getSignerWarnings } = useSignerWarnings();
   const {
     config: { options },

@@ -13,7 +13,7 @@ import { useHelp } from 'contexts/Help';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import type { SubmitProps } from '../types';
 
 export const Ledger = ({

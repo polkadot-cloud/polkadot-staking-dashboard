@@ -21,7 +21,7 @@ import { SelectItem } from 'library/SelectItems/Item';
 import { SubmitTx } from 'library/SubmitTx';
 import type { MaybeAccount } from 'types';
 import { useTxMeta } from 'contexts/TxMeta';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const UpdatePayee = () => {
   const { t } = useTranslation('modals');

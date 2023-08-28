@@ -22,7 +22,7 @@ import { Close } from 'library/Modal/Close';
 import { Title } from 'library/Modal/Title';
 import { SliderWrapper } from 'modals/ManagePool/Wrappers';
 import 'rc-slider/assets/index.css';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const UpdateReserve = () => {
   const { t } = useTranslation('modals');

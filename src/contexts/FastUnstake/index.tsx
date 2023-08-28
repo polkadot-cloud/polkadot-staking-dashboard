@@ -15,8 +15,9 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, MaybeAccount } from 'types';
 import Worker from 'workers/stakers?worker';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
+import { validateLocalExposure } from 'contexts/Validators/Utils';
 import { defaultFastUnstakeContext, defaultMeta } from './defaults';
 import type {
   FastUnstakeContextInterface,
@@ -31,8 +32,8 @@ export const FastUnstakeProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { inSetup } = useStaking();
   const { activeAccount } = useConnect();
+  const { inSetup, fetchEraStakers } = useStaking();
   const { api, isReady, consts, network } = useApi();
   const { metrics, activeEra } = useNetworkMetrics();
   const { getNominationStatus } = useNominationStatus();
@@ -82,9 +83,7 @@ export const FastUnstakeProvider = ({
       fastUnstakeErasToCheckPerBlock > 0
     ) {
       // cancel fast unstake check on network change or account change.
-      for (const u of unsubs.current) {
-        u();
-      }
+      for (const unsub of unsubs.current) unsub();
 
       setStateWithRef(false, setChecking, checkingRef);
       setStateWithRef(null, setqueueDeposit, queueDepositRef);
@@ -142,42 +141,37 @@ export const FastUnstakeProvider = ({
     }
 
     return () => {
-      for (const u of unsubs.current) {
-        u();
-      }
+      for (const unsub of unsubs.current) unsub();
     };
   }, [
-    isReady,
-    activeAccount,
-    network.name,
-    activeEra.index,
     inSetup(),
+    isReady,
+    network.name,
+    activeAccount,
+    activeEra.index,
     fastUnstakeErasToCheckPerBlock,
   ]);
 
   // handle worker message on completed exposure check.
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
-      // ensure correct task received
+      // ensure correct task received.
       const { data } = message;
       const { task } = data;
-      if (task !== 'process_fast_unstake_era') {
-        return;
-      }
+      if (task !== 'processEraForExposure') return;
+
       // ensure still same conditions.
-      const { where, who } = data;
-      if (where !== network.name || who !== activeAccount) {
-        // checkpoint: conditions have changed, cancel fast unstake.
-        return;
-      }
-      const { currentEra, exposed } = data;
+      const { networkName, who } = data;
+      if (networkName !== network.name || who !== activeAccount) return;
+
+      const { era, exposed } = data;
 
       // ensure checked eras are in order highest first.
       const checked = metaRef.current.checked
-        .concat(Number(currentEra))
+        .concat(Number(era))
         .sort((a: number, b: number) => b - a);
 
-      if (!metaRef.current.checked.includes(Number(currentEra))) {
+      if (!metaRef.current.checked.includes(Number(era))) {
         // update localStorage with updated changes.
         localStorage.setItem(
           getLocalkey(who),
@@ -214,7 +208,7 @@ export const FastUnstakeProvider = ({
         subscribeToFastUnstakeQueue();
       } else {
         // continue checking the next era.
-        checkEra(new BigNumber(currentEra).minus(1));
+        checkEra(new BigNumber(era).minus(1));
       }
     }
   };
@@ -240,20 +234,14 @@ export const FastUnstakeProvider = ({
   const checkEra = async (era: BigNumber) => {
     if (!api) return;
 
-    // checkpoint: checking era: era
+    const exposures = await fetchEraStakers(era.toString());
 
-    const exposuresRaw = await api.query.staking.erasStakers.entries(
-      era.toString()
-    );
-    const exposures = exposuresRaw.map(([keys, val]: AnyApi) => ({
-      keys: keys.toHuman(),
-      val: val.toHuman(),
-    }));
     worker.postMessage({
-      task: 'process_fast_unstake_era',
-      currentEra: era.toString(),
+      task: 'processEraForExposure',
+      era: era.toString(),
       who: activeAccount,
-      where: network.name,
+      networkName: network.name,
+      exitOnExposed: true,
       exposures,
     });
   };
@@ -302,15 +290,13 @@ export const FastUnstakeProvider = ({
 
   // gets any existing fast unstake metadata for an account.
   const getLocalMeta = (): LocalMeta | null => {
-    let localMeta: AnyJson = localStorage.getItem(getLocalkey(activeAccount));
+    const localMeta: AnyJson = localStorage.getItem(getLocalkey(activeAccount));
+    if (!localMeta) return null;
 
-    if (!localMeta) {
-      return null;
-    }
-
-    localMeta = JSON.parse(localMeta);
-
-    const localMetaValidated = validateMeta(localMeta);
+    const localMetaValidated = validateLocalExposure(
+      JSON.parse(localMeta),
+      checkToEra
+    );
     if (!localMetaValidated) {
       // remove if not valid.
       localStorage.removeItem(getLocalkey(activeAccount));
@@ -322,56 +308,6 @@ export const FastUnstakeProvider = ({
       JSON.stringify(localMetaValidated)
     );
     return localMetaValidated;
-  };
-
-  // validates stored fast unstake metadata for an account.
-  const validateMeta = (localMeta: AnyJson): LocalMeta | null => {
-    const localIsExposed = localMeta?.isExposed ?? null;
-    let localChecked = localMeta?.checked ?? null;
-
-    // check types saved
-    if (typeof localIsExposed !== 'boolean' || !Array.isArray(localChecked)) {
-      return null;
-    }
-    // check checked only contains numbers
-    const checkedNumeric = localChecked.every(
-      (e: AnyJson) => typeof e === 'number'
-    );
-    if (!checkedNumeric) {
-      return null;
-    }
-
-    // remove any expired eras and sort highest first
-    localChecked = localChecked
-      .filter((e: number) => checkToEra.isLessThan(e))
-      .sort((a: number, b: number) => b - a);
-
-    // if no remaining eras, invalid
-    if (!localChecked.length) {
-      return null;
-    }
-
-    // check if highest -> lowest are decremented, no missing eras.
-    let i = 0;
-    let prev = 0;
-    const noMissingEras = localChecked.every((e: number) => {
-      i++;
-      if (i === 1) {
-        prev = e;
-        return true;
-      }
-      const p = prev;
-      prev = e;
-      if (e === p - 1) return true;
-      return false;
-    });
-    if (!noMissingEras) {
-      return null;
-    }
-    return {
-      isExposed: localIsExposed,
-      checked: localChecked,
-    };
   };
 
   return (

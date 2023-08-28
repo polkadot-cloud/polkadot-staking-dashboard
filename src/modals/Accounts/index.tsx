@@ -17,8 +17,10 @@ import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useProxies } from 'contexts/Proxies';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
-import { useOverlay } from 'contexts/Overlay';
+import {
+  useEffectIgnoreInitial,
+  useOverlay,
+} from '@polkadot-cloud/react/hooks';
 import { AccountButton } from './Account';
 import { Delegates } from './Delegates';
 import { AccountSeparator, AccountWrapper } from './Wrappers';

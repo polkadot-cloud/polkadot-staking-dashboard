@@ -21,8 +21,8 @@ import {
   Separator,
   Wrapper,
 } from 'library/ListItem/Wrappers';
-import { useOverlay } from 'contexts/Overlay';
-import { useValidators } from '../../../contexts/Validators';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useValidators } from '../../../contexts/Validators/ValidatorEntries';
 import { useList } from '../../List/context';
 import { Blocked } from '../../ListItem/Labels/Blocked';
 import { Commission } from '../../ListItem/Labels/Commission';

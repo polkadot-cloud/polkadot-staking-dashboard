@@ -5,11 +5,11 @@ import { ModalPadding } from '@polkadot-cloud/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useValidators } from 'contexts/Validators';
 import type { Validator } from 'contexts/Validators/types';
 import { Title } from 'library/Modal/Title';
 import { ValidatorList } from 'library/ValidatorList';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { FooterWrapper, ListWrapper } from './Wrappers';
 
 export const SelectFavorites = () => {
@@ -20,7 +20,7 @@ export const SelectFavorites = () => {
     setModalStatus,
     setModalResize,
   } = useOverlay().modal;
-  const { favoritesList } = useValidators();
+  const { favoritesList } = useFavoriteValidators();
   const { maxNominations } = consts;
   const { nominations, callback: generateNominationsCallback } = options;
 

@@ -4,19 +4,23 @@
 import type { AnyJson } from 'types';
 
 export interface ValidatorsContextInterface {
-  addFavorite: (a: string) => void;
-  removeFavorite: (a: string) => void;
+  fetchValidatorPrefs: (a: ValidatorAddresses) => Promise<Validator[] | null>;
   validators: Validator[];
   validatorIdentities: Record<string, Identity>;
   validatorSupers: Record<string, AnyJson>;
   avgCommission: number;
   sessionValidators: string[];
   sessionParaValidators: string[];
-  favorites: string[];
   nominated: Validator[] | null;
   poolNominated: Validator[] | null;
-  favoritesList: Validator[] | null;
   validatorCommunity: any[];
+}
+
+export interface FavoriteValidatorsContextInterface {
+  addFavorite: (a: string) => void;
+  removeFavorite: (a: string) => void;
+  favorites: string[];
+  favoritesList: Validator[] | null;
 }
 
 export interface Identity {
@@ -44,11 +48,8 @@ export interface ValidatorPrefs {
   blocked: boolean;
 }
 
-export type LocalExposureData = Record<
-  string,
-  {
-    avgCommission: number;
-    era: string;
-    exposures: Validator[];
-  }
->;
+export interface LocalValidatorEntriesData {
+  avgCommission: number;
+  era: string;
+  entries: Validator[];
+}

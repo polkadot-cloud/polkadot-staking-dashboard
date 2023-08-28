@@ -11,7 +11,7 @@ import { useConnect } from 'contexts/Connect';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import type { MaybeAccount } from 'types';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import * as defaults from './defaults';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';
 
@@ -87,8 +87,8 @@ export const TransferOptionsProvider = ({
         { amount: new BigNumber(0) }
       )?.amount || new BigNumber(0);
 
-    const points = membership?.points;
-    const activePool = points ? new BigNumber(points) : new BigNumber(0);
+    const poolBalance = membership?.balance;
+    const activePool = poolBalance || new BigNumber(0);
 
     // total amount actively unlocking
     let totalUnlocking = new BigNumber(0);

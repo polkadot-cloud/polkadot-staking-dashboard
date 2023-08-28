@@ -5,7 +5,7 @@ import { setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import React, { useRef, useState } from 'react';
 import type { AnyApi, AnyJson } from 'types';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
 import type {

@@ -12,7 +12,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import type { AnyApi, MaybeAccount } from 'types';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import * as defaults from './defaults';
 import type { BondedAccount, BondedContextInterface } from './types';
 
@@ -87,7 +87,7 @@ export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
         [api.query.staking.bonded, address],
         [api.query.staking.nominators, address],
       ],
-      async ([controller, nominations]): Promise<void> => {
+      async ([controller, nominations]) => {
         const newAccount: BondedAccount = {
           address,
         };

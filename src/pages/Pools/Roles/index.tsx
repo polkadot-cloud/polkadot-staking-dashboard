@@ -6,7 +6,11 @@ import {
   faEdit,
   faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonPrimary } from '@polkadot-cloud/react';
+import {
+  ButtonHelp,
+  ButtonPrimary,
+  ButtonPrimaryInvert,
+} from '@polkadot-cloud/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -16,7 +20,7 @@ import { useIdentities } from 'contexts/Identities';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { RolesWrapper } from '../Home/ManagePool/Wrappers';
 import { PoolAccount } from '../PoolAccount';
 import { RoleEditInput } from './RoleEditInput';
@@ -26,6 +30,7 @@ export const Roles = ({
   batchKey,
   defaultRoles,
   setters = [],
+  inline = false,
   listenIsValid = () => {},
 }: RolesProps) => {
   const { t } = useTranslation('pages');
@@ -114,7 +119,7 @@ export const Roles = ({
       openModal({
         key: 'ChangePoolRoles',
         options: { id, roleEdits },
-        size: 'small',
+        size: 'sm',
       });
     }
   };
@@ -140,20 +145,25 @@ export const Roles = ({
     setRoleEdits(newEdit);
   };
 
+  const ButtonType = inline ? ButtonPrimaryInvert : ButtonPrimary;
+
   return (
     <>
       <CardHeaderWrapper $withAction>
-        <h3>
-          {t('pools.roles')}{' '}
-          <ButtonHelp marginLeft onClick={() => openHelp('Pool Roles')} />
-        </h3>
+        {!inline && (
+          <h3>
+            {t('pools.roles')}
+            <ButtonHelp marginLeft onClick={() => openHelp('Pool Roles')} />
+          </h3>
+        )}
+
         {!(isOwner() === true || setters.length) ? (
           <></>
         ) : (
           <>
             {isEditing && (
               <div>
-                <ButtonPrimary
+                <ButtonType
                   iconLeft={faTimesCircle}
                   iconTransform="grow-1"
                   text={t('pools.cancel')}
@@ -164,7 +174,7 @@ export const Roles = ({
             )}
             &nbsp;&nbsp;
             <div>
-              <ButtonPrimary
+              <ButtonType
                 iconLeft={isEditing ? faCheckCircle : faEdit}
                 iconTransform="grow-1"
                 text={isEditing ? t('pools.save') : t('pools.edit')}

@@ -9,7 +9,7 @@ import {
 import React, { useState } from 'react';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import type { BondFor, MaybeAccount } from 'types';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useStaking } from '../Staking';

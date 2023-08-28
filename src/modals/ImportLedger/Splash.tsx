@@ -10,7 +10,7 @@ import { useHelp } from 'contexts/Help';
 import { useTheme } from 'contexts/Themes';
 import { ReactComponent as LogoSVG } from 'img/ledgerLogo.svg';
 import type { AnyFunction } from 'types';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { SplashWrapper } from './Wrappers';
 
 export const Splash = ({ handleLedgerLoop }: AnyFunction) => {

@@ -16,7 +16,7 @@ import { useConnect } from 'contexts/Connect';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const ControllerNotStash = () => {
   const { t } = useTranslation('pages');
@@ -42,7 +42,7 @@ export const ControllerNotStash = () => {
         ? !isSyncing &&
           !isReadOnlyAccount(activeAccount) && (
             <PageRow>
-              <CardWrapper $warning>
+              <CardWrapper className="warning">
                 <CardHeaderWrapper>
                   <h3>
                     <FontAwesomeIcon icon={faExclamationTriangle} />

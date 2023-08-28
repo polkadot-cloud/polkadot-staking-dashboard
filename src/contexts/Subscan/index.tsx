@@ -16,7 +16,7 @@ import { sortNonZeroPayouts } from 'library/Graphs/Utils';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { locales } from 'locale';
 import type { AnyApi, AnySubscan } from 'types';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { usePlugins } from '../Plugins';

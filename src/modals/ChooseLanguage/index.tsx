@@ -7,7 +7,7 @@ import { ReactComponent as LanguageSVG } from 'img/language.svg';
 import { Title } from 'library/Modal/Title';
 import { availableLanguages } from 'locale';
 import { changeLanguage } from 'locale/utils';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { ContentWrapper, LocaleButton } from './Wrapper';
 
 export const ChooseLanguage = () => {

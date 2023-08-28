@@ -33,9 +33,11 @@ import { TooltipProvider } from 'contexts/Tooltip';
 import { TransferOptionsProvider } from 'contexts/TransferOptions';
 import { TxMetaProvider } from 'contexts/TxMeta';
 import { UIProvider } from 'contexts/UI';
-import { ValidatorsProvider } from 'contexts/Validators';
+import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries';
+import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidators';
 import { withProviders } from 'library/Hooks';
-import { OverlayProvider } from 'contexts/Overlay';
+import { PayoutsProvider } from 'contexts/Payouts';
+import { OverlayProvider } from '@polkadot-cloud/react';
 import { PolkawatchProvider } from './contexts/Polkawatch';
 
 // !! Provider order matters.
@@ -61,7 +63,9 @@ export const Providers = withProviders(
   ActivePoolsProvider,
   TransferOptionsProvider,
   ValidatorsProvider,
+  FavoriteValidatorsProvider,
   FastUnstakeProvider,
+  PayoutsProvider,
   UIProvider,
   PluginsProvider,
   SetupProvider,
