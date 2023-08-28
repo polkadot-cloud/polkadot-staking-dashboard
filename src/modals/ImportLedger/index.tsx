@@ -1,22 +1,22 @@
 // Copyright 2022 @paritytech/polkadot-native authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { clipAddress, setStateWithRef } from '@polkadotcloud/utils';
 import { registerSaEvent } from 'Utils';
+import { clipAddress, setStateWithRef } from '@polkadot-cloud/utils';
+import React, { useEffect, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import type { LedgerAddress, LedgerResponse } from 'contexts/Hardware/types';
-import { useModal } from 'contexts/Modal';
 import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
-import React, { useEffect, useRef, useState } from 'react';
 import type { AnyJson } from 'types';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { Manage } from './Manage';
 import { Splash } from './Splash';
 
 export const ImportLedger: React.FC = () => {
   const { network } = useApi();
-  const { setResize } = useModal();
+  const { setModalResize } = useOverlay().modal;
   const {
     transportResponse,
     getIsExecuting,
@@ -139,7 +139,7 @@ export const ImportLedger: React.FC = () => {
 
   // Resize modal on content change.
   useEffect(() => {
-    setResize();
+    setModalResize();
   }, [isPaired, getStatusCodes(), addressesRef.current]);
 
   // Listen for new Ledger status reports.

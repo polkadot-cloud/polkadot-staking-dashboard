@@ -1,19 +1,19 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faSquarePen } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonSubmit } from '@polkadotcloud/core-ui';
+import { ButtonHelp, ButtonSubmit } from '@polkadot-cloud/react';
+import React, { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import type { LedgerResponse } from 'contexts/Hardware/types';
 import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
-import React, { useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import type { SubmitProps } from '../types';
 
 export const Ledger = ({
@@ -41,7 +41,7 @@ export const Ledger = ({
     handleUnmount,
   } = useLedgerHardware();
   const { openHelp } = useHelp();
-  const { setResize } = useModal();
+  const { setModalResize } = useOverlay().modal;
   const { activeAccount, accountHasSigner, getAccount } = useConnect();
   const { txFeesValid, setTxSignature, getTxSignature } = useTxMeta();
 
@@ -89,7 +89,7 @@ export const Ledger = ({
 
   // Resize modal on content change.
   useEffect(() => {
-    setResize();
+    setModalResize();
   }, [isPaired, getStatusCodes()]);
 
   // Listen for new Ledger status reports.
@@ -140,7 +140,7 @@ export const Ledger = ({
         {buttons}
         {getTxSignature() !== null || submitting ? (
           <ButtonSubmit
-            text={`${submitText}`}
+            text={submitText || ''}
             iconLeft={faSquarePen}
             iconTransform="grow-2"
             onClick={() => onSubmit(customEvent)}

@@ -1,39 +1,42 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyMetaBatch } from 'types';
+import type { AnyJson } from 'types';
 
 export interface ValidatorsContextInterface {
-  fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => void;
-  removeValidatorMetaBatch: (k: string) => void;
-  fetchValidatorPrefs: (v: ValidatorAddresses) => Promise<Validator[] | null>;
-  addFavorite: (a: string) => void;
-  removeFavorite: (a: string) => void;
+  fetchValidatorPrefs: (a: ValidatorAddresses) => Promise<Validator[] | null>;
   validators: Validator[];
+  validatorIdentities: Record<string, Identity>;
+  validatorSupers: Record<string, AnyJson>;
   avgCommission: number;
-  meta: AnyMetaBatch;
-  session: SessionValidators;
-  sessionParachain: string[];
-  favorites: string[];
+  sessionValidators: string[];
+  sessionParaValidators: string[];
   nominated: Validator[] | null;
   poolNominated: Validator[] | null;
-  favoritesList: Validator[] | null;
   validatorCommunity: any[];
+}
+
+export interface FavoriteValidatorsContextInterface {
+  addFavorite: (a: string) => void;
+  removeFavorite: (a: string) => void;
+  favorites: string[];
+  favoritesList: Validator[] | null;
+}
+
+export interface Identity {
+  deposit: string;
+  info: AnyJson;
+  judgements: AnyJson[];
+}
+
+export interface ValidatorSuper {
+  identity: Identity;
+  superOf: [string, { Raw: string }];
 }
 
 export type ValidatorAddresses = {
   address: string;
 }[];
-
-export interface SessionValidators {
-  list: string[];
-  unsub: { (): void } | null;
-}
-
-export interface SessionParachainValidators {
-  list: string[];
-  unsub: { (): void } | null;
-}
 
 export interface Validator {
   address: string;
@@ -43,4 +46,10 @@ export interface Validator {
 export interface ValidatorPrefs {
   commission: number;
   blocked: boolean;
+}
+
+export interface LocalValidatorEntriesData {
+  avgCommission: number;
+  era: string;
+  entries: Validator[];
 }

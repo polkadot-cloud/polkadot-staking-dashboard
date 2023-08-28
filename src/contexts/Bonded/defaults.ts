@@ -1,5 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import type {
   BondedContextInterface,
@@ -12,13 +13,9 @@ export const nominations: Nominations = {
 };
 
 export const defaultBondedContext: BondedContextInterface = {
-  // eslint-disable-next-line
   getAccount: (address) => null,
-  // eslint-disable-next-line
   getBondedAccount: (address) => null,
-  // eslint-disable-next-line
   getAccountNominations: (address) => [],
-  // eslint-disable-next-line
   isController: (address) => false,
   bondedAccounts: [],
 };

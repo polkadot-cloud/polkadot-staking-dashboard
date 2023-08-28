@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
@@ -154,7 +154,7 @@ export const StatBoxWrapper = styled(motion.div)`
 export const TextTitleWrapper = styled.div<{ $primary?: boolean }>`
   color: ${(props) =>
     props.$primary === true
-      ? 'var(--network-color-primary)'
+      ? 'var(--accent-color-primary)'
       : 'var(--text-color-primary)'};
   font-family: InterBold, sans-serif;
   display: flex;
@@ -183,7 +183,7 @@ export const TextTitleWrapper = styled.div<{ $primary?: boolean }>`
 export const TimeLeftWrapper = styled.div<{ primary?: boolean }>`
   color: ${(props) =>
     props.primary === true
-      ? 'var(--network-color-primary)'
+      ? 'var(--accent-color-primary)'
       : 'var(--text-color-primary)'};
   font-family: InterBold, sans-serif;
   display: flex;

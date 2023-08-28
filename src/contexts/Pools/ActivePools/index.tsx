@@ -1,16 +1,17 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { localStorageOrDefault, setStateWithRef } from '@polkadotcloud/utils';
+import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type {
   ActivePool,
   ActivePoolsContextState,
   PoolAddresses,
 } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { AnyApi, AnyJson, Sync } from 'types';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import { useBondedPools } from '../BondedPools';
@@ -70,25 +71,6 @@ export const ActivePoolsProvider = ({
   // store the currently selected active pool for the UI.
   // Should default to the membership pool (if present).
   const [selectedPoolId, setSelectedPoolId] = useState<string | null>(null);
-
-  // re-sync when number of accountRoles change.
-  // this can happen when bondedPools sync, when roles
-  // are edited within the dashboard, or when pool
-  // membership changes.
-  useEffect(() => {
-    unsubscribeActivePools();
-    unsubscribePoolNominations();
-
-    setStateWithRef('unsynced', setSynced, syncedRef);
-  }, [activeAccount, accountPools.length]);
-
-  // subscribe to pool that the active account is a member of.
-  useEffect(() => {
-    if (isReady && syncedRef.current === 'unsynced') {
-      setStateWithRef('syncing', setSynced, syncedRef);
-      handlePoolSubscriptions();
-    }
-  }, [network, isReady, syncedRef.current]);
 
   const getActivePoolMembership = () =>
     // get the activePool that the active account
@@ -407,9 +389,7 @@ export const ActivePoolsProvider = ({
         statuses[nomination] = 'waiting';
         continue;
       }
-      const exists = (s.others ?? []).find(
-        ({ who }: any) => who === activeAccount
-      );
+      const exists = (s.others ?? []).find(({ who }) => who === activeAccount);
       if (exists === undefined) {
         statuses[nomination] = 'inactive';
         continue;
@@ -460,6 +440,24 @@ export const ActivePoolsProvider = ({
     );
   };
 
+  // re-sync when number of accountRoles change.
+  // this can happen when bondedPools sync, when roles
+  // are edited within the dashboard, or when pool
+  // membership changes.
+  useEffectIgnoreInitial(() => {
+    unsubscribeActivePools();
+    unsubscribePoolNominations();
+    setStateWithRef('unsynced', setSynced, syncedRef);
+  }, [activeAccount, accountPools.length]);
+
+  // subscribe to pool that the active account is a member of.
+  useEffectIgnoreInitial(() => {
+    if (isReady && syncedRef.current === 'unsynced') {
+      setStateWithRef('syncing', setSynced, syncedRef);
+      handlePoolSubscriptions();
+    }
+  }, [network, isReady, syncedRef.current]);
+
   // unsubscribe all on component unmount
   useEffect(
     () => () => {
@@ -470,7 +468,7 @@ export const ActivePoolsProvider = ({
   );
 
   // re-calculate pending rewards when membership changes
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     updatePendingRewards();
   }, [
     network,
@@ -482,7 +480,7 @@ export const ActivePoolsProvider = ({
 
   // when we are subscribed to all active pools, syncing is considered
   // completed.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (unsubNominations.current.length === accountPools.length) {
       setStateWithRef('synced', setSynced, syncedRef);
     }

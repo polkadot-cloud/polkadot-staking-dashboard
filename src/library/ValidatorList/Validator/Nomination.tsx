@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { useValidators } from 'contexts/Validators';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator';
 import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
 import { useList } from '../../List/context';
@@ -21,29 +21,21 @@ export const Nomination = ({
   validator,
   nominator,
   toggleFavorites,
-  batchIndex,
-  batchKey,
   bondFor,
   inModal,
 }: NominationProps) => {
-  const { meta } = useValidators();
   const { selectActive } = useList();
-  const identities = meta[batchKey]?.identities ?? [];
-  const supers = meta[batchKey]?.supers ?? [];
+  const { validatorIdentities, validatorSupers } = useValidators();
 
   const { address, prefs } = validator;
   const commission = prefs?.commission ?? null;
 
   return (
-    <Wrapper format="nomination" inModal={inModal}>
+    <Wrapper $format="nomination" $inModal={inModal}>
       <div className="inner">
         <div className="row">
           {selectActive && <Select item={validator} />}
-          <Identity
-            address={address}
-            batchIndex={batchIndex}
-            batchKey={batchKey}
-          />
+          <Identity address={address} />
           <div>
             <Labels>
               <CopyAddress address={address} />
@@ -59,7 +51,7 @@ export const Nomination = ({
             nominator={nominator}
           />
           <Labels>
-            <Oversubscribed batchIndex={batchIndex} batchKey={batchKey} />
+            <Oversubscribed address={address} />
             <Blocked prefs={prefs} />
             <Commission commission={commission} />
             <ParaValidator address={address} />
@@ -69,8 +61,8 @@ export const Nomination = ({
               <Metrics
                 address={address}
                 display={getIdentityDisplay(
-                  identities[batchIndex],
-                  supers[batchIndex]
+                  validatorIdentities[address],
+                  validatorSupers[address]
                 )}
               />
             )}

@@ -1,25 +1,25 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import {
   PageHeading,
   PageRow,
   PageTitle,
   RowSection,
-} from '@polkadotcloud/core-ui';
-import { planckToUnit } from '@polkadotcloud/utils';
+} from '@polkadot-cloud/react';
+import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 import { DefaultLocale } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useSubscan } from 'contexts/Subscan';
-import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
 import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
 import { ControllerNotStash } from 'pages/Nominate/Active/ControllerNotStash';
-import { useTranslation } from 'react-i18next';
 import { ActiveAccounts } from './ActiveAccounts';
 import { BalanceChart } from './BalanceChart';
 import { BalanceLinks } from './BalanceLinks';
@@ -62,7 +62,7 @@ export const Overview = () => {
 
   return (
     <>
-      <PageTitle title={`${t('overview.overview')}`} />
+      <PageTitle title={t('overview.overview')} />
       <PageRow>
         <PageHeading>
           <ActiveAccounts />
@@ -79,13 +79,13 @@ export const Overview = () => {
       </PageRow>
       <PageRow>
         <RowSection secondary>
-          <CardWrapper height={PAYOUTS_HEIGHT} $flex>
+          <CardWrapper height={PAYOUTS_HEIGHT}>
             <BalanceChart />
             <BalanceLinks />
           </CardWrapper>
         </RowSection>
         <RowSection hLast vLast>
-          <CardWrapper style={{ minHeight: PAYOUTS_HEIGHT }} $flex>
+          <CardWrapper style={{ minHeight: PAYOUTS_HEIGHT }}>
             <SubscanButton />
             <CardHeaderWrapper>
               <h4>{t('overview.recentPayouts')}</h4>

@@ -1,22 +1,19 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  ActionItem,
-  ModalPadding,
-  ModalWarnings,
-} from '@polkadotcloud/core-ui';
+import { ActionItem, ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
 import {
   greaterThanZero,
   planckToUnit,
   unitToPlanck,
-} from '@polkadotcloud/utils';
+} from '@polkadot-cloud/utils';
+import { getUnixTime } from 'date-fns';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { getUnixTime } from 'date-fns';
 import { Warning } from 'library/Form/Warning';
 import { useBatchCall } from 'library/Hooks/useBatchCall';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
@@ -26,21 +23,22 @@ import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const Unstake = () => {
   const { t } = useTranslation('modals');
   const { newBatchCall } = useBatchCall();
-  const { api, network, consts } = useApi();
+  const { notEnoughFunds } = useTxMeta();
   const { activeAccount } = useConnect();
+  const { api, network, consts } = useApi();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
-  const { setStatus: setModalStatus, setResize } = useModal();
+  const { setModalStatus, setModalResize } = useOverlay().modal;
   const { getBondedAccount, getAccountNominations } = useBonded();
-  const { units } = network;
 
+  const { units } = network;
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
   const { bondDuration } = consts;
@@ -75,9 +73,7 @@ export const Unstake = () => {
   }, [freeToUnbond.toString(), isValid]);
 
   // modal resize on form update
-  useEffect(() => {
-    setResize();
-  }, [bond]);
+  useEffect(() => setModalResize(), [bond, notEnoughFunds]);
 
   // tx to submit
   const getTx = () => {
@@ -104,7 +100,7 @@ export const Unstake = () => {
     from: controller,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
-      setModalStatus(2);
+      setModalStatus('closing');
     },
     callbackInBlock: () => {},
   });

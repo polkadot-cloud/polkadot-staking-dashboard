@@ -1,16 +1,16 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonSecondary } from '@polkadotcloud/core-ui';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger';
-import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
-import { useTheme } from 'contexts/Themes';
-import { ReactComponent as LogoSVG } from 'img/ledgerLogo.svg';
+import { ButtonHelp, ButtonSecondary } from '@polkadot-cloud/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { useHelp } from 'contexts/Help';
+import { useTheme } from 'contexts/Themes';
+import { ReactComponent as LogoSVG } from 'img/ledgerLogo.svg';
 import type { AnyFunction } from 'types';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { SplashWrapper } from './Wrappers';
 
 export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
@@ -25,7 +25,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   } = useLedgerHardware();
   const { mode } = useTheme();
   const { openHelp } = useHelp();
-  const { replaceModalWith, setResize } = useModal();
+  const { replaceModal, setModalResize } = useOverlay().modal;
 
   const statusCodes = getStatusCodes();
 
@@ -54,9 +54,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   }, [isPaired]);
 
   // Resize modal on new message
-  useEffect(() => {
-    setResize();
-  }, [statusCodes, feedback]);
+  useEffect(() => setModalResize(), [statusCodes, feedback]);
 
   return (
     <>
@@ -67,7 +65,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
             iconLeft={faChevronLeft}
             iconTransform="shrink-3"
             onClick={async () =>
-              replaceModalWith('Connect', { disableScroll: true }, 'large')
+              replaceModal({ key: 'Connect', options: { disableScroll: true } })
             }
           />
         </h1>

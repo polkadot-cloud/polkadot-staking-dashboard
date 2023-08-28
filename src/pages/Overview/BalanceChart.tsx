@@ -1,19 +1,23 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
+import { faCheck, faCheckDouble } from '@fortawesome/free-solid-svg-icons';
+import { ButtonTertiary } from '@polkadot-cloud/react';
+import { greaterThanZero, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { usePlugins } from 'contexts/Plugins';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useUi } from 'contexts/UI';
 import { BarSegment } from 'library/BarChart/BarSegment';
 import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { usePrices } from 'library/Hooks/usePrices';
-import { useTranslation } from 'react-i18next';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
@@ -22,8 +26,10 @@ export const BalanceChart = () => {
   } = useApi();
   const prices = usePrices();
   const { plugins } = usePlugins();
-  const { activeAccount } = useConnect();
+  const { isNetworkSyncing } = useUi();
+  const { openModal } = useOverlay().modal;
   const { getBalance, getLocks } = useBalances();
+  const { activeAccount, accountHasSigner } = useConnect();
   const { feeReserve, getTransferOptions } = useTransferOptions();
   const balance = getBalance(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
@@ -216,15 +222,37 @@ export const BalanceChart = () => {
             <div
               style={{
                 flex: 0,
-                minWidth: '8.5rem',
-                maxWidth: '8.5rem',
+                minWidth: '12.5rem',
+                maxWidth: '12.5rem',
                 flexBasis: '50%',
               }}
             >
-              <Legend>
+              <Legend className="end">
                 <LegendItem
-                  label={t('overview.reserve')}
-                  helpKey="Reserve Balance"
+                  label=""
+                  button={
+                    <ButtonTertiary
+                      text="Reserve Balance"
+                      onClick={() =>
+                        openModal({ key: 'UpdateReserve', size: 'sm' })
+                      }
+                      iconRight={
+                        isNetworkSyncing
+                          ? undefined
+                          : !feeReserve.isZero() && !edReserved.isZero()
+                          ? faCheckDouble
+                          : feeReserve.isZero() && edReserved.isZero()
+                          ? undefined
+                          : faCheck
+                      }
+                      iconTransform="shrink-1"
+                      disabled={
+                        !activeAccount ||
+                        isNetworkSyncing ||
+                        !accountHasSigner(activeAccount)
+                      }
+                    />
+                  }
                 />
               </Legend>
               <Bar>

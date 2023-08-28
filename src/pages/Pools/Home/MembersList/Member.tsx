@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import {
   faBars,
@@ -7,8 +7,9 @@ import {
   faUnlockAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useMenu } from 'contexts/Menu';
-import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
@@ -22,13 +23,12 @@ import {
   Separator,
   Wrapper,
 } from 'library/ListItem/Wrappers';
-import { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const Member = ({ who, batchKey, batchIndex }: any) => {
   const { t } = useTranslation('pages');
   const { meta } = usePoolMembers();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { selectActive } = useList();
   const { activeEra } = useNetworkMetrics();
   const { selectedActivePool, isOwner, isBouncer } = useActivePools();
@@ -57,14 +57,14 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
         wrap: null,
         title: `${t('pools.unbondFunds')}`,
         cb: () => {
-          openModalWith(
-            'UnbondPoolMember',
-            {
+          openModal({
+            key: 'UnbondPoolMember',
+            options: {
               who,
               member,
             },
-            'small'
-          );
+            size: 'sm',
+          });
         },
       });
     }
@@ -83,7 +83,11 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
           wrap: null,
           title: `${t('pools.withdrawFunds')}`,
           cb: () => {
-            openModalWith('WithdrawPoolMember', { who, member }, 'small');
+            openModal({
+              key: 'WithdrawPoolMember',
+              options: { who, member },
+              size: 'sm',
+            });
           },
         });
       }
@@ -100,12 +104,12 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
   };
 
   return (
-    <Wrapper format="nomination">
+    <Wrapper $format="nomination">
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">
           {selectActive && <Select item={who} />}
-          <Identity address={who} batchIndex={batchIndex} batchKey={batchKey} />
+          <Identity address={who} />
           <div>
             <Labels>
               {menuItems.length > 0 && (

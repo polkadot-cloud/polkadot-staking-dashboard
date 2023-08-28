@@ -1,10 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { unitToPlanck } from '@polkadotcloud/utils';
+import { unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -18,7 +19,6 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
 import { SubmitTx } from 'library/SubmitTx';
-import { useTranslation } from 'react-i18next';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = ({ section }: SetupStepProps) => {
@@ -89,7 +89,7 @@ export const Summary = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={null}
-        title={`${t('pools.summary')}`}
+        title={t('pools.summary')}
         bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
@@ -137,7 +137,7 @@ export const Summary = ({ section }: SetupStepProps) => {
           }}
         >
           <SubmitTx
-            submitText={`${t('pools.createPool')}`}
+            submitText={t('pools.createPool')}
             valid
             noMargin
             customEvent={`${name.toLowerCase()}_user_created_pool`}

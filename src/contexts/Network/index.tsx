@@ -1,10 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { setStateWithRef } from '@polkadotcloud/utils';
+import { setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import type { AnyApi, AnyJson } from 'types';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
 import type {
@@ -121,7 +122,7 @@ export const NetworkMetricsProvider = ({
   };
 
   // manage unsubscribe
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     initialiseSubscriptions();
     return () => {
       unsubscribe();
@@ -129,7 +130,7 @@ export const NetworkMetricsProvider = ({
   }, [isReady]);
 
   // Reset active era and metrics on network change.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     handleResetMetrics();
   }, [network]);
 

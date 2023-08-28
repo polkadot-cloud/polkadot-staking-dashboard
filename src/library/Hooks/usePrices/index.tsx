@@ -1,10 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
+import { useEffect, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { usePlugins } from 'contexts/Plugins';
 import { useUnitPrice } from 'library/Hooks/useUnitPrice';
-import { useEffect, useRef, useState } from 'react';
 
 export const usePrices = () => {
   const { network } = useApi();
@@ -37,8 +37,7 @@ export const usePrices = () => {
   };
 
   const initiatePriceInterval = async () => {
-    const _prices = await fetchUnitPrice();
-    setPrices(_prices);
+    setPrices(await fetchUnitPrice());
     if (priceHandle === null) {
       setPriceInterval();
     }
@@ -47,8 +46,7 @@ export const usePrices = () => {
   let priceHandle: any = null;
   const setPriceInterval = async () => {
     priceHandle = setInterval(async () => {
-      const _prices = await fetchUnitPrice();
-      setPrices(_prices);
+      setPrices(await fetchUnitPrice());
     }, 1000 * 30);
   };
 

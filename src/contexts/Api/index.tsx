@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
@@ -8,8 +8,9 @@ import {
   makeCancelable,
   rmCommas,
   varToUrlHash,
-} from '@polkadotcloud/utils';
+} from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import React, { useEffect, useState } from 'react';
 import { NetworkList } from 'config/networks';
 import {
   DefaultNetwork,
@@ -28,8 +29,8 @@ import type {
   ApiStatus,
   NetworkState,
 } from 'contexts/Api/types';
-import React, { useEffect, useState } from 'react';
 import type { AnyApi, NetworkName } from 'types';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import * as defaults from './defaults';
 
 export const APIProvider = ({ children }: { children: React.ReactNode }) => {
@@ -137,24 +138,33 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     connectProvider(network.name, newProvider);
   };
 
+  // Handle a switch in API.
+  const handleApiSwitch = () => {
+    setApi(null);
+    setConsts(defaults.consts);
+    setchainState(undefined);
+  };
   // Dynamically load `Sc` when user opts to use light client.
   useEffect(() => {
+    let cancel: () => void | undefined;
+
     if (isLightClient) {
+      handleApiSwitch();
       setApiStatus('connecting');
-      const { promise: ScPromise, cancel } = makeCancelable(
-        import('@substrate/connect')
-      );
-      ScPromise.then((Sc) => {
+
+      const ScPromise = makeCancelable(import('@substrate/connect'));
+      cancel = ScPromise.cancel;
+      ScPromise.promise.then((Sc) => {
         handleLightClientConnection(Sc);
       });
-      return () => {
-        cancel?.();
-      };
     }
+    return () => {
+      cancel?.();
+    };
   }, [isLightClient, network.name]);
 
   // Initialise provider event handlers when provider is set.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (provider) {
       provider.on('connected', () => {
         setApiStatus('connected');
@@ -286,7 +296,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     const { endpoints } = NetworkList[name];
     const newProvider = lc || new WsProvider(endpoints.rpc);
     if (lc) {
-      await newProvider.connect({ forceEmbeddedNode: true });
+      await newProvider.connect();
     }
     setProvider(newProvider);
   };

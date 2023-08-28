@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { useEffect } from 'react';
 
@@ -36,12 +36,15 @@ export const withProviders =
   (...providers: any) =>
   (WrappedComponent: any) =>
   (props: any) =>
-    providers.reduceRight((acc: any, prov: any) => {
-      let Provider = prov;
-      if (Array.isArray(prov)) {
-        Provider = prov[0];
-        return <Provider {...prov[1]}>{acc}</Provider>;
-      }
+    providers.reduceRight(
+      (acc: any, prov: any) => {
+        let Provider = prov;
+        if (Array.isArray(prov)) {
+          Provider = prov[0];
+          return <Provider {...prov[1]}>{acc}</Provider>;
+        }
 
-      return <Provider>{acc}</Provider>;
-    }, <WrappedComponent {...props} />);
+        return <Provider>{acc}</Provider>;
+      },
+      <WrappedComponent {...props} />
+    );

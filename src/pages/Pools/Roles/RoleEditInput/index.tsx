@@ -1,10 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { isValidAddress } from '@polkadotcloud/utils';
-import { useConnect } from 'contexts/Connect';
+import { isValidAddress } from '@polkadot-cloud/utils';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useConnect } from 'contexts/Connect';
 import { Wrapper } from './Wrapper';
 
 export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {
@@ -54,7 +54,7 @@ export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {
       <div className="input">
         <section>
           <input
-            placeholder={`${t('pools.address')}`}
+            placeholder={t('pools.address')}
             type="text"
             onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
             value={roleEdit?.newAddress ?? ''}

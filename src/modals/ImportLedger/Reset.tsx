@@ -1,26 +1,26 @@
 // Copyright 2023 @paritytech/polkadot-live authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonMono, ButtonMonoInvert } from '@polkadotcloud/core-ui';
 import { registerSaEvent } from 'Utils';
 import { useApi } from 'contexts/Api';
+import { ButtonMono, ButtonMonoInvert } from '@polkadot-cloud/react';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import type { LedgerAddress } from 'contexts/Hardware/types';
-import { useModal } from 'contexts/Modal';
-import { useOverlay } from 'contexts/Overlay';
+import { usePrompt } from 'contexts/Prompt';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
-import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const Reset = ({ removeLedgerAddress }: AnyJson) => {
   const { t } = useTranslation('modals');
   const { network } = useApi();
-  const { setStatus } = useOverlay();
+  const { setStatus } = usePrompt();
   const { forgetAccounts } = useConnect();
-  const { replaceModalWith } = useModal();
+  const { replaceModal } = useOverlay().modal;
   const { ledgerAccounts, removeLedgerAccount } = useLedgerHardware();
 
   const removeAccounts = () => {
@@ -36,7 +36,7 @@ export const Reset = ({ removeLedgerAddress }: AnyJson) => {
     });
 
     // Go back to Connect modal.
-    replaceModalWith('Connect', { disableScroll: true }, 'large');
+    replaceModal({ key: 'Connect', options: { disableScroll: true } });
   };
 
   return (

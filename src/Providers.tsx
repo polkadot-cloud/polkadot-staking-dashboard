@@ -1,9 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { Entry } from '@polkadotcloud/core-ui';
-import { Router } from 'Router';
-import { APIProvider, useApi } from 'contexts/Api';
+import { ThemedRouter } from 'Themes';
+import { APIProvider } from 'contexts/Api';
 import { BalancesProvider } from 'contexts/Balances';
 import { BondedProvider } from 'contexts/Bonded';
 import { ConnectProvider } from 'contexts/Connect';
@@ -17,10 +16,9 @@ import { HelpProvider } from 'contexts/Help';
 import { IdentitiesProvider } from 'contexts/Identities';
 import { MenuProvider } from 'contexts/Menu';
 import { MigrateProvider } from 'contexts/Migrate';
-import { ModalProvider } from 'contexts/Modal';
 import { NetworkMetricsProvider } from 'contexts/Network';
 import { NotificationsProvider } from 'contexts/Notifications';
-import { OverlayProvider } from 'contexts/Overlay';
+import { PromptProvider } from 'contexts/Prompt';
 import { PluginsProvider } from 'contexts/Plugins';
 import { ActivePoolsProvider } from 'contexts/Pools/ActivePools';
 import { BondedPoolsProvider } from 'contexts/Pools/BondedPools';
@@ -31,29 +29,17 @@ import { ProxiesProvider } from 'contexts/Proxies';
 import { SetupProvider } from 'contexts/Setup';
 import { StakingProvider } from 'contexts/Staking';
 import { SubscanProvider } from 'contexts/Subscan';
-import { useTheme } from 'contexts/Themes';
 import { TooltipProvider } from 'contexts/Tooltip';
 import { TransferOptionsProvider } from 'contexts/TransferOptions';
 import { TxMetaProvider } from 'contexts/TxMeta';
 import { UIProvider } from 'contexts/UI';
-import { ValidatorsProvider } from 'contexts/Validators';
+import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries';
+import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidators';
 import { withProviders } from 'library/Hooks';
-import { ThemeProvider } from 'styled-components';
+import { PayoutsProvider } from 'contexts/Payouts';
+import { OverlayProvider } from '@polkadot-cloud/react';
 
-// App theme classes and `@polkadotcloud/core-ui` theme classes are inserted here.
-export const ThemedRouter = () => {
-  const { mode } = useTheme();
-  const { network } = useApi();
-
-  return (
-    <ThemeProvider theme={{ mode, network: `${network.name}-${mode}` }}>
-      <Entry mode={mode} network={network.name}>
-        <Router />
-      </Entry>
-    </ThemeProvider>
-  );
-};
-
+// !! Provider order matters.
 export const Providers = withProviders(
   FiltersProvider,
   NotificationsProvider,
@@ -76,7 +62,9 @@ export const Providers = withProviders(
   ActivePoolsProvider,
   TransferOptionsProvider,
   ValidatorsProvider,
+  FavoriteValidatorsProvider,
   FastUnstakeProvider,
+  PayoutsProvider,
   UIProvider,
   PluginsProvider,
   SetupProvider,
@@ -85,7 +73,7 @@ export const Providers = withProviders(
   TooltipProvider,
   TxMetaProvider,
   ExtrinsicsProvider,
-  ModalProvider,
   OverlayProvider,
+  PromptProvider,
   MigrateProvider
 )(ThemedRouter);

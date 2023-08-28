@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -8,17 +8,19 @@ import {
   ButtonText,
   ModalCustomHeader,
   ModalPadding,
-} from '@polkadotcloud/core-ui';
-import { useApi } from 'contexts/Api';
+} from '@polkadot-cloud/react';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import { useModal } from 'contexts/Modal';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useProxies } from 'contexts/Proxies';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import {
+  useEffectIgnoreInitial,
+  useOverlay,
+} from '@polkadot-cloud/react/hooks';
 import { AccountButton } from './Account';
 import { Delegates } from './Delegates';
 import { AccountSeparator, AccountWrapper } from './Wrappers';
@@ -31,112 +33,93 @@ import type {
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');
-  const { isReady } = useApi();
-  const { activeAccount, disconnectFromAccount, setActiveProxy, accounts } =
-    useConnect();
-  const { bondedAccounts } = useBonded();
   const { balances } = useBalances();
+  const { getDelegates } = useProxies();
+  const { extensions } = useExtensions();
+  const { bondedAccounts } = useBonded();
   const { ledgers, getLocks } = useBalances();
   const { memberships } = usePoolMemberships();
-  const { replaceModalWith, setResize } = useModal();
-  const { extensions } = useExtensions();
-  const { getDelegates } = useProxies();
+  const {
+    replaceModal,
+    status: modalStatus,
+    setModalResize,
+  } = useOverlay().modal;
+  const { activeAccount, disconnectFromAccount, setActiveProxy, accounts } =
+    useConnect();
 
-  // store local copy of accounts
+  // Store local copy of accounts.
   const [localAccounts, setLocalAccounts] = useState(accounts);
 
-  // store accounts that are actively newNominating.
-  const [nominating, setNominating] = useState<AccountNominating[]>([]);
-  const [inPool, setInPool] = useState<AccountInPool[]>([]);
-  const [notStaking, setNotStaking] = useState<AccountNotStaking[]>([]);
-  const [nominatingAndPool, setNominatingAndPool] = useState<
-    AccountNominatingAndInPool[]
-  >([]);
+  const stashes: string[] = [];
+  // accumulate imported stash accounts
+  for (const { address } of localAccounts) {
+    const locks = getLocks(address);
 
-  const getAccountsStatus = () => {
-    const stashes: string[] = [];
+    // account is a stash if they have an active `staking` lock
+    if (locks.find(({ id }) => id === 'staking')) {
+      stashes.push(address);
+    }
+  }
 
-    // accumulate imported stash accounts
-    for (const { address } of localAccounts) {
-      const locks = getLocks(address);
+  // construct account groupings
+  const nominating: AccountNominating[] = [];
+  const inPool: AccountInPool[] = [];
+  const nominatingAndPool: AccountNominatingAndInPool[] = [];
+  const notStaking: AccountNotStaking[] = [];
 
-      // account is a stash if they have an active `staking` lock
-      if (locks.find(({ id }) => id === 'staking')) {
-        stashes.push(address);
+  for (const { address } of localAccounts) {
+    let isNominating = false;
+    let isInPool = false;
+    const isStash = stashes[stashes.indexOf(address)] ?? null;
+    const delegates = getDelegates(address);
+
+    const poolMember = memberships.find((m) => m.address === address) ?? null;
+
+    // If stash exists, add address to nominating list.
+    if (
+      isStash &&
+      nominating.find((a) => a.address === address) === undefined
+    ) {
+      isNominating = true;
+    }
+
+    // if pooling, add address to active pooling.
+    if (poolMember) {
+      if (!inPool.find((n) => n.address === address)) {
+        isInPool = true;
       }
     }
 
-    // construct account groupings
-    const newNominating: AccountNominating[] = [];
-    const newInPool: AccountInPool[] = [];
-    const newNominatingAndInPool: AccountNominatingAndInPool[] = [];
-    const newNotStaking: AccountNotStaking[] = [];
-
-    for (const { address } of localAccounts) {
-      let isNominating = false;
-      let isInPool = false;
-      const isStash = stashes[stashes.indexOf(address)] ?? null;
-      const delegates = getDelegates(address);
-
-      const poolMember = memberships.find((m) => m.address === address) ?? null;
-
-      // If stash exists, add address to nominating list.
-      if (
-        isStash &&
-        newNominating.find((a) => a.address === address) === undefined
-      ) {
-        isNominating = true;
-      }
-
-      // if pooling, add address to active pooling.
-      if (poolMember) {
-        if (!newInPool.find((n) => n.address === address)) {
-          isInPool = true;
-        }
-      }
-
-      // If not doing anything, add address to `notStaking`.
-      if (
-        !isStash &&
-        !poolMember &&
-        !newNotStaking.find((n) => n.address === address)
-      ) {
-        newNotStaking.push({ address, delegates });
-      }
-
-      if (isNominating && isInPool && poolMember) {
-        newNominatingAndInPool.push({
-          ...poolMember,
-          address,
-          stashImported: true,
-          delegates,
-        });
-      }
-
-      if (isNominating && !isInPool) {
-        newNominating.push({ address, stashImported: true, delegates });
-      }
-      if (!isNominating && isInPool && poolMember) {
-        newInPool.push({ ...poolMember, delegates });
-      }
+    // If not doing anything, add address to `notStaking`.
+    if (
+      !isStash &&
+      !poolMember &&
+      !notStaking.find((n) => n.address === address)
+    ) {
+      notStaking.push({ address, delegates });
     }
 
-    setNominatingAndPool(newNominatingAndInPool);
-    setNominating(newNominating);
-    setInPool(newInPool);
-    setNotStaking(newNotStaking);
-  };
+    if (isNominating && isInPool && poolMember) {
+      nominatingAndPool.push({
+        ...poolMember,
+        address,
+        stashImported: true,
+        delegates,
+      });
+    }
 
-  useEffect(() => {
-    setLocalAccounts(accounts);
-  }, [isReady, accounts]);
+    if (isNominating && !isInPool) {
+      nominating.push({ address, stashImported: true, delegates });
+    }
+    if (!isNominating && isInPool && poolMember) {
+      inPool.push({ ...poolMember, delegates });
+    }
+  }
 
-  useEffect(() => {
-    getAccountsStatus();
-  }, [localAccounts, bondedAccounts, balances, ledgers, accounts, memberships]);
+  useEffect(() => setLocalAccounts(accounts), [accounts]);
 
-  useEffect(() => {
-    setResize();
+  useEffectIgnoreInitial(() => {
+    if (modalStatus === 'open') setModalResize();
   }, [activeAccount, accounts, bondedAccounts, balances, ledgers, extensions]);
 
   return (
@@ -149,7 +132,7 @@ export const Accounts = () => {
             iconLeft={faChevronLeft}
             iconTransform="shrink-3"
             onClick={() =>
-              replaceModalWith('Connect', { disableScroll: true }, 'large')
+              replaceModal({ key: 'Connect', options: { disableScroll: true } })
             }
             marginLeft
           />
@@ -158,7 +141,7 @@ export const Accounts = () => {
           {activeAccount && (
             <ButtonText
               style={{
-                color: 'var(--network-color-primary)',
+                color: 'var(--accent-color-primary)',
               }}
               text={t('disconnect')}
               iconRight={faLinkSlash}

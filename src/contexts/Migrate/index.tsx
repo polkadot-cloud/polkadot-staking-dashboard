@@ -1,12 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
+import React, { useState } from 'react';
 import { NetworkList } from 'config/networks';
 import { AppVersion } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
-import React, { useEffect, useState } from 'react';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 
 export const MigrateProvider = ({
   children,
@@ -43,7 +44,7 @@ export const MigrateProvider = ({
       localStorage.removeItem(`${n.name}_active_proxy`);
     });
 
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady && !isNetworkSyncing && !done) {
       // Carry out migrations if local version is different to current version.
       if (localAppVersion !== AppVersion) {

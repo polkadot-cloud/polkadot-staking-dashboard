@@ -1,12 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonHelp, ModalPadding } from '@polkadotcloud/core-ui';
-import { clipAddress, planckToUnit, rmCommas } from '@polkadotcloud/utils';
+import { ButtonHelp, ModalPadding } from '@polkadot-cloud/react';
+import { clipAddress, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import { useEffect, useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
@@ -20,47 +21,45 @@ import { Title } from 'library/Modal/Title';
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');
   const {
     network: { units, unit },
   } = useApi();
-  const { config } = useModal();
-  const { address, identity } = config;
+  const { options } = useOverlay().modal.config;
+  const { address, identity } = options;
   const { fetchEraPoints }: any = useSubscan();
   const { activeEra } = useNetworkMetrics();
-  const { eraStakers } = useStaking();
-  const { stakers } = eraStakers;
+  const {
+    eraStakers: { stakers },
+  } = useStaking();
   const { openHelp } = useHelp();
 
   // is the validator in the active era
-  const validatorInEra =
-    stakers.find((s: any) => s.address === address) || null;
+  const validatorInEra = stakers.find((s) => s.address === address) || null;
 
   let validatorOwnStake = new BigNumber(0);
   let otherStake = new BigNumber(0);
   if (validatorInEra) {
     const { others, own } = validatorInEra;
 
-    others.forEach((o: any) => {
-      otherStake = otherStake.plus(rmCommas(o.value));
+    others.forEach(({ value }) => {
+      otherStake = otherStake.plus(value);
     });
     if (own) {
-      validatorOwnStake = new BigNumber(rmCommas(own));
+      validatorOwnStake = new BigNumber(own);
     }
   }
   const [list, setList] = useState([]);
 
-  const ref: any = React.useRef();
+  const ref = useRef<HTMLDivElement>(null);
   const size = useSize(ref.current);
   const { width, height, minHeight } = formatSize(size, 300);
 
   const handleEraPoints = async () => {
-    const _list = await fetchEraPoints(address, activeEra.index);
-    setList(_list);
+    setList(await fetchEraPoints(address, activeEra.index));
   };
 
   useEffect(() => {
@@ -111,14 +110,11 @@ export const ValidatorMetrics = () => {
       >
         <SubscanButton />
         <CardWrapper
+          className="transparent"
           style={{
             margin: '0 0 0 0.5rem',
             height: 350,
-            border: 'none',
-            boxShadow: 'none',
           }}
-          $flex
-          $transparent
         >
           <CardHeaderWrapper>
             <h4>

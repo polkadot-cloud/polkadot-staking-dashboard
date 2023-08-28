@@ -1,51 +1,58 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clipAddress } from '@polkadotcloud/utils';
+import { clipAddress, planckToUnit } from '@polkadot-cloud/utils';
+import { useTranslation } from 'react-i18next';
+import { Extensions } from '@polkadot-cloud/community/extensions';
 import { useConnect } from 'contexts/Connect';
-import { useExtensions } from 'contexts/Extensions';
-import { useModal } from 'contexts/Modal';
 import { ReactComponent as LedgerIconSVG } from 'img/ledgerIcon.svg';
 import { ReactComponent as PolkadotVaultIconSVG } from 'img/polkadotVault.svg';
 import { Identicon } from 'library/Identicon';
-import { useTranslation } from 'react-i18next';
+import { useApi } from 'contexts/Api';
+import { useTransferOptions } from 'contexts/TransferOptions';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
 
 export const AccountButton = ({
-  address,
   label,
+  address,
   delegator,
-  noBorder = false,
   proxyType,
+  noBorder = false,
 }: AccountItemProps) => {
   const { t } = useTranslation('modals');
-  const { setStatus } = useModal();
-  const { extensions } = useExtensions();
   const {
-    activeAccount,
-    connectToAccount,
     getAccount,
     activeProxy,
-    activeProxyType,
+    activeAccount,
     setActiveProxy,
+    activeProxyType,
+    connectToAccount,
   } = useConnect();
+  const { setModalStatus } = useOverlay().modal;
+  const { units, unit } = useApi().network;
+  const { getTransferOptions } = useTransferOptions();
+  const { freeBalance } = getTransferOptions(address || '');
 
+  // Accumulate account data.
   const meta = getAccount(address || '');
-
-  const Icon =
-    meta?.source === 'ledger'
-      ? LedgerIconSVG
-      : meta?.source === 'vault'
-      ? PolkadotVaultIconSVG
-      : extensions.find(({ id }) => id === meta?.source)?.icon ?? undefined;
 
   const imported = !!meta;
   const connectTo = delegator || address || '';
   const connectProxy = delegator ? address || null : '';
 
+  // Determine account source icon.
+  const Icon =
+    meta?.source === 'ledger'
+      ? LedgerIconSVG
+      : meta?.source === 'vault'
+      ? PolkadotVaultIconSVG
+      : Extensions[meta?.source || '']?.Icon ?? undefined;
+
+  // Determine if this account is active (active account or proxy).
   const isActive =
     (connectTo === activeAccount &&
       address === activeAccount &&
@@ -54,63 +61,75 @@ export const AccountButton = ({
       proxyType === activeProxyType &&
       activeProxy);
 
+  // Handle account click. Handles both active account and active proxy.
+  const handleClick = () => {
+    if (!imported) return;
+    connectToAccount(getAccount(connectTo));
+    setActiveProxy(proxyType ? { address: connectProxy, proxyType } : null);
+    setModalStatus('closing');
+  };
+
   return (
     <AccountWrapper className={isActive ? 'active' : undefined}>
-      <button
-        type="button"
-        disabled={!imported}
-        onClick={() => {
-          if (imported) {
-            connectToAccount(getAccount(connectTo));
-            setActiveProxy(
-              proxyType ? { address: connectProxy, proxyType } : null
-            );
-            setStatus(2);
-          }
-        }}
-        style={noBorder ? { border: 'none' } : undefined}
-      >
-        <div>
-          {delegator && (
-            <div className="delegator">
-              <Identicon value={delegator} size={26} />
-            </div>
-          )}
-          <div className="identicon">
-            <Identicon value={address ?? ''} size={26} />
-          </div>
-          <span className="name">
-            {delegator && (
-              <>
-                <span>
-                  {proxyType} {t('proxy')}
-                </span>
-              </>
-            )}
-            {meta?.name ?? clipAddress(address ?? '')}
-          </span>
-        </div>
-        {meta?.source === 'external' && (
-          <div
-            className="label warning"
-            style={{ color: '#a17703', paddingLeft: '0.5rem' }}
+      <div className={noBorder ? 'noBorder' : undefined}>
+        <section className="head">
+          <button
+            type="button"
+            onClick={() => handleClick()}
+            disabled={!imported}
           >
-            {t('readOnly')}
-          </div>
-        )}
-        <div className={label === undefined ? `` : label[0]}>
-          {label !== undefined ? <h5>{label[1]}</h5> : null}
-          {Icon !== undefined ? <Icon className="icon" /> : null}
+            {delegator && (
+              <div className="delegator">
+                <Identicon value={delegator} size={23} />
+              </div>
+            )}
+            <div className="identicon">
+              <Identicon value={address ?? ''} size={23} />
+            </div>
+            <span className="name">
+              {delegator && (
+                <>
+                  <span>
+                    {proxyType} {t('proxy')}
+                  </span>
+                </>
+              )}
+              {meta?.name ?? clipAddress(address ?? '')}
+            </span>
+            {meta?.source === 'external' && (
+              <div
+                className="label warning"
+                style={{ color: '#a17703', paddingLeft: '0.5rem' }}
+              >
+                {t('readOnly')}
+              </div>
+            )}
+            <div className={label === undefined ? `` : label[0]}>
+              {label !== undefined ? <h5>{label[1]}</h5> : null}
+              {Icon !== undefined ? (
+                <span className="icon">
+                  <Icon />
+                </span>
+              ) : null}
 
-          {meta?.source === 'external' && (
-            <FontAwesomeIcon
-              icon={faGlasses}
-              className="icon"
-              style={{ opacity: 0.7 }}
-            />
-          )}
-        </div>
-      </button>
+              {meta?.source === 'external' && (
+                <FontAwesomeIcon
+                  icon={faGlasses}
+                  className="icon"
+                  style={{ opacity: 0.7 }}
+                />
+              )}
+            </div>
+          </button>
+        </section>
+        <section className="foot">
+          <span className="balance">
+            {`Free: ${planckToUnit(freeBalance, units)
+              .decimalPlaces(3)
+              .toFormat()} ${unit}`}
+          </span>
+        </section>
+      </div>
     </AccountWrapper>
   );
 };

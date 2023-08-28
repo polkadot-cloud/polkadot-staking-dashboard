@@ -1,22 +1,26 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import {
   faCheckCircle,
   faEdit,
   faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/core-ui';
+import {
+  ButtonHelp,
+  ButtonPrimary,
+  ButtonPrimaryInvert,
+} from '@polkadot-cloud/react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useIdentities } from 'contexts/Identities';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { RolesWrapper } from '../Home/ManagePool/Wrappers';
 import { PoolAccount } from '../PoolAccount';
 import { RoleEditInput } from './RoleEditInput';
@@ -26,18 +30,19 @@ export const Roles = ({
   batchKey,
   defaultRoles,
   setters = [],
+  inline = false,
   listenIsValid = () => {},
 }: RolesProps) => {
   const { t } = useTranslation('pages');
+  const { openHelp } = useHelp();
+  const { isPoolSyncing } = useUi();
+  const { openModal } = useOverlay().modal;
   const { isReady, network } = useApi();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { fetchIdentitiesMetaBatch } = useIdentities();
   const { isOwner, selectedActivePool } = useActivePools();
-  const { isPoolSyncing } = useUi();
-  const { openModalWith } = useModal();
+  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { id } = selectedActivePool || { id: 0 };
   const roles = defaultRoles;
-  const { openHelp } = useHelp();
 
   const initialiseEdits = (() => {
     const initState: Record<string, RoleEditEntry> = {};
@@ -111,7 +116,11 @@ export const Roles = ({
       }
     } else {
       // else, open modal with role edits data to update pool roles.
-      openModalWith('ChangePoolRoles', { id, roleEdits }, 'small');
+      openModal({
+        key: 'ChangePoolRoles',
+        options: { id, roleEdits },
+        size: 'sm',
+      });
     }
   };
 
@@ -136,20 +145,25 @@ export const Roles = ({
     setRoleEdits(newEdit);
   };
 
+  const ButtonType = inline ? ButtonPrimaryInvert : ButtonPrimary;
+
   return (
     <>
       <CardHeaderWrapper $withAction>
-        <h3>
-          {t('pools.roles')}{' '}
-          <ButtonHelp marginLeft onClick={() => openHelp('Pool Roles')} />
-        </h3>
+        {!inline && (
+          <h3>
+            {t('pools.roles')}
+            <ButtonHelp marginLeft onClick={() => openHelp('Pool Roles')} />
+          </h3>
+        )}
+
         {!(isOwner() === true || setters.length) ? (
           <></>
         ) : (
           <>
             {isEditing && (
               <div>
-                <ButtonPrimary
+                <ButtonType
                   iconLeft={faTimesCircle}
                   iconTransform="grow-1"
                   text={t('pools.cancel')}
@@ -160,7 +174,7 @@ export const Roles = ({
             )}
             &nbsp;&nbsp;
             <div>
-              <ButtonPrimary
+              <ButtonType
                 iconLeft={isEditing ? faCheckCircle : faEdit}
                 iconTransform="grow-1"
                 text={isEditing ? t('pools.save') : t('pools.edit')}

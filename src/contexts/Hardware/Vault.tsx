@@ -1,10 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { clipAddress, setStateWithRef } from '@polkadotcloud/utils';
+import { clipAddress, setStateWithRef } from '@polkadot-cloud/utils';
+import React, { useEffect, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import type { VaultAccount } from 'contexts/Connect/types';
-import React, { useEffect, useRef, useState } from 'react';
 import { getLocalVaultAccounts, isLocalNetworkAddress } from './Utils';
 import { defaultVaultHardwareContext } from './defaults';
 import type { VaultHardwareContextInterface } from './types';

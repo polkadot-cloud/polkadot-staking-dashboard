@@ -1,19 +1,19 @@
 // Copyright 2023 @paritytech/polkadot-live authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
-import { ButtonText, HardwareAddress } from '@polkadotcloud/core-ui';
-import { clipAddress, unescape } from '@polkadotcloud/utils';
+import { ButtonText, HardwareAddress } from '@polkadot-cloud/react';
+import { clipAddress, unescape } from '@polkadot-cloud/utils';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
-import { useOverlay } from 'contexts/Overlay';
+import { usePrompt } from 'contexts/Prompt';
 import { Identicon } from 'library/Identicon';
 import { Confirm } from 'library/Import/Confirm';
 import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
-import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
 
 export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
@@ -29,7 +29,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
     getLedgerAccount,
     pairDevice,
   } = useLedgerHardware();
-  const { openOverlayWith } = useOverlay();
+  const { openPromptWith } = usePrompt();
   const { renameImportedAccount } = useConnect();
   const isExecuting = getIsExecuting();
   const source = 'ledger';
@@ -40,7 +40,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
   };
 
   const openConfirmHandler = (address: string, index: number) => {
-    openOverlayWith(
+    openPromptWith(
       <Confirm
         address={address}
         index={index}
@@ -52,7 +52,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
   };
 
   const openRemoveHandler = (address: string) => {
-    openOverlayWith(
+    openPromptWith(
       <Remove
         address={address}
         removeHandler={removeLedgerAccount}

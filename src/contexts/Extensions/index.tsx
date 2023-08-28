@@ -1,14 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { setStateWithRef } from '@polkadotcloud/utils';
-import { Extensions } from 'config/extensions';
+import { setStateWithRef } from '@polkadot-cloud/utils';
+import { ExtensionsArray } from '@polkadot-cloud/community/extensions';
+import React, { useEffect, useRef, useState } from 'react';
 import type {
   ExtensionInjected,
   ExtensionsContextInterface,
   ExtensionsStatus,
 } from 'contexts/Extensions/types';
-import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi } from 'types';
 import { defaultExtensionsContext } from './defaults';
 
@@ -48,7 +48,8 @@ export const ExtensionsProvider = ({
   let injectedWeb3Interval: ReturnType<typeof setInterval>;
   let injectCounter = 0;
 
-  // handle completed interval check for `injectedWeb3`.
+  // Handle completed interval check for `injectedWeb3`. If `injectedWeb3` is present, get installed
+  // extensions and add to state.
   const handleClearInterval = (hasInjectedWeb3: boolean) => {
     clearInterval(injectedWeb3Interval);
     if (hasInjectedWeb3) {
@@ -57,26 +58,25 @@ export const ExtensionsProvider = ({
     setStateWithRef(false, setCheckingInjectedWeb3, checkingInjectedWeb3Ref);
   };
 
-  // sets an interval to listen to `window` until the
-  // `injectedWeb3` property is present.
+  // Sets an interval to listen to `window` until the `injectedWeb3` property is present. Cancels
+  // after 500 * 10 milliseconds.
   useEffect(() => {
-    if (intervalInitialisedRef.current) return;
-    intervalInitialisedRef.current = true;
+    if (!intervalInitialisedRef.current) {
+      intervalInitialisedRef.current = true;
 
-    injectedWeb3Interval = setInterval(() => {
-      if (++injectCounter === 10) {
-        handleClearInterval(false);
-      } else {
-        // if injected is present
-        const injectedWeb3 = (window as AnyApi)?.injectedWeb3 || null;
-        if (injectedWeb3 !== null) {
-          handleClearInterval(true);
+      injectedWeb3Interval = setInterval(() => {
+        if (++injectCounter === 10) {
+          handleClearInterval(false);
+        } else {
+          // if injected is present
+          const injectedWeb3 = (window as AnyApi)?.injectedWeb3 || null;
+          if (injectedWeb3 !== null) {
+            handleClearInterval(true);
+          }
         }
-      }
-    }, 500);
-    return () => {
-      clearInterval(injectedWeb3Interval);
-    };
+      }, 500);
+    }
+    return () => clearInterval(injectedWeb3Interval);
   });
 
   const setExtensionStatus = (id: string, status: string) => {
@@ -92,7 +92,7 @@ export const ExtensionsProvider = ({
   const getInstalledExtensions = () => {
     const { injectedWeb3 }: AnyApi = window;
     const installed: ExtensionInjected[] = [];
-    Extensions.forEach((e) => {
+    ExtensionsArray.forEach((e) => {
       if (injectedWeb3[e.id] !== undefined) {
         installed.push({
           ...e,

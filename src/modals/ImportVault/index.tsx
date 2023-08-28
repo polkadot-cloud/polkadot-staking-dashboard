@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faQrcode } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -7,11 +7,12 @@ import {
   ButtonText,
   HardwareAddress,
   HardwareStatusBar,
-} from '@polkadotcloud/core-ui';
+} from '@polkadot-cloud/react';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
-import { useModal } from 'contexts/Modal';
-import { useOverlay } from 'contexts/Overlay';
+import { usePrompt } from 'contexts/Prompt';
 import { ReactComponent as Icon } from 'img/polkadotVault.svg';
 import { Identicon } from 'library/Identicon';
 import { Confirm } from 'library/Import/Confirm';
@@ -19,16 +20,15 @@ import { Heading } from 'library/Import/Heading';
 import { NoAccounts } from 'library/Import/NoAccounts';
 import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { Reader } from './Reader';
 
 export const ImportVault = () => {
   const { t } = useTranslation();
-  const { replaceModalWith } = useModal();
+  const { replaceModal } = useOverlay().modal;
   const { renameImportedAccount } = useConnect();
-  const { openOverlayWith, status: overlayStatus } = useOverlay();
+  const { openPromptWith, status: promptStatus } = usePrompt();
 
   const {
     vaultAccounts,
@@ -38,7 +38,7 @@ export const ImportVault = () => {
     removeVaultAccount,
     getVaultAccount,
   } = useVaultHardware();
-  const { setResize } = useModal();
+  const { setModalResize } = useOverlay().modal;
   const source = 'vault';
 
   const renameHandler = (address: string, newName: string) => {
@@ -47,7 +47,7 @@ export const ImportVault = () => {
   };
 
   const openConfirmHandler = (address: string, index: number) => {
-    openOverlayWith(
+    openPromptWith(
       <Confirm
         address={address}
         index={index}
@@ -59,7 +59,7 @@ export const ImportVault = () => {
   };
 
   const openRemoveHandler = (address: string) => {
-    openOverlayWith(
+    openPromptWith(
       <Remove
         address={address}
         removeHandler={removeVaultAccount}
@@ -71,7 +71,7 @@ export const ImportVault = () => {
   };
 
   useEffect(() => {
-    setResize();
+    setModalResize();
   }, [vaultAccounts]);
 
   return (
@@ -86,9 +86,9 @@ export const ImportVault = () => {
               lg
               iconLeft={faQrcode}
               text={t('importAccount', { ns: 'modals' })}
-              disabled={overlayStatus !== 0}
+              disabled={promptStatus !== 0}
               onClick={() => {
-                openOverlayWith(<Reader />, 'small');
+                openPromptWith(<Reader />, 'small');
               }}
             />
           </div>
@@ -120,9 +120,9 @@ export const ImportVault = () => {
               <ButtonText
                 iconLeft={faQrcode}
                 text={t('importAnotherAccount', { ns: 'modals' })}
-                disabled={overlayStatus !== 0}
+                disabled={promptStatus !== 0}
                 onClick={() => {
-                  openOverlayWith(<Reader />, 'small');
+                  openPromptWith(<Reader />, 'small');
                 }}
               />
             </div>
@@ -136,7 +136,7 @@ export const ImportVault = () => {
             })}
             inProgress={false}
             handleDone={() =>
-              replaceModalWith('Connect', { disableScroll: true }, 'large')
+              replaceModal({ key: 'Connect', options: { disableScroll: true } })
             }
             t={{
               tDone: t('done', { ns: 'library' }),

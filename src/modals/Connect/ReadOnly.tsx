@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import {
   faChevronRight,
@@ -11,14 +11,14 @@ import {
   ButtonHelp,
   ButtonMonoInvert,
   ButtonSecondary,
-} from '@polkadotcloud/core-ui';
+} from '@polkadot-cloud/react';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import type { ExternalAccount } from 'contexts/Connect/types';
 import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
 import { AccountInput } from 'library/AccountInput';
 import { Identicon } from 'library/Identicon';
-import { useTranslation } from 'react-i18next';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import {
   ActionWithButton,
   ManualAccount,
@@ -28,9 +28,9 @@ import type { ListWithInputProps } from './types';
 
 export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');
-  const { accounts, forgetAccounts, addExternalAccount } = useConnect();
-  const { setResize } = useModal();
   const { openHelp } = useHelp();
+  const { setModalResize } = useOverlay().modal;
+  const { accounts, forgetAccounts, addExternalAccount } = useConnect();
 
   // get all external accounts
   const externalAccountsOnly = accounts.filter(
@@ -45,7 +45,7 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   // forget account
   const forgetAccount = (account: ExternalAccount) => {
     forgetAccounts([account]);
-    setResize();
+    setModalResize();
   };
   return (
     <>

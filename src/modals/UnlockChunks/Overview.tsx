@@ -1,21 +1,21 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonSubmit, ModalNotes } from '@polkadotcloud/core-ui';
-import { planckToUnit } from '@polkadotcloud/utils';
+import { ButtonSubmit, ModalNotes } from '@polkadot-cloud/react';
+import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import { getUnixTime } from 'date-fns';
+import { forwardRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
-import { getUnixTime } from 'date-fns';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { StaticNote } from 'modals/Utils/StaticNote';
-import { forwardRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
 import { Chunk } from './Chunk';
 import { ContentWrapper } from './Wrappers';
@@ -41,8 +41,8 @@ export const Overview = forwardRef(
 
     let withdrawAvailable = new BigNumber(0);
     let totalUnbonding = new BigNumber(0);
-    for (const _chunk of unlocking) {
-      const { era, value } = _chunk;
+    for (const c of unlocking) {
+      const { era, value } = c;
       const left = new BigNumber(era).minus(activeEra.index);
 
       totalUnbonding = totalUnbonding.plus(value);

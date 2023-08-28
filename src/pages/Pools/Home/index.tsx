@@ -1,9 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { PageRow, PageTitle, RowSection } from '@polkadotcloud/core-ui';
+import { PageRow, PageTitle, RowSection } from '@polkadot-cloud/react';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import type { PageTitleTabProps } from '@polkadot-cloud/react/base/types';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { usePlugins } from 'contexts/Plugins';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -13,8 +15,8 @@ import { useSubscan } from 'contexts/Subscan';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList/Default';
 import { StatBoxList } from 'library/StatBoxList';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { Roles } from '../Roles';
 import { ClosurePrompts } from './ClosurePrompts';
 import { PoolFavorites } from './Favorites';
@@ -25,15 +27,18 @@ import { PoolStats } from './PoolStats';
 import { ActivePoolsStat } from './Stats/ActivePools';
 import { MinCreateBondStat } from './Stats/MinCreateBond';
 import { MinJoinBondStat } from './Stats/MinJoinBond';
-import { PoolMembershipStat } from './Stats/PoolMembership';
 import { Status } from './Status';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
 
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
   const { pluginEnabled } = usePlugins();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { activeAccount } = useConnect();
+  const {
+    favorites,
+    stats: { counterForBondedPools },
+  } = usePoolsConfig();
   const { fetchPoolDetails } = useSubscan();
   const { membership } = usePoolMemberships();
   const { activeTab, setActiveTab } = usePoolsTabs();
@@ -50,18 +55,25 @@ export const HomeInner = () => {
       setMemberCount(0);
       return;
     }
+    // If `Subscan` plugin is enabled, fetch member count directly from the API.
     if (pluginEnabled('subscan') && !fetchingMemberCount.current) {
       fetchingMemberCount.current = true;
       const poolDetails = await fetchPoolDetails(selectedActivePool.id);
       fetchingMemberCount.current = false;
-      return setMemberCount(poolDetails?.member_count || 0);
+      setMemberCount(poolDetails?.member_count || 0);
+      return;
     }
+    // If no plugin available, fetch all pool members from RPC and filter them to determine current
+    // pool member count. NOTE: Expensive operation.
     setMemberCount(
       getMembersOfPoolFromNode(selectedActivePool?.id ?? 0).length
     );
   };
 
-  let tabs = [
+  // Store the pool member count.
+  const [memberCount, setMemberCount] = useState<number>(0);
+
+  let tabs: PageTitleTabProps[] = [
     {
       title: t('pools.overview'),
       active: activeTab === 0,
@@ -74,6 +86,7 @@ export const HomeInner = () => {
       title: t('pools.members'),
       active: activeTab === 1,
       onClick: () => setActiveTab(1),
+      badge: String(memberCount),
     });
   }
 
@@ -82,16 +95,15 @@ export const HomeInner = () => {
       title: t('pools.allPools'),
       active: activeTab === 2,
       onClick: () => setActiveTab(2),
+      badge: String(counterForBondedPools.toString()),
     },
     {
       title: t('pools.favorites'),
       active: activeTab === 3,
       onClick: () => setActiveTab(3),
+      badge: String(favorites.length),
     }
   );
-
-  // Store the pool member count.
-  const [memberCount, setMemberCount] = useState<number>(0);
 
   // Back to tab 0 if not in a pool & on members tab.
   useEffect(() => {
@@ -111,14 +123,17 @@ export const HomeInner = () => {
   return (
     <>
       <PageTitle
-        title={`${t('pools.pools')}`}
+        title={t('pools.pools')}
         tabs={tabs}
         button={
           totalAccountPools
             ? {
                 title: t('pools.allRoles'),
                 onClick: () =>
-                  openModalWith('AccountPoolRoles', { who: activeAccount }),
+                  openModal({
+                    key: 'AccountPoolRoles',
+                    options: { who: activeAccount },
+                  }),
               }
             : undefined
         }
@@ -164,11 +179,6 @@ export const HomeInner = () => {
       {activeTab === 1 && <Members memberCount={memberCount} />}
       {activeTab === 2 && (
         <>
-          <StatBoxList>
-            <PoolMembershipStat />
-            <ActivePoolsStat />
-            <MinJoinBondStat />
-          </StatBoxList>
           <PageRow>
             <CardWrapper>
               <PoolList

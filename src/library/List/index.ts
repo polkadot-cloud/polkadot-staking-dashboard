@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components';
 import type { ListProps, PaginationWrapperProps } from './types';
@@ -67,7 +67,7 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
       &.next {
         color: ${(props) =>
           props.$next
-            ? 'var(--network-color-primary)'
+            ? 'var(--accent-color-primary)'
             : 'var(--text-color-secondary)'};
         cursor: ${(props) => (props.$next ? 'pointer' : 'default')};
         opacity: ${(props) => (props.$next ? 1 : 0.4)};
@@ -75,7 +75,7 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
       &.prev {
         color: ${(props) =>
           props.$prev
-            ? 'var(--network-color-primary)'
+            ? 'var(--accent-color-primary)'
             : 'var(--text-color-secondary)'};
         cursor: ${(props) => (props.$prev ? 'pointer' : 'default')};
         opacity: ${(props) => (props.$prev ? 1 : 0.4)};
@@ -143,8 +143,8 @@ export const List = styled.div<ListProps>`
           max-width: 50%;
         }
         @media (min-width: 1500px) {
-          flex-basis: ${(props) => props.flexBasisLarge};
-          max-width: ${(props) => props.flexBasisLarge};
+          flex-basis: ${(props) => props.$flexBasisLarge};
+          max-width: ${(props) => props.$flexBasisLarge};
         }
       }
     }

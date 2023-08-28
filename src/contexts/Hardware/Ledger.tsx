@@ -1,14 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import TransportWebHID from '@ledgerhq/hw-transport-webhid';
 import { u8aToBuffer } from '@polkadot/util';
-import { localStorageOrDefault, setStateWithRef } from '@polkadotcloud/utils';
+import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
 import { newSubstrateApp } from '@zondax/ledger-substrate';
-import { useApi } from 'contexts/Api';
-import type { LedgerAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useApi } from 'contexts/Api';
+import type { LedgerAccount } from 'contexts/Connect/types';
 import type { AnyFunction, AnyJson, MaybeString } from 'types';
 import {
   getLocalLedgerAccounts,
@@ -277,6 +277,7 @@ export const LedgerHardwareProvider = ({
         body: [result],
       };
     }
+    return undefined;
   };
 
   // Signs a payload on device.
@@ -328,6 +329,7 @@ export const LedgerHardwareProvider = ({
         },
       };
     }
+    return undefined;
   };
 
   // Handle an incoming new status code and persist to state.

@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { capitalizeFirstLetter, planckToUnit } from '@polkadotcloud/utils';
+import { capitalizeFirstLetter, planckToUnit } from '@polkadot-cloud/utils';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';

@@ -1,12 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useOverlay } from 'contexts/Overlay';
 import { useAnimationControls } from 'framer-motion';
-import { Tip } from 'library/Tips/Tip';
 import React, { useEffect, useState } from 'react';
+import { usePrompt } from 'contexts/Prompt';
+import { Tip } from 'library/Tips/Tip';
 import { ItemInnerWrapper, ItemWrapper, ItemsWrapper } from './Wrappers';
 
 export const ItemsInner = ({ items, page }: any) => {
@@ -62,7 +62,7 @@ const Item = ({
   initial,
   page,
 }: any) => {
-  const { openOverlayWith } = useOverlay();
+  const { openPromptWith } = usePrompt();
   const [isStopped, setIsStopped] = useState(true);
 
   useEffect(() => {
@@ -102,7 +102,7 @@ const Item = ({
           <div className="desc active">
             <button
               onClick={() =>
-                openOverlayWith(
+                openPromptWith(
                   <Tip title={title} description={description} page={page} />,
                   'large'
                 )
@@ -114,7 +114,6 @@ const Item = ({
                 <FontAwesomeIcon
                   icon={faExternalLinkAlt}
                   transform="shrink-2"
-                  className="more"
                 />
               </h4>
             </button>

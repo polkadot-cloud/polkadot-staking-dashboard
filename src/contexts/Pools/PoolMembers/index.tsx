@@ -1,12 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { setStateWithRef } from '@polkadotcloud/utils';
+import { setStateWithRef } from '@polkadot-cloud/utils';
+import React, { useRef, useState } from 'react';
 import { useConnect } from 'contexts/Connect';
 import { usePlugins } from 'contexts/Plugins';
 import type { PoolMember, PoolMemberContext } from 'contexts/Pools/types';
-import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount, Sync } from 'types';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useApi } from '../../Api';
 import { defaultPoolMembers } from './defaults';
 
@@ -42,19 +43,19 @@ export const PoolMembersProvider = ({
   };
 
   // Clear existing state for network refresh
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     setPoolMembersNode([]);
     unsubscribeAndResetMeta();
   }, [network]);
 
   // Clear meta state when activeAccount changes
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     unsubscribeAndResetMeta();
   }, [activeAccount]);
 
   // Initial setup for fetching members if Subscan is not enabled. Ensure poolMembers are reset if
   // subscan is disabled.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (!pluginEnabled('subscan')) {
       if (isReady) fetchPoolMembers();
     } else {
@@ -168,8 +169,8 @@ export const PoolMembersProvider = ({
 
     // aggregate member addresses
     const addresses = [];
-    for (const _p of p) {
-      addresses.push(_p.who);
+    for (const { who } of p) {
+      addresses.push(who);
     }
 
     // store batch addresses
@@ -190,12 +191,10 @@ export const PoolMembersProvider = ({
           for (let i = 0; i < _pools.length; i++) {
             pools.push(_pools[i].toHuman());
           }
-          const _batchesUpdated = Object.assign(
-            poolMembersMetaBatchesRef.current
-          );
-          _batchesUpdated[key].poolMembers = pools;
+          const updated = Object.assign(poolMembersMetaBatchesRef.current);
+          updated[key].poolMembers = pools;
           setStateWithRef(
-            { ..._batchesUpdated },
+            { ...updated },
             setPoolMembersMetaBatch,
             poolMembersMetaBatchesRef
           );
@@ -212,12 +211,10 @@ export const PoolMembersProvider = ({
           for (let i = 0; i < _identities.length; i++) {
             identities.push(_identities[i].toHuman());
           }
-          const _batchesUpdated = Object.assign(
-            poolMembersMetaBatchesRef.current
-          );
-          _batchesUpdated[key].identities = identities;
+          const updated = Object.assign(poolMembersMetaBatchesRef.current);
+          updated[key].identities = identities;
           setStateWithRef(
-            { ..._batchesUpdated },
+            { ...updated },
             setPoolMembersMetaBatch,
             poolMembersMetaBatchesRef
           );
@@ -229,15 +226,15 @@ export const PoolMembersProvider = ({
     const subscribeToSuperIdentities = async (addr: string[]) => {
       const unsub = await api.query.identity.superOf.multi<AnyApi>(
         addr,
-        async (_supers) => {
+        async (result) => {
           // determine where supers exist
           const supers: AnyApi = [];
           const supersWithIdentity: AnyApi = [];
 
-          for (let i = 0; i < _supers.length; i++) {
-            const _super = _supers[i].toHuman();
-            supers.push(_super);
-            if (_super !== null) {
+          for (let i = 0; i < result.length; i++) {
+            const item = result[i].toHuman();
+            supers.push(item);
+            if (item !== null) {
               supersWithIdentity.push(i);
             }
           }
@@ -251,20 +248,18 @@ export const PoolMembersProvider = ({
             query,
             (_identities) => {
               for (let j = 0; j < _identities.length; j++) {
-                const _identity = _identities[j].toHuman();
+                const identity = _identities[j].toHuman();
                 // inject identity into super array
-                supers[supersWithIdentity[j]].identity = _identity;
+                supers[supersWithIdentity[j]].identity = identity;
               }
             }
           );
           temp();
 
-          const _batchesUpdated = Object.assign(
-            poolMembersMetaBatchesRef.current
-          );
-          _batchesUpdated[key].supers = supers;
+          const updated = Object.assign(poolMembersMetaBatchesRef.current);
+          updated[key].supers = supers;
           setStateWithRef(
-            { ..._batchesUpdated },
+            { ...updated },
             setPoolMembersMetaBatch,
             poolMembersMetaBatchesRef
           );

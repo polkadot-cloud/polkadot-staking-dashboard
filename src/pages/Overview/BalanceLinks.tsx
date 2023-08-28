@@ -1,28 +1,17 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  faCheck,
-  faCheckDouble,
-  faExternalLinkAlt,
-} from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimaryInvert, Separator } from '@polkadotcloud/core-ui';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { ButtonPrimaryInvert, Separator } from '@polkadot-cloud/react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
-import { useTransferOptions } from 'contexts/TransferOptions';
-import { useUi } from 'contexts/UI';
-import { useTranslation } from 'react-i18next';
 import { MoreWrapper } from './Wrappers';
 
 export const BalanceLinks = () => {
   const { t } = useTranslation('pages');
   const { name } = useApi().network;
-  const { openModalWith } = useModal();
-  const { isNetworkSyncing } = useUi();
-  const { activeAccount, accountHasSigner } = useConnect();
-  const { feeReserve, getTransferOptions } = useTransferOptions();
-  const { edReserved } = getTransferOptions(activeAccount);
+  const { activeAccount } = useConnect();
 
   return (
     <MoreWrapper>
@@ -40,28 +29,21 @@ export const BalanceLinks = () => {
           iconRight={faExternalLinkAlt}
           iconTransform="shrink-2"
           text="Subscan"
+          marginRight
           disabled={!activeAccount}
         />
         <ButtonPrimaryInvert
           lg
-          marginLeft
-          disabled={
-            isNetworkSyncing ||
-            !activeAccount ||
-            !accountHasSigner(activeAccount)
+          onClick={() =>
+            window.open(
+              `https://${name}.polkawatch.app/nomination/${activeAccount}`,
+              '_blank'
+            )
           }
-          iconTransform="grow-1"
-          onClick={() => openModalWith('UpdateReserve', {}, 'small')}
-          iconRight={
-            isNetworkSyncing
-              ? undefined
-              : !feeReserve.isZero() && !edReserved.isZero()
-              ? faCheckDouble
-              : feeReserve.isZero() && edReserved.isZero()
-              ? undefined
-              : faCheck
-          }
-          text={t('overview.updateReserve')}
+          iconRight={faExternalLinkAlt}
+          iconTransform="shrink-2"
+          text="Polkawatch"
+          disabled={!(activeAccount && ['polkadot', 'kusama'].includes(name))}
         />
       </section>
     </MoreWrapper>

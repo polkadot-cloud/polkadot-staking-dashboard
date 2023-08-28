@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
 import type { PayeeConfig } from 'contexts/Setup/types';
@@ -17,12 +17,15 @@ export interface StakingMetrics {
   totalStaked: BigNumber;
 }
 
+export interface ActiveAccountOwnStake {
+  address: string;
+  value: string;
+}
 export interface EraStakers {
-  stakers: any[];
-  nominators: any[] | undefined;
-  totalActiveNominators: number;
+  activeAccountOwnStake: ActiveAccountOwnStake[];
   activeValidators: number;
-  activeAccountOwnStake: any[];
+  stakers: Staker[];
+  totalActiveNominators: number;
 }
 
 export type NominationStatuses = Record<string, string>;
@@ -47,6 +50,8 @@ export interface ExposureValue {
 
 export type Staker = ExposureValue & {
   address: string;
+  lowestReward: string;
+  oversubscribed: boolean;
 };
 
 export interface ActiveAccountStaker {
@@ -59,8 +64,13 @@ export interface ExposureOther {
   value: string;
 }
 
+interface LowestReward {
+  lowest: BigNumber;
+  oversubscribed: boolean;
+}
+
 export interface StakingContextInterface {
-  getNominationsStatus: () => any;
+  fetchEraStakers: (era: string) => Promise<Exposure[]>;
   getNominationsStatusFromTargets: (w: MaybeAccount, t: any[]) => any;
   setTargets: (t: any) => any;
   hasController: () => boolean;
@@ -69,8 +79,23 @@ export interface StakingContextInterface {
   isBonding: () => boolean;
   isNominating: () => boolean;
   inSetup: () => any;
+  getLowestRewardFromStaker: (a: MaybeAccount) => LowestReward;
   staking: StakingMetrics;
   eraStakers: EraStakers;
   targets: any;
   erasStakersSyncing: any;
+}
+
+export interface LocalExposuresData {
+  era: string;
+  exposures: LocalExposure[];
+}
+
+export interface LocalExposure {
+  k: [string, string];
+  v: {
+    o: [string, string];
+    w: string;
+    t: string;
+  };
 }

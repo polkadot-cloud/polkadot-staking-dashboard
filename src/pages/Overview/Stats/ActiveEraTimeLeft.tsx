@@ -1,16 +1,16 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
+import { fromUnixTime } from 'date-fns';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
-import { fromUnixTime } from 'date-fns';
 import { useEraTimeLeft } from 'library/Hooks/useEraTimeLeft';
 import { useTimeLeft } from 'library/Hooks/useTimeLeft';
 import { fromNow } from 'library/Hooks/useTimeLeft/utils';
 import { Timeleft } from 'library/StatBoxList/Timeleft';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export const ActiveEraStat = () => {
   const { t } = useTranslation('pages');

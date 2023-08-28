@@ -1,14 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-live authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonMono, ButtonMonoInvert } from '@polkadotcloud/core-ui';
 import { registerSaEvent } from 'Utils';
 import { useApi } from 'contexts/Api';
+import { ButtonMono, ButtonMonoInvert } from '@polkadot-cloud/react';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
-import { useOverlay } from 'contexts/Overlay';
+import { usePrompt } from 'contexts/Prompt';
 import { Identicon } from 'library/Identicon';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
-import { useTranslation } from 'react-i18next';
 import type { ConfirmProps } from './types';
 
 export const Confirm = ({
@@ -20,7 +20,7 @@ export const Confirm = ({
   const { t } = useTranslation('modals');
   const { network } = useApi();
   const { addToAccounts } = useConnect();
-  const { setStatus } = useOverlay();
+  const { setStatus } = usePrompt();
 
   return (
     <ConfirmWrapper>

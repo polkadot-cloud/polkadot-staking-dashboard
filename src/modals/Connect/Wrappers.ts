@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { TwoThreshold } from 'library/SelectItems/Wrapper';
 import styled from 'styled-components';
+import { TwoThreshold } from 'library/SelectItems/Wrapper';
 
 // Wraps a list of extensions. `SelectItems` typically follows this wrapper, with the items embedded
 // within it.
@@ -69,12 +69,17 @@ export const ExtensionInner = styled.div`
       color: var(--status-success-color);
     }
     .active {
-      color: var(--network-color-primary);
+      color: var(--accent-color-primary);
     }
   }
   .icon {
-    width: 2.6rem;
-    height: 2.6rem;
+    color: var(--text-color-primary);
+    width: 100%;
+
+    svg {
+      max-width: 2.6rem;
+      max-height: 2.6rem;
+    }
   }
   svg {
     .light {

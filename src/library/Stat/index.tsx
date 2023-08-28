@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,12 +7,12 @@ import {
   ButtonHelp,
   ButtonPrimary,
   ButtonSecondary,
-} from '@polkadotcloud/core-ui';
-import { applyWidthAsPadding } from '@polkadotcloud/utils';
+} from '@polkadot-cloud/react';
+import { applyWidthAsPadding } from '@polkadot-cloud/utils';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { useHelp } from 'contexts/Help';
 import { useNotifications } from 'contexts/Notifications';
 import { Identicon } from 'library/Identicon';
-import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { Wrapper } from './Wrapper';
 import type { StatAddress, StatProps } from './types';
 

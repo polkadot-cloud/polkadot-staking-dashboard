@@ -1,13 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { PageRow } from '@polkadotcloud/core-ui';
+import { PageRow } from '@polkadot-cloud/react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useValidators } from 'contexts/Validators';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { StatBoxList } from 'library/StatBoxList';
 import { ValidatorList } from 'library/ValidatorList';
-import { useTranslation } from 'react-i18next';
 import { ActiveValidatorsStat } from './Stats/ActiveValidators';
 import { AverageCommissionStat } from './Stats/AverageCommission';
 import { TotalValidatorsStat } from './Stats/TotalValidators';
@@ -42,7 +42,6 @@ export const AllValidators = () => {
                 <ValidatorList
                   bondFor="nominator"
                   validators={validators}
-                  batchKey="validators_browse"
                   title={t('validators.networkValidators')}
                   selectable={false}
                   defaultFilters={{

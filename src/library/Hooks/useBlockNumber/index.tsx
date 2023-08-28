@@ -1,10 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { rmCommas } from '@polkadotcloud/utils';
+import { rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import { useApi } from 'contexts/Api';
 import { useEffect, useRef, useState } from 'react';
+import { useApi } from 'contexts/Api';
 import type { AnyApi } from 'types';
 
 export const useBlockNumber = () => {
@@ -17,10 +17,9 @@ export const useBlockNumber = () => {
   const unsub = useRef<AnyApi>();
 
   useEffect(() => {
-    if (!isReady) return;
-
-    subscribeBlockNumber();
-
+    if (isReady) {
+      subscribeBlockNumber();
+    }
     return () => {
       if (unsub.current) unsub.current();
     };

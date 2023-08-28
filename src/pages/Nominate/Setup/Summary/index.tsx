@@ -1,10 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clipAddress, unitToPlanck } from '@polkadotcloud/utils';
+import { clipAddress, unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
@@ -16,14 +17,13 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
 import { SubmitTx } from 'library/SubmitTx';
-import { useTranslation } from 'react-i18next';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const {
     api,
-    network: { units, unit, name },
+    network: { units, unit },
   } = useApi();
   const { newBatchCall } = useBatchCall();
   const { getPayeeItems } = usePayeeConfig();
@@ -79,7 +79,7 @@ export const Summary = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={null}
-        title={`${t('nominate.summary')}`}
+        title={t('nominate.summary')}
         bondFor="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
@@ -124,7 +124,7 @@ export const Summary = ({ section }: SetupStepProps) => {
           }}
         >
           <SubmitTx
-            submitText={`${t('nominate.startNominating')}`}
+            submitText={t('nominate.startNominating')}
             valid
             noMargin
             customEvent={`${name.toLowerCase()}_user_started_nominating`}

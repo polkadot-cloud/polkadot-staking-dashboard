@@ -1,13 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import { useTranslation } from 'react-i18next';
 import { GenerateNominations } from '../GenerateNominations';
 import type { NominationsProps } from './types';
 
@@ -32,7 +32,7 @@ export const Nominate = ({ batchKey, bondFor, section }: NominationsProps) => {
       <Header
         thisSection={section}
         complete={progress.nominations.length > 0}
-        title={`${t('nominate')}`}
+        title={t('nominate')}
         helpKey="Nominating"
         bondFor={bondFor}
       />

@@ -1,14 +1,15 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { pageFromUri } from '@polkadotcloud/utils';
+import { pageFromUri } from '@polkadot-cloud/utils';
+import { useLocation } from 'react-router-dom';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { usePlugins } from 'contexts/Plugins';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useUi } from 'contexts/UI';
-import { useValidators } from 'contexts/Validators';
-import { useLocation } from 'react-router-dom';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
+import { usePayouts } from 'contexts/Payouts';
 import { Connect } from './Connect';
 import { Connected } from './Connected';
 import { SideMenuToggle } from './SideMenuToggle';
@@ -19,36 +20,46 @@ export const Headers = () => {
   const { isSyncing } = useUi();
   const { pathname } = useLocation();
   const { pending } = useExtrinsics();
+  const { payoutsSynced } = usePayouts();
   const { pluginEnabled } = usePlugins();
   const { validators } = useValidators();
   const { bondedPools } = useBondedPools();
   const { poolMembersNode } = usePoolMembers();
 
-  // keep syncing if on validators page and still fetching
-  const onValidatorsSyncing = () => {
-    if (pageFromUri(pathname, 'overview') === 'validators') {
-      if (!validators.length) {
-        return true;
-      }
-    }
+  // Keep syncing if on nominate page and still fetching payouts.
+  const onNominateSyncing = () => {
+    if (pageFromUri(pathname, 'overview') === 'nominate')
+      if (payoutsSynced !== 'synced') return true;
+
     return false;
   };
 
-  // keep syncing if on pools page and still fetching bonded pools or pool members. Ignore pool
+  // Keep syncing if on pools page and still fetching bonded pools or pool members. Ignore pool
   // member sync if Subscan is enabled.
   const onPoolsSyncing = () => {
-    if (pageFromUri(pathname, 'overview') === 'pools') {
+    if (pageFromUri(pathname, 'overview') === 'pools')
       if (
         !bondedPools.length ||
         (!poolMembersNode.length && !pluginEnabled('subscan'))
-      ) {
+      )
         return true;
-      }
-    }
+
     return false;
   };
 
-  const syncing = isSyncing || onValidatorsSyncing() || onPoolsSyncing();
+  // Keep syncing if on validators page and still fetching.
+  const onValidatorsSyncing = () => {
+    if (pageFromUri(pathname, 'overview') === 'validators')
+      if (!validators.length) return true;
+
+    return false;
+  };
+
+  const syncing =
+    isSyncing ||
+    onNominateSyncing() ||
+    onValidatorsSyncing() ||
+    onPoolsSyncing();
 
   return (
     <>

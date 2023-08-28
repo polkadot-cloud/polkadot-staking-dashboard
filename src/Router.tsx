@@ -1,27 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { Body, Main, Page, Side } from '@polkadotcloud/core-ui';
-import { extractUrlValue } from '@polkadotcloud/utils';
 import { registerLastVisited, registerSaEvent } from 'Utils';
-import { PagesConfig } from 'config/pages';
-import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
-import { useNotifications } from 'contexts/Notifications';
-import { useOverlay } from 'contexts/Overlay';
-import { useUi } from 'contexts/UI';
-import { AnimatePresence } from 'framer-motion';
-import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
-import { Headers } from 'library/Headers';
-import { Help } from 'library/Help';
-import { Menu } from 'library/Menu';
-import { NetworkBar } from 'library/NetworkBar';
+import { usePrompt } from 'contexts/Prompt';
 import { Disclaimer } from 'library/NetworkBar/Disclaimer';
-import { Notifications } from 'library/Notifications';
-import { Overlay } from 'library/Overlay';
-import { SideMenu } from 'library/SideMenu';
-import { Tooltip } from 'library/Tooltip';
-import { Modal } from 'modals';
+import { Body, Main, Page, Side } from '@polkadot-cloud/react';
+import { extractUrlValue } from '@polkadot-cloud/utils';
+import { AnimatePresence } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Helmet } from 'react-helmet';
@@ -33,6 +18,21 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
+import { Prompt } from 'library/Prompt';
+import { PagesConfig } from 'config/pages';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { useNotifications } from 'contexts/Notifications';
+import { useUi } from 'contexts/UI';
+import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
+import { Headers } from 'library/Headers';
+import { Help } from 'library/Help';
+import { Menu } from 'library/Menu';
+import { NetworkBar } from 'library/NetworkBar';
+import { Notifications } from 'library/Notifications';
+import { SideMenu } from 'library/SideMenu';
+import { Tooltip } from 'library/Tooltip';
+import { Overlays } from 'overlay';
 
 export const RouterInner = () => {
   const { t } = useTranslation();
@@ -42,7 +42,7 @@ export const RouterInner = () => {
   const { accountsInitialised, accounts, activeAccount, connectToAccount } =
     useConnect();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
-  const { openOverlayWith } = useOverlay();
+  const { openPromptWith } = usePrompt();
 
   // register landing source from URL
   useEffect(() => {
@@ -53,25 +53,25 @@ export const RouterInner = () => {
 
     if (!localStorage.getItem('last_visited')) {
       setTimeout(() => {
-        openOverlayWith(<Disclaimer />);
+        openPromptWith(<Disclaimer />);
       }, 5000);
     }
     registerLastVisited(utmSource);
   }, []);
 
-  // scroll to top of the window on every page change or network change.
+  // Scroll to top of the window on every page change or network change.
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname, network]);
 
-  // set references to UI context and make available throughout app.
+  // Set references to UI context and make available throughout app.
   useEffect(() => {
     setContainerRefs({
       mainInterface: mainInterfaceRef,
     });
   }, []);
 
-  // open default account modal if url var present and accounts initialised.
+  // Open default account modal if url var present and accounts initialised.
   useEffect(() => {
     if (accountsInitialised) {
       const aUrl = extractUrlValue('a');
@@ -90,16 +90,17 @@ export const RouterInner = () => {
     }
   }, [accountsInitialised]);
 
-  // references to outer containers
+  // References to outer containers
   const mainInterfaceRef = useRef<HTMLDivElement>(null);
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
       <Body>
-        {/* Modal: closed by default */}
-        <Modal />
         {/* Help: closed by default */}
         <Help />
+
+        {/* Overlays: modal and canvas. Closed by default */}
+        <Overlays />
 
         {/* Menu: closed by default */}
         <Menu />
@@ -107,8 +108,8 @@ export const RouterInner = () => {
         {/* Tooltip: invisible by default */}
         <Tooltip />
 
-        {/* Overlay: closed by default */}
-        <Overlay />
+        {/* Prompt: closed by default */}
+        <Prompt />
 
         {/* Left side menu */}
         <Side open={sideMenuOpen} minimised={sideMenuMinimised}>

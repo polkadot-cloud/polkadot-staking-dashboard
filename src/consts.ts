@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { stringToU8a } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
@@ -8,9 +8,8 @@ import BigNumber from 'bignumber.js';
  * Global Constants
  */
 export const AppVersion = '1.0.8';
-export const BaseURL = '';
 export const DappName = 'Polkadot Staking Dashboard';
-export const PolkadotUrl = 'https://polkadot.network/staking/';
+export const PolkadotUrl = 'https://polkadot.network/features/staking/';
 export const DefaultNetwork = 'polkadot';
 
 /*

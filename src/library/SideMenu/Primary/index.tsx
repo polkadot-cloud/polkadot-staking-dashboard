@@ -1,13 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { registerSaEvent } from 'Utils';
 import { useApi } from 'contexts/Api';
+import { Link } from 'react-router-dom';
 import { useUi } from 'contexts/UI';
 import { useDotLottieButton } from 'library/Hooks/useDotLottieButton';
-import { Link } from 'react-router-dom';
 import type { PrimaryProps } from '../types';
 import { Wrapper } from './Wrappers';
 
@@ -30,7 +30,9 @@ export const Primary = ({
     case 'text':
       Action = (
         <div className="action text">
-          <span className={`${actionStatus}`}>{action?.text ?? ''}</span>
+          <span className={actionStatus || undefined}>
+            {action?.text ?? ''}
+          </span>
         </div>
       );
       break;

@@ -1,17 +1,17 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import {
   ModalFooter,
   ModalPadding,
   ModalWarnings,
-} from '@polkadotcloud/core-ui';
+} from '@polkadot-cloud/react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useValidators } from 'contexts/Validators';
 import type { Validator } from 'contexts/Validators/types';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
@@ -19,23 +19,29 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { SubmitTx } from 'library/SubmitTx';
 import { ValidatorList } from 'library/ValidatorList';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavorites = () => {
   const { t } = useTranslation('modals');
   const { consts, api } = useApi();
   const { activeAccount } = useConnect();
+  const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
-  const { config, setStatus: setModalStatus, setResize } = useModal();
-  const { favoritesList } = useValidators();
-  const { selectedActivePool, isNominator, isOwner } = useActivePools();
-  const controller = getBondedAccount(activeAccount);
+  const { favoritesList } = useFavoriteValidators();
   const { getSignerWarnings } = useSignerWarnings();
+  const {
+    config: { options },
+    setModalStatus,
+    setModalResize,
+  } = useOverlay().modal;
+  const { selectedActivePool, isNominator, isOwner } = useActivePools();
 
+  const controller = getBondedAccount(activeAccount);
   const { maxNominations } = consts;
-  const { bondFor, nominations } = config;
+  const { bondFor, nominations } = options;
   const signingAccount = bondFor === 'pool' ? activeAccount : controller;
 
   // store filtered favorites
@@ -47,13 +53,14 @@ export const NominateFromFavorites = () => {
   // store filtered favorites
   useEffect(() => {
     if (favoritesList) {
-      const _availableFavorites = favoritesList.filter(
-        (favorite) =>
-          !nominations.find(
-            (nomination: string) => nomination === favorite.address
-          ) && !favorite.prefs.blocked
+      setAvailableFavorites(
+        favoritesList.filter(
+          (favorite) =>
+            !nominations.find(
+              (nomination: string) => nomination === favorite.address
+            ) && !favorite.prefs.blocked
+        )
       );
-      setAvailableFavorites(_availableFavorites);
     }
   }, []);
 
@@ -65,9 +72,7 @@ export const NominateFromFavorites = () => {
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
 
-  useEffect(() => {
-    setResize();
-  }, [selectedFavorites]);
+  useEffect(() => setModalResize(), [notEnoughFunds, selectedFavorites]);
 
   // ensure selected list is within limits
   useEffect(() => {
@@ -119,7 +124,7 @@ export const NominateFromFavorites = () => {
     from: signingAccount,
     shouldSubmit: valid,
     callbackSubmit: () => {
-      setModalStatus(2);
+      setModalStatus('closing');
     },
     callbackInBlock: () => {},
   });

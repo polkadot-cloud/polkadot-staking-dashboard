@@ -1,23 +1,20 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  ModalNotes,
-  ModalPadding,
-  ModalWarnings,
-} from '@polkadotcloud/core-ui';
-import { isNotZero, planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
+import { ModalNotes, ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
+import { isNotZero, planckToUnit, unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import { getUnixTime } from 'date-fns';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxMeta } from 'contexts/TxMeta';
-import { getUnixTime } from 'date-fns';
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
@@ -27,25 +24,29 @@ import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const Unbond = () => {
   const { t } = useTranslation('modals');
-  const { api, network, consts } = useApi();
-  const { units } = network;
-  const { setStatus: setModalStatus, setResize, config } = useModal();
-  const { activeAccount } = useConnect();
-  const { staking } = useStaking();
-  const { getBondedAccount } = useBonded();
-  const { bondFor } = config;
-  const { stats } = usePoolsConfig();
-  const { isDepositor, selectedActivePool } = useActivePools();
   const { txFees } = useTxMeta();
-  const { getTransferOptions } = useTransferOptions();
+  const { staking } = useStaking();
+  const { stats } = usePoolsConfig();
+  const { activeAccount } = useConnect();
+  const { notEnoughFunds } = useTxMeta();
+  const { getBondedAccount } = useBonded();
+  const { api, network, consts } = useApi();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
+  const { getTransferOptions } = useTransferOptions();
+  const { isDepositor, selectedActivePool } = useActivePools();
+  const {
+    setModalStatus,
+    setModalResize,
+    config: { options },
+  } = useOverlay().modal;
 
+  const { units } = network;
+  const { bondFor } = options;
   const controller = getBondedAccount(activeAccount);
   const { minNominatorBond: minNominatorBondBn } = staking;
   const { minJoinBond: minJoinBondBn, minCreateBond: minCreateBondBn } = stats;
@@ -83,6 +84,9 @@ export const Unbond = () => {
 
   // bond valid
   const [bondValid, setBondValid] = useState<boolean>(false);
+
+  // feedback errors to trigger modal resize
+  const [feedbackErrors, setFeedbackErrors] = useState<string[]>([]);
 
   // get the max amount available to unbond
   const unbondToMin = isPooling
@@ -122,7 +126,7 @@ export const Unbond = () => {
     from: signingAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
-      setModalStatus(2);
+      setModalStatus('closing');
     },
     callbackInBlock: () => {},
   });
@@ -169,15 +173,16 @@ export const Unbond = () => {
   }
 
   // modal resize on form update
-  useEffect(() => {
-    setResize();
-  }, [bond, warnings.length]);
+  useEffect(
+    () => setModalResize(),
+    [bond, notEnoughFunds, feedbackErrors.length, warnings.length]
+  );
 
   return (
     <>
       <Close />
       <ModalPadding>
-        <h2 className="title unbounded">{`${t('removeBond')}`}</h2>
+        <h2 className="title unbounded">{t('removeBond')}</h2>
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
             {warnings.map((text, i) => (
@@ -187,7 +192,10 @@ export const Unbond = () => {
         ) : null}
         <UnbondFeedback
           bondFor={bondFor}
-          listenIsValid={setBondValid}
+          listenIsValid={(valid, errors) => {
+            setBondValid(valid);
+            setFeedbackErrors(errors);
+          }}
           setters={[
             {
               set: setBond,

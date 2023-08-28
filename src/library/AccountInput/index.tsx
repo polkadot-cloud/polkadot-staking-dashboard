@@ -1,15 +1,15 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonSecondary } from '@polkadotcloud/core-ui';
-import { isValidAddress } from '@polkadotcloud/utils';
-import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
-import { Identicon } from 'library/Identicon';
+import { ButtonSecondary } from '@polkadot-cloud/react';
+import { isValidAddress } from '@polkadot-cloud/utils';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useConnect } from 'contexts/Connect';
+import { Identicon } from 'library/Identicon';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { AccountInputWrapper } from './Wrapper';
 import type { AccountInputProps } from './types';
 
@@ -28,7 +28,7 @@ export const AccountInput = ({
   const { t } = useTranslation('library');
 
   const { formatAccountSs58, accounts } = useConnect();
-  const { setResize } = useModal();
+  const { setModalResize } = useOverlay().modal;
 
   // store current input value
   const [value, setValue] = useState(initialValue || '');
@@ -138,7 +138,7 @@ export const AccountInput = ({
     setReformatted(false);
     setValue('');
     setValid(null);
-    setResize();
+    setModalResize();
     setSuccessLocked(false);
     if (resetCallback) {
       resetCallback();
@@ -174,7 +174,7 @@ export const AccountInput = ({
           </div>
           <div>
             <input
-              placeholder={`${t('address')}`}
+              placeholder={t('address')}
               type="text"
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 handleChange(e)

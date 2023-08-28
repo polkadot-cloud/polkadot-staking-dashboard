@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import type { VoidFn } from '@polkadot/api/types';
 import {
@@ -7,34 +7,38 @@ import {
   isNotZero,
   localStorageOrDefault,
   setStateWithRef,
-} from '@polkadotcloud/utils';
+} from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import React, { useRef, useState } from 'react';
 import { useBalances } from 'contexts/Balances';
 import type { ExternalAccount } from 'contexts/Connect/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type {
   EraStakers,
   Exposure,
-  NominationStatuses,
   StakingContextInterface,
   StakingMetrics,
   StakingTargets,
 } from 'contexts/Staking/types';
-import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, AnyJson, MaybeAccount } from 'types';
 import Worker from 'workers/stakers?worker';
 import type { ResponseInitialiseExposures } from 'workers/types';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useApi } from '../Api';
 import { useBonded } from '../Bonded';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import {
   defaultEraStakers,
-  defaultNominationStatus,
   defaultStakingContext,
   defaultStakingMetrics,
   defaultTargets,
 } from './defaults';
+import {
+  setLocalEraExposures,
+  getLocalEraExposures,
+  formatRawExposures,
+} from './Utils';
 
 const worker = new Worker();
 
@@ -43,16 +47,17 @@ export const StakingProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { isReady, api, apiStatus, network } = useApi();
   const {
     activeAccount,
     accounts: connectAccounts,
     getActiveAccount,
   } = useConnect();
-  const { activeEra } = useNetworkMetrics();
   const { getStashLedger } = useBalances();
+  const { activeEra } = useNetworkMetrics();
+  const { isReady, api, apiStatus, network, consts } = useApi();
   const { bondedAccounts, getBondedAccount, getAccountNominations } =
     useBonded();
+  const { maxNominatorRewardedPerValidator } = consts;
 
   // Store staking metrics in state.
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
@@ -79,24 +84,6 @@ export const StakingProvider = ({
     ) as StakingTargets
   );
 
-  useEffect(() => {
-    if (apiStatus === 'connecting') {
-      setStateWithRef(defaultEraStakers, setEraStakers, eraStakersRef);
-      setStakingMetrics(stakingMetrics);
-    }
-  }, [apiStatus]);
-
-  // handle staking metrics subscription
-  useEffect(() => {
-    if (isReady) {
-      unsubscribeMetrics();
-      subscribeToStakingkMetrics();
-    }
-    return () => {
-      unsubscribeMetrics();
-    };
-  }, [isReady, activeEra, activeAccount]);
-
   // Handle metrics unsubscribe.
   const unsubscribeMetrics = () => {
     if (unsub.current !== null) {
@@ -105,33 +92,19 @@ export const StakingProvider = ({
     }
   };
 
-  // handle syncing with eraStakers
-  useEffect(() => {
-    if (isReady) {
-      fetchEraStakers();
-    }
-  }, [isReady, activeEra.index, activeAccount]);
-
-  useEffect(() => {
-    if (activeAccount) {
-      // set account's targets
-      setTargetsState(
-        localStorageOrDefault(
-          `${activeAccount}_targets`,
-          defaultTargets,
-          true
-        ) as StakingTargets
-      );
-    }
-  }, [isReady, bondedAccounts, activeAccount, eraStakersRef.current?.stakers]);
-
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
       const { data }: { data: ResponseInitialiseExposures } = message;
-      const { task } = data;
-      if (task !== 'initialise_exposures') {
+      const { task, networkName, era } = data;
+
+      // ensure task matches, & era is still the same.
+      if (
+        task !== 'processExposures' ||
+        networkName !== network.name ||
+        era !== activeEra.index.toString()
+      )
         return;
-      }
+
       const {
         stakers,
         totalActiveNominators,
@@ -160,7 +133,7 @@ export const StakingProvider = ({
     }
   };
 
-  // subscribe to account ledger
+  // Multi subscription to staking metrics.
   const subscribeToStakingkMetrics = async () => {
     if (api !== null && isReady && isNotZero(activeEra.index)) {
       const previousEra = activeEra.index.minus(1);
@@ -177,7 +150,7 @@ export const StakingProvider = ({
           [api.query.staking.payee, activeAccount],
           [api.query.staking.erasTotalStake, activeEra.index.toString()],
         ],
-        (q: AnyApi) => {
+        (q) => {
           setStakingMetrics({
             totalNominators: new BigNumber(q[0].toString()),
             totalValidators: new BigNumber(q[1].toString()),
@@ -196,7 +169,7 @@ export const StakingProvider = ({
     }
   };
 
-  // process raw payee object from API. payee with `Account` type is returned as an key value pair,
+  // Process raw payee object from API. payee with `Account` type is returned as an key value pair,
   // with all others strings. This function handles both cases and formats into a unified structure.
   const processPayee = (rawPayee: AnyApi) => {
     const payeeHuman = rawPayee.toHuman();
@@ -220,74 +193,61 @@ export const StakingProvider = ({
     return payeeFinal;
   };
 
-  /*
-   * Fetches the active nominator set.
-   * The top 256 nominators get rewarded. Nominators may have their bond  spread
-   * among multiple nominees.
-   * the minimum nominator bond is calculated by summing a particular bond of a nominator.
-   */
-  const fetchEraStakers = async () => {
-    if (!isReady || activeEra.index.isZero() || !api) {
-      return;
-    }
-    const exposuresRaw = await api.query.staking.erasStakers.entries(
+  // Fetches erasStakers exposures for an era, and saves to `localStorage`.
+  const fetchEraStakers = async (era: string) => {
+    if (!isReady || activeEra.index.isZero() || !api) return [];
+
+    let exposures: Exposure[] = [];
+    const localExposures = getLocalEraExposures(
+      network.name,
+      era,
       activeEra.index.toString()
     );
+
+    if (localExposures) {
+      exposures = localExposures;
+    } else {
+      exposures = formatRawExposures(
+        await api.query.staking.erasStakers.entries(era)
+      );
+    }
+
+    // For resource limitation concerns, only store the current era in local storage.
+    if (era === activeEra.index.toString())
+      setLocalEraExposures(network.name, era, exposures);
+
+    return exposures;
+  };
+
+  // Fetches the active nominator set and metadata around it.
+  const fetchActiveEraStakers = async () => {
+    if (!isReady || activeEra.index.isZero() || !api) return;
 
     // flag eraStakers is recyncing
     setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
 
-    // humanise exposures to send to worker
-    const exposures: Exposure[] = exposuresRaw.map(([keys, val]: AnyApi) => ({
-      keys: keys.toHuman(),
-      val: val.toHuman(),
-    }));
+    const exposures = await fetchEraStakers(activeEra.index.toString());
 
     // worker to calculate stats
     worker.postMessage({
-      task: 'initialise_exposures',
+      era: activeEra.index.toString(),
+      networkName: network.name,
+      task: 'processExposures',
       activeAccount,
       units: network.units,
       exposures,
+      maxNominatorRewardedPerValidator:
+        maxNominatorRewardedPerValidator.toNumber(),
     });
   };
 
-  /*
-   * Get the status of nominations.
-   * Possible statuses: waiting, inactive, active.
-   */
-  const getNominationsStatus = () => {
-    if (inSetup() || !activeAccount) {
-      return defaultNominationStatus;
-    }
-    const statuses: NominationStatuses = {};
-    for (const nomination of getAccountNominations(activeAccount)) {
-      const s = eraStakersRef.current.stakers.find(
-        ({ address }) => address === nomination
-      );
-
-      if (s === undefined) {
-        statuses[nomination] = 'waiting';
-        continue;
-      }
-      if (!(s.others ?? []).find(({ who }: any) => who === activeAccount)) {
-        statuses[nomination] = 'inactive';
-        continue;
-      }
-      statuses[nomination] = 'active';
-    }
-    return statuses;
-  };
-
-  /* Sets an account's stored target validators */
+  // Sets an account's stored target validators.
   const setTargets = (value: StakingTargets) => {
     localStorage.setItem(`${activeAccount}_targets`, JSON.stringify(value));
     setTargetsState(value);
   };
 
-  /*
-   * Gets the nomination statuses of passed in nominations.
-   */
+  // Gets the nomination statuses of passed in nominations.
   const getNominationsStatusFromTargets = (
     who: MaybeAccount,
     fromTargets: AnyJson[]
@@ -300,7 +260,7 @@ export const StakingProvider = ({
 
     for (const target of fromTargets) {
       const staker = eraStakersRef.current.stakers.find(
-        ({ address }: any) => address === target
+        ({ address }) => address === target
       );
 
       if (staker === undefined) {
@@ -317,10 +277,7 @@ export const StakingProvider = ({
     return statuses;
   };
 
-  /*
-   * Helper function to determine whether the controller account
-   * is the same as the stash account.
-   */
+  // Helper function to determine whether the controller account is the same as the stash account.
   const addressDifferentToStash = (address: MaybeAccount) => {
     // check if controller is imported.
     if (!connectAccounts.find((acc) => acc.address === address)) {
@@ -329,10 +286,7 @@ export const StakingProvider = ({
     return address !== activeAccount && activeAccount !== null;
   };
 
-  /*
-   * Helper function to determine whether the controller account
-   * has been imported.
-   */
+  // Helper function to determine whether the controller account has been imported.
   const getControllerNotImported = (address: MaybeAccount) => {
     if (address === null || !activeAccount) {
       return false;
@@ -356,44 +310,79 @@ export const StakingProvider = ({
     return !Object.prototype.hasOwnProperty.call(exists, 'signer');
   };
 
-  /*
-   * Helper function to determine whether the active account
-   * has set a controller account.
-   */
+  // Helper function to determine whether the active account.
   const hasController = () => getBondedAccount(activeAccount) !== null;
 
-  /*
-   * Helper function to determine whether the active account
-   * is bonding, or is yet to start.
-   */
+  // Helper function to determine whether the active account is bonding, or is yet to start.
   const isBonding = () =>
     hasController() && greaterThanZero(getStashLedger(activeAccount).active);
 
-  /*
-   * Helper function to determine whether the active account
-   * has funds unlocking.
-   */
+  // Helper function to determine whether the active account.
   const isUnlocking = () =>
     hasController() && getStashLedger(activeAccount).unlocking.length;
 
-  /*
-   * Helper function to determine whether the active account
-   * is nominating, or is yet to start.
-   */
+  // Helper function to determine whether the active account is nominating, or is yet to start.
   const isNominating = () => getAccountNominations(activeAccount).length > 0;
 
-  /*
-   * Helper function to determine whether the active account
-   * is nominating, or is yet to start.
-   */
+  // Helper function to determine whether the active account is nominating, or is yet to start.
   const inSetup = () =>
     !activeAccount ||
     (!hasController() && !isBonding() && !isNominating() && !isUnlocking());
 
+  // Helper function to get the lowest reward from an active validator.
+  const getLowestRewardFromStaker = (address: MaybeAccount) => {
+    const staker = eraStakersRef.current.stakers.find(
+      (s) => s.address === address
+    );
+    const lowest = new BigNumber(staker?.lowestReward || 0);
+    const oversubscribed = staker?.oversubscribed || false;
+
+    return {
+      lowest,
+      oversubscribed,
+    };
+  };
+
+  useEffectIgnoreInitial(() => {
+    if (apiStatus === 'connecting') {
+      setStateWithRef(defaultEraStakers, setEraStakers, eraStakersRef);
+      setStakingMetrics(stakingMetrics);
+    }
+  }, [apiStatus]);
+
+  // Handle staking metrics subscription
+  useEffectIgnoreInitial(() => {
+    if (isReady) {
+      unsubscribeMetrics();
+      subscribeToStakingkMetrics();
+    }
+    return () => {
+      unsubscribeMetrics();
+    };
+  }, [isReady, activeEra, activeAccount]);
+
+  // handle syncing with eraStakers
+  useEffectIgnoreInitial(() => {
+    if (isReady) fetchActiveEraStakers();
+  }, [isReady, activeEra.index, activeAccount]);
+
+  useEffectIgnoreInitial(() => {
+    if (activeAccount) {
+      // set account's targets
+      setTargetsState(
+        localStorageOrDefault(
+          `${activeAccount}_targets`,
+          defaultTargets,
+          true
+        ) as StakingTargets
+      );
+    }
+  }, [isReady, bondedAccounts, activeAccount, eraStakersRef.current?.stakers]);
+
   return (
     <StakingContext.Provider
       value={{
-        getNominationsStatus,
+        fetchEraStakers,
         getNominationsStatusFromTargets,
         setTargets,
         hasController,
@@ -402,6 +391,7 @@ export const StakingProvider = ({
         isBonding,
         isNominating,
         inSetup,
+        getLowestRewardFromStaker,
         staking: stakingMetrics,
         eraStakers: eraStakersRef.current,
         erasStakersSyncing: erasStakersSyncingRef.current,

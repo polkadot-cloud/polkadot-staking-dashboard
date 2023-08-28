@@ -1,16 +1,17 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { unitToPlanck } from '@polkadotcloud/utils';
+import { unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import React, { useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import React, { useEffect, useState } from 'react';
 import type { MaybeAccount } from 'types';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import * as defaults from './defaults';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';
 
@@ -47,7 +48,7 @@ export const TransferOptionsProvider = ({
   );
 
   // Update an account's reserve amount on account or network change.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     setFeeReserve(getFeeReserveLocalStorage(activeAccount));
   }, [activeAccount, name]);
 
@@ -86,8 +87,8 @@ export const TransferOptionsProvider = ({
         { amount: new BigNumber(0) }
       )?.amount || new BigNumber(0);
 
-    const points = membership?.points;
-    const activePool = points ? new BigNumber(points) : new BigNumber(0);
+    const poolBalance = membership?.balance;
+    const activePool = poolBalance || new BigNumber(0);
 
     // total amount actively unlocking
     let totalUnlocking = new BigNumber(0);

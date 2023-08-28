@@ -1,18 +1,19 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faBars, faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useMenu } from 'contexts/Menu';
-import { useModal } from 'contexts/Modal';
 import { useNotifications } from 'contexts/Notifications';
 import type { NotificationText } from 'contexts/Notifications/types';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useUi } from 'contexts/UI';
-import { useValidators } from 'contexts/Validators';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { usePoolCommission } from 'library/Hooks/usePoolCommission';
 import { FavoritePool } from 'library/ListItem/Labels/FavoritePool';
 import { PoolBonded } from 'library/ListItem/Labels/PoolBonded';
@@ -25,8 +26,7 @@ import {
   Wrapper,
 } from 'library/ListItem/Wrappers';
 import { usePoolsTabs } from 'pages/Pools/Home/context';
-import { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { JoinPool } from '../ListItem/Labels/JoinPool';
 import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
@@ -35,7 +35,7 @@ import type { PoolProps } from './types';
 export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   const { t } = useTranslation('library');
   const { memberCounter, addresses, id, state } = pool;
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { meta } = useBondedPools();
   const { membership } = usePoolMemberships();
@@ -80,14 +80,13 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
     wrap: null,
     title: `${t('viewPoolNominations')}`,
     cb: () => {
-      openModalWith(
-        'PoolNominations',
-        {
+      openModal({
+        key: 'PoolNominations',
+        options: {
           nominator: addresses.stash,
           targets: targetValidators,
         },
-        'large'
-      );
+      });
     },
   });
 
@@ -113,7 +112,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   };
 
   return (
-    <Wrapper format="nomination">
+    <Wrapper $format="nomination">
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">
@@ -124,7 +123,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
           />
           <div>
             <Labels>
-              {currentCommission && (
+              {currentCommission > 0 && (
                 <PoolCommission commission={`${currentCommission}%`} />
               )}
               <PoolId id={id} />

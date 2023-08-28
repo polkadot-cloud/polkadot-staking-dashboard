@@ -1,20 +1,20 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faGear, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Stat } from 'library/Stat';
-import { useTranslation } from 'react-i18next';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const PayoutDestinationStatus = () => {
   const { t } = useTranslation('pages');
   const { isSyncing } = useUi();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { staking, inSetup } = useStaking();
   const { isFastUnstaking } = useUnstaking();
   const { getPayeeItems } = usePayeeConfig();
@@ -60,7 +60,7 @@ export const PayoutDestinationStatus = () => {
                   isSyncing ||
                   isReadOnlyAccount(activeAccount) ||
                   isFastUnstaking,
-                onClick: () => openModalWith('UpdatePayee', {}, 'small'),
+                onClick: () => openModal({ key: 'UpdatePayee', size: 'sm' }),
               },
             ]
           : []

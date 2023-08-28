@@ -1,16 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import type { HelpContextInterface } from './types';
 
 export const defaultHelpContext: HelpContextInterface = {
-  // eslint-disable-next-line
-  openHelp: (k) => {},
+  openHelp: (key) => {},
   closeHelp: () => {},
-  // eslint-disable-next-line
-  setStatus: (s) => {},
-  // eslint-disable-next-line
-  setDefinition: (d) => {},
-  status: 0,
+  setStatus: (status) => {},
+  setDefinition: (definition) => {},
+  status: 'closed',
   definition: null,
 };

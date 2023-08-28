@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import type { VoidFn } from '@polkadot/api/types';
 import Keyring from '@polkadot/keyring';
@@ -7,7 +7,8 @@ import {
   clipAddress,
   localStorageOrDefault,
   setStateWithRef,
-} from '@polkadotcloud/utils';
+} from '@polkadot-cloud/utils';
+import React, { useEffect, useRef, useState } from 'react';
 import { registerSaEvent } from 'Utils';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -26,8 +27,8 @@ import {
   getLocalLedgerAccounts,
   getLocalVaultAccounts,
 } from 'contexts/Hardware/Utils';
-import React, { useEffect, useRef, useState } from 'react';
-import type { AnyApi, MaybeAccount } from 'types';
+import type { AnyApi, MaybeAccount, NetworkName } from 'types';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useImportExtension } from './Hooks/useImportExtension';
 import {
   extensionIsLocal,
@@ -110,7 +111,7 @@ export const ConnectProvider = ({
     // account import process.
     if (!checkingInjectedWeb3) {
       // unsubscribe from all accounts and reset state
-      unsubscribeAll();
+      unsubscribe();
       setStateWithRef(null, setActiveAccountState, activeAccountRef);
       setStateWithRef([], setAccounts, accountsRef);
       setStateWithRef([], setExtensionsInitialised, extensionsInitialisedRef);
@@ -133,52 +134,48 @@ export const ConnectProvider = ({
         }
       }
     }
-    return () => {
-      unsubscribeAll();
-    };
+    return () => unsubscribe();
   }, [extensions?.length, network, checkingInjectedWeb3]);
 
-  // once initialised extensions equal total extensions present in
-  // `injectedWeb3`, mark extensions as fetched
-  useEffect(() => {
-    if (!checkingInjectedWeb3) {
-      if (extensionsInitialisedRef.current.length === extensions?.length || 0) {
-        setExtensionsFetched(true);
-      }
+  // Once initialised extensions equal total extensions present in `injectedWeb3`, mark extensions
+  // as fetched.
+  useEffectIgnoreInitial(() => {
+    if (
+      (!checkingInjectedWeb3 &&
+        extensionsInitialisedRef.current.length === extensions?.length) ||
+      0
+    ) {
+      setExtensionsFetched(true);
     }
   }, [checkingInjectedWeb3, extensionsInitialisedRef.current]);
 
-  // once extensions are fully initialised, fetch any external accounts present
-  // in localStorage.
-  useEffect(() => {
+  // Once extensions are fully initialised, fetch accounts from other sources.
+  useEffectIgnoreInitial(() => {
     if (extensionsFetched) {
-      importVaultAccounts();
-      importLedgerAccounts();
-      importExternalAccounts();
-      // Finally, signal that initial accounts have finished being fetched.
+      // Fetch accounts from supported hardware wallets.
+      importLocalAccounts(getLocalVaultAccounts);
+      importLocalAccounts(getLocalLedgerAccounts);
       hardwareInitialisedRef.current = true;
+      // Finally, fetch any read-only accounts that have been added by `system` or `user`.
+      importLocalAccounts(getLocalExternalAccounts);
     }
   }, [extensionsFetched]);
 
-  // account fetching complete, mark accounts as initialised.
-  useEffect(() => {
+  // Account fetching complete, mark accounts as initialised. Does not include read only accounts.
+  useEffectIgnoreInitial(() => {
     if (extensionsFetched && hardwareInitialisedRef.current === true) {
       accountsInitialisedRef.current = true;
     }
   }, [extensionsFetched, hardwareInitialisedRef.current]);
 
-  /*
-   * Unsubscrbe all account subscriptions
-   */
-  const unsubscribeAll = () => {
+  // Unsubscrbe all account subscriptions.
+  const unsubscribe = () => {
     Object.values(unsubs.current).forEach((unsub) => {
       unsub();
     });
   };
 
-  /*
-   * Unsubscrbe from some account subscriptions and update the resulting state.
-   */
+  // Unsubscrbe from some account subscriptions and update the resulting state.
   const forgetAccounts = (forget: ImportedAccount[]) => {
     if (!forget.length) return;
 
@@ -190,29 +187,27 @@ export const ConnectProvider = ({
       }
     }
 
-    // if active account is being forgotten, disconnect
-    const activeAccountUnsub = forget.find(
-      (a: ImportedAccount) => a.address === activeAccountRef.current
-    );
-
-    if (activeAccountUnsub !== undefined) {
+    // If the currently active account is being forgotten, disconnect.
+    if (
+      forget.find((a) => a.address === activeAccountRef.current) !== undefined
+    ) {
       localStorage.removeItem(`${network.name}_active_account`);
       setStateWithRef(null, setActiveAccount, activeAccountRef);
     }
 
-    // get any external accounts and remove from localStorage
-    const externalToForget = forget.filter(
-      (i: AnyApi) => 'network' in i
-    ) as ExternalAccount[];
-
+    // Get any external accounts and remove from localStorage.
+    const externalToForget = forget.filter((i) => 'network' in i);
     if (externalToForget.length) {
-      removeLocalExternalAccounts(network, externalToForget);
+      removeLocalExternalAccounts(
+        network,
+        externalToForget as ExternalAccount[]
+      );
     }
 
-    // update accounts.
+    // Remove forgotten accounts from state.
     setStateWithRef(
       [...accountsRef.current].filter(
-        (a) => forget.find((e) => e.address === a.address) === undefined
+        (a) => forget.find(({ address }) => address === a.address) === undefined
       ),
       setAccounts,
       accountsRef
@@ -235,13 +230,15 @@ export const ConnectProvider = ({
     );
   };
 
-  /* importLedgerAccounts
-   * Checks previously added Ledger accounts from localStorage and adds them to
+  /* Checks `localStorage` for previously added accounts from the provided source, and adds them to
    * `accounts` state. if local active account is present, it will also be assigned as active.
    * Accounts are ignored if they are already imported through an extension. */
-  const importLedgerAccounts = () => {
-    // import any local external accounts
-    let localAccounts = getLocalLedgerAccounts(network.name);
+  const importLocalAccounts = (
+    getter: (n: NetworkName) => ImportedAccount[]
+  ) => {
+    // Get accounts from provided `getter` function. The resulting array of accounts must contain an
+    // `address` field.
+    let localAccounts = getter(network.name);
 
     if (localAccounts.length) {
       const activeAccountInSet =
@@ -249,82 +246,18 @@ export const ConnectProvider = ({
           ({ address }) => address === getActiveAccountLocal(network)
         ) ?? null;
 
-      // remove already-imported accounts
+      // remove already-imported accounts.
       localAccounts = localAccounts.filter(
         (l) =>
           accountsRef.current.find(({ address }) => address === l.address) ===
           undefined
       );
 
-      // set active account for network
+      // set active account for network.
       if (activeAccountInSet) {
         connectToAccount(activeAccountInSet);
       }
-      // add Ledger accounts to imported
-      addToAccounts(localAccounts);
-    }
-  };
-
-  /* importVaultAccounts
-   * Checks previously added Polkadot Vault accounts from localStorage and adds them to
-   * `accounts` state. if local active account is present, it will also be assigned as active.
-   * Accounts are ignored if they are already imported through an extension. */
-  const importVaultAccounts = () => {
-    // import any local external accounts
-    let localAccounts = getLocalVaultAccounts(network.name);
-
-    if (localAccounts.length) {
-      const activeAccountInSet =
-        localAccounts.find(
-          ({ address }) => address === getActiveAccountLocal(network)
-        ) ?? null;
-
-      // remove already-imported accounts
-      localAccounts = localAccounts.filter(
-        (l) =>
-          accountsRef.current.find(({ address }) => address === l.address) ===
-          undefined
-      );
-
-      // set active account for network
-      if (activeAccountInSet) {
-        connectToAccount(activeAccountInSet);
-      }
-      // add Ledger accounts to imported
-      addToAccounts(localAccounts);
-    }
-  };
-
-  /* importExternalAccounts
-   * checks previously imported read-only accounts from
-   * localStorage and adds them to `accounts` state.
-   * if local active account is present, it will also be
-   * assigned as active.
-   * Should be called AFTER extension accounts are imported, as
-   * to not replace an extension account by an external account.
-   */
-  const importExternalAccounts = () => {
-    // import any local external accounts
-    let localAccounts = getLocalExternalAccounts(network, true);
-
-    if (localAccounts.length) {
-      const activeAccountInSet =
-        localAccounts.find(
-          ({ address }) => address === getActiveAccountLocal(network)
-        ) ?? null;
-
-      // remove already-imported accounts
-      localAccounts = localAccounts.filter(
-        (l) =>
-          accountsRef.current.find(({ address }) => address === l.address) ===
-          undefined
-      );
-
-      // set active account for network
-      if (activeAccountInSet) {
-        connectToAccount(activeAccountInSet);
-      }
-      // add external accounts to imported
+      // add accounts to imported.
       addToAccounts(localAccounts);
     }
   };
@@ -504,7 +437,7 @@ export const ConnectProvider = ({
     updateInitialisedExtensions(id);
   };
 
-  const setActiveAccount = (address: string | null) => {
+  const setActiveAccount = (address: MaybeAccount) => {
     if (address === null) {
       localStorage.removeItem(`${network.name}_active_account`);
     } else {
@@ -543,7 +476,7 @@ export const ConnectProvider = ({
     };
 
     // get all external accounts from localStorage.
-    const localExternalAccounts = getLocalExternalAccounts(network, false);
+    const localExternalAccounts = getLocalExternalAccounts();
     const existsLocal = localExternalAccounts.find(
       (l) => l.address === address && l.network === network.name
     );

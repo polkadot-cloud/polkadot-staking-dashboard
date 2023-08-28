@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 export interface StatusLabelProps {
   hideIcon?: boolean;
@@ -11,5 +11,5 @@ export interface StatusLabelProps {
 }
 
 export interface WrapperProps {
-  topOffset?: string;
+  $topOffset?: string;
 }

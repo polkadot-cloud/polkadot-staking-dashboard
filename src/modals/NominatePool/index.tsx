@@ -1,31 +1,29 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  ActionItem,
-  ModalPadding,
-  ModalWarnings,
-} from '@polkadotcloud/core-ui';
+import { ActionItem, ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const NominatePool = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
-  const { setStatus: setModalStatus } = useModal();
+  const { setModalStatus, setModalResize } = useOverlay().modal;
   const { activeAccount } = useConnect();
   const { selectedActivePool, isOwner, isNominator, targets } =
     useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
+  const { notEnoughFunds } = useTxMeta();
 
   const { nominations } = targets;
 
@@ -37,9 +35,6 @@ export const NominatePool = () => {
   // ensure selected roles are valid
   const isValid =
     (poolId !== null && isNominator() && nominations.length > 0) ?? false;
-  useEffect(() => {
-    setValid(isValid);
-  }, [isValid]);
 
   // tx to submit
   const getTx = () => {
@@ -52,12 +47,16 @@ export const NominatePool = () => {
     return tx;
   };
 
+  useEffect(() => setValid(isValid), [isValid]);
+
+  useEffect(() => setModalResize(), [notEnoughFunds]);
+
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: valid,
     callbackSubmit: () => {
-      setModalStatus(2);
+      setModalStatus('closing');
     },
     callbackInBlock: () => {},
   });

@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faExternalLinkAlt as faExt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,7 +20,7 @@ export const External = ({
   }, [url]);
 
   return (
-    <ItemWrapper width={`${width}`} height={height || 'auto'}>
+    <ItemWrapper width={width} height={height || 'auto'}>
       <motion.button
         className="item"
         whileHover={{ scale: 1.004 }}

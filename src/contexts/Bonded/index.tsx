@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import type { VoidFn } from '@polkadot/api/types';
 import {
@@ -7,11 +7,12 @@ import {
   matchedProperties,
   removedFrom,
   setStateWithRef,
-} from '@polkadotcloud/utils';
+} from '@polkadot-cloud/utils';
+import React, { useEffect, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import * as defaults from './defaults';
 import type { BondedAccount, BondedContextInterface } from './types';
 
@@ -22,6 +23,7 @@ export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
   // Balance accounts state.
   const [bondedAccounts, setBondedAccounts] = useState<BondedAccount[]>([]);
   const bondedAccountsRef = useRef(bondedAccounts);
+
   const unsubs = useRef<Record<string, VoidFn>>({});
 
   // Handle the syncing of accounts on accounts change.
@@ -61,30 +63,31 @@ export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // Handle accounts sync on connected accounts change.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady) {
       handleSyncAccounts();
     }
   }, [accounts, network, isReady]);
 
   // Unsubscribe from subscriptions on unmount.
-  useEffect(() => {
-    return () =>
+  useEffect(
+    () => () =>
       Object.values(unsubs.current).forEach((unsub) => {
         unsub();
-      });
-  }, []);
+      }),
+    []
+  );
 
   // Subscribe to account, get controller and nominations.
   const subscribeToBondedAccount = async (address: string) => {
-    if (!api) return;
+    if (!api) return undefined;
 
     const unsub = await api.queryMulti<AnyApi>(
       [
         [api.query.staking.bonded, address],
         [api.query.staking.nominators, address],
       ],
-      async ([controller, nominations]): Promise<void> => {
+      async ([controller, nominations]) => {
         const newAccount: BondedAccount = {
           address,
         };

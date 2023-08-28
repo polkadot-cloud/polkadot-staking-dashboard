@@ -1,12 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
+import { motion } from 'framer-motion';
+import styled from 'styled-components';
 import {
   ShowAccountsButtonWidthThreshold,
   SideMenuStickyThreshold,
 } from 'consts';
-import { motion } from 'framer-motion';
-import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   position: fixed;
@@ -40,7 +40,7 @@ export const Wrapper = styled.div`
 `;
 
 export const ConnectedAccount = styled(motion.div)`
-  background: var(--network-color-primary);
+  background: var(--accent-color-primary);
   border-radius: 1.5rem;
   display: flex;
   transition: transform var(--transition-duration);
@@ -83,8 +83,8 @@ export const Item = styled.button`
   }
 
   .label {
-    color: var(--network-color-primary);
-    border: 0.125rem solid var(--network-color-primary);
+    color: var(--accent-color-primary);
+    border: 0.125rem solid var(--accent-color-primary);
     border-radius: 0.8rem;
     font-size: 0.85rem;
     margin-right: 0.6rem;
@@ -101,7 +101,7 @@ export const Item = styled.button`
   }
 
   &.connect {
-    background: var(--network-color-primary);
+    background: var(--accent-color-primary);
     > span {
       color: white;
     }

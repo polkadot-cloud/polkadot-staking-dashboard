@@ -1,5 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import BigNumber from 'bignumber.js';
 import type {
@@ -26,33 +27,34 @@ export const defaultStakingMetrics: StakingMetrics = {
 };
 
 export const defaultEraStakers: EraStakers = {
-  stakers: [],
-  nominators: undefined,
-  totalActiveNominators: 0,
-  activeValidators: 0,
   activeAccountOwnStake: [],
+  activeValidators: 0,
+  stakers: [],
+  totalActiveNominators: 0,
 };
 
 export const defaultTargets: StakingTargets = {
   nominations: [],
 };
 
+const defaultLowestReward = {
+  lowest: new BigNumber(0),
+  oversubscribed: false,
+};
+
 export const defaultNominationStatus: NominationStatuses = {};
 
 export const defaultStakingContext: StakingContextInterface = {
-  getNominationsStatus: () => defaultNominationStatus,
-  // eslint-disable-next-line
+  fetchEraStakers: async (e) => new Promise((resolve) => resolve([])),
   getNominationsStatusFromTargets: (w, t) => defaultNominationStatus,
-  // eslint-disable-next-line
   setTargets: (t) => {},
   hasController: () => false,
-  // eslint-disable-next-line
   getControllerNotImported: (a) => null,
-  // eslint-disable-next-line
   addressDifferentToStash: (a) => false,
   isBonding: () => false,
   isNominating: () => false,
   inSetup: () => true,
+  getLowestRewardFromStaker: (address) => defaultLowestReward,
   staking: defaultStakingMetrics,
   eraStakers: defaultEraStakers,
   targets: defaultTargets,
