@@ -25,18 +25,18 @@ export const PoolMembershipsProvider = ({
   const { api, network, isReady } = useApi();
   const { accounts: connectAccounts, activeAccount } = useConnect();
 
-  // stores pool membership
+  // Stores pool memberships for the imported accounts.
   const [poolMemberships, setPoolMemberships] = useState<PoolMembership[]>([]);
   const poolMembershipsRef = useRef(poolMemberships);
 
-  // stores pool subscription objects
-  const poolMembershipUnsubs = useRef<AnyApi[]>([]);
+  // Stores pool membership unsubs.
+  const unsubs = useRef<AnyApi[]>([]);
 
   useEffectIgnoreInitial(() => {
     if (isReady) {
       (() => {
         setStateWithRef([], setPoolMemberships, poolMembershipsRef);
-        unsubscribeAll();
+        unsubAll();
         getPoolMemberships();
       })();
     }
@@ -45,21 +45,21 @@ export const PoolMembershipsProvider = ({
   // subscribe to account pool memberships
   const getPoolMemberships = async () => {
     Promise.all(
-      connectAccounts.map((a) => subscribeToPoolMembership(a.address))
+      connectAccounts.map(({ address }) => subscribeToPoolMembership(address))
     );
   };
 
   // unsubscribe from pool memberships on unmount
   useEffect(
     () => () => {
-      unsubscribeAll();
+      unsubAll();
     },
     []
   );
 
   // unsubscribe from all pool memberships
-  const unsubscribeAll = () => {
-    Object.values(poolMembershipUnsubs.current).forEach((v: Fn) => v());
+  const unsubAll = () => {
+    Object.values(unsubs.current).forEach((v: Fn) => v());
   };
 
   // subscribe to an account's pool membership
@@ -132,7 +132,7 @@ export const PoolMembershipsProvider = ({
       }
     };
 
-    poolMembershipUnsubs.current = poolMembershipUnsubs.current.concat(unsub);
+    unsubs.current = unsubs.current.concat(unsub);
     return unsub;
   };
 
