@@ -8,6 +8,7 @@ export interface RolesProps {
   defaultRoles: PoolRoles;
   listenIsValid?: any;
   setters?: any;
+  inline?: boolean;
 }
 
 export type RoleEditEntry = {
