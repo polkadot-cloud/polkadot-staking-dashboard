@@ -79,13 +79,13 @@ export const Overview = () => {
       </PageRow>
       <PageRow>
         <RowSection secondary>
-          <CardWrapper height={PAYOUTS_HEIGHT} $flex>
+          <CardWrapper height={PAYOUTS_HEIGHT}>
             <BalanceChart />
             <BalanceLinks />
           </CardWrapper>
         </RowSection>
         <RowSection hLast vLast>
-          <CardWrapper style={{ minHeight: PAYOUTS_HEIGHT }} $flex>
+          <CardWrapper style={{ minHeight: PAYOUTS_HEIGHT }}>
             <SubscanButton />
             <CardHeaderWrapper>
               <h4>{t('overview.recentPayouts')}</h4>

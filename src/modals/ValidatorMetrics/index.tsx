@@ -114,10 +114,7 @@ export const ValidatorMetrics = () => {
           style={{
             margin: '0 0 0 0.5rem',
             height: 350,
-            border: 'none',
-            boxShadow: 'none',
           }}
-          $flex
         >
           <CardHeaderWrapper>
             <h4>

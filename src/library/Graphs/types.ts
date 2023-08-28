@@ -39,10 +39,6 @@ export interface CardHeaderWrapperProps {
 }
 
 export interface CardWrapperProps {
-  $flex?: boolean;
-  $noPadding?: boolean;
-  $transparent?: boolean;
-  border?: string;
   height?: string | number;
 }
 
