@@ -19,13 +19,13 @@ export const ManageBond = () => {
   const { t } = useTranslation('pages');
 
   const { network } = useApi();
-  const { units } = network;
-  const { openModal } = useOverlay().modal;
-  const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { isPoolSyncing } = useUi();
-  const { isBonding, isMember, selectedActivePool } = useActivePools();
-  const { getTransferOptions } = useTransferOptions();
   const { openHelp } = useHelp();
+  const { isPoolSyncing } = useUi();
+  const { openModal } = useOverlay().modal;
+  const { getTransferOptions } = useTransferOptions();
+  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { isBonding, isMember, selectedActivePool } = useActivePools();
+  const { units } = network;
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const {

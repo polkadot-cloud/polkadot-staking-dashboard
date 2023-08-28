@@ -4,7 +4,7 @@
 import { PageRow } from '@polkadot-cloud/react';
 import { useEffect, useState } from 'react';
 import { useApi } from 'contexts/Api';
-import { useValidators } from 'contexts/Validators';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { Item } from './Item';
 import { ItemsWrapper } from './Wrappers';
 import { useCommunitySections } from './context';

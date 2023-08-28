@@ -177,17 +177,20 @@ export const PayoutsProvider = ({
     for (const ledgerResult of ledgerResults) {
       const ledger = ledgerResult.unwrapOr(null)?.toHuman();
       if (ledger) {
-        unclaimedRewards[ledger.stash] = ledger.claimedRewards
+        // get claimed eras within `erasToCheck`.
+        const erasClaimed = ledger.claimedRewards
           .map((e: string) => rmCommas(e))
           .filter(
             (e: string) =>
-              !erasToCheck.includes(e) &&
               new BigNumber(e).isLessThanOrEqualTo(startEra) &&
               new BigNumber(e).isGreaterThanOrEqualTo(endEra)
-          )
-          .filter((r: string) =>
-            validatorExposedEras(ledger.stash).includes(r)
           );
+
+        // filter eras yet to be claimed
+        unclaimedRewards[ledger.stash] = erasToCheck
+          .map((e) => e.toString())
+          .filter((r: string) => validatorExposedEras(ledger.stash).includes(r))
+          .filter((r: string) => !erasClaimed.includes(r));
       }
     }
 

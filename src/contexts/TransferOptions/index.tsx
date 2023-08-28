@@ -87,8 +87,8 @@ export const TransferOptionsProvider = ({
         { amount: new BigNumber(0) }
       )?.amount || new BigNumber(0);
 
-    const points = membership?.points;
-    const activePool = points ? new BigNumber(points) : new BigNumber(0);
+    const poolBalance = membership?.balance;
+    const activePool = poolBalance || new BigNumber(0);
 
     // total amount actively unlocking
     let totalUnlocking = new BigNumber(0);

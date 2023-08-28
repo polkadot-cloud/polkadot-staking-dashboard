@@ -5,26 +5,22 @@ import { greaterThanZero, shuffle } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useRef, useState } from 'react';
 import { ValidatorCommunity } from '@polkadot-cloud/community/validators';
+import type { AnyApi, Fn, Sync } from 'types';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useApi } from 'contexts/Api';
+import { useBonded } from 'contexts/Bonded';
+import { useConnect } from 'contexts/Connect';
+import { useNetworkMetrics } from 'contexts/Network';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import type {
   Identity,
   Validator,
   ValidatorAddresses,
   ValidatorSuper,
   ValidatorsContextInterface,
-} from 'contexts/Validators/types';
-import type { AnyApi, Fn, Sync } from 'types';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
-import { useApi } from '../Api';
-import { useBonded } from '../Bonded';
-import { useConnect } from '../Connect';
-import { useNetworkMetrics } from '../Network';
-import { useActivePools } from '../Pools/ActivePools';
+} from '../types';
 import { defaultValidatorsData, defaultValidatorsContext } from './defaults';
-import {
-  getLocalEraValidators,
-  getLocalFavorites,
-  setLocalEraValidators,
-} from './Utils';
+import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
 
 export const ValidatorsProvider = ({
   children,
@@ -68,17 +64,11 @@ export const ValidatorsProvider = ({
   // Stores the average network commission rate.
   const [avgCommission, setAvgCommission] = useState(0);
 
-  // Stores the user's favorite validators.
-  const [favorites, setFavorites] = useState<string[]>(getLocalFavorites(name));
-
   // stores the user's nominated validators as list
   const [nominated, setNominated] = useState<Validator[] | null>(null);
 
   // stores the nominated validators by the members pool's as list
   const [poolNominated, setPoolNominated] = useState<Validator[] | null>(null);
-
-  // stores the user's favorites validators as list
-  const [favoritesList, setFavoritesList] = useState<Validator[] | null>(null);
 
   // Stores a randomised validator community dataset.
   const [validatorCommunity] = useState<any>([...shuffle(ValidatorCommunity)]);
@@ -158,28 +148,6 @@ export const ValidatorsProvider = ({
     // fetch preferences
     const nominationsWithPrefs = await fetchValidatorPrefs(n);
     setPoolNominated(nominationsWithPrefs || []);
-  };
-
-  // re-fetch favorites on network change
-  useEffectIgnoreInitial(() => {
-    setFavorites(getLocalFavorites(name));
-  }, [network]);
-
-  // fetch favorites in validator list format
-  useEffectIgnoreInitial(() => {
-    if (isReady) {
-      fetchFavoriteList();
-    }
-  }, [isReady, favorites]);
-
-  const fetchFavoriteList = async () => {
-    // fetch preferences
-    const favoritesWithPrefs = await fetchValidatorPrefs(
-      [...favorites].map((address) => ({
-        address,
-      }))
-    );
-    setFavoritesList(favoritesWithPrefs || []);
   };
 
   // Fetch validator entries and format the returning data.
@@ -366,51 +334,18 @@ export const ValidatorsProvider = ({
     return supersWithIdentity;
   };
 
-  /*
-   * Adds a favorite validator.
-   */
-  const addFavorite = (address: string) => {
-    const newFavorites: any = Object.assign(favorites);
-    if (!newFavorites.includes(address)) {
-      newFavorites.push(address);
-    }
-
-    localStorage.setItem(
-      `${network.name}_favorites`,
-      JSON.stringify(newFavorites)
-    );
-    setFavorites([...newFavorites]);
-  };
-
-  /*
-   * Removes a favorite validator if they exist.
-   */
-  const removeFavorite = (address: string) => {
-    const newFavorites = Object.assign(favorites).filter(
-      (validator: string) => validator !== address
-    );
-    localStorage.setItem(
-      `${network.name}_favorites`,
-      JSON.stringify(newFavorites)
-    );
-    setFavorites([...newFavorites]);
-  };
-
   return (
     <ValidatorsContext.Provider
       value={{
-        addFavorite,
-        removeFavorite,
+        fetchValidatorPrefs,
         validators,
         validatorIdentities,
         validatorSupers,
         avgCommission,
         sessionValidators,
         sessionParaValidators,
-        favorites,
         nominated,
         poolNominated,
-        favoritesList,
         validatorCommunity,
       }}
     >
