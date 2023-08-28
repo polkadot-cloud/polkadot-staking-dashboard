@@ -23,7 +23,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const {
     api,
-    network: { units, unit },
+    network: { units, unit, name },
   } = useApi();
   const { newBatchCall } = useBatchCall();
   const { getPayeeItems } = usePayeeConfig();
