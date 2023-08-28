@@ -125,9 +125,4 @@ export const CardWrapper = styled.div<CardWrapperProps>`
     font-size: 1rem;
     text-align: left;
   }
-  h4 {
-    &.withMargin {
-      margin: 0.5rem 0;
-    }
-  }
 `;
