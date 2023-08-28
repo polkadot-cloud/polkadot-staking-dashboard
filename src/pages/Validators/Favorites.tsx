@@ -4,14 +4,14 @@
 import { PageRow } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { ValidatorList } from 'library/ValidatorList';
+import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 
 export const ValidatorFavorites = () => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
-  const { favoritesList } = useValidators();
+  const { favoritesList } = useFavoriteValidators();
 
   const batchKey = 'favorite_validators';
 
