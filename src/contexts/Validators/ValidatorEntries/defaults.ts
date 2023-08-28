@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import BigNumber from 'bignumber.js';
-import type { ValidatorsContextInterface } from 'contexts/Validators/types';
+import type { ValidatorsContextInterface } from '../types';
 
 export const defaultValidatorsData = {
   entries: [],
@@ -12,17 +12,14 @@ export const defaultValidatorsData = {
 };
 
 export const defaultValidatorsContext: ValidatorsContextInterface = {
-  addFavorite: (a) => {},
-  removeFavorite: (a) => {},
+  fetchValidatorPrefs: async (a) => new Promise((resolve) => resolve(null)),
   validators: [],
   validatorIdentities: {},
   validatorSupers: {},
   avgCommission: 0,
   sessionValidators: [],
   sessionParaValidators: [],
-  favorites: [],
   nominated: null,
   poolNominated: null,
-  favoritesList: null,
   validatorCommunity: [],
 };

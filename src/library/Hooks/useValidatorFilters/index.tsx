@@ -3,7 +3,7 @@
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useTranslation } from 'react-i18next';
-import { useValidators } from 'contexts/Validators';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { AnyFunction, AnyJson } from 'types';
 import { useStaking } from 'contexts/Staking';
 

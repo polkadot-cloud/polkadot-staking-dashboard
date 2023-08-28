@@ -9,7 +9,7 @@ import { useBonded } from 'contexts/Bonded';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
-import { useValidators } from 'contexts/Validators';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { AnyJson, MaybeAccount } from 'types';
 
 export const useNominationStatus = () => {

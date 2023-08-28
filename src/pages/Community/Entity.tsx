@@ -6,7 +6,7 @@ import { ButtonSecondary, PageHeading, PageRow } from '@polkadot-cloud/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useValidators } from 'contexts/Validators';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { ValidatorList } from 'library/ValidatorList';
 import { Item } from './Item';

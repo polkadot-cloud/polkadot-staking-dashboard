@@ -3,7 +3,7 @@
 
 import { clipAddress } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
-import { useValidators } from 'contexts/Validators';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { Identicon } from 'library/Identicon';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';
 import { getIdentityDisplay } from '../../ValidatorList/Validator/Utils';

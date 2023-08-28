@@ -8,7 +8,7 @@ import { usePlugins } from 'contexts/Plugins';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useUi } from 'contexts/UI';
-import { useValidators } from 'contexts/Validators';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { usePayouts } from 'contexts/Payouts';
 import { Connect } from './Connect';
 import { Connected } from './Connected';

@@ -15,7 +15,7 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
-import { useValidators } from 'contexts/Validators';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';

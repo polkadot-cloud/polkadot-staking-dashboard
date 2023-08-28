@@ -7,15 +7,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
 import { useNotifications } from 'contexts/Notifications';
 import { useTooltip } from 'contexts/Tooltip';
-import { useValidators } from 'contexts/Validators';
 import { TooltipTrigger } from 'library/ListItem/Wrappers';
+import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import type { FavoriteProps } from '../types';
 
 export const FavoriteValidator = ({ address }: FavoriteProps) => {
   const { t } = useTranslation('library');
-  const { addNotification } = useNotifications();
-  const { favorites, addFavorite, removeFavorite } = useValidators();
   const { setTooltipTextAndOpen } = useTooltip();
+  const { addNotification } = useNotifications();
+  const { favorites, addFavorite, removeFavorite } = useFavoriteValidators();
 
   const isFavorite = favorites.includes(address);
 

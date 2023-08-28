@@ -2,17 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { shuffle } from '@polkadot-cloud/utils';
-import { useValidators } from 'contexts/Validators';
+import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { Validator } from 'contexts/Validators/types';
 import { useValidatorFilters } from 'library/Hooks/useValidatorFilters';
 
 export const useFetchMehods = () => {
   const { validators, sessionParaValidators } = useValidators();
   const { applyFilter, applyOrder } = useValidatorFilters();
-  let { favoritesList } = useValidators();
-  if (favoritesList === null) {
-    favoritesList = [];
-  }
+  const { favoritesList } = useFavoriteValidators();
 
   const fetch = (method: string) => {
     let nominations;
@@ -56,7 +54,7 @@ export const useFetchMehods = () => {
       return favs;
     }
 
-    if (favoritesList.length) {
+    if (favoritesList?.length) {
       // take subset of up to 16 favorites
       favs = favoritesList.slice(0, 16);
     }
