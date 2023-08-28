@@ -110,6 +110,7 @@ export const ValidatorMetrics = () => {
       >
         <SubscanButton />
         <CardWrapper
+          className="transparent"
           style={{
             margin: '0 0 0 0.5rem',
             height: 350,
@@ -117,7 +118,6 @@ export const ValidatorMetrics = () => {
             boxShadow: 'none',
           }}
           $flex
-          $transparent
         >
           <CardHeaderWrapper>
             <h4>

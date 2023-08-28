@@ -74,25 +74,20 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   flex: 1;
   position: relative;
   overflow: hidden;
-  margin-top: ${(props) => (props.$transparent ? '0rem' : '1.4rem')};
-  padding: ${(props) =>
-    props.$noPadding ? 0 : props.$transparent ? 0 : '1.5rem'};
-  ${(props) =>
-    props.$transparent &&
-    `
-      border: none;
-      box-shadow: none;
-      background: none;
-      border-radius: 0rem;
-    `}
+  margin-top: 1.4rem;
+  padding: ${(props) => (props.$noPadding ? 0 : '1.5rem')};
 
   @media (max-width: ${SideMenuStickyThreshold}px) {
-    padding: ${(props) =>
-      props.$noPadding
-        ? '0rem'
-        : props.$transparent
-        ? '0rem 0rem'
-        : '1rem 0.75rem'};
+    padding: ${(props) => (props.$noPadding ? '0rem' : '1rem 0.75rem')};
+  }
+
+  &.transparent {
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    margin-top: 0;
+    padding: 0;
   }
 
   ${(props) =>
