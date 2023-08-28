@@ -76,7 +76,10 @@ export const PoolMembershipsProvider = ({
       }
     );
 
-    const handleMembership = (poolMember: AnyApi, claimPermission?: AnyApi) => {
+    const handleMembership = async (
+      poolMember: AnyApi,
+      claimPermission?: AnyApi
+    ) => {
       let membership = poolMember?.unwrapOr(undefined)?.toHuman();
 
       if (membership) {
@@ -92,8 +95,18 @@ export const PoolMembershipsProvider = ({
         membership.points = membership.points
           ? rmCommas(membership.points)
           : '0';
+
+        const balance =
+          (
+            await api.call.nominationPoolsApi.pointsToBalance(
+              membership.poolId,
+              membership.points
+            )
+          )?.toString() || '0';
+
         membership = {
           ...membership,
+          balance: new BigNumber(balance),
           address,
           unlocking,
           claimPermission: claimPermission?.toString() || 'Permissioned',
