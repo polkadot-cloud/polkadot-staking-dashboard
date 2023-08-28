@@ -2,7 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
-import { faBars, faChartLine } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBars,
+  faChartLine,
+  faGlobe,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -70,6 +74,20 @@ export const Default = ({
       cb: () => {
         openModal({
           key: 'ValidatorMetrics',
+          options: {
+            address,
+            identity,
+          },
+        });
+      },
+    },
+    {
+      icon: <FontAwesomeIcon icon={faGlobe} transform="shrink-3" />,
+      wrap: null,
+      title: `${t('viewDecentralization')}`,
+      cb: () => {
+        openModal({
+          key: 'ValidatorDecentralization',
           options: {
             address,
             identity,

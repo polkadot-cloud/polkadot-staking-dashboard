@@ -53,6 +53,7 @@ import { UpdateController } from '../modals/UpdateController';
 import { UpdatePayee } from '../modals/UpdatePayee';
 import { UpdateReserve } from '../modals/UpdateReserve';
 import { ValidatorMetrics } from '../modals/ValidatorMetrics';
+import { ValidatorDecentralization } from '../modals/ValidatorDecentralization';
 import { WithdrawPoolMember } from '../modals/WithdrawPoolMember';
 
 export const Overlays = () => {
@@ -84,6 +85,7 @@ export const Overlays = () => {
         SelectFavorites,
         Settings,
         ValidatorMetrics,
+        ValidatorDecentralization,
         UnbondPoolMember,
         UnlockChunks,
         Unstake,

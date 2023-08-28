@@ -1,0 +1,147 @@
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+import { ButtonHelp } from '@polkadot-cloud/react';
+import { clipAddress } from '@polkadot-cloud/utils';
+import { useEffect, useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useHelp } from 'contexts/Help';
+import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
+import { DistributionDoughnut } from 'library/Graphs/DistributionDoughnut';
+import { formatSize } from 'library/Graphs/Utils';
+import { GraphWrapper } from 'library/Graphs/Wrapper';
+import { useSize } from 'library/Hooks/useSize';
+import { Identicon } from 'library/Identicon';
+import { Title } from 'library/Modal/Title';
+import { StatusLabel } from 'library/StatusLabel';
+import { useOverlay } from 'contexts/Overlay';
+import type { ValidatorDetail } from '@polkawatch/ddp-client';
+import { usePolkawatchApi } from '../../contexts/Polkawatch';
+import { PolkawatchButton } from '../../library/PolkawatchButton';
+
+export const ValidatorDecentralization = () => {
+  const { t } = useTranslation('modals');
+  const { pwApi, networkSupported } = usePolkawatchApi();
+  const { options } = useOverlay().modal.config;
+  const { address, identity } = options;
+  const { openHelp } = useHelp();
+
+  const ref = useRef<HTMLDivElement>(null);
+  const size = useSize(ref.current);
+  const { height, minHeight } = formatSize(size, 300);
+  const [pwData, setPwData] = useState({} as ValidatorDetail);
+  const [analyticsAvailable, setAnalyticsAvailable] = useState(true);
+
+  // In Small Screens we will display the most relevant chart.
+  // For now, we are not going to complicate the UI.
+  const isSmallScreen = window.innerWidth <= 650;
+  const chartWidth = '330px';
+
+  useEffect(() => {
+    if (networkSupported)
+      pwApi
+        .ddpIpfsValidatorDetail({
+          lastDays: 60,
+          validator: address,
+          validationType: 'public',
+        })
+        .then((response) => {
+          setAnalyticsAvailable(true);
+          setPwData(response.data);
+        })
+        .catch(() => setAnalyticsAvailable(false));
+    else setAnalyticsAvailable(false);
+    return () => {};
+  }, [pwApi, address]);
+
+  return (
+    <>
+      <Title title={t('validatorDecentralization')} />
+      <div className="header">
+        <Identicon value={address} size={33} />
+        <h2>
+          &nbsp;&nbsp;
+          {identity === null ? clipAddress(address) : identity}
+        </h2>
+      </div>
+      <div
+        className="body"
+        style={{ position: 'relative', marginTop: '0.5rem' }}
+      >
+        <PolkawatchButton />
+        <CardWrapper
+          style={{
+            margin: '0 0 0 0.5rem',
+            height: 350,
+            border: 'none',
+            boxShadow: 'none',
+          }}
+          $flex
+          $transparent
+        >
+          <CardHeaderWrapper>
+            <h4>
+              {t('rewardsByCountryAndNetwork')}{' '}
+              <ButtonHelp
+                marginLeft
+                onClick={() => openHelp('Rewards By Country And Network')}
+              />
+            </h4>
+          </CardHeaderWrapper>
+          <div
+            ref={ref}
+            style={{
+              minHeight,
+              display: 'flex',
+              justifyContent: 'space-evenly',
+            }}
+          >
+            {analyticsAvailable ? (
+              <StatusLabel
+                status="active_service"
+                statusFor="polkawatch"
+                title={t('polkawatchDisabled')}
+              />
+            ) : (
+              <StatusLabel
+                status="no_analytic_data"
+                title={
+                  networkSupported
+                    ? t('decentralizationAnalyticsNotAvailable')
+                    : t('decentralizationAnalyticsNotSupported')
+                }
+              />
+            )}
+            <GraphWrapper
+              style={{
+                height: `${height}px`,
+              }}
+            >
+              <DistributionDoughnut
+                title="Rewards"
+                series={pwData.topCountryDistributionChart}
+                height={`${height}px`}
+                width={chartWidth}
+              />
+            </GraphWrapper>
+
+            <div style={{ display: isSmallScreen ? 'none' : 'block' }}>
+              <GraphWrapper
+                style={{
+                  height: `${height}px`,
+                }}
+              >
+                <DistributionDoughnut
+                  title="Rewards"
+                  series={pwData.topNetworkDistributionChart}
+                  height={`${height}px`}
+                  width={chartWidth}
+                />
+              </GraphWrapper>
+            </div>
+          </div>
+        </CardWrapper>
+      </div>
+    </>
+  );
+};

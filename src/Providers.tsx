@@ -36,6 +36,7 @@ import { UIProvider } from 'contexts/UI';
 import { ValidatorsProvider } from 'contexts/Validators';
 import { withProviders } from 'library/Hooks';
 import { OverlayProvider } from 'contexts/Overlay';
+import { PolkawatchProvider } from './contexts/Polkawatch';
 
 // !! Provider order matters.
 export const Providers = withProviders(
@@ -65,6 +66,7 @@ export const Providers = withProviders(
   PluginsProvider,
   SetupProvider,
   SubscanProvider,
+  PolkawatchProvider,
   MenuProvider,
   TooltipProvider,
   TxMetaProvider,
