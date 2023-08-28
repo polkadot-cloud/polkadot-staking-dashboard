@@ -121,11 +121,4 @@ export const CardWrapper = styled.div<CardWrapperProps>`
     width: 100%;
     position: relative;
   }
-
-  .option {
-    border-bottom: 1px solid #ddd;
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    text-align: left;
-  }
 `;
