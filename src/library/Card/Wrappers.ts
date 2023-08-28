@@ -77,10 +77,6 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   margin-top: 1.4rem;
   padding: 1.5rem;
 
-  @media (max-width: ${SideMenuStickyThreshold}px) {
-    padding: 1rem 0.75rem;
-  }
-
   &.transparent {
     background: none;
     border: none;
@@ -94,19 +90,26 @@ export const CardWrapper = styled.div<CardWrapperProps>`
     border: 1px solid var(--status-warning-color);
   }
 
+  @media (max-width: ${SideMenuStickyThreshold}px) {
+    padding: 1rem 0.75rem;
+  }
+
   @media (min-width: ${SideMenuStickyThreshold + 1}px) {
     height: ${(props) => (props.height ? `${props.height}px` : 'inherit')};
   }
 
   .content {
     padding: 0 0.5rem;
+
+    h3,
+    h4 {
+      margin-top: 0;
+    }
     h3 {
-      margin-top: 0rem;
       margin-bottom: 0.75rem;
     }
 
     h4 {
-      margin-top: 0;
       margin-bottom: 0;
     }
   }
