@@ -1,11 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonHelp } from '@polkadot-cloud/react';
-import { ReactOdometer } from '@polkadotcloud/react-odometer';
+import { ButtonHelp, Odometer } from '@polkadot-cloud/react';
 import { useEffect, useState } from 'react';
 import { useHelp } from 'contexts/Help';
 import { StatPie } from 'library/Graphs/StatBoxPie';
+import BigNumber from 'bignumber.js';
 import { StatBox } from './Item';
 import type { PieProps } from './types';
 
@@ -40,19 +40,14 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
 
         <div className="labels">
           <h3>
-            <ReactOdometer duration={150} value={values.value} />
+            <Odometer value={new BigNumber(values.value).toFormat()} />
             {stat?.unit && <>{stat?.unit}</>}
 
             {showTotal ? (
               <span className="total">
                 /&nbsp;
-                <ReactOdometer duration={150} value={values.total} />
-                {stat?.unit ? (
-                  <>
-                    &nbsp;
-                    {stat?.unit}
-                  </>
-                ) : null}
+                <Odometer value={new BigNumber(values.total).toFormat()} />
+                {stat?.unit ? <>{stat?.unit}unit</> : null}
               </span>
             ) : null}
           </h3>

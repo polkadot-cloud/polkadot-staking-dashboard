@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
+  Odometer,
   PageHeading,
   PageRow,
   PageTitle,
@@ -90,18 +91,27 @@ export const Overview = () => {
             <CardHeaderWrapper>
               <h4>{t('overview.recentPayouts')}</h4>
               <h2>
-                {lastReward === null
-                  ? 0
-                  : planckToUnit(
-                      new BigNumber(lastReward.amount),
-                      units
-                    ).toFormat()}
-                &nbsp;{network.unit}
-                &nbsp;
+                <Odometer
+                  value={
+                    lastReward === null
+                      ? 0
+                      : planckToUnit(
+                          new BigNumber(lastReward.amount),
+                          units
+                        ).toFormat()
+                  }
+                  spaceAfter="0.4rem"
+                />
+                {network.unit}
+
                 <span className="note">
-                  {lastReward === null
-                    ? ''
-                    : formatDistance(formatFrom, formatTo, formatOpts)}
+                  {lastReward === null ? (
+                    ''
+                  ) : (
+                    <>
+                      &nbsp;{formatDistance(formatFrom, formatTo, formatOpts)}
+                    </>
+                  )}
                 </span>
               </h2>
             </CardHeaderWrapper>

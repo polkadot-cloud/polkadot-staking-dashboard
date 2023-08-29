@@ -14,8 +14,6 @@ import '@polkadot-cloud/core/template/default/index.css';
 // Polkadot Cloud core styles.
 import '@polkadot-cloud/core/css/styles/index.css';
 
-// Miscellaneous component styles.
-import '@polkadotcloud/react-odometer/index.css';
 import { createRoot } from 'react-dom/client';
 import { App } from 'App';
 

@@ -2,7 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonPrimary, ButtonRow } from '@polkadot-cloud/react';
+import {
+  ButtonHelp,
+  ButtonPrimary,
+  ButtonRow,
+  Odometer,
+} from '@polkadot-cloud/react';
 import { planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -45,7 +50,13 @@ export const ManageBond = () => {
           {t('pools.bondedFunds')}
           <ButtonHelp marginLeft onClick={() => openHelp('Bonded in Pool')} />
         </h4>
-        <h2>{`${planckToUnit(active, units).toFormat()} ${network.unit}`}</h2>
+        <h2>
+          <Odometer
+            value={planckToUnit(active, units).toFormat()}
+            spaceAfter="0.4rem"
+          />
+          {network.unit}
+        </h2>
         <ButtonRow>
           <ButtonPrimary
             disabled={
