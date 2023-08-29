@@ -131,13 +131,6 @@ export const StatBoxWrapper = styled(motion.div)`
           display: flex;
           align-items: center;
         }
-
-        .odometer {
-          position: relative;
-          top: -0.1rem;
-          margin-right: 0.2rem;
-        }
-
         span.total {
           color: var(--text-color-secondary);
           display: flex;

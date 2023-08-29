@@ -79,6 +79,7 @@ export const MembershipStatus = ({
           <Stat
             label={label}
             helpKey="Pool Membership"
+            type="address"
             stat={{
               address: selectedActivePool?.addresses?.stash ?? '',
               display: membershipDisplay,
