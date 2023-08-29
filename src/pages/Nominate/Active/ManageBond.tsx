@@ -52,7 +52,10 @@ export const ManageBond = () => {
           <ButtonHelp marginLeft onClick={() => openHelp('Bonding')} />
         </h4>
         <h2>
-          <Odometer value={planckToUnit(active, units).toFormat()} />
+          <Odometer
+            value={planckToUnit(active, units).toFormat()}
+            spaceAfter="0.4rem"
+          />
           {network.unit}
         </h2>
         <ButtonRow>

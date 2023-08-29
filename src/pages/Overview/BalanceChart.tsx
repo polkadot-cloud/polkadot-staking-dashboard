@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheck, faCheckDouble } from '@fortawesome/free-solid-svg-icons';
-import { ButtonTertiary } from '@polkadot-cloud/react';
+import { ButtonTertiary, Odometer } from '@polkadot-cloud/react';
 import { greaterThanZero, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
@@ -129,7 +129,7 @@ export const BalanceChart = () => {
       <CardHeaderWrapper>
         <h4>{t('overview.balance')}</h4>
         <h2>
-          <span className="amount">{totalBalance.toFormat()}</span>&nbsp;
+          <Odometer value={totalBalance.toFormat()} spaceAfter="0.4rem" />
           {unit}
           <span className="note">
             {plugins.includes('binance_spot') ? (

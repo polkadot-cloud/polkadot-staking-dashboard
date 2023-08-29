@@ -58,7 +58,7 @@ export const Stat = ({
     case 'odometer':
       display = (
         <h2>
-          <Odometer value={stat.value} />
+          <Odometer value={stat.value} spaceAfter="0.4rem" />
           {stat?.unit ? stat.unit : null}
         </h2>
       );
