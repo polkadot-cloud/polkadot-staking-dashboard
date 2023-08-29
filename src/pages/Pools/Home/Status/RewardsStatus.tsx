@@ -15,7 +15,7 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 export const RewardsStatus = () => {
   const { t } = useTranslation('pages');
   const {
-    network: { units, unit },
+    network: { units },
     isReady,
   } = useApi();
   const { isPoolSyncing } = useUi();
@@ -71,7 +71,7 @@ export const RewardsStatus = () => {
       label={t('pools.unclaimedRewards')}
       helpKey="Pool Rewards"
       type="odometer"
-      stat={{ value: labelRewards, unit }}
+      stat={{ value: labelRewards }}
       buttons={isPoolSyncing ? [] : buttonsRewards}
     />
   );

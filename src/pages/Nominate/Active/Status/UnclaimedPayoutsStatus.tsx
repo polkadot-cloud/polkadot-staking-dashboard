@@ -28,7 +28,6 @@ export const UnclaimedPayoutsStatus = () => {
       type="odometer"
       stat={{
         value: planckToUnit(totalUnclaimed, network.units).toFormat(),
-        unit: network.unit,
       }}
     />
   );
