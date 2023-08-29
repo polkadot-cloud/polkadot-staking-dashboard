@@ -57,7 +57,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
   .networkIcon {
     width: 1.9rem;
     height: 1.9rem;
-    margin-right: 0.45rem;
+    margin-right: 0.55rem;
   }
 
   > div {

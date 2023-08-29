@@ -66,7 +66,7 @@ export const Stat = ({
             style={{
               width: '1.9rem',
               height: '1.9rem',
-              marginRight: '0.45rem',
+              marginRight: '0.55rem',
             }}
           />
           <Odometer value={stat.value} spaceAfter="0.4rem" />
