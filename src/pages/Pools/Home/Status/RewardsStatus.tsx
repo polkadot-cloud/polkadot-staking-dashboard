@@ -30,8 +30,8 @@ export const RewardsStatus = () => {
   const minUnclaimedDisplay = new BigNumber(1_000_000);
 
   const labelRewards = pendingRewards.isGreaterThan(minUnclaimedDisplay)
-    ? `${planckToUnit(pendingRewards, units)} ${unit}`
-    : `0 ${unit}`;
+    ? planckToUnit(pendingRewards, units).toString()
+    : '0';
 
   // Display Reward buttons if unclaimed rewards is a non-zero value.
   const buttonsRewards = pendingRewards.isGreaterThan(minUnclaimedDisplay)
@@ -70,7 +70,8 @@ export const RewardsStatus = () => {
     <Stat
       label={t('pools.unclaimedRewards')}
       helpKey="Pool Rewards"
-      stat={labelRewards}
+      type="odometer"
+      stat={{ value: labelRewards, unit }}
       buttons={isPoolSyncing ? [] : buttonsRewards}
     />
   );

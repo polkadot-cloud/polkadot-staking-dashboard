@@ -60,6 +60,12 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
       white-space: nowrap;
       overflow: hidden;
 
+      h2 {
+        display: flex;
+        font-family: InterBold, sans-serif;
+        text-overflow: ellipsis;
+      }
+
       .identicon {
         position: absolute;
         display: flex;

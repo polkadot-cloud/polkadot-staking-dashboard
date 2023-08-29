@@ -7,6 +7,7 @@ import {
   ButtonHelp,
   ButtonPrimary,
   ButtonSecondary,
+  Odometer,
 } from '@polkadot-cloud/react';
 import { applyWidthAsPadding } from '@polkadot-cloud/utils';
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
@@ -23,6 +24,7 @@ export const Stat = ({
   helpKey,
   icon,
   copy,
+  type = 'string',
   buttonType = 'primary',
 }: StatProps) => {
   const { addNotification } = useNotifications();
@@ -49,17 +51,24 @@ export const Stat = ({
   const Button = buttonType === 'primary' ? ButtonPrimary : ButtonSecondary;
 
   let display;
-  let isAddress;
-  if (typeof stat === 'string') {
-    display = stat;
-    isAddress = false;
-  } else {
-    display = stat.display;
-    isAddress = true;
+  switch (type) {
+    case 'address':
+      display = stat.display;
+      break;
+    case 'odometer':
+      display = (
+        <h2>
+          <Odometer value={stat.value} />
+          {stat?.unit ? stat.unit : null}
+        </h2>
+      );
+      break;
+    default:
+      display = stat;
   }
 
   return (
-    <Wrapper $isAddress={isAddress}>
+    <Wrapper $isAddress={type === 'address'}>
       <h4>
         {label}
         {helpKey !== undefined ? (
@@ -86,7 +95,7 @@ export const Stat = ({
               &nbsp;
             </>
           ) : null}
-          {isAddress ? (
+          {type === 'address' ? (
             <div className="identicon">
               <Identicon
                 value={(stat as StatAddress)?.address || ''}
