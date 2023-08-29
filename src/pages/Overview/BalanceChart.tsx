@@ -3,7 +3,11 @@
 
 import { faCheck, faCheckDouble } from '@fortawesome/free-solid-svg-icons';
 import { ButtonTertiary, Odometer } from '@polkadot-cloud/react';
-import { greaterThanZero, planckToUnit } from '@polkadot-cloud/utils';
+import {
+  greaterThanZero,
+  minDecimalPlaces,
+  planckToUnit,
+} from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -134,7 +138,10 @@ export const BalanceChart = () => {
         <h4>{t('overview.balance')}</h4>
         <h2>
           <Token className="networkIcon" />
-          <Odometer value={totalBalance.toFormat()} zeroDecimals={2} />
+          <Odometer
+            value={minDecimalPlaces(totalBalance.toFormat(), 2)}
+            zeroDecimals={2}
+          />
           <span className="note">
             {plugins.includes('binance_spot') ? (
               <>&nbsp;{usdFormatter.format(freeFiat.toNumber())}</>

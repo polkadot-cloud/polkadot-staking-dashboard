@@ -8,7 +8,6 @@ import {
   PageTitle,
   RowSection,
 } from '@polkadot-cloud/react';
-import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +20,7 @@ import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
 import { ControllerNotStash } from 'pages/Nominate/Active/ControllerNotStash';
+import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
 import { ActiveAccounts } from './ActiveAccounts';
 import { BalanceChart } from './BalanceChart';
 import { BalanceLinks } from './BalanceLinks';
@@ -95,15 +95,15 @@ export const Overview = () => {
               <h2>
                 <Token className="networkIcon" />
                 <Odometer
-                  value={
+                  value={minDecimalPlaces(
                     lastReward === null
-                      ? 0
+                      ? '0'
                       : planckToUnit(
                           new BigNumber(lastReward.amount),
                           units
-                        ).toFormat()
-                  }
-                  zeroDecimals={2}
+                        ).toFormat(),
+                    2
+                  )}
                 />
 
                 <span className="note">

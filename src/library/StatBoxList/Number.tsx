@@ -4,6 +4,7 @@
 import { ButtonHelp, Odometer } from '@polkadot-cloud/react';
 import { useHelp } from 'contexts/Help';
 import BigNumber from 'bignumber.js';
+import { minDecimalPlaces } from '@polkadot-cloud/utils';
 import { StatBox } from './Item';
 import type { NumberProps } from './types';
 
@@ -23,9 +24,10 @@ export const Number = ({
         <div className="labels">
           <h3>
             <Odometer
-              value={new BigNumber(value)
-                .decimalPlaces(decimals || 0)
-                .toFormat()}
+              value={minDecimalPlaces(
+                new BigNumber(value).decimalPlaces(decimals || 0).toFormat(),
+                2
+              )}
             />
             {unit ? <>{unit}</> : null}
           </h3>
