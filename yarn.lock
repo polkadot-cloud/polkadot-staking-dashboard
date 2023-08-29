@@ -1910,11 +1910,6 @@
     tslib "^2.5.3"
     ws "^8.13.0"
 
-"@polkadotcloud/react-odometer@^0.1.19":
-  version "0.1.19"
-  resolved "https://registry.yarnpkg.com/@polkadotcloud/react-odometer/-/react-odometer-0.1.19.tgz#3bd476c8d00fa011a14f7bc8b9b5227a26c9299a"
-  integrity sha512-s7JJIIP4ZR37J+r478TrE5yCuO2niT1ATscTm/0wVLq/nFvCrJ63JZbCLl13I17ZotId41kRUb3vGxIYn4giMQ==
-
 "@remix-run/router@1.8.0":
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.8.0.tgz#e848d2f669f601544df15ce2a313955e4bf0bafc"
