@@ -47,12 +47,7 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
               <span className="total">
                 /&nbsp;
                 <Odometer value={new BigNumber(values.total).toFormat()} />
-                {stat?.unit ? (
-                  <>
-                    <span style={{ paddingLeft: '0.2rem' }} />
-                    {stat?.unit}unit
-                  </>
-                ) : null}
+                {stat?.unit ? <>{stat?.unit}unit</> : null}
               </span>
             ) : null}
           </h3>
