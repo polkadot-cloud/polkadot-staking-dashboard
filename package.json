@@ -31,7 +31,7 @@
     "@polkadot-cloud/community": "^0.1.10",
     "@polkadot-cloud/core": "^0.1.12",
     "@polkadot-cloud/react": "0.1.28",
-    "@polkadot-cloud/utils": "^0.0.4",
+    "@polkadot-cloud/utils": "0.0.6",
     "@polkadot/api": "^10.9.1",
     "@polkadot/keyring": "^12.1.1",
     "@polkadot/rpc-provider": "^10.9.1",

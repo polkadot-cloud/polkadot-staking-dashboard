@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useHelp } from 'contexts/Help';
 import { StatPie } from 'library/Graphs/StatBoxPie';
 import BigNumber from 'bignumber.js';
+import { minDecimalPlaces } from '@polkadot-cloud/utils';
 import { StatBox } from './Item';
 import type { PieProps } from './types';
 
@@ -40,13 +41,23 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
 
         <div className="labels">
           <h3>
-            <Odometer value={new BigNumber(values.value).toFormat()} />
+            <Odometer
+              value={minDecimalPlaces(
+                new BigNumber(values.value).toFormat(),
+                2
+              )}
+            />
             {stat?.unit && <>{stat?.unit}</>}
 
             {showTotal ? (
               <span className="total">
                 /&nbsp;
-                <Odometer value={new BigNumber(values.total).toFormat()} />
+                <Odometer
+                  value={minDecimalPlaces(
+                    new BigNumber(values.total).toFormat(),
+                    2
+                  )}
+                />
                 {stat?.unit ? <>{stat?.unit}unit</> : null}
               </span>
             ) : null}
