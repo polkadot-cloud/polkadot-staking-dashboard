@@ -32,6 +32,9 @@ export interface Network {
     icon: FunctionComponent<
       SVGProps<SVGSVGElement> & { title?: string | undefined }
     >;
+    token: FunctionComponent<
+      SVGProps<SVGSVGElement> & { title?: string | undefined }
+    >;
     logo: {
       svg: FunctionComponent<
         SVGProps<SVGSVGElement> & { title?: string | undefined }

@@ -21,7 +21,7 @@ import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { BondedChart } from '../../../library/BarChart/BondedChart';
+import { BondedChart } from 'library/BarChart/BondedChart';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');
@@ -34,8 +34,10 @@ export const ManageBond = () => {
   const { isSyncing } = useUi();
   const { isFastUnstaking } = useUnstaking();
   const { openHelp } = useHelp();
-
-  const { units } = network;
+  const {
+    units,
+    brand: { token: Token },
+  } = network;
   const ledger = getStashLedger(activeAccount);
   const { active }: { active: BigNumber } = ledger;
   const allTransferOptions = getTransferOptions(activeAccount);
@@ -52,11 +54,11 @@ export const ManageBond = () => {
           <ButtonHelp marginLeft onClick={() => openHelp('Bonding')} />
         </h4>
         <h2>
+          <Token className="networkIcon" />
           <Odometer
             value={planckToUnit(active, units).toFormat()}
-            spaceAfter="0.4rem"
+            zeroDecimals={2}
           />
-          {network.unit}
         </h2>
         <ButtonRow>
           <ButtonPrimary

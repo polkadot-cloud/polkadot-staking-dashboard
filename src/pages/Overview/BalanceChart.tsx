@@ -22,7 +22,11 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
   const {
-    network: { units, unit },
+    network: {
+      units,
+      unit,
+      brand: { token: Token },
+    },
   } = useApi();
   const prices = usePrices();
   const { plugins } = usePlugins();
@@ -129,8 +133,8 @@ export const BalanceChart = () => {
       <CardHeaderWrapper>
         <h4>{t('overview.balance')}</h4>
         <h2>
-          <Odometer value={totalBalance.toFormat()} spaceAfter="0.4rem" />
-          {unit}
+          <Token className="networkIcon" />
+          <Odometer value={totalBalance.toFormat()} zeroDecimals={2} />
           <span className="note">
             {plugins.includes('binance_spot') ? (
               <>&nbsp;{usdFormatter.format(freeFiat.toNumber())}</>
