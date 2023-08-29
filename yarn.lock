@@ -1507,25 +1507,15 @@
   resolved "https://registry.npmjs.org/@polkadot-cloud/community/-/community-0.1.10.tgz#d2a99190c0a89a67275264084e6e750269990986"
   integrity sha512-VT38rqOvORuYdPLigS8UNwvitoc0DFZWEazsvHxz9bTnPBL/7M3LujWXO14OSGw+FTvfz4RzPwovmW4u7RoT/Q==
 
+"@polkadot-cloud/core@0.1.11", "@polkadot-cloud/core@^0.1.11":
+  version "0.1.11"
+  resolved "https://registry.npmjs.org/@polkadot-cloud/core/-/core-0.1.11.tgz#42151954df88029d373376f4d8fd30d26bea7d41"
+  integrity sha512-BqJscRY3b4eM7n3F3/VGdkdnBGwFjrSPFpRWf+YSn2M++EiVYd3FYJIQhBtpntijUoeQXeajzYjtNOpvoJvc+A==
+
 "@polkadot-cloud/core@0.1.6":
   version "0.1.6"
   resolved "https://registry.npmjs.org/@polkadot-cloud/core/-/core-0.1.6.tgz#c82934fdbc1fd5e9759de30f2bb6881cec2a5bf4"
   integrity sha512-4nftY+1sXXG4qauZhlagafdWsBLewnuk+UtqA8z5AIADr2QmEfsuQMBXIwsAZIaHPvP2/VfjCwLEBKQR3uWAow==
-
-"@polkadot-cloud/core@^0.1.10":
-  version "0.1.10"
-  resolved "https://registry.npmjs.org/@polkadot-cloud/core/-/core-0.1.10.tgz#5b438fd05c8258a37c2a19853ce6338874240843"
-  integrity sha512-xSu9ldyY5/soILHfmzQ0BKE0wJCaliIuTJxGGVHnaiFHIid9+CRkaVAkmh1y3+FUgil9ASV6CcmBSFasvwm7Xw==
-
-"@polkadot-cloud/react@0.1.24":
-  version "0.1.24"
-  resolved "https://registry.npmjs.org/@polkadot-cloud/react/-/react-0.1.24.tgz#b5f0d48e9ab2c9d39c0b2edea26f1efa39814947"
-  integrity sha512-gdtJ6g778GGZFpDZGrEWpY77r+8ZPbhtng401CF/pG1JpKiEA8YqdeCWrN0xoJSqPSPo8jBP9WW+ytgs6GIlDA==
-  dependencies:
-    "@polkadot-cloud/core" "^0.1.10"
-    "@polkadot-cloud/react" "^0.1.20"
-    "@polkadot-cloud/utils" "^0.0.4"
-    react-error-boundary "^4.0.11"
 
 "@polkadot-cloud/react@^0.1.20":
   version "0.1.20"
@@ -1533,6 +1523,16 @@
   integrity sha512-K2d+YzPGfHF/eZ1TU7264VGKGpqEtg07nYCbmpThXCFnrPkO/oe9UT5ym/7Rpzq4aNSugIJ6YXtUL8UPCCheSQ==
   dependencies:
     "@polkadot-cloud/core" "0.1.6"
+    "@polkadot-cloud/utils" "^0.0.4"
+    react-error-boundary "^4.0.11"
+
+"@polkadot-cloud/react@^0.1.25":
+  version "0.1.25"
+  resolved "https://registry.npmjs.org/@polkadot-cloud/react/-/react-0.1.25.tgz#6699c80473d27605a08ac61dee1c7cd8afc2a3bf"
+  integrity sha512-SP3L4jQZXY5lRVanKQm5cNncnej1/RQWxp4l3wpgdWWCZk0AC6QgxpQdlu3UZGNjx5+0KcqHZ1b7ATVk6/ikrQ==
+  dependencies:
+    "@polkadot-cloud/core" "0.1.11"
+    "@polkadot-cloud/react" "^0.1.20"
     "@polkadot-cloud/utils" "^0.0.4"
     react-error-boundary "^4.0.11"
 
