@@ -7,12 +7,14 @@ import {
   ButtonHelp,
   ButtonPrimary,
   ButtonSecondary,
+  Odometer,
 } from '@polkadot-cloud/react';
 import { applyWidthAsPadding } from '@polkadot-cloud/utils';
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { useHelp } from 'contexts/Help';
 import { useNotifications } from 'contexts/Notifications';
 import { Identicon } from 'library/Identicon';
+import { useApi } from 'contexts/Api';
 import { Wrapper } from './Wrapper';
 import type { StatAddress, StatProps } from './types';
 
@@ -23,8 +25,12 @@ export const Stat = ({
   helpKey,
   icon,
   copy,
+  type = 'string',
   buttonType = 'primary',
 }: StatProps) => {
+  const {
+    brand: { token: Token },
+  } = useApi().network;
   const { addNotification } = useNotifications();
   const { openHelp } = useHelp();
 
@@ -49,17 +55,31 @@ export const Stat = ({
   const Button = buttonType === 'primary' ? ButtonPrimary : ButtonSecondary;
 
   let display;
-  let isAddress;
-  if (typeof stat === 'string') {
-    display = stat;
-    isAddress = false;
-  } else {
-    display = stat.display;
-    isAddress = true;
+  switch (type) {
+    case 'address':
+      display = stat.display;
+      break;
+    case 'odometer':
+      display = (
+        <h2>
+          <Token
+            style={{
+              width: '1.9rem',
+              height: '1.9rem',
+              marginRight: '0.55rem',
+            }}
+          />
+          <Odometer value={stat.value} spaceAfter="0.4rem" zeroDecimals={2} />
+          {stat?.unit ? stat.unit : null}
+        </h2>
+      );
+      break;
+    default:
+      display = stat;
   }
 
   return (
-    <Wrapper $isAddress={isAddress}>
+    <Wrapper $isAddress={type === 'address'}>
       <h4>
         {label}
         {helpKey !== undefined ? (
@@ -86,7 +106,7 @@ export const Stat = ({
               &nbsp;
             </>
           ) : null}
-          {isAddress ? (
+          {type === 'address' ? (
             <div className="identicon">
               <Identicon
                 value={(stat as StatAddress)?.address || ''}

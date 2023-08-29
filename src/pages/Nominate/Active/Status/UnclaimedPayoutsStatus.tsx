@@ -1,12 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { Stat } from 'library/Stat';
 import { usePayouts } from 'contexts/Payouts';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
+import { planckToUnit } from '@polkadot-cloud/utils';
 
 export const UnclaimedPayoutsStatus = () => {
   const { t } = useTranslation('pages');
@@ -25,10 +25,10 @@ export const UnclaimedPayoutsStatus = () => {
     <Stat
       label={t('nominate.pendingPayouts')}
       helpKey="Payout"
-      stat={`${planckToUnit(totalUnclaimed, network.units).toFormat()} ${
-        network.unit
-      }
-      `}
+      type="odometer"
+      stat={{
+        value: planckToUnit(totalUnclaimed, network.units).toFormat(),
+      }}
     />
   );
 };

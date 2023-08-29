@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheck, faCheckDouble } from '@fortawesome/free-solid-svg-icons';
-import { ButtonTertiary } from '@polkadot-cloud/react';
+import { ButtonTertiary, Odometer } from '@polkadot-cloud/react';
 import { greaterThanZero, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
@@ -22,7 +22,11 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
   const {
-    network: { units, unit },
+    network: {
+      units,
+      unit,
+      brand: { token: Token },
+    },
   } = useApi();
   const prices = usePrices();
   const { plugins } = usePlugins();
@@ -129,8 +133,8 @@ export const BalanceChart = () => {
       <CardHeaderWrapper>
         <h4>{t('overview.balance')}</h4>
         <h2>
-          <span className="amount">{totalBalance.toFormat()}</span>&nbsp;
-          {unit}
+          <Token className="networkIcon" />
+          <Odometer value={totalBalance.toFormat()} zeroDecimals={2} />
           <span className="note">
             {plugins.includes('binance_spot') ? (
               <>&nbsp;{usdFormatter.format(freeFiat.toNumber())}</>

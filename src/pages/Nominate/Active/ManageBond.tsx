@@ -2,7 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonPrimary, ButtonRow } from '@polkadot-cloud/react';
+import {
+  ButtonHelp,
+  ButtonPrimary,
+  ButtonRow,
+  Odometer,
+} from '@polkadot-cloud/react';
 import { planckToUnit } from '@polkadot-cloud/utils';
 import type BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +21,7 @@ import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { BondedChart } from '../../../library/BarChart/BondedChart';
+import { BondedChart } from 'library/BarChart/BondedChart';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');
@@ -29,8 +34,10 @@ export const ManageBond = () => {
   const { isSyncing } = useUi();
   const { isFastUnstaking } = useUnstaking();
   const { openHelp } = useHelp();
-
-  const { units } = network;
+  const {
+    units,
+    brand: { token: Token },
+  } = network;
   const ledger = getStashLedger(activeAccount);
   const { active }: { active: BigNumber } = ledger;
   const allTransferOptions = getTransferOptions(activeAccount);
@@ -46,7 +53,13 @@ export const ManageBond = () => {
           {t('nominate.bondedFunds')}
           <ButtonHelp marginLeft onClick={() => openHelp('Bonding')} />
         </h4>
-        <h2>{`${planckToUnit(active, units).toFormat()} ${network.unit}`}</h2>
+        <h2>
+          <Token className="networkIcon" />
+          <Odometer
+            value={planckToUnit(active, units).toFormat()}
+            zeroDecimals={2}
+          />
+        </h2>
         <ButtonRow>
           <ButtonPrimary
             disabled={

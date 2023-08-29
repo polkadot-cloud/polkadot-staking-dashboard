@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
+  Odometer,
   PageHeading,
   PageRow,
   PageTitle,
@@ -43,7 +44,9 @@ export const Overview = () => {
     poolClaims,
     unclaimedPayouts
   );
-
+  const {
+    brand: { token: Token },
+  } = network;
   const PAYOUTS_HEIGHT = 380;
 
   let formatFrom = new Date();
@@ -90,18 +93,27 @@ export const Overview = () => {
             <CardHeaderWrapper>
               <h4>{t('overview.recentPayouts')}</h4>
               <h2>
-                {lastReward === null
-                  ? 0
-                  : planckToUnit(
-                      new BigNumber(lastReward.amount),
-                      units
-                    ).toFormat()}
-                &nbsp;{network.unit}
-                &nbsp;
+                <Token className="networkIcon" />
+                <Odometer
+                  value={
+                    lastReward === null
+                      ? 0
+                      : planckToUnit(
+                          new BigNumber(lastReward.amount),
+                          units
+                        ).toFormat()
+                  }
+                  zeroDecimals={2}
+                />
+
                 <span className="note">
-                  {lastReward === null
-                    ? ''
-                    : formatDistance(formatFrom, formatTo, formatOpts)}
+                  {lastReward === null ? (
+                    ''
+                  ) : (
+                    <>
+                      &nbsp;{formatDistance(formatFrom, formatTo, formatOpts)}
+                    </>
+                  )}
                 </span>
               </h2>
             </CardHeaderWrapper>

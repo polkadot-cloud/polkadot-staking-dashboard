@@ -52,7 +52,12 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     font-family: InterSemiBold, sans-serif;
     font-size: 1.1rem;
     margin-top: 0.2rem;
-    margin-left: 0.3rem;
+    margin-left: 0.4rem;
+  }
+  .networkIcon {
+    width: 1.9rem;
+    height: 1.9rem;
+    margin-right: 0.55rem;
   }
 
   > div {
