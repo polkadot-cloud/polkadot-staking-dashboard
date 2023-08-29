@@ -1,8 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonHelp } from '@polkadot-cloud/react';
-import { ReactOdometer } from '@polkadotcloud/react-odometer';
+import { ButtonHelp, Odometer } from '@polkadot-cloud/react';
 import { useHelp } from 'contexts/Help';
 import { StatBox } from './Item';
 import type { NumberProps } from './types';
@@ -22,8 +21,13 @@ export const Number = ({
       <div className="content chart">
         <div className="labels">
           <h3>
-            <ReactOdometer duration={150} value={value} decimals={decimals} />
-            {unit || null}
+            <Odometer value={value.toFixed(decimals)} />
+            {unit ? (
+              <>
+                <span style={{ paddingLeft: '0.2rem' }} />
+                {unit}
+              </>
+            ) : null}
           </h3>
           <h4>
             {label}

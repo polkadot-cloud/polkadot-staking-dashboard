@@ -1512,10 +1512,20 @@
   resolved "https://registry.npmjs.org/@polkadot-cloud/core/-/core-0.1.6.tgz#c82934fdbc1fd5e9759de30f2bb6881cec2a5bf4"
   integrity sha512-4nftY+1sXXG4qauZhlagafdWsBLewnuk+UtqA8z5AIADr2QmEfsuQMBXIwsAZIaHPvP2/VfjCwLEBKQR3uWAow==
 
-"@polkadot-cloud/core@^0.1.7":
-  version "0.1.7"
-  resolved "https://registry.npmjs.org/@polkadot-cloud/core/-/core-0.1.7.tgz#ec46b59efc2067d1fea26b3cccb36ee1b51be14a"
-  integrity sha512-5z4grPh78Z/BZS0hmwJHxEYB+oIUwxNorCaV1TwewyFGvmrLDkeCOVnH/J+mLZAj/v/3UkV+R1nOP4iJubFvnQ==
+"@polkadot-cloud/core@^0.1.10":
+  version "0.1.10"
+  resolved "https://registry.npmjs.org/@polkadot-cloud/core/-/core-0.1.10.tgz#5b438fd05c8258a37c2a19853ce6338874240843"
+  integrity sha512-xSu9ldyY5/soILHfmzQ0BKE0wJCaliIuTJxGGVHnaiFHIid9+CRkaVAkmh1y3+FUgil9ASV6CcmBSFasvwm7Xw==
+
+"@polkadot-cloud/react@0.1.24":
+  version "0.1.24"
+  resolved "https://registry.npmjs.org/@polkadot-cloud/react/-/react-0.1.24.tgz#b5f0d48e9ab2c9d39c0b2edea26f1efa39814947"
+  integrity sha512-gdtJ6g778GGZFpDZGrEWpY77r+8ZPbhtng401CF/pG1JpKiEA8YqdeCWrN0xoJSqPSPo8jBP9WW+ytgs6GIlDA==
+  dependencies:
+    "@polkadot-cloud/core" "^0.1.10"
+    "@polkadot-cloud/react" "^0.1.20"
+    "@polkadot-cloud/utils" "^0.0.4"
+    react-error-boundary "^4.0.11"
 
 "@polkadot-cloud/react@^0.1.20":
   version "0.1.20"
