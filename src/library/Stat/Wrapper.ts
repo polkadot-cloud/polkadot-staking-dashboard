@@ -64,6 +64,7 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
         display: flex;
         font-family: InterBold, sans-serif;
         text-overflow: ellipsis;
+        line-height: 1.4rem;
       }
 
       .identicon {
