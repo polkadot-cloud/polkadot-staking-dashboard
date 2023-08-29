@@ -3,6 +3,7 @@
 
 import { ButtonHelp, Odometer } from '@polkadot-cloud/react';
 import { useHelp } from 'contexts/Help';
+import BigNumber from 'bignumber.js';
 import { StatBox } from './Item';
 import type { NumberProps } from './types';
 
@@ -21,7 +22,11 @@ export const Number = ({
       <div className="content chart">
         <div className="labels">
           <h3>
-            <Odometer value={value.toFixed(decimals)} />
+            <Odometer
+              value={new BigNumber(value)
+                .decimalPlaces(decimals || 0)
+                .toFormat()}
+            />
             {unit ? (
               <>
                 <span style={{ paddingLeft: '0.2rem' }} />
