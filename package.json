@@ -34,7 +34,6 @@
     "@polkadot/rpc-provider": "^10.9.1",
     "@polkadot/util": "^12.4.2",
     "@polkadot/util-crypto": "12.3.2",
-    "@polkadotcloud/react-odometer": "^0.1.19",
     "@substrate/connect": "^0.7.31",
     "@zondax/ledger-substrate": "^0.41.1",
     "bignumber.js": "^9.1.2",
