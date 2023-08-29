@@ -9,7 +9,7 @@ import {
   ButtonSecondary,
   Odometer,
 } from '@polkadot-cloud/react';
-import { applyWidthAsPadding } from '@polkadot-cloud/utils';
+import { applyWidthAsPadding, minDecimalPlaces } from '@polkadot-cloud/utils';
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { useHelp } from 'contexts/Help';
 import { useNotifications } from 'contexts/Notifications';
@@ -69,7 +69,11 @@ export const Stat = ({
               marginRight: '0.55rem',
             }}
           />
-          <Odometer value={stat.value} spaceAfter="0.4rem" zeroDecimals={2} />
+          <Odometer
+            value={minDecimalPlaces(stat.value, 2)}
+            spaceAfter="0.4rem"
+            zeroDecimals={2}
+          />
           {stat?.unit ? stat.unit : null}
         </h2>
       );

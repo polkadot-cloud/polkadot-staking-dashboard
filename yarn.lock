@@ -1536,6 +1536,11 @@
     "@polkadot-cloud/utils" "^0.0.4"
     react-error-boundary "^4.0.11"
 
+"@polkadot-cloud/utils@0.0.6":
+  version "0.0.6"
+  resolved "https://registry.npmjs.org/@polkadot-cloud/utils/-/utils-0.0.6.tgz#ea0fc18c6af7cd6a1d14ae6674f19b1b3ef82347"
+  integrity sha512-alm1zdqRcuBm9a59jy0yPKWY4FTenQTKvLSrX/+8aV0YbkwQ6vBkUwhs3FMi5GI52pC68X6VO5DzwVscg6kvEg==
+
 "@polkadot-cloud/utils@^0.0.4":
   version "0.0.4"
   resolved "https://registry.npmjs.org/@polkadot-cloud/utils/-/utils-0.0.4.tgz#660d5ea9dbf6548f0f7ae9d0d4b86e6016d90c23"
