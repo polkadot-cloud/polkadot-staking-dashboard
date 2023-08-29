@@ -103,6 +103,7 @@ export const Overview = () => {
                           units
                         ).toFormat()
                   }
+                  zeroDecimals={2}
                 />
 
                 <span className="note">

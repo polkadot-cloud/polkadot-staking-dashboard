@@ -134,7 +134,7 @@ export const BalanceChart = () => {
         <h4>{t('overview.balance')}</h4>
         <h2>
           <Token className="networkIcon" />
-          <Odometer value={totalBalance.toFormat()} />
+          <Odometer value={totalBalance.toFormat()} zeroDecimals={2} />
           <span className="note">
             {plugins.includes('binance_spot') ? (
               <>&nbsp;{usdFormatter.format(freeFiat.toNumber())}</>

@@ -69,7 +69,7 @@ export const Stat = ({
               marginRight: '0.55rem',
             }}
           />
-          <Odometer value={stat.value} spaceAfter="0.4rem" />
+          <Odometer value={stat.value} spaceAfter="0.4rem" zeroDecimals={2} />
           {stat?.unit ? stat.unit : null}
         </h2>
       );

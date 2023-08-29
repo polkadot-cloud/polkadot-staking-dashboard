@@ -55,7 +55,10 @@ export const ManageBond = () => {
         </h4>
         <h2>
           <Token className="networkIcon" />
-          <Odometer value={planckToUnit(active, units).toFormat()} />
+          <Odometer
+            value={planckToUnit(active, units).toFormat()}
+            zeroDecimals={2}
+          />
         </h2>
         <ButtonRow>
           <ButtonPrimary
