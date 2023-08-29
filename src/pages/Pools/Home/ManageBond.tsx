@@ -30,7 +30,10 @@ export const ManageBond = () => {
   const { getTransferOptions } = useTransferOptions();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { isBonding, isMember, selectedActivePool } = useActivePools();
-  const { units } = network;
+  const {
+    units,
+    brand: { token: Token },
+  } = network;
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const {
@@ -51,11 +54,11 @@ export const ManageBond = () => {
           <ButtonHelp marginLeft onClick={() => openHelp('Bonded in Pool')} />
         </h4>
         <h2>
+          <Token className="networkIcon" />
           <Odometer
             value={planckToUnit(active, units).toFormat()}
-            spaceAfter="0.4rem"
+            zeroDecimals={2}
           />
-          {network.unit}
         </h2>
         <ButtonRow>
           <ButtonPrimary

@@ -44,7 +44,9 @@ export const Overview = () => {
     poolClaims,
     unclaimedPayouts
   );
-
+  const {
+    brand: { token: Token },
+  } = network;
   const PAYOUTS_HEIGHT = 380;
 
   let formatFrom = new Date();
@@ -91,6 +93,7 @@ export const Overview = () => {
             <CardHeaderWrapper>
               <h4>{t('overview.recentPayouts')}</h4>
               <h2>
+                <Token className="networkIcon" />
                 <Odometer
                   value={
                     lastReward === null
@@ -100,9 +103,8 @@ export const Overview = () => {
                           units
                         ).toFormat()
                   }
-                  spaceAfter="0.4rem"
+                  zeroDecimals={2}
                 />
-                {network.unit}
 
                 <span className="note">
                   {lastReward === null ? (

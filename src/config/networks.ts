@@ -12,6 +12,10 @@ import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_logo.svg';
 import { ReactComponent as WestendIconSVG } from 'img/westend_icon.svg';
 import { ReactComponent as WestendInlineSVG } from 'img/westend_inline.svg';
 import { ReactComponent as WestendLogoSVG } from 'img/westend_logo.svg';
+import { ReactComponent as PolkadotTokenSVG } from 'config/tokens/svg/DOT.svg';
+import { ReactComponent as KusamaTokenSVG } from 'config/tokens/svg/KSM.svg';
+import { ReactComponent as WestendTokenSVG } from 'config/tokens/svg/WND.svg';
+
 import type { Networks } from 'types';
 
 export const NetworkList: Networks = {
@@ -50,6 +54,7 @@ export const NetworkList: Networks = {
     ss58: 0,
     brand: {
       icon: PolkadotIconSVG,
+      token: PolkadotTokenSVG,
       logo: {
         svg: PolkadotLogoSVG,
         width: '7.2em',
@@ -104,6 +109,7 @@ export const NetworkList: Networks = {
     ss58: 2,
     brand: {
       icon: KusamaIconSVG,
+      token: KusamaTokenSVG,
       logo: {
         svg: KusamaLogoSVG,
         width: '7.2em',
@@ -160,6 +166,7 @@ export const NetworkList: Networks = {
     ss58: 42,
     brand: {
       icon: WestendIconSVG,
+      token: WestendTokenSVG,
       logo: {
         svg: WestendLogoSVG,
         width: '7.1em',

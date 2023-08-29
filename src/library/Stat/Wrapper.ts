@@ -61,8 +61,9 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
       overflow: hidden;
 
       h2 {
-        display: flex;
         font-family: InterBold, sans-serif;
+        display: flex;
+        align-items: center;
         text-overflow: ellipsis;
         line-height: 1.4rem;
       }
