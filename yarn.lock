@@ -1747,9 +1747,22 @@
     bn.js "^5.2.1"
     tslib "^2.5.3"
 
-"@polkadot/util@^12.3.1", "@polkadot/util@^12.4.2":
+"@polkadot/util@^12.3.1":
   version "12.4.2"
   resolved "https://registry.yarnpkg.com/@polkadot/util/-/util-12.4.2.tgz#65759f4b366c2a787fd21abacab8cf8ab1aebbf9"
+  integrity sha512-NcTCbnIzMb/3TvJNEbaiu/9EvYIBuzDwZfqQ4hzL0GAptkF8aDkKMDCfQ/j3FI38rR+VTPQHNky9fvWglGKGRw==
+  dependencies:
+    "@polkadot/x-bigint" "12.4.2"
+    "@polkadot/x-global" "12.4.2"
+    "@polkadot/x-textdecoder" "12.4.2"
+    "@polkadot/x-textencoder" "12.4.2"
+    "@types/bn.js" "^5.1.1"
+    bn.js "^5.2.1"
+    tslib "^2.6.2"
+
+"@polkadot/util@^12.4.2":
+  version "12.4.2"
+  resolved "https://registry.npmjs.org/@polkadot/util/-/util-12.4.2.tgz#65759f4b366c2a787fd21abacab8cf8ab1aebbf9"
   integrity sha512-NcTCbnIzMb/3TvJNEbaiu/9EvYIBuzDwZfqQ4hzL0GAptkF8aDkKMDCfQ/j3FI38rR+VTPQHNky9fvWglGKGRw==
   dependencies:
     "@polkadot/x-bigint" "12.4.2"
