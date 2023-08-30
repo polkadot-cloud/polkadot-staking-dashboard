@@ -6,7 +6,7 @@ import { Stat } from 'library/Stat';
 import { usePayouts } from 'contexts/Payouts';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
-import { planckToUnit } from '@polkadot-cloud/utils';
+import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
 
 export const UnclaimedPayoutsStatus = () => {
   const { t } = useTranslation('pages');
@@ -27,7 +27,10 @@ export const UnclaimedPayoutsStatus = () => {
       helpKey="Payout"
       type="odometer"
       stat={{
-        value: planckToUnit(totalUnclaimed, network.units).toFormat(),
+        value: minDecimalPlaces(
+          planckToUnit(totalUnclaimed, network.units).toFormat(),
+          2
+        ),
       }}
     />
   );

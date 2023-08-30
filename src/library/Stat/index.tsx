@@ -7,13 +7,14 @@ import {
   ButtonHelp,
   ButtonPrimary,
   ButtonSecondary,
+  PolkadotIcon,
   Odometer,
 } from '@polkadot-cloud/react';
-import { applyWidthAsPadding } from '@polkadot-cloud/utils';
+import { applyWidthAsPadding, minDecimalPlaces } from '@polkadot-cloud/utils';
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { useHelp } from 'contexts/Help';
 import { useNotifications } from 'contexts/Notifications';
-import { Identicon } from 'library/Identicon';
+import { useTheme } from 'contexts/Themes';
 import { useApi } from 'contexts/Api';
 import { Wrapper } from './Wrapper';
 import type { StatAddress, StatProps } from './types';
@@ -33,6 +34,7 @@ export const Stat = ({
   } = useApi().network;
   const { addNotification } = useNotifications();
   const { openHelp } = useHelp();
+  const { mode } = useTheme();
 
   const containerRef = useRef<HTMLDivElement>(null);
   const subjectRef = useRef<HTMLDivElement>(null);
@@ -69,7 +71,11 @@ export const Stat = ({
               marginRight: '0.55rem',
             }}
           />
-          <Odometer value={stat.value} spaceAfter="0.4rem" zeroDecimals={2} />
+          <Odometer
+            value={minDecimalPlaces(stat.value, 2)}
+            spaceAfter="0.4rem"
+            zeroDecimals={2}
+          />
           {stat?.unit ? stat.unit : null}
         </h2>
       );
@@ -108,8 +114,10 @@ export const Stat = ({
           ) : null}
           {type === 'address' ? (
             <div className="identicon">
-              <Identicon
-                value={(stat as StatAddress)?.address || ''}
+              <PolkadotIcon
+                dark={mode === 'dark'}
+                nocopy
+                address={(stat as StatAddress)?.address || ''}
                 size={26}
               />
             </div>

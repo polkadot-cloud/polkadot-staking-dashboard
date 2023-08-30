@@ -8,7 +8,7 @@ import {
   ButtonRow,
   Odometer,
 } from '@polkadot-cloud/react';
-import { planckToUnit } from '@polkadot-cloud/utils';
+import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
 import type BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -56,7 +56,7 @@ export const ManageBond = () => {
         <h2>
           <Token className="networkIcon" />
           <Odometer
-            value={planckToUnit(active, units).toFormat()}
+            value={minDecimalPlaces(planckToUnit(active, units).toFormat(), 2)}
             zeroDecimals={2}
           />
         </h2>
