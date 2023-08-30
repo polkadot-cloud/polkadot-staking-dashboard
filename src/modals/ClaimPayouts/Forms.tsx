@@ -22,9 +22,9 @@ import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef(({ setSection, payout }: any, ref: any) => {
   const { t } = useTranslation('modals');
-  const { setModalStatus } = useOverlay().modal;
   const { api, network } = useApi();
   const { activeAccount } = useConnect();
+  const { setModalStatus } = useOverlay().modal;
   const { getSignerWarnings } = useSignerWarnings();
   const { units } = network;
 
