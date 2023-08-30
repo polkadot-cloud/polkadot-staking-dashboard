@@ -7,11 +7,16 @@ import { usePayouts } from 'contexts/Payouts';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
+import { faCircleDown } from '@fortawesome/free-solid-svg-icons';
+import { useConnect } from 'contexts/Connect';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const UnclaimedPayoutsStatus = () => {
-  const { t } = useTranslation('pages');
-  const { network } = useApi();
+  const { t } = useTranslation();
+  const { network, isReady } = useApi();
+  const { openModal } = useOverlay().modal;
   const { unclaimedPayouts } = usePayouts();
+  const { activeAccount, isReadOnlyAccount } = useConnect();
 
   const totalUnclaimed = Object.values(unclaimedPayouts || {}).reduce(
     (total, validators) =>
@@ -23,7 +28,7 @@ export const UnclaimedPayoutsStatus = () => {
 
   return (
     <Stat
-      label={t('nominate.pendingPayouts')}
+      label={t('nominate.pendingPayouts', { ns: 'pages' })}
       helpKey="Payout"
       type="odometer"
       stat={{
@@ -32,6 +37,23 @@ export const UnclaimedPayoutsStatus = () => {
           2
         ),
       }}
+      buttons={
+        Object.keys(unclaimedPayouts || {}).length > 0
+          ? [
+              {
+                title: t('claim', { ns: 'modals' }),
+                icon: faCircleDown,
+                disabled: !isReady || isReadOnlyAccount(activeAccount),
+                small: true,
+                onClick: () =>
+                  openModal({
+                    key: 'ClaimPayouts',
+                    size: 'sm',
+                  }),
+              },
+            ]
+          : undefined
+      }
     />
   );
 };
