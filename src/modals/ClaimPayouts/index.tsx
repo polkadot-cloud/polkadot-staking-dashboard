@@ -21,7 +21,7 @@ export const ClaimPayouts = () => {
   const { unclaimedPayouts } = usePayouts();
   const { setModalHeight } = useOverlay().modal;
 
-  // active modal section
+  // Active modal section.
   const [section, setSectionState] = useState(0);
   const sectionRef = useRef(section);
 
@@ -29,10 +29,9 @@ export const ClaimPayouts = () => {
     setStateWithRef(s, setSectionState, sectionRef);
   };
 
-  // Unclaimed payout of interest.
+  // Unclaimed payout(s) that will be applied to submission form.
   const [payouts, setPayouts] = useState<ActivePayout[] | null>(null);
 
-  // refs for wrappers
   const headerRef = useRef<HTMLDivElement>(null);
   const overviewRef = useRef<HTMLDivElement>(null);
   const formsRef = useRef<HTMLDivElement>(null);
@@ -52,7 +51,7 @@ export const ClaimPayouts = () => {
     setModalHeight(getModalHeight());
   }, [unclaimedPayouts, notEnoughFunds, section]);
 
-  // resize this modal on window resize
+  // Resize this modal on window resize.
   useEffect(() => {
     window.addEventListener('resize', resizeCallback);
     return () => {

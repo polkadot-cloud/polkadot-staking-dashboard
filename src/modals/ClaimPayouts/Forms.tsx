@@ -82,7 +82,8 @@ export const Forms = forwardRef(
         setModalStatus('closing');
       },
       callbackInBlock: () => {
-        // TODO: Remove Subscan unclaimed payout record if it exists & subscan is enabled.
+        // TODO: Remove Subscan unclaimed payout record if it exists.
+        // TOOD: deduct from `unclaimedPayouts` in Payouts context.
       },
     });
 
