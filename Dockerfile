@@ -1,24 +1,15 @@
-FROM node:18
+# build environment
+FROM node:18 as build
 WORKDIR /app
 COPY . .
-# RUN mkdir /root/.ssh
-# ADD ./.ssh/ /root/.ssh
-# RUN chown node:node /app package.json yarn.lock
-# USER node
-# RUN useradd nodeUser
-# RUN su - nodeUser
-# RUN mkdir ~/.ssh/
-# RUN cd ~/.ssh && ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa
-
 RUN npm install yarn --legacy-peer-deps
-
-# RUN touch ~/.ssh/known_hosts
-# RUN ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-# RUN eval $(ssh-agent)
-
 RUN git config --global url."https://github.com/".insteadOf git@github.com:
 RUN git config --global url."https://".insteadOf ssh://git
+RUN yarn install
+RUN yarn build
 
-RUN yarn install 
-CMD ["yarn", "dev"]
-EXPOSE 5173
+# production environment
+FROM nginx:1.16.0-alpine
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

@@ -2,14 +2,9 @@
 
 # Creditcoin Staking Dashboard
 
-#### Staging (Latest Version):
-
-https://staking-dashboard-test-app.azurewebsites.net
-
 #### Production:
 
 https://staking.creditcoin.org
-
 
 ## Validator Operator Setup Guide
 
@@ -68,7 +63,7 @@ export const ValidatorCommunity = [
 ### General Requirements
 
 | Requirement | Notes                                                                                                                                                                                             |
-| ----------- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Accuracy    | Operator contact details must be working and valid.                                                                                                                                               |
 | Liveness    | All submitted validator addresses must be discoverable as a validator on the network in question - whether Mainnet or Testnet.                                                                    |
 | Ordering    | Please place your operator in alphabetical order within `ValidatorCommunity`. Operators are shuffled before being displayed in the dashboard, removing any bias associated with ordering methods. |

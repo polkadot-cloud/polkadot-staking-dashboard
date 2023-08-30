@@ -25,13 +25,14 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn install
+      - run: yarn list
       - run: yarn build
       - run: yarn lint
       - run: yarn test
 
   all:
     # This job ensures that all jobs above (now we have just build) are successful.
-    needs: [check-license-lines, build, validate-locales]
+    needs: [check-license-lines, build]
     runs-on: ubuntu-latest
     steps:
       - run: echo Success

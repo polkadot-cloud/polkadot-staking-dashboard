@@ -58,7 +58,7 @@ export const Announcements = () => {
 
   const announcements = [];
 
-  const networkUnit = network.unit;
+  // const networkUnit = network.unit;
 
   // total staked on the network
   if (!isSyncing) {

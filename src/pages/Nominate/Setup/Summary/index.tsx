@@ -51,6 +51,9 @@ export const Summary = ({ section }: SetupStepProps) => {
         : payee.destination;
 
     const bondToSubmit = unitToPlanck(bond, units);
+    if (bondToSubmit.isNegative()) {
+      return;
+    }
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toFixed();
 
     const txs = [
@@ -111,7 +114,10 @@ export const Summary = ({ section }: SetupStepProps) => {
               {t('nominate.bondAmount')}:
             </div>
             <div>
-              {new BigNumber(bond).toFormat()} {network.unit}
+              {bond > 0
+                ? new BigNumber(bond).toFormat()
+                : new BigNumber(0).toFormat()}
+              {network.unit}
             </div>
           </section>
         </SummaryWrapper>

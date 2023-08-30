@@ -12,6 +12,12 @@ import { ReactComponent as TalismanSVG } from './icons/talisman.svg';
 
 export const Extensions: ExtensionConfig[] = [
   {
+    id: 'subwallet-js',
+    title: 'SubWallet',
+    icon: SubwalletSVG,
+    url: 'subwallet.app',
+  },
+  {
     id: 'polkadot-js',
     title: (window as any)?.walletExtension?.isNovaWallet
       ? 'Nova Wallet'
@@ -40,12 +46,6 @@ export const Extensions: ExtensionConfig[] = [
     title: 'PolkaGate',
     icon: PolkaGateSVG,
     url: 'polkagate.xyz',
-  },
-  {
-    id: 'subwallet-js',
-    title: 'SubWallet',
-    icon: SubwalletSVG,
-    url: 'subwallet.app',
   },
   {
     id: 'talisman',

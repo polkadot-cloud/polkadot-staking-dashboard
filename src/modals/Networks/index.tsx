@@ -96,18 +96,6 @@ export const Networks = () => {
               <h3>RPC</h3>
               {!isLightClient && <h4 className="selected">{t('selected')}</h4>}
             </ConnectionButton>
-            <ConnectionButton
-              connected={isLightClient}
-              className="off"
-              type="button"
-              onClick={() => {
-                switchNetwork(networkKey as NetworkName, true);
-                setStatus(0);
-              }}
-            >
-              <h3>{t('lightClient')}</h3>
-              {isLightClient && <h4 className="selected">{t('selected')}</h4>}
-            </ConnectionButton>
           </ConnectionsWrapper>
 
           {braveBrowser ? (
