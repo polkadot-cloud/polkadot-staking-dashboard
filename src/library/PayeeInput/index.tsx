@@ -8,7 +8,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import { Identicon } from 'library/Identicon';
+import { PolkadotIcon } from '@polkadot-cloud/react';
+import { useTheme } from 'contexts/Themes';
 import { Wrapper } from './Wrapper';
 import type { PayeeInputProps } from './types';
 
@@ -21,6 +22,7 @@ export const PayeeInput = ({
   const { t } = useTranslation('library');
   const { activeAccount, formatAccountSs58, accounts } = useConnect();
   const { getBondedAccount } = useBonded();
+  const { mode } = useTheme();
   const controller = getBondedAccount(activeAccount);
 
   const accountMeta = accounts.find((a) => a.address === activeAccount);
@@ -96,8 +98,10 @@ export const PayeeInput = ({
             {showEmpty ? (
               <div className="emptyIcon" />
             ) : (
-              <Identicon
-                value={accountDisplay || ''}
+              <PolkadotIcon
+                dark={mode === 'dark'}
+                nocopy
+                address={accountDisplay || ''}
                 size={remToUnit('2.5rem')}
               />
             )}

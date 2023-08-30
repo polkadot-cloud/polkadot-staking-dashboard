@@ -10,7 +10,8 @@ import { useConnect } from 'contexts/Connect';
 import { useNotifications } from 'contexts/Notifications';
 import type { NotificationText } from 'contexts/Notifications/types';
 import { useProxies } from 'contexts/Proxies';
-import { Identicon } from 'library/Identicon';
+import { PolkadotIcon } from '@polkadot-cloud/react';
+import { useTheme } from 'contexts/Themes';
 import { ItemWrapper } from './Wrappers';
 import type { ActiveAccountProps } from './types';
 
@@ -19,6 +20,7 @@ export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
   const { addNotification } = useNotifications();
   const { getAccount } = useConnect();
   const { getProxyDelegate } = useProxies();
+  const { mode } = useTheme();
 
   const primaryAddress = delegate || address || '';
   const delegatorAddress = delegate ? address : null;
@@ -44,14 +46,21 @@ export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
             <>
               {delegatorAddress && (
                 <div className="delegator">
-                  <Identicon
-                    value={delegatorAddress || ''}
+                  <PolkadotIcon
+                    dark={mode === 'dark'}
+                    nocopy
+                    address={delegatorAddress || ''}
                     size={remToUnit('1.7rem')}
                   />
                 </div>
               )}
               <div className="icon">
-                <Identicon value={primaryAddress} size={remToUnit('1.7rem')} />
+                <PolkadotIcon
+                  dark={mode === 'dark'}
+                  nocopy
+                  address={primaryAddress}
+                  size={remToUnit('1.7rem')}
+                />
               </div>
               {delegatorAddress && (
                 <>
