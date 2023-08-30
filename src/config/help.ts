@@ -131,6 +131,7 @@ export const HelpConfig: HelpItems = [
       'Commission',
       'Over Subscribed',
       'Blocked Nominations',
+      'Rewards By Country And Network',
     ],
     external: [
       [
