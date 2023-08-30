@@ -30,7 +30,7 @@ export const ClaimPayouts = () => {
   };
 
   // Unclaimed payout of interest.
-  const [payout, setPayout] = useState<ActivePayout | null>(null);
+  const [payouts, setPayouts] = useState<ActivePayout[] | null>(null);
 
   // refs for wrappers
   const headerRef = useRef<HTMLDivElement>(null);
@@ -86,10 +86,10 @@ export const ClaimPayouts = () => {
       >
         <Overview
           setSection={setSection}
-          setPayout={setPayout}
+          setPayouts={setPayouts}
           ref={overviewRef}
         />
-        <Forms setSection={setSection} payout={payout} ref={formsRef} />
+        <Forms setSection={setSection} payouts={payouts} ref={formsRef} />
       </ModalMotionTwoSection>
     </ModalSection>
   );

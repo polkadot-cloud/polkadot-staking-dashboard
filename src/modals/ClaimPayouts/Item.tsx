@@ -9,16 +9,21 @@ import { planckToUnit } from '@polkadot-cloud/utils';
 import { ItemWrapper } from './Wrappers';
 import type { ItemProps } from './types';
 
-export const Item = ({ era, payouts, setPayout, setSection }: ItemProps) => {
+export const Item = ({
+  era,
+  unclaimedPayout,
+  setPayouts,
+  setSection,
+}: ItemProps) => {
   const { t } = useTranslation('modals');
   const { network } = useApi();
 
-  const totalPayout = Object.values(payouts).reduce(
+  const totalPayout = Object.values(unclaimedPayout).reduce(
     (acc: BigNumber, cur: string) => acc.plus(cur),
     new BigNumber(0)
   );
 
-  const numPayouts = Object.values(payouts).length;
+  const numPayouts = Object.values(unclaimedPayout).length;
 
   return (
     <ItemWrapper>
@@ -40,11 +45,13 @@ export const Item = ({ era, payouts, setPayout, setSection }: ItemProps) => {
             <ButtonSubmit
               text={t('claim')}
               onClick={() => {
-                setPayout({
-                  era,
-                  payout: totalPayout.toString(),
-                  validators: Object.keys(payouts),
-                });
+                setPayouts([
+                  {
+                    era,
+                    payout: totalPayout.toString(),
+                    validators: Object.keys(unclaimedPayout),
+                  },
+                ]);
                 setSection(1);
               }}
             />

@@ -6,9 +6,10 @@ import { forwardRef } from 'react';
 import { usePayouts } from 'contexts/Payouts';
 import { Item } from './Item';
 import { ContentWrapper } from './Wrappers';
+import type { OverviewProps } from './types';
 
 export const Overview = forwardRef(
-  ({ setSection, setPayout }: any, ref: any) => {
+  ({ setSection, setPayouts }: OverviewProps, ref: any) => {
     const { unclaimedPayouts } = usePayouts();
 
     return (
@@ -19,22 +20,26 @@ export const Overview = forwardRef(
               disabled={Object.values(unclaimedPayouts || {}).length === 0}
               text="Claim All"
               onClick={() => {
-                setPayout({
-                  era: 0,
-                  value: 5000000000,
-                });
+                // TODO: plug real values for all payouts.
+                setPayouts([
+                  {
+                    era: '0',
+                    payout: '5000000000',
+                    validators: [''],
+                  },
+                ]);
                 setSection(1);
               }}
             />
           </div>
 
           {Object.entries(unclaimedPayouts || {}).map(
-            ([era, payouts]: any, i: number) => (
+            ([era, unclaimedPayout]: any, i: number) => (
               <Item
                 key={`unclaimed_payout_${i}`}
                 era={era}
-                payouts={payouts}
-                setPayout={setPayout}
+                unclaimedPayout={unclaimedPayout}
+                setPayouts={setPayouts}
                 setSection={setSection}
               />
             )

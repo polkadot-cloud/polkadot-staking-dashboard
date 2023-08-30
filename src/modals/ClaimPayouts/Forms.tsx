@@ -19,99 +19,114 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useBatchCall } from 'library/Hooks/useBatchCall';
+import type { AnyApi } from 'types';
+import type { FormProps, ActivePayout } from './types';
 import { ContentWrapper } from './Wrappers';
 
-export const Forms = forwardRef(({ setSection, payout }: any, ref: any) => {
-  const { t } = useTranslation('modals');
-  const { api, network } = useApi();
-  const { activeAccount } = useConnect();
-  const { newBatchCall } = useBatchCall();
-  const { setModalStatus } = useOverlay().modal;
-  const { getSignerWarnings } = useSignerWarnings();
-  const { units } = network;
+export const Forms = forwardRef(
+  ({ setSection, payouts }: FormProps, ref: any) => {
+    const { t } = useTranslation('modals');
+    const { api, network } = useApi();
+    const { activeAccount } = useConnect();
+    const { newBatchCall } = useBatchCall();
+    const { setModalStatus } = useOverlay().modal;
+    const { getSignerWarnings } = useSignerWarnings();
+    const { units } = network;
 
-  const era = payout?.era ?? '';
-  const totalPayout = new BigNumber(payout?.payout || 0);
-  const validators = payout?.validators ?? [];
+    const totalPayout =
+      payouts?.reduce(
+        (total: BigNumber, cur: ActivePayout) => total.plus(cur.payout),
+        new BigNumber(0)
+      ) || new BigNumber(0);
 
-  // Store whether form is valid to submit transaction.
-  const [valid, setValid] = useState<boolean>(
-    totalPayout.isGreaterThan(0) && validators.length > 0
-  );
+    const getCalls = () => {
+      if (!api) return [];
 
-  // Ensure payout value is valid.
-  useEffect(() => {
-    setValid(totalPayout.isGreaterThan(0) && validators.length > 0);
-  }, [payout]);
-
-  const getTx = () => {
-    const tx = null;
-    if (!valid || !api) return tx;
-
-    return validators.length === 1
-      ? api.tx.staking.payoutStakers('', era)
-      : newBatchCall(
-          validators.map((v: string) => api.tx.staking.payoutStakers(v, era)),
-          activeAccount
+      const calls: AnyApi[] = [];
+      payouts?.forEach(({ era, validators }) => {
+        if (!validators) return [];
+        return validators.forEach((v) =>
+          calls.push(api.tx.staking.payoutStakers(v, era))
         );
-  };
+      });
+      return calls;
+    };
 
-  const submitExtrinsic = useSubmitExtrinsic({
-    tx: getTx(),
-    from: activeAccount,
-    shouldSubmit: valid,
-    callbackSubmit: () => {
-      setModalStatus('closing');
-    },
-    callbackInBlock: () => {
-      // TODO: Remove subscan unclaimed payout record if it exists & subscan is enabled.
-    },
-  });
+    // Store whether form is valid to submit transaction.
+    const [valid, setValid] = useState<boolean>(
+      totalPayout.isGreaterThan(0) && getCalls().length > 0
+    );
 
-  const warnings = getSignerWarnings(
-    activeAccount,
-    false,
-    submitExtrinsic.proxySupported
-  );
+    // Ensure payouts value is valid.
+    useEffect(
+      () => setValid(totalPayout.isGreaterThan(0) && getCalls().length > 0),
+      [payouts]
+    );
 
-  return (
-    <ContentWrapper>
-      <div ref={ref}>
-        <div className="padding">
-          {warnings.length > 0 ? (
-            <ModalWarnings withMargin>
-              {warnings.map((text, i) => (
-                <Warning key={`warning${i}`} text={text} />
-              ))}
-            </ModalWarnings>
-          ) : null}
-          <div style={{ marginBottom: '2rem' }}>
-            <ActionItem
-              text={`${t('claim')} ${planckToUnit(totalPayout, units)} ${
-                network.unit
-              }`}
-            />
-            <p>
-              Funds will be immediately available as free balance after
-              claiming.
-            </p>
+    const getTx = () => {
+      const tx = null;
+      if (!valid || !api) return tx;
+      const calls = getCalls();
+      return calls.length === 1 ? calls[1] : newBatchCall(calls, activeAccount);
+    };
+
+    const submitExtrinsic = useSubmitExtrinsic({
+      tx: getTx(),
+      from: activeAccount,
+      shouldSubmit: valid,
+      callbackSubmit: () => {
+        setModalStatus('closing');
+      },
+      callbackInBlock: () => {
+        // TODO: Remove Subscan unclaimed payout record if it exists & subscan is enabled.
+      },
+    });
+
+    const warnings = getSignerWarnings(
+      activeAccount,
+      false,
+      submitExtrinsic.proxySupported
+    );
+
+    return (
+      <ContentWrapper>
+        <div ref={ref}>
+          <div className="padding">
+            {warnings.length > 0 ? (
+              <ModalWarnings withMargin>
+                {warnings.map((text, i) => (
+                  <Warning key={`warning${i}`} text={text} />
+                ))}
+              </ModalWarnings>
+            ) : null}
+            <div style={{ marginBottom: '2rem' }}>
+              <ActionItem
+                text={`${t('claim')} ${planckToUnit(totalPayout, units)} ${
+                  network.unit
+                }`}
+              />
+              <p>
+                Funds will be immediately available as free balance after
+                claiming.
+              </p>
+            </div>
           </div>
+          <SubmitTx
+            fromController={false}
+            valid={valid}
+            buttons={[
+              <ButtonSubmitInvert
+                key="button_back"
+                text={t('back')}
+                iconLeft={faChevronLeft}
+                iconTransform="shrink-1"
+                onClick={() => setSection(0)}
+              />,
+            ]}
+            {...submitExtrinsic}
+          />
         </div>
-        <SubmitTx
-          fromController={false}
-          valid={valid}
-          buttons={[
-            <ButtonSubmitInvert
-              key="button_back"
-              text={t('back')}
-              iconLeft={faChevronLeft}
-              iconTransform="shrink-1"
-              onClick={() => setSection(0)}
-            />,
-          ]}
-          {...submitExtrinsic}
-        />
-      </div>
-    </ContentWrapper>
-  );
-});
+      </ContentWrapper>
+    );
+  }
+);

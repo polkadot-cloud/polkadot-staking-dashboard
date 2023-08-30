@@ -5,13 +5,23 @@ import type { EraUnclaimedPayouts } from 'contexts/Payouts/types';
 
 export interface ItemProps {
   era: string;
-  payouts: EraUnclaimedPayouts;
+  unclaimedPayout: EraUnclaimedPayouts;
   setSection: (v: number) => void;
-  setPayout: (payout: ActivePayout) => void;
+  setPayouts: (payout: ActivePayout[]) => void;
 }
 
 export interface ActivePayout {
   era: string;
   payout: string;
   validators: string[];
+}
+
+export interface OverviewProps {
+  setSection: (s: number) => void;
+  setPayouts: (p: ActivePayout[]) => void;
+}
+
+export interface FormProps {
+  setSection: (s: number) => void;
+  payouts: ActivePayout[] | null;
 }
