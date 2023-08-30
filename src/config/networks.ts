@@ -14,7 +14,7 @@ export const NetworkList: Networks = {
       rpc: 'wss://mainnet.creditcoin.network/ws',
       lightClient: null,
     },
-    namespace: '09573a3526818a8ecd6eb92f60f1175d',
+    namespace: 'creditcoin-mainnet',
     api: {
       unit: 'CTC',
       priceTicker: 'CTCUSDT',
