@@ -4,6 +4,7 @@
 import { ButtonSubmit, ModalNotes } from '@polkadot-cloud/react';
 import { forwardRef } from 'react';
 import { usePayouts } from 'contexts/Payouts';
+import BigNumber from 'bignumber.js';
 import { Item } from './Item';
 import { ContentWrapper } from './Wrappers';
 import type { OverviewProps } from './types';
@@ -11,6 +12,19 @@ import type { OverviewProps } from './types';
 export const Overview = forwardRef(
   ({ setSection, setPayouts }: OverviewProps, ref: any) => {
     const { unclaimedPayouts } = usePayouts();
+
+    const claimAllPayouts = Object.entries(unclaimedPayouts || {}).map(
+      ([era, validatorPayout]) => ({
+        era,
+        payout: Object.entries(validatorPayout)
+          .reduce(
+            (acc: BigNumber, [, amount]) => acc.plus(amount),
+            new BigNumber(0)
+          )
+          .toString(),
+        validators: Object.keys(validatorPayout),
+      })
+    );
 
     return (
       <ContentWrapper>
@@ -20,14 +34,7 @@ export const Overview = forwardRef(
               disabled={Object.values(unclaimedPayouts || {}).length === 0}
               text="Claim All"
               onClick={() => {
-                // TODO: plug real values for all payouts.
-                setPayouts([
-                  {
-                    era: '0',
-                    payout: '5000000000',
-                    validators: [''],
-                  },
-                ]);
+                setPayouts(claimAllPayouts);
                 setSection(1);
               }}
             />

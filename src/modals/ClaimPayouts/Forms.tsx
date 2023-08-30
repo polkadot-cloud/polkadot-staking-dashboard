@@ -45,6 +45,7 @@ export const Forms = forwardRef(
       const calls: AnyApi[] = [];
       payouts?.forEach(({ era, validators }) => {
         if (!validators) return [];
+
         return validators.forEach((v) =>
           calls.push(api.tx.staking.payoutStakers(v, era))
         );
@@ -65,9 +66,12 @@ export const Forms = forwardRef(
 
     const getTx = () => {
       const tx = null;
-      if (!valid || !api) return tx;
       const calls = getCalls();
-      return calls.length === 1 ? calls[1] : newBatchCall(calls, activeAccount);
+      if (!valid || !api || !calls.length) return tx;
+
+      return calls.length === 1
+        ? calls.pop()
+        : newBatchCall(calls, activeAccount);
     };
 
     const submitExtrinsic = useSubmitExtrinsic({
