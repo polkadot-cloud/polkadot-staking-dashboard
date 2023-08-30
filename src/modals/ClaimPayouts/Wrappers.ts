@@ -8,7 +8,9 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
   flex-basis: 50%;
-  flex: 1;
+  flex-grow: 0;
+  flex-shrink: 1;
+  height: fit-content;
 
   .padding {
     padding: 0 1rem;

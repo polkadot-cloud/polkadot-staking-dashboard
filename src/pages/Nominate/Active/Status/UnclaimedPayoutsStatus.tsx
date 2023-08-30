@@ -49,6 +49,9 @@ export const UnclaimedPayoutsStatus = () => {
                   openModal({
                     key: 'ClaimPayouts',
                     size: 'sm',
+                    options: {
+                      disableWindowResize: true,
+                    },
                   }),
               },
             ]
