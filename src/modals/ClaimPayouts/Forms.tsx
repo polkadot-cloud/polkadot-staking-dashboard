@@ -18,32 +18,42 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useBatchCall } from 'library/Hooks/useBatchCall';
 import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef(({ setSection, payout }: any, ref: any) => {
   const { t } = useTranslation('modals');
   const { api, network } = useApi();
   const { activeAccount } = useConnect();
+  const { newBatchCall } = useBatchCall();
   const { setModalStatus } = useOverlay().modal;
   const { getSignerWarnings } = useSignerWarnings();
   const { units } = network;
 
-  // TODO: Update to real values.
-  const validator = payout?.validator ?? '';
-  const value = payout?.value ?? new BigNumber(0);
+  const era = payout?.era ?? '';
+  const totalPayout = new BigNumber(payout?.payout || 0);
+  const validators = payout?.validators ?? [];
 
   // Store whether form is valid to submit transaction.
-  const [valid, setValid] = useState<boolean>(value.isGreaterThan(0));
+  const [valid, setValid] = useState<boolean>(
+    totalPayout.isGreaterThan(0) && validators.length > 0
+  );
 
   // Ensure payout value is valid.
   useEffect(() => {
-    setValid(value.isGreaterThan(0));
+    setValid(totalPayout.isGreaterThan(0) && validators.length > 0);
   }, [payout]);
 
   const getTx = () => {
     const tx = null;
     if (!valid || !api) return tx;
-    return api.tx.staking.payoutStakers(validator, '1180');
+
+    return validators.length === 1
+      ? api.tx.staking.payoutStakers('', era)
+      : newBatchCall(
+          validators.map((v: string) => api.tx.staking.payoutStakers(v, era)),
+          activeAccount
+        );
   };
 
   const submitExtrinsic = useSubmitExtrinsic({
@@ -77,11 +87,14 @@ export const Forms = forwardRef(({ setSection, payout }: any, ref: any) => {
           ) : null}
           <div style={{ marginBottom: '2rem' }}>
             <ActionItem
-              text={`${t('withdraw')} ${planckToUnit(value, units)} ${
+              text={`${t('claim')} ${planckToUnit(totalPayout, units)} ${
                 network.unit
               }`}
             />
-            <p>{t('withdrawSubtitle')}</p>
+            <p>
+              Funds will be immediately available as free balance after
+              claiming.
+            </p>
           </div>
         </div>
         <SubmitTx

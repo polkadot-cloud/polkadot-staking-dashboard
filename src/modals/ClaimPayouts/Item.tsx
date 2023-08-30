@@ -9,7 +9,7 @@ import { planckToUnit } from '@polkadot-cloud/utils';
 import { ItemWrapper } from './Wrappers';
 import type { ItemProps } from './types';
 
-export const Item = ({ era, payouts, setSection }: ItemProps) => {
+export const Item = ({ era, payouts, setPayout, setSection }: ItemProps) => {
   const { t } = useTranslation('modals');
   const { network } = useApi();
 
@@ -37,7 +37,17 @@ export const Item = ({ era, payouts, setSection }: ItemProps) => {
 
         <section>
           <div>
-            <ButtonSubmit text={t('claim')} onClick={() => setSection(1)} />
+            <ButtonSubmit
+              text={t('claim')}
+              onClick={() => {
+                setPayout({
+                  era,
+                  payout: totalPayout.toString(),
+                  validators: Object.keys(payouts),
+                });
+                setSection(1);
+              }}
+            />
           </div>
         </section>
       </div>

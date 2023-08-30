@@ -7,4 +7,11 @@ export interface ItemProps {
   era: string;
   payouts: EraUnclaimedPayouts;
   setSection: (v: number) => void;
+  setPayout: (payout: ActivePayout) => void;
+}
+
+export interface ActivePayout {
+  era: string;
+  payout: string;
+  validators: string[];
 }

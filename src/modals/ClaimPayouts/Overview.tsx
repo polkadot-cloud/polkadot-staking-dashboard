@@ -8,7 +8,7 @@ import { Item } from './Item';
 import { ContentWrapper } from './Wrappers';
 
 export const Overview = forwardRef(
-  ({ setSection, setUnlock }: any, ref: any) => {
+  ({ setSection, setPayout }: any, ref: any) => {
     const { unclaimedPayouts } = usePayouts();
 
     return (
@@ -19,7 +19,7 @@ export const Overview = forwardRef(
               disabled={Object.values(unclaimedPayouts || {}).length === 0}
               text="Claim All"
               onClick={() => {
-                setUnlock({
+                setPayout({
                   era: 0,
                   value: 5000000000,
                 });
@@ -34,6 +34,7 @@ export const Overview = forwardRef(
                 key={`unclaimed_payout_${i}`}
                 era={era}
                 payouts={payouts}
+                setPayout={setPayout}
                 setSection={setSection}
               />
             )

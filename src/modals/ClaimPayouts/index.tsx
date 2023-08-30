@@ -14,6 +14,7 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { usePayouts } from 'contexts/Payouts';
 import { Forms } from './Forms';
 import { Overview } from './Overview';
+import type { ActivePayout } from './types';
 
 export const ClaimPayouts = () => {
   const { notEnoughFunds } = useTxMeta();
@@ -28,8 +29,8 @@ export const ClaimPayouts = () => {
     setStateWithRef(s, setSectionState, sectionRef);
   };
 
-  // unlock value of interest
-  const [unlock, setUnlock] = useState(null);
+  // Unclaimed payout of interest.
+  const [payout, setPayout] = useState<ActivePayout | null>(null);
 
   // refs for wrappers
   const headerRef = useRef<HTMLDivElement>(null);
@@ -38,7 +39,6 @@ export const ClaimPayouts = () => {
 
   const getModalHeight = () => {
     let h = headerRef.current?.clientHeight ?? 0;
-
     if (sectionRef.current === 0) {
       h += overviewRef.current?.clientHeight ?? 0;
     } else {
@@ -50,7 +50,7 @@ export const ClaimPayouts = () => {
   // Resize modal on state change.
   useEffect(() => {
     setModalHeight(getModalHeight());
-  }, [unclaimedPayouts, notEnoughFunds, sectionRef.current]);
+  }, [unclaimedPayouts, notEnoughFunds, section]);
 
   // resize this modal on window resize
   useEffect(() => {
@@ -86,10 +86,10 @@ export const ClaimPayouts = () => {
       >
         <Overview
           setSection={setSection}
-          setUnlock={setUnlock}
+          setPayout={setPayout}
           ref={overviewRef}
         />
-        <Forms setSection={setSection} unlock={unlock} ref={formsRef} />
+        <Forms setSection={setSection} payout={payout} ref={formsRef} />
       </ModalMotionTwoSection>
     </ModalSection>
   );
