@@ -9,10 +9,11 @@ import { Extensions } from '@polkadot-cloud/community/extensions';
 import { useConnect } from 'contexts/Connect';
 import { ReactComponent as LedgerIconSVG } from 'img/ledgerIcon.svg';
 import { ReactComponent as PolkadotVaultIconSVG } from 'img/polkadotVault.svg';
-import { Identicon } from 'library/Identicon';
+import { PolkadotIcon } from '@polkadot-cloud/react';
 import { useApi } from 'contexts/Api';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useTheme } from 'contexts/Themes';
 import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
 
@@ -32,6 +33,8 @@ export const AccountButton = ({
     activeProxyType,
     connectToAccount,
   } = useConnect();
+  const { mode } = useTheme();
+
   const { setModalStatus } = useOverlay().modal;
   const { units, unit } = useApi().network;
   const { getTransferOptions } = useTransferOptions();
@@ -80,11 +83,21 @@ export const AccountButton = ({
           >
             {delegator && (
               <div className="delegator">
-                <Identicon value={delegator} size={23} />
+                <PolkadotIcon
+                  dark={mode === 'dark'}
+                  nocopy
+                  address={delegator}
+                  size={23}
+                />
               </div>
             )}
             <div className="identicon">
-              <Identicon value={address ?? ''} size={23} />
+              <PolkadotIcon
+                dark={mode === 'dark'}
+                nocopy
+                address={address ?? ''}
+                size={23}
+              />
             </div>
             <span className="name">
               {delegator && (

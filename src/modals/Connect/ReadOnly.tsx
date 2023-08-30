@@ -11,13 +11,14 @@ import {
   ButtonHelp,
   ButtonMonoInvert,
   ButtonSecondary,
+  PolkadotIcon,
 } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import type { ExternalAccount } from 'contexts/Connect/types';
 import { useHelp } from 'contexts/Help';
 import { AccountInput } from 'library/AccountInput';
-import { Identicon } from 'library/Identicon';
+import { useTheme } from 'contexts/Themes';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import {
   ActionWithButton,
@@ -30,6 +31,7 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');
   const { openHelp } = useHelp();
   const { setModalResize } = useOverlay().modal;
+  const { mode } = useTheme();
   const { accounts, forgetAccounts, addExternalAccount } = useConnect();
 
   // get all external accounts
@@ -86,7 +88,12 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                 <ManualAccount key={`user_external_account_${i}`}>
                   <div>
                     <span>
-                      <Identicon value={a.address} size={26} />
+                      <PolkadotIcon
+                        dark={mode === 'dark'}
+                        nocopy
+                        address={a.address}
+                        size={26}
+                      />
                     </span>
                     <div className="text">
                       <h4>{a.address}</h4>
