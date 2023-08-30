@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonHelp } from '@polkadot-cloud/react';
+import { ButtonHelp, PolkadotIcon } from '@polkadot-cloud/react';
 import { clipAddress } from '@polkadot-cloud/utils';
 import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +11,6 @@ import { DistributionDoughnut } from 'library/Graphs/DistributionDoughnut';
 import { formatSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
 import { useSize } from 'library/Hooks/useSize';
-import { Identicon } from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
 import { StatusLabel } from 'library/StatusLabel';
 import type { ValidatorDetail } from '@polkawatch/ddp-client';
@@ -19,6 +18,7 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { usePolkawatchApi } from '../../contexts/Polkawatch';
 import { PolkawatchButton } from '../../library/PolkawatchButton';
 import { usePlugins } from '../../contexts/Plugins';
+import { useTheme } from '../../contexts/Themes';
 
 export const ValidatorDecentralization = () => {
   const { t } = useTranslation('modals');
@@ -26,6 +26,7 @@ export const ValidatorDecentralization = () => {
   const { options } = useOverlay().modal.config;
   const { address, identity } = options;
   const { openHelp } = useHelp();
+  const { mode } = useTheme();
 
   const ref = useRef<HTMLDivElement>(null);
   const size = useSize(ref.current);
@@ -62,7 +63,12 @@ export const ValidatorDecentralization = () => {
     <>
       <Title title={t('validatorDecentralization')} />
       <div className="header">
-        <Identicon value={address} size={33} />
+        <PolkadotIcon
+          dark={mode === 'dark'}
+          nocopy
+          address={address}
+          size={33}
+        />
         <h2>
           &nbsp;&nbsp;
           {identity === null ? clipAddress(address) : identity}
