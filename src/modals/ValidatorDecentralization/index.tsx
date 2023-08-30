@@ -18,6 +18,7 @@ import type { ValidatorDetail } from '@polkawatch/ddp-client';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { usePolkawatchApi } from '../../contexts/Polkawatch';
 import { PolkawatchButton } from '../../library/PolkawatchButton';
+import { usePlugins } from '../../contexts/Plugins';
 
 export const ValidatorDecentralization = () => {
   const { t } = useTranslation('modals');
@@ -31,6 +32,9 @@ export const ValidatorDecentralization = () => {
   const { height, minHeight } = formatSize(size, 300);
   const [pwData, setPwData] = useState({} as ValidatorDetail);
   const [analyticsAvailable, setAnalyticsAvailable] = useState(true);
+  const { pluginEnabled } = usePlugins();
+
+  const enabled = pluginEnabled('polkawatch');
 
   // In Small Screens we will display the most relevant chart.
   // For now, we are not going to complicate the UI.
@@ -38,7 +42,7 @@ export const ValidatorDecentralization = () => {
   const chartWidth = '330px';
 
   useEffect(() => {
-    if (networkSupported)
+    if (networkSupported && enabled)
       pwApi
         .ddpIpfsValidatorDetail({
           lastDays: 60,
@@ -93,7 +97,7 @@ export const ValidatorDecentralization = () => {
               justifyContent: 'space-evenly',
             }}
           >
-            {analyticsAvailable ? (
+            {!enabled || analyticsAvailable ? (
               <StatusLabel
                 status="active_service"
                 statusFor="polkawatch"
