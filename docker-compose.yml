@@ -27,4 +27,3 @@ services:
       --port ${PORT}
       --unsafe-rpc-external
       --rpc-port ${RPC_PORT}
-
