@@ -8,7 +8,6 @@ import {
 } from '@polkadot-cloud/react';
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Title } from 'library/Modal/Title';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
@@ -17,7 +16,6 @@ import { Forms } from './Forms';
 import { Overview } from './Overview';
 
 export const ClaimPayouts = () => {
-  const { t } = useTranslation('modals');
   const { notEnoughFunds } = useTxMeta();
   const { unclaimedPayouts } = usePayouts();
   const { setModalHeight } = useOverlay().modal;
@@ -68,7 +66,7 @@ export const ClaimPayouts = () => {
   return (
     <ModalSection type="carousel">
       <ModalFixedTitle ref={headerRef}>
-        <Title title={t('unlocks')} fixed />
+        <Title title="Claim Payouts" fixed />
       </ModalFixedTitle>
       <ModalMotionTwoSection
         animate={sectionRef.current === 0 ? 'home' : 'next'}

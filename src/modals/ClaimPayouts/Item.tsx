@@ -4,29 +4,40 @@
 import { ButtonSubmit } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
+import BigNumber from 'bignumber.js';
+import { planckToUnit } from '@polkadot-cloud/utils';
 import { ItemWrapper } from './Wrappers';
+import type { ItemProps } from './types';
 
-// eslint-disable-next-line
-export const Item = ({ era, payouts, setSection }: any) => {
+export const Item = ({ era, payouts, setSection }: ItemProps) => {
   const { t } = useTranslation('modals');
   const { network } = useApi();
+
+  const totalPayout = Object.values(payouts).reduce(
+    (acc: BigNumber, cur: string) => acc.plus(cur),
+    new BigNumber(0)
+  );
+
+  const numPayouts = Object.values(payouts).length;
 
   return (
     <ItemWrapper>
       <div>
         <section>
-          <h2>
-            Era {era} Payouts ${network.unit}
-          </h2>
           <h4>
-            {t('unlocksInEra')} [era] /&nbsp;
-            <span>Countdown was here.</span>
+            <span>
+              Era {era}: {numPayouts} Pending Payout
+              {numPayouts === 1 ? '' : 's'}
+            </span>
           </h4>
+          <h2>
+            {planckToUnit(totalPayout, network.units).toString()} {network.unit}
+          </h2>
         </section>
 
         <section>
           <div>
-            <ButtonSubmit text={t('rebond')} onClick={() => setSection(1)} />
+            <ButtonSubmit text={t('claim')} onClick={() => setSection(1)} />
           </div>
         </section>
       </div>

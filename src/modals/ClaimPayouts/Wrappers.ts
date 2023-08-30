@@ -49,11 +49,11 @@ export const ItemWrapper = styled.div<any>`
   }
 
   h2 {
-    margin: 0;
+    margin: 0.75rem 0 0 0;
   }
 
   h4 {
     color: var(--text-color-secondary);
-    margin: 0.75rem 0 0 0;
+    margin: 0;
   }
 `;

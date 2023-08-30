@@ -3,14 +3,12 @@
 
 import { ButtonSubmit, ModalNotes } from '@polkadot-cloud/react';
 import { forwardRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import { usePayouts } from 'contexts/Payouts';
 import { Item } from './Item';
 import { ContentWrapper } from './Wrappers';
 
 export const Overview = forwardRef(
   ({ setSection, setUnlock }: any, ref: any) => {
-    const { t } = useTranslation('modals');
     const { unclaimedPayouts } = usePayouts();
 
     return (
@@ -19,7 +17,7 @@ export const Overview = forwardRef(
           <div style={{ margin: '1rem 0 0.5rem 0' }}>
             <ButtonSubmit
               disabled={Object.values(unclaimedPayouts || {}).length === 0}
-              text={t('withdrawUnlocked')}
+              text="Claim All"
               onClick={() => {
                 setUnlock({
                   era: 0,
@@ -41,8 +39,17 @@ export const Overview = forwardRef(
             )
           )}
           <ModalNotes withPadding>
-            <p>${t('rebondUnlock')}`</p>
-            <p>{t('unlockChunk')}</p>
+            <p>
+              Claiming a payout claims on behalf of every nominator backing the
+              validator for the era you are claiming for. For this reason,
+              transaction fees are usually higher, and most nominators rely on
+              the validator to claim on their behalf.
+            </p>
+            <p>
+              Validators usually claim payouts on behalf of their nominators. If
+              you decide not to claim here, it is likely you will receive your
+              payouts within 1-2 days of them becoming available.
+            </p>
           </ModalNotes>
         </div>
       </ContentWrapper>
