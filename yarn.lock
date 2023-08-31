@@ -1522,15 +1522,30 @@
     "@polkadot-cloud/utils" "^0.0.4"
     react-error-boundary "^4.0.11"
 
-"@polkadot-cloud/utils@0.0.6":
-  version "0.0.6"
-  resolved "https://registry.npmjs.org/@polkadot-cloud/utils/-/utils-0.0.6.tgz#ea0fc18c6af7cd6a1d14ae6674f19b1b3ef82347"
-  integrity sha512-alm1zdqRcuBm9a59jy0yPKWY4FTenQTKvLSrX/+8aV0YbkwQ6vBkUwhs3FMi5GI52pC68X6VO5DzwVscg6kvEg==
+"@polkadot-cloud/react@^0.1.31":
+  version "0.1.31"
+  resolved "https://registry.npmjs.org/@polkadot-cloud/react/-/react-0.1.31.tgz#97fb9887bbc0b60277b00b2329fe5bc63192ec55"
+  integrity sha512-EcRlFUAVZ5pxztUYmVHw//fUqikj2git6Hhw8drQ8Wu97ZM3Hb55F4j+yzttfsKn/rszzj09G131j7o+uSrcVg==
+  dependencies:
+    "@polkadot-cloud/core" "^0.1.12"
+    "@polkadot-cloud/react" "^0.1.29"
+    "@polkadot-cloud/utils" "^0.0.6"
+    react-error-boundary "^4.0.11"
 
 "@polkadot-cloud/utils@^0.0.4":
   version "0.0.4"
   resolved "https://registry.npmjs.org/@polkadot-cloud/utils/-/utils-0.0.4.tgz#660d5ea9dbf6548f0f7ae9d0d4b86e6016d90c23"
   integrity sha512-cSjaNcB/DgmKjG+VUJuA/wOBvUqsBRIr7KhVfJgD6tozqCyyHUgVO041T2uQioX+HauExO+5/wOVExthtS4ewQ==
+
+"@polkadot-cloud/utils@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.npmjs.org/@polkadot-cloud/utils/-/utils-0.0.6.tgz#ea0fc18c6af7cd6a1d14ae6674f19b1b3ef82347"
+  integrity sha512-alm1zdqRcuBm9a59jy0yPKWY4FTenQTKvLSrX/+8aV0YbkwQ6vBkUwhs3FMi5GI52pC68X6VO5DzwVscg6kvEg==
+
+"@polkadot-cloud/utils@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.npmjs.org/@polkadot-cloud/utils/-/utils-0.0.8.tgz#667a8111b897a8f89fa87ff4d728d85cccf00f58"
+  integrity sha512-XOFxz5Z+q6ZSj7Gs5FhfW3q/o9qQVX344g34l+wiNraowoMTqEv4P/1MqVnMTcOf3FWqJBPbKKDbJVbSB1IEFw==
 
 "@polkadot/api-augment@10.9.1":
   version "10.9.1"
@@ -1747,22 +1762,9 @@
     bn.js "^5.2.1"
     tslib "^2.5.3"
 
-"@polkadot/util@^12.3.1":
+"@polkadot/util@^12.3.1", "@polkadot/util@^12.4.2":
   version "12.4.2"
   resolved "https://registry.yarnpkg.com/@polkadot/util/-/util-12.4.2.tgz#65759f4b366c2a787fd21abacab8cf8ab1aebbf9"
-  integrity sha512-NcTCbnIzMb/3TvJNEbaiu/9EvYIBuzDwZfqQ4hzL0GAptkF8aDkKMDCfQ/j3FI38rR+VTPQHNky9fvWglGKGRw==
-  dependencies:
-    "@polkadot/x-bigint" "12.4.2"
-    "@polkadot/x-global" "12.4.2"
-    "@polkadot/x-textdecoder" "12.4.2"
-    "@polkadot/x-textencoder" "12.4.2"
-    "@types/bn.js" "^5.1.1"
-    bn.js "^5.2.1"
-    tslib "^2.6.2"
-
-"@polkadot/util@^12.4.2":
-  version "12.4.2"
-  resolved "https://registry.npmjs.org/@polkadot/util/-/util-12.4.2.tgz#65759f4b366c2a787fd21abacab8cf8ab1aebbf9"
   integrity sha512-NcTCbnIzMb/3TvJNEbaiu/9EvYIBuzDwZfqQ4hzL0GAptkF8aDkKMDCfQ/j3FI38rR+VTPQHNky9fvWglGKGRw==
   dependencies:
     "@polkadot/x-bigint" "12.4.2"
