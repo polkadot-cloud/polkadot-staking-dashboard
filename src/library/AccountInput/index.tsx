@@ -3,12 +3,12 @@
 
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonSecondary } from '@polkadot-cloud/react';
+import { ButtonSecondary, PolkadotIcon } from '@polkadot-cloud/react';
 import { isValidAddress } from '@polkadot-cloud/utils';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
-import { Identicon } from 'library/Identicon';
+import { useTheme } from 'contexts/Themes';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { AccountInputWrapper } from './Wrapper';
 import type { AccountInputProps } from './types';
@@ -29,6 +29,7 @@ export const AccountInput = ({
 
   const { formatAccountSs58, accounts } = useConnect();
   const { setModalResize } = useOverlay().modal;
+  const { mode } = useTheme();
 
   // store current input value
   const [value, setValue] = useState(initialValue || '');
@@ -167,7 +168,12 @@ export const AccountInput = ({
         <section>
           <div>
             {isValidAddress(value) ? (
-              <Identicon value={value} size={22} />
+              <PolkadotIcon
+                dark={mode === 'dark'}
+                nocopy
+                address={value}
+                size={22}
+              />
             ) : (
               <div className="ph" />
             )}

@@ -2,15 +2,19 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { ButtonOption, ModalPadding } from '@polkadot-cloud/react';
+import {
+  ButtonOption,
+  ModalPadding,
+  PolkadotIcon,
+} from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { Identicon } from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useTheme } from 'contexts/Themes';
 import { ContentWrapper } from './Wrappers';
 
 export const AccountPoolRoles = () => {
@@ -56,6 +60,7 @@ const Button = ({ item, poolId }: { item: string[]; poolId: string }) => {
   const { t } = useTranslation('modals');
   const { setModalStatus } = useOverlay().modal;
   const { bondedPools } = useBondedPools();
+  const { mode } = useTheme();
   const { setSelectedPoolId } = useActivePools();
   const pool = bondedPools.find((b) => String(b.id) === poolId);
   const stash = pool?.addresses?.stash || '';
@@ -70,7 +75,7 @@ const Button = ({ item, poolId }: { item: string[]; poolId: string }) => {
       }}
     >
       <div className="icon">
-        <Identicon value={stash} size={30} />
+        <PolkadotIcon dark={mode === 'dark'} nocopy address={stash} size={30} />
       </div>
 
       <div className="details">
