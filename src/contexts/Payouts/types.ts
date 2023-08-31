@@ -6,6 +6,7 @@ import type { Sync } from 'types';
 export type PayoutsContextInterface = {
   payoutsSynced: Sync;
   unclaimedPayouts: UnclaimedPayouts;
+  removeEraPayout: (era: string, validator: string) => void;
 };
 
 export type UnclaimedPayouts = Record<string, EraUnclaimedPayouts> | null;

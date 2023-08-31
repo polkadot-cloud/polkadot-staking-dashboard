@@ -19,18 +19,23 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useBatchCall } from 'library/Hooks/useBatchCall';
-import type { AnyApi } from 'types';
+import type { AnyApi, AnySubscan } from 'types';
+import { useSubscan } from 'contexts/Subscan';
+import { usePayouts } from 'contexts/Payouts';
 import type { FormProps, ActivePayout } from './types';
 import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef(
-  ({ setSection, payouts }: FormProps, ref: any) => {
+  ({ setSection, payouts, setPayouts }: FormProps, ref: any) => {
     const { t } = useTranslation('modals');
     const { api, network } = useApi();
     const { activeAccount } = useConnect();
     const { newBatchCall } = useBatchCall();
+    const { removeEraPayout } = usePayouts();
     const { setModalStatus } = useOverlay().modal;
     const { getSignerWarnings } = useSignerWarnings();
+    const { unclaimedPayouts: unclaimedPayoutsSubscan, setUnclaimedPayouts } =
+      useSubscan();
     const { units } = network;
 
     const totalPayout =
@@ -82,8 +87,28 @@ export const Forms = forwardRef(
         setModalStatus('closing');
       },
       callbackInBlock: () => {
-        // TODO: Remove Subscan unclaimed payout record if it exists.
-        // TOOD: deduct from `unclaimedPayouts` in Payouts context.
+        // Remove Subscan unclaimed payout record(s) if they exists.
+        let newUnclaimedPayoutsSubscan = unclaimedPayoutsSubscan;
+
+        payouts?.forEach(({ era, validators }) => {
+          validators?.forEach((validator) => {
+            newUnclaimedPayoutsSubscan = newUnclaimedPayoutsSubscan.filter(
+              (u: AnySubscan) =>
+                !(u.validator_stash === validator && String(u.era) === era)
+            );
+          });
+        });
+        setUnclaimedPayouts(newUnclaimedPayoutsSubscan);
+
+        // Deduct from `unclaimedPayouts` in Payouts context.
+        payouts?.forEach(({ era, validators }) => {
+          for (const v of validators || []) {
+            removeEraPayout(era, v);
+          }
+        });
+
+        // Reset active form payouts for this modal.
+        setPayouts([]);
       },
     });
 

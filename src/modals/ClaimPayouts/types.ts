@@ -7,7 +7,7 @@ export interface ItemProps {
   era: string;
   unclaimedPayout: EraUnclaimedPayouts;
   setSection: (v: number) => void;
-  setPayouts: (payout: ActivePayout[]) => void;
+  setPayouts: (payout: ActivePayout[] | null) => void;
 }
 
 export interface ActivePayout {
@@ -18,10 +18,11 @@ export interface ActivePayout {
 
 export interface OverviewProps {
   setSection: (s: number) => void;
-  setPayouts: (p: ActivePayout[]) => void;
+  setPayouts: (p: ActivePayout[] | null) => void;
 }
 
 export interface FormProps {
   setSection: (s: number) => void;
   payouts: ActivePayout[] | null;
+  setPayouts: (p: ActivePayout[] | null) => void;
 }

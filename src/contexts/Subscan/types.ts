@@ -12,4 +12,5 @@ export interface SubscanContextInterface {
   payoutsToDate: string | undefined;
   fetchPoolDetails: (poolId: number) => Promise<any>;
   fetchPoolMembers: (poolId: number, page: number) => Promise<any[]>;
+  setUnclaimedPayouts: (payouts: AnySubscan) => void;
 }

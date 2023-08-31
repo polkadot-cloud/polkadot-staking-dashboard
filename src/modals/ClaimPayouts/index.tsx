@@ -88,7 +88,12 @@ export const ClaimPayouts = () => {
           setPayouts={setPayouts}
           ref={overviewRef}
         />
-        <Forms setSection={setSection} payouts={payouts} ref={formsRef} />
+        <Forms
+          ref={formsRef}
+          payouts={payouts}
+          setPayouts={setPayouts}
+          setSection={setSection}
+        />
       </ModalMotionTwoSection>
     </ModalSection>
   );
