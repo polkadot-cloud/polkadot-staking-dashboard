@@ -351,6 +351,7 @@ export const SubscanProvider = ({
         payoutsToDate,
         fetchPoolDetails,
         fetchPoolMembers,
+        setUnclaimedPayouts,
       }}
     >
       {children}

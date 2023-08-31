@@ -13,4 +13,5 @@ export const defaultSubscanContext: SubscanContextInterface = {
   payoutsToDate: undefined,
   fetchPoolDetails: (poolId) => new Promise((resolve) => resolve({})),
   fetchPoolMembers: (poolId, page) => new Promise((resolve) => resolve([])),
+  setUnclaimedPayouts: (payouts) => {},
 };

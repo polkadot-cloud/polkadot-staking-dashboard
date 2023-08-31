@@ -294,6 +294,14 @@ export const PayoutsProvider = ({
     });
   };
 
+  // Removes a payout from `unclaimedPayouts` based on an era and validator record.
+  const removeEraPayout = (era: string, validator: string) => {
+    if (!unclaimedPayouts) return;
+    const newUnclaimedPayouts = { ...unclaimedPayouts };
+    delete newUnclaimedPayouts[era][validator];
+    setUnclaimedPayouts(newUnclaimedPayouts);
+  };
+
   // Fetch payouts if active account is nominating.
   useEffect(() => {
     if (!activeEra.index.isZero()) {
@@ -323,7 +331,11 @@ export const PayoutsProvider = ({
 
   return (
     <PayoutsContext.Provider
-      value={{ unclaimedPayouts, payoutsSynced: payoutsSyncedRef.current }}
+      value={{
+        unclaimedPayouts,
+        payoutsSynced: payoutsSyncedRef.current,
+        removeEraPayout,
+      }}
     >
       {children}
     </PayoutsContext.Provider>

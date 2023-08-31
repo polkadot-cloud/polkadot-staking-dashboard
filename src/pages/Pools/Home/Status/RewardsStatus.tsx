@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faPlus, faShare } from '@fortawesome/free-solid-svg-icons';
+import { faCircleDown, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
@@ -38,7 +38,7 @@ export const RewardsStatus = () => {
     ? [
         {
           title: t('pools.withdraw'),
-          icon: faShare,
+          icon: faCircleDown,
           disabled: !isReady || isReadOnlyAccount(activeAccount),
           small: true,
           onClick: () =>
