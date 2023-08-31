@@ -1483,10 +1483,10 @@
   resolved "https://registry.npmjs.org/@polkadot-cloud/utils/-/utils-0.0.6.tgz#ea0fc18c6af7cd6a1d14ae6674f19b1b3ef82347"
   integrity sha512-alm1zdqRcuBm9a59jy0yPKWY4FTenQTKvLSrX/+8aV0YbkwQ6vBkUwhs3FMi5GI52pC68X6VO5DzwVscg6kvEg==
 
-"@polkadot-cloud/utils@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.npmjs.org/@polkadot-cloud/utils/-/utils-0.0.8.tgz#667a8111b897a8f89fa87ff4d728d85cccf00f58"
-  integrity sha512-XOFxz5Z+q6ZSj7Gs5FhfW3q/o9qQVX344g34l+wiNraowoMTqEv4P/1MqVnMTcOf3FWqJBPbKKDbJVbSB1IEFw==
+"@polkadot-cloud/utils@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/utils/-/utils-0.0.9.tgz#e0d4b7a15fc42b4f321eb8b0182329b4367c573b"
+  integrity sha512-14EowuGj6jl+zf6qXEikaDKkvFREqj8YXs9Z8vgQpdQ55LgXD47M0D5SSKFIfrOCNFymgAXePYru5U0SfxWoLg==
 
 "@polkadot/api-augment@10.9.1":
   version "10.9.1"
