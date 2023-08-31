@@ -1560,15 +1560,6 @@
     "@polkadot/util-crypto" "12.4.2"
     tslib "^2.6.2"
 
-"@polkadot/networks@12.3.2":
-  version "12.3.2"
-  resolved "https://registry.npmjs.org/@polkadot/networks/-/networks-12.3.2.tgz#131b0439c481add159814dd2cf0286c6c3fe5b3b"
-  integrity sha512-uCkyybKoeEm1daKr0uT/9oNDHDDzCy2/ZdVl346hQqfdR1Ct3BaxMjxqvdmb5N8aCw0cBWSfgsxAYtw8ESmllQ==
-  dependencies:
-    "@polkadot/util" "12.3.2"
-    "@substrate/ss58-registry" "^1.40.0"
-    tslib "^2.5.3"
-
 "@polkadot/networks@12.4.2", "@polkadot/networks@^12.3.1":
   version "12.4.2"
   resolved "https://registry.npmjs.org/@polkadot/networks/-/networks-12.4.2.tgz#6b3dcbdd016beb0ea585009fd61b048b99b17d1c"
@@ -1683,22 +1674,6 @@
     rxjs "^7.8.1"
     tslib "^2.5.3"
 
-"@polkadot/util-crypto@12.3.2":
-  version "12.3.2"
-  resolved "https://registry.npmjs.org/@polkadot/util-crypto/-/util-crypto-12.3.2.tgz#42d810886904e06fa6e5db254c15f6ef80f4ab72"
-  integrity sha512-pTpx+YxolY0BDT4RcGmgeKbHHD/dI6Ll9xRsqmVdIjpcVVY20uDNTyXs81ZNtfKgyod1y9JQkfNv2Dz9iEpTkQ==
-  dependencies:
-    "@noble/curves" "1.1.0"
-    "@noble/hashes" "1.3.1"
-    "@polkadot/networks" "12.3.2"
-    "@polkadot/util" "12.3.2"
-    "@polkadot/wasm-crypto" "^7.2.1"
-    "@polkadot/wasm-util" "^7.2.1"
-    "@polkadot/x-bigint" "12.3.2"
-    "@polkadot/x-randomvalues" "12.3.2"
-    "@scure/base" "1.1.1"
-    tslib "^2.5.3"
-
 "@polkadot/util-crypto@12.4.2", "@polkadot/util-crypto@^12.3.1":
   version "12.4.2"
   resolved "https://registry.npmjs.org/@polkadot/util-crypto/-/util-crypto-12.4.2.tgz#e19258dab5f2d4fe49f2d074d36d33a445e50b74"
@@ -1714,19 +1689,6 @@
     "@polkadot/x-randomvalues" "12.4.2"
     "@scure/base" "1.1.1"
     tslib "^2.6.2"
-
-"@polkadot/util@12.3.2":
-  version "12.3.2"
-  resolved "https://registry.npmjs.org/@polkadot/util/-/util-12.3.2.tgz#f46e147b0e6a426da5ba59df4ce65de1a3effe4a"
-  integrity sha512-y/JShcGyOamCUiSIg++XZuLHt1ktSKBaSH2K5Nw5NXlgP0+7am+GZzqPB8fQ4qhYLruEOv+YRiz0GC1Zr9S+wg==
-  dependencies:
-    "@polkadot/x-bigint" "12.3.2"
-    "@polkadot/x-global" "12.3.2"
-    "@polkadot/x-textdecoder" "12.3.2"
-    "@polkadot/x-textencoder" "12.3.2"
-    "@types/bn.js" "^5.1.1"
-    bn.js "^5.2.1"
-    tslib "^2.5.3"
 
 "@polkadot/util@12.4.2", "@polkadot/util@^12.3.1", "@polkadot/util@^12.4.2":
   version "12.4.2"
@@ -1775,7 +1737,7 @@
     "@polkadot/wasm-util" "7.2.2"
     tslib "^2.6.1"
 
-"@polkadot/wasm-crypto@^7.2.1", "@polkadot/wasm-crypto@^7.2.2":
+"@polkadot/wasm-crypto@^7.2.2":
   version "7.2.2"
   resolved "https://registry.npmjs.org/@polkadot/wasm-crypto/-/wasm-crypto-7.2.2.tgz#3c4b300c0997f4f7e2ddcdf8101d97fa1f5d1a7f"
   integrity sha512-1ZY1rxUTawYm0m1zylvBMFovNIHYgG2v/XoASNp/EMG5c8FQIxCbhJRaTBA983GVq4lN/IAKREKEp9ZbLLqssA==
@@ -1787,20 +1749,12 @@
     "@polkadot/wasm-util" "7.2.2"
     tslib "^2.6.1"
 
-"@polkadot/wasm-util@7.2.2", "@polkadot/wasm-util@^7.2.1", "@polkadot/wasm-util@^7.2.2":
+"@polkadot/wasm-util@7.2.2", "@polkadot/wasm-util@^7.2.2":
   version "7.2.2"
   resolved "https://registry.npmjs.org/@polkadot/wasm-util/-/wasm-util-7.2.2.tgz#f8aa62eba9a35466aa23f3c5634f3e8dbd398bbf"
   integrity sha512-N/25960ifCc56sBlJZ2h5UBpEPvxBmMLgwYsl7CUuT+ea2LuJW9Xh8VHDN/guYXwmm92/KvuendYkEUykpm/JQ==
   dependencies:
     tslib "^2.6.1"
-
-"@polkadot/x-bigint@12.3.2":
-  version "12.3.2"
-  resolved "https://registry.npmjs.org/@polkadot/x-bigint/-/x-bigint-12.3.2.tgz#0e99489cc7938bed40762aaaed58ded6850ab54b"
-  integrity sha512-JLqLgfGXe/x+hZJETd5ZqfpVsbwyMsH5Nn1Q20ineMMjXN/ig+kVR8Mc15LXBMuw4g7LldFW6UUrotWnuMI8Yw==
-  dependencies:
-    "@polkadot/x-global" "12.3.2"
-    tslib "^2.5.3"
 
 "@polkadot/x-bigint@12.4.2", "@polkadot/x-bigint@^12.3.1":
   version "12.4.2"
@@ -1819,27 +1773,12 @@
     node-fetch "^3.3.2"
     tslib "^2.6.2"
 
-"@polkadot/x-global@12.3.2":
-  version "12.3.2"
-  resolved "https://registry.npmjs.org/@polkadot/x-global/-/x-global-12.3.2.tgz#04ac0b0e559a35107f0b95ff7889fcade3796aa3"
-  integrity sha512-yVZq6oIegjlyh5rUZiTklgu+fL+W/DG1ypEa02683tUCB3avV5cA3PAHKptMSlb6FpweHu37lKKrqfAWrraDxg==
-  dependencies:
-    tslib "^2.5.3"
-
 "@polkadot/x-global@12.4.2", "@polkadot/x-global@^12.3.1":
   version "12.4.2"
   resolved "https://registry.npmjs.org/@polkadot/x-global/-/x-global-12.4.2.tgz#cc6ed596698678f98a53547b9adb712eadfd5175"
   integrity sha512-CwbjSt1Grmn56xAj+hGC8ZB0uZxMl92K+VkBH0KxjgcbAX/D24ZD/0ds8pAnUYrO4aYHYq2j2MAGVSMdHcMBAQ==
   dependencies:
     tslib "^2.6.2"
-
-"@polkadot/x-randomvalues@12.3.2":
-  version "12.3.2"
-  resolved "https://registry.npmjs.org/@polkadot/x-randomvalues/-/x-randomvalues-12.3.2.tgz#43ac489a998098bdd40b3f82f28adb5b542db2a5"
-  integrity sha512-ywjIs8CWpvOGmq+3cGCNPOHxAjPHdBUiXyDccftx5BRVdmtbt36gK/V84bKr6Xs73FGu0jprUAOSRRsLZX/3dg==
-  dependencies:
-    "@polkadot/x-global" "12.3.2"
-    tslib "^2.5.3"
 
 "@polkadot/x-randomvalues@12.4.2":
   version "12.4.2"
@@ -1849,14 +1788,6 @@
     "@polkadot/x-global" "12.4.2"
     tslib "^2.6.2"
 
-"@polkadot/x-textdecoder@12.3.2":
-  version "12.3.2"
-  resolved "https://registry.npmjs.org/@polkadot/x-textdecoder/-/x-textdecoder-12.3.2.tgz#bbd5682744f3552ce5d4d792ff48a3ca525eafcf"
-  integrity sha512-lY5bfA5xArJRWEJlYOlQQMJeTjWD8s0yMhchirVgf5xj8Id9vPGeUoneH+VFDEwgXxrqBvDFJ4smN4T/r6a/fg==
-  dependencies:
-    "@polkadot/x-global" "12.3.2"
-    tslib "^2.5.3"
-
 "@polkadot/x-textdecoder@12.4.2":
   version "12.4.2"
   resolved "https://registry.npmjs.org/@polkadot/x-textdecoder/-/x-textdecoder-12.4.2.tgz#fea941decbe32d24aa3f951a511bf576dc104826"
@@ -1864,14 +1795,6 @@
   dependencies:
     "@polkadot/x-global" "12.4.2"
     tslib "^2.6.2"
-
-"@polkadot/x-textencoder@12.3.2":
-  version "12.3.2"
-  resolved "https://registry.npmjs.org/@polkadot/x-textencoder/-/x-textencoder-12.3.2.tgz#223e6f6dd78e2d81c6dcc6f244c76ceae7b08e32"
-  integrity sha512-iP3qEBiHzBckQ9zeY7ZHRWuu7mCEg5SMpOugs6UODRk8sx6KHzGQYlghBbWLit0uppPDVE0ifEwZ2n73djJHWQ==
-  dependencies:
-    "@polkadot/x-global" "12.3.2"
-    tslib "^2.5.3"
 
 "@polkadot/x-textencoder@12.4.2":
   version "12.4.2"
@@ -1949,7 +1872,7 @@
     "@substrate/connect-extension-protocol" "^1.0.1"
     smoldot "1.0.13"
 
-"@substrate/ss58-registry@^1.40.0", "@substrate/ss58-registry@^1.43.0":
+"@substrate/ss58-registry@^1.43.0":
   version "1.43.0"
   resolved "https://registry.npmjs.org/@substrate/ss58-registry/-/ss58-registry-1.43.0.tgz#93108e45cb7ef6d82560c153e3692c2aa1c711b3"
   integrity sha512-USEkXA46P9sqClL7PZv0QFsit4S8Im97wchKG0/H/9q3AT/S76r40UHfCr4Un7eBJPE23f7fU9BZ0ITpP9MCsA==
