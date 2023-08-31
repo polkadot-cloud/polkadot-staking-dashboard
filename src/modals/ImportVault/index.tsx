@@ -7,6 +7,7 @@ import {
   ButtonText,
   HardwareAddress,
   HardwareStatusBar,
+  PolkadotIcon,
 } from '@polkadot-cloud/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +15,6 @@ import { useConnect } from 'contexts/Connect';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
 import { usePrompt } from 'contexts/Prompt';
 import { ReactComponent as Icon } from 'img/polkadotVault.svg';
-import { Identicon } from 'library/Identicon';
 import { Confirm } from 'library/Import/Confirm';
 import { Heading } from 'library/Import/Heading';
 import { NoAccounts } from 'library/Import/NoAccounts';
@@ -22,6 +22,7 @@ import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useTheme } from 'contexts/Themes';
 import { Reader } from './Reader';
 
 export const ImportVault = () => {
@@ -29,6 +30,7 @@ export const ImportVault = () => {
   const { replaceModal } = useOverlay().modal;
   const { renameImportedAccount } = useConnect();
   const { openPromptWith, status: promptStatus } = usePrompt();
+  const { mode } = useTheme();
 
   const {
     vaultAccounts,
@@ -104,7 +106,14 @@ export const ImportVault = () => {
                   address={address}
                   index={index}
                   initial={name}
-                  Identicon={<Identicon value={address} size={40} />}
+                  Identicon={
+                    <PolkadotIcon
+                      dark={mode === 'dark'}
+                      nocopy
+                      address={address}
+                      size={40}
+                    />
+                  }
                   existsHandler={vaultAccountExists}
                   renameHandler={renameHandler}
                   openRemoveHandler={openRemoveHandler}

@@ -3,11 +3,15 @@
 
 import { registerSaEvent } from 'Utils';
 import { useApi } from 'contexts/Api';
-import { ButtonMono, ButtonMonoInvert } from '@polkadot-cloud/react';
+import {
+  ButtonMono,
+  ButtonMonoInvert,
+  PolkadotIcon,
+} from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { usePrompt } from 'contexts/Prompt';
-import { Identicon } from 'library/Identicon';
+import { useTheme } from 'contexts/Themes';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
 import type { RemoveProps } from './types';
 
@@ -21,10 +25,11 @@ export const Remove = ({
   const { network } = useApi();
   const { forgetAccounts } = useConnect();
   const { setStatus } = usePrompt();
+  const { mode } = useTheme();
 
   return (
     <ConfirmWrapper>
-      <Identicon value={address} size={60} />
+      <PolkadotIcon dark={mode === 'dark'} nocopy address={address} size={60} />
       <h3>{t('removeAccount')}</h3>
       <h5>{address}</h5>
       <div className="footer">

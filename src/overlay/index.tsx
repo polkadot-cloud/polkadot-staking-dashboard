@@ -4,6 +4,7 @@
 import { useHelp } from 'contexts/Help';
 import { ErrorFallbackModal } from 'library/ErrorBoundary';
 import { Overlay } from '@polkadot-cloud/react';
+import { ClaimPayouts } from 'modals/ClaimPayouts';
 import { AccountPoolRoles } from '../modals/AccountPoolRoles';
 import { Accounts } from '../modals/Accounts';
 import { Bio } from '../modals/Bio';
@@ -49,6 +50,7 @@ export const Overlays = () => {
         ChangeNominations,
         ChangePoolRoles,
         ChooseLanguage,
+        ClaimPayouts,
         ClaimReward,
         Connect,
         Accounts,
