@@ -4,7 +4,7 @@
 import type { VoidFn } from '@polkadot/api/types';
 import Keyring from '@polkadot/keyring';
 import {
-  clipAddress,
+  ellipsisFn,
   localStorageOrDefault,
   setStateWithRef,
 } from '@polkadot-cloud/utils';
@@ -464,7 +464,7 @@ export const ConnectProvider = ({
     const newAccount = {
       address: formatted,
       network: network.name,
-      name: clipAddress(address),
+      name: ellipsisFn(address),
       source: 'external',
       addedBy,
     };

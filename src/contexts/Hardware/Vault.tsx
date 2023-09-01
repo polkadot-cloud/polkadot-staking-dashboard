@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { clipAddress, setStateWithRef } from '@polkadot-cloud/utils';
+import { ellipsisFn, setStateWithRef } from '@polkadot-cloud/utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import type { VaultAccount } from 'contexts/Connect/types';
@@ -39,7 +39,7 @@ export const VaultHardwareProvider = ({
       const account = {
         address,
         network: network.name,
-        name: clipAddress(address),
+        name: ellipsisFn(address),
         source: 'vault',
         index,
       };
