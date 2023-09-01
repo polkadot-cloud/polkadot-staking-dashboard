@@ -7,7 +7,6 @@ import {
   extractUrlValue,
   makeCancelable,
   rmCommas,
-  varToUrlHash,
 } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { NetworkList } from 'config/networks';
@@ -60,35 +59,8 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
 
   // handle network switching
   const switchNetwork = async (name: NetworkName, lightClient: boolean) => {
-    // disconnect api if there is an existing connection.
-    if (api) {
-      await api.disconnect();
-      setApi(null);
-    }
-    // handle local light client flag.
-    if (lightClient) {
-      localStorage.setItem('light_client', lightClient ? 'true' : '');
-    } else {
-      localStorage.removeItem('light_client');
-    }
-
-    setNetwork({
-      name,
-      meta: NetworkList[name],
-    });
-
-    // handle light client state, which will trigger dynamic Sc import.
-    setIsLightClient(lightClient);
-
-    // update url `n` if needed.
-    varToUrlHash('n', name, false);
-
-    // if not light client, directly connect. Otherwise, `connect` is called after dynamic import of
-    // Sc.
-    if (!lightClient) {
-      setApiStatus('connecting');
-      connectProvider(name);
-    }
+    localStorage.setItem('network', name);
+    window.location.reload();
   };
 
   // Store povider instance.
