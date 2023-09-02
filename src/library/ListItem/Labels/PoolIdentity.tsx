@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { clipAddress, determinePoolDisplay } from '@polkadot-cloud/utils';
+import { ellipsisFn, determinePoolDisplay } from '@polkadot-cloud/utils';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { PolkadotIcon } from '@polkadot-cloud/react';
 import { useTheme } from 'contexts/Themes';
@@ -36,7 +36,7 @@ export const PoolIdentity = ({
       />
       <div className="inner">
         {!metadataSynced ? (
-          <h4>{clipAddress(addresses.stash)}</h4>
+          <h4>{ellipsisFn(addresses.stash)}</h4>
         ) : (
           <h4>{display}</h4>
         )}

@@ -3,7 +3,7 @@
 
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clipAddress, remToUnit } from '@polkadot-cloud/utils';
+import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
 import { PolkadotIcon } from '@polkadot-cloud/react';
 import { useTheme } from 'contexts/Themes';
 import { RoleChangeWrapper } from './Wrapper';
@@ -24,7 +24,7 @@ export const RoleChange = ({ roleName, oldAddress, newAddress }: any) => {
           <input
             className="input"
             disabled
-            value={oldAddress ? clipAddress(oldAddress) : ''}
+            value={oldAddress ? ellipsisFn(oldAddress) : ''}
           />
         </div>
         <span>
@@ -40,7 +40,7 @@ export const RoleChange = ({ roleName, oldAddress, newAddress }: any) => {
           <input
             className="input"
             disabled
-            value={newAddress ? clipAddress(newAddress) : ''}
+            value={newAddress ? ellipsisFn(newAddress) : ''}
           />
         </div>
       </div>

@@ -3,7 +3,7 @@
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clipAddress, remToUnit } from '@polkadot-cloud/utils';
+import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
@@ -36,15 +36,15 @@ export const Account = ({
       case 'name':
         setDisplayValue(
           value !== ''
-            ? getAccount(value)?.name || clipAddress(value)
-            : clipAddress(value)
+            ? getAccount(value)?.name || ellipsisFn(value)
+            : ellipsisFn(value)
         );
         break;
       case 'text':
         setDisplayValue(value);
         break;
       default:
-        if (value) setDisplayValue(clipAddress(value));
+        if (value) setDisplayValue(ellipsisFn(value));
     }
 
     // if title prop is provided, override `displayValue`

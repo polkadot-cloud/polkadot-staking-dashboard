@@ -4,7 +4,7 @@
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clipAddress, remToUnit } from '@polkadot-cloud/utils';
+import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useNotifications } from 'contexts/Notifications';
@@ -70,7 +70,7 @@ export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
                   </span>
                 </>
               )}
-              {clipAddress(primaryAddress)}
+              {ellipsisFn(primaryAddress)}
               <button
                 type="button"
                 onClick={() => {
@@ -86,7 +86,7 @@ export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
                   transform="shrink-4"
                 />
               </button>
-              {accountData.name !== clipAddress(primaryAddress) && (
+              {accountData.name !== ellipsisFn(primaryAddress) && (
                 <>
                   <div className="sep" />
                   <div className="rest">

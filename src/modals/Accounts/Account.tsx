@@ -3,7 +3,7 @@
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clipAddress, planckToUnit } from '@polkadot-cloud/utils';
+import { ellipsisFn, planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { Extensions } from '@polkadot-cloud/community/extensions';
 import { useConnect } from 'contexts/Connect';
@@ -107,7 +107,7 @@ export const AccountButton = ({
                   </span>
                 </>
               )}
-              {meta?.name ?? clipAddress(address ?? '')}
+              {meta?.name ?? ellipsisFn(address ?? '')}
             </span>
             {meta?.source === 'external' && (
               <div
