@@ -7,7 +7,7 @@ import {
   HardwareAddress,
   PolkadotIcon,
 } from '@polkadot-cloud/react';
-import { clipAddress, unescape } from '@polkadot-cloud/utils';
+import { ellipsisFn, unescape } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -79,7 +79,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
               );
               return localAddress?.name
                 ? unescape(localAddress.name)
-                : clipAddress(address);
+                : ellipsisFn(address);
             })();
 
             return (

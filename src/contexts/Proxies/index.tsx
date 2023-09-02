@@ -4,7 +4,7 @@
 import type { VoidFn } from '@polkadot/api/types';
 import {
   addedTo,
-  clipAddress,
+  ellipsisFn,
   localStorageOrDefault,
   matchedProperties,
   removedFrom,
@@ -151,7 +151,7 @@ export const ProxiesProvider = ({
       .filter(({ proxyType }) => isSupportedProxy(proxyType))
       .map(({ delegator, proxyType }) => ({
         address: delegator,
-        name: clipAddress(delegator),
+        name: ellipsisFn(delegator),
         proxyType,
       }));
     return proxiedAccounts;

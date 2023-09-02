@@ -3,7 +3,7 @@
 
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clipAddress, unitToPlanck } from '@polkadot-cloud/utils';
+import { ellipsisFn, unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -94,7 +94,7 @@ export const Summary = ({ section }: SetupStepProps) => {
             </div>
             <div>
               {payee.destination === 'Account'
-                ? `${payeeDisplay}: ${clipAddress(payee.account)}`
+                ? `${payeeDisplay}: ${ellipsisFn(payee.account)}`
                 : payeeDisplay}
             </div>
           </section>

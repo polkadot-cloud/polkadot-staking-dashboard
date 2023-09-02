@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ButtonHelp, ModalPadding, PolkadotIcon } from '@polkadot-cloud/react';
-import { clipAddress, planckToUnit } from '@polkadot-cloud/utils';
+import { ellipsisFn, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -91,7 +91,7 @@ export const ValidatorMetrics = () => {
         />
         <h2>
           &nbsp;&nbsp;
-          {identity === null ? clipAddress(address) : identity}
+          {identity === null ? ellipsisFn(address) : identity}
         </h2>
       </div>
 

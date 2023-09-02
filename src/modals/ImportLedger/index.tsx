@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { registerSaEvent } from 'Utils';
-import { clipAddress, setStateWithRef } from '@polkadot-cloud/utils';
+import { ellipsisFn, setStateWithRef } from '@polkadot-cloud/utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
@@ -106,7 +106,7 @@ export const ImportLedger: React.FC = () => {
         index: options.accountIndex,
         pubKey,
         address,
-        name: clipAddress(address),
+        name: ellipsisFn(address),
         network: network.name,
       }));
 
