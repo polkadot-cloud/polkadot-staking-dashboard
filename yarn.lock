@@ -1453,40 +1453,24 @@
   resolved "https://registry.npmjs.org/@polkadot-cloud/community/-/community-0.1.10.tgz#d2a99190c0a89a67275264084e6e750269990986"
   integrity sha512-VT38rqOvORuYdPLigS8UNwvitoc0DFZWEazsvHxz9bTnPBL/7M3LujWXO14OSGw+FTvfz4RzPwovmW4u7RoT/Q==
 
-"@polkadot-cloud/core@^0.1.12", "@polkadot-cloud/core@^0.1.13":
+"@polkadot-cloud/core@^0.1.13":
   version "0.1.13"
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-0.1.13.tgz#010c363431fdf7e1b9b757b761275836c5b8d351"
   integrity sha512-MaMWctssdptEUqzAO5XwhjpSF/kTY+2Gn/d6EwnfkuVnnIGlKqPvn5JyIi2qHtqdeVrJTZUo5b/HFshC8kdKDw==
 
-"@polkadot-cloud/react@^0.1.29":
-  version "0.1.31"
-  resolved "https://registry.npmjs.org/@polkadot-cloud/react/-/react-0.1.31.tgz#97fb9887bbc0b60277b00b2329fe5bc63192ec55"
-  integrity sha512-EcRlFUAVZ5pxztUYmVHw//fUqikj2git6Hhw8drQ8Wu97ZM3Hb55F4j+yzttfsKn/rszzj09G131j7o+uSrcVg==
+"@polkadot-cloud/react@^0.1.34":
+  version "0.1.34"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.34.tgz#6442c7124b5b6c00ed073b357e0be31c0c0ac598"
+  integrity sha512-4f7JMwwQIK0q2cAiil9oXKlalIcJDYkmFFHCpHq1TsKkQq8wCJ52vH0JPS6O5PrRdDoMcaINFwfultHRFGXdgQ==
   dependencies:
-    "@polkadot-cloud/core" "^0.1.12"
-    "@polkadot-cloud/react" "^0.1.29"
-    "@polkadot-cloud/utils" "^0.0.6"
-    react-error-boundary "^4.0.11"
-
-"@polkadot-cloud/react@^0.1.32":
-  version "0.1.32"
-  resolved "https://registry.npmjs.org/@polkadot-cloud/react/-/react-0.1.32.tgz#231444a1d52eee990b2dd3ceaa601f5a8b089d4b"
-  integrity sha512-S2GcangOrOLXu4sm8BtAx8C1I2rwfTiwHlH2OSbmgBucpyObJPlWfhUwOET9XcMaUc2bJve8tYqe1Dbe1t9HXw==
-  dependencies:
-    "@polkadot-cloud/core" "^0.1.12"
-    "@polkadot-cloud/react" "^0.1.29"
-    "@polkadot-cloud/utils" "^0.0.6"
+    "@polkadot-cloud/core" "^0.1.13"
+    "@polkadot-cloud/utils" "^0.0.11"
     react-error-boundary "^4.0.11"
 
 "@polkadot-cloud/utils@^0.0.11":
   version "0.0.11"
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/utils/-/utils-0.0.11.tgz#1b5afeffb12f6df8958eb6285a8020c28d06eadf"
   integrity sha512-h73gDY5IDUIVS3KboPE7F5ks0CwVyqYE+jVpGI1kiV5aUseluSaOqRj3enZNWm2q04m358ZUgVxjZ9g9vSoJeA==
-
-"@polkadot-cloud/utils@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.npmjs.org/@polkadot-cloud/utils/-/utils-0.0.6.tgz#ea0fc18c6af7cd6a1d14ae6674f19b1b3ef82347"
-  integrity sha512-alm1zdqRcuBm9a59jy0yPKWY4FTenQTKvLSrX/+8aV0YbkwQ6vBkUwhs3FMi5GI52pC68X6VO5DzwVscg6kvEg==
 
 "@polkadot/api-augment@10.9.1":
   version "10.9.1"
