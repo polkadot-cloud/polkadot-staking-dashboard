@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { clipAddress, remToUnit } from '@polkadot-cloud/utils';
+import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -58,7 +58,7 @@ export const Account = ({
   const syncing = metaData === undefined;
 
   // display value
-  const defaultDisplay = clipAddress(pool.addresses.stash);
+  const defaultDisplay = ellipsisFn(pool.addresses.stash);
   let display = syncing ? t('syncing') : metaData ?? defaultDisplay;
 
   // check if super identity has been byte encoded
