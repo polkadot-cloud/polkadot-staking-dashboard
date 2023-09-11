@@ -2306,14 +2306,14 @@
     loupe "^2.3.6"
     pretty-format "^29.5.0"
 
-"@zondax/ledger-substrate@^0.41.1":
-  version "0.41.1"
-  resolved "https://registry.npmjs.org/@zondax/ledger-substrate/-/ledger-substrate-0.41.1.tgz#6b79aceb61c042263ab1751a4cf28bb73e7cf774"
-  integrity sha512-EcHM0HpCElkd8jI9i2ei/TenIG5rvKFynjDE1i+gCfSc5CWgdWxhcpyokK3CAiR/pm4qcLpNSA9ZZYo9wBN1uA==
+"@zondax/ledger-substrate@^0.41.2":
+  version "0.41.2"
+  resolved "https://registry.yarnpkg.com/@zondax/ledger-substrate/-/ledger-substrate-0.41.2.tgz#727d1d1b84f4491b842d7a2428f0eb1543fcd4b9"
+  integrity sha512-snd5b1MK1GGNgLgYASHL1TJ/9Wzt+S2f6P7Hsfe+QtfS4SnCLH9bDa9HMypcYJwTFPYbqxcE6Hbp2mxi8VMN1Q==
   dependencies:
     "@ledgerhq/hw-transport" "^6.27.1"
     bip32 "^4.0.0"
-    bip32-ed25519 "https://github.com/Zondax/bip32-ed25519"
+    bip32-ed25519 "git+https://github.com/Zondax/bip32-ed25519.git"
     bip39 "^3.0.4"
     blakejs "^1.2.1"
     bs58 "^5.0.0"
@@ -2585,10 +2585,10 @@ binary-extensions@^2.0.0:
   resolved "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
 
-"bip32-ed25519@https://github.com/Zondax/bip32-ed25519":
+"bip32-ed25519@git+https://github.com/Zondax/bip32-ed25519.git":
   version "0.0.4"
   uid "0949df01b5c93885339bc28116690292088f6134"
-  resolved "https://github.com/Zondax/bip32-ed25519#0949df01b5c93885339bc28116690292088f6134"
+  resolved "git+https://github.com/Zondax/bip32-ed25519.git#0949df01b5c93885339bc28116690292088f6134"
   dependencies:
     bn.js "^5.1.1"
     elliptic "^6.4.1"
