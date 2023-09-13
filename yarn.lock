@@ -1453,17 +1453,17 @@
   resolved "https://registry.npmjs.org/@polkadot-cloud/community/-/community-0.1.11.tgz#62f57c92d663f758bdee2b1a2147b74dd3de4971"
   integrity sha512-R2ncl5idtiRfzA0a/Lo1j7HHo/4ztatz7xbnP9TPDMYk1JWCtoy77APnFLLukIUbGQGxw1kDVCP8U4X9KrZMKQ==
 
-"@polkadot-cloud/core@^0.1.13", "@polkadot-cloud/core@^0.1.17":
-  version "0.1.17"
-  resolved "https://registry.npmjs.org/@polkadot-cloud/core/-/core-0.1.17.tgz#a3978a52199d6e48c0a103cfe26fc1bcf9d89063"
-  integrity sha512-akjtK4s7oom2Qkp2AfJ2JgMV8z2tFSCdbkdJmYe5L3nl4vUR24Sls7Juyy8k9S5l9AyeJj1ujTV9swu/8nYNHw==
+"@polkadot-cloud/core@^0.1.19":
+  version "0.1.19"
+  resolved "https://registry.npmjs.org/@polkadot-cloud/core/-/core-0.1.19.tgz#08b630fa15676cbd51bd0eb56ad5ca067fa200e7"
+  integrity sha512-UwbbyW2jVJm0aAKEOA2ybhTrw471u6+N/0KWdnHCi6IbuftnLQNoY9FYEWWub7K9FvzUR/vd+p+o/Pq06DMI4Q==
 
-"@polkadot-cloud/react@^0.1.34":
-  version "0.1.34"
-  resolved "https://registry.npmjs.org/@polkadot-cloud/react/-/react-0.1.34.tgz#6442c7124b5b6c00ed073b357e0be31c0c0ac598"
-  integrity sha512-4f7JMwwQIK0q2cAiil9oXKlalIcJDYkmFFHCpHq1TsKkQq8wCJ52vH0JPS6O5PrRdDoMcaINFwfultHRFGXdgQ==
+"@polkadot-cloud/react@^0.1.37":
+  version "0.1.37"
+  resolved "https://registry.npmjs.org/@polkadot-cloud/react/-/react-0.1.37.tgz#51402a792f6ed511be29aff9d925c34dcbca26e0"
+  integrity sha512-l/Gy/YLik+e98rNdUn1+jHSYAOLWu9IHA6MdyzulI8lyVpnejnHD3UWYKfbGZSUXGnp8LxR4ZrRLT8rHWwyNOg==
   dependencies:
-    "@polkadot-cloud/core" "^0.1.13"
+    "@polkadot-cloud/core" "^0.1.19"
     "@polkadot-cloud/utils" "^0.0.11"
     react-error-boundary "^4.0.11"
 
@@ -2552,9 +2552,9 @@ binary-extensions@^2.0.0:
   resolved "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
 
-"bip32-ed25519@git+https://github.com/Zondax/bip32-ed25519.git":
+"bip32-ed25519@https://github.com/Zondax/bip32-ed25519":
   version "0.0.4"
-  resolved "git+https://github.com/Zondax/bip32-ed25519.git#0949df01b5c93885339bc28116690292088f6134"
+  resolved "https://github.com/Zondax/bip32-ed25519#0949df01b5c93885339bc28116690292088f6134"
   dependencies:
     bn.js "^5.1.1"
     elliptic "^6.4.1"
@@ -2696,9 +2696,9 @@ camelize@^1.0.0:
   integrity sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==
 
 caniuse-lite@^1.0.30001517:
-  version "1.0.30001533"
-  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001533.tgz#1180daeb2518b93c82f19b904d1fefcf82197707"
-  integrity sha512-9aY/b05NKU4Yl2sbcJhn4A7MsGwR1EPfW/nrqsnqVA0Oq50wpmPaGI+R1Z0UKlUl96oxUkGEOILWtOHck0eCWw==
+  version "1.0.30001534"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001534.tgz#f24a9b2a6d39630bac5c132b5dff89b39a12e7dd"
+  integrity sha512-vlPVrhsCS7XaSh2VvWluIQEzVhefrUQcEsQWSS5A5V+dM07uv1qHeQzAOTGIMy9i3e9bH15+muvI/UHojVgS/Q==
 
 chai@^4.3.7:
   version "4.3.8"
