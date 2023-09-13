@@ -135,10 +135,7 @@ export const Forms = forwardRef(
                   network.unit
                 }`}
               />
-              <p>
-                Funds will be immediately available as free balance after
-                claiming.
-              </p>
+              <p>{t('afterClaiming')}</p>
             </div>
           </div>
           <SubmitTx

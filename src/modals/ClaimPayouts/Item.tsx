@@ -31,8 +31,10 @@ export const Item = ({
         <section>
           <h4>
             <span>
-              Era {era}: {numPayouts} Pending Payout
-              {numPayouts === 1 ? '' : 's'}
+              Era {era}: {numPayouts}
+              {t('pendingPayout', {
+                count: numPayouts,
+              })}
             </span>
           </h4>
           <h2>
