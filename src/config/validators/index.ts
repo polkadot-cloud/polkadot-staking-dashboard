@@ -27,6 +27,21 @@ export const ValidatorCommunity = [
     },
   },
   {
+    name: 'Kessoku DAO',
+    thumbnail: 'megumii',
+    bio: '1 + 1 > 2',
+    email: 'hello@megumii.xyz',
+    twitter: '@KessokuDao',
+    website: 'https://megumii.tez.page/',
+    validators: {
+      creditcoin: [
+        '5HpS9MnYR4QRTFPjJ1K3tgiEuhjnbiHdvFH7eZb1nd9Svz7C',
+        '5Ea6YxEEnW3Qw19aKqP5ZXunpedrG2X5hggzjzTmtM4gNw1a',
+      ],
+      creditcoinTest: [],
+    },
+  },
+  {
     name: 'wi_ry_',
     thumbnail: 'Wiry',
     bio: 'Creditcoin validators managed by someone involved in the project since day one',
