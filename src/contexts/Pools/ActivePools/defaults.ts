@@ -65,4 +65,5 @@ export const defaultActivePoolContext: ActivePoolsContextState = {
   targets,
   poolNominations,
   synced: 'unsynced',
+  selectedPoolMemberCount: 0,
 };

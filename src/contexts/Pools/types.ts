@@ -127,6 +127,7 @@ export interface ActivePoolsContextState {
   targets: any;
   poolNominations: any;
   synced: Sync;
+  selectedPoolMemberCount: number;
 }
 
 // PoolMembers types
