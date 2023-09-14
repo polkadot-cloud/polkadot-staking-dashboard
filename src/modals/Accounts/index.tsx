@@ -17,10 +17,7 @@ import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useProxies } from 'contexts/Proxies';
-import {
-  useEffectIgnoreInitial,
-  useOverlay,
-} from '@polkadot-cloud/react/hooks';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { AccountButton } from './Account';
 import { Delegates } from './Delegates';
 import { AccountSeparator, AccountWrapper } from './Wrappers';
@@ -118,7 +115,7 @@ export const Accounts = () => {
 
   useEffect(() => setLocalAccounts(accounts), [accounts]);
 
-  useEffectIgnoreInitial(() => {
+  useEffect(() => {
     if (modalStatus === 'open') setModalResize();
   }, [activeAccount, accounts, bondedAccounts, balances, ledgers, extensions]);
 
