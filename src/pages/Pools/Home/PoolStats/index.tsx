@@ -12,10 +12,10 @@ import { StatsHead } from 'library/StatsHead';
 import { Announcements } from './Announcements';
 import { Wrapper } from './Wrappers';
 
-export const PoolStats = ({ memberCount }: { memberCount: number }) => {
+export const PoolStats = () => {
   const { t } = useTranslation('pages');
   const { network } = useApi();
-  const { selectedActivePool } = useActivePools();
+  const { selectedActivePool, selectedPoolMemberCount } = useActivePools();
   const { getCurrentCommission } = usePoolCommission();
 
   const { state, points } = selectedActivePool?.bondedPool || {};
@@ -58,7 +58,7 @@ export const PoolStats = ({ memberCount }: { memberCount: number }) => {
   items.push(
     {
       label: t('pools.poolMembers'),
-      value: `${memberCount}`,
+      value: `${selectedPoolMemberCount}`,
     },
     {
       label: t('pools.totalBonded'),
