@@ -269,11 +269,13 @@ export const PayoutsProvider = ({
               .dividedBy(total)
               .plus(isValidator ? valCut : 0);
 
-        unclaimed[era] = {
-          ...unclaimed[era],
-          [validator]: unclaimedPayout.toString(),
-        };
-        j++;
+        if (!unclaimedPayout.isZero()) {
+          unclaimed[era] = {
+            ...unclaimed[era],
+            [validator]: unclaimedPayout.toString(),
+          };
+          j++;
+        }
       }
 
       // This is not currently useful for preventing re-syncing. Need to know the eras that have
@@ -305,8 +307,9 @@ export const PayoutsProvider = ({
   // Fetch payouts if active account is nominating.
   useEffect(() => {
     if (!activeEra.index.isZero()) {
-      if (
-        isNominating() &&
+      if (!isNominating()) {
+        setStateWithRef('synced', setPayoutsSynced, payoutsSyncedRef);
+      } else if (
         unclaimedPayouts === null &&
         payoutsSyncedRef.current !== 'syncing'
       ) {
@@ -315,18 +318,12 @@ export const PayoutsProvider = ({
         checkEra(activeEra.index.minus(1));
       }
     }
-  }, [isNominating(), activeEra]);
+  }, [unclaimedPayouts, isNominating(), activeEra]);
 
   // Clear payout state on network / active account change.
   useEffect(() => {
-    if (unclaimedPayouts !== null) {
-      setUnclaimedPayouts(null);
-    }
-    if (!isNominating()) {
-      setStateWithRef('synced', setPayoutsSynced, payoutsSyncedRef);
-    } else {
-      setStateWithRef('unsynced', setPayoutsSynced, payoutsSyncedRef);
-    }
+    setUnclaimedPayouts(null);
+    setStateWithRef('unsynced', setPayoutsSynced, payoutsSyncedRef);
   }, [network, activeAccount]);
 
   return (
