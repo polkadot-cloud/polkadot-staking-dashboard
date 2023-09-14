@@ -1,32 +1,31 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
+import { useNominationStatus } from '../useNominationStatus';
 
 export const useUnstaking = () => {
   const { t } = useTranslation('library');
   const { consts } = useApi();
-  const { getTransferOptions } = useTransferOptions();
+  const { inSetup } = useStaking();
   const { activeAccount } = useConnect();
-  const { getNominationsStatus, inSetup } = useStaking();
   const { activeEra } = useNetworkMetrics();
+  const { getTransferOptions } = useTransferOptions();
+  const { getNominationStatus } = useNominationStatus();
   const { checking, head, isExposed, queueDeposit, meta } = useFastUnstake();
   const { bondDuration } = consts;
   const transferOptions = getTransferOptions(activeAccount).nominate;
-  const nominationStatuses = getNominationsStatus();
+  const { nominees } = getNominationStatus(activeAccount, 'nominator');
 
   // determine if user is regular unstaking
   const { active } = transferOptions;
-  const activeNominations = Object.entries(nominationStatuses)
-    .map(([k, v]: any) => (v === 'active' ? k : false))
-    .filter((v) => v !== false);
 
   // determine if user is fast unstaking.
   const inHead =
@@ -58,7 +57,7 @@ export const useUnstaking = () => {
 
   return {
     getFastUnstakeText,
-    isUnstaking: !inSetup() && !activeNominations.length && active.isZero(),
+    isUnstaking: !inSetup() && !nominees.active.length && active.isZero(),
     isFastUnstaking: !!registered,
   };
 };

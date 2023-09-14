@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import type { VoidFn } from '@polkadot/api/types';
 import {
@@ -8,12 +8,13 @@ import {
   removedFrom,
   rmCommas,
   setStateWithRef,
-} from '@polkadotcloud/utils';
+} from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import React, { useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { getLedger } from './Utils';
 import * as defaults from './defaults';
 import type {
@@ -79,7 +80,7 @@ export const BalancesProvider = ({
   };
 
   const handleSubscriptions = async (address: string) => {
-    if (!api) return;
+    if (!api) return undefined;
 
     const unsub = await api.queryMulti<AnyApi>(
       [
@@ -173,14 +174,14 @@ export const BalancesProvider = ({
   };
 
   // fetch account balances & ledgers. Remove or add subscriptions
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady) {
       handleSyncAccounts();
     }
   }, [accounts, network, isReady]);
 
   // Unsubscribe from subscriptions on network change & unmount.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     unsubAll();
     return () => unsubAll();
   }, [network]);

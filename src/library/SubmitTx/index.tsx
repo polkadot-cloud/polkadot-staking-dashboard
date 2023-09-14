@@ -1,14 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { Tx } from '@polkadotcloud/core-ui';
+import { Tx } from '@polkadot-cloud/react';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useTxMeta } from 'contexts/TxMeta';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { Default } from './Default';
 import { ManualSign } from './ManualSign';
 import type { SubmitTxProps } from './types';
@@ -27,11 +27,11 @@ export const SubmitTx = ({
 }: SubmitTxProps) => {
   const { t } = useTranslation();
   const { unit } = useApi().network;
+  const { getBondedAccount } = useBonded();
+  const { setModalResize } = useOverlay().modal;
   const { notEnoughFunds, sender, setTxSignature } = useTxMeta();
   const { requiresManualSign, activeAccount, activeProxy, getAccount } =
     useConnect();
-  const { setResize } = useModal();
-  const { getBondedAccount } = useBonded();
   const controller = getBondedAccount(activeAccount);
 
   // Default to active account
@@ -62,7 +62,7 @@ export const SubmitTx = ({
 
   // Set resize on not enough funds.
   useEffect(() => {
-    setResize();
+    setModalResize();
   }, [notEnoughFunds, fromController]);
 
   // Reset tx metadata on unmount.

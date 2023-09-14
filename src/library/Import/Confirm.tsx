@@ -1,14 +1,19 @@
 // Copyright 2023 @paritytech/polkadot-live authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonMono, ButtonMonoInvert } from '@polkadotcloud/core-ui';
 import { registerSaEvent } from 'Utils';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
-import { useOverlay } from 'contexts/Overlay';
-import { Identicon } from 'library/Identicon';
-import { ConfirmWrapper } from 'library/Import/Wrappers';
+import {
+  ButtonMono,
+  ButtonMonoInvert,
+  PolkadotIcon,
+} from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
+import { useConnect } from 'contexts/Connect';
+import { usePrompt } from 'contexts/Prompt';
+import { useTheme } from 'contexts/Themes';
+
+import { ConfirmWrapper } from 'library/Import/Wrappers';
 import type { ConfirmProps } from './types';
 
 export const Confirm = ({
@@ -20,11 +25,11 @@ export const Confirm = ({
   const { t } = useTranslation('modals');
   const { network } = useApi();
   const { addToAccounts } = useConnect();
-  const { setStatus } = useOverlay();
-
+  const { setStatus } = usePrompt();
+  const { mode } = useTheme();
   return (
     <ConfirmWrapper>
-      <Identicon value={address} size={60} />
+      <PolkadotIcon dark={mode === 'dark'} nocopy address={address} size={60} />
       <h3>{t('importAccount')}</h3>
       <h5>{address}</h5>
       <div className="footer">

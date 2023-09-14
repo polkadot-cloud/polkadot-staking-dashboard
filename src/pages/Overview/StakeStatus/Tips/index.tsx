@@ -1,7 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { setStateWithRef } from '@polkadotcloud/utils';
+import { setStateWithRef } from '@polkadot-cloud/utils';
+import throttle from 'lodash.throttle';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { TipsConfig } from 'config/tips';
 import { DefaultLocale, TipsThresholdMedium, TipsThresholdSmall } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -12,9 +15,6 @@ import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { useFillVariables } from 'library/Hooks/useFillVariables';
-import throttle from 'lodash.throttle';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
 import { Items } from './Items';
 import { PageToggle } from './PageToggle';
@@ -73,7 +73,7 @@ export const Tips = () => {
   // resize callback
   const resizeCallback = () => {
     setStateWithRef(getPage(), setPage, pageRef);
-    setStateWithRef(getItemsPerPage(), setItemsPerPage, itemsPerPageRef);
+    setStateWithRef(getItemsPerPage(), setItemsPerPageState, itemsPerPageRef);
   };
 
   // throttle resize callback
@@ -96,15 +96,14 @@ export const Tips = () => {
   }, []);
 
   // store the current amount of allowed items on display
-  const [itemsPerPage, setItemsPerPage] = useState<number>(getItemsPerPage());
+  const [itemsPerPage, setItemsPerPageState] = useState<number>(
+    getItemsPerPage()
+  );
   const itemsPerPageRef = useRef(itemsPerPage);
 
   // store the current page
   const [page, setPage] = useState<number>(1);
   const pageRef = useRef(page);
-
-  const _itemsPerPage = itemsPerPageRef.current;
-  const _page = pageRef.current;
 
   // accumulate segments to include in tips
   const segments: AnyJson = [];
@@ -159,10 +158,10 @@ export const Tips = () => {
   // determine items to be displayed
   const end = isNetworkSyncing
     ? 1
-    : Math.min(_page * _itemsPerPage, items.length);
+    : Math.min(pageRef.current * itemsPerPageRef.current, items.length);
   const start = isNetworkSyncing
     ? 1
-    : _page * _itemsPerPage - (_itemsPerPage - 1);
+    : pageRef.current * itemsPerPageRef.current - (itemsPerPageRef.current - 1);
 
   const itemsDisplay = items.slice(start - 1, end);
 

@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import type { ReactNode } from 'react';
 import type { MaybeString } from 'types';
@@ -26,17 +26,19 @@ export interface ExternalWithKeys {
   website?: string;
 }
 
+export type HelpStatus = 'closed' | 'open' | 'closing';
+
 export interface HelpContextInterface {
   openHelp: (d: MaybeString) => void;
   closeHelp: () => void;
-  setStatus: (s: number) => void;
+  setStatus: (s: HelpStatus) => void;
   setDefinition: (d: MaybeString) => void;
-  status: number;
+  status: HelpStatus;
   definition: MaybeString;
 }
 
 export interface HelpContextState {
-  status: number;
+  status: HelpStatus;
   definition: MaybeString;
 }
 

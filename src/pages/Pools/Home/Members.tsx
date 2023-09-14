@@ -1,29 +1,30 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { PageRow } from '@polkadotcloud/core-ui';
+import { PageRow } from '@polkadot-cloud/react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { usePlugins } from 'contexts/Plugins';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useTheme } from 'contexts/Themes';
 import { CardWrapper } from 'library/Card/Wrappers';
-import { useTranslation } from 'react-i18next';
 import { MembersList as DefaultMemberList } from './MembersList/Default';
 import { MembersList as FetchPageMemberList } from './MembersList/FetchPage';
 
-export const Members = ({ memberCount }: { memberCount: number }) => {
+export const Members = () => {
   const { t } = useTranslation('pages');
   const { mode } = useTheme();
   const { pluginEnabled } = usePlugins();
   const { getMembersOfPoolFromNode } = usePoolMembers();
-  const { selectedActivePool, isOwner, isBouncer } = useActivePools();
+  const { selectedActivePool, isOwner, isBouncer, selectedPoolMemberCount } =
+    useActivePools();
   const { colors } = useApi().network;
 
   const listTitle = `${t('pools.poolMember', {
-    count: memberCount,
+    count: selectedPoolMemberCount,
   })}`;
   const annuncementBorderColor = colors.secondary[mode];
 
@@ -82,7 +83,7 @@ export const Members = ({ memberCount }: { memberCount: number }) => {
           {pluginEnabled('subscan') ? (
             <FetchPageMemberList
               {...membersListProps}
-              memberCount={memberCount}
+              memberCount={selectedPoolMemberCount}
             />
           ) : (
             <DefaultMemberList

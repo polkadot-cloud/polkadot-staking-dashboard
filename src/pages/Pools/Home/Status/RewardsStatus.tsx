@@ -1,25 +1,25 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { faPlus, faShare } from '@fortawesome/free-solid-svg-icons';
-import { planckToUnit } from '@polkadotcloud/utils';
+import { faCircleDown, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { Stat } from 'library/Stat';
-import { useTranslation } from 'react-i18next';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const RewardsStatus = () => {
   const { t } = useTranslation('pages');
   const {
-    network: { units, unit },
+    network: { units },
     isReady,
   } = useApi();
   const { isPoolSyncing } = useUi();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { selectedActivePool } = useActivePools();
   const { activeAccount, isReadOnlyAccount } = useConnect();
 
@@ -30,19 +30,23 @@ export const RewardsStatus = () => {
   const minUnclaimedDisplay = new BigNumber(1_000_000);
 
   const labelRewards = pendingRewards.isGreaterThan(minUnclaimedDisplay)
-    ? `${planckToUnit(pendingRewards, units)} ${unit}`
-    : `0 ${unit}`;
+    ? planckToUnit(pendingRewards, units).toString()
+    : '0';
 
   // Display Reward buttons if unclaimed rewards is a non-zero value.
   const buttonsRewards = pendingRewards.isGreaterThan(minUnclaimedDisplay)
     ? [
         {
           title: t('pools.withdraw'),
-          icon: faShare,
+          icon: faCircleDown,
           disabled: !isReady || isReadOnlyAccount(activeAccount),
           small: true,
           onClick: () =>
-            openModalWith('ClaimReward', { claimType: 'withdraw' }, 'small'),
+            openModal({
+              key: 'ClaimReward',
+              options: { claimType: 'withdraw' },
+              size: 'sm',
+            }),
         },
         {
           title: t('pools.compound'),
@@ -53,7 +57,11 @@ export const RewardsStatus = () => {
             selectedActivePool?.bondedPool?.state === 'Destroying',
           small: true,
           onClick: () =>
-            openModalWith('ClaimReward', { claimType: 'bond' }, 'small'),
+            openModal({
+              key: 'ClaimReward',
+              options: { claimType: 'bond' },
+              size: 'sm',
+            }),
         },
       ]
     : undefined;
@@ -62,7 +70,8 @@ export const RewardsStatus = () => {
     <Stat
       label={t('pools.unclaimedRewards')}
       helpKey="Pool Rewards"
-      stat={labelRewards}
+      type="odometer"
+      stat={{ value: labelRewards }}
       buttons={isPoolSyncing ? [] : buttonsRewards}
     />
   );

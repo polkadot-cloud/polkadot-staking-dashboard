@@ -1,12 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ModalPadding } from '@polkadotcloud/core-ui';
+import { ModalPadding } from '@polkadot-cloud/react';
+import { useTranslation } from 'react-i18next';
 import { ReactComponent as ForumSVG } from 'img/forum.svg';
 import { Title } from 'library/Modal/Title';
-import { useTranslation } from 'react-i18next';
 
 export const GoToFeedback = () => {
   const { t } = useTranslation('modals');
@@ -16,7 +16,7 @@ export const GoToFeedback = () => {
       <ModalPadding verticalOnly>
         <div
           style={{
-            padding: '0 1.75rem',
+            padding: '0 1.75rem 0.5rem 1.75rem',
             width: '100%',
           }}
         >
@@ -27,7 +27,7 @@ export const GoToFeedback = () => {
             </a>
             . {t('welcomeToReport')}
           </h4>
-          <h2 style={{ marginTop: 0 }}>
+          <h2 style={{ marginTop: '0.75rem' }}>
             <a
               href="https://polkadot-staking-dashboard.canny.io/feedback"
               target="_blank"

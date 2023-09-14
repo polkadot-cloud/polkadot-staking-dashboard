@@ -1,15 +1,15 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { PageRow } from '@polkadotcloud/core-ui';
+import { PageRow } from '@polkadot-cloud/react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList/Default';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export const PoolFavorites = () => {
   const { t } = useTranslation('pages');
@@ -23,18 +23,16 @@ export const PoolFavorites = () => {
 
   useEffect(() => {
     // map favorites to bonded pools
-    let _favoritesList = favorites.map((f: any) => {
-      const pool = bondedPools.find((b: any) => b.addresses.stash === f);
-      if (!pool) {
-        removeFavorite(f);
-      }
+    let newFavoritesList = favorites.map((f) => {
+      const pool = !bondedPools.find((b) => b.addresses.stash === f);
+      if (!pool) removeFavorite(f);
       return pool;
     });
 
     // filter not found bonded pools
-    _favoritesList = _favoritesList.filter((f: any) => f !== undefined);
+    newFavoritesList = newFavoritesList.filter((f: any) => f !== undefined);
 
-    setFavoritesList(_favoritesList);
+    setFavoritesList(newFavoritesList);
   }, [favorites]);
 
   return (

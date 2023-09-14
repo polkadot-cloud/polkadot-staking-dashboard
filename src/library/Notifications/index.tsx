@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { useNotifications } from 'contexts/Notifications';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useNotifications } from 'contexts/Notifications';
 import { Wrapper } from './Wrapper';
 
 export const Notifications = () => {

@@ -1,21 +1,21 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslation } from 'react-i18next';
 import { useNotifications } from 'contexts/Notifications';
 import { useTooltip } from 'contexts/Tooltip';
-import { useValidators } from 'contexts/Validators';
 import { TooltipTrigger } from 'library/ListItem/Wrappers';
-import { useTranslation } from 'react-i18next';
+import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import type { FavoriteProps } from '../types';
 
 export const FavoriteValidator = ({ address }: FavoriteProps) => {
   const { t } = useTranslation('library');
-  const { addNotification } = useNotifications();
-  const { favorites, addFavorite, removeFavorite } = useValidators();
   const { setTooltipTextAndOpen } = useTooltip();
+  const { addNotification } = useNotifications();
+  const { favorites, addFavorite, removeFavorite } = useFavoriteValidators();
 
   const isFavorite = favorites.includes(address);
 

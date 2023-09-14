@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { useDotLottieButton } from 'library/Hooks/useDotLottieButton';
 import { useTranslation } from 'react-i18next';
+import { useDotLottieButton } from 'library/Hooks/useDotLottieButton';
 import { ItemInnerWrapper, ItemWrapper, ItemsWrapper } from './Wrappers';
 
 export const Syncing = () => {
@@ -21,7 +21,7 @@ export const Syncing = () => {
       }}
     >
       <ItemWrapper>
-        <ItemInnerWrapper inactive>
+        <ItemInnerWrapper>
           <section
             style={{
               marginRight: '0.5rem',
@@ -33,7 +33,9 @@ export const Syncing = () => {
           </section>
           <section>
             <div className="desc">
-              <h4>{t('module.oneMoment')}...</h4>
+              <button type="button" disabled>
+                <h4>{t('module.oneMoment')}...</h4>
+              </button>
             </div>
           </section>
         </ItemInnerWrapper>

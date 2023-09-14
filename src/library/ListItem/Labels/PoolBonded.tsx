@@ -1,19 +1,19 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import {
   capitalizeFirstLetter,
   planckToUnit,
   rmCommas,
-} from '@polkadotcloud/utils';
+} from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import type { Pool } from 'library/Pool/types';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export const PoolBonded = ({
   pool,
@@ -43,11 +43,9 @@ export const PoolBonded = ({
   // we cannot add effect dependencies here as this needs to trigger
   // as soon as the component displays. (upon tab change).
   const handleNominationsStatus = () => {
-    const _nominationStatus = getNominationsStatusFromTargets(
-      addresses.stash,
-      targets
+    setNominationsStatus(
+      getNominationsStatusFromTargets(addresses.stash, targets)
     );
-    setNominationsStatus(_nominationStatus);
   };
 
   // recalculate nominations status as app syncs
@@ -78,7 +76,7 @@ export const PoolBonded = ({
 
   return (
     <>
-      <ValidatorStatusWrapper status={nominationStatus}>
+      <ValidatorStatusWrapper $status={nominationStatus}>
         <h5>
           {nominationStatus === null || !eraStakers.stakers.length
             ? `${t('syncing')}...`

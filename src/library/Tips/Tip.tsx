@@ -1,24 +1,24 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import {
   ButtonPrimary,
   ButtonPrimaryInvert,
   ButtonSecondary,
-} from '@polkadotcloud/core-ui';
-import { useOverlay } from 'contexts/Overlay';
-import { usePlugins } from 'contexts/Plugins';
-import { Title } from 'library/Overlay/Title';
+} from '@polkadot-cloud/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { Title } from 'library/Prompt/Title';
+import { usePrompt } from 'contexts/Prompt';
+import { usePlugins } from 'contexts/Plugins';
 
 export const Tip = ({ title, description, page }: any) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { togglePlugin } = usePlugins();
-  const { closeOverlay } = useOverlay();
+  const { closePrompt } = usePrompt();
 
   const [disabling, setDisabling] = useState<boolean>(false);
 
@@ -37,7 +37,7 @@ export const Tip = ({ title, description, page }: any) => {
                 text={t('module.disableTips', { ns: 'tips' })}
                 onClick={() => {
                   togglePlugin('tips');
-                  closeOverlay();
+                  closePrompt();
                 }}
               />
               <ButtonPrimaryInvert
@@ -65,7 +65,7 @@ export const Tip = ({ title, description, page }: any) => {
                     ns: 'base',
                   })}`}
                   onClick={() => {
-                    closeOverlay();
+                    closePrompt();
                     navigate(`/${page}`);
                   }}
                   iconRight={faAngleRight}

@@ -1,16 +1,16 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { useModal } from 'contexts/Modal';
 import { ReactComponent as CrossSVG } from 'img/cross.svg';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { CloseWrapper } from './Wrappers';
 
 export const Close = () => {
-  const { setStatus } = useModal();
+  const { setModalStatus } = useOverlay().modal;
 
   return (
     <CloseWrapper>
-      <button type="button" onClick={() => setStatus(2)}>
+      <button type="button" onClick={() => setModalStatus('closing')}>
         <CrossSVG style={{ width: '1.25rem', height: '1.25rem' }} />
       </button>
     </CloseWrapper>

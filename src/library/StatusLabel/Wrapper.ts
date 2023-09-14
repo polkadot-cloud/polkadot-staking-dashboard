@@ -1,12 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components';
 import type { WrapperProps } from './types';
 
 export const Wrapper = styled.div<WrapperProps>`
   position: absolute;
-  top: ${(props) => (props.topOffset ? props.topOffset : '50%')};
+  top: ${(props) => (props.$topOffset ? props.$topOffset : '50%')};
   left: 0;
   width: 100%;
   display: flex;

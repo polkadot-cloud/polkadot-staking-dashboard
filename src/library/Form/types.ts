@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
 import type { Balance } from 'contexts/Balances/types';
@@ -38,7 +38,7 @@ export interface BondFeedbackProps {
   defaultBond: number | null;
   inSetup?: boolean;
   joiningPool?: boolean;
-  listenIsValid: { (v: boolean): void } | { (): void };
+  listenIsValid: { (valid: boolean, errors: string[]): void } | { (): void };
   parentErrors?: string[];
   disableTxFeeUpdate?: boolean;
   setLocalResize?: () => void;
@@ -61,7 +61,7 @@ export interface UnbondFeedbackProps {
   bondFor: BondFor;
   defaultBond?: number;
   inSetup?: boolean;
-  listenIsValid: { (v: boolean): void } | { (): void };
+  listenIsValid: { (valid: boolean, errors: string[]): void } | { (): void };
   parentErrors?: string[];
   setLocalResize?: () => void;
   txFees: BigNumber;

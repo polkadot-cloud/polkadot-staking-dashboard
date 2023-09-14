@@ -1,12 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { ModalPadding, ModalWarnings } from '@polkadotcloud/core-ui';
-import { planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
+import { ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
+import { planckToUnit, unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
@@ -16,19 +17,24 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const Bond = () => {
   const { t } = useTranslation('modals');
   const { api, network } = useApi();
-  const { units } = network;
-  const { setStatus: setModalStatus, config, setResize } = useModal();
   const { activeAccount } = useConnect();
-  const { feeReserve, getTransferOptions } = useTransferOptions();
+  const { notEnoughFunds } = useTxMeta();
   const { selectedActivePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
-  const { bondFor } = config;
+  const { feeReserve, getTransferOptions } = useTransferOptions();
+  const {
+    setModalStatus,
+    config: { options },
+    setModalResize,
+  } = useOverlay().modal;
+  const { units } = network;
+  const { bondFor } = options;
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
   const { nominate, pool } = getTransferOptions(activeAccount);
@@ -53,6 +59,9 @@ export const Bond = () => {
 
   // bond valid.
   const [bondValid, setBondValid] = useState<boolean>(false);
+
+  // feedback errors to trigger modal resize
+  const [feedbackErrors, setFeedbackErrors] = useState<string[]>([]);
 
   // bond minus tx fees.
   const enoughToCoverTxFees: boolean = freeBalance
@@ -112,7 +121,7 @@ export const Bond = () => {
     from: activeAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
-      setModalStatus(2);
+      setModalStatus('closing');
     },
     callbackInBlock: () => {},
   });
@@ -124,9 +133,10 @@ export const Bond = () => {
   );
 
   // modal resize on form update
-  useEffect(() => {
-    setResize();
-  }, [bond, warnings.length]);
+  useEffect(
+    () => setModalResize(),
+    [bond, bondValid, notEnoughFunds, feedbackErrors.length, warnings.length]
+  );
 
   return (
     <>
@@ -145,7 +155,10 @@ export const Bond = () => {
         <BondFeedback
           syncing={largestTxFee.isZero()}
           bondFor={bondFor}
-          listenIsValid={setBondValid}
+          listenIsValid={(valid, errors) => {
+            setBondValid(valid);
+            setFeedbackErrors(errors);
+          }}
           defaultBond={null}
           setters={[
             {

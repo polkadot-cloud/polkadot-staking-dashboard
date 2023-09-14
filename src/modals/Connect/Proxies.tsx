@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import {
   faChevronRight,
@@ -11,14 +11,15 @@ import {
   ButtonHelp,
   ButtonMonoInvert,
   ButtonSecondary,
-} from '@polkadotcloud/core-ui';
+  PolkadotIcon,
+} from '@polkadot-cloud/react';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useProxies } from 'contexts/Proxies';
 import { AccountInput } from 'library/AccountInput';
-import { Identicon } from 'library/Identicon';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTheme } from 'contexts/Themes';
 import {
   ActionWithButton,
   ManualAccount,
@@ -30,6 +31,7 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');
   const { accounts, getAccount } = useConnect();
   const { openHelp } = useHelp();
+  const { mode } = useTheme();
   const { delegates, handleDeclareDelegate } = useProxies();
 
   // Filter delegates to only show those who are imported in the dashboard.
@@ -79,7 +81,12 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                       <ManualAccount key={`user_delegate_${i}_delegator_${j}`}>
                         <div>
                           <span>
-                            <Identicon value={delegate} size={26} />
+                            <PolkadotIcon
+                              dark={mode === 'dark'}
+                              nocopy
+                              address={delegate}
+                              size={26}
+                            />
                           </span>
                           <div className="text">
                             <h4 className="title">

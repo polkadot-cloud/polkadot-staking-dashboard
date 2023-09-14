@@ -1,9 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { clipAddress, determinePoolDisplay } from '@polkadotcloud/utils';
+import { ellipsisFn, determinePoolDisplay } from '@polkadot-cloud/utils';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { Identicon } from 'library/Identicon';
+import { PolkadotIcon } from '@polkadot-cloud/react';
+import { useTheme } from 'contexts/Themes';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';
 import type { PoolIdentityProps } from '../types';
 
@@ -13,6 +14,7 @@ export const PoolIdentity = ({
   batchIndex,
 }: PoolIdentityProps) => {
   const { meta } = useBondedPools();
+  const { mode } = useTheme();
   const { addresses } = pool;
 
   // get metadata from pools metabatch
@@ -26,10 +28,15 @@ export const PoolIdentity = ({
 
   return (
     <IdentityWrapper className="identity">
-      <Identicon value={addresses.stash} size={26} />
+      <PolkadotIcon
+        dark={mode === 'dark'}
+        nocopy
+        address={addresses.stash}
+        size={26}
+      />
       <div className="inner">
         {!metadataSynced ? (
-          <h4>{clipAddress(addresses.stash)}</h4>
+          <h4>{ellipsisFn(addresses.stash)}</h4>
         ) : (
           <h4>{display}</h4>
         )}

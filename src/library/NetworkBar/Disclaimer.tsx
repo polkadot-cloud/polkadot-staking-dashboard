@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 
-import { ModalPadding } from '@polkadotcloud/core-ui';
-import { Title } from 'library/Overlay/Title';
+import { ModalPadding } from '@polkadot-cloud/react';
+import { Title } from 'library/Prompt/Title';
 
 export const Disclaimer = () => (
   <>

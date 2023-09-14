@@ -1,25 +1,25 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { ButtonSubmitInvert, ModalWarnings } from '@polkadotcloud/core-ui';
+import { ButtonSubmitInvert, ModalWarnings } from '@polkadot-cloud/react';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const SetMetadata = ({ setSection, section }: any) => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
-  const { setStatus: setModalStatus } = useModal();
+  const { setModalStatus } = useOverlay().modal;
   const { activeAccount } = useConnect();
   const { isOwner, selectedActivePool } = useActivePools();
   const { bondedPools, meta } = useBondedPools();
@@ -62,7 +62,7 @@ export const SetMetadata = ({ setSection, section }: any) => {
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {
-      setModalStatus(2);
+      setModalStatus('closing');
     },
     callbackInBlock: () => {},
   });
@@ -91,7 +91,7 @@ export const SetMetadata = ({ setSection, section }: any) => {
         <input
           className="textbox"
           style={{ width: '100%' }}
-          placeholder={`${t('poolName')}`}
+          placeholder={t('poolName')}
           type="text"
           onChange={(e: React.FormEvent<HTMLInputElement>) =>
             handleMetadataChange(e)

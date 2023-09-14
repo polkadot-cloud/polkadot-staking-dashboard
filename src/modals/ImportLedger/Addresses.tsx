@@ -1,24 +1,29 @@
 // Copyright 2023 @paritytech/polkadot-live authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
-import { ButtonText, HardwareAddress } from '@polkadotcloud/core-ui';
-import { clipAddress, unescape } from '@polkadotcloud/utils';
+import {
+  ButtonText,
+  HardwareAddress,
+  PolkadotIcon,
+} from '@polkadot-cloud/react';
+import { ellipsisFn, unescape } from '@polkadot-cloud/utils';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
-import { useOverlay } from 'contexts/Overlay';
-import { Identicon } from 'library/Identicon';
+import { usePrompt } from 'contexts/Prompt';
 import { Confirm } from 'library/Import/Confirm';
 import { Remove } from 'library/Import/Remove';
+import { useTheme } from 'contexts/Themes';
 import { AddressesWrapper } from 'library/Import/Wrappers';
-import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
 
 export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
   const { t } = useTranslation('modals');
   const { network } = useApi();
+  const { mode } = useTheme();
   const {
     getIsExecuting,
     ledgerAccountExists,
@@ -29,7 +34,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
     getLedgerAccount,
     pairDevice,
   } = useLedgerHardware();
-  const { openOverlayWith } = useOverlay();
+  const { openPromptWith } = usePrompt();
   const { renameImportedAccount } = useConnect();
   const isExecuting = getIsExecuting();
   const source = 'ledger';
@@ -40,7 +45,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
   };
 
   const openConfirmHandler = (address: string, index: number) => {
-    openOverlayWith(
+    openPromptWith(
       <Confirm
         address={address}
         index={index}
@@ -52,7 +57,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
   };
 
   const openRemoveHandler = (address: string) => {
-    openOverlayWith(
+    openPromptWith(
       <Remove
         address={address}
         removeHandler={removeLedgerAccount}
@@ -74,7 +79,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
               );
               return localAddress?.name
                 ? unescape(localAddress.name)
-                : clipAddress(address);
+                : ellipsisFn(address);
             })();
 
             return (
@@ -83,7 +88,14 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
                 address={address}
                 index={index}
                 initial={initialName}
-                Identicon={<Identicon value={address} size={40} />}
+                Identicon={
+                  <PolkadotIcon
+                    dark={mode === 'dark'}
+                    nocopy
+                    address={address}
+                    size={40}
+                  />
+                }
                 existsHandler={ledgerAccountExists}
                 renameHandler={renameHandler}
                 openRemoveHandler={openRemoveHandler}

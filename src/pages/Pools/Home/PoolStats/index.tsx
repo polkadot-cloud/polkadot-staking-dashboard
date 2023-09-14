@@ -1,21 +1,21 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit, rmCommas } from '@polkadotcloud/utils';
+import { planckToUnit, rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { usePoolCommission } from 'library/Hooks/usePoolCommission';
 import { StatsHead } from 'library/StatsHead';
-import { useTranslation } from 'react-i18next';
 import { Announcements } from './Announcements';
 import { Wrapper } from './Wrappers';
 
-export const PoolStats = ({ memberCount }: { memberCount: number }) => {
+export const PoolStats = () => {
   const { t } = useTranslation('pages');
   const { network } = useApi();
-  const { selectedActivePool } = useActivePools();
+  const { selectedActivePool, selectedPoolMemberCount } = useActivePools();
   const { getCurrentCommission } = usePoolCommission();
 
   const { state, points } = selectedActivePool?.bondedPool || {};
@@ -58,7 +58,7 @@ export const PoolStats = ({ memberCount }: { memberCount: number }) => {
   items.push(
     {
       label: t('pools.poolMembers'),
-      value: `${memberCount}`,
+      value: `${selectedPoolMemberCount}`,
     },
     {
       label: t('pools.totalBonded'),

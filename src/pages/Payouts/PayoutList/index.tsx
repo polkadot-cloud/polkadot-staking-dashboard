@@ -1,27 +1,27 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clipAddress, isNotZero, planckToUnit } from '@polkadotcloud/utils';
+import { clipAddress, isNotZero, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import { formatDistance, fromUnixTime } from 'date-fns';
+import { motion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DefaultLocale, ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
-import { useValidators } from 'contexts/Validators';
-import { formatDistance, fromUnixTime } from 'date-fns';
-import { motion } from 'framer-motion';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { Identity } from 'library/ListItem/Labels/Identity';
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
 import { locales } from 'locale';
-import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import type { AnySubscan } from 'types';
 import { ItemWrapper } from '../Wrappers';
 import type { PayoutListProps } from '../types';
@@ -111,9 +111,6 @@ export const PayoutListInner = ({
     return <></>;
   }
 
-  // get validator metadata
-  const batchKey = 'validators_browse';
-
   return (
     <ListWrapper>
       <Header>
@@ -135,7 +132,7 @@ export const PayoutListInner = ({
           </button>
         </div>
       </Header>
-      <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
+      <List $flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
         {pagination && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
@@ -191,7 +188,7 @@ export const PayoutListInner = ({
                     <div className="row">
                       <div>
                         <div>
-                          <h4 className={`${labelClass}`}>
+                          <h4 className={labelClass}>
                             <>
                               {p.event_id === 'Slashed' ? '-' : '+'}
                               {planckToUnit(
@@ -203,7 +200,7 @@ export const PayoutListInner = ({
                           </h4>
                         </div>
                         <div>
-                          <h5 className={`${labelClass}`}>{label}</h5>
+                          <h5 className={labelClass}>{label}</h5>
                         </div>
                       </div>
                     </div>
@@ -213,11 +210,7 @@ export const PayoutListInner = ({
                           {label === t('payouts.payout') && (
                             <>
                               {batchIndex > 0 ? (
-                                <Identity
-                                  address={p.validator_stash}
-                                  batchIndex={batchIndex}
-                                  batchKey={batchKey}
-                                />
+                                <Identity address={p.validator_stash} />
                               ) : (
                                 <div>{clipAddress(p.validator_stash)}</div>
                               )}
@@ -227,7 +220,7 @@ export const PayoutListInner = ({
                             <>
                               {pool ? (
                                 <PoolIdentity
-                                  batchKey={batchKey}
+                                  batchKey="bonded_pools"
                                   batchIndex={batchIndex}
                                   pool={pool}
                                 />

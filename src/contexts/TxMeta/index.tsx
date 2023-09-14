@@ -1,14 +1,15 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { setStateWithRef } from '@polkadotcloud/utils';
+import { setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import React, { useState } from 'react';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import React, { useEffect, useState } from 'react';
 import type { AnyJson, MaybeAccount } from 'types';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import * as defaults from './defaults';
 import type { TxMetaContextInterface } from './types';
 
@@ -41,7 +42,7 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   const [txSignature, setTxSignatureState] = useState<AnyJson>(null);
   const txSignatureRef = React.useRef(txSignature);
 
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     const { freeBalance } = getTransferOptions(sender);
     setNotEnoughFunds(freeBalance.minus(txFees).isLessThan(0));
   }, [txFees, sender]);

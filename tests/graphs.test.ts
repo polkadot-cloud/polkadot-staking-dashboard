@@ -1,14 +1,14 @@
 /* Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
- * SPDX-License-Identifier: Apache-2.0 */
+ * SPDX-License-Identifier: GPL-3.0-only */
 
 import { fromUnixTime, getUnixTime, startOfToday, subDays } from 'date-fns';
+import { expect, test } from 'vitest';
 import {
   daysPassed,
   normalisePayouts,
   postFillMissingDays,
   prefillMissingDays,
 } from 'library/Graphs/Utils';
-import { expect, test } from 'vitest';
 
 // payouts that were made 2, 3 and 4 days ago.
 const mockPayouts = [

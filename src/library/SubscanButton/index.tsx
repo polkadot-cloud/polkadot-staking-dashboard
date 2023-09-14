@@ -1,12 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { usePlugins } from 'contexts/Plugins';
 import styled from 'styled-components';
+import { usePlugins } from 'contexts/Plugins';
 
-const Wrapper = styled.div<{ active: boolean }>`
+const Wrapper = styled.div<{ $active: boolean }>`
   position: absolute;
   right: 10px;
   top: 10px;
@@ -14,10 +14,10 @@ const Wrapper = styled.div<{ active: boolean }>`
   border-radius: 0.3rem;
   padding: 0.25rem 0.4rem;
   color: ${(props) =>
-    props.active
-      ? 'var(--network-color-primary)'
+    props.$active
+      ? 'var(--accent-color-primary)'
       : 'var(--text-color-secondary)'};
-  opacity: ${(props) => (props.active ? 1 : 0.5)};
+  opacity: ${(props) => (props.$active ? 1 : 0.5)};
   z-index: 2;
 `;
 
@@ -25,7 +25,7 @@ export const SubscanButton = () => {
   const { plugins } = usePlugins();
 
   return (
-    <Wrapper active={plugins.includes('subscan')}>
+    <Wrapper $active={plugins.includes('subscan')}>
       <FontAwesomeIcon
         icon={faProjectDiagram}
         transform="shrink-2"

@@ -1,13 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonSubmitInvert } from '@polkadotcloud/core-ui';
-import { planckToUnit } from '@polkadotcloud/utils';
+import { ButtonSubmitInvert } from '@polkadot-cloud/react';
+import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
 import { InputWrapper } from '../Wrappers';
 import type { UnbondInputProps } from '../types';
 

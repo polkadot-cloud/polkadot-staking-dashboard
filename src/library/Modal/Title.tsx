@@ -1,13 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonHelp } from '@polkadotcloud/core-ui';
-import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
-import { ReactComponent as CrossSVG } from 'img/cross.svg';
+import { ButtonHelp } from '@polkadot-cloud/react';
 import type { FunctionComponent } from 'react';
+import React from 'react';
+import { useHelp } from 'contexts/Help';
+import { ReactComponent as CrossSVG } from 'img/cross.svg';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { TitleWrapper } from './Wrappers';
 
 interface TitleProps {
@@ -16,10 +17,18 @@ interface TitleProps {
   Svg?: FunctionComponent<any>;
   fixed?: boolean;
   helpKey?: string;
+  style?: React.CSSProperties;
 }
 
-export const Title = ({ helpKey, title, icon, fixed, Svg }: TitleProps) => {
-  const { setStatus } = useModal();
+export const Title = ({
+  helpKey,
+  title,
+  icon,
+  fixed,
+  Svg,
+  style,
+}: TitleProps) => {
+  const { setModalStatus } = useOverlay().modal;
   const { openHelp } = useHelp();
 
   const graphic = Svg ? (
@@ -29,7 +38,7 @@ export const Title = ({ helpKey, title, icon, fixed, Svg }: TitleProps) => {
   ) : null;
 
   return (
-    <TitleWrapper $fixed={fixed || false}>
+    <TitleWrapper $fixed={fixed || false} style={{ ...style }}>
       <div>
         {graphic}
         <h2>
@@ -40,7 +49,7 @@ export const Title = ({ helpKey, title, icon, fixed, Svg }: TitleProps) => {
         </h2>
       </div>
       <div>
-        <button type="button" onClick={() => setStatus(2)}>
+        <button type="button" onClick={() => setModalStatus('closing')}>
           <CrossSVG style={{ width: '1.25rem', height: '1.25rem' }} />
         </button>
       </div>

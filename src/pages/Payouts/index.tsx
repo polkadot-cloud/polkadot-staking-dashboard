@@ -1,7 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonHelp, PageRow, PageTitle } from '@polkadotcloud/core-ui';
+import { ButtonHelp, PageRow, PageTitle } from '@polkadot-cloud/react';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { MaxPayoutDays } from 'consts';
 import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
@@ -17,10 +19,7 @@ import { useSize } from 'library/Hooks/useSize';
 import { StatBoxList } from 'library/StatBoxList';
 import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import type { AnySubscan } from 'types';
-import type { PageProps } from '../types';
+import type { AnySubscan, PageProps } from 'types';
 import { PayoutList } from './PayoutList';
 import { LastEraPayoutStat } from './Stats/LastEraPayout';
 
@@ -48,7 +47,7 @@ export const Payouts = ({ page }: PageProps) => {
 
   return (
     <>
-      <PageTitle title={`${t(key, { ns: 'base' })}`} />
+      <PageTitle title={t(key, { ns: 'base' })} />
       <StatBoxList>
         <LastEraPayoutStat />
       </StatBoxList>

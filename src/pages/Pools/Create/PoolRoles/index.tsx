@@ -1,14 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
+import { useEffect, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
-import { useEffect, useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
 import { Roles } from '../../Roles';
 
 export const PoolRoles = ({ section }: SetupStepProps) => {
@@ -63,24 +63,22 @@ export const PoolRoles = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={progress.roles !== null}
-        title={`${t('pools.roles')}`}
+        title={t('pools.roles')}
         helpKey="Pool Roles"
         bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <h4 className="withMargin">
-          <Trans
-            defaults={`${t('pools.poolCreator')}`}
-            components={{ b: <b /> }}
-          />
+        <h4 style={{ margin: '0.5rem 0' }}>
+          <Trans defaults={t('pools.poolCreator')} components={{ b: <b /> }} />
         </h4>
-        <h4 className="withMargin">
+        <h4 style={{ margin: '0.5rem 0 1.5rem 0' }}>
           <Trans
-            defaults={`${t('pools.assignedToAnyAccount')}`}
+            defaults={t('pools.assignedToAnyAccount')}
             components={{ b: <b /> }}
           />
         </h4>
         <Roles
+          inline
           batchKey="pool_roles_create"
           listenIsValid={setRolesValid}
           defaultRoles={initialValue}

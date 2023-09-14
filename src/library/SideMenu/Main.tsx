@@ -1,8 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import { PageCategories, PagesConfig } from 'config/pages';
-import { BaseURL, PolkadotUrl } from 'consts';
+import { PolkadotUrl } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
@@ -12,9 +15,6 @@ import type { SetupContextInterface } from 'contexts/Setup/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import type { UIContextInterface } from 'contexts/UI/types';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
 import type { PageCategory, PageItem, PagesConfigItems } from 'types';
 import { Heading } from './Heading/Heading';
 import { Primary } from './Primary';
@@ -47,43 +47,43 @@ export const Main = () => {
     if (!accounts.length) return;
 
     // inject actions into menu items
-    const _pages = Object.assign(pageConfig.pages);
-    for (let i = 0; i < _pages.length; i++) {
-      const { uri } = _pages[i];
+    const pages = Object.assign(pageConfig.pages);
+    for (let i = 0; i < pages.length; i++) {
+      const { uri } = pages[i];
 
       // set undefined action as default
-      _pages[i].action = undefined;
-      if (uri === `${BaseURL}/`) {
+      pages[i].action = undefined;
+      if (uri === `${import.meta.env.BASE_URL}`) {
         const warning = !isSyncing && controllerDifferentToStash;
         if (warning) {
-          _pages[i].action = {
+          pages[i].action = {
             type: 'bullet',
             status: 'warning',
           };
         }
       }
 
-      if (uri === `${BaseURL}/nominate`) {
+      if (uri === `${import.meta.env.BASE_URL}nominate`) {
         // configure Stake action
         const staking = !inNominatorSetup();
         const warning = !isSyncing && controllerDifferentToStash;
         const setupPercent = getNominatorSetupPercent(activeAccount);
 
         if (staking) {
-          _pages[i].action = {
+          pages[i].action = {
             type: 'text',
             status: 'success',
             text: t('active'),
           };
         }
         if (warning) {
-          _pages[i].action = {
+          pages[i].action = {
             type: 'bullet',
             status: 'warning',
           };
         }
         if (!staking && (onNominatorSetup || setupPercent > 0)) {
-          _pages[i].action = {
+          pages[i].action = {
             type: 'text',
             status: 'warning',
             text: `${setupPercent}%`,
@@ -91,20 +91,20 @@ export const Main = () => {
         }
       }
 
-      if (uri === `${BaseURL}/pools`) {
+      if (uri === `${import.meta.env.BASE_URL}pools`) {
         // configure Pools action
         const inPool = membership;
         const setupPercent = getPoolSetupPercent(activeAccount);
 
         if (inPool) {
-          _pages[i].action = {
+          pages[i].action = {
             type: 'text',
             status: 'success',
             text: t('active'),
           };
         }
         if (!inPool && (setupPercent > 0 || onPoolSetup)) {
-          _pages[i].action = {
+          pages[i].action = {
             type: 'text',
             status: 'warning',
             text: `${setupPercent}%`,
@@ -114,7 +114,7 @@ export const Main = () => {
     }
     setPageConfig({
       categories: pageConfig.categories,
-      pages: _pages,
+      pages,
     });
   }, [
     network,

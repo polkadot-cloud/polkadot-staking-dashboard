@@ -1,24 +1,28 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { ModalPadding } from '@polkadotcloud/core-ui';
+import { ModalPadding } from '@polkadot-cloud/react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useModal } from 'contexts/Modal';
-import { useValidators } from 'contexts/Validators';
 import type { Validator } from 'contexts/Validators/types';
 import { Title } from 'library/Modal/Title';
 import { ValidatorList } from 'library/ValidatorList';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { FooterWrapper, ListWrapper } from './Wrappers';
 
 export const SelectFavorites = () => {
   const { t } = useTranslation('modals');
   const { consts } = useApi();
-  const { config, setStatus, setResize } = useModal();
-  const { favoritesList } = useValidators();
+  const {
+    config: { options },
+    setModalStatus,
+    setModalResize,
+  } = useOverlay().modal;
+  const { favoritesList } = useFavoriteValidators();
   const { maxNominations } = consts;
-  const { nominations, callback: generateNominationsCallback } = config;
+  const { nominations, callback: generateNominationsCallback } = options;
 
   // store filtered favorites
   const [availableFavorites, setAvailableFavorites] = useState<Validator[]>([]);
@@ -29,19 +33,18 @@ export const SelectFavorites = () => {
   // store filtered favorites
   useEffect(() => {
     if (favoritesList) {
-      const _availableFavorites = favoritesList.filter(
-        (favorite) =>
-          !nominations.find(
-            (nomination: Validator) => nomination.address === favorite.address
-          ) && !favorite.prefs.blocked
+      setAvailableFavorites(
+        favoritesList.filter(
+          (favorite) =>
+            !nominations.find(
+              (nomination: Validator) => nomination.address === favorite.address
+            ) && !favorite.prefs.blocked
+        )
       );
-      setAvailableFavorites(_availableFavorites);
     }
   }, []);
 
-  useEffect(() => {
-    setResize();
-  }, [selectedFavorites]);
+  useEffect(() => setModalResize(), [selectedFavorites]);
 
   const batchKey = 'favorite_validators';
 
@@ -54,7 +57,7 @@ export const SelectFavorites = () => {
     if (!selectedFavorites.length) return;
     const newNominations = [...nominations].concat(...selectedFavorites);
     generateNominationsCallback(newNominations);
-    setStatus(0);
+    setModalStatus('closing');
   };
 
   const totalAfterSelection = nominations.length + selectedFavorites.length;

@@ -1,13 +1,15 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { capitalizeFirstLetter } from '@polkadotcloud/utils';
+import { capitalizeFirstLetter } from '@polkadot-cloud/utils';
+import throttle from 'lodash.throttle';
+import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import type { UIContextInterface } from 'contexts/UI/types';
@@ -19,9 +21,7 @@ import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
 import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
 import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
 import { useOutsideAlerter } from 'library/Hooks';
-import throttle from 'lodash.throttle';
-import { useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { Heading } from './Heading/Heading';
 import { Main } from './Main';
 import { Secondary } from './Secondary';
@@ -31,7 +31,7 @@ export const SideMenu = () => {
   const { t } = useTranslation('base');
   const { network, apiStatus } = useApi();
   const { mode, toggleTheme } = useTheme();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const {
     setSideMenu,
     sideMenuMinimised,
@@ -87,7 +87,7 @@ export const SideMenu = () => {
           }}
         />
         <Secondary
-          onClick={() => openModalWith('GoToFeedback')}
+          onClick={() => openModal({ key: 'GoToFeedback' })}
           name={t('feedback')}
           minimised={sideMenuMinimised}
           icon={{
@@ -100,7 +100,7 @@ export const SideMenu = () => {
         <Secondary
           classes={[apiStatusClass]}
           name={capitalizeFirstLetter(network.name)}
-          onClick={() => openModalWith('Networks')}
+          onClick={() => openModal({ key: 'Networks' })}
           icon={{
             Svg: network.brand.inline.svg,
             size: network.brand.inline.size,
@@ -135,19 +135,16 @@ export const SideMenu = () => {
         >
           <LogoGithubSVG width="1.2em" height="1.2em" />
         </button>
-        <button
-          type="button"
-          onClick={() => openModalWith('Settings', {}, 'large')}
-        >
+        <button type="button" onClick={() => openModal({ key: 'Settings' })}>
           <CogOutlineSVG width="1.3em" height="1.3em" />
         </button>
         <button
           type="button"
-          onClick={() => openModalWith('ChooseLanguage', {}, 'small')}
+          onClick={() => openModal({ key: 'ChooseLanguage' })}
         >
           <LanguageSVG width="1.25em" height="1.25em" />
         </button>
-        {mode === 'light' ? (
+        {mode === 'dark' ? (
           <button type="button" onClick={() => toggleTheme()}>
             <SunnyOutlineSVG width="1.25em" height="1.25em" />
           </button>

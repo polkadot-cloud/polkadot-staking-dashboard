@@ -1,35 +1,35 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+import { SmallFontSizeMaxWidth } from 'consts';
 
-export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
+export const Wrapper = styled.div<{ $format?: string; $inModal?: boolean }>`
   display: flex;
   flex-flow: row wrap;
   width: 100%;
-  height: ${(props) => (props.format === 'nomination' ? '6rem' : '3rem')};
+  height: ${(props) => (props.$format === 'nomination' ? '6rem' : '3rem')};
   position: relative;
   margin: 0.5rem;
 
   > .inner {
     background: ${(props) =>
-      props.inModal
+      props.$inModal
         ? 'var(--background-modal-item)'
         : 'var(--background-list-item)'};
 
     ${(props) =>
-      props.inModal &&
+      props.$inModal &&
       `
       box-shadow: none;
       border: none;`}
+
     flex: 1;
     border-radius: 1rem;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    flex: 1;
     overflow: hidden;
     position: absolute;
     top: 0px;
@@ -37,6 +37,7 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
     width: 100%;
     height: 100%;
     padding: 0;
+
     .row {
       flex: 1 0 100%;
       height: 3.25rem;
@@ -45,7 +46,7 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
       padding: 0 0.5rem;
 
       &.status {
-        height: 2.75rem;
+        height: 2.5rem;
       }
       svg {
         margin: 0;
@@ -60,9 +61,9 @@ export const Labels = styled.div`
   font-size: 0.85rem;
   align-items: center;
   overflow: hidden;
-  flex: 1 1 100%;
+  flex-grow: 1;
   padding: 0 0 0 0.25rem;
-  height: 2.75rem;
+  height: inherit;
 
   button {
     padding: 0 0.1rem;
@@ -74,7 +75,7 @@ export const Labels = styled.div`
       opacity: 0.75;
     }
     &.active {
-      color: var(--network-color-primary);
+      color: var(--accent-color-primary);
     }
     &:disabled {
       opacity: var(--opacity-disabled);
@@ -102,7 +103,7 @@ export const Labels = styled.div`
       margin-right: 0;
 
       button {
-        color: var(--network-color-primary);
+        color: var(--accent-color-primary);
         font-size: 0.95rem;
         display: flex;
         flex-flow: row wrap;
@@ -180,16 +181,16 @@ export const IdentityWrapper = styled(motion.div)`
   }
 `;
 
-export const ValidatorStatusWrapper = styled.div<{ status: string }>`
+export const ValidatorStatusWrapper = styled.div<{ $status: string }>`
   margin-right: 0.35rem;
   padding: 0 0.5rem;
 
   h5 {
     color: ${(props) =>
-      props.status === 'active'
+      props.$status === 'active'
         ? 'var(--status-success-color)'
         : 'var(--text-color-secondary)'};
-    opacity: ${(props) => (props.status === 'active' ? 0.8 : 0.5)};
+    opacity: ${(props) => (props.$status === 'active' ? 0.8 : 0.5)};
     display: flex;
     overflow: hidden;
     text-overflow: ellipsis;

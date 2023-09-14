@@ -1,17 +1,17 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronRight, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ModalPadding } from '@polkadotcloud/core-ui';
-import { capitalizeFirstLetter } from '@polkadotcloud/utils';
-import { NetworkList } from 'config/networks';
-import { useApi } from 'contexts/Api';
-import { useModal } from 'contexts/Modal';
-import { Title } from 'library/Modal/Title';
+import { ModalPadding } from '@polkadot-cloud/react';
+import { capitalizeFirstLetter } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import type { NetworkName } from 'types';
+import { NetworkList } from 'config/networks';
+import { useApi } from 'contexts/Api';
+import { Title } from 'library/Modal/Title';
+import type { AnyJson, NetworkName } from 'types';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { ReactComponent as BraveIconSVG } from '../../img/brave-logo.svg';
 import {
   BraveWarning,
@@ -23,18 +23,20 @@ import {
 
 export const Networks = () => {
   const { t } = useTranslation('modals');
+  const { setModalStatus, setModalResize } = useOverlay().modal;
   const { switchNetwork, network, isLightClient } = useApi();
-  const { setStatus } = useModal();
   const networkKey: string = network.name;
 
   const [braveBrowser, setBraveBrowser] = useState<boolean>(false);
 
   useEffect(() => {
-    // @ts-ignore
-    window.navigator?.brave?.isBrave().then(async (isBrave: boolean) => {
+    const navigator: AnyJson = window.navigator;
+    navigator?.brave?.isBrave().then(async (isBrave: boolean) => {
       setBraveBrowser(isBrave);
     });
   });
+
+  useEffect(() => setModalResize(), [braveBrowser]);
 
   return (
     <>
@@ -50,14 +52,14 @@ export const Networks = () => {
 
                 return (
                   <NetworkButton
-                    connected={networkKey === key}
+                    $connected={networkKey === key}
                     disabled={rpcDisabled}
                     key={`network_switch_${index}`}
                     type="button"
                     onClick={() => {
                       if (networkKey !== key) {
                         switchNetwork(key, isLightClient);
-                        setStatus(0);
+                        setModalStatus('closing');
                       }
                     }}
                   >
@@ -85,24 +87,24 @@ export const Networks = () => {
           <h4>{t('connectionType')}</h4>
           <ConnectionsWrapper>
             <ConnectionButton
-              connected={!isLightClient}
+              $connected={!isLightClient}
               disabled={!isLightClient}
               type="button"
               onClick={() => {
                 switchNetwork(networkKey as NetworkName, false);
-                setStatus(0);
+                setModalStatus('closing');
               }}
             >
               <h3>RPC</h3>
               {!isLightClient && <h4 className="selected">{t('selected')}</h4>}
             </ConnectionButton>
             <ConnectionButton
-              connected={isLightClient}
+              $connected={isLightClient}
               className="off"
               type="button"
               onClick={() => {
                 switchNetwork(networkKey as NetworkName, true);
-                setStatus(0);
+                setModalStatus('closing');
               }}
             >
               <h3>{t('lightClient')}</h3>
@@ -115,7 +117,7 @@ export const Networks = () => {
               <BraveIconSVG />
               <div className="brave-text">
                 <Trans
-                  defaults={`${t('braveText')}`}
+                  defaults={t('braveText')}
                   components={{ b: <b />, i: <i /> }}
                 />
               </div>

@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,21 +7,22 @@ import {
   ButtonHelp,
   ButtonPrimaryInvert,
   ModalPadding,
-} from '@polkadotcloud/core-ui';
-import { planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
+} from '@polkadot-cloud/react';
+import { planckToUnit, unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import Slider from 'rc-slider';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { Close } from 'library/Modal/Close';
+import { Title } from 'library/Modal/Title';
 import { SliderWrapper } from 'modals/ManagePool/Wrappers';
-import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const UpdateReserve = () => {
   const { t } = useTranslation('modals');
@@ -29,13 +30,13 @@ export const UpdateReserve = () => {
     network: { units, unit },
   } = useApi();
   const { network } = useApi();
-  const { setStatus } = useModal();
   const { openHelp } = useHelp();
+  const { setModalStatus } = useOverlay().modal;
+  const { activeAccount, accountHasSigner } = useConnect();
   const { feeReserve, setFeeReserveBalance, getTransferOptions } =
     useTransferOptions();
-  const { activeAccount, accountHasSigner } = useConnect();
-  const { edReserved } = getTransferOptions(activeAccount);
 
+  const { edReserved } = getTransferOptions(activeAccount);
   const minReserve = planckToUnit(edReserved, units);
   const maxReserve = minReserve.plus(
     ['polkadot', 'westend'].includes(network.name) ? 3 : 1
@@ -47,11 +48,11 @@ export const UpdateReserve = () => {
 
   const sliderProps = {
     trackStyle: {
-      backgroundColor: 'var(--network-color-primary)',
+      backgroundColor: 'var(--accent-color-primary)',
     },
     handleStyle: {
       backgroundColor: 'var(--background-primary)',
-      borderColor: 'var(--network-color-primary)',
+      borderColor: 'var(--accent-color-primary)',
       opacity: 1,
     },
   };
@@ -69,10 +70,11 @@ export const UpdateReserve = () => {
     <>
       <Close />
       <ModalPadding>
-        <h2 className="title unbounded" style={{ padding: '0 0.5rem' }}>
-          {t('reserveBalance')}
-        </h2>
-
+        <Title
+          title={t('reserveBalance')}
+          helpKey="Reserve Balance"
+          style={{ padding: '0.5rem 0 0 0' }}
+        />
         <SliderWrapper style={{ marginTop: '1rem' }}>
           <p>{t('reserveText', { unit })}</p>
           <div>
@@ -138,9 +140,7 @@ export const UpdateReserve = () => {
           <div className="done">
             <ButtonPrimaryInvert
               text={t('done')}
-              onClick={() => {
-                setStatus(2);
-              }}
+              onClick={() => setModalStatus('closing')}
               disabled={!accountHasSigner(activeAccount)}
             />
           </div>

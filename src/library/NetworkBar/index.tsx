@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { capitalizeFirstLetter } from '@polkadotcloud/utils';
+import { capitalizeFirstLetter } from '@polkadot-cloud/utils';
 import { useApi } from 'contexts/Api';
-import { useOverlay } from 'contexts/Overlay';
+import { usePrompt } from 'contexts/Prompt';
 import { usePlugins } from 'contexts/Plugins';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useEffect, useState } from 'react';
@@ -17,8 +17,7 @@ export const NetworkBar = () => {
   const { plugins } = usePlugins();
   const { network, isLightClient } = useApi();
   const prices = usePrices();
-  const { openOverlayWith } = useOverlay();
-
+  const { openPromptWith } = usePrompt();
   const PRIVACY_URL = import.meta.env.VITE_PRIVACY_URL;
   const DISCLAIMER_URL = import.meta.env.VITE_DISCLAIMER_URL;
   const ORGANISATION = import.meta.env.VITE_ORGANISATION;
@@ -75,7 +74,7 @@ export const NetworkBar = () => {
             <button
               type="button"
               onClick={() => {
-                openOverlayWith(<Disclaimer />);
+                openPromptWith(<Disclaimer />);
               }}
             >
               {t('dashboardDisclaimer')}

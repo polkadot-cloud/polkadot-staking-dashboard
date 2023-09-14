@@ -1,12 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { ButtonSubmit } from '@polkadotcloud/core-ui';
+import { ButtonSubmit } from '@polkadot-cloud/react';
+import React from 'react';
 import { useConnect } from 'contexts/Connect';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import React from 'react';
 import type { SubmitProps } from './types';
 
 export const Default = ({
@@ -32,7 +32,7 @@ export const Default = ({
       <div>
         {buttons}
         <ButtonSubmit
-          text={`${submitText}`}
+          text={submitText || ''}
           iconLeft={faArrowAltCircleUp}
           iconTransform="grow-2"
           onClick={() => onSubmit(customEvent)}

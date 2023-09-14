@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
+import { useTranslation } from 'react-i18next';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { Number } from 'library/StatBoxList/Number';
-import { useTranslation } from 'react-i18next';
 
 export const ActivePoolsStat = () => {
   const { t } = useTranslation('pages');

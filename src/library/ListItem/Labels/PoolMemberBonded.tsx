@@ -1,11 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { greaterThanZero, planckToUnit, rmCommas } from '@polkadotcloud/utils';
+import { greaterThanZero, planckToUnit, rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
-import { useTranslation } from 'react-i18next';
 
 export const PoolMemberBonded = ({ meta, batchKey, batchIndex }: any) => {
   const { t } = useTranslation('library');
@@ -36,13 +36,13 @@ export const PoolMemberBonded = ({ meta, batchKey, batchIndex }: any) => {
   return (
     <>
       {!poolMember ? (
-        <ValidatorStatusWrapper status="inactive">
+        <ValidatorStatusWrapper $status="inactive">
           <h5>{t('syncing')}...</h5>
         </ValidatorStatusWrapper>
       ) : (
         <>
           {greaterThanZero(bonded) && (
-            <ValidatorStatusWrapper status={status}>
+            <ValidatorStatusWrapper $status={status}>
               <h5>
                 {t('bonded')}: {bonded.decimalPlaces(3).toFormat()} {unit}
               </h5>
@@ -52,7 +52,7 @@ export const PoolMemberBonded = ({ meta, batchKey, batchIndex }: any) => {
       )}
 
       {poolMember && greaterThanZero(totalUnbonding) && (
-        <ValidatorStatusWrapper status="inactive">
+        <ValidatorStatusWrapper $status="inactive">
           <h5>
             {t('unbonding')} {totalUnbonding.decimalPlaces(3).toFormat()} {unit}
           </h5>

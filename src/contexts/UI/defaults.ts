@@ -1,25 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import type { UIContextInterface } from './types';
 
 export const defaultUIContext: UIContextInterface = {
-  // eslint-disable-next-line
   setSideMenu: (v) => {},
-  // eslint-disable-next-line
   setUserSideMenuMinimised: (v) => {},
-  // eslint-disable-next-line
-  getSyncById: (id) => null,
-  // eslint-disable-next-line
   setContainerRefs: (v) => {},
-  // eslint-disable-next-line
-  getSyncStart: (i) => 0,
-  // eslint-disable-next-line
-  setSyncStart: (i, s) => {},
-  // eslint-disable-next-line
-  getSyncSynced: (id: string) => true,
-  // eslint-disable-next-line
-  setSyncSynced: (i) => {},
   sideMenuOpen: false,
   userSideMenuMinimised: false,
   sideMenuMinimised: false,

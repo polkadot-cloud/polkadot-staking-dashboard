@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -11,15 +11,18 @@ import {
   ModalMotionThreeSection,
   ModalPadding,
   ModalSection,
-} from '@polkadotcloud/core-ui';
-import { Extensions } from 'config/extensions';
-import { useExtensions } from 'contexts/Extensions';
-import { useModal } from 'contexts/Modal';
-import { Close } from 'library/Modal/Close';
-import { SelectItems } from 'library/SelectItems';
+} from '@polkadot-cloud/react';
+import { ExtensionsArray } from '@polkadot-cloud/community/extensions';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useExtensions } from 'contexts/Extensions';
+import { Close } from 'library/Modal/Close';
+import { SelectItems } from 'library/SelectItems';
 import type { AnyFunction } from 'types';
+import {
+  useEffectIgnoreInitial,
+  useOverlay,
+} from '@polkadot-cloud/react/hooks';
 import { Extension } from './Extension';
 import { Ledger } from './Ledger';
 import { Proxies } from './Proxies';
@@ -30,13 +33,15 @@ import { ExtensionsWrapper } from './Wrappers';
 export const Connect = () => {
   const { t } = useTranslation('modals');
   const { extensions } = useExtensions();
-  const { replaceModalWith, setModalHeight, modalMaxHeight } = useModal();
+  const { replaceModal, setModalHeight, modalMaxHeight } = useOverlay().modal;
 
-  const installed = Extensions.filter((a) =>
+  const installed = ExtensionsArray.filter((a) =>
     extensions.find((b) => b.id === a.id)
   );
 
-  const other = Extensions.filter((a) => !installed.find((b) => b.id === a.id));
+  const other = ExtensionsArray.filter(
+    (a) => !installed.find((b) => b.id === a.id)
+  );
 
   // toggle read only management
   const [readOnlyOpen, setReadOnlyOpen] = useState(false);
@@ -65,7 +70,7 @@ export const Connect = () => {
   };
 
   // Resize modal on state change.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     refreshModalHeight();
   }, [section, readOnlyOpen, newProxyOpen, extensions]);
 
@@ -88,7 +93,7 @@ export const Connect = () => {
                 text={t('goToAccounts')}
                 iconRight={faChevronRight}
                 iconTransform="shrink-3"
-                onClick={() => replaceModalWith('Accounts', {}, 'large')}
+                onClick={() => replaceModal({ key: 'Accounts' })}
                 marginLeft
               />
             </div>
@@ -114,8 +119,7 @@ export const Connect = () => {
 
         <ModalMotionThreeSection
           style={{
-            maxHeight:
-              modalMaxHeight() - (headerRef.current?.clientHeight || 0),
+            maxHeight: modalMaxHeight - (headerRef.current?.clientHeight || 0),
           }}
           animate={
             section === 0 ? 'home' : section === 1 ? 'readOnly' : 'proxies'

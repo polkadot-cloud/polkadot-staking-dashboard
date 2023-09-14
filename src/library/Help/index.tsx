@@ -1,9 +1,17 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
-import { camelize } from '@polkadotcloud/utils';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import {
+  ButtonPrimaryInvert,
+  ModalCanvas,
+  ModalContent,
+  ModalScroll,
+} from '@polkadot-cloud/react';
+import { camelize } from '@polkadot-cloud/utils';
+import { useAnimation } from 'framer-motion';
+import { useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { HelpConfig } from 'config/help';
 import { DefaultLocale } from 'consts';
 import { useHelp } from 'contexts/Help';
@@ -12,19 +20,16 @@ import type {
   ExternalItems,
   HelpItem,
 } from 'contexts/Help/types';
-import { useAnimation } from 'framer-motion';
 import { useFillVariables } from 'library/Hooks/useFillVariables';
-import { useCallback, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Definition } from './Items/Definition';
 import { External } from './Items/External';
-import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
+import { ActiveDefinition } from './Items/ActiveDefinition';
 
 export const Help = () => {
   const { t, i18n } = useTranslation('help');
-  const { setStatus, status, definition, closeHelp, setDefinition } = useHelp();
   const controls = useAnimation();
   const { fillVariables } = useFillVariables();
+  const { setStatus, status, definition, closeHelp } = useHelp();
 
   const onFadeIn = useCallback(async () => {
     await controls.start('visible');
@@ -32,49 +37,35 @@ export const Help = () => {
 
   const onFadeOut = useCallback(async () => {
     await controls.start('hidden');
-    setStatus(0);
+    setStatus('closed');
   }, []);
 
-  const variants = {
-    hidden: {
-      opacity: 0,
-    },
-    visible: {
-      opacity: 1,
-    },
-  };
-
+  // control canvas fade.
   useEffect(() => {
-    // help has been opened - fade in
-    if (status === 1) {
-      onFadeIn();
-    }
-    // an external component triggered closure - fade out
-    if (status === 2) {
-      onFadeOut();
-    }
+    if (status === 'open') onFadeIn();
+    if (status === 'closing') onFadeOut();
   }, [status]);
 
   // render early if help not open
-  if (status === 0) return <></>;
+  if (status === 'closed') return <></>;
 
   let meta: HelpItem | undefined;
 
   if (definition) {
     // get items for active category
-    meta = Object.values(HelpConfig).find((c) =>
-      c?.definitions?.find((d) => d === definition)
+    meta = Object.values(HelpConfig).find(
+      (c) => c?.definitions?.find((d) => d === definition)
     );
   } else {
     // get all items
-    let _definitions: string[] = [];
-    let _external: ExternalItems = [];
+    let definitions: string[] = [];
+    let external: ExternalItems = [];
 
     Object.values(HelpConfig).forEach((c) => {
-      _definitions = _definitions.concat([...(c.definitions || [])]);
-      _external = _external.concat([...(c.external || [])]);
+      definitions = definitions.concat([...(c.definitions || [])]);
+      external = external.concat([...(c.external || [])]);
     });
-    meta = { definitions: _definitions, external: _external };
+    meta = { definitions, external };
   }
 
   let definitions = meta?.definitions ?? [];
@@ -140,95 +131,85 @@ export const Help = () => {
   });
 
   return (
-    <Wrapper
+    <ModalCanvas
       initial={{
         opacity: 0,
+        scale: 1.05,
       }}
       animate={controls}
       transition={{
-        duration: 0.25,
+        duration: 0.2,
       }}
-      variants={variants}
+      variants={{
+        hidden: {
+          opacity: 0,
+          scale: 1.05,
+        },
+        visible: {
+          opacity: 1,
+          scale: 1,
+        },
+      }}
+      style={{
+        zIndex: 20,
+      }}
     >
-      <div>
-        <HeightWrapper>
-          <ContentWrapper>
-            <div className="buttons">
-              {definition && (
-                <ButtonPrimaryInvert
-                  lg
-                  text={t('modal.allResources')}
-                  iconLeft={faChevronLeft}
-                  onClick={() => setDefinition(null)}
-                />
-              )}
-              <ButtonPrimaryInvert
-                lg
-                text={t('modal.close')}
-                iconLeft={faTimes}
-                onClick={() => closeHelp()}
-              />
-            </div>
-            <h1>
-              {activeDefinition
-                ? `${activeDefinition.title}`
-                : `${t('modal.helpResources')}`}
-            </h1>
+      <ModalScroll>
+        <ModalContent>
+          <div className="buttons">
+            <ButtonPrimaryInvert
+              lg
+              text={t('modal.close')}
+              iconLeft={faTimes}
+              onClick={() => closeHelp()}
+            />
+          </div>
+          <h1>
+            {activeDefinition
+              ? `${activeDefinition.title}`
+              : `${t('modal.helpResources')}`}
+          </h1>
 
-            {activeDefinition !== null && (
-              <>
+          {activeDefinition !== null && (
+            <ActiveDefinition description={activeDefinition?.description} />
+          )}
+
+          {definitions.length > 0 && (
+            <>
+              <h3>
+                {activeDefinition ? `${t('modal.related')} ` : ''}
+                {t('modal.definitions')}
+              </h3>
+              {activeDefinitions.map((item, index: number) => (
                 <Definition
-                  open
+                  key={`def_${index}`}
                   onClick={() => {}}
-                  title={activeDefinition?.title}
-                  description={activeDefinition?.description}
+                  title={item.title}
+                  description={item.description}
                 />
-              </>
-            )}
+              ))}
+            </>
+          )}
 
-            {definitions.length > 0 && (
-              <>
-                <h3>
-                  {activeDefinition ? `${t('modal.related')} ` : ''}
-                  {t('modal.definitions')}
-                </h3>
-                {activeDefinitions.map((item, index: number) => (
-                  <Definition
-                    key={`def_${index}`}
-                    onClick={() => {}}
-                    title={item.title}
-                    description={item.description}
-                  />
-                ))}
-              </>
-            )}
-
-            {activeExternals.length > 0 && (
-              <>
-                <h3>{t('modal.articles')}</h3>
-                {activeExternals.map((item, index: number) => (
-                  <External
-                    key={`ext_${index}`}
-                    width="100%"
-                    title={t(item.title)}
-                    url={item.url}
-                    website={item.website}
-                  />
-                ))}
-              </>
-            )}
-          </ContentWrapper>
-        </HeightWrapper>
-        <button
-          type="button"
-          className="close"
-          onClick={() => {
-            closeHelp();
-          }}
-        >
-          &nbsp;
-        </button>
-      </div>
-    </Wrapper>
+          {activeExternals.length > 0 && (
+            <>
+              <h3>{t('modal.articles')}</h3>
+              {activeExternals.map((item, index: number) => (
+                <External
+                  key={`ext_${index}`}
+                  width="100%"
+                  title={t(item.title)}
+                  url={item.url}
+                  website={item.website}
+                />
+              ))}
+            </>
+          )}
+        </ModalContent>
+      </ModalScroll>
+      <button type="button" className="close" onClick={() => closeHelp()}>
+        &nbsp;
+      </button>
+    </ModalCanvas>
   );
 };

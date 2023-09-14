@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { setStateWithRef } from '@polkadotcloud/utils';
+import { setStateWithRef } from '@polkadot-cloud/utils';
 import React, { useState } from 'react';
 import { defaultTooltipContext } from './defaults';
 import type { TooltipContextInterface } from './types';

@@ -1,21 +1,21 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
-import { PoolAccount } from 'library/PoolAccount';
-import { useTranslation } from 'react-i18next';
-import { Account } from '../Account';
+import { Account } from '../Account/Default';
+import { Account as PoolAccount } from '../Account/Pool';
 import { HeadingWrapper } from './Wrappers';
 
 export const Connected = () => {
   const { t } = useTranslation('library');
-  const { activeAccount, activeProxy, accountHasSigner } = useConnect();
+  const { isNetworkSyncing } = useUi();
   const { isNominating } = useStaking();
   const { selectedActivePool } = useActivePools();
-  const { isNetworkSyncing } = useUi();
+  const { activeAccount, activeProxy, accountHasSigner } = useConnect();
 
   let poolAddress = '';
   if (selectedActivePool) {
@@ -41,7 +41,6 @@ export const Connected = () => {
                   : undefined
               }
               format="name"
-              filled
             />
           </HeadingWrapper>
 
@@ -49,12 +48,12 @@ export const Connected = () => {
           {selectedActivePool !== null && !isNetworkSyncing && (
             <HeadingWrapper>
               <PoolAccount
+                format="name"
                 value={poolAddress}
                 pool={selectedActivePool}
-                label={`${t('pool')}`}
+                label={t('pool')}
                 canClick={false}
                 onClick={() => {}}
-                filled
               />
             </HeadingWrapper>
           )}
@@ -66,9 +65,8 @@ export const Connected = () => {
                 canClick={false}
                 value={activeProxy}
                 readOnly={!accountHasSigner(activeProxy)}
-                label={`${t('proxy')}`}
+                label={t('proxy')}
                 format="name"
-                filled
               />
             </HeadingWrapper>
           )}

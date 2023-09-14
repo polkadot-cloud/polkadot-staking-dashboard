@@ -1,17 +1,18 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { bnToU8a, u8aConcat } from '@polkadot/util';
-import { rmCommas, setStateWithRef } from '@polkadotcloud/utils';
+import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
+import React, { useRef, useState } from 'react';
 import { EmptyH256, ModPrefix, U32Opts } from 'consts';
 import type {
   PoolConfigState,
   PoolsConfigContextState,
 } from 'contexts/Pools/types';
-import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi } from 'types';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useApi } from '../../Api';
 import * as defaults from './defaults';
 
@@ -41,7 +42,7 @@ export const PoolsConfigProvider = ({
   // stores the user's favorite pools
   const [favorites, setFavorites] = useState<string[]>(getLocalFavorites());
 
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady) {
       subscribeToPoolConfig();
     }

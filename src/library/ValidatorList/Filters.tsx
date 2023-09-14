@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import {
   faArrowDownWideShort,
@@ -7,20 +7,20 @@ import {
   faCheck,
   faFilterCircleXmark,
 } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimaryInvert, ButtonSecondary } from '@polkadotcloud/core-ui';
-import { useFilters } from 'contexts/Filters';
-import { useOverlay } from 'contexts/Overlay';
-import { Container } from 'library/Filter/Container';
-import { Item } from 'library/Filter/Item';
+import { ButtonPrimaryInvert, ButtonSecondary } from '@polkadot-cloud/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useFilters } from 'contexts/Filters';
+import { usePrompt } from 'contexts/Prompt';
+import { Container } from 'library/Filter/Container';
+import { Item } from 'library/Filter/Item';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 import { FilterValidators } from './FilterValidators';
 import { OrderValidators } from './OrderValidators';
 
 export const Filters = () => {
   const { t } = useTranslation('library');
-  const { openOverlayWith } = useOverlay();
+  const { openPromptWith } = usePrompt();
   const { resetFilters, getFilters, getOrder, toggleFilter } = useFilters();
   const { includesToLabels, excludesToLabels, ordersToLabels } =
     useValidatorFilters();
@@ -43,7 +43,7 @@ export const Filters = () => {
           marginRight
           iconLeft={faArrowDownWideShort}
           onClick={() => {
-            openOverlayWith(<OrderValidators />);
+            openPromptWith(<OrderValidators />);
           }}
         />
         <ButtonPrimaryInvert
@@ -51,7 +51,7 @@ export const Filters = () => {
           marginRight
           iconLeft={faFilterCircleXmark}
           onClick={() => {
-            openOverlayWith(<FilterValidators />);
+            openPromptWith(<FilterValidators />);
           }}
         />
         <ButtonSecondary
@@ -73,7 +73,7 @@ export const Filters = () => {
             }
             disabled
           />
-          {!hasFilters && <Item label={`${t('noFilters')}`} disabled />}
+          {!hasFilters && <Item label={t('noFilters')} disabled />}
           {includes?.map((e, i) => (
             <Item
               key={`validator_include_${i}`}

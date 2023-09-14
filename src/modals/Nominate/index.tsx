@@ -1,35 +1,33 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  ActionItem,
-  ModalPadding,
-  ModalWarnings,
-} from '@polkadotcloud/core-ui';
-import { planckToUnit } from '@polkadotcloud/utils';
+import { ActionItem, ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
+import { planckToUnit } from '@polkadot-cloud/utils';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const Nominate = () => {
   const { t } = useTranslation('modals');
   const { api, network } = useApi();
   const { activeAccount } = useConnect();
-  const { targets, staking } = useStaking();
+  const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
   const { getStashLedger } = useBalances();
-  const { setStatus: setModalStatus } = useModal();
+  const { targets, staking } = useStaking();
   const { getSignerWarnings } = useSignerWarnings();
+  const { setModalStatus, setModalResize } = useOverlay().modal;
 
   const { units, unit } = network;
   const { minNominatorBond } = staking;
@@ -52,6 +50,8 @@ export const Nominate = () => {
     );
   }, [targets]);
 
+  useEffect(() => setModalResize(), [notEnoughFunds]);
+
   // tx to submit
   const getTx = () => {
     let tx = null;
@@ -70,7 +70,7 @@ export const Nominate = () => {
     from: controller,
     shouldSubmit: valid,
     callbackSubmit: () => {
-      setModalStatus(2);
+      setModalStatus('closing');
     },
     callbackInBlock: () => {},
   });

@@ -1,8 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components';
-import type { NetworkButtonProps } from './types';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -48,7 +47,7 @@ export const ContentWrapper = styled.div`
   }
 `;
 
-export const NetworkButton = styled.button<NetworkButtonProps>`
+export const NetworkButton = styled.button<{ $connected: boolean }>`
   background: var(--button-primary-background);
   border: 1px solid var(--status-success-color-transparent);
   padding: 1rem;
@@ -60,7 +59,7 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
   align-items: center;
   width: 100%;
   ${(props) =>
-    props.connected !== true &&
+    props.$connected !== true &&
     `
     border: 1px solid rgba(0,0,0,0);
   `}
@@ -139,7 +138,7 @@ export const ConnectionsWrapper = styled.div`
   margin-bottom: 1.5rem;
 `;
 
-export const ConnectionButton = styled.button<NetworkButtonProps>`
+export const ConnectionButton = styled.button<{ $connected: boolean }>`
   background: var(--button-primary-background);
   border: 1px solid var(--status-success-color-transparent);
   position: relative;
@@ -148,7 +147,7 @@ export const ConnectionButton = styled.button<NetworkButtonProps>`
   margin-right: 0.5rem;
   border-radius: 0.5rem;
   ${(props) =>
-    props.connected !== true &&
+    props.$connected !== true &&
     `
     border: 1px solid rgba(0,0,0,0);
   `}

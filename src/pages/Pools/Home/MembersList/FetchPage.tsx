@@ -1,8 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -12,13 +15,10 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import type { PoolMember } from 'contexts/Pools/types';
 import { useSubscan } from 'contexts/Subscan';
 import { useTheme } from 'contexts/Themes';
-import { motion } from 'framer-motion';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { ListProvider, useList } from 'library/List/context';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Member } from './Member';
 import type { FetchpageMembersListProps } from './types';
 
@@ -148,7 +148,7 @@ export const MembersListInner = ({
           </button>
         </div>
       </Header>
-      <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
+      <List $flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
         {listMembers.length > 0 && pagination && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}

@@ -1,16 +1,16 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { isNotZero, planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
+import { isNotZero, planckToUnit, unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
 import type { UnbondFeedbackProps } from '../types';
@@ -108,8 +108,7 @@ export const UnbondFeedback = ({
   // handle error updates
   const handleErrors = () => {
     const newErrors = parentErrors;
-    const _bond = bond.bond;
-    const _decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
+    const decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
 
     if (bondBn.isGreaterThan(active)) {
       newErrors.push(t('unbondAmount'));
@@ -119,7 +118,7 @@ export const UnbondFeedback = ({
       newErrors.push(t('valueTooSmall'));
     }
 
-    if (_decimals > units) {
+    if (decimals > units) {
       newErrors.push(`${t('bondAmountDecimals', { unit })}`);
     }
 
@@ -140,7 +139,7 @@ export const UnbondFeedback = ({
       newErrors.push(err);
     }
 
-    listenIsValid(!newErrors.length && _bond !== '');
+    listenIsValid(!newErrors.length && bond.bond !== '', newErrors);
     setErrors(newErrors);
   };
 

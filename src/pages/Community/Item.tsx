@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import {
@@ -8,17 +8,17 @@ import {
   faServer,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useApi } from 'contexts/Api';
-import { useModal } from 'contexts/Modal';
 import { Suspense, lazy, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useApi } from 'contexts/Api';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { ItemWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
 import type { ItemProps } from './types';
 
 export const Item = ({ item, actionable }: ItemProps) => {
   const { t } = useTranslation('pages');
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { network } = useApi();
 
   const {
@@ -55,8 +55,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
   };
 
   const Thumbnail = useMemo(
-    () =>
-      lazy(() => import(`../../config/validators/thumbnails/${thumbnail}.tsx`)),
+    () => lazy(() => import(`../../config/validators/${thumbnail}.tsx`)),
     []
   );
 
@@ -77,7 +76,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
             {name}
             <button
               type="button"
-              onClick={() => openModalWith('Bio', { name, bio }, 'large')}
+              onClick={() => openModal({ key: 'Bio', options: { name, bio } })}
               className="active"
             >
               <span>{t('community.bio')}</span>

@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { useUi } from 'contexts/UI';
 import throttle from 'lodash.throttle';
 import React from 'react';
+import { useUi } from 'contexts/UI';
 
 export const getSize = (element: any) => {
   const width = element?.offsetWidth;

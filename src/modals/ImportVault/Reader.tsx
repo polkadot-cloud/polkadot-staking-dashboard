@@ -1,25 +1,25 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { QrScanSignature } from '@polkadot/react-qr';
-import { ButtonSecondary } from '@polkadotcloud/core-ui';
-import { isValidAddress } from '@polkadotcloud/utils';
-import { registerSaEvent } from 'Utils';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
-import { useVaultHardware } from 'contexts/Hardware/Vault';
-import { useOverlay } from 'contexts/Overlay';
-import { QRViewerWrapper } from 'library/Import/Wrappers';
+import { registerSaEvent } from 'Utils';
+import { ButtonSecondary } from '@polkadot-cloud/react';
+import { isValidAddress } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useConnect } from 'contexts/Connect';
+import { useVaultHardware } from 'contexts/Hardware/Vault';
+import { usePrompt } from 'contexts/Prompt';
+import { QRViewerWrapper } from 'library/Import/Wrappers';
+import { QrScanSignature } from 'library/QRCode/ScanSignature';
 
 export const Reader = () => {
   const { t } = useTranslation('modals');
   const {
     network: { name },
   } = useApi();
+  const { setStatus: setPromptStatus } = usePrompt();
   const { addToAccounts, formatAccountSs58 } = useConnect();
-  const { setStatus: setOverlayStatus } = useOverlay();
   const { addVaultAccount, vaultAccountExists, vaultAccounts } =
     useVaultHardware();
 
@@ -51,7 +51,7 @@ export const Reader = () => {
         registerSaEvent(`${name.toLowerCase()}_vault_account_import`);
         addToAccounts([account]);
       }
-      setOverlayStatus(0);
+      setPromptStatus(0);
     }
 
     // Display feedback.
@@ -85,7 +85,7 @@ export const Reader = () => {
           <ButtonSecondary
             lg
             text={t('cancel')}
-            onClick={() => setOverlayStatus(0)}
+            onClick={() => setPromptStatus(0)}
           />
         </div>
       </div>

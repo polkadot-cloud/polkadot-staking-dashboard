@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faExternalLinkAlt, faQrcode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,17 +9,17 @@ import {
   ButtonText,
   ModalConnectItem,
   ModalHardwareItem,
-} from '@polkadotcloud/core-ui';
-import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
-import { ReactComponent as VaultSVG } from 'img/polkadotVault.svg';
+} from '@polkadot-cloud/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHelp } from 'contexts/Help';
+import { ReactComponent as VaultSVG } from 'img/polkadotVault.svg';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const Vault = (): React.ReactElement => {
   const { t } = useTranslation('modals');
   const { openHelp } = useHelp();
-  const { replaceModalWith } = useModal();
+  const { replaceModal } = useOverlay().modal;
   const url = 'signer.parity.io';
 
   return (
@@ -39,7 +39,7 @@ export const Vault = (): React.ReactElement => {
               marginRight
               style={{
                 opacity: 1,
-                color: 'var(--network-color-primary)',
+                color: 'var(--accent-color-primary)',
                 fontFamily: 'Unbounded',
               }}
             />
@@ -48,7 +48,7 @@ export const Vault = (): React.ReactElement => {
             <ButtonPrimaryInvert
               text={t('import')}
               onClick={() => {
-                replaceModalWith('ImportVault', {}, 'large');
+                replaceModal({ key: 'ImportVault' });
               }}
               iconLeft={faQrcode}
               iconTransform="shrink-1"

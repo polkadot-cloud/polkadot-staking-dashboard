@@ -1,6 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
@@ -13,8 +15,6 @@ import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import type { MaybeAccount } from 'types';
 
 export const Payee = ({ section }: SetupStepProps) => {
@@ -73,7 +73,7 @@ export const Payee = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={isComplete()}
-        title={`${t('nominate.payoutDestination')}`}
+        title={t('nominate.payoutDestination')}
         helpKey="Payout Destination"
         bondFor="nominator"
       />

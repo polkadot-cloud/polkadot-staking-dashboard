@@ -1,6 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
@@ -10,8 +12,6 @@ import { formatSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
 import { useSize } from 'library/Hooks/useSize';
 import { StatusLabel } from 'library/StatusLabel';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 export const Payouts = () => {
   const { t } = useTranslation('pages');

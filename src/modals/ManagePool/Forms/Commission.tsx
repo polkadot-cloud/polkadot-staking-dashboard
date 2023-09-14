@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -7,17 +7,19 @@ import {
   ButtonHelp,
   ButtonSubmitInvert,
   ModalWarnings,
-} from '@polkadotcloud/core-ui';
-import { rmCommas } from '@polkadotcloud/utils';
+} from '@polkadot-cloud/react';
+import { rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import { intervalToDuration } from 'date-fns';
+import Slider from 'rc-slider';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { intervalToDuration } from 'date-fns';
 import { AccountInput } from 'library/AccountInput';
 import { MinDelayInput } from 'library/Form/MinDelayInput';
 import { Warning } from 'library/Form/Warning';
@@ -25,11 +27,9 @@ import { useBatchCall } from 'library/Hooks/useBatchCall';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
-import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import type { MaybeAccount } from 'types';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { SliderWrapper } from '../Wrappers';
 import type { ChangeRateInput } from './types';
 
@@ -40,7 +40,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   const { activeAccount } = useConnect();
   const { newBatchCall } = useBatchCall();
   const { stats } = usePoolsConfig();
-  const { setStatus: setModalStatus } = useModal();
+  const { setModalStatus } = useOverlay().modal;
   const { getSignerWarnings } = useSignerWarnings();
   const { isOwner, selectedActivePool } = useActivePools();
   const { getBondedPool, updateBondedPools } = useBondedPools();
@@ -314,7 +314,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {
-      setModalStatus(2);
+      setModalStatus('closing');
     },
     callbackInBlock: () => {
       const pool = getBondedPool(poolId);
@@ -431,14 +431,14 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
 
   const sliderProps = {
     trackStyle: {
-      backgroundColor: 'var(--network-color-primary)',
+      backgroundColor: 'var(--accent-color-primary)',
     },
     railStyle: {
       backgroundColor: 'var(--button-secondary-background)',
     },
     handleStyle: {
       backgroundColor: 'var(--background-primary)',
-      borderColor: 'var(--network-color-primary)',
+      borderColor: 'var(--accent-color-primary)',
       opacity: 1,
     },
     activeDotStyle: {
@@ -491,7 +491,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
 
         <AccountInput
           defaultLabel={t('inputPayeeAccount')}
-          successLabel={`${t('payeeAdded')}`}
+          successLabel={t('payeeAdded')}
           locked={payee !== null}
           successCallback={async (input) => {
             setPayee(input);

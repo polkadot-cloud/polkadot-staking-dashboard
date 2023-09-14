@@ -1,9 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
+import { greaterThanZero, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import { MaxPayoutDays } from 'consts';
 import {
   addDays,
   differenceInDays,
@@ -13,6 +12,7 @@ import {
   startOfDay,
   subDays,
 } from 'date-fns';
+import { MaxPayoutDays } from 'consts';
 import type { AnyApi, AnyJson, AnySubscan } from 'types';
 import type { PayoutDayCursor } from './types';
 
@@ -44,7 +44,7 @@ export const calculateDailyPayouts = (
   fromDate: Date,
   maxDays: number,
   units: number,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   subject: string
 ) => {
   let dailyPayouts: AnySubscan = [];

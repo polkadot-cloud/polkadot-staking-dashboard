@@ -1,7 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { useTxMeta } from 'contexts/TxMeta';
@@ -11,8 +13,6 @@ import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export const Bond = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
@@ -61,7 +61,7 @@ export const Bond = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={progress.bond !== '0' && progress.bond !== ''}
-        title={`${t('nominate.bond')}`}
+        title={t('nominate.bond')}
         helpKey="Bonding"
         bondFor="nominator"
       />
@@ -70,7 +70,7 @@ export const Bond = ({ section }: SetupStepProps) => {
           syncing={txFees.isZero()}
           bondFor="nominator"
           inSetup
-          listenIsValid={setBondValid}
+          listenIsValid={(valid) => setBondValid(valid)}
           defaultBond={initialBondValue}
           setters={[
             {

@@ -1,14 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Input } from './Input';
 
 export const PoolName = ({ section }: SetupStepProps) => {
@@ -56,8 +56,7 @@ export const PoolName = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={progress.metadata !== ''}
-        title={`${t('pools.poolName')}`}
-        // helpKey="Bonding"
+        title={t('pools.poolName')}
         bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>

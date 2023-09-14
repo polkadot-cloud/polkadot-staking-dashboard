@@ -1,16 +1,16 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
+import { planckToUnit, unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
 import type { BondFeedbackProps } from '../types';
@@ -161,7 +161,7 @@ export const BondFeedback = ({
 
     const bondValid = !newErrors.length && bond.bond !== '';
     setBondDisabled(disabled);
-    listenIsValid(bondValid);
+    listenIsValid(bondValid, newErrors);
     setErrors(newErrors);
   };
 

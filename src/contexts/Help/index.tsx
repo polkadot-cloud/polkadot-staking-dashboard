@@ -1,25 +1,27 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import type { MaybeString } from 'types';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import * as defaults from './defaults';
 import type {
   HelpContextInterface,
   HelpContextProps,
   HelpContextState,
+  HelpStatus,
 } from './types';
 
 export const HelpProvider = ({ children }: HelpContextProps) => {
   // help module state
   const [state, setState] = useState<HelpContextState>({
-    status: 0,
+    status: 'closed',
     definition: null,
   });
 
   // when fade out completes, reset active definiton
-  useEffect(() => {
-    if (state.status === 0) {
+  useEffectIgnoreInitial(() => {
+    if (state.status === 'closed') {
       setState({
         ...state,
         definition: null,
@@ -34,7 +36,7 @@ export const HelpProvider = ({ children }: HelpContextProps) => {
     });
   };
 
-  const setStatus = (newStatus: number) => {
+  const setStatus = (newStatus: HelpStatus) => {
     setState({
       ...state,
       status: newStatus,
@@ -45,14 +47,14 @@ export const HelpProvider = ({ children }: HelpContextProps) => {
     setState({
       ...state,
       definition,
-      status: 1,
+      status: 'open',
     });
   };
 
   const closeHelp = () => {
     setState({
       ...state,
-      status: 2,
+      status: 'closing',
     });
   };
 

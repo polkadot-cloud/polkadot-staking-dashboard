@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { SideMenuStickyThreshold } from 'consts';
 import styled from 'styled-components';
+import { SideMenuStickyThreshold } from 'consts';
 import type { CardHeaderWrapperProps, CardWrapperProps } from '../Graphs/types';
 
 /* CardHeaderWrapper
@@ -52,7 +52,12 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     font-family: InterSemiBold, sans-serif;
     font-size: 1.1rem;
     margin-top: 0.2rem;
-    margin-left: 0.3rem;
+    margin-left: 0.4rem;
+  }
+  .networkIcon {
+    width: 1.9rem;
+    height: 1.9rem;
+    margin-right: 0.55rem;
   }
 
   > div {
@@ -74,45 +79,28 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   flex: 1;
   position: relative;
   overflow: hidden;
-  margin-top: ${(props) => (props.$transparent ? '0rem' : '1.4rem')};
-  padding: ${(props) =>
-    props.$noPadding ? 0 : props.$transparent ? 0 : '1.5rem'};
-  ${(props) =>
-    props.$transparent &&
-    `
-      border: none;
-      box-shadow: none;
-      background: none;
-      border-radius: 0rem;
-    `}
+  margin-top: 1.4rem;
+  padding: 1.5rem;
 
-  @media (max-width: ${SideMenuStickyThreshold}px) {
-    padding: ${(props) =>
-      props.$noPadding
-        ? '0rem'
-        : props.$transparent
-        ? '0rem 0rem'
-        : '1rem 0.75rem'};
+  &.transparent {
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    margin-top: 0;
+    padding: 0;
   }
 
-  ${(props) =>
-    props.$warning ? 'border: 1px solid var(--status-warning-color);' : ''}
+  &.warning {
+    border: 1px solid var(--status-warning-color);
+  }
+
+  @media (max-width: ${SideMenuStickyThreshold}px) {
+    padding: 1rem 0.75rem;
+  }
 
   @media (min-width: ${SideMenuStickyThreshold + 1}px) {
     height: ${(props) => (props.height ? `${props.height}px` : 'inherit')};
-  }
-
-  .content {
-    padding: 0 0.5rem;
-    h3 {
-      margin-top: 0rem;
-      margin-bottom: 0.75rem;
-    }
-
-    h4 {
-      margin-top: 0;
-      margin-bottom: 0;
-    }
   }
 
   .inner {
@@ -123,15 +111,19 @@ export const CardWrapper = styled.div<CardWrapperProps>`
     position: relative;
   }
 
-  .option {
-    border-bottom: 1px solid #ddd;
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    text-align: left;
-  }
-  h4 {
-    &.withMargin {
-      margin: 0.5rem 0;
+  .content {
+    padding: 0 0.5rem;
+
+    h3,
+    h4 {
+      margin-top: 0;
+    }
+    h3 {
+      margin-bottom: 0.75rem;
+    }
+
+    h4 {
+      margin-bottom: 0;
     }
   }
 `;

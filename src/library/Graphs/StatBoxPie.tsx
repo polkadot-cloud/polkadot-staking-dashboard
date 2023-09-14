@@ -1,10 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { ArcElement, Chart as ChartJS, Tooltip } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
 import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
-import { Pie } from 'react-chartjs-2';
 import { graphColors } from 'styles/graphs';
 import type { StatPieProps } from './types';
 
@@ -19,16 +19,13 @@ export const StatPie = ({ value, value2 }: StatPieProps) => {
     value = 1;
     value2 = 0;
   }
-  const borderColor = isZero
-    ? graphColors.inactive[mode]
-    : [colors.primary[mode], graphColors.border[mode]];
-
   const backgroundColor = isZero
     ? graphColors.inactive[mode]
     : colors.primary[mode];
 
   const options = {
-    borderColor,
+    borderColor: graphColors.inactive[mode],
+    hoverBorderColor: graphColors.inactive[mode],
     backgroundColor,
     hoverBackgroundColor: [backgroundColor, graphColors.inactive[mode]],
     responsive: true,

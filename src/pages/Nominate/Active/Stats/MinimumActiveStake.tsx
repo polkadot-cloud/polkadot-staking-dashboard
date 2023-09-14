@@ -1,11 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit } from '@polkadotcloud/utils';
+import { planckToUnit } from '@polkadot-cloud/utils';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { Number } from 'library/StatBoxList/Number';
-import { useTranslation } from 'react-i18next';
 
 export const MinimumActiveStakeStat = () => {
   const { t } = useTranslation('pages');

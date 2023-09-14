@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components';
 
@@ -9,8 +9,8 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
   border-radius: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  min-width: 100px;
+  padding: 0.25rem 0.75rem;
+  width: max-content;
   max-width: 200px;
 
   h3 {

@@ -1,8 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { registerSaEvent } from 'Utils';
 import BigNumber from 'bignumber.js';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -12,8 +14,6 @@ import { useExtrinsics } from 'contexts/Extrinsics';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useNotifications } from 'contexts/Notifications';
 import { useTxMeta } from 'contexts/TxMeta';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import type { AnyApi, AnyJson } from 'types';
 import { useBuildPayload } from '../useBuildPayload';
 import { useProxySupported } from '../useProxySupported';

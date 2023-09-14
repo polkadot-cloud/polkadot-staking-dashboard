@@ -1,119 +1,156 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components';
 
 export const AccountWrapper = styled.div`
-  width: 100%;
-  margin: 0.5rem 0 0 0;
   transition: transform var(--transition-duration);
+  margin: 0.6rem 0 0 0;
+  width: 100%;
 
   &.active {
-    > div,
-    button {
-      border: 1px solid var(--network-color-primary);
+    > div {
+      border: 1px solid var(--accent-color-primary);
     }
   }
 
   &:hover {
-    transform: scale(1.006);
-    .name {
-      color: var(--network-color-primary);
-    }
+    transform: scale(1.01);
   }
 
-  > div,
-  button {
+  > div {
     background: var(--button-primary-background);
-    border: 1px solid var(--transparent-color);
     color: var(--text-color-primary);
     font-family: InterSemiBold, sans-serif;
-    width: 100%;
-    border-radius: 0.75rem;
-    font-size: 1rem;
+    border: 1px solid transparent;
     display: flex;
-    align-items: center;
-    min-height: 3.5rem;
-    padding-left: 0.4rem;
-    padding-right: 0.4rem;
+    align-items: flex-start;
+    flex-direction: column;
+    border-radius: 0.85rem;
+    width: 100%;
+    overflow: hidden;
 
-    > div {
+    &.noBorder {
+      border: none;
+    }
+
+    > section {
       display: flex;
+      flex-direction: row;
       align-items: center;
-      padding: 0 0.25rem;
+      width: 100%;
 
-      &.label {
-        font-size: 0.85rem;
-        display: flex;
-        align-items: flex-end;
-      }
+      /* Top half of the button, account information */
+      &.head {
+        background: var(--button-tertiary-background);
 
-      &:first-child {
-        flex-shrink: 1;
-        overflow: hidden;
-        .name {
-          max-width: 100%;
-          text-overflow: ellipsis;
-          white-space: nowrap;
+        > button {
+          color: var(--text-color-primary);
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          flex-shrink: 1;
+          padding: 0.5rem 0.75rem;
+          font-size: 1.05rem;
+          width: 100%;
+          transition: background var(--transition-duration);
+
+          &:hover {
+            .name {
+              color: var(--accent-color-primary);
+            }
+          }
+
+          .label {
+            font-size: 0.95rem;
+            display: flex;
+            align-items: flex-end;
+          }
+
           overflow: hidden;
-          transition: color var(--transition-duration);
-          margin: 0 0.5rem;
+          .name {
+            transition: color var(--transition-duration);
+            font-family: InterSemiBold, sans-serif;
+            max-width: 100%;
+            margin: 0 0.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
 
-          > span {
-            opacity: 0.7;
-            margin-right: 0.6rem;
-            > svg {
-              margin-left: 0.5rem;
+            > span {
+              opacity: 0.7;
+              margin-right: 0.6rem;
+              > svg {
+                margin-left: 0.5rem;
+              }
+            }
+          }
+
+          .badge {
+            background-color: var(--background-floating-card);
+            color: var(--text-color-secondary);
+            margin-left: 1rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.45rem;
+            font-size: 0.9rem;
+          }
+          .delegator {
+            width: 1rem;
+            z-index: 0;
+          }
+          .identicon {
+            z-index: 1;
+          }
+
+          /* svg theming */
+          svg {
+            .light {
+              fill: var(--text-color-invert);
+            }
+            .dark {
+              fill: var(--text-color-secondary);
+            }
+          }
+
+          > div:last-child {
+            display: flex;
+            flex-grow: 1;
+            justify-content: flex-end;
+
+            &.neutral {
+              h5 {
+                color: var(--text-color-secondary);
+                opacity: 0.75;
+              }
+            }
+            &.danger {
+              h5 {
+                color: var(--status-danger-color);
+              }
+            }
+            .icon {
+              width: 1.25rem;
+              height: 1.25rem;
+              margin-left: 0.75rem;
+
+              svg {
+                width: inherit;
+                height: inherit;
+              }
             }
           }
         }
       }
 
-      &:last-child {
-        flex-grow: 1;
-        justify-content: flex-end;
-      }
+      /* Bottom half of the button, account metadata */
+      &.foot {
+        border-top: 1px solid var(--border-primary-color);
+        padding: 0.7rem 1rem;
 
-      &.neutral {
-        h5 {
+        > .balance {
           color: var(--text-color-secondary);
-          opacity: 0.75;
-        }
-      }
-      &.danger {
-        h5 {
-          color: var(--status-danger-color);
-        }
-      }
-      .icon {
-        width: 1.1rem;
-        height: 1.1rem;
-        margin-left: 0.75rem;
-      }
-      .badge {
-        background-color: var(--background-floating-card);
-        color: var(--text-color-secondary);
-        margin-left: 1rem;
-        padding: 0.25rem 0.5rem;
-        border-radius: 0.45rem;
-        font-size: 0.9rem;
-      }
-
-      .delegator {
-        width: 0.85rem;
-        z-index: 0;
-      }
-      .identicon {
-        z-index: 1;
-      }
-
-      /* svg theming */
-      svg {
-        .light {
-          fill: var(--text-color-invert);
-        }
-        .dark {
-          fill: var(--text-color-secondary);
+          font-size: 0.9rem;
+          opacity: 0.6;
         }
       }
     }
@@ -123,22 +160,4 @@ export const AccountWrapper = styled.div`
 export const AccountSeparator = styled.div`
   width: 100%;
   height: 0.5rem;
-`;
-
-export const AccountGroupWrapper = styled.div`
-  border-left: 1px solid var(--border-primary-color);
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  padding-left: 1rem;
-  margin: 0.5rem 0 1.25rem 0;
-
-  > div {
-    &:first-child {
-      margin-top: 0;
-    }
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
 `;

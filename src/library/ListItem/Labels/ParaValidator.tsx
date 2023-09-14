@@ -1,22 +1,22 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faCubes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useTooltip } from 'contexts/Tooltip';
-import { useValidators } from 'contexts/Validators';
-import { TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useTranslation } from 'react-i18next';
+import { useTooltip } from 'contexts/Tooltip';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
+import { TooltipTrigger } from 'library/ListItem/Wrappers';
 import type { ParaValidatorProps } from '../types';
 
 export const ParaValidator = ({ address }: ParaValidatorProps) => {
   const { t } = useTranslation('library');
-  const { sessionParachain } = useValidators();
+  const { sessionParaValidators } = useValidators();
   const { setTooltipTextAndOpen } = useTooltip();
 
   const tooltipText = t('validatingParachainBlocks');
 
-  if (!sessionParachain?.includes(address || '')) {
+  if (!sessionParaValidators?.includes(address || '')) {
     return <></>;
   }
 

@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,17 +8,17 @@ import {
   planckToUnit,
   rmCommas,
   sortWithNull,
-} from '@polkadotcloud/utils';
+} from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import type { BondedPool } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
-import { motion } from 'framer-motion';
 import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
-import { useTranslation } from 'react-i18next';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {

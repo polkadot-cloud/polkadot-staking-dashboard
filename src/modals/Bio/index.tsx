@@ -1,14 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { ModalPadding } from '@polkadotcloud/core-ui';
-import { useModal } from 'contexts/Modal';
+import { ModalPadding } from '@polkadot-cloud/react';
 import { Title } from 'library/Modal/Title';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { Wrapper } from './Wrapper';
 
 export const Bio = () => {
-  const { config } = useModal();
-  const { name, bio } = config;
+  const { name, bio } = useOverlay().modal.config.options;
 
   return (
     <>
