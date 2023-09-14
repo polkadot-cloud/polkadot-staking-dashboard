@@ -37,7 +37,7 @@ export const ActivePoolsProvider = ({
   const { getAccountPools, bondedPools } = useBondedPools();
   const { getMembersOfPoolFromNode, poolMembersNode } = usePoolMembers();
 
-  // determine active pools to subscribe to.
+  // Determine active pools to subscribe to.
   const accountPools = useMemo(() => {
     const newAccountPools = Object.keys(getAccountPools(activeAccount) || {});
     const p = membership?.poolId ? String(membership.poolId) : '-1';
@@ -48,40 +48,39 @@ export const ActivePoolsProvider = ({
     return newAccountPools;
   }, [activeAccount, bondedPools, membership]);
 
-  // stores member's active pools
+  // Stores member's active pools.
   const [activePools, setActivePools] = useState<ActivePool[]>([]);
   const activePoolsRef = useRef(activePools);
 
-  // store active pools unsubs
+  // Store active pools unsubs.
   const unsubActivePools = useRef<AnyApi[]>([]);
 
-  // store active pools nominations.
+  // Store active pools nominations.
   const [poolNominations, setPoolNominations] = useState<
     Record<number, AnyJson>
   >({});
   const poolNominationsRef = useRef(poolNominations);
 
-  // store pool nominations unsubs
+  // Store pool nominations unsubs.
   const unsubNominations = useRef<AnyApi[]>([]);
 
-  // store account target validators
+  // Store account target validators.
   const [targets, setTargetsState] = useState<Record<number, AnyJson>>({});
   const targetsRef = useRef(targets);
 
-  // store the member count of the selected pool
+  // Store the member count of the selected pool.
   const [selectedPoolMemberCount, setSelectedPoolMemberCount] =
     useState<number>(0);
 
   const fetchingMemberCount = useRef<boolean>(false);
 
-  // store whether active pool data has been synced.
-  // this will be true if no active pool exists for the active account.
-  // We just need confirmation this is the case.
+  // Store whether active pool data has been synced. this will be true if no active pool exists for
+  // the active account. We just need confirmation this is the case.
   const [synced, setSynced] = useState<Sync>('unsynced');
   const syncedRef = useRef(synced);
 
-  // store the currently selected active pool for the UI.
-  // Should default to the membership pool (if present).
+  // Store the currently selected active pool for the UI. Should default to the membership pool (if
+  // present).
   const [selectedPoolId, setSelectedPoolId] = useState<string | null>(null);
 
   const getActivePoolMembership = () =>
@@ -120,7 +119,7 @@ export const ActivePoolsProvider = ({
     }
   };
 
-  // unsubscribe and reset poolNominations
+  // Unsubscribe and reset poolNominations.
   const unsubscribePoolNominations = () => {
     if (unsubNominations.current.length) {
       for (const unsub of unsubNominations.current) {
@@ -131,7 +130,7 @@ export const ActivePoolsProvider = ({
     unsubNominations.current = [];
   };
 
-  // unsubscribe and reset activePool and poolNominations
+  // Unsubscribe and reset activePool and poolNominations.
   const unsubscribeActivePools = () => {
     if (unsubActivePools.current.length) {
       for (const unsub of unsubActivePools.current) {
