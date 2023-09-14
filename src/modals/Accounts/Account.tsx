@@ -137,7 +137,7 @@ export const AccountButton = ({
         </section>
         <section className="foot">
           <span className="balance">
-            {`Free: ${planckToUnit(freeBalance, units)
+            {`${t('free')}: ${planckToUnit(freeBalance, units)
               .decimalPlaces(3)
               .toFormat()} ${unit}`}
           </span>
