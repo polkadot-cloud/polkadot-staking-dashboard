@@ -101,6 +101,7 @@
       "proxy": "Proxy",
       "recentPayouts": "Recent Payouts",
       "reserve": "Reserve",
+      "reserveBalance": "Reserve Balance",
       "reserved": "Reserved",
       "start": "Start",
       "subscanDisabled": "Subscan Disabled",
