@@ -52,6 +52,7 @@ export const ValidatorCommunity = [
       creditcoin: [
         '5FnAR3NHuwaANAKEKRHn7prTkCLdesyhnxPe6d2gaqum96QW',
         '5FbJ2BDjo2Edf3GYfKLErbPHdmNFRc8n88kFUBYVzsQPYRZv',
+        '5CzJ3wedCknprGEjMLcw6ZRmEUM6HhmjQe1zcF667srgZyxx',
       ],
       creditcoinTest: [],
     },
