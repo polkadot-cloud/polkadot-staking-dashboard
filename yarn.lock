@@ -1061,10 +1061,10 @@
     "@babel/helper-validator-identifier" "^7.22.15"
     to-fast-properties "^2.0.0"
 
-"@dotlottie/player-component@^2.5.4":
-  version "2.5.4"
-  resolved "https://registry.yarnpkg.com/@dotlottie/player-component/-/player-component-2.5.4.tgz#51a1b95aaf971c59be38663de94c17500b130655"
-  integrity sha512-VJ80w+XtOFu8g9YZj6DftJZr6oEKQzQSa8RkHOZqG1fwh4VN8k6OZQ9IyIJJIDwjEw+bv3PayXQXMFj6pbmSeA==
+"@dotlottie/player-component@^2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@dotlottie/player-component/-/player-component-2.6.0.tgz#1611edd0ac07f4199456071484bed5d99016808b"
+  integrity sha512-yXnkVThvKFVzaqprE2bAW7bxXlQlFdCL09r7pC5g2P+CQ+6yKZ+4hQ1Vd/QeWgkH4bxVXb4HA+oBpnVzKDa9hg==
   dependencies:
     lit "^2.7.5"
 
