@@ -12,12 +12,15 @@ import type {
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useSubscan } from 'contexts/Subscan';
+import { usePlugins } from 'contexts/Plugins';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import { useBondedPools } from '../BondedPools';
 import { usePoolMemberships } from '../PoolMemberships';
 import { usePoolsConfig } from '../PoolsConfig';
 import * as defaults from './defaults';
+import { usePoolMembers } from '../PoolMembers';
 
 export const ActivePoolsProvider = ({
   children,
@@ -25,13 +28,16 @@ export const ActivePoolsProvider = ({
   children: React.ReactNode;
 }) => {
   const { eraStakers } = useStaking();
+  const { pluginEnabled } = usePlugins();
   const { activeAccount } = useConnect();
+  const { fetchPoolDetails } = useSubscan();
   const { api, network, isReady } = useApi();
   const { membership } = usePoolMemberships();
   const { createAccounts } = usePoolsConfig();
   const { getAccountPools, bondedPools } = useBondedPools();
+  const { getMembersOfPoolFromNode, poolMembersNode } = usePoolMembers();
 
-  // determine active pools to subscribe to.
+  // Determine active pools to subscribe to.
   const accountPools = useMemo(() => {
     const newAccountPools = Object.keys(getAccountPools(activeAccount) || {});
     const p = membership?.poolId ? String(membership.poolId) : '-1';
@@ -42,34 +48,39 @@ export const ActivePoolsProvider = ({
     return newAccountPools;
   }, [activeAccount, bondedPools, membership]);
 
-  // stores member's active pools
+  // Stores member's active pools.
   const [activePools, setActivePools] = useState<ActivePool[]>([]);
   const activePoolsRef = useRef(activePools);
 
-  // store active pools unsubs
+  // Store active pools unsubs.
   const unsubActivePools = useRef<AnyApi[]>([]);
 
-  // store active pools nominations.
+  // Store active pools nominations.
   const [poolNominations, setPoolNominations] = useState<
     Record<number, AnyJson>
   >({});
   const poolNominationsRef = useRef(poolNominations);
 
-  // store pool nominations unsubs
+  // Store pool nominations unsubs.
   const unsubNominations = useRef<AnyApi[]>([]);
 
-  // store account target validators
+  // Store account target validators.
   const [targets, setTargetsState] = useState<Record<number, AnyJson>>({});
   const targetsRef = useRef(targets);
 
-  // store whether active pool data has been synced.
-  // this will be true if no active pool exists for the active account.
-  // We just need confirmation this is the case.
+  // Store the member count of the selected pool.
+  const [selectedPoolMemberCount, setSelectedPoolMemberCount] =
+    useState<number>(0);
+
+  const fetchingMemberCount = useRef<boolean>(false);
+
+  // Store whether active pool data has been synced. this will be true if no active pool exists for
+  // the active account. We just need confirmation this is the case.
   const [synced, setSynced] = useState<Sync>('unsynced');
   const syncedRef = useRef(synced);
 
-  // store the currently selected active pool for the UI.
-  // Should default to the membership pool (if present).
+  // Store the currently selected active pool for the UI. Should default to the membership pool (if
+  // present).
   const [selectedPoolId, setSelectedPoolId] = useState<string | null>(null);
 
   const getActivePoolMembership = () =>
@@ -108,7 +119,7 @@ export const ActivePoolsProvider = ({
     }
   };
 
-  // unsubscribe and reset poolNominations
+  // Unsubscribe and reset poolNominations.
   const unsubscribePoolNominations = () => {
     if (unsubNominations.current.length) {
       for (const unsub of unsubNominations.current) {
@@ -119,7 +130,7 @@ export const ActivePoolsProvider = ({
     unsubNominations.current = [];
   };
 
-  // unsubscribe and reset activePool and poolNominations
+  // Unsubscribe and reset activePool and poolNominations.
   const unsubscribeActivePools = () => {
     if (unsubActivePools.current.length) {
       for (const unsub of unsubActivePools.current) {
@@ -478,6 +489,29 @@ export const ActivePoolsProvider = ({
     membership,
   ]);
 
+  // Gets the member count of the currently selected pool. If Subscan is enabled, it is used instead of the connected node.
+  const getMemberCount = async () => {
+    const selectedActivePool = getSelectedActivePool();
+
+    if (!selectedActivePool?.id) {
+      setSelectedPoolMemberCount(0);
+      return;
+    }
+    // If `Subscan` plugin is enabled, fetch member count directly from the API.
+    if (pluginEnabled('subscan') && !fetchingMemberCount.current) {
+      fetchingMemberCount.current = true;
+      const poolDetails = await fetchPoolDetails(selectedActivePool.id);
+      fetchingMemberCount.current = false;
+      setSelectedPoolMemberCount(poolDetails?.member_count || 0);
+      return;
+    }
+    // If no plugin available, fetch all pool members from RPC and filter them to determine current
+    // pool member count. NOTE: Expensive operation.
+    setSelectedPoolMemberCount(
+      getMembersOfPoolFromNode(selectedActivePool?.id ?? 0).length
+    );
+  };
+
   // when we are subscribed to all active pools, syncing is considered
   // completed.
   useEffectIgnoreInitial(() => {
@@ -485,6 +519,12 @@ export const ActivePoolsProvider = ({
       setStateWithRef('synced', setSynced, syncedRef);
     }
   }, [accountPools, unsubNominations.current]);
+
+  // Fetch pool member count. We use `membership` as a dependency as the member count could change
+  // in the UI when active account's membership changes.
+  useEffect(() => {
+    getMemberCount();
+  }, [activeAccount, getSelectedActivePool(), membership, poolMembersNode]);
 
   return (
     <ActivePoolsContext.Provider
@@ -505,6 +545,7 @@ export const ActivePoolsProvider = ({
         selectedActivePool: getSelectedActivePool(),
         targets: getSelectedPoolTargets(),
         poolNominations: getSelectedPoolNominations(),
+        selectedPoolMemberCount,
       }}
     >
       {children}
