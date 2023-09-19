@@ -16,14 +16,13 @@ import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import { usePrompt } from 'contexts/Prompt';
 import { Confirm } from 'library/Import/Confirm';
 import { Remove } from 'library/Import/Remove';
-import { useTheme } from 'contexts/Themes';
 import { AddressesWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
 
 export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
   const { t } = useTranslation('modals');
   const { network } = useApi();
-  const { mode } = useTheme();
+
   const {
     getIsExecuting,
     ledgerAccountExists,
@@ -81,14 +80,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
                 address={address}
                 index={index}
                 initial={initialName}
-                Identicon={
-                  <PolkadotIcon
-                    dark={mode === 'dark'}
-                    nocopy
-                    address={address}
-                    size={40}
-                  />
-                }
+                Identicon={<PolkadotIcon address={address} size={40} />}
                 existsHandler={ledgerAccountExists}
                 renameHandler={renameHandler}
                 openRemoveHandler={openRemoveHandler}

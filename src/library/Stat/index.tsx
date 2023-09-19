@@ -14,7 +14,6 @@ import { applyWidthAsPadding, minDecimalPlaces } from '@polkadot-cloud/utils';
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { useHelp } from 'contexts/Help';
 import { useNotifications } from 'contexts/Notifications';
-import { useTheme } from 'contexts/Themes';
 import { useApi } from 'contexts/Api';
 import { Wrapper } from './Wrapper';
 import type { StatAddress, StatProps } from './types';
@@ -32,9 +31,8 @@ export const Stat = ({
   const {
     brand: { token: Token },
   } = useApi().network;
-  const { addNotification } = useNotifications();
   const { openHelp } = useHelp();
-  const { mode } = useTheme();
+  const { addNotification } = useNotifications();
 
   const containerRef = useRef<HTMLDivElement>(null);
   const subjectRef = useRef<HTMLDivElement>(null);
@@ -115,8 +113,6 @@ export const Stat = ({
           {type === 'address' ? (
             <div className="identicon">
               <PolkadotIcon
-                dark={mode === 'dark'}
-                nocopy
                 address={(stat as StatAddress)?.address || ''}
                 size={26}
               />

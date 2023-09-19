@@ -13,7 +13,6 @@ import { PolkadotIcon } from '@polkadot-cloud/react';
 import { useApi } from 'contexts/Api';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useTheme } from 'contexts/Themes';
 import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
 
@@ -33,8 +32,6 @@ export const AccountButton = ({
     activeProxyType,
     connectToAccount,
   } = useConnect();
-  const { mode } = useTheme();
-
   const { setModalStatus } = useOverlay().modal;
   const { units, unit } = useApi().network;
   const { getTransferOptions } = useTransferOptions();
@@ -83,21 +80,11 @@ export const AccountButton = ({
           >
             {delegator && (
               <div className="delegator">
-                <PolkadotIcon
-                  dark={mode === 'dark'}
-                  nocopy
-                  address={delegator}
-                  size={23}
-                />
+                <PolkadotIcon address={delegator} size={23} />
               </div>
             )}
             <div className="identicon">
-              <PolkadotIcon
-                dark={mode === 'dark'}
-                nocopy
-                address={address ?? ''}
-                size={23}
-              />
+              <PolkadotIcon address={address ?? ''} size={23} />
             </div>
             <span className="name">
               {delegator && (

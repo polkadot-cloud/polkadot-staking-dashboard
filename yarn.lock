@@ -1458,10 +1458,10 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-0.1.29.tgz#7a2923de91fbb3948b7ba7625893f694f6f5ddd3"
   integrity sha512-HoE9uynHCanz7rt6QlEWoSWePPre6+1MYUqgwUZtEKq2g0cOHWQ8GR8v1dp6r5ZiHTsbrPsPHadEvwmQe6R05A==
 
-"@polkadot-cloud/react@0.1.47":
-  version "0.1.47"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.47.tgz#80e981d310a35225ae870267d6a5c62e8d43e295"
-  integrity sha512-BXjSSXi7CiauZU9HLsqIKVdC9soZ9I4rwTyZ5Lq7vz53o/LiDXTjl18g173ymZCYgqhrPpUURggvQ2/iuyeEMA==
+"@polkadot-cloud/react@^0.1.48":
+  version "0.1.48"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.48.tgz#42555ecc4fd844c53fe0f0481152f80c30f8175d"
+  integrity sha512-8zIN30xl1Gyba8zNQaAyIXn+JbS4us0peRLMqJFRPqF2G8P6cKlt5jz+H1nZIqfb750a/1zFg0MZA7gXiWgcyA==
   dependencies:
     "@polkadot-cloud/core" "0.1.29"
     "@polkadot-cloud/utils" "^0.0.11"

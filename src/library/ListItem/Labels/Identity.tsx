@@ -5,13 +5,11 @@ import { ellipsisFn } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { PolkadotIcon } from '@polkadot-cloud/react';
-import { useTheme } from 'contexts/Themes';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';
 import { getIdentityDisplay } from '../../ValidatorList/Validator/Utils';
 import type { IdentityProps } from '../types';
 
 export const Identity = ({ address }: IdentityProps) => {
-  const { mode } = useTheme();
   const { validatorIdentities, validatorSupers } = useValidators();
 
   const [display, setDisplay] = useState(
@@ -37,7 +35,7 @@ export const Identity = ({ address }: IdentityProps) => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      <PolkadotIcon dark={mode === 'dark'} nocopy address={address} size={24} />
+      <PolkadotIcon address={address} size={24} />
       <div className="inner">
         {identitiesSynced && supersSynced && display !== null ? (
           <h4>{display}</h4>

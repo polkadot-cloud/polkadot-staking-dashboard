@@ -9,7 +9,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { usePrompt } from 'contexts/Prompt';
-import { useTheme } from 'contexts/Themes';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
 import type { RemoveProps } from './types';
 
@@ -17,11 +16,10 @@ export const Remove = ({ address, getHandler, removeHandler }: RemoveProps) => {
   const { t } = useTranslation('modals');
   const { forgetAccounts } = useConnect();
   const { setStatus } = usePrompt();
-  const { mode } = useTheme();
 
   return (
     <ConfirmWrapper>
-      <PolkadotIcon dark={mode === 'dark'} nocopy address={address} size={60} />
+      <PolkadotIcon address={address} size={60} />
       <h3>{t('removeAccount')}</h3>
       <h5>{address}</h5>
       <div className="footer">

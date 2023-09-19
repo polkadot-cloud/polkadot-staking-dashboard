@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { PolkadotIcon } from '@polkadot-cloud/react';
-import { useTheme } from 'contexts/Themes';
 import { Wrapper } from './Wrapper';
 import type { PayeeInputProps } from './types';
 
@@ -20,9 +19,8 @@ export const PayeeInput = ({
   handleChange,
 }: PayeeInputProps) => {
   const { t } = useTranslation('library');
-  const { activeAccount, formatAccountSs58, accounts } = useConnect();
   const { getBondedAccount } = useBonded();
-  const { mode } = useTheme();
+  const { activeAccount, formatAccountSs58, accounts } = useConnect();
   const controller = getBondedAccount(activeAccount);
 
   const accountMeta = accounts.find((a) => a.address === activeAccount);
@@ -99,8 +97,6 @@ export const PayeeInput = ({
               <div className="emptyIcon" />
             ) : (
               <PolkadotIcon
-                dark={mode === 'dark'}
-                nocopy
                 address={accountDisplay || ''}
                 size={remToUnit('2.5rem')}
               />

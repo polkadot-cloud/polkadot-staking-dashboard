@@ -22,7 +22,6 @@ import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useTheme } from 'contexts/Themes';
 import { Reader } from './Reader';
 
 export const ImportVault = () => {
@@ -30,7 +29,6 @@ export const ImportVault = () => {
   const { replaceModal } = useOverlay().modal;
   const { renameImportedAccount } = useConnect();
   const { openPromptWith, status: promptStatus } = usePrompt();
-  const { mode } = useTheme();
 
   const {
     vaultAccounts,
@@ -99,14 +97,7 @@ export const ImportVault = () => {
                   address={address}
                   index={index}
                   initial={name}
-                  Identicon={
-                    <PolkadotIcon
-                      dark={mode === 'dark'}
-                      nocopy
-                      address={address}
-                      size={40}
-                    />
-                  }
+                  Identicon={<PolkadotIcon address={address} size={40} />}
                   existsHandler={vaultAccountExists}
                   renameHandler={renameHandler}
                   openRemoveHandler={openRemoveHandler}
