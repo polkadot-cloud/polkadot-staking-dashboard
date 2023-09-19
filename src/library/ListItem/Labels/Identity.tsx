@@ -35,7 +35,7 @@ export const Identity = ({ address }: IdentityProps) => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      <PolkadotIcon address={address} size={24} />
+      <PolkadotIcon address={address} size="2rem" />
       <div className="inner">
         {identitiesSynced && supersSynced && display !== null ? (
           <h4>{display}</h4>

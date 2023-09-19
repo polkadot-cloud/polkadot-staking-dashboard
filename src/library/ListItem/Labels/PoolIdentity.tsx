@@ -26,7 +26,7 @@ export const PoolIdentity = ({
 
   return (
     <IdentityWrapper className="identity">
-      <PolkadotIcon address={addresses.stash} size={26} />
+      <PolkadotIcon address={addresses.stash} size="2rem" />
       <div className="inner">
         {!metadataSynced ? (
           <h4>{ellipsisFn(addresses.stash)}</h4>

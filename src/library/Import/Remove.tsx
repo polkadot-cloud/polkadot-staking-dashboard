@@ -19,7 +19,7 @@ export const Remove = ({ address, getHandler, removeHandler }: RemoveProps) => {
 
   return (
     <ConfirmWrapper>
-      <PolkadotIcon address={address} size={60} />
+      <PolkadotIcon address={address} size="3rem" />
       <h3>{t('removeAccount')}</h3>
       <h5>{address}</h5>
       <div className="footer">

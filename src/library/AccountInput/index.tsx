@@ -166,7 +166,7 @@ export const AccountInput = ({
         <section>
           <div>
             {isValidAddress(value) ? (
-              <PolkadotIcon address={value} size={22} />
+              <PolkadotIcon address={value} size="2rem" />
             ) : (
               <div className="ph" />
             )}

@@ -114,7 +114,7 @@ export const Stat = ({
             <div className="identicon">
               <PolkadotIcon
                 address={(stat as StatAddress)?.address || ''}
-                size={26}
+                size="2.4rem"
               />
             </div>
           ) : null}
