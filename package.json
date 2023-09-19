@@ -18,7 +18,7 @@
     "visualizer": "vite-bundle-visualizer"
   },
   "dependencies": {
-    "@dotlottie/player-component": "^2.5.4",
+    "@dotlottie/player-component": "^2.6.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
@@ -61,13 +61,13 @@
   "devDependencies": {
     "@ledgerhq/logs": "^6.10.1",
     "@types/lodash.throttle": "^4.1.7",
-    "@types/react": "^18.2.21",
+    "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
     "@types/react-helmet": "^6.1.6",
     "@types/react-qr-reader": "^2.1.4",
     "@types/react-scroll": "^1.8.6",
-    "@typescript-eslint/eslint-plugin": "^6.7.0",
-    "@typescript-eslint/parser": "^6.7.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.2",
     "@vitejs/plugin-react-swc": "^3.3.2",
     "eslint": "^8.49.0",
     "eslint-config-airbnb": "^19.0.4",
