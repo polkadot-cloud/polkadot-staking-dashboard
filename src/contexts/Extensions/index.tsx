@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@polkadot-cloud/utils';
-import { ExtensionsArray } from '@polkadot-cloud/community/extensions';
+import { ExtensionsArray } from '@polkadot-cloud/assets/extensions';
 import React, { useEffect, useRef, useState } from 'react';
 import type {
   ExtensionInjected,

@@ -12,7 +12,7 @@ import {
   ModalPadding,
   ModalSection,
 } from '@polkadot-cloud/react';
-import { ExtensionsArray } from '@polkadot-cloud/community/extensions';
+import { ExtensionsArray } from '@polkadot-cloud/assets/extensions';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useExtensions } from 'contexts/Extensions';

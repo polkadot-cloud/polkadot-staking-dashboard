@@ -4,7 +4,7 @@
 import { greaterThanZero, shuffle } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useRef, useState } from 'react';
-import { ValidatorCommunity } from '@polkadot-cloud/community/validators';
+import { ValidatorCommunity } from '@polkadot-cloud/assets/validators';
 import type { AnyApi, Fn, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useApi } from 'contexts/Api';
