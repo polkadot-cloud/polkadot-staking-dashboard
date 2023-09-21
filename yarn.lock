@@ -1453,22 +1453,17 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.11.tgz#1818383e81c2478a9ef8bf287b6cf893906b0f16"
   integrity sha512-eRsJyWo0vBaP2w3ERzNF4GQxdjds4Z7LYHZKMGXnlLf5U7PsgdL1TFa82PTdo46OsiR5Sfu7sqcHkdFfpE1XpQ==
 
-"@polkadot-cloud/core@0.1.29":
-  version "0.1.29"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-0.1.29.tgz#7a2923de91fbb3948b7ba7625893f694f6f5ddd3"
-  integrity sha512-HoE9uynHCanz7rt6QlEWoSWePPre6+1MYUqgwUZtEKq2g0cOHWQ8GR8v1dp6r5ZiHTsbrPsPHadEvwmQe6R05A==
-
-"@polkadot-cloud/core@^0.1.30":
+"@polkadot-cloud/core@0.1.30", "@polkadot-cloud/core@^0.1.30":
   version "0.1.30"
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-0.1.30.tgz#677614960f64dc9c262e5dd08298c63104ca4d4f"
   integrity sha512-TQsKQF1fFu5j10FYjpZrB0GLpSHjXL5jxl8ybx3NgmP4QvmTa5vK6bRsmwlCg10vaLm391k+JVmUqY2ThQLzyA==
 
-"@polkadot-cloud/react@^0.1.48":
-  version "0.1.48"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.48.tgz#42555ecc4fd844c53fe0f0481152f80c30f8175d"
-  integrity sha512-8zIN30xl1Gyba8zNQaAyIXn+JbS4us0peRLMqJFRPqF2G8P6cKlt5jz+H1nZIqfb750a/1zFg0MZA7gXiWgcyA==
+"@polkadot-cloud/react@^0.1.49":
+  version "0.1.49"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.49.tgz#67bde8a21efe21c47d748b6d7239ff5797fedaa1"
+  integrity sha512-Wvti3Mtcy9qJNRRIi//bZbCYUAPhBYTERjCFDsXa0qD7+gS+mnrMALJ4e82rxSmPdpnvaYJQ09W8xXuiNXNPkw==
   dependencies:
-    "@polkadot-cloud/core" "0.1.29"
+    "@polkadot-cloud/core" "0.1.30"
     "@polkadot-cloud/utils" "^0.0.11"
     react-error-boundary "^4.0.11"
 
