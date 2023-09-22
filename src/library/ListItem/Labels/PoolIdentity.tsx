@@ -3,7 +3,7 @@
 
 import { ellipsisFn, determinePoolDisplay } from '@polkadot-cloud/utils';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { PolkadotIcon } from '@polkadot-cloud/react';
+import { Polkicon } from '@polkadot-cloud/react';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';
 import type { PoolIdentityProps } from '../types';
 
@@ -26,7 +26,7 @@ export const PoolIdentity = ({
 
   return (
     <IdentityWrapper className="identity">
-      <PolkadotIcon address={addresses.stash} size="2rem" />
+      <Polkicon address={addresses.stash} size="2rem" />
       <div className="inner">
         {!metadataSynced ? (
           <h4>{ellipsisFn(addresses.stash)}</h4>

@@ -5,7 +5,7 @@ import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { remToUnit } from '@polkadot-cloud/utils';
 import { useConnect } from 'contexts/Connect';
-import { PolkadotIcon } from '@polkadot-cloud/react';
+import { Polkicon } from '@polkadot-cloud/react';
 import type { AccountDropdownProps } from '../../../library/Form/types';
 import { StyledSelect } from './Wrappers';
 
@@ -19,7 +19,7 @@ export const Switch = ({ current, to }: AccountDropdownProps) => {
         <div className="current">
           <div className="input-wrap selected">
             {toAccount !== null && (
-              <PolkadotIcon
+              <Polkicon
                 address={current?.address ?? ''}
                 size={remToUnit('2rem')}
               />
@@ -32,7 +32,7 @@ export const Switch = ({ current, to }: AccountDropdownProps) => {
 
           <div className="input-wrap selected">
             {current?.active ? (
-              <PolkadotIcon
+              <Polkicon
                 address={toAccount?.address ?? ''}
                 size={remToUnit('2rem')}
               />

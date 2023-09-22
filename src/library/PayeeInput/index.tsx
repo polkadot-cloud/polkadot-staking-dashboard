@@ -8,7 +8,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import { PolkadotIcon } from '@polkadot-cloud/react';
+import { Polkicon } from '@polkadot-cloud/react';
 import { Wrapper } from './Wrapper';
 import type { PayeeInputProps } from './types';
 
@@ -96,7 +96,7 @@ export const PayeeInput = ({
             {showEmpty ? (
               <div className="emptyIcon" />
             ) : (
-              <PolkadotIcon
+              <Polkicon
                 address={accountDisplay || ''}
                 size={remToUnit('2.5rem')}
               />

@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { PolkadotIcon } from '@polkadot-cloud/react';
+import { Polkicon } from '@polkadot-cloud/react';
 import { Wrapper } from './Wrapper';
 import type { AccountProps } from './types';
 
@@ -74,7 +74,7 @@ export const Account = ({
       {label !== undefined && <div className="account-label">{label}</div>}
 
       <span className="identicon">
-        <PolkadotIcon
+        <Polkicon
           address={pool.addresses.stash}
           size={remToUnit(fontSize) * 1.4}
         />

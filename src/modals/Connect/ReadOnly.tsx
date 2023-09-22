@@ -11,7 +11,7 @@ import {
   ButtonHelp,
   ButtonMonoInvert,
   ButtonSecondary,
-  PolkadotIcon,
+  Polkicon,
 } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
@@ -86,7 +86,7 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                 <ManualAccount key={`user_external_account_${i}`}>
                   <div>
                     <span>
-                      <PolkadotIcon address={a.address} size={26} />
+                      <Polkicon address={a.address} size={26} />
                     </span>
                     <div className="text">
                       <h4>{a.address}</h4>

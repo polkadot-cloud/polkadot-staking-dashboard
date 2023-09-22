@@ -3,7 +3,7 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clipAddress, isNotZero, planckToUnit } from '@polkadot-cloud/utils';
+import { ellipsisFn, isNotZero, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { formatDistance, fromUnixTime } from 'date-fns';
 import { motion } from 'framer-motion';
@@ -212,7 +212,7 @@ export const PayoutListInner = ({
                               {batchIndex > 0 ? (
                                 <Identity address={p.validator_stash} />
                               ) : (
-                                <div>{clipAddress(p.validator_stash)}</div>
+                                <div>{ellipsisFn(p.validator_stash)}</div>
                               )}
                             </>
                           )}

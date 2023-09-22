@@ -2,11 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import {
-  ButtonOption,
-  ModalPadding,
-  PolkadotIcon,
-} from '@polkadot-cloud/react';
+import { ButtonOption, ModalPadding, Polkicon } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -73,7 +69,7 @@ const Button = ({ item, poolId }: { item: string[]; poolId: string }) => {
       }}
     >
       <div className="icon">
-        <PolkadotIcon address={stash} size={30} />
+        <Polkicon address={stash} size={30} />
       </div>
 
       <div className="details">

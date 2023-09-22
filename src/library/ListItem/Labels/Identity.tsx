@@ -4,7 +4,7 @@
 import { ellipsisFn } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { PolkadotIcon } from '@polkadot-cloud/react';
+import { Polkicon } from '@polkadot-cloud/react';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';
 import { getIdentityDisplay } from '../../ValidatorList/Validator/Utils';
 import type { IdentityProps } from '../types';
@@ -35,7 +35,7 @@ export const Identity = ({ address }: IdentityProps) => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      <PolkadotIcon address={address} size="2rem" />
+      <Polkicon address={address} size="2rem" />
       <div className="inner">
         {identitiesSynced && supersSynced && display !== null ? (
           <h4>{display}</h4>

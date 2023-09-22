@@ -11,7 +11,7 @@ import {
   ButtonHelp,
   ButtonMonoInvert,
   ButtonSecondary,
-  PolkadotIcon,
+  Polkicon,
 } from '@polkadot-cloud/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -79,7 +79,7 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                       <ManualAccount key={`user_delegate_${i}_delegator_${j}`}>
                         <div>
                           <span>
-                            <PolkadotIcon address={delegate} size={26} />
+                            <Polkicon address={delegate} size={26} />
                           </span>
                           <div className="text">
                             <h4 className="title">

@@ -9,7 +9,7 @@ import { Extensions } from '@polkadot-cloud/assets/extensions';
 import { useConnect } from 'contexts/Connect';
 import { ReactComponent as LedgerIconSVG } from 'img/ledgerIcon.svg';
 import { ReactComponent as PolkadotVaultIconSVG } from 'img/polkadotVault.svg';
-import { PolkadotIcon } from '@polkadot-cloud/react';
+import { Polkicon } from '@polkadot-cloud/react';
 import { useApi } from 'contexts/Api';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
@@ -80,11 +80,11 @@ export const AccountButton = ({
           >
             {delegator && (
               <div className="delegator">
-                <PolkadotIcon address={delegator} size={23} />
+                <Polkicon address={delegator} size={23} />
               </div>
             )}
             <div className="identicon">
-              <PolkadotIcon address={address ?? ''} size={23} />
+              <Polkicon address={address ?? ''} size={23} />
             </div>
             <span className="name">
               {delegator && (

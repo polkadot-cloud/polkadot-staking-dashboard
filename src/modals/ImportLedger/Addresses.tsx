@@ -2,11 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
-import {
-  ButtonText,
-  HardwareAddress,
-  PolkadotIcon,
-} from '@polkadot-cloud/react';
+import { ButtonText, HardwareAddress, Polkicon } from '@polkadot-cloud/react';
 import { ellipsisFn, unescape } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -80,7 +76,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
                 address={address}
                 index={index}
                 initial={initialName}
-                Identicon={<PolkadotIcon address={address} size={40} />}
+                Identicon={<Polkicon address={address} size={40} />}
                 existsHandler={ledgerAccountExists}
                 renameHandler={renameHandler}
                 openRemoveHandler={openRemoveHandler}

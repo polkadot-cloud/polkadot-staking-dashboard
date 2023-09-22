@@ -3,13 +3,13 @@
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clipAddress, remToUnit } from '@polkadot-cloud/utils';
+import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useIdentities } from 'contexts/Identities';
 import { useNotifications } from 'contexts/Notifications';
 import type { NotificationText } from 'contexts/Notifications/types';
-import { PolkadotIcon } from '@polkadot-cloud/react';
+import { Polkicon } from '@polkadot-cloud/react';
 import { getIdentityDisplay } from 'library/ValidatorList/Validator/Utils';
 import type { PoolAccountProps } from '../types';
 import { Wrapper } from './Wrapper';
@@ -56,16 +56,16 @@ export const PoolAccount = ({
         ) : synced && display !== null ? (
           <>
             <div className="icon">
-              <PolkadotIcon address={address} size={remToUnit('1.6rem')} />
+              <Polkicon address={address} size={remToUnit('1.6rem')} />
             </div>
             <h4>{display}</h4>
           </>
         ) : (
           <>
             <div className="icon">
-              <PolkadotIcon address={address} size={remToUnit('1.6rem')} />
+              <Polkicon address={address} size={remToUnit('1.6rem')} />
             </div>
-            <h4>{clipAddress(address)}</h4>
+            <h4>{ellipsisFn(address)}</h4>
           </>
         )}
         <div>

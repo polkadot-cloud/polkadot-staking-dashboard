@@ -3,7 +3,7 @@
 
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonSecondary, PolkadotIcon } from '@polkadot-cloud/react';
+import { ButtonSecondary, Polkicon } from '@polkadot-cloud/react';
 import { isValidAddress } from '@polkadot-cloud/utils';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -166,7 +166,7 @@ export const AccountInput = ({
         <section>
           <div>
             {isValidAddress(value) ? (
-              <PolkadotIcon address={value} size="2rem" />
+              <Polkicon address={value} size="2rem" />
             ) : (
               <div className="ph" />
             )}

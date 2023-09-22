@@ -4,7 +4,7 @@
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
-import { PolkadotIcon } from '@polkadot-cloud/react';
+import { Polkicon } from '@polkadot-cloud/react';
 import { RoleChangeWrapper } from './Wrapper';
 
 export const RoleChange = ({ roleName, oldAddress, newAddress }: any) => {
@@ -13,7 +13,7 @@ export const RoleChange = ({ roleName, oldAddress, newAddress }: any) => {
       <div className="label">{roleName}</div>
       <div className="role-change">
         <div className="input-wrap selected">
-          <PolkadotIcon address={oldAddress ?? ''} size={remToUnit('2rem')} />
+          <Polkicon address={oldAddress ?? ''} size={remToUnit('2rem')} />
           <input
             className="input"
             disabled
@@ -24,7 +24,7 @@ export const RoleChange = ({ roleName, oldAddress, newAddress }: any) => {
           <FontAwesomeIcon icon={faAnglesRight} />
         </span>
         <div className="input-wrap selected">
-          <PolkadotIcon address={newAddress ?? ''} size={remToUnit('2rem')} />
+          <Polkicon address={newAddress ?? ''} size={remToUnit('2rem')} />
           <input
             className="input"
             disabled

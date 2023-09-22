@@ -7,7 +7,7 @@ import {
   ButtonText,
   HardwareAddress,
   HardwareStatusBar,
-  PolkadotIcon,
+  Polkicon,
 } from '@polkadot-cloud/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -97,7 +97,7 @@ export const ImportVault = () => {
                   address={address}
                   index={index}
                   initial={name}
-                  Identicon={<PolkadotIcon address={address} size={40} />}
+                  Identicon={<Polkicon address={address} size={40} />}
                   existsHandler={vaultAccountExists}
                   renameHandler={renameHandler}
                   openRemoveHandler={openRemoveHandler}

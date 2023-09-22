@@ -7,7 +7,7 @@ import {
   ButtonHelp,
   ButtonPrimary,
   ButtonSecondary,
-  PolkadotIcon,
+  Polkicon,
   Odometer,
 } from '@polkadot-cloud/react';
 import { applyWidthAsPadding, minDecimalPlaces } from '@polkadot-cloud/utils';
@@ -112,7 +112,7 @@ export const Stat = ({
           ) : null}
           {type === 'address' ? (
             <div className="identicon">
-              <PolkadotIcon
+              <Polkicon
                 address={(stat as StatAddress)?.address || ''}
                 size="2.4rem"
               />
