@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useHelp } from 'contexts/Help';
 import { useTheme } from 'contexts/Themes';
-import { ReactComponent as LogoSVG } from 'img/ledgerLogo.svg';
+import LogoSVG from 'img/ledgerLogo.svg?react';
 import type { AnyFunction } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { SplashWrapper } from './Wrappers';
