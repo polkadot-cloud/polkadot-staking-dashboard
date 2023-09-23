@@ -18,7 +18,7 @@ import { inChrome } from '@polkadot-cloud/utils';
 import React from 'react';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
-import { ReactComponent as LedgerLogoSVG } from 'img/ledgerLogo.svg';
+import LedgerLogoSVG from 'img/ledgerLogo.svg?react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const Ledger = (): React.ReactElement => {

@@ -3,7 +3,7 @@
 
 import { ModalPadding } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { ReactComponent as LanguageSVG } from 'img/language.svg';
+import LanguageSVG from 'img/language.svg?react';
 import { Title } from 'library/Modal/Title';
 import { availableLanguages } from 'locale';
 import { changeLanguage } from 'locale/utils';
