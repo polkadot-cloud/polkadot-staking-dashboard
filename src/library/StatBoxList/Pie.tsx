@@ -1,10 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonHelp, Odometer } from '@polkadot-cloud/react';
+import { ButtonHelp, Chart, Odometer } from '@polkadot-cloud/react';
 import { useEffect, useState } from 'react';
 import { useHelp } from 'contexts/Help';
-import { StatPie } from 'library/Graphs/StatBoxPie';
 import BigNumber from 'bignumber.js';
 import { StatBox } from './Item';
 import type { PieProps } from './types';
@@ -30,7 +29,20 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
     <StatBox>
       <div className="content chart">
         <div className="chart">
-          <StatPie value={graph?.value1} value2={graph?.value2} />
+          <Chart
+            items={[
+              {
+                value: graph?.value1,
+                color: 'var(--accent-color-primary)',
+              },
+              {
+                value: graph?.value2,
+                color: 'var(--background-default)',
+              },
+            ]}
+            diameter={30}
+            speed={0.7}
+          />
           {tooltip ? (
             <div className="tooltip">
               <h3>{tooltip}</h3>
