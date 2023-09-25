@@ -3,9 +3,11 @@
 
 import { Configuration, PolkawatchApi } from '@polkawatch/ddp-client';
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { localStorageOrDefault } from '@polkadot-cloud/utils';
 import { useApi } from '../../Api';
 import type { NetworkName } from '../../../types';
 import type { PolkawatchState } from './types';
+import { DefaultNetwork } from '../../../consts';
 
 /**
  * This is the Polkawatch API provider, which builds polkawatch API depending on the Chain that is currently
@@ -22,12 +24,16 @@ const POLKAWATCH_NETWORKS = ['polkadot', 'kusama'];
  * @constructor
  */
 const apiConfiguration = (
-  name: NetworkName = 'polkadot',
+  name: NetworkName = localStorageOrDefault(
+    'network',
+    DefaultNetwork
+  ) as NetworkName,
   version = POLKAWATCH_API_VERSION
-): Configuration =>
-  new Configuration({
+): Configuration => {
+  return new Configuration({
     basePath: `https://${name}-${version}-api.polkawatch.app`,
   });
+};
 
 const PolkawatchInitialState = {
   pwApi: new PolkawatchApi(apiConfiguration()),
