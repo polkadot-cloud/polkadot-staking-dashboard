@@ -153,7 +153,7 @@ export const IdentityWrapper = styled(motion.div)`
     align-items: center;
     width: 100%;
     height: 3.25rem;
-    padding: 0 0 0 0.2rem;
+    padding: 0 0 0 0;
   }
   h4 {
     color: var(--text-color-secondary);
@@ -163,7 +163,7 @@ export const IdentityWrapper = styled(motion.div)`
     width: 100%;
     height: 3.25rem;
     line-height: 3.25rem;
-    padding: 0 0 0 0.3rem;
+    padding: 0 0 0 0;
     margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;

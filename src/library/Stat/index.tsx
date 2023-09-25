@@ -7,8 +7,8 @@ import {
   ButtonHelp,
   ButtonPrimary,
   ButtonSecondary,
-  Polkicon,
   Odometer,
+  AccountCard,
 } from '@polkadot-cloud/react';
 import { applyWidthAsPadding, minDecimalPlaces } from '@polkadot-cloud/utils';
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
@@ -111,14 +111,28 @@ export const Stat = ({
             </>
           ) : null}
           {type === 'address' ? (
-            <div className="identicon">
-              <Polkicon
-                address={(stat as StatAddress)?.address || ''}
-                size="2.4rem"
-              />
-            </div>
-          ) : null}
-          {display}
+            <AccountCard
+              noCard
+              icon={{
+                size: 26,
+                gridSize: 1,
+                justify: 'flex-start',
+              }}
+              title={{
+                address: (stat as StatAddress)?.address || '',
+                name: display || '',
+                justify: 'flex-start',
+                align: 'center',
+                style: {
+                  padding: '0 0.3rem 0.5rem 0.4rem',
+                  width: '30rem',
+                },
+              }}
+              fontSize="1.4rem"
+            />
+          ) : (
+            display
+          )}
           {buttons ? (
             <span ref={subjectRef}>
               {buttons.map((btn: any, index: number) => (

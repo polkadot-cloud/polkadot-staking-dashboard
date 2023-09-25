@@ -3,7 +3,7 @@
 
 import { ellipsisFn, determinePoolDisplay } from '@polkadot-cloud/utils';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { Polkicon } from '@polkadot-cloud/react';
+import { AccountCard } from '@polkadot-cloud/react';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';
 import type { PoolIdentityProps } from '../types';
 
@@ -26,14 +26,31 @@ export const PoolIdentity = ({
 
   return (
     <IdentityWrapper className="identity">
-      <Polkicon address={addresses.stash} size="2rem" />
-      <div className="inner">
-        {!metadataSynced ? (
-          <h4>{ellipsisFn(addresses.stash)}</h4>
-        ) : (
-          <h4>{display}</h4>
-        )}
-      </div>
+      <AccountCard
+        noCard
+        title={{
+          address: addresses.stash,
+          component: (
+            <div className="inner">
+              {!metadataSynced ? (
+                <h4>{ellipsisFn(addresses.stash)}</h4>
+              ) : (
+                <h4>{display}</h4>
+              )}
+            </div>
+          ),
+          justify: 'flex-start',
+          // TODO: This is a bug (#601) in polkadot-cloud:
+          // https://github.com/paritytech/polkadot-cloud/issues/601
+          // The line below should be removed once the bug is fixed.
+          style: { display: 'contents' },
+        }}
+        icon={{
+          size: 22,
+          gridSize: 1,
+          justify: 'flex-start',
+        }}
+      />
     </IdentityWrapper>
   );
 };

@@ -4,8 +4,9 @@
 import { ellipsisFn } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { Polkicon } from '@polkadot-cloud/react';
+import { AccountCard } from '@polkadot-cloud/react';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';
+import type { TitleProps } from '@polkadot-cloud/react/recipes/AccountCard';
 import { getIdentityDisplay } from '../../ValidatorList/Validator/Utils';
 import type { IdentityProps } from '../types';
 
@@ -28,6 +29,18 @@ export const Identity = ({ address }: IdentityProps) => {
     );
   }, [validatorSupers, validatorIdentities, address]);
 
+  let titleProps: TitleProps = {
+    address,
+    justify: 'flex-start',
+  };
+
+  titleProps = Object.assign(
+    titleProps,
+    identitiesSynced && supersSynced && display !== null
+      ? { component: display }
+      : { name: ellipsisFn(address, 6) }
+  );
+
   return (
     <IdentityWrapper
       className="identity"
@@ -35,14 +48,16 @@ export const Identity = ({ address }: IdentityProps) => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      <Polkicon address={address} size="2rem" />
-      <div className="inner">
-        {identitiesSynced && supersSynced && display !== null ? (
-          <h4>{display}</h4>
-        ) : (
-          <h4>{ellipsisFn(address, 6)}</h4>
-        )}
-      </div>
+      <AccountCard
+        noCard
+        fontSize="1.1rem"
+        title={titleProps}
+        icon={{
+          size: 22,
+          gridSize: 1,
+          justify: 'flex-start',
+        }}
+      />
     </IdentityWrapper>
   );
 };

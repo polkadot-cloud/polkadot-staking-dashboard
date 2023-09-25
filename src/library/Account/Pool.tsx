@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
+import { ellipsisFn } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { Polkicon } from '@polkadot-cloud/react';
+import { AccountCard } from '@polkadot-cloud/react';
+import type { IconProps } from '@polkadot-cloud/react/recipes/AccountCard';
 import { Wrapper } from './Wrapper';
 import type { AccountProps } from './types';
 
@@ -69,19 +70,37 @@ export const Account = ({
     display = defaultDisplay;
   }
 
+  const iconProps: IconProps = {
+    size: 15,
+    gridSize: 1,
+    justify: 'flex-start',
+  };
+
+  const syncArgs = !syncing
+    ? {
+        icon: iconProps,
+      }
+    : {};
+
   return (
     <Wrapper $canClick={canClick} $fontSize={fontSize} onClick={onClick}>
-      {label !== undefined && <div className="account-label">{label}</div>}
-
-      <span className="identicon">
-        <Polkicon
-          address={pool.addresses.stash}
-          size={remToUnit(fontSize) * 1.4}
-        />
-      </span>
-      <span className={`title${syncing === true ? ` syncing` : ``}`}>
-        {display}
-      </span>
+      <AccountCard
+        noCard
+        fontSize="1rem"
+        title={{
+          address: pool.addresses.stash,
+          name: display || '',
+          justify: 'flex-start',
+        }}
+        extraComponent={{
+          component:
+            label !== undefined ? (
+              <div className="account-label">{label}</div>
+            ) : undefined,
+          gridSize: 2,
+        }}
+        {...syncArgs}
+      />
     </Wrapper>
   );
 };

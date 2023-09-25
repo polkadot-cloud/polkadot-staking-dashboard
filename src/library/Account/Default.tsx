@@ -3,11 +3,11 @@
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
+import { ellipsisFn } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
-import { Polkicon } from '@polkadot-cloud/react';
+import { AccountCard } from '@polkadot-cloud/react';
 import { Wrapper } from './Wrapper';
 import type { AccountProps } from './types';
 
@@ -51,28 +51,40 @@ export const Account = ({
 
   return (
     <Wrapper onClick={onClick} $canClick={canClick} $fontSize={fontSize}>
-      {label !== undefined && (
-        <div className="account-label">
-          {label}{' '}
-          {readOnly && (
-            <>
-              &nbsp;
-              <FontAwesomeIcon icon={faGlasses} />
-            </>
-          )}
-        </div>
-      )}
       {unassigned ? (
         <span className="title unassigned">{t('notStaking')}</span>
       ) : (
-        <>
-          {format !== 'text' && (
-            <span className="identicon">
-              <Polkicon address={value} size={remToUnit(fontSize) * 1.4} />
-            </span>
-          )}
-          <span className="title">{displayValue}</span>
-        </>
+        <AccountCard
+          noCard
+          fontSize="1.1rem"
+          icon={{
+            size: 15,
+            gridSize: 1,
+            justify: 'flex-start',
+          }}
+          extraComponent={{
+            component:
+              label !== undefined ? (
+                <div className="account-label">
+                  {label}{' '}
+                  {readOnly && (
+                    <>
+                      &nbsp;
+                      <FontAwesomeIcon icon={faGlasses} />
+                    </>
+                  )}
+                </div>
+              ) : undefined,
+            gridSize: 4,
+            style: { width: '10rem' },
+          }}
+          title={{
+            address: value,
+            name: displayValue || '',
+            justify: 'flex-start',
+            align: 'center',
+          }}
+        />
       )}
     </Wrapper>
   );

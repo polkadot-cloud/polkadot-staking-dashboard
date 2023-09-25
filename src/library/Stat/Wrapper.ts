@@ -42,10 +42,10 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
     overflow: hidden;
 
     .text {
-      padding-left: ${(props) => (props.$isAddress ? '3rem' : 0)};
+      padding-left: 0;
       font-family: InterBold, sans-serif;
       color: var(--text-color-primary);
-      padding-top: 0.25rem;
+      padding-top: ${(props) => (props.$isAddress ? '0' : '0.25rem')};
       position: absolute;
       left: 0;
       top: 0;

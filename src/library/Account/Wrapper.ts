@@ -20,9 +20,6 @@ export const Wrapper = styled.button<WrapperProps>`
   &:hover {
     transform: scale(1.03);
   }
-  .identicon {
-    margin: 0.15rem 0.25rem 0 0;
-  }
   .account-label {
     border-right: 1px solid var(--border-secondary-color);
     color: var(--text-color-secondary);
@@ -40,6 +37,11 @@ export const Wrapper = styled.button<WrapperProps>`
     > svg {
       color: var(--text-color-primary);
     }
+  }
+
+  .account-card-main-text {
+    color: var(--text-color-secondary);
+    padding: 0 0 0 0.3rem;
   }
 
   .title {
