@@ -33,7 +33,7 @@ export const Timeleft = ({
                 color: 'var(--background-default)',
               },
             ]}
-            diameter={30}
+            diameter={34}
           />
           {tooltip ? (
             <div className="tooltip">

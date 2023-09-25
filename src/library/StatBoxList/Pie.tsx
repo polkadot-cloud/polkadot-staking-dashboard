@@ -40,7 +40,7 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
                 color: 'var(--background-default)',
               },
             ]}
-            diameter={30}
+            diameter={34}
             speed={0.7}
           />
           {tooltip ? (
