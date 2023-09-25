@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonHelp, PolkadotIcon } from '@polkadot-cloud/react';
-import { clipAddress } from '@polkadot-cloud/utils';
+import { ButtonHelp, Polkicon } from '@polkadot-cloud/react';
+import { ellipsisFn } from '@polkadot-cloud/utils';
 import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
@@ -18,7 +18,6 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { usePolkawatchApi } from '../../contexts/Polkawatch';
 import { PolkawatchButton } from '../../library/PolkawatchButton';
 import { usePlugins } from '../../contexts/Plugins';
-import { useTheme } from '../../contexts/Themes';
 
 export const ValidatorDecentralization = () => {
   const { t } = useTranslation('modals');
@@ -26,7 +25,6 @@ export const ValidatorDecentralization = () => {
   const { options } = useOverlay().modal.config;
   const { address, identity } = options;
   const { openHelp } = useHelp();
-  const { mode } = useTheme();
 
   const ref = useRef<HTMLDivElement>(null);
   const size = useSize(ref.current);
@@ -63,15 +61,10 @@ export const ValidatorDecentralization = () => {
     <>
       <Title title={t('validatorDecentralization')} />
       <div className="header">
-        <PolkadotIcon
-          dark={mode === 'dark'}
-          nocopy
-          address={address}
-          size={33}
-        />
+        <Polkicon address={address} size={33} />
         <h2>
           &nbsp;&nbsp;
-          {identity === null ? clipAddress(address) : identity}
+          {identity === null ? ellipsisFn(address) : identity}
         </h2>
       </div>
       <div
