@@ -1482,15 +1482,6 @@
     framer-motion "^10.15.0"
     react-error-boundary "^4.0.11"
 
-"@polkadot-cloud/utils@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/utils/-/utils-0.0.13.tgz#c32b60145f80edd3cfbbfbaa25f3a716fc43c6b1"
-  integrity sha512-fqM2bEwEbok0/3yN1TUy40dhJn4FAilRN0b/Jl2p0C9FAxcTbUUMYE5aKPBEf4KdqxqVNamLIpYpCgdMIGM88Q==
-  dependencies:
-    "@polkadot/keyring" "^12.5.1"
-    "@polkadot/util" "^12.5.1"
-    bignumber.js "^9.1.1"
-
 "@polkadot-cloud/utils@^0.0.15":
   version "0.0.15"
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/utils/-/utils-0.0.15.tgz#cd89e406e0dc9ab4b912830122c541d3dc853f0f"
@@ -1563,16 +1554,7 @@
     rxjs "^7.8.1"
     tslib "^2.5.3"
 
-"@polkadot/keyring@^12.1.1", "@polkadot/keyring@^12.3.1":
-  version "12.4.2"
-  resolved "https://registry.yarnpkg.com/@polkadot/keyring/-/keyring-12.4.2.tgz#ff66c531ff29c1c9cb7c0f8411930bc18c76e2d3"
-  integrity sha512-VH91feSL6GiVVLcJ6V8h6jIAuq62bfvhM75AMcjTFol6MDqFl25jdjkHfZ2bQhig330LIhLw89nKdYr2/OfwjA==
-  dependencies:
-    "@polkadot/util" "12.4.2"
-    "@polkadot/util-crypto" "12.4.2"
-    tslib "^2.6.2"
-
-"@polkadot/keyring@^12.5.1":
+"@polkadot/keyring@^12.1.1", "@polkadot/keyring@^12.3.1", "@polkadot/keyring@^12.5.1":
   version "12.5.1"
   resolved "https://registry.yarnpkg.com/@polkadot/keyring/-/keyring-12.5.1.tgz#2f38504aa915f54bbd265f3793a6be55010eb1f5"
   integrity sha512-u6b+Q7wI6WY/vwmJS9uUHy/5hKZ226nTlVNmxjkj9GvrRsQvUSwS94163yHPJwiZJiIv5xK5m0rwCMyoYu+wjA==
