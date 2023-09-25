@@ -7,17 +7,17 @@ import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { graphColors } from 'styles/graphs';
 import chroma from 'chroma-js';
-import ellipsize from 'ellipsize';
-import type { DistributionDoughnutProps } from './types';
+import { ellipsisFn } from '@polkadot-cloud/utils';
+import type { GeoDonutProps } from './types';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const DistributionDoughnut = ({
+export const GeoDonut = ({
   title,
   series = { labels: [], data: [] },
   height = 'auto',
   width = 'auto',
-}: DistributionDoughnutProps) => {
+}: GeoDonutProps) => {
   const { colors } = useApi().network;
   const { mode } = useTheme();
   const { labels } = series;
@@ -56,7 +56,7 @@ export const DistributionDoughnut = ({
                 chart
               );
             return ls.map((l) => {
-              l.text = ellipsize(l.text, labelTotal > 30 ? 10 : 20);
+              l.text = ellipsisFn(l.text, labelTotal > 30 ? 10 : 20, 'right');
               return l;
             });
           },

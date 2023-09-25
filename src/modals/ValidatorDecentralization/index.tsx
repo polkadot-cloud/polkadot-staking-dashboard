@@ -7,7 +7,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
-import { DistributionDoughnut } from 'library/Graphs/DistributionDoughnut';
+import { GeoDonut } from 'library/Graphs/GeoDonut';
 import { formatSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
 import { useSize } from 'library/Hooks/useSize';
@@ -117,7 +117,7 @@ export const ValidatorDecentralization = () => {
                 height: `${height}px`,
               }}
             >
-              <DistributionDoughnut
+              <GeoDonut
                 title="Rewards"
                 series={pwData.topCountryDistributionChart}
                 height={`${height}px`}
@@ -131,7 +131,7 @@ export const ValidatorDecentralization = () => {
                   height: `${height}px`,
                 }}
               >
-                <DistributionDoughnut
+                <GeoDonut
                   title="Rewards"
                   series={pwData.topNetworkDistributionChart}
                   height={`${height}px`}

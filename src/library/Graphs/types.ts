@@ -47,7 +47,7 @@ export interface PayoutDayCursor {
   event_id: string;
 }
 
-export interface DistributionDoughnutProps {
+export interface GeoDonutProps {
   title: string;
   series: AnyPolkawatch;
   width?: string | number;
