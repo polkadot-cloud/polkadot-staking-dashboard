@@ -3,8 +3,8 @@
 
 import { Configuration, PolkawatchApi } from '@polkawatch/ddp-client';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useApi } from '../Api';
-import type { NetworkName } from '../../types';
+import { useApi } from '../../Api';
+import type { NetworkName } from '../../../types';
 
 /**
  * This is the Polkawatch API provider, which builds polkawatch API depending on the Chain that is currently
