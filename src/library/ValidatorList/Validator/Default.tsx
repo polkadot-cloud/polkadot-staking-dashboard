@@ -87,7 +87,7 @@ export const Default = ({
       title: `${t('viewDecentralization')}`,
       cb: () => {
         openModal({
-          key: 'ValidatorDecentralization',
+          key: 'ValidatorGeo',
           options: {
             address,
             identity,

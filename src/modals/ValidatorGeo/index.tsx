@@ -19,7 +19,7 @@ import { usePolkawatchApi } from '../../contexts/Plugins/Polkawatch';
 import { PolkawatchButton } from '../../library/PolkawatchButton';
 import { usePlugins } from '../../contexts/Plugins';
 
-export const ValidatorDecentralization = () => {
+export const ValidatorGeo = () => {
   const { t } = useTranslation('modals');
   const { pwApi, networkSupported } = usePolkawatchApi();
   const { options } = useOverlay().modal.config;
