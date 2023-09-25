@@ -5,6 +5,7 @@ import { Configuration, PolkawatchApi } from '@polkawatch/ddp-client';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useApi } from '../../Api';
 import type { NetworkName } from '../../../types';
+import type { PolkawatchState } from './types';
 
 /**
  * This is the Polkawatch API provider, which builds polkawatch API depending on the Chain that is currently
@@ -27,15 +28,6 @@ const apiConfiguration = (
   new Configuration({
     basePath: `https://${name}-${version}-api.polkawatch.app`,
   });
-
-/**
- * The provider will return an API and also information about whether the selected network has decentralization
- * analytics support.
- */
-interface PolkawatchState {
-  pwApi: PolkawatchApi;
-  networkSupported: boolean;
-}
 
 const PolkawatchInitialState = {
   pwApi: new PolkawatchApi(apiConfiguration()),
