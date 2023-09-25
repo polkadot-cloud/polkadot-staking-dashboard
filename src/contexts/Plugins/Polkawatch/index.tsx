@@ -8,14 +8,12 @@ import { useApi } from '../../Api';
 import type { NetworkName } from '../../../types';
 import type { PolkawatchState } from './types';
 import { DefaultNetwork } from '../../../consts';
+import { POLKAWATCH_API_VERSION, POLKAWATCH_NETWORKS } from './defaults';
 
 /**
  * This is the Polkawatch API provider, which builds polkawatch API depending on the Chain that is currently
  * in context. Also returns information about whether there exist decentralization analytics for the Network.
  */
-
-const POLKAWATCH_API_VERSION = 'v2';
-const POLKAWATCH_NETWORKS = ['polkadot', 'kusama'];
 
 /**
  * Builds the API Configuration based on Chain and API Version
