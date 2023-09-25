@@ -2,11 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
-import {
-  ButtonText,
-  HardwareAddress,
-  PolkadotIcon,
-} from '@polkadot-cloud/react';
+import { ButtonText, HardwareAddress, Polkicon } from '@polkadot-cloud/react';
 import { ellipsisFn, unescape } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -16,14 +12,13 @@ import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import { usePrompt } from 'contexts/Prompt';
 import { Confirm } from 'library/Import/Confirm';
 import { Remove } from 'library/Import/Remove';
-import { useTheme } from 'contexts/Themes';
 import { AddressesWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
 
 export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
   const { t } = useTranslation('modals');
   const { network } = useApi();
-  const { mode } = useTheme();
+
   const {
     getIsExecuting,
     ledgerAccountExists,
@@ -81,14 +76,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
                 address={address}
                 index={index}
                 initial={initialName}
-                Identicon={
-                  <PolkadotIcon
-                    dark={mode === 'dark'}
-                    nocopy
-                    address={address}
-                    size={40}
-                  />
-                }
+                Identicon={<Polkicon address={address} size={40} />}
                 existsHandler={ledgerAccountExists}
                 renameHandler={renameHandler}
                 openRemoveHandler={openRemoveHandler}

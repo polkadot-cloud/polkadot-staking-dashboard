@@ -12,7 +12,7 @@ import { useApi } from 'contexts/Api';
 import { Title } from 'library/Modal/Title';
 import type { AnyJson, NetworkName } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { ReactComponent as BraveIconSVG } from '../../img/brave-logo.svg';
+import BraveIconSVG from '../../img/brave-logo.svg?react';
 import {
   BraveWarning,
   ConnectionButton,

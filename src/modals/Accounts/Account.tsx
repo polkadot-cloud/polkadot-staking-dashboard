@@ -5,15 +5,14 @@ import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn, planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
-import { Extensions } from '@polkadot-cloud/community/extensions';
+import { Extensions } from '@polkadot-cloud/assets/extensions';
 import { useConnect } from 'contexts/Connect';
-import { ReactComponent as LedgerIconSVG } from 'img/ledgerIcon.svg';
-import { ReactComponent as PolkadotVaultIconSVG } from 'img/polkadotVault.svg';
-import { PolkadotIcon } from '@polkadot-cloud/react';
+import LedgerIconSVG from 'img/ledgerIcon.svg?react';
+import PolkadotVaultIconSVG from 'img/polkadotVault.svg?react';
+import { Polkicon } from '@polkadot-cloud/react';
 import { useApi } from 'contexts/Api';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useTheme } from 'contexts/Themes';
 import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
 
@@ -33,8 +32,6 @@ export const AccountButton = ({
     activeProxyType,
     connectToAccount,
   } = useConnect();
-  const { mode } = useTheme();
-
   const { setModalStatus } = useOverlay().modal;
   const { units, unit } = useApi().network;
   const { getTransferOptions } = useTransferOptions();
@@ -83,21 +80,11 @@ export const AccountButton = ({
           >
             {delegator && (
               <div className="delegator">
-                <PolkadotIcon
-                  dark={mode === 'dark'}
-                  nocopy
-                  address={delegator}
-                  size={23}
-                />
+                <Polkicon address={delegator} size={23} />
               </div>
             )}
             <div className="identicon">
-              <PolkadotIcon
-                dark={mode === 'dark'}
-                nocopy
-                address={address ?? ''}
-                size={23}
-              />
+              <Polkicon address={address ?? ''} size={23} />
             </div>
             <span className="name">
               {delegator && (

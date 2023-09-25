@@ -8,7 +8,7 @@ import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useHelp } from 'contexts/Help';
 import { usePrompt } from 'contexts/Prompt';
-import { ReactComponent as StatusBarIcon } from 'img/ledgerIcon.svg';
+import StatusBarSVG from 'img/ledgerIcon.svg?react';
 import { Heading } from 'library/Import/Heading';
 import type { AnyJson } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
@@ -59,7 +59,7 @@ export const Manage = ({
       />
       <HardwareStatusBar
         show
-        Icon={StatusBarIcon}
+        Icon={StatusBarSVG}
         text={feedback?.message || fallbackMessage}
         help={
           helpKey

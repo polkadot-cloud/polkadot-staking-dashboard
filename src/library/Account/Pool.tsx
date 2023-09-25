@@ -8,8 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { PolkadotIcon } from '@polkadot-cloud/react';
-import { useTheme } from 'contexts/Themes';
+import { Polkicon } from '@polkadot-cloud/react';
 import { Wrapper } from './Wrapper';
 import type { AccountProps } from './types';
 
@@ -24,7 +23,6 @@ export const Account = ({
   const { isReady } = useApi();
   const { activeAccount } = useConnect();
   const { fetchPoolsMetaBatch, meta } = useBondedPools();
-  const { mode } = useTheme();
 
   // is this the initial fetch
   const [fetched, setFetched] = useState(false);
@@ -76,9 +74,7 @@ export const Account = ({
       {label !== undefined && <div className="account-label">{label}</div>}
 
       <span className="identicon">
-        <PolkadotIcon
-          dark={mode === 'dark'}
-          nocopy
+        <Polkicon
           address={pool.addresses.stash}
           size={remToUnit(fontSize) * 1.4}
         />

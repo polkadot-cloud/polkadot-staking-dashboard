@@ -7,7 +7,7 @@ import { ButtonHelp } from '@polkadot-cloud/react';
 import type { FunctionComponent } from 'react';
 import React from 'react';
 import { useHelp } from 'contexts/Help';
-import { ReactComponent as CrossSVG } from 'img/cross.svg';
+import CrossSVG from 'img/cross.svg?react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { TitleWrapper } from './Wrappers';
 

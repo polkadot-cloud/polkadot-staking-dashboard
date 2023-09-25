@@ -3,8 +3,7 @@
 
 import { ellipsisFn, determinePoolDisplay } from '@polkadot-cloud/utils';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { PolkadotIcon } from '@polkadot-cloud/react';
-import { useTheme } from 'contexts/Themes';
+import { Polkicon } from '@polkadot-cloud/react';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';
 import type { PoolIdentityProps } from '../types';
 
@@ -14,7 +13,6 @@ export const PoolIdentity = ({
   batchIndex,
 }: PoolIdentityProps) => {
   const { meta } = useBondedPools();
-  const { mode } = useTheme();
   const { addresses } = pool;
 
   // get metadata from pools metabatch
@@ -28,12 +26,7 @@ export const PoolIdentity = ({
 
   return (
     <IdentityWrapper className="identity">
-      <PolkadotIcon
-        dark={mode === 'dark'}
-        nocopy
-        address={addresses.stash}
-        size={26}
-      />
+      <Polkicon address={addresses.stash} size="2rem" />
       <div className="inner">
         {!metadataSynced ? (
           <h4>{ellipsisFn(addresses.stash)}</h4>

@@ -7,8 +7,7 @@ import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
-import { PolkadotIcon } from '@polkadot-cloud/react';
-import { useTheme } from 'contexts/Themes';
+import { Polkicon } from '@polkadot-cloud/react';
 import { Wrapper } from './Wrapper';
 import type { AccountProps } from './types';
 
@@ -24,7 +23,6 @@ export const Account = ({
 }: AccountProps) => {
   const { t } = useTranslation('library');
   const { getAccount } = useConnect();
-  const { mode } = useTheme();
 
   const [displayValue, setDisplayValue] = useState<string | undefined>();
 
@@ -70,12 +68,7 @@ export const Account = ({
         <>
           {format !== 'text' && (
             <span className="identicon">
-              <PolkadotIcon
-                dark={mode === 'dark'}
-                nocopy
-                address={value}
-                size={remToUnit(fontSize) * 1.4}
-              />
+              <Polkicon address={value} size={remToUnit(fontSize) * 1.4} />
             </span>
           )}
           <span className="title">{displayValue}</span>

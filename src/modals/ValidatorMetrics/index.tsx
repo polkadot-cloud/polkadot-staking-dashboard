@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonHelp, ModalPadding, PolkadotIcon } from '@polkadot-cloud/react';
+import { ButtonHelp, ModalPadding, Polkicon } from '@polkadot-cloud/react';
 import { ellipsisFn, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState, useRef } from 'react';
@@ -21,7 +21,6 @@ import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useTheme } from 'contexts/Themes';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');
@@ -36,7 +35,6 @@ export const ValidatorMetrics = () => {
     eraStakers: { stakers },
   } = useStaking();
   const { openHelp } = useHelp();
-  const { mode } = useTheme();
 
   // is the validator in the active era
   const validatorInEra = stakers.find((s) => s.address === address) || null;
@@ -83,12 +81,7 @@ export const ValidatorMetrics = () => {
     <>
       <Title title={t('validatorMetrics')} />
       <div className="header">
-        <PolkadotIcon
-          dark={mode === 'dark'}
-          nocopy
-          address={address}
-          size={33}
-        />
+        <Polkicon address={address} size={33} />
         <h2>
           &nbsp;&nbsp;
           {identity === null ? ellipsisFn(address) : identity}
