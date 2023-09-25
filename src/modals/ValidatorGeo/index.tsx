@@ -118,7 +118,7 @@ export const ValidatorGeo = () => {
               }}
             >
               <GeoDonut
-                title="Rewards"
+                title={t('rewards')}
                 series={pwData.topCountryDistributionChart}
                 height={`${height}px`}
                 width={chartWidth}
@@ -132,7 +132,7 @@ export const ValidatorGeo = () => {
                 }}
               >
                 <GeoDonut
-                  title="Rewards"
+                  title={t('rewards')}
                   series={pwData.topNetworkDistributionChart}
                   height={`${height}px`}
                   width={chartWidth}
