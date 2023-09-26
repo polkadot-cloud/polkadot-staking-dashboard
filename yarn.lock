@@ -1482,15 +1482,6 @@
     framer-motion "^10.15.0"
     react-error-boundary "^4.0.11"
 
-"@polkadot-cloud/utils@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/utils/-/utils-0.0.13.tgz#c32b60145f80edd3cfbbfbaa25f3a716fc43c6b1"
-  integrity sha512-fqM2bEwEbok0/3yN1TUy40dhJn4FAilRN0b/Jl2p0C9FAxcTbUUMYE5aKPBEf4KdqxqVNamLIpYpCgdMIGM88Q==
-  dependencies:
-    "@polkadot/keyring" "^12.5.1"
-    "@polkadot/util" "^12.5.1"
-    bignumber.js "^9.1.1"
-
 "@polkadot-cloud/utils@^0.0.15":
   version "0.0.15"
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/utils/-/utils-0.0.15.tgz#cd89e406e0dc9ab4b912830122c541d3dc853f0f"
@@ -2249,7 +2240,7 @@
   resolved "https://registry.yarnpkg.com/@types/trusted-types/-/trusted-types-2.0.4.tgz#2b38784cd16957d3782e8e2b31c03bc1d13b4d65"
   integrity sha512-IDaobHimLQhjwsQ/NMwRVfa/yL7L/wriQPMhw1ZJall0KX6E1oxk29XMDeilW5qTIg5aoiqf5Udy8U/51aNoQQ==
 
-"@typescript-eslint/eslint-plugin@^6.7.2":
+"@typescript-eslint/eslint-plugin@^6.7.3":
   version "6.7.3"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-6.7.3.tgz#d98046e9f7102d49a93d944d413c6055c47fafd7"
   integrity sha512-vntq452UHNltxsaaN+L9WyuMch8bMd9CqJ3zhzTPXXidwbf5mqqKCVXEuvRZUqLJSTLeWE65lQwyXsRGnXkCTA==
@@ -2266,7 +2257,7 @@
     semver "^7.5.4"
     ts-api-utils "^1.0.1"
 
-"@typescript-eslint/parser@^6.7.2":
+"@typescript-eslint/parser@^6.7.3":
   version "6.7.3"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-6.7.3.tgz#aaf40092a32877439e5957e18f2d6a91c82cc2fd"
   integrity sha512-TlutE+iep2o7R8Lf+yoer3zU6/0EAUc8QIBB3GYBc1KGz4c4TRm83xwXUZVPlZ6YCLss4r77jbu6j3sendJoiQ==
@@ -2334,7 +2325,7 @@
     "@typescript-eslint/types" "6.7.3"
     eslint-visitor-keys "^3.4.1"
 
-"@vitejs/plugin-react-swc@^3.3.2":
+"@vitejs/plugin-react-swc@^3.4.0":
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/@vitejs/plugin-react-swc/-/plugin-react-swc-3.4.0.tgz#53ca6a07423abadec92f967e188d5ba49b350830"
   integrity sha512-m7UaA4Uvz82N/0EOVpZL4XsFIakRqrFKeSNxa1FBLSXGvWrWRBwmZb4qxk+ZIVAZcW3c3dn5YosomDgx62XWcQ==
@@ -2664,9 +2655,9 @@ binary-extensions@^2.0.0:
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
 
-"bip32-ed25519@git+https://github.com/Zondax/bip32-ed25519.git":
+"bip32-ed25519@https://github.com/Zondax/bip32-ed25519":
   version "0.0.4"
-  resolved "git+https://github.com/Zondax/bip32-ed25519.git#0949df01b5c93885339bc28116690292088f6134"
+  resolved "https://github.com/Zondax/bip32-ed25519#0949df01b5c93885339bc28116690292088f6134"
   dependencies:
     bn.js "^5.1.1"
     elliptic "^6.4.1"
