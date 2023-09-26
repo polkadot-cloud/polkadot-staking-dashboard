@@ -56,7 +56,7 @@ export const GeoDonut = ({
                 chart
               );
             return ls.map((l) => {
-              l.text = ellipsisFn(l.text, labelTotal > 30 ? 10 : 20, 'right');
+              l.text = ellipsisFn(l.text, labelTotal > 30 ? 13 : 23, 'end');
               return l;
             });
           },
