@@ -1465,10 +1465,10 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-0.1.35.tgz#3bb4c5f34c33903ea6a3894e619f8f45c7b8f3f0"
   integrity sha512-LsRlOQD3vNOvnCO9GaTQX0iISmiGEL4mlUJRkyh9lPWhPYBw3dwnEFCRMJS4lEE8bz/5CTX+D96GgR2RMz75Bw==
 
-"@polkadot-cloud/react@^0.1.58":
-  version "0.1.58"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.58.tgz#09d852cfc224c6020ec9464d794889b302ba4120"
-  integrity sha512-LFg7PfC5VyiRVuG5F38gyvBIxqtKEAX5biG330zE9fyUYToVVirrgbmhGMKAmBwRZXKef1RZQ2XlMNSushMbVQ==
+"@polkadot-cloud/react@^0.1.61":
+  version "0.1.61"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.61.tgz#36308355a4f66b032a7f70647d2c706c6e64985e"
+  integrity sha512-+hVrtAhx/QoKczVdSWG5dSUrEZMi/2IcxDllPqi50h9XDBWQ6/HHlnN4T2qYBkJRX65iZ6GoYkye1ZtSYPgPoA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.4.2"
     "@fortawesome/free-brands-svg-icons" "^6.4.2"
