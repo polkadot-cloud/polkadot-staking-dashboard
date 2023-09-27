@@ -64,7 +64,7 @@
     "@types/react": "^18.2.23",
     "@types/react-dom": "^18.2.7",
     "@types/react-helmet": "^6.1.6",
-    "@types/react-qr-reader": "^2.1.4",
+    "@types/react-qr-reader": "^2.1.5",
     "@types/react-scroll": "^1.8.8",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "@typescript-eslint/parser": "^6.7.3",
