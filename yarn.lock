@@ -1061,7 +1061,7 @@
     "@babel/helper-validator-identifier" "^7.22.20"
     to-fast-properties "^2.0.0"
 
-"@dotlottie/player-component@^2.6.0":
+"@dotlottie/player-component@^2.7.0":
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/@dotlottie/player-component/-/player-component-2.7.0.tgz#b7f5edfa9a54a0d99eb5cd85b94f0aebcd9270b3"
   integrity sha512-UZiBEViLVSjXGRZKHgFDRAFHettwKWJgh3eBriGY4ljNfaKxbItx/+KWVpUgPQxDGmIQt1ouMyDeQEZGwonCjQ==
@@ -1944,10 +1944,10 @@
     eventemitter3 "^4.0.7"
     smoldot "1.0.4"
 
-"@substrate/connect@^0.7.31":
-  version "0.7.32"
-  resolved "https://registry.yarnpkg.com/@substrate/connect/-/connect-0.7.32.tgz#a556ca0f5de568c64f9a9ebd7a7aabf515f7a64b"
-  integrity sha512-CdudmCTjYIYp9WufFdRZOxUE3zWxm3eXZpFqylETY2cuaLZrWBHDIyHyUm59fadEbZaezKW8iAs+4VZbx7ItqA==
+"@substrate/connect@^0.7.33":
+  version "0.7.33"
+  resolved "https://registry.yarnpkg.com/@substrate/connect/-/connect-0.7.33.tgz#6fa309557b5b45cb918f5f4fe25a356384de9808"
+  integrity sha512-1B984/bmXVQvTT9oV3c3b7215lvWmulP9rfP3T3Ri+OU3uIsyCzYw0A+XG6J8/jgO2FnroeNIBWlgoLaUM1uzw==
   dependencies:
     "@substrate/connect-extension-protocol" "^1.0.1"
     smoldot "2.0.1"
@@ -2211,7 +2211,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^18.2.22":
+"@types/react@*", "@types/react@^18.2.23":
   version "18.2.23"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.23.tgz#60ad6cf4895e93bed858db0e03bcc4ff97d0410e"
   integrity sha512-qHLW6n1q2+7KyBEYnrZpcsAmU/iiCh9WGCKgXvMxx89+TYdJWRjZohVIo9XTcoLhfX3+/hP0Pbulu3bCZQ9PSA==
