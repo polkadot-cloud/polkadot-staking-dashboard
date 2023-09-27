@@ -2197,10 +2197,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-qr-reader@^2.1.4":
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/@types/react-qr-reader/-/react-qr-reader-2.1.4.tgz#a36f0b83b4402e26c4217d0e8af6b5e2887fc749"
-  integrity sha512-2Hq+UNfsO2TVqxbFlOE0gGhQr/+C4wdgNDaaLV8K93mK/Z7Vw2D3YbMlnJAaSzM45fUtYJs0vc48wV04+OEkiA==
+"@types/react-qr-reader@^2.1.5":
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/@types/react-qr-reader/-/react-qr-reader-2.1.5.tgz#933351729b01f61ab7700fec3ed3f78737ed08a1"
+  integrity sha512-a21g42lQkBKr87zS0idEkTsnVB/UObQol9RcB7YTkLokz3bwwDVJqnXaOliITIAfZtQAYpsPAj08Mb9G2U8K4A==
   dependencies:
     "@types/react" "*"
 
