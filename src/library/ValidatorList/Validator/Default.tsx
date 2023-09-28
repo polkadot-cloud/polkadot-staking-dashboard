@@ -22,6 +22,7 @@ import {
   Wrapper,
 } from 'library/ListItem/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { usePlugins } from 'contexts/Plugins';
 import { useValidators } from '../../../contexts/Validators/ValidatorEntries';
 import { useList } from '../../List/context';
 import { Blocked } from '../../ListItem/Labels/Blocked';
@@ -44,6 +45,7 @@ export const Default = ({
   const { selectActive } = useList();
   const { openModal } = useOverlay().modal;
   const { addNotification } = useNotifications();
+  const { pluginEnabled } = usePlugins();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
   const { validatorIdentities, validatorSupers } = useValidators();
 
@@ -81,7 +83,10 @@ export const Default = ({
         });
       },
     },
-    {
+  ];
+
+  if (pluginEnabled('polkawatch')) {
+    menuItems.push({
       icon: <FontAwesomeIcon icon={faGlobe} transform="shrink-3" />,
       wrap: null,
       title: `${t('viewDecentralization')}`,
@@ -94,19 +99,20 @@ export const Default = ({
           },
         });
       },
+    });
+  }
+
+  menuItems.push({
+    icon: <FontAwesomeIcon icon={faCopy} transform="shrink-3" />,
+    wrap: null,
+    title: `${t('copyAddress')}`,
+    cb: () => {
+      navigator.clipboard.writeText(address);
+      if (notificationCopyAddress) {
+        addNotification(notificationCopyAddress);
+      }
     },
-    {
-      icon: <FontAwesomeIcon icon={faCopy} transform="shrink-3" />,
-      wrap: null,
-      title: `${t('copyAddress')}`,
-      cb: () => {
-        navigator.clipboard.writeText(address);
-        if (notificationCopyAddress) {
-          addNotification(notificationCopyAddress);
-        }
-      },
-    },
-  ];
+  });
 
   const toggleMenu = () => {
     if (!open) {
