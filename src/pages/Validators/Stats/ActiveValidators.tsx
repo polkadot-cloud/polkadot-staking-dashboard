@@ -31,8 +31,7 @@ export const ActiveValidatorsStat = () => {
     },
     graph: {
       value1: activeValidators,
-      // Force a value of at least 1 so the pie chart displays its inactive color.
-      value2: Math.max(validatorCount.minus(activeValidators).toNumber(), 1),
+      value2: validatorCount.minus(activeValidators).toNumber(),
     },
     tooltip: `${activeValidatorsAsPercent.decimalPlaces(2).toFormat()}%`,
     helpKey: 'Active Validator',
