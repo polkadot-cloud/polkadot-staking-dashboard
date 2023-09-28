@@ -28,10 +28,7 @@ export const GeoDonut = ({
     : colors.primary[mode];
 
   const total = data.reduce((acc: number, value: number) => acc + value, 0);
-  const labelTotal = labels.reduce(
-    (acc: number, label: string) => acc + label.length,
-    0
-  );
+
   data = data.map((value: number) => (value / total) * 100);
 
   const options = {
@@ -56,7 +53,7 @@ export const GeoDonut = ({
                 chart
               );
             return ls.map((l) => {
-              l.text = ellipsize(l.text, labelTotal);
+              l.text = ellipsisFn(l.text, undefined, 'end');
               return l;
             });
           },
@@ -92,21 +89,4 @@ export const GeoDonut = ({
       <Doughnut options={options} data={chartData} />
     </div>
   );
-};
-
-/**
- * Depending on how much text we need to display in the legend it may be needed to cut the labels more or less.
- * This function reuses polkadot ellipsize function to achieve that purpose when required.
- * @param str the string to adjust
- * @param labelTotal
- */
-const ellipsize = (str: string, labelTotal: number) => {
-  // The maximum we can afford to present
-  const maxLength = labelTotal > 30 ? 10 : 20;
-
-  // We may not need to ellipsize in some cases
-  if (str.length <= maxLength) return str;
-
-  // Note that this function will add 3 characters '...'
-  return ellipsisFn(str, maxLength - 3, 'end');
 };
