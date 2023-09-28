@@ -29,11 +29,6 @@ export interface PayoutLineProps {
   background?: string;
 }
 
-export interface StatPieProps {
-  value: number;
-  value2: number;
-}
-
 export interface CardHeaderWrapperProps {
   $withAction?: boolean;
 }
