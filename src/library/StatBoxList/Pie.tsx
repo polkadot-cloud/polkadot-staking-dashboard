@@ -41,7 +41,7 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
               },
             ]}
             diameter={34}
-            speed={0.7}
+            speed={2}
           />
           {tooltip ? (
             <div className="tooltip">

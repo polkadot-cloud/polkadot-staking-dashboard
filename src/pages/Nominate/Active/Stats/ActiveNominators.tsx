@@ -29,7 +29,11 @@ export const ActiveNominatorsStat = () => {
     },
     graph: {
       value1: totalActiveNominators,
-      value2: maxElectingVoters.minus(totalActiveNominators).toNumber(),
+      // Force a value of at least 1 so the pie chart displays its inactive color.
+      value2: Math.max(
+        maxElectingVoters.minus(totalActiveNominators).toNumber(),
+        1
+      ),
     },
     tooltip: `${new BigNumber(totalNominatorsAsPercent)
       .decimalPlaces(2)
