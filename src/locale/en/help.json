@@ -344,6 +344,13 @@
           "In this scenario, \"None\" is displayed under the \"Reserve For Existential Deposit\" section in your Reserve Balance settings."
         ]
       ],
+      "rewardsByCountryAndNetwork": [
+        "Rewards By Country And Network",
+        [
+          "Shows the estimated percentage of rewards that are generated from different countries and IP networks.",
+          "Polkawatch decentralization analytics are computed by aggregating rewards by the IP Geolocation of the Validator. The sample period is the last 60 days."
+        ]
+      ],
       "selfStake": [
         "Self Stake",
         [

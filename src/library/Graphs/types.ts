@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
-import type { AnySubscan } from 'types';
+import type { AnyPolkawatch, AnySubscan } from 'types';
 
 export interface BondedProps {
   active: BigNumber;
@@ -40,4 +40,11 @@ export interface CardWrapperProps {
 export interface PayoutDayCursor {
   amount: BigNumber;
   event_id: string;
+}
+
+export interface GeoDonutProps {
+  title: string;
+  series: AnyPolkawatch;
+  width?: string | number;
+  height?: string | number;
 }

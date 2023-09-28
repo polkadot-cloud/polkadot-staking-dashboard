@@ -32,7 +32,7 @@ export const TipsThresholdMedium = 1200;
 /*
  * Available plugins
  */
-export const PluginsList = ['subscan', 'binance_spot', 'tips'];
+export const PluginsList = ['subscan', 'binance_spot', 'tips', 'polkawatch'];
 
 /*
  * Fallback config values

@@ -2,7 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
-import { faBars, faChartLine } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBars,
+  faChartLine,
+  faGlobe,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +22,7 @@ import {
   Wrapper,
 } from 'library/ListItem/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { usePlugins } from 'contexts/Plugins';
 import { useValidators } from '../../../contexts/Validators/ValidatorEntries';
 import { useList } from '../../List/context';
 import { Blocked } from '../../ListItem/Labels/Blocked';
@@ -40,6 +45,7 @@ export const Default = ({
   const { selectActive } = useList();
   const { openModal } = useOverlay().modal;
   const { addNotification } = useNotifications();
+  const { pluginEnabled } = usePlugins();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
   const { validatorIdentities, validatorSupers } = useValidators();
 
@@ -77,18 +83,36 @@ export const Default = ({
         });
       },
     },
-    {
-      icon: <FontAwesomeIcon icon={faCopy} transform="shrink-3" />,
-      wrap: null,
-      title: `${t('copyAddress')}`,
-      cb: () => {
-        navigator.clipboard.writeText(address);
-        if (notificationCopyAddress) {
-          addNotification(notificationCopyAddress);
-        }
-      },
-    },
   ];
+
+  if (pluginEnabled('polkawatch')) {
+    menuItems.push({
+      icon: <FontAwesomeIcon icon={faGlobe} transform="shrink-3" />,
+      wrap: null,
+      title: `${t('viewDecentralization')}`,
+      cb: () => {
+        openModal({
+          key: 'ValidatorGeo',
+          options: {
+            address,
+            identity,
+          },
+        });
+      },
+    });
+  }
+
+  menuItems.push({
+    icon: <FontAwesomeIcon icon={faCopy} transform="shrink-3" />,
+    wrap: null,
+    title: `${t('copyAddress')}`,
+    cb: () => {
+      navigator.clipboard.writeText(address);
+      if (notificationCopyAddress) {
+        addNotification(notificationCopyAddress);
+      }
+    },
+  });
 
   const toggleMenu = () => {
     if (!open) {

@@ -111,3 +111,5 @@ export type AnyFunction = any;
 export type AnyMetaBatch = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnySubscan = any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type AnyPolkawatch = any;

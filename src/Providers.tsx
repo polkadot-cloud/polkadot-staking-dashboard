@@ -38,6 +38,7 @@ import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidato
 import { withProviders } from 'library/Hooks';
 import { PayoutsProvider } from 'contexts/Payouts';
 import { OverlayProvider } from '@polkadot-cloud/react';
+import { PolkawatchProvider } from './contexts/Plugins/Polkawatch';
 
 // !! Provider order matters.
 export const Providers = withProviders(
@@ -52,6 +53,7 @@ export const Providers = withProviders(
   HelpProvider,
   NetworkMetricsProvider,
   SubscanProvider,
+  PolkawatchProvider,
   IdentitiesProvider,
   ProxiesProvider,
   BalancesProvider,
