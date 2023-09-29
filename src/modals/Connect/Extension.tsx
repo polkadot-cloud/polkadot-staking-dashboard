@@ -7,16 +7,16 @@ import { ModalConnectItem } from '@polkadot-cloud/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
-import { useExtensions } from 'contexts/Extensions';
+import { useExtensions } from '@polkadot-cloud/react/hooks';
 import { useNotifications } from 'contexts/Notifications';
 import { ExtensionInner } from './Wrappers';
 import type { ExtensionProps } from './types';
 
 export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const { t } = useTranslation('modals');
-  const { extensions, extensionsStatus } = useExtensions();
-  const { connectExtensionAccounts } = useConnect();
   const { addNotification } = useNotifications();
+  const { connectExtensionAccounts } = useConnect();
+  const { extensions, extensionsStatus } = useExtensions();
   const { title, Icon, website } = meta;
 
   const { id } = meta;
@@ -48,18 +48,16 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   // click to connect to extension
   const handleClick = async () => {
     if (status !== 'connected' && extension) {
-      (async () => {
-        const connected = await connectExtensionAccounts(extension);
-        // force re-render to display error messages
-        setIncrement(increment + 1);
+      const connected = await connectExtensionAccounts(extension);
+      // force re-render to display error messages
+      setIncrement(increment + 1);
 
-        if (connected) {
-          addNotification({
-            title: t('extensionConnected'),
-            subtitle: `${t('titleExtensionConnected', { title })}`,
-          });
-        }
-      })();
+      if (connected) {
+        addNotification({
+          title: t('extensionConnected'),
+          subtitle: `${t('titleExtensionConnected', { title })}`,
+        });
+      }
     }
   };
 
@@ -68,16 +66,12 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
       <ExtensionInner>
         <div>
           <div className="body">
-            {!(disabled || status === 'connected') ? (
+            {!disabled ? (
               <button
                 type="button"
                 className="button"
                 disabled={disabled}
-                onClick={() => {
-                  if (status !== 'connected') {
-                    handleClick();
-                  }
-                }}
+                onClick={() => handleClick()}
               >
                 &nbsp;
               </button>

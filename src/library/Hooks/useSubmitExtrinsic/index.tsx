@@ -8,7 +8,7 @@ import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { manualSigners } from 'contexts/Connect/Utils';
-import { useExtensions } from 'contexts/Extensions';
+import { useExtensions } from '@polkadot-cloud/react/hooks';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useNotifications } from 'contexts/Notifications';

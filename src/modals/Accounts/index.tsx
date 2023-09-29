@@ -14,13 +14,13 @@ import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import { useExtensions } from 'contexts/Extensions';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { useProxies } from 'contexts/Proxies';
 import {
+  useExtensions,
   useEffectIgnoreInitial,
   useOverlay,
 } from '@polkadot-cloud/react/hooks';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useProxies } from 'contexts/Proxies';
 import { AccountButton } from './Account';
 import { Delegates } from './Delegates';
 import { AccountSeparator, AccountWrapper } from './Wrappers';

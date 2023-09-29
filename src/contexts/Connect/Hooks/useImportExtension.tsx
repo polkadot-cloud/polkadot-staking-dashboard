@@ -4,11 +4,11 @@
 import Keyring from '@polkadot/keyring';
 import { isValidAddress } from '@polkadot-cloud/utils';
 import { useApi } from 'contexts/Api';
-import { useExtensions } from 'contexts/Extensions';
+import { useExtensions } from '@polkadot-cloud/react/hooks';
 import type {
   ExtensionAccount,
   ExtensionInterface,
-} from 'contexts/Extensions/types';
+} from '@polkadot-cloud/react/connect/ExtensionsProvider/types';
 import type { AnyFunction } from 'types';
 import {
   addToLocalExtensions,
