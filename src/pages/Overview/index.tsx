@@ -17,10 +17,10 @@ import { useSubscan } from 'contexts/Plugins/Subscan';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
 import { StatBoxList } from 'library/StatBoxList';
-import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
 import { ControllerNotStash } from 'pages/Nominate/Active/ControllerNotStash';
 import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
+import { PluginButton } from 'library/PluginButton';
 import { ActiveAccounts } from './ActiveAccounts';
 import { BalanceChart } from './BalanceChart';
 import { BalanceLinks } from './BalanceLinks';
@@ -89,7 +89,7 @@ export const Overview = () => {
         </RowSection>
         <RowSection hLast vLast>
           <CardWrapper style={{ minHeight: PAYOUTS_HEIGHT }}>
-            <SubscanButton />
+            <PluginButton plugin="subscan" />
             <CardHeaderWrapper>
               <h4>{t('overview.recentPayouts')}</h4>
               <h2>

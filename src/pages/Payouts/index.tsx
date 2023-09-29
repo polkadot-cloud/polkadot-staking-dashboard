@@ -18,8 +18,8 @@ import { GraphWrapper } from 'library/Graphs/Wrapper';
 import { useSize } from 'library/Hooks/useSize';
 import { StatBoxList } from 'library/StatBoxList';
 import { StatusLabel } from 'library/StatusLabel';
-import { SubscanButton } from 'library/SubscanButton';
 import type { AnySubscan, PageProps } from 'types';
+import { PluginButton } from 'library/PluginButton';
 import { PayoutList } from './PayoutList';
 import { LastEraPayoutStat } from './Stats/LastEraPayout';
 
@@ -53,7 +53,7 @@ export const Payouts = ({ page }: PageProps) => {
       </StatBoxList>
       <PageRow>
         <CardWrapper>
-          <SubscanButton />
+          <PluginButton plugin="subscan" />
           <CardHeaderWrapper>
             <h4>
               {t('payouts.payoutHistory', { ns: 'pages' })}

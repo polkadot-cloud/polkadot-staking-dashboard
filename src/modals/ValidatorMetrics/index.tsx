@@ -19,8 +19,8 @@ import { useSize } from 'library/Hooks/useSize';
 import { Title } from 'library/Modal/Title';
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { StatusLabel } from 'library/StatusLabel';
-import { SubscanButton } from 'library/SubscanButton';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { PluginButton } from 'library/PluginButton';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');
@@ -107,7 +107,7 @@ export const ValidatorMetrics = () => {
         className="body"
         style={{ position: 'relative', marginTop: '0.5rem' }}
       >
-        <SubscanButton />
+        <PluginButton plugin="subscan" />
         <CardWrapper
           className="transparent"
           style={{
