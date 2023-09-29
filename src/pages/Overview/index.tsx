@@ -13,7 +13,7 @@ import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { DefaultLocale } from 'consts';
 import { useApi } from 'contexts/Api';
-import { useSubscan } from 'contexts/Subscan';
+import { useSubscan } from 'contexts/Plugins/Subscan';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
 import { StatBoxList } from 'library/StatBoxList';

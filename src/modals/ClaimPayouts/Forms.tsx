@@ -20,7 +20,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useBatchCall } from 'library/Hooks/useBatchCall';
 import type { AnyApi, AnySubscan } from 'types';
-import { useSubscan } from 'contexts/Subscan';
+import { useSubscan } from 'contexts/Plugins/Subscan';
 import { usePayouts } from 'contexts/Payouts';
 import type { FormProps, ActivePayout } from './types';
 import { ContentWrapper } from './Wrappers';

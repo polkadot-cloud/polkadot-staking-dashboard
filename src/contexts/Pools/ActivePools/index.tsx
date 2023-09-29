@@ -12,7 +12,7 @@ import type {
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
-import { useSubscan } from 'contexts/Subscan';
+import { useSubscan } from 'contexts/Plugins/Subscan';
 import { usePlugins } from 'contexts/Plugins';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';

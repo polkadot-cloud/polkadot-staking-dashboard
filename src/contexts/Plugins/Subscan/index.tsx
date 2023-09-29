@@ -17,9 +17,9 @@ import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { locales } from 'locale';
 import type { AnyApi, AnySubscan } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
-import { useApi } from '../Api';
-import { useConnect } from '../Connect';
-import { usePlugins } from '../Plugins';
+import { useApi } from '../../Api';
+import { useConnect } from '../../Connect';
+import { usePlugins } from '..';
 import { defaultSubscanContext } from './defaults';
 import type { SubscanContextInterface } from './types';
 

@@ -8,7 +8,7 @@ import { MaxPayoutDays } from 'consts';
 import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
-import { useSubscan } from 'contexts/Subscan';
+import { useSubscan } from 'contexts/Plugins/Subscan';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
