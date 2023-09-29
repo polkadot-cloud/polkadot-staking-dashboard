@@ -24,24 +24,18 @@ export const Settings = () => {
           <StatusButton
             checked={plugins.includes('subscan')}
             label="Subscan API"
-            onClick={() => {
-              togglePlugin('subscan');
-            }}
+            onClick={() => togglePlugin('subscan')}
           />
           <StatusButton
             checked={plugins.includes('polkawatch')}
             label="Polkawatch API"
-            onClick={() => {
-              togglePlugin('polkawatch');
-            }}
+            onClick={() => togglePlugin('polkawatch')}
           />
           {!DISABLE_FIAT && (
             <StatusButton
               checked={plugins.includes('binance_spot')}
               label={t('binanceApi')}
-              onClick={() => {
-                togglePlugin('binance_spot');
-              }}
+              onClick={() => togglePlugin('binance_spot')}
             />
           )}
 
@@ -50,9 +44,7 @@ export const Settings = () => {
           <StatusButton
             checked={plugins.includes('tips')}
             label={t('dashboardTips')}
-            onClick={() => {
-              togglePlugin('tips');
-            }}
+            onClick={() => togglePlugin('tips')}
           />
         </ContentWrapper>
       </ModalPadding>

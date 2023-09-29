@@ -3,6 +3,7 @@
 
 import { stringToU8a } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
+import type { Plugin } from 'types';
 
 /*
  * Global Constants
@@ -32,7 +33,12 @@ export const TipsThresholdMedium = 1200;
 /*
  * Available plugins
  */
-export const PluginsList = ['subscan', 'binance_spot', 'tips', 'polkawatch'];
+export const PluginsList: Plugin[] = [
+  'subscan',
+  'binance_spot',
+  'tips',
+  'polkawatch',
+];
 
 /*
  * Fallback config values

@@ -8,7 +8,7 @@ import { useApi } from '../../Api';
 import type { NetworkName } from '../../../types';
 import type { PolkawatchState } from './types';
 import { DefaultNetwork } from '../../../consts';
-import { POLKAWATCH_API_VERSION, POLKAWATCH_NETWORKS } from './defaults';
+import { PolkaWatchApiVersion, PolkaWatchNetworks } from './defaults';
 
 /**
  * This is the Polkawatch API provider, which builds polkawatch API depending on the Chain that is currently
@@ -26,22 +26,15 @@ const apiConfiguration = (
     'network',
     DefaultNetwork
   ) as NetworkName,
-  version = POLKAWATCH_API_VERSION
-): Configuration => {
-  return new Configuration({
+  version = PolkaWatchApiVersion
+): Configuration =>
+  new Configuration({
     basePath: `https://${name}-${version}-api.polkawatch.app`,
   });
-};
 
 const PolkawatchInitialState = {
   pwApi: new PolkawatchApi(apiConfiguration()),
   networkSupported: true,
-};
-
-const PolkawatchContext = createContext(PolkawatchInitialState);
-
-export const usePolkawatchApi = () => {
-  return useContext(PolkawatchContext);
 };
 
 export const PolkawatchProvider = ({
@@ -49,18 +42,18 @@ export const PolkawatchProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [state, setState] = useState<PolkawatchState>(PolkawatchInitialState);
   const { name } = useApi().network;
 
+  const [state, setState] = useState<PolkawatchState>(PolkawatchInitialState);
+
   /**
-   * We update the API object when another network is selected.
-   * The api Object is stateless, there is no network or computational
-   * cost involved in creating a new API.
+   * We update the API object when another network is selected. The api Object is stateless, there
+   * is no network or computational cost involved in creating a new API.
    */
   useEffect(() => {
     setState({
       pwApi: new PolkawatchApi(apiConfiguration(name)),
-      networkSupported: POLKAWATCH_NETWORKS.includes(name),
+      networkSupported: PolkaWatchNetworks.includes(name),
     });
   }, [name]);
 
@@ -70,3 +63,9 @@ export const PolkawatchProvider = ({
     </PolkawatchContext.Provider>
   );
 };
+
+const PolkawatchContext = createContext<PolkawatchState>(
+  PolkawatchInitialState
+);
+
+export const usePolkawatchApi = () => useContext(PolkawatchContext);
