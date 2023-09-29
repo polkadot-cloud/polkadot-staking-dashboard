@@ -17,17 +17,19 @@ import type {
   ExternalAccount,
   ImportedAccount,
 } from 'contexts/Connect/types';
-import { useExtensions } from 'contexts/Extensions';
-import type {
-  ExtensionInjected,
-  ExtensionInterface,
-} from 'contexts/Extensions/types';
+import {
+  useExtensions,
+  useEffectIgnoreInitial,
+} from '@polkadot-cloud/react/hooks';
 import {
   getLocalLedgerAccounts,
   getLocalVaultAccounts,
 } from 'contexts/Hardware/Utils';
 import type { AnyApi, MaybeAccount, NetworkName } from 'types';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import type {
+  ExtensionInjected,
+  ExtensionInterface,
+} from '@polkadot-cloud/react/connect/ExtensionsProvider/types';
 import { useImportExtension } from './Hooks/useImportExtension';
 import {
   extensionIsLocal,
@@ -45,18 +47,17 @@ export const ConnectProvider = ({
   children: React.ReactNode;
 }) => {
   const { network } = useApi();
-  const {
-    checkingInjectedWeb3,
-    setExtensionStatus,
-    extensionsFetched,
-    setExtensionsFetched,
-    extensions,
-  } = useExtensions();
+  const { checkingInjectedWeb3, extensions, setExtensionStatus } =
+    useExtensions();
   const {
     handleImportExtension,
     getActiveExtensionAccount,
     connectActiveExtensionAccount,
   } = useImportExtension();
+
+  // store whether extension accounts have been synced.
+  const [extensionAccountsSynced, setExtensionAccountsSynced] =
+    useState<boolean>(false);
 
   // store accounts list
   const [accounts, setAccounts] = useState<ImportedAccount[]>([]);
@@ -114,7 +115,7 @@ export const ConnectProvider = ({
       setStateWithRef(null, setActiveAccountState, activeAccountRef);
       setStateWithRef([], setAccounts, accountsRef);
       setStateWithRef([], setExtensionsInitialised, extensionsInitialisedRef);
-      setExtensionsFetched(false);
+      setExtensionAccountsSynced(false);
 
       // if extensions have been fetched, get accounts if extensions exist and
       // local extensions exist (previously connected).
@@ -129,7 +130,7 @@ export const ConnectProvider = ({
         if (extensions.length && localExtensions.length) {
           connectActiveExtensions();
         } else {
-          setExtensionsFetched(true);
+          setExtensionAccountsSynced(true);
         }
       }
     }
@@ -144,13 +145,13 @@ export const ConnectProvider = ({
         extensionsInitialisedRef.current.length === extensions?.length) ||
       0
     ) {
-      setExtensionsFetched(true);
+      setExtensionAccountsSynced(true);
     }
   }, [checkingInjectedWeb3, extensionsInitialisedRef.current]);
 
   // Once extensions are fully initialised, fetch accounts from other sources.
   useEffectIgnoreInitial(() => {
-    if (extensionsFetched) {
+    if (extensionAccountsSynced) {
       // Fetch accounts from supported hardware wallets.
       importLocalAccounts(getLocalVaultAccounts);
       importLocalAccounts(getLocalLedgerAccounts);
@@ -158,14 +159,14 @@ export const ConnectProvider = ({
       // Finally, fetch any read-only accounts that have been added by `system` or `user`.
       importLocalAccounts(getLocalExternalAccounts);
     }
-  }, [extensionsFetched]);
+  }, [extensionAccountsSynced]);
 
   // Account fetching complete, mark accounts as initialised. Does not include read only accounts.
   useEffectIgnoreInitial(() => {
-    if (extensionsFetched && hardwareInitialisedRef.current === true) {
+    if (extensionAccountsSynced && hardwareInitialisedRef.current === true) {
       accountsInitialisedRef.current = true;
     }
-  }, [extensionsFetched, hardwareInitialisedRef.current]);
+  }, [extensionAccountsSynced, hardwareInitialisedRef.current]);
 
   // Unsubscrbe all account subscriptions.
   const unsubscribe = () => {

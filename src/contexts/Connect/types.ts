@@ -4,7 +4,7 @@
 import type {
   ExtensionAccount,
   ExtensionInjected,
-} from 'contexts/Extensions/types';
+} from '@polkadot-cloud/react/connect/ExtensionsProvider/types';
 import type { MaybeAccount } from 'types';
 
 export interface ConnectContextInterface {

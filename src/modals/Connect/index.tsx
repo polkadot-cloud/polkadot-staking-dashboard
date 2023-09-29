@@ -15,14 +15,14 @@ import {
 import { ExtensionsArray } from '@polkadot-cloud/assets/extensions';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useExtensions } from 'contexts/Extensions';
-import { Close } from 'library/Modal/Close';
-import { SelectItems } from 'library/SelectItems';
-import type { AnyFunction } from 'types';
 import {
+  useExtensions,
   useEffectIgnoreInitial,
   useOverlay,
 } from '@polkadot-cloud/react/hooks';
+import { Close } from 'library/Modal/Close';
+import { SelectItems } from 'library/SelectItems';
+import type { AnyFunction } from 'types';
 import { Extension } from './Extension';
 import { Ledger } from './Ledger';
 import { Proxies } from './Proxies';

@@ -6,7 +6,7 @@ import { APIProvider } from 'contexts/Api';
 import { BalancesProvider } from 'contexts/Balances';
 import { BondedProvider } from 'contexts/Bonded';
 import { ConnectProvider } from 'contexts/Connect';
-import { ExtensionsProvider } from 'contexts/Extensions';
+import { ExtensionsProvider, OverlayProvider } from '@polkadot-cloud/react';
 import { ExtrinsicsProvider } from 'contexts/Extrinsics';
 import { FastUnstakeProvider } from 'contexts/FastUnstake';
 import { FiltersProvider } from 'contexts/Filters';
@@ -37,15 +37,14 @@ import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries';
 import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidators';
 import { withProviders } from 'library/Hooks';
 import { PayoutsProvider } from 'contexts/Payouts';
-import { OverlayProvider } from '@polkadot-cloud/react';
 import { PolkawatchProvider } from './contexts/Plugins/Polkawatch';
 
 // !! Provider order matters.
 export const Providers = withProviders(
+  APIProvider,
   FiltersProvider,
   NotificationsProvider,
   PluginsProvider,
-  APIProvider,
   VaultHardwareProvider,
   LedgerHardwareProvider,
   ExtensionsProvider,
