@@ -6,9 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { usePlugins } from 'contexts/Plugins';
 import { capitalizeFirstLetter } from '@polkadot-cloud/utils';
 import { Wrapper } from './Wrapper';
-import type { PluginButtonProps } from './types';
+import type { PluginLabelProps } from './types';
 
-export const PluginButton = ({ plugin }: PluginButtonProps) => {
+export const PluginLabel = ({ plugin }: PluginLabelProps) => {
   const { plugins } = usePlugins();
 
   return (

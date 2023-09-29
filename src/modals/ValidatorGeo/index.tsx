@@ -15,8 +15,8 @@ import { Title } from 'library/Modal/Title';
 import { StatusLabel } from 'library/StatusLabel';
 import type { ValidatorDetail } from '@polkawatch/ddp-client';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { usePolkawatchApi } from '../../contexts/Plugins/Polkawatch';
-import { PluginButton } from '../../library/PluginButton';
+import { PluginLabel } from 'library/PluginLabel';
+import { usePolkawatchApi } from 'contexts/Plugins/Polkawatch';
 import { usePlugins } from '../../contexts/Plugins';
 
 export const ValidatorGeo = () => {
@@ -71,7 +71,7 @@ export const ValidatorGeo = () => {
         className="body"
         style={{ position: 'relative', marginTop: '0.5rem' }}
       >
-        <PluginButton plugin="polkawatch" />
+        <PluginLabel plugin="polkawatch" />
         <CardWrapper
           className="transparent"
           style={{

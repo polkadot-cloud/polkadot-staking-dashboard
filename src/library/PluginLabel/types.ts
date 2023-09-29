@@ -3,6 +3,6 @@
 
 import type { Plugin } from 'types';
 
-export interface PluginButtonProps {
+export interface PluginLabelProps {
   plugin: Plugin;
 }

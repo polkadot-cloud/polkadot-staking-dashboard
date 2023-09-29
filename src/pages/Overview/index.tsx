@@ -20,7 +20,7 @@ import { StatBoxList } from 'library/StatBoxList';
 import { locales } from 'locale';
 import { ControllerNotStash } from 'pages/Nominate/Active/ControllerNotStash';
 import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
-import { PluginButton } from 'library/PluginButton';
+import { PluginLabel } from 'library/PluginLabel';
 import { ActiveAccounts } from './ActiveAccounts';
 import { BalanceChart } from './BalanceChart';
 import { BalanceLinks } from './BalanceLinks';
@@ -89,7 +89,7 @@ export const Overview = () => {
         </RowSection>
         <RowSection hLast vLast>
           <CardWrapper style={{ minHeight: PAYOUTS_HEIGHT }}>
-            <PluginButton plugin="subscan" />
+            <PluginLabel plugin="subscan" />
             <CardHeaderWrapper>
               <h4>{t('overview.recentPayouts')}</h4>
               <h2>
