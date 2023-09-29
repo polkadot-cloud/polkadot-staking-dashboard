@@ -10,7 +10,7 @@ import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
-import { useSubscan } from 'contexts/Subscan';
+import { useSubscan } from 'contexts/Plugins/Subscan';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { EraPoints as EraPointsGraph } from 'library/Graphs/EraPoints';
 import { formatSize } from 'library/Graphs/Utils';
@@ -19,8 +19,8 @@ import { useSize } from 'library/Hooks/useSize';
 import { Title } from 'library/Modal/Title';
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { StatusLabel } from 'library/StatusLabel';
-import { SubscanButton } from 'library/SubscanButton';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { PluginLabel } from 'library/PluginLabel';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');
@@ -107,7 +107,7 @@ export const ValidatorMetrics = () => {
         className="body"
         style={{ position: 'relative', marginTop: '0.5rem' }}
       >
-        <SubscanButton />
+        <PluginLabel plugin="subscan" />
         <CardWrapper
           className="transparent"
           style={{

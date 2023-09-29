@@ -91,6 +91,9 @@ export type MaybeAccount = string | null;
 
 export type MaybeString = string | null;
 
+// list of available plugins.
+export type Plugin = 'subscan' | 'binance_spot' | 'tips' | 'polkawatch';
+
 // track the status of a syncing / fetching process.
 export type Sync = 'unsynced' | 'syncing' | 'synced';
 

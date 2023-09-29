@@ -16,7 +16,7 @@ export const StatusLabel = ({
   title,
   helpKey,
   hideIcon,
-  statusFor = '',
+  statusFor,
   topOffset = '40%',
   status = 'sync_or_setup',
 }: StatusLabelProps) => {
@@ -33,11 +33,10 @@ export const StatusLabel = ({
     }
   }
 
-  if (status === 'active_service') {
-    if (plugins.includes(statusFor || '')) {
+  if (status === 'active_service' && statusFor)
+    if (plugins.includes(statusFor)) {
       return <></>;
     }
-  }
 
   return (
     <Wrapper $topOffset={topOffset}>
