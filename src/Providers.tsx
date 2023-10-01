@@ -37,46 +37,55 @@ import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries';
 import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidators';
 import { withProviders } from 'library/Hooks';
 import { PayoutsProvider } from 'contexts/Payouts';
-import { NetworkProvider } from 'contexts/Network';
 import { PolkawatchProvider } from 'contexts/Plugins/Polkawatch';
+import { useNetwork } from 'contexts/Network';
+
+// Embed providers from hook.
+export const Providers = () => {
+  const ProvidersJSX = useProviders();
+  return <ProvidersJSX />;
+};
 
 // !! Provider order matters.
-export const Providers = withProviders(
-  NetworkProvider,
-  APIProvider,
-  FiltersProvider,
-  NotificationsProvider,
-  PluginsProvider,
-  VaultHardwareProvider,
-  LedgerHardwareProvider,
-  ExtensionsProvider,
-  ConnectProvider,
-  HelpProvider,
-  NetworkMetricsProvider,
-  SubscanProvider,
-  PolkawatchProvider,
-  IdentitiesProvider,
-  ProxiesProvider,
-  BalancesProvider,
-  BondedProvider,
-  StakingProvider,
-  PoolsConfigProvider,
-  BondedPoolsProvider,
-  PoolMembershipsProvider,
-  PoolMembersProvider,
-  ActivePoolsProvider,
-  TransferOptionsProvider,
-  ValidatorsProvider,
-  FavoriteValidatorsProvider,
-  FastUnstakeProvider,
-  PayoutsProvider,
-  UIProvider,
-  SetupProvider,
-  MenuProvider,
-  TooltipProvider,
-  TxMetaProvider,
-  ExtrinsicsProvider,
-  OverlayProvider,
-  PromptProvider,
-  MigrateProvider
-)(ThemedRouter);
+export const useProviders = () => {
+  const { network } = useNetwork();
+
+  return withProviders(
+    [APIProvider, { network }],
+    FiltersProvider,
+    NotificationsProvider,
+    PluginsProvider,
+    VaultHardwareProvider,
+    LedgerHardwareProvider,
+    ExtensionsProvider,
+    ConnectProvider,
+    HelpProvider,
+    NetworkMetricsProvider,
+    SubscanProvider,
+    PolkawatchProvider,
+    IdentitiesProvider,
+    ProxiesProvider,
+    BalancesProvider,
+    BondedProvider,
+    StakingProvider,
+    PoolsConfigProvider,
+    BondedPoolsProvider,
+    PoolMembershipsProvider,
+    PoolMembersProvider,
+    ActivePoolsProvider,
+    TransferOptionsProvider,
+    ValidatorsProvider,
+    FavoriteValidatorsProvider,
+    FastUnstakeProvider,
+    PayoutsProvider,
+    UIProvider,
+    SetupProvider,
+    MenuProvider,
+    TooltipProvider,
+    TxMetaProvider,
+    ExtrinsicsProvider,
+    OverlayProvider,
+    PromptProvider,
+    MigrateProvider
+  )(ThemedRouter);
+};
