@@ -22,7 +22,7 @@ export const PoolsConfigProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { networkData, network } = useNetwork();
+  const { network } = useNetwork();
   const { api, isReady, consts } = useApi();
   const { poolsPalletId } = consts;
 
@@ -49,7 +49,7 @@ export const PoolsConfigProvider = ({
     return () => {
       unsubscribe();
     };
-  }, [networkData, isReady]);
+  }, [network, isReady]);
 
   const unsubscribe = () => {
     if (poolsConfigRef.current.unsub !== null) {

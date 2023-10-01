@@ -31,7 +31,10 @@ export const SubscanProvider = ({
 }) => {
   const { i18n } = useTranslation();
   const { isReady } = useApi();
-  const { networkData } = useNetwork();
+  const {
+    network,
+    networkData: { subscanEndpoint },
+  } = useNetwork();
   const { activeAccount } = useConnect();
   const { activeEra } = useNetworkMetrics();
   const { erasToSeconds } = useErasToTimeLeft();
@@ -85,14 +88,14 @@ export const SubscanProvider = ({
   // Reset payouts on network switch.
   useEffectIgnoreInitial(() => {
     resetPayouts();
-  }, [networkData]);
+  }, [network]);
 
   // Fetch payouts as soon as network is ready.
   useEffectIgnoreInitial(() => {
     if (isReady && isNotZero(activeEra.index)) {
       handleFetchPayouts();
     }
-  }, [isReady, networkData, activeAccount, activeEra]);
+  }, [isReady, network, activeAccount, activeEra]);
 
   // Store start and end date of fetched payouts.
   useEffectIgnoreInitial(() => {
@@ -262,7 +265,7 @@ export const SubscanProvider = ({
       return [];
     }
     const res: Response = await fetch(
-      networkData.subscanEndpoint + ApiEndpoints.subscanPoolDetails,
+      subscanEndpoint + ApiEndpoints.subscanPoolDetails,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -330,7 +333,7 @@ export const SubscanProvider = ({
       page,
       ...body,
     };
-    const res: Response = await fetch(networkData.subscanEndpoint + endpoint, {
+    const res: Response = await fetch(subscanEndpoint + endpoint, {
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': ApiSubscanKey,

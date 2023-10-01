@@ -30,7 +30,10 @@ import type {
 
 export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   const { inSetup } = useStaking();
-  const { networkData } = useNetwork();
+  const {
+    network,
+    networkData: { units },
+  } = useNetwork();
   const { accounts, activeAccount } = useConnect();
   const { membership: poolMembership } = usePoolMemberships();
 
@@ -138,7 +141,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     if (!address) return 0;
     const setup = getSetupProgress('nominator', address) as NominatorSetup;
     const { progress } = setup;
-    const bond = unitToPlanck(progress?.bond || '0', networkData.units);
+    const bond = unitToPlanck(progress?.bond || '0', units);
 
     const p = 33;
     let percentage = 0;
@@ -153,7 +156,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     if (!address) return 0;
     const setup = getSetupProgress('pool', address) as PoolSetup;
     const { progress } = setup;
-    const bond = unitToPlanck(progress?.bond || '0', networkData.units);
+    const bond = unitToPlanck(progress?.bond || '0', units);
 
     const p = 25;
     let percentage = 0;
@@ -214,12 +217,12 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     if (poolMembership) {
       setOnPoolSetup(false);
     }
-  }, [inSetup(), networkData, poolMembership]);
+  }, [inSetup(), network, poolMembership]);
 
   // Update setup state when activeAccount changes
   useEffectIgnoreInitial(() => {
     if (accounts.length) refreshSetups();
-  }, [activeAccount, networkData, accounts]);
+  }, [activeAccount, network, accounts]);
 
   return (
     <SetupContext.Provider
