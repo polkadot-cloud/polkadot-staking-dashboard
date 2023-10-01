@@ -9,8 +9,8 @@ import type { AnyApi } from 'types';
 import { useNetwork } from 'contexts/Network';
 
 export const useBlockNumber = () => {
+  const { network } = useNetwork();
   const { isReady, api } = useApi();
-  const { networkData } = useNetwork();
 
   // store the current block number.
   const [block, setBlock] = useState<BigNumber>(new BigNumber(0));
@@ -25,7 +25,7 @@ export const useBlockNumber = () => {
     return () => {
       if (unsub.current) unsub.current();
     };
-  }, [networkData, isReady]);
+  }, [network, isReady]);
 
   const subscribeBlockNumber = async () => {
     if (!api) return;

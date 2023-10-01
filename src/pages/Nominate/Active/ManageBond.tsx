@@ -25,19 +25,20 @@ import { useNetwork } from 'contexts/Network';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');
-  const { networkData } = useNetwork();
-  const { openModal } = useOverlay().modal;
-  const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { getStashLedger } = useBalances();
-  const { getTransferOptions } = useTransferOptions();
-  const { inSetup } = useStaking();
-  const { isSyncing } = useUi();
-  const { isFastUnstaking } = useUnstaking();
-  const { openHelp } = useHelp();
   const {
-    units,
-    brand: { token: Token },
-  } = networkData;
+    networkData: {
+      units,
+      brand: { token: Token },
+    },
+  } = useNetwork();
+  const { isSyncing } = useUi();
+  const { openHelp } = useHelp();
+  const { inSetup } = useStaking();
+  const { openModal } = useOverlay().modal;
+  const { getStashLedger } = useBalances();
+  const { isFastUnstaking } = useUnstaking();
+  const { getTransferOptions } = useTransferOptions();
+  const { activeAccount, isReadOnlyAccount } = useConnect();
   const ledger = getStashLedger(activeAccount);
   const { active }: { active: BigNumber } = ledger;
   const allTransferOptions = getTransferOptions(activeAccount);

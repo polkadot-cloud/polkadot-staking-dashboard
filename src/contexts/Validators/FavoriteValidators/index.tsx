@@ -16,9 +16,11 @@ export const FavoriteValidatorsProvider = ({
   children: React.ReactNode;
 }) => {
   const { isReady } = useApi();
-  const { networkData } = useNetwork();
+  const {
+    networkData: { name },
+    network,
+  } = useNetwork();
   const { fetchValidatorPrefs } = useValidators();
-  const { name } = networkData;
 
   // Stores the user's favorite validators.
   const [favorites, setFavorites] = useState<string[]>(getLocalFavorites(name));
@@ -43,10 +45,7 @@ export const FavoriteValidatorsProvider = ({
       newFavorites.push(address);
     }
 
-    localStorage.setItem(
-      `${networkData.name}_favorites`,
-      JSON.stringify(newFavorites)
-    );
+    localStorage.setItem(`${network}_favorites`, JSON.stringify(newFavorites));
     setFavorites([...newFavorites]);
   };
 
@@ -55,17 +54,14 @@ export const FavoriteValidatorsProvider = ({
     const newFavorites = Object.assign(favorites).filter(
       (validator: string) => validator !== address
     );
-    localStorage.setItem(
-      `${networkData.name}_favorites`,
-      JSON.stringify(newFavorites)
-    );
+    localStorage.setItem(`${network}_favorites`, JSON.stringify(newFavorites));
     setFavorites([...newFavorites]);
   };
 
   // Re-fetch favorites on network change
   useEffectIgnoreInitial(() => {
     setFavorites(getLocalFavorites(name));
-  }, [networkData]);
+  }, [network]);
 
   // Fetch favorites in validator list format
   useEffectIgnoreInitial(() => {

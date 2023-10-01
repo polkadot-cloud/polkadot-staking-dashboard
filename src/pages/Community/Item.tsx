@@ -19,7 +19,7 @@ import type { ItemProps } from './types';
 export const Item = ({ item, actionable }: ItemProps) => {
   const { t } = useTranslation('pages');
   const { openModal } = useOverlay().modal;
-  const { networkData } = useNetwork();
+  const { network } = useNetwork();
 
   const {
     bio,
@@ -30,7 +30,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
     thumbnail,
     validators: entityAllValidators,
   } = item;
-  const validatorCount = entityAllValidators[networkData.name]?.length ?? 0;
+  const validatorCount = entityAllValidators[network]?.length ?? 0;
 
   const { setActiveSection, setActiveItem, setScrollPos } =
     useCommunitySections();

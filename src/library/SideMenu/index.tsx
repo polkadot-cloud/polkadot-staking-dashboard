@@ -31,7 +31,7 @@ import { ConnectionSymbol, Separator, Wrapper } from './Wrapper';
 export const SideMenu = () => {
   const { t } = useTranslation('base');
   const { apiStatus } = useApi();
-  const { networkData } = useNetwork();
+  const { networkData, network } = useNetwork();
   const { mode, toggleTheme } = useTheme();
   const { openModal } = useOverlay().modal;
   const {
@@ -101,7 +101,7 @@ export const SideMenu = () => {
         <Heading title={t('network')} minimised={sideMenuMinimised} />
         <Secondary
           classes={[apiStatusClass]}
-          name={capitalizeFirstLetter(networkData.name)}
+          name={capitalizeFirstLetter(network)}
           onClick={() => openModal({ key: 'Networks' })}
           icon={{
             Svg: networkData.brand.inline.svg,

@@ -46,7 +46,7 @@ export const ConnectProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { networkData } = useNetwork();
+  const { networkData, network } = useNetwork();
   const { checkingInjectedWeb3, extensions, setExtensionStatus } =
     useExtensions();
   const {
@@ -75,11 +75,11 @@ export const ConnectProvider = ({
     if (updateLocal) {
       if (newActiveProxy) {
         localStorage.setItem(
-          `${networkData.name}_active_proxy`,
+          `${network}_active_proxy`,
           JSON.stringify(newActiveProxy)
         );
       } else {
-        localStorage.removeItem(`${networkData.name}_active_proxy`);
+        localStorage.removeItem(`${network}_active_proxy`);
       }
     }
     setStateWithRef(newActiveProxy, setActiveProxyState, activeProxyRef);
@@ -135,7 +135,7 @@ export const ConnectProvider = ({
       }
     }
     return () => unsubscribe();
-  }, [extensions?.length, networkData, checkingInjectedWeb3]);
+  }, [extensions?.length, network, checkingInjectedWeb3]);
 
   // Once initialised extensions equal total extensions present in `injectedWeb3`, mark extensions
   // as fetched.
@@ -191,7 +191,7 @@ export const ConnectProvider = ({
     if (
       forget.find((a) => a.address === activeAccountRef.current) !== undefined
     ) {
-      localStorage.removeItem(`${networkData.name}_active_account`);
+      localStorage.removeItem(`${network}_active_account`);
       setStateWithRef(null, setActiveAccount, activeAccountRef);
     }
 
@@ -238,7 +238,7 @@ export const ConnectProvider = ({
   ) => {
     // Get accounts from provided `getter` function. The resulting array of accounts must contain an
     // `address` field.
-    let localAccounts = getter(networkData.name);
+    let localAccounts = getter(network);
 
     if (localAccounts.length) {
       const activeAccountInSet =
@@ -434,9 +434,9 @@ export const ConnectProvider = ({
 
   const setActiveAccount = (address: MaybeAccount) => {
     if (address === null) {
-      localStorage.removeItem(`${networkData.name}_active_account`);
+      localStorage.removeItem(`${network}_active_account`);
     } else {
-      localStorage.setItem(`${networkData.name}_active_account`, address);
+      localStorage.setItem(`${network}_active_account`, address);
     }
     setStateWithRef(address, setActiveAccountState, activeAccountRef);
   };
@@ -446,7 +446,7 @@ export const ConnectProvider = ({
   };
 
   const disconnectFromAccount = () => {
-    localStorage.removeItem(`${networkData.name}_active_account`);
+    localStorage.removeItem(`${network}_active_account`);
     setActiveAccount(null);
   };
 
@@ -464,7 +464,7 @@ export const ConnectProvider = ({
 
     const newAccount = {
       address: formatted,
-      network: networkData.name,
+      network,
       name: ellipsisFn(address),
       source: 'external',
       addedBy,
@@ -473,7 +473,7 @@ export const ConnectProvider = ({
     // get all external accounts from localStorage.
     const localExternalAccounts = getLocalExternalAccounts();
     const existsLocal = localExternalAccounts.find(
-      (l) => l.address === address && l.network === networkData.name
+      (l) => l.address === address && l.network === network
     );
 
     // check that address is not sitting in imported accounts (currently cannot check which

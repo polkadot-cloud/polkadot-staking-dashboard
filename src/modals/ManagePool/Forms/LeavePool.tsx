@@ -33,9 +33,10 @@ import { useNetwork } from 'contexts/Network';
 export const LeavePool = ({ setSection }: any) => {
   const { t } = useTranslation('modals');
   const { api, consts } = useApi();
-  const { networkData } = useNetwork();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
   const { activeAccount } = useConnect();
-  const { units } = networkData;
   const { setModalStatus, setModalResize } = useOverlay().modal;
   const { getTransferOptions } = useTransferOptions();
   const { selectedActivePool } = useActivePools();
@@ -55,7 +56,7 @@ export const LeavePool = ({ setSection }: any) => {
 
   let { pendingRewards } = selectedActivePool || {};
   pendingRewards = pendingRewards ?? new BigNumber(0);
-  pendingRewards = planckToUnit(pendingRewards, networkData.units);
+  pendingRewards = planckToUnit(pendingRewards, units);
 
   // convert BigNumber values to number
   const freeToUnbond = planckToUnit(activeBn, units);
@@ -111,9 +112,7 @@ export const LeavePool = ({ setSection }: any) => {
 
   if (greaterThanZero(pendingRewards)) {
     warnings.push(
-      `${t('unbondingWithdraw')} ${pendingRewards.toString()} ${
-        networkData.unit
-      }.`
+      `${t('unbondingWithdraw')} ${pendingRewards.toString()} ${unit}.`
     );
   }
 
@@ -127,9 +126,7 @@ export const LeavePool = ({ setSection }: any) => {
             ))}
           </ModalWarnings>
         ) : null}
-        <ActionItem
-          text={`${t('unbond')} ${freeToUnbond} ${networkData.unit}`}
-        />
+        <ActionItem text={`${t('unbond')} ${freeToUnbond} ${unit}`} />
         <StaticNote
           value={bondDurationFormatted}
           tKey="onceUnbonding"

@@ -39,10 +39,10 @@ export const LedgerHardwareProvider = ({
   children: React.ReactNode;
 }) => {
   const { t } = useTranslation('modals');
-  const { networkData } = useNetwork();
+  const { network } = useNetwork();
 
   const [ledgerAccounts, setLedgerAccountsState] = useState<LedgerAccount[]>(
-    getLocalLedgerAccounts(networkData.name)
+    getLocalLedgerAccounts(network)
   );
   const ledgerAccountsRef = useRef(ledgerAccounts);
 
@@ -79,11 +79,11 @@ export const LedgerHardwareProvider = ({
   // Refresh imported ledger accounts on network change.
   useEffect(() => {
     setStateWithRef(
-      getLocalLedgerAccounts(networkData.name),
+      getLocalLedgerAccounts(network),
       setLedgerAccountsState,
       ledgerAccountsRef
     );
-  }, [networkData.name]);
+  }, [network]);
 
   // Handles errors that occur during `executeLedgerLoop` and `pairDevice` calls.
   const handleErrors = (appName: string, err: AnyJson) => {
@@ -346,25 +346,23 @@ export const LedgerHardwareProvider = ({
   // Check if a Ledger address exists in imported addresses.
   const ledgerAccountExists = (address: string) =>
     !!getLocalLedgerAccounts().find((a) =>
-      isLocalNetworkAddress(networkData.name, a, address)
+      isLocalNetworkAddress(network, a, address)
     );
 
   const addLedgerAccount = (address: string, index: number) => {
     let newLedgerAccounts = getLocalLedgerAccounts();
 
     const ledgerAddress = getLocalLedgerAddresses().find((a) =>
-      isLocalNetworkAddress(networkData.name, a, address)
+      isLocalNetworkAddress(network, a, address)
     );
 
     if (
       ledgerAddress &&
-      !newLedgerAccounts.find((a) =>
-        isLocalNetworkAddress(networkData.name, a, address)
-      )
+      !newLedgerAccounts.find((a) => isLocalNetworkAddress(network, a, address))
     ) {
       const account = {
         address,
-        network: networkData.name,
+        network,
         name: ledgerAddress.name,
         source: 'ledger',
         index,
@@ -379,7 +377,7 @@ export const LedgerHardwareProvider = ({
 
       // store only those accounts on the current network in state.
       setStateWithRef(
-        newLedgerAccounts.filter((a) => a.network === networkData.name),
+        newLedgerAccounts.filter((a) => a.network === network),
         setLedgerAccountsState,
         ledgerAccountsRef
       );
@@ -396,7 +394,7 @@ export const LedgerHardwareProvider = ({
       if (a.address !== address) {
         return true;
       }
-      if (a.network !== networkData.name) {
+      if (a.network !== network) {
         return true;
       }
       return false;
@@ -410,7 +408,7 @@ export const LedgerHardwareProvider = ({
       );
     }
     setStateWithRef(
-      newLedgerAccounts.filter((a) => a.network === networkData.name),
+      newLedgerAccounts.filter((a) => a.network === network),
       setLedgerAccountsState,
       ledgerAccountsRef
     );
@@ -425,7 +423,7 @@ export const LedgerHardwareProvider = ({
     }
     return (
       localLedgerAccounts.find((a) =>
-        isLocalNetworkAddress(networkData.name, a, address)
+        isLocalNetworkAddress(network, a, address)
       ) ?? null
     );
   };
@@ -435,7 +433,7 @@ export const LedgerHardwareProvider = ({
     let newLedgerAccounts = getLocalLedgerAccounts();
 
     newLedgerAccounts = newLedgerAccounts.map((a) =>
-      isLocalNetworkAddress(networkData.name, a, address)
+      isLocalNetworkAddress(network, a, address)
         ? {
             ...a,
             name: newName,
@@ -445,7 +443,7 @@ export const LedgerHardwareProvider = ({
     renameLocalLedgerAddress(address, newName);
     localStorage.setItem('ledger_accounts', JSON.stringify(newLedgerAccounts));
     setStateWithRef(
-      newLedgerAccounts.filter((a) => a.network === networkData.name),
+      newLedgerAccounts.filter((a) => a.network === network),
       setLedgerAccountsState,
       ledgerAccountsRef
     );
@@ -456,7 +454,7 @@ export const LedgerHardwareProvider = ({
     const localLedger = (
       localStorageOrDefault('ledger_addresses', [], true) as LedgerAddress[]
     )?.map((i) =>
-      !(i.address === address && i.network === networkData.name)
+      !(i.address === address && i.network === network)
         ? i
         : {
             ...i,

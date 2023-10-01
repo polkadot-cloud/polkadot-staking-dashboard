@@ -35,7 +35,7 @@ export const BalancesProvider = ({
   children: React.ReactNode;
 }) => {
   const { api, isReady } = useApi();
-  const { networkData } = useNetwork();
+  const { network } = useNetwork();
   const { accounts, addExternalAccount, getAccount } = useConnect();
 
   const [balances, setBalances] = useState<Balances[]>([]);
@@ -180,13 +180,13 @@ export const BalancesProvider = ({
     if (isReady) {
       handleSyncAccounts();
     }
-  }, [accounts, networkData, isReady]);
+  }, [accounts, network, isReady]);
 
   // Unsubscribe from subscriptions on network change & unmount.
   useEffectIgnoreInitial(() => {
     unsubAll();
     return () => unsubAll();
-  }, [networkData]);
+  }, [network]);
 
   // Gets a ledger for a stash address.
   const getStashLedger = (address: MaybeAccount) => {

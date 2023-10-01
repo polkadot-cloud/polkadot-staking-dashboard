@@ -30,7 +30,9 @@ import { useNetwork } from 'contexts/Network';
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
   const { api, consts } = useApi();
-  const { networkData } = useNetwork();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
   const { activeAccount } = useConnect();
   const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
@@ -116,8 +118,8 @@ export const ManageFastUnstake = () => {
       warnings.push(
         `${t('noEnough')} ${planckToUnit(
           fastUnstakeDeposit,
-          networkData.units
-        ).toString()} ${networkData.unit}`
+          units
+        ).toString()} ${unit}`
       );
     }
 
@@ -179,11 +181,8 @@ export const ManageFastUnstake = () => {
                   <p>
                     <>
                       {t('registerFastUnstake')}{' '}
-                      {planckToUnit(
-                        fastUnstakeDeposit,
-                        networkData.units
-                      ).toString()}{' '}
-                      {networkData.unit}. {t('fastUnstakeOnceRegistered')}
+                      {planckToUnit(fastUnstakeDeposit, units).toString()}{' '}
+                      {unit}. {t('fastUnstakeOnceRegistered')}
                     </>
                   </p>
                   <p>

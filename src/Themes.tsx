@@ -13,11 +13,11 @@ import { useNetwork } from 'contexts/Network';
 // `@polkadot-cloud/react` themes are added to `Entry`.
 export const ThemedRouter = () => {
   const { mode } = useTheme();
-  const { networkData } = useNetwork();
+  const { network } = useNetwork();
 
   return (
     <ThemeProvider theme={{ mode }}>
-      <Entry mode={mode} theme={`${networkData.name}-relay`}>
+      <Entry mode={mode} theme={`${network}-relay`}>
         <Router />
       </Entry>
     </ThemeProvider>

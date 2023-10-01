@@ -28,9 +28,9 @@ export const ActivePoolsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { network } = useNetwork();
   const { api, isReady } = useApi();
   const { eraStakers } = useStaking();
-  const { networkData } = useNetwork();
   const { pluginEnabled } = usePlugins();
   const { activeAccount } = useConnect();
   const { fetchPoolDetails } = useSubscan();
@@ -469,7 +469,7 @@ export const ActivePoolsProvider = ({
       setStateWithRef('syncing', setSynced, syncedRef);
       handlePoolSubscriptions();
     }
-  }, [networkData, isReady, syncedRef.current]);
+  }, [network, isReady, syncedRef.current]);
 
   // unsubscribe all on component unmount
   useEffect(
@@ -477,14 +477,14 @@ export const ActivePoolsProvider = ({
       unsubscribeActivePools();
       unsubscribePoolNominations();
     },
-    [networkData]
+    [network]
   );
 
   // re-calculate pending rewards when membership changes
   useEffectIgnoreInitial(() => {
     updatePendingRewards();
   }, [
-    networkData,
+    network,
     isReady,
     getActivePoolMembership()?.bondedPool,
     getActivePoolMembership()?.rewardPool,

@@ -14,7 +14,7 @@ import { Manage } from './Manage';
 import { Splash } from './Splash';
 
 export const ImportLedger: React.FC = () => {
-  const { networkData } = useNetwork();
+  const { network } = useNetwork();
   const { setModalResize } = useOverlay().modal;
   const {
     transportResponse,
@@ -51,7 +51,7 @@ export const ImportLedger: React.FC = () => {
 
   // Store addresses retreived from Ledger device. Defaults to local addresses.
   const [addresses, setAddresses] = useState<LedgerAddress[]>(
-    getLocalLedgerAddresses(networkData.name)
+    getLocalLedgerAddresses(network)
   );
   const addressesRef = useRef(addresses);
 
@@ -62,7 +62,7 @@ export const ImportLedger: React.FC = () => {
       if (a.address !== address) {
         return true;
       }
-      if (a.network !== networkData.name) {
+      if (a.network !== network) {
         return true;
       }
       return false;
@@ -76,9 +76,7 @@ export const ImportLedger: React.FC = () => {
       );
     }
     setStateWithRef(
-      newLedgerAddresses.filter(
-        (a: LedgerAddress) => a.network === networkData.name
-      ),
+      newLedgerAddresses.filter((a: LedgerAddress) => a.network === network),
       setAddresses,
       addressesRef
     );
@@ -87,11 +85,11 @@ export const ImportLedger: React.FC = () => {
   // refresh imported ledger accounts on network change.
   useEffect(() => {
     setStateWithRef(
-      getLocalLedgerAddresses(networkData.name),
+      getLocalLedgerAddresses(network),
       setAddresses,
       addressesRef
     );
-  }, [networkData]);
+  }, [network]);
 
   // Handle new Ledger status report.
   const handleLedgerStatusResponse = (response: LedgerResponse) => {
@@ -106,7 +104,7 @@ export const ImportLedger: React.FC = () => {
         pubKey,
         address,
         name: ellipsisFn(address),
-        network: networkData.name,
+        network,
       }));
 
       // update the full list of local ledger addresses with new entry.
@@ -115,7 +113,7 @@ export const ImportLedger: React.FC = () => {
           if (a.address !== newAddress.address) {
             return true;
           }
-          if (a.network !== networkData.name) {
+          if (a.network !== network) {
             return true;
           }
           return false;
@@ -127,7 +125,7 @@ export const ImportLedger: React.FC = () => {
 
       // store only those accounts on the current network in state.
       setStateWithRef(
-        newAddresses.filter((a) => a.network === networkData.name),
+        newAddresses.filter((a) => a.network === network),
         setAddresses,
         addressesRef
       );

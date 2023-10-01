@@ -21,14 +21,14 @@ export const Manage = ({
   removeLedgerAddress,
 }: AnyJson) => {
   const { t } = useTranslation();
-  const { name } = useNetwork().networkData;
+  const { network } = useNetwork();
   const { setIsExecuting, getIsExecuting, resetStatusCodes, getFeedback } =
     useLedgerHardware();
   const { openPromptWith } = usePrompt();
   const { replaceModal } = useOverlay().modal;
   const { openHelp } = useHelp();
 
-  const { appName, Icon } = getLedgerApp(name);
+  const { appName, Icon } = getLedgerApp(network);
   const isExecuting = getIsExecuting();
 
   const fallbackMessage = `${t('ledgerAccounts', {

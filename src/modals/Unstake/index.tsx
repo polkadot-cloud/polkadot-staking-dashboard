@@ -33,14 +33,15 @@ export const Unstake = () => {
   const { notEnoughFunds } = useTxMeta();
   const { activeAccount } = useConnect();
   const { api, consts } = useApi();
-  const { networkData } = useNetwork();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
   const { setModalStatus, setModalResize } = useOverlay().modal;
   const { getBondedAccount, getAccountNominations } = useBonded();
 
-  const { units } = networkData;
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
   const { bondDuration } = consts;
@@ -129,7 +130,7 @@ export const Unstake = () => {
           <ActionItem
             text={t('unstakeUnbond', {
               bond: freeToUnbond.toFormat(),
-              unit: networkData.unit,
+              unit,
             })}
           />
         ) : null}

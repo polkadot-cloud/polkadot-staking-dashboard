@@ -19,7 +19,7 @@ import { defaultHandleImportExtension } from '../defaults';
 import type { HandleImportExtension, ImportedAccount } from '../types';
 
 export const useImportExtension = () => {
-  const { networkData } = useNetwork();
+  const { networkData, network } = useNetwork();
   const { setExtensionStatus } = useExtensions();
 
   // Handles importing of an extension.
@@ -75,7 +75,7 @@ export const useImportExtension = () => {
     });
 
     // remove newAccounts from local external accounts if present
-    const inExternal = getInExternalAccounts(newAccounts, networkData.name);
+    const inExternal = getInExternalAccounts(newAccounts, network);
     forget(inExternal);
 
     // find any accounts that have been removed from this extension

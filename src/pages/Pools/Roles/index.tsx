@@ -35,11 +35,11 @@ export const Roles = ({
   listenIsValid = () => {},
 }: RolesProps) => {
   const { t } = useTranslation('pages');
+  const { isReady } = useApi();
   const { openHelp } = useHelp();
+  const { network } = useNetwork();
   const { isPoolSyncing } = useUi();
   const { openModal } = useOverlay().modal;
-  const { isReady } = useApi();
-  const { networkData } = useNetwork();
   const { fetchIdentitiesMetaBatch } = useIdentities();
   const { isOwner, selectedActivePool } = useActivePools();
   const { activeAccount, isReadOnlyAccount } = useConnect();
@@ -77,7 +77,7 @@ export const Roles = ({
     setIsEditing(false);
     setRoleEdits(initialiseEdits);
     setFetched(false);
-  }, [activeAccount, networkData]);
+  }, [activeAccount, network]);
 
   // fetch accounts meta batch
   useEffect(() => {

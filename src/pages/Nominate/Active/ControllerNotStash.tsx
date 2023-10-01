@@ -20,7 +20,7 @@ import { useNetwork } from 'contexts/Network';
 
 export const ControllerNotStash = () => {
   const { t } = useTranslation('pages');
-  const { networkData } = useNetwork();
+  const { network } = useNetwork();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { addressDifferentToStash } = useStaking();
   const { getBondedAccount } = useBonded();
@@ -49,8 +49,7 @@ export const ControllerNotStash = () => {
                     &nbsp; {t('nominate.controllerAccountsDeprecated')}
                   </h3>
                   <h4>
-                    {t('nominate.proxyprompt')}{' '}
-                    {stringUpperFirst(networkData.name)}.
+                    {t('nominate.proxyprompt')} {stringUpperFirst(network)}.
                   </h4>
                 </CardHeaderWrapper>
                 <div>

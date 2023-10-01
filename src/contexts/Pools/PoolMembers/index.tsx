@@ -17,8 +17,8 @@ export const PoolMembersProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { network } = useNetwork();
   const { api, isReady } = useApi();
-  const { networkData } = useNetwork();
   const { pluginEnabled } = usePlugins();
   const { activeAccount } = useConnect();
 
@@ -48,7 +48,7 @@ export const PoolMembersProvider = ({
   useEffectIgnoreInitial(() => {
     setPoolMembersNode([]);
     unsubscribeAndResetMeta();
-  }, [networkData]);
+  }, [network]);
 
   // Clear meta state when activeAccount changes
   useEffectIgnoreInitial(() => {
@@ -66,7 +66,7 @@ export const PoolMembersProvider = ({
     return () => {
       unsubscribe();
     };
-  }, [networkData, isReady, pluginEnabled('subscan')]);
+  }, [network, isReady, pluginEnabled('subscan')]);
 
   const unsubscribe = () => {
     unsubscribeAndResetMeta();

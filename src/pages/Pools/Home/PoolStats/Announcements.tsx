@@ -16,9 +16,10 @@ import { Item } from './Wrappers';
 export const Announcements = () => {
   const { t } = useTranslation('pages');
   const { consts } = useApi();
-  const { networkData } = useNetwork();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
   const { selectedActivePool } = useActivePools();
-  const { units, unit } = networkData;
   const { rewardAccountBalance } = selectedActivePool || {};
   const { totalRewardsClaimed } = selectedActivePool?.rewardPool || {};
   const { existentialDeposit } = consts;
@@ -35,7 +36,7 @@ export const Announcements = () => {
     totalRewardsClaimed
       ? new BigNumber(rmCommas(totalRewardsClaimed))
       : new BigNumber(0),
-    networkData.units
+    units
   );
 
   const container = {

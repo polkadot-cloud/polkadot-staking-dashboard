@@ -17,12 +17,12 @@ import { useCommunitySections } from './context';
 export const Entity = () => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
-  const { networkData } = useNetwork();
+  const { network } = useNetwork();
   const { validators: allValidators } = useValidators();
   const { setActiveSection, activeItem } = useCommunitySections();
 
   const { name, validators: entityAllValidators } = activeItem;
-  const validators = entityAllValidators[networkData.name] ?? [];
+  const validators = entityAllValidators[network] ?? [];
 
   // include validators that exist in `erasStakers`
   const [activeValidators, setActiveValidators] = useState(
@@ -33,12 +33,12 @@ export const Entity = () => {
     setActiveValidators(
       allValidators.filter((v) => validators.includes(v.address))
     );
-  }, [allValidators, networkData]);
+  }, [allValidators, network]);
 
   useEffect(() => {
     const newValidators = [...activeValidators];
     setActiveValidators(newValidators);
-  }, [name, activeItem, networkData]);
+  }, [name, activeItem, network]);
 
   const container = {
     hidden: { opacity: 0 },

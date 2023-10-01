@@ -26,10 +26,12 @@ export const Announcements = () => {
   const { isSyncing } = useUi();
   const { staking } = useStaking();
   const { stats } = usePoolsConfig();
-  const { networkData } = useNetwork();
+  const {
+    network,
+    networkData: { units, unit },
+  } = useNetwork();
   const { bondedPools } = useBondedPools();
 
-  const { units } = networkData;
   const { totalStaked } = staking;
   const { counterForPoolMembers } = stats;
 
@@ -60,7 +62,7 @@ export const Announcements = () => {
 
   const announcements = [];
 
-  const networkUnit = networkData.unit;
+  const networkUnit = unit;
 
   // total staked on the network
   if (!isSyncing) {
@@ -68,11 +70,11 @@ export const Announcements = () => {
       class: 'neutral',
       title: t('overview.networkCurrentlyStaked', {
         total: planckToUnit(totalStaked, units).integerValue().toFormat(),
-        unit: networkData.unit,
-        network: capitalizeFirstLetter(networkData.name),
+        unit,
+        network: capitalizeFirstLetter(network),
       }),
       subtitle: t('overview.networkCurrentlyStakedSubtitle', {
-        unit: networkData.unit,
+        unit,
       }),
     });
   } else {
@@ -83,9 +85,9 @@ export const Announcements = () => {
   if (bondedPools.length) {
     announcements.push({
       class: 'neutral',
-      title: `${totalPoolPointsUnit.integerValue().toFormat()} ${
-        networkData.unit
-      } ${t('overview.inPools')}`,
+      title: `${totalPoolPointsUnit.integerValue().toFormat()} ${unit} ${t(
+        'overview.inPools'
+      )}`,
       subtitle: `${t('overview.bondedInPools', { networkUnit })}`,
     });
   } else {

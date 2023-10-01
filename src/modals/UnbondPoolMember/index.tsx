@@ -29,7 +29,9 @@ import { useNetwork } from 'contexts/Network';
 export const UnbondPoolMember = () => {
   const { t } = useTranslation('modals');
   const { api, consts } = useApi();
-  const { networkData } = useNetwork();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
   const { activeAccount } = useConnect();
   const { notEnoughFunds } = useTxMeta();
   const { erasToSeconds } = useErasToTimeLeft();
@@ -40,7 +42,6 @@ export const UnbondPoolMember = () => {
     config: { options },
   } = useOverlay().modal;
 
-  const { units } = networkData;
   const { bondDuration } = consts;
   const { member, who } = options;
   const { points } = member;
@@ -113,9 +114,7 @@ export const UnbondPoolMember = () => {
             ))}
           </ModalWarnings>
         ) : null}
-        <ActionItem
-          text={`${t('unbond')} ${freeToUnbond} ${networkData.unit}`}
-        />
+        <ActionItem text={`${t('unbond')} ${freeToUnbond} ${unit}`} />
         <StaticNote
           value={bondDurationFormatted}
           tKey="onceUnbonding"

@@ -33,9 +33,14 @@ import { SupplyStakedStat } from './Stats/SupplyStaked';
 
 export const Overview = () => {
   const { i18n, t } = useTranslation('pages');
-  const { networkData } = useNetwork();
+  const {
+    networkData: {
+      units,
+      brand: { token: Token },
+    },
+  } = useNetwork();
   const { payouts, poolClaims, unclaimedPayouts } = useSubscan();
-  const { units } = networkData;
+
   const { lastReward } = formatRewardsForGraphs(
     new Date(),
     14,
@@ -44,9 +49,7 @@ export const Overview = () => {
     poolClaims,
     unclaimedPayouts
   );
-  const {
-    brand: { token: Token },
-  } = networkData;
+
   const PAYOUTS_HEIGHT = 380;
 
   let formatFrom = new Date();

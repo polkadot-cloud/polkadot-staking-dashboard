@@ -23,7 +23,7 @@ import { TipsWrapper } from './Wrappers';
 
 export const Tips = () => {
   const { i18n, t } = useTranslation();
-  const { networkData } = useNetwork();
+  const { network } = useNetwork();
   const { activeAccount } = useConnect();
   const { isNetworkSyncing } = useUi();
   const { fillVariables } = useFillVariables();
@@ -85,7 +85,7 @@ export const Tips = () => {
   // re-sync page when active account changes
   useEffect(() => {
     setStateWithRef(getPage(), setPage, pageRef);
-  }, [activeAccount, networkData]);
+  }, [activeAccount, network]);
 
   // resize event listener
   useEffect(() => {

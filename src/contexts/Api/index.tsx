@@ -28,8 +28,7 @@ import { useNetwork } from 'contexts/Network';
 import * as defaults from './defaults';
 
 export const APIProvider = ({ children }: { children: React.ReactNode }) => {
-  const { networkData } = useNetwork();
-  const { name: networkName } = networkData;
+  const { network } = useNetwork();
 
   // Store povider instance.
   const [provider, setProvider] = useState<WsProvider | ScProvider | null>(
@@ -56,7 +55,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   // Handle an initial RPC connection.
   useEffect(() => {
     if (!provider && !isLightClient) {
-      connectProvider(networkName);
+      connectProvider(network);
     }
   });
 
@@ -64,9 +63,9 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   const handleLightClientConnection = async (Sc: AnyApi) => {
     const newProvider = new ScProvider(
       Sc,
-      NetworkList[networkName].endpoints.lightClient
+      NetworkList[network].endpoints.lightClient
     );
-    connectProvider(networkName, newProvider);
+    connectProvider(network, newProvider);
   };
 
   // Handle a switch in API.
@@ -104,7 +103,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     } else {
       // if not light client, directly connect.
       setApiStatus('connecting');
-      connectProvider(networkName);
+      connectProvider(network);
     }
   };
 
@@ -115,7 +114,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     return () => {
       cancelFn?.();
     };
-  }, [isLightClient, networkName]);
+  }, [isLightClient, network]);
 
   // Initialise provider event handlers when provider is set.
   useEffectIgnoreInitial(() => {
@@ -163,7 +162,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
 
     // store active network in localStorage.
     // NOTE: this should ideally refer to above `chain` value.
-    localStorage.setItem('network', String(networkName));
+    localStorage.setItem('network', String(network));
 
     // Assume chain state is correct and bootstrap network consts.
     connectedCallback(newApi);

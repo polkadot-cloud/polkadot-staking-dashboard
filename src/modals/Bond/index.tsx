@@ -24,7 +24,9 @@ import { useNetwork } from 'contexts/Network';
 export const Bond = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
-  const { networkData } = useNetwork();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
   const { activeAccount } = useConnect();
   const { notEnoughFunds } = useTxMeta();
   const { selectedActivePool } = useActivePools();
@@ -35,7 +37,7 @@ export const Bond = () => {
     config: { options },
     setModalResize,
   } = useOverlay().modal;
-  const { units } = networkData;
+
   const { bondFor } = options;
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
@@ -52,7 +54,7 @@ export const Bond = () => {
   // calculate any unclaimed pool rewards.
   let { pendingRewards } = selectedActivePool || {};
   pendingRewards = pendingRewards ?? new BigNumber(0);
-  pendingRewards = planckToUnit(pendingRewards, networkData.units);
+  pendingRewards = planckToUnit(pendingRewards, units);
 
   // local bond value.
   const [bond, setBond] = useState<{ bond: string }>({
@@ -148,9 +150,7 @@ export const Bond = () => {
         {pendingRewards > 0 && bondFor === 'pool' ? (
           <ModalWarnings withMargin>
             <Warning
-              text={`${t('bondingWithdraw')} ${pendingRewards} ${
-                networkData.unit
-              }.`}
+              text={`${t('bondingWithdraw')} ${pendingRewards} ${unit}.`}
             />
           </ModalWarnings>
         ) : null}

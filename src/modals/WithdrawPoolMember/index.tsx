@@ -22,7 +22,9 @@ import { useNetwork } from 'contexts/Network';
 export const WithdrawPoolMember = () => {
   const { t } = useTranslation('modals');
   const { api, consts } = useApi();
-  const { networkData } = useNetwork();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
   const { activeAccount } = useConnect();
   const {
     setModalStatus,
@@ -50,15 +52,9 @@ export const WithdrawPoolMember = () => {
     }
   });
 
-  const bonded = planckToUnit(
-    new BigNumber(rmCommas(points)),
-    networkData.units
-  );
+  const bonded = planckToUnit(new BigNumber(rmCommas(points)), units);
 
-  const totalWithdraw = planckToUnit(
-    new BigNumber(totalWithdrawUnit),
-    networkData.units
-  );
+  const totalWithdraw = planckToUnit(new BigNumber(totalWithdrawUnit), units);
 
   // valid to submit transaction
   const [valid] = useState<boolean>(isNotZero(totalWithdraw) ?? false);
@@ -100,9 +96,7 @@ export const WithdrawPoolMember = () => {
       <Close />
       <ModalPadding>
         <h2 className="title">{t('withdrawMemberFunds')}</h2>
-        <ActionItem
-          text={`${t('withdraw')} ${totalWithdraw} ${networkData.unit}`}
-        />
+        <ActionItem text={`${t('withdraw')} ${totalWithdraw} ${unit}`} />
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
             {warnings.map((text, i) => (

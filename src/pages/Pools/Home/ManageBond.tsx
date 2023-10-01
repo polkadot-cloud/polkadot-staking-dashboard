@@ -23,17 +23,18 @@ import { useNetwork } from 'contexts/Network';
 export const ManageBond = () => {
   const { t } = useTranslation('pages');
 
-  const { networkData } = useNetwork();
+  const {
+    networkData: {
+      units,
+      brand: { token: Token },
+    },
+  } = useNetwork();
   const { openHelp } = useHelp();
   const { isPoolSyncing } = useUi();
   const { openModal } = useOverlay().modal;
   const { getTransferOptions } = useTransferOptions();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { isBonding, isMember, selectedActivePool } = useActivePools();
-  const {
-    units,
-    brand: { token: Token },
-  } = networkData;
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const {

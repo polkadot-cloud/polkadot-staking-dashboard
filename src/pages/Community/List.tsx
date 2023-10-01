@@ -10,23 +10,19 @@ import { ItemsWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
 
 export const List = () => {
-  const { networkData } = useNetwork();
+  const { network } = useNetwork();
   const { validatorCommunity } = useValidators();
   const { scrollPos } = useCommunitySections();
 
   const [entityItems, setEntityItems] = useState(
-    validatorCommunity.filter(
-      (v) => v.validators[networkData.name] !== undefined
-    )
+    validatorCommunity.filter((v) => v.validators[network] !== undefined)
   );
 
   useEffect(() => {
     setEntityItems(
-      validatorCommunity.filter(
-        (v) => v.validators[networkData.name] !== undefined
-      )
+      validatorCommunity.filter((v) => v.validators[network] !== undefined)
     );
-  }, [networkData]);
+  }, [network]);
 
   useEffect(() => {
     window.scrollTo(0, scrollPos);

@@ -14,8 +14,8 @@ import type {
 import { getDuration } from './utils';
 
 export const useTimeLeft = () => {
+  const { network } = useNetwork();
   const { t, i18n } = useTranslation();
-  const { networkData } = useNetwork();
 
   // check whether timeleft is within a minute of finishing.
   const inLastHour = () => {
@@ -107,7 +107,7 @@ export const useTimeLeft = () => {
         setStateWithRef(interval, setMinInterval, minIntervalRef);
       }
     }
-  }, [to, inLastHour(), lastMinuteCountdown(), networkData]);
+  }, [to, inLastHour(), lastMinuteCountdown(), network]);
 
   // re-render the timeleft upon langauge switch.
   useEffect(() => {

@@ -17,7 +17,7 @@ export const CommunitySectionsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { networkData } = useNetwork();
+  const { network } = useNetwork();
 
   // store the active section of the community page
   const [activeSection, setActiveSectionState] = useState<number>(0);
@@ -33,7 +33,7 @@ export const CommunitySectionsProvider = ({
   useEffect(() => {
     setActiveSectionState(0);
     setActiveItem(defaults.item);
-  }, [networkData]);
+  }, [network]);
 
   const setActiveSection = (t: any) => {
     setActiveSectionState(t);

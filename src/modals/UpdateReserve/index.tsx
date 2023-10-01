@@ -27,7 +27,8 @@ import { useNetwork } from 'contexts/Network';
 export const UpdateReserve = () => {
   const { t } = useTranslation('modals');
   const {
-    networkData: { units, unit, name },
+    network,
+    networkData: { units, unit },
   } = useNetwork();
   const { openHelp } = useHelp();
   const { setModalStatus } = useOverlay().modal;
@@ -38,7 +39,7 @@ export const UpdateReserve = () => {
   const { edReserved } = getTransferOptions(activeAccount);
   const minReserve = planckToUnit(edReserved, units);
   const maxReserve = minReserve.plus(
-    ['polkadot', 'westend'].includes(name) ? 3 : 1
+    ['polkadot', 'westend'].includes(network) ? 3 : 1
   );
 
   const [sliderReserve, setSliderReserve] = useState<number>(

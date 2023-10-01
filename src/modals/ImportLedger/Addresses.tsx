@@ -17,7 +17,7 @@ import { useNetwork } from 'contexts/Network';
 
 export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
   const { t } = useTranslation('modals');
-  const { networkData } = useNetwork();
+  const { network } = useNetwork();
 
   const {
     getIsExecuting,
@@ -63,7 +63,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
           {addresses.map(({ address, index }: AnyJson, i: number) => {
             const initialName = (() => {
               const localAddress = getLocalLedgerAddresses().find(
-                (a) => a.address === address && a.network === networkData.name
+                (a) => a.address === address && a.network === network
               );
               return localAddress?.name
                 ? unescape(localAddress.name)

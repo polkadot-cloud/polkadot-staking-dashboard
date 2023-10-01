@@ -9,8 +9,8 @@ import { useNetwork } from 'contexts/Network';
 import { MoreWrapper } from './Wrappers';
 
 export const BalanceLinks = () => {
+  const { network } = useNetwork();
   const { t } = useTranslation('pages');
-  const { name } = useNetwork().networkData;
   const { activeAccount } = useConnect();
 
   return (
@@ -22,7 +22,7 @@ export const BalanceLinks = () => {
           lg
           onClick={() =>
             window.open(
-              `https://${name}.subscan.io/account/${activeAccount}`,
+              `https://${network}.subscan.io/account/${activeAccount}`,
               '_blank'
             )
           }
@@ -36,14 +36,16 @@ export const BalanceLinks = () => {
           lg
           onClick={() =>
             window.open(
-              `https://${name}.polkawatch.app/nomination/${activeAccount}`,
+              `https://${network}.polkawatch.app/nomination/${activeAccount}`,
               '_blank'
             )
           }
           iconRight={faExternalLinkAlt}
           iconTransform="shrink-2"
           text="Polkawatch"
-          disabled={!(activeAccount && ['polkadot', 'kusama'].includes(name))}
+          disabled={
+            !(activeAccount && ['polkadot', 'kusama'].includes(network))
+          }
         />
       </section>
     </MoreWrapper>

@@ -4,6 +4,7 @@
 import type { Network, NetworkName } from 'types';
 
 export interface NetworkContextInterface {
+  network: NetworkName;
   networkData: Network;
   switchNetwork: (network: NetworkName) => void;
 }

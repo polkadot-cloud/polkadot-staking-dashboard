@@ -30,7 +30,9 @@ export const Forms = forwardRef(
   ({ setSection, payouts, setPayouts }: FormProps, ref: any) => {
     const { t } = useTranslation('modals');
     const { api } = useApi();
-    const { networkData } = useNetwork();
+    const {
+      networkData: { units, unit },
+    } = useNetwork();
     const { activeAccount } = useConnect();
     const { newBatchCall } = useBatchCall();
     const { removeEraPayout } = usePayouts();
@@ -38,7 +40,6 @@ export const Forms = forwardRef(
     const { getSignerWarnings } = useSignerWarnings();
     const { unclaimedPayouts: unclaimedPayoutsSubscan, setUnclaimedPayouts } =
       useSubscan();
-    const { units } = networkData;
 
     const totalPayout =
       payouts?.reduce(
@@ -133,9 +134,10 @@ export const Forms = forwardRef(
             ) : null}
             <div style={{ marginBottom: '2rem' }}>
               <ActionItem
-                text={`${t('claim')} ${planckToUnit(totalPayout, units)} ${
-                  networkData.unit
-                }`}
+                text={`${t('claim')} ${planckToUnit(
+                  totalPayout,
+                  units
+                )} ${unit}`}
               />
               <p>{t('afterClaiming')}</p>
             </div>

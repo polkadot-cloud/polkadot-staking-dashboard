@@ -23,8 +23,8 @@ export const PoolMembershipsProvider = ({
   children: React.ReactNode;
 }) => {
   const { t } = useTranslation('base');
+  const { network } = useNetwork();
   const { api, isReady } = useApi();
-  const { networkData } = useNetwork();
   const { accounts: connectAccounts, activeAccount } = useConnect();
 
   // Stores pool memberships for the imported accounts.
@@ -42,7 +42,7 @@ export const PoolMembershipsProvider = ({
         getPoolMemberships();
       })();
     }
-  }, [networkData, isReady, connectAccounts]);
+  }, [network, isReady, connectAccounts]);
 
   // subscribe to account pool memberships
   const getPoolMemberships = async () => {

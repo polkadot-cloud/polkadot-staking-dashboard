@@ -23,8 +23,8 @@ export const BondedPoolsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { network } = useNetwork();
   const { api, isReady } = useApi();
-  const { networkData } = useNetwork();
   const { getNominationsStatusFromTargets } = useStaking();
   const { createAccounts, stats } = usePoolsConfig();
   const { lastPoolId } = stats;
@@ -43,7 +43,7 @@ export const BondedPoolsProvider = ({
   useEffectIgnoreInitial(() => {
     setBondedPools([]);
     setStateWithRef({}, setPoolMetaBatch, poolMetaBatchesRef);
-  }, [networkData]);
+  }, [network]);
 
   // initial setup for fetching bonded pools
   useEffectIgnoreInitial(() => {
@@ -54,7 +54,7 @@ export const BondedPoolsProvider = ({
     return () => {
       unsubscribe();
     };
-  }, [networkData, isReady, lastPoolId]);
+  }, [network, isReady, lastPoolId]);
 
   // after bonded pools have synced, fetch metabatch
   useEffectIgnoreInitial(() => {

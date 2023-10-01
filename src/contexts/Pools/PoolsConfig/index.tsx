@@ -22,7 +22,7 @@ export const PoolsConfigProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { networkData } = useNetwork();
+  const { networkData, network } = useNetwork();
   const { api, isReady, consts } = useApi();
   const { poolsPalletId } = consts;
 
@@ -35,9 +35,7 @@ export const PoolsConfigProvider = ({
 
   // get favorite pools from local storage.
   const getLocalFavorites = () => {
-    const localFavorites = localStorage.getItem(
-      `${networkData.name}_favorite_pools`
-    );
+    const localFavorites = localStorage.getItem(`${network}_favorite_pools`);
     return localFavorites !== null ? JSON.parse(localFavorites) : [];
   };
 
@@ -154,7 +152,7 @@ export const PoolsConfigProvider = ({
     }
 
     localStorage.setItem(
-      `${networkData.name}_favorite_pools`,
+      `${network}_favorite_pools`,
       JSON.stringify(newFavorites)
     );
     setFavorites([...newFavorites]);
@@ -169,7 +167,7 @@ export const PoolsConfigProvider = ({
       (validator: string) => validator !== address
     );
     localStorage.setItem(
-      `${networkData.name}_favorite_pools`,
+      `${network}_favorite_pools`,
       JSON.stringify(newFavorites)
     );
     setFavorites([...newFavorites]);

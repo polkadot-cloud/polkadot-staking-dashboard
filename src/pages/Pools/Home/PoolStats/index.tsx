@@ -14,7 +14,9 @@ import { Wrapper } from './Wrappers';
 
 export const PoolStats = () => {
   const { t } = useTranslation('pages');
-  const { networkData } = useNetwork();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
   const { selectedActivePool, selectedPoolMemberCount } = useActivePools();
   const { getCurrentCommission } = usePoolCommission();
 
@@ -23,7 +25,7 @@ export const PoolStats = () => {
 
   const bonded = planckToUnit(
     new BigNumber(points ? rmCommas(points) : 0),
-    networkData.units
+    units
   )
     .decimalPlaces(3)
     .toFormat();
@@ -62,7 +64,7 @@ export const PoolStats = () => {
     },
     {
       label: t('pools.totalBonded'),
-      value: `${bonded} ${networkData.unit}`,
+      value: `${bonded} ${unit}`,
     }
   );
 

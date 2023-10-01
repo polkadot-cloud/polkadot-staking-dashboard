@@ -25,7 +25,9 @@ import { useNetwork } from 'contexts/Network';
 export const ClaimCommission = ({ setSection }: any) => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
-  const { networkData } = useNetwork();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
   const { setModalStatus } = useOverlay().modal;
   const { activeAccount } = useConnect();
   const { isOwner, selectedActivePool } = useActivePools();
@@ -79,8 +81,8 @@ export const ClaimCommission = ({ setSection }: any) => {
         <ActionItem
           text={`${t('claim')} ${planckToUnit(
             pendingCommission,
-            networkData.units
-          )} ${networkData.unit} `}
+            units
+          )} ${unit} `}
         />
         <ModalNotes>
           <p>{t('sentToCommissionPayee')}</p>

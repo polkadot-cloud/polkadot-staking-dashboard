@@ -28,13 +28,12 @@ export const ValidatorsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { network } = useNetwork();
   const { isReady, api } = useApi();
-  const { networkData } = useNetwork();
   const { activeAccount } = useConnect();
   const { poolNominations } = useActivePools();
   const { activeEra, metrics } = useNetworkMetrics();
   const { bondedAccounts, getAccountNominations } = useBonded();
-  const { name } = networkData;
   const { earliestStoredSession } = metrics;
 
   // Stores all validator entries.
@@ -84,7 +83,7 @@ export const ValidatorsProvider = ({
     setValidators([]);
     setValidatorIdentities({});
     setValidatorSupers({});
-  }, [networkData]);
+  }, [network]);
 
   // fetch validators and session validators when activeEra ready
   useEffectIgnoreInitial(() => {
@@ -140,7 +139,7 @@ export const ValidatorsProvider = ({
       sessionUnsub.current?.();
       sessionParaUnsub.current?.();
     };
-  }, [networkData]);
+  }, [network]);
 
   const fetchPoolNominatedList = async () => {
     // get raw nominations list
@@ -192,7 +191,7 @@ export const ValidatorsProvider = ({
     // If local validator entries exist for the current era, store these values in state. Otherwise,
     // fetch entries from API.
     const localEraValidators = getLocalEraValidators(
-      name,
+      network,
       activeEra.index.toString()
     );
 
@@ -219,7 +218,7 @@ export const ValidatorsProvider = ({
 
     // Set entries data for the era to local storage.
     setLocalEraValidators(
-      name,
+      network,
       activeEra.index.toString(),
       validatorEntries,
       avg

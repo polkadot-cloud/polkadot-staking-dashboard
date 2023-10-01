@@ -15,7 +15,7 @@ export const NetworkBar = () => {
   const { t } = useTranslation('library');
   const { plugins } = usePlugins();
   const { isLightClient } = useApi();
-  const { networkData } = useNetwork();
+  const { networkData, network } = useNetwork();
   const prices = usePrices();
 
   const PRIVACY_URL = import.meta.env.VITE_PRIVACY_URL;
@@ -24,16 +24,14 @@ export const NetworkBar = () => {
   const LEGAL_DISCLOSURES_URL = import.meta.env.VITE_LEGAL_DISCLOSURES_URL;
 
   const [networkName, setNetworkName] = useState<string>(
-    capitalizeFirstLetter(networkData.name)
+    capitalizeFirstLetter(network)
   );
 
   useEffect(() => {
     setNetworkName(
-      `${capitalizeFirstLetter(networkData.name)}${
-        isLightClient ? ` Light` : ``
-      }`
+      `${capitalizeFirstLetter(network)}${isLightClient ? ` Light` : ``}`
     );
-  }, [networkData.name, isLightClient]);
+  }, [network, isLightClient]);
 
   return (
     <Wrapper>

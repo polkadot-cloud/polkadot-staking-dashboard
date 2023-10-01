@@ -10,11 +10,9 @@ import type { LederLoopProps } from './types';
 export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
   const { setIsPaired, getIsExecuting, getStatusCodes, executeLedgerLoop } =
     useLedgerHardware();
-  const {
-    networkData: { name },
-  } = useNetwork();
+  const { network } = useNetwork();
   const { getTxPayload, getPayloadUid } = useTxMeta();
-  const { appName } = getLedgerApp(name);
+  const { appName } = getLedgerApp(network);
 
   // Connect to Ledger device and perform necessary tasks.
   //

@@ -25,10 +25,11 @@ export const Overview = forwardRef(
   ({ unlocking, bondFor, setSection, setUnlock, setTask }: any, ref: any) => {
     const { t } = useTranslation('modals');
     const { consts } = useApi();
-    const { networkData } = useNetwork();
+    const {
+      networkData: { units, unit },
+    } = useNetwork();
     const { activeEra } = useNetworkMetrics();
     const { bondDuration } = consts;
-    const { units } = networkData;
     const { isFastUnstaking } = useUnstaking();
     const { erasToSeconds } = useErasToTimeLeft();
 
@@ -73,7 +74,7 @@ export const Overview = forwardRef(
                   {planckToUnit(withdrawAvailable, units)
                     .decimalPlaces(3)
                     .toFormat()}{' '}
-                  {networkData.unit}
+                  {unit}
                 </h2>
               </div>
             </StatWrapper>
@@ -87,7 +88,7 @@ export const Overview = forwardRef(
                   {planckToUnit(totalUnbonding.minus(withdrawAvailable), units)
                     .decimalPlaces(3)
                     .toFormat()}{' '}
-                  {networkData.unit}
+                  {unit}
                 </h2>
               </div>
             </StatWrapper>
@@ -98,7 +99,7 @@ export const Overview = forwardRef(
                   {planckToUnit(totalUnbonding, units)
                     .decimalPlaces(3)
                     .toFormat()}{' '}
-                  {networkData.unit}
+                  {unit}
                 </h2>
               </div>
             </StatWrapper>

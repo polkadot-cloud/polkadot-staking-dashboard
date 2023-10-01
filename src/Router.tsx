@@ -33,7 +33,7 @@ import { useNetwork } from 'contexts/Network';
 
 export const RouterInner = () => {
   const { t } = useTranslation();
-  const { networkData } = useNetwork();
+  const { network } = useNetwork();
   const { pathname } = useLocation();
   const { addNotification } = useNotifications();
   const { accountsInitialised, accounts, activeAccount, connectToAccount } =
@@ -43,7 +43,7 @@ export const RouterInner = () => {
   // Scroll to top of the window on every page change or network change.
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [pathname, networkData]);
+  }, [pathname, network]);
 
   // Set references to UI context and make available throughout app.
   useEffect(() => {
@@ -116,7 +116,7 @@ export const RouterInner = () => {
                         <Page>
                           <Helmet>
                             <title>{`${t(key, { ns: 'base' })} : ${t('title', {
-                              context: `${networkData.name}`,
+                              context: `${network}`,
                               ns: 'base',
                             })}`}</title>
                           </Helmet>

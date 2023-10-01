@@ -7,12 +7,12 @@ import { useUnitPrice } from 'library/Hooks/useUnitPrice';
 import { useNetwork } from 'contexts/Network';
 
 export const usePrices = () => {
+  const { network } = useNetwork();
   const { plugins } = usePlugins();
-  const { networkData } = useNetwork();
   const fetchUnitPrice = useUnitPrice();
 
   const pricesLocalStorage = () => {
-    const pricesLocal = localStorage.getItem(`${networkData.name}_prices`);
+    const pricesLocal = localStorage.getItem(`${network}_prices`);
     return pricesLocal === null
       ? {
           lastPrice: 0,
@@ -25,7 +25,7 @@ export const usePrices = () => {
   const pricesRef = useRef(prices);
 
   const setPrices = (p: any) => {
-    localStorage.setItem(`${networkData.name}_prices`, JSON.stringify(p));
+    localStorage.setItem(`${network}_prices`, JSON.stringify(p));
     pricesRef.current = {
       ...pricesRef.current,
       ...p,
@@ -66,7 +66,7 @@ export const usePrices = () => {
       clearInterval(priceHandle);
     }
     initiatePriceInterval();
-  }, [networkData]);
+  }, [network]);
 
   // servie toggle
   useEffect(() => {

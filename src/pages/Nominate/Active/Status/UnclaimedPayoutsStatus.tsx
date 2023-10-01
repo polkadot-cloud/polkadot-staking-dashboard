@@ -15,7 +15,9 @@ import { useNetwork } from 'contexts/Network';
 export const UnclaimedPayoutsStatus = () => {
   const { t } = useTranslation();
   const { isReady } = useApi();
-  const { networkData } = useNetwork();
+  const {
+    networkData: { units },
+  } = useNetwork();
   const { openModal } = useOverlay().modal;
   const { unclaimedPayouts } = usePayouts();
   const { activeAccount, isReadOnlyAccount } = useConnect();
@@ -35,7 +37,7 @@ export const UnclaimedPayoutsStatus = () => {
       type="odometer"
       stat={{
         value: minDecimalPlaces(
-          planckToUnit(totalUnclaimed, networkData.units).toFormat(),
+          planckToUnit(totalUnclaimed, units).toFormat(),
           2
         ),
       }}

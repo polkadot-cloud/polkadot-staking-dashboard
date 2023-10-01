@@ -32,7 +32,8 @@ export const MembersListInner = ({
 }: FetchpageMembersListProps) => {
   const { t } = useTranslation('pages');
   const {
-    networkData: { colors, name },
+    network,
+    networkData: { colors },
   } = useNetwork();
   const provider = useList();
   const { mode } = useTheme();
@@ -109,7 +110,7 @@ export const MembersListInner = ({
     setFetchedPoolMembersApi('unsynced');
     setPoolMembersApi([]);
     setPage(1);
-  }, [name]);
+  }, [network]);
 
   // Configure list when network is ready to fetch.
   useEffect(() => {

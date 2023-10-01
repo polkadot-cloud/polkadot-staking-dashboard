@@ -20,8 +20,8 @@ export const NetworkMetricsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { network } = useNetwork();
   const { isReady, api } = useApi();
-  const { networkData } = useNetwork();
 
   // Store active era in state.
   const [activeEra, setActiveEra] = useState<ActiveEra>(defaults.activeEra);
@@ -134,7 +134,7 @@ export const NetworkMetricsProvider = ({
   // Reset active era and metrics on network change.
   useEffectIgnoreInitial(() => {
     handleResetMetrics();
-  }, [networkData]);
+  }, [network]);
 
   return (
     <NetworkMetricsContext.Provider

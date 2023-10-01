@@ -42,7 +42,7 @@ export const PolkawatchProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { name } = useNetwork().networkData;
+  const { network } = useNetwork();
 
   const [state, setState] = useState<PolkawatchState>(PolkawatchInitialState);
 
@@ -52,10 +52,10 @@ export const PolkawatchProvider = ({
    */
   useEffect(() => {
     setState({
-      pwApi: new PolkawatchApi(apiConfiguration(name)),
-      networkSupported: PolkaWatchNetworks.includes(name),
+      pwApi: new PolkawatchApi(apiConfiguration(network)),
+      networkSupported: PolkaWatchNetworks.includes(network),
     });
-  }, [name]);
+  }, [network]);
 
   return (
     <PolkawatchContext.Provider value={state}>

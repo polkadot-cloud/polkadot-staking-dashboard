@@ -33,7 +33,7 @@ export const FastUnstakeProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { networkData } = useNetwork();
+  const { network } = useNetwork();
   const { activeAccount } = useConnect();
   const { api, isReady, consts } = useApi();
   const { inSetup, fetchEraStakers } = useStaking();
@@ -71,8 +71,7 @@ export const FastUnstakeProvider = ({
   const unsubs = useRef<AnyApi[]>([]);
 
   // localStorage key to fetch local metadata.
-  const getLocalkey = (a: MaybeAccount) =>
-    `${networkData.name}_fast_unstake_${a}`;
+  const getLocalkey = (a: MaybeAccount) => `${network}_fast_unstake_${a}`;
 
   // check until bond duration eras surpasssed.
   const checkToEra = activeEra.index.minus(bondDuration);
@@ -149,7 +148,7 @@ export const FastUnstakeProvider = ({
   }, [
     inSetup(),
     isReady,
-    networkData.name,
+    network,
     activeAccount,
     activeEra.index,
     fastUnstakeErasToCheckPerBlock,
@@ -165,7 +164,7 @@ export const FastUnstakeProvider = ({
 
       // ensure still same conditions.
       const { networkName, who } = data;
-      if (networkName !== networkData.name || who !== activeAccount) return;
+      if (networkName !== network || who !== activeAccount) return;
 
       const { era, exposed } = data;
 
@@ -243,7 +242,7 @@ export const FastUnstakeProvider = ({
       task: 'processEraForExposure',
       era: era.toString(),
       who: activeAccount,
-      networkName: networkData.name,
+      networkName: network,
       exitOnExposed: true,
       exposures,
     });

@@ -24,10 +24,10 @@ import {
 
 export const Networks = () => {
   const { t } = useTranslation('modals');
-  const { setModalStatus, setModalResize } = useOverlay().modal;
+  const { network, switchNetwork } = useNetwork();
   const { isLightClient, setIsLightClient } = useApi();
-  const { networkData, switchNetwork } = useNetwork();
-  const networkKey: string = networkData.name;
+  const { setModalStatus, setModalResize } = useOverlay().modal;
+  const networkKey: string = network;
 
   const [braveBrowser, setBraveBrowser] = useState<boolean>(false);
 

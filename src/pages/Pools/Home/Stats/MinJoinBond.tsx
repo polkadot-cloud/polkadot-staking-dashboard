@@ -9,8 +9,9 @@ import { useNetwork } from 'contexts/Network';
 
 export const MinJoinBondStat = () => {
   const { t } = useTranslation('pages');
-  const { networkData } = useNetwork();
-  const { units, unit } = networkData;
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
   const { stats } = usePoolsConfig();
 
   const params = {

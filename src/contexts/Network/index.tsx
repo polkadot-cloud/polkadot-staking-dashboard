@@ -62,6 +62,7 @@ export const NetworkProvider = ({
   return (
     <NetworkContext.Provider
       value={{
+        network: network.name,
         networkData: network.meta,
         switchNetwork,
       }}

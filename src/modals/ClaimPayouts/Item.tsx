@@ -16,7 +16,9 @@ export const Item = ({
   setSection,
 }: ItemProps) => {
   const { t } = useTranslation('modals');
-  const { networkData } = useNetwork();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
 
   const totalPayout = Object.values(unclaimedPayout).reduce(
     (acc: BigNumber, cur: string) => acc.plus(cur),
@@ -38,8 +40,7 @@ export const Item = ({
             </span>
           </h4>
           <h2>
-            {planckToUnit(totalPayout, networkData.units).toString()}{' '}
-            {networkData.unit}
+            {planckToUnit(totalPayout, units).toString()} {unit}
           </h2>
         </section>
 

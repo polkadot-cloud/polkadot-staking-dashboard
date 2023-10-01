@@ -36,7 +36,9 @@ export const Unbond = () => {
   const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
   const { api, consts } = useApi();
-  const { networkData } = useNetwork();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
@@ -47,7 +49,6 @@ export const Unbond = () => {
     config: { options },
   } = useOverlay().modal;
 
-  const { units } = networkData;
   const { bondFor } = options;
   const controller = getBondedAccount(activeAccount);
   const { minNominatorBond: minNominatorBondBn } = staking;
@@ -63,7 +64,7 @@ export const Unbond = () => {
 
   let { pendingRewards } = selectedActivePool || {};
   pendingRewards = pendingRewards ?? new BigNumber(0);
-  pendingRewards = planckToUnit(pendingRewards, networkData.units);
+  pendingRewards = planckToUnit(pendingRewards, units);
 
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
@@ -150,15 +151,13 @@ export const Unbond = () => {
   );
 
   if (pendingRewards > 0 && bondFor === 'pool') {
-    warnings.push(
-      `${t('unbondingWithdraw')} ${pendingRewards} ${networkData.unit}.`
-    );
+    warnings.push(`${t('unbondingWithdraw')} ${pendingRewards} ${unit}.`);
   }
   if (nominatorActiveBelowMin) {
     warnings.push(
       t('unbondErrorBelowMinimum', {
         bond: minNominatorBond,
-        unit: networkData.unit,
+        unit,
       })
     );
   }
@@ -166,12 +165,12 @@ export const Unbond = () => {
     warnings.push(
       t('unbondErrorBelowMinimum', {
         bond: planckToUnit(poolToMinBn, units),
-        unit: networkData.unit,
+        unit,
       })
     );
   }
   if (activeBn.isZero()) {
-    warnings.push(t('unbondErrorNoFunds', { unit: networkData.unit }));
+    warnings.push(t('unbondErrorNoFunds', { unit }));
   }
 
   // modal resize on form update
@@ -214,7 +213,7 @@ export const Unbond = () => {
                   {t('notePoolDepositorMinBond', {
                     context: 'depositor',
                     bond: minCreateBond,
-                    unit: networkData.unit,
+                    unit,
                   })}
                 </p>
               ) : (
@@ -222,7 +221,7 @@ export const Unbond = () => {
                   {t('notePoolDepositorMinBond', {
                     context: 'member',
                     bond: minJoinBond,
-                    unit: networkData.unit,
+                    unit,
                   })}
                 </p>
               )}

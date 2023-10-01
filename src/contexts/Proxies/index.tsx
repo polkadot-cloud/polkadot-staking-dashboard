@@ -34,8 +34,8 @@ export const ProxiesProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { network } = useNetwork();
   const { api, isReady } = useApi();
-  const { networkData } = useNetwork();
   const {
     accounts,
     activeProxy,
@@ -173,13 +173,13 @@ export const ProxiesProvider = ({
     if (isReady) {
       handleSyncAccounts();
     }
-  }, [accounts, isReady, networkData]);
+  }, [accounts, isReady, network]);
 
   // If active proxy has not yet been set, check local storage `activeProxy` & set it as active
   // proxy if it is the delegate of `activeAccount`.
   useEffectIgnoreInitial(() => {
     const localActiveProxy = localStorageOrDefault(
-      `${networkData.name}_active_proxy`,
+      `${network}_active_proxy`,
       null
     );
 
@@ -208,17 +208,17 @@ export const ProxiesProvider = ({
         }
       } catch (e) {
         // Corrupt local active proxy record. Remove it.
-        localStorage.removeItem(`${networkData.name}_active_proxy`);
+        localStorage.removeItem(`${network}_active_proxy`);
       }
     }
-  }, [accounts, activeAccount, proxiesRef.current, networkData]);
+  }, [accounts, activeAccount, proxiesRef.current, network]);
 
   // Reset active proxy state, unsubscribe from subscriptions on network change & unmount.
   useEffectIgnoreInitial(() => {
     setActiveProxy(null, false);
     unsubAll();
     return () => unsubAll();
-  }, [networkData]);
+  }, [network]);
 
   const unsubAll = () => {
     for (const unsub of Object.values(unsubs.current)) {

@@ -53,9 +53,9 @@ export const StakingProvider = ({
     accounts: connectAccounts,
     getActiveAccount,
   } = useConnect();
-  const { networkData } = useNetwork();
   const { getStashLedger } = useBalances();
   const { activeEra } = useNetworkMetrics();
+  const { networkData, network } = useNetwork();
   const { isReady, api, apiStatus, consts } = useApi();
   const { bondedAccounts, getBondedAccount, getAccountNominations } =
     useBonded();
@@ -102,7 +102,7 @@ export const StakingProvider = ({
       // ensure task matches, & era is still the same.
       if (
         task !== 'processExposures' ||
-        networkName !== networkData.name ||
+        networkName !== network ||
         era !== activeEra.index.toString()
       )
         return;
@@ -201,7 +201,7 @@ export const StakingProvider = ({
 
     let exposures: Exposure[] = [];
     const localExposures = getLocalEraExposures(
-      networkData.name,
+      network,
       era,
       activeEra.index.toString()
     );
@@ -216,7 +216,7 @@ export const StakingProvider = ({
 
     // For resource limitation concerns, only store the current era in local storage.
     if (era === activeEra.index.toString())
-      setLocalEraExposures(networkData.name, era, exposures);
+      setLocalEraExposures(network, era, exposures);
 
     return exposures;
   };
@@ -233,7 +233,7 @@ export const StakingProvider = ({
     // worker to calculate stats
     worker.postMessage({
       era: activeEra.index.toString(),
-      networkName: networkData.name,
+      networkName: network,
       task: 'processExposures',
       activeAccount,
       units: networkData.units,
