@@ -199,7 +199,7 @@ export const ConnectProvider = ({
     const externalToForget = forget.filter((i) => 'network' in i);
     if (externalToForget.length) {
       removeLocalExternalAccounts(
-        networkData,
+        network,
         externalToForget as ExternalAccount[]
       );
     }
@@ -243,7 +243,8 @@ export const ConnectProvider = ({
     if (localAccounts.length) {
       const activeAccountInSet =
         localAccounts.find(
-          ({ address }) => address === getActiveAccountLocal(networkData)
+          ({ address }) =>
+            address === getActiveAccountLocal(network, networkData.ss58)
         ) ?? null;
 
       // remove already-imported accounts.
