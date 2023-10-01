@@ -24,12 +24,15 @@ import type {
 } from 'contexts/Api/types';
 import type { AnyApi, NetworkName } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
-import { useNetwork } from 'contexts/Network';
 import * as defaults from './defaults';
 
-export const APIProvider = ({ children }: { children: React.ReactNode }) => {
-  const { network } = useNetwork();
-
+export const APIProvider = ({
+  children,
+  network,
+}: {
+  children: React.ReactNode;
+  network: NetworkName;
+}) => {
   // Store povider instance.
   const [provider, setProvider] = useState<WsProvider | ScProvider | null>(
     null
