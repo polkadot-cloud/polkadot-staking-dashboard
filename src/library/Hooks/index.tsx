@@ -34,7 +34,7 @@ export const useOutsideAlerter = (
 // A pure function that applies an arbitrary amount of context providers to a wrapped
 // component.
 export const withProviders = (
-  providers: Array<FC<AnyJson> | [FC<AnyJson>, AnyJson]>,
+  providers: (FC<AnyJson> | [FC<AnyJson>, AnyJson])[],
   Wrapped: FC
 ) =>
   providers.reduceRight(
