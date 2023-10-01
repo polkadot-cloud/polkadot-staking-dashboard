@@ -15,6 +15,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import type { AnyApi, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import { getLedger } from './Utils';
 import * as defaults from './defaults';
 import type {
@@ -33,7 +34,8 @@ export const BalancesProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, isReady, network } = useApi();
+  const { api, isReady } = useApi();
+  const { network } = useNetwork();
   const { accounts, addExternalAccount, getAccount } = useConnect();
 
   const [balances, setBalances] = useState<Balances[]>([]);

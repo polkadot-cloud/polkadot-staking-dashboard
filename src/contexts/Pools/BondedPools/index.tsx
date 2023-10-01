@@ -13,6 +13,7 @@ import type {
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';
@@ -22,7 +23,8 @@ export const BondedPoolsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, network, isReady } = useApi();
+  const { network } = useNetwork();
+  const { api, isReady } = useApi();
   const { getNominationsStatusFromTargets } = useStaking();
   const { createAccounts, stats } = usePoolsConfig();
   const { lastPoolId } = stats;

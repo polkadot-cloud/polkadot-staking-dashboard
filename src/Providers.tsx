@@ -3,16 +3,14 @@
 
 import { useProviders } from 'useProviders';
 import { ThemedRouter } from 'Themes';
-import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
 
 export const Providers = () => {
-  const {
-    network: { name },
-  } = useApi();
+  const { network } = useNetwork();
 
   const ProvidersJSX = useProviders({
     WrappedComponent: ThemedRouter,
-    name,
+    name: network,
   });
 
   return <ProvidersJSX />;

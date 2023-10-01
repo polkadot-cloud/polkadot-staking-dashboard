@@ -16,10 +16,14 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 
 export const ClaimReward = () => {
   const { t } = useTranslation('modals');
-  const { api, network } = useApi();
+  const { api } = useApi();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
   const { activeAccount } = useConnect();
   const { notEnoughFunds } = useTxMeta();
   const { selectedActivePool } = useActivePools();
@@ -30,7 +34,6 @@ export const ClaimReward = () => {
     setModalResize,
   } = useOverlay().modal;
 
-  const { units, unit } = network;
   let { pendingRewards } = selectedActivePool || {};
   pendingRewards = pendingRewards ?? new BigNumber(0);
   const { claimType } = options;

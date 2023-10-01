@@ -17,7 +17,6 @@ import {
 } from 'react-router-dom';
 import { Prompt } from 'library/Prompt';
 import { PagesConfig } from 'config/pages';
-import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useNotifications } from 'contexts/Notifications';
 import { useUi } from 'contexts/UI';
@@ -30,10 +29,11 @@ import { Notifications } from 'library/Notifications';
 import { SideMenu } from 'library/SideMenu';
 import { Tooltip } from 'library/Tooltip';
 import { Overlays } from 'overlay';
+import { useNetwork } from 'contexts/Network';
 
 export const RouterInner = () => {
   const { t } = useTranslation();
-  const { network } = useApi();
+  const { network } = useNetwork();
   const { pathname } = useLocation();
   const { addNotification } = useNotifications();
   const { accountsInitialised, accounts, activeAccount, connectToAccount } =
@@ -116,7 +116,7 @@ export const RouterInner = () => {
                         <Page>
                           <Helmet>
                             <title>{`${t(key, { ns: 'base' })} : ${t('title', {
-                              context: `${network.name}`,
+                              context: `${network}`,
                               ns: 'base',
                             })}`}</title>
                           </Helmet>

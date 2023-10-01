@@ -10,7 +10,6 @@ import {
 } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { usePlugins } from 'contexts/Plugins';
@@ -22,16 +21,17 @@ import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
   const {
-    network: {
+    networkData: {
       units,
       unit,
       brand: { token: Token },
     },
-  } = useApi();
+  } = useNetwork();
   const prices = usePrices();
   const { plugins } = usePlugins();
   const { isNetworkSyncing } = useUi();

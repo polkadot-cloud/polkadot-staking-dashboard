@@ -12,7 +12,6 @@ import BigNumber from 'bignumber.js';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { DefaultLocale } from 'consts';
-import { useApi } from 'contexts/Api';
 import { useSubscan } from 'contexts/Plugins/Subscan';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
@@ -21,6 +20,7 @@ import { locales } from 'locale';
 import { ControllerNotStash } from 'pages/Nominate/Active/ControllerNotStash';
 import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
 import { PluginLabel } from 'library/PluginLabel';
+import { useNetwork } from 'contexts/Network';
 import { ActiveAccounts } from './ActiveAccounts';
 import { BalanceChart } from './BalanceChart';
 import { BalanceLinks } from './BalanceLinks';
@@ -33,9 +33,14 @@ import { SupplyStakedStat } from './Stats/SupplyStaked';
 
 export const Overview = () => {
   const { i18n, t } = useTranslation('pages');
-  const { network } = useApi();
+  const {
+    networkData: {
+      units,
+      brand: { token: Token },
+    },
+  } = useNetwork();
   const { payouts, poolClaims, unclaimedPayouts } = useSubscan();
-  const { units } = network;
+
   const { lastReward } = formatRewardsForGraphs(
     new Date(),
     14,
@@ -44,9 +49,7 @@ export const Overview = () => {
     poolClaims,
     unclaimedPayouts
   );
-  const {
-    brand: { token: Token },
-  } = network;
+
   const PAYOUTS_HEIGHT = 380;
 
   let formatFrom = new Date();

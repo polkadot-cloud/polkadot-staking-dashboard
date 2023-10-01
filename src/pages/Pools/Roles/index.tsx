@@ -21,6 +21,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import { RolesWrapper } from '../Home/ManagePool/Wrappers';
 import { PoolAccount } from '../PoolAccount';
 import { RoleEditInput } from './RoleEditInput';
@@ -34,10 +35,11 @@ export const Roles = ({
   listenIsValid = () => {},
 }: RolesProps) => {
   const { t } = useTranslation('pages');
+  const { isReady } = useApi();
   const { openHelp } = useHelp();
+  const { network } = useNetwork();
   const { isPoolSyncing } = useUi();
   const { openModal } = useOverlay().modal;
-  const { isReady, network } = useApi();
   const { fetchIdentitiesMetaBatch } = useIdentities();
   const { isOwner, selectedActivePool } = useActivePools();
   const { activeAccount, isReadOnlyAccount } = useConnect();

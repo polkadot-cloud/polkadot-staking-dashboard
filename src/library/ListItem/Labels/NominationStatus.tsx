@@ -4,12 +4,12 @@
 import { greaterThanZero, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
 import { useConnect } from 'contexts/Connect';
+import { useNetwork } from 'contexts/Network';
 import type { NominationStatusProps } from '../types';
 
 export const NominationStatus = ({
@@ -19,8 +19,8 @@ export const NominationStatus = ({
 }: NominationStatusProps) => {
   const { t } = useTranslation('library');
   const {
-    network: { unit, units },
-  } = useApi();
+    networkData: { unit, units },
+  } = useNetwork();
   const { activeAccount } = useConnect();
   const { getPoolNominationStatus } = useBondedPools();
   const { getNomineesStatus } = useNominationStatus();

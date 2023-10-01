@@ -25,6 +25,7 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 
 export const Unbond = () => {
   const { t } = useTranslation('modals');
@@ -34,7 +35,10 @@ export const Unbond = () => {
   const { activeAccount } = useConnect();
   const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
-  const { api, network, consts } = useApi();
+  const { api, consts } = useApi();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
@@ -45,7 +49,6 @@ export const Unbond = () => {
     config: { options },
   } = useOverlay().modal;
 
-  const { units } = network;
   const { bondFor } = options;
   const controller = getBondedAccount(activeAccount);
   const { minNominatorBond: minNominatorBondBn } = staking;
@@ -61,7 +64,7 @@ export const Unbond = () => {
 
   let { pendingRewards } = selectedActivePool || {};
   pendingRewards = pendingRewards ?? new BigNumber(0);
-  pendingRewards = planckToUnit(pendingRewards, network.units);
+  pendingRewards = planckToUnit(pendingRewards, units);
 
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
@@ -148,15 +151,13 @@ export const Unbond = () => {
   );
 
   if (pendingRewards > 0 && bondFor === 'pool') {
-    warnings.push(
-      `${t('unbondingWithdraw')} ${pendingRewards} ${network.unit}.`
-    );
+    warnings.push(`${t('unbondingWithdraw')} ${pendingRewards} ${unit}.`);
   }
   if (nominatorActiveBelowMin) {
     warnings.push(
       t('unbondErrorBelowMinimum', {
         bond: minNominatorBond,
-        unit: network.unit,
+        unit,
       })
     );
   }
@@ -164,12 +165,12 @@ export const Unbond = () => {
     warnings.push(
       t('unbondErrorBelowMinimum', {
         bond: planckToUnit(poolToMinBn, units),
-        unit: network.unit,
+        unit,
       })
     );
   }
   if (activeBn.isZero()) {
-    warnings.push(t('unbondErrorNoFunds', { unit: network.unit }));
+    warnings.push(t('unbondErrorNoFunds', { unit }));
   }
 
   // modal resize on form update
@@ -212,7 +213,7 @@ export const Unbond = () => {
                   {t('notePoolDepositorMinBond', {
                     context: 'depositor',
                     bond: minCreateBond,
-                    unit: network.unit,
+                    unit,
                   })}
                 </p>
               ) : (
@@ -220,7 +221,7 @@ export const Unbond = () => {
                   {t('notePoolDepositorMinBond', {
                     context: 'member',
                     bond: minJoinBond,
-                    unit: network.unit,
+                    unit,
                   })}
                 </p>
               )}

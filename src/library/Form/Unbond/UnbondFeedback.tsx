@@ -5,12 +5,12 @@ import { isNotZero, planckToUnit, unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useNetwork } from 'contexts/Network';
 import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
 import type { UnbondFeedbackProps } from '../types';
@@ -27,14 +27,15 @@ export const UnbondFeedback = ({
   txFees,
 }: UnbondFeedbackProps) => {
   const { t } = useTranslation('library');
-  const { network } = useApi();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
   const { activeAccount } = useConnect();
   const { staking } = useStaking();
   const { getTransferOptions } = useTransferOptions();
   const { isDepositor } = useActivePools();
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
-  const { units, unit } = network;
   const { minNominatorBond } = staking;
   const allTransferOptions = getTransferOptions(activeAccount);
 

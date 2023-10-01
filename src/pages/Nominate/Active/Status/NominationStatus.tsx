@@ -11,7 +11,7 @@ import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';

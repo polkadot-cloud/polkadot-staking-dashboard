@@ -18,6 +18,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import type { AnyApi, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import * as defaults from './defaults';
 import type {
   Delegates,
@@ -33,7 +34,8 @@ export const ProxiesProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, isReady, network } = useApi();
+  const { network } = useNetwork();
+  const { api, isReady } = useApi();
   const {
     accounts,
     activeProxy,
@@ -177,7 +179,7 @@ export const ProxiesProvider = ({
   // proxy if it is the delegate of `activeAccount`.
   useEffectIgnoreInitial(() => {
     const localActiveProxy = localStorageOrDefault(
-      `${network.name}_active_proxy`,
+      `${network}_active_proxy`,
       null
     );
 
@@ -206,7 +208,7 @@ export const ProxiesProvider = ({
         }
       } catch (e) {
         // Corrupt local active proxy record. Remove it.
-        localStorage.removeItem(`${network.name}_active_proxy`);
+        localStorage.removeItem(`${network}_active_proxy`);
       }
     }
   }, [accounts, activeAccount, proxiesRef.current, network]);

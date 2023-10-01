@@ -11,13 +11,14 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { Stat } from 'library/Stat';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 
 export const RewardsStatus = () => {
   const { t } = useTranslation('pages');
   const {
-    network: { units },
-    isReady,
-  } = useApi();
+    networkData: { units },
+  } = useNetwork();
+  const { isReady } = useApi();
   const { isPoolSyncing } = useUi();
   const { openModal } = useOverlay().modal;
   const { selectedActivePool } = useActivePools();

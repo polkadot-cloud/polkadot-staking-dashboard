@@ -17,7 +17,6 @@ import { format, fromUnixTime } from 'date-fns';
 import { Bar } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import { DefaultLocale } from 'consts';
-import { useApi } from 'contexts/Api';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Plugins/Subscan';
@@ -26,6 +25,7 @@ import { useUi } from 'contexts/UI';
 import { locales } from 'locale';
 import { graphColors } from 'styles/graphs';
 import type { AnySubscan } from 'types';
+import { useNetwork } from 'contexts/Network';
 import type { PayoutBarProps } from './types';
 import { formatRewardsForGraphs } from './Utils';
 
@@ -43,10 +43,10 @@ ChartJS.register(
 export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   const { i18n, t } = useTranslation('library');
   const { mode } = useTheme();
-  const { unit, units, colors } = useApi().network;
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
+  const { unit, units, colors } = useNetwork().networkData;
   const { payouts, poolClaims, unclaimedPayouts } = useSubscan();
   const notStaking = !isSyncing && inSetup() && !membership;
 
