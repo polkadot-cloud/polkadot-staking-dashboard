@@ -8,6 +8,7 @@ import { usePlugins } from 'contexts/Plugins';
 import type { PoolMember, PoolMemberContext } from 'contexts/Pools/types';
 import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import { useApi } from '../../Api';
 import { defaultPoolMembers } from './defaults';
 
@@ -16,9 +17,10 @@ export const PoolMembersProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { network } = useNetwork();
+  const { api, isReady } = useApi();
   const { pluginEnabled } = usePlugins();
   const { activeAccount } = useConnect();
-  const { api, network, isReady } = useApi();
 
   // Store pool members from node.
   const [poolMembersNode, setPoolMembersNode] = useState<PoolMember[]>([]);

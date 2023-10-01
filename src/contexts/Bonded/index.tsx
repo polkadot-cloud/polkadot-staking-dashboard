@@ -13,11 +13,13 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import type { AnyApi, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import * as defaults from './defaults';
 import type { BondedAccount, BondedContextInterface } from './types';
 
 export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
-  const { api, isReady, network } = useApi();
+  const { network } = useNetwork();
+  const { api, isReady } = useApi();
   const { accounts, addExternalAccount } = useConnect();
 
   // Balance accounts state.

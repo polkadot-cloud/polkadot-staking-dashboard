@@ -3,13 +3,13 @@
 
 import Keyring from '@polkadot/keyring';
 import { isValidAddress } from '@polkadot-cloud/utils';
-import { useApi } from 'contexts/Api';
 import { useExtensions } from '@polkadot-cloud/react/hooks';
 import type {
   ExtensionAccount,
   ExtensionInterface,
 } from '@polkadot-cloud/react/connect/ExtensionsProvider/types';
 import type { AnyFunction } from 'types';
+import { useNetwork } from 'contexts/Network';
 import {
   addToLocalExtensions,
   getActiveAccountLocal,
@@ -19,7 +19,7 @@ import { defaultHandleImportExtension } from '../defaults';
 import type { HandleImportExtension, ImportedAccount } from '../types';
 
 export const useImportExtension = () => {
-  const { network } = useApi();
+  const { networkData, network } = useNetwork();
   const { setExtensionStatus } = useExtensions();
 
   // Handles importing of an extension.
@@ -62,7 +62,7 @@ export const useImportExtension = () => {
   ): HandleImportExtension => {
     // set network ss58 format
     const keyring = new Keyring();
-    keyring.setSS58Format(network.ss58);
+    keyring.setSS58Format(networkData.ss58);
 
     // remove accounts that do not contain correctly formatted addresses.
     newAccounts = newAccounts.filter((i) => isValidAddress(i.address));
@@ -75,7 +75,7 @@ export const useImportExtension = () => {
     });
 
     // remove newAccounts from local external accounts if present
-    const inExternal = getInExternalAccounts(newAccounts, network.name);
+    const inExternal = getInExternalAccounts(newAccounts, network);
     forget(inExternal);
 
     // find any accounts that have been removed from this extension
@@ -84,7 +84,7 @@ export const useImportExtension = () => {
       .filter((j) => !newAccounts.find((i) => i.address === j.address));
     // check whether active account is present in forgotten accounts
     const activeGoneFromExtension = goneFromExtension.find(
-      (i) => i.address === getActiveAccountLocal(network)
+      (i) => i.address === getActiveAccountLocal(networkData)
     );
     // commit remove forgotten accounts
     forget(goneFromExtension);
@@ -117,7 +117,8 @@ export const useImportExtension = () => {
   //
   // checks if the local active account is in the extension.
   const getActiveExtensionAccount = (accounts: ImportedAccount[]) =>
-    accounts.find((a) => a.address === getActiveAccountLocal(network)) ?? null;
+    accounts.find((a) => a.address === getActiveAccountLocal(networkData)) ??
+    null;
 
   // Connect active extension account.
   //

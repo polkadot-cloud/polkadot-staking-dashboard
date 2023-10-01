@@ -3,7 +3,7 @@
 
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';

@@ -11,12 +11,13 @@ import {
   DefaultLocale,
   ListItemsPerPage,
 } from 'consts';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { sortNonZeroPayouts } from 'library/Graphs/Utils';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { locales } from 'locale';
 import type { AnyApi, AnySubscan } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import { usePlugins } from '..';
@@ -29,7 +30,11 @@ export const SubscanProvider = ({
   children: React.ReactNode;
 }) => {
   const { i18n } = useTranslation();
-  const { network, isReady } = useApi();
+  const { isReady } = useApi();
+  const {
+    network,
+    networkData: { subscanEndpoint },
+  } = useNetwork();
   const { activeAccount } = useConnect();
   const { activeEra } = useNetworkMetrics();
   const { erasToSeconds } = useErasToTimeLeft();
@@ -260,7 +265,7 @@ export const SubscanProvider = ({
       return [];
     }
     const res: Response = await fetch(
-      network.subscanEndpoint + ApiEndpoints.subscanPoolDetails,
+      subscanEndpoint + ApiEndpoints.subscanPoolDetails,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -328,7 +333,7 @@ export const SubscanProvider = ({
       page,
       ...body,
     };
-    const res: Response = await fetch(network.subscanEndpoint + endpoint, {
+    const res: Response = await fetch(subscanEndpoint + endpoint, {
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': ApiSubscanKey,

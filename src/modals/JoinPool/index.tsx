@@ -23,10 +23,14 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 
 export const JoinPool = () => {
   const { t } = useTranslation('modals');
-  const { api, network } = useApi();
+  const { api } = useApi();
+  const {
+    networkData: { units },
+  } = useNetwork();
   const { activeAccount } = useConnect();
   const { newBatchCall } = useBatchCall();
   const { setActiveAccountSetup } = useSetup();
@@ -41,7 +45,6 @@ export const JoinPool = () => {
   } = useOverlay().modal;
 
   const { id: poolId, setActiveTab } = options;
-  const { units } = network;
 
   const { totalPossibleBond, totalAdditionalBond } =
     getTransferOptions(activeAccount).pool;

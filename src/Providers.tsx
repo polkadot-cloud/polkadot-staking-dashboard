@@ -16,7 +16,7 @@ import { HelpProvider } from 'contexts/Help';
 import { IdentitiesProvider } from 'contexts/Identities';
 import { MenuProvider } from 'contexts/Menu';
 import { MigrateProvider } from 'contexts/Migrate';
-import { NetworkMetricsProvider } from 'contexts/Network';
+import { NetworkMetricsProvider } from 'contexts/NetworkMetrics';
 import { NotificationsProvider } from 'contexts/Notifications';
 import { PromptProvider } from 'contexts/Prompt';
 import { PluginsProvider } from 'contexts/Plugins';
@@ -37,10 +37,12 @@ import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries';
 import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidators';
 import { withProviders } from 'library/Hooks';
 import { PayoutsProvider } from 'contexts/Payouts';
-import { PolkawatchProvider } from './contexts/Plugins/Polkawatch';
+import { NetworkProvider } from 'contexts/Network';
+import { PolkawatchProvider } from 'contexts/Plugins/Polkawatch';
 
 // !! Provider order matters.
 export const Providers = withProviders(
+  NetworkProvider,
   APIProvider,
   FiltersProvider,
   NotificationsProvider,

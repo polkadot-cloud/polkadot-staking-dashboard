@@ -24,10 +24,11 @@ import type { AnyApi, AnyJson, MaybeAccount } from 'types';
 import Worker from 'workers/stakers?worker';
 import type { ResponseInitialiseExposures } from 'workers/types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import { useApi } from '../Api';
 import { useBonded } from '../Bonded';
 import { useConnect } from '../Connect';
-import { useNetworkMetrics } from '../Network';
+import { useNetworkMetrics } from '../NetworkMetrics';
 import {
   defaultEraStakers,
   defaultStakingContext,
@@ -54,7 +55,8 @@ export const StakingProvider = ({
   } = useConnect();
   const { getStashLedger } = useBalances();
   const { activeEra } = useNetworkMetrics();
-  const { isReady, api, apiStatus, network, consts } = useApi();
+  const { networkData, network } = useNetwork();
+  const { isReady, api, apiStatus, consts } = useApi();
   const { bondedAccounts, getBondedAccount, getAccountNominations } =
     useBonded();
   const { maxNominatorRewardedPerValidator } = consts;
@@ -100,7 +102,7 @@ export const StakingProvider = ({
       // ensure task matches, & era is still the same.
       if (
         task !== 'processExposures' ||
-        networkName !== network.name ||
+        networkName !== network ||
         era !== activeEra.index.toString()
       )
         return;
@@ -199,7 +201,7 @@ export const StakingProvider = ({
 
     let exposures: Exposure[] = [];
     const localExposures = getLocalEraExposures(
-      network.name,
+      network,
       era,
       activeEra.index.toString()
     );
@@ -214,7 +216,7 @@ export const StakingProvider = ({
 
     // For resource limitation concerns, only store the current era in local storage.
     if (era === activeEra.index.toString())
-      setLocalEraExposures(network.name, era, exposures);
+      setLocalEraExposures(network, era, exposures);
 
     return exposures;
   };
@@ -231,10 +233,10 @@ export const StakingProvider = ({
     // worker to calculate stats
     worker.postMessage({
       era: activeEra.index.toString(),
-      networkName: network.name,
+      networkName: network,
       task: 'processExposures',
       activeAccount,
-      units: network.units,
+      units: networkData.units,
       exposures,
       maxNominatorRewardedPerValidator:
         maxNominatorRewardedPerValidator.toNumber(),

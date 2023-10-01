@@ -14,7 +14,7 @@ import { applyWidthAsPadding, minDecimalPlaces } from '@polkadot-cloud/utils';
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { useHelp } from 'contexts/Help';
 import { useNotifications } from 'contexts/Notifications';
-import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
 import { Wrapper } from './Wrapper';
 import type { StatAddress, StatProps } from './types';
 
@@ -30,7 +30,7 @@ export const Stat = ({
 }: StatProps) => {
   const {
     brand: { token: Token },
-  } = useApi().network;
+  } = useNetwork().networkData;
   const { openHelp } = useHelp();
   const { addNotification } = useNotifications();
 

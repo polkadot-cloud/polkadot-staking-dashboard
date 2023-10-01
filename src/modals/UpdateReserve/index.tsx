@@ -13,7 +13,6 @@ import BigNumber from 'bignumber.js';
 import Slider from 'rc-slider';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useTransferOptions } from 'contexts/TransferOptions';
@@ -23,13 +22,14 @@ import { Title } from 'library/Modal/Title';
 import { SliderWrapper } from 'modals/ManagePool/Wrappers';
 import 'rc-slider/assets/index.css';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 
 export const UpdateReserve = () => {
   const { t } = useTranslation('modals');
   const {
-    network: { units, unit },
-  } = useApi();
-  const { network } = useApi();
+    network,
+    networkData: { units, unit },
+  } = useNetwork();
   const { openHelp } = useHelp();
   const { setModalStatus } = useOverlay().modal;
   const { activeAccount, accountHasSigner } = useConnect();
@@ -39,7 +39,7 @@ export const UpdateReserve = () => {
   const { edReserved } = getTransferOptions(activeAccount);
   const minReserve = planckToUnit(edReserved, units);
   const maxReserve = minReserve.plus(
-    ['polkadot', 'westend'].includes(network.name) ? 3 : 1
+    ['polkadot', 'westend'].includes(network) ? 3 : 1
   );
 
   const [sliderReserve, setSliderReserve] = useState<number>(

@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import type { PoolMember } from 'contexts/Pools/types';
 import { useTheme } from 'contexts/Themes';
@@ -18,6 +18,7 @@ import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { ListProvider, useList } from 'library/List/context';
 import type { Sync } from 'types';
+import { useNetwork } from 'contexts/Network';
 import { Member } from './Member';
 import type { DefaultMembersListProps } from './types';
 
@@ -30,10 +31,10 @@ export const MembersListInner = ({
   disableThrottle = false,
 }: DefaultMembersListProps) => {
   const { t } = useTranslation('pages');
+  const { isReady } = useApi();
   const {
-    isReady,
-    network: { colors },
-  } = useApi();
+    networkData: { colors },
+  } = useNetwork();
   const provider = useList();
   const { mode } = useTheme();
   const { activeEra } = useNetworkMetrics();

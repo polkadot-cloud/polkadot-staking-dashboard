@@ -7,11 +7,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ValidatorCommunity } from '@polkadot-cloud/assets/validators';
 import type { AnyApi, Fn, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
-import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useNetwork } from 'contexts/Network';
+import { useApi } from 'contexts/Api';
 import type {
   Identity,
   Validator,
@@ -27,12 +28,12 @@ export const ValidatorsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { network } = useNetwork();
+  const { isReady, api } = useApi();
   const { activeAccount } = useConnect();
-  const { isReady, api, network } = useApi();
   const { poolNominations } = useActivePools();
   const { activeEra, metrics } = useNetworkMetrics();
   const { bondedAccounts, getAccountNominations } = useBonded();
-  const { name } = network;
   const { earliestStoredSession } = metrics;
 
   // Stores all validator entries.
@@ -190,7 +191,7 @@ export const ValidatorsProvider = ({
     // If local validator entries exist for the current era, store these values in state. Otherwise,
     // fetch entries from API.
     const localEraValidators = getLocalEraValidators(
-      name,
+      network,
       activeEra.index.toString()
     );
 
@@ -217,7 +218,7 @@ export const ValidatorsProvider = ({
 
     // Set entries data for the era to local storage.
     setLocalEraValidators(
-      name,
+      network,
       activeEra.index.toString(),
       validatorEntries,
       avg

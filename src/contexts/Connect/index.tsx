@@ -10,7 +10,6 @@ import {
 } from '@polkadot-cloud/utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { DappName } from 'consts';
-import { useApi } from 'contexts/Api';
 import type {
   ActiveProxy,
   ConnectContextInterface,
@@ -30,6 +29,7 @@ import type {
   ExtensionInjected,
   ExtensionInterface,
 } from '@polkadot-cloud/react/connect/ExtensionsProvider/types';
+import { useNetwork } from 'contexts/Network';
 import { useImportExtension } from './Hooks/useImportExtension';
 import {
   extensionIsLocal,
@@ -46,7 +46,7 @@ export const ConnectProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { network } = useApi();
+  const { networkData, network } = useNetwork();
   const { checkingInjectedWeb3, extensions, setExtensionStatus } =
     useExtensions();
   const {
@@ -75,11 +75,11 @@ export const ConnectProvider = ({
     if (updateLocal) {
       if (newActiveProxy) {
         localStorage.setItem(
-          `${network.name}_active_proxy`,
+          `${network}_active_proxy`,
           JSON.stringify(newActiveProxy)
         );
       } else {
-        localStorage.removeItem(`${network.name}_active_proxy`);
+        localStorage.removeItem(`${network}_active_proxy`);
       }
     }
     setStateWithRef(newActiveProxy, setActiveProxyState, activeProxyRef);
@@ -191,7 +191,7 @@ export const ConnectProvider = ({
     if (
       forget.find((a) => a.address === activeAccountRef.current) !== undefined
     ) {
-      localStorage.removeItem(`${network.name}_active_account`);
+      localStorage.removeItem(`${network}_active_account`);
       setStateWithRef(null, setActiveAccount, activeAccountRef);
     }
 
@@ -199,7 +199,7 @@ export const ConnectProvider = ({
     const externalToForget = forget.filter((i) => 'network' in i);
     if (externalToForget.length) {
       removeLocalExternalAccounts(
-        network,
+        networkData,
         externalToForget as ExternalAccount[]
       );
     }
@@ -238,12 +238,12 @@ export const ConnectProvider = ({
   ) => {
     // Get accounts from provided `getter` function. The resulting array of accounts must contain an
     // `address` field.
-    let localAccounts = getter(network.name);
+    let localAccounts = getter(network);
 
     if (localAccounts.length) {
       const activeAccountInSet =
         localAccounts.find(
-          ({ address }) => address === getActiveAccountLocal(network)
+          ({ address }) => address === getActiveAccountLocal(networkData)
         ) ?? null;
 
       // remove already-imported accounts.
@@ -253,7 +253,7 @@ export const ConnectProvider = ({
           undefined
       );
 
-      // set active account for network.
+      // set active account for networkData.
       if (activeAccountInSet) {
         connectToAccount(activeAccountInSet);
       }
@@ -434,9 +434,9 @@ export const ConnectProvider = ({
 
   const setActiveAccount = (address: MaybeAccount) => {
     if (address === null) {
-      localStorage.removeItem(`${network.name}_active_account`);
+      localStorage.removeItem(`${network}_active_account`);
     } else {
-      localStorage.setItem(`${network.name}_active_account`, address);
+      localStorage.setItem(`${network}_active_account`, address);
     }
     setStateWithRef(address, setActiveAccountState, activeAccountRef);
   };
@@ -446,7 +446,7 @@ export const ConnectProvider = ({
   };
 
   const disconnectFromAccount = () => {
-    localStorage.removeItem(`${network.name}_active_account`);
+    localStorage.removeItem(`${network}_active_account`);
     setActiveAccount(null);
   };
 
@@ -459,12 +459,12 @@ export const ConnectProvider = ({
   const addExternalAccount = (address: string, addedBy: string) => {
     // ensure account is formatted correctly
     const keyring = new Keyring();
-    keyring.setSS58Format(network.ss58);
+    keyring.setSS58Format(networkData.ss58);
     const formatted = keyring.addFromAddress(address).address;
 
     const newAccount = {
       address: formatted,
-      network: network.name,
+      network,
       name: ellipsisFn(address),
       source: 'external',
       addedBy,
@@ -473,7 +473,7 @@ export const ConnectProvider = ({
     // get all external accounts from localStorage.
     const localExternalAccounts = getLocalExternalAccounts();
     const existsLocal = localExternalAccounts.find(
-      (l) => l.address === address && l.network === network.name
+      (l) => l.address === address && l.network === network
     );
 
     // check that address is not sitting in imported accounts (currently cannot check which
@@ -535,7 +535,7 @@ export const ConnectProvider = ({
   const formatAccountSs58 = (address: string) => {
     try {
       const keyring = new Keyring();
-      keyring.setSS58Format(network.ss58);
+      keyring.setSS58Format(networkData.ss58);
       const formatted = keyring.addFromAddress(address).address;
       if (formatted !== address) {
         return formatted;

@@ -10,9 +10,9 @@ import { useConnect } from 'contexts/Connect';
 import LedgerIconSVG from 'img/ledgerIcon.svg?react';
 import PolkadotVaultIconSVG from 'img/polkadotVault.svg?react';
 import { Polkicon } from '@polkadot-cloud/react';
-import { useApi } from 'contexts/Api';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
 
@@ -33,7 +33,7 @@ export const AccountButton = ({
     connectToAccount,
   } = useConnect();
   const { setModalStatus } = useOverlay().modal;
-  const { units, unit } = useApi().network;
+  const { units, unit } = useNetwork().networkData;
   const { getTransferOptions } = useTransferOptions();
   const { freeBalance } = getTransferOptions(address || '');
 

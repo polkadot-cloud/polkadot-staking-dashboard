@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useFilters } from 'contexts/Filters';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
@@ -21,6 +21,7 @@ import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { SearchInput } from 'library/List/SearchInput';
 import { Pool } from 'library/Pool';
+import { useNetwork } from 'contexts/Network';
 import { usePoolList } from './context';
 import type { PoolListProps } from './types';
 
@@ -36,10 +37,10 @@ export const PoolList = ({
 }: PoolListProps) => {
   const { t } = useTranslation('library');
   const { mode } = useTheme();
+  const { isReady } = useApi();
   const {
-    isReady,
-    network: { colors },
-  } = useApi();
+    networkData: { colors },
+  } = useNetwork();
   const { isSyncing } = useUi();
   const { applyFilter } = usePoolFilters();
   const { activeEra } = useNetworkMetrics();

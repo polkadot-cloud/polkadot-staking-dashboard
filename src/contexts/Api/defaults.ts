@@ -4,7 +4,6 @@
 
 import { stringToU8a } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
-import { NetworkList } from 'config/networks';
 import type { APIConstants, APIContextInterface } from 'contexts/Api/types';
 
 export const consts: APIConstants = {
@@ -22,14 +21,11 @@ export const consts: APIConstants = {
 };
 
 export const defaultApiContext: APIContextInterface = {
-  switchNetwork: async (n, lc) => {
-    await new Promise((resolve) => resolve(null));
-  },
   api: null,
   consts,
   chainState: undefined,
-  isLightClient: false,
   isReady: false,
   apiStatus: 'disconnected',
-  network: NetworkList.polkadot,
+  isLightClient: false,
+  setIsLightClient: () => {},
 };

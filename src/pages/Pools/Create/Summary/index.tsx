@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
@@ -19,14 +18,16 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
 import { SubmitTx } from 'library/SubmitTx';
+import { useNetwork } from 'contexts/Network';
+import { useApi } from 'contexts/Api';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
+  const { api } = useApi();
   const {
-    api,
-    network: { units, unit },
-  } = useApi();
+    networkData: { units, unit },
+  } = useNetwork();
   const { stats } = usePoolsConfig();
   const { newBatchCall } = useBatchCall();
   const { getSetupProgress, removeSetupProgress } = useSetup();
