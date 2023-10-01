@@ -4,17 +4,17 @@
 import { capitalizeFirstLetter, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import type { MaybeAccount } from 'types';
+import { useNetwork } from 'contexts/Network';
 
 export const EraStatus = ({ address }: { address: MaybeAccount }) => {
   const { t } = useTranslation('library');
   const {
-    network: { unit, units },
-  } = useApi();
+    networkData: { unit, units },
+  } = useNetwork();
   const {
     eraStakers: { stakers },
     erasStakersSyncing,

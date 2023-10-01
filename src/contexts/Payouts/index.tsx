@@ -6,10 +6,11 @@ import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import type { AnyApi, AnyJson, Sync } from 'types';
 import { useConnect } from 'contexts/Connect';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import Worker from 'workers/stakers?worker';
 import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import { useNetwork } from 'contexts/Network';
 import { MaxSupportedPayoutEras, defaultPayoutsContext } from './defaults';
 import type {
   LocalValidatorExposure,
@@ -30,7 +31,8 @@ export const PayoutsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, network } = useApi();
+  const { api } = useApi();
+  const { networkData } = useNetwork();
   const { activeAccount } = useConnect();
   const { activeEra } = useNetworkMetrics();
   const { isNominating, fetchEraStakers } = useStaking();
@@ -77,7 +79,7 @@ export const PayoutsProvider = ({
     if (!activeAccount) return;
 
     // Bypass worker if local exposure data is available.
-    if (hasLocalEraExposure(network.name, era.toString(), activeAccount)) {
+    if (hasLocalEraExposure(networkData.name, era.toString(), activeAccount)) {
       // Continue processing eras, or move onto reward processing.
       shouldContinueProcessing(era, getErasInterval().endEra);
     } else {
@@ -86,7 +88,7 @@ export const PayoutsProvider = ({
         task: 'processEraForExposure',
         era: String(era),
         who: activeAccount,
-        networkName: network.name,
+        networkName: networkData.name,
         exposures,
       });
     }
@@ -102,7 +104,7 @@ export const PayoutsProvider = ({
 
       // Exit early if network or account conditions have changed.
       const { networkName, who } = data;
-      if (networkName !== network.name || who !== activeAccount) return;
+      if (networkName !== networkData.name || who !== activeAccount) return;
       const { era, exposedValidators } = data;
       const { endEra } = getErasInterval();
 
@@ -131,7 +133,11 @@ export const PayoutsProvider = ({
     let currentEra = startEra;
     while (currentEra.isGreaterThanOrEqualTo(endEra)) {
       const validators = Object.keys(
-        getLocalEraExposure(network.name, currentEra.toString(), activeAccount)
+        getLocalEraExposure(
+          networkData.name,
+          currentEra.toString(),
+          activeAccount
+        )
       );
       erasValidators.push(...validators);
       erasToCheck.push(currentEra.toString());
@@ -152,7 +158,9 @@ export const PayoutsProvider = ({
       for (const era of erasToCheck)
         if (
           Object.values(
-            Object.keys(getLocalEraExposure(network.name, era, activeAccount))
+            Object.keys(
+              getLocalEraExposure(networkData.name, era, activeAccount)
+            )
           )?.[0] === validator
         )
           exposedEras.push(era);
@@ -239,7 +247,7 @@ export const PayoutsProvider = ({
         const validator = unclaimedValidators?.[j] || '';
 
         const localExposed: LocalValidatorExposure | null = getLocalEraExposure(
-          network.name,
+          networkData.name,
           era,
           activeAccount
         )?.[validator];
@@ -281,7 +289,7 @@ export const PayoutsProvider = ({
       // This is not currently useful for preventing re-syncing. Need to know the eras that have
       // been claimed already and remove them from `erasToCheck`.
       setLocalUnclaimedPayouts(
-        network.name,
+        networkData.name,
         era,
         activeAccount,
         unclaimed[era],
@@ -324,7 +332,7 @@ export const PayoutsProvider = ({
   useEffect(() => {
     setUnclaimedPayouts(null);
     setStateWithRef('unsynced', setPayoutsSynced, payoutsSyncedRef);
-  }, [network, activeAccount]);
+  }, [networkData, activeAccount]);
 
   return (
     <PayoutsContext.Provider

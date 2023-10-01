@@ -15,6 +15,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import type { AnyApi, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import { getLedger } from './Utils';
 import * as defaults from './defaults';
 import type {
@@ -33,7 +34,8 @@ export const BalancesProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, isReady, network } = useApi();
+  const { api, isReady } = useApi();
+  const { networkData } = useNetwork();
   const { accounts, addExternalAccount, getAccount } = useConnect();
 
   const [balances, setBalances] = useState<Balances[]>([]);
@@ -178,13 +180,13 @@ export const BalancesProvider = ({
     if (isReady) {
       handleSyncAccounts();
     }
-  }, [accounts, network, isReady]);
+  }, [accounts, networkData, isReady]);
 
   // Unsubscribe from subscriptions on network change & unmount.
   useEffectIgnoreInitial(() => {
     unsubAll();
     return () => unsubAll();
-  }, [network]);
+  }, [networkData]);
 
   // Gets a ledger for a stash address.
   const getStashLedger = (address: MaybeAccount) => {

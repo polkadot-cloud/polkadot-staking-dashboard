@@ -22,13 +22,15 @@ import { useBatchCall } from 'library/Hooks/useBatchCall';
 import type { AnyApi, AnySubscan } from 'types';
 import { useSubscan } from 'contexts/Plugins/Subscan';
 import { usePayouts } from 'contexts/Payouts';
+import { useNetwork } from 'contexts/Network';
 import type { FormProps, ActivePayout } from './types';
 import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef(
   ({ setSection, payouts, setPayouts }: FormProps, ref: any) => {
     const { t } = useTranslation('modals');
-    const { api, network } = useApi();
+    const { api } = useApi();
+    const { networkData } = useNetwork();
     const { activeAccount } = useConnect();
     const { newBatchCall } = useBatchCall();
     const { removeEraPayout } = usePayouts();
@@ -36,7 +38,7 @@ export const Forms = forwardRef(
     const { getSignerWarnings } = useSignerWarnings();
     const { unclaimedPayouts: unclaimedPayoutsSubscan, setUnclaimedPayouts } =
       useSubscan();
-    const { units } = network;
+    const { units } = networkData;
 
     const totalPayout =
       payouts?.reduce(
@@ -132,7 +134,7 @@ export const Forms = forwardRef(
             <div style={{ marginBottom: '2rem' }}>
               <ActionItem
                 text={`${t('claim')} ${planckToUnit(totalPayout, units)} ${
-                  network.unit
+                  networkData.unit
                 }`}
               />
               <p>{t('afterClaiming')}</p>

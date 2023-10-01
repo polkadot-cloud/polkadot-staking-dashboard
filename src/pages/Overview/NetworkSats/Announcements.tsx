@@ -12,24 +12,24 @@ import {
 import BigNumber from 'bignumber.js';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import type { BondedPool } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
+import { useNetwork } from 'contexts/Network';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
   const { t } = useTranslation('pages');
-  const { network } = useApi();
   const { isSyncing } = useUi();
   const { staking } = useStaking();
   const { stats } = usePoolsConfig();
+  const { networkData } = useNetwork();
   const { bondedPools } = useBondedPools();
 
-  const { units } = network;
+  const { units } = networkData;
   const { totalStaked } = staking;
   const { counterForPoolMembers } = stats;
 
@@ -60,7 +60,7 @@ export const Announcements = () => {
 
   const announcements = [];
 
-  const networkUnit = network.unit;
+  const networkUnit = networkData.unit;
 
   // total staked on the network
   if (!isSyncing) {
@@ -68,11 +68,11 @@ export const Announcements = () => {
       class: 'neutral',
       title: t('overview.networkCurrentlyStaked', {
         total: planckToUnit(totalStaked, units).integerValue().toFormat(),
-        unit: network.unit,
-        network: capitalizeFirstLetter(network.name),
+        unit: networkData.unit,
+        network: capitalizeFirstLetter(networkData.name),
       }),
       subtitle: t('overview.networkCurrentlyStakedSubtitle', {
-        unit: network.unit,
+        unit: networkData.unit,
       }),
     });
   } else {
@@ -84,7 +84,7 @@ export const Announcements = () => {
     announcements.push({
       class: 'neutral',
       title: `${totalPoolPointsUnit.integerValue().toFormat()} ${
-        network.unit
+        networkData.unit
       } ${t('overview.inPools')}`,
       subtitle: `${t('overview.bondedInPools', { networkUnit })}`,
     });

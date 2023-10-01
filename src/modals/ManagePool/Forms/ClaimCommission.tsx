@@ -20,10 +20,12 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 
 export const ClaimCommission = ({ setSection }: any) => {
   const { t } = useTranslation('modals');
-  const { api, network } = useApi();
+  const { api } = useApi();
+  const { networkData } = useNetwork();
   const { setModalStatus } = useOverlay().modal;
   const { activeAccount } = useConnect();
   const { isOwner, selectedActivePool } = useActivePools();
@@ -77,8 +79,8 @@ export const ClaimCommission = ({ setSection }: any) => {
         <ActionItem
           text={`${t('claim')} ${planckToUnit(
             pendingCommission,
-            network.units
-          )} ${network.unit} `}
+            networkData.units
+          )} ${networkData.unit} `}
         />
         <ModalNotes>
           <p>{t('sentToCommissionPayee')}</p>

@@ -2,15 +2,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import { useApi } from 'contexts/Api';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetwork } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useStaking } from 'contexts/Staking';
 
 export const useInflation = () => {
-  const { network } = useApi();
+  const {
+    networkData: { params },
+  } = useNetwork();
   const { metrics } = useNetworkMetrics();
   const { staking } = useStaking();
-  const { params } = network;
   const { lastTotalStake } = staking;
   const { totalIssuance, auctionCounter } = metrics;
 

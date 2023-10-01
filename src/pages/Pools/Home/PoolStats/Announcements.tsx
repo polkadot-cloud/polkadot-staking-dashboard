@@ -10,13 +10,15 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
+import { useNetwork } from 'contexts/Network';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
   const { t } = useTranslation('pages');
-  const { network, consts } = useApi();
+  const { consts } = useApi();
+  const { networkData } = useNetwork();
   const { selectedActivePool } = useActivePools();
-  const { units, unit } = network;
+  const { units, unit } = networkData;
   const { rewardAccountBalance } = selectedActivePool || {};
   const { totalRewardsClaimed } = selectedActivePool?.rewardPool || {};
   const { existentialDeposit } = consts;
@@ -33,7 +35,7 @@ export const Announcements = () => {
     totalRewardsClaimed
       ? new BigNumber(rmCommas(totalRewardsClaimed))
       : new BigNumber(0),
-    network.units
+    networkData.units
   );
 
   const container = {

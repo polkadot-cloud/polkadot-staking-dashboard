@@ -10,8 +10,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Suspense, lazy, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import { ItemWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
 import type { ItemProps } from './types';
@@ -19,7 +19,7 @@ import type { ItemProps } from './types';
 export const Item = ({ item, actionable }: ItemProps) => {
   const { t } = useTranslation('pages');
   const { openModal } = useOverlay().modal;
-  const { network } = useApi();
+  const { networkData } = useNetwork();
 
   const {
     bio,
@@ -30,7 +30,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
     thumbnail,
     validators: entityAllValidators,
   } = item;
-  const validatorCount = entityAllValidators[network.name]?.length ?? 0;
+  const validatorCount = entityAllValidators[networkData.name]?.length ?? 0;
 
   const { setActiveSection, setActiveItem, setScrollPos } =
     useCommunitySections();

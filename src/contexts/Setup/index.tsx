@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import type { BondFor, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
-import { useApi } from '../Api';
+import { useNetwork } from 'contexts/Network';
 import { useConnect } from '../Connect';
 import { useStaking } from '../Staking';
 import {
@@ -29,8 +29,8 @@ import type {
 } from './types';
 
 export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
-  const { network } = useApi();
   const { inSetup } = useStaking();
+  const { networkData } = useNetwork();
   const { accounts, activeAccount } = useConnect();
   const { membership: poolMembership } = usePoolMemberships();
 
@@ -138,7 +138,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     if (!address) return 0;
     const setup = getSetupProgress('nominator', address) as NominatorSetup;
     const { progress } = setup;
-    const bond = unitToPlanck(progress?.bond || '0', network.units);
+    const bond = unitToPlanck(progress?.bond || '0', networkData.units);
 
     const p = 33;
     let percentage = 0;
@@ -153,7 +153,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     if (!address) return 0;
     const setup = getSetupProgress('pool', address) as PoolSetup;
     const { progress } = setup;
-    const bond = unitToPlanck(progress?.bond || '0', network.units);
+    const bond = unitToPlanck(progress?.bond || '0', networkData.units);
 
     const p = 25;
     let percentage = 0;
@@ -214,12 +214,12 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     if (poolMembership) {
       setOnPoolSetup(false);
     }
-  }, [inSetup(), network, poolMembership]);
+  }, [inSetup(), networkData, poolMembership]);
 
   // Update setup state when activeAccount changes
   useEffectIgnoreInitial(() => {
     if (accounts.length) refreshSetups();
-  }, [activeAccount, network, accounts]);
+  }, [activeAccount, networkData, accounts]);
 
   return (
     <SetupContext.Provider

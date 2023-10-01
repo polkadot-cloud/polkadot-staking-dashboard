@@ -11,7 +11,6 @@ import {
 import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
 import type BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
@@ -22,10 +21,11 @@ import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { BondedChart } from 'library/BarChart/BondedChart';
+import { useNetwork } from 'contexts/Network';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');
-  const { network } = useApi();
+  const { networkData } = useNetwork();
   const { openModal } = useOverlay().modal;
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { getStashLedger } = useBalances();
@@ -37,7 +37,7 @@ export const ManageBond = () => {
   const {
     units,
     brand: { token: Token },
-  } = network;
+  } = networkData;
   const ledger = getStashLedger(activeAccount);
   const { active }: { active: BigNumber } = ledger;
   const allTransferOptions = getTransferOptions(activeAccount);

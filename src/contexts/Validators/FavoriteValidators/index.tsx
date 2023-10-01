@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
 import type { Validator, FavoriteValidatorsContextInterface } from '../types';
 import { getLocalFavorites } from '../Utils';
@@ -14,9 +15,10 @@ export const FavoriteValidatorsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { isReady, network } = useApi();
+  const { isReady } = useApi();
+  const { networkData } = useNetwork();
   const { fetchValidatorPrefs } = useValidators();
-  const { name } = network;
+  const { name } = networkData;
 
   // Stores the user's favorite validators.
   const [favorites, setFavorites] = useState<string[]>(getLocalFavorites(name));
@@ -42,7 +44,7 @@ export const FavoriteValidatorsProvider = ({
     }
 
     localStorage.setItem(
-      `${network.name}_favorites`,
+      `${networkData.name}_favorites`,
       JSON.stringify(newFavorites)
     );
     setFavorites([...newFavorites]);
@@ -54,7 +56,7 @@ export const FavoriteValidatorsProvider = ({
       (validator: string) => validator !== address
     );
     localStorage.setItem(
-      `${network.name}_favorites`,
+      `${networkData.name}_favorites`,
       JSON.stringify(newFavorites)
     );
     setFavorites([...newFavorites]);
@@ -63,7 +65,7 @@ export const FavoriteValidatorsProvider = ({
   // Re-fetch favorites on network change
   useEffectIgnoreInitial(() => {
     setFavorites(getLocalFavorites(name));
-  }, [network]);
+  }, [networkData]);
 
   // Fetch favorites in validator list format
   useEffectIgnoreInitial(() => {

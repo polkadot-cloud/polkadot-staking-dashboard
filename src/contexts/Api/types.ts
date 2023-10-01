@@ -35,12 +35,11 @@ export type APIChainState =
   | undefined;
 
 export interface APIContextInterface {
-  switchNetwork: (n: NetworkName, l: boolean) => Promise<void>;
   api: ApiPromise | null;
   consts: APIConstants;
   chainState: APIChainState;
   isReady: boolean;
-  isLightClient: boolean;
   apiStatus: ApiStatus;
-  network: Network;
+  isLightClient: boolean;
+  setIsLightClient: (isLightClient: boolean) => void;
 }

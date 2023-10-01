@@ -22,6 +22,7 @@ import MoonOutlineSVG from 'img/moon-outline.svg?react';
 import SunnyOutlineSVG from 'img/sunny-outline.svg?react';
 import { useOutsideAlerter } from 'library/Hooks';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import { Heading } from './Heading/Heading';
 import { Main } from './Main';
 import { Secondary } from './Secondary';
@@ -29,7 +30,8 @@ import { ConnectionSymbol, Separator, Wrapper } from './Wrapper';
 
 export const SideMenu = () => {
   const { t } = useTranslation('base');
-  const { network, apiStatus } = useApi();
+  const { apiStatus } = useApi();
+  const { networkData } = useNetwork();
   const { mode, toggleTheme } = useTheme();
   const { openModal } = useOverlay().modal;
   const {
@@ -99,11 +101,11 @@ export const SideMenu = () => {
         <Heading title={t('network')} minimised={sideMenuMinimised} />
         <Secondary
           classes={[apiStatusClass]}
-          name={capitalizeFirstLetter(network.name)}
+          name={capitalizeFirstLetter(networkData.name)}
           onClick={() => openModal({ key: 'Networks' })}
           icon={{
-            Svg: network.brand.inline.svg,
-            size: network.brand.inline.size,
+            Svg: networkData.brand.inline.svg,
+            size: networkData.brand.inline.size,
           }}
           minimised={sideMenuMinimised}
           action={

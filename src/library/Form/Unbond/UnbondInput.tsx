@@ -6,8 +6,8 @@ import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
+import { useNetwork } from 'contexts/Network';
 import { InputWrapper } from '../Wrappers';
 import type { UnbondInputProps } from '../types';
 
@@ -20,11 +20,11 @@ export const UnbondInput = ({
   active,
 }: UnbondInputProps) => {
   const { t } = useTranslation('library');
-  const { network } = useApi();
+  const { networkData } = useNetwork();
   const { activeAccount } = useConnect();
 
   // get the actively bonded amount.
-  const activeUnit = planckToUnit(active, network.units);
+  const activeUnit = planckToUnit(active, networkData.units);
 
   // the current local bond value.
   const [localBond, setLocalBond] = useState(value);
@@ -55,12 +55,12 @@ export const UnbondInput = ({
   };
 
   // unbond to min as unit.
-  const unbondToMinUnit = planckToUnit(unbondToMin, network.units);
+  const unbondToMinUnit = planckToUnit(unbondToMin, networkData.units);
 
   // available funds as jsx.
   const maxBondedJsx = (
     <p>
-      {activeUnit.toFormat()} {network.unit} {t('bonded')}
+      {activeUnit.toFormat()} {networkData.unit} {t('bonded')}
     </p>
   );
 
@@ -72,7 +72,7 @@ export const UnbondInput = ({
             <div>
               <input
                 type="text"
-                placeholder={`0 ${network.unit}`}
+                placeholder={`0 ${networkData.unit}`}
                 value={localBond}
                 onChange={(e) => {
                   handleChangeUnbond(e);

@@ -14,6 +14,7 @@ import type { AnyApi, AnyJson, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useSubscan } from 'contexts/Plugins/Subscan';
 import { usePlugins } from 'contexts/Plugins';
+import { useNetwork } from 'contexts/Network';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import { useBondedPools } from '../BondedPools';
@@ -27,11 +28,12 @@ export const ActivePoolsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { api, isReady } = useApi();
   const { eraStakers } = useStaking();
+  const { networkData } = useNetwork();
   const { pluginEnabled } = usePlugins();
   const { activeAccount } = useConnect();
   const { fetchPoolDetails } = useSubscan();
-  const { api, network, isReady } = useApi();
   const { membership } = usePoolMemberships();
   const { createAccounts } = usePoolsConfig();
   const { getAccountPools, bondedPools } = useBondedPools();
@@ -467,7 +469,7 @@ export const ActivePoolsProvider = ({
       setStateWithRef('syncing', setSynced, syncedRef);
       handlePoolSubscriptions();
     }
-  }, [network, isReady, syncedRef.current]);
+  }, [networkData, isReady, syncedRef.current]);
 
   // unsubscribe all on component unmount
   useEffect(
@@ -475,14 +477,14 @@ export const ActivePoolsProvider = ({
       unsubscribeActivePools();
       unsubscribePoolNominations();
     },
-    [network]
+    [networkData]
   );
 
   // re-calculate pending rewards when membership changes
   useEffectIgnoreInitial(() => {
     updatePendingRewards();
   }, [
-    network,
+    networkData,
     isReady,
     getActivePoolMembership()?.bondedPool,
     getActivePoolMembership()?.rewardPool,

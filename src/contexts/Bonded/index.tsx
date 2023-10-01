@@ -13,11 +13,13 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import type { AnyApi, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import * as defaults from './defaults';
 import type { BondedAccount, BondedContextInterface } from './types';
 
 export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
-  const { api, isReady, network } = useApi();
+  const { api, isReady } = useApi();
+  const { networkData } = useNetwork();
   const { accounts, addExternalAccount } = useConnect();
 
   // Balance accounts state.
@@ -67,7 +69,7 @@ export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
     if (isReady) {
       handleSyncAccounts();
     }
-  }, [accounts, network, isReady]);
+  }, [accounts, networkData, isReady]);
 
   // Unsubscribe from subscriptions on unmount.
   useEffect(

@@ -19,10 +19,12 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 
 export const Bond = () => {
   const { t } = useTranslation('modals');
-  const { api, network } = useApi();
+  const { api } = useApi();
+  const { networkData } = useNetwork();
   const { activeAccount } = useConnect();
   const { notEnoughFunds } = useTxMeta();
   const { selectedActivePool } = useActivePools();
@@ -33,7 +35,7 @@ export const Bond = () => {
     config: { options },
     setModalResize,
   } = useOverlay().modal;
-  const { units } = network;
+  const { units } = networkData;
   const { bondFor } = options;
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
@@ -50,7 +52,7 @@ export const Bond = () => {
   // calculate any unclaimed pool rewards.
   let { pendingRewards } = selectedActivePool || {};
   pendingRewards = pendingRewards ?? new BigNumber(0);
-  pendingRewards = planckToUnit(pendingRewards, network.units);
+  pendingRewards = planckToUnit(pendingRewards, networkData.units);
 
   // local bond value.
   const [bond, setBond] = useState<{ bond: string }>({
@@ -147,7 +149,7 @@ export const Bond = () => {
           <ModalWarnings withMargin>
             <Warning
               text={`${t('bondingWithdraw')} ${pendingRewards} ${
-                network.unit
+                networkData.unit
               }.`}
             />
           </ModalWarnings>

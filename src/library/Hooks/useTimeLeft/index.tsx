@@ -4,7 +4,7 @@
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
 import type {
   TimeLeftAll,
   TimeLeftFormatted,
@@ -15,7 +15,7 @@ import { getDuration } from './utils';
 
 export const useTimeLeft = () => {
   const { t, i18n } = useTranslation();
-  const { network } = useApi();
+  const { networkData } = useNetwork();
 
   // check whether timeleft is within a minute of finishing.
   const inLastHour = () => {
@@ -107,7 +107,7 @@ export const useTimeLeft = () => {
         setStateWithRef(interval, setMinInterval, minIntervalRef);
       }
     }
-  }, [to, inLastHour(), lastMinuteCountdown(), network]);
+  }, [to, inLastHour(), lastMinuteCountdown(), networkData]);
 
   // re-render the timeleft upon langauge switch.
   useEffect(() => {

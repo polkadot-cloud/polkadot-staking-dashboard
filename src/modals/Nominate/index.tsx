@@ -17,10 +17,14 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 
 export const Nominate = () => {
   const { t } = useTranslation('modals');
-  const { api, network } = useApi();
+  const { api } = useApi();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
   const { activeAccount } = useConnect();
   const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
@@ -29,7 +33,6 @@ export const Nominate = () => {
   const { getSignerWarnings } = useSignerWarnings();
   const { setModalStatus, setModalResize } = useOverlay().modal;
 
-  const { units, unit } = network;
   const { minNominatorBond } = staking;
   const controller = getBondedAccount(activeAccount);
   const { nominations } = targets;

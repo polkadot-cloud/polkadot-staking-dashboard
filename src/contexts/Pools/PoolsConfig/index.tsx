@@ -13,6 +13,7 @@ import type {
 } from 'contexts/Pools/types';
 import type { AnyApi } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import { useApi } from '../../Api';
 import * as defaults from './defaults';
 
@@ -21,7 +22,8 @@ export const PoolsConfigProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, network, isReady, consts } = useApi();
+  const { networkData } = useNetwork();
+  const { api, isReady, consts } = useApi();
   const { poolsPalletId } = consts;
 
   // store pool metadata
@@ -34,7 +36,7 @@ export const PoolsConfigProvider = ({
   // get favorite pools from local storage.
   const getLocalFavorites = () => {
     const localFavorites = localStorage.getItem(
-      `${network.name}_favorite_pools`
+      `${networkData.name}_favorite_pools`
     );
     return localFavorites !== null ? JSON.parse(localFavorites) : [];
   };
@@ -49,7 +51,7 @@ export const PoolsConfigProvider = ({
     return () => {
       unsubscribe();
     };
-  }, [network, isReady]);
+  }, [networkData, isReady]);
 
   const unsubscribe = () => {
     if (poolsConfigRef.current.unsub !== null) {
@@ -152,7 +154,7 @@ export const PoolsConfigProvider = ({
     }
 
     localStorage.setItem(
-      `${network.name}_favorite_pools`,
+      `${networkData.name}_favorite_pools`,
       JSON.stringify(newFavorites)
     );
     setFavorites([...newFavorites]);
@@ -167,7 +169,7 @@ export const PoolsConfigProvider = ({
       (validator: string) => validator !== address
     );
     localStorage.setItem(
-      `${network.name}_favorite_pools`,
+      `${networkData.name}_favorite_pools`,
       JSON.stringify(newFavorites)
     );
     setFavorites([...newFavorites]);

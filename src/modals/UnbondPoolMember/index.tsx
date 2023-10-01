@@ -24,12 +24,14 @@ import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 
 export const UnbondPoolMember = () => {
   const { t } = useTranslation('modals');
+  const { api, consts } = useApi();
+  const { networkData } = useNetwork();
   const { activeAccount } = useConnect();
   const { notEnoughFunds } = useTxMeta();
-  const { api, network, consts } = useApi();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
   const {
@@ -38,7 +40,7 @@ export const UnbondPoolMember = () => {
     config: { options },
   } = useOverlay().modal;
 
-  const { units } = network;
+  const { units } = networkData;
   const { bondDuration } = consts;
   const { member, who } = options;
   const { points } = member;
@@ -111,7 +113,9 @@ export const UnbondPoolMember = () => {
             ))}
           </ModalWarnings>
         ) : null}
-        <ActionItem text={`${t('unbond')} ${freeToUnbond} ${network.unit}`} />
+        <ActionItem
+          text={`${t('unbond')} ${freeToUnbond} ${networkData.unit}`}
+        />
         <StaticNote
           value={bondDurationFormatted}
           tKey="onceUnbonding"

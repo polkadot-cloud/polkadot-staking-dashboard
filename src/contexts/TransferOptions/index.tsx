@@ -8,10 +8,11 @@ import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import type { MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import * as defaults from './defaults';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';
 
@@ -20,10 +21,10 @@ export const TransferOptionsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { consts } = useApi();
   const {
-    consts,
-    network: { name, units, defaultFeeReserve },
-  } = useApi();
+    networkData: { name, units, defaultFeeReserve },
+  } = useNetwork();
   const { activeEra } = useNetworkMetrics();
   const { getStashLedger, getBalance, getLocks } = useBalances();
   const { getAccount } = useBonded();

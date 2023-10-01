@@ -18,6 +18,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import type { AnyApi, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import * as defaults from './defaults';
 import type {
   Delegates,
@@ -33,7 +34,8 @@ export const ProxiesProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, isReady, network } = useApi();
+  const { api, isReady } = useApi();
+  const { networkData } = useNetwork();
   const {
     accounts,
     activeProxy,
@@ -171,13 +173,13 @@ export const ProxiesProvider = ({
     if (isReady) {
       handleSyncAccounts();
     }
-  }, [accounts, isReady, network]);
+  }, [accounts, isReady, networkData]);
 
   // If active proxy has not yet been set, check local storage `activeProxy` & set it as active
   // proxy if it is the delegate of `activeAccount`.
   useEffectIgnoreInitial(() => {
     const localActiveProxy = localStorageOrDefault(
-      `${network.name}_active_proxy`,
+      `${networkData.name}_active_proxy`,
       null
     );
 
@@ -206,17 +208,17 @@ export const ProxiesProvider = ({
         }
       } catch (e) {
         // Corrupt local active proxy record. Remove it.
-        localStorage.removeItem(`${network.name}_active_proxy`);
+        localStorage.removeItem(`${networkData.name}_active_proxy`);
       }
     }
-  }, [accounts, activeAccount, proxiesRef.current, network]);
+  }, [accounts, activeAccount, proxiesRef.current, networkData]);
 
   // Reset active proxy state, unsubscribe from subscriptions on network change & unmount.
   useEffectIgnoreInitial(() => {
     setActiveProxy(null, false);
     unsubAll();
     return () => unsubAll();
-  }, [network]);
+  }, [networkData]);
 
   const unsubAll = () => {
     for (const unsub of Object.values(unsubs.current)) {

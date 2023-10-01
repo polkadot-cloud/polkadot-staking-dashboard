@@ -11,13 +11,14 @@ import BigNumber from 'bignumber.js';
 import React, { useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, MaybeAccount } from 'types';
 import Worker from 'workers/stakers?worker';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
 import { validateLocalExposure } from 'contexts/Validators/Utils';
+import { useNetwork } from 'contexts/Network';
 import { defaultFastUnstakeContext, defaultMeta } from './defaults';
 import type {
   FastUnstakeContextInterface,
@@ -32,9 +33,10 @@ export const FastUnstakeProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { networkData } = useNetwork();
   const { activeAccount } = useConnect();
+  const { api, isReady, consts } = useApi();
   const { inSetup, fetchEraStakers } = useStaking();
-  const { api, isReady, consts, network } = useApi();
   const { metrics, activeEra } = useNetworkMetrics();
   const { getNominationStatus } = useNominationStatus();
   const { fastUnstakeErasToCheckPerBlock } = metrics;
@@ -69,7 +71,8 @@ export const FastUnstakeProvider = ({
   const unsubs = useRef<AnyApi[]>([]);
 
   // localStorage key to fetch local metadata.
-  const getLocalkey = (a: MaybeAccount) => `${network.name}_fast_unstake_${a}`;
+  const getLocalkey = (a: MaybeAccount) =>
+    `${networkData.name}_fast_unstake_${a}`;
 
   // check until bond duration eras surpasssed.
   const checkToEra = activeEra.index.minus(bondDuration);
@@ -146,7 +149,7 @@ export const FastUnstakeProvider = ({
   }, [
     inSetup(),
     isReady,
-    network.name,
+    networkData.name,
     activeAccount,
     activeEra.index,
     fastUnstakeErasToCheckPerBlock,
@@ -162,7 +165,7 @@ export const FastUnstakeProvider = ({
 
       // ensure still same conditions.
       const { networkName, who } = data;
-      if (networkName !== network.name || who !== activeAccount) return;
+      if (networkName !== networkData.name || who !== activeAccount) return;
 
       const { era, exposed } = data;
 
@@ -240,7 +243,7 @@ export const FastUnstakeProvider = ({
       task: 'processEraForExposure',
       era: era.toString(),
       who: activeAccount,
-      networkName: network.name,
+      networkName: networkData.name,
       exitOnExposed: true,
       exposures,
     });

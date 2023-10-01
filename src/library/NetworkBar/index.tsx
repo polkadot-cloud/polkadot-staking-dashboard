@@ -7,13 +7,15 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { usePlugins } from 'contexts/Plugins';
 import { usePrices } from 'library/Hooks/usePrices';
+import { useNetwork } from 'contexts/Network';
 import { Status } from './Status';
 import { Summary, Wrapper } from './Wrappers';
 
 export const NetworkBar = () => {
   const { t } = useTranslation('library');
   const { plugins } = usePlugins();
-  const { network, isLightClient } = useApi();
+  const { isLightClient } = useApi();
+  const { networkData } = useNetwork();
   const prices = usePrices();
 
   const PRIVACY_URL = import.meta.env.VITE_PRIVACY_URL;
@@ -22,18 +24,20 @@ export const NetworkBar = () => {
   const LEGAL_DISCLOSURES_URL = import.meta.env.VITE_LEGAL_DISCLOSURES_URL;
 
   const [networkName, setNetworkName] = useState<string>(
-    capitalizeFirstLetter(network.name)
+    capitalizeFirstLetter(networkData.name)
   );
 
   useEffect(() => {
     setNetworkName(
-      `${capitalizeFirstLetter(network.name)}${isLightClient ? ` Light` : ``}`
+      `${capitalizeFirstLetter(networkData.name)}${
+        isLightClient ? ` Light` : ``
+      }`
     );
-  }, [network.name, isLightClient]);
+  }, [networkData.name, isLightClient]);
 
   return (
     <Wrapper>
-      <network.brand.icon className="network_icon" />
+      <networkData.brand.icon className="network_icon" />
       <Summary>
         <section>
           <p>{ORGANISATION === undefined ? networkName : ORGANISATION}</p>
@@ -88,7 +92,7 @@ export const NetworkBar = () => {
                   </span>
                 </div>
                 <div className="stat">
-                  1 {network.api.unit} / {prices.lastPrice} USD
+                  1 {networkData.api.unit} / {prices.lastPrice} USD
                 </div>
               </>
             )}

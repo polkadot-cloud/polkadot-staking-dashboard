@@ -12,14 +12,17 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect } from 'react';
+import { useNetwork } from 'contexts/Network';
 
 export const BalanceTest = () => {
-  const { api, network } = useApi();
+  const { api } = useApi();
+  const {
+    networkData: { units },
+  } = useNetwork();
   const { activeAccount } = useConnect();
   const { notEnoughFunds } = useTxMeta();
   const { newBatchCall } = useBatchCall();
   const { setModalStatus, setModalResize } = useOverlay().modal;
-  const { units } = network;
 
   // tx to submit
   const getTx = () => {

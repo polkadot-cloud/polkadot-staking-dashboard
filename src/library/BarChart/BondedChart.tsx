@@ -4,10 +4,10 @@
 import { greaterThanZero } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { BarSegment } from 'library/BarChart/BarSegment';
 import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
+import { useNetwork } from 'contexts/Network';
 import type { BondedChartProps } from '../../pages/Nominate/Active/types';
 
 export const BondedChart = ({
@@ -19,8 +19,8 @@ export const BondedChart = ({
 }: BondedChartProps) => {
   const { t } = useTranslation('library');
   const {
-    network: { unit },
-  } = useApi();
+    networkData: { unit },
+  } = useNetwork();
   const totalUnlocking = unlocking.plus(unlocked);
 
   // graph percentages

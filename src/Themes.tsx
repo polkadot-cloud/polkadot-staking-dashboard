@@ -4,8 +4,8 @@
 import { ThemeProvider } from 'styled-components';
 import { Entry } from '@polkadot-cloud/react';
 import { Router } from 'Router';
-import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
+import { useNetwork } from 'contexts/Network';
 
 // App-wide theme classes are inserted here.
 //
@@ -13,11 +13,11 @@ import { useTheme } from 'contexts/Themes';
 // `@polkadot-cloud/react` themes are added to `Entry`.
 export const ThemedRouter = () => {
   const { mode } = useTheme();
-  const { network } = useApi();
+  const { networkData } = useNetwork();
 
   return (
     <ThemeProvider theme={{ mode }}>
-      <Entry mode={mode} theme={`${network.name}-relay`}>
+      <Entry mode={mode} theme={`${networkData.name}-relay`}>
         <Router />
       </Entry>
     </ThemeProvider>

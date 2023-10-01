@@ -10,10 +10,12 @@ import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
 import { faCircleDown } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 
 export const UnclaimedPayoutsStatus = () => {
   const { t } = useTranslation();
-  const { network, isReady } = useApi();
+  const { isReady } = useApi();
+  const { networkData } = useNetwork();
   const { openModal } = useOverlay().modal;
   const { unclaimedPayouts } = usePayouts();
   const { activeAccount, isReadOnlyAccount } = useConnect();
@@ -33,7 +35,7 @@ export const UnclaimedPayoutsStatus = () => {
       type="odometer"
       stat={{
         value: minDecimalPlaces(
-          planckToUnit(totalUnclaimed, network.units).toFormat(),
+          planckToUnit(totalUnclaimed, networkData.units).toFormat(),
           2
         ),
       }}

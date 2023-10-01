@@ -11,7 +11,7 @@ import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useFilters } from 'contexts/Filters';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
@@ -21,6 +21,7 @@ import { SearchInput } from 'library/List/SearchInput';
 import { Selectable } from 'library/List/Selectable';
 import { Validator } from 'library/ValidatorList/Validator';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 import { ListProvider, useList } from '../List/context';
 import { Filters } from './Filters';
@@ -47,10 +48,10 @@ export const ValidatorListInner = ({
   disableThrottle = false,
 }: any) => {
   const { t } = useTranslation('library');
+  const { isReady } = useApi();
   const {
-    isReady,
-    network: { colors },
-  } = useApi();
+    networkData: { colors },
+  } = useNetwork();
   const { setModalResize } = useOverlay().modal;
   const provider = useList();
   const { mode } = useTheme();

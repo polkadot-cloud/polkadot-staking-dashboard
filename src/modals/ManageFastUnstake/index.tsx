@@ -15,7 +15,7 @@ import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
@@ -25,13 +25,15 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
+  const { api, consts } = useApi();
+  const { networkData } = useNetwork();
   const { activeAccount } = useConnect();
   const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
-  const { api, consts, network } = useApi();
   const { isFastUnstaking } = useUnstaking();
   const { setModalResize, setModalStatus } = useOverlay().modal;
   const { getSignerWarnings } = useSignerWarnings();
@@ -114,8 +116,8 @@ export const ManageFastUnstake = () => {
       warnings.push(
         `${t('noEnough')} ${planckToUnit(
           fastUnstakeDeposit,
-          network.units
-        ).toString()} ${network.unit}`
+          networkData.units
+        ).toString()} ${networkData.unit}`
       );
     }
 
@@ -179,9 +181,9 @@ export const ManageFastUnstake = () => {
                       {t('registerFastUnstake')}{' '}
                       {planckToUnit(
                         fastUnstakeDeposit,
-                        network.units
+                        networkData.units
                       ).toString()}{' '}
-                      {network.unit}. {t('fastUnstakeOnceRegistered')}
+                      {networkData.unit}. {t('fastUnstakeOnceRegistered')}
                     </>
                   </p>
                   <p>

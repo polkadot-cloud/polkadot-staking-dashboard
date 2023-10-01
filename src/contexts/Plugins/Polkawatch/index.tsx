@@ -4,7 +4,7 @@
 import { Configuration, PolkawatchApi } from '@polkawatch/ddp-client';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { localStorageOrDefault } from '@polkadot-cloud/utils';
-import { useApi } from '../../Api';
+import { useNetwork } from 'contexts/Network';
 import type { NetworkName } from '../../../types';
 import type { PolkawatchState } from './types';
 import { DefaultNetwork } from '../../../consts';
@@ -42,7 +42,7 @@ export const PolkawatchProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { name } = useApi().network;
+  const { name } = useNetwork().networkData;
 
   const [state, setState] = useState<PolkawatchState>(PolkawatchInitialState);
 

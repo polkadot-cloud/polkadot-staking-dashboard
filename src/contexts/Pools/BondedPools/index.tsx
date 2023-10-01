@@ -13,6 +13,7 @@ import type {
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';
@@ -22,7 +23,8 @@ export const BondedPoolsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, network, isReady } = useApi();
+  const { api, isReady } = useApi();
+  const { networkData } = useNetwork();
   const { getNominationsStatusFromTargets } = useStaking();
   const { createAccounts, stats } = usePoolsConfig();
   const { lastPoolId } = stats;
@@ -41,7 +43,7 @@ export const BondedPoolsProvider = ({
   useEffectIgnoreInitial(() => {
     setBondedPools([]);
     setStateWithRef({}, setPoolMetaBatch, poolMetaBatchesRef);
-  }, [network]);
+  }, [networkData]);
 
   // initial setup for fetching bonded pools
   useEffectIgnoreInitial(() => {
@@ -52,7 +54,7 @@ export const BondedPoolsProvider = ({
     return () => {
       unsubscribe();
     };
-  }, [network, isReady, lastPoolId]);
+  }, [networkData, isReady, lastPoolId]);
 
   // after bonded pools have synced, fetch metabatch
   useEffectIgnoreInitial(() => {

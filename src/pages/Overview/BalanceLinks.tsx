@@ -4,13 +4,13 @@
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimaryInvert, Separator } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
+import { useNetwork } from 'contexts/Network';
 import { MoreWrapper } from './Wrappers';
 
 export const BalanceLinks = () => {
   const { t } = useTranslation('pages');
-  const { name } = useApi().network;
+  const { name } = useNetwork().networkData;
   const { activeAccount } = useConnect();
 
   return (

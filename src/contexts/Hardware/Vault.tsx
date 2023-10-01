@@ -3,8 +3,8 @@
 
 import { ellipsisFn, setStateWithRef } from '@polkadot-cloud/utils';
 import React, { useEffect, useRef, useState } from 'react';
-import { useApi } from 'contexts/Api';
 import type { VaultAccount } from 'contexts/Connect/types';
+import { useNetwork } from 'contexts/Network';
 import { getLocalVaultAccounts, isLocalNetworkAddress } from './Utils';
 import { defaultVaultHardwareContext } from './defaults';
 import type { VaultHardwareContextInterface } from './types';
@@ -14,17 +14,17 @@ export const VaultHardwareProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { network } = useApi();
+  const { networkData } = useNetwork();
 
   const [vaultAccounts, seVaultAccountsState] = useState<VaultAccount[]>(
-    getLocalVaultAccounts(network.name)
+    getLocalVaultAccounts(networkData.name)
   );
   const vaultAccountsRef = useRef(vaultAccounts);
 
   // Check if a Vault address exists in imported addresses.
   const vaultAccountExists = (address: string) =>
     !!getLocalVaultAccounts().find((a) =>
-      isLocalNetworkAddress(network.name, a, address)
+      isLocalNetworkAddress(networkData.name, a, address)
     );
 
   // Adds a vault account to state and local storage.
@@ -33,12 +33,12 @@ export const VaultHardwareProvider = ({
 
     if (
       !newVaultAccounts.find((a) =>
-        isLocalNetworkAddress(network.name, a, address)
+        isLocalNetworkAddress(networkData.name, a, address)
       )
     ) {
       const account = {
         address,
-        network: network.name,
+        network: networkData.name,
         name: ellipsisFn(address),
         source: 'vault',
         index,
@@ -52,7 +52,7 @@ export const VaultHardwareProvider = ({
 
       // store only those accounts on the current network in state.
       setStateWithRef(
-        newVaultAccounts.filter((a) => a.network === network.name),
+        newVaultAccounts.filter((a) => a.network === networkData.name),
         seVaultAccountsState,
         vaultAccountsRef
       );
@@ -68,7 +68,7 @@ export const VaultHardwareProvider = ({
       if (a.address !== address) {
         return true;
       }
-      if (a.network !== network.name) {
+      if (a.network !== networkData.name) {
         return true;
       }
       return false;
@@ -83,7 +83,7 @@ export const VaultHardwareProvider = ({
       );
     }
     setStateWithRef(
-      newVaultAccounts.filter((a) => a.network === network.name),
+      newVaultAccounts.filter((a) => a.network === networkData.name),
       seVaultAccountsState,
       vaultAccountsRef
     );
@@ -96,7 +96,7 @@ export const VaultHardwareProvider = ({
     }
     return (
       localVaultAccounts.find((a) =>
-        isLocalNetworkAddress(network.name, a, address)
+        isLocalNetworkAddress(networkData.name, a, address)
       ) ?? null
     );
   };
@@ -105,7 +105,7 @@ export const VaultHardwareProvider = ({
     let newVaultAccounts = getLocalVaultAccounts();
 
     newVaultAccounts = newVaultAccounts.map((a) =>
-      isLocalNetworkAddress(network.name, a, address)
+      isLocalNetworkAddress(networkData.name, a, address)
         ? {
             ...a,
             name: newName,
@@ -117,7 +117,7 @@ export const VaultHardwareProvider = ({
       JSON.stringify(newVaultAccounts)
     );
     setStateWithRef(
-      newVaultAccounts.filter((a) => a.network === network.name),
+      newVaultAccounts.filter((a) => a.network === networkData.name),
       seVaultAccountsState,
       vaultAccountsRef
     );
@@ -126,11 +126,11 @@ export const VaultHardwareProvider = ({
   // Refresh imported vault accounts on network change.
   useEffect(() => {
     setStateWithRef(
-      getLocalVaultAccounts(network.name),
+      getLocalVaultAccounts(networkData.name),
       seVaultAccountsState,
       vaultAccountsRef
     );
-  }, [network]);
+  }, [networkData]);
 
   return (
     <VaultHardwareContext.Provider

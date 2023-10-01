@@ -4,12 +4,12 @@
 import { greaterThanZero, planckToUnit, rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
+import { useNetwork } from 'contexts/Network';
 
 export const PoolMemberBonded = ({ meta, batchKey, batchIndex }: any) => {
   const { t } = useTranslation('library');
-  const { units, unit } = useApi().network;
+  const { units, unit } = useNetwork().networkData;
 
   const poolMembers = meta[batchKey]?.poolMembers ?? [];
   const poolMember = poolMembers[batchIndex] ?? null;

@@ -21,6 +21,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import { RolesWrapper } from '../Home/ManagePool/Wrappers';
 import { PoolAccount } from '../PoolAccount';
 import { RoleEditInput } from './RoleEditInput';
@@ -37,7 +38,8 @@ export const Roles = ({
   const { openHelp } = useHelp();
   const { isPoolSyncing } = useUi();
   const { openModal } = useOverlay().modal;
-  const { isReady, network } = useApi();
+  const { isReady } = useApi();
+  const { networkData } = useNetwork();
   const { fetchIdentitiesMetaBatch } = useIdentities();
   const { isOwner, selectedActivePool } = useActivePools();
   const { activeAccount, isReadOnlyAccount } = useConnect();
@@ -75,7 +77,7 @@ export const Roles = ({
     setIsEditing(false);
     setRoleEdits(initialiseEdits);
     setFetched(false);
-  }, [activeAccount, network]);
+  }, [activeAccount, networkData]);
 
   // fetch accounts meta batch
   useEffect(() => {

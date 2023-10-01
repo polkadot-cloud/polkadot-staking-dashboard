@@ -17,7 +17,6 @@ import {
 } from 'react-router-dom';
 import { Prompt } from 'library/Prompt';
 import { PagesConfig } from 'config/pages';
-import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useNotifications } from 'contexts/Notifications';
 import { useUi } from 'contexts/UI';
@@ -30,10 +29,11 @@ import { Notifications } from 'library/Notifications';
 import { SideMenu } from 'library/SideMenu';
 import { Tooltip } from 'library/Tooltip';
 import { Overlays } from 'overlay';
+import { useNetwork } from 'contexts/Network';
 
 export const RouterInner = () => {
   const { t } = useTranslation();
-  const { network } = useApi();
+  const { networkData } = useNetwork();
   const { pathname } = useLocation();
   const { addNotification } = useNotifications();
   const { accountsInitialised, accounts, activeAccount, connectToAccount } =
@@ -43,7 +43,7 @@ export const RouterInner = () => {
   // Scroll to top of the window on every page change or network change.
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [pathname, network]);
+  }, [pathname, networkData]);
 
   // Set references to UI context and make available throughout app.
   useEffect(() => {
@@ -116,7 +116,7 @@ export const RouterInner = () => {
                         <Page>
                           <Helmet>
                             <title>{`${t(key, { ns: 'base' })} : ${t('title', {
-                              context: `${network.name}`,
+                              context: `${networkData.name}`,
                               ns: 'base',
                             })}`}</title>
                           </Helmet>

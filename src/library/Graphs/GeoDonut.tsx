@@ -3,11 +3,11 @@
 
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { graphColors } from 'styles/graphs';
 import chroma from 'chroma-js';
 import { ellipsisFn } from '@polkadot-cloud/utils';
+import { useNetwork } from 'contexts/Network';
 import type { GeoDonutProps } from './types';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -18,8 +18,9 @@ export const GeoDonut = ({
   height = 'auto',
   width = 'auto',
 }: GeoDonutProps) => {
-  const { colors } = useApi().network;
   const { mode } = useTheme();
+  const { colors } = useNetwork().networkData;
+
   const { labels } = series;
   let { data } = series;
   const isZero = data.length === 0;

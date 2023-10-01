@@ -25,20 +25,22 @@ import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 
 export const Unstake = () => {
   const { t } = useTranslation('modals');
   const { newBatchCall } = useBatchCall();
   const { notEnoughFunds } = useTxMeta();
   const { activeAccount } = useConnect();
-  const { api, network, consts } = useApi();
+  const { api, consts } = useApi();
+  const { networkData } = useNetwork();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
   const { setModalStatus, setModalResize } = useOverlay().modal;
   const { getBondedAccount, getAccountNominations } = useBonded();
 
-  const { units } = network;
+  const { units } = networkData;
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
   const { bondDuration } = consts;
@@ -127,7 +129,7 @@ export const Unstake = () => {
           <ActionItem
             text={t('unstakeUnbond', {
               bond: freeToUnbond.toFormat(),
-              unit: network.unit,
+              unit: networkData.unit,
             })}
           />
         ) : null}
