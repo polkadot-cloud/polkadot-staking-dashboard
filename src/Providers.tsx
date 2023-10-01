@@ -1,8 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ThemedRouter } from 'Themes';
-import { APIProvider } from 'contexts/Api';
 import { BalancesProvider } from 'contexts/Balances';
 import { BondedProvider } from 'contexts/Bonded';
 import { ConnectProvider } from 'contexts/Connect';
@@ -35,22 +33,21 @@ import { TxMetaProvider } from 'contexts/TxMeta';
 import { UIProvider } from 'contexts/UI';
 import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries';
 import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidators';
-import { withProviders } from 'library/Hooks';
 import { PayoutsProvider } from 'contexts/Payouts';
 import { PolkawatchProvider } from 'contexts/Plugins/Polkawatch';
 import { useNetwork } from 'contexts/Network';
+import { APIProvider } from 'contexts/Api';
+import { ThemedRouter } from 'Themes';
+import type { AnyJson } from 'types';
+import type { FC } from 'react';
+import { withProviders } from 'library/Hooks';
 
 // Embed providers from hook.
 export const Providers = () => {
-  const ProvidersJSX = useProviders();
-  return <ProvidersJSX />;
-};
-
-// !! Provider order matters.
-export const useProviders = () => {
   const { network } = useNetwork();
 
-  return withProviders(
+  // !! Provider order matters
+  const providers: Array<FC<AnyJson> | [FC<AnyJson>, AnyJson]> = [
     [APIProvider, { network }],
     FiltersProvider,
     NotificationsProvider,
@@ -86,6 +83,8 @@ export const useProviders = () => {
     ExtrinsicsProvider,
     OverlayProvider,
     PromptProvider,
-    MigrateProvider
-  )(ThemedRouter);
+    MigrateProvider,
+  ];
+
+  return <>{withProviders(providers, ThemedRouter)}</>;
 };
