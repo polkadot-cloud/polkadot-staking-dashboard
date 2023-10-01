@@ -4,9 +4,15 @@
 import type { ApiPromise } from '@polkadot/api';
 import type { U8aLike } from '@polkadot/util/types';
 import type BigNumber from 'bignumber.js';
+import type { ReactNode } from 'react';
 import type { Network, NetworkName } from '../../types';
 
 export type ApiStatus = 'connecting' | 'connected' | 'disconnected';
+
+export interface APIProviderProps {
+  children: ReactNode;
+  network: NetworkName;
+}
 
 export interface NetworkState {
   name: NetworkName;

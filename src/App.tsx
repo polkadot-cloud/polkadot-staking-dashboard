@@ -6,8 +6,8 @@ import { I18nextProvider } from 'react-i18next';
 import { DefaultNetwork } from 'consts';
 import { ThemesProvider } from 'contexts/Themes';
 import { i18next } from 'locale';
-import { APIProvider } from 'contexts/Api';
 import { Providers } from 'Providers';
+import { NetworkProvider } from 'contexts/Network';
 
 export const App: React.FC = () => {
   let network = localStorage.getItem('network');
@@ -19,11 +19,11 @@ export const App: React.FC = () => {
 
   return (
     <I18nextProvider i18n={i18next}>
-      <APIProvider>
-        <ThemesProvider>
+      <ThemesProvider>
+        <NetworkProvider>
           <Providers />
-        </ThemesProvider>
-      </APIProvider>
+        </NetworkProvider>
+      </ThemesProvider>
     </I18nextProvider>
   );
 };

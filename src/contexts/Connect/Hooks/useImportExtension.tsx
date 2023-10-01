@@ -84,7 +84,7 @@ export const useImportExtension = () => {
       .filter((j) => !newAccounts.find((i) => i.address === j.address));
     // check whether active account is present in forgotten accounts
     const activeGoneFromExtension = goneFromExtension.find(
-      (i) => i.address === getActiveAccountLocal(networkData)
+      (i) => i.address === getActiveAccountLocal(network, networkData.ss58)
     );
     // commit remove forgotten accounts
     forget(goneFromExtension);
@@ -117,8 +117,9 @@ export const useImportExtension = () => {
   //
   // checks if the local active account is in the extension.
   const getActiveExtensionAccount = (accounts: ImportedAccount[]) =>
-    accounts.find((a) => a.address === getActiveAccountLocal(networkData)) ??
-    null;
+    accounts.find(
+      (a) => a.address === getActiveAccountLocal(network, networkData.ss58)
+    ) ?? null;
 
   // Connect active extension account.
   //

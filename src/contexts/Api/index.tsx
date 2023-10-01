@@ -5,7 +5,7 @@ import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import { makeCancelable, rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import React, { useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { NetworkList } from 'config/networks';
 import {
   FallbackBondingDuration,
@@ -20,16 +20,14 @@ import type {
   APIChainState,
   APIConstants,
   APIContextInterface,
+  APIProviderProps,
   ApiStatus,
 } from 'contexts/Api/types';
 import type { AnyApi, NetworkName } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
-import { useNetwork } from 'contexts/Network';
 import * as defaults from './defaults';
 
-export const APIProvider = ({ children }: { children: React.ReactNode }) => {
-  const { network } = useNetwork();
-
+export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Store povider instance.
   const [provider, setProvider] = useState<WsProvider | ScProvider | null>(
     null
@@ -271,8 +269,8 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export const APIContext = React.createContext<APIContextInterface>(
+export const APIContext = createContext<APIContextInterface>(
   defaults.defaultApiContext
 );
 
-export const useApi = () => React.useContext(APIContext);
+export const useApi = () => useContext(APIContext);
