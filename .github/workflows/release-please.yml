@@ -16,6 +16,6 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         with:
           # Commit to start releases from. This can be removed after the first release is merged.
-          last-release-sha: 6b7dc60cece70cfeb4190ac4dacc205112578288
+          last-release-sha: 99cfade027ce6ca81d0a14657d6bdd1b05406ad8
           release-type: node
           package-name: staking-dashboard
