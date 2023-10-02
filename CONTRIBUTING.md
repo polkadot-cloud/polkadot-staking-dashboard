@@ -1,10 +1,28 @@
 # Contribution Guide
 
-## Introduction
-
 This section aims to familiarise developers to the Polkadot Staking Dashboard [[GitHub](https://github.com/paritytech/polkadot-staking-dashboard), [Demo](https://paritytech.github.io/polkadot-staking-dashboard/#/overview)] for the purpose of contributing to the project.
 
 Reach out to ross@parity.io for clarification of any content within this document.
+
+## Submitting Pull Requests
+
+This project follows the Conventional Commits specification. Pull requests are merged and squashed, with the pull request title being used as the commit message. Commit messages should adhere to the following structure:
+
+```
+<type>(<scope>): <summary>
+```
+
+Some example PR titles:
+
+- `feat: implement help overlay`
+- `feat(auth): implement login API`
+- `fix(button): resolve issue with button alignment`
+- `docs(readme): add installation section`
+- `chore(tests): refactor user tests`
+
+The `(scope)` could be anything specifying the place of the commit change. For example, api, app, cli, etc.
+
+If you would like to know more about the Conventional Commits specification, please visit the [Conventional Commits website](https://www.conventionalcommits.org/).
 
 ## Major Packages Used
 
@@ -17,18 +35,9 @@ Reach out to ross@parity.io for clarification of any content within this documen
 
 ## Environment Variables
 
-Optionally apply the following envrionment variables in an environment file such as `.env` or with `yarn build` to customise the build of staking dashboard:
+Optionally apply envrionment variables in an environment file such as `.env` or with `yarn build` to customise the build of staking dashboard.
 
-```
-# disable all mentioning of fiat values and token prices
-VITE_DISABLE_FIAT=1
-
-# display an organisation label in the network bar
-VITE_ORGANISATION="© Parity Technologies"
-
-# provide a privacy policy url in the network bar
-VITE_PRIVACY_URL=https://www.parity.io/privacy/
-```
+Refer to the [`.env`](https://github.com/paritytech/polkadot-staking-dashboard/blob/main/.env) file in the root of the repository for all supported variables.
 
 ## Config Files
 
@@ -47,7 +56,6 @@ Folders are structured in the [`src/`](https://github.com/paritytech/polkadot-st
 - [`library`](https://github.com/paritytech/polkadot-staking-dashboard/tree/main/src/library): reusable components that could eventually be abstracted into a separate UI library.
 - [`modals`](https://github.com/paritytech/polkadot-staking-dashboard/tree/main/src/modals): the various modal pop-ups used in the app.
 - [`pages`](https://github.com/paritytech/polkadot-staking-dashboard/tree/main/src/pages): similar to modals, page components and components that comprise pages.
-- [`theme`](https://github.com/paritytech/polkadot-staking-dashboard/tree/main/src/theme): the theming configuration of the app.
 - [`workers`](https://github.com/paritytech/polkadot-staking-dashboard/tree/main/src/workers): web workers that crunch process-heavy scripts. Only one exists right now, that iterates `erasStakers` and calculates active nominators and minimum nomination bond.
 
 ## App Entry
@@ -57,12 +65,7 @@ Going from the top-most component, the component hierarchy is set up as follows:
 - [`index.tsx`](https://github.com/paritytech/polkadot-staking-dashboard/blob/main/src/index.tsx): DOM render, of little interest.
 - [`App.tsx`](https://github.com/paritytech/polkadot-staking-dashboard/blob/main/src/App.tsx): wraps `<App />` in the theme provider context and determines the active network from local storage.
 - [`Providers.tsx`](https://github.com/paritytech/polkadot-staking-dashboard/blob/main/src/Providers.tsx): imports and wraps `<Router />` with all the contexts using a withProviders hook. We also wrap styled component's theme provider context here to make the theme configuration work.
-- [`Router.tsx`](https://github.com/paritytech/polkadot-staking-dashboard/blob/main/src/Router.tsx): contains react router `<Route>`'s, in addition to the major app presentational components. Beyond `<Route>` components, this file is also the entry point for the following components:
-  - `<Modal />`: top-level of the modal.
-  - `<Help />`: top-level of the help module.
-  - `<Headers />`: fixed header of the app containing the stash / controller and accounts toggle buttons.
-  - `<NetworkBar />`: fixed network bar at the bottom of the app.
-  - `<Notifications />`: smaller context-based popups. Currently used on click-to-copy, or to display extrinsic status (pending, success).
+- [`Router.tsx`](https://github.com/paritytech/polkadot-staking-dashboard/blob/main/src/Router.tsx): contains react router `<Route>`'s, in addition to the major app presentational components.
 
 ## Development Patterns
 
@@ -78,16 +81,4 @@ Documenting some of the development patterns used:
 
 The majority of components have types. Type additions are welcome for data that makes sense to type (e.g. data that is unlikely to change as we continue development).
 
-We develop in strict mode, so types are always required for objects. Use any initially to adhere to this requirement.
-
-## Testing Support State
-
-**Tests have not yet been developed.**
-
-Testing could be initialised on a per-component basis, such as isolating library components and testing them within a storybook environment.
-
-Integration tests make sense for the app itself, ensuring the page layout, help module, and modals display the correct content at various app states. These states currently persist of:
-
-- Connecting to the network, fetching from API, fully synced.
-- Actively staking, not actively staking.
-- Account connected, no account connected.
+Strict mode is used in development, so types are always required for objects.
