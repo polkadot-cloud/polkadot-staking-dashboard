@@ -24,6 +24,12 @@ The `(scope)` could be anything specifying the place of the commit change. For e
 
 If you would like to know more about the Conventional Commits specification, please visit the [Conventional Commits website](https://www.conventionalcommits.org/).
 
+## Releases
+
+[Release Please](https://github.com/googleapis/release-please) is used for automating staking dashboard's changelog and release generation.
+
+Release Please is a GitHub action maintained by Google that automates CHANGELOG generation, the creation of GitHub releases, and version bumps. [[Gtihub docs](https://github.com/googleapis/release-please), [Action](https://github.com/marketplace/actions/release-please-action)]
+
 ## Major Packages Used
 
 - React 18
