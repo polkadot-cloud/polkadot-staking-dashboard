@@ -16,6 +16,6 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         with:
           # Commit to start releases from.
-          bootstrap-sha: 6b7dc60cece70cfeb4190ac4dacc205112578288
+          last-release-sha: 6b7dc60cece70cfeb4190ac4dacc205112578288
           release-type: node
           package-name: staking-dashboard
