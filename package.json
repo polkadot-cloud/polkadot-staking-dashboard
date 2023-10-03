@@ -26,7 +26,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@ledgerhq/hw-transport-webhid": "^6.27.19",
     "@polkadot-cloud/assets": "^0.1.11",
-    "@polkadot-cloud/core": "^0.1.31",
+    "@polkadot-cloud/core": "^1.0.0",
     "@polkadot-cloud/react": "^0.1.63",
     "@polkadot-cloud/utils": "^0.0.15",
     "@polkadot/api": "^10.9.1",
