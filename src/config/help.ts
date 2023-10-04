@@ -41,6 +41,26 @@ export const HelpConfig: HelpItems = [
     external: [],
   },
   {
+    key: 'pools',
+    definitions: [
+      'Nomination Pools',
+      'Active Pools',
+      'Minimum To Join Pool',
+      'Minimum To Create Pool',
+      'Pool Membership',
+      'Bonded in Pool',
+      'Pool Rewards',
+      'Pool Roles',
+      'Pool Commission Rate',
+      'Pool Max Commission',
+      'Pool Commission Change Rate',
+    ],
+    external: [
+      ['createPools', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
+      ['claimRewards', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
+    ],
+  },
+  {
     key: 'validators',
     definitions: [
       'Validator',

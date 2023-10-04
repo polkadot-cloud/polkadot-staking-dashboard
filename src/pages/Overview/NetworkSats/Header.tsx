@@ -5,7 +5,7 @@ import { ButtonHelp } from '@polkadotcloud/core-ui';
 import BigNumber from 'bignumber.js';
 import { useHelp } from 'contexts/Help';
 import { useNetworkMetrics } from 'contexts/Network';
-// import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { useInflation } from 'library/Hooks/useInflation';
 import { useTranslation } from 'react-i18next';
@@ -15,7 +15,7 @@ export const Header = () => {
   const { t } = useTranslation('pages');
   const { metrics } = useNetworkMetrics();
   const { staking } = useStaking();
-  // const { bondedPools } = useBondedPools();
+  const { bondedPools } = useBondedPools();
   const { inflation } = useInflation();
   const { totalNominators, totalValidators } = staking;
   const { totalIssuance } = metrics;
@@ -46,18 +46,20 @@ export const Header = () => {
               </h4>
             </div>
           </div>
-          {/* <div> */}
-          {/*   <div className="inner"> */}
-          {/*     <h2>{new BigNumber(bondedPools.length).toFormat()}</h2> */}
-          {/*     <h4> */}
-          {/*       {t('overview.activePools')} */}
-          {/*       <ButtonHelp */}
-          {/*         marginLeft */}
-          {/*         onClick={() => openHelp('Active Pools')} */}
-          {/*       /> */}
-          {/*     </h4> */}
-          {/*   </div> */}
-          {/* </div> */}
+          <div>
+            {' '}
+            *
+            <div className="inner">
+              <h2>{new BigNumber(bondedPools.length).toFormat()}</h2>
+              <h4>
+                {t('overview.activePools')}
+                <ButtonHelp
+                  marginLeft
+                  onClick={() => openHelp('Active Pools')}
+                />
+              </h4>
+            </div>
+          </div>
           <div>
             <div className="inner">
               <h2>
