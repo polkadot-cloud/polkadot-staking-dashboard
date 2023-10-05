@@ -1443,10 +1443,10 @@
     picocolors "^1.0.0"
     tslib "^2.6.0"
 
-"@polkadot-cloud/assets@^0.1.11", "@polkadot-cloud/assets@^0.1.15":
-  version "0.1.15"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.15.tgz#ad3cac31c1aae3e3b35f823576e5be154974664a"
-  integrity sha512-gyCR+cu6ecw4SfrIiZPBO8GQLwqKPqeWKy2E4yP5XQbv01lIDWbnAHGi69Tg7IsQOzfHnBumTCBxc1FF0QwuaQ==
+"@polkadot-cloud/assets@^0.1.11", "@polkadot-cloud/assets@^0.1.16":
+  version "0.1.16"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.16.tgz#385b1b0b3a06942620b6e4e788997439f68dcf5c"
+  integrity sha512-5YB7Op38hAxKVnHkJav/s6JPFa2KRpUob8zMMg2OBnC/tAaapFzNxVtE357+uSO0EbY1CHkYuOmmMTN87UwAzg==
 
 "@polkadot-cloud/core@^0.1.31":
   version "0.1.35"
