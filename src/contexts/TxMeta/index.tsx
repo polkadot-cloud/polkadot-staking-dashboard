@@ -5,20 +5,20 @@ import { setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import React, { useState } from 'react';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import type { AnyJson, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import * as defaults from './defaults';
 import type { TxMetaContextInterface } from './types';
 
 export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   const { getBondedAccount } = useBonded();
-  const { accountHasSigner } = useConnect();
   const { activeProxy } = useActiveAccount();
   const { getControllerNotImported } = useStaking();
+  const { accountHasSigner } = useImportedAccounts();
   const { getTransferOptions } = useTransferOptions();
 
   // Store the transaction fees for the transaction.

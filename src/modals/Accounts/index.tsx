@@ -13,7 +13,6 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
 import {
   useExtensions,
   useEffectIgnoreInitial,
@@ -22,6 +21,7 @@ import {
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useProxies } from 'contexts/Proxies';
 import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { AccountButton } from './Account';
 import { Delegates } from './Delegates';
 import { AccountSeparator, AccountWrapper } from './Wrappers';
@@ -45,8 +45,9 @@ export const Accounts = () => {
     status: modalStatus,
     setModalResize,
   } = useOverlay().modal;
-  const { disconnectFromAccount, accounts } = useConnect();
-  const { activeAccount, setActiveProxy } = useActiveAccount();
+  const { accounts } = useImportedAccounts();
+  const { activeAccount, setActiveProxy, disconnectFromAccount } =
+    useActiveAccount();
 
   // Store local copy of accounts.
   const [localAccounts, setLocalAccounts] = useState(accounts);

@@ -24,6 +24,7 @@ import type { ImportedAccount } from '../types';
 import { useConnect } from '..';
 // TODO: the functions in this hook need to be moved to the cloud.
 import { extensionIsLocal, removeFromLocalExtensions } from '../Utils';
+import { useActiveAccount } from '../ActiveAccount';
 
 export const ExtensionAccountsContext =
   createContext<ExtensionAccountsContextInterface>(
@@ -42,8 +43,9 @@ export const ExtensionAccountsProvider = ({
     getActiveExtensionAccount,
   } = useImportExtension();
 
-  // TODO: these useConnect imports should be refactored and moved to the cloud.
-  const { forgetAccounts, connectToAccount } = useConnect();
+  // TODO: these `useConnect` imports should be refactored and moved to the cloud.
+  const { forgetAccounts } = useConnect();
+  const { setActiveAccount } = useActiveAccount();
   const { checkingInjectedWeb3, setExtensionStatus, extensions } =
     useExtensions();
 
@@ -65,6 +67,10 @@ export const ExtensionAccountsProvider = ({
 
   // Store unsubscribe handlers for connected extensions.
   const unsubs = useRef<Record<string, VoidFn>>({});
+
+  const connectToAccount = (account: ImportedAccount | null) => {
+    setActiveAccount(account?.address ?? null);
+  };
 
   // connectActiveExtensions
   //
@@ -123,7 +129,7 @@ export const ExtensionAccountsProvider = ({
                   }
                 }
                 // Concat accounts and store.
-                addToAccounts(newAccounts);
+                addExtensionAccount(newAccounts);
                 // Update initialised extensions.
                 updateInitialisedExtensions(id);
               }
@@ -181,7 +187,7 @@ export const ExtensionAccountsProvider = ({
                   );
               }
               // Concat accounts and store.
-              addToAccounts(newAccounts);
+              addExtensionAccount(newAccounts);
               // Update initialised extensions.
               updateInitialisedExtensions(id);
             }
@@ -225,7 +231,7 @@ export const ExtensionAccountsProvider = ({
   };
 
   // Add an extension account to context state.
-  const addToAccounts = (a: ImportedAccount[]) => {
+  const addExtensionAccount = (a: ImportedAccount[]) => {
     setStateWithRef(
       [...extensionAccountsRef.current].concat(a),
       setExtensionAccounts,

@@ -44,17 +44,27 @@ export const ActiveAccountProvider = ({
   };
 
   // Setter for the active account.
-  const setActiveAccount = (newActiveAccount: MaybeAccount) => {
-    if (newActiveAccount === null) {
-      localStorage.removeItem(`${network}_active_account`);
-    } else {
-      localStorage.setItem(`${network}_active_account`, newActiveAccount);
+  const setActiveAccount = (
+    newActiveAccount: MaybeAccount,
+    local: boolean = true
+  ) => {
+    if (local) {
+      if (newActiveAccount === null) {
+        localStorage.removeItem(`${network}_active_account`);
+      } else {
+        localStorage.setItem(`${network}_active_account`, newActiveAccount);
+      }
     }
     setStateWithRef(newActiveAccount, setActiveAccountState, activeAccountRef);
   };
 
   // Getter for the active account.
   const getActiveAccount = () => activeAccountRef.current;
+
+  const disconnectFromAccount = () => {
+    localStorage.removeItem(`${network}_active_account`);
+    setActiveAccount(null);
+  };
 
   return (
     <ActiveAccountContext.Provider
@@ -65,6 +75,7 @@ export const ActiveAccountProvider = ({
         setActiveAccount,
         getActiveAccount,
         setActiveProxy,
+        disconnectFromAccount,
       }}
     >
       {children}

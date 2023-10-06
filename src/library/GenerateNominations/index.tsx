@@ -14,7 +14,6 @@ import { camelize } from '@polkadot-cloud/utils';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { SelectableWrapper } from 'library/List';
@@ -26,6 +25,7 @@ import { useStaking } from 'contexts/Staking';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type {
   GenerateNominationsInnerProps,
   Nominations,
@@ -43,7 +43,7 @@ export const GenerateNominations = ({
   const { isFastUnstaking } = useUnstaking();
   const { stakers } = useStaking().eraStakers;
   const { favoritesList } = useFavoriteValidators();
-  const { isReadOnlyAccount } = useConnect();
+  const { isReadOnlyAccount } = useImportedAccounts();
   const { activeAccount } = useActiveAccount();
   const { validators, validatorIdentities, validatorSupers } = useValidators();
   const {

@@ -9,6 +9,7 @@ export interface ActiveAccountContextInterface {
   activeProxy: MaybeAccount;
   activeProxyType: string | null;
   getActiveAccount: () => string | null;
-  setActiveAccount: (a: MaybeAccount) => void;
+  setActiveAccount: (a: MaybeAccount, l?: boolean) => void;
   setActiveProxy: (p: ActiveProxy, l?: boolean) => void;
+  disconnectFromAccount: () => void;
 }

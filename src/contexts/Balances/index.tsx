@@ -16,6 +16,7 @@ import { useConnect } from 'contexts/Connect';
 import type { AnyApi, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { getLedger } from './Utils';
 import * as defaults from './defaults';
 import type {
@@ -36,7 +37,9 @@ export const BalancesProvider = ({
 }) => {
   const { api, isReady } = useApi();
   const { network } = useNetwork();
-  const { accounts, addExternalAccount, getAccount } = useConnect();
+  const { accounts } = useImportedAccounts();
+  const { addExternalAccount } = useConnect();
+  const { getAccount } = useImportedAccounts();
 
   const [balances, setBalances] = useState<Balances[]>([]);
   const balancesRef = useRef(balances);

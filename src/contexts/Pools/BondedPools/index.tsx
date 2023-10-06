@@ -409,7 +409,6 @@ export const BondedPoolsProvider = ({
   const getAccountPools = (who: MaybeAccount) => {
     // first get the roles of the account
     const roles = getAccountRoles(who);
-
     // format new list has pool => roles
     const pools: any = {};
     Object.entries(roles).forEach(([key, poolIds]: any) => {

@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn, unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { Warning } from 'library/Form/Warning';
 import { useBatchCall } from 'library/Hooks/useBatchCall';
@@ -19,6 +18,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
 import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = ({ section }: SetupStepProps) => {
@@ -29,7 +29,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   } = useNetwork();
   const { newBatchCall } = useBatchCall();
   const { getPayeeItems } = usePayeeConfig();
-  const { accountHasSigner } = useConnect();
+  const { accountHasSigner } = useImportedAccounts();
   const { activeAccount, activeProxy } = useActiveAccount();
   const { getSetupProgress, removeSetupProgress } = useSetup();
 

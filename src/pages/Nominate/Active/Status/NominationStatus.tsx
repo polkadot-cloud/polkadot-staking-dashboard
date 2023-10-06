@@ -9,7 +9,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useSetup } from 'contexts/Setup';
@@ -20,6 +19,7 @@ import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Stat } from 'library/Stat';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const NominationStatus = ({
   showButtons = true,
@@ -36,8 +36,8 @@ export const NominationStatus = ({
   const { metrics } = useNetworkMetrics();
   const { getBondedAccount } = useBonded();
   const { checking, isExposed } = useFastUnstake();
+  const { isReadOnlyAccount } = useImportedAccounts();
   const { getNominationStatus } = useNominationStatus();
-  const { isReadOnlyAccount } = useConnect();
   const { activeAccount } = useActiveAccount();
   const { getFastUnstakeText, isUnstaking } = useUnstaking();
   const { setOnNominatorSetup, getNominatorSetupPercent } = useSetup();

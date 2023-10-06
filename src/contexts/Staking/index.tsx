@@ -26,9 +26,9 @@ import type { ResponseInitialiseExposures } from 'workers/types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useApi } from '../Api';
 import { useBonded } from '../Bonded';
-import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../NetworkMetrics';
 import {
   defaultEraStakers,
@@ -49,7 +49,7 @@ export const StakingProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { accounts: connectAccounts } = useConnect();
+  const { accounts: connectAccounts } = useImportedAccounts();
   const { activeAccount, getActiveAccount } = useActiveAccount();
   const { getStashLedger } = useBalances();
   const { activeEra } = useNetworkMetrics();

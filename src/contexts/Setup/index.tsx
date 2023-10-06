@@ -12,7 +12,7 @@ import type { BondFor, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
-import { useConnect } from '../Connect';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useStaking } from '../Staking';
 import {
   defaultNominatorProgress,
@@ -35,7 +35,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     network,
     networkData: { units },
   } = useNetwork();
-  const { accounts } = useConnect();
+  const { accounts } = useImportedAccounts();
   const { activeAccount } = useActiveAccount();
   const { membership: poolMembership } = usePoolMemberships();
 

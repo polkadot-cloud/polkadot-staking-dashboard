@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn, planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { Extensions } from '@polkadot-cloud/assets/extensions';
-import { useConnect } from 'contexts/Connect';
 import LedgerIconSVG from 'img/ledgerIcon.svg?react';
 import PolkadotVaultIconSVG from 'img/polkadotVault.svg?react';
 import { Polkicon } from '@polkadot-cloud/react';
@@ -14,6 +13,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
 
@@ -25,9 +25,14 @@ export const AccountButton = ({
   noBorder = false,
 }: AccountItemProps) => {
   const { t } = useTranslation('modals');
-  const { getAccount, connectToAccount } = useConnect();
-  const { activeProxy, activeAccount, setActiveProxy, activeProxyType } =
-    useActiveAccount();
+  const { getAccount } = useImportedAccounts();
+  const {
+    activeProxy,
+    activeAccount,
+    setActiveAccount,
+    setActiveProxy,
+    activeProxyType,
+  } = useActiveAccount();
   const { setModalStatus } = useOverlay().modal;
   const { units, unit } = useNetwork().networkData;
   const { getTransferOptions } = useTransferOptions();
@@ -60,7 +65,7 @@ export const AccountButton = ({
   // Handle account click. Handles both active account and active proxy.
   const handleClick = () => {
     if (!imported) return;
-    connectToAccount(getAccount(connectTo));
+    setActiveAccount(getAccount(connectTo)?.address || null);
     setActiveProxy(proxyType ? { address: connectProxy, proxyType } : null);
     setModalStatus('closing');
   };

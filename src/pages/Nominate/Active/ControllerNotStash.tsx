@@ -11,23 +11,23 @@ import { ButtonPrimary, PageRow } from '@polkadot-cloud/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const ControllerNotStash = () => {
   const { t } = useTranslation('pages');
   const { network } = useNetwork();
-  const { isReadOnlyAccount } = useConnect();
   const { activeAccount } = useActiveAccount();
   const { addressDifferentToStash } = useStaking();
   const { getBondedAccount } = useBonded();
   const { openModal } = useOverlay().modal;
   const { isSyncing } = useUi();
+  const { isReadOnlyAccount } = useImportedAccounts();
   const controller = getBondedAccount(activeAccount);
 
   const [showPrompt, setShowPrompt] = useState<boolean>(

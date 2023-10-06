@@ -1,27 +1,17 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type {
-  ExtensionAccount,
-  ExtensionInjected,
-} from '@polkadot-cloud/react/connect/ExtensionsProvider/types';
+import type { ExtensionAccount } from '@polkadot-cloud/react/connect/ExtensionsProvider/types';
 import type { MaybeAccount, NetworkName } from 'types';
 
 export interface ConnectContextInterface {
   formatAccountSs58: (a: string) => string | null;
-  connectExtensionAccounts: (e: ExtensionInjected) => Promise<boolean>;
-  getAccount: (account: MaybeAccount) => ExtensionAccount | null;
-  connectToAccount: (a: ImportedAccount | null) => void;
-  disconnectFromAccount: () => void;
   addExternalAccount: (a: string, addedBy: string) => void;
-  accountHasSigner: (a: MaybeAccount) => boolean;
-  requiresManualSign: (a: MaybeAccount) => boolean;
-  isReadOnlyAccount: (a: MaybeAccount) => boolean;
-  addToAccounts: (a: ImportedAccount[]) => void;
+  addOtherAccounts: (a: ImportedAccount[]) => void;
   forgetAccounts: (a: ImportedAccount[]) => void;
   renameImportedAccount: (a: MaybeAccount, n: string) => void;
   importLocalAccounts: (g: (n: NetworkName) => ImportedAccount[]) => void;
-  accounts: ExtensionAccount[];
+  otherAccounts: ImportedAccount[];
 }
 
 export type ImportedAccount =

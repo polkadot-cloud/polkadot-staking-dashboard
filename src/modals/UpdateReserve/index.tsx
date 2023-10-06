@@ -13,7 +13,6 @@ import BigNumber from 'bignumber.js';
 import Slider from 'rc-slider';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
@@ -24,6 +23,7 @@ import 'rc-slider/assets/index.css';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const UpdateReserve = () => {
   const { t } = useTranslation('modals');
@@ -33,8 +33,8 @@ export const UpdateReserve = () => {
   } = useNetwork();
   const { openHelp } = useHelp();
   const { setModalStatus } = useOverlay().modal;
-  const { accountHasSigner } = useConnect();
   const { activeAccount } = useActiveAccount();
+  const { accountHasSigner } = useImportedAccounts();
   const { feeReserve, setFeeReserveBalance, getTransferOptions } =
     useTransferOptions();
 

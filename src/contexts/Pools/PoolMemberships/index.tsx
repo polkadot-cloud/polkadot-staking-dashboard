@@ -14,8 +14,8 @@ import type { AnyApi, Fn } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useApi } from '../../Api';
-import { useConnect } from '../../Connect';
 import * as defaults from './defaults';
 
 export const PoolMembershipsProvider = ({
@@ -27,7 +27,7 @@ export const PoolMembershipsProvider = ({
   const { network } = useNetwork();
   const { api, isReady } = useApi();
   const { activeAccount } = useActiveAccount();
-  const { accounts: connectAccounts } = useConnect();
+  const { accounts: connectAccounts } = useImportedAccounts();
 
   // Stores pool memberships for the imported accounts.
   const [poolMemberships, setPoolMemberships] = useState<PoolMembership[]>([]);

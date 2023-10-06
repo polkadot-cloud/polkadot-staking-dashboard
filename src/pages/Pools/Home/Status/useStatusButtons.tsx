@@ -4,7 +4,6 @@
 import { faPlusCircle, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
@@ -12,6 +11,7 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useSetup } from 'contexts/Setup';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {
@@ -21,10 +21,10 @@ export const useStatusButtons = () => {
   const { isOwner } = useActivePools();
   const { setActiveTab } = usePoolsTabs();
   const { bondedPools } = useBondedPools();
-  const { isReadOnlyAccount } = useConnect();
   const { membership } = usePoolMemberships();
   const { activeAccount } = useActiveAccount();
   const { getTransferOptions } = useTransferOptions();
+  const { isReadOnlyAccount } = useImportedAccounts();
   const { setOnPoolSetup, getPoolSetupPercent } = useSetup();
 
   const { maxPools } = stats;

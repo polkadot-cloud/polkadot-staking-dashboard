@@ -5,10 +5,10 @@ import { faSquarePen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@polkadot-cloud/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { usePrompt } from 'contexts/Prompt';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { SubmitProps } from '../../types';
 import { SignPrompt } from './SignPrompt';
 
@@ -21,7 +21,7 @@ export const Vault = ({
   submitAddress,
 }: SubmitProps & { buttons?: React.ReactNode[] }) => {
   const { t } = useTranslation('library');
-  const { accountHasSigner } = useConnect();
+  const { accountHasSigner } = useImportedAccounts();
   const { txFeesValid, getTxSignature } = useTxMeta();
   const { openPromptWith, status: promptStatus } = usePrompt();
 

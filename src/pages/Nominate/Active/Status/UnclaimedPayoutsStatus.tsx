@@ -8,10 +8,10 @@ import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
 import { faCircleDown } from '@fortawesome/free-solid-svg-icons';
-import { useConnect } from 'contexts/Connect';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const UnclaimedPayoutsStatus = () => {
   const { t } = useTranslation();
@@ -21,8 +21,8 @@ export const UnclaimedPayoutsStatus = () => {
   } = useNetwork();
   const { openModal } = useOverlay().modal;
   const { unclaimedPayouts } = usePayouts();
-  const { isReadOnlyAccount } = useConnect();
   const { activeAccount } = useActiveAccount();
+  const { isReadOnlyAccount } = useImportedAccounts();
 
   const totalUnclaimed = Object.values(unclaimedPayouts || {}).reduce(
     (total, validators) =>

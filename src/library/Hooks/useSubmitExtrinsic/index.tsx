@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { manualSigners } from 'contexts/Connect/Utils';
 import { useExtensions } from '@polkadot-cloud/react/hooks';
 import { useExtrinsics } from 'contexts/Extrinsics';
@@ -15,6 +14,7 @@ import { useNotifications } from 'contexts/Notifications';
 import { useTxMeta } from 'contexts/TxMeta';
 import type { AnyApi, AnyJson } from 'types';
 import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useBuildPayload } from '../useBuildPayload';
 import { useProxySupported } from '../useProxySupported';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
@@ -34,7 +34,7 @@ export const useSubmitExtrinsic = ({
   const { addPending, removePending } = useExtrinsics();
   const { buildPayload } = useBuildPayload();
   const { activeProxy } = useActiveAccount();
-  const { getAccount, requiresManualSign } = useConnect();
+  const { getAccount, requiresManualSign } = useImportedAccounts();
   const {
     setTxFees,
     incrementPayloadUid,

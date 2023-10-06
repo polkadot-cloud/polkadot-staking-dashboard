@@ -45,6 +45,7 @@ import { ExtensionAccountsProvider } from 'contexts/Connect/ExtensionAccounts';
 import { OtherAccountsProvider } from 'contexts/Connect/OtherAccounts';
 import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import { DappName } from 'consts';
+import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts';
 
 // Embed providers from hook.
 export const Providers = () => {
@@ -61,9 +62,9 @@ export const Providers = () => {
     LedgerHardwareProvider,
     ExtensionsProvider,
     ConnectProvider,
-    // Note: not currently in use.
     [ExtensionAccountsProvider, { network, activeAccount, dappName: DappName }],
     OtherAccountsProvider,
+    ImportedAccountsProvider,
     HelpProvider,
     NetworkMetricsProvider,
     SubscanProvider,

@@ -10,7 +10,6 @@ import {
 } from '@polkadot-cloud/react';
 import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
@@ -20,6 +19,7 @@ import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');
@@ -33,8 +33,8 @@ export const ManageBond = () => {
   const { openHelp } = useHelp();
   const { isPoolSyncing } = useUi();
   const { openModal } = useOverlay().modal;
-  const { isReadOnlyAccount } = useConnect();
   const { activeAccount } = useActiveAccount();
+  const { isReadOnlyAccount } = useImportedAccounts();
   const { getTransferOptions } = useTransferOptions();
   const { isBonding, isMember, selectedActivePool } = useActivePools();
 

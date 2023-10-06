@@ -116,10 +116,13 @@ export const useImportExtension = () => {
   // Get active extension account.
   //
   // checks if the local active account is in the extension.
-  const getActiveExtensionAccount = (accounts: ImportedAccount[]) =>
-    accounts.find(
-      (a) => a.address === getActiveAccountLocal(network, networkData.ss58)
-    ) ?? null;
+  const getActiveExtensionAccount = (accounts: ImportedAccount[]) => {
+    return (
+      accounts.find(
+        (a) => a.address === getActiveAccountLocal(network, networkData.ss58)
+      ) ?? null
+    );
+  };
 
   // Connect active extension account.
   //

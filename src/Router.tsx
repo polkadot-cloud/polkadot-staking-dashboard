@@ -17,7 +17,6 @@ import {
 } from 'react-router-dom';
 import { Prompt } from 'library/Prompt';
 import { PagesConfig } from 'config/pages';
-import { useConnect } from 'contexts/Connect';
 import { useNotifications } from 'contexts/Notifications';
 import { useUi } from 'contexts/UI';
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
@@ -32,15 +31,16 @@ import { Overlays } from 'overlay';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const RouterInner = () => {
   const { t } = useTranslation();
   const { network } = useNetwork();
   const { pathname } = useLocation();
-  const { activeAccount } = useActiveAccount();
+  const { accounts } = useImportedAccounts();
   const { addNotification } = useNotifications();
   const { accountsInitialised } = useOtherAccounts();
-  const { accounts, connectToAccount } = useConnect();
+  const { activeAccount, setActiveAccount } = useActiveAccount();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
 
   // Scroll to top of the window on every page change or network change.
@@ -62,7 +62,7 @@ export const RouterInner = () => {
       if (aUrl) {
         const account = accounts.find((a) => a.address === aUrl);
         if (account && aUrl !== activeAccount) {
-          connectToAccount(account);
+          setActiveAccount(account?.address || null);
           addNotification({
             title: t('accountConnected', { ns: 'library' }),
             subtitle: `${t('connectedTo', { ns: 'library' })} ${

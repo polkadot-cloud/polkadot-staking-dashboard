@@ -13,7 +13,7 @@ import { QrScanSignature } from 'library/QRCode/ScanSignature';
 
 export const Reader = () => {
   const { t } = useTranslation('modals');
-  const { addToAccounts, formatAccountSs58 } = useConnect();
+  const { addOtherAccounts, formatAccountSs58 } = useConnect();
   const { setStatus: setPromptStatus } = usePrompt();
   const { addVaultAccount, vaultAccountExists, vaultAccounts } =
     useVaultHardware();
@@ -43,7 +43,7 @@ export const Reader = () => {
     if (valid) {
       const account = addVaultAccount(qrData, vaultAccounts.length);
       if (account) {
-        addToAccounts([account]);
+        addOtherAccounts([account]);
       }
       setPromptStatus(0);
     }

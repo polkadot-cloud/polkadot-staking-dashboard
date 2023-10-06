@@ -6,20 +6,12 @@ import type { ConnectContextInterface } from 'contexts/Connect/types';
 
 export const defaultConnectContext: ConnectContextInterface = {
   formatAccountSs58: (a: string) => null,
-  connectExtensionAccounts: async (e) =>
-    new Promise((resolve) => resolve(false)),
-  getAccount: (a) => null,
-  connectToAccount: (a) => {},
-  disconnectFromAccount: () => {},
   addExternalAccount: (a, b) => {},
-  accountHasSigner: (a) => false,
-  requiresManualSign: (a) => false,
-  isReadOnlyAccount: (a) => false,
-  addToAccounts: (a) => {},
+  addOtherAccounts: (a) => {},
   forgetAccounts: (a) => {},
   renameImportedAccount: (a, n) => {},
   importLocalAccounts: (n) => {},
-  accounts: [],
+  otherAccounts: [],
 };
 
 export const defaultHandleImportExtension = {

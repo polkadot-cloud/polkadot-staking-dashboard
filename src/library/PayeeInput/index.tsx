@@ -10,6 +10,7 @@ import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { Polkicon } from '@polkadot-cloud/react';
 import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Wrapper } from './Wrapper';
 import type { PayeeInputProps } from './types';
 
@@ -21,8 +22,9 @@ export const PayeeInput = ({
 }: PayeeInputProps) => {
   const { t } = useTranslation('library');
   const { getBondedAccount } = useBonded();
+  const { accounts } = useImportedAccounts();
+  const { formatAccountSs58 } = useConnect();
   const { activeAccount } = useActiveAccount();
-  const { formatAccountSs58, accounts } = useConnect();
   const controller = getBondedAccount(activeAccount);
 
   const accountMeta = accounts.find((a) => a.address === activeAccount);

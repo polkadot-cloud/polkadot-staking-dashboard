@@ -3,36 +3,21 @@
 
 import type { VoidFn } from '@polkadot/api/types';
 import Keyring from '@polkadot/keyring';
-import {
-  ellipsisFn,
-  localStorageOrDefault,
-  setStateWithRef,
-} from '@polkadot-cloud/utils';
+import { ellipsisFn, setStateWithRef } from '@polkadot-cloud/utils';
 import React, { useEffect, useRef, useState } from 'react';
-import { DappName } from 'consts';
 import type {
   ConnectContextInterface,
   ExternalAccount,
   ImportedAccount,
 } from 'contexts/Connect/types';
-import {
-  useExtensions,
-  useEffectIgnoreInitial,
-} from '@polkadot-cloud/react/hooks';
+import { useExtensions } from '@polkadot-cloud/react/hooks';
 
-import type { AnyApi, MaybeAccount, NetworkName } from 'types';
-import type {
-  ExtensionInjected,
-  ExtensionInterface,
-} from '@polkadot-cloud/react/connect/ExtensionsProvider/types';
+import type { MaybeAccount, NetworkName } from 'types';
+
 import { useNetwork } from 'contexts/Network';
-import { useImportExtension } from './Hooks/useImportExtension';
 import {
-  extensionIsLocal,
   getActiveAccountLocal,
   getLocalExternalAccounts,
-  manualSigners,
-  removeFromLocalExtensions,
   removeLocalExternalAccounts,
 } from './Utils';
 import { defaultConnectContext } from './defaults';
@@ -44,31 +29,15 @@ export const ConnectProvider = ({
   children: React.ReactNode;
 }) => {
   const { networkData, network } = useNetwork();
+  const { checkingInjectedWeb3, extensions } = useExtensions();
   const { activeAccount, setActiveAccount } = useActiveAccount();
-  const { checkingInjectedWeb3, extensions, setExtensionStatus } =
-    useExtensions();
-  const {
-    handleImportExtension,
-    getActiveExtensionAccount,
-    connectActiveExtensionAccount,
-  } = useImportExtension();
 
-  // store whether extension accounts have been synced.
-  // TODO: get this value from useExtensionAccounts().
-  const [, setExtensionAccountsSynced] = useState<boolean>(false);
-
-  // store accounts list
-  const [accounts, setAccounts] = useState<ImportedAccount[]>([]);
-  const accountsRef = useRef(accounts);
+  // store other (non-extension) accounts list
+  const [otherAccounts, setOtherAccounts] = useState<ImportedAccount[]>([]);
+  const otherAccountsRef = useRef(otherAccounts);
 
   // store unsubscribe handlers for connected extensions.
   const unsubs = useRef<Record<string, VoidFn>>({});
-
-  // store extensions whose account subscriptions have been initialised
-  const [extensionsInitialised, setExtensionsInitialised] = useState<AnyApi[]>(
-    []
-  );
-  const extensionsInitialisedRef = useRef(extensionsInitialised);
 
   /* re-sync extensions accounts on network switch
    * do this if activeAccount is present.
@@ -82,42 +51,11 @@ export const ConnectProvider = ({
     if (!checkingInjectedWeb3) {
       // unsubscribe from all accounts and reset state
       unsubscribe();
-      setActiveAccount(null);
-      setStateWithRef([], setAccounts, accountsRef);
-      setStateWithRef([], setExtensionsInitialised, extensionsInitialisedRef);
-      setExtensionAccountsSynced(false);
-
-      // if extensions have been fetched, get accounts if extensions exist and
-      // local extensions exist (previously connected).
-
-      if (extensions.length) {
-        // get active extensions
-        const localExtensions = localStorageOrDefault(
-          `active_extensions`,
-          [],
-          true
-        );
-        if (extensions.length && localExtensions.length) {
-          connectActiveExtensions();
-        } else {
-          setExtensionAccountsSynced(true);
-        }
-      }
+      setActiveAccount(null, false);
+      setStateWithRef([], setOtherAccounts, otherAccountsRef);
     }
     return () => unsubscribe();
   }, [extensions?.length, network, checkingInjectedWeb3]);
-
-  // Once initialised extensions equal total extensions present in `injectedWeb3`, mark extensions
-  // as fetched.
-  useEffectIgnoreInitial(() => {
-    if (
-      (!checkingInjectedWeb3 &&
-        extensionsInitialisedRef.current.length === extensions?.length) ||
-      0
-    ) {
-      setExtensionAccountsSynced(true);
-    }
-  }, [checkingInjectedWeb3, extensionsInitialisedRef.current]);
 
   // Unsubscrbe all account subscriptions.
   const unsubscribe = () => {
@@ -155,18 +93,19 @@ export const ConnectProvider = ({
 
     // Remove forgotten accounts from state.
     setStateWithRef(
-      [...accountsRef.current].filter(
+      [...otherAccountsRef.current].filter(
         (a) => forget.find(({ address }) => address === a.address) === undefined
       ),
-      setAccounts,
-      accountsRef
+      setOtherAccounts,
+      otherAccountsRef
     );
   };
 
   // renames an account
+  // TODO: move to ImportedAccounts context and refactor.
   const renameImportedAccount = (address: MaybeAccount, newName: string) => {
     setStateWithRef(
-      [...accountsRef.current].map((a) =>
+      [...otherAccountsRef.current].map((a) =>
         a.address !== address
           ? a
           : {
@@ -174,8 +113,8 @@ export const ConnectProvider = ({
               name: newName,
             }
       ),
-      setAccounts,
-      accountsRef
+      setOtherAccounts,
+      otherAccountsRef
     );
   };
 
@@ -199,200 +138,19 @@ export const ConnectProvider = ({
       // remove already-imported accounts.
       localAccounts = localAccounts.filter(
         (l) =>
-          accountsRef.current.find(({ address }) => address === l.address) ===
-          undefined
+          otherAccountsRef.current.find(
+            ({ address }) => address === l.address
+          ) === undefined
       );
 
       // set active account for networkData.
       if (activeAccountInSet) {
-        connectToAccount(activeAccountInSet);
+        setActiveAccount(activeAccountInSet?.address || null);
       }
       // add accounts to imported.
-      addToAccounts(localAccounts);
+      addOtherAccounts(localAccounts);
     }
   };
-
-  /* connectActiveExtensions
-   * Connects to extensions that already have been connected
-   * to and stored in localStorage.
-   * Loop through extensions and connect to accounts.
-   * If `activeAccount` exists locally, we wait until all
-   * extensions are looped before connecting to it; there is
-   * no guarantee it still exists - must explicitly find it.
-   */
-  const connectActiveExtensions = async () => {
-    // iterate extensions and add accounts to state
-    const total = extensions?.length ?? 0;
-    let activeWalletAccount: ImportedAccount | null = null;
-
-    if (!extensions) {
-      return;
-    }
-
-    let i = 0;
-    extensions.forEach(async (e: ExtensionInjected) => {
-      i++;
-
-      // ensure the extension carries an `id` property
-      const id = e?.id ?? undefined;
-
-      // whether extension is locally stored (previously connected)
-      const isLocal = extensionIsLocal(id ?? 0);
-
-      if (!id || !isLocal) {
-        updateInitialisedExtensions(
-          id ||
-            `unknown_extension_${extensionsInitialisedRef.current.length + 1}`
-        );
-      } else {
-        try {
-          // attempt to get extension `enable` property
-          const { enable } = e;
-
-          // summons extension popup
-          const extension: ExtensionInterface = await enable(DappName);
-
-          if (extension !== undefined) {
-            const unsub = extension.accounts.subscribe((a) => {
-              if (a) {
-                const { newAccounts, meta } = handleImportExtension(
-                  id,
-                  accountsRef.current,
-                  extension,
-                  a,
-                  forgetAccounts
-                );
-
-                // store active wallet account if found in this extension
-                if (!activeWalletAccount) {
-                  activeWalletAccount = getActiveExtensionAccount(newAccounts);
-                }
-                // set active account for network on final extension
-                if (i === total && activeAccount === null) {
-                  const activeAccountRemoved =
-                    activeWalletAccount?.address !==
-                      meta.removedActiveAccount &&
-                    meta.removedActiveAccount !== null;
-
-                  if (!activeAccountRemoved) {
-                    connectActiveExtensionAccount(
-                      activeWalletAccount,
-                      connectToAccount
-                    );
-                  }
-                }
-
-                // concat accounts and store
-                addToAccounts(newAccounts);
-
-                // update initialised extensions
-                updateInitialisedExtensions(id);
-              }
-            });
-
-            addToUnsubscribe(id, unsub);
-          }
-        } catch (err) {
-          handleExtensionError(id, String(err));
-        }
-      }
-    });
-  };
-
-  /* connectExtensionAccounts
-   * Similar to the above but only connects to a single extension.
-   * This is invoked by the user by clicking on an extension.
-   * If activeAccount is not found here, it is simply ignored.
-   */
-  const connectExtensionAccounts = async (
-    e: ExtensionInjected
-  ): Promise<boolean> => {
-    // ensure the extension carries an `id` property
-    const id = e?.id ?? undefined;
-
-    if (!id) {
-      updateInitialisedExtensions(
-        `unknown_extension_${extensionsInitialisedRef.current.length + 1}`
-      );
-    } else {
-      try {
-        // attempt to get extension `enable` property
-        const { enable } = e;
-
-        // summons extension popup
-        const extension: ExtensionInterface = await enable(DappName);
-
-        if (extension !== undefined) {
-          // subscribe to accounts
-          const unsub = extension.accounts.subscribe((a) => {
-            if (a) {
-              const { newAccounts, meta } = handleImportExtension(
-                id,
-                accountsRef.current,
-                extension,
-                a,
-                forgetAccounts
-              );
-              // set active account for network if not yet set
-              if (activeAccount === null) {
-                const activeExtensionAccount =
-                  getActiveExtensionAccount(newAccounts);
-
-                if (
-                  activeExtensionAccount !== meta.removedActiveAccount &&
-                  meta.removedActiveAccount !== null
-                )
-                  connectActiveExtensionAccount(
-                    activeExtensionAccount,
-                    connectToAccount
-                  );
-              }
-              // concat accounts and store
-              addToAccounts(newAccounts);
-
-              // update initialised extensions
-              updateInitialisedExtensions(id);
-            }
-          });
-          addToUnsubscribe(id, unsub);
-          return true;
-        }
-      } catch (err) {
-        handleExtensionError(id, String(err));
-      }
-    }
-    return false;
-  };
-
-  const handleExtensionError = (id: string, err: string) => {
-    // if not general error (maybe enabled but no accounts trust app)
-    if (err.startsWith('Error')) {
-      // remove extension from local `active_extensions`.
-      removeFromLocalExtensions(id);
-
-      // extension not found (does not exist)
-      if (err.substring(0, 17) === 'NotInstalledError') {
-        setExtensionStatus(id, 'not_found');
-      } else {
-        // declare extension as no imported accounts authenticated.
-        setExtensionStatus(id, 'not_authenticated');
-      }
-    }
-    // mark extension as initialised
-    updateInitialisedExtensions(id);
-  };
-
-  const connectToAccount = (account: ImportedAccount | null) => {
-    setActiveAccount(account?.address ?? null);
-  };
-
-  const disconnectFromAccount = () => {
-    localStorage.removeItem(`${network}_active_account`);
-    setActiveAccount(null);
-  };
-
-  const getAccount = (who: MaybeAccount) =>
-    accountsRef.current.find(({ address }) => address === who) || null;
 
   // adds an external account (non-wallet) to accounts
   const addExternalAccount = (address: string, addedBy: string) => {
@@ -417,7 +175,7 @@ export const ConnectProvider = ({
 
     // check that address is not sitting in imported accounts (currently cannot check which
     // network).
-    const existsImported = accountsRef.current.find(
+    const existsImported = otherAccountsRef.current.find(
       (a) => a.address === address
     );
 
@@ -429,7 +187,7 @@ export const ConnectProvider = ({
       );
 
       // add external account to imported accounts
-      addToAccounts([newAccount]);
+      addOtherAccounts([newAccount]);
     } else if (existsLocal && existsLocal.addedBy !== 'system') {
       // the external account needs to change to `system` so it cannot be removed. This will replace
       // the whole entry.
@@ -444,30 +202,6 @@ export const ConnectProvider = ({
       // refresh accounts state.
       replaceAccount(newAccount);
     }
-  };
-
-  // Checks whether an account can sign transactions
-  const accountHasSigner = (address: MaybeAccount) =>
-    accountsRef.current.find(
-      (a) => a.address === address && a.source !== 'external'
-    ) !== undefined;
-
-  // Checks whether an account needs manual signing. This is the case for Ledger accounts,
-  // transactions of which cannot be automatically signed by a provided `signer` as is the case with
-  // extensions.
-  const requiresManualSign = (address: MaybeAccount) =>
-    accountsRef.current.find(
-      (a) => a.address === address && manualSigners.includes(a.source)
-    ) !== undefined;
-
-  const isReadOnlyAccount = (address: MaybeAccount) => {
-    const account = getAccount(address) ?? {};
-
-    if (Object.prototype.hasOwnProperty.call(account, 'addedBy')) {
-      const { addedBy } = account as ExternalAccount;
-      return addedBy === 'user';
-    }
-    return false;
   };
 
   // formats an address into the currently active network's ss58 format.
@@ -485,59 +219,36 @@ export const ConnectProvider = ({
     }
   };
 
-  // update initialised extensions.
-  const updateInitialisedExtensions = (id: string) => {
-    if (!extensionsInitialisedRef.current.includes(id)) {
-      setStateWithRef(
-        [...extensionsInitialisedRef.current].concat(id),
-        setExtensionsInitialised,
-        extensionsInitialisedRef
-      );
-    }
-  };
-
   // add accounts to context state.
-  const addToAccounts = (a: ImportedAccount[]) => {
+  const addOtherAccounts = (a: ImportedAccount[]) => {
     setStateWithRef(
-      [...accountsRef.current].concat(a),
-      setAccounts,
-      accountsRef
+      [...otherAccountsRef.current].concat(a),
+      setOtherAccounts,
+      otherAccountsRef
     );
   };
 
   // replaces an account in context state.
   const replaceAccount = (a: ImportedAccount) => {
     setStateWithRef(
-      [...accountsRef.current].map((item) =>
+      [...otherAccountsRef.current].map((item) =>
         item.address !== a.address ? item : a
       ),
-      setAccounts,
-      accountsRef
+      setOtherAccounts,
+      otherAccountsRef
     );
-  };
-
-  // add an extension id to unsubscribe state.
-  const addToUnsubscribe = (id: string, unsub: AnyApi) => {
-    unsubs.current[id] = unsub;
   };
 
   return (
     <ConnectContext.Provider
       value={{
         formatAccountSs58,
-        connectExtensionAccounts,
-        getAccount,
-        connectToAccount,
-        disconnectFromAccount,
         addExternalAccount,
-        accountHasSigner,
-        requiresManualSign,
-        isReadOnlyAccount,
-        addToAccounts,
+        addOtherAccounts,
         forgetAccounts,
         renameImportedAccount,
         importLocalAccounts,
-        accounts: accountsRef.current,
+        otherAccounts: otherAccountsRef.current,
       }}
     >
       {children}

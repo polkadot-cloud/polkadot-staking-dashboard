@@ -19,6 +19,7 @@ import type { ExternalAccount } from 'contexts/Connect/types';
 import { useHelp } from 'contexts/Help';
 import { AccountInput } from 'library/AccountInput';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import {
   ActionWithButton,
   ManualAccount,
@@ -30,7 +31,8 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');
   const { openHelp } = useHelp();
   const { setModalResize } = useOverlay().modal;
-  const { accounts, forgetAccounts, addExternalAccount } = useConnect();
+  const { accounts } = useImportedAccounts();
+  const { forgetAccounts, addExternalAccount } = useConnect();
 
   // get all external accounts
   const externalAccountsOnly = accounts.filter(

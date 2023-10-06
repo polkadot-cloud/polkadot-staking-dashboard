@@ -5,7 +5,6 @@ import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonPrimary } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
@@ -18,6 +17,7 @@ import type { MaybeAccount } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = ({
@@ -35,7 +35,7 @@ export const Nominations = ({
   const { isFastUnstaking } = useUnstaking();
   const { getAccountNominations } = useBonded();
   const { favoritesList } = useFavoriteValidators();
-  const { isReadOnlyAccount } = useConnect();
+  const { isReadOnlyAccount } = useImportedAccounts();
   const { activeAccount } = useActiveAccount();
   const { nominated: stakeNominated, poolNominated } = useValidators();
 

@@ -15,10 +15,10 @@ import {
 } from '@polkadot-cloud/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useProxies } from 'contexts/Proxies';
 import { AccountInput } from 'library/AccountInput';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import {
   ActionWithButton,
   ManualAccount,
@@ -29,7 +29,8 @@ import type { ListWithInputProps } from './types';
 export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');
   const { openHelp } = useHelp();
-  const { accounts, getAccount } = useConnect();
+  const { accounts } = useImportedAccounts();
+  const { getAccount } = useImportedAccounts();
   const { delegates, handleDeclareDelegate } = useProxies();
 
   // Filter delegates to only show those who are imported in the dashboard.

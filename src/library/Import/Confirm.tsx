@@ -11,7 +11,7 @@ import type { ConfirmProps } from './types';
 
 export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
   const { t } = useTranslation('modals');
-  const { addToAccounts } = useConnect();
+  const { addOtherAccounts } = useConnect();
   const { setStatus } = usePrompt();
 
   return (
@@ -26,7 +26,7 @@ export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
           onClick={() => {
             const account = addHandler(address, index);
             if (account) {
-              addToAccounts([account]);
+              addOtherAccounts([account]);
             }
             setStatus(0);
           }}
