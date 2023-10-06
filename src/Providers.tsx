@@ -41,6 +41,7 @@ import { ThemedRouter } from 'Themes';
 import type { AnyJson } from 'types';
 import type { FC } from 'react';
 import { withProviders } from 'library/Hooks';
+import { ExtensionAccountsProvider } from 'contexts/Connect/ExtensionAccounts';
 
 // Embed providers from hook.
 export const Providers = () => {
@@ -55,6 +56,8 @@ export const Providers = () => {
     VaultHardwareProvider,
     LedgerHardwareProvider,
     ExtensionsProvider,
+    // Note: not currently in use.
+    ExtensionAccountsProvider,
     ConnectProvider,
     HelpProvider,
     NetworkMetricsProvider,
