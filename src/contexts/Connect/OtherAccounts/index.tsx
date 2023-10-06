@@ -14,7 +14,8 @@ import { useConnect } from '..';
 // TODO: move these to utils to the cloud.
 import { getLocalExternalAccounts } from '../Utils';
 
-export const OtherAccountsContext = createContext<any>(null);
+// TODO: provide other accounts through this provider.
+export const OtherAccountsContext = createContext<null>(null);
 
 export const OtherAccountsProvider = ({
   children,
@@ -53,7 +54,11 @@ export const OtherAccountsProvider = ({
     }
   }, [extensionAccountsSynced, hardwareInitialisedRef.current]);
 
-  return { children };
+  return (
+    <OtherAccountsContext.Provider value={null}>
+      {children}
+    </OtherAccountsContext.Provider>
+  );
 };
 
 export const useOtherAccounts = () => useContext(OtherAccountsContext);
