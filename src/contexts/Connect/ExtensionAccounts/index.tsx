@@ -110,6 +110,7 @@ export const ExtensionAccountsProvider = ({
                   a,
                   forgetAccounts
                 );
+
                 // Store active wallet account if found in this extension.
                 if (!activeWalletAccount) {
                   activeWalletAccount = getActiveExtensionAccount(newAccounts);
@@ -259,6 +260,7 @@ export const ExtensionAccountsProvider = ({
     if (!checkingInjectedWeb3) {
       // unsubscribe from all accounts and reset state
       unsubscribe();
+      setStateWithRef([], setExtensionAccounts, extensionAccountsRef);
       setStateWithRef([], setExtensionsInitialised, extensionsInitialisedRef);
       setExtensionAccountsSynced(false);
       // if extensions have been fetched, get accounts if extensions exist and

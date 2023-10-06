@@ -51,7 +51,6 @@ export const ConnectProvider = ({
     if (!checkingInjectedWeb3) {
       // unsubscribe from all accounts and reset state
       unsubscribe();
-      setActiveAccount(null, false);
       setStateWithRef([], setOtherAccounts, otherAccountsRef);
     }
     return () => unsubscribe();
