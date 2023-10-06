@@ -17,7 +17,6 @@ import type {
   ExtensionInterface,
 } from '@polkadot-cloud/react/connect/ExtensionsProvider/types';
 import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
-// TODO: the functions in this hook need to be moved to the cloud.
 import { defaultExtensionAccountsContext } from '@polkadot-cloud/react/connect/ExtensionAccountsProvider/defaults';
 import { useImportExtension } from '../Hooks/useImportExtension';
 import type { ImportedAccount } from '../types';
