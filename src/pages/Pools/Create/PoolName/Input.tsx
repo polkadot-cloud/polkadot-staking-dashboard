@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 
 export const Input = ({
   listenIsValid,
@@ -12,7 +12,7 @@ export const Input = ({
   value = 0,
 }: any) => {
   const { t } = useTranslation('pages');
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
 
   // the current local bond value
   const [metadata, setMetadata] = useState(value);

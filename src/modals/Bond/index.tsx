@@ -7,7 +7,6 @@ import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
@@ -20,6 +19,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 
 export const Bond = () => {
   const { t } = useTranslation('modals');
@@ -27,7 +27,7 @@ export const Bond = () => {
   const {
     networkData: { units, unit },
   } = useNetwork();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
   const { notEnoughFunds } = useTxMeta();
   const { selectedActivePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();

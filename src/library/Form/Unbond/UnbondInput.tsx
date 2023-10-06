@@ -6,8 +6,8 @@ import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import { InputWrapper } from '../Wrappers';
 import type { UnbondInputProps } from '../types';
 
@@ -21,7 +21,7 @@ export const UnbondInput = ({
 }: UnbondInputProps) => {
   const { t } = useTranslation('library');
   const { networkData } = useNetwork();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
 
   // get the actively bonded amount.
   const activeUnit = planckToUnit(active, networkData.units);

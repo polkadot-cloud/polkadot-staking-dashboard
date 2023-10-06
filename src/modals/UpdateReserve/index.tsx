@@ -23,6 +23,7 @@ import { SliderWrapper } from 'modals/ManagePool/Wrappers';
 import 'rc-slider/assets/index.css';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 
 export const UpdateReserve = () => {
   const { t } = useTranslation('modals');
@@ -32,7 +33,8 @@ export const UpdateReserve = () => {
   } = useNetwork();
   const { openHelp } = useHelp();
   const { setModalStatus } = useOverlay().modal;
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { accountHasSigner } = useConnect();
+  const { activeAccount } = useActiveAccount();
   const { feeReserve, setFeeReserveBalance, getTransferOptions } =
     useTransferOptions();
 

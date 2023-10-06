@@ -11,19 +11,21 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useSetup } from 'contexts/Setup';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
-  const { setOnPoolSetup, getPoolSetupPercent } = useSetup();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { stats } = usePoolsConfig();
-  const { membership } = usePoolMemberships();
+  const { isOwner } = useActivePools();
   const { setActiveTab } = usePoolsTabs();
   const { bondedPools } = useBondedPools();
-  const { isOwner } = useActivePools();
+  const { isReadOnlyAccount } = useConnect();
+  const { membership } = usePoolMemberships();
+  const { activeAccount } = useActiveAccount();
   const { getTransferOptions } = useTransferOptions();
+  const { setOnPoolSetup, getPoolSetupPercent } = useSetup();
 
   const { maxPools } = stats;
   const { active } = getTransferOptions(activeAccount).pool;

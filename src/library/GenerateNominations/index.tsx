@@ -25,6 +25,7 @@ import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
 import { useStaking } from 'contexts/Staking';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import type {
   GenerateNominationsInnerProps,
   Nominations,
@@ -42,7 +43,8 @@ export const GenerateNominations = ({
   const { isFastUnstaking } = useUnstaking();
   const { stakers } = useStaking().eraStakers;
   const { favoritesList } = useFavoriteValidators();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { isReadOnlyAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
   const { validators, validatorIdentities, validatorSupers } = useValidators();
   const {
     fetch: fetchFromMethod,

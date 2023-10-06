@@ -6,6 +6,7 @@ import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import { Account } from '../Account/Default';
 import { Account as PoolAccount } from '../Account/Pool';
 import { HeadingWrapper } from './Wrappers';
@@ -14,8 +15,9 @@ export const Connected = () => {
   const { t } = useTranslation('library');
   const { isNetworkSyncing } = useUi();
   const { isNominating } = useStaking();
+  const { accountHasSigner } = useConnect();
   const { selectedActivePool } = useActivePools();
-  const { activeAccount, activeProxy, accountHasSigner } = useConnect();
+  const { activeAccount, activeProxy } = useActiveAccount();
 
   let poolAddress = '';
   if (selectedActivePool) {

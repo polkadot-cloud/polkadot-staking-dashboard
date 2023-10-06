@@ -4,7 +4,6 @@
 import { ModalPadding } from '@polkadot-cloud/react';
 import { unitToPlanck } from '@polkadot-cloud/utils';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useBatchCall } from 'library/Hooks/useBatchCall';
@@ -13,13 +12,14 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect } from 'react';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 
 export const BalanceTest = () => {
   const { api } = useApi();
   const {
     networkData: { units },
   } = useNetwork();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
   const { notEnoughFunds } = useTxMeta();
   const { newBatchCall } = useBatchCall();
   const { setModalStatus, setModalResize } = useOverlay().modal;

@@ -10,10 +10,10 @@ import {
 } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { Element } from 'react-scroll';
-import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { Nominate } from 'library/SetupSteps/Nominate';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import { Bond } from './Bond';
 import { PoolName } from './PoolName';
 import { PoolRoles } from './PoolRoles';
@@ -21,7 +21,7 @@ import { Summary } from './Summary';
 
 export const Create = () => {
   const { t } = useTranslation('pages');
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
   const { setOnPoolSetup, removeSetupProgress } = useSetup();
 
   return (

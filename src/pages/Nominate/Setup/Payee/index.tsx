@@ -3,7 +3,6 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { Spacer } from 'library/Form/Wrappers';
@@ -16,11 +15,12 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
 import type { MaybeAccount } from 'types';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 
 export const Payee = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const { getPayeeItems } = usePayeeConfig();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
 
   const setup = getSetupProgress('nominator', activeAccount);

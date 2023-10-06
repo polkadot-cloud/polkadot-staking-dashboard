@@ -30,14 +30,17 @@ import { SideMenu } from 'library/SideMenu';
 import { Tooltip } from 'library/Tooltip';
 import { Overlays } from 'overlay';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 
 export const RouterInner = () => {
   const { t } = useTranslation();
   const { network } = useNetwork();
   const { pathname } = useLocation();
+  const { activeAccount } = useActiveAccount();
   const { addNotification } = useNotifications();
-  const { accountsInitialised, accounts, activeAccount, connectToAccount } =
-    useConnect();
+  const { accountsInitialised } = useOtherAccounts();
+  const { accounts, connectToAccount } = useConnect();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
 
   // Scroll to top of the window on every page change or network change.

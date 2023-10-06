@@ -8,11 +8,11 @@ import { ValidatorCommunity } from '@polkadot-cloud/assets/validators';
 import type { AnyApi, Fn, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import type {
   Identity,
   Validator,
@@ -30,8 +30,8 @@ export const ValidatorsProvider = ({
 }) => {
   const { network } = useNetwork();
   const { isReady, api } = useApi();
-  const { activeAccount } = useConnect();
   const { poolNominations } = useActivePools();
+  const { activeAccount } = useActiveAccount();
   const { activeEra, metrics } = useNetworkMetrics();
   const { bondedAccounts, getAccountNominations } = useBonded();
   const { earliestStoredSession } = metrics;

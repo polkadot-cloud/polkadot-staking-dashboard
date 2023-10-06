@@ -14,20 +14,14 @@ export interface ConnectContextInterface {
   connectToAccount: (a: ImportedAccount | null) => void;
   disconnectFromAccount: () => void;
   addExternalAccount: (a: string, addedBy: string) => void;
-  getActiveAccount: () => string | null;
   accountHasSigner: (a: MaybeAccount) => boolean;
   requiresManualSign: (a: MaybeAccount) => boolean;
   isReadOnlyAccount: (a: MaybeAccount) => boolean;
   addToAccounts: (a: ImportedAccount[]) => void;
   forgetAccounts: (a: ImportedAccount[]) => void;
-  setActiveProxy: (p: ActiveProxy, l?: boolean) => void;
   renameImportedAccount: (a: MaybeAccount, n: string) => void;
   importLocalAccounts: (g: (n: NetworkName) => ImportedAccount[]) => void;
   accounts: ExtensionAccount[];
-  activeAccount: MaybeAccount;
-  activeProxy: MaybeAccount;
-  activeProxyType: string | null;
-  accountsInitialised: boolean;
 }
 
 export type ImportedAccount =

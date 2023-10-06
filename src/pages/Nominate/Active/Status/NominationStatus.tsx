@@ -19,6 +19,7 @@ import { useNominationStatus } from 'library/Hooks/useNominationStatus';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Stat } from 'library/Stat';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 
 export const NominationStatus = ({
   showButtons = true,
@@ -36,7 +37,8 @@ export const NominationStatus = ({
   const { getBondedAccount } = useBonded();
   const { checking, isExposed } = useFastUnstake();
   const { getNominationStatus } = useNominationStatus();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { isReadOnlyAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
   const { getFastUnstakeText, isUnstaking } = useUnstaking();
   const { setOnNominatorSetup, getNominatorSetupPercent } = useSetup();
 

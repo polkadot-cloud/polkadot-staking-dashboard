@@ -7,13 +7,13 @@ import BigNumber from 'bignumber.js';
 import { fromUnixTime } from 'date-fns';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { Countdown } from 'library/Countdown';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useTimeLeft } from 'library/Hooks/useTimeLeft';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import { ChunkWrapper } from './Wrappers';
 
 export const Chunk = ({ chunk, bondFor, onRebond }: any) => {
@@ -23,7 +23,7 @@ export const Chunk = ({ chunk, bondFor, onRebond }: any) => {
     networkData: { units, unit },
     network,
   } = useNetwork();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
   const { activeEra } = useNetworkMetrics();
   const { isFastUnstaking } = useUnstaking();
   const { erasToSeconds } = useErasToTimeLeft();

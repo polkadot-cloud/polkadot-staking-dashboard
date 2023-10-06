@@ -12,6 +12,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { Stat } from 'library/Stat';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import { useStatusButtons } from './useStatusButtons';
 
 export const MembershipStatus = ({
@@ -25,10 +26,11 @@ export const MembershipStatus = ({
   const { isReady } = useApi();
   const { isPoolSyncing } = useUi();
   const { openModal } = useOverlay().modal;
+  const { activeAccount } = useActiveAccount();
   const { label, buttons } = useStatusButtons();
   const { bondedPools, meta } = useBondedPools();
   const { getTransferOptions } = useTransferOptions();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { isReadOnlyAccount } = useConnect();
   const { selectedActivePool, isOwner, isBouncer, isMember } = useActivePools();
 
   const { active } = getTransferOptions(activeAccount).pool;

@@ -13,6 +13,7 @@ import { Polkicon } from '@polkadot-cloud/react';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
 
@@ -24,14 +25,9 @@ export const AccountButton = ({
   noBorder = false,
 }: AccountItemProps) => {
   const { t } = useTranslation('modals');
-  const {
-    getAccount,
-    activeProxy,
-    activeAccount,
-    setActiveProxy,
-    activeProxyType,
-    connectToAccount,
-  } = useConnect();
+  const { getAccount, connectToAccount } = useConnect();
+  const { activeProxy, activeAccount, setActiveProxy, activeProxyType } =
+    useActiveAccount();
   const { setModalStatus } = useOverlay().modal;
   const { units, unit } = useNetwork().networkData;
   const { getTransferOptions } = useTransferOptions();

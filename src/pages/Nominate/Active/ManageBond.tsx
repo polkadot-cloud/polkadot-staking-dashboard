@@ -22,6 +22,7 @@ import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { BondedChart } from 'library/BarChart/BondedChart';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');
@@ -38,7 +39,8 @@ export const ManageBond = () => {
   const { getStashLedger } = useBalances();
   const { isFastUnstaking } = useUnstaking();
   const { getTransferOptions } = useTransferOptions();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { isReadOnlyAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
   const ledger = getStashLedger(activeAccount);
   const { active }: { active: BigNumber } = ledger;
   const allTransferOptions = getTransferOptions(activeAccount);

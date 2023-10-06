@@ -5,8 +5,8 @@ import { ButtonSubmitInvert } from '@polkadot-cloud/react';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import { InputWrapper } from '../Wrappers';
 import type { BondInputProps } from '../types';
 
@@ -23,7 +23,7 @@ export const BondInput = ({
   const {
     networkData: { unit },
   } = useNetwork();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
 
   // the current local bond value
   const [localBond, setLocalBond] = useState<string>(value);

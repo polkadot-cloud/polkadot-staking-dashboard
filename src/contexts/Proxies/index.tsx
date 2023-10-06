@@ -19,6 +19,7 @@ import { useConnect } from 'contexts/Connect';
 import type { AnyApi, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import * as defaults from './defaults';
 import type {
   Delegates,
@@ -36,13 +37,8 @@ export const ProxiesProvider = ({
 }) => {
   const { network } = useNetwork();
   const { api, isReady } = useApi();
-  const {
-    accounts,
-    activeProxy,
-    setActiveProxy,
-    activeAccount,
-    addExternalAccount,
-  } = useConnect();
+  const { accounts, addExternalAccount } = useConnect();
+  const { activeProxy, setActiveProxy, activeAccount } = useActiveAccount();
 
   // store the proxy accounts of each imported account.
   const [proxies, setProxies] = useState<Proxies>([]);

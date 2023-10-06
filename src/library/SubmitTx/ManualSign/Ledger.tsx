@@ -14,6 +14,7 @@ import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import type { SubmitProps } from '../types';
 
 export const Ledger = ({
@@ -41,7 +42,8 @@ export const Ledger = ({
   } = useLedgerHardware();
   const { openHelp } = useHelp();
   const { setModalResize } = useOverlay().modal;
-  const { activeAccount, accountHasSigner, getAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
+  const { accountHasSigner, getAccount } = useConnect();
   const { txFeesValid, setTxSignature, getTxSignature } = useTxMeta();
 
   const getAddressIndex = () => {

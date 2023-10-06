@@ -12,6 +12,7 @@ import { useUi } from 'contexts/UI';
 import { Stat } from 'library/Stat';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 
 export const RewardsStatus = () => {
   const { t } = useTranslation('pages');
@@ -21,8 +22,9 @@ export const RewardsStatus = () => {
   const { isReady } = useApi();
   const { isPoolSyncing } = useUi();
   const { openModal } = useOverlay().modal;
+  const { isReadOnlyAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
   const { selectedActivePool } = useActivePools();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
 
   let { pendingRewards } = selectedActivePool || {};
   pendingRewards = pendingRewards ?? new BigNumber(0);

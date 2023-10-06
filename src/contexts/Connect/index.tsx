@@ -11,7 +11,6 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 import { DappName } from 'consts';
 import type {
-  ActiveProxy,
   ConnectContextInterface,
   ExternalAccount,
   ImportedAccount,
@@ -20,10 +19,7 @@ import {
   useExtensions,
   useEffectIgnoreInitial,
 } from '@polkadot-cloud/react/hooks';
-import {
-  getLocalLedgerAccounts,
-  getLocalVaultAccounts,
-} from 'contexts/Hardware/Utils';
+
 import type { AnyApi, MaybeAccount, NetworkName } from 'types';
 import type {
   ExtensionInjected,
@@ -40,6 +36,7 @@ import {
   removeLocalExternalAccounts,
 } from './Utils';
 import { defaultConnectContext } from './defaults';
+import { useActiveAccount } from './ActiveAccount';
 
 export const ConnectProvider = ({
   children,
@@ -47,6 +44,7 @@ export const ConnectProvider = ({
   children: React.ReactNode;
 }) => {
   const { networkData, network } = useNetwork();
+  const { activeAccount, setActiveAccount } = useActiveAccount();
   const { checkingInjectedWeb3, extensions, setExtensionStatus } =
     useExtensions();
   const {
@@ -56,34 +54,12 @@ export const ConnectProvider = ({
   } = useImportExtension();
 
   // store whether extension accounts have been synced.
-  const [extensionAccountsSynced, setExtensionAccountsSynced] =
-    useState<boolean>(false);
+  // TODO: get this value from useExtensionAccounts().
+  const [, setExtensionAccountsSynced] = useState<boolean>(false);
 
   // store accounts list
   const [accounts, setAccounts] = useState<ImportedAccount[]>([]);
   const accountsRef = useRef(accounts);
-
-  // store the currently active account
-  const [activeAccount, setActiveAccountState] = useState<MaybeAccount>(null);
-  const activeAccountRef = useRef<string | null>(activeAccount);
-
-  // store the active proxy account
-  const [activeProxy, setActiveProxyState] = useState<ActiveProxy>(null);
-  const activeProxyRef = useRef(activeProxy);
-
-  const setActiveProxy = (newActiveProxy: ActiveProxy, updateLocal = true) => {
-    if (updateLocal) {
-      if (newActiveProxy) {
-        localStorage.setItem(
-          `${network}_active_proxy`,
-          JSON.stringify(newActiveProxy)
-        );
-      } else {
-        localStorage.removeItem(`${network}_active_proxy`);
-      }
-    }
-    setStateWithRef(newActiveProxy, setActiveProxyState, activeProxyRef);
-  };
 
   // store unsubscribe handlers for connected extensions.
   const unsubs = useRef<Record<string, VoidFn>>({});
@@ -93,12 +69,6 @@ export const ConnectProvider = ({
     []
   );
   const extensionsInitialisedRef = useRef(extensionsInitialised);
-
-  // store whether hardwaree accounts have been initialised.
-  const hardwareInitialisedRef = useRef<boolean>(false);
-
-  // store whether all accounts have been initialised.
-  const accountsInitialisedRef = useRef<boolean>(false);
 
   /* re-sync extensions accounts on network switch
    * do this if activeAccount is present.
@@ -112,7 +82,7 @@ export const ConnectProvider = ({
     if (!checkingInjectedWeb3) {
       // unsubscribe from all accounts and reset state
       unsubscribe();
-      setStateWithRef(null, setActiveAccountState, activeAccountRef);
+      setActiveAccount(null);
       setStateWithRef([], setAccounts, accountsRef);
       setStateWithRef([], setExtensionsInitialised, extensionsInitialisedRef);
       setExtensionAccountsSynced(false);
@@ -149,25 +119,6 @@ export const ConnectProvider = ({
     }
   }, [checkingInjectedWeb3, extensionsInitialisedRef.current]);
 
-  // Once extensions are fully initialised, fetch accounts from other sources.
-  useEffectIgnoreInitial(() => {
-    if (extensionAccountsSynced) {
-      // Fetch accounts from supported hardware wallets.
-      importLocalAccounts(getLocalVaultAccounts);
-      importLocalAccounts(getLocalLedgerAccounts);
-      hardwareInitialisedRef.current = true;
-      // Finally, fetch any read-only accounts that have been added by `system` or `user`.
-      importLocalAccounts(getLocalExternalAccounts);
-    }
-  }, [extensionAccountsSynced]);
-
-  // Account fetching complete, mark accounts as initialised. Does not include read only accounts.
-  useEffectIgnoreInitial(() => {
-    if (extensionAccountsSynced && hardwareInitialisedRef.current === true) {
-      accountsInitialisedRef.current = true;
-    }
-  }, [extensionAccountsSynced, hardwareInitialisedRef.current]);
-
   // Unsubscrbe all account subscriptions.
   const unsubscribe = () => {
     Object.values(unsubs.current).forEach((unsub) => {
@@ -188,11 +139,9 @@ export const ConnectProvider = ({
     }
 
     // If the currently active account is being forgotten, disconnect.
-    if (
-      forget.find((a) => a.address === activeAccountRef.current) !== undefined
-    ) {
+    if (forget.find((a) => a.address === activeAccount) !== undefined) {
       localStorage.removeItem(`${network}_active_account`);
-      setStateWithRef(null, setActiveAccount, activeAccountRef);
+      setActiveAccount(null);
     }
 
     // Get any external accounts and remove from localStorage.
@@ -319,7 +268,7 @@ export const ConnectProvider = ({
                   activeWalletAccount = getActiveExtensionAccount(newAccounts);
                 }
                 // set active account for network on final extension
-                if (i === total && activeAccountRef.current === null) {
+                if (i === total && activeAccount === null) {
                   const activeAccountRemoved =
                     activeWalletAccount?.address !==
                       meta.removedActiveAccount &&
@@ -385,7 +334,7 @@ export const ConnectProvider = ({
                 forgetAccounts
               );
               // set active account for network if not yet set
-              if (activeAccountRef.current === null) {
+              if (activeAccount === null) {
                 const activeExtensionAccount =
                   getActiveExtensionAccount(newAccounts);
 
@@ -433,15 +382,6 @@ export const ConnectProvider = ({
     updateInitialisedExtensions(id);
   };
 
-  const setActiveAccount = (address: MaybeAccount) => {
-    if (address === null) {
-      localStorage.removeItem(`${network}_active_account`);
-    } else {
-      localStorage.setItem(`${network}_active_account`, address);
-    }
-    setStateWithRef(address, setActiveAccountState, activeAccountRef);
-  };
-
   const connectToAccount = (account: ImportedAccount | null) => {
     setActiveAccount(account?.address ?? null);
   };
@@ -453,8 +393,6 @@ export const ConnectProvider = ({
 
   const getAccount = (who: MaybeAccount) =>
     accountsRef.current.find(({ address }) => address === who) || null;
-
-  const getActiveAccount = () => activeAccountRef.current;
 
   // adds an external account (non-wallet) to accounts
   const addExternalAccount = (address: string, addedBy: string) => {
@@ -592,20 +530,14 @@ export const ConnectProvider = ({
         connectToAccount,
         disconnectFromAccount,
         addExternalAccount,
-        getActiveAccount,
         accountHasSigner,
         requiresManualSign,
         isReadOnlyAccount,
         addToAccounts,
         forgetAccounts,
-        setActiveProxy,
         renameImportedAccount,
         importLocalAccounts,
         accounts: accountsRef.current,
-        activeAccount: activeAccountRef.current,
-        activeProxy: activeProxyRef.current?.address ?? null,
-        activeProxyType: activeProxyRef.current?.proxyType ?? null,
-        accountsInitialised: accountsInitialisedRef.current,
       }}
     >
       {children}

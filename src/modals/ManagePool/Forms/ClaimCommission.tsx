@@ -13,7 +13,6 @@ import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
@@ -21,6 +20,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 
 export const ClaimCommission = ({ setSection }: any) => {
   const { t } = useTranslation('modals');
@@ -29,7 +29,7 @@ export const ClaimCommission = ({ setSection }: any) => {
     networkData: { units, unit },
   } = useNetwork();
   const { setModalStatus } = useOverlay().modal;
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
   const { isOwner, selectedActivePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
   const poolId = selectedActivePool?.id;

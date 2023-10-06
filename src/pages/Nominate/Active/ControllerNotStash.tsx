@@ -17,11 +17,13 @@ import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 
 export const ControllerNotStash = () => {
   const { t } = useTranslation('pages');
   const { network } = useNetwork();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { isReadOnlyAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
   const { addressDifferentToStash } = useStaking();
   const { getBondedAccount } = useBonded();
   const { openModal } = useOverlay().modal;

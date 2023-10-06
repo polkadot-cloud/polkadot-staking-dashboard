@@ -14,16 +14,18 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect } from 'react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import { Switch } from './Switch';
 import { Wrapper } from './Wrapper';
 
 export const UpdateController = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
+  const { getAccount } = useConnect();
   const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
+  const { activeAccount } = useActiveAccount();
   const { getSignerWarnings } = useSignerWarnings();
-  const { activeAccount, getAccount } = useConnect();
   const { setModalStatus, setModalResize } = useOverlay().modal;
 
   const controller = getBondedAccount(activeAccount);

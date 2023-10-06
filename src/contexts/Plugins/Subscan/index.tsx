@@ -18,8 +18,8 @@ import { locales } from 'locale';
 import type { AnyApi, AnySubscan } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import { useApi } from '../../Api';
-import { useConnect } from '../../Connect';
 import { usePlugins } from '..';
 import { defaultSubscanContext } from './defaults';
 import type { SubscanContextInterface } from './types';
@@ -35,7 +35,7 @@ export const SubscanProvider = ({
     network,
     networkData: { subscanEndpoint },
   } = useNetwork();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
   const { activeEra } = useNetworkMetrics();
   const { erasToSeconds } = useErasToTimeLeft();
   const { plugins, pluginEnabled } = usePlugins();

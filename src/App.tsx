@@ -8,6 +8,7 @@ import { ThemesProvider } from 'contexts/Themes';
 import { i18next } from 'locale';
 import { Providers } from 'Providers';
 import { NetworkProvider } from 'contexts/Network';
+import { ActiveAccountProvider } from 'contexts/Connect/ActiveAccount';
 
 export const App: React.FC = () => {
   let network = localStorage.getItem('network');
@@ -21,7 +22,9 @@ export const App: React.FC = () => {
     <I18nextProvider i18n={i18next}>
       <ThemesProvider>
         <NetworkProvider>
-          <Providers />
+          <ActiveAccountProvider>
+            <Providers />
+          </ActiveAccountProvider>
         </NetworkProvider>
       </ThemesProvider>
     </I18nextProvider>

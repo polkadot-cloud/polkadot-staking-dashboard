@@ -12,20 +12,14 @@ export const defaultConnectContext: ConnectContextInterface = {
   connectToAccount: (a) => {},
   disconnectFromAccount: () => {},
   addExternalAccount: (a, b) => {},
-  getActiveAccount: () => null,
   accountHasSigner: (a) => false,
   requiresManualSign: (a) => false,
   isReadOnlyAccount: (a) => false,
   addToAccounts: (a) => {},
   forgetAccounts: (a) => {},
-  setActiveProxy: (p, l) => {},
   renameImportedAccount: (a, n) => {},
   importLocalAccounts: (n) => {},
   accounts: [],
-  activeAccount: null,
-  activeProxy: null,
-  activeProxyType: null,
-  accountsInitialised: false,
 };
 
 export const defaultHandleImportExtension = {

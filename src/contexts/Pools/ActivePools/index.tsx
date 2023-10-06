@@ -15,8 +15,8 @@ import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useSubscan } from 'contexts/Plugins/Subscan';
 import { usePlugins } from 'contexts/Plugins';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import { useApi } from '../../Api';
-import { useConnect } from '../../Connect';
 import { useBondedPools } from '../BondedPools';
 import { usePoolMemberships } from '../PoolMemberships';
 import { usePoolsConfig } from '../PoolsConfig';
@@ -32,10 +32,10 @@ export const ActivePoolsProvider = ({
   const { api, isReady } = useApi();
   const { eraStakers } = useStaking();
   const { pluginEnabled } = usePlugins();
-  const { activeAccount } = useConnect();
   const { fetchPoolDetails } = useSubscan();
   const { membership } = usePoolMemberships();
   const { createAccounts } = usePoolsConfig();
+  const { activeAccount } = useActiveAccount();
   const { getAccountPools, bondedPools } = useBondedPools();
   const { getMembersOfPoolFromNode, poolMembersNode } = usePoolMembers();
 

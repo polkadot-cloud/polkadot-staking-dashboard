@@ -5,10 +5,12 @@ import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useTxMeta } from 'contexts/TxMeta';
 import type { MaybeAccount } from 'types';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 
 export const useSignerWarnings = () => {
   const { t } = useTranslation('modals');
-  const { activeProxy, accountHasSigner } = useConnect();
+  const { activeProxy } = useActiveAccount();
+  const { accountHasSigner } = useConnect();
   const { controllerSignerAvailable } = useTxMeta();
 
   const getSignerWarnings = (

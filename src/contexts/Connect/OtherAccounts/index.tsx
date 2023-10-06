@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ReactNode } from 'react';
-import { createContext, useContext, useRef } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 // TODO: move these to utils to the cloud.
 import {
@@ -13,9 +13,12 @@ import { useExtensionAccounts } from '../ExtensionAccounts';
 import { useConnect } from '..';
 // TODO: move these to utils to the cloud.
 import { getLocalExternalAccounts } from '../Utils';
+import type { OtherAccountsContextInterface } from './types';
+import { defaultOtherAccountsContext } from './defaults';
 
 // TODO: provide other accounts through this provider.
-export const OtherAccountsContext = createContext<null>(null);
+export const OtherAccountsContext =
+  createContext<OtherAccountsContextInterface>(defaultOtherAccountsContext);
 
 export const OtherAccountsProvider = ({
   children,
@@ -26,11 +29,14 @@ export const OtherAccountsProvider = ({
   // TODO: move these high level helpers to the cloud.
   const { importLocalAccounts } = useConnect();
 
-  // Store whether hardware accounts have been initialised.
-  const hardwareInitialisedRef = useRef<boolean>(false);
+  // Store whether other (non-extension) accounts have been initialised.
+  const [otherAccountsSynced, setOtherAccountsSynced] =
+    useState<boolean>(false);
 
-  // Store whether all accounts have been initialised.
-  const accountsInitialisedRef = useRef<boolean>(false);
+  // Store whether all accounts have been synced.
+  // TODO: move to a context that provides getters to all accounts.
+  const [accountsInitialised, setAccountsInitialised] =
+    useState<boolean>(false);
 
   // Once extensions are fully initialised, fetch accounts from other sources.
   useEffectIgnoreInitial(() => {
@@ -40,7 +46,7 @@ export const OtherAccountsProvider = ({
       importLocalAccounts(getLocalLedgerAccounts);
 
       // Mark hardware wallets as initialised.
-      hardwareInitialisedRef.current = true;
+      setOtherAccountsSynced(true);
 
       // Finally, fetch any read-only accounts that have been added by `system` or `user`.
       importLocalAccounts(getLocalExternalAccounts);
@@ -49,13 +55,17 @@ export const OtherAccountsProvider = ({
 
   // Account fetching complete, mark accounts as initialised. Does not include read only accounts.
   useEffectIgnoreInitial(() => {
-    if (extensionAccountsSynced && hardwareInitialisedRef.current === true) {
-      accountsInitialisedRef.current = true;
+    if (extensionAccountsSynced && otherAccountsSynced === true) {
+      setAccountsInitialised(true);
     }
-  }, [extensionAccountsSynced, hardwareInitialisedRef.current]);
+  }, [extensionAccountsSynced, otherAccountsSynced]);
 
   return (
-    <OtherAccountsContext.Provider value={null}>
+    <OtherAccountsContext.Provider
+      value={{
+        accountsInitialised,
+      }}
+    >
       {children}
     </OtherAccountsContext.Provider>
   );

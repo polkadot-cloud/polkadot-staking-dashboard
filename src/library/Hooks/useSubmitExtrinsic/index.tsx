@@ -14,6 +14,7 @@ import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useNotifications } from 'contexts/Notifications';
 import { useTxMeta } from 'contexts/TxMeta';
 import type { AnyApi, AnyJson } from 'types';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import { useBuildPayload } from '../useBuildPayload';
 import { useProxySupported } from '../useProxySupported';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
@@ -32,7 +33,8 @@ export const useSubmitExtrinsic = ({
   const { isProxySupported } = useProxySupported();
   const { addPending, removePending } = useExtrinsics();
   const { buildPayload } = useBuildPayload();
-  const { getAccount, requiresManualSign, activeProxy } = useConnect();
+  const { activeProxy } = useActiveAccount();
+  const { getAccount, requiresManualSign } = useConnect();
   const {
     setTxFees,
     incrementPayloadUid,

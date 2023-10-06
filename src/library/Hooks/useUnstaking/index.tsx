@@ -3,19 +3,19 @@
 
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import type { AnyJson } from 'types';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import { useNominationStatus } from '../useNominationStatus';
 
 export const useUnstaking = () => {
   const { t } = useTranslation('library');
   const { consts } = useApi();
   const { inSetup } = useStaking();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
   const { activeEra } = useNetworkMetrics();
   const { getTransferOptions } = useTransferOptions();
   const { getNominationStatus } = useNominationStatus();

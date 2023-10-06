@@ -4,7 +4,6 @@
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimary, ButtonRow, PageRow } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useTheme } from 'contexts/Themes';
@@ -13,11 +12,12 @@ import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 
 export const ClosurePrompts = () => {
   const { t } = useTranslation('pages');
   const { colors } = useNetwork().networkData;
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
   const { mode } = useTheme();
   const { openModal } = useOverlay().modal;
   const { membership } = usePoolMemberships();

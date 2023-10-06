@@ -4,16 +4,16 @@
 import { ButtonOption } from '@polkadot-cloud/react';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import { ContentWrapper } from './Wrappers';
 
 export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
   const { t } = useTranslation('modals');
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
   const { selectedActivePool, isOwner, isBouncer, isMember, isDepositor } =
     useActivePools();
   const { getTransferOptions } = useTransferOptions();

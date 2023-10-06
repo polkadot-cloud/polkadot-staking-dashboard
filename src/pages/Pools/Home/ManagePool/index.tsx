@@ -4,7 +4,6 @@
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonPrimary, PageRow } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
@@ -12,12 +11,13 @@ import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { Nominations } from 'pages/Nominate/Active/Nominations';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 
 export const ManagePool = () => {
   const { t } = useTranslation('pages');
   const { isSyncing } = useUi();
   const { openModal } = useOverlay().modal;
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
   const {
     isOwner,
     isNominator,

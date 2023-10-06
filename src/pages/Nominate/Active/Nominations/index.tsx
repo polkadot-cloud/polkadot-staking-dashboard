@@ -17,6 +17,7 @@ import { ValidatorList } from 'library/ValidatorList';
 import type { MaybeAccount } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = ({
@@ -34,7 +35,8 @@ export const Nominations = ({
   const { isFastUnstaking } = useUnstaking();
   const { getAccountNominations } = useBonded();
   const { favoritesList } = useFavoriteValidators();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { isReadOnlyAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
   const { nominated: stakeNominated, poolNominated } = useValidators();
 
   const {

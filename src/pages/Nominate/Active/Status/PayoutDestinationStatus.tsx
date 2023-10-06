@@ -10,6 +10,7 @@ import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Stat } from 'library/Stat';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
 
 export const PayoutDestinationStatus = () => {
   const { t } = useTranslation('pages');
@@ -18,7 +19,8 @@ export const PayoutDestinationStatus = () => {
   const { staking, inSetup } = useStaking();
   const { isFastUnstaking } = useUnstaking();
   const { getPayeeItems } = usePayeeConfig();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { activeAccount } = useActiveAccount();
+  const { isReadOnlyAccount } = useConnect();
   const { payee } = staking;
 
   // Get payee status text to display.

@@ -27,14 +27,16 @@ export const ExtensionAccountsProvider = ({
   children,
   network,
   dappName,
+  activeAccount,
 }: ExtensionAccountsProviderProps) => {
   const {
     handleImportExtension,
     connectActiveExtensionAccount,
     getActiveExtensionAccount,
   } = useImportExtension();
+
   // TODO: these useConnect imports should be refactored and moved to the cloud.
-  const { forgetAccounts, activeAccount, connectToAccount } = useConnect();
+  const { forgetAccounts, connectToAccount } = useConnect();
   const { checkingInjectedWeb3, setExtensionStatus, extensions } =
     useExtensions();
 
