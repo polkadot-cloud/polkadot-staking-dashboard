@@ -5,7 +5,6 @@
 import type { ConnectContextInterface } from 'contexts/Connect/types';
 
 export const defaultConnectContext: ConnectContextInterface = {
-  formatAccountSs58: (a: string) => null,
   addExternalAccount: (a, b) => {},
   addOtherAccounts: (a) => {},
   forgetAccounts: (a) => {},

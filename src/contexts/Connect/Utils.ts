@@ -114,3 +114,17 @@ export const removeLocalExternalAccounts = (
     JSON.stringify(localExternalAccounts)
   );
 };
+
+export const formatAccountSs58 = (address: string, ss58: number) => {
+  try {
+    const keyring = new Keyring();
+    keyring.setSS58Format(ss58);
+    const formatted = keyring.addFromAddress(address).address;
+    if (formatted !== address) {
+      return formatted;
+    }
+    return null;
+  } catch (e) {
+    return null;
+  }
+};

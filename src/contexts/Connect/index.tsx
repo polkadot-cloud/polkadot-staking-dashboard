@@ -32,11 +32,11 @@ export const ConnectProvider = ({
   const { checkingInjectedWeb3, extensions } = useExtensions();
   const { activeAccount, setActiveAccount } = useActiveAccount();
 
-  // store other (non-extension) accounts list
+  // Store other (non-extension) accounts list.
   const [otherAccounts, setOtherAccounts] = useState<ImportedAccount[]>([]);
   const otherAccountsRef = useRef(otherAccounts);
 
-  // store unsubscribe handlers for connected extensions.
+  // Store unsubscribe handlers for connected extensions.
   const unsubs = useRef<Record<string, VoidFn>>({});
 
   /* re-sync extensions accounts on network switch
@@ -46,10 +46,8 @@ export const ConnectProvider = ({
    * here.
    */
   useEffect(() => {
-    // wait for injectedWeb3 check to finish before starting
-    // account import process.
     if (!checkingInjectedWeb3) {
-      // unsubscribe from all accounts and reset state
+      // unsubscribe from all accounts and reset state.
       unsubscribe();
       setStateWithRef([], setOtherAccounts, otherAccountsRef);
     }
@@ -64,6 +62,7 @@ export const ConnectProvider = ({
   };
 
   // Unsubscrbe from some account subscriptions and update the resulting state.
+  // TODO: move to ImportedAccounts context and refactor to account for all account sources.
   const forgetAccounts = (forget: ImportedAccount[]) => {
     if (!forget.length) return;
 
@@ -101,7 +100,7 @@ export const ConnectProvider = ({
   };
 
   // renames an account
-  // TODO: move to ImportedAccounts context and refactor.
+  // TODO: move to ImportedAccounts context and refactor to account for all account sources.
   const renameImportedAccount = (address: MaybeAccount, newName: string) => {
     setStateWithRef(
       [...otherAccountsRef.current].map((a) =>
@@ -203,22 +202,7 @@ export const ConnectProvider = ({
     }
   };
 
-  // formats an address into the currently active network's ss58 format.
-  const formatAccountSs58 = (address: string) => {
-    try {
-      const keyring = new Keyring();
-      keyring.setSS58Format(networkData.ss58);
-      const formatted = keyring.addFromAddress(address).address;
-      if (formatted !== address) {
-        return formatted;
-      }
-      return null;
-    } catch (e) {
-      return null;
-    }
-  };
-
-  // add accounts to context state.
+  // Add other accounts to context state.
   const addOtherAccounts = (a: ImportedAccount[]) => {
     setStateWithRef(
       [...otherAccountsRef.current].concat(a),
@@ -227,7 +211,8 @@ export const ConnectProvider = ({
     );
   };
 
-  // replaces an account in context state.
+  // Replaces an account in context state.
+  // TODO: move to ImportedAccounts context and refactor to account for all account sources.
   const replaceAccount = (a: ImportedAccount) => {
     setStateWithRef(
       [...otherAccountsRef.current].map((item) =>
@@ -241,7 +226,6 @@ export const ConnectProvider = ({
   return (
     <ConnectContext.Provider
       value={{
-        formatAccountSs58,
         addExternalAccount,
         addOtherAccounts,
         forgetAccounts,

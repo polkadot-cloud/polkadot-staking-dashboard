@@ -5,7 +5,6 @@ import type { ExtensionAccount } from '@polkadot-cloud/react/connect/ExtensionsP
 import type { MaybeAccount, NetworkName } from 'types';
 
 export interface ConnectContextInterface {
-  formatAccountSs58: (a: string) => string | null;
   addExternalAccount: (a: string, addedBy: string) => void;
   addOtherAccounts: (a: ImportedAccount[]) => void;
   forgetAccounts: (a: ImportedAccount[]) => void;

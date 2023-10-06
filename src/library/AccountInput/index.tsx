@@ -7,9 +7,10 @@ import { ButtonSecondary, Polkicon } from '@polkadot-cloud/react';
 import { isValidAddress } from '@polkadot-cloud/utils';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useNetwork } from 'contexts/Network';
+import { formatAccountSs58 } from 'contexts/Connect/Utils';
 import { AccountInputWrapper } from './Wrapper';
 import type { AccountInputProps } from './types';
 
@@ -27,7 +28,9 @@ export const AccountInput = ({
 }: AccountInputProps) => {
   const { t } = useTranslation('library');
 
-  const { formatAccountSs58 } = useConnect();
+  const {
+    networkData: { ss58 },
+  } = useNetwork();
   const { accounts } = useImportedAccounts();
   const { setModalResize } = useOverlay().modal;
 
@@ -75,7 +78,7 @@ export const AccountInput = ({
 
   const handleImport = async () => {
     // reformat address if in wrong format
-    const addressFormatted = formatAccountSs58(value);
+    const addressFormatted = formatAccountSs58(value, ss58);
     if (addressFormatted) {
       setValid('confirm_reformat');
       setValue(addressFormatted);

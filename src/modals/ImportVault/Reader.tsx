@@ -10,10 +10,15 @@ import { useVaultHardware } from 'contexts/Hardware/Vault';
 import { usePrompt } from 'contexts/Prompt';
 import { QRViewerWrapper } from 'library/Import/Wrappers';
 import { QrScanSignature } from 'library/QRCode/ScanSignature';
+import { useNetwork } from 'contexts/Network';
+import { formatAccountSs58 } from 'contexts/Connect/Utils';
 
 export const Reader = () => {
   const { t } = useTranslation('modals');
-  const { addOtherAccounts, formatAccountSs58 } = useConnect();
+  const { addOtherAccounts } = useConnect();
+  const {
+    networkData: { ss58 },
+  } = useNetwork();
   const { setStatus: setPromptStatus } = usePrompt();
   const { addVaultAccount, vaultAccountExists, vaultAccounts } =
     useVaultHardware();
@@ -31,7 +36,7 @@ export const Reader = () => {
   const valid =
     isValidAddress(qrData) &&
     !vaultAccountExists(qrData) &&
-    !formatAccountSs58(qrData);
+    !formatAccountSs58(qrData, ss58);
 
   // Reset QR data on open.
   useEffect(() => {
@@ -53,7 +58,7 @@ export const Reader = () => {
       qrData === undefined
         ? `${t('waitingForQRCode')}`
         : isValidAddress(qrData)
-        ? formatAccountSs58(qrData)
+        ? formatAccountSs58(qrData, ss58)
           ? `${t('differentNetworkAddress')}`
           : vaultAccountExists(qrData)
           ? `${t('accountAlreadyImported')}`
