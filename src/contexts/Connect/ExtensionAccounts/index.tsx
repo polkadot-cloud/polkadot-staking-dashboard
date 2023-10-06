@@ -2,7 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import type { ExtensionAccountsProviderProps } from '@polkadot-cloud/react/connect/ExtensionAccountsProvider/types';
+import type {
+  ExtensionAccountsContextInterface,
+  ExtensionAccountsProviderProps,
+} from '@polkadot-cloud/react/connect/ExtensionAccountsProvider/types';
 import {
   useEffectIgnoreInitial,
   useExtensions,
@@ -15,13 +18,17 @@ import type {
 } from '@polkadot-cloud/react/connect/ExtensionsProvider/types';
 import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
 // TODO: the functions in this hook need to be moved to the cloud.
+import { defaultExtensionAccountsContext } from '@polkadot-cloud/react/connect/ExtensionAccountsProvider/defaults';
 import { useImportExtension } from '../Hooks/useImportExtension';
 import type { ImportedAccount } from '../types';
 import { useConnect } from '..';
 // TODO: the functions in this hook need to be moved to the cloud.
 import { extensionIsLocal, removeFromLocalExtensions } from '../Utils';
 
-export const ExtensionAccountsContext = createContext<any>(null);
+export const ExtensionAccountsContext =
+  createContext<ExtensionAccountsContextInterface>(
+    defaultExtensionAccountsContext
+  );
 
 export const ExtensionAccountsProvider = ({
   children,
@@ -285,6 +292,7 @@ export const ExtensionAccountsProvider = ({
       value={{
         connectExtensionAccounts,
         extensionAccountsSynced,
+        extensionAccounts: extensionAccountsRef.current,
       }}
     >
       {children}
