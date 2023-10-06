@@ -5,7 +5,7 @@ import type {
   ExtensionAccount,
   ExtensionInjected,
 } from '@polkadot-cloud/react/connect/ExtensionsProvider/types';
-import type { MaybeAccount } from 'types';
+import type { MaybeAccount, NetworkName } from 'types';
 
 export interface ConnectContextInterface {
   formatAccountSs58: (a: string) => string | null;
@@ -22,6 +22,7 @@ export interface ConnectContextInterface {
   forgetAccounts: (a: ImportedAccount[]) => void;
   setActiveProxy: (p: ActiveProxy, l?: boolean) => void;
   renameImportedAccount: (a: MaybeAccount, n: string) => void;
+  importLocalAccounts: (g: (n: NetworkName) => ImportedAccount[]) => void;
   accounts: ExtensionAccount[];
   activeAccount: MaybeAccount;
   activeProxy: MaybeAccount;

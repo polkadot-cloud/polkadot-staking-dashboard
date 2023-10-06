@@ -600,6 +600,7 @@ export const ConnectProvider = ({
         forgetAccounts,
         setActiveProxy,
         renameImportedAccount,
+        importLocalAccounts,
         accounts: accountsRef.current,
         activeAccount: activeAccountRef.current,
         activeProxy: activeProxyRef.current?.address ?? null,

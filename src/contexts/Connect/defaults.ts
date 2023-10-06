@@ -20,6 +20,7 @@ export const defaultConnectContext: ConnectContextInterface = {
   forgetAccounts: (a) => {},
   setActiveProxy: (p, l) => {},
   renameImportedAccount: (a, n) => {},
+  importLocalAccounts: (n) => {},
   accounts: [],
   activeAccount: null,
   activeProxy: null,
