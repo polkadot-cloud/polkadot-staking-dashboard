@@ -30,7 +30,7 @@ export const ActiveAccountProvider = ({
 
   // Setter for the active proxy account.
   const setActiveProxy = (newActiveProxy: ActiveProxy, updateLocal = true) => {
-    if (updateLocal) {
+    if (updateLocal)
       if (newActiveProxy) {
         localStorage.setItem(
           `${network}_active_proxy`,
@@ -39,7 +39,6 @@ export const ActiveAccountProvider = ({
       } else {
         localStorage.removeItem(`${network}_active_proxy`);
       }
-    }
     setStateWithRef(newActiveProxy, setActiveProxyState, activeProxyRef);
   };
 
@@ -48,28 +47,20 @@ export const ActiveAccountProvider = ({
     newActiveAccount: MaybeAccount,
     local: boolean = true
   ) => {
-    if (local) {
+    if (local)
       if (newActiveAccount === null) {
         localStorage.removeItem(`${network}_active_account`);
       } else {
         localStorage.setItem(`${network}_active_account`, newActiveAccount);
       }
-    }
     setStateWithRef(newActiveAccount, setActiveAccountState, activeAccountRef);
   };
 
   // Getter for the active account.
   const getActiveAccount = () => activeAccountRef.current;
 
-  // Disconnect from the active account.
-  const disconnectFromAccount = () => {
-    setActiveAccount(null);
-  };
-
   // Disconnect from the active account on network change, but don't remove local record.
-  useEffect(() => {
-    setActiveAccount(null, false);
-  }, [network]);
+  useEffect(() => setActiveAccount(null, false), [network]);
 
   return (
     <ActiveAccountContext.Provider
@@ -80,7 +71,6 @@ export const ActiveAccountProvider = ({
         setActiveAccount,
         getActiveAccount,
         setActiveProxy,
-        disconnectFromAccount,
       }}
     >
       {children}

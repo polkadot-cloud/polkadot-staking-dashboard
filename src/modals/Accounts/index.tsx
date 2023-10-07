@@ -46,7 +46,7 @@ export const Accounts = () => {
     setModalResize,
   } = useOverlay().modal;
   const { accounts } = useImportedAccounts();
-  const { activeAccount, setActiveProxy, disconnectFromAccount } =
+  const { activeAccount, setActiveAccount, setActiveProxy } =
     useActiveAccount();
 
   // Store local copy of accounts.
@@ -148,7 +148,7 @@ export const Accounts = () => {
               text={t('disconnect')}
               iconRight={faLinkSlash}
               onClick={() => {
-                disconnectFromAccount();
+                setActiveAccount(null);
                 setActiveProxy(null);
               }}
             />

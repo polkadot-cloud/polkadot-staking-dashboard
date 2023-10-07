@@ -9,7 +9,6 @@ export const defaultActiveAccountContext: ActiveAccountContextInterface = {
   activeProxy: null,
   activeProxyType: null,
   getActiveAccount: () => null,
-  setActiveAccount: (a, l) => {},
-  setActiveProxy: (p, l) => {},
-  disconnectFromAccount: () => {},
+  setActiveAccount: (address, updateLocal) => {},
+  setActiveProxy: (address, updateLocal) => {},
 };
