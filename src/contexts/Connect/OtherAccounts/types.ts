@@ -18,7 +18,8 @@ export interface OtherAccountsContextInterface {
 export type ImportedAccount =
   | ExtensionAccount
   | ExternalAccount
-  | LedgerAccount;
+  | LedgerAccount
+  | VaultAccount;
 
 export interface ExternalAccount {
   address: string;
