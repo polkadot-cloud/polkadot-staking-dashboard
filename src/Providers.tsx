@@ -3,7 +3,6 @@
 
 import { BalancesProvider } from 'contexts/Balances';
 import { BondedProvider } from 'contexts/Bonded';
-import { ConnectProvider } from 'contexts/Connect';
 import { ExtensionsProvider, OverlayProvider } from '@polkadot-cloud/react';
 import { ExtrinsicsProvider } from 'contexts/Extrinsics';
 import { FastUnstakeProvider } from 'contexts/FastUnstake';
@@ -61,7 +60,6 @@ export const Providers = () => {
     VaultHardwareProvider,
     LedgerHardwareProvider,
     ExtensionsProvider,
-    ConnectProvider,
     [ExtensionAccountsProvider, { network, activeAccount, dappName: DappName }],
     OtherAccountsProvider,
     ImportedAccountsProvider,

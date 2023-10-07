@@ -14,12 +14,12 @@ import {
   Polkicon,
 } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
-import type { ExternalAccount } from 'contexts/Connect/types';
 import { useHelp } from 'contexts/Help';
 import { AccountInput } from 'library/AccountInput';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import type { ExternalAccount } from 'contexts/Connect/OtherAccounts/types';
 import {
   ActionWithButton,
   ManualAccount,
@@ -32,7 +32,7 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { openHelp } = useHelp();
   const { accounts } = useImportedAccounts();
   const { setModalResize } = useOverlay().modal;
-  const { forgetExternalAccounts, addExternalAccount } = useConnect();
+  const { forgetExternalAccounts, addExternalAccount } = useOtherAccounts();
 
   // get all external accounts
   const externalAccountsOnly = accounts.filter(

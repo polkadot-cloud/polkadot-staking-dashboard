@@ -3,7 +3,10 @@
 
 import { localStorageOrDefault } from '@polkadot-cloud/utils';
 import { LedgerApps } from 'config/ledger';
-import type { LedgerAccount, VaultAccount } from 'contexts/Connect/types';
+import type {
+  LedgerAccount,
+  VaultAccount,
+} from 'contexts/Connect/OtherAccounts/types';
 import type { MaybeString } from 'types';
 import type { LedgerAddress } from './types';
 

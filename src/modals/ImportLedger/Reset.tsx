@@ -3,7 +3,6 @@
 
 import { ButtonMono, ButtonMonoInvert } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import type { LedgerAccount } from 'contexts/Connect/types';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import type { LedgerAddress } from 'contexts/Hardware/types';
@@ -11,13 +10,14 @@ import { usePrompt } from 'contexts/Prompt';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useConnect } from 'contexts/Connect';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import type { LedgerAccount } from 'contexts/Connect/OtherAccounts/types';
 
 export const Reset = ({ removeLedgerAddress }: AnyJson) => {
   const { t } = useTranslation('modals');
   const { setStatus } = usePrompt();
   const { replaceModal } = useOverlay().modal;
-  const { forgetOtherAccounts } = useConnect();
+  const { forgetOtherAccounts } = useOtherAccounts();
   const { ledgerAccounts, removeLedgerAccount } = useLedgerHardware();
 
   const removeAccounts = () => {

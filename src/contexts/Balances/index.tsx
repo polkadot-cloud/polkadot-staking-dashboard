@@ -12,11 +12,11 @@ import {
 import BigNumber from 'bignumber.js';
 import React, { useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import type { AnyApi, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { getLedger } from './Utils';
 import * as defaults from './defaults';
 import type {
@@ -38,8 +38,8 @@ export const BalancesProvider = ({
   const { api, isReady } = useApi();
   const { network } = useNetwork();
   const { accounts } = useImportedAccounts();
-  const { addExternalAccount } = useConnect();
   const { getAccount } = useImportedAccounts();
+  const { addExternalAccount } = useOtherAccounts();
 
   const [balances, setBalances] = useState<Balances[]>([]);
   const balancesRef = useRef(balances);

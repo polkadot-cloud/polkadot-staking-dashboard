@@ -11,7 +11,7 @@ import {
 import BigNumber from 'bignumber.js';
 import React, { useRef, useState } from 'react';
 import { useBalances } from 'contexts/Balances';
-import type { ExternalAccount } from 'contexts/Connect/types';
+import type { ExternalAccount } from 'contexts/Connect/OtherAccounts/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type {
   EraStakers,

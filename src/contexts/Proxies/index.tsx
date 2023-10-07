@@ -15,12 +15,12 @@ import BigNumber from 'bignumber.js';
 import React, { useRef, useState } from 'react';
 import { isSupportedProxy } from 'config/proxies';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import type { AnyApi, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import * as defaults from './defaults';
 import type {
   Delegates,
@@ -39,7 +39,7 @@ export const ProxiesProvider = ({
   const { network } = useNetwork();
   const { api, isReady } = useApi();
   const { accounts } = useImportedAccounts();
-  const { addExternalAccount } = useConnect();
+  const { addExternalAccount } = useOtherAccounts();
   const { activeProxy, setActiveProxy, activeAccount } = useActiveAccounts();
 
   // store the proxy accounts of each imported account.

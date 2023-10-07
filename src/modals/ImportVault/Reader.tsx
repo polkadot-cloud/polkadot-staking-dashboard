@@ -5,20 +5,20 @@ import { ButtonSecondary } from '@polkadot-cloud/react';
 import { isValidAddress } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
 import { usePrompt } from 'contexts/Prompt';
 import { QRViewerWrapper } from 'library/Import/Wrappers';
 import { QrScanSignature } from 'library/QRCode/ScanSignature';
 import { useNetwork } from 'contexts/Network';
 import { formatAccountSs58 } from 'contexts/Connect/Utils';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 
 export const Reader = () => {
   const { t } = useTranslation('modals');
-  const { addOtherAccounts } = useConnect();
   const {
     networkData: { ss58 },
   } = useNetwork();
+  const { addOtherAccounts } = useOtherAccounts();
   const { setStatus: setPromptStatus } = usePrompt();
   const { addVaultAccount, vaultAccountExists, vaultAccounts } =
     useVaultHardware();

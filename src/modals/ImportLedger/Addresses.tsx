@@ -5,7 +5,6 @@ import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { ButtonText, HardwareAddress, Polkicon } from '@polkadot-cloud/react';
 import { ellipsisFn, unescape } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import { usePrompt } from 'contexts/Prompt';
@@ -14,6 +13,7 @@ import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
 import { useNetwork } from 'contexts/Network';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 
 export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
   const { t } = useTranslation('modals');
@@ -29,9 +29,9 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
     getLedgerAccount,
     pairDevice,
   } = useLedgerHardware();
-  const { openPromptWith } = usePrompt();
-  const { renameOtherAccount } = useConnect();
   const isExecuting = getIsExecuting();
+  const { openPromptWith } = usePrompt();
+  const { renameOtherAccount } = useOtherAccounts();
 
   const renameHandler = (address: string, newName: string) => {
     renameLedgerAccount(address, newName);

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { MaybeAccount } from 'types';
-import type { ActiveProxy } from '../Connect/types';
 
 export interface ActiveAccountsContextInterface {
   activeAccount: MaybeAccount;
@@ -12,3 +11,8 @@ export interface ActiveAccountsContextInterface {
   setActiveAccount: (address: MaybeAccount, updateLocal?: boolean) => void;
   setActiveProxy: (address: ActiveProxy, updateLocal?: boolean) => void;
 }
+
+export type ActiveProxy = {
+  address: MaybeAccount;
+  proxyType: string;
+} | null;

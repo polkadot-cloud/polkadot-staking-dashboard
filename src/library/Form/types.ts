@@ -3,9 +3,9 @@
 
 import type BigNumber from 'bignumber.js';
 import type { Balance } from 'contexts/Balances/types';
-import type { ExternalAccount } from 'contexts/Connect/types';
 import type { ExtensionAccount } from '@polkadot-cloud/react/connect/ExtensionsProvider/types';
 import type { BondFor, MaybeAccount } from 'types';
+import type { ExternalAccount } from 'contexts/Connect/OtherAccounts/types';
 
 export interface ExtensionAccountItem extends ExtensionAccount {
   active?: boolean;

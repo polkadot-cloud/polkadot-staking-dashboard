@@ -11,7 +11,6 @@ import {
 } from '@polkadot-cloud/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
 import { usePrompt } from 'contexts/Prompt';
 import IconSVG from 'img/polkadotVault.svg?react';
@@ -22,12 +21,13 @@ import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { Reader } from './Reader';
 
 export const ImportVault = () => {
   const { t } = useTranslation();
   const { replaceModal } = useOverlay().modal;
-  const { renameOtherAccount } = useConnect();
+  const { renameOtherAccount } = useOtherAccounts();
   const { openPromptWith, status: promptStatus } = usePrompt();
 
   const {

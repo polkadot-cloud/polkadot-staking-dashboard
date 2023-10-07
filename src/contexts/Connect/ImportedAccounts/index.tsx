@@ -6,10 +6,10 @@ import { createContext, useContext } from 'react';
 import type { MaybeAccount } from 'types';
 import { defaultImportedAccountsContext } from './defaults';
 import type { ImportedAccountsContextInterface } from './types';
-import { useConnect } from '..';
 import { useExtensionAccounts } from '../ExtensionAccounts';
-import type { ExternalAccount } from '../types';
 import { manualSigners } from '../Utils';
+import { useOtherAccounts } from '../OtherAccounts';
+import type { ExternalAccount } from '../OtherAccounts/types';
 
 export const ImportedAccountsContext =
   createContext<ImportedAccountsContextInterface>(
@@ -21,7 +21,7 @@ export const ImportedAccountsProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const { otherAccounts } = useConnect();
+  const { otherAccounts } = useOtherAccounts();
   const { extensionAccounts } = useExtensionAccounts();
 
   const allAccounts = extensionAccounts.concat(otherAccounts);

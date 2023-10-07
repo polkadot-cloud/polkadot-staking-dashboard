@@ -5,7 +5,6 @@ import { faSquarePen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonSubmit } from '@polkadot-cloud/react';
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { LedgerAccount } from 'contexts/Connect/types';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import type { LedgerResponse } from 'contexts/Hardware/types';
 import { useHelp } from 'contexts/Help';
@@ -15,6 +14,7 @@ import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import type { LedgerAccount } from 'contexts/Connect/OtherAccounts/types';
 import type { SubmitProps } from '../types';
 
 export const Ledger = ({

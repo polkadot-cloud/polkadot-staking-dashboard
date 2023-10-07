@@ -19,10 +19,10 @@ import type {
 import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
 import { defaultExtensionAccountsContext } from '@polkadot-cloud/react/connect/ExtensionAccountsProvider/defaults';
 import { useImportExtension } from './useImportExtension';
-import type { ImportedAccount } from '../types';
 // TODO: the functions in this hook need to be moved to the cloud.
 import { extensionIsLocal, removeFromLocalExtensions } from '../Utils';
 import { useActiveAccounts } from '../../ActiveAccounts';
+import type { ImportedAccount } from '../OtherAccounts/types';
 
 export const ExtensionAccountsContext =
   createContext<ExtensionAccountsContextInterface>(

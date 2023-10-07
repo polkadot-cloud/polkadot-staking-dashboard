@@ -10,11 +10,11 @@ import {
 } from '@polkadot-cloud/utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import type { AnyApi, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import * as defaults from './defaults';
 import type { BondedAccount, BondedContextInterface } from './types';
 
@@ -22,7 +22,7 @@ export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
   const { network } = useNetwork();
   const { api, isReady } = useApi();
   const { accounts } = useImportedAccounts();
-  const { addExternalAccount } = useConnect();
+  const { addExternalAccount } = useOtherAccounts();
 
   // Balance accounts state.
   const [bondedAccounts, setBondedAccounts] = useState<BondedAccount[]>([]);

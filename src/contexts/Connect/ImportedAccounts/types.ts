@@ -3,7 +3,7 @@
 
 import type { MaybeAccount } from 'types';
 import type { ExtensionAccount } from '@polkadot-cloud/react/connect/ExtensionsProvider/types';
-import type { ImportedAccount } from '../types';
+import type { ImportedAccount } from '../OtherAccounts/types';
 
 export interface ImportedAccountsContextInterface {
   accounts: ImportedAccount[];
