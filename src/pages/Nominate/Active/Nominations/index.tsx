@@ -13,7 +13,7 @@ import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { ValidatorList } from 'library/ValidatorList';
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -25,7 +25,7 @@ export const Nominations = ({
   nominator,
 }: {
   bondFor: 'pool' | 'nominator';
-  nominator: MaybeAccount;
+  nominator: MaybeAddress;
 }) => {
   const { t } = useTranslation('pages');
   const { isSyncing } = useUi();

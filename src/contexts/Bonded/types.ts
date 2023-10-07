@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
 
 export interface BondedAccount {
   address?: string;
@@ -17,9 +17,9 @@ export interface Nominations {
 export type Targets = string[];
 
 export interface BondedContextInterface {
-  getAccount: (address: MaybeAccount) => BondedAccount | null;
-  getBondedAccount: (address: MaybeAccount) => string | null;
-  getAccountNominations: (address: MaybeAccount) => Targets;
-  isController: (address: MaybeAccount) => boolean;
+  getAccount: (address: MaybeAddress) => BondedAccount | null;
+  getBondedAccount: (address: MaybeAddress) => string | null;
+  getAccountNominations: (address: MaybeAddress) => Targets;
+  isController: (address: MaybeAddress) => boolean;
   bondedAccounts: BondedAccount[];
 }

@@ -11,7 +11,7 @@ import type {
   NominationStatuses,
 } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
-import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
+import type { AnyApi, AnyMetaBatch, Fn, MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from '../../Api';
@@ -219,8 +219,8 @@ export const BondedPoolsProvider = ({
    * Get bonded pool nomination statuses
    */
   const getPoolNominationStatus = (
-    nominator: MaybeAccount,
-    nomination: MaybeAccount
+    nominator: MaybeAddress,
+    nomination: MaybeAddress
   ) => {
     const pool = bondedPools.find((p: any) => p.addresses.stash === nominator);
 
@@ -371,7 +371,7 @@ export const BondedPoolsProvider = ({
   };
 
   // get all the roles belonging to one pool account
-  const getAccountRoles = (who: MaybeAccount) => {
+  const getAccountRoles = (who: MaybeAddress) => {
     if (!who) {
       return {
         depositor: [],
@@ -406,7 +406,7 @@ export const BondedPoolsProvider = ({
   };
 
   // accumulate account pool list
-  const getAccountPools = (who: MaybeAccount) => {
+  const getAccountPools = (who: MaybeAddress) => {
     // first get the roles of the account
     const roles = getAccountRoles(who);
     // format new list has pool => roles

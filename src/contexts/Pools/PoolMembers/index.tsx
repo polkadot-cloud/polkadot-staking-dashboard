@@ -5,7 +5,7 @@ import { setStateWithRef } from '@polkadot-cloud/utils';
 import React, { useRef, useState } from 'react';
 import { usePlugins } from 'contexts/Plugins';
 import type { PoolMember, PoolMemberContext } from 'contexts/Pools/types';
-import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount, Sync } from 'types';
+import type { AnyApi, AnyMetaBatch, Fn, MaybeAddress, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -100,7 +100,7 @@ export const PoolMembersProvider = ({
     poolMembersNode.filter((p: any) => p.poolId === String(poolId)) ?? null;
 
   // queries a  pool member and formats to `PoolMember`.
-  const queryPoolMember = async (who: MaybeAccount) => {
+  const queryPoolMember = async (who: MaybeAddress) => {
     if (!api) return null;
 
     const poolMember: AnyApi = (
@@ -281,7 +281,7 @@ export const PoolMembersProvider = ({
   };
 
   // Removes a member from the member list and updates state.
-  const removePoolMember = (who: MaybeAccount) => {
+  const removePoolMember = (who: MaybeAddress) => {
     if (!pluginEnabled('subscan')) return;
 
     const newMembers = poolMembersNode.filter((p: any) => p.who !== who);

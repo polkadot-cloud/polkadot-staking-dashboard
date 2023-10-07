@@ -18,7 +18,7 @@ import { PayeeInput } from 'library/PayeeInput';
 import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
 import { SubmitTx } from 'library/SubmitTx';
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -43,7 +43,7 @@ export const UpdatePayee = () => {
   };
 
   // Store the current user-inputted custom payout account.
-  const [account, setAccount] = useState<MaybeAccount>(payee.account);
+  const [account, setAccount] = useState<MaybeAddress>(payee.account);
 
   // Store the currently selected payee option.
   const [selected, setSelected]: any = useState<PayeeConfig>(DefaultSelected);
@@ -57,7 +57,7 @@ export const UpdatePayee = () => {
   };
 
   // update setup progress with payee account.
-  const handleChangeAccount = (newAccount: MaybeAccount) => {
+  const handleChangeAccount = (newAccount: MaybeAddress) => {
     setSelected({
       destination: selected?.destination ?? null,
       account: newAccount,

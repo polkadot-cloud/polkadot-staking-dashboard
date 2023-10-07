@@ -3,7 +3,7 @@
 
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import { useNetwork } from 'contexts/Network';
 import type { ActiveAccountsContextInterface, ActiveProxy } from './types';
@@ -20,7 +20,7 @@ export const ActiveAccountsProvider = ({
   const { network } = useNetwork();
 
   // Store the currently active account.
-  const [activeAccount, setActiveAccountState] = useState<MaybeAccount>(null);
+  const [activeAccount, setActiveAccountState] = useState<MaybeAddress>(null);
   const activeAccountRef = useRef<string | null>(activeAccount);
 
   // Store the active proxy account.
@@ -43,7 +43,7 @@ export const ActiveAccountsProvider = ({
 
   // Setter for the active account.
   const setActiveAccount = (
-    newActiveAccount: MaybeAccount,
+    newActiveAccount: MaybeAddress,
     local: boolean = true
   ) => {
     if (local)

@@ -3,7 +3,7 @@
 
 import { useTranslation } from 'react-i18next';
 import { useTxMeta } from 'contexts/TxMeta';
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
@@ -14,7 +14,7 @@ export const useSignerWarnings = () => {
   const { controllerSignerAvailable } = useTxMeta();
 
   const getSignerWarnings = (
-    account: MaybeAccount,
+    account: MaybeAddress,
     controller = false,
     proxySupported = false
   ) => {

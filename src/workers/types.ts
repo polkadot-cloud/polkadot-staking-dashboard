@@ -6,13 +6,13 @@ import type {
   Exposure,
   Staker,
 } from 'contexts/Staking/types';
-import type { MaybeAccount, NetworkName } from 'types';
+import type { MaybeAddress, NetworkName } from 'types';
 
 export interface DataInitialiseExposures {
   task: string;
   networkName: NetworkName;
   era: string;
-  activeAccount: MaybeAccount;
+  activeAccount: MaybeAddress;
   units: number;
   exposures: Exposure[];
   maxNominatorRewardedPerValidator: number;
@@ -26,5 +26,5 @@ export interface ResponseInitialiseExposures {
   totalActiveNominators: number;
   activeAccountOwnStake: ActiveAccountStaker[];
   activeValidators: number;
-  who: MaybeAccount;
+  who: MaybeAddress;
 }

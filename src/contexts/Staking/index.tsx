@@ -20,7 +20,7 @@ import type {
   StakingMetrics,
   StakingTargets,
 } from 'contexts/Staking/types';
-import type { AnyApi, AnyJson, MaybeAccount } from 'types';
+import type { AnyApi, AnyJson, MaybeAddress } from 'types';
 import Worker from 'workers/stakers?worker';
 import type { ResponseInitialiseExposures } from 'workers/types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
@@ -184,7 +184,7 @@ export const StakingProvider = ({
     } else {
       const payeeEntry = Object.entries(payeeHuman);
       const destination = `${payeeEntry[0][0]}` as PayeeOptions;
-      const account = `${payeeEntry[0][1]}` as MaybeAccount;
+      const account = `${payeeEntry[0][1]}` as MaybeAddress;
       payeeFinal = {
         destination,
         account,
@@ -249,7 +249,7 @@ export const StakingProvider = ({
 
   // Gets the nomination statuses of passed in nominations.
   const getNominationsStatusFromTargets = (
-    who: MaybeAccount,
+    who: MaybeAddress,
     fromTargets: AnyJson[]
   ) => {
     const statuses: Record<string, string> = {};
@@ -278,7 +278,7 @@ export const StakingProvider = ({
   };
 
   // Helper function to determine whether the controller account is the same as the stash account.
-  const addressDifferentToStash = (address: MaybeAccount) => {
+  const addressDifferentToStash = (address: MaybeAddress) => {
     // check if controller is imported.
     if (!connectAccounts.find((acc) => acc.address === address)) {
       return false;
@@ -287,7 +287,7 @@ export const StakingProvider = ({
   };
 
   // Helper function to determine whether the controller account has been imported.
-  const getControllerNotImported = (address: MaybeAccount) => {
+  const getControllerNotImported = (address: MaybeAddress) => {
     if (address === null || !activeAccount) {
       return false;
     }
@@ -330,7 +330,7 @@ export const StakingProvider = ({
     (!hasController() && !isBonding() && !isNominating() && !isUnlocking());
 
   // Helper function to get the lowest reward from an active validator.
-  const getLowestRewardFromStaker = (address: MaybeAccount) => {
+  const getLowestRewardFromStaker = (address: MaybeAddress) => {
     const staker = eraStakersRef.current.stakers.find(
       (s) => s.address === address
     );

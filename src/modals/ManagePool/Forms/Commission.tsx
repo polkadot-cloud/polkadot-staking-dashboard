@@ -27,7 +27,7 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import 'rc-slider/assets/index.css';
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { SliderWrapper } from '../Wrappers';
@@ -89,7 +89,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   );
 
   // Store the commission payee.
-  const [payee, setPayee] = useState<MaybeAccount>(initialPayee);
+  const [payee, setPayee] = useState<MaybeAddress>(initialPayee);
 
   // Store the maximum commission value.
   const [maxCommission, setMaxCommission] =

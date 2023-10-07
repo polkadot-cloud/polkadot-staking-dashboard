@@ -3,7 +3,7 @@
 
 import type React from 'react';
 import type { Dispatch, SetStateAction } from 'react';
-import type { AnyJson, MaybeAccount } from 'types';
+import type { AnyJson, MaybeAddress } from 'types';
 
 export interface SelectItemsProps {
   layout?: 'two-col' | 'three-col';
@@ -23,6 +23,6 @@ export interface SelectItemProps {
   includeToggle?: boolean;
   bodyRef?: AnyJson;
   containerRef?: AnyJson;
-  account?: MaybeAccount;
-  setAccount?: Dispatch<SetStateAction<MaybeAccount>>;
+  account?: MaybeAddress;
+  setAccount?: Dispatch<SetStateAction<MaybeAddress>>;
 }

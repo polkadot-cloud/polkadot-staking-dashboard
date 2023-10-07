@@ -3,7 +3,7 @@
 
 import type React from 'react';
 import type { BondedPool } from 'contexts/Pools/types';
-import type { BondFor, MaybeAccount } from 'types';
+import type { BondFor, MaybeAddress } from 'types';
 
 export interface BlockedProps {
   prefs: {
@@ -38,11 +38,11 @@ export interface MetricsProps {
 export interface NominationStatusProps {
   address: string;
   bondFor: BondFor;
-  nominator: MaybeAccount;
+  nominator: MaybeAddress;
 }
 
 export interface OversubscribedProps {
-  address: MaybeAccount;
+  address: MaybeAddress;
 }
 
 export interface SelectProps {
@@ -52,5 +52,5 @@ export interface SelectProps {
 }
 
 export interface ParaValidatorProps {
-  address: MaybeAccount;
+  address: MaybeAddress;
 }

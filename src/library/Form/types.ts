@@ -4,7 +4,7 @@
 import type BigNumber from 'bignumber.js';
 import type { Balance } from 'contexts/Balances/types';
 import type { ExtensionAccount } from '@polkadot-cloud/react/connect/ExtensionsProvider/types';
-import type { BondFor, MaybeAccount } from 'types';
+import type { BondFor, MaybeAddress } from 'types';
 import type { ExternalAccount } from 'contexts/Connect/OtherAccounts/types';
 
 export interface ExtensionAccountItem extends ExtensionAccount {
@@ -28,7 +28,7 @@ export interface DropdownInput {
 
 export interface AccountDropdownProps {
   current: InputItem;
-  to: MaybeAccount;
+  to: MaybeAddress;
 }
 
 export interface BondFeedbackProps {

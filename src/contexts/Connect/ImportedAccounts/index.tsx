@@ -3,7 +3,7 @@
 
 import type { ReactNode } from 'react';
 import { createContext, useContext } from 'react';
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
 import { defaultImportedAccountsContext } from './defaults';
 import type { ImportedAccountsContextInterface } from './types';
 import { useExtensionAccounts } from '../ExtensionAccounts';
@@ -26,10 +26,10 @@ export const ImportedAccountsProvider = ({
 
   const allAccounts = extensionAccounts.concat(otherAccounts);
 
-  const getAccount = (who: MaybeAccount) =>
+  const getAccount = (who: MaybeAddress) =>
     allAccounts.find(({ address }) => address === who) || null;
 
-  const isReadOnlyAccount = (address: MaybeAccount) => {
+  const isReadOnlyAccount = (address: MaybeAddress) => {
     const account = getAccount(address) ?? {};
 
     if (Object.prototype.hasOwnProperty.call(account, 'addedBy')) {
@@ -40,7 +40,7 @@ export const ImportedAccountsProvider = ({
   };
 
   // Checks whether an account can sign transactions
-  const accountHasSigner = (address: MaybeAccount) =>
+  const accountHasSigner = (address: MaybeAddress) =>
     allAccounts.find(
       (a) => a.address === address && a.source !== 'external'
     ) !== undefined;
@@ -48,7 +48,7 @@ export const ImportedAccountsProvider = ({
   // Checks whether an account needs manual signing. This is the case for Ledger accounts,
   // transactions of which cannot be automatically signed by a provided `signer` as is the case with
   // extensions.
-  const requiresManualSign = (address: MaybeAccount) =>
+  const requiresManualSign = (address: MaybeAddress) =>
     allAccounts.find(
       (a) => a.address === address && manualSigners.includes(a.source)
     ) !== undefined;

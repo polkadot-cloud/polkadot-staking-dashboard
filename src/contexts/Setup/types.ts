@@ -3,7 +3,7 @@
 
 import type { PoolRoles } from 'contexts/Pools/types';
 import type { ValidatorPrefs } from 'contexts/Validators/types';
-import type { AnyJson, BondFor, MaybeAccount, MaybeString } from 'types';
+import type { AnyJson, BondFor, MaybeAddress, MaybeString } from 'types';
 
 export type PayeeOptions =
   | 'Staked'
@@ -27,7 +27,7 @@ export interface NominatorProgress {
 
 export interface PayeeConfig {
   destination: PayeeOptions | null;
-  account: MaybeAccount;
+  account: MaybeAddress;
 }
 
 export type PoolSetups = Record<string, PoolSetup>;
@@ -45,10 +45,10 @@ export interface PoolProgress {
 }
 
 export interface SetupContextInterface {
-  getSetupProgress: (t: BondFor, a: MaybeAccount) => any;
-  removeSetupProgress: (t: BondFor, a: MaybeAccount) => void;
-  getNominatorSetupPercent: (a: MaybeAccount) => number;
-  getPoolSetupPercent: (a: MaybeAccount) => number;
+  getSetupProgress: (t: BondFor, a: MaybeAddress) => any;
+  removeSetupProgress: (t: BondFor, a: MaybeAddress) => void;
+  getNominatorSetupPercent: (a: MaybeAddress) => number;
+  getPoolSetupPercent: (a: MaybeAddress) => number;
   setActiveAccountSetup: (
     t: BondFor,
     p: NominatorProgress | PoolProgress

@@ -1,14 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
 import type { ExtensionAccount } from '@polkadot-cloud/react/connect/ExtensionsProvider/types';
 import type { ImportedAccount } from '../OtherAccounts/types';
 
 export interface ImportedAccountsContextInterface {
   accounts: ImportedAccount[];
-  getAccount: (account: MaybeAccount) => ExtensionAccount | null;
-  isReadOnlyAccount: (a: MaybeAccount) => boolean;
-  accountHasSigner: (a: MaybeAccount) => boolean;
-  requiresManualSign: (a: MaybeAccount) => boolean;
+  getAccount: (account: MaybeAddress) => ExtensionAccount | null;
+  isReadOnlyAccount: (a: MaybeAddress) => boolean;
+  accountHasSigner: (a: MaybeAddress) => boolean;
+  requiresManualSign: (a: MaybeAddress) => boolean;
 }

@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ExtensionAccount } from '@polkadot-cloud/react/connect/ExtensionsProvider/types';
-import type { MaybeAccount, NetworkName } from 'types';
+import type { MaybeAddress, NetworkName } from 'types';
 
 export interface OtherAccountsContextInterface {
   addExternalAccount: (a: string, addedBy: string) => void;
   addOtherAccounts: (a: ImportedAccount[]) => void;
-  renameOtherAccount: (a: MaybeAccount, n: string) => void;
+  renameOtherAccount: (a: MaybeAddress, n: string) => void;
   importLocalOtherAccounts: (g: (n: NetworkName) => ImportedAccount[]) => void;
   forgetOtherAccounts: (a: ImportedAccount[]) => void;
   forgetExternalAccounts: (a: ImportedAccount[]) => void;
@@ -48,6 +48,6 @@ export interface VaultAccount {
 export interface HandleImportExtension {
   newAccounts: ExtensionAccount[];
   meta: {
-    removedActiveAccount: MaybeAccount;
+    removedActiveAccount: MaybeAddress;
   };
 }

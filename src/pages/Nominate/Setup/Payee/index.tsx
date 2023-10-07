@@ -14,7 +14,7 @@ import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const Payee = ({ section }: SetupStepProps) => {
@@ -28,7 +28,7 @@ export const Payee = ({ section }: SetupStepProps) => {
   const { payee } = progress;
 
   // Store the current user-inputted custom payout account.
-  const [account, setAccount] = useState<MaybeAccount>(payee.account);
+  const [account, setAccount] = useState<MaybeAddress>(payee.account);
 
   const DefaultPayeeConfig: PayeeConfig = {
     destination: 'Staked',
@@ -50,7 +50,7 @@ export const Payee = ({ section }: SetupStepProps) => {
   };
 
   // update setup progress with payee account.
-  const handleChangeAccount = (newAccount: MaybeAccount) => {
+  const handleChangeAccount = (newAccount: MaybeAddress) => {
     // set local value to update input element set setup payee
     setActiveAccountSetup('nominator', {
       ...progress,

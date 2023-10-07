@@ -11,7 +11,7 @@ import {
   getLocalLedgerAccounts,
   getLocalVaultAccounts,
 } from 'contexts/Hardware/Utils';
-import type { AnyFunction, MaybeAccount, NetworkName } from 'types';
+import type { AnyFunction, MaybeAddress, NetworkName } from 'types';
 import { ellipsisFn, setStateWithRef } from '@polkadot-cloud/utils';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -121,7 +121,7 @@ export const OtherAccountsProvider = ({
   };
 
   // Renames an other account.
-  const renameOtherAccount = (address: MaybeAccount, newName: string) => {
+  const renameOtherAccount = (address: MaybeAddress, newName: string) => {
     setStateWithRef(
       [...otherAccountsRef.current].map((a) =>
         a.address !== address

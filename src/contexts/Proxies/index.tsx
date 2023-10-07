@@ -15,7 +15,7 @@ import BigNumber from 'bignumber.js';
 import React, { useRef, useState } from 'react';
 import { isSupportedProxy } from 'config/proxies';
 import { useApi } from 'contexts/Api';
-import type { AnyApi, MaybeAccount } from 'types';
+import type { AnyApi, MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -137,12 +137,12 @@ export const ProxiesProvider = ({
   };
 
   // Gets the delegates of the given account
-  const getDelegates = (address: MaybeAccount): Proxy | undefined =>
+  const getDelegates = (address: MaybeAddress): Proxy | undefined =>
     proxiesRef.current.find(({ delegator }) => delegator === address) ||
     undefined;
 
   // Gets delegators and proxy types for the given delegate address
-  const getProxiedAccounts = (address: MaybeAccount) => {
+  const getProxiedAccounts = (address: MaybeAddress) => {
     const delegate = delegatesRef.current[address || ''];
     if (!delegate) {
       return [];
@@ -159,8 +159,8 @@ export const ProxiesProvider = ({
 
   // Gets the delegates and proxy type of an account, if any.
   const getProxyDelegate = (
-    delegator: MaybeAccount,
-    delegate: MaybeAccount
+    delegator: MaybeAddress,
+    delegate: MaybeAddress
   ): ProxyDelegate | null =>
     proxiesRef.current
       .find((p) => p.delegator === delegator)

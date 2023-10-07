@@ -3,11 +3,11 @@
 
 import type { Dispatch, SetStateAction } from 'react';
 import type { PayeeConfig } from 'contexts/Setup/types';
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
 
 export interface PayeeInputProps {
   payee: PayeeConfig;
-  account: MaybeAccount;
-  setAccount: Dispatch<SetStateAction<MaybeAccount>>;
-  handleChange: (a: MaybeAccount) => void;
+  account: MaybeAddress;
+  setAccount: Dispatch<SetStateAction<MaybeAddress>>;
+  handleChange: (a: MaybeAddress) => void;
 }

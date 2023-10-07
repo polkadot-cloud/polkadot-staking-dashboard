@@ -8,7 +8,7 @@ import {
 } from '@polkadot-cloud/utils';
 import React, { useState } from 'react';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import type { BondFor, MaybeAccount } from 'types';
+import type { BondFor, MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -62,7 +62,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   // not yet exist.
   const getSetupProgress = (
     type: BondFor,
-    address: MaybeAccount
+    address: MaybeAddress
   ): NominatorSetup | PoolSetup => {
     const setup = Object.fromEntries(
       Object.entries(
@@ -78,7 +78,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // Remove setup progress for an account.
-  const removeSetupProgress = (type: BondFor, address: MaybeAccount) => {
+  const removeSetupProgress = (type: BondFor, address: MaybeAddress) => {
     const updatedSetups = Object.fromEntries(
       Object.entries(
         type === 'nominator' ? nominatorSetups : poolSetups
@@ -139,7 +139,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // Gets the stake setup progress as a percentage for an address.
-  const getNominatorSetupPercent = (address: MaybeAccount) => {
+  const getNominatorSetupPercent = (address: MaybeAddress) => {
     if (!address) return 0;
     const setup = getSetupProgress('nominator', address) as NominatorSetup;
     const { progress } = setup;
@@ -154,7 +154,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // Gets the stake setup progress as a percentage for an address.
-  const getPoolSetupPercent = (address: MaybeAccount) => {
+  const getPoolSetupPercent = (address: MaybeAddress) => {
     if (!address) return 0;
     const setup = getSetupProgress('pool', address) as PoolSetup;
     const { progress } = setup;

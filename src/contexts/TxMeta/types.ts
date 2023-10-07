@@ -2,19 +2,19 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
-import type { AnyJson, MaybeAccount } from 'types';
+import type { AnyJson, MaybeAddress } from 'types';
 
 export interface TxMetaContextInterface {
   controllerSignerAvailable: (
-    a: MaybeAccount,
+    a: MaybeAddress,
     b: boolean
   ) => 'controller_not_imported' | 'read_only' | 'ok';
   txFees: BigNumber;
   notEnoughFunds: boolean;
   setTxFees: (f: BigNumber) => void;
   resetTxFees: () => void;
-  sender: MaybeAccount;
-  setSender: (s: MaybeAccount) => void;
+  sender: MaybeAddress;
+  setSender: (s: MaybeAddress) => void;
   txFeesValid: boolean;
   incrementPayloadUid: () => number;
   getPayloadUid: () => number;

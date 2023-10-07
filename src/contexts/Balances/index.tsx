@@ -12,7 +12,7 @@ import {
 import BigNumber from 'bignumber.js';
 import React, { useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
-import type { AnyApi, MaybeAccount } from 'types';
+import type { AnyApi, MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -192,21 +192,21 @@ export const BalancesProvider = ({
   }, [network]);
 
   // Gets a ledger for a stash address.
-  const getStashLedger = (address: MaybeAccount) => {
+  const getStashLedger = (address: MaybeAddress) => {
     return getLedger(ledgersRef.current, 'stash', address);
   };
 
   // Gets an account's balance metadata.
-  const getBalance = (address: MaybeAccount) =>
+  const getBalance = (address: MaybeAddress) =>
     balancesRef.current.find((a) => a.address === address)?.balance ||
     defaults.defaultBalance;
 
   // Gets an account's locks.
-  const getLocks = (address: MaybeAccount) =>
+  const getLocks = (address: MaybeAddress) =>
     balancesRef.current.find((a) => a.address === address)?.locks ?? [];
 
   // Gets an account's nonce.
-  const getNonce = (address: MaybeAccount) =>
+  const getNonce = (address: MaybeAddress) =>
     balancesRef.current.find((a) => a.address === address)?.nonce ?? 0;
 
   return (

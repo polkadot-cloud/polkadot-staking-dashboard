@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { useBonded } from 'contexts/Bonded';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import type { AnyJson, MaybeAccount } from 'types';
+import type { AnyJson, MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -25,7 +25,7 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   const [txFees, setTxFees] = useState(new BigNumber(0));
 
   // Store the sender of the transaction.
-  const [sender, setSender] = useState<MaybeAccount>(null);
+  const [sender, setSender] = useState<MaybeAddress>(null);
 
   // Store whether the sender does not have enough funds.
   const [notEnoughFunds, setNotEnoughFunds] = useState(false);
@@ -96,7 +96,7 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   })();
 
   const controllerSignerAvailable = (
-    stash: MaybeAccount,
+    stash: MaybeAddress,
     proxySupported: boolean
   ) => {
     const controller = getBondedAccount(stash);
