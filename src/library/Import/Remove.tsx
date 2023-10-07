@@ -10,8 +10,8 @@ import type { RemoveProps } from './types';
 
 export const Remove = ({ address, getHandler, removeHandler }: RemoveProps) => {
   const { t } = useTranslation('modals');
-  const { forgetAccounts } = useConnect();
   const { setStatus } = usePrompt();
+  const { forgetOtherAccounts } = useConnect();
 
   return (
     <ConfirmWrapper>
@@ -26,7 +26,7 @@ export const Remove = ({ address, getHandler, removeHandler }: RemoveProps) => {
             const account = getHandler(address);
             if (account) {
               removeHandler(address);
-              forgetAccounts([account]);
+              forgetOtherAccounts([account]);
               setStatus(0);
             }
           }}

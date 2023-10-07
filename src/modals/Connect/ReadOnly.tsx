@@ -30,9 +30,9 @@ import type { ListWithInputProps } from './types';
 export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');
   const { openHelp } = useHelp();
-  const { setModalResize } = useOverlay().modal;
   const { accounts } = useImportedAccounts();
-  const { forgetAccounts, addExternalAccount } = useConnect();
+  const { setModalResize } = useOverlay().modal;
+  const { forgetExternalAccounts, addExternalAccount } = useConnect();
 
   // get all external accounts
   const externalAccountsOnly = accounts.filter(
@@ -46,7 +46,7 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
 
   // forget account
   const forgetAccount = (account: ExternalAccount) => {
-    forgetAccounts([account]);
+    forgetExternalAccounts([account]);
     setModalResize();
   };
   return (

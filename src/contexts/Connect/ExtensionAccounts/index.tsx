@@ -20,7 +20,6 @@ import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
 import { defaultExtensionAccountsContext } from '@polkadot-cloud/react/connect/ExtensionAccountsProvider/defaults';
 import { useImportExtension } from './useImportExtension';
 import type { ImportedAccount } from '../types';
-import { useConnect } from '..';
 // TODO: the functions in this hook need to be moved to the cloud.
 import { extensionIsLocal, removeFromLocalExtensions } from '../Utils';
 import { useActiveAccounts } from '../../ActiveAccounts';
@@ -43,7 +42,6 @@ export const ExtensionAccountsProvider = ({
   } = useImportExtension();
 
   // TODO: these `useConnect` imports should be refactored and moved to the cloud.
-  const { forgetAccounts } = useConnect();
   const { setActiveAccount } = useActiveAccounts();
   const { checkingInjectedWeb3, setExtensionStatus, extensions } =
     useExtensions();
@@ -202,6 +200,7 @@ export const ExtensionAccountsProvider = ({
     return false;
   };
 
+  // Handle errors when communiating with extensions.
   const handleExtensionError = (id: string, err: string) => {
     // if not general error (maybe enabled but no accounts trust app)
     if (err.startsWith('Error')) {
@@ -219,7 +218,34 @@ export const ExtensionAccountsProvider = ({
     updateInitialisedExtensions(id);
   };
 
-  // update initialised extensions.
+  // Handle forgetting of an imported extension account.
+  const forgetAccounts = (forget: ImportedAccount[]) => {
+    // Unsubscribe and remove unsub from context ref.
+    if (forget.length) {
+      for (const { address } of forget) {
+        if (extensionAccountsRef.current.find((a) => a.address === address)) {
+          const unsub = unsubs.current[address];
+          if (unsub) {
+            unsub();
+            delete unsubs.current[address];
+          }
+        }
+      }
+      // Remove forgotten accounts from context state.
+      setStateWithRef(
+        [...extensionAccountsRef.current].filter(
+          (a) => forget.find((s) => s.address === a.address) === undefined
+        ),
+        setExtensionAccounts,
+        extensionAccountsRef
+      );
+      // If the currently active account is being forgotten, disconnect.
+      if (forget.find((a) => a.address === activeAccount) !== undefined)
+        setActiveAccount(null);
+    }
+  };
+
+  // Update initialised extensions.
   const updateInitialisedExtensions = (id: string) => {
     if (!extensionsInitialisedRef.current.includes(id)) {
       setStateWithRef(
@@ -299,6 +325,7 @@ export const ExtensionAccountsProvider = ({
       value={{
         connectExtensionAccounts,
         extensionAccountsSynced,
+        forgetAccounts,
         extensionAccounts: extensionAccountsRef.current,
       }}
     >

@@ -103,6 +103,8 @@ export const removeLocalExternalAccounts = (
   network: NetworkName,
   accounts: ExternalAccount[]
 ) => {
+  if (!accounts.length) return;
+
   let localExternalAccounts = getLocalExternalAccounts(network);
   localExternalAccounts = localExternalAccounts.filter(
     (a) =>

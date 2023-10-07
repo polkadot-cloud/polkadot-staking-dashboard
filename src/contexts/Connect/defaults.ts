@@ -7,9 +7,10 @@ import type { ConnectContextInterface } from 'contexts/Connect/types';
 export const defaultConnectContext: ConnectContextInterface = {
   addExternalAccount: (a, b) => {},
   addOtherAccounts: (a) => {},
-  forgetAccounts: (a) => {},
-  renameImportedAccount: (a, n) => {},
+  renameOtherAccount: (a, n) => {},
   importLocalAccounts: (n) => {},
+  forgetOtherAccounts: (a) => {},
+  forgetExternalAccounts: (a) => {},
   otherAccounts: [],
 };
 

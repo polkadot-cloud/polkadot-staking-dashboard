@@ -30,12 +30,12 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
     pairDevice,
   } = useLedgerHardware();
   const { openPromptWith } = usePrompt();
-  const { renameImportedAccount } = useConnect();
+  const { renameOtherAccount } = useConnect();
   const isExecuting = getIsExecuting();
 
   const renameHandler = (address: string, newName: string) => {
     renameLedgerAccount(address, newName);
-    renameImportedAccount(address, newName);
+    renameOtherAccount(address, newName);
   };
 
   const openConfirmHandler = (address: string, index: number) => {

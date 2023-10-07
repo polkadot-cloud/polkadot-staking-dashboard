@@ -61,47 +61,49 @@ export const ConnectProvider = ({
     });
   };
 
-  // Unsubscrbe from some account subscriptions and update the resulting state.
-  // TODO: move to ImportedAccounts context and refactor to account for all account sources.
-  const forgetAccounts = (forget: ImportedAccount[]) => {
-    if (!forget.length) return;
-
-    for (const { address } of forget) {
-      const unsub = unsubs.current[address];
-      if (unsub) {
-        unsub();
-        delete unsubs.current[address];
+  // Handle forgetting of an imported other account.
+  const forgetOtherAccounts = (forget: ImportedAccount[]) => {
+    // Unsubscribe and remove unsub from context ref.
+    if (forget.length) {
+      for (const { address } of forget) {
+        if (otherAccountsRef.current.find((a) => a.address === address)) {
+          const unsub = unsubs.current[address];
+          if (unsub) {
+            unsub();
+            delete unsubs.current[address];
+          }
+        }
       }
-    }
-
-    // If the currently active account is being forgotten, disconnect.
-    if (forget.find((a) => a.address === activeAccount) !== undefined) {
-      localStorage.removeItem(`${network}_active_account`);
-      setActiveAccount(null);
-    }
-
-    // Get any external accounts and remove from localStorage.
-    const externalToForget = forget.filter((i) => 'network' in i);
-    if (externalToForget.length) {
-      removeLocalExternalAccounts(
-        network,
-        externalToForget as ExternalAccount[]
+      // Remove forgotten accounts from context state.
+      setStateWithRef(
+        [...otherAccountsRef.current].filter(
+          (a) => forget.find((s) => s.address === a.address) === undefined
+        ),
+        setOtherAccounts,
+        otherAccountsRef
       );
+      // If the currently active account is being forgotten, disconnect.
+      if (forget.find((a) => a.address === activeAccount) !== undefined)
+        setActiveAccount(null);
     }
-
-    // Remove forgotten accounts from state.
-    setStateWithRef(
-      [...otherAccountsRef.current].filter(
-        (a) => forget.find(({ address }) => address === a.address) === undefined
-      ),
-      setOtherAccounts,
-      otherAccountsRef
-    );
   };
 
-  // renames an account
-  // TODO: move to ImportedAccounts context and refactor to account for all account sources.
-  const renameImportedAccount = (address: MaybeAccount, newName: string) => {
+  // Get any external accounts and remove from localStorage.
+  const forgetExternalAccounts = (forget: ImportedAccount[]) => {
+    if (!forget.length) return;
+
+    removeLocalExternalAccounts(
+      network,
+      forget.filter((i) => 'network' in i) as ExternalAccount[]
+    );
+
+    // If the currently active account is being forgotten, disconnect.
+    if (forget.find((a) => a.address === activeAccount) !== undefined)
+      setActiveAccount(null);
+  };
+
+  // Renames an other account.
+  const renameOtherAccount = (address: MaybeAccount, newName: string) => {
     setStateWithRef(
       [...otherAccountsRef.current].map((a) =>
         a.address !== address
@@ -116,9 +118,9 @@ export const ConnectProvider = ({
     );
   };
 
-  /* Checks `localStorage` for previously added accounts from the provided source, and adds them to
-   * `accounts` state. if local active account is present, it will also be assigned as active.
-   * Accounts are ignored if they are already imported through an extension. */
+  // Checks `localStorage` for previously added accounts from the provided source, and adds them to
+  // `accounts` state. if local active account is present, it will also be assigned as active.
+  // Accounts are ignored if they are already imported through an extension.
   const importLocalAccounts = (
     getter: (n: NetworkName) => ImportedAccount[]
   ) => {
@@ -197,8 +199,14 @@ export const ConnectProvider = ({
           )
         )
       );
-      // refresh accounts state.
-      replaceAccount(newAccount);
+      // re-sync account state.
+      setStateWithRef(
+        [...otherAccountsRef.current].map((item) =>
+          item.address !== newAccount.address ? item : newAccount
+        ),
+        setOtherAccounts,
+        otherAccountsRef
+      );
     }
   };
 
@@ -211,26 +219,15 @@ export const ConnectProvider = ({
     );
   };
 
-  // Replaces an account in context state.
-  // TODO: move to ImportedAccounts context and refactor to account for all account sources.
-  const replaceAccount = (a: ImportedAccount) => {
-    setStateWithRef(
-      [...otherAccountsRef.current].map((item) =>
-        item.address !== a.address ? item : a
-      ),
-      setOtherAccounts,
-      otherAccountsRef
-    );
-  };
-
   return (
     <ConnectContext.Provider
       value={{
         addExternalAccount,
         addOtherAccounts,
-        forgetAccounts,
-        renameImportedAccount,
+        renameOtherAccount,
         importLocalAccounts,
+        forgetOtherAccounts,
+        forgetExternalAccounts,
         otherAccounts: otherAccountsRef.current,
       }}
     >

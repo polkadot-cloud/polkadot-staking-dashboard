@@ -7,9 +7,10 @@ import type { MaybeAccount, NetworkName } from 'types';
 export interface ConnectContextInterface {
   addExternalAccount: (a: string, addedBy: string) => void;
   addOtherAccounts: (a: ImportedAccount[]) => void;
-  forgetAccounts: (a: ImportedAccount[]) => void;
-  renameImportedAccount: (a: MaybeAccount, n: string) => void;
+  renameOtherAccount: (a: MaybeAccount, n: string) => void;
   importLocalAccounts: (g: (n: NetworkName) => ImportedAccount[]) => void;
+  forgetOtherAccounts: (a: ImportedAccount[]) => void;
+  forgetExternalAccounts: (a: ImportedAccount[]) => void;
   otherAccounts: ImportedAccount[];
 }
 

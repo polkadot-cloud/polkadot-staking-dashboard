@@ -27,7 +27,7 @@ import { Reader } from './Reader';
 export const ImportVault = () => {
   const { t } = useTranslation();
   const { replaceModal } = useOverlay().modal;
-  const { renameImportedAccount } = useConnect();
+  const { renameOtherAccount } = useConnect();
   const { openPromptWith, status: promptStatus } = usePrompt();
 
   const {
@@ -42,7 +42,7 @@ export const ImportVault = () => {
 
   const renameHandler = (address: string, newName: string) => {
     renameVaultAccount(address, newName);
-    renameImportedAccount(address, newName);
+    renameOtherAccount(address, newName);
   };
 
   const openConfirmHandler = (address: string, index: number) => {
