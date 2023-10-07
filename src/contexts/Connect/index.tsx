@@ -121,7 +121,7 @@ export const ConnectProvider = ({
   // Checks `localStorage` for previously added accounts from the provided source, and adds them to
   // `accounts` state. if local active account is present, it will also be assigned as active.
   // Accounts are ignored if they are already imported through an extension.
-  const importLocalAccounts = (
+  const importLocalOtherAccounts = (
     getter: (n: NetworkName) => ImportedAccount[]
   ) => {
     // Get accounts from provided `getter` function. The resulting array of accounts must contain an
@@ -225,7 +225,7 @@ export const ConnectProvider = ({
         addExternalAccount,
         addOtherAccounts,
         renameOtherAccount,
-        importLocalAccounts,
+        importLocalOtherAccounts,
         forgetOtherAccounts,
         forgetExternalAccounts,
         otherAccounts: otherAccountsRef.current,

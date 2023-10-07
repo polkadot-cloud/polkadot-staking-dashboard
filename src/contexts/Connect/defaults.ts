@@ -8,7 +8,7 @@ export const defaultConnectContext: ConnectContextInterface = {
   addExternalAccount: (a, b) => {},
   addOtherAccounts: (a) => {},
   renameOtherAccount: (a, n) => {},
-  importLocalAccounts: (n) => {},
+  importLocalOtherAccounts: (n) => {},
   forgetOtherAccounts: (a) => {},
   forgetExternalAccounts: (a) => {},
   otherAccounts: [],

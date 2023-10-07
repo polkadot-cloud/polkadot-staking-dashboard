@@ -27,7 +27,7 @@ export const OtherAccountsProvider = ({
 }) => {
   const { extensionAccountsSynced } = useExtensionAccounts();
   // TODO: move these high level helpers to the cloud.
-  const { importLocalAccounts } = useConnect();
+  const { importLocalOtherAccounts } = useConnect();
 
   // Store whether other (non-extension) accounts have been initialised.
   const [otherAccountsSynced, setOtherAccountsSynced] =
@@ -42,14 +42,14 @@ export const OtherAccountsProvider = ({
   useEffectIgnoreInitial(() => {
     if (extensionAccountsSynced) {
       // Fetch accounts from supported hardware wallets.
-      importLocalAccounts(getLocalVaultAccounts);
-      importLocalAccounts(getLocalLedgerAccounts);
+      importLocalOtherAccounts(getLocalVaultAccounts);
+      importLocalOtherAccounts(getLocalLedgerAccounts);
 
       // Mark hardware wallets as initialised.
       setOtherAccountsSynced(true);
 
       // Finally, fetch any read-only accounts that have been added by `system` or `user`.
-      importLocalAccounts(getLocalExternalAccounts);
+      importLocalOtherAccounts(getLocalExternalAccounts);
     }
   }, [extensionAccountsSynced]);
 

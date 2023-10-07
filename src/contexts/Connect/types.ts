@@ -8,7 +8,7 @@ export interface ConnectContextInterface {
   addExternalAccount: (a: string, addedBy: string) => void;
   addOtherAccounts: (a: ImportedAccount[]) => void;
   renameOtherAccount: (a: MaybeAccount, n: string) => void;
-  importLocalAccounts: (g: (n: NetworkName) => ImportedAccount[]) => void;
+  importLocalOtherAccounts: (g: (n: NetworkName) => ImportedAccount[]) => void;
   forgetOtherAccounts: (a: ImportedAccount[]) => void;
   forgetExternalAccounts: (a: ImportedAccount[]) => void;
   otherAccounts: ImportedAccount[];
