@@ -3,7 +3,6 @@
 
 import { BalancesProvider } from 'contexts/Balances';
 import { BondedProvider } from 'contexts/Bonded';
-import { ConnectProvider } from 'contexts/Connect';
 import { ExtensionsProvider, OverlayProvider } from '@polkadot-cloud/react';
 import { ExtrinsicsProvider } from 'contexts/Extrinsics';
 import { FastUnstakeProvider } from 'contexts/FastUnstake';
@@ -41,10 +40,16 @@ import { ThemedRouter } from 'Themes';
 import type { AnyJson } from 'types';
 import type { FC } from 'react';
 import { withProviders } from 'library/Hooks';
+import { ExtensionAccountsProvider } from 'contexts/Connect/ExtensionAccounts';
+import { OtherAccountsProvider } from 'contexts/Connect/OtherAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { DappName } from 'consts';
+import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts';
 
 // Embed providers from hook.
 export const Providers = () => {
   const { network } = useNetwork();
+  const { activeAccount } = useActiveAccounts();
 
   // !! Provider order matters
   const providers: Array<FC<AnyJson> | [FC<AnyJson>, AnyJson]> = [
@@ -55,7 +60,9 @@ export const Providers = () => {
     VaultHardwareProvider,
     LedgerHardwareProvider,
     ExtensionsProvider,
-    ConnectProvider,
+    [ExtensionAccountsProvider, { network, activeAccount, dappName: DappName }],
+    OtherAccountsProvider,
+    ImportedAccountsProvider,
     HelpProvider,
     NetworkMetricsProvider,
     SubscanProvider,

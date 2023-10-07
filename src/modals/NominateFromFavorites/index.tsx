@@ -10,7 +10,6 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import type { Validator } from 'contexts/Validators/types';
 import { Warning } from 'library/Form/Warning';
@@ -22,12 +21,13 @@ import { ValidatorList } from 'library/ValidatorList';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavorites = () => {
   const { t } = useTranslation('modals');
   const { consts, api } = useApi();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccounts();
   const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
   const { favoritesList } = useFavoriteValidators();

@@ -6,9 +6,9 @@ import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Polkicon } from '@polkadot-cloud/react';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Wrapper } from './Wrapper';
 import type { AccountProps } from './types';
 
@@ -21,7 +21,7 @@ export const Account = ({
 }: AccountProps) => {
   const { t } = useTranslation('library');
   const { isReady } = useApi();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccounts();
   const { fetchPoolsMetaBatch, meta } = useBondedPools();
 
   // is this the initial fetch

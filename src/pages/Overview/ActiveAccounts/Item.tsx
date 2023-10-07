@@ -6,18 +6,18 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useNotifications } from 'contexts/Notifications';
 import type { NotificationText } from 'contexts/Notifications/types';
 import { useProxies } from 'contexts/Proxies';
 import { Polkicon } from '@polkadot-cloud/react';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { ItemWrapper } from './Wrappers';
 import type { ActiveAccountProps } from './types';
 
 export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
   const { t } = useTranslation('pages');
-  const { getAccount } = useConnect();
   const { getProxyDelegate } = useProxies();
+  const { getAccount } = useImportedAccounts();
   const { addNotification } = useNotifications();
 
   const primaryAddress = delegate || address || '';

@@ -6,7 +6,6 @@ import { faBars, faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useMenu } from 'contexts/Menu';
 import { useNotifications } from 'contexts/Notifications';
 import type { NotificationText } from 'contexts/Notifications/types';
@@ -27,6 +26,8 @@ import {
 } from 'library/ListItem/Wrappers';
 import { usePoolsTabs } from 'pages/Pools/Home/context';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { JoinPool } from '../ListItem/Labels/JoinPool';
 import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
@@ -36,7 +37,8 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   const { t } = useTranslation('library');
   const { memberCounter, addresses, id, state } = pool;
   const { openModal } = useOverlay().modal;
-  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { isReadOnlyAccount } = useImportedAccounts();
+  const { activeAccount } = useActiveAccounts();
   const { meta } = useBondedPools();
   const { membership } = usePoolMemberships();
   const { addNotification } = useNotifications();

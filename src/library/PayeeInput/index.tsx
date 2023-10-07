@@ -7,8 +7,11 @@ import { isValidAddress, remToUnit } from '@polkadot-cloud/utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
 import { Polkicon } from '@polkadot-cloud/react';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useNetwork } from 'contexts/Network';
+import { formatAccountSs58 } from 'contexts/Connect/Utils';
 import { Wrapper } from './Wrapper';
 import type { PayeeInputProps } from './types';
 
@@ -20,7 +23,11 @@ export const PayeeInput = ({
 }: PayeeInputProps) => {
   const { t } = useTranslation('library');
   const { getBondedAccount } = useBonded();
-  const { activeAccount, formatAccountSs58, accounts } = useConnect();
+  const { accounts } = useImportedAccounts();
+  const {
+    networkData: { ss58 },
+  } = useNetwork();
+  const { activeAccount } = useActiveAccounts();
   const controller = getBondedAccount(activeAccount);
 
   const accountMeta = accounts.find((a) => a.address === activeAccount);
@@ -45,7 +52,7 @@ export const PayeeInput = ({
   // Handle change of account value. Updates setup progress if the account is a valid value.
   const handleChangeAccount = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newAddress = e.target.value;
-    const formatted = formatAccountSs58(newAddress) || newAddress || null;
+    const formatted = formatAccountSs58(newAddress, ss58) || newAddress || null;
     const isValid = isValidAddress(formatted || '');
 
     setValid(isValid);

@@ -7,7 +7,6 @@ import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
-import { useConnect } from 'contexts/Connect';
 import { usePlugins } from 'contexts/Plugins';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
@@ -19,6 +18,7 @@ import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { ListProvider, useList } from 'library/List/context';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Member } from './Member';
 import type { FetchpageMembersListProps } from './types';
 
@@ -37,9 +37,9 @@ export const MembersListInner = ({
   } = useNetwork();
   const provider = useList();
   const { mode } = useTheme();
-  const { activeAccount } = useConnect();
   const { pluginEnabled } = usePlugins();
   const { fetchPoolMembers } = useSubscan();
+  const { activeAccount } = useActiveAccounts();
   const { selectedActivePool } = useActivePools();
   const {
     poolMembersApi,

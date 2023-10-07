@@ -7,10 +7,10 @@ import { useTranslation } from 'react-i18next';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
 import { useNetwork } from 'contexts/Network';
 
-export const EraStatus = ({ address }: { address: MaybeAccount }) => {
+export const EraStatus = ({ address }: { address: MaybeAddress }) => {
   const { t } = useTranslation('library');
   const {
     networkData: { unit, units },

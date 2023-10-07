@@ -3,10 +3,10 @@
 
 import type { PoolMembership } from 'contexts/Pools/types';
 import type { Proxy } from 'contexts/Proxies/type';
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
 
 export interface AccountItemProps {
-  address?: MaybeAccount;
+  address?: MaybeAddress;
   label?: string[];
   asElement?: boolean;
   delegator?: string;
@@ -24,7 +24,7 @@ export interface AccountInPool extends PoolMembership {
 }
 
 export interface AccountNominating {
-  address: MaybeAccount;
+  address: MaybeAddress;
   stashImported: boolean;
   delegates?: Proxy;
 }

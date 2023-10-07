@@ -12,7 +12,6 @@ import BigNumber from 'bignumber.js';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -23,6 +22,7 @@ import type { AnyApi, AnySubscan } from 'types';
 import { useSubscan } from 'contexts/Plugins/Subscan';
 import { usePayouts } from 'contexts/Payouts';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { FormProps, ActivePayout } from './types';
 import { ContentWrapper } from './Wrappers';
 
@@ -33,7 +33,7 @@ export const Forms = forwardRef(
     const {
       networkData: { units, unit },
     } = useNetwork();
-    const { activeAccount } = useConnect();
+    const { activeAccount } = useActiveAccounts();
     const { newBatchCall } = useBatchCall();
     const { removeEraPayout } = usePayouts();
     const { setModalStatus } = useOverlay().modal;

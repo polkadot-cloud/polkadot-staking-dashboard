@@ -8,8 +8,8 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
-import { useConnect } from 'contexts/Connect';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { NominationStatusProps } from '../types';
 
 export const NominationStatus = ({
@@ -21,7 +21,7 @@ export const NominationStatus = ({
   const {
     networkData: { unit, units },
   } = useNetwork();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccounts();
   const { getPoolNominationStatus } = useBondedPools();
   const { getNomineesStatus } = useNominationStatus();
   const {

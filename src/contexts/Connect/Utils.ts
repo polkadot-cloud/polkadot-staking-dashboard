@@ -5,7 +5,7 @@ import Keyring from '@polkadot/keyring';
 import { localStorageOrDefault } from '@polkadot-cloud/utils';
 import type { ExtensionAccount } from '@polkadot-cloud/react/connect/ExtensionsProvider/types';
 import type { NetworkName } from 'types';
-import type { ExternalAccount } from './types';
+import type { ExternalAccount } from '@polkadot-cloud/react/connect/types';
 
 // extension utils
 
@@ -103,6 +103,8 @@ export const removeLocalExternalAccounts = (
   network: NetworkName,
   accounts: ExternalAccount[]
 ) => {
+  if (!accounts.length) return;
+
   let localExternalAccounts = getLocalExternalAccounts(network);
   localExternalAccounts = localExternalAccounts.filter(
     (a) =>
@@ -113,4 +115,18 @@ export const removeLocalExternalAccounts = (
     'external_accounts',
     JSON.stringify(localExternalAccounts)
   );
+};
+
+export const formatAccountSs58 = (address: string, ss58: number) => {
+  try {
+    const keyring = new Keyring();
+    keyring.setSS58Format(ss58);
+    const formatted = keyring.addFromAddress(address).address;
+    if (formatted !== address) {
+      return formatted;
+    }
+    return null;
+  } catch (e) {
+    return null;
+  }
 };

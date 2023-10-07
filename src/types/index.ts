@@ -87,7 +87,7 @@ interface PageProp {
   key: string;
 }
 
-export type MaybeAccount = string | null;
+export type MaybeAddress = string | null;
 
 export type MaybeString = string | null;
 

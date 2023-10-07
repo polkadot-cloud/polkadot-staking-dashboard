@@ -4,9 +4,9 @@
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { ButtonSubmit } from '@polkadot-cloud/react';
 import React from 'react';
-import { useConnect } from 'contexts/Connect';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { SubmitProps } from './types';
 
 export const Default = ({
@@ -18,7 +18,7 @@ export const Default = ({
   submitAddress,
 }: SubmitProps & { buttons?: React.ReactNode[] }) => {
   const { txFeesValid } = useTxMeta();
-  const { accountHasSigner } = useConnect();
+  const { accountHasSigner } = useImportedAccounts();
 
   const disabled =
     submitting || !valid || !accountHasSigner(submitAddress) || !txFeesValid;

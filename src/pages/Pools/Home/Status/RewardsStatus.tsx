@@ -6,12 +6,13 @@ import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { Stat } from 'library/Stat';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const RewardsStatus = () => {
   const { t } = useTranslation('pages');
@@ -21,8 +22,9 @@ export const RewardsStatus = () => {
   const { isReady } = useApi();
   const { isPoolSyncing } = useUi();
   const { openModal } = useOverlay().modal;
+  const { activeAccount } = useActiveAccounts();
   const { selectedActivePool } = useActivePools();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { isReadOnlyAccount } = useImportedAccounts();
 
   let { pendingRewards } = selectedActivePool || {};
   pendingRewards = pendingRewards ?? new BigNumber(0);

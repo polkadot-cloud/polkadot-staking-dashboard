@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
 import { defaultLedger } from './defaults';
 import type { Ledger } from './types';
 
@@ -10,11 +10,11 @@ import type { Ledger } from './types';
  * @summary Get an account's ledger record according to a key.
  * @param {Ledger} ledgers
  * @param {string} key
- * @param { MaybeAccount } address
+ * @param { MaybeAddress } address
  * @returns Ledger
  */
 export const getLedger = (
   ledgers: Ledger[],
   key: 'stash' | 'address',
-  address: MaybeAccount
+  address: MaybeAddress
 ): Ledger => ledgers.find((l) => l[key] === address) || defaultLedger;

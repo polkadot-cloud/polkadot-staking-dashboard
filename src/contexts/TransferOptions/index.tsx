@@ -7,12 +7,12 @@ import React, { useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import * as defaults from './defaults';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';
 
@@ -30,10 +30,10 @@ export const TransferOptionsProvider = ({
   const { getAccount } = useBonded();
   const { membership } = usePoolMemberships();
   const { existentialDeposit } = consts;
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccounts();
 
   // Get the local storage rcord for an account reserve balance.
-  const getFeeReserveLocalStorage = (address: MaybeAccount) => {
+  const getFeeReserveLocalStorage = (address: MaybeAddress) => {
     const reserves = JSON.parse(
       localStorage.getItem('reserve_balances') ?? '{}'
     );
@@ -54,7 +54,7 @@ export const TransferOptionsProvider = ({
   }, [activeAccount, name]);
 
   // Get the bond and unbond amounts available to the user
-  const getTransferOptions = (address: MaybeAccount): TransferOptions => {
+  const getTransferOptions = (address: MaybeAddress): TransferOptions => {
     const account = getAccount(address);
     if (account === null) {
       return defaults.transferOptions;

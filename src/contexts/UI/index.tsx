@@ -6,11 +6,11 @@ import BigNumber from 'bignumber.js';
 import React, { useEffect, useRef, useState } from 'react';
 import { SideMenuStickyThreshold } from 'consts';
 import { useBalances } from 'contexts/Balances';
-import type { ImportedAccount } from 'contexts/Connect/types';
+import type { ImportedAccount } from '@polkadot-cloud/react/connect/types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useApi } from '../Api';
-import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../NetworkMetrics';
 import { useStaking } from '../Staking';
 import * as defaults from './defaults';
@@ -21,8 +21,8 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { balances } = useBalances();
   const { staking, eraStakers } = useStaking();
   const { activeEra, metrics } = useNetworkMetrics();
-  const { accounts: connectAccounts } = useConnect();
   const { synced: activePoolsSynced } = useActivePools();
+  const { accounts: connectAccounts } = useImportedAccounts();
 
   // set whether the network has been synced.
   const [isNetworkSyncing, setIsNetworkSyncing] = useState(false);

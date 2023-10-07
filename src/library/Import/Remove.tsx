@@ -3,15 +3,15 @@
 
 import { ButtonMono, ButtonMonoInvert, Polkicon } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { usePrompt } from 'contexts/Prompt';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { RemoveProps } from './types';
 
 export const Remove = ({ address, getHandler, removeHandler }: RemoveProps) => {
   const { t } = useTranslation('modals');
-  const { forgetAccounts } = useConnect();
   const { setStatus } = usePrompt();
+  const { forgetOtherAccounts } = useOtherAccounts();
 
   return (
     <ConfirmWrapper>
@@ -26,7 +26,7 @@ export const Remove = ({ address, getHandler, removeHandler }: RemoveProps) => {
             const account = getHandler(address);
             if (account) {
               removeHandler(address);
-              forgetAccounts([account]);
+              forgetOtherAccounts([account]);
               setStatus(0);
             }
           }}

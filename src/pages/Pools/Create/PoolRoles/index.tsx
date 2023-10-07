@@ -3,17 +3,17 @@
 
 import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Roles } from '../../Roles';
 
 export const PoolRoles = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccounts();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress('pool', activeAccount);
   const { progress } = setup;

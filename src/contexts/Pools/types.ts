@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
-import type { AnyApi, AnyJson, AnyMetaBatch, MaybeAccount, Sync } from 'types';
+import type { AnyApi, AnyJson, AnyMetaBatch, MaybeAddress, Sync } from 'types';
 
 // PoolsConfig types
 export interface PoolsConfigContextState {
@@ -66,10 +66,10 @@ export interface BondedPoolsContextState {
   updateBondedPools: (p: BondedPool[]) => void;
   addToBondedPools: (p: BondedPool) => void;
   removeFromBondedPools: (p: number) => void;
-  getPoolNominationStatus: (n: MaybeAccount, o: MaybeAccount) => any;
+  getPoolNominationStatus: (n: MaybeAddress, o: MaybeAddress) => any;
   getPoolNominationStatusCode: (t: NominationStatuses | null) => string;
-  getAccountRoles: (w: MaybeAccount) => any;
-  getAccountPools: (w: MaybeAccount) => any;
+  getAccountRoles: (w: MaybeAddress) => any;
+  getAccountPools: (w: MaybeAddress) => any;
   replacePoolRoles: (poolId: number, roleEdits: AnyJson) => void;
   poolSearchFilter: (l: any, k: string, v: string) => void;
   bondedPools: BondedPool[];
@@ -117,7 +117,7 @@ export interface ActivePoolsContextState {
   isMember: () => boolean;
   isDepositor: () => boolean;
   isBouncer: () => boolean;
-  getPoolBondedAccount: () => MaybeAccount;
+  getPoolBondedAccount: () => MaybeAddress;
   getPoolUnlocking: () => any;
   getPoolRoles: () => PoolRoles;
   setTargets: (t: any) => void;
@@ -133,10 +133,10 @@ export interface ActivePoolsContextState {
 // PoolMembers types
 export interface PoolMemberContext {
   fetchPoolMembersMetaBatch: (k: string, v: AnyMetaBatch[], r: boolean) => void;
-  queryPoolMember: (w: MaybeAccount) => any;
+  queryPoolMember: (w: MaybeAddress) => any;
   getMembersOfPoolFromNode: (p: number) => any;
   addToPoolMembers: (m: any) => void;
-  removePoolMember: (w: MaybeAccount) => void;
+  removePoolMember: (w: MaybeAddress) => void;
   getPoolMemberCount: (p: number) => number;
   poolMembersNode: any;
   meta: AnyMetaBatch;

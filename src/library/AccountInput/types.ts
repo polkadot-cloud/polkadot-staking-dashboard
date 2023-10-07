@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyApi, MaybeAccount } from 'types';
+import type { AnyApi, MaybeAddress } from 'types';
 
 export interface AccountInputProps {
   successCallback: (a: string) => Promise<AnyApi>;
@@ -12,6 +12,6 @@ export interface AccountInputProps {
   locked?: boolean;
   inactive?: boolean;
   disallowAlreadyImported?: boolean;
-  initialValue?: MaybeAccount;
+  initialValue?: MaybeAddress;
   border?: boolean;
 }

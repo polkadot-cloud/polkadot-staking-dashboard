@@ -4,26 +4,28 @@
 import { faPlusCircle, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useSetup } from 'contexts/Setup';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
-  const { setOnPoolSetup, getPoolSetupPercent } = useSetup();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { stats } = usePoolsConfig();
-  const { membership } = usePoolMemberships();
+  const { isOwner } = useActivePools();
   const { setActiveTab } = usePoolsTabs();
   const { bondedPools } = useBondedPools();
-  const { isOwner } = useActivePools();
+  const { membership } = usePoolMemberships();
+  const { activeAccount } = useActiveAccounts();
   const { getTransferOptions } = useTransferOptions();
+  const { isReadOnlyAccount } = useImportedAccounts();
+  const { setOnPoolSetup, getPoolSetupPercent } = useSetup();
 
   const { maxPools } = stats;
   const { active } = getTransferOptions(activeAccount).pool;

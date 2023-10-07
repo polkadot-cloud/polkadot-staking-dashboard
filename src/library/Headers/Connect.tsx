@@ -4,14 +4,14 @@
 import { faPlug, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { ButtonText } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { ConnectedAccount, HeadingWrapper } from './Wrappers';
 
 export const Connect = () => {
   const { t } = useTranslation('library');
-  const { accounts } = useConnect();
   const { openModal } = useOverlay().modal;
+  const { accounts } = useImportedAccounts();
 
   return (
     <HeadingWrapper>

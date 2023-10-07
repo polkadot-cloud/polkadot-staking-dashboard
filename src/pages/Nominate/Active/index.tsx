@@ -11,7 +11,6 @@ import {
 } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
@@ -20,6 +19,7 @@ import { GenerateNominations } from 'library/GenerateNominations';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { StatBoxList } from 'library/StatBoxList';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ControllerNotStash } from './ControllerNotStash';
 import { ManageBond } from './ManageBond';
 import { Nominations } from './Nominations';
@@ -31,9 +31,9 @@ import { UnstakePrompts } from './UnstakePrompts';
 
 export const Active = () => {
   const { t } = useTranslation('pages');
-  const { openModal } = useOverlay().modal;
-  const { activeAccount } = useConnect();
   const { isSyncing } = useUi();
+  const { openModal } = useOverlay().modal;
+  const { activeAccount } = useActiveAccounts();
   const { targets, setTargets, inSetup } = useStaking();
   const { getAccountNominations } = useBonded();
   const { isFastUnstaking } = useUnstaking();

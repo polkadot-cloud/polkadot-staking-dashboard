@@ -9,7 +9,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useFilters } from 'contexts/Filters';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useTheme } from 'contexts/Themes';
@@ -22,6 +21,7 @@ import { Selectable } from 'library/List/Selectable';
 import { Validator } from 'library/ValidatorList/Validator';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 import { ListProvider, useList } from '../List/context';
 import { Filters } from './Filters';
@@ -56,7 +56,7 @@ export const ValidatorListInner = ({
   const provider = useList();
   const { mode } = useTheme();
   const { isSyncing } = useUi();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccounts();
   const { activeEra } = useNetworkMetrics();
 
   // determine the nominator of the validator list.

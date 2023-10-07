@@ -11,7 +11,6 @@ import {
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';
-import { useConnect } from 'contexts/Connect';
 import { usePlugins } from 'contexts/Plugins';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
@@ -22,6 +21,8 @@ import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
@@ -37,7 +38,8 @@ export const BalanceChart = () => {
   const { isNetworkSyncing } = useUi();
   const { openModal } = useOverlay().modal;
   const { getBalance, getLocks } = useBalances();
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { activeAccount } = useActiveAccounts();
+  const { accountHasSigner } = useImportedAccounts();
   const { feeReserve, getTransferOptions } = useTransferOptions();
   const balance = getBalance(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);

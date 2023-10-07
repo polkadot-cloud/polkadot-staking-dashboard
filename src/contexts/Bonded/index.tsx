@@ -10,17 +10,19 @@ import {
 } from '@polkadot-cloud/utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
-import type { AnyApi, MaybeAccount } from 'types';
+import type { AnyApi, MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import * as defaults from './defaults';
 import type { BondedAccount, BondedContextInterface } from './types';
 
 export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
   const { network } = useNetwork();
   const { api, isReady } = useApi();
-  const { accounts, addExternalAccount } = useConnect();
+  const { accounts } = useImportedAccounts();
+  const { addExternalAccount } = useOtherAccounts();
 
   // Balance accounts state.
   const [bondedAccounts, setBondedAccounts] = useState<BondedAccount[]>([]);
@@ -132,18 +134,18 @@ export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
     return unsub;
   };
 
-  const getBondedAccount = (address: MaybeAccount) =>
+  const getBondedAccount = (address: MaybeAddress) =>
     bondedAccountsRef.current.find((a) => a.address === address)?.bonded ||
     null;
 
-  const getAccountNominations = (address: MaybeAccount) =>
+  const getAccountNominations = (address: MaybeAddress) =>
     bondedAccountsRef.current.find((a) => a.address === address)?.nominations
       ?.targets || [];
 
-  const getAccount = (address: MaybeAccount) =>
+  const getAccount = (address: MaybeAddress) =>
     bondedAccountsRef.current.find((a) => a.address === address) || null;
 
-  const isController = (address: MaybeAccount) =>
+  const isController = (address: MaybeAddress) =>
     bondedAccountsRef.current.filter((a) => (a?.bonded || '') === address)
       ?.length > 0 || false;
 

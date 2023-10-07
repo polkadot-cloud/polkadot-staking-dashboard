@@ -3,16 +3,16 @@
 
 import { ButtonMono, ButtonMonoInvert, Polkicon } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { usePrompt } from 'contexts/Prompt';
 
 import { ConfirmWrapper } from 'library/Import/Wrappers';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { ConfirmProps } from './types';
 
 export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
   const { t } = useTranslation('modals');
-  const { addToAccounts } = useConnect();
   const { setStatus } = usePrompt();
+  const { addOtherAccounts } = useOtherAccounts();
 
   return (
     <ConfirmWrapper>
@@ -26,7 +26,7 @@ export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
           onClick={() => {
             const account = addHandler(address, index);
             if (account) {
-              addToAccounts([account]);
+              addOtherAccounts([account]);
             }
             setStatus(0);
           }}

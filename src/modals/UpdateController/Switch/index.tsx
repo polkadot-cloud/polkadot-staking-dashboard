@@ -4,13 +4,13 @@
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { remToUnit } from '@polkadot-cloud/utils';
-import { useConnect } from 'contexts/Connect';
 import { Polkicon } from '@polkadot-cloud/react';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { AccountDropdownProps } from '../../../library/Form/types';
 import { StyledSelect } from './Wrappers';
 
 export const Switch = ({ current, to }: AccountDropdownProps) => {
-  const { getAccount } = useConnect();
+  const { getAccount } = useImportedAccounts();
   const toAccount = getAccount(to);
 
   return (

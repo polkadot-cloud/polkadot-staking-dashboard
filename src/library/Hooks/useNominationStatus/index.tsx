@@ -9,7 +9,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import type { AnyJson, MaybeAccount } from 'types';
+import type { AnyJson, MaybeAddress } from 'types';
 import { useNetwork } from 'contexts/Network';
 
 export const useNominationStatus = () => {
@@ -30,7 +30,7 @@ export const useNominationStatus = () => {
   } = useStaking();
 
   // Utility to get an account's nominees alongside their status.
-  const getNomineesStatus = (who: MaybeAccount, type: 'nominator' | 'pool') => {
+  const getNomineesStatus = (who: MaybeAddress, type: 'nominator' | 'pool') => {
     const nominations =
       type === 'nominator'
         ? getAccountNominations(who)
@@ -47,7 +47,7 @@ export const useNominationStatus = () => {
   // Utility to get the status of the provided account's nominations, and whether they are earning
   // reards.
   const getNominationStatus = (
-    who: MaybeAccount,
+    who: MaybeAddress,
     type: 'nominator' | 'pool'
   ) => {
     // Get the sets nominees from the provided account's targets.

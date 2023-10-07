@@ -5,7 +5,6 @@ import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonPrimary } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
@@ -14,9 +13,11 @@ import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { ValidatorList } from 'library/ValidatorList';
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = ({
@@ -24,7 +25,7 @@ export const Nominations = ({
   nominator,
 }: {
   bondFor: 'pool' | 'nominator';
-  nominator: MaybeAccount;
+  nominator: MaybeAddress;
 }) => {
   const { t } = useTranslation('pages');
   const { isSyncing } = useUi();
@@ -34,7 +35,8 @@ export const Nominations = ({
   const { isFastUnstaking } = useUnstaking();
   const { getAccountNominations } = useBonded();
   const { favoritesList } = useFavoriteValidators();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { isReadOnlyAccount } = useImportedAccounts();
+  const { activeAccount } = useActiveAccounts();
   const { nominated: stakeNominated, poolNominated } = useValidators();
 
   const {

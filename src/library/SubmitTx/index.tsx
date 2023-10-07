@@ -5,10 +5,11 @@ import { Tx } from '@polkadot-cloud/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Default } from './Default';
 import { ManualSign } from './ManualSign';
 import type { SubmitTxProps } from './types';
@@ -28,9 +29,9 @@ export const SubmitTx = ({
   const { getBondedAccount } = useBonded();
   const { unit } = useNetwork().networkData;
   const { setModalResize } = useOverlay().modal;
+  const { activeAccount, activeProxy } = useActiveAccounts();
   const { notEnoughFunds, sender, setTxSignature } = useTxMeta();
-  const { requiresManualSign, activeAccount, activeProxy, getAccount } =
-    useConnect();
+  const { getAccount, requiresManualSign } = useImportedAccounts();
   const controller = getBondedAccount(activeAccount);
 
   // Default to active account
