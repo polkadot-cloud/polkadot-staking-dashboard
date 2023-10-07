@@ -57,7 +57,7 @@
     "react-i18next": "^13.2.2",
     "react-qr-reader": "^2.2.1",
     "react-router-dom": "^6.16.0",
-    "react-scroll": "^1.8.9",
+    "react-scroll": "^1.9.0",
     "styled-components": "^6.0.8"
   },
   "devDependencies": {
@@ -72,7 +72,7 @@
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
     "@vitejs/plugin-react-swc": "^3.4.0",
-    "eslint": "^8.50.0",
+    "eslint": "^8.51.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-prettier": "^9.0.0",
@@ -87,7 +87,7 @@
     "gh-pages": "^6.0.0",
     "prettier": "^3.0.3",
     "prettier-plugin-organize-imports": "^3.2.3",
-    "sass": "^1.68.0",
+    "sass": "^1.69.0",
     "typescript": "^5.2.2",
     "vite": "^4.4.11",
     "vite-bundle-visualizer": "^0.10.0",
