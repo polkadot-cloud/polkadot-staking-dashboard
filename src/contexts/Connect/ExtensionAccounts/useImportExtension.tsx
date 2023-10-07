@@ -11,15 +11,13 @@ import type {
 import type { AnyFunction } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { defaultHandleImportExtension } from '@polkadot-cloud/react/connect/ExtensionAccountsProvider/defaults';
+import type { ImportedAccount } from '@polkadot-cloud/react/connect/types';
+import type { HandleImportExtension } from '@polkadot-cloud/react/connect/ExtensionAccountsProvider/types';
 import {
   addToLocalExtensions,
   getActiveAccountLocal,
   getInExternalAccounts,
 } from '../Utils';
-import type {
-  HandleImportExtension,
-  ImportedAccount,
-} from '../OtherAccounts/types';
 
 export const useImportExtension = () => {
   const { networkData, network } = useNetwork();

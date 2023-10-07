@@ -19,7 +19,7 @@ import { AccountInput } from 'library/AccountInput';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import type { ExternalAccount } from 'contexts/Connect/OtherAccounts/types';
+import type { ExternalAccount } from '@polkadot-cloud/react/connect/types';
 import {
   ActionWithButton,
   ManualAccount,

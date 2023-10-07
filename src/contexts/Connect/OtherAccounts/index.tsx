@@ -16,17 +16,17 @@ import { ellipsisFn, setStateWithRef } from '@polkadot-cloud/utils';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import Keyring from '@polkadot/keyring';
+import type {
+  ExternalAccount,
+  ImportedAccount,
+} from '@polkadot-cloud/react/connect/types';
 import { useExtensionAccounts } from '../ExtensionAccounts';
 import {
   getActiveAccountLocal,
   getLocalExternalAccounts,
   removeLocalExternalAccounts,
 } from '../Utils';
-import type {
-  OtherAccountsContextInterface,
-  ExternalAccount,
-  ImportedAccount,
-} from './types';
+import type { OtherAccountsContextInterface } from './types';
 import { defaultOtherAccountsContext } from './defaults';
 
 export const OtherAccountsContext =
