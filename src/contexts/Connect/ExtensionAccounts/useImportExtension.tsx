@@ -61,37 +61,37 @@ export const useImportExtension = () => {
     newAccounts: ExtensionAccount[],
     forget: (a: ImportedAccount[]) => void
   ): HandleImportExtension => {
-    // set network ss58 format
     const keyring = new Keyring();
     keyring.setSS58Format(networkData.ss58);
 
-    // remove accounts that do not contain correctly formatted addresses.
+    // Remove accounts that do not contain correctly formatted addresses.
     newAccounts = newAccounts.filter((i) => isValidAddress(i.address));
 
-    // reformat addresses to ensure correct ss58 format
+    // Reformat addresses to ensure correct ss58 format
     newAccounts.forEach(async (account) => {
       const { address } = keyring.addFromAddress(account.address);
       account.address = address;
       return account;
     });
 
-    // remove newAccounts from local external accounts if present
+    // Remove newAccounts from local external accounts if present
     const inExternal = getInExternalAccounts(newAccounts, network);
     forget(inExternal);
 
-    // find any accounts that have been removed from this extension
+    // Find any accounts that have been removed from this extension
     const goneFromExtension = currentAccounts
       .filter((j) => j.source === id)
       .filter((j) => !newAccounts.find((i) => i.address === j.address));
-    // check whether active account is present in forgotten accounts
+
+    // Check whether active account is present in forgotten accounts
     const activeGoneFromExtension = goneFromExtension.find(
       (i) => i.address === getActiveAccountLocal(network, networkData.ss58)
     );
-    // commit remove forgotten accounts
+    // Commit remove forgotten accounts
     forget(goneFromExtension);
 
-    // remove accounts that have already been added to currentAccounts via another extension.
-    // note: does not include external accounts.
+    // Remove accounts that have already been added to `currentAccounts` via another extension.
+    // Note: does not include external accounts.
     newAccounts = newAccounts.filter(
       (i) =>
         !currentAccounts.find(
@@ -99,7 +99,7 @@ export const useImportExtension = () => {
         )
     );
 
-    // format accounts properties
+    // Format accounts properties
     newAccounts = newAccounts.map((a) => ({
       address: a.address,
       source: id,
@@ -116,7 +116,7 @@ export const useImportExtension = () => {
 
   // Get active extension account.
   //
-  // checks if the local active account is in the extension.
+  // Checks if the local active account is in the extension.
   const getActiveExtensionAccount = (accounts: ImportedAccount[]) => {
     return (
       accounts.find(
