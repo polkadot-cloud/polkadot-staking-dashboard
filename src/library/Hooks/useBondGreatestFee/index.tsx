@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import type { BondFor } from 'types';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 
 interface Props {
   bondFor: BondFor;
@@ -14,7 +14,7 @@ interface Props {
 
 export const useBondGreatestFee = ({ bondFor }: Props) => {
   const { api } = useApi();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { feeReserve, getTransferOptions } = useTransferOptions();
   const transferOptions = useMemo(
     () => getTransferOptions(activeAccount),

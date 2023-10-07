@@ -13,7 +13,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect } from 'react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Switch } from './Switch';
 import { Wrapper } from './Wrapper';
@@ -23,7 +23,7 @@ export const UpdateController = () => {
   const { api } = useApi();
   const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { getAccount } = useImportedAccounts();
   const { getSignerWarnings } = useSignerWarnings();
   const { setModalStatus, setModalResize } = useOverlay().modal;

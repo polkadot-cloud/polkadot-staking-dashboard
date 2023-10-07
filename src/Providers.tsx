@@ -43,14 +43,14 @@ import type { FC } from 'react';
 import { withProviders } from 'library/Hooks';
 import { ExtensionAccountsProvider } from 'contexts/Connect/ExtensionAccounts';
 import { OtherAccountsProvider } from 'contexts/Connect/OtherAccounts';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { DappName } from 'consts';
 import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts';
 
 // Embed providers from hook.
 export const Providers = () => {
   const { network } = useNetwork();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
 
   // !! Provider order matters
   const providers: Array<FC<AnyJson> | [FC<AnyJson>, AnyJson]> = [

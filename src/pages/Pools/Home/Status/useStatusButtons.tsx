@@ -10,7 +10,7 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useSetup } from 'contexts/Setup';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { usePoolsTabs } from '../context';
 
@@ -22,7 +22,7 @@ export const useStatusButtons = () => {
   const { setActiveTab } = usePoolsTabs();
   const { bondedPools } = useBondedPools();
   const { membership } = usePoolMemberships();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { getTransferOptions } = useTransferOptions();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { setOnPoolSetup, getPoolSetupPercent } = useSetup();

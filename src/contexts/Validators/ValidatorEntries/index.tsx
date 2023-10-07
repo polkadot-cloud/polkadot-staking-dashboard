@@ -12,7 +12,7 @@ import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import type {
   Identity,
   Validator,
@@ -31,7 +31,7 @@ export const ValidatorsProvider = ({
   const { network } = useNetwork();
   const { isReady, api } = useApi();
   const { poolNominations } = useActivePools();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { activeEra, metrics } = useNetworkMetrics();
   const { bondedAccounts, getAccountNominations } = useBonded();
   const { earliestStoredSession } = metrics;

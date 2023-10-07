@@ -14,13 +14,13 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Title } from 'library/Modal/Title';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { Forms } from './Forms';
 import { Overview } from './Overview';
 
 export const UnlockChunks = () => {
   const { t } = useTranslation('modals');
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { notEnoughFunds } = useTxMeta();
   const { getStashLedger } = useBalances();
   const {

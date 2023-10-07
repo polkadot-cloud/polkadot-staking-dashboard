@@ -15,7 +15,7 @@ import { useUi } from 'contexts/UI';
 import type { UIContextInterface } from 'contexts/UI/types';
 import type { PageCategory, PageItem, PagesConfigItems } from 'types';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Heading } from './Heading/Heading';
 import { Primary } from './Primary';
@@ -27,7 +27,7 @@ export const Main = () => {
   const { pathname } = useLocation();
   const { getBondedAccount } = useBonded();
   const { accounts } = useImportedAccounts();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { inSetup: inNominatorSetup, addressDifferentToStash } = useStaking();
   const { membership } = usePoolMemberships();
   const controller = getBondedAccount(activeAccount);

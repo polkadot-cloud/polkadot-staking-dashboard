@@ -26,7 +26,7 @@ import {
 } from 'library/ListItem/Wrappers';
 import { usePoolsTabs } from 'pages/Pools/Home/context';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { JoinPool } from '../ListItem/Labels/JoinPool';
 import { Members } from '../ListItem/Labels/Members';
@@ -38,7 +38,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   const { memberCounter, addresses, id, state } = pool;
   const { openModal } = useOverlay().modal;
   const { isReadOnlyAccount } = useImportedAccounts();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { meta } = useBondedPools();
   const { membership } = usePoolMemberships();
   const { addNotification } = useNotifications();

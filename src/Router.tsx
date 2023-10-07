@@ -29,7 +29,7 @@ import { SideMenu } from 'library/SideMenu';
 import { Tooltip } from 'library/Tooltip';
 import { Overlays } from 'overlay';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
@@ -40,7 +40,7 @@ export const RouterInner = () => {
   const { accounts } = useImportedAccounts();
   const { addNotification } = useNotifications();
   const { accountsInitialised } = useOtherAccounts();
-  const { activeAccount, setActiveAccount } = useActiveAccount();
+  const { activeAccount, setActiveAccount } = useActiveAccounts();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
 
   // Scroll to top of the window on every page change or network change.

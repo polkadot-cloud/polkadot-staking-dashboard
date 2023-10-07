@@ -15,12 +15,12 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
 import type { MaybeAccount } from 'types';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 
 export const Payee = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const { getPayeeItems } = usePayeeConfig();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
 
   const setup = getSetupProgress('nominator', activeAccount);

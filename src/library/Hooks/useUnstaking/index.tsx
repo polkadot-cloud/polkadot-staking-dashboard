@@ -8,14 +8,14 @@ import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import type { AnyJson } from 'types';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useNominationStatus } from '../useNominationStatus';
 
 export const useUnstaking = () => {
   const { t } = useTranslation('library');
   const { consts } = useApi();
   const { inSetup } = useStaking();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { activeEra } = useNetworkMetrics();
   const { getTransferOptions } = useTransferOptions();
   const { getNominationStatus } = useNominationStatus();

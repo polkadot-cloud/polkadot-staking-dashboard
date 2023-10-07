@@ -11,7 +11,7 @@ import { useUi } from 'contexts/UI';
 import { Stat } from 'library/Stat';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const RewardsStatus = () => {
@@ -22,7 +22,7 @@ export const RewardsStatus = () => {
   const { isReady } = useApi();
   const { isPoolSyncing } = useUi();
   const { openModal } = useOverlay().modal;
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { selectedActivePool } = useActivePools();
   const { isReadOnlyAccount } = useImportedAccounts();
 

@@ -18,7 +18,7 @@ import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
 import { validateLocalExposure } from 'contexts/Validators/Utils';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { defaultFastUnstakeContext, defaultMeta } from './defaults';
 import type {
   FastUnstakeContextInterface,
@@ -35,7 +35,7 @@ export const FastUnstakeProvider = ({
 }) => {
   const { network } = useNetwork();
   const { api, isReady, consts } = useApi();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { inSetup, fetchEraStakers } = useStaking();
   const { metrics, activeEra } = useNetworkMetrics();
   const { getNominationStatus } = useNominationStatus();

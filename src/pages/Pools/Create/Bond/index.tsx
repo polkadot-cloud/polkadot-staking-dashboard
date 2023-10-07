@@ -12,11 +12,11 @@ import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 
 export const Bond = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { txFees } = useTxMeta();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress('pool', activeAccount);

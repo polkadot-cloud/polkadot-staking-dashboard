@@ -21,7 +21,7 @@ import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const BalanceChart = () => {
@@ -38,7 +38,7 @@ export const BalanceChart = () => {
   const { isNetworkSyncing } = useUi();
   const { openModal } = useOverlay().modal;
   const { getBalance, getLocks } = useBalances();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { accountHasSigner } = useImportedAccounts();
   const { feeReserve, getTransferOptions } = useTransferOptions();
   const balance = getBalance(activeAccount);

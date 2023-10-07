@@ -12,7 +12,7 @@ import { PoolList } from 'library/PoolList/Default';
 import { StatBoxList } from 'library/StatBoxList';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { Roles } from '../Roles';
 import { ClosurePrompts } from './ClosurePrompts';
 import { PoolFavorites } from './Favorites';
@@ -29,7 +29,7 @@ import { PoolsTabsProvider, usePoolsTabs } from './context';
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
   const { openModal } = useOverlay().modal;
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const {
     favorites,
     stats: { counterForBondedPools },

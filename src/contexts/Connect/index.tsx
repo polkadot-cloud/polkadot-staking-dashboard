@@ -21,7 +21,7 @@ import {
   removeLocalExternalAccounts,
 } from './Utils';
 import { defaultConnectContext } from './defaults';
-import { useActiveAccount } from './ActiveAccount';
+import { useActiveAccounts } from './ActiveAccounts';
 
 export const ConnectProvider = ({
   children,
@@ -30,7 +30,7 @@ export const ConnectProvider = ({
 }) => {
   const { networkData, network } = useNetwork();
   const { checkingInjectedWeb3, extensions } = useExtensions();
-  const { activeAccount, setActiveAccount } = useActiveAccount();
+  const { activeAccount, setActiveAccount } = useActiveAccounts();
 
   // Store other (non-extension) accounts list.
   const [otherAccounts, setOtherAccounts] = useState<ImportedAccount[]>([]);

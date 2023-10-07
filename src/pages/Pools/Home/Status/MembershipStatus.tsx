@@ -11,7 +11,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { Stat } from 'library/Stat';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useStatusButtons } from './useStatusButtons';
 
@@ -26,7 +26,7 @@ export const MembershipStatus = ({
   const { isReady } = useApi();
   const { isPoolSyncing } = useUi();
   const { openModal } = useOverlay().modal;
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { label, buttons } = useStatusButtons();
   const { bondedPools, meta } = useBondedPools();
   const { isReadOnlyAccount } = useImportedAccounts();

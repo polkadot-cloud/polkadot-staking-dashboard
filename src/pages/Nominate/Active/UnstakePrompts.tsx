@@ -12,12 +12,12 @@ import { CardWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 
 export const UnstakePrompts = () => {
   const { t } = useTranslation('pages');
   const { unit, colors } = useNetwork().networkData;
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { mode } = useTheme();
   const { openModal } = useOverlay().modal;
   const { isNetworkSyncing } = useUi();

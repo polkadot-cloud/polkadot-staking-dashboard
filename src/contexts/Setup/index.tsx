@@ -11,7 +11,7 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import type { BondFor, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useStaking } from '../Staking';
 import {
@@ -36,7 +36,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     networkData: { units },
   } = useNetwork();
   const { accounts } = useImportedAccounts();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { membership: poolMembership } = usePoolMemberships();
 
   // is the user actively on the setup page

@@ -14,13 +14,13 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 
 export const SetMetadata = ({ setSection, section }: any) => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
   const { setModalStatus } = useOverlay().modal;
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { isOwner, selectedActivePool } = useActivePools();
   const { bondedPools, meta } = useBondedPools();
   const { getSignerWarnings } = useSignerWarnings();

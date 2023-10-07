@@ -8,12 +8,12 @@ import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { Roles } from '../../Roles';
 
 export const PoolRoles = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress('pool', activeAccount);
   const { progress } = setup;

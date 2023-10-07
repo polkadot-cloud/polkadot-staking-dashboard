@@ -10,7 +10,7 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
 import type { BondFeedbackProps } from '../types';
@@ -34,7 +34,7 @@ export const BondFeedback = ({
     networkData: { units, unit },
   } = useNetwork();
   const { staking } = useStaking();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { stats } = usePoolsConfig();
   const { isDepositor } = useActivePools();
   const { getTransferOptions } = useTransferOptions();

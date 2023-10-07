@@ -1,12 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { Item } from './Item';
 import { ActiveAccounsWrapper } from './Wrappers';
 
 export const ActiveAccounts = () => {
-  const { activeProxy, activeAccount } = useActiveAccount();
+  const { activeProxy, activeAccount } = useActiveAccounts();
 
   return (
     <ActiveAccounsWrapper>

@@ -5,7 +5,7 @@ import { ButtonHelp, ButtonSecondary } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { useSetup } from 'contexts/Setup';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import type { HeaderProps } from '../types';
 import { Wrapper } from './Wrapper';
 
@@ -17,7 +17,7 @@ export const Header = ({
   bondFor,
 }: HeaderProps) => {
   const { t } = useTranslation('library');
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { getSetupProgress, setActiveAccountSetupSection } = useSetup();
   const setup = getSetupProgress(bondFor, activeAccount);
   const { openHelp } = useHelp();

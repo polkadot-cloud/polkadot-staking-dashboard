@@ -20,7 +20,7 @@ import {
 } from '@polkadot-cloud/react/hooks';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useProxies } from 'contexts/Proxies';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { AccountButton } from './Account';
 import { Delegates } from './Delegates';
@@ -47,7 +47,7 @@ export const Accounts = () => {
   } = useOverlay().modal;
   const { accounts } = useImportedAccounts();
   const { activeAccount, setActiveAccount, setActiveProxy } =
-    useActiveAccount();
+    useActiveAccounts();
 
   // Store local copy of accounts.
   const [localAccounts, setLocalAccounts] = useState(accounts);

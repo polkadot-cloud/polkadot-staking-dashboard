@@ -5,13 +5,13 @@ import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimaryInvert, Separator } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { MoreWrapper } from './Wrappers';
 
 export const BalanceLinks = () => {
   const { network } = useNetwork();
   const { t } = useTranslation('pages');
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
 
   return (
     <MoreWrapper>

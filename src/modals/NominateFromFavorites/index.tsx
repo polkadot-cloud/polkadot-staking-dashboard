@@ -21,13 +21,13 @@ import { ValidatorList } from 'library/ValidatorList';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavorites = () => {
   const { t } = useTranslation('modals');
   const { consts, api } = useApi();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
   const { favoritesList } = useFavoriteValidators();

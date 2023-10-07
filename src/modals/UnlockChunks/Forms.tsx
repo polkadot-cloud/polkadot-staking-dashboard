@@ -24,7 +24,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef(
@@ -34,7 +34,7 @@ export const Forms = forwardRef(
     const {
       networkData: { units, unit },
     } = useNetwork();
-    const { activeAccount } = useActiveAccount();
+    const { activeAccount } = useActiveAccounts();
     const { removeFavorite: removeFavoritePool } = usePoolsConfig();
     const { membership } = usePoolMemberships();
     const { selectedActivePool } = useActivePools();

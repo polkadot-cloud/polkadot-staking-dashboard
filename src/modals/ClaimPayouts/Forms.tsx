@@ -22,7 +22,7 @@ import type { AnyApi, AnySubscan } from 'types';
 import { useSubscan } from 'contexts/Plugins/Subscan';
 import { usePayouts } from 'contexts/Payouts';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import type { FormProps, ActivePayout } from './types';
 import { ContentWrapper } from './Wrappers';
 
@@ -33,7 +33,7 @@ export const Forms = forwardRef(
     const {
       networkData: { units, unit },
     } = useNetwork();
-    const { activeAccount } = useActiveAccount();
+    const { activeAccount } = useActiveAccounts();
     const { newBatchCall } = useBatchCall();
     const { removeEraPayout } = usePayouts();
     const { setModalStatus } = useOverlay().modal;

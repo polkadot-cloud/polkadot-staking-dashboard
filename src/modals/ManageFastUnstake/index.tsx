@@ -25,7 +25,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
@@ -33,7 +33,7 @@ export const ManageFastUnstake = () => {
   const {
     networkData: { units, unit },
   } = useNetwork();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
   const { isFastUnstaking } = useUnstaking();

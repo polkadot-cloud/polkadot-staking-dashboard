@@ -11,13 +11,13 @@ import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { Nominations } from 'pages/Nominate/Active/Nominations';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 
 export const ManagePool = () => {
   const { t } = useTranslation('pages');
   const { isSyncing } = useUi();
   const { openModal } = useOverlay().modal;
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const {
     isOwner,
     isNominator,

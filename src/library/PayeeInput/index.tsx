@@ -8,7 +8,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
 import { Polkicon } from '@polkadot-cloud/react';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useNetwork } from 'contexts/Network';
 import { formatAccountSs58 } from 'contexts/Connect/Utils';
@@ -27,7 +27,7 @@ export const PayeeInput = ({
   const {
     networkData: { ss58 },
   } = useNetwork();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const controller = getBondedAccount(activeAccount);
 
   const accountMeta = accounts.find((a) => a.address === activeAccount);

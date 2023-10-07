@@ -9,14 +9,14 @@ import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import type { AnyJson, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import * as defaults from './defaults';
 import type { TxMetaContextInterface } from './types';
 
 export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   const { getBondedAccount } = useBonded();
-  const { activeProxy } = useActiveAccount();
+  const { activeProxy } = useActiveAccounts();
   const { getControllerNotImported } = useStaking();
   const { accountHasSigner } = useImportedAccounts();
   const { getTransferOptions } = useTransferOptions();

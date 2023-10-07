@@ -17,7 +17,7 @@ import type { SetupStepProps } from 'library/SetupSteps/types';
 import { SubmitTx } from 'library/SubmitTx';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { SummaryWrapper } from './Wrapper';
 
@@ -30,7 +30,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { newBatchCall } = useBatchCall();
   const { getPayeeItems } = usePayeeConfig();
   const { accountHasSigner } = useImportedAccounts();
-  const { activeAccount, activeProxy } = useActiveAccount();
+  const { activeAccount, activeProxy } = useActiveAccounts();
   const { getSetupProgress, removeSetupProgress } = useSetup();
 
   const setup = getSetupProgress('nominator', activeAccount);

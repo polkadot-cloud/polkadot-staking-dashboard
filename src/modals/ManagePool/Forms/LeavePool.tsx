@@ -28,7 +28,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 
 export const LeavePool = ({ setSection }: any) => {
   const { t } = useTranslation('modals');
@@ -36,7 +36,7 @@ export const LeavePool = ({ setSection }: any) => {
   const {
     networkData: { units, unit },
   } = useNetwork();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { setModalStatus, setModalResize } = useOverlay().modal;
   const { getTransferOptions } = useTransferOptions();
   const { selectedActivePool } = useActivePools();

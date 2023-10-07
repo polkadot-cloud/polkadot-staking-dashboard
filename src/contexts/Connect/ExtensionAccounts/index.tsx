@@ -23,7 +23,7 @@ import type { ImportedAccount } from '../types';
 import { useConnect } from '..';
 // TODO: the functions in this hook need to be moved to the cloud.
 import { extensionIsLocal, removeFromLocalExtensions } from '../Utils';
-import { useActiveAccount } from '../ActiveAccount';
+import { useActiveAccounts } from '../ActiveAccounts';
 
 export const ExtensionAccountsContext =
   createContext<ExtensionAccountsContextInterface>(
@@ -44,7 +44,7 @@ export const ExtensionAccountsProvider = ({
 
   // TODO: these `useConnect` imports should be refactored and moved to the cloud.
   const { forgetAccounts } = useConnect();
-  const { setActiveAccount } = useActiveAccount();
+  const { setActiveAccount } = useActiveAccounts();
   const { checkingInjectedWeb3, setExtensionStatus, extensions } =
     useExtensions();
 

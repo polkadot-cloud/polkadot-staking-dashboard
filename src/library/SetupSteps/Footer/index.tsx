@@ -4,13 +4,13 @@
 import { ButtonPrimary } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useSetup } from 'contexts/Setup';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import type { FooterProps } from '../types';
 import { Wrapper } from './Wrapper';
 
 export const Footer = ({ complete, bondFor }: FooterProps) => {
   const { t } = useTranslation('library');
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { getSetupProgress, setActiveAccountSetupSection } = useSetup();
   const setup = getSetupProgress(bondFor, activeAccount);
 

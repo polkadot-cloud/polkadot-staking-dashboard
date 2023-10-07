@@ -19,7 +19,7 @@ import type { SetupStepProps } from 'library/SetupSteps/types';
 import { SubmitTx } from 'library/SubmitTx';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { SummaryWrapper } from './Wrapper';
 
@@ -35,7 +35,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { getSetupProgress, removeSetupProgress } = useSetup();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { queryBondedPool, addToBondedPools } = useBondedPools();
-  const { activeAccount, activeProxy } = useActiveAccount();
+  const { activeAccount, activeProxy } = useActiveAccounts();
 
   const { lastPoolId } = stats;
   const poolId = lastPoolId.plus(1);

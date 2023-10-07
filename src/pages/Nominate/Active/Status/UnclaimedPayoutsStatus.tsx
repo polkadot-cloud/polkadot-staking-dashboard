@@ -10,7 +10,7 @@ import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
 import { faCircleDown } from '@fortawesome/free-solid-svg-icons';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const UnclaimedPayoutsStatus = () => {
@@ -21,7 +21,7 @@ export const UnclaimedPayoutsStatus = () => {
   } = useNetwork();
   const { openModal } = useOverlay().modal;
   const { unclaimedPayouts } = usePayouts();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { isReadOnlyAccount } = useImportedAccounts();
 
   const totalUnclaimed = Object.values(unclaimedPayouts || {}).reduce(

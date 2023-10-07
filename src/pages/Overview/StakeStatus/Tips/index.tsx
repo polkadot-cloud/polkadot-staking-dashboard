@@ -15,7 +15,7 @@ import { useUi } from 'contexts/UI';
 import { useFillVariables } from 'library/Hooks/useFillVariables';
 import type { AnyJson } from 'types';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { Items } from './Items';
 import { PageToggle } from './PageToggle';
 import { Syncing } from './Syncing';
@@ -25,7 +25,7 @@ export const Tips = () => {
   const { i18n, t } = useTranslation();
   const { network } = useNetwork();
   const { isNetworkSyncing } = useUi();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { fillVariables } = useFillVariables();
   const { membership } = usePoolMemberships();
   const { isNominating, staking } = useStaking();

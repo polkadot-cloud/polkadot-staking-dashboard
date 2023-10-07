@@ -13,13 +13,13 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 
 export const NominatePool = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
   const { setModalStatus, setModalResize } = useOverlay().modal;
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { selectedActivePool, isOwner, isNominator, targets } =
     useActivePools();
   const { getSignerWarnings } = useSignerWarnings();

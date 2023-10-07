@@ -11,14 +11,14 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect } from 'react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { RoleChange } from './RoleChange';
 import { Wrapper } from './Wrapper';
 
 export const ChangePoolRoles = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { notEnoughFunds } = useTxMeta();
   const { replacePoolRoles } = useBondedPools();
   const {

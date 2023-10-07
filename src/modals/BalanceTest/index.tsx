@@ -12,14 +12,14 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect } from 'react';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 
 export const BalanceTest = () => {
   const { api } = useApi();
   const {
     networkData: { units },
   } = useNetwork();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { notEnoughFunds } = useTxMeta();
   const { newBatchCall } = useBatchCall();
   const { setModalStatus, setModalResize } = useOverlay().modal;

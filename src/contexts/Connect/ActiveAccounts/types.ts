@@ -4,7 +4,7 @@
 import type { MaybeAccount } from 'types';
 import type { ActiveProxy } from '../types';
 
-export interface ActiveAccountContextInterface {
+export interface ActiveAccountsContextInterface {
   activeAccount: MaybeAccount;
   activeProxy: MaybeAccount;
   activeProxyType: string | null;

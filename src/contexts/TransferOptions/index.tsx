@@ -12,7 +12,7 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import type { MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import * as defaults from './defaults';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';
 
@@ -30,7 +30,7 @@ export const TransferOptionsProvider = ({
   const { getAccount } = useBonded();
   const { membership } = usePoolMemberships();
   const { existentialDeposit } = consts;
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
 
   // Get the local storage rcord for an account reserve balance.
   const getFeeReserveLocalStorage = (address: MaybeAccount) => {

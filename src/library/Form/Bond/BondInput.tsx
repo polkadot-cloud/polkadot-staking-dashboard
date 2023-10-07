@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { InputWrapper } from '../Wrappers';
 import type { BondInputProps } from '../types';
 
@@ -23,7 +23,7 @@ export const BondInput = ({
   const {
     networkData: { unit },
   } = useNetwork();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
 
   // the current local bond value
   const [localBond, setLocalBond] = useState<string>(value);

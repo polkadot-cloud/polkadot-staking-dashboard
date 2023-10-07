@@ -25,14 +25,14 @@ import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 
 export const Unbond = () => {
   const { t } = useTranslation('modals');
   const { txFees } = useTxMeta();
   const { staking } = useStaking();
   const { stats } = usePoolsConfig();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
   const { api, consts } = useApi();

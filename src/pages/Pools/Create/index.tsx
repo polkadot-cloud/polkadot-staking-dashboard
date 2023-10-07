@@ -13,7 +13,7 @@ import { Element } from 'react-scroll';
 import { useSetup } from 'contexts/Setup';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { Nominate } from 'library/SetupSteps/Nominate';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { Bond } from './Bond';
 import { PoolName } from './PoolName';
 import { PoolRoles } from './PoolRoles';
@@ -21,7 +21,7 @@ import { Summary } from './Summary';
 
 export const Create = () => {
   const { t } = useTranslation('pages');
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { setOnPoolSetup, removeSetupProgress } = useSetup();
 
   return (

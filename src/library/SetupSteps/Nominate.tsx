@@ -7,14 +7,14 @@ import { useSetup } from 'contexts/Setup';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { GenerateNominations } from '../GenerateNominations';
 import type { NominationsProps } from './types';
 
 export const Nominate = ({ batchKey, bondFor, section }: NominationsProps) => {
   const { t } = useTranslation('library');
   const { consts } = useApi();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress(bondFor, activeAccount);
   const { progress } = setup;

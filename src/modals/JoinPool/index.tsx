@@ -23,7 +23,7 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 
 export const JoinPool = () => {
   const { t } = useTranslation('modals');
@@ -31,7 +31,7 @@ export const JoinPool = () => {
   const {
     networkData: { units },
   } = useNetwork();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { newBatchCall } = useBatchCall();
   const { setActiveAccountSetup } = useSetup();
   const { txFees, notEnoughFunds } = useTxMeta();

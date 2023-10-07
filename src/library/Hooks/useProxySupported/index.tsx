@@ -6,12 +6,12 @@ import {
   isSupportedProxyCall,
 } from 'config/proxies';
 import { useBonded } from 'contexts/Bonded';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useProxies } from 'contexts/Proxies';
 import type { AnyApi, AnyJson, MaybeAccount } from 'types';
 
 export const useProxySupported = () => {
-  const { activeProxy } = useActiveAccount();
+  const { activeProxy } = useActiveAccounts();
   const { getBondedAccount } = useBonded();
   const { getProxyDelegate } = useProxies();
 

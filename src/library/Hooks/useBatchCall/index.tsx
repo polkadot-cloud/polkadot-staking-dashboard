@@ -3,12 +3,12 @@
 
 import { useApi } from 'contexts/Api';
 import type { AnyApi, MaybeAccount } from 'types';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useProxySupported } from '../useProxySupported';
 
 export const useBatchCall = () => {
   const { api } = useApi();
-  const { activeProxy } = useActiveAccount();
+  const { activeProxy } = useActiveAccounts();
   const { isProxySupported } = useProxySupported();
 
   const newBatchCall = (txs: AnyApi[], from: MaybeAccount) => {

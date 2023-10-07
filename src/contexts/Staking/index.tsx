@@ -25,7 +25,7 @@ import Worker from 'workers/stakers?worker';
 import type { ResponseInitialiseExposures } from 'workers/types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useApi } from '../Api';
 import { useBonded } from '../Bonded';
@@ -50,7 +50,7 @@ export const StakingProvider = ({
   children: React.ReactNode;
 }) => {
   const { accounts: connectAccounts } = useImportedAccounts();
-  const { activeAccount, getActiveAccount } = useActiveAccount();
+  const { activeAccount, getActiveAccount } = useActiveAccounts();
   const { getStashLedger } = useBalances();
   const { activeEra } = useNetworkMetrics();
   const { networkData, network } = useNetwork();

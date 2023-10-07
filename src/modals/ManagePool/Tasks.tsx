@@ -8,12 +8,12 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { ContentWrapper } from './Wrappers';
 
 export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
   const { t } = useTranslation('modals');
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { selectedActivePool, isOwner, isBouncer, isMember, isDepositor } =
     useActivePools();
   const { getTransferOptions } = useTransferOptions();

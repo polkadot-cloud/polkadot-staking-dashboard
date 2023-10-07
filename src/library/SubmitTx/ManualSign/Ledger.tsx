@@ -13,7 +13,7 @@ import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { SubmitProps } from '../types';
 
@@ -42,7 +42,7 @@ export const Ledger = ({
   } = useLedgerHardware();
   const { openHelp } = useHelp();
   const { setModalResize } = useOverlay().modal;
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { accountHasSigner } = useImportedAccounts();
   const { getAccount } = useImportedAccounts();
   const { txFeesValid, setTxSignature, getTxSignature } = useTxMeta();

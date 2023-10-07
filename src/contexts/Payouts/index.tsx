@@ -10,7 +10,7 @@ import Worker from 'workers/stakers?worker';
 import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { MaxSupportedPayoutEras, defaultPayoutsContext } from './defaults';
 import type {
   LocalValidatorExposure,
@@ -34,7 +34,7 @@ export const PayoutsProvider = ({
   const { api } = useApi();
   const { network } = useNetwork();
   const { activeEra } = useNetworkMetrics();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { isNominating, fetchEraStakers } = useStaking();
 
   // Store active accont's payout state.

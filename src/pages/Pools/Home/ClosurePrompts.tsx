@@ -12,12 +12,12 @@ import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 
 export const ClosurePrompts = () => {
   const { t } = useTranslation('pages');
   const { colors } = useNetwork().networkData;
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { mode } = useTheme();
   const { openModal } = useOverlay().modal;
   const { membership } = usePoolMemberships();

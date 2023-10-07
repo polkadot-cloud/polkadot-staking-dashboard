@@ -20,7 +20,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 
 export const ClaimCommission = ({ setSection }: any) => {
   const { t } = useTranslation('modals');
@@ -29,7 +29,7 @@ export const ClaimCommission = ({ setSection }: any) => {
     networkData: { units, unit },
   } = useNetwork();
   const { setModalStatus } = useOverlay().modal;
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { isOwner, selectedActivePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
   const poolId = selectedActivePool?.id;

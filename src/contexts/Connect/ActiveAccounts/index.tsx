@@ -7,13 +7,13 @@ import type { MaybeAccount } from 'types';
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import { useNetwork } from 'contexts/Network';
 import type { ActiveProxy } from '../types';
-import type { ActiveAccountContextInterface } from './types';
-import { defaultActiveAccountContext } from './defaults';
+import type { ActiveAccountsContextInterface } from './types';
+import { defaultActiveAccountsContext } from './defaults';
 
-export const ActiveAccountContext =
-  createContext<ActiveAccountContextInterface>(defaultActiveAccountContext);
+export const ActiveAccountsContext =
+  createContext<ActiveAccountsContextInterface>(defaultActiveAccountsContext);
 
-export const ActiveAccountProvider = ({
+export const ActiveAccountsProvider = ({
   children,
 }: {
   children: ReactNode;
@@ -63,7 +63,7 @@ export const ActiveAccountProvider = ({
   useEffect(() => setActiveAccount(null, false), [network]);
 
   return (
-    <ActiveAccountContext.Provider
+    <ActiveAccountsContext.Provider
       value={{
         activeAccount: activeAccountRef.current,
         activeProxy: activeProxyRef.current?.address ?? null,
@@ -74,8 +74,8 @@ export const ActiveAccountProvider = ({
       }}
     >
       {children}
-    </ActiveAccountContext.Provider>
+    </ActiveAccountsContext.Provider>
   );
 };
 
-export const useActiveAccount = () => useContext(ActiveAccountContext);
+export const useActiveAccounts = () => useContext(ActiveAccountsContext);

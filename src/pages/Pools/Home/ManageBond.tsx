@@ -18,7 +18,7 @@ import { BondedChart } from 'library/BarChart/BondedChart';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const ManageBond = () => {
@@ -33,7 +33,7 @@ export const ManageBond = () => {
   const { openHelp } = useHelp();
   const { isPoolSyncing } = useUi();
   const { openModal } = useOverlay().modal;
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getTransferOptions } = useTransferOptions();
   const { isBonding, isMember, selectedActivePool } = useActivePools();

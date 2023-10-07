@@ -9,7 +9,7 @@ import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Stat } from 'library/Stat';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const PayoutDestinationStatus = () => {
@@ -19,7 +19,7 @@ export const PayoutDestinationStatus = () => {
   const { staking, inSetup } = useStaking();
   const { isFastUnstaking } = useUnstaking();
   const { getPayeeItems } = usePayeeConfig();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { payee } = staking;
 

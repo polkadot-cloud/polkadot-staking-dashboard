@@ -13,7 +13,7 @@ import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useTimeLeft } from 'library/Hooks/useTimeLeft';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { ChunkWrapper } from './Wrappers';
 
 export const Chunk = ({ chunk, bondFor, onRebond }: any) => {
@@ -23,7 +23,7 @@ export const Chunk = ({ chunk, bondFor, onRebond }: any) => {
     networkData: { units, unit },
     network,
   } = useNetwork();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { activeEra } = useNetworkMetrics();
   const { isFastUnstaking } = useUnstaking();
   const { erasToSeconds } = useErasToTimeLeft();

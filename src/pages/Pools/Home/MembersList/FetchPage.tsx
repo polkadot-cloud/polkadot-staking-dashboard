@@ -18,7 +18,7 @@ import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { ListProvider, useList } from 'library/List/context';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccount } from 'contexts/Connect/ActiveAccount';
+import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
 import { Member } from './Member';
 import type { FetchpageMembersListProps } from './types';
 
@@ -39,7 +39,7 @@ export const MembersListInner = ({
   const { mode } = useTheme();
   const { pluginEnabled } = usePlugins();
   const { fetchPoolMembers } = useSubscan();
-  const { activeAccount } = useActiveAccount();
+  const { activeAccount } = useActiveAccounts();
   const { selectedActivePool } = useActivePools();
   const {
     poolMembersApi,
