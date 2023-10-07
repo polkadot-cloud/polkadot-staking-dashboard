@@ -41,8 +41,9 @@ export const ExtensionAccountsProvider = ({
     getActiveExtensionAccount,
   } = useImportExtension();
 
-  // TODO: these `useConnect` imports should be refactored and moved to the cloud.
+  // TODO: this should be passed into the context as a setter.
   const { setActiveAccount } = useActiveAccounts();
+
   const { checkingInjectedWeb3, setExtensionStatus, extensions } =
     useExtensions();
 
