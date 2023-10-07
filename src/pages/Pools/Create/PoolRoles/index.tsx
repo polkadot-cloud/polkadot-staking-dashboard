@@ -8,7 +8,7 @@ import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Roles } from '../../Roles';
 
 export const PoolRoles = ({ section }: SetupStepProps) => {

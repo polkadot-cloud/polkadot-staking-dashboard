@@ -11,7 +11,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect } from 'react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { RoleChange } from './RoleChange';
 import { Wrapper } from './Wrapper';
 

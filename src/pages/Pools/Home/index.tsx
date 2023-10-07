@@ -12,7 +12,7 @@ import { PoolList } from 'library/PoolList/Default';
 import { StatBoxList } from 'library/StatBoxList';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Roles } from '../Roles';
 import { ClosurePrompts } from './ClosurePrompts';
 import { PoolFavorites } from './Favorites';

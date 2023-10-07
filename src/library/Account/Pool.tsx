@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Polkicon } from '@polkadot-cloud/react';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Wrapper } from './Wrapper';
 import type { AccountProps } from './types';
 

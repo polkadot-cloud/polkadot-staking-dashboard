@@ -3,7 +3,7 @@
 
 import { useApi } from 'contexts/Api';
 import type { AnyApi, MaybeAccount } from 'types';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useProxySupported } from '../useProxySupported';
 
 export const useBatchCall = () => {

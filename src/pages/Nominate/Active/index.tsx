@@ -19,7 +19,7 @@ import { GenerateNominations } from 'library/GenerateNominations';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { StatBoxList } from 'library/StatBoxList';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ControllerNotStash } from './ControllerNotStash';
 import { ManageBond } from './ManageBond';
 import { Nominations } from './Nominations';

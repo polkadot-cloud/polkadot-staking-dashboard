@@ -23,7 +23,7 @@ import type { ImportedAccount } from '../types';
 import { useConnect } from '..';
 // TODO: the functions in this hook need to be moved to the cloud.
 import { extensionIsLocal, removeFromLocalExtensions } from '../Utils';
-import { useActiveAccounts } from '../ActiveAccounts';
+import { useActiveAccounts } from '../../ActiveAccounts';
 
 export const ExtensionAccountsContext =
   createContext<ExtensionAccountsContextInterface>(

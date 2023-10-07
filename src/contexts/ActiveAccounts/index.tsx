@@ -6,7 +6,7 @@ import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import type { MaybeAccount } from 'types';
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import { useNetwork } from 'contexts/Network';
-import type { ActiveProxy } from '../types';
+import type { ActiveProxy } from '../Connect/types';
 import type { ActiveAccountsContextInterface } from './types';
 import { defaultActiveAccountsContext } from './defaults';
 

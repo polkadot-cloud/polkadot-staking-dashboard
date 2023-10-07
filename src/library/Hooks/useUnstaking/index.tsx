@@ -8,7 +8,7 @@ import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import type { AnyJson } from 'types';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNominationStatus } from '../useNominationStatus';
 
 export const useUnstaking = () => {

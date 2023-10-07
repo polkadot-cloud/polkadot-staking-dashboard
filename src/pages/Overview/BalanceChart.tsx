@@ -21,7 +21,7 @@ import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const BalanceChart = () => {

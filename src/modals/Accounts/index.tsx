@@ -20,7 +20,7 @@ import {
 } from '@polkadot-cloud/react/hooks';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useProxies } from 'contexts/Proxies';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { AccountButton } from './Account';
 import { Delegates } from './Delegates';

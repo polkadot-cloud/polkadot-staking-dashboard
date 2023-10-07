@@ -43,7 +43,7 @@ import type { FC } from 'react';
 import { withProviders } from 'library/Hooks';
 import { ExtensionAccountsProvider } from 'contexts/Connect/ExtensionAccounts';
 import { OtherAccountsProvider } from 'contexts/Connect/OtherAccounts';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { DappName } from 'consts';
 import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts';
 

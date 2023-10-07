@@ -10,7 +10,7 @@ import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
 import { faCircleDown } from '@fortawesome/free-solid-svg-icons';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const UnclaimedPayoutsStatus = () => {

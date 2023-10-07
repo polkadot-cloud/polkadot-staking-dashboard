@@ -22,7 +22,7 @@ import type { AnyApi, AnySubscan } from 'types';
 import { useSubscan } from 'contexts/Plugins/Subscan';
 import { usePayouts } from 'contexts/Payouts';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { FormProps, ActivePayout } from './types';
 import { ContentWrapper } from './Wrappers';
 

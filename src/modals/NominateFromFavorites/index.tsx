@@ -21,7 +21,7 @@ import { ValidatorList } from 'library/ValidatorList';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavorites = () => {

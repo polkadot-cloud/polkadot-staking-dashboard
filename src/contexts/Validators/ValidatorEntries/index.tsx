@@ -12,7 +12,7 @@ import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type {
   Identity,
   Validator,

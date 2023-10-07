@@ -18,7 +18,7 @@ import { locales } from 'locale';
 import type { AnyApi, AnySubscan } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from '../../Api';
 import { usePlugins } from '..';
 import { defaultSubscanContext } from './defaults';

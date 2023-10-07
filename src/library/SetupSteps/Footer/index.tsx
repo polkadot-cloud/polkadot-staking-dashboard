@@ -4,7 +4,7 @@
 import { ButtonPrimary } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useSetup } from 'contexts/Setup';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { FooterProps } from '../types';
 import { Wrapper } from './Wrapper';
 

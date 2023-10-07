@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import type { BondFor } from 'types';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 interface Props {
   bondFor: BondFor;

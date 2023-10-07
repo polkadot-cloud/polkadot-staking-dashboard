@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { MaybeAccount } from 'types';
-import type { ActiveProxy } from '../types';
+import type { ActiveProxy } from '../Connect/types';
 
 export interface ActiveAccountsContextInterface {
   activeAccount: MaybeAccount;

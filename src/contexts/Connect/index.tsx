@@ -21,7 +21,7 @@ import {
   removeLocalExternalAccounts,
 } from './Utils';
 import { defaultConnectContext } from './defaults';
-import { useActiveAccounts } from './ActiveAccounts';
+import { useActiveAccounts } from '../ActiveAccounts';
 
 export const ConnectProvider = ({
   children,

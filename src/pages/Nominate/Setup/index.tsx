@@ -15,7 +15,7 @@ import { Element } from 'react-scroll';
 import { useSetup } from 'contexts/Setup';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { Nominate } from 'library/SetupSteps/Nominate';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Bond } from './Bond';
 import { Payee } from './Payee';
 import { Summary } from './Summary';

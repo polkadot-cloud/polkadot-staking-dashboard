@@ -10,7 +10,7 @@ import Worker from 'workers/stakers?worker';
 import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { MaxSupportedPayoutEras, defaultPayoutsContext } from './defaults';
 import type {
   LocalValidatorExposure,

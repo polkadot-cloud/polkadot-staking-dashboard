@@ -16,7 +16,7 @@ import { ValidatorList } from 'library/ValidatorList';
 import type { MaybeAccount } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Wrapper } from './Wrapper';
 

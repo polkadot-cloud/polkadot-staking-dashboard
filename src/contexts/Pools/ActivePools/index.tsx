@@ -15,7 +15,7 @@ import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useSubscan } from 'contexts/Plugins/Subscan';
 import { usePlugins } from 'contexts/Plugins';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from '../../Api';
 import { useBondedPools } from '../BondedPools';
 import { usePoolMemberships } from '../PoolMemberships';

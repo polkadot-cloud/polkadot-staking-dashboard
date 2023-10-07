@@ -4,7 +4,7 @@
 import { useTranslation } from 'react-i18next';
 import { useTxMeta } from 'contexts/TxMeta';
 import type { MaybeAccount } from 'types';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const useSignerWarnings = () => {

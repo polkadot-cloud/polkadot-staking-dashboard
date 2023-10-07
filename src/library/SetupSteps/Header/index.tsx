@@ -5,7 +5,7 @@ import { ButtonHelp, ButtonSecondary } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { useSetup } from 'contexts/Setup';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { HeaderProps } from '../types';
 import { Wrapper } from './Wrapper';
 

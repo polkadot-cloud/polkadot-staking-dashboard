@@ -17,7 +17,7 @@ import type { SetupStepProps } from 'library/SetupSteps/types';
 import { SubmitTx } from 'library/SubmitTx';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { SummaryWrapper } from './Wrapper';
 

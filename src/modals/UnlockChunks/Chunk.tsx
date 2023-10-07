@@ -13,7 +13,7 @@ import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useTimeLeft } from 'library/Hooks/useTimeLeft';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ChunkWrapper } from './Wrappers';
 
 export const Chunk = ({ chunk, bondFor, onRebond }: any) => {

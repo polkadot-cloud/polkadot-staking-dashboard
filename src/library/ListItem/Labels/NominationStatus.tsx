@@ -9,7 +9,7 @@ import { useStaking } from 'contexts/Staking';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { NominationStatusProps } from '../types';
 
 export const NominationStatus = ({

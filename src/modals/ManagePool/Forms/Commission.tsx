@@ -29,7 +29,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import 'rc-slider/assets/index.css';
 import type { MaybeAccount } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useActiveAccounts } from 'contexts/Connect/ActiveAccounts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { SliderWrapper } from '../Wrappers';
 import type { ChangeRateInput } from './types';
 
