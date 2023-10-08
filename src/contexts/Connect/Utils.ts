@@ -27,34 +27,6 @@ export const addToLocalExtensions = (id: string) => {
   }
 };
 
-// removes extension from local `active_extensions`
-export const removeFromLocalExtensions = (id: string) => {
-  let localExtensions = localStorageOrDefault<string[]>(
-    `active_extensions`,
-    [],
-    true
-  );
-  if (Array.isArray(localExtensions)) {
-    localExtensions = localExtensions.filter((l: string) => l !== id);
-    localStorage.setItem('active_extensions', JSON.stringify(localExtensions));
-  }
-};
-
-// check if an extension exists in local `active_extensions`.
-export const extensionIsLocal = (id: string) => {
-  // connect if extension has been connected to previously
-  const localExtensions = localStorageOrDefault<string[]>(
-    `active_extensions`,
-    [],
-    true
-  );
-  let foundExtensionLocally = false;
-  if (Array.isArray(localExtensions)) {
-    foundExtensionLocally = localExtensions.find((l) => l === id) !== undefined;
-  }
-  return foundExtensionLocally;
-};
-
 // account utils
 
 // gets local `activeAccount` for a network

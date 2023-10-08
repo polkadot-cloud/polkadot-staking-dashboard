@@ -51,7 +51,10 @@ import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts';
 
 // Embed providers from hook.
 export const Providers = () => {
-  const { network } = useNetwork();
+  const {
+    network,
+    networkData: { ss58 },
+  } = useNetwork();
   const { activeAccount } = useActiveAccounts();
 
   // !! Provider order matters
@@ -63,7 +66,10 @@ export const Providers = () => {
     VaultHardwareProvider,
     LedgerHardwareProvider,
     ExtensionsProvider,
-    [ExtensionAccountsProvider, { network, activeAccount, dappName: DappName }],
+    [
+      ExtensionAccountsProvider,
+      { network, ss58, activeAccount, dappName: DappName },
+    ],
     OtherAccountsProvider,
     ImportedAccountsProvider,
     HelpProvider,

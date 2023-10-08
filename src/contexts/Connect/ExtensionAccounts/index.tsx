@@ -10,16 +10,17 @@ import type {
   ExtensionInterface,
 } from '@polkadot-cloud/react/types';
 import {
+  useImportExtension,
   useEffectIgnoreInitial,
   useExtensions,
 } from '@polkadot-cloud/react/hooks';
-import type { AnyApi } from 'types';
-import type { VoidFn } from '@polkadot/api/types';
+import type { AnyApi, AnyFunction } from 'types';
 import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
 import { defaultExtensionAccountsContext } from '@polkadot-cloud/react/connect/ExtensionAccountsProvider/defaults';
-import { useImportExtension } from './useImportExtension';
-// TODO: the functions in this hook need to be moved to the cloud.
-import { extensionIsLocal, removeFromLocalExtensions } from '../Utils';
+import {
+  extensionIsLocal,
+  removeFromLocalExtensions,
+} from '@polkadot-cloud/react/connect/ExtensionAccountsProvider/utils';
 import { useActiveAccounts } from '../../ActiveAccounts';
 
 export const ExtensionAccountsContext =
@@ -30,6 +31,7 @@ export const ExtensionAccountsContext =
 export const ExtensionAccountsProvider = ({
   children,
   network,
+  ss58,
   dappName,
   activeAccount,
 }: ExtensionAccountsProviderProps) => {
@@ -62,7 +64,7 @@ export const ExtensionAccountsProvider = ({
   const extensionsInitialisedRef = useRef(extensionsInitialised);
 
   // Store unsubscribe handlers for connected extensions.
-  const unsubs = useRef<Record<string, VoidFn>>({});
+  const unsubs = useRef<Record<string, AnyFunction>>({});
 
   const connectToAccount = (account: ImportedAccount | null) => {
     setActiveAccount(account?.address ?? null);
@@ -105,12 +107,19 @@ export const ExtensionAccountsProvider = ({
                   extensionAccountsRef.current,
                   extension,
                   a,
-                  forgetAccounts
+                  forgetAccounts,
+                  {
+                    name: network,
+                    ss58,
+                  }
                 );
 
                 // Store active wallet account if found in this extension.
                 if (!activeWalletAccount) {
-                  activeWalletAccount = getActiveExtensionAccount(newAccounts);
+                  activeWalletAccount = getActiveExtensionAccount(
+                    { name: network, ss58 },
+                    newAccounts
+                  );
                 }
                 // Set active account for network on final extension.
                 if (i === total && activeAccount === null) {
@@ -168,14 +177,18 @@ export const ExtensionAccountsProvider = ({
                 extensionAccountsRef.current,
                 extension,
                 a,
-                forgetAccounts
+                forgetAccounts,
+                { name: network, ss58 }
               );
               // Set active account for network if not yet set.
               if (activeAccount === null) {
-                const activeExtensionAccount =
-                  getActiveExtensionAccount(newAccounts);
+                const activeExtensionAccount = getActiveExtensionAccount(
+                  { name: network, ss58 },
+                  newAccounts
+                );
                 if (
-                  activeExtensionAccount !== meta.removedActiveAccount &&
+                  activeExtensionAccount?.address !==
+                    meta.removedActiveAccount &&
                   meta.removedActiveAccount !== null
                 )
                   connectActiveExtensionAccount(
