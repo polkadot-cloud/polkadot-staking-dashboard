@@ -4,10 +4,7 @@
 import { localStorageOrDefault } from '@polkadot-cloud/utils';
 import { LedgerApps } from 'config/ledger';
 import type { MaybeString } from 'types';
-import type {
-  LedgerAccount,
-  VaultAccount,
-} from '@polkadot-cloud/react/connect/types';
+import type { LedgerAccount, VaultAccount } from '@polkadot-cloud/react/types';
 import type { LedgerAddress } from './types';
 
 // Gets ledger app from local storage, fallback to first entry.

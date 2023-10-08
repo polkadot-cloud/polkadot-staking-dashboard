@@ -3,9 +3,11 @@
 
 import Keyring from '@polkadot/keyring';
 import { localStorageOrDefault } from '@polkadot-cloud/utils';
-import type { ExtensionAccount } from '@polkadot-cloud/react/connect/ExtensionsProvider/types';
+import type {
+  ExtensionAccount,
+  ExternalAccount,
+} from '@polkadot-cloud/react/types';
 import type { NetworkName } from 'types';
-import type { ExternalAccount } from '@polkadot-cloud/react/connect/types';
 
 // extension utils
 

@@ -11,7 +11,7 @@ import { ConfirmWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import type { LedgerAccount } from '@polkadot-cloud/react/connect/types';
+import type { LedgerAccount } from '@polkadot-cloud/react/types';
 
 export const Reset = ({ removeLedgerAddress }: AnyJson) => {
   const { t } = useTranslation('modals');

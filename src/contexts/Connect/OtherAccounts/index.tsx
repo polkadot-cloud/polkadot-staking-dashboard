@@ -19,7 +19,7 @@ import Keyring from '@polkadot/keyring';
 import type {
   ExternalAccount,
   ImportedAccount,
-} from '@polkadot-cloud/react/connect/types';
+} from '@polkadot-cloud/react/types';
 import { useExtensionAccounts } from '../ExtensionAccounts';
 import {
   getActiveAccountLocal,

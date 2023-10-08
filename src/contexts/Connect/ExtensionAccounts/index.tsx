@@ -5,20 +5,18 @@ import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import type {
   ExtensionAccountsContextInterface,
   ExtensionAccountsProviderProps,
-} from '@polkadot-cloud/react/connect/ExtensionAccountsProvider/types';
+  ImportedAccount,
+  ExtensionInjected,
+  ExtensionInterface,
+} from '@polkadot-cloud/react/types';
 import {
   useEffectIgnoreInitial,
   useExtensions,
 } from '@polkadot-cloud/react/hooks';
 import type { AnyApi } from 'types';
 import type { VoidFn } from '@polkadot/api/types';
-import type {
-  ExtensionInjected,
-  ExtensionInterface,
-} from '@polkadot-cloud/react/connect/ExtensionsProvider/types';
 import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
 import { defaultExtensionAccountsContext } from '@polkadot-cloud/react/connect/ExtensionAccountsProvider/defaults';
-import type { ImportedAccount } from '@polkadot-cloud/react/connect/types';
 import { useImportExtension } from './useImportExtension';
 // TODO: the functions in this hook need to be moved to the cloud.
 import { extensionIsLocal, removeFromLocalExtensions } from '../Utils';
