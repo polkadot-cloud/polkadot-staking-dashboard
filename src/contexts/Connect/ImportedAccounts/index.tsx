@@ -5,10 +5,10 @@ import type { ReactNode } from 'react';
 import { createContext, useContext } from 'react';
 import type { MaybeAddress } from 'types';
 import type { ExternalAccount } from '@polkadot-cloud/react/types';
+import { ManualSigners } from 'consts';
 import { defaultImportedAccountsContext } from './defaults';
 import type { ImportedAccountsContextInterface } from './types';
 import { useExtensionAccounts } from '../ExtensionAccounts';
-import { manualSigners } from '../Utils';
 import { useOtherAccounts } from '../OtherAccounts';
 
 export const ImportedAccountsContext =
@@ -50,7 +50,7 @@ export const ImportedAccountsProvider = ({
   // extensions.
   const requiresManualSign = (address: MaybeAddress) =>
     allAccounts.find(
-      (a) => a.address === address && manualSigners.includes(a.source)
+      (a) => a.address === address && ManualSigners.includes(a.source)
     ) !== undefined;
 
   return (

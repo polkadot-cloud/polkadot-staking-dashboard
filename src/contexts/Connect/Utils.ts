@@ -9,10 +9,6 @@ import type {
 } from '@polkadot-cloud/react/types';
 import type { NetworkName } from 'types';
 
-// extension utils
-
-export const manualSigners = ['ledger', 'vault'];
-
 // adds an extension to local `active_extensions`
 export const addToLocalExtensions = (id: string) => {
   const localExtensions = localStorageOrDefault<string[]>(

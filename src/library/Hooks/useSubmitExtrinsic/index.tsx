@@ -4,9 +4,8 @@
 import BigNumber from 'bignumber.js';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DappName } from 'consts';
+import { DappName, ManualSigners } from 'consts';
 import { useApi } from 'contexts/Api';
-import { manualSigners } from 'contexts/Connect/Utils';
 import { useExtensions } from '@polkadot-cloud/react/hooks';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
@@ -159,7 +158,7 @@ export const useSubmitExtrinsic = ({
     const { source } = account;
 
     // if `activeAccount` is imported from an extension, ensure it is enabled.
-    if (!manualSigners.includes(source)) {
+    if (!ManualSigners.includes(source)) {
       const extension = extensions.find((e) => e.id === source);
       if (extension === undefined) {
         throw new Error(`${t('walletNotFound')}`);
@@ -267,7 +266,7 @@ export const useSubmitExtrinsic = ({
           }
         );
       } catch (e) {
-        onError(manualSigners.includes(source) ? source : 'default');
+        onError(ManualSigners.includes(source) ? source : 'default');
       }
     } else {
       // handle unsigned transaction.
