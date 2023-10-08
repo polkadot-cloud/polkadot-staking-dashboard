@@ -4,7 +4,7 @@
 import { PageRow, PageTitle, RowSection } from '@polkadot-cloud/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { PageTitleTabProps } from '@polkadot-cloud/react/base/types';
+import type { PageTitleTabProps } from '@polkadot-cloud/react/types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { CardWrapper } from 'library/Card/Wrappers';

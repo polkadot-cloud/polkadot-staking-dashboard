@@ -4,7 +4,7 @@
 import type { ReactNode } from 'react';
 import { createContext, useContext } from 'react';
 import type { MaybeAddress } from 'types';
-import type { ExternalAccount } from '@polkadot-cloud/react/connect/types';
+import type { ExternalAccount } from '@polkadot-cloud/react/types';
 import { defaultImportedAccountsContext } from './defaults';
 import type { ImportedAccountsContextInterface } from './types';
 import { useExtensionAccounts } from '../ExtensionAccounts';

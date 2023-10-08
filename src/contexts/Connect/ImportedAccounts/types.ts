@@ -1,9 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type {
+  ExtensionAccount,
+  ImportedAccount,
+} from '@polkadot-cloud/react/types';
 import type { MaybeAddress } from 'types';
-import type { ExtensionAccount } from '@polkadot-cloud/react/connect/ExtensionsProvider/types';
-import type { ImportedAccount } from '@polkadot-cloud/react/connect/types';
 
 export interface ImportedAccountsContextInterface {
   accounts: ImportedAccount[];

@@ -3,7 +3,10 @@
 
 import { BalancesProvider } from 'contexts/Balances';
 import { BondedProvider } from 'contexts/Bonded';
-import { ExtensionsProvider, OverlayProvider } from '@polkadot-cloud/react';
+import {
+  ExtensionsProvider,
+  OverlayProvider,
+} from '@polkadot-cloud/react/providers';
 import { ExtrinsicsProvider } from 'contexts/Extrinsics';
 import { FastUnstakeProvider } from 'contexts/FastUnstake';
 import { FiltersProvider } from 'contexts/Filters';
