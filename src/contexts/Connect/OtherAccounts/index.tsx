@@ -6,6 +6,7 @@ import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import {
   useEffectIgnoreInitial,
   useExtensions,
+  useExtensionAccounts,
 } from '@polkadot-cloud/react/hooks';
 import {
   getLocalLedgerAccounts,
@@ -20,7 +21,6 @@ import type {
   ExternalAccount,
   ImportedAccount,
 } from '@polkadot-cloud/react/types';
-import { useExtensionAccounts } from '../ExtensionAccounts';
 import {
   getActiveAccountLocal,
   getLocalExternalAccounts,

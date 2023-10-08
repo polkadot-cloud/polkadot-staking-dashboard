@@ -1453,10 +1453,10 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.7.tgz#ace2356c524c11553ea125fc1c5f7538ba6fd044"
   integrity sha512-EjlOfMNc+Nh5RzMXNoiwMogeDNyZ+Up7LIEiz1TlbpWuHcnAk3zuNdrGpJC3SHvUnjQ16GKDfELtAzFblTCdIg==
 
-"@polkadot-cloud/react@^0.1.71":
-  version "0.1.71"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.71.tgz#64a80e14865f374cfea08901d0a90a5f345dedd0"
-  integrity sha512-Lcss11THRAYGbOuaq1sTR/cxxC0TeNusFGyhvV8uaMV4QLAfeinoljGbwO4w89pEKvkDYjLeL6G9WpY93CsZjg==
+"@polkadot-cloud/react@^0.1.72":
+  version "0.1.72"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.72.tgz#e9ec089562928d0d65d3357520b5130a2ea8b3ec"
+  integrity sha512-JI0CwvtYshxwxc6hf6uw4wItADqLWwxG5ACiMAeiyJ72kM9oAtr1edSgaAMdFx1nCPYBzyYr0UlUe3f0A0oEaw==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.4.2"
     "@fortawesome/free-brands-svg-icons" "^6.4.2"
@@ -1466,6 +1466,7 @@
     "@polkadot-cloud/assets" "^0.1.16"
     "@polkadot-cloud/core" "^1.0.7"
     "@polkadot-cloud/utils" "^0.0.20"
+    "@polkadot/keyring" "^12.5.1"
     "@polkadot/util" "^12.5.1"
     "@polkadot/util-crypto" "^12.5.1"
     framer-motion "^10.15.0"
@@ -4349,9 +4350,9 @@ jsqr@^1.2.0:
     object.values "^1.1.6"
 
 keyv@^4.5.3:
-  version "4.5.3"
-  resolved "https://registry.yarnpkg.com/keyv/-/keyv-4.5.3.tgz#00873d2b046df737963157bd04f294ca818c9c25"
-  integrity sha512-QCiSav9WaX1PgETJ+SpNnx2PRRapJ/oRSXM4VO5OGYGSjrxbKPVFVhB3l2OCbLCk329N8qyAtsJjSjvVBWzEug==
+  version "4.5.4"
+  resolved "https://registry.yarnpkg.com/keyv/-/keyv-4.5.4.tgz#a879a99e29452f942439f2a405e3af8b31d4de93"
+  integrity sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==
   dependencies:
     json-buffer "3.0.1"
 
