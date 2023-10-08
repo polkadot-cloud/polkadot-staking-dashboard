@@ -21,7 +21,6 @@ import {
   extensionIsLocal,
   removeFromLocalExtensions,
 } from '@polkadot-cloud/react/connect/ExtensionAccountsProvider/utils';
-import { useActiveAccounts } from '../../ActiveAccounts';
 
 export const ExtensionAccountsContext =
   createContext<ExtensionAccountsContextInterface>(
@@ -34,15 +33,13 @@ export const ExtensionAccountsProvider = ({
   ss58,
   dappName,
   activeAccount,
+  setActiveAccount,
 }: ExtensionAccountsProviderProps) => {
   const {
     handleImportExtension,
     connectActiveExtensionAccount,
     getActiveExtensionAccount,
   } = useImportExtension();
-
-  // TODO: this should be passed into the context as a setter.
-  const { setActiveAccount } = useActiveAccounts();
 
   const { checkingInjectedWeb3, setExtensionStatus, extensions } =
     useExtensions();

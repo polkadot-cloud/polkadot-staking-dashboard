@@ -55,7 +55,7 @@ export const Providers = () => {
     network,
     networkData: { ss58 },
   } = useNetwork();
-  const { activeAccount } = useActiveAccounts();
+  const { activeAccount, setActiveAccount } = useActiveAccounts();
 
   // !! Provider order matters
   const providers: Array<FC<AnyJson> | [FC<AnyJson>, AnyJson]> = [
@@ -68,7 +68,7 @@ export const Providers = () => {
     ExtensionsProvider,
     [
       ExtensionAccountsProvider,
-      { network, ss58, activeAccount, dappName: DappName },
+      { dappName: DappName, network, ss58, activeAccount, setActiveAccount },
     ],
     OtherAccountsProvider,
     ImportedAccountsProvider,
