@@ -5,6 +5,7 @@ import { BalancesProvider } from 'contexts/Balances';
 import { BondedProvider } from 'contexts/Bonded';
 import {
   ExtensionsProvider,
+  ExtensionAccountsProvider,
   OverlayProvider,
 } from '@polkadot-cloud/react/providers';
 import { ExtrinsicsProvider } from 'contexts/Extrinsics';
@@ -43,7 +44,6 @@ import { ThemedRouter } from 'Themes';
 import type { AnyJson } from 'types';
 import type { FC } from 'react';
 import { withProviders } from 'library/Hooks';
-import { ExtensionAccountsProvider } from 'contexts/Connect/ExtensionAccounts';
 import { OtherAccountsProvider } from 'contexts/Connect/OtherAccounts';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { DappName } from 'consts';

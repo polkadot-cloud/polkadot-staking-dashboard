@@ -6,9 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ModalConnectItem } from '@polkadot-cloud/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useExtensions } from '@polkadot-cloud/react/hooks';
+import {
+  useExtensions,
+  useExtensionAccounts,
+} from '@polkadot-cloud/react/hooks';
 import { useNotifications } from 'contexts/Notifications';
-import { useExtensionAccounts } from 'contexts/Connect/ExtensionAccounts';
 import { ExtensionInner } from './Wrappers';
 import type { ExtensionProps } from './types';
 
