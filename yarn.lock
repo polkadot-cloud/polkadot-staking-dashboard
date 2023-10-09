@@ -1448,20 +1448,15 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.16.tgz#385b1b0b3a06942620b6e4e788997439f68dcf5c"
   integrity sha512-5YB7Op38hAxKVnHkJav/s6JPFa2KRpUob8zMMg2OBnC/tAaapFzNxVtE357+uSO0EbY1CHkYuOmmMTN87UwAzg==
 
-"@polkadot-cloud/core@1.0.10":
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.10.tgz#6f4b18ea25e941a388a7f01082b4eb6b50cc7bf6"
-  integrity sha512-2QZmVPyQ+MknrwwW8he0C31dYb6Hooj16efPaEavY5/fGOVOHZiSisL6ACTndUJhdY5RMhTC7aglsdNzYbFhmQ==
+"@polkadot-cloud/core@^1.0.13":
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.13.tgz#abe09be674b9f6ab86da7bb0fdc2acc95202c2ee"
+  integrity sha512-IrpRA495Buoleue9tilYnj9MS7y0WnqgSn36Dgy1gk4p0Qf+iWqExj15++EK8vbEGOBh+p3czCDU25/iV0DaOQ==
 
-"@polkadot-cloud/core@^1.0.12":
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.12.tgz#b76ff6dc74f119f0334ab43cf230e2fdda0fe246"
-  integrity sha512-l1qbfpnjsg4VDmrvBjDAofvIgykHA3onn0Cg8RLH6hCNuz10LsCQYdq+MrIjmolWJP7bWBVpuQ6n0znGHeHMkQ==
-
-"@polkadot-cloud/react@^0.1.74":
-  version "0.1.74"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.74.tgz#90b16a3a21081bc7e384f0a5060e48e5d1e87aee"
-  integrity sha512-k34coeghEvCMunmwIPvqYSywOcSvw24HBgDpIHuGmKkELtdl+007p+K8c4hV1P8+Yrut0CLLBNlDA2ZMpPvejA==
+"@polkadot-cloud/react@^0.1.76":
+  version "0.1.76"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.76.tgz#67bf42523b108dd5b87d368fd54efe74946d3a12"
+  integrity sha512-MH0CNiadHrLIHR/syq6MVLS4UcNa0HsN3m31iYPsdocYbFsUChrJalCaAs0p0E+8UEJH4Kc31VWxdOU55+9olQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.4.2"
     "@fortawesome/free-brands-svg-icons" "^6.4.2"
@@ -1469,7 +1464,7 @@
     "@fortawesome/free-solid-svg-icons" "^6.4.2"
     "@fortawesome/react-fontawesome" "^0.2.0"
     "@polkadot-cloud/assets" "^0.1.16"
-    "@polkadot-cloud/core" "1.0.10"
+    "@polkadot-cloud/core" "^1.0.13"
     "@polkadot-cloud/utils" "^0.0.20"
     "@polkadot/keyring" "^12.5.1"
     "@polkadot/util" "^12.5.1"

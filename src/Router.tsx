@@ -100,7 +100,7 @@ export const RouterInner = () => {
         <Side
           open={sideMenuOpen}
           minimised={sideMenuMinimised}
-          width={SideMenuMaximisedWidth}
+          width={`${SideMenuMaximisedWidth}px`}
         >
           <SideMenu />
         </Side>
