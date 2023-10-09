@@ -1448,15 +1448,20 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.16.tgz#385b1b0b3a06942620b6e4e788997439f68dcf5c"
   integrity sha512-5YB7Op38hAxKVnHkJav/s6JPFa2KRpUob8zMMg2OBnC/tAaapFzNxVtE357+uSO0EbY1CHkYuOmmMTN87UwAzg==
 
-"@polkadot-cloud/core@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.7.tgz#ace2356c524c11553ea125fc1c5f7538ba6fd044"
-  integrity sha512-EjlOfMNc+Nh5RzMXNoiwMogeDNyZ+Up7LIEiz1TlbpWuHcnAk3zuNdrGpJC3SHvUnjQ16GKDfELtAzFblTCdIg==
+"@polkadot-cloud/core@1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.10.tgz#6f4b18ea25e941a388a7f01082b4eb6b50cc7bf6"
+  integrity sha512-2QZmVPyQ+MknrwwW8he0C31dYb6Hooj16efPaEavY5/fGOVOHZiSisL6ACTndUJhdY5RMhTC7aglsdNzYbFhmQ==
 
-"@polkadot-cloud/react@^0.1.72":
-  version "0.1.72"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.72.tgz#e9ec089562928d0d65d3357520b5130a2ea8b3ec"
-  integrity sha512-JI0CwvtYshxwxc6hf6uw4wItADqLWwxG5ACiMAeiyJ72kM9oAtr1edSgaAMdFx1nCPYBzyYr0UlUe3f0A0oEaw==
+"@polkadot-cloud/core@^1.0.12":
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.12.tgz#b76ff6dc74f119f0334ab43cf230e2fdda0fe246"
+  integrity sha512-l1qbfpnjsg4VDmrvBjDAofvIgykHA3onn0Cg8RLH6hCNuz10LsCQYdq+MrIjmolWJP7bWBVpuQ6n0znGHeHMkQ==
+
+"@polkadot-cloud/react@^0.1.74":
+  version "0.1.74"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.74.tgz#90b16a3a21081bc7e384f0a5060e48e5d1e87aee"
+  integrity sha512-k34coeghEvCMunmwIPvqYSywOcSvw24HBgDpIHuGmKkELtdl+007p+K8c4hV1P8+Yrut0CLLBNlDA2ZMpPvejA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.4.2"
     "@fortawesome/free-brands-svg-icons" "^6.4.2"
@@ -1464,7 +1469,7 @@
     "@fortawesome/free-solid-svg-icons" "^6.4.2"
     "@fortawesome/react-fontawesome" "^0.2.0"
     "@polkadot-cloud/assets" "^0.1.16"
-    "@polkadot-cloud/core" "^1.0.7"
+    "@polkadot-cloud/core" "1.0.10"
     "@polkadot-cloud/utils" "^0.0.20"
     "@polkadot/keyring" "^12.5.1"
     "@polkadot/util" "^12.5.1"
@@ -2582,9 +2587,9 @@ binary-extensions@^2.0.0:
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
 
-"bip32-ed25519@https://github.com/Zondax/bip32-ed25519":
+"bip32-ed25519@git+https://github.com/Zondax/bip32-ed25519.git":
   version "0.0.4"
-  resolved "https://github.com/Zondax/bip32-ed25519#0949df01b5c93885339bc28116690292088f6134"
+  resolved "git+https://github.com/Zondax/bip32-ed25519.git#0949df01b5c93885339bc28116690292088f6134"
   dependencies:
     bn.js "^5.1.1"
     elliptic "^6.4.1"

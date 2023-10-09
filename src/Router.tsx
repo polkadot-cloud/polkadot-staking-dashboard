@@ -32,6 +32,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { SideMenuMaximisedWidth } from 'consts';
 
 export const RouterInner = () => {
   const { t } = useTranslation();
@@ -96,7 +97,11 @@ export const RouterInner = () => {
         <Prompt />
 
         {/* Left side menu */}
-        <Side open={sideMenuOpen} minimised={sideMenuMinimised}>
+        <Side
+          open={sideMenuOpen}
+          minimised={sideMenuMinimised}
+          width={SideMenuMaximisedWidth}
+        >
           <SideMenu />
         </Side>
 
