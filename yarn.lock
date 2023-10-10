@@ -1448,10 +1448,10 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.17.tgz#fca29f7444cd1d3026e07dfb0110060d5f75536b"
   integrity sha512-PMXH1+YQgAjAAScmmbD2nBshO87uK2JGJqDYyBSBg5By8rbuDAXKquR6n7eP04Lwv2dsi8Ut3iS453sakOHO0A==
 
-"@polkadot-cloud/core@^1.0.13":
-  version "1.0.13"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.13.tgz#abe09be674b9f6ab86da7bb0fdc2acc95202c2ee"
-  integrity sha512-IrpRA495Buoleue9tilYnj9MS7y0WnqgSn36Dgy1gk4p0Qf+iWqExj15++EK8vbEGOBh+p3czCDU25/iV0DaOQ==
+"@polkadot-cloud/core@^1.0.13", "@polkadot-cloud/core@^1.0.14":
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.14.tgz#f20551d6c9c325f4c7191c56552420cf7f751c5c"
+  integrity sha512-tdIAOo463XNdjL7n4goUlW6JkRXrnfpmMF8opaA58NO+tPJuR71B4dFjBI9CxoL7dee0/eGuhv0xp4ujXCJQ3Q==
 
 "@polkadot-cloud/react@^0.1.77":
   version "0.1.77"
