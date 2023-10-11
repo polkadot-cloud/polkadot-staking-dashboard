@@ -1443,10 +1443,15 @@
     picocolors "^1.0.0"
     tslib "^2.6.0"
 
-"@polkadot-cloud/assets@^0.1.16", "@polkadot-cloud/assets@^0.1.17":
+"@polkadot-cloud/assets@^0.1.16":
   version "0.1.17"
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.17.tgz#fca29f7444cd1d3026e07dfb0110060d5f75536b"
   integrity sha512-PMXH1+YQgAjAAScmmbD2nBshO87uK2JGJqDYyBSBg5By8rbuDAXKquR6n7eP04Lwv2dsi8Ut3iS453sakOHO0A==
+
+"@polkadot-cloud/assets@^0.1.18":
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.18.tgz#fc7320728a6e0bc4d95a276cd923e9abbed157fc"
+  integrity sha512-bIyRTxplMaAFVqYW8J3DEWXkTiOWQJvrOAsSMdK7LplO/m9EkZwK2mNTiIeA2mknkoHmRknsgw8QaLL3PnBFrA==
 
 "@polkadot-cloud/core@^1.0.13", "@polkadot-cloud/core@^1.0.14":
   version "1.0.14"
@@ -2593,7 +2598,6 @@ binary-extensions@^2.0.0:
 
 "bip32-ed25519@https://github.com/Zondax/bip32-ed25519":
   version "0.0.4"
-  uid "0949df01b5c93885339bc28116690292088f6134"
   resolved "https://github.com/Zondax/bip32-ed25519#0949df01b5c93885339bc28116690292088f6134"
   dependencies:
     bn.js "^5.1.1"

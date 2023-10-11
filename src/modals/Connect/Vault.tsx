@@ -13,7 +13,7 @@ import {
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
-import VaultSVG from 'img/polkadotVault.svg?react';
+import PolkadotVaultSVG from '@polkadot-cloud/assets/extensions/svg/polkadotvault.svg?react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const Vault = (): React.ReactElement => {
@@ -30,7 +30,7 @@ export const Vault = (): React.ReactElement => {
             <ButtonHelp onClick={() => openHelp('Polkadot Vault')} />
           </div>
           <div className="row">
-            <VaultSVG className="logo vault" />
+            <PolkadotVaultSVG className="logo vault" />
           </div>
           <div className="row margin">
             <ButtonText
