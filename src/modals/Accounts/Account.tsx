@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn, planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { Extensions } from '@polkadot-cloud/assets/extensions';
-import LedgerIconSVG from 'img/ledgerIcon.svg?react';
-import PolkadotVaultIconSVG from 'img/polkadotVault.svg?react';
+import LedgerSVG from '@polkadot-cloud/assets/extensions/svg/ledger.svg?react';
+import PolkadotVaultSVG from '@polkadot-cloud/assets/extensions/svg/polkadotvault.svg?react';
 import { Polkicon } from '@polkadot-cloud/react';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
@@ -48,9 +48,9 @@ export const AccountButton = ({
   // Determine account source icon.
   const Icon =
     meta?.source === 'ledger'
-      ? LedgerIconSVG
+      ? LedgerSVG
       : meta?.source === 'vault'
-      ? PolkadotVaultIconSVG
+      ? PolkadotVaultSVG
       : Extensions[meta?.source || '']?.Icon ?? undefined;
 
   // Determine if this account is active (active account or proxy).

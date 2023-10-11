@@ -13,7 +13,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
 import { usePrompt } from 'contexts/Prompt';
-import IconSVG from 'img/polkadotVault.svg?react';
+import PolkadotVaultSVG from '@polkadot-cloud/assets/extensions/svg/polkadotvault.svg?react';
 import { Confirm } from 'library/Import/Confirm';
 import { Heading } from 'library/Import/Heading';
 import { NoAccounts } from 'library/Import/NoAccounts';
@@ -71,7 +71,7 @@ export const ImportVault = () => {
     <>
       {vaultAccounts.length === 0 ? (
         <NoAccounts
-          Icon={IconSVG}
+          Icon={PolkadotVaultSVG}
           text={t('noVaultAccountsImported', { ns: 'modals' })}
         >
           <div>
@@ -122,7 +122,7 @@ export const ImportVault = () => {
           </AddressesWrapper>
           <HardwareStatusBar
             show
-            Icon={IconSVG}
+            Icon={PolkadotVaultSVG}
             text={t('vaultAccounts', {
               ns: 'modals',
               count: vaultAccounts.length,
