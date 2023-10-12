@@ -11,6 +11,7 @@ import {
   useExtensionAccounts,
 } from '@polkadot-cloud/react/hooks';
 import { useNotifications } from 'contexts/Notifications';
+import { ExtensionIcons } from '@polkadot-cloud/assets/extensions';
 import { ExtensionInner } from './Wrappers';
 import type { ExtensionProps } from './types';
 
@@ -19,9 +20,10 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const { addNotification } = useNotifications();
   const { connectExtensionAccounts } = useExtensionAccounts();
   const { extensions, extensionsStatus } = useExtensions();
-  const { title, Icon, website } = meta;
+  const { title, website, id } = meta;
 
-  const { id } = meta;
+  const Icon = ExtensionIcons[id || ''] || undefined;
+
   const extension = extensions.find((e) => e.id === id);
   const status = !extension ? 'not_found' : extensionsStatus[id];
   const disabled = status === 'connected' || !extension;
@@ -80,7 +82,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
             ) : null}
 
             <div className="row icon">
-              <Icon width={size} height={size} />
+              <Icon style={{ width: size, height: size }} />
             </div>
             <div className="status">
               {flag && flag}
