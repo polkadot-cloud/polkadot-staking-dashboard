@@ -22,7 +22,7 @@ export const Nomination = ({
   nominator,
   toggleFavorites,
   bondFor,
-  inModal,
+  inOverlay,
 }: NominationProps) => {
   const { selectActive } = useList();
   const { validatorIdentities, validatorSupers } = useValidators();
@@ -31,7 +31,7 @@ export const Nomination = ({
   const commission = prefs?.commission ?? null;
 
   return (
-    <Wrapper $format="nomination" $inModal={inModal}>
+    <Wrapper $format="nomination" $inOverlay={inOverlay}>
       <div className="inner">
         <div className="row">
           {selectActive && <Select item={validator} />}
@@ -57,7 +57,7 @@ export const Nomination = ({
             <ParaValidator address={address} />
 
             {/* restrict opening another modal within a modal */}
-            {!inModal && (
+            {!inOverlay && (
               <Metrics
                 address={address}
                 display={getIdentityDisplay(

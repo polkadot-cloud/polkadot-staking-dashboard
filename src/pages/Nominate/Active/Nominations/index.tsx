@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonPrimary } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
@@ -38,7 +38,10 @@ export const Nominations = ({
   const { isSyncing } = useUi();
   const { openHelp } = useHelp();
   const { inSetup } = useStaking();
-  const { openModal } = useOverlay().modal;
+  const {
+    modal: { openModal },
+    canvas: { openCanvas },
+  } = useOverlay();
   const { isFastUnstaking } = useUnstaking();
   const { activeAccount } = useActiveAccounts();
   const { getAccountNominations } = useBonded();
@@ -108,18 +111,20 @@ export const Nominations = ({
               />
               <ButtonPrimary
                 text={t('nominate.manage')}
-                iconLeft={faStopCircle}
+                iconLeft={faCog}
                 iconTransform="grow-1"
                 disabled={btnsDisabled}
                 marginLeft
                 onClick={() =>
-                  openModal({
-                    key: 'ChangeNominations',
+                  openCanvas({
+                    key: 'ManageNominations',
                     options: {
-                      nominations: [],
                       bondFor,
+                      nominator,
+                      nominated,
+                      nominations,
                     },
-                    size: 'sm',
+                    size: 'xl',
                   })
                 }
               />

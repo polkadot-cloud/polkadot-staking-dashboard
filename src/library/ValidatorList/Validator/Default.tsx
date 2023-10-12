@@ -39,7 +39,7 @@ export const Default = ({
   validator,
   toggleFavorites,
   showMenu,
-  inModal,
+  inOverlay,
 }: DefaultProps) => {
   const { t } = useTranslation('library');
   const { selectActive } = useList();
@@ -122,7 +122,7 @@ export const Default = ({
   };
 
   return (
-    <Wrapper $format="nomination" $inModal={inModal}>
+    <Wrapper $format="nomination" $inOverlay={inOverlay}>
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">
@@ -151,7 +151,7 @@ export const Default = ({
         <Separator />
         <div className="row status">
           <EraStatus address={address} />
-          {inModal && (
+          {inOverlay && (
             <>
               <Labels>
                 <CopyAddress address={address} />

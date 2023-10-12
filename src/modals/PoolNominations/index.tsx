@@ -30,7 +30,7 @@ export const PoolNominations = () => {
               batchKey={batchKey}
               title={t('poolNominations')}
               showMenu={false}
-              inModal
+              inOverlay
               refetchOnListUpdate
             />
           ) : (

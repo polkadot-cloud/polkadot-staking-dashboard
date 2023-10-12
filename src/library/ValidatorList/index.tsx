@@ -40,7 +40,7 @@ export const ValidatorListInner = ({
   onSelected,
   actions = [],
   showMenu = true,
-  inModal = false,
+  inOverlay = false,
   allowSearch = false,
   allowListFormat = true,
   alwaysRefetchValidators = false,
@@ -238,7 +238,7 @@ export const ValidatorListInner = ({
 
   // if in modal, handle resize
   const maybeHandleModalResize = () => {
-    if (inModal) setModalResize();
+    if (inOverlay) setModalResize();
   };
 
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -345,7 +345,7 @@ export const ValidatorListInner = ({
                     format={format}
                     showMenu={showMenu}
                     bondFor={bondFor}
-                    inModal={inModal}
+                    inOverlay={inOverlay}
                   />
                 </motion.div>
               ))}

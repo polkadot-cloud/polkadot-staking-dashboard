@@ -8,12 +8,12 @@ export interface NominationProps {
   nominator: MaybeAddress;
   toggleFavorites: boolean;
   bondFor: BondFor;
-  inModal: boolean;
+  inOverlay: boolean;
 }
 
 export interface DefaultProps {
   validator: any;
   toggleFavorites: boolean;
   showMenu: boolean;
-  inModal: boolean;
+  inOverlay: boolean;
 }
