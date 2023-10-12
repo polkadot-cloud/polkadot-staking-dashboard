@@ -160,7 +160,7 @@ export const NominateFromFavorites = () => {
               selectToggleable={false}
               onSelected={onSelected}
               showMenu={false}
-              inOverlay
+              displayFor="modal"
               allowMoreCols
               refetchOnListUpdate
             />

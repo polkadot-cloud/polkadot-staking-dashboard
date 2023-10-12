@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { Validator } from 'contexts/Validators/types';
-import type { AnyFunction, BondFor } from 'types';
+import type { AnyFunction, BondFor, DisplayFor } from 'types';
 
 export interface NominationsProps {
   batchKey: string;
@@ -18,8 +18,8 @@ export interface FooterProps {
 export interface GenerateNominationsProps {
   setters: AnyFunction[];
   nominations: Validator[];
+  displayFor?: DisplayFor;
   batchKey: string;
-  inOverlay?: boolean;
 }
 
 export interface HeaderProps {

@@ -40,7 +40,7 @@ export const Default = ({
   validator,
   toggleFavorites,
   showMenu,
-  inOverlay,
+  displayFor,
 }: DefaultProps) => {
   const { t } = useTranslation('library');
   const { selectActive } = useList();
@@ -122,7 +122,7 @@ export const Default = ({
   };
 
   return (
-    <Wrapper $format="nomination" $inOverlay={inOverlay}>
+    <Wrapper $format="nomination" $displayFor={displayFor}>
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">
@@ -137,7 +137,7 @@ export const Default = ({
               {toggleFavorites && <FavoriteValidator address={address} />}
 
               {/* restrict opening modal within a canvas */}
-              {!inOverlay && showMenu && (
+              {displayFor === 'default' && showMenu && (
                 <button
                   type="button"
                   className="label"
@@ -153,7 +153,7 @@ export const Default = ({
         <div className="row status">
           <EraStatus address={address} />
           {/* restrict opening modal within a canvas */}
-          {inOverlay && (
+          {displayFor !== 'default' && (
             <>
               <Labels>
                 <CopyAddress address={address} />

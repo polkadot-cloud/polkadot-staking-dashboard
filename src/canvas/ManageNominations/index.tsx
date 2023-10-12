@@ -51,7 +51,7 @@ export const ManageNominations = () => {
       <h1 style={{ marginTop: '1.5rem' }}>Manage Nominations</h1>
 
       <GenerateNominations
-        inOverlay
+        displayFor="canvas"
         batchKey="active_account_manage_nominations"
         setters={[
           {

@@ -79,7 +79,7 @@ export const SelectFavorites = () => {
               selectToggleable={false}
               onSelected={onSelected}
               showMenu={false}
-              inOverlay
+              displayFor="modal"
               allowMoreCols
               refetchOnListUpdate
             />

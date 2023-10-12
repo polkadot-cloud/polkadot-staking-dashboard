@@ -22,7 +22,7 @@ export const Nomination = ({
   nominator,
   toggleFavorites,
   bondFor,
-  inOverlay,
+  displayFor,
 }: NominationProps) => {
   const { selectActive } = useList();
   const { validatorIdentities, validatorSupers } = useValidators();
@@ -31,7 +31,7 @@ export const Nomination = ({
   const commission = prefs?.commission ?? null;
 
   return (
-    <Wrapper $format="nomination" $inOverlay={inOverlay}>
+    <Wrapper $format="nomination" $displayFor={displayFor}>
       <div className="inner">
         <div className="row">
           {selectActive && <Select item={validator} />}
@@ -57,7 +57,7 @@ export const Nomination = ({
             <ParaValidator address={address} />
 
             {/* restrict opening modal within a canvas */}
-            {!inOverlay && (
+            {displayFor === 'default' && (
               <Metrics
                 address={address}
                 display={getIdentityDisplay(

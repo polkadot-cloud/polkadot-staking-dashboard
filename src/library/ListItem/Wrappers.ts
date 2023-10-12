@@ -4,8 +4,12 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { SmallFontSizeMaxWidth } from 'consts';
+import type { DisplayFor } from 'types';
 
-export const Wrapper = styled.div<{ $format?: string; $inOverlay?: boolean }>`
+export const Wrapper = styled.div<{
+  $format?: string;
+  $displayFor?: DisplayFor;
+}>`
   display: flex;
   flex-flow: row wrap;
   width: 100%;
@@ -15,12 +19,12 @@ export const Wrapper = styled.div<{ $format?: string; $inOverlay?: boolean }>`
 
   > .inner {
     background: ${(props) =>
-      props.$inOverlay
-        ? 'var(--background-modal-item)'
-        : 'var(--background-list-item)'};
+      props.$displayFor === 'default'
+        ? 'var(--background-list-item)'
+        : 'var(--background-modal-item)'};
 
     ${(props) =>
-      props.$inOverlay &&
+      props.$displayFor !== 'default' &&
       `
       box-shadow: none;
       border: none;`}
