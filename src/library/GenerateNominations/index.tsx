@@ -27,14 +27,14 @@ import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { Validator } from 'contexts/Validators/types';
-import type { GenerateNominationsInnerProps } from '../SetupSteps/types';
+import type { GenerateNominationsProps } from '../SetupSteps/types';
 import { useFetchMehods } from './useFetchMethods';
 
 export const GenerateNominations = ({
   setters = [],
   nominations: defaultNominations,
   batchKey,
-}: GenerateNominationsInnerProps) => {
+}: GenerateNominationsProps) => {
   const { t } = useTranslation('library');
   const { isReady, consts } = useApi();
   const { openModal } = useOverlay().modal;

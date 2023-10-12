@@ -15,7 +15,7 @@ export interface FooterProps {
   bondFor: BondFor;
 }
 
-export interface GenerateNominationsInnerProps {
+export interface GenerateNominationsProps {
   setters: any[];
   nominations: Validator[];
   batchKey: string;
