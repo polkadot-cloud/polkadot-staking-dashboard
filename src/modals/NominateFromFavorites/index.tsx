@@ -83,8 +83,6 @@ export const NominateFromFavorites = () => {
     );
   }, [selectedFavorites]);
 
-  const batchKey = 'nominate_from_favorites';
-
   const onSelected = (provider: any) => {
     const { selected } = provider;
     setSelectedFavorites(selected);
@@ -153,7 +151,6 @@ export const NominateFromFavorites = () => {
             <ValidatorList
               bondFor="nominator"
               validators={availableFavorites}
-              batchKey={batchKey}
               title={t('favoriteNotNominated')}
               selectable
               selectActive

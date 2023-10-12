@@ -5,7 +5,6 @@ import type { Validator } from 'contexts/Validators/types';
 import type { AnyFunction, BondFor, DisplayFor } from 'types';
 
 export interface NominationsProps {
-  batchKey: string;
   bondFor: BondFor;
   section: number;
 }
@@ -19,7 +18,6 @@ export interface GenerateNominationsProps {
   setters: AnyFunction[];
   nominations: Validator[];
   displayFor?: DisplayFor;
-  batchKey: string;
 }
 
 export interface HeaderProps {

@@ -52,7 +52,6 @@ export const ManageNominations = () => {
 
       <GenerateNominations
         displayFor="canvas"
-        batchKey="active_account_manage_nominations"
         setters={[
           {
             current: {

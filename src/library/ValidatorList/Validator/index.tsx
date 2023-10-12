@@ -4,8 +4,9 @@
 import React from 'react';
 import { Default } from './Default';
 import { Nomination } from './Nomination';
+import type { ValidatorItemProps } from './types';
 
-export const ValidatorInner = (props: any) => {
+export const ValidatorInner = (props: ValidatorItemProps) => {
   const { format } = props;
 
   return format === 'nomination' ? (
@@ -15,13 +16,9 @@ export const ValidatorInner = (props: any) => {
   );
 };
 
-export class Validator extends React.Component<any, any> {
-  shouldComponentUpdate(nextProps: any) {
-    return (
-      this.props.validator.address !== nextProps.validator.address ||
-      this.props.batchIndex !== nextProps.batchIndex ||
-      this.props.batchKey !== nextProps.batchKey
-    );
+export class Validator extends React.Component<ValidatorItemProps> {
+  shouldComponentUpdate(nextProps: ValidatorItemProps) {
+    return this.props.validator.address !== nextProps.validator.address;
   }
 
   render() {

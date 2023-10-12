@@ -92,7 +92,6 @@ export const Active = () => {
                 </div>
               </CardHeaderWrapper>
               <GenerateNominations
-                batchKey="generate_nominations_active"
                 setters={[
                   {
                     set: setTargets,

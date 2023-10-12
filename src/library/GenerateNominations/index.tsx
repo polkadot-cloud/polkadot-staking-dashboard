@@ -33,7 +33,6 @@ import { useFetchMehods } from './useFetchMethods';
 export const GenerateNominations = ({
   setters = [],
   nominations: defaultNominations,
-  batchKey,
   displayFor = 'default',
 }: GenerateNominationsProps) => {
   const { t } = useTranslation('library');
@@ -339,7 +338,6 @@ export const GenerateNominations = ({
                 <ValidatorList
                   bondFor="nominator"
                   validators={nominations}
-                  batchKey={batchKey}
                   selectable
                   actions={actions}
                   allowMoreCols

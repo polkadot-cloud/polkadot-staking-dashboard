@@ -1,19 +1,16 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { BondFor, DisplayFor, MaybeAddress } from 'types';
+import type { MaybeAddress } from '@polkadot-cloud/react/types';
+import type { Validator } from 'contexts/Validators/types';
+import type { BondFor, DisplayFor } from 'types';
 
-export interface NominationProps {
-  validator: any;
-  nominator: MaybeAddress;
-  toggleFavorites: boolean;
+export interface ValidatorItemProps {
+  validator: Validator;
   bondFor: BondFor;
   displayFor: DisplayFor;
-}
-
-export interface DefaultProps {
-  validator: any;
-  toggleFavorites: boolean;
-  showMenu: boolean;
-  displayFor: DisplayFor;
+  nominator: MaybeAddress;
+  format?: string;
+  showMenu?: boolean;
+  toggleFavorites?: boolean;
 }

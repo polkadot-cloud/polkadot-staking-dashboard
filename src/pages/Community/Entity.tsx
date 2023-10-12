@@ -51,8 +51,6 @@ export const Entity = () => {
     },
   };
 
-  const batchKey = 'community_entity_validators';
-
   return (
     <PageRow>
       <PageHeading>
@@ -86,7 +84,6 @@ export const Entity = () => {
               <ValidatorList
                 bondFor="nominator"
                 validators={activeValidators}
-                batchKey={batchKey}
                 title={`${name} ${t('community.validators')}`}
                 selectable={false}
                 allowMoreCols

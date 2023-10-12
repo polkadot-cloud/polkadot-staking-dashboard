@@ -12,7 +12,7 @@ import { Subheading } from 'pages/Nominate/Wrappers';
 import { GenerateNominations } from '../GenerateNominations';
 import type { NominationsProps } from './types';
 
-export const Nominate = ({ batchKey, bondFor, section }: NominationsProps) => {
+export const Nominate = ({ bondFor, section }: NominationsProps) => {
   const { t } = useTranslation('library');
   const { consts } = useApi();
   const { activeAccount } = useActiveAccounts();
@@ -43,7 +43,6 @@ export const Nominate = ({ batchKey, bondFor, section }: NominationsProps) => {
           </h4>
         </Subheading>
         <GenerateNominations
-          batchKey={batchKey}
           setters={[
             {
               current: {

@@ -15,7 +15,7 @@ import { NominationStatus } from '../../ListItem/Labels/NominationStatus';
 import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
 import { Select } from '../../ListItem/Labels/Select';
 import { getIdentityDisplay } from './Utils';
-import type { NominationProps } from './types';
+import type { ValidatorItemProps } from './types';
 
 export const Nomination = ({
   validator,
@@ -23,7 +23,7 @@ export const Nomination = ({
   toggleFavorites,
   bondFor,
   displayFor,
-}: NominationProps) => {
+}: ValidatorItemProps) => {
   const { selectActive } = useList();
   const { validatorIdentities, validatorSupers } = useValidators();
 

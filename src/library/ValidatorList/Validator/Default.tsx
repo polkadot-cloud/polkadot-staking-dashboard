@@ -34,19 +34,19 @@ import { Identity } from '../../ListItem/Labels/Identity';
 import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
 import { Select } from '../../ListItem/Labels/Select';
 import { getIdentityDisplay } from './Utils';
-import type { DefaultProps } from './types';
+import type { ValidatorItemProps } from './types';
 
 export const Default = ({
   validator,
   toggleFavorites,
   showMenu,
   displayFor,
-}: DefaultProps) => {
+}: ValidatorItemProps) => {
   const { t } = useTranslation('library');
   const { selectActive } = useList();
+  const { pluginEnabled } = usePlugins();
   const { openModal } = useOverlay().modal;
   const { addNotification } = useNotifications();
-  const { pluginEnabled } = usePlugins();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
   const { validatorIdentities, validatorSupers } = useValidators();
 

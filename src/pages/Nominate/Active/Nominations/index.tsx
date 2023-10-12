@@ -152,7 +152,6 @@ export const Nominations = ({
                 bondFor={bondFor}
                 validators={nominated}
                 nominator={nominator}
-                batchKey={isPool ? 'pool_nominations' : 'stake_nominations'}
                 format="nomination"
                 selectable={
                   !isReadOnlyAccount(activeAccount) &&

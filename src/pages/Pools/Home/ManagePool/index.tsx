@@ -60,7 +60,6 @@ export const ManagePool = () => {
               </div>
             </CardHeaderWrapper>
             <GenerateNominations
-              batchKey="generate_pool_nominations"
               nominations={targets.nominations}
               setters={[
                 {
