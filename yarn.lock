@@ -1443,30 +1443,20 @@
     picocolors "^1.0.0"
     tslib "^2.6.0"
 
-"@polkadot-cloud/assets@^0.1.19":
-  version "0.1.20"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.20.tgz#4d864e3f5e433d6e8e2a11971ff2b0bb8c079e80"
-  integrity sha512-jBiR/6qebhVaDvlffE9mJxW5aVFZQSJ2o+4CARws23K2cGyI2e1ouHj0D0uOPuXloeOwyDp9N2NvpyoB8mjpUw==
-
-"@polkadot-cloud/assets@^0.1.22":
+"@polkadot-cloud/assets@^0.1.19", "@polkadot-cloud/assets@^0.1.22":
   version "0.1.22"
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.22.tgz#2db01e6b6cc876f775756806134040c9fe2d858e"
   integrity sha512-65bsSRclgNTDLwfpPYUGwJTIu5zlxx82UV+B6/vytIcOycnKP3Kjzgf1Z8I+b5GpptuQ1oCMAlU/okK5scoDUg==
 
-"@polkadot-cloud/core@1.0.15":
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.15.tgz#5d5ddfca3aa98b6a29472c176e0c141890124d77"
-  integrity sha512-1d4mXGNEe7jjD/apNXRCoab6qAh9sak277h46JTBVsmvPf7Q8w1kuFUmFemGZ7iryzHABYzHa156lrreFOEdIw==
-
-"@polkadot-cloud/core@^1.0.16":
+"@polkadot-cloud/core@1.0.16", "@polkadot-cloud/core@^1.0.16":
   version "1.0.16"
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.16.tgz#bb610c99f975d0a473ae70ef65f0f2f42b8ee623"
   integrity sha512-YLEwZc/hr2+xXttSZTPI5x+VGzfnurdS4vB8KZxSgZkGZtGgoQOpVW/8AGaPogWvVZeJIc3qDOv4tjKEDmi11Q==
 
-"@polkadot-cloud/react@^0.1.80":
-  version "0.1.80"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.80.tgz#9bbb266ca9de24ee9a20a36b1550f5b689012e6c"
-  integrity sha512-Y1Fky0mbX970OvzvyrE+z1tsf+FAs4WZSf9jOzAoFjXRYTf8Kq7CbIe/bfcWIuPcz9rrIqQz8tq+0NkhLYx5dg==
+"@polkadot-cloud/react@^0.1.81":
+  version "0.1.81"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.81.tgz#01c5e3c3df071c46d8fc0c96131bac28b23180a5"
+  integrity sha512-7ppvejG0VFeUZhM8uc7/ti0+voB0FyxTVWxrx0gghSbED/rsPJv4Tao+3vD20iAZQAQicV3XdbwMCCkx5kephQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.4.2"
     "@fortawesome/free-brands-svg-icons" "^6.4.2"
@@ -1474,7 +1464,7 @@
     "@fortawesome/free-solid-svg-icons" "^6.4.2"
     "@fortawesome/react-fontawesome" "^0.2.0"
     "@polkadot-cloud/assets" "^0.1.19"
-    "@polkadot-cloud/core" "1.0.15"
+    "@polkadot-cloud/core" "1.0.16"
     "@polkadot-cloud/utils" "^0.0.21"
     "@polkadot/keyring" "^12.5.1"
     "@polkadot/util" "^12.5.1"
