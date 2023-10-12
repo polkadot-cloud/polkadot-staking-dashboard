@@ -56,7 +56,7 @@ export const Nomination = ({
             <Commission commission={commission} />
             <ParaValidator address={address} />
 
-            {/* restrict opening another modal within a modal */}
+            {/* restrict opening modal within a canvas */}
             {!inOverlay && (
               <Metrics
                 address={address}

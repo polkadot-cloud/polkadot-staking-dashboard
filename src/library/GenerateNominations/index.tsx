@@ -34,6 +34,7 @@ export const GenerateNominations = ({
   setters = [],
   nominations: defaultNominations,
   batchKey,
+  inOverlay = false,
 }: GenerateNominationsProps) => {
   const { t } = useTranslation('library');
   const { isReady, consts } = useApi();
@@ -343,6 +344,7 @@ export const GenerateNominations = ({
                   actions={actions}
                   allowMoreCols
                   allowListFormat={false}
+                  inOverlay={inOverlay}
                 />
               </div>
             )}

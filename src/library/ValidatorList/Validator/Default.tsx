@@ -23,6 +23,7 @@ import {
 } from 'library/ListItem/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { usePlugins } from 'contexts/Plugins';
+import type { AnyJson } from 'types';
 import { useValidators } from '../../../contexts/Validators/ValidatorEntries';
 import { useList } from '../../List/context';
 import { Blocked } from '../../ListItem/Labels/Blocked';
@@ -68,22 +69,21 @@ export const Default = ({
 
   // configure floating menu
   const posRef = useRef(null);
-  const menuItems = [
-    {
-      icon: <FontAwesomeIcon icon={faChartLine} transform="shrink-3" />,
-      wrap: null,
-      title: `${t('viewMetrics')}`,
-      cb: () => {
-        openModal({
-          key: 'ValidatorMetrics',
-          options: {
-            address,
-            identity,
-          },
-        });
-      },
+  const menuItems: AnyJson[] = [];
+  menuItems.push({
+    icon: <FontAwesomeIcon icon={faChartLine} transform="shrink-3" />,
+    wrap: null,
+    title: `${t('viewMetrics')}`,
+    cb: () => {
+      openModal({
+        key: 'ValidatorMetrics',
+        options: {
+          address,
+          identity,
+        },
+      });
     },
-  ];
+  });
 
   if (pluginEnabled('polkawatch')) {
     menuItems.push({
@@ -134,9 +134,10 @@ export const Default = ({
               <Blocked prefs={prefs} />
               <Commission commission={commission} />
               <ParaValidator address={address} />
-
               {toggleFavorites && <FavoriteValidator address={address} />}
-              {showMenu && (
+
+              {/* restrict opening modal within a canvas */}
+              {!inOverlay && showMenu && (
                 <button
                   type="button"
                   className="label"
@@ -151,6 +152,7 @@ export const Default = ({
         <Separator />
         <div className="row status">
           <EraStatus address={address} />
+          {/* restrict opening modal within a canvas */}
           {inOverlay && (
             <>
               <Labels>
