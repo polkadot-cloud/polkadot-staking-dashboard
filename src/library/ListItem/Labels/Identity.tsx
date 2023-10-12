@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { Polkicon } from '@polkadot-cloud/react';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';
-import { getIdentityDisplay } from '../../ValidatorList/Validator/Utils';
+import { getIdentityDisplay } from '../../ValidatorList/ValidatorItem/Utils';
 import type { IdentityProps } from '../types';
 
 export const Identity = ({ address }: IdentityProps) => {

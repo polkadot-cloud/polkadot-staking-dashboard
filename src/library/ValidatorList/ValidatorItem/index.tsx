@@ -6,7 +6,7 @@ import { Default } from './Default';
 import { Nomination } from './Nomination';
 import type { ValidatorItemProps } from './types';
 
-export const ValidatorInner = (props: ValidatorItemProps) => {
+export const ValidatorItemInner = (props: ValidatorItemProps) => {
   const { format } = props;
 
   return format === 'nomination' ? (
@@ -16,12 +16,12 @@ export const ValidatorInner = (props: ValidatorItemProps) => {
   );
 };
 
-export class Validator extends React.Component<ValidatorItemProps> {
+export class ValidatorItem extends React.Component<ValidatorItemProps> {
   shouldComponentUpdate(nextProps: ValidatorItemProps) {
     return this.props.validator.address !== nextProps.validator.address;
   }
 
   render() {
-    return <ValidatorInner {...this.props} />;
+    return <ValidatorItemInner {...this.props} />;
   }
 }

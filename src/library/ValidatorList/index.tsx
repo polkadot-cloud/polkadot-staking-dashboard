@@ -18,8 +18,8 @@ import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { SearchInput } from 'library/List/SearchInput';
 import { Selectable } from 'library/List/Selectable';
-import { Validator } from 'library/ValidatorList/Validator';
-import type { Validator as ValidatorType } from 'contexts/Validators/types';
+import { ValidatorItem } from 'library/ValidatorList/ValidatorItem';
+import type { Validator } from 'contexts/Validators/types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -253,7 +253,7 @@ export const ValidatorListInner = ({
 
     // ensure no duplicates
     filteredValidators = filteredValidators.filter(
-      (value: ValidatorType, index: number, self: ValidatorType[]) =>
+      (value: Validator, index: number, self: Validator[]) =>
         index === self.findIndex((i) => i.address === value.address)
     );
 
@@ -323,7 +323,7 @@ export const ValidatorListInner = ({
         <MotionContainer>
           {listValidators.length ? (
             <>
-              {listValidators.map((validator: ValidatorType, index: number) => (
+              {listValidators.map((validator: Validator, index: number) => (
                 <motion.div
                   key={`nomination_${index}`}
                   className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
@@ -338,7 +338,7 @@ export const ValidatorListInner = ({
                     },
                   }}
                 >
-                  <Validator
+                  <ValidatorItem
                     validator={validator}
                     nominator={nominator}
                     toggleFavorites={toggleFavorites}
