@@ -64,16 +64,16 @@ export const Nominations = ({
     selectedActivePool?.bondedPool?.state === 'Destroying' &&
     !isNominating;
 
-  // Determine whether to display the stop button.
+  // Determine whether to display buttons.
   //
   // If regular staking and nominating, or if pool and account is nominator or root, display stop
   // button.
-  const displayStopBtn =
+  const displayBtns =
     (!isPool && nominations.length) ||
     (isPool && (isPoolNominator() || isPoolOwner()));
 
   // Determine whether buttons are disabled.
-  const stopBtnDisabled =
+  const btnsDisabled =
     (!isPool && inSetup()) ||
     isSyncing ||
     isReadOnlyAccount(activeAccount) ||
@@ -88,23 +88,42 @@ export const Nominations = ({
           <ButtonHelp marginLeft onClick={() => openHelp('Nominations')} />
         </h3>
         <div>
-          {displayStopBtn && (
-            <ButtonPrimary
-              iconLeft={faStopCircle}
-              iconTransform="grow-1"
-              text={t('nominate.stop')}
-              disabled={stopBtnDisabled}
-              onClick={() =>
-                openModal({
-                  key: 'ChangeNominations',
-                  options: {
-                    nominations: [],
-                    bondFor,
-                  },
-                  size: 'sm',
-                })
-              }
-            />
+          {displayBtns && (
+            <>
+              <ButtonPrimary
+                text={t('nominate.stop')}
+                iconLeft={faStopCircle}
+                iconTransform="grow-1"
+                disabled={btnsDisabled}
+                onClick={() =>
+                  openModal({
+                    key: 'ChangeNominations',
+                    options: {
+                      nominations: [],
+                      bondFor,
+                    },
+                    size: 'sm',
+                  })
+                }
+              />
+              <ButtonPrimary
+                text={t('nominate.manage')}
+                iconLeft={faStopCircle}
+                iconTransform="grow-1"
+                disabled={btnsDisabled}
+                marginLeft
+                onClick={() =>
+                  openModal({
+                    key: 'ChangeNominations',
+                    options: {
+                      nominations: [],
+                      bondFor,
+                    },
+                    size: 'sm',
+                  })
+                }
+              />
+            </>
           )}
         </div>
       </CardHeaderWrapper>
