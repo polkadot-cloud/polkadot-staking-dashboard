@@ -1443,53 +1443,53 @@
     picocolors "^1.0.0"
     tslib "^2.6.0"
 
-"@polkadot-cloud/assets@^0.1.16":
-  version "0.1.17"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.17.tgz#fca29f7444cd1d3026e07dfb0110060d5f75536b"
-  integrity sha512-PMXH1+YQgAjAAScmmbD2nBshO87uK2JGJqDYyBSBg5By8rbuDAXKquR6n7eP04Lwv2dsi8Ut3iS453sakOHO0A==
+"@polkadot-cloud/assets@^0.1.19":
+  version "0.1.20"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.20.tgz#4d864e3f5e433d6e8e2a11971ff2b0bb8c079e80"
+  integrity sha512-jBiR/6qebhVaDvlffE9mJxW5aVFZQSJ2o+4CARws23K2cGyI2e1ouHj0D0uOPuXloeOwyDp9N2NvpyoB8mjpUw==
 
-"@polkadot-cloud/assets@^0.1.18":
-  version "0.1.18"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.18.tgz#fc7320728a6e0bc4d95a276cd923e9abbed157fc"
-  integrity sha512-bIyRTxplMaAFVqYW8J3DEWXkTiOWQJvrOAsSMdK7LplO/m9EkZwK2mNTiIeA2mknkoHmRknsgw8QaLL3PnBFrA==
+"@polkadot-cloud/assets@^0.1.22":
+  version "0.1.22"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.22.tgz#2db01e6b6cc876f775756806134040c9fe2d858e"
+  integrity sha512-65bsSRclgNTDLwfpPYUGwJTIu5zlxx82UV+B6/vytIcOycnKP3Kjzgf1Z8I+b5GpptuQ1oCMAlU/okK5scoDUg==
 
-"@polkadot-cloud/core@^1.0.13", "@polkadot-cloud/core@^1.0.14":
-  version "1.0.14"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.14.tgz#f20551d6c9c325f4c7191c56552420cf7f751c5c"
-  integrity sha512-tdIAOo463XNdjL7n4goUlW6JkRXrnfpmMF8opaA58NO+tPJuR71B4dFjBI9CxoL7dee0/eGuhv0xp4ujXCJQ3Q==
+"@polkadot-cloud/core@1.0.15", "@polkadot-cloud/core@^1.0.15":
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.15.tgz#5d5ddfca3aa98b6a29472c176e0c141890124d77"
+  integrity sha512-1d4mXGNEe7jjD/apNXRCoab6qAh9sak277h46JTBVsmvPf7Q8w1kuFUmFemGZ7iryzHABYzHa156lrreFOEdIw==
 
-"@polkadot-cloud/react@^0.1.77":
-  version "0.1.77"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.77.tgz#8627c948b8e9df05e29911e3853152f7d23e9489"
-  integrity sha512-m59w1JLc0zp2qQAtFTfnHChC/RHf1eihhgwLIgmHJaXFRoidQzt3KNyvR0xU2bTEGkoTu//8I3Cd5+DDCWZNng==
+"@polkadot-cloud/react@^0.1.80":
+  version "0.1.80"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.80.tgz#9bbb266ca9de24ee9a20a36b1550f5b689012e6c"
+  integrity sha512-Y1Fky0mbX970OvzvyrE+z1tsf+FAs4WZSf9jOzAoFjXRYTf8Kq7CbIe/bfcWIuPcz9rrIqQz8tq+0NkhLYx5dg==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.4.2"
     "@fortawesome/free-brands-svg-icons" "^6.4.2"
     "@fortawesome/free-regular-svg-icons" "^6.4.2"
     "@fortawesome/free-solid-svg-icons" "^6.4.2"
     "@fortawesome/react-fontawesome" "^0.2.0"
-    "@polkadot-cloud/assets" "^0.1.16"
-    "@polkadot-cloud/core" "^1.0.13"
-    "@polkadot-cloud/utils" "^0.0.20"
+    "@polkadot-cloud/assets" "^0.1.19"
+    "@polkadot-cloud/core" "1.0.15"
+    "@polkadot-cloud/utils" "^0.0.21"
     "@polkadot/keyring" "^12.5.1"
     "@polkadot/util" "^12.5.1"
     "@polkadot/util-crypto" "^12.5.1"
     framer-motion "^10.15.0"
     react-error-boundary "^4.0.11"
 
-"@polkadot-cloud/utils@^0.0.20":
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/utils/-/utils-0.0.20.tgz#b9a8038304d8dc24f6b530ec687543aaf268721a"
-  integrity sha512-PA2FRzRkmXdt58XJu1nfVxVJcPYG4JittJFRcnMVQ+V0hY40hkoiJoSRR0S0KWmCfF7DHi4AhoEGmH9oj7JEMA==
+"@polkadot-cloud/utils@^0.0.21":
+  version "0.0.21"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/utils/-/utils-0.0.21.tgz#a4e771280794d341bff0a09e3cf8696a829b65f6"
+  integrity sha512-I727tVtybyUHzt60+x4EzLQ4Aaltg+RZe5pns9UgYd5/7mduCTlKPNMLqx4QGVD8xQuFoUblCgQzD7YitbWx5Q==
   dependencies:
     "@polkadot/keyring" "^12.5.1"
     "@polkadot/util" "^12.5.1"
     bignumber.js "^9.1.1"
 
-"@polkadot-cloud/utils@^0.0.21":
-  version "0.0.21"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/utils/-/utils-0.0.21.tgz#a4e771280794d341bff0a09e3cf8696a829b65f6"
-  integrity sha512-I727tVtybyUHzt60+x4EzLQ4Aaltg+RZe5pns9UgYd5/7mduCTlKPNMLqx4QGVD8xQuFoUblCgQzD7YitbWx5Q==
+"@polkadot-cloud/utils@^0.0.22":
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/utils/-/utils-0.0.22.tgz#b50a1f8dd6c49af2886bd653124fda8a4209a3b6"
+  integrity sha512-fx5e2f3KQ6EJCpepujFw5wqP2e6w/2j+k6gBw1lzaNALHDuGcIAh0MCrkg9k9HT/u75H6ANK2Sh6WDq5/7tayA==
   dependencies:
     "@polkadot/keyring" "^12.5.1"
     "@polkadot/util" "^12.5.1"
@@ -2145,10 +2145,19 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^18.2.27":
+"@types/react@*":
   version "18.2.27"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.27.tgz#746e52b06f3ccd5d7a724fd53769b70792601440"
   integrity sha512-Wfv7B7FZiR2r3MIqbAlXoY1+tXm4bOqfz4oRr+nyXdBqapDBZ0l/IGcSlAfvxIHEEJjkPU0MYAc/BlFPOcrgLw==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@^18.2.28":
+  version "18.2.28"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.28.tgz#86877465c0fcf751659a36c769ecedfcfacee332"
+  integrity sha512-ad4aa/RaaJS3hyGz0BGegdnSRXQBkd1CCYDCdNjBPg90UUpLgo+WlJqb9fMYUxtehmzF3PJaTWqRZjko6BRzBg==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
