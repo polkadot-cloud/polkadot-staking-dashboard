@@ -16,6 +16,7 @@ import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
 import type { MaybeAddress } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { Subheading } from 'pages/Nominate/Wrappers';
 
 export const Payee = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
@@ -78,9 +79,9 @@ export const Payee = ({ section }: SetupStepProps) => {
         bondFor="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <h4 className="withMargin">
-          {t('nominate.payoutDestinationSubtitle')}
-        </h4>
+        <Subheading>
+          <h4>{t('nominate.payoutDestinationSubtitle')}</h4>
+        </Subheading>
 
         <SelectItems layout="three-col">
           {getPayeeItems().map((item) => (

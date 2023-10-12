@@ -13,3 +13,7 @@ export const Spacer = styled.div`
   height: 1px;
   margin: 0.75rem 0;
 `;
+
+export const Subheading = styled.div`
+  margin: 0.4rem 0 1rem 0;
+`;

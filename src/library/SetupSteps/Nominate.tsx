@@ -8,6 +8,7 @@ import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { Subheading } from 'pages/Nominate/Wrappers';
 import { GenerateNominations } from '../GenerateNominations';
 import type { NominationsProps } from './types';
 
@@ -37,9 +38,13 @@ export const Nominate = ({ batchKey, bondFor, section }: NominationsProps) => {
         bondFor={bondFor}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <h4 className="withMargin">
-          {t('chooseValidators', { maxNominations: maxNominations.toString() })}
-        </h4>
+        <Subheading>
+          <h4>
+            {t('chooseValidators', {
+              maxNominations: maxNominations.toString(),
+            })}
+          </h4>
+        </Subheading>
         <GenerateNominations
           batchKey={batchKey}
           setters={[
