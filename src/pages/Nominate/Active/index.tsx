@@ -32,13 +32,13 @@ import { UnstakePrompts } from './UnstakePrompts';
 export const Active = () => {
   const { t } = useTranslation('pages');
   const { isSyncing } = useUi();
+  const { openHelp } = useHelp();
   const { openModal } = useOverlay().modal;
+  const { isFastUnstaking } = useUnstaking();
+  const { getAccountNominations } = useBonded();
   const { activeAccount } = useActiveAccounts();
   const { targets, setTargets, inSetup } = useStaking();
-  const { getAccountNominations } = useBonded();
-  const { isFastUnstaking } = useUnstaking();
   const nominations = getAccountNominations(activeAccount);
-  const { openHelp } = useHelp();
 
   const ROW_HEIGHT = 220;
 

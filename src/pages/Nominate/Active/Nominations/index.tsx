@@ -19,6 +19,7 @@ import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Wrapper } from './Wrapper';
+import type { ManageNominationsInterface } from './types';
 
 export const Nominations = ({
   bondFor,
@@ -28,68 +29,50 @@ export const Nominations = ({
   nominator: MaybeAddress;
 }) => {
   const { t } = useTranslation('pages');
+  const {
+    poolNominations,
+    selectedActivePool,
+    isOwner: isPoolOwner,
+    isNominator: isPoolNominator,
+  } = useActivePools();
   const { isSyncing } = useUi();
   const { openHelp } = useHelp();
   const { inSetup } = useStaking();
   const { openModal } = useOverlay().modal;
   const { isFastUnstaking } = useUnstaking();
+  const { activeAccount } = useActiveAccounts();
   const { getAccountNominations } = useBonded();
   const { favoritesList } = useFavoriteValidators();
   const { isReadOnlyAccount } = useImportedAccounts();
-  const { activeAccount } = useActiveAccounts();
-  const { nominated: stakeNominated, poolNominated } = useValidators();
+  const { nominated: nominatorNominated, poolNominated } = useValidators();
 
-  const {
-    poolNominations,
-    isNominator: isPoolNominator,
-    isOwner: isPoolOwner,
-    selectedActivePool,
-  } = useActivePools();
-
+  // Determine if pool or nominator.
   const isPool = bondFor === 'pool';
+
+  // Derive nominations from `bondFor` type.
   const nominations = isPool
     ? poolNominations.targets
     : getAccountNominations(nominator);
-  const nominated = isPool ? poolNominated : stakeNominated;
-  const batchKey = isPool ? 'pool_nominations' : 'stake_nominations';
+  const nominated = isPool ? poolNominated : nominatorNominated;
 
-  const nominating = nominated?.length ?? false;
+  // Determine if this nominator is actually nominating.
+  const isNominating = nominated?.length ?? false;
 
-  // callback function to stop nominating selected validators
-  const cbStopNominatingSelected = (provider: any) => {
-    const { selected } = provider;
-    openModal({
-      key: 'ChangeNominations',
-      options: {
-        nominations: [...nominations].filter(
-          (n) => !selected.map((_s: any) => _s.address).includes(n)
-        ),
-        provider,
-        bondFor,
-      },
-      size: 'sm',
-    });
-  };
-
-  // callback function for adding nominations
-  const cbAddNominations = ({ setSelectActive }: any) => {
-    setSelectActive(false);
-    openModal({
-      key: 'NominateFromFavorites',
-      options: {
-        nominations,
-        bondFor,
-      },
-      size: 'xl',
-    });
-  };
-
-  // determine whether buttons are disabled
+  // Determine whether this is a pool that is in Destroying state & not nominating.
   const poolDestroying =
     isPool &&
     selectedActivePool?.bondedPool?.state === 'Destroying' &&
-    !nominating;
+    !isNominating;
 
+  // Determine whether to display the stop button.
+  //
+  // If regular staking and nominating, or if pool and account is nominator or root, display stop
+  // button.
+  const displayStopBtn =
+    (!isPool && nominations.length) ||
+    (isPool && (isPoolNominator() || isPoolOwner()));
+
+  // Determine whether buttons are disabled.
   const stopBtnDisabled =
     (!isPool && inSetup()) ||
     isSyncing ||
@@ -105,11 +88,7 @@ export const Nominations = ({
           <ButtonHelp marginLeft onClick={() => openHelp('Nominations')} />
         </h3>
         <div>
-          {/* If regular staking and nominating, display stop button.
-              If Pool and account is nominator or root, display stop button.
-          */}
-          {((!isPool && nominations.length) ||
-            (isPool && (isPoolNominator() || isPoolOwner()))) && (
+          {displayStopBtn && (
             <ButtonPrimary
               iconLeft={faStopCircle}
               iconTransform="grow-1"
@@ -146,11 +125,11 @@ export const Nominations = ({
           {nominated.length > 0 ? (
             <div style={{ marginTop: '1rem' }}>
               <ValidatorList
-                bondFor={isPool ? 'pool' : 'nominator'}
+                title={t('nominate.yourNominations')}
+                bondFor={bondFor}
                 validators={nominated}
                 nominator={nominator}
-                batchKey={batchKey}
-                title={t('nominate.yourNominations')}
+                batchKey={isPool ? 'pool_nominations' : 'stake_nominations'}
                 format="nomination"
                 selectable={
                   !isReadOnlyAccount(activeAccount) &&
@@ -162,13 +141,41 @@ export const Nominations = ({
                     : [
                         {
                           title: t('nominate.stopNominatingSelected'),
-                          onClick: cbStopNominatingSelected,
+                          onClick: (provider: ManageNominationsInterface) => {
+                            const { selected } = provider;
+                            openModal({
+                              key: 'ChangeNominations',
+                              options: {
+                                nominations: [...nominations].filter(
+                                  (n) =>
+                                    !selected
+                                      .map(({ address }) => address)
+                                      .includes(n)
+                                ),
+                                provider,
+                                bondFor,
+                              },
+                              size: 'sm',
+                            });
+                          },
                           onSelected: true,
                         },
                         {
                           isDisabled: () => !favoritesList?.length,
                           title: t('nominate.addFromFavorites'),
-                          onClick: cbAddNominations,
+                          onClick: ({
+                            setSelectActive,
+                          }: ManageNominationsInterface) => {
+                            setSelectActive(false);
+                            openModal({
+                              key: 'NominateFromFavorites',
+                              options: {
+                                nominations,
+                                bondFor,
+                              },
+                              size: 'xl',
+                            });
+                          },
                           onSelected: false,
                         },
                       ]
