@@ -122,7 +122,6 @@ export const Nominations = ({
                       bondFor,
                       nominator,
                       nominated,
-                      nominations,
                     },
                     size: 'xl',
                   })

@@ -21,12 +21,9 @@ export const Nominate = ({ batchKey, bondFor, section }: NominationsProps) => {
   const { progress } = setup;
   const { maxNominations } = consts;
 
-  const setterFn = () => getSetupProgress(bondFor, activeAccount).progress;
-
-  // handler for updating setup.bond
-  const handleSetupUpdate = (value: any) => {
+  // Handler for updating setup.
+  const handleSetupUpdate = (value: any) =>
     setActiveAccountSetup(bondFor, value);
-  };
 
   return (
     <>
@@ -51,7 +48,7 @@ export const Nominate = ({ batchKey, bondFor, section }: NominationsProps) => {
             {
               current: {
                 callable: true,
-                fn: setterFn,
+                fn: () => getSetupProgress(bondFor, activeAccount).progress,
               },
               set: handleSetupUpdate,
             },

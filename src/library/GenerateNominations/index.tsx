@@ -26,10 +26,8 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import type {
-  GenerateNominationsInnerProps,
-  Nominations,
-} from '../SetupSteps/types';
+import type { Validator } from 'contexts/Validators/types';
+import type { GenerateNominationsInnerProps } from '../SetupSteps/types';
 import { useFetchMehods } from './useFetchMethods';
 
 export const GenerateNominations = ({
@@ -42,9 +40,9 @@ export const GenerateNominations = ({
   const { openModal } = useOverlay().modal;
   const { isFastUnstaking } = useUnstaking();
   const { stakers } = useStaking().eraStakers;
+  const { activeAccount } = useActiveAccounts();
   const { favoritesList } = useFavoriteValidators();
   const { isReadOnlyAccount } = useImportedAccounts();
-  const { activeAccount } = useActiveAccounts();
   const { validators, validatorIdentities, validatorSupers } = useValidators();
   const {
     fetch: fetchFromMethod,
@@ -128,7 +126,7 @@ export const GenerateNominations = ({
     }
   };
 
-  const updateSetters = (newNominations: Nominations) => {
+  const updateSetters = (newNominations: Validator[]) => {
     for (const { current, set } of setters) {
       const currentValue = current?.callable ? current.fn() : current;
       set({
@@ -142,9 +140,9 @@ export const GenerateNominations = ({
   const cbAddNominations = ({ setSelectActive }: any) => {
     setSelectActive(false);
 
-    const updateList = (_nominations: Nominations) => {
-      setNominations([..._nominations]);
-      updateSetters(_nominations);
+    const updateList = (newNominations: Validator[]) => {
+      setNominations([...newNominations]);
+      updateSetters(newNominations);
     };
     openModal({
       key: 'SelectFavorites',

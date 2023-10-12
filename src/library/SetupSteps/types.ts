@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { Validator } from 'contexts/Validators/types';
 import type { BondFor } from 'types';
 
 export interface NominationsProps {
@@ -16,7 +17,7 @@ export interface FooterProps {
 
 export interface GenerateNominationsInnerProps {
   setters: any[];
-  nominations: string[];
+  nominations: Validator[];
   batchKey: string;
 }
 
@@ -27,8 +28,6 @@ export interface HeaderProps {
   thisSection: number;
   bondFor: BondFor;
 }
-
-export type Nominations = string[];
 
 export interface SetupStepProps {
   section: number;
