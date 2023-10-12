@@ -21,7 +21,9 @@ export const Wrapper = styled.div<{
     background: ${(props) =>
       props.$displayFor === 'default'
         ? 'var(--background-list-item)'
-        : 'var(--background-modal-item)'};
+        : props.$displayFor === 'canvas'
+        ? 'var(--background-canvas-card)'
+        : 'var(--background-modal-card)'};
 
     ${(props) =>
       props.$displayFor !== 'default' &&
