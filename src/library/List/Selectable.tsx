@@ -1,60 +1,67 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
+import { ButtonMonoInvert, ButtonTertiary } from '@polkadot-cloud/react';
 import { SelectableWrapper } from '.';
 import { useList } from './context';
+import type { SelectableProps } from './types';
 
-export const Selectable = ({ actionsAll, actionsSelected, canSelect }: any) => {
+export const Selectable = ({
+  actionsAll,
+  actionsSelected,
+  canSelect,
+  displayFor,
+}: SelectableProps) => {
   const { t } = useTranslation('library');
   const provider = useList();
   const { isFastUnstaking } = useUnstaking();
 
-  // get list provider props
+  // Get list provider props.
   const { selectActive, setSelectActive, selected, selectToggleable } =
     provider;
+
+  // Determine button style depending on in canvas.
+  const ButtonType =
+    displayFor === 'canvas' ? ButtonMonoInvert : ButtonTertiary;
 
   return (
     <SelectableWrapper>
       {selectToggleable === true ? (
-        <button
-          type="button"
+        <ButtonType
+          text={selectActive ? t('cancel') : t('select')}
           disabled={!canSelect || isFastUnstaking}
           onClick={() => {
             setSelectActive(!selectActive);
           }}
-        >
-          {selectActive ? t('cancel') : t('select')}
-        </button>
+          marginRight
+        />
       ) : null}
       {selected.length > 0 ? (
         <>
           {actionsSelected.map((a: any, i: number) => (
-            <button
+            <ButtonType
               key={`a_selected_${i}`}
+              text={a.title}
               disabled={
                 isFastUnstaking || (a?.isDisabled ? a.isDisabled() : false)
               }
-              type="button"
               onClick={() => a.onClick(provider)}
-            >
-              {a.title}
-            </button>
+              marginRight
+            />
           ))}
         </>
       ) : null}
       {actionsAll.map((a: any, i: number) => (
-        <button
+        <ButtonType
+          text={a.title}
           key={`a_all_${i}`}
           disabled={isFastUnstaking || (a?.isDisabled ? a.isDisabled() : false)}
-          type="button"
           onClick={() => a.onClick(provider)}
-        >
-          {a.icon ? <FontAwesomeIcon icon={a.icon} /> : null}
-          {a.title}
-        </button>
+          iconLeft={a.icon ? a.icon : undefined}
+          marginRight
+        />
       ))}
     </SelectableWrapper>
   );

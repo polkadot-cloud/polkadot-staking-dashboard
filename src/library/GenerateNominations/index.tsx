@@ -9,7 +9,6 @@ import {
   faTimes,
   faUserEdit,
 } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { camelize } from '@polkadot-cloud/utils';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,6 +26,7 @@ import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { Validator } from 'contexts/Validators/types';
+import { ButtonPrimaryInvert, ButtonTertiary } from '@polkadot-cloud/react';
 import type { GenerateNominationsProps } from '../SetupSteps/types';
 import { useFetchMehods } from './useFetchMethods';
 
@@ -268,29 +268,33 @@ export const GenerateNominations = ({
     },
   ];
 
+  // Determine button style depending on in canvas.
+  const ButtonType =
+    displayFor === 'canvas' ? ButtonPrimaryInvert : ButtonTertiary;
+
   return (
     <>
       {method && (
         <SelectableWrapper>
-          <button type="button" onClick={() => clearNominations()}>
-            <FontAwesomeIcon icon={faTimes} />
-            {t(`${camelize(method)}`)}
-          </button>
+          <ButtonType
+            text={t(`${camelize(method)}`)}
+            iconLeft={faTimes}
+            onClick={() => clearNominations()}
+            marginRight
+          />
 
           {['Active Low Commission', 'Optimal Selection'].includes(
             method || ''
           ) && (
-            <button
-              type="button"
+            <ButtonType
+              text={t('reGenerate')}
               onClick={() => {
                 // set a temporary height to prevent height snapping on re-renders.
                 setHeight(heightRef?.current?.clientHeight || null);
                 setTimeout(() => setHeight(null), 200);
                 setFetching(true);
               }}
-            >
-              {t('reGenerate')}
-            </button>
+            />
           )}
         </SelectableWrapper>
       )}

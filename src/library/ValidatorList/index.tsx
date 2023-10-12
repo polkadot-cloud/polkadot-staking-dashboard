@@ -317,6 +317,7 @@ export const ValidatorListInner = ({
             canSelect={listValidators.length > 0}
             actionsAll={actionsAll}
             actionsSelected={actionsSelected}
+            displayFor={displayFor}
           />
         ) : null}
 

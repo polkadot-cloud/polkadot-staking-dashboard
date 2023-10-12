@@ -88,27 +88,10 @@ export const SelectableWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  padding: 0 0.15rem;
 
   > button {
-    border: 1px solid var(--border-primary-color);
-    font-size: 1rem;
-    color: var(--text-color-secondary);
-    border-radius: 1.5rem;
-    padding: 0.45rem 1rem;
-    margin-right: 0.5rem;
     margin-bottom: 0.75rem;
-
-    > svg {
-      margin-right: 0.5rem;
-    }
-
-    &:disabled {
-      opacity: var(--opacity-disabled);
-    }
-
-    &:hover {
-      color: var(--text-color-primary);
-    }
   }
 `;
 
