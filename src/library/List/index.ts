@@ -20,7 +20,7 @@ export const Header = styled.div<{ $displayFor?: DisplayFor }>`
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-end;
-  padding: 0 0.25rem 0.5rem 0.25rem;
+  padding: 0.25rem 0.25rem 0.75rem 0.25rem;
   flex: 1;
 
   h4 {
