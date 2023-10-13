@@ -267,7 +267,7 @@ export const ValidatorListInner = ({
 
   return (
     <ListWrapper>
-      <Header>
+      <Header $displayFor={displayFor}>
         <div>
           <h4>
             {title ||

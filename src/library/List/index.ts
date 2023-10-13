@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components';
+import type { DisplayFor } from 'types';
 import type { ListProps, PaginationWrapperProps } from './types';
 
 export const Wrapper = styled.div`
@@ -10,8 +11,12 @@ export const Wrapper = styled.div`
   flex-flow: column nowrap;
 `;
 
-export const Header = styled.div`
-  border-bottom: 1px solid var(--border-primary-color);
+export const Header = styled.div<{ $displayFor?: DisplayFor }>`
+  border-bottom: ${(props) =>
+    props.$displayFor === 'canvas'
+      ? '1px solid var(--border-secondary-color)'
+      : '1px solid var(--border-primary-color)'};
+
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-end;
