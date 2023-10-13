@@ -78,7 +78,9 @@ export const ManageNominations = () => {
           style={{ marginLeft: '1.1rem' }}
         />
       </div>
-      <h1 style={{ marginTop: '1.5rem' }}>Manage Nominations</h1>
+      <h1 style={{ marginTop: '1.5rem', marginBottom: '1.25rem' }}>
+        Manage Nominations
+      </h1>
 
       <Subheading>
         <h3 style={{ marginBottom: '1.5rem' }}>

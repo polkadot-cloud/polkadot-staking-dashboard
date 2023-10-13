@@ -278,7 +278,7 @@ export const GenerateNominations = ({
       {method && (
         <SelectableWrapper>
           <ButtonType
-            text={t(`Go Back`)}
+            text={t(`Back to Methods`)}
             iconLeft={faChevronLeft}
             iconTransform="shrink-2"
             onClick={() => clearNominations()}
