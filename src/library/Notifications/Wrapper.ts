@@ -18,7 +18,7 @@ export const Wrapper = styled.ul`
     margin: 0.3rem 1.2rem;
     position: relative;
     border-radius: 1.25rem;
-    padding: 1rem 1.25rem;
+    padding: 1rem 1.35rem;
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
@@ -31,6 +31,11 @@ export const Wrapper = styled.ul`
       font-family: InterSemiBold, sans-serif;
       margin: 0.15rem 0 0.5rem;
       flex: 1;
+    }
+    h4 {
+      font-family: InterSemiBold, sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.45rem;
     }
   }
 `;

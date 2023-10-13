@@ -66,8 +66,7 @@ export const ManageNominations = () => {
     setNewNominations({ nominations: defaultNominations });
     addNotification({
       title: 'Nominations Reverted',
-      subtitle:
-        'Nominations have been reverted to your currently active selection.',
+      subtitle: 'Nominations have been reverted to your active selection.',
     });
     closePrompt();
   };
