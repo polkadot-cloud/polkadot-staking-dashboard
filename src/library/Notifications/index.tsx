@@ -34,7 +34,7 @@ export const Notifications = () => {
                   onClick={() => removeNotification(index)}
                 >
                   {item.title && <h3>{item.title}</h3>}
-                  {item.subtitle && <h5>{item.subtitle}</h5>}
+                  {item.subtitle && <h4>{item.subtitle}</h4>}
                 </motion.li>
               );
             }
