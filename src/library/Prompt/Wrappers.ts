@@ -17,7 +17,7 @@ export const PromptWrapper = styled.div`
     flex-flow: row wrap;
     justify-content: center;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 2rem 2rem;
 
     /* click anywhere behind overlay to close */
     .close {
@@ -38,7 +38,7 @@ export const HeightWrapper = styled.div<{ size: string }>`
   border-radius: 1.5rem;
   z-index: 9;
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 `;
 
 export const ContentWrapper = styled.div`

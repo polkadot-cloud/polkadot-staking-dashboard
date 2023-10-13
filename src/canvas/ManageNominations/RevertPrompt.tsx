@@ -1,4 +1,4 @@
-import { ButtonPrimaryInvert } from '@polkadot-cloud/react';
+import { ButtonPrimary } from '@polkadot-cloud/react';
 import { Title } from 'library/Prompt/Title';
 
 export const RevertPrompt = ({ onRevert }: { onRevert: () => void }) => (
@@ -17,7 +17,7 @@ export const RevertPrompt = ({ onRevert }: { onRevert: () => void }) => (
           display: 'flex',
         }}
       >
-        <ButtonPrimaryInvert
+        <ButtonPrimary
           marginRight
           text="Revert Changes"
           onClick={() => onRevert()}

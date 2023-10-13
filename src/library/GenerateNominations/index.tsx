@@ -21,13 +21,14 @@ import { SelectItem } from 'library/SelectItems/Item';
 import { ValidatorList } from 'library/ValidatorList';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
 import { useStaking } from 'contexts/Staking';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { Validator } from 'contexts/Validators/types';
 import { ButtonMonoInvert, ButtonPrimaryInvert } from '@polkadot-cloud/react';
 import { Subheading } from 'pages/Nominate/Wrappers';
+import { FavoritesPrompt } from 'canvas/ManageNominations/FavoritesPrompt';
+import { usePrompt } from 'contexts/Prompt';
 import type { GenerateNominationsProps } from '../SetupSteps/types';
 import { useFetchMehods } from './useFetchMethods';
 
@@ -38,11 +39,11 @@ export const GenerateNominations = ({
 }: GenerateNominationsProps) => {
   const { t } = useTranslation('library');
   const { isReady, consts } = useApi();
-  const { openModal } = useOverlay().modal;
   const { isFastUnstaking } = useUnstaking();
   const { stakers } = useStaking().eraStakers;
   const { activeAccount } = useActiveAccounts();
   const { favoritesList } = useFavoriteValidators();
+  const { openPromptWith, closePrompt } = usePrompt();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { validators, validatorIdentities, validatorSupers } = useValidators();
   const {
@@ -144,15 +145,12 @@ export const GenerateNominations = ({
     const updateList = (newNominations: Validator[]) => {
       setNominations([...newNominations]);
       updateSetters(newNominations);
+      closePrompt();
     };
-    openModal({
-      key: 'SelectFavorites',
-      options: {
-        nominations,
-        callback: updateList,
-      },
-      size: 'xl',
-    });
+
+    openPromptWith(
+      <FavoritesPrompt callback={updateList} nominations={nominations} />
+    );
   };
 
   // function for clearing nomination list

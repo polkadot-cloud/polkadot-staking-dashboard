@@ -166,7 +166,6 @@ export const IdentityWrapper = styled(motion.div)`
     font-family: InterSemiBold, sans-serif;
     position: absolute;
     top: 0;
-    width: 100%;
     height: 3.25rem;
     line-height: 3.25rem;
     padding: 0 0 0 0.3rem;
@@ -175,6 +174,7 @@ export const IdentityWrapper = styled(motion.div)`
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 1rem;
+    width: 100%;
 
     > span {
       color: var(--text-color-secondary);
