@@ -1,7 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonPrimary, ButtonPrimaryInvert } from '@polkadot-cloud/react';
+import {
+  ButtonHelp,
+  ButtonPrimary,
+  ButtonPrimaryInvert,
+} from '@polkadot-cloud/react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import type { Validator } from 'contexts/Validators/types';
 import { GenerateNominations } from 'library/GenerateNominations';
@@ -11,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { usePrompt } from 'contexts/Prompt';
+import { useHelp } from 'contexts/Help';
 import type { NewNominations } from './types';
 import { RevertPrompt } from './RevertPrompt';
 
@@ -22,6 +27,7 @@ export const ManageNominations = () => {
   } = useOverlay().canvas;
   const { consts } = useApi();
   const { openPromptWith, closePrompt } = usePrompt();
+  const { openHelp } = useHelp();
   const { maxNominations } = consts;
 
   // const { activeAccount } = useActiveAccounts();
@@ -78,7 +84,12 @@ export const ManageNominations = () => {
           style={{ marginLeft: '1.1rem' }}
         />
       </div>
-      <h1 style={{ marginTop: '1.5rem', marginBottom: '1.25rem' }}>
+      <h1
+        style={{
+          marginTop: '1.5rem',
+          marginBottom: '1.25rem',
+        }}
+      >
         Manage Nominations
       </h1>
 
@@ -87,6 +98,10 @@ export const ManageNominations = () => {
           {t('chooseValidators', {
             maxNominations: maxNominations.toString(),
           })}
+          <ButtonHelp
+            onClick={() => openHelp('Nominations')}
+            backgroundSecondary
+          />
         </h3>
       </Subheading>
 

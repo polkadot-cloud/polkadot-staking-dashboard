@@ -21,5 +21,11 @@ export const Subheading = styled.div`
   h4 {
     margin-top: 0;
     margin-left: 0;
+    display: flex;
+    align-items: center;
+
+    > button {
+      margin-left: 0.75rem;
+    }
   }
 `;
