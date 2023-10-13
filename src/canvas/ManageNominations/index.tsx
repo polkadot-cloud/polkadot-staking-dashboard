@@ -16,6 +16,7 @@ import { useApi } from 'contexts/Api';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { usePrompt } from 'contexts/Prompt';
 import { useHelp } from 'contexts/Help';
+import { useNotifications } from 'contexts/Notifications';
 import type { NewNominations } from './types';
 import { RevertPrompt } from './RevertPrompt';
 
@@ -26,6 +27,7 @@ export const ManageNominations = () => {
     config: { options },
   } = useOverlay().canvas;
   const { consts } = useApi();
+  const { addNotification } = useNotifications();
   const { openPromptWith, closePrompt } = usePrompt();
   const { openHelp } = useHelp();
   const { maxNominations } = consts;
@@ -62,6 +64,11 @@ export const ManageNominations = () => {
   // Handler for reverting nomination updates.
   const handleRevertChanges = () => {
     setNewNominations({ nominations: defaultNominations });
+    addNotification({
+      title: 'Nominations Reverted',
+      subtitle:
+        'Nominations have been reverted to your currently active selection.',
+    });
     closePrompt();
   };
 
