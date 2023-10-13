@@ -3,7 +3,7 @@
 
 import { useTranslation } from 'react-i18next';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
-import { ButtonMonoInvert, ButtonTertiary } from '@polkadot-cloud/react';
+import { ButtonMonoInvert } from '@polkadot-cloud/react';
 import { SelectableWrapper } from '.';
 import { useList } from './context';
 import type { SelectableProps } from './types';
@@ -22,9 +22,9 @@ export const Selectable = ({
   const { selectActive, setSelectActive, selected, selectToggleable } =
     provider;
 
-  // Determine button style depending on in canvas.
+  // Determine button style depending on in canvas. Same for now, may change as design evolves.
   const ButtonType =
-    displayFor === 'canvas' ? ButtonMonoInvert : ButtonTertiary;
+    displayFor === 'canvas' ? ButtonMonoInvert : ButtonMonoInvert;
 
   return (
     <SelectableWrapper>

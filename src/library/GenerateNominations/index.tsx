@@ -26,7 +26,7 @@ import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { Validator } from 'contexts/Validators/types';
-import { ButtonPrimaryInvert, ButtonTertiary } from '@polkadot-cloud/react';
+import { ButtonMonoInvert, ButtonPrimaryInvert } from '@polkadot-cloud/react';
 import { Subheading } from 'pages/Nominate/Wrappers';
 import type { GenerateNominationsProps } from '../SetupSteps/types';
 import { useFetchMehods } from './useFetchMethods';
@@ -271,7 +271,7 @@ export const GenerateNominations = ({
 
   // Determine button style depending on in canvas.
   const ButtonType =
-    displayFor === 'canvas' ? ButtonPrimaryInvert : ButtonTertiary;
+    displayFor === 'canvas' ? ButtonPrimaryInvert : ButtonMonoInvert;
 
   return (
     <>

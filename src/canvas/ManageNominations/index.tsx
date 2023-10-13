@@ -81,7 +81,7 @@ export const ManageNominations = () => {
       <h1 style={{ marginTop: '1.5rem' }}>Manage Nominations</h1>
 
       <Subheading>
-        <h3>
+        <h3 style={{ marginBottom: '1.5rem' }}>
           {t('chooseValidators', {
             maxNominations: maxNominations.toString(),
           })}
