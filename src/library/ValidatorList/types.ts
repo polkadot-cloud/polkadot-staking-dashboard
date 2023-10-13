@@ -9,6 +9,7 @@ export interface ValidatorListProps {
   validators: Validator[];
   bondFor: BondFor;
   allowMoreCols?: boolean;
+  generateMethod?: string;
   nominator?: MaybeAddress;
   allowFilters?: boolean;
   toggleFavorites?: boolean;

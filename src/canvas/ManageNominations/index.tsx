@@ -10,7 +10,9 @@ import { Subheading } from 'pages/Nominate/Wrappers';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { usePrompt } from 'contexts/Prompt';
 import type { NewNominations } from './types';
+import { RevertPrompt } from './RevertPrompt';
 
 export const ManageNominations = () => {
   const { t } = useTranslation('library');
@@ -19,6 +21,7 @@ export const ManageNominations = () => {
     config: { options },
   } = useOverlay().canvas;
   const { consts } = useApi();
+  const { openPromptWith, closePrompt } = usePrompt();
   const { maxNominations } = consts;
 
   // const { activeAccount } = useActiveAccounts();
@@ -50,6 +53,12 @@ export const ManageNominations = () => {
     setNewNominations(value);
   };
 
+  // Handler for reverting nomination updates.
+  const handleRevertChanges = () => {
+    setNewNominations({ nominations: defaultNominations });
+    closePrompt();
+  };
+
   return (
     <>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -57,7 +66,7 @@ export const ManageNominations = () => {
           text="Revert Changes"
           lg
           onClick={() => {
-            setNewNominations({ nominations: defaultNominations });
+            openPromptWith(<RevertPrompt onRevert={handleRevertChanges} />);
           }}
           disabled={newNominations.nominations === defaultNominations}
         />

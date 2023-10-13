@@ -3,10 +3,10 @@
 
 import {
   faChartPie,
+  faChevronLeft,
   faCoins,
   faHeart,
   faPlus,
-  faTimes,
   faUserEdit,
 } from '@fortawesome/free-solid-svg-icons';
 import { camelize } from '@polkadot-cloud/utils';
@@ -278,8 +278,9 @@ export const GenerateNominations = ({
       {method && (
         <SelectableWrapper>
           <ButtonType
-            text={t(`${camelize(method)}`)}
-            iconLeft={faTimes}
+            text={t(`Go Back`)}
+            iconLeft={faChevronLeft}
+            iconTransform="shrink-2"
             onClick={() => clearNominations()}
             marginRight
           />
@@ -348,6 +349,7 @@ export const GenerateNominations = ({
                 }}
               >
                 <ValidatorList
+                  generateMethod={t(`${camelize(method)}`)}
                   bondFor="nominator"
                   validators={nominations}
                   selectable

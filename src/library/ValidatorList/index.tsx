@@ -36,6 +36,7 @@ export const ValidatorListInner = ({
   toggleFavorites,
   pagination,
   title,
+  generateMethod,
   format,
   selectable,
   bondFor,
@@ -272,7 +273,7 @@ export const ValidatorListInner = ({
             {title ||
               `${t('displayingValidators', {
                 count: validators.length,
-              })}`}
+              })}${generateMethod !== 'Manual' ? ` (${generateMethod})` : ``}`}
           </h4>
         </div>
         <div>

@@ -8,7 +8,7 @@ export const PromptWrapper = styled.div`
   position: fixed;
   width: 100%;
   height: 100%;
-  z-index: 9;
+  z-index: 11;
 
   /* content wrapper */
   > div {
