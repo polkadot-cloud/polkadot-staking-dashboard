@@ -16,4 +16,10 @@ export const Spacer = styled.div`
 
 export const Subheading = styled.div`
   margin: 0.4rem 0 1rem 0;
+
+  h3,
+  h4 {
+    margin-top: 0;
+    margin-left: 0;
+  }
 `;

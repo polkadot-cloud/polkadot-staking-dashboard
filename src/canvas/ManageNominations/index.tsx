@@ -1,19 +1,26 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonPrimaryInvert } from '@polkadot-cloud/react';
+import { ButtonPrimary, ButtonPrimaryInvert } from '@polkadot-cloud/react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import type { Validator } from 'contexts/Validators/types';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { useState } from 'react';
+import { Subheading } from 'pages/Nominate/Wrappers';
+import { useTranslation } from 'react-i18next';
+import { useApi } from 'contexts/Api';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import type { NewNominations } from './types';
 
 export const ManageNominations = () => {
-  // const { t } = useTranslation('pages');
+  const { t } = useTranslation('library');
   const {
     closeCanvas,
     config: { options },
   } = useOverlay().canvas;
+  const { consts } = useApi();
+  const { maxNominations } = consts;
+
   // const { activeAccount } = useActiveAccounts();
   // const { favoritesList } = useFavoriteValidators();
   // const { isReadOnlyAccount } = useImportedAccounts();
@@ -46,9 +53,31 @@ export const ManageNominations = () => {
   return (
     <>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <ButtonPrimaryInvert text="Close" lg onClick={() => closeCanvas()} />
+        <ButtonPrimaryInvert
+          text="Revert Changes"
+          lg
+          onClick={() => {
+            setNewNominations({ nominations: defaultNominations });
+          }}
+          disabled={newNominations.nominations === defaultNominations}
+        />
+        <ButtonPrimary
+          text="Cancel"
+          lg
+          onClick={() => closeCanvas()}
+          iconLeft={faTimes}
+          style={{ marginLeft: '1.1rem' }}
+        />
       </div>
       <h1 style={{ marginTop: '1.5rem' }}>Manage Nominations</h1>
+
+      <Subheading>
+        <h3>
+          {t('chooseValidators', {
+            maxNominations: maxNominations.toString(),
+          })}
+        </h3>
+      </Subheading>
 
       <GenerateNominations
         displayFor="canvas"

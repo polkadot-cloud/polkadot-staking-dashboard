@@ -27,6 +27,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { Validator } from 'contexts/Validators/types';
 import { ButtonPrimaryInvert, ButtonTertiary } from '@polkadot-cloud/react';
+import { Subheading } from 'pages/Nominate/Wrappers';
 import type { GenerateNominationsProps } from '../SetupSteps/types';
 import { useFetchMehods } from './useFetchMethods';
 
@@ -68,12 +69,12 @@ export const GenerateNominations = ({
   // ref for the height of the container
   const heightRef = useRef<HTMLDivElement>(null);
 
-  // update nominations on account switch
+  // Update nominations on account switch, or if defaultNominations change.
   useEffect(() => {
     if (nominations !== defaultNominations) {
       setNominations([...defaultNominations]);
     }
-  }, [activeAccount]);
+  }, [activeAccount, defaultNominations]);
 
   // refetch if fetching is triggered
   useEffect(() => {
@@ -307,6 +308,13 @@ export const GenerateNominations = ({
         <div>
           {!isReadOnlyAccount(activeAccount) && !method && (
             <>
+              <Subheading>
+                <h4>
+                  {t('chooseValidators2', {
+                    maxNominations: maxNominations.toString(),
+                  })}
+                </h4>
+              </Subheading>
               <SelectItems layout="three-col">
                 {methods.map((m: any, n: number) => (
                   <SelectItem
