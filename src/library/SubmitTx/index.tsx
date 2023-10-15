@@ -21,6 +21,7 @@ export const SubmitTx = ({
   buttons = [],
   submitAddress,
   valid = false,
+  noMargin = false,
   submitting = false,
   proxySupported,
   fromController = false,
@@ -74,7 +75,7 @@ export const SubmitTx = ({
 
   return (
     <Tx
-      margin
+      margin={!noMargin}
       label={signingOpts.label}
       name={signingOpts.who?.name || ''}
       notEnoughFunds={notEnoughFunds}
