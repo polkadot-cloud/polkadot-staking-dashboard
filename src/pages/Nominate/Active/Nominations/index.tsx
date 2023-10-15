@@ -118,6 +118,7 @@ export const Nominations = ({
                 onClick={() =>
                   openCanvas({
                     key: 'ManageNominations',
+                    scroll: false,
                     options: {
                       bondFor,
                       nominator,

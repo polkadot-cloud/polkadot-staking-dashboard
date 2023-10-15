@@ -73,57 +73,65 @@ export const ManageNominations = () => {
 
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <ButtonPrimaryInvert
-          text="Revert Changes"
-          lg
-          onClick={() => {
-            openPromptWith(<RevertPrompt onRevert={handleRevertChanges} />);
-          }}
-          disabled={newNominations.nominations === defaultNominations}
-        />
-        <ButtonPrimary
-          text="Cancel"
-          lg
-          onClick={() => closeCanvas()}
-          iconLeft={faTimes}
-          style={{ marginLeft: '1.1rem' }}
-        />
-      </div>
-      <h1
+      <div
         style={{
-          marginTop: '1.5rem',
-          marginBottom: '1.25rem',
+          paddingTop: '5rem',
+          height: 'calc(100vh - 10rem)', // TODO: adjust for tx submission footer.
         }}
       >
-        Manage Nominations
-      </h1>
-
-      <Subheading>
-        <h3 style={{ marginBottom: '1.5rem' }}>
-          {t('chooseValidators', {
-            maxNominations: maxNominations.toString(),
-          })}
-          <ButtonHelp
-            onClick={() => openHelp('Nominations')}
-            backgroundSecondary
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <ButtonPrimaryInvert
+            text="Revert Changes"
+            lg
+            onClick={() => {
+              openPromptWith(<RevertPrompt onRevert={handleRevertChanges} />);
+            }}
+            disabled={newNominations.nominations === defaultNominations}
           />
-        </h3>
-      </Subheading>
+          <ButtonPrimary
+            text="Cancel"
+            lg
+            onClick={() => closeCanvas()}
+            iconLeft={faTimes}
+            style={{ marginLeft: '1.1rem' }}
+          />
+        </div>
+        <h1
+          style={{
+            marginTop: '1.5rem',
+            marginBottom: '1.25rem',
+          }}
+        >
+          Manage Nominations
+        </h1>
 
-      <GenerateNominations
-        displayFor="canvas"
-        setters={[
-          {
-            current: {
-              callable: true,
-              fn: () => newNominations,
+        <Subheading>
+          <h3 style={{ marginBottom: '1.5rem' }}>
+            {t('chooseValidators', {
+              maxNominations: maxNominations.toString(),
+            })}
+            <ButtonHelp
+              onClick={() => openHelp('Nominations')}
+              backgroundSecondary
+            />
+          </h3>
+        </Subheading>
+
+        <GenerateNominations
+          displayFor="canvas"
+          setters={[
+            {
+              current: {
+                callable: true,
+                fn: () => newNominations,
+              },
+              set: handleSetupUpdate,
             },
-            set: handleSetupUpdate,
-          },
-        ]}
-        nominations={newNominations.nominations}
-      />
+          ]}
+          nominations={newNominations.nominations}
+        />
+      </div>
+      <div>{/* TODO: Tx Submission */}</div>
     </>
   );
 };
