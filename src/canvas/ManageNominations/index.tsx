@@ -7,7 +7,6 @@ import {
   ButtonPrimaryInvert,
 } from '@polkadot-cloud/react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import type { Validator } from 'contexts/Validators/types';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { useEffect, useState } from 'react';
 import { Subheading } from 'pages/Nominate/Wrappers';
@@ -22,7 +21,10 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBonded } from 'contexts/Bonded';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { SubmitTx } from 'library/SubmitTx';
-import type { NewNominations } from './types';
+import type {
+  NominationSelection,
+  NominationSelectionWithResetCounter,
+} from 'library/GenerateNominations/types';
 import { RevertPrompt } from './RevertPrompt';
 
 export const ManageNominations = () => {
@@ -49,26 +51,46 @@ export const ManageNominations = () => {
   const [valid, setValid] = useState<boolean>(false);
 
   // Default nominators, from canvas options.
-  const [defaultNominations] = useState<Validator[]>(options?.nominated || []);
+  const [defaultNominations, setDefaultNominations] =
+    useState<NominationSelectionWithResetCounter>({
+      nominations: options?.nominated || [],
+      reset: 0,
+    });
 
   // Current nominator selection, defaults to defaultNominations.
-  const [newNominations, setNewNominations] = useState<NewNominations>({
+  const [newNominations, setNewNominations] = useState<NominationSelection>({
     nominations: options?.nominated || [],
   });
 
   // Handler for updating setup.
-  const handleSetupUpdate = (value: NewNominations) => {
+  const handleSetupUpdate = (value: NominationSelection) => {
     setNewNominations(value);
   };
 
   // Handler for reverting nomination updates.
   const handleRevertChanges = () => {
-    setNewNominations({ nominations: defaultNominations });
+    setNewNominations({ nominations: defaultNominations.nominations });
+    setDefaultNominations({
+      nominations: defaultNominations.nominations,
+      reset: defaultNominations.reset + 1,
+    });
     addNotification({
       title: 'Nominations Reverted',
       subtitle: 'Nominations have been reverted to your active selection.',
     });
     closePrompt();
+  };
+
+  // Check if default nominations match new ones.
+  const nominationsMatch = () => {
+    return (
+      newNominations.nominations.every((n) =>
+        defaultNominations.nominations.find((d) => d.address === n.address)
+      ) &&
+      newNominations.nominations.length > 0 &&
+      newNominations.nominations.length ===
+        defaultNominations.nominations.length
+    );
   };
 
   // Tx to submit.
@@ -113,7 +135,9 @@ export const ManageNominations = () => {
     setValid(
       maxNominations.isGreaterThanOrEqualTo(
         newNominations.nominations.length
-      ) && newNominations.nominations.length > 0
+      ) &&
+        newNominations.nominations.length > 0 &&
+        !nominationsMatch()
     );
   }, [newNominations]);
 
@@ -133,7 +157,9 @@ export const ManageNominations = () => {
             onClick={() => {
               openPromptWith(<RevertPrompt onRevert={handleRevertChanges} />);
             }}
-            disabled={newNominations.nominations === defaultNominations}
+            disabled={
+              newNominations.nominations === defaultNominations.nominations
+            }
           />
           <ButtonPrimary
             text="Cancel"
@@ -175,7 +201,7 @@ export const ManageNominations = () => {
               set: handleSetupUpdate,
             },
           ]}
-          nominations={newNominations.nominations}
+          nominations={defaultNominations}
         />
       </div>
       <div

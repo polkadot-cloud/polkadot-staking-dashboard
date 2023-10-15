@@ -29,8 +29,8 @@ import { ButtonMonoInvert, ButtonPrimaryInvert } from '@polkadot-cloud/react';
 import { Subheading } from 'pages/Nominate/Wrappers';
 import { FavoritesPrompt } from 'canvas/ManageNominations/FavoritesPrompt';
 import { usePrompt } from 'contexts/Prompt';
-import type { GenerateNominationsProps } from '../SetupSteps/types';
 import { useFetchMehods } from './useFetchMethods';
+import type { GenerateNominationsProps } from './types';
 
 export const GenerateNominations = ({
   setters = [],
@@ -55,14 +55,16 @@ export const GenerateNominations = ({
 
   // store the method of fetching validators
   const [method, setMethod] = useState<string | null>(
-    defaultNominations.length ? 'Manual' : null
+    defaultNominations.nominations.length ? 'Manual' : null
   );
 
   // store whether validators are being fetched
   const [fetching, setFetching] = useState<boolean>(false);
 
   // store the currently selected set of nominations
-  const [nominations, setNominations] = useState(defaultNominations);
+  const [nominations, setNominations] = useState<Validator[]>(
+    defaultNominations.nominations
+  );
 
   // store the height of the container
   const [height, setHeight] = useState<number | null>(null);
@@ -70,10 +72,11 @@ export const GenerateNominations = ({
   // ref for the height of the container
   const heightRef = useRef<HTMLDivElement>(null);
 
-  // Update nominations on account switch, or if defaultNominations change.
+  // Update nominations on account switch, or if `defaultNominations` change.
   useEffect(() => {
-    if (nominations !== defaultNominations) {
-      setNominations([...defaultNominations]);
+    if (nominations !== defaultNominations.nominations) {
+      setNominations([...defaultNominations.nominations]);
+      if (defaultNominations.nominations.length) setMethod('manual');
     }
   }, [activeAccount, defaultNominations]);
 
