@@ -26,6 +26,7 @@ import type {
   NominationSelectionWithResetCounter,
 } from 'library/GenerateNominations/types';
 import { RevertPrompt } from './RevertPrompt';
+import { CanvasSubmitTxFooter, ManageNominationsWrapper } from './Wrappers';
 
 export const ManageNominations = () => {
   const { t } = useTranslation('library');
@@ -143,14 +144,8 @@ export const ManageNominations = () => {
 
   return (
     <>
-      <div
-        style={{
-          paddingTop: '5rem',
-          minHeight: 'calc(100vh - 12rem)',
-          paddingBottom: '2rem',
-        }}
-      >
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <ManageNominationsWrapper>
+        <div className="head">
           <ButtonPrimaryInvert
             text="Revert Changes"
             lg
@@ -169,14 +164,7 @@ export const ManageNominations = () => {
             style={{ marginLeft: '1.1rem' }}
           />
         </div>
-        <h1
-          style={{
-            marginTop: '1.5rem',
-            marginBottom: '1.25rem',
-          }}
-        >
-          Manage Nominations
-        </h1>
+        <h1>Manage Nominations</h1>
 
         <Subheading>
           <h3 style={{ marginBottom: '1.5rem' }}>
@@ -204,14 +192,8 @@ export const ManageNominations = () => {
           ]}
           nominations={defaultNominations}
         />
-      </div>
-      <div
-        style={{
-          borderRadius: '1rem',
-          overflow: 'hidden',
-          marginBottom: '2rem',
-        }}
-      >
+      </ManageNominationsWrapper>
+      <CanvasSubmitTxFooter>
         <SubmitTx
           noMargin
           fromController={!isPool}
@@ -219,7 +201,7 @@ export const ManageNominations = () => {
           displayFor="canvas"
           {...submitExtrinsic}
         />
-      </div>
+      </CanvasSubmitTxFooter>
     </>
   );
 };
