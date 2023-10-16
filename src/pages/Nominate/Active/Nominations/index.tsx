@@ -154,10 +154,6 @@ export const Nominations = ({
                 validators={nominated}
                 nominator={nominator}
                 format="nomination"
-                selectable={
-                  !isReadOnlyAccount(activeAccount) &&
-                  (!isPool || isPoolNominator() || isPoolOwner())
-                }
                 actions={
                   isReadOnlyAccount(activeAccount)
                     ? []
