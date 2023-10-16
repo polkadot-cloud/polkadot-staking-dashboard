@@ -45,7 +45,7 @@ export const GenerateNominations = ({
   const { favoritesList } = useFavoriteValidators();
   const { openPromptWith, closePrompt } = usePrompt();
   const { isReadOnlyAccount } = useImportedAccounts();
-  const { validators, validatorIdentities, validatorSupers } = useValidators();
+  const { validators, validatorsFetched } = useValidators();
   const {
     fetch: fetchFromMethod,
     add: addNomination,
@@ -86,13 +86,14 @@ export const GenerateNominations = ({
 
   // refetch if fetching is triggered
   useEffect(() => {
-    if (!isReady || !validators.length) return;
     if (
+      !isReady ||
+      !validators.length ||
       !stakers.length ||
-      !Object.values(validatorIdentities).length ||
-      !Object.values(validatorSupers).length
+      validatorsFetched !== 'synced'
     )
       return;
+
     if (fetching) fetchNominationsForMethod();
   });
 
@@ -112,6 +113,7 @@ export const GenerateNominations = ({
   const fetchNominationsForMethod = () => {
     if (method) {
       const newNominations = fetchFromMethod(method);
+
       // update component state
       setNominations([...newNominations]);
       setFetching(false);
