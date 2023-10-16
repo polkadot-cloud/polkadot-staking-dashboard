@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type React from 'react';
-import type { MaybeAddress } from 'types';
+import type { DisplayFor, MaybeAddress } from 'types';
 
 export type SubmitTxProps = SubmitProps & {
   buttons?: React.ReactNode[];
@@ -19,6 +19,7 @@ export interface SubmitProps {
   valid: boolean;
   submitText?: string;
   submitAddress: MaybeAddress;
+  displayFor?: DisplayFor;
 }
 
 export interface SignerPromptProps {

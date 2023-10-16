@@ -215,6 +215,7 @@ export const ManageNominations = () => {
           noMargin
           fromController={!isPool}
           valid={valid}
+          displayFor="canvas"
           {...submitExtrinsic}
         />
       </div>
