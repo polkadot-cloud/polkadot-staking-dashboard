@@ -131,7 +131,7 @@ export const Ledger = ({
               <ButtonHelp
                 marginLeft
                 onClick={() => openHelp(helpKey)}
-                backgroundSecondary
+                background="secondary"
               />
             ) : null}
           </p>

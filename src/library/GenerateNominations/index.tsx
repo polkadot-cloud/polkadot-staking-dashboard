@@ -52,10 +52,11 @@ export const GenerateNominations = ({
     available: availableToNominate,
   } = useFetchMehods();
   const { maxNominations } = consts;
+  const defaultNominationsCount = defaultNominations.nominations?.length || 0;
 
   // store the method of fetching validators
   const [method, setMethod] = useState<string | null>(
-    defaultNominations.nominations.length ? 'Manual' : null
+    defaultNominationsCount ? 'Manual' : null
   );
 
   // store whether validators are being fetched
@@ -74,29 +75,25 @@ export const GenerateNominations = ({
 
   // Update nominations on account switch, or if `defaultNominations` change.
   useEffect(() => {
-    if (nominations !== defaultNominations.nominations) {
-      setNominations([...defaultNominations.nominations]);
-      if (defaultNominations.nominations.length) setMethod('manual');
+    if (
+      nominations !== defaultNominations.nominations &&
+      defaultNominationsCount > 0
+    ) {
+      setNominations([...(defaultNominations?.nominations || [])]);
+      if (defaultNominationsCount) setMethod('manual');
     }
   }, [activeAccount, defaultNominations]);
 
   // refetch if fetching is triggered
   useEffect(() => {
-    if (!isReady || !validators.length) {
-      return;
-    }
-
+    if (!isReady || !validators.length) return;
     if (
       !stakers.length ||
       !Object.values(validatorIdentities).length ||
       !Object.values(validatorSupers).length
-    ) {
+    )
       return;
-    }
-
-    if (fetching) {
-      fetchNominationsForMethod();
-    }
+    if (fetching) fetchNominationsForMethod();
   });
 
   // reset fixed height on window size change

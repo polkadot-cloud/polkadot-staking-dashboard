@@ -185,7 +185,8 @@ export const ManageNominations = () => {
             })}
             <ButtonHelp
               onClick={() => openHelp('Nominations')}
-              backgroundSecondary
+              background="none"
+              outline
             />
           </h3>
         </Subheading>
