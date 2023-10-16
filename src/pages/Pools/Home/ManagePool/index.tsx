@@ -55,7 +55,7 @@ export const ManagePool = () => {
                       options: {
                         bondFor: 'pool',
                         nominator,
-                        nominated: targets,
+                        nominated: targets?.nominations || [],
                       },
                       size: 'xl',
                     })
