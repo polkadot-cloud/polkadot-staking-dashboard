@@ -223,7 +223,6 @@ export const ValidatorsProvider = ({
       validatorEntries,
       avg
     );
-    setValidatorsFetched('synced');
     setAvgCommission(avg);
     // Validators are shuffled before committed to state.
     setValidators(shuffle(validatorEntries));
@@ -235,6 +234,7 @@ export const ValidatorsProvider = ({
     ]);
     setValidatorIdentities(identities);
     setValidatorSupers(supers);
+    setValidatorsFetched('synced');
   };
 
   // Subscribe to active session validators.
@@ -348,6 +348,7 @@ export const ValidatorsProvider = ({
         nominated,
         poolNominated,
         validatorCommunity,
+        validatorsFetched,
       }}
     >
       {children}

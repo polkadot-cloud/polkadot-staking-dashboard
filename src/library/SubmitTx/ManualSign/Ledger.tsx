@@ -25,6 +25,7 @@ export const Ledger = ({
   submitText,
   buttons,
   submitAddress,
+  displayFor,
 }: SubmitProps & { buttons?: React.ReactNode[] }) => {
   const { t } = useTranslation('library');
   const {
@@ -130,7 +131,7 @@ export const Ledger = ({
               <ButtonHelp
                 marginLeft
                 onClick={() => openHelp(helpKey)}
-                backgroundSecondary
+                background="secondary"
               />
             ) : null}
           </p>
@@ -142,6 +143,7 @@ export const Ledger = ({
         {buttons}
         {getTxSignature() !== null || submitting ? (
           <ButtonSubmit
+            lg={displayFor === 'canvas'}
             text={submitText || ''}
             iconLeft={faSquarePen}
             iconTransform="grow-2"
@@ -151,6 +153,7 @@ export const Ledger = ({
           />
         ) : (
           <ButtonSubmit
+            lg={displayFor === 'canvas'}
             text={getIsExecuting() ? t('signing') : t('sign')}
             iconLeft={faSquarePen}
             iconTransform="grow-2"

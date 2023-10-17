@@ -19,6 +19,7 @@ export const Vault = ({
   submitText,
   buttons,
   submitAddress,
+  displayFor,
 }: SubmitProps & { buttons?: React.ReactNode[] }) => {
   const { t } = useTranslation('library');
   const { accountHasSigner } = useImportedAccounts();
@@ -39,6 +40,7 @@ export const Vault = ({
         {buttons}
         {getTxSignature() !== null || submitting ? (
           <ButtonSubmit
+            lg={displayFor === 'canvas'}
             text={submitText || ''}
             iconLeft={faSquarePen}
             iconTransform="grow-2"
@@ -48,6 +50,7 @@ export const Vault = ({
           />
         ) : (
           <ButtonSubmit
+            lg={displayFor === 'canvas'}
             text={promptStatus === 0 ? t('sign') : t('signing')}
             iconLeft={faSquarePen}
             iconTransform="grow-2"

@@ -50,7 +50,7 @@ export const StatusLabel = ({
               <ButtonHelp
                 marginLeft
                 onClick={() => openHelp(helpKey)}
-                backgroundSecondary
+                background="secondary"
               />
             </span>
           ) : null}

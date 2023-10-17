@@ -21,8 +21,10 @@ export const SubmitTx = ({
   buttons = [],
   submitAddress,
   valid = false,
+  noMargin = false,
   submitting = false,
   proxySupported,
+  displayFor = 'default',
   fromController = false,
 }: SubmitTxProps) => {
   const { t } = useTranslation();
@@ -74,7 +76,8 @@ export const SubmitTx = ({
 
   return (
     <Tx
-      margin
+      displayFor={displayFor}
+      margin={!noMargin}
       label={signingOpts.label}
       name={signingOpts.who?.name || ''}
       notEnoughFunds={notEnoughFunds}
@@ -89,6 +92,7 @@ export const SubmitTx = ({
             submitText={submitText}
             buttons={buttons}
             submitAddress={submitAddress}
+            displayFor={displayFor}
           />
         ) : (
           <Default
@@ -98,6 +102,7 @@ export const SubmitTx = ({
             submitText={submitText}
             buttons={buttons}
             submitAddress={submitAddress}
+            displayFor={displayFor}
           />
         )
       }

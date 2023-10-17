@@ -69,11 +69,7 @@ export const Setup = () => {
       <PageRow>
         <CardWrapper>
           <Element name="nominate" style={{ position: 'absolute' }} />
-          <Nominate
-            batchKey="generate_nominations_inactive"
-            bondFor="nominator"
-            section={2}
-          />
+          <Nominate bondFor="nominator" section={2} />
         </CardWrapper>
       </PageRow>
       <PageRow>

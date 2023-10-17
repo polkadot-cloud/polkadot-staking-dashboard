@@ -3,7 +3,7 @@
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonHelp, ButtonPrimaryInvert } from '@polkadot-cloud/react';
+import { ButtonHelp, ButtonSecondary } from '@polkadot-cloud/react';
 import type { FunctionComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
@@ -16,9 +16,17 @@ interface TitleProps {
   Svg?: FunctionComponent<any>;
   helpKey?: string;
   hideDone?: boolean;
+  closeText?: string;
 }
 
-export const Title = ({ helpKey, title, icon, Svg, hideDone }: TitleProps) => {
+export const Title = ({
+  helpKey,
+  title,
+  icon,
+  Svg,
+  hideDone,
+  closeText,
+}: TitleProps) => {
   const { t } = useTranslation('library');
   const { closePrompt } = usePrompt();
   const { openHelp } = useHelp();
@@ -40,7 +48,10 @@ export const Title = ({ helpKey, title, icon, Svg, hideDone }: TitleProps) => {
       </div>
       {hideDone !== true ? (
         <div>
-          <ButtonPrimaryInvert text={t('done')} onClick={() => closePrompt()} />
+          <ButtonSecondary
+            text={closeText || t('done')}
+            onClick={() => closePrompt()}
+          />
         </div>
       ) : null}
     </TitleWrapper>

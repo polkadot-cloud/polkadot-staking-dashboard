@@ -14,8 +14,8 @@ import type { FavoriteProps } from '../types';
 export const FavoritePool = ({ address }: FavoriteProps) => {
   const { t } = useTranslation('library');
   const { addNotification } = useNotifications();
-  const { favorites, addFavorite, removeFavorite } = usePoolsConfig();
   const { setTooltipTextAndOpen } = useTooltip();
+  const { favorites, addFavorite, removeFavorite } = usePoolsConfig();
 
   const isFavorite = favorites.includes(address);
 

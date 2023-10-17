@@ -16,6 +16,7 @@ export const Default = ({
   submitText,
   buttons,
   submitAddress,
+  displayFor,
 }: SubmitProps & { buttons?: React.ReactNode[] }) => {
   const { txFeesValid } = useTxMeta();
   const { accountHasSigner } = useImportedAccounts();
@@ -31,6 +32,7 @@ export const Default = ({
       <div>
         {buttons}
         <ButtonSubmit
+          lg={displayFor === 'canvas'}
           text={submitText || ''}
           iconLeft={faArrowAltCircleUp}
           iconTransform="grow-2"

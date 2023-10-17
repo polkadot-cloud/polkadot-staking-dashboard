@@ -46,8 +46,6 @@ export const SelectFavorites = () => {
 
   useEffect(() => setModalResize(), [selectedFavorites]);
 
-  const batchKey = 'favorite_validators';
-
   const onSelected = (provider: any) => {
     const { selected } = provider;
     setSelectedFavorites(selected);
@@ -72,14 +70,13 @@ export const SelectFavorites = () => {
             <ValidatorList
               bondFor="nominator"
               validators={availableFavorites}
-              batchKey={batchKey}
               title={t('favoriteValidators')}
               selectable
               selectActive
               selectToggleable={false}
               onSelected={onSelected}
               showMenu={false}
-              inModal
+              displayFor="modal"
               allowMoreCols
               refetchOnListUpdate
             />
