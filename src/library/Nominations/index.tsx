@@ -142,7 +142,7 @@ export const Nominations = ({
         </div>
       ) : !nominator ? (
         <div className="head">
-          <h4>{t('nominate.notNominating')}</h4>
+          <h4>{t('nominate.notNominating')}.</h4>
         </div>
       ) : (
         <>
@@ -209,7 +209,7 @@ export const Nominations = ({
               {poolDestroying ? (
                 <h4>{t('nominate.poolDestroy')}</h4>
               ) : (
-                <h4>{t('nominate.notNominating')}</h4>
+                <h4>{t('nominate.notNominating')}.</h4>
               )}
             </div>
           )}

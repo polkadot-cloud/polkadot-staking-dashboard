@@ -95,7 +95,7 @@ export const Active = () => {
                   />
                 </div>
               </CardHeaderWrapper>
-              <h4>{t('notNominatingValidators', { ns: 'library' })}</h4>
+              <h4>{t('notNominating', { ns: 'library' })}.</h4>
             </>
           )}
         </CardWrapper>
