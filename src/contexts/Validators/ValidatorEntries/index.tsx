@@ -54,7 +54,6 @@ export const ValidatorsProvider = ({
 
   // Stores the currently active validator set.
   const [sessionValidators, setSessionValidators] = useState<string[]>([]);
-  const sessionUnsub = useRef<Fn>();
 
   // Stores the currently active parachain validator set.
   const [sessionParaValidators, setSessionParaValidators] = useState<string[]>(
@@ -72,7 +71,7 @@ export const ValidatorsProvider = ({
   const [poolNominated, setPoolNominated] = useState<Validator[] | null>(null);
 
   // Stores a randomised validator community dataset.
-  const [validatorCommunity] = useState<any>([...shuffle(ValidatorCommunity)]);
+  const [validatorCommunity] = useState([...shuffle(ValidatorCommunity)]);
 
   // Reset validators list on network change.
   useEffectIgnoreInitial(() => {
@@ -85,22 +84,22 @@ export const ValidatorsProvider = ({
     setValidatorSupers({});
   }, [network]);
 
-  // fetch validators and session validators when activeEra ready
+  // Fetch validators and session validators when activeEra ready.
   useEffectIgnoreInitial(() => {
     if (isReady && activeEra.index.isGreaterThan(0)) {
       fetchValidators();
-      subscribeSessionValidators();
+      fetchSessionValidators();
     }
   }, [isReady, activeEra]);
 
-  // fetch parachain session validators when `earliestStoredSession` ready
+  // Fetch parachain session validators when `earliestStoredSession` ready.
   useEffectIgnoreInitial(() => {
     if (isReady && greaterThanZero(earliestStoredSession)) {
       subscribeParachainValidators();
     }
   }, [isReady, earliestStoredSession]);
 
-  // fetch active account's nominations in validator list format
+  // Fetch active account's nominations in validator list format.
   useEffectIgnoreInitial(() => {
     if (isReady && activeAccount) {
       fetchNominatedList();
@@ -114,13 +113,13 @@ export const ValidatorsProvider = ({
     const targets = getAccountNominations(activeAccount);
 
     // format to list format
-    const targetsFormatted = targets.map((item: any) => ({ address: item }));
+    const targetsFormatted = targets.map((item) => ({ address: item }));
     // fetch preferences
     const nominationsWithPrefs = await fetchValidatorPrefs(targetsFormatted);
     setNominated(nominationsWithPrefs || []);
   };
 
-  // fetch active account's pool nominations in validator list format
+  // Fetch active account's pool nominations in validator list format.
   useEffectIgnoreInitial(() => {
     if (isReady && poolNominations) {
       fetchPoolNominatedList();
@@ -129,14 +128,9 @@ export const ValidatorsProvider = ({
 
   // Unsubscribe on network change and component unmount.
   useEffect(() => {
-    if (sessionValidators.length) {
-      sessionUnsub.current?.();
-    }
-    if (sessionParaValidators.length) {
-      sessionParaUnsub.current?.();
-    }
+    if (sessionParaValidators.length) sessionParaUnsub.current?.();
+
     return () => {
-      sessionUnsub.current?.();
       sessionParaUnsub.current?.();
     };
   }, [network]);
@@ -238,12 +232,10 @@ export const ValidatorsProvider = ({
   };
 
   // Subscribe to active session validators.
-  const subscribeSessionValidators = async () => {
+  const fetchSessionValidators = async () => {
     if (!api || !isReady) return;
-    const unsub: AnyApi = await api.query.session.validators((v: AnyApi) => {
-      setSessionValidators(v.toHuman());
-      sessionUnsub.current = unsub;
-    });
+    const sessionValidatorsRaw: AnyApi = await api.query.session.validators();
+    setSessionValidators(sessionValidatorsRaw.toHuman());
   };
 
   // Subscribe to active parachain validators.
