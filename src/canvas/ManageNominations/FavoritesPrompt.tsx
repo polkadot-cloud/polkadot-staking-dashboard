@@ -49,32 +49,40 @@ export const FavoritesPrompt = ({ callback, nominations }: any) => {
           </h4>
         )}
 
-        {favoritesList?.map((favorite: Validator, i) => (
-          <div
-            key={`favorite_${i}`}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              borderBottom: '1px solid var(--border-primary-color)',
-            }}
-          >
-            <SelectWrapper
-              disabled={!canAdd && !selected.includes(favorite)}
-              onClick={() => {
-                if (selected.includes(favorite)) {
-                  removeFromSelected([favorite]);
-                } else {
-                  addToSelected(favorite);
-                }
+        {favoritesList?.map((favorite: Validator, i) => {
+          const inInitial = !!nominations.find(
+            ({ address }: Validator) => address === favorite.address
+          );
+          const isDisabled = !canAdd || inInitial;
+
+          return (
+            <div
+              key={`favorite_${i}`}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                borderBottom: '1px solid var(--border-primary-color)',
+                opacity: isDisabled ? 'var(--opacity-disabled)' : 1,
               }}
             >
-              {selected.includes(favorite) && (
-                <FontAwesomeIcon icon={faCheck} transform="shrink-2" />
-              )}
-            </SelectWrapper>
-            <Identity key={`favorite_${i}`} address={favorite.address} />
-          </div>
-        ))}
+              <SelectWrapper
+                disabled={isDisabled}
+                onClick={() => {
+                  if (selected.includes(favorite)) {
+                    removeFromSelected([favorite]);
+                  } else {
+                    addToSelected(favorite);
+                  }
+                }}
+              >
+                {(inInitial || selected.includes(favorite)) && (
+                  <FontAwesomeIcon icon={faCheck} transform="shrink-2" />
+                )}
+              </SelectWrapper>
+              <Identity key={`favorite_${i}`} address={favorite.address} />
+            </div>
+          );
+        })}
 
         <div style={{ margin: '1.5rem 0 0.5rem 0' }}>
           <ButtonPrimary
