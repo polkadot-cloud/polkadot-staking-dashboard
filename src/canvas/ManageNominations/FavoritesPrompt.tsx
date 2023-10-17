@@ -35,7 +35,7 @@ export const FavoritesPrompt = ({ callback, nominations }: any) => {
 
   return (
     <>
-      <Title title={t('nominateFavorites')} closeText="Cancel" />
+      <Title title={t('nominateFavorites')} closeText={t('cancel')} />
       <div style={{ padding: '1rem 1.5rem' }}>
         {remaining.isZero() ? (
           <h4 style={{ marginBottom: '1rem' }}>
@@ -78,7 +78,7 @@ export const FavoritesPrompt = ({ callback, nominations }: any) => {
 
         <div style={{ margin: '1.5rem 0 0.5rem 0' }}>
           <ButtonPrimary
-            text="Add to Nominations"
+            text={t('addToNominations')}
             onClick={() => {
               callback(nominations.concat(selected));
               addNotification({

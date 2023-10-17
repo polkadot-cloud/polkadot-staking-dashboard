@@ -12,6 +12,7 @@
     "add": "Add",
     "addFromFavorites": "Add From Favorites",
     "addToBond": "Add to Bond",
+    "addToNominations": "Add to Nominations",
     "addUpToFavorites_one": "You can add {{count}} more validator",
     "addUpToFavorites_other": "You can add up to {{count}} more favorite validators",
     "addedToBond": "This amount of {{unit}} will be added to your current bonded funds.",
