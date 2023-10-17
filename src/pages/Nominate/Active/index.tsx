@@ -15,7 +15,6 @@ import { useHelp } from 'contexts/Help';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
-import { GenerateNominations } from 'library/GenerateNominations';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { StatBoxList } from 'library/StatBoxList';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
@@ -33,11 +32,11 @@ export const Active = () => {
   const { t } = useTranslation('pages');
   const { isSyncing } = useUi();
   const { openHelp } = useHelp();
-  const { openModal } = useOverlay().modal;
+  const { targets, inSetup } = useStaking();
+  const { openCanvas } = useOverlay().canvas;
   const { isFastUnstaking } = useUnstaking();
   const { getAccountNominations } = useBonded();
   const { activeAccount } = useActiveAccounts();
-  const { targets, setTargets, inSetup } = useStaking();
   const nominations = getAccountNominations(activeAccount);
 
   const ROW_HEIGHT = 220;
@@ -78,28 +77,26 @@ export const Active = () => {
                 </h3>
                 <div>
                   <ButtonPrimary
-                    text={t('nominate.nominate')}
                     iconLeft={faChevronCircleRight}
                     iconTransform="grow-1"
-                    disabled={
-                      targets.nominations.length === 0 ||
-                      inSetup() ||
-                      isSyncing ||
-                      isFastUnstaking
+                    text={t('nominate.nominate')}
+                    disabled={inSetup() || isSyncing || isFastUnstaking}
+                    onClick={() =>
+                      openCanvas({
+                        key: 'ManageNominations',
+                        scroll: false,
+                        options: {
+                          bondFor: 'pool',
+                          nominator: activeAccount,
+                          nominated: targets?.nominations || [],
+                        },
+                        size: 'xl',
+                      })
                     }
-                    onClick={() => openModal({ key: 'Nominate' })}
                   />
                 </div>
               </CardHeaderWrapper>
-              <GenerateNominations
-                setters={[
-                  {
-                    set: setTargets,
-                    current: targets,
-                  },
-                ]}
-                nominations={targets.nominations}
-              />
+              <h4>You are not nominating any validators.</h4>
             </>
           )}
         </CardWrapper>
