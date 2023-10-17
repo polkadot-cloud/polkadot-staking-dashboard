@@ -4,12 +4,10 @@
 import type React from 'react';
 import type { BondedPool } from 'contexts/Pools/types';
 import type { BondFor, MaybeAddress } from 'types';
+import type { ValidatorPrefs } from 'contexts/Validators/types';
 
 export interface BlockedProps {
-  prefs: {
-    commission: string;
-    blocked: boolean;
-  };
+  prefs: ValidatorPrefs;
 }
 
 export interface CopyAddressProps {

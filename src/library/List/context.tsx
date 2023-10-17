@@ -37,6 +37,7 @@ export const ListProvider = ({
   const resetSelected = () => {
     setSelected([]);
   };
+
   const setSelectActive = (_selectActive: boolean) => {
     setSelectActiveState(_selectActive);
     if (_selectActive === false) {

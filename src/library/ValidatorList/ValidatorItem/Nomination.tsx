@@ -15,15 +15,15 @@ import { NominationStatus } from '../../ListItem/Labels/NominationStatus';
 import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
 import { Select } from '../../ListItem/Labels/Select';
 import { getIdentityDisplay } from './Utils';
-import type { NominationProps } from './types';
+import type { ValidatorItemProps } from './types';
 
 export const Nomination = ({
   validator,
   nominator,
   toggleFavorites,
   bondFor,
-  inModal,
-}: NominationProps) => {
+  displayFor,
+}: ValidatorItemProps) => {
   const { selectActive } = useList();
   const { validatorIdentities, validatorSupers } = useValidators();
 
@@ -31,7 +31,7 @@ export const Nomination = ({
   const commission = prefs?.commission ?? null;
 
   return (
-    <Wrapper $format="nomination" $inModal={inModal}>
+    <Wrapper $format="nomination" $displayFor={displayFor}>
       <div className="inner">
         <div className="row">
           {selectActive && <Select item={validator} />}
@@ -56,8 +56,8 @@ export const Nomination = ({
             <Commission commission={commission} />
             <ParaValidator address={address} />
 
-            {/* restrict opening another modal within a modal */}
-            {!inModal && (
+            {/* restrict opening modal within a canvas */}
+            {displayFor === 'default' && (
               <Metrics
                 address={address}
                 display={getIdentityDisplay(

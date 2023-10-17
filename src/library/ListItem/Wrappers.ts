@@ -4,8 +4,12 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { SmallFontSizeMaxWidth } from 'consts';
+import type { DisplayFor } from 'types';
 
-export const Wrapper = styled.div<{ $format?: string; $inModal?: boolean }>`
+export const Wrapper = styled.div<{
+  $format?: string;
+  $displayFor?: DisplayFor;
+}>`
   display: flex;
   flex-flow: row wrap;
   width: 100%;
@@ -15,12 +19,14 @@ export const Wrapper = styled.div<{ $format?: string; $inModal?: boolean }>`
 
   > .inner {
     background: ${(props) =>
-      props.$inModal
-        ? 'var(--background-modal-item)'
-        : 'var(--background-list-item)'};
+      props.$displayFor === 'default'
+        ? 'var(--background-list-item)'
+        : props.$displayFor === 'canvas'
+        ? 'var(--background-canvas-card)'
+        : 'var(--background-modal-card)'};
 
     ${(props) =>
-      props.$inModal &&
+      props.$displayFor !== 'default' &&
       `
       box-shadow: none;
       border: none;`}
@@ -160,7 +166,6 @@ export const IdentityWrapper = styled(motion.div)`
     font-family: InterSemiBold, sans-serif;
     position: absolute;
     top: 0;
-    width: 100%;
     height: 3.25rem;
     line-height: 3.25rem;
     padding: 0 0 0 0.3rem;
@@ -169,6 +174,7 @@ export const IdentityWrapper = styled(motion.div)`
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 1rem;
+    width: 100%;
 
     > span {
       color: var(--text-color-secondary);

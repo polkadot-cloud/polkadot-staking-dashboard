@@ -18,13 +18,15 @@ import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { SearchInput } from 'library/List/SearchInput';
 import { Selectable } from 'library/List/Selectable';
-import { Validator } from 'library/ValidatorList/Validator';
+import { ValidatorItem } from 'library/ValidatorList/ValidatorItem';
+import type { Validator } from 'contexts/Validators/types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 import { ListProvider, useList } from '../List/context';
 import { Filters } from './Filters';
+import type { ValidatorListProps } from './types';
 
 export const ValidatorListInner = ({
   nominator: initialNominator,
@@ -34,19 +36,20 @@ export const ValidatorListInner = ({
   toggleFavorites,
   pagination,
   title,
+  generateMethod,
   format,
   selectable,
   bondFor,
   onSelected,
   actions = [],
   showMenu = true,
-  inModal = false,
+  displayFor = 'default',
   allowSearch = false,
   allowListFormat = true,
   alwaysRefetchValidators = false,
   defaultFilters = undefined,
   disableThrottle = false,
-}: any) => {
+}: ValidatorListProps) => {
   const { t } = useTranslation('library');
   const { isReady } = useApi();
   const {
@@ -62,7 +65,7 @@ export const ValidatorListInner = ({
   // determine the nominator of the validator list.
   // By default this will be the activeAccount. But for pools,
   // the pool stash address should be the nominator.
-  const nominator = initialNominator ?? activeAccount;
+  const nominator = initialNominator || activeAccount;
 
   const { selected, listFormat, setListFormat } = provider;
 
@@ -83,9 +86,7 @@ export const ValidatorListInner = ({
   const searchTerm = getSearchTerm('validators');
 
   const actionsAll = [...actions].filter((action) => !action.onSelected);
-  const actionsSelected = [...actions].filter(
-    (action: any) => action.onSelected
-  );
+  const actionsSelected = [...actions].filter((action) => action.onSelected);
 
   // current page
   const [page, setPage] = useState<number>(1);
@@ -97,7 +98,7 @@ export const ValidatorListInner = ({
   const [validatorsDefault, setValidatorsDefault] = useState(initialValidators);
 
   // manipulated list (ordering, filtering) of validators
-  const [validators, setValidators]: any = useState(initialValidators);
+  const [validators, setValidators] = useState(initialValidators);
 
   // is this the initial fetch
   const [fetched, setFetched] = useState(false);
@@ -210,7 +211,7 @@ export const ValidatorListInner = ({
 
   // handle filter / order update
   const handleValidatorsFilterUpdate = (
-    filteredValidators: any = Object.assign(validatorsDefault)
+    filteredValidators = Object.assign(validatorsDefault)
   ) => {
     if (allowFilters) {
       if (order !== 'default') {
@@ -238,7 +239,7 @@ export const ValidatorListInner = ({
 
   // if in modal, handle resize
   const maybeHandleModalResize = () => {
-    if (inModal) setModalResize();
+    if (displayFor === 'modal') setModalResize();
   };
 
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -253,8 +254,8 @@ export const ValidatorListInner = ({
 
     // ensure no duplicates
     filteredValidators = filteredValidators.filter(
-      (value: any, index: any, self: any) =>
-        index === self.findIndex((i: any) => i.address === value.address)
+      (value: Validator, index: number, self: Validator[]) =>
+        index === self.findIndex((i) => i.address === value.address)
     );
 
     setValidators(filteredValidators);
@@ -266,13 +267,13 @@ export const ValidatorListInner = ({
 
   return (
     <ListWrapper>
-      <Header>
+      <Header $displayFor={displayFor}>
         <div>
           <h4>
             {title ||
               `${t('displayingValidators', {
                 count: validators.length,
-              })}`}
+              })}${generateMethod !== 'Manual' ? ` (${generateMethod})` : ``}`}
           </h4>
         </div>
         <div>
@@ -317,13 +318,14 @@ export const ValidatorListInner = ({
             canSelect={listValidators.length > 0}
             actionsAll={actionsAll}
             actionsSelected={actionsSelected}
+            displayFor={displayFor}
           />
         ) : null}
 
         <MotionContainer>
           {listValidators.length ? (
             <>
-              {listValidators.map((validator: any, index: number) => (
+              {listValidators.map((validator: Validator, index: number) => (
                 <motion.div
                   key={`nomination_${index}`}
                   className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
@@ -338,14 +340,14 @@ export const ValidatorListInner = ({
                     },
                   }}
                 >
-                  <Validator
+                  <ValidatorItem
                     validator={validator}
                     nominator={nominator}
                     toggleFavorites={toggleFavorites}
                     format={format}
                     showMenu={showMenu}
                     bondFor={bondFor}
-                    inModal={inModal}
+                    displayFor={displayFor}
                   />
                 </motion.div>
               ))}
@@ -361,7 +363,7 @@ export const ValidatorListInner = ({
   );
 };
 
-export const ValidatorList = (props: any) => {
+export const ValidatorList = (props: ValidatorListProps) => {
   const { selectActive, selectToggleable } = props;
   return (
     <ListProvider

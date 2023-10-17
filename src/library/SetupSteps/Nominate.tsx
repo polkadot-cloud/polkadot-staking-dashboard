@@ -8,10 +8,11 @@ import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { Subheading } from 'pages/Nominate/Wrappers';
 import { GenerateNominations } from '../GenerateNominations';
 import type { NominationsProps } from './types';
 
-export const Nominate = ({ batchKey, bondFor, section }: NominationsProps) => {
+export const Nominate = ({ bondFor, section }: NominationsProps) => {
   const { t } = useTranslation('library');
   const { consts } = useApi();
   const { activeAccount } = useActiveAccounts();
@@ -20,12 +21,9 @@ export const Nominate = ({ batchKey, bondFor, section }: NominationsProps) => {
   const { progress } = setup;
   const { maxNominations } = consts;
 
-  const setterFn = () => getSetupProgress(bondFor, activeAccount).progress;
-
-  // handler for updating setup.bond
-  const handleSetupUpdate = (value: any) => {
+  // Handler for updating setup.
+  const handleSetupUpdate = (value: any) =>
     setActiveAccountSetup(bondFor, value);
-  };
 
   return (
     <>
@@ -37,16 +35,19 @@ export const Nominate = ({ batchKey, bondFor, section }: NominationsProps) => {
         bondFor={bondFor}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <h4 className="withMargin">
-          {t('chooseValidators', { maxNominations: maxNominations.toString() })}
-        </h4>
+        <Subheading>
+          <h4>
+            {t('chooseValidators', {
+              maxNominations: maxNominations.toString(),
+            })}
+          </h4>
+        </Subheading>
         <GenerateNominations
-          batchKey={batchKey}
           setters={[
             {
               current: {
                 callable: true,
-                fn: setterFn,
+                fn: () => getSetupProgress(bondFor, activeAccount).progress,
               },
               set: handleSetupUpdate,
             },

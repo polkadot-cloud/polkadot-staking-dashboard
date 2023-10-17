@@ -27,6 +27,7 @@
       "controllerNotImported": "尚未导入Controller帐户。如果无法访问该帐户,请立即设置新帐户。否则,请将该账户导入扩展之一",
       "earningRewards": "挣取收益中",
       "inactiveNominations": "非活跃提名人",
+      "manage": "管理",
       "minimumToEarnRewards": "最低收益抵押额",
       "minimumToNominate": "最低提名质押额",
       "noNominationsSet": "非活跃：未设置提名",

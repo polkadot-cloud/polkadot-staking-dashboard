@@ -129,8 +129,8 @@ export const Summary = ({ section }: SetupStepProps) => {
           <SubmitTx
             submitText={t('nominate.startNominating')}
             valid
-            noMargin
             {...submitExtrinsic}
+            displayFor="canvas" /* Edge case: not canvas, but the larger button sizes suit this UI more. */
           />
         </div>
       </MotionContainer>

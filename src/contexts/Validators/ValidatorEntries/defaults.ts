@@ -23,4 +23,5 @@ export const defaultValidatorsContext: ValidatorsContextInterface = {
   poolNominated: null,
   validatorCommunity: [],
   erasRewardPoints: {},
+  validatorsFetched: 'unsynced',
 };

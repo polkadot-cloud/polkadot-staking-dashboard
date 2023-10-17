@@ -81,6 +81,8 @@ export const Wrapper = styled.div<{
   }
 
   > .inner {
+    transition: border var(--transition-duration);
+    background: var(--background-primary);
     border: 1.75px solid
       ${(props) =>
         props.$selected
@@ -90,7 +92,6 @@ export const Wrapper = styled.div<{
     width: 100%;
     position: relative;
     overflow: hidden;
-    transition: border var(--transition-duration);
 
     &:hover {
       border-color: ${(props) =>
@@ -134,9 +135,12 @@ export const Wrapper = styled.div<{
 
         h3 {
           font-family: InterSemiBold, sans-serif;
+          padding: 0;
+          margin: 0;
         }
 
         p {
+          padding: 0;
           margin: 0.4rem 0 0 0;
         }
       }

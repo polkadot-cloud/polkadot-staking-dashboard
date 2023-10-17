@@ -36,17 +36,17 @@ import type { PoolProps } from './types';
 export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   const { t } = useTranslation('library');
   const { memberCounter, addresses, id, state } = pool;
-  const { openModal } = useOverlay().modal;
-  const { isReadOnlyAccount } = useImportedAccounts();
-  const { activeAccount } = useActiveAccounts();
-  const { meta } = useBondedPools();
-  const { membership } = usePoolMemberships();
-  const { addNotification } = useNotifications();
-  const { validators } = useValidators();
   const { isPoolSyncing } = useUi();
+  const { meta } = useBondedPools();
+  const { validators } = useValidators();
   const { setActiveTab } = usePoolsTabs();
-  const { setMenuPosition, setMenuItems, open }: any = useMenu();
+  const { openModal } = useOverlay().modal;
+  const { membership } = usePoolMemberships();
+  const { activeAccount } = useActiveAccounts();
+  const { addNotification } = useNotifications();
+  const { isReadOnlyAccount } = useImportedAccounts();
   const { getCurrentCommission } = usePoolCommission();
+  const { setMenuPosition, setMenuItems, open }: any = useMenu();
 
   const currentCommission = getCurrentCommission(id);
 

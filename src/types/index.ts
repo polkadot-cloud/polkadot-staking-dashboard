@@ -100,6 +100,9 @@ export type Sync = 'unsynced' | 'syncing' | 'synced';
 // track whether bonding should be for nominator or nomination pool.
 export type BondFor = 'pool' | 'nominator';
 
+// which medium components are being displayed on.
+export type DisplayFor = 'default' | 'modal' | 'canvas';
+
 // generic function with no args or return type.
 export type Fn = () => void;
 

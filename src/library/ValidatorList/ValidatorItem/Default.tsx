@@ -23,6 +23,7 @@ import {
 } from 'library/ListItem/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { usePlugins } from 'contexts/Plugins';
+import type { AnyJson } from 'types';
 import { useValidators } from '../../../contexts/Validators/ValidatorEntries';
 import { useList } from '../../List/context';
 import { Blocked } from '../../ListItem/Labels/Blocked';
@@ -33,19 +34,19 @@ import { Identity } from '../../ListItem/Labels/Identity';
 import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
 import { Select } from '../../ListItem/Labels/Select';
 import { getIdentityDisplay } from './Utils';
-import type { DefaultProps } from './types';
+import type { ValidatorItemProps } from './types';
 
 export const Default = ({
   validator,
   toggleFavorites,
   showMenu,
-  inModal,
-}: DefaultProps) => {
+  displayFor,
+}: ValidatorItemProps) => {
   const { t } = useTranslation('library');
   const { selectActive } = useList();
+  const { pluginEnabled } = usePlugins();
   const { openModal } = useOverlay().modal;
   const { addNotification } = useNotifications();
-  const { pluginEnabled } = usePlugins();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
   const { validatorIdentities, validatorSupers } = useValidators();
 
@@ -68,22 +69,21 @@ export const Default = ({
 
   // configure floating menu
   const posRef = useRef(null);
-  const menuItems = [
-    {
-      icon: <FontAwesomeIcon icon={faChartLine} transform="shrink-3" />,
-      wrap: null,
-      title: `${t('viewMetrics')}`,
-      cb: () => {
-        openModal({
-          key: 'ValidatorMetrics',
-          options: {
-            address,
-            identity,
-          },
-        });
-      },
+  const menuItems: AnyJson[] = [];
+  menuItems.push({
+    icon: <FontAwesomeIcon icon={faChartLine} transform="shrink-3" />,
+    wrap: null,
+    title: `${t('viewMetrics')}`,
+    cb: () => {
+      openModal({
+        key: 'ValidatorMetrics',
+        options: {
+          address,
+          identity,
+        },
+      });
     },
-  ];
+  });
 
   if (pluginEnabled('polkawatch')) {
     menuItems.push({
@@ -122,7 +122,7 @@ export const Default = ({
   };
 
   return (
-    <Wrapper $format="nomination" $inModal={inModal}>
+    <Wrapper $format="nomination" $displayFor={displayFor}>
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">
@@ -134,9 +134,10 @@ export const Default = ({
               <Blocked prefs={prefs} />
               <Commission commission={commission} />
               <ParaValidator address={address} />
-
               {toggleFavorites && <FavoriteValidator address={address} />}
-              {showMenu && (
+
+              {/* restrict opening modal within a canvas */}
+              {displayFor === 'default' && showMenu && (
                 <button
                   type="button"
                   className="label"
@@ -151,7 +152,8 @@ export const Default = ({
         <Separator />
         <div className="row status">
           <EraStatus address={address} />
-          {inModal && (
+          {/* restrict opening modal within a canvas */}
+          {displayFor !== 'default' && (
             <>
               <Labels>
                 <CopyAddress address={address} />

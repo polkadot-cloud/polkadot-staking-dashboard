@@ -146,10 +146,8 @@ export const PoolsConfigProvider = ({
    * Adds a favorite validator.
    */
   const addFavorite = (address: string) => {
-    const newFavorites: any = Object.assign(favorites);
-    if (!newFavorites.includes(address)) {
-      newFavorites.push(address);
-    }
+    const newFavorites = Object.assign(favorites);
+    if (!newFavorites.includes(address)) newFavorites.push(address);
 
     localStorage.setItem(
       `${network}_favorite_pools`,

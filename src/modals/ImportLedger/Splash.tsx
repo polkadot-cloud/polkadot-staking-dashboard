@@ -85,7 +85,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
               <ButtonHelp
                 marginLeft
                 onClick={() => openHelp(helpKey)}
-                backgroundSecondary
+                background="secondary"
               />
             ) : null}
           </h2>
