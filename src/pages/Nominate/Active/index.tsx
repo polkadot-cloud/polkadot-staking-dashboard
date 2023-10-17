@@ -33,9 +33,9 @@ export const Active = () => {
   const { isSyncing } = useUi();
   const { openHelp } = useHelp();
   const { inSetup } = useStaking();
-  const { openCanvas } = useOverlay().canvas;
-  const { isFastUnstaking } = useUnstaking();
   const { nominated } = useValidators();
+  const { isFastUnstaking } = useUnstaking();
+  const { openCanvas } = useOverlay().canvas;
   const { activeAccount } = useActiveAccounts();
 
   const ROW_HEIGHT = 220;
