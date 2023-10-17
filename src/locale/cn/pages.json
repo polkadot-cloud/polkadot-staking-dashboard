@@ -13,7 +13,6 @@
     },
     "nominate": {
       "activeNominations": "活跃提名人",
-      "addFromFavorites": "从收藏夹添加",
       "addressCopied": "地址已复制到剪贴板",
       "automaticallyBonded": "将自动质押收益到现有的质押余额中",
       "back": "返回",
@@ -50,7 +49,6 @@
       "startNominating": "开始提名",
       "status": "提名人状态",
       "stop": "停止",
-      "stopNominatingSelected": "停止指定选定验证人",
       "summary": "总结",
       "syncing": "正在同步",
       "totalSupplyStaked": "所有抵押比例",

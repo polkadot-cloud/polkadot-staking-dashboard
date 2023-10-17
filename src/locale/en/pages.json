@@ -14,7 +14,6 @@
     },
     "nominate": {
       "activeNominations": "Active Nominations",
-      "addFromFavorites": "Add From Favorites",
       "addressCopied": "Address Copied to Clipboard",
       "automaticallyBonded": "Automatically bond payouts to your existing staked balance.",
       "back": "Back",
@@ -51,7 +50,6 @@
       "startNominating": "Start Nominating",
       "status": "Nominator Status",
       "stop": "Stop",
-      "stopNominatingSelected": "Stop Nominating Selected",
       "summary": "Summary",
       "syncing": "Syncing",
       "totalSupplyStaked": "Total Supply Staked",

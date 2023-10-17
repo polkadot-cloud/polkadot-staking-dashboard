@@ -22,7 +22,6 @@ import { ManageFastUnstake } from '../modals/ManageFastUnstake';
 import { ManagePool } from '../modals/ManagePool';
 import { Networks } from '../modals/Networks';
 import { Nominate } from '../modals/Nominate';
-import { NominateFromFavorites } from '../modals/NominateFromFavorites';
 import { NominatePool } from '../modals/NominatePool';
 import { PoolNominations } from '../modals/PoolNominations';
 import { SelectFavorites } from '../modals/SelectFavorites';
@@ -64,7 +63,6 @@ export const Overlays = () => {
         ManageFastUnstake,
         Networks,
         Nominate,
-        NominateFromFavorites,
         NominatePool,
         PoolNominations,
         SelectFavorites,
