@@ -47,8 +47,6 @@ export const HelpConfig: HelpItems = [
     key: 'nominate',
     definitions: [
       'Nomination Status',
-      'Stash and Controller Accounts',
-      'Controller Account Eligibility',
       'Bonding',
       'Active Stake Threshold',
       'Payout Destination',
