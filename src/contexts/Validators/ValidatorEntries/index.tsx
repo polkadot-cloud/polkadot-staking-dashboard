@@ -81,7 +81,13 @@ export const ValidatorsProvider = ({
 
   // Fetches era reward points for eligible eras.
   const fetchErasRewardPoints = () => {
-    // TODO: implement
+    // TODO: get active era as initial era to fetch.
+    // fetch era reward points, format and store in state. (abstract in a function taking current era).
+    // - if era is already in state, skip.
+    // - if already in local storage, get from there `<network>_era_reward_points`.
+    // - store to local storae if not already there.
+    //
+    // move on to next era if not yet reached threshold. (threshold to consts).
   };
 
   // Fetches the active account's nominees.
