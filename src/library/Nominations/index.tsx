@@ -15,11 +15,9 @@ import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { ValidatorList } from 'library/ValidatorList';
 import type { MaybeAddress } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Wrapper } from './Wrapper';
-import type { ManageNominationsInterface } from './types';
 
 export const Nominations = ({
   bondFor,
@@ -45,7 +43,6 @@ export const Nominations = ({
   const { isFastUnstaking } = useUnstaking();
   const { activeAccount } = useActiveAccounts();
   const { getAccountNominations } = useBonded();
-  const { favoritesList } = useFavoriteValidators();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { nominated: nominatorNominated, poolNominated } = useValidators();
 
@@ -154,51 +151,6 @@ export const Nominations = ({
                 validators={nominated}
                 nominator={nominator}
                 format="nomination"
-                actions={
-                  isReadOnlyAccount(activeAccount)
-                    ? []
-                    : [
-                        {
-                          title: t('nominate.stopNominatingSelected'),
-                          onClick: (provider: ManageNominationsInterface) => {
-                            const { selected } = provider;
-                            openModal({
-                              key: 'ChangeNominations',
-                              options: {
-                                nominations: [...nominations].filter(
-                                  (n) =>
-                                    !selected
-                                      .map(({ address }) => address)
-                                      .includes(n)
-                                ),
-                                provider,
-                                bondFor,
-                              },
-                              size: 'sm',
-                            });
-                          },
-                          onSelected: true,
-                        },
-                        {
-                          isDisabled: () => !favoritesList?.length,
-                          title: t('nominate.addFromFavorites'),
-                          onClick: ({
-                            setSelectActive,
-                          }: ManageNominationsInterface) => {
-                            setSelectActive(false);
-                            openModal({
-                              key: 'NominateFromFavorites',
-                              options: {
-                                nominations,
-                                bondFor,
-                              },
-                              size: 'xl',
-                            });
-                          },
-                          onSelected: false,
-                        },
-                      ]
-                }
                 refetchOnListUpdate
                 allowMoreCols
                 disableThrottle
