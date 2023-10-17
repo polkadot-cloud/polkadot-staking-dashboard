@@ -10,8 +10,12 @@ import { SelectWrapper } from 'library/ListItem/Wrappers';
 import { Title } from 'library/Prompt/Title';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { FavoritesPromptProps } from './types';
 
-export const FavoritesPrompt = ({ callback, nominations }: any) => {
+export const FavoritesPrompt = ({
+  callback,
+  nominations,
+}: FavoritesPromptProps) => {
   const { t } = useTranslation('modals');
   const { consts } = useApi();
   const { addNotification } = useNotifications();
@@ -21,10 +25,10 @@ export const FavoritesPrompt = ({ callback, nominations }: any) => {
   // Store the total number of selected favorites.
   const [selected, setSelected] = useState<Validator[]>([]);
 
-  const addToSelected = (_item: any) =>
-    setSelected([...selected].concat(_item));
+  const addToSelected = (item: Validator) =>
+    setSelected([...selected].concat(item));
 
-  const removeFromSelected = (items: any[]) =>
+  const removeFromSelected = (items: Validator[]) =>
     setSelected([...selected].filter((item) => !items.includes(item)));
 
   const remaining = maxNominations

@@ -1,8 +1,9 @@
 import { ButtonPrimary } from '@polkadot-cloud/react';
 import { Title } from 'library/Prompt/Title';
 import { useTranslation } from 'react-i18next';
+import type { RevertPromptProps } from './types';
 
-export const RevertPrompt = ({ onRevert }: { onRevert: () => void }) => {
+export const RevertPrompt = ({ onRevert }: RevertPromptProps) => {
   const { t } = useTranslation('modals');
 
   return (
