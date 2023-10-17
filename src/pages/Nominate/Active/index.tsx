@@ -10,7 +10,6 @@ import {
   RowSection,
 } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useBonded } from 'contexts/Bonded';
 import { useHelp } from 'contexts/Help';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
@@ -20,6 +19,7 @@ import { StatBoxList } from 'library/StatBoxList';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Nominations } from 'library/Nominations';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { ControllerNotStash } from './ControllerNotStash';
 import { ManageBond } from './ManageBond';
 import { ActiveNominatorsStat } from './Stats/ActiveNominators';
@@ -29,21 +29,20 @@ import { Status } from './Status';
 import { UnstakePrompts } from './UnstakePrompts';
 
 export const Active = () => {
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation();
   const { isSyncing } = useUi();
   const { openHelp } = useHelp();
-  const { targets, inSetup } = useStaking();
+  const { inSetup } = useStaking();
   const { openCanvas } = useOverlay().canvas;
   const { isFastUnstaking } = useUnstaking();
-  const { getAccountNominations } = useBonded();
+  const { nominated } = useValidators();
   const { activeAccount } = useActiveAccounts();
-  const nominations = getAccountNominations(activeAccount);
 
   const ROW_HEIGHT = 220;
 
   return (
     <>
-      <PageTitle title={t('nominate.nominate')} />
+      <PageTitle title={t('nominate.nominate', { ns: 'pages' })} />
       <StatBoxList>
         <ActiveNominatorsStat />
         <MinimumNominatorBondStat />
@@ -63,13 +62,13 @@ export const Active = () => {
       </PageRow>
       <PageRow>
         <CardWrapper>
-          {nominations.length || inSetup() || isSyncing ? (
+          {nominated?.length || inSetup() || isSyncing ? (
             <Nominations bondFor="nominator" nominator={activeAccount} />
           ) : (
             <>
               <CardHeaderWrapper $withAction>
                 <h3>
-                  {t('nominate.nominate')}
+                  {t('nominate.nominate', { ns: 'pages' })}
                   <ButtonHelp
                     marginLeft
                     onClick={() => openHelp('Nominations')}
@@ -79,7 +78,7 @@ export const Active = () => {
                   <ButtonPrimary
                     iconLeft={faChevronCircleRight}
                     iconTransform="grow-1"
-                    text={t('nominate.nominate')}
+                    text={t('nominate.nominate', { ns: 'pages' })}
                     disabled={inSetup() || isSyncing || isFastUnstaking}
                     onClick={() =>
                       openCanvas({
@@ -88,7 +87,7 @@ export const Active = () => {
                         options: {
                           bondFor: 'pool',
                           nominator: activeAccount,
-                          nominated: targets?.nominations || [],
+                          nominated,
                         },
                         size: 'xl',
                       })
@@ -96,7 +95,7 @@ export const Active = () => {
                   />
                 </div>
               </CardHeaderWrapper>
-              <h4>You are not nominating any validators.</h4>
+              <h4>{t('notNominatingValidators', { ns: 'library' })}</h4>
             </>
           )}
         </CardWrapper>

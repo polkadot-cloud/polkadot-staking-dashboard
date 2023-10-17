@@ -147,7 +147,7 @@ export const ManageNominations = () => {
       <ManageNominationsWrapper>
         <div className="head">
           <ButtonPrimaryInvert
-            text="Revert Changes"
+            text={t('revertChanges', { ns: 'modals' })}
             lg
             onClick={() => {
               openPromptWith(<RevertPrompt onRevert={handleRevertChanges} />);
@@ -157,18 +157,19 @@ export const ManageNominations = () => {
             }
           />
           <ButtonPrimary
-            text="Cancel"
+            text={t('cancel', { ns: 'library' })}
             lg
             onClick={() => closeCanvas()}
             iconLeft={faTimes}
             style={{ marginLeft: '1.1rem' }}
           />
         </div>
-        <h1>Manage Nominations</h1>
+        <h1>{t('manageNominations', { ns: 'modals' })}</h1>
 
         <Subheading>
           <h3 style={{ marginBottom: '1.5rem' }}>
             {t('chooseValidators', {
+              ns: 'library',
               maxNominations: maxNominations.toString(),
             })}
             <ButtonHelp

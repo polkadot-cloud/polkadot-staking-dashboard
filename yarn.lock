@@ -588,10 +588,10 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.23.tgz#fdfeadea8570fb3ae8b02c7113bf5afa3219c595"
   integrity sha512-8YGQoFkDkEr0LiIDiZ7VK1sFUESBAGCntsgma2194yHU/+6r9joHOiZJuKuCKviYkfI//eVxJAr1msBTxP0Evw==
 
-"@polkadot-cloud/react@^0.1.90":
-  version "0.1.90"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.90.tgz#f477e692b2519c2b1ebfd938ab79f06eced2d3e6"
-  integrity sha512-cBVUso1IV7fB+aZSWQUFKW+LPsQfYk6AQqRiXMT/ygX6V/HE4FzdbPWcIAKgCTleCG/ehCK8VXSWXH0pi78hKw==
+"@polkadot-cloud/react@^0.1.91":
+  version "0.1.91"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.91.tgz#814ef18e5a7eae7de29555d7b23ce2febc794792"
+  integrity sha512-jXcQseNXybxBj1wvvYRxJr6ijRqv5Xx+L0ao+/EDhQAOdyB99zABMhk2O+AuX2LpJj19RPpGe4PzpDSdjRc9mA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.4.2"
     "@fortawesome/free-brands-svg-icons" "^6.4.2"
@@ -1686,9 +1686,9 @@ binary-extensions@^2.0.0:
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
 
-"bip32-ed25519@git+https://github.com/Zondax/bip32-ed25519.git":
+"bip32-ed25519@https://github.com/Zondax/bip32-ed25519":
   version "0.0.4"
-  resolved "git+https://github.com/Zondax/bip32-ed25519.git#0949df01b5c93885339bc28116690292088f6134"
+  resolved "https://github.com/Zondax/bip32-ed25519#0949df01b5c93885339bc28116690292088f6134"
   dependencies:
     bn.js "^5.1.1"
     elliptic "^6.4.1"

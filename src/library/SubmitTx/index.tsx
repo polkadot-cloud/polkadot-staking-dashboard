@@ -76,7 +76,7 @@ export const SubmitTx = ({
 
   return (
     <Tx
-      displayFor="canvas"
+      displayFor={displayFor}
       margin={!noMargin}
       label={signingOpts.label}
       name={signingOpts.who?.name || ''}

@@ -9,8 +9,10 @@ import { Identity } from 'library/ListItem/Labels/Identity';
 import { SelectWrapper } from 'library/ListItem/Wrappers';
 import { Title } from 'library/Prompt/Title';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const FavoritesPrompt = ({ callback, nominations }: any) => {
+  const { t } = useTranslation('modals');
   const { consts } = useApi();
   const { addNotification } = useNotifications();
   const { favoritesList } = useFavoriteValidators();
@@ -33,49 +35,46 @@ export const FavoritesPrompt = ({ callback, nominations }: any) => {
 
   return (
     <>
-      <Title title="Nominate Favorites" closeText="Cancel" />
+      <Title title={t('nominateFavorites')} closeText="Cancel" />
       <div style={{ padding: '1rem 1.5rem' }}>
         {remaining.isZero() ? (
           <h4 style={{ marginBottom: '1rem' }}>
-            Adding more favorites will surpass {maxNominations.toString()}{' '}
-            nominations.
+            {t('moreFavoritesSurpassLimit', {
+              max: maxNominations.toString(),
+            })}
           </h4>
         ) : (
           <h4 style={{ marginBottom: '1rem' }}>
-            You can add {remaining.isGreaterThan(1) && ` up to`}{' '}
-            {remaining.toString()} more favorite validator
-            {remaining.isEqualTo(1) ? '' : 's'}.
+            {t('addUpToFavorites', { count: remaining.toNumber() })}.
           </h4>
         )}
 
-        {favoritesList?.map((favorite: Validator, i) => {
-          return (
-            <div
-              key={`favorite_${i}`}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                borderBottom: '1px solid var(--border-primary-color)',
+        {favoritesList?.map((favorite: Validator, i) => (
+          <div
+            key={`favorite_${i}`}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              borderBottom: '1px solid var(--border-primary-color)',
+            }}
+          >
+            <SelectWrapper
+              disabled={!canAdd && !selected.includes(favorite)}
+              onClick={() => {
+                if (selected.includes(favorite)) {
+                  removeFromSelected([favorite]);
+                } else {
+                  addToSelected(favorite);
+                }
               }}
             >
-              <SelectWrapper
-                disabled={!canAdd && !selected.includes(favorite)}
-                onClick={() => {
-                  if (selected.includes(favorite)) {
-                    removeFromSelected([favorite]);
-                  } else {
-                    addToSelected(favorite);
-                  }
-                }}
-              >
-                {selected.includes(favorite) && (
-                  <FontAwesomeIcon icon={faCheck} transform="shrink-2" />
-                )}
-              </SelectWrapper>
-              <Identity key={`favorite_${i}`} address={favorite.address} />
-            </div>
-          );
-        })}
+              {selected.includes(favorite) && (
+                <FontAwesomeIcon icon={faCheck} transform="shrink-2" />
+              )}
+            </SelectWrapper>
+            <Identity key={`favorite_${i}`} address={favorite.address} />
+          </div>
+        ))}
 
         <div style={{ margin: '1.5rem 0 0.5rem 0' }}>
           <ButtonPrimary
@@ -83,10 +82,10 @@ export const FavoritesPrompt = ({ callback, nominations }: any) => {
             onClick={() => {
               callback(nominations.concat(selected));
               addNotification({
-                title: 'Favorites Added',
-                subtitle: `${selected.length} favorite${
-                  selected.length === 1 ? '' : 's'
-                } have been added to your nominees.`,
+                title: t('favoritesAddedTitle', { count: selected.length }),
+                subtitle: t('favoritesAddedSubtitle', {
+                  count: selected.length,
+                }),
               });
             }}
             disabled={selected.length === 0}

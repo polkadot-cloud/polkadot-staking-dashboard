@@ -113,6 +113,7 @@
     "notImported": "未导入",
     "notMeet": "未达到最低质押金款",
     "notNominating": "非提名状态中",
+    "notNominatingValidators": "You are not nominating any validators.",
     "notStaking": "无抵押",
     "notValidAddress": "无效地址",
     "optimalSelection": "最佳选择",

@@ -13,7 +13,7 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const ManagePool = () => {
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation();
   const { isSyncing } = useUi();
   const { openCanvas } = useOverlay().canvas;
   const { activeAccount } = useActiveAccounts();
@@ -36,7 +36,7 @@ export const ManagePool = () => {
           <>
             <CardHeaderWrapper $withAction>
               <h3>
-                {t('nominate.nominations')}
+                {t('nominate.nominations', { ns: 'pages' })}
                 <ButtonHelp
                   marginLeft
                   onClick={() => openHelp('Nominations')}
@@ -46,7 +46,7 @@ export const ManagePool = () => {
                 <ButtonPrimary
                   iconLeft={faChevronCircleRight}
                   iconTransform="grow-1"
-                  text={t('pools.nominate')}
+                  text={t('pools.nominate', { ns: 'pages' })}
                   disabled={!canNominate}
                   onClick={() =>
                     openCanvas({
@@ -63,7 +63,7 @@ export const ManagePool = () => {
                 />
               </div>
             </CardHeaderWrapper>
-            <h4>You are not nominating any validators.</h4>
+            <h4>{t('notNominatingValidators', { ns: 'library' })}</h4>
           </>
         ) : (
           <Nominations bondFor="pool" nominator={nominator} />
