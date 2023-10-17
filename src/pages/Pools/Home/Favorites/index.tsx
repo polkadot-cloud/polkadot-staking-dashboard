@@ -24,7 +24,7 @@ export const PoolFavorites = () => {
   useEffect(() => {
     // map favorites to bonded pools
     let newFavoritesList = favorites.map((f) => {
-      const pool = !bondedPools.find((b) => b.addresses.stash === f);
+      const pool = bondedPools.find((b) => b.addresses.stash === f);
       if (!pool) removeFavorite(f);
       return pool;
     });
