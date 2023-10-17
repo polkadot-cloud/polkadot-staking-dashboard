@@ -199,6 +199,7 @@
     "reserveForTxFees": "为交易费用预存金额",
     "reserveText": "控制预存多少{{unit}}用于支付交易费用. 这笔金额是在您账户最低存款基础上增加的.",
     "resetLedgerAccounts": "重设Ledger帐户",
+    "revertChanges": "Revert Changes",
     "revertNominationChanges": "Are you sure you wish to revert the changes to your selected nominations?",
     "revertNominations": "Revert Nominations",
     "rewards": "收益",
