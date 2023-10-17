@@ -14,6 +14,7 @@ import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type {
+  ErasRewardPoints,
   Identity,
   Validator,
   ValidatorAddresses,
@@ -73,68 +74,30 @@ export const ValidatorsProvider = ({
   // Stores a randomised validator community dataset.
   const [validatorCommunity] = useState([...shuffle(ValidatorCommunity)]);
 
-  // Reset validators list on network change.
-  useEffectIgnoreInitial(() => {
-    setValidatorsFetched('unsynced');
-    setSessionValidators([]);
-    setSessionParaValidators([]);
-    setAvgCommission(0);
-    setValidators([]);
-    setValidatorIdentities({});
-    setValidatorSupers({});
-  }, [network]);
+  // Store era reward points, keyed by era.
+  const [erasRewardPoints, setErasRewardPoints] = useState<ErasRewardPoints>(
+    {}
+  );
 
-  // Fetch validators and session validators when activeEra ready.
-  useEffectIgnoreInitial(() => {
-    if (isReady && activeEra.index.isGreaterThan(0)) {
-      fetchValidators();
-      fetchSessionValidators();
-    }
-  }, [isReady, activeEra]);
+  // Fetches era reward points for eligible eras.
+  const fetchErasRewardPoints = () => {
+    // TODO: implement
+  };
 
-  // Fetch parachain session validators when `earliestStoredSession` ready.
-  useEffectIgnoreInitial(() => {
-    if (isReady && greaterThanZero(earliestStoredSession)) {
-      subscribeParachainValidators();
-    }
-  }, [isReady, earliestStoredSession]);
-
-  // Fetch active account's nominations in validator list format.
-  useEffectIgnoreInitial(() => {
-    if (isReady && activeAccount) {
-      fetchNominatedList();
-    }
-  }, [isReady, activeAccount, bondedAccounts]);
-
+  // Fetches the active account's nominees.
   const fetchNominatedList = async () => {
     if (!activeAccount) return;
 
-    // get raw targets list
-    const targets = getAccountNominations(activeAccount);
-
     // format to list format
-    const targetsFormatted = targets.map((item) => ({ address: item }));
+    const targetsFormatted = getAccountNominations(activeAccount).map(
+      (item) => ({ address: item })
+    );
     // fetch preferences
     const nominationsWithPrefs = await fetchValidatorPrefs(targetsFormatted);
     setNominated(nominationsWithPrefs || []);
   };
 
-  // Fetch active account's pool nominations in validator list format.
-  useEffectIgnoreInitial(() => {
-    if (isReady && poolNominations) {
-      fetchPoolNominatedList();
-    }
-  }, [isReady, poolNominations]);
-
-  // Unsubscribe on network change and component unmount.
-  useEffect(() => {
-    if (sessionParaValidators.length) sessionParaUnsub.current?.();
-
-    return () => {
-      sessionParaUnsub.current?.();
-    };
-  }, [network]);
-
+  // Fetches the active pool's nominees.
   const fetchPoolNominatedList = async () => {
     // get raw nominations list
     let n = poolNominations.targets;
@@ -159,11 +122,9 @@ export const ValidatorsProvider = ({
       const prefs = p.toHuman();
       const commission = new BigNumber(prefs.commission.replace(/%/g, ''));
 
-      if (!commission.isEqualTo(100)) {
+      if (!commission.isEqualTo(100))
         totalNonAllCommission = totalNonAllCommission.plus(commission);
-      } else {
-        notFullCommissionCount++;
-      }
+      else notFullCommissionCount++;
 
       entries.push({
         address,
@@ -323,9 +284,56 @@ export const ValidatorsProvider = ({
         },
       ])
     );
-
     return supersWithIdentity;
   };
+
+  // Reset validator state data on network change.
+  useEffectIgnoreInitial(() => {
+    setValidatorsFetched('unsynced');
+    setSessionValidators([]);
+    setSessionParaValidators([]);
+    setAvgCommission(0);
+    setValidators([]);
+    setValidatorIdentities({});
+    setValidatorSupers({});
+    setErasRewardPoints({});
+  }, [network]);
+
+  // Fetch validators, session validators, and era reward points when `activeEra` ready.
+  useEffectIgnoreInitial(() => {
+    if (isReady && activeEra.index.isGreaterThan(0)) {
+      fetchValidators();
+      fetchErasRewardPoints();
+      fetchSessionValidators();
+    }
+  }, [isReady, activeEra]);
+
+  // Fetch parachain session validators when `earliestStoredSession` ready.
+  useEffectIgnoreInitial(() => {
+    if (isReady && greaterThanZero(earliestStoredSession))
+      subscribeParachainValidators();
+  }, [isReady, earliestStoredSession]);
+
+  // Fetch active account's nominations in validator list format.
+  useEffectIgnoreInitial(() => {
+    if (isReady && activeAccount) {
+      fetchNominatedList();
+    }
+  }, [isReady, activeAccount, bondedAccounts]);
+
+  // Fetch active account's pool nominations in validator list format.
+  useEffectIgnoreInitial(() => {
+    if (isReady && poolNominations) fetchPoolNominatedList();
+  }, [isReady, poolNominations]);
+
+  // Unsubscribe on network change and component unmount.
+  useEffect(() => {
+    if (sessionParaValidators.length) sessionParaUnsub.current?.();
+
+    return () => {
+      sessionParaUnsub.current?.();
+    };
+  }, [network]);
 
   return (
     <ValidatorsContext.Provider
@@ -340,6 +348,7 @@ export const ValidatorsProvider = ({
         nominated,
         poolNominated,
         validatorCommunity,
+        erasRewardPoints,
       }}
     >
       {children}
