@@ -142,8 +142,8 @@ export const Summary = ({ section }: SetupStepProps) => {
           <SubmitTx
             submitText={t('pools.createPool')}
             valid
-            noMargin
             {...submitExtrinsic}
+            displayFor="canvas" /* Edge case: not canvas, but the larger button sizes suit this UI more. */
           />
         </div>
       </MotionContainer>
