@@ -16,6 +16,7 @@ import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
 import { Select } from '../../ListItem/Labels/Select';
 import { getIdentityDisplay } from './Utils';
 import type { ValidatorItemProps } from './types';
+import { Pulse } from './Pulse';
 
 export const Nomination = ({
   validator,
@@ -31,33 +32,15 @@ export const Nomination = ({
   const commission = prefs?.commission ?? null;
 
   return (
-    <Wrapper $format="nomination" $displayFor={displayFor}>
-      <div className="inner">
-        <div className="row">
+    <Wrapper>
+      <div className={`inner ${displayFor}`}>
+        <div className="row top">
           {selectActive && <Select item={validator} />}
           <Identity address={address} />
           <div>
-            <Labels>
+            <Labels className={displayFor}>
               <CopyAddress address={address} />
               {toggleFavorites && <FavoriteValidator address={address} />}
-            </Labels>
-          </div>
-        </div>
-        <Separator />
-        <div className="row status">
-          <NominationStatus
-            address={address}
-            bondFor={bondFor}
-            nominator={nominator}
-          />
-          <Labels>
-            <Oversubscribed address={address} />
-            <Blocked prefs={prefs} />
-            <Commission commission={commission} />
-            <ParaValidator address={address} />
-
-            {/* restrict opening modal within a canvas */}
-            {displayFor === 'default' && (
               <Metrics
                 address={address}
                 display={getIdentityDisplay(
@@ -65,8 +48,28 @@ export const Nomination = ({
                   validatorSupers[address]
                 )}
               />
-            )}
-          </Labels>
+            </Labels>
+          </div>
+        </div>
+        <Separator />
+        <div className="row bottom lg">
+          <div>
+            <Pulse address={address} displayFor={displayFor} />
+          </div>
+          <div>
+            <Labels style={{ marginBottom: '0.9rem' }}>
+              <Oversubscribed address={address} />
+              <Blocked prefs={prefs} />
+              <Commission commission={commission} />
+              <ParaValidator address={address} />
+            </Labels>
+            <NominationStatus
+              address={address}
+              bondFor={bondFor}
+              nominator={nominator}
+              noMargin
+            />
+          </div>
         </div>
       </div>
     </Wrapper>

@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import {
   faBars,
   faChartLine,
@@ -11,8 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMenu } from 'contexts/Menu';
-import { useNotifications } from 'contexts/Notifications';
-import type { NotificationText } from 'contexts/Notifications/types';
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator';
 import {
@@ -35,6 +32,7 @@ import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
 import { Select } from '../../ListItem/Labels/Select';
 import { getIdentityDisplay } from './Utils';
 import type { ValidatorItemProps } from './types';
+import { Pulse } from './Pulse';
 
 export const Default = ({
   validator,
@@ -46,8 +44,7 @@ export const Default = ({
   const { selectActive } = useList();
   const { pluginEnabled } = usePlugins();
   const { openModal } = useOverlay().modal;
-  const { addNotification } = useNotifications();
-  const { setMenuPosition, setMenuItems, open }: any = useMenu();
+  const { setMenuPosition, setMenuItems, open } = useMenu();
   const { validatorIdentities, validatorSupers } = useValidators();
 
   const { address, prefs } = validator;
@@ -57,15 +54,6 @@ export const Default = ({
     validatorIdentities[address],
     validatorSupers[address]
   );
-
-  // copy address notification.
-  const notificationCopyAddress: NotificationText | null =
-    address == null
-      ? null
-      : {
-          title: t('addressCopiedToClipboard'),
-          subtitle: address,
-        };
 
   // configure floating menu
   const posRef = useRef(null);
@@ -102,18 +90,6 @@ export const Default = ({
     });
   }
 
-  menuItems.push({
-    icon: <FontAwesomeIcon icon={faCopy} transform="shrink-3" />,
-    wrap: null,
-    title: `${t('copyAddress')}`,
-    cb: () => {
-      navigator.clipboard.writeText(address);
-      if (notificationCopyAddress) {
-        addNotification(notificationCopyAddress);
-      }
-    },
-  });
-
   const toggleMenu = () => {
     if (!open) {
       setMenuItems(menuItems);
@@ -122,44 +98,42 @@ export const Default = ({
   };
 
   return (
-    <Wrapper $format="nomination" $displayFor={displayFor}>
-      <div className="inner">
+    <Wrapper>
+      <div className={`inner ${displayFor}`}>
         <MenuPosition ref={posRef} />
-        <div className="row">
+        <div className="row top">
           {selectActive && <Select item={validator} />}
           <Identity address={address} />
           <div>
-            <Labels>
-              <Oversubscribed address={address} />
-              <Blocked prefs={prefs} />
-              <Commission commission={commission} />
-              <ParaValidator address={address} />
+            <Labels className={displayFor}>
+              <CopyAddress address={address} />
               {toggleFavorites && <FavoriteValidator address={address} />}
 
               {/* restrict opening modal within a canvas */}
               {displayFor === 'default' && showMenu && (
-                <button
-                  type="button"
-                  className="label"
-                  onClick={() => toggleMenu()}
-                >
-                  <FontAwesomeIcon icon={faBars} />
-                </button>
+                <div className="label">
+                  <button type="button" onClick={() => toggleMenu()}>
+                    <FontAwesomeIcon icon={faBars} transform="shrink-2" />
+                  </button>
+                </div>
               )}
             </Labels>
           </div>
         </div>
         <Separator />
-        <div className="row status">
-          <EraStatus address={address} />
-          {/* restrict opening modal within a canvas */}
-          {displayFor !== 'default' && (
-            <>
-              <Labels>
-                <CopyAddress address={address} />
-              </Labels>
-            </>
-          )}
+        <div className="row bottom lg">
+          <div>
+            <Pulse address={address} displayFor={displayFor} />
+          </div>
+          <div>
+            <Labels style={{ marginBottom: '0.9rem' }}>
+              <Oversubscribed address={address} />
+              <Blocked prefs={prefs} />
+              <Commission commission={commission} />
+              <ParaValidator address={address} />
+            </Labels>
+            <EraStatus address={address} noMargin />
+          </div>
         </div>
       </div>
     </Wrapper>

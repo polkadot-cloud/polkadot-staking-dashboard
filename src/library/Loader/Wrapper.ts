@@ -20,7 +20,7 @@ export const LoaderWrapper = styled.div`
   animation-name: shimmer;
   animation-timing-function: linear;
 
-  opacity: 0.25;
+  opacity: 0.1;
   border-radius: 0.75rem;
   display: inline-block;
   position: relative;

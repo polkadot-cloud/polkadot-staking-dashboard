@@ -14,3 +14,13 @@ export interface ValidatorItemProps {
   showMenu?: boolean;
   toggleFavorites?: boolean;
 }
+
+export interface PulseProps {
+  address: string;
+  displayFor: DisplayFor;
+}
+export interface PulseGraphProps {
+  points: number[];
+  syncing: boolean;
+  displayFor: DisplayFor;
+}

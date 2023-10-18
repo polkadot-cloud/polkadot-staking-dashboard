@@ -85,6 +85,7 @@ export const Entity = () => {
                 bondFor="nominator"
                 validators={activeValidators}
                 title={`${name} ${t('community.validators')}`}
+                allowListFormat={false}
                 selectable={false}
                 allowMoreCols
                 pagination
