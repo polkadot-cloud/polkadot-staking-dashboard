@@ -154,6 +154,7 @@ export const Nominations = ({
                 refetchOnListUpdate
                 allowMoreCols
                 disableThrottle
+                allowListFormat={false}
               />
             </div>
           ) : (

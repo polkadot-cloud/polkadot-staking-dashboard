@@ -104,10 +104,10 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
   };
 
   return (
-    <Wrapper $format="nomination">
+    <Wrapper className="pool">
       <div className="inner">
         <MenuPosition ref={posRef} />
-        <div className="row">
+        <div className="row top">
           {selectActive && <Select item={who} />}
           <Identity address={who} />
           <div>
@@ -126,7 +126,7 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
           </div>
         </div>
         <Separator />
-        <div className="row status">
+        <div className="row bottom">
           <PoolMemberBonded
             who={who}
             meta={meta}

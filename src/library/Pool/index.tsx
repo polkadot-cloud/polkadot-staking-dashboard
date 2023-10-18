@@ -114,10 +114,10 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   };
 
   return (
-    <Wrapper $format="nomination">
+    <Wrapper className="pool">
       <div className="inner">
         <MenuPosition ref={posRef} />
-        <div className="row">
+        <div className="row top">
           <PoolIdentity
             batchKey={batchKey}
             batchIndex={batchIndex}
@@ -142,7 +142,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
           </div>
         </div>
         <Separator />
-        <div className="row status">
+        <div className="row bottom">
           <PoolBonded pool={pool} batchIndex={batchIndex} batchKey={batchKey} />
           {!isPoolSyncing &&
             state === 'Open' &&

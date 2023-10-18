@@ -10,7 +10,13 @@ import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import type { MaybeAddress } from 'types';
 import { useNetwork } from 'contexts/Network';
 
-export const EraStatus = ({ address }: { address: MaybeAddress }) => {
+export const EraStatus = ({
+  address,
+  noMargin,
+}: {
+  address: MaybeAddress;
+  noMargin: boolean;
+}) => {
   const { t } = useTranslation('library');
   const {
     networkData: { unit, units },
@@ -45,7 +51,7 @@ export const EraStatus = ({ address }: { address: MaybeAddress }) => {
   const totalStake = planckToUnit(totalStakePlanck, units);
 
   return (
-    <ValidatorStatusWrapper $status={validatorStatus}>
+    <ValidatorStatusWrapper $status={validatorStatus} $noMargin={noMargin}>
       <h5>
         {isSyncing || erasStakersSyncing
           ? t('syncing')

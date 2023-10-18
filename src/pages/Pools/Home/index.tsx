@@ -13,6 +13,7 @@ import { StatBoxList } from 'library/StatBoxList';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { PoolListProvider } from 'library/PoolList/context';
 import { Roles } from '../Roles';
 import { ClosurePrompts } from './ClosurePrompts';
 import { PoolFavorites } from './Favorites';
@@ -143,18 +144,20 @@ export const HomeInner = () => {
         <>
           <PageRow>
             <CardWrapper>
-              <PoolList
-                batchKey="bonded_pools"
-                pools={bondedPools}
-                title={t('pools.activePools')}
-                defaultFilters={{
-                  includes: ['active'],
-                  excludes: ['locked', 'destroying'],
-                }}
-                allowMoreCols
-                allowSearch
-                pagination
-              />
+              <PoolListProvider>
+                <PoolList
+                  batchKey="bonded_pools"
+                  pools={bondedPools}
+                  title={t('pools.activePools')}
+                  defaultFilters={{
+                    includes: ['active'],
+                    excludes: ['locked', 'destroying'],
+                  }}
+                  allowMoreCols
+                  allowSearch
+                  pagination
+                />
+              </PoolListProvider>
             </CardWrapper>
           </PageRow>
         </>

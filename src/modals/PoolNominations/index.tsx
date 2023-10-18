@@ -29,6 +29,7 @@ export const PoolNominations = () => {
               title={t('poolNominations')}
               showMenu={false}
               displayFor="modal"
+              allowListFormat={false}
               refetchOnListUpdate
             />
           ) : (

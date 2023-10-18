@@ -52,6 +52,7 @@ export const AllValidators = () => {
                       'missing_identity',
                     ],
                   }}
+                  allowListFormat={false}
                   allowMoreCols
                   allowFilters
                   allowSearch

@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
+import type BigNumber from 'bignumber.js';
+import { MaxEraRewardPointsEras } from 'consts';
 
 export const getIdentityDisplay = (_identity: any, _superIdentity: any) => {
   let displayFinal = '';
@@ -54,4 +56,28 @@ export const getIdentityDisplay = (_identity: any, _superIdentity: any) => {
       ) : null}
     </>
   );
+};
+
+// Normalise era points between 0 and 1 relative to the highest recorded value.
+export const normaliseEraPoints = (
+  eraPoints: Record<string, BigNumber>,
+  high: BigNumber
+): Record<string, number> => {
+  const percentile = high.dividedBy(100);
+
+  return Object.fromEntries(
+    Object.entries(eraPoints).map(([era, points]) => [
+      era,
+      points.dividedBy(percentile).multipliedBy(0.01).toNumber(),
+    ])
+  );
+};
+
+// Prefill low values where no points are recorded.
+export const prefillEraPoints = (eraPoints: number[]): number[] => {
+  const missing = Math.max(MaxEraRewardPointsEras - eraPoints.length, 0);
+
+  if (!missing) return eraPoints;
+
+  return Array(missing).fill(0).concat(eraPoints);
 };
