@@ -302,7 +302,7 @@ export const TooltipTrigger = styled.div`
 `;
 
 export const ValidatorPulseWrapper = styled.div`
-  border: 1px solid var(--border-primary-color);
+  border: 1px solid var(--grid-color-primary);
   border-radius: 0.25rem;
   height: 3.2rem;
   display: flex;
