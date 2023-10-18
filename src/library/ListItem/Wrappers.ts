@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { SmallFontSizeMaxWidth } from 'consts';
 
 export const Wrapper = styled.div`
-  --height-top-row: 3.5rem;
+  --height-top-row: 3.75rem;
   --height-bottom-row: 5rem;
 
   /* Pool lists do not currently have larger bottom row. */
@@ -118,14 +118,21 @@ export const Labels = styled.div`
     font-size: inherit;
 
     @media (min-width: ${SmallFontSizeMaxWidth}px) {
-      margin: 0 0.3rem;
+      margin: 0 0.35rem;
       &.pool {
         margin: 0 0.45rem;
       }
     }
+
     button {
-      font-size: 1.1rem;
+      background: var(--shimmer-foreground);
+      color: var(--text-color-secondary);
+      font-size: 1rem;
+      border-radius: 50%;
+      width: 1.9rem;
+      height: 1.9rem;
     }
+
     &.button-with-text {
       margin-right: 0;
 
@@ -295,7 +302,7 @@ export const TooltipTrigger = styled.div`
 export const ValidatorPulseWrapper = styled.div`
   border: 1px solid var(--border-primary-color);
   border-radius: 0.25rem;
-  height: 3.4rem;
+  height: 3.2rem;
   display: flex;
   align-items: center;
   width: 100%;

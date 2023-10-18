@@ -111,13 +111,11 @@ export const Default = ({
 
               {/* restrict opening modal within a canvas */}
               {displayFor === 'default' && showMenu && (
-                <button
-                  type="button"
-                  className="label"
-                  onClick={() => toggleMenu()}
-                >
-                  <FontAwesomeIcon icon={faBars} />
-                </button>
+                <div className="label">
+                  <button type="button" onClick={() => toggleMenu()}>
+                    <FontAwesomeIcon icon={faBars} transform="shrink-2" />
+                  </button>
+                </div>
               )}
             </Labels>
           </div>
