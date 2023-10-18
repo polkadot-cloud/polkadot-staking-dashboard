@@ -5,15 +5,21 @@ import BigNumber from 'bignumber.js';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { Fragment } from 'react';
-import { ValidatorPulseWrapper } from 'library/ListItem/Wrappers';
+import {
+  TooltipTrigger,
+  ValidatorPulseWrapper,
+} from 'library/ListItem/Wrappers';
+import { useTooltip } from 'contexts/Tooltip';
+import { useTranslation } from 'react-i18next';
 import { normaliseEraPoints, prefillEraPoints } from './Utils';
 import type { PulseGraphProps, PulseProps } from './types';
 
 export const Pulse = ({ address, displayFor }: PulseProps) => {
+  const { t } = useTranslation('library');
   const { activeEra } = useNetworkMetrics();
+  const { setTooltipTextAndOpen } = useTooltip();
   const { getValidatorEraPoints, eraPointsBoundaries, erasRewardPoints } =
     useValidators();
-
   const startEra = activeEra.index.minus(1);
   const eraRewardPoints = getValidatorEraPoints(startEra, address);
 
@@ -22,10 +28,16 @@ export const Pulse = ({ address, displayFor }: PulseProps) => {
   const prefilledPoints = prefillEraPoints(Object.values(normalisedPoints));
 
   const syncing = !Object.values(erasRewardPoints).length;
+  const tooltipText = t('validatorPerformance');
 
   return (
     <ValidatorPulseWrapper className={displayFor}>
       {syncing && <div className="preload" />}
+      <TooltipTrigger
+        className="tooltip-trigger-element"
+        data-tooltip-text={tooltipText}
+        onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
+      />
       <PulseGraph
         points={prefilledPoints}
         syncing={syncing}
