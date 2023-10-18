@@ -14,6 +14,7 @@ import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { MaxEraRewardPointEras } from 'consts';
+import type { AnyJson } from '@polkadot-cloud/react/types';
 import type {
   ErasRewardPoints,
   Identity,
@@ -94,10 +95,6 @@ export const ValidatorsProvider = ({
   ) => {
     if (!api || erasRewardPoints[era.toString()]) return false;
 
-    // If already in local storage, get data from there.
-    if (hasLocalEraRewardPoints(network, era.toString()))
-      return getLocalEraRewardPoints(network, era.toString());
-
     const formatted = {
       total: rmCommas(result.total),
       individual: Object.fromEntries(
@@ -137,9 +134,18 @@ export const ValidatorsProvider = ({
     // Iterate eras and process reward points.
     const calls = [];
     const eras = [];
+    const localEras: Record<string, AnyJson> = {};
     do {
-      calls.push(api.query.staking.erasRewardPoints(currentEra.toString()));
-      eras.push(currentEra);
+      // If already in local storage, get data from there. Otherwise, add to calls.
+      if (hasLocalEraRewardPoints(network, currentEra.toString())) {
+        localEras[currentEra.toString()] = getLocalEraRewardPoints(
+          network,
+          currentEra.toString()
+        );
+      } else {
+        calls.push(api.query.staking.erasRewardPoints(currentEra.toString()));
+        eras.push(currentEra);
+      }
 
       currentEra = currentEra.minus(1);
       erasProcessed = erasProcessed.plus(1);
@@ -162,7 +168,10 @@ export const ValidatorsProvider = ({
     }
 
     // Commit results to state.
-    setErasRewardPoints(newErasRewardPoints);
+    setErasRewardPoints({
+      ...localEras,
+      ...newErasRewardPoints,
+    });
   };
 
   // Fetches the active account's nominees.
