@@ -4,7 +4,7 @@
 import styled from 'styled-components';
 
 export const ManageNominationsWrapper = styled.div`
-  padding-top: 5rem;
+  padding-top: 3rem;
   min-height: calc(100vh - 12rem);
   padding-bottom: 2rem;
 
