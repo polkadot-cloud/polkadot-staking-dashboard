@@ -29,6 +29,7 @@ export const ValidatorFavorites = () => {
                       validators={favoritesList}
                       title={t('validators.favoriteValidators')}
                       selectable={false}
+                      allowListFormat={false}
                       refetchOnListUpdate
                       allowMoreCols
                       toggleFavorites

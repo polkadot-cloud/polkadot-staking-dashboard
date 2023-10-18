@@ -34,6 +34,7 @@ export const PoolList = ({
   pools,
   title,
   defaultFilters,
+  allowListFormat = true,
 }: PoolListProps) => {
   const { t } = useTranslation('library');
   const { mode } = useTheme();
@@ -181,20 +182,22 @@ export const PoolList = ({
         <div>
           <h4>{title}</h4>
         </div>
-        <div>
-          <button type="button" onClick={() => setListFormat('row')}>
-            <FontAwesomeIcon
-              icon={faBars}
-              color={listFormat === 'row' ? colors.primary[mode] : 'inherit'}
-            />
-          </button>
-          <button type="button" onClick={() => setListFormat('col')}>
-            <FontAwesomeIcon
-              icon={faGripVertical}
-              color={listFormat === 'col' ? colors.primary[mode] : 'inherit'}
-            />
-          </button>
-        </div>
+        {allowListFormat && (
+          <div>
+            <button type="button" onClick={() => setListFormat('row')}>
+              <FontAwesomeIcon
+                icon={faBars}
+                color={listFormat === 'row' ? colors.primary[mode] : 'inherit'}
+              />
+            </button>
+            <button type="button" onClick={() => setListFormat('col')}>
+              <FontAwesomeIcon
+                icon={faGripVertical}
+                color={listFormat === 'col' ? colors.primary[mode] : 'inherit'}
+              />
+            </button>
+          </div>
+        )}
       </Header>
       <List $flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
         {allowSearch && poolsDefault.length > 0 && (
