@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import {
   faBars,
   faChartLine,
@@ -11,8 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMenu } from 'contexts/Menu';
-import { useNotifications } from 'contexts/Notifications';
-import type { NotificationText } from 'contexts/Notifications/types';
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator';
 import {
@@ -47,7 +44,6 @@ export const Default = ({
   const { selectActive } = useList();
   const { pluginEnabled } = usePlugins();
   const { openModal } = useOverlay().modal;
-  const { addNotification } = useNotifications();
   const { setMenuPosition, setMenuItems, open } = useMenu();
   const { validatorIdentities, validatorSupers } = useValidators();
 
@@ -58,15 +54,6 @@ export const Default = ({
     validatorIdentities[address],
     validatorSupers[address]
   );
-
-  // copy address notification.
-  const notificationCopyAddress: NotificationText | null =
-    address == null
-      ? null
-      : {
-          title: t('addressCopiedToClipboard'),
-          subtitle: address,
-        };
 
   // configure floating menu
   const posRef = useRef(null);
@@ -103,18 +90,6 @@ export const Default = ({
     });
   }
 
-  menuItems.push({
-    icon: <FontAwesomeIcon icon={faCopy} transform="shrink-3" />,
-    wrap: null,
-    title: `${t('copyAddress')}`,
-    cb: () => {
-      navigator.clipboard.writeText(address);
-      if (notificationCopyAddress) {
-        addNotification(notificationCopyAddress);
-      }
-    },
-  });
-
   const toggleMenu = () => {
     if (!open) {
       setMenuItems(menuItems);
@@ -131,10 +106,7 @@ export const Default = ({
           <Identity address={address} />
           <div>
             <Labels>
-              <Oversubscribed address={address} />
-              <Blocked prefs={prefs} />
-              <Commission commission={commission} />
-              <ParaValidator address={address} />
+              <CopyAddress address={address} />
               {toggleFavorites && <FavoriteValidator address={address} />}
 
               {/* restrict opening modal within a canvas */}
@@ -156,12 +128,11 @@ export const Default = ({
             <Pulse address={address} />
           </div>
           <div>
-            <Labels style={{ marginBottom: '0.75rem' }}>
-              {displayFor !== 'default' ? (
-                <CopyAddress address={address} />
-              ) : (
-                <>&nbsp;</>
-              )}
+            <Labels style={{ marginBottom: '0.9rem' }}>
+              <Oversubscribed address={address} />
+              <Blocked prefs={prefs} />
+              <Commission commission={commission} />
+              <ParaValidator address={address} />
             </Labels>
             <EraStatus address={address} noMargin />
           </div>

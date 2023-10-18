@@ -41,6 +41,13 @@ export const Nomination = ({
             <Labels>
               <CopyAddress address={address} />
               {toggleFavorites && <FavoriteValidator address={address} />}
+              <Metrics
+                address={address}
+                display={getIdentityDisplay(
+                  validatorIdentities[address],
+                  validatorSupers[address]
+                )}
+              />
             </Labels>
           </div>
         </div>
@@ -50,22 +57,11 @@ export const Nomination = ({
             <Pulse address={address} />
           </div>
           <div>
-            <Labels style={{ marginBottom: '0.75rem' }}>
+            <Labels style={{ marginBottom: '0.9rem' }}>
               <Oversubscribed address={address} />
               <Blocked prefs={prefs} />
               <Commission commission={commission} />
               <ParaValidator address={address} />
-
-              {/* restrict opening modal within a canvas */}
-              {displayFor === 'default' && (
-                <Metrics
-                  address={address}
-                  display={getIdentityDisplay(
-                    validatorIdentities[address],
-                    validatorSupers[address]
-                  )}
-                />
-              )}
             </Labels>
             <NominationStatus
               address={address}
