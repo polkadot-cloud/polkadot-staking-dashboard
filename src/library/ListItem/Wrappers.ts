@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { SmallFontSizeMaxWidth } from 'consts';
 
 export const Wrapper = styled.div`
-  --height-top-row: 3.75rem;
+  --height-top-row: 3.25rem;
   --height-bottom-row: 5rem;
 
   /* Pool lists do not currently have larger bottom row. */
