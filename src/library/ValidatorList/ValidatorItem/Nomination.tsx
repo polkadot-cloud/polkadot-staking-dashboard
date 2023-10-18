@@ -3,7 +3,12 @@
 
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator';
-import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
+import {
+  Labels,
+  Separator,
+  ValidatorPulseWrapper,
+  Wrapper,
+} from 'library/ListItem/Wrappers';
 import { useList } from '../../List/context';
 import { Blocked } from '../../ListItem/Labels/Blocked';
 import { Commission } from '../../ListItem/Labels/Commission';
@@ -16,6 +21,7 @@ import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
 import { Select } from '../../ListItem/Labels/Select';
 import { getIdentityDisplay } from './Utils';
 import type { ValidatorItemProps } from './types';
+import { Pulse } from './Pulse';
 
 export const Nomination = ({
   validator,
@@ -44,29 +50,37 @@ export const Nomination = ({
           </div>
         </div>
         <Separator />
-        <div className="row bottom">
-          <NominationStatus
-            address={address}
-            bondFor={bondFor}
-            nominator={nominator}
-          />
-          <Labels>
-            <Oversubscribed address={address} />
-            <Blocked prefs={prefs} />
-            <Commission commission={commission} />
-            <ParaValidator address={address} />
+        <div className="row bottom lg">
+          <div>
+            <ValidatorPulseWrapper>
+              <Pulse />
+            </ValidatorPulseWrapper>
+          </div>
+          <div>
+            <Labels style={{ marginBottom: '0.7rem' }}>
+              <Oversubscribed address={address} />
+              <Blocked prefs={prefs} />
+              <Commission commission={commission} />
+              <ParaValidator address={address} />
 
-            {/* restrict opening modal within a canvas */}
-            {displayFor === 'default' && (
-              <Metrics
-                address={address}
-                display={getIdentityDisplay(
-                  validatorIdentities[address],
-                  validatorSupers[address]
-                )}
-              />
-            )}
-          </Labels>
+              {/* restrict opening modal within a canvas */}
+              {displayFor === 'default' && (
+                <Metrics
+                  address={address}
+                  display={getIdentityDisplay(
+                    validatorIdentities[address],
+                    validatorSupers[address]
+                  )}
+                />
+              )}
+            </Labels>
+            <NominationStatus
+              address={address}
+              bondFor={bondFor}
+              nominator={nominator}
+              noMargin
+            />
+          </div>
         </div>
       </div>
     </Wrapper>

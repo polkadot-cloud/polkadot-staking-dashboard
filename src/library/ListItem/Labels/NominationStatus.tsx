@@ -16,6 +16,7 @@ export const NominationStatus = ({
   address,
   nominator,
   bondFor,
+  noMargin = false,
 }: NominationStatusProps) => {
   const { t } = useTranslation('library');
   const {
@@ -59,7 +60,7 @@ export const NominationStatus = ({
   }
 
   return (
-    <ValidatorStatusWrapper $status={nominationStatus}>
+    <ValidatorStatusWrapper $status={nominationStatus} $noMargin={noMargin}>
       <h5>
         {t(`${nominationStatus}`)}
         {greaterThanZero(stakedAmount)

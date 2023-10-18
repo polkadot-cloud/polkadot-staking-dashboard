@@ -37,6 +37,7 @@ export interface NominationStatusProps {
   address: string;
   bondFor: BondFor;
   nominator: MaybeAddress;
+  noMargin?: boolean;
 }
 
 export interface OversubscribedProps {

@@ -19,6 +19,7 @@ import {
   Labels,
   MenuPosition,
   Separator,
+  ValidatorPulseWrapper,
   Wrapper,
 } from 'library/ListItem/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
@@ -35,6 +36,7 @@ import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
 import { Select } from '../../ListItem/Labels/Select';
 import { getIdentityDisplay } from './Utils';
 import type { ValidatorItemProps } from './types';
+import { Pulse } from './Pulse';
 
 export const Default = ({
   validator,
@@ -150,16 +152,23 @@ export const Default = ({
           </div>
         </div>
         <Separator />
-        <div className="row bottom">
-          <EraStatus address={address} />
-          {/* restrict opening modal within a canvas */}
-          {displayFor !== 'default' && (
-            <>
-              <Labels>
-                <CopyAddress address={address} />
-              </Labels>
-            </>
-          )}
+        <div className="row bottom lg">
+          <div>
+            <ValidatorPulseWrapper>
+              <Pulse />
+            </ValidatorPulseWrapper>
+          </div>
+          <div>
+            <EraStatus address={address} />
+            {/* restrict opening modal within a canvas */}
+            {displayFor !== 'default' && (
+              <>
+                <Labels>
+                  <CopyAddress address={address} />
+                </Labels>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </Wrapper>

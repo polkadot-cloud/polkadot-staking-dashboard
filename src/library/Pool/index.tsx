@@ -114,7 +114,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper className="pool">
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row top">

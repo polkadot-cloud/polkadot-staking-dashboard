@@ -6,8 +6,14 @@ import styled from 'styled-components';
 import { SmallFontSizeMaxWidth } from 'consts';
 
 export const Wrapper = styled.div`
-  --height-top-row: 3.25rem;
-  --height-bottom-row: 2.75rem;
+  --height-top-row: 3.5rem;
+  --height-bottom-row: 5rem;
+
+  /* Pool lists do not currently have larger bottom row. */
+  &.pool {
+    --height-bottom-row: 2.75rem;
+  }
+
   --height-total: calc(var(--height-top-row) + var(--height-bottom-row));
 
   height: var(--height-total);
@@ -54,6 +60,23 @@ export const Wrapper = styled.div`
       }
       &.bottom {
         height: var(--height-bottom-row);
+
+        &.lg {
+          display: flex;
+          align-items: center;
+          > div {
+            &:first-child {
+              flex-grow: 1;
+              padding: 0 0.25rem;
+            }
+            &:last-child {
+              flex-shrink: 1;
+              display: flex;
+              flex-direction: column;
+              align-items: flex-end;
+            }
+          }
+        }
       }
     }
   }
@@ -95,9 +118,9 @@ export const Labels = styled.div`
     font-size: inherit;
 
     @media (min-width: ${SmallFontSizeMaxWidth}px) {
-      margin: 0 0.2rem;
+      margin: 0 0.3rem;
       &.pool {
-        margin: 0 0.4rem;
+        margin: 0 0.45rem;
       }
     }
     button {
@@ -185,8 +208,11 @@ export const IdentityWrapper = styled(motion.div)`
   }
 `;
 
-export const ValidatorStatusWrapper = styled.div<{ $status: string }>`
-  margin-right: 0.35rem;
+export const ValidatorStatusWrapper = styled.div<{
+  $status: string;
+  $noMargin?: boolean;
+}>`
+  margin-right: ${(props) => (props.$noMargin ? '0' : '0.35rem')};
   padding: 0 0.5rem;
 
   h5 {
@@ -263,5 +289,20 @@ export const TooltipTrigger = styled.div`
 
   &.as-button {
     cursor: pointer;
+  }
+`;
+
+export const ValidatorPulseWrapper = styled.div`
+  border: 1px solid var(--border-primary-color);
+  border-radius: 0.3rem;
+  height: 3.1rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 14rem;
+
+  > svg {
+    max-width: 100%;
+    max-height: 100%;
   }
 `;
