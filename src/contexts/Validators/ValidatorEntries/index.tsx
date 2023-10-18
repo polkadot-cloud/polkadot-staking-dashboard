@@ -91,12 +91,7 @@ export const ValidatorsProvider = ({
     useState<EraPointsBoundaries>(defaultEraPointsBoundaries);
 
   // Processes reward points for a given era.
-  const processEraRewardPoints = (
-    result: AnyJson,
-    era: BigNumber,
-    // eslint-disable-next-line
-    endEra: BigNumber
-  ) => {
+  const processEraRewardPoints = (result: AnyJson, era: BigNumber) => {
     if (!api || erasRewardPoints[era.toString()]) return false;
 
     const formatted = {
@@ -146,11 +141,7 @@ export const ValidatorsProvider = ({
     const newErasRewardPoints: ErasRewardPoints = {};
     let i = 0;
     for (const result of await Promise.all(calls)) {
-      const formatted = processEraRewardPoints(
-        result.toHuman(),
-        eras[i],
-        endEra
-      );
+      const formatted = processEraRewardPoints(result.toHuman(), eras[i]);
       if (formatted) newErasRewardPoints[eras[i].toString()] = formatted;
       i++;
     }
