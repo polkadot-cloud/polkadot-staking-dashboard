@@ -583,15 +583,15 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.22.tgz#2db01e6b6cc876f775756806134040c9fe2d858e"
   integrity sha512-65bsSRclgNTDLwfpPYUGwJTIu5zlxx82UV+B6/vytIcOycnKP3Kjzgf1Z8I+b5GpptuQ1oCMAlU/okK5scoDUg==
 
-"@polkadot-cloud/core@^1.0.23":
-  version "1.0.23"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.23.tgz#fdfeadea8570fb3ae8b02c7113bf5afa3219c595"
-  integrity sha512-8YGQoFkDkEr0LiIDiZ7VK1sFUESBAGCntsgma2194yHU/+6r9joHOiZJuKuCKviYkfI//eVxJAr1msBTxP0Evw==
+"@polkadot-cloud/core@^1.0.24":
+  version "1.0.24"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.24.tgz#be9fed76a82dbd9b1f5827d41f532ade04fcd0f9"
+  integrity sha512-8ShkcYDaPlroLDYEAhjvcVRmNYpHE72O/DZaCskhOrErYMI16AdeptOfkoaP/C7NgxkgYc8NgCDmnmfKgpy2eQ==
 
-"@polkadot-cloud/react@^0.1.91":
-  version "0.1.91"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.91.tgz#814ef18e5a7eae7de29555d7b23ce2febc794792"
-  integrity sha512-jXcQseNXybxBj1wvvYRxJr6ijRqv5Xx+L0ao+/EDhQAOdyB99zABMhk2O+AuX2LpJj19RPpGe4PzpDSdjRc9mA==
+"@polkadot-cloud/react@^0.1.92":
+  version "0.1.92"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.92.tgz#ea82ca840f9205517a8b8f65b151389783f96c6d"
+  integrity sha512-ZaT/hu3Hwv7PlBd1fT4E8NzCCAvje5E5HkPduOprJBPUpTMiBM4UiNRFGM8hVFl6iiW2hM8/LBzzyHLfAAVFWg==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.4.2"
     "@fortawesome/free-brands-svg-icons" "^6.4.2"
@@ -599,7 +599,7 @@
     "@fortawesome/free-solid-svg-icons" "^6.4.2"
     "@fortawesome/react-fontawesome" "^0.2.0"
     "@polkadot-cloud/assets" "^0.1.22"
-    "@polkadot-cloud/core" "^1.0.23"
+    "@polkadot-cloud/core" "^1.0.24"
     "@polkadot-cloud/utils" "^0.0.22"
     "@polkadot/keyring" "^12.5.1"
     "@polkadot/util" "^12.5.1"
@@ -1686,9 +1686,9 @@ binary-extensions@^2.0.0:
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
 
-"bip32-ed25519@git+https://github.com/Zondax/bip32-ed25519.git":
+"bip32-ed25519@https://github.com/Zondax/bip32-ed25519":
   version "0.0.4"
-  resolved "git+https://github.com/Zondax/bip32-ed25519.git#0949df01b5c93885339bc28116690292088f6134"
+  resolved "https://github.com/Zondax/bip32-ed25519#0949df01b5c93885339bc28116690292088f6134"
   dependencies:
     bn.js "^5.1.1"
     elliptic "^6.4.1"
