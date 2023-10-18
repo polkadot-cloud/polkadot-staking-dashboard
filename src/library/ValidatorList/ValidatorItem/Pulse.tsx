@@ -11,6 +11,7 @@ import {
 } from 'library/ListItem/Wrappers';
 import { useTooltip } from 'contexts/Tooltip';
 import { useTranslation } from 'react-i18next';
+import { MaxEraRewardPointsEras } from 'consts';
 import { normaliseEraPoints, prefillEraPoints } from './Utils';
 import type { PulseGraphProps, PulseProps } from './types';
 
@@ -28,7 +29,9 @@ export const Pulse = ({ address, displayFor }: PulseProps) => {
   const prefilledPoints = prefillEraPoints(Object.values(normalisedPoints));
 
   const syncing = !Object.values(erasRewardPoints).length;
-  const tooltipText = t('validatorPerformance');
+  const tooltipText = t('validatorPerformance', {
+    count: MaxEraRewardPointsEras,
+  });
 
   return (
     <ValidatorPulseWrapper className={displayFor}>

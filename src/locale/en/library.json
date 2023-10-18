@@ -176,7 +176,7 @@
     "validAddress": "Valid address",
     "validatingParachainBlocks": "Validating Parachain Blocks",
     "validatorCommission": "Validator Commission",
-    "validatorPerformance": "Validator Performance",
+    "validatorPerformance": "{{count}} Day Validator Performance",
     "valueTooSmall": "Value is too small",
     "viewDecentralization": "View Decentralization",
     "viewMetrics": "View Metrics",
