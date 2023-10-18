@@ -159,14 +159,13 @@ export const Default = ({
             </ValidatorPulseWrapper>
           </div>
           <div>
-            {/* restrict opening modal within a canvas */}
-            {displayFor !== 'default' && (
-              <>
-                <Labels style={{ marginBottom: '0.7rem' }}>
-                  <CopyAddress address={address} />
-                </Labels>
-              </>
-            )}
+            <Labels style={{ marginBottom: '0.7rem' }}>
+              {displayFor !== 'default' ? (
+                <CopyAddress address={address} />
+              ) : (
+                <>&nbsp;</>
+              )}
+            </Labels>
             <EraStatus address={address} noMargin />
           </div>
         </div>
