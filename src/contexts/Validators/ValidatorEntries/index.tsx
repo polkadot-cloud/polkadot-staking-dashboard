@@ -5,7 +5,7 @@ import { greaterThanZero, rmCommas, shuffle } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useRef, useState } from 'react';
 import { ValidatorCommunity } from '@polkadot-cloud/assets/validators';
-import type { AnyApi, Fn, Sync } from 'types';
+import type { AnyApi, AnyJson, Fn, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useBonded } from 'contexts/Bonded';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
@@ -14,8 +14,8 @@ import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { MaxEraRewardPointEras } from 'consts';
-import type { AnyJson } from '@polkadot-cloud/react/types';
 import type {
+  EraRewardPoints,
   ErasRewardPoints,
   Identity,
   Validator,
@@ -89,7 +89,7 @@ export const ValidatorsProvider = ({
 
   // Processes reward points for a given era.
   const processEraRewardPoints = (
-    result: AnyApi,
+    result: AnyJson,
     era: BigNumber,
     endEra: BigNumber
   ) => {
@@ -134,7 +134,7 @@ export const ValidatorsProvider = ({
     // Iterate eras and process reward points.
     const calls = [];
     const eras = [];
-    const localEras: Record<string, AnyJson> = {};
+    const localEras: Record<string, EraRewardPoints> = {};
     do {
       // If already in local storage, get data from there. Otherwise, add to calls.
       if (hasLocalEraRewardPoints(network, currentEra.toString())) {

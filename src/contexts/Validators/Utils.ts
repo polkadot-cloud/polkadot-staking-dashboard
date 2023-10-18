@@ -4,6 +4,7 @@
 import BigNumber from 'bignumber.js';
 import type { LocalMeta } from 'contexts/FastUnstake/types';
 import type {
+  EraRewardPoints,
   LocalValidatorEntriesData,
   Validator,
 } from 'contexts/Validators/types';
@@ -115,7 +116,7 @@ export const getLocalEraRewardPoints = (network: NetworkName, era: string) => {
 export const setLocalEraRewardPoints = (
   network: NetworkName,
   era: string,
-  eraRewardPoints: AnyJson | null,
+  eraRewardPoints: EraRewardPoints | null,
   endEra: string
 ) => {
   const current = JSON.parse(
@@ -123,7 +124,7 @@ export const setLocalEraRewardPoints = (
   );
 
   const removeStaleEras = Object.fromEntries(
-    Object.entries(current || {}).filter(([k]: AnyJson) =>
+    Object.entries(current || {}).filter(([k]: [string, unknown]) =>
       new BigNumber(k).isGreaterThanOrEqualTo(endEra)
     )
   );
