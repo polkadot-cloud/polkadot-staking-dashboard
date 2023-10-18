@@ -213,7 +213,6 @@ export const PayoutsProvider = ({
         calls.push(
           Promise.all([
             api.query.staking.erasValidatorReward<AnyApi>(era),
-            // TODO: only call this if era reward points are not available in ValidatorEntries`. Otherwise, just get reward data from there.
             api.query.staking.erasRewardPoints<AnyApi>(era),
             ...validators.map((validator: AnyJson) =>
               api.query.staking.erasValidatorPrefs<AnyApi>(era, validator)

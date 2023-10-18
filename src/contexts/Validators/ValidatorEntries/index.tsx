@@ -13,7 +13,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { MaxEraRewardPointEras } from 'consts';
+import { MaxEraRewardPointsEras } from 'consts';
 import type {
   EraRewardPoints,
   ErasRewardPoints,
@@ -123,12 +123,12 @@ export const ValidatorsProvider = ({
     // start fetching from the current era.
     let currentEra = activeEra.index;
     const endEra = BigNumber.max(
-      currentEra.minus(MaxEraRewardPointEras - 1),
+      currentEra.minus(MaxEraRewardPointsEras - 1),
       1
     );
 
     // Introduce additional safeguard againt looping forever.
-    const totalEras = new BigNumber(MaxEraRewardPointEras);
+    const totalEras = new BigNumber(MaxEraRewardPointsEras);
     let erasProcessed = new BigNumber(0);
 
     // Iterate eras and process reward points.
