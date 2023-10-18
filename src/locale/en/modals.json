@@ -10,7 +10,6 @@
     "activeRoles_other": "Active Roles in {{count}} Pools",
     "activeRoles_zero": "Active Roles In No Pool",
     "add": "Add",
-    "addFromFavorites": "Add From Favorites",
     "addToBond": "Add to Bond",
     "addToNominations": "Add to Nominations",
     "addUpToFavorites_one": "You can add {{count}} more validator",

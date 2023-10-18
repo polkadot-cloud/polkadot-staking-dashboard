@@ -24,7 +24,6 @@ import { Networks } from '../modals/Networks';
 import { Nominate } from '../modals/Nominate';
 import { NominatePool } from '../modals/NominatePool';
 import { PoolNominations } from '../modals/PoolNominations';
-import { SelectFavorites } from '../modals/SelectFavorites';
 import { Settings } from '../modals/Settings';
 import { Unbond } from '../modals/Unbond';
 import { UnbondPoolMember } from '../modals/UnbondPoolMember';
@@ -65,7 +64,6 @@ export const Overlays = () => {
         Nominate,
         NominatePool,
         PoolNominations,
-        SelectFavorites,
         Settings,
         ValidatorMetrics,
         ValidatorGeo,

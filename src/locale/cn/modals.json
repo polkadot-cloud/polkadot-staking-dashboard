@@ -9,7 +9,6 @@
     "activeRoles": "有活跃角色在 {{count}} 个提名池",
     "activeRoles_zero": "无活跃角色在提名池",
     "add": "添加",
-    "addFromFavorites": "从收藏夹添加",
     "addToBond": "添加到质押",
     "addToNominations": "添加到提名列表",
     "addUpToFavorites": "您最多可从收藏夹添加到{{count}}个验证人",
