@@ -94,6 +94,12 @@ export const Labels = styled.div`
 
   button {
     padding: 0 0.1rem;
+    background: var(--shimmer-foreground);
+    font-size: 1rem;
+    border-radius: 50%;
+    width: 1.9rem;
+    height: 1.9rem;
+
     @media (min-width: ${SmallFontSizeMaxWidth}px) {
       padding: 0 0.2rem;
     }
@@ -109,6 +115,11 @@ export const Labels = styled.div`
     }
   }
 
+  &.canvas button {
+    background: none;
+    border: 1px solid var(--border-secondary-color);
+  }
+
   .label {
     color: var(--text-color-secondary);
     position: relative;
@@ -122,15 +133,6 @@ export const Labels = styled.div`
       &.pool {
         margin: 0 0.45rem;
       }
-    }
-
-    button {
-      background: var(--shimmer-foreground);
-      color: var(--text-color-secondary);
-      font-size: 1rem;
-      border-radius: 50%;
-      width: 1.9rem;
-      height: 1.9rem;
     }
 
     &.button-with-text {

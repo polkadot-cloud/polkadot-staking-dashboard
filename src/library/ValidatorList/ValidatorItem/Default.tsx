@@ -105,7 +105,7 @@ export const Default = ({
           {selectActive && <Select item={validator} />}
           <Identity address={address} />
           <div>
-            <Labels>
+            <Labels className={displayFor}>
               <CopyAddress address={address} />
               {toggleFavorites && <FavoriteValidator address={address} />}
 
