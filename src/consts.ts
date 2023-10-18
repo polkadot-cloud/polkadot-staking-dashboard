@@ -58,6 +58,7 @@ export const ListItemsPerPage = 50;
 export const ListItemsPerBatch = 30;
 export const MinBondPrecision = 3;
 export const MaxPayoutDays = 60;
+export const MaxEraRewardPointEras = 7;
 
 /*
  * Third party API keys and endpoints

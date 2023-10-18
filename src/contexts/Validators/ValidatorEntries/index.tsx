@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { greaterThanZero, shuffle } from '@polkadot-cloud/utils';
+import { greaterThanZero, rmCommas, shuffle } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useRef, useState } from 'react';
 import { ValidatorCommunity } from '@polkadot-cloud/assets/validators';
@@ -13,6 +13,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { MaxEraRewardPointEras } from 'consts';
 import type {
   ErasRewardPoints,
   Identity,
@@ -79,15 +80,65 @@ export const ValidatorsProvider = ({
     {}
   );
 
+  // Processes reward points for a given era.
+  const processEraRewardPoints = (result: AnyApi, era: BigNumber) => {
+    if (!api || erasRewardPoints[era.toString()]) return false;
+
+    // TODO: if already in local storage, get from there `<network>_era_reward_points`.
+
+    // TODO: store in local storage.
+
+    return {
+      total: rmCommas(result.total),
+      individual: Object.fromEntries(
+        Object.entries(result.individual).map(([key, value]) => [
+          key,
+          rmCommas(value as string),
+        ])
+      ),
+    };
+  };
+
   // Fetches era reward points for eligible eras.
-  const fetchErasRewardPoints = () => {
-    // TODO: get active era as initial era to fetch.
-    // fetch era reward points, format and store in state. (abstract in a function taking current era).
-    // - if era is already in state, skip.
-    // - if already in local storage, get from there `<network>_era_reward_points`.
-    // - store to local storae if not already there.
-    //
-    // move on to next era if not yet reached threshold. (threshold to consts).
+  const fetchErasRewardPoints = async () => {
+    if (activeEra.index.isZero() || !api) return;
+
+    // start fetching from the current era.
+    let currentEra = activeEra.index;
+    const endEra = BigNumber.max(
+      currentEra.minus(MaxEraRewardPointEras - 1),
+      1
+    );
+
+    // Introduce additional safeguard againt looping forever.
+    const totalEras = new BigNumber(MaxEraRewardPointEras);
+    let erasProcessed = new BigNumber(0);
+
+    // Iterate eras and process reward points.
+    const calls = [];
+    const eras = [];
+    do {
+      calls.push(api.query.staking.erasRewardPoints(currentEra.toString()));
+      eras.push(currentEra);
+
+      currentEra = currentEra.minus(1);
+      erasProcessed = erasProcessed.plus(1);
+    } while (
+      currentEra.isGreaterThanOrEqualTo(endEra) &&
+      erasProcessed.isLessThan(totalEras)
+    );
+
+    // Make calls and format reward point results.
+    const newErasRewardPoints: ErasRewardPoints = {};
+    let i = 0;
+    for (const result of await Promise.all(calls)) {
+      const formatted = processEraRewardPoints(result.toHuman(), eras[i]);
+      if (formatted) newErasRewardPoints[eras[i].toString()] = formatted;
+      i++;
+    }
+
+    // Commit results to state.
+    setErasRewardPoints(newErasRewardPoints);
   };
 
   // Fetches the active account's nominees.
