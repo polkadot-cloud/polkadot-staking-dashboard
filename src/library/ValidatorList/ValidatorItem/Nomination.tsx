@@ -31,9 +31,9 @@ export const Nomination = ({
   const commission = prefs?.commission ?? null;
 
   return (
-    <Wrapper $displayFor={displayFor}>
-      <div className="inner">
-        <div className="row">
+    <Wrapper>
+      <div className={`inner ${displayFor}`}>
+        <div className="row top">
           {selectActive && <Select item={validator} />}
           <Identity address={address} />
           <div>
@@ -44,7 +44,7 @@ export const Nomination = ({
           </div>
         </div>
         <Separator />
-        <div className="row status">
+        <div className="row bottom">
           <NominationStatus
             address={address}
             bondFor={bondFor}

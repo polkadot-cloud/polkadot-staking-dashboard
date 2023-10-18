@@ -122,10 +122,10 @@ export const Default = ({
   };
 
   return (
-    <Wrapper $displayFor={displayFor}>
-      <div className="inner">
+    <Wrapper>
+      <div className={`inner ${displayFor}`}>
         <MenuPosition ref={posRef} />
-        <div className="row">
+        <div className="row top">
           {selectActive && <Select item={validator} />}
           <Identity address={address} />
           <div>
@@ -150,7 +150,7 @@ export const Default = ({
           </div>
         </div>
         <Separator />
-        <div className="row status">
+        <div className="row bottom">
           <EraStatus address={address} />
           {/* restrict opening modal within a canvas */}
           {displayFor !== 'default' && (

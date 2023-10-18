@@ -4,57 +4,56 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { SmallFontSizeMaxWidth } from 'consts';
-import type { DisplayFor } from 'types';
 
-export const Wrapper = styled.div<{
-  $displayFor?: DisplayFor;
-}>`
+export const Wrapper = styled.div`
+  --height-top-row: 3.25rem;
+  --height-bottom-row: 2.75rem;
+  --height-total: calc(var(--height-top-row) + var(--height-bottom-row));
+
+  height: var(--height-total);
   display: flex;
   flex-flow: row wrap;
-  width: 100%;
-  height: 6rem;
   position: relative;
   margin: 0.5rem;
+  width: 100%;
 
   > .inner {
-    background: ${(props) =>
-      props.$displayFor === 'default'
-        ? 'var(--background-list-item)'
-        : props.$displayFor === 'canvas'
-        ? 'var(--background-canvas-card)'
-        : 'var(--background-modal-card)'};
-
-    ${(props) =>
-      props.$displayFor !== 'default' &&
-      `
+    background: var(--background-list-item);
+    &.modal {
+      background: var(--background-modal-card);
+    }
+    &.canvas {
+      background: var(--background-canvas-card);
+    }
+    &.modal,
+    &.canvas {
       box-shadow: none;
-      border: none;`}
+      border: none;
+    }
 
-    flex: 1;
     border-radius: 1rem;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     overflow: hidden;
     position: absolute;
+    padding: 0;
     top: 0px;
     left: 0px;
     width: 100%;
     height: 100%;
-    padding: 0;
 
     .row {
       flex: 1 0 100%;
-      height: 3.25rem;
       display: flex;
       align-items: center;
       padding: 0 0.5rem;
 
-      &.status {
-        height: 2.5rem;
+      &.top {
+        height: var(--height-top-row);
       }
-      svg {
-        margin: 0;
+      &.bottom {
+        height: var(--height-bottom-row);
       }
     }
   }
