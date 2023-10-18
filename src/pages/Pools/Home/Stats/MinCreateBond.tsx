@@ -3,21 +3,22 @@
 
 import { planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { Number } from 'library/StatBoxList/Number';
+import { useNetwork } from 'contexts/Network';
 
 export const MinCreateBondStat = () => {
   const { t } = useTranslation('pages');
-  const { network } = useApi();
-  const { units } = network;
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
   const { stats } = usePoolsConfig();
 
   const params = {
     label: t('pools.minimumToCreatePool'),
     value: planckToUnit(stats.minCreateBond, units).toNumber(),
     decimals: 3,
-    unit: network.unit,
+    unit,
     helpKey: 'Minimum To Create Pool',
   };
   return <Number {...params} />;

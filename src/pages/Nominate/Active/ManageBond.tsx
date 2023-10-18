@@ -11,9 +11,7 @@ import {
 import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
 import type BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
-import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
@@ -22,22 +20,27 @@ import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { BondedChart } from 'library/BarChart/BondedChart';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');
-  const { network } = useApi();
-  const { openModal } = useOverlay().modal;
-  const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { getStashLedger } = useBalances();
-  const { getTransferOptions } = useTransferOptions();
-  const { inSetup } = useStaking();
-  const { isSyncing } = useUi();
-  const { isFastUnstaking } = useUnstaking();
-  const { openHelp } = useHelp();
   const {
-    units,
-    brand: { token: Token },
-  } = network;
+    networkData: {
+      units,
+      brand: { token: Token },
+    },
+  } = useNetwork();
+  const { isSyncing } = useUi();
+  const { openHelp } = useHelp();
+  const { inSetup } = useStaking();
+  const { openModal } = useOverlay().modal;
+  const { getStashLedger } = useBalances();
+  const { isFastUnstaking } = useUnstaking();
+  const { isReadOnlyAccount } = useImportedAccounts();
+  const { getTransferOptions } = useTransferOptions();
+  const { activeAccount } = useActiveAccounts();
   const ledger = getStashLedger(activeAccount);
   const { active }: { active: BigNumber } = ledger;
   const allTransferOptions = getTransferOptions(activeAccount);

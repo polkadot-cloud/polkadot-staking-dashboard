@@ -11,7 +11,7 @@ import {
 import BigNumber from 'bignumber.js';
 import React, { useRef, useState } from 'react';
 import { useBalances } from 'contexts/Balances';
-import type { ExternalAccount } from 'contexts/Connect/types';
+import type { ExternalAccount } from '@polkadot-cloud/react/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type {
   EraStakers,
@@ -20,14 +20,16 @@ import type {
   StakingMetrics,
   StakingTargets,
 } from 'contexts/Staking/types';
-import type { AnyApi, AnyJson, MaybeAccount } from 'types';
+import type { AnyApi, AnyJson, MaybeAddress } from 'types';
 import Worker from 'workers/stakers?worker';
 import type { ResponseInitialiseExposures } from 'workers/types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useApi } from '../Api';
 import { useBonded } from '../Bonded';
-import { useConnect } from '../Connect';
-import { useNetworkMetrics } from '../Network';
+import { useNetworkMetrics } from '../NetworkMetrics';
 import {
   defaultEraStakers,
   defaultStakingContext,
@@ -47,14 +49,12 @@ export const StakingProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const {
-    activeAccount,
-    accounts: connectAccounts,
-    getActiveAccount,
-  } = useConnect();
+  const { accounts: connectAccounts } = useImportedAccounts();
+  const { activeAccount, getActiveAccount } = useActiveAccounts();
   const { getStashLedger } = useBalances();
   const { activeEra } = useNetworkMetrics();
-  const { isReady, api, apiStatus, network, consts } = useApi();
+  const { networkData, network } = useNetwork();
+  const { isReady, api, apiStatus, consts } = useApi();
   const { bondedAccounts, getBondedAccount, getAccountNominations } =
     useBonded();
   const { maxNominatorRewardedPerValidator } = consts;
@@ -100,7 +100,7 @@ export const StakingProvider = ({
       // ensure task matches, & era is still the same.
       if (
         task !== 'processExposures' ||
-        networkName !== network.name ||
+        networkName !== network ||
         era !== activeEra.index.toString()
       )
         return;
@@ -184,7 +184,7 @@ export const StakingProvider = ({
     } else {
       const payeeEntry = Object.entries(payeeHuman);
       const destination = `${payeeEntry[0][0]}` as PayeeOptions;
-      const account = `${payeeEntry[0][1]}` as MaybeAccount;
+      const account = `${payeeEntry[0][1]}` as MaybeAddress;
       payeeFinal = {
         destination,
         account,
@@ -199,7 +199,7 @@ export const StakingProvider = ({
 
     let exposures: Exposure[] = [];
     const localExposures = getLocalEraExposures(
-      network.name,
+      network,
       era,
       activeEra.index.toString()
     );
@@ -214,7 +214,7 @@ export const StakingProvider = ({
 
     // For resource limitation concerns, only store the current era in local storage.
     if (era === activeEra.index.toString())
-      setLocalEraExposures(network.name, era, exposures);
+      setLocalEraExposures(network, era, exposures);
 
     return exposures;
   };
@@ -231,10 +231,10 @@ export const StakingProvider = ({
     // worker to calculate stats
     worker.postMessage({
       era: activeEra.index.toString(),
-      networkName: network.name,
+      networkName: network,
       task: 'processExposures',
       activeAccount,
-      units: network.units,
+      units: networkData.units,
       exposures,
       maxNominatorRewardedPerValidator:
         maxNominatorRewardedPerValidator.toNumber(),
@@ -249,7 +249,7 @@ export const StakingProvider = ({
 
   // Gets the nomination statuses of passed in nominations.
   const getNominationsStatusFromTargets = (
-    who: MaybeAccount,
+    who: MaybeAddress,
     fromTargets: AnyJson[]
   ) => {
     const statuses: Record<string, string> = {};
@@ -278,7 +278,7 @@ export const StakingProvider = ({
   };
 
   // Helper function to determine whether the controller account is the same as the stash account.
-  const addressDifferentToStash = (address: MaybeAccount) => {
+  const addressDifferentToStash = (address: MaybeAddress) => {
     // check if controller is imported.
     if (!connectAccounts.find((acc) => acc.address === address)) {
       return false;
@@ -287,7 +287,7 @@ export const StakingProvider = ({
   };
 
   // Helper function to determine whether the controller account has been imported.
-  const getControllerNotImported = (address: MaybeAccount) => {
+  const getControllerNotImported = (address: MaybeAddress) => {
     if (address === null || !activeAccount) {
       return false;
     }
@@ -330,7 +330,7 @@ export const StakingProvider = ({
     (!hasController() && !isBonding() && !isNominating() && !isUnlocking());
 
   // Helper function to get the lowest reward from an active validator.
-  const getLowestRewardFromStaker = (address: MaybeAccount) => {
+  const getLowestRewardFromStaker = (address: MaybeAddress) => {
     const staker = eraStakersRef.current.stakers.find(
       (s) => s.address === address
     );

@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type React from 'react';
-import type { MaybeAccount } from 'types';
+import type { DisplayFor, MaybeAddress } from 'types';
 
 export type SubmitTxProps = SubmitProps & {
   buttons?: React.ReactNode[];
   fromController?: boolean;
   proxySupported: boolean;
-  submitAddress?: MaybeAccount;
+  submitAddress?: MaybeAddress;
   noMargin?: boolean;
 };
 
@@ -18,9 +18,10 @@ export interface SubmitProps {
   submitting: boolean;
   valid: boolean;
   submitText?: string;
-  submitAddress: MaybeAccount;
+  submitAddress: MaybeAddress;
+  displayFor?: DisplayFor;
 }
 
 export interface SignerPromptProps {
-  submitAddress: MaybeAccount;
+  submitAddress: MaybeAddress;
 }

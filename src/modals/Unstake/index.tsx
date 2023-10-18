@@ -12,7 +12,6 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
 import { useBatchCall } from 'library/Hooks/useBatchCall';
@@ -25,20 +24,24 @@ import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const Unstake = () => {
   const { t } = useTranslation('modals');
   const { newBatchCall } = useBatchCall();
   const { notEnoughFunds } = useTxMeta();
-  const { activeAccount } = useConnect();
-  const { api, network, consts } = useApi();
+  const { activeAccount } = useActiveAccounts();
+  const { api, consts } = useApi();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
   const { setModalStatus, setModalResize } = useOverlay().modal;
   const { getBondedAccount, getAccountNominations } = useBonded();
 
-  const { units } = network;
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
   const { bondDuration } = consts;
@@ -127,7 +130,7 @@ export const Unstake = () => {
           <ActionItem
             text={t('unstakeUnbond', {
               bond: freeToUnbond.toFormat(),
-              unit: network.unit,
+              unit,
             })}
           />
         ) : null}

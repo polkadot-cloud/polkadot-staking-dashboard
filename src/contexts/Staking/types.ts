@@ -3,7 +3,7 @@
 
 import type BigNumber from 'bignumber.js';
 import type { PayeeConfig } from 'contexts/Setup/types';
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
 
 export interface StakingMetrics {
   totalNominators: BigNumber;
@@ -71,15 +71,15 @@ interface LowestReward {
 
 export interface StakingContextInterface {
   fetchEraStakers: (era: string) => Promise<Exposure[]>;
-  getNominationsStatusFromTargets: (w: MaybeAccount, t: any[]) => any;
+  getNominationsStatusFromTargets: (w: MaybeAddress, t: any[]) => any;
   setTargets: (t: any) => any;
   hasController: () => boolean;
-  getControllerNotImported: (a: MaybeAccount) => any;
-  addressDifferentToStash: (a: MaybeAccount) => boolean;
+  getControllerNotImported: (a: MaybeAddress) => any;
+  addressDifferentToStash: (a: MaybeAddress) => boolean;
   isBonding: () => boolean;
   isNominating: () => boolean;
   inSetup: () => any;
-  getLowestRewardFromStaker: (a: MaybeAccount) => LowestReward;
+  getLowestRewardFromStaker: (a: MaybeAddress) => LowestReward;
   staking: StakingMetrics;
   eraStakers: EraStakers;
   targets: any;

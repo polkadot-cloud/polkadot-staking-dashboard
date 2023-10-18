@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { AccountCard } from '@polkadot-cloud/react';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Wrapper } from './Wrapper';
 import type { AccountProps } from './types';
 
@@ -22,7 +22,7 @@ export const Account = ({
   onClick,
 }: AccountProps) => {
   const { t } = useTranslation('library');
-  const { getAccount } = useConnect();
+  const { getAccount } = useImportedAccounts();
 
   const [displayValue, setDisplayValue] = useState<string | undefined>();
 

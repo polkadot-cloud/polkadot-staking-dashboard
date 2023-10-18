@@ -3,21 +3,23 @@
 
 import { planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { Number } from 'library/StatBoxList/Number';
+import { useNetwork } from 'contexts/Network';
 
 export const MinimumActiveStakeStat = () => {
   const { t } = useTranslation('pages');
-  const { network } = useApi();
+  const {
+    networkData: { unit, units },
+  } = useNetwork();
   const { metrics } = useNetworkMetrics();
   const { minimumActiveStake } = metrics;
 
   const params = {
     label: t('nominate.minimumToEarnRewards'),
-    value: planckToUnit(minimumActiveStake, network.units).toNumber(),
+    value: planckToUnit(minimumActiveStake, units).toNumber(),
     decimals: 3,
-    unit: `${network.unit}`,
+    unit: `${unit}`,
     helpKey: 'Bonding',
   };
 

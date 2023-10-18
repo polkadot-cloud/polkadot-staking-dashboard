@@ -13,19 +13,23 @@ import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const ClaimCommission = ({ setSection }: any) => {
   const { t } = useTranslation('modals');
-  const { api, network } = useApi();
+  const { api } = useApi();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
   const { setModalStatus } = useOverlay().modal;
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccounts();
   const { isOwner, selectedActivePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
   const poolId = selectedActivePool?.id;
@@ -77,8 +81,8 @@ export const ClaimCommission = ({ setSection }: any) => {
         <ActionItem
           text={`${t('claim')} ${planckToUnit(
             pendingCommission,
-            network.units
-          )} ${network.unit} `}
+            units
+          )} ${unit} `}
         />
         <ModalNotes>
           <p>{t('sentToCommissionPayee')}</p>

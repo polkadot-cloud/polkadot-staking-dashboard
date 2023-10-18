@@ -13,7 +13,6 @@ import { getUnixTime } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
@@ -24,12 +23,17 @@ import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const UnbondPoolMember = () => {
   const { t } = useTranslation('modals');
-  const { activeAccount } = useConnect();
+  const { api, consts } = useApi();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
+  const { activeAccount } = useActiveAccounts();
   const { notEnoughFunds } = useTxMeta();
-  const { api, network, consts } = useApi();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
   const {
@@ -38,7 +42,6 @@ export const UnbondPoolMember = () => {
     config: { options },
   } = useOverlay().modal;
 
-  const { units } = network;
   const { bondDuration } = consts;
   const { member, who } = options;
   const { points } = member;
@@ -111,7 +114,7 @@ export const UnbondPoolMember = () => {
             ))}
           </ModalWarnings>
         ) : null}
-        <ActionItem text={`${t('unbond')} ${freeToUnbond} ${network.unit}`} />
+        <ActionItem text={`${t('unbond')} ${freeToUnbond} ${unit}`} />
         <StaticNote
           value={bondDurationFormatted}
           tKey="onceUnbonding"

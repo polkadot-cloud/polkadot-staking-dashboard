@@ -13,8 +13,6 @@ export const ValidatorFavorites = () => {
   const { isReady } = useApi();
   const { favoritesList } = useFavoriteValidators();
 
-  const batchKey = 'favorite_validators';
-
   return (
     <>
       <PageRow>
@@ -29,9 +27,9 @@ export const ValidatorFavorites = () => {
                     <ValidatorList
                       bondFor="nominator"
                       validators={favoritesList}
-                      batchKey={batchKey}
                       title={t('validators.favoriteValidators')}
                       selectable={false}
+                      allowListFormat={false}
                       refetchOnListUpdate
                       allowMoreCols
                       toggleFavorites

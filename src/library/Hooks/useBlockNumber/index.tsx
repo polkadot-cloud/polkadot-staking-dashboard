@@ -6,9 +6,11 @@ import BigNumber from 'bignumber.js';
 import { useEffect, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import type { AnyApi } from 'types';
+import { useNetwork } from 'contexts/Network';
 
 export const useBlockNumber = () => {
-  const { isReady, api, network } = useApi();
+  const { network } = useNetwork();
+  const { isReady, api } = useApi();
 
   // store the current block number.
   const [block, setBlock] = useState<BigNumber>(new BigNumber(0));

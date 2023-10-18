@@ -6,9 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { PageCategories, PagesConfig } from 'config/pages';
 import { PolkadotUrl } from 'consts';
-import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useSetup } from 'contexts/Setup';
 import type { SetupContextInterface } from 'contexts/Setup/types';
@@ -16,16 +14,20 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import type { UIContextInterface } from 'contexts/UI/types';
 import type { PageCategory, PageItem, PagesConfigItems } from 'types';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Heading } from './Heading/Heading';
 import { Primary } from './Primary';
 import { LogoWrapper } from './Wrapper';
 
 export const Main = () => {
   const { t, i18n } = useTranslation('base');
-  const { network } = useApi();
-  const { activeAccount, accounts } = useConnect();
+  const { networkData } = useNetwork();
   const { pathname } = useLocation();
   const { getBondedAccount } = useBonded();
+  const { accounts } = useImportedAccounts();
+  const { activeAccount } = useActiveAccounts();
   const { inSetup: inNominatorSetup, addressDifferentToStash } = useStaking();
   const { membership } = usePoolMemberships();
   const controller = getBondedAccount(activeAccount);
@@ -117,7 +119,7 @@ export const Main = () => {
       pages,
     });
   }, [
-    network,
+    networkData,
     activeAccount,
     accounts,
     controllerDifferentToStash,
@@ -141,14 +143,16 @@ export const Main = () => {
         onClick={() => window.open(PolkadotUrl, '_blank')}
       >
         {sideMenuMinimised ? (
-          <network.brand.icon style={{ maxHeight: '100%', width: '2rem' }} />
+          <networkData.brand.icon
+            style={{ maxHeight: '100%', width: '2rem' }}
+          />
         ) : (
           <>
-            <network.brand.logo.svg
+            <networkData.brand.logo.svg
               style={{
                 maxHeight: '100%',
                 height: '100%',
-                width: network.brand.logo.width,
+                width: networkData.brand.logo.width,
               }}
             />
           </>

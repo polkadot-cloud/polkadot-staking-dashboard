@@ -13,7 +13,6 @@ export const PoolNominations = () => {
     config: { options },
   } = useOverlay().modal;
   const { nominator, targets } = options;
-  const batchKey = 'pool_nominations';
   const { t } = useTranslation('modals');
 
   return (
@@ -27,10 +26,10 @@ export const PoolNominations = () => {
               bondFor="pool"
               validators={targets}
               nominator={nominator}
-              batchKey={batchKey}
               title={t('poolNominations')}
               showMenu={false}
-              inModal
+              displayFor="modal"
+              allowListFormat={false}
               refetchOnListUpdate
             />
           ) : (

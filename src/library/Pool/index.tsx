@@ -6,7 +6,6 @@ import { faBars, faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useMenu } from 'contexts/Menu';
 import { useNotifications } from 'contexts/Notifications';
 import type { NotificationText } from 'contexts/Notifications/types';
@@ -27,6 +26,8 @@ import {
 } from 'library/ListItem/Wrappers';
 import { usePoolsTabs } from 'pages/Pools/Home/context';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { JoinPool } from '../ListItem/Labels/JoinPool';
 import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
@@ -35,16 +36,17 @@ import type { PoolProps } from './types';
 export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   const { t } = useTranslation('library');
   const { memberCounter, addresses, id, state } = pool;
-  const { openModal } = useOverlay().modal;
-  const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { meta } = useBondedPools();
-  const { membership } = usePoolMemberships();
-  const { addNotification } = useNotifications();
-  const { validators } = useValidators();
   const { isPoolSyncing } = useUi();
+  const { meta } = useBondedPools();
+  const { validators } = useValidators();
   const { setActiveTab } = usePoolsTabs();
-  const { setMenuPosition, setMenuItems, open }: any = useMenu();
+  const { openModal } = useOverlay().modal;
+  const { membership } = usePoolMemberships();
+  const { activeAccount } = useActiveAccounts();
+  const { addNotification } = useNotifications();
+  const { isReadOnlyAccount } = useImportedAccounts();
   const { getCurrentCommission } = usePoolCommission();
+  const { setMenuPosition, setMenuItems, open }: any = useMenu();
 
   const currentCommission = getCurrentCommission(id);
 
@@ -112,10 +114,10 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   };
 
   return (
-    <Wrapper $format="nomination">
+    <Wrapper className="pool">
       <div className="inner">
         <MenuPosition ref={posRef} />
-        <div className="row">
+        <div className="row top">
           <PoolIdentity
             batchKey={batchKey}
             batchIndex={batchIndex}
@@ -140,7 +142,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
           </div>
         </div>
         <Separator />
-        <div className="row status">
+        <div className="row bottom">
           <PoolBonded pool={pool} batchIndex={batchIndex} batchKey={batchKey} />
           {!isPoolSyncing &&
             state === 'Open' &&

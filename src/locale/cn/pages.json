@@ -13,7 +13,6 @@
     },
     "nominate": {
       "activeNominations": "活跃提名人",
-      "addFromFavorites": "从收藏夹添加",
       "addressCopied": "地址已复制到剪贴板",
       "automaticallyBonded": "将自动质押收益到现有的质押余额中",
       "back": "返回",
@@ -27,6 +26,7 @@
       "controllerNotImported": "尚未导入Controller帐户。如果无法访问该帐户,请立即设置新帐户。否则,请将该账户导入扩展之一",
       "earningRewards": "挣取收益中",
       "inactiveNominations": "非活跃提名人",
+      "manage": "管理",
       "minimumToEarnRewards": "最低收益抵押额",
       "minimumToNominate": "最低提名质押额",
       "noNominationsSet": "非活跃：未设置提名",
@@ -49,7 +49,6 @@
       "startNominating": "开始提名",
       "status": "提名人状态",
       "stop": "停止",
-      "stopNominatingSelected": "停止指定选定验证人",
       "summary": "总结",
       "syncing": "正在同步",
       "totalSupplyStaked": "所有抵押比例",

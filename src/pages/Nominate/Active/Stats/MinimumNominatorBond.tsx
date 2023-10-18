@@ -3,14 +3,14 @@
 
 import { planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { Number } from 'library/StatBoxList/Number';
+import { useNetwork } from 'contexts/Network';
 
 export const MinimumNominatorBondStat = () => {
   const { t } = useTranslation('pages');
-  const { unit, units } = useApi().network;
   const { staking } = useStaking();
+  const { unit, units } = useNetwork().networkData;
   const { minNominatorBond } = staking;
 
   const params = {

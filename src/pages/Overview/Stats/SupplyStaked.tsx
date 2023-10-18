@@ -4,14 +4,14 @@
 import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
+import { useNetwork } from 'contexts/Network';
 
 export const SupplyStakedStat = () => {
   const { t } = useTranslation('pages');
-  const { units, unit } = useApi().network;
+  const { units, unit } = useNetwork().networkData;
   const { metrics } = useNetworkMetrics();
   const { staking } = useStaking();
 

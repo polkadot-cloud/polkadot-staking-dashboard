@@ -4,24 +4,25 @@
 import { greaterThanZero, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
-import { useConnect } from 'contexts/Connect';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { NominationStatusProps } from '../types';
 
 export const NominationStatus = ({
   address,
   nominator,
   bondFor,
+  noMargin = false,
 }: NominationStatusProps) => {
   const { t } = useTranslation('library');
   const {
-    network: { unit, units },
-  } = useApi();
-  const { activeAccount } = useConnect();
+    networkData: { unit, units },
+  } = useNetwork();
+  const { activeAccount } = useActiveAccounts();
   const { getPoolNominationStatus } = useBondedPools();
   const { getNomineesStatus } = useNominationStatus();
   const {
@@ -59,7 +60,7 @@ export const NominationStatus = ({
   }
 
   return (
-    <ValidatorStatusWrapper $status={nominationStatus}>
+    <ValidatorStatusWrapper $status={nominationStatus} $noMargin={noMargin}>
       <h5>
         {t(`${nominationStatus}`)}
         {greaterThanZero(stakedAmount)

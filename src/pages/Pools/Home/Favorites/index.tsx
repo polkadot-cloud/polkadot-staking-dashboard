@@ -14,17 +14,17 @@ import { PoolList } from 'library/PoolList/Default';
 export const PoolFavorites = () => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
-  const { favorites, removeFavorite } = usePoolsConfig();
-  const { bondedPools } = useBondedPools();
   const { isPoolSyncing } = useUi();
+  const { bondedPools } = useBondedPools();
+  const { favorites, removeFavorite } = usePoolsConfig();
 
-  // store local favorite list and update when favorites list is mutated
+  // Store local favorite list and update when favorites list is mutated.
   const [favoritesList, setFavoritesList] = useState<any[]>([]);
 
   useEffect(() => {
     // map favorites to bonded pools
     let newFavoritesList = favorites.map((f) => {
-      const pool = !bondedPools.find((b) => b.addresses.stash === f);
+      const pool = bondedPools.find((b) => b.addresses.stash === f);
       if (!pool) removeFavorite(f);
       return pool;
     });

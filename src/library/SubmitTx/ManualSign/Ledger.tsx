@@ -5,8 +5,6 @@ import { faSquarePen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonSubmit } from '@polkadot-cloud/react';
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
-import type { LedgerAccount } from 'contexts/Connect/types';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import type { LedgerResponse } from 'contexts/Hardware/types';
 import { useHelp } from 'contexts/Help';
@@ -14,6 +12,9 @@ import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import type { LedgerAccount } from '@polkadot-cloud/react/types';
 import type { SubmitProps } from '../types';
 
 export const Ledger = ({
@@ -24,6 +25,7 @@ export const Ledger = ({
   submitText,
   buttons,
   submitAddress,
+  displayFor,
 }: SubmitProps & { buttons?: React.ReactNode[] }) => {
   const { t } = useTranslation('library');
   const {
@@ -41,7 +43,9 @@ export const Ledger = ({
   } = useLedgerHardware();
   const { openHelp } = useHelp();
   const { setModalResize } = useOverlay().modal;
-  const { activeAccount, accountHasSigner, getAccount } = useConnect();
+  const { activeAccount } = useActiveAccounts();
+  const { accountHasSigner } = useImportedAccounts();
+  const { getAccount } = useImportedAccounts();
   const { txFeesValid, setTxSignature, getTxSignature } = useTxMeta();
 
   const getAddressIndex = () => {
@@ -127,7 +131,7 @@ export const Ledger = ({
               <ButtonHelp
                 marginLeft
                 onClick={() => openHelp(helpKey)}
-                backgroundSecondary
+                background="secondary"
               />
             ) : null}
           </p>
@@ -139,6 +143,7 @@ export const Ledger = ({
         {buttons}
         {getTxSignature() !== null || submitting ? (
           <ButtonSubmit
+            lg={displayFor === 'canvas'}
             text={submitText || ''}
             iconLeft={faSquarePen}
             iconTransform="grow-2"
@@ -148,6 +153,7 @@ export const Ledger = ({
           />
         ) : (
           <ButtonSubmit
+            lg={displayFor === 'canvas'}
             text={getIsExecuting() ? t('signing') : t('sign')}
             iconLeft={faSquarePen}
             iconTransform="grow-2"

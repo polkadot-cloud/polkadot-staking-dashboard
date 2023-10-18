@@ -11,10 +11,9 @@ import {
 } from '@polkadot-cloud/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
 import { usePrompt } from 'contexts/Prompt';
-import IconSVG from 'img/polkadotVault.svg?react';
+import PolkadotVaultSVG from '@polkadot-cloud/assets/extensions/svg/polkadotvault.svg?react';
 import { Confirm } from 'library/Import/Confirm';
 import { Heading } from 'library/Import/Heading';
 import { NoAccounts } from 'library/Import/NoAccounts';
@@ -22,12 +21,13 @@ import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { Reader } from './Reader';
 
 export const ImportVault = () => {
   const { t } = useTranslation();
   const { replaceModal } = useOverlay().modal;
-  const { renameImportedAccount } = useConnect();
+  const { renameOtherAccount } = useOtherAccounts();
   const { openPromptWith, status: promptStatus } = usePrompt();
 
   const {
@@ -42,7 +42,7 @@ export const ImportVault = () => {
 
   const renameHandler = (address: string, newName: string) => {
     renameVaultAccount(address, newName);
-    renameImportedAccount(address, newName);
+    renameOtherAccount(address, newName);
   };
 
   const openConfirmHandler = (address: string, index: number) => {
@@ -71,7 +71,7 @@ export const ImportVault = () => {
     <>
       {vaultAccounts.length === 0 ? (
         <NoAccounts
-          Icon={IconSVG}
+          Icon={PolkadotVaultSVG}
           text={t('noVaultAccountsImported', { ns: 'modals' })}
         >
           <div>
@@ -122,7 +122,7 @@ export const ImportVault = () => {
           </AddressesWrapper>
           <HardwareStatusBar
             show
-            Icon={IconSVG}
+            Icon={PolkadotVaultSVG}
             text={t('vaultAccounts', {
               ns: 'modals',
               count: vaultAccounts.length,

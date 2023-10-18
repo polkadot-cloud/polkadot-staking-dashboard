@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components';
+import type { DisplayFor } from 'types';
 import type { ListProps, PaginationWrapperProps } from './types';
 
 export const Wrapper = styled.div`
@@ -10,12 +11,16 @@ export const Wrapper = styled.div`
   flex-flow: column nowrap;
 `;
 
-export const Header = styled.div`
-  border-bottom: 1px solid var(--border-primary-color);
+export const Header = styled.div<{ $displayFor?: DisplayFor }>`
+  border-bottom: ${(props) =>
+    props.$displayFor === 'canvas'
+      ? '1px solid var(--border-secondary-color)'
+      : '1px solid var(--border-primary-color)'};
+
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-end;
-  padding: 0 0.25rem 0.5rem 0.25rem;
+  padding: 0 0.25rem 0.75rem 0.25rem;
   flex: 1;
 
   h4 {
@@ -88,27 +93,11 @@ export const SelectableWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  padding: 0 0.15rem;
+  margin-top: 0.5rem;
 
   > button {
-    border: 1px solid var(--border-primary-color);
-    font-size: 1rem;
-    color: var(--text-color-secondary);
-    border-radius: 1.5rem;
-    padding: 0.45rem 1rem;
-    margin-right: 0.5rem;
     margin-bottom: 0.75rem;
-
-    > svg {
-      margin-right: 0.5rem;
-    }
-
-    &:disabled {
-      opacity: var(--opacity-disabled);
-    }
-
-    &:hover {
-      color: var(--text-color-primary);
-    }
   }
 `;
 

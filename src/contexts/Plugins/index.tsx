@@ -4,6 +4,7 @@
 import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
 import React, { useRef, useState } from 'react';
 import { PluginsList } from 'consts';
+import type { Plugin } from 'types';
 import * as defaults from './defaults';
 import type { PluginsContextInterface } from './types';
 
@@ -14,33 +15,32 @@ export const PluginsProvider = ({
 }) => {
   // Get initial plugins from local storage.
   const getAvailablePlugins = () => {
-    const localPlugins: any = localStorageOrDefault(
+    const localPlugins = localStorageOrDefault(
       'plugins',
       PluginsList,
       true
-    );
+    ) as Plugin[];
+
     // if fiat is disabled, remove binance_spot service
     const DISABLE_FIAT = Number(import.meta.env.VITE_DISABLE_FIAT ?? 0);
     if (DISABLE_FIAT && localPlugins.includes('binance_spot')) {
       const index = localPlugins.indexOf('binance_spot');
-      if (index !== -1) {
-        localPlugins.splice(index, 1);
-      }
+      if (index !== -1) localPlugins.splice(index, 1);
     }
     return localPlugins;
   };
 
   // Store the currently active plugins.
-  const [plugins, setPlugins] = useState<string[]>(getAvailablePlugins());
+  const [plugins, setPlugins] = useState<Plugin[]>(getAvailablePlugins());
   const pluginsRef = useRef(plugins);
 
   // Toggle a plugin.
-  const togglePlugin = (key: string) => {
+  const togglePlugin = (key: Plugin) => {
     let localPlugins = [...plugins];
-    const found = localPlugins.find((item) => item === key);
+    const found = localPlugins.find((p) => p === key);
 
     if (found) {
-      localPlugins = localPlugins.filter((s) => s !== key);
+      localPlugins = localPlugins.filter((p) => p !== key);
     } else {
       localPlugins.push(key);
     }
@@ -50,9 +50,7 @@ export const PluginsProvider = ({
   };
 
   // Check if a plugin is currently enabled.
-  const pluginEnabled = (key: string) => {
-    return pluginsRef.current.includes(key);
-  };
+  const pluginEnabled = (key: Plugin) => pluginsRef.current.includes(key);
 
   return (
     <PluginsContext.Provider

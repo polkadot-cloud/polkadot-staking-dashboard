@@ -5,7 +5,6 @@ import { ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -14,6 +13,8 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect } from 'react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Switch } from './Switch';
 import { Wrapper } from './Wrapper';
 
@@ -22,8 +23,9 @@ export const UpdateController = () => {
   const { api } = useApi();
   const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
+  const { activeAccount } = useActiveAccounts();
+  const { getAccount } = useImportedAccounts();
   const { getSignerWarnings } = useSignerWarnings();
-  const { activeAccount, getAccount } = useConnect();
   const { setModalStatus, setModalResize } = useOverlay().modal;
 
   const controller = getBondedAccount(activeAccount);

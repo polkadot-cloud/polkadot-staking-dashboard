@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import React, { useEffect, useState } from 'react';
-import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
 import * as defaults from './defaults';
 
 export const CommunitySectionsContext: React.Context<any> = React.createContext(
@@ -17,7 +17,7 @@ export const CommunitySectionsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { network } = useApi();
+  const { network } = useNetwork();
 
   // store the active section of the community page
   const [activeSection, setActiveSectionState] = useState<number>(0);

@@ -9,18 +9,20 @@ import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { ValidatorList } from 'library/ValidatorList';
+import { useNetwork } from 'contexts/Network';
 import { Item } from './Item';
 import { ItemsWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
 
 export const Entity = () => {
   const { t } = useTranslation('pages');
-  const { isReady, network } = useApi();
+  const { isReady } = useApi();
+  const { network } = useNetwork();
   const { validators: allValidators } = useValidators();
   const { setActiveSection, activeItem } = useCommunitySections();
 
   const { name, validators: entityAllValidators } = activeItem;
-  const validators = entityAllValidators[network.name] ?? [];
+  const validators = entityAllValidators[network] ?? [];
 
   // include validators that exist in `erasStakers`
   const [activeValidators, setActiveValidators] = useState(
@@ -48,8 +50,6 @@ export const Entity = () => {
       },
     },
   };
-
-  const batchKey = 'community_entity_validators';
 
   return (
     <PageRow>
@@ -84,8 +84,8 @@ export const Entity = () => {
               <ValidatorList
                 bondFor="nominator"
                 validators={activeValidators}
-                batchKey={batchKey}
                 title={`${name} ${t('community.validators')}`}
+                allowListFormat={false}
                 selectable={false}
                 allowMoreCols
                 pagination

@@ -6,8 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn, unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { Warning } from 'library/Form/Warning';
 import { useBatchCall } from 'library/Hooks/useBatchCall';
@@ -17,18 +15,23 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
 import { SubmitTx } from 'library/SubmitTx';
+import { useNetwork } from 'contexts/Network';
+import { useApi } from 'contexts/Api';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
+  const { api } = useApi();
   const {
-    api,
-    network: { units, unit },
-  } = useApi();
+    networkData: { units, unit },
+  } = useNetwork();
   const { newBatchCall } = useBatchCall();
   const { getPayeeItems } = usePayeeConfig();
+  const { accountHasSigner } = useImportedAccounts();
+  const { activeAccount, activeProxy } = useActiveAccounts();
   const { getSetupProgress, removeSetupProgress } = useSetup();
-  const { activeAccount, activeProxy, accountHasSigner } = useConnect();
 
   const setup = getSetupProgress('nominator', activeAccount);
   const { progress } = setup;
@@ -126,8 +129,8 @@ export const Summary = ({ section }: SetupStepProps) => {
           <SubmitTx
             submitText={t('nominate.startNominating')}
             valid
-            noMargin
             {...submitExtrinsic}
+            displayFor="canvas" /* Edge case: not canvas, but the larger button sizes suit this UI more. */
           />
         </div>
       </MotionContainer>

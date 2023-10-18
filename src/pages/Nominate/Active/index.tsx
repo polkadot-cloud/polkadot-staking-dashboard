@@ -10,19 +10,18 @@ import {
   RowSection,
 } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
-import { GenerateNominations } from 'library/GenerateNominations';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { StatBoxList } from 'library/StatBoxList';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { Nominations } from 'library/Nominations';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { ControllerNotStash } from './ControllerNotStash';
 import { ManageBond } from './ManageBond';
-import { Nominations } from './Nominations';
 import { ActiveNominatorsStat } from './Stats/ActiveNominators';
 import { MinimumActiveStakeStat } from './Stats/MinimumActiveStake';
 import { MinimumNominatorBondStat } from './Stats/MinimumNominatorBond';
@@ -30,21 +29,20 @@ import { Status } from './Status';
 import { UnstakePrompts } from './UnstakePrompts';
 
 export const Active = () => {
-  const { t } = useTranslation('pages');
-  const { openModal } = useOverlay().modal;
-  const { activeAccount } = useConnect();
+  const { t } = useTranslation();
   const { isSyncing } = useUi();
-  const { targets, setTargets, inSetup } = useStaking();
-  const { getAccountNominations } = useBonded();
-  const { isFastUnstaking } = useUnstaking();
-  const nominations = getAccountNominations(activeAccount);
   const { openHelp } = useHelp();
+  const { inSetup } = useStaking();
+  const { nominated } = useValidators();
+  const { isFastUnstaking } = useUnstaking();
+  const { openCanvas } = useOverlay().canvas;
+  const { activeAccount } = useActiveAccounts();
 
   const ROW_HEIGHT = 220;
 
   return (
     <>
-      <PageTitle title={t('nominate.nominate')} />
+      <PageTitle title={t('nominate.nominate', { ns: 'pages' })} />
       <StatBoxList>
         <ActiveNominatorsStat />
         <MinimumNominatorBondStat />
@@ -64,13 +62,13 @@ export const Active = () => {
       </PageRow>
       <PageRow>
         <CardWrapper>
-          {nominations.length || inSetup() || isSyncing ? (
+          {nominated?.length || inSetup() || isSyncing ? (
             <Nominations bondFor="nominator" nominator={activeAccount} />
           ) : (
             <>
               <CardHeaderWrapper $withAction>
                 <h3>
-                  {t('nominate.nominate')}
+                  {t('nominate.nominate', { ns: 'pages' })}
                   <ButtonHelp
                     marginLeft
                     onClick={() => openHelp('Nominations')}
@@ -78,29 +76,26 @@ export const Active = () => {
                 </h3>
                 <div>
                   <ButtonPrimary
-                    text={t('nominate.nominate')}
                     iconLeft={faChevronCircleRight}
                     iconTransform="grow-1"
-                    disabled={
-                      targets.nominations.length === 0 ||
-                      inSetup() ||
-                      isSyncing ||
-                      isFastUnstaking
+                    text={t('nominate.nominate', { ns: 'pages' })}
+                    disabled={inSetup() || isSyncing || isFastUnstaking}
+                    onClick={() =>
+                      openCanvas({
+                        key: 'ManageNominations',
+                        scroll: false,
+                        options: {
+                          bondFor: 'pool',
+                          nominator: activeAccount,
+                          nominated,
+                        },
+                        size: 'xl',
+                      })
                     }
-                    onClick={() => openModal({ key: 'Nominate' })}
                   />
                 </div>
               </CardHeaderWrapper>
-              <GenerateNominations
-                batchKey="generate_nominations_active"
-                setters={[
-                  {
-                    set: setTargets,
-                    current: targets,
-                  },
-                ]}
-                nominations={targets.nominations}
-              />
+              <h4>{t('notNominating', { ns: 'library' })}.</h4>
             </>
           )}
         </CardWrapper>

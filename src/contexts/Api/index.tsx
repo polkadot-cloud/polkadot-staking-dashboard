@@ -3,17 +3,11 @@
 
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
-import {
-  extractUrlValue,
-  makeCancelable,
-  rmCommas,
-  varToUrlHash,
-} from '@polkadot-cloud/utils';
+import { makeCancelable, rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import React, { useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { NetworkList } from 'config/networks';
 import {
-  DefaultNetwork,
   FallbackBondingDuration,
   FallbackEpochDuration,
   FallbackExpectedBlockTime,
@@ -26,73 +20,14 @@ import type {
   APIChainState,
   APIConstants,
   APIContextInterface,
+  APIProviderProps,
   ApiStatus,
-  NetworkState,
 } from 'contexts/Api/types';
 import type { AnyApi, NetworkName } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import * as defaults from './defaults';
 
-export const APIProvider = ({ children }: { children: React.ReactNode }) => {
-  // Get the initial network and prepare meta tags if necessary.
-  const getInitialNetwork = () => {
-    const urlNetworkRaw = extractUrlValue('n');
-
-    const urlNetworkValid = !!Object.values(NetworkList).find(
-      (n) => n.name === urlNetworkRaw
-    );
-
-    // use network from url if valid.
-    if (urlNetworkValid) {
-      const urlNetwork = urlNetworkRaw as NetworkName;
-
-      if (urlNetworkValid) {
-        return urlNetwork;
-      }
-    }
-    // fallback to localStorage network if there.
-    const localNetwork: NetworkName = localStorage.getItem(
-      'network'
-    ) as NetworkName;
-    const localNetworkValid = !!Object.values(NetworkList).find(
-      (n) => n.name === localNetwork
-    );
-    return localNetworkValid ? localNetwork : DefaultNetwork;
-  };
-
-  // handle network switching
-  const switchNetwork = async (name: NetworkName, lightClient: boolean) => {
-    // disconnect api if there is an existing connection.
-    if (api) {
-      await api.disconnect();
-      setApi(null);
-    }
-    // handle local light client flag.
-    if (lightClient) {
-      localStorage.setItem('light_client', lightClient ? 'true' : '');
-    } else {
-      localStorage.removeItem('light_client');
-    }
-
-    setNetwork({
-      name,
-      meta: NetworkList[name],
-    });
-
-    // handle light client state, which will trigger dynamic Sc import.
-    setIsLightClient(lightClient);
-
-    // update url `n` if needed.
-    varToUrlHash('n', name, false);
-
-    // if not light client, directly connect. Otherwise, `connect` is called after dynamic import of
-    // Sc.
-    if (!lightClient) {
-      setApiStatus('connecting');
-      connectProvider(name);
-    }
-  };
-
+export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Store povider instance.
   const [provider, setProvider] = useState<WsProvider | ScProvider | null>(
     null
@@ -109,13 +44,6 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   // API instance state.
   const [api, setApi] = useState<ApiPromise | null>(null);
 
-  // Store the initial active network.
-  const initialNetwork = getInitialNetwork();
-  const [network, setNetwork] = useState<NetworkState>({
-    name: initialNetwork,
-    meta: NetworkList[initialNetwork],
-  });
-
   // Store network constants.
   const [consts, setConsts] = useState<APIConstants>(defaults.consts);
 
@@ -125,7 +53,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   // Handle an initial RPC connection.
   useEffect(() => {
     if (!provider && !isLightClient) {
-      connectProvider(getInitialNetwork());
+      connectProvider(network);
     }
   });
 
@@ -133,35 +61,58 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   const handleLightClientConnection = async (Sc: AnyApi) => {
     const newProvider = new ScProvider(
       Sc,
-      NetworkList[network.name].endpoints.lightClient
+      NetworkList[network].endpoints.lightClient
     );
-    connectProvider(network.name, newProvider);
+    connectProvider(network, newProvider);
   };
 
   // Handle a switch in API.
+  let cancelFn: () => void | undefined;
+
   const handleApiSwitch = () => {
     setApi(null);
     setConsts(defaults.consts);
     setchainState(undefined);
   };
+
+  // Handle connect to API.
   // Dynamically load `Sc` when user opts to use light client.
-  useEffect(() => {
-    let cancel: () => void | undefined;
+  const handleConnectApi = async () => {
+    if (api) {
+      await api.disconnect();
+      setApi(null);
+    }
+    // handle local light client flag.
+    if (isLightClient) {
+      localStorage.setItem('light_client', isLightClient ? 'true' : '');
+    } else {
+      localStorage.removeItem('light_client');
+    }
 
     if (isLightClient) {
       handleApiSwitch();
       setApiStatus('connecting');
 
       const ScPromise = makeCancelable(import('@substrate/connect'));
-      cancel = ScPromise.cancel;
+      cancelFn = ScPromise.cancel;
       ScPromise.promise.then((Sc) => {
         handleLightClientConnection(Sc);
       });
+    } else {
+      // if not light client, directly connect.
+      setApiStatus('connecting');
+      connectProvider(network);
     }
+  };
+
+  // Trigger API connection handler on network or light client change.
+  useEffect(() => {
+    handleConnectApi();
+
     return () => {
-      cancel?.();
+      cancelFn?.();
     };
-  }, [isLightClient, network.name]);
+  }, [isLightClient, network]);
 
   // Initialise provider event handlers when provider is set.
   useEffectIgnoreInitial(() => {
@@ -209,7 +160,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
 
     // store active network in localStorage.
     // NOTE: this should ideally refer to above `chain` value.
-    localStorage.setItem('network', String(network.name));
+    localStorage.setItem('network', String(network));
 
     // Assume chain state is correct and bootstrap network consts.
     connectedCallback(newApi);
@@ -304,14 +255,13 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <APIContext.Provider
       value={{
-        switchNetwork,
         api,
         consts,
         chainState,
         isReady: apiStatus === 'connected' && api !== null,
-        network: network.meta,
         apiStatus,
         isLightClient,
+        setIsLightClient,
       }}
     >
       {children}
@@ -319,8 +269,8 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export const APIContext = React.createContext<APIContextInterface>(
+export const APIContext = createContext<APIContextInterface>(
   defaults.defaultApiContext
 );
 
-export const useApi = () => React.useContext(APIContext);
+export const useApi = () => useContext(APIContext);

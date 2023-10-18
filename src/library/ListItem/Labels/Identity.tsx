@@ -7,7 +7,7 @@ import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { AccountCard } from '@polkadot-cloud/react';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';
 import type { TitleProps } from '@polkadot-cloud/react/recipes/AccountCard';
-import { getIdentityDisplay } from '../../ValidatorList/Validator/Utils';
+import { getIdentityDisplay } from '../../ValidatorList/ValidatorItem/Utils';
 import type { IdentityProps } from '../types';
 
 export const Identity = ({ address }: IdentityProps) => {
@@ -58,6 +58,14 @@ export const Identity = ({ address }: IdentityProps) => {
           justify: 'flex-start',
         }}
       />
+      {/* <Polkicon address={address} size="2rem" />
+      <div className="inner">
+        {validatorsFetched && display !== null ? (
+          <h4>{display}</h4>
+        ) : (
+          <h4>{ellipsisFn(address, 6)}</h4>
+        )}
+      </div> */}
     </IdentityWrapper>
   );
 };

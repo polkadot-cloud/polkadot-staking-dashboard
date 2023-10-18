@@ -4,16 +4,16 @@
 import BigNumber from 'bignumber.js';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DappName } from 'consts';
+import { DappName, ManualSigners } from 'consts';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
-import { manualSigners } from 'contexts/Connect/Utils';
-import { useExtensions } from 'contexts/Extensions';
+import { useExtensions } from '@polkadot-cloud/react/hooks';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useNotifications } from 'contexts/Notifications';
 import { useTxMeta } from 'contexts/TxMeta';
 import type { AnyApi, AnyJson } from 'types';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useBuildPayload } from '../useBuildPayload';
 import { useProxySupported } from '../useProxySupported';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
@@ -32,7 +32,8 @@ export const useSubmitExtrinsic = ({
   const { isProxySupported } = useProxySupported();
   const { addPending, removePending } = useExtrinsics();
   const { buildPayload } = useBuildPayload();
-  const { getAccount, requiresManualSign, activeProxy } = useConnect();
+  const { activeProxy } = useActiveAccounts();
+  const { getAccount, requiresManualSign } = useImportedAccounts();
   const {
     setTxFees,
     incrementPayloadUid,
@@ -157,7 +158,7 @@ export const useSubmitExtrinsic = ({
     const { source } = account;
 
     // if `activeAccount` is imported from an extension, ensure it is enabled.
-    if (!manualSigners.includes(source)) {
+    if (!ManualSigners.includes(source)) {
       const extension = extensions.find((e) => e.id === source);
       if (extension === undefined) {
         throw new Error(`${t('walletNotFound')}`);
@@ -265,7 +266,7 @@ export const useSubmitExtrinsic = ({
           }
         );
       } catch (e) {
-        onError(manualSigners.includes(source) ? source : 'default');
+        onError(ManualSigners.includes(source) ? source : 'default');
       }
     } else {
       // handle unsigned transaction.

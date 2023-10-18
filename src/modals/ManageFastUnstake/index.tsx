@@ -13,9 +13,8 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
@@ -25,13 +24,18 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
-  const { activeAccount } = useConnect();
+  const { api, consts } = useApi();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
+  const { activeAccount } = useActiveAccounts();
   const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
-  const { api, consts, network } = useApi();
   const { isFastUnstaking } = useUnstaking();
   const { setModalResize, setModalStatus } = useOverlay().modal;
   const { getSignerWarnings } = useSignerWarnings();
@@ -114,8 +118,8 @@ export const ManageFastUnstake = () => {
       warnings.push(
         `${t('noEnough')} ${planckToUnit(
           fastUnstakeDeposit,
-          network.units
-        ).toString()} ${network.unit}`
+          units
+        ).toString()} ${unit}`
       );
     }
 
@@ -177,11 +181,8 @@ export const ManageFastUnstake = () => {
                   <p>
                     <>
                       {t('registerFastUnstake')}{' '}
-                      {planckToUnit(
-                        fastUnstakeDeposit,
-                        network.units
-                      ).toString()}{' '}
-                      {network.unit}. {t('fastUnstakeOnceRegistered')}
+                      {planckToUnit(fastUnstakeDeposit, units).toString()}{' '}
+                      {unit}. {t('fastUnstakeOnceRegistered')}
                     </>
                   </p>
                   <p>

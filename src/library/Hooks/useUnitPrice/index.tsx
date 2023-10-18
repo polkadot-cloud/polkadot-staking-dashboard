@@ -3,14 +3,14 @@
 
 import { NetworkList } from 'config/networks';
 import { ApiEndpoints } from 'consts';
-import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
 
 export const useUnitPrice = () => {
-  const { network } = useApi();
+  const { network } = useNetwork();
 
   const fetchUnitPrice = async () => {
     const urls = [
-      `${ApiEndpoints.priceChange}${NetworkList[network.name].api.priceTicker}`,
+      `${ApiEndpoints.priceChange}${NetworkList[network].api.priceTicker}`,
     ];
 
     const responses = await Promise.all(

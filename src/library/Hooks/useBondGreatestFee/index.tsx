@@ -4,9 +4,9 @@
 import BigNumber from 'bignumber.js';
 import { useEffect, useMemo, useState } from 'react';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import type { BondFor } from 'types';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 interface Props {
   bondFor: BondFor;
@@ -14,7 +14,7 @@ interface Props {
 
 export const useBondGreatestFee = ({ bondFor }: Props) => {
   const { api } = useApi();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccounts();
   const { feeReserve, getTransferOptions } = useTransferOptions();
   const transferOptions = useMemo(
     () => getTransferOptions(activeAccount),

@@ -2,17 +2,17 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useEffect, useRef, useState } from 'react';
-import { useApi } from 'contexts/Api';
 import { usePlugins } from 'contexts/Plugins';
 import { useUnitPrice } from 'library/Hooks/useUnitPrice';
+import { useNetwork } from 'contexts/Network';
 
 export const usePrices = () => {
-  const { network } = useApi();
+  const { network } = useNetwork();
   const { plugins } = usePlugins();
   const fetchUnitPrice = useUnitPrice();
 
   const pricesLocalStorage = () => {
-    const pricesLocal = localStorage.getItem(`${network.name}_prices`);
+    const pricesLocal = localStorage.getItem(`${network}_prices`);
     return pricesLocal === null
       ? {
           lastPrice: 0,
@@ -25,7 +25,7 @@ export const usePrices = () => {
   const pricesRef = useRef(prices);
 
   const setPrices = (p: any) => {
-    localStorage.setItem(`${network.name}_prices`, JSON.stringify(p));
+    localStorage.setItem(`${network}_prices`, JSON.stringify(p));
     pricesRef.current = {
       ...pricesRef.current,
       ...p,

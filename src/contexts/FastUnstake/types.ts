@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
-import type { AnyApi, MaybeAccount } from 'types';
+import type { AnyApi, MaybeAddress } from 'types';
 
 export interface LocalMeta {
   isExposed: boolean;
@@ -13,7 +13,7 @@ export interface MetaInterface {
 }
 
 export interface FastUnstakeContextInterface {
-  getLocalkey: (a: MaybeAccount) => string;
+  getLocalkey: (a: MaybeAddress) => string;
   checking: boolean;
   meta: MetaInterface;
   isExposed: boolean | null;

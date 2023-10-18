@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
 
 export interface TransferOptionsContextInterface {
-  getTransferOptions: (a: MaybeAccount) => TransferOptions;
+  getTransferOptions: (a: MaybeAddress) => TransferOptions;
   setFeeReserveBalance: (r: BigNumber) => void;
   feeReserve: BigNumber;
 }

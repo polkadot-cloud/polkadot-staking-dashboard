@@ -15,7 +15,6 @@ import Slider from 'rc-slider';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -28,8 +27,9 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import 'rc-slider/assets/index.css';
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { SliderWrapper } from '../Wrappers';
 import type { ChangeRateInput } from './types';
 
@@ -37,7 +37,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   const { t } = useTranslation('modals');
   const { openHelp } = useHelp();
   const { api, consts } = useApi();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccounts();
   const { newBatchCall } = useBatchCall();
   const { stats } = usePoolsConfig();
   const { setModalStatus } = useOverlay().modal;
@@ -89,7 +89,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   );
 
   // Store the commission payee.
-  const [payee, setPayee] = useState<MaybeAccount>(initialPayee);
+  const [payee, setPayee] = useState<MaybeAddress>(initialPayee);
 
   // Store the maximum commission value.
   const [maxCommission, setMaxCommission] =

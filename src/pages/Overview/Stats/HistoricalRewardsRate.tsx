@@ -3,7 +3,7 @@
 
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useInflation } from 'library/Hooks/useInflation';
 import { Text } from 'library/StatBoxList/Text';
 

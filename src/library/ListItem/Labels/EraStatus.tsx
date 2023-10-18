@@ -4,17 +4,23 @@
 import { capitalizeFirstLetter, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
+import { useNetwork } from 'contexts/Network';
 
-export const EraStatus = ({ address }: { address: MaybeAccount }) => {
+export const EraStatus = ({
+  address,
+  noMargin,
+}: {
+  address: MaybeAddress;
+  noMargin: boolean;
+}) => {
   const { t } = useTranslation('library');
   const {
-    network: { unit, units },
-  } = useApi();
+    networkData: { unit, units },
+  } = useNetwork();
   const {
     eraStakers: { stakers },
     erasStakersSyncing,
@@ -45,7 +51,7 @@ export const EraStatus = ({ address }: { address: MaybeAccount }) => {
   const totalStake = planckToUnit(totalStakePlanck, units);
 
   return (
-    <ValidatorStatusWrapper $status={validatorStatus}>
+    <ValidatorStatusWrapper $status={validatorStatus} $noMargin={noMargin}>
       <h5>
         {isSyncing || erasStakersSyncing
           ? t('syncing')

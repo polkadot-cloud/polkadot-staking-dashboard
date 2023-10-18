@@ -17,7 +17,6 @@ import { getUnixTime } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
@@ -28,12 +27,16 @@ import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const LeavePool = ({ setSection }: any) => {
   const { t } = useTranslation('modals');
-  const { api, network, consts } = useApi();
-  const { activeAccount } = useConnect();
-  const { units } = network;
+  const { api, consts } = useApi();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
+  const { activeAccount } = useActiveAccounts();
   const { setModalStatus, setModalResize } = useOverlay().modal;
   const { getTransferOptions } = useTransferOptions();
   const { selectedActivePool } = useActivePools();
@@ -53,7 +56,7 @@ export const LeavePool = ({ setSection }: any) => {
 
   let { pendingRewards } = selectedActivePool || {};
   pendingRewards = pendingRewards ?? new BigNumber(0);
-  pendingRewards = planckToUnit(pendingRewards, network.units);
+  pendingRewards = planckToUnit(pendingRewards, units);
 
   // convert BigNumber values to number
   const freeToUnbond = planckToUnit(activeBn, units);
@@ -109,7 +112,7 @@ export const LeavePool = ({ setSection }: any) => {
 
   if (greaterThanZero(pendingRewards)) {
     warnings.push(
-      `${t('unbondingWithdraw')} ${pendingRewards.toString()} ${network.unit}.`
+      `${t('unbondingWithdraw')} ${pendingRewards.toString()} ${unit}.`
     );
   }
 
@@ -123,7 +126,7 @@ export const LeavePool = ({ setSection }: any) => {
             ))}
           </ModalWarnings>
         ) : null}
-        <ActionItem text={`${t('unbond')} ${freeToUnbond} ${network.unit}`} />
+        <ActionItem text={`${t('unbond')} ${freeToUnbond} ${unit}`} />
         <StaticNote
           value={bondDurationFormatted}
           tKey="onceUnbonding"
