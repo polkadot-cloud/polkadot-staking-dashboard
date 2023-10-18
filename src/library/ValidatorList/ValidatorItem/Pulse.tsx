@@ -31,7 +31,7 @@ export const PulseGraph = ({ points: rawPoints = [] }: PulseGraphProps) => {
 
   const totalSegments = points.length - 2;
   const vbWidth = 512;
-  const vbHeight = 124;
+  const vbHeight = 120;
   const xPadding = 5;
   const yPadding = 25;
   const xArea = vbWidth - 2 * xPadding;
@@ -78,7 +78,7 @@ export const PulseGraph = ({ points: rawPoints = [] }: PulseGraphProps) => {
     >
       {lineCoords.map(({ x1 }, index) => {
         if (index === 0 || index === lineCoords.length - 1) {
-          return <Fragment key={`grid_coord_${index}`} />;
+          return <Fragment key={`grid_y_coord_${index}`} />;
         }
         return (
           <line
@@ -92,6 +92,21 @@ export const PulseGraph = ({ points: rawPoints = [] }: PulseGraphProps) => {
           />
         );
       })}
+
+      {[{ y1: vbHeight * 0.5, y2: vbHeight * 0.5 }].map(({ y1, y2 }, index) => {
+        return (
+          <line
+            key={`grid_coord_${index}`}
+            strokeWidth="3.75"
+            stroke="var(--border-primary-color)"
+            x1={0}
+            y1={y1}
+            x2={vbWidth}
+            y2={y2}
+          />
+        );
+      })}
+
       {lineCoords.map(({ x1, y1, x2, y2, zero }, index) => {
         const startOrEnd = index === 0 || index === lineCoords.length - 2;
         const opacity = startOrEnd ? 0.25 : zero ? 0.5 : 1;

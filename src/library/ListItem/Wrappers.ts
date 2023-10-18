@@ -294,12 +294,12 @@ export const TooltipTrigger = styled.div`
 
 export const ValidatorPulseWrapper = styled.div`
   border: 1px solid var(--border-primary-color);
-  border-radius: 0.3rem;
-  height: 3.1rem;
+  border-radius: 0.25rem;
+  height: 3.25rem;
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 14rem;
+  max-width: 13rem;
 
   > svg {
     max-width: 100%;
