@@ -3,12 +3,7 @@
 
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator';
-import {
-  Labels,
-  Separator,
-  ValidatorPulseWrapper,
-  Wrapper,
-} from 'library/ListItem/Wrappers';
+import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
 import { useList } from '../../List/context';
 import { Blocked } from '../../ListItem/Labels/Blocked';
 import { Commission } from '../../ListItem/Labels/Commission';
@@ -52,12 +47,10 @@ export const Nomination = ({
         <Separator />
         <div className="row bottom lg">
           <div>
-            <ValidatorPulseWrapper>
-              <Pulse address={address} />
-            </ValidatorPulseWrapper>
+            <Pulse address={address} />
           </div>
           <div>
-            <Labels style={{ marginBottom: '0.7rem' }}>
+            <Labels style={{ marginBottom: '0.75rem' }}>
               <Oversubscribed address={address} />
               <Blocked prefs={prefs} />
               <Commission commission={commission} />

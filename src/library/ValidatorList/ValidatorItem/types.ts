@@ -20,4 +20,5 @@ export interface PulseProps {
 }
 export interface PulseGraphProps {
   points: number[];
+  syncing: boolean;
 }

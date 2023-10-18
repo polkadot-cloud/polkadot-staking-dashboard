@@ -5,12 +5,14 @@ import BigNumber from 'bignumber.js';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { Fragment } from 'react';
+import { ValidatorPulseWrapper } from 'library/ListItem/Wrappers';
 import { normaliseEraPoints, prefillEraPoints } from './Utils';
 import type { PulseGraphProps, PulseProps } from './types';
 
 export const Pulse = ({ address }: PulseProps) => {
   const { activeEra } = useNetworkMetrics();
-  const { getValidatorEraPoints, eraPointsBoundaries } = useValidators();
+  const { getValidatorEraPoints, eraPointsBoundaries, erasRewardPoints } =
+    useValidators();
 
   const startEra = activeEra.index.minus(1);
   const eraRewardPoints = getValidatorEraPoints(startEra, address);
@@ -19,10 +21,20 @@ export const Pulse = ({ address }: PulseProps) => {
   const normalisedPoints = normaliseEraPoints(eraRewardPoints, high);
   const prefilledPoints = prefillEraPoints(Object.values(normalisedPoints));
 
-  return <PulseGraph points={prefilledPoints} />;
+  const syncing = !Object.values(erasRewardPoints).length;
+
+  return (
+    <ValidatorPulseWrapper>
+      {syncing && <div className="preload" />}
+      <PulseGraph points={prefilledPoints} syncing={syncing} />
+    </ValidatorPulseWrapper>
+  );
 };
 
-export const PulseGraph = ({ points: rawPoints = [] }: PulseGraphProps) => {
+export const PulseGraph = ({
+  points: rawPoints = [],
+  syncing,
+}: PulseGraphProps) => {
   // Prefill with duplicate of start point.
   let points = [rawPoints[0] || 0];
   points = points.concat(rawPoints);
@@ -31,9 +43,9 @@ export const PulseGraph = ({ points: rawPoints = [] }: PulseGraphProps) => {
 
   const totalSegments = points.length - 2;
   const vbWidth = 512;
-  const vbHeight = 120;
+  const vbHeight = 115;
   const xPadding = 5;
-  const yPadding = 25;
+  const yPadding = 10;
   const xArea = vbWidth - 2 * xPadding;
   const yArea = vbHeight - 2 * yPadding;
   const xSegment = xArea / totalSegments;
@@ -93,40 +105,44 @@ export const PulseGraph = ({ points: rawPoints = [] }: PulseGraphProps) => {
         );
       })}
 
-      {[{ y1: vbHeight * 0.5, y2: vbHeight * 0.5 }].map(({ y1, y2 }, index) => {
-        return (
-          <line
-            key={`grid_coord_${index}`}
-            strokeWidth="3.75"
-            stroke="var(--border-primary-color)"
-            x1={0}
-            y1={y1}
-            x2={vbWidth}
-            y2={y2}
-          />
-        );
-      })}
+      {!syncing &&
+        [{ y1: vbHeight * 0.5, y2: vbHeight * 0.5 }].map(
+          ({ y1, y2 }, index) => {
+            return (
+              <line
+                key={`grid_coord_${index}`}
+                strokeWidth="3.75"
+                stroke="var(--border-primary-color)"
+                x1={0}
+                y1={y1}
+                x2={vbWidth}
+                y2={y2}
+              />
+            );
+          }
+        )}
 
-      {lineCoords.map(({ x1, y1, x2, y2, zero }, index) => {
-        const startOrEnd = index === 0 || index === lineCoords.length - 2;
-        const opacity = startOrEnd ? 0.25 : zero ? 0.5 : 1;
-        return (
-          <line
-            key={`line_coord_${index}`}
-            strokeWidth={5}
-            opacity={opacity}
-            stroke={
-              zero
-                ? 'var(--text-color-tertiary)'
-                : 'var(--accent-color-primary)'
-            }
-            x1={x1}
-            y1={y1}
-            x2={x2}
-            y2={y2}
-          />
-        );
-      })}
+      {!syncing &&
+        lineCoords.map(({ x1, y1, x2, y2, zero }, index) => {
+          const startOrEnd = index === 0 || index === lineCoords.length - 2;
+          const opacity = startOrEnd ? 0.25 : zero ? 0.5 : 1;
+          return (
+            <line
+              key={`line_coord_${index}`}
+              strokeWidth={5}
+              opacity={opacity}
+              stroke={
+                zero
+                  ? 'var(--text-color-tertiary)'
+                  : 'var(--accent-color-primary)'
+              }
+              x1={x1}
+              y1={y1}
+              x2={x2}
+              y2={y2}
+            />
+          );
+        })}
     </svg>
   );
 };

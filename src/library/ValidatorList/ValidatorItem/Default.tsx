@@ -19,7 +19,6 @@ import {
   Labels,
   MenuPosition,
   Separator,
-  ValidatorPulseWrapper,
   Wrapper,
 } from 'library/ListItem/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
@@ -154,12 +153,10 @@ export const Default = ({
         <Separator />
         <div className="row bottom lg">
           <div>
-            <ValidatorPulseWrapper>
-              <Pulse address={address} />
-            </ValidatorPulseWrapper>
+            <Pulse address={address} />
           </div>
           <div>
-            <Labels style={{ marginBottom: '0.7rem' }}>
+            <Labels style={{ marginBottom: '0.75rem' }}>
               {displayFor !== 'default' ? (
                 <CopyAddress address={address} />
               ) : (

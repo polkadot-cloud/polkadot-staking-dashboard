@@ -299,10 +299,45 @@ export const ValidatorPulseWrapper = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 13rem;
+  max-width: 13.5rem;
+  position: relative;
 
   > svg {
     max-width: 100%;
     max-height: 100%;
+  }
+
+  > .preload {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--shimmer-foreground);
+    background-image: linear-gradient(
+      to right,
+      var(--shimmer-foreground) 0%,
+      var(--shimmer-background) 20%,
+      var(--shimmer-foreground) 40%,
+      var(--shimmer-foreground) 100%
+    );
+    background-repeat: no-repeat;
+    background-size: 600px 104px;
+    animation-duration: 1.5s;
+    opacity: 0.15;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: shimmer;
+    animation-timing-function: linear;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+
+    @keyframes shimmer {
+      0% {
+        background-position: -50% 0;
+      }
+      100% {
+        background-position: 200% 0;
+      }
+    }
   }
 `;
