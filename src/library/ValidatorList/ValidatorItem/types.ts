@@ -17,8 +17,10 @@ export interface ValidatorItemProps {
 
 export interface PulseProps {
   address: string;
+  displayFor: DisplayFor;
 }
 export interface PulseGraphProps {
   points: number[];
   syncing: boolean;
+  displayFor: DisplayFor;
 }

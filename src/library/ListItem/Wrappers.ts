@@ -295,12 +295,17 @@ export const TooltipTrigger = styled.div`
 export const ValidatorPulseWrapper = styled.div`
   border: 1px solid var(--border-primary-color);
   border-radius: 0.25rem;
-  height: 3.25rem;
+  height: 3.4rem;
   display: flex;
   align-items: center;
   width: 100%;
   max-width: 13.5rem;
   position: relative;
+  padding: 0.15rem 0;
+
+  &.canvas {
+    border: 1px solid var(--grid-color-secondary);
+  }
 
   > svg {
     max-width: 100%;

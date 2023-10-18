@@ -9,7 +9,7 @@ import { ValidatorPulseWrapper } from 'library/ListItem/Wrappers';
 import { normaliseEraPoints, prefillEraPoints } from './Utils';
 import type { PulseGraphProps, PulseProps } from './types';
 
-export const Pulse = ({ address }: PulseProps) => {
+export const Pulse = ({ address, displayFor }: PulseProps) => {
   const { activeEra } = useNetworkMetrics();
   const { getValidatorEraPoints, eraPointsBoundaries, erasRewardPoints } =
     useValidators();
@@ -24,9 +24,13 @@ export const Pulse = ({ address }: PulseProps) => {
   const syncing = !Object.values(erasRewardPoints).length;
 
   return (
-    <ValidatorPulseWrapper>
+    <ValidatorPulseWrapper className={displayFor}>
       {syncing && <div className="preload" />}
-      <PulseGraph points={prefilledPoints} syncing={syncing} />
+      <PulseGraph
+        points={prefilledPoints}
+        syncing={syncing}
+        displayFor={displayFor}
+      />
     </ValidatorPulseWrapper>
   );
 };
@@ -34,6 +38,7 @@ export const Pulse = ({ address }: PulseProps) => {
 export const PulseGraph = ({
   points: rawPoints = [],
   syncing,
+  displayFor,
 }: PulseGraphProps) => {
   // Prefill with duplicate of start point.
   let points = [rawPoints[0] || 0];
@@ -96,7 +101,11 @@ export const PulseGraph = ({
           <line
             key={`grid_coord_${index}`}
             strokeWidth="3.75"
-            stroke="var(--border-primary-color)"
+            stroke={
+              displayFor === 'canvas'
+                ? 'var(--grid-color-secondary)'
+                : 'var(--grid-color-primary)'
+            }
             x1={x1}
             y1={0}
             x2={x1}
@@ -112,11 +121,16 @@ export const PulseGraph = ({
               <line
                 key={`grid_coord_${index}`}
                 strokeWidth="3.75"
-                stroke="var(--border-primary-color)"
+                stroke={
+                  displayFor === 'canvas'
+                    ? 'var(--grid-color-secondary)'
+                    : 'var(--grid-color-primary)'
+                }
                 x1={0}
                 y1={y1}
                 x2={vbWidth}
                 y2={y2}
+                opacity={0.5}
               />
             );
           }

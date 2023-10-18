@@ -125,7 +125,7 @@ export const Default = ({
         <Separator />
         <div className="row bottom lg">
           <div>
-            <Pulse address={address} />
+            <Pulse address={address} displayFor={displayFor} />
           </div>
           <div>
             <Labels style={{ marginBottom: '0.9rem' }}>
