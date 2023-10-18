@@ -14,6 +14,7 @@ export interface ValidatorsContextInterface {
   nominated: Validator[] | null;
   poolNominated: Validator[] | null;
   validatorCommunity: any[];
+  erasRewardPoints: ErasRewardPoints;
   validatorsFetched: Sync;
 }
 
@@ -53,4 +54,11 @@ export interface LocalValidatorEntriesData {
   avgCommission: number;
   era: string;
   entries: Validator[];
+}
+
+export type ErasRewardPoints = Record<string, EraRewardPoints>;
+
+export interface EraRewardPoints {
+  total: string;
+  individual: Record<string, string>;
 }
