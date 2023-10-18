@@ -53,7 +53,7 @@ export const Nomination = ({
         <div className="row bottom lg">
           <div>
             <ValidatorPulseWrapper>
-              <Pulse />
+              <Pulse address={address} />
             </ValidatorPulseWrapper>
           </div>
           <div>

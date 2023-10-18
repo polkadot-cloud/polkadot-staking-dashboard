@@ -1,12 +1,32 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const Pulse = ({ points: rawPoints }: any) => {
-  rawPoints = [0.9, 0.7, 0.9, 0.2, 0, 0, 0.9];
+import BigNumber from 'bignumber.js';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
+import { Fragment } from 'react';
+import { normaliseEraPoints, prefillEraPoints } from './Utils';
+import type { PulseGraphProps, PulseProps } from './types';
 
+export const Pulse = ({ address }: PulseProps) => {
+  const { activeEra } = useNetworkMetrics();
+  const { getValidatorEraPoints, eraPointsBoundaries } = useValidators();
+
+  const startEra = activeEra.index.minus(1);
+  const eraRewardPoints = getValidatorEraPoints(startEra, address);
+
+  const high = eraPointsBoundaries?.high || new BigNumber(1);
+  const normalisedPoints = normaliseEraPoints(eraRewardPoints, high);
+  const prefilledPoints = prefillEraPoints(Object.values(normalisedPoints));
+
+  return <PulseGraph points={prefilledPoints} />;
+};
+
+export const PulseGraph = ({ points: rawPoints = [] }: PulseGraphProps) => {
+  // Prefill with duplicate of start point.
   let points = [rawPoints[0] || 0];
   points = points.concat(rawPoints);
+  // Prefill with duplicate of end point.
   points.push(rawPoints[rawPoints.length - 1] || 0);
 
   const totalSegments = points.length - 2;
@@ -23,6 +43,7 @@ export const Pulse = ({ points: rawPoints }: any) => {
     const coord = {
       x: xCursor,
       y: vbHeight - yPadding - yArea * point,
+      zero: point === 0,
     };
 
     if (index === 0 || index === points.length - 2) {
@@ -35,11 +56,15 @@ export const Pulse = ({ points: rawPoints }: any) => {
 
   const lineCoords = [];
   for (let i = 0; i <= pointsCoords.length - 1; i++) {
+    const startZero = pointsCoords[i].zero;
+    const endZero = pointsCoords[i + 1]?.zero;
+
     lineCoords.push({
       x1: pointsCoords[i].x,
       y1: pointsCoords[i].y,
       x2: pointsCoords[i + 1]?.x || pointsCoords[i].x,
       y2: pointsCoords[i + 1]?.y || pointsCoords[i].y,
+      zero: startZero && endZero,
     });
   }
 
@@ -53,7 +78,7 @@ export const Pulse = ({ points: rawPoints }: any) => {
     >
       {lineCoords.map(({ x1 }, index) => {
         if (index === 0 || index === lineCoords.length - 1) {
-          return <></>;
+          return <Fragment key={`grid_coord_${index}`} />;
         }
         return (
           <line
@@ -67,15 +92,19 @@ export const Pulse = ({ points: rawPoints }: any) => {
           />
         );
       })}
-      {lineCoords.map(({ x1, y1, x2, y2 }, index) => {
-        const opacity =
-          index === 0 || index === lineCoords.length - 2 ? 0.25 : 1;
+      {lineCoords.map(({ x1, y1, x2, y2, zero }, index) => {
+        const startOrEnd = index === 0 || index === lineCoords.length - 2;
+        const opacity = startOrEnd ? 0.25 : zero ? 0.5 : 1;
         return (
           <line
             key={`line_coord_${index}`}
-            strokeWidth={4.25}
+            strokeWidth={5}
             opacity={opacity}
-            stroke="var(--accent-color-primary)"
+            stroke={
+              zero
+                ? 'var(--text-color-tertiary)'
+                : 'var(--accent-color-primary)'
+            }
             x1={x1}
             y1={y1}
             x2={x2}

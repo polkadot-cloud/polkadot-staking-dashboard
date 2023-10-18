@@ -15,6 +15,7 @@ import { useApi } from 'contexts/Api';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { MaxEraRewardPointsEras } from 'consts';
 import type {
+  EraPointsBoundaries,
   EraRewardPoints,
   ErasRewardPoints,
   Identity,
@@ -23,14 +24,12 @@ import type {
   ValidatorSuper,
   ValidatorsContextInterface,
 } from '../types';
-import { defaultValidatorsData, defaultValidatorsContext } from './defaults';
 import {
-  getLocalEraRewardPoints,
-  getLocalEraValidators,
-  hasLocalEraRewardPoints,
-  setLocalEraRewardPoints,
-  setLocalEraValidators,
-} from '../Utils';
+  defaultValidatorsData,
+  defaultValidatorsContext,
+  defaultEraPointsBoundaries,
+} from './defaults';
+import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
 
 export const ValidatorsProvider = ({
   children,
@@ -87,10 +86,15 @@ export const ValidatorsProvider = ({
     {}
   );
 
+  // Store era point high and low for `MaxEraPointsEras` eras.
+  const [eraPointsBoundaries, setEraPointsBoundaries] =
+    useState<EraPointsBoundaries>(defaultEraPointsBoundaries);
+
   // Processes reward points for a given era.
   const processEraRewardPoints = (
     result: AnyJson,
     era: BigNumber,
+    // eslint-disable-next-line
     endEra: BigNumber
   ) => {
     if (!api || erasRewardPoints[era.toString()]) return false;
@@ -106,12 +110,13 @@ export const ValidatorsProvider = ({
     };
 
     // Store era in local storage.
-    setLocalEraRewardPoints(
-      network,
-      era.toString(),
-      formatted,
-      endEra.toString()
-    );
+    // NOTE: currently disabled due to local storage limitations.
+    // setLocalEraRewardPoints(
+    //   network,
+    //   era.toString(),
+    //   formatted,
+    //   endEra.toString()
+    // );
 
     return formatted;
   };
@@ -121,7 +126,7 @@ export const ValidatorsProvider = ({
     if (activeEra.index.isZero() || !api) return;
 
     // start fetching from the current era.
-    let currentEra = activeEra.index;
+    let currentEra = BigNumber.max(activeEra.index.minus(1), 1);
     const endEra = BigNumber.max(
       currentEra.minus(MaxEraRewardPointsEras - 1),
       1
@@ -137,15 +142,16 @@ export const ValidatorsProvider = ({
     const localEras: Record<string, EraRewardPoints> = {};
     do {
       // If already in local storage, get data from there. Otherwise, add to calls.
-      if (hasLocalEraRewardPoints(network, currentEra.toString())) {
-        localEras[currentEra.toString()] = getLocalEraRewardPoints(
-          network,
-          currentEra.toString()
-        );
-      } else {
-        calls.push(api.query.staking.erasRewardPoints(currentEra.toString()));
-        eras.push(currentEra);
-      }
+      // Note: currently disabled due to localStorage limitations.
+      // if (hasLocalEraRewardPoints(network, currentEra.toString())) {
+      //   localEras[currentEra.toString()] = getLocalEraRewardPoints(
+      //     network,
+      //     currentEra.toString()
+      //   );
+      // }
+
+      calls.push(api.query.staking.erasRewardPoints(currentEra.toString()));
+      eras.push(currentEra);
 
       currentEra = currentEra.minus(1);
       erasProcessed = erasProcessed.plus(1);
@@ -377,6 +383,50 @@ export const ValidatorsProvider = ({
     return supersWithIdentity;
   };
 
+  // Gets era points for a validator
+  const getValidatorEraPoints = (startEra: BigNumber, address: string) => {
+    startEra = BigNumber.max(startEra, 1);
+
+    // minus 1 from `MaxRewardPointsEras` to account for the current era.
+    const endEra = BigNumber.max(startEra.minus(MaxEraRewardPointsEras - 1), 1);
+
+    const points: Record<string, BigNumber> = {};
+    let currentEra = startEra;
+    do {
+      const eraPoints = erasRewardPoints[currentEra.toString()];
+      if (eraPoints) {
+        const validatorPoints = eraPoints.individual[address];
+        points[currentEra.toString()] = new BigNumber(validatorPoints || 0);
+      } else {
+        points[currentEra.toString()] = new BigNumber(0);
+      }
+      currentEra = currentEra.minus(1);
+    } while (currentEra.isGreaterThanOrEqualTo(endEra));
+
+    return points;
+  };
+
+  // Gets the highest and lowest (non-zero) era points earned `MaxEraRewardPointsEras` timeframe.
+  const calculateEraPointsBoundaries = () => {
+    let high: BigNumber | null = null;
+    let low: BigNumber | null = null;
+
+    Object.entries(erasRewardPoints).forEach(([, { individual }]) => {
+      for (const [, points] of Object.entries(individual)) {
+        const p = new BigNumber(points);
+
+        if (p.isGreaterThan(high || 0)) high = p;
+        if (low === null) low = p;
+        else if (p.isLessThan(low) && !p.isZero()) low = p;
+      }
+    });
+
+    setEraPointsBoundaries({
+      high: high || new BigNumber(0),
+      low: low || new BigNumber(0),
+    });
+  };
+
   // Reset validator state data on network change.
   useEffectIgnoreInitial(() => {
     setValidatorsFetched('unsynced');
@@ -387,6 +437,7 @@ export const ValidatorsProvider = ({
     setValidatorIdentities({});
     setValidatorSupers({});
     setErasRewardPoints({});
+    setEraPointsBoundaries(null);
   }, [network]);
 
   // Fetch validators, session validators, and era reward points when `activeEra` ready.
@@ -397,6 +448,16 @@ export const ValidatorsProvider = ({
       fetchSessionValidators();
     }
   }, [isReady, activeEra]);
+
+  // Fetch era points boundaries when `erasRewardPoints` ready.
+  useEffectIgnoreInitial(() => {
+    if (
+      isReady &&
+      Object.values(erasRewardPoints).length &&
+      !eraPointsBoundaries
+    )
+      calculateEraPointsBoundaries();
+  }, [isReady, erasRewardPoints]);
 
   // Fetch parachain session validators when `earliestStoredSession` ready.
   useEffectIgnoreInitial(() => {
@@ -429,6 +490,7 @@ export const ValidatorsProvider = ({
     <ValidatorsContext.Provider
       value={{
         fetchValidatorPrefs,
+        getValidatorEraPoints,
         validators,
         validatorIdentities,
         validatorSupers,
@@ -440,6 +502,7 @@ export const ValidatorsProvider = ({
         validatorCommunity,
         erasRewardPoints,
         validatorsFetched,
+        eraPointsBoundaries,
       }}
     >
       {children}
