@@ -23,7 +23,13 @@ import type {
   ValidatorsContextInterface,
 } from '../types';
 import { defaultValidatorsData, defaultValidatorsContext } from './defaults';
-import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
+import {
+  getLocalEraRewardPoints,
+  getLocalEraValidators,
+  hasLocalEraRewardPoints,
+  setLocalEraRewardPoints,
+  setLocalEraValidators,
+} from '../Utils';
 
 export const ValidatorsProvider = ({
   children,
@@ -81,14 +87,18 @@ export const ValidatorsProvider = ({
   );
 
   // Processes reward points for a given era.
-  const processEraRewardPoints = (result: AnyApi, era: BigNumber) => {
+  const processEraRewardPoints = (
+    result: AnyApi,
+    era: BigNumber,
+    endEra: BigNumber
+  ) => {
     if (!api || erasRewardPoints[era.toString()]) return false;
 
-    // TODO: if already in local storage, get from there `<network>_era_reward_points`.
+    // If already in local storage, get data from there.
+    if (hasLocalEraRewardPoints(network, era.toString()))
+      return getLocalEraRewardPoints(network, era.toString());
 
-    // TODO: store in local storage.
-
-    return {
+    const formatted = {
       total: rmCommas(result.total),
       individual: Object.fromEntries(
         Object.entries(result.individual).map(([key, value]) => [
@@ -97,6 +107,16 @@ export const ValidatorsProvider = ({
         ])
       ),
     };
+
+    // Store era in local storage.
+    setLocalEraRewardPoints(
+      network,
+      era.toString(),
+      formatted,
+      endEra.toString()
+    );
+
+    return formatted;
   };
 
   // Fetches era reward points for eligible eras.
@@ -132,7 +152,11 @@ export const ValidatorsProvider = ({
     const newErasRewardPoints: ErasRewardPoints = {};
     let i = 0;
     for (const result of await Promise.all(calls)) {
-      const formatted = processEraRewardPoints(result.toHuman(), eras[i]);
+      const formatted = processEraRewardPoints(
+        result.toHuman(),
+        eras[i],
+        endEra
+      );
       if (formatted) newErasRewardPoints[eras[i].toString()] = formatted;
       i++;
     }
