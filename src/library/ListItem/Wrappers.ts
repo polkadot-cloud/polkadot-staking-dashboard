@@ -7,13 +7,12 @@ import { SmallFontSizeMaxWidth } from 'consts';
 import type { DisplayFor } from 'types';
 
 export const Wrapper = styled.div<{
-  $format?: string;
   $displayFor?: DisplayFor;
 }>`
   display: flex;
   flex-flow: row wrap;
   width: 100%;
-  height: ${(props) => (props.$format === 'nomination' ? '6rem' : '3rem')};
+  height: 6rem;
   position: relative;
   margin: 0.5rem;
 

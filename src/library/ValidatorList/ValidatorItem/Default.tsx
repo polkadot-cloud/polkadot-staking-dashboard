@@ -47,7 +47,7 @@ export const Default = ({
   const { pluginEnabled } = usePlugins();
   const { openModal } = useOverlay().modal;
   const { addNotification } = useNotifications();
-  const { setMenuPosition, setMenuItems, open }: any = useMenu();
+  const { setMenuPosition, setMenuItems, open } = useMenu();
   const { validatorIdentities, validatorSupers } = useValidators();
 
   const { address, prefs } = validator;
@@ -122,7 +122,7 @@ export const Default = ({
   };
 
   return (
-    <Wrapper $format="nomination" $displayFor={displayFor}>
+    <Wrapper $displayFor={displayFor}>
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">
