@@ -109,15 +109,6 @@ export const ValidatorsProvider = ({
       ),
     };
 
-    // Store era in local storage.
-    // NOTE: currently disabled due to local storage limitations.
-    // setLocalEraRewardPoints(
-    //   network,
-    //   era.toString(),
-    //   formatted,
-    //   endEra.toString()
-    // );
-
     return formatted;
   };
 
@@ -141,15 +132,6 @@ export const ValidatorsProvider = ({
     const eras = [];
     const localEras: Record<string, EraRewardPoints> = {};
     do {
-      // If already in local storage, get data from there. Otherwise, add to calls.
-      // Note: currently disabled due to localStorage limitations.
-      // if (hasLocalEraRewardPoints(network, currentEra.toString())) {
-      //   localEras[currentEra.toString()] = getLocalEraRewardPoints(
-      //     network,
-      //     currentEra.toString()
-      //   );
-      // }
-
       calls.push(api.query.staking.erasRewardPoints(currentEra.toString()));
       eras.push(currentEra);
 
