@@ -15,33 +15,31 @@ export const ValidatorFavorites = () => {
   const { favoritesList } = useFavoriteValidators();
 
   return (
-    <>
-      <PageRow>
-        <CardWrapper>
-          {favoritesList === null ? (
-            <ListStatusHeader>
-              {t('validators.fetchingFavoriteValidators')}...
-            </ListStatusHeader>
+    <PageRow>
+      <CardWrapper>
+        {favoritesList === null ? (
+          <ListStatusHeader>
+            {t('validators.fetchingFavoriteValidators')}...
+          </ListStatusHeader>
+        ) : (
+          isReady &&
+          (favoritesList.length > 0 ? (
+            <ValidatorList
+              bondFor="nominator"
+              validators={favoritesList}
+              title={t('validators.favoriteValidators')}
+              selectable={false}
+              allowListFormat={false}
+              allowFilters
+              refetchOnListUpdate
+              allowMoreCols
+              toggleFavorites
+            />
           ) : (
-            isReady &&
-            (favoritesList.length > 0 ? (
-              <ValidatorList
-                bondFor="nominator"
-                validators={favoritesList}
-                title={t('validators.favoriteValidators')}
-                selectable={false}
-                allowListFormat={false}
-                allowFilters
-                refetchOnListUpdate
-                allowMoreCols
-                toggleFavorites
-              />
-            ) : (
-              <ListStatusHeader>{t('validators.noFavorites')}</ListStatusHeader>
-            ))
-          )}
-        </CardWrapper>
-      </PageRow>
-    </>
+            <ListStatusHeader>{t('validators.noFavorites')}</ListStatusHeader>
+          ))
+        )}
+      </CardWrapper>
+    </PageRow>
   );
 };
