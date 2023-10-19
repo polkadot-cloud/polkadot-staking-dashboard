@@ -12,11 +12,13 @@ import {
 import { useTooltip } from 'contexts/Tooltip';
 import { useTranslation } from 'react-i18next';
 import { MaxEraRewardPointsEras } from 'consts';
+import { useApi } from 'contexts/Api';
 import { normaliseEraPoints, prefillEraPoints } from './Utils';
 import type { PulseGraphProps, PulseProps } from './types';
 
 export const Pulse = ({ address, displayFor }: PulseProps) => {
   const { t } = useTranslation('library');
+  const { isReady } = useApi();
   const { activeEra } = useNetworkMetrics();
   const { setTooltipTextAndOpen } = useTooltip();
   const { getValidatorEraPoints, eraPointsBoundaries, erasRewardPoints } =
@@ -28,7 +30,7 @@ export const Pulse = ({ address, displayFor }: PulseProps) => {
   const normalisedPoints = normaliseEraPoints(eraRewardPoints, high);
   const prefilledPoints = prefillEraPoints(Object.values(normalisedPoints));
 
-  const syncing = !Object.values(erasRewardPoints).length;
+  const syncing = !isReady || !Object.values(erasRewardPoints).length;
   const tooltipText = t('validatorPerformance', {
     count: MaxEraRewardPointsEras,
   });
