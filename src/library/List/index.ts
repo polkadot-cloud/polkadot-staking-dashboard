@@ -11,6 +11,7 @@ export const Wrapper = styled.div`
   flex-flow: column nowrap;
 `;
 
+/* No longer being used for ValidatorList or PoolLis. Phasing out to remove titles from lists */
 export const Header = styled.div<{ $displayFor?: DisplayFor }>`
   border-bottom: ${(props) =>
     props.$displayFor === 'canvas'
@@ -61,6 +62,7 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
     display: flex;
     flex: 1;
   }
+
   > div:last-child {
     display: flex;
     justify-content: flex-end;
@@ -157,6 +159,36 @@ export const SearchInputWrapper = styled.div`
 
     &:focus {
       border-width: 1.75px;
+    }
+  }
+`;
+
+export const FilterHeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  > div {
+    display: flex;
+
+    &:first-child {
+      flex-grow: 1;
+      flex-direction: column;
+    }
+    &:last-child {
+      flex-shrink: 1;
+
+      button {
+        color: var(--text-color-secondary);
+        font-size: 1.1rem;
+        margin: 0 0.5rem 0 0.75rem;
+        opacity: 0.6;
+        transition: all var(--transition-duration);
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
     }
   }
 `;
