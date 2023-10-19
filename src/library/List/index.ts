@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
   flex-flow: column nowrap;
 `;
 
-/* No longer being used for ValidatorList or PoolLis. Phasing out to remove titles from lists */
+// NOTE: used for member lists and payout list only.
 export const Header = styled.div<{ $displayFor?: DisplayFor }>`
   border-bottom: ${(props) =>
     props.$displayFor === 'canvas'
