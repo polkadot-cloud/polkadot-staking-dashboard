@@ -83,7 +83,10 @@ export const BalanceChart = () => {
     : new BigNumber(0);
 
   // total funds available, including existential deposit, minus staking.
-  const graphAvailable = planckToUnit(free.minus(lockStakingAmount), units);
+  const graphAvailable = planckToUnit(
+    BigNumber.max(free.minus(lockStakingAmount), 0),
+    units
+  );
   const notStaking = graphAvailable;
 
   // graph percentages
@@ -97,16 +100,25 @@ export const BalanceChart = () => {
     : new BigNumber(0);
 
   const graphNotStaking = greaterThanZero(graphTotal)
-    ? new BigNumber(100).minus(graphNominating).minus(graphInPool)
+    ? BigNumber.max(
+        new BigNumber(100).minus(graphNominating).minus(graphInPool),
+        0
+      )
     : new BigNumber(0);
 
   // available balance data
-  const fundsLocked = planckToUnit(frozen.minus(lockStakingAmount), units);
+  const fundsLocked = planckToUnit(
+    BigNumber.max(frozen.minus(lockStakingAmount), 0),
+    units
+  );
   let fundsReserved = planckToUnit(edReserved.plus(feeReserve), units);
   const fundsFree = planckToUnit(
-    BigNumber.max(allTransferOptions.freeBalance.minus(feeReserve), 0),
+    BigNumber.max(
+      allTransferOptions.freeBalance.minus(feeReserve).minus(fundsLocked),
+      0
+    ),
     units
-  ).minus(fundsLocked);
+  );
   // available balance percentages
   const graphLocked = greaterThanZero(fundsLocked)
     ? fundsLocked.dividedBy(graphAvailable.multipliedBy(0.01))
