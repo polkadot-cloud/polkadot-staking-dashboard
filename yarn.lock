@@ -985,13 +985,21 @@
   resolved "https://registry.yarnpkg.com/@substrate/connect-extension-protocol/-/connect-extension-protocol-1.0.1.tgz#fa5738039586c648013caa6a0c95c43265dbe77d"
   integrity sha512-161JhCC1csjH3GE5mPLEd7HbWtwNSPJBg3p1Ksz9SFlTzj/bgEwudiRN2y5i0MoLGCIJRYKyKGMxVnd29PzNjg==
 
-"@substrate/connect@0.7.33", "@substrate/connect@^0.7.33":
+"@substrate/connect@0.7.33":
   version "0.7.33"
   resolved "https://registry.yarnpkg.com/@substrate/connect/-/connect-0.7.33.tgz#6fa309557b5b45cb918f5f4fe25a356384de9808"
   integrity sha512-1B984/bmXVQvTT9oV3c3b7215lvWmulP9rfP3T3Ri+OU3uIsyCzYw0A+XG6J8/jgO2FnroeNIBWlgoLaUM1uzw==
   dependencies:
     "@substrate/connect-extension-protocol" "^1.0.1"
     smoldot "2.0.1"
+
+"@substrate/connect@^0.7.34":
+  version "0.7.34"
+  resolved "https://registry.yarnpkg.com/@substrate/connect/-/connect-0.7.34.tgz#e1b74125a3bf04b0037ec6f71852c943db1dd16f"
+  integrity sha512-APxn6PlxM+V+bJU4NSwD4WcBivqoNAQPVZAFxrM4Qf0aExHNBmB9j+uISyyc6ZbM84bN7/PWh4xd+3Wy7xEZMA==
+  dependencies:
+    "@substrate/connect-extension-protocol" "^1.0.1"
+    smoldot "2.0.6"
 
 "@substrate/ss58-registry@^1.43.0":
   version "1.43.0"
@@ -1231,38 +1239,38 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.8.tgz#805eae6e8f41bd19e88917d2ea200dc992f405d3"
   integrity sha512-kMpQpfZKSCBqltAJwskgePRaYRFukDkm1oItcAbC3gNELR20XIBcN9VRgg4+m8DKsTfkWeA4m4Imp4DDuWy7FQ==
 
-"@types/react-dom@^18.2.13":
-  version "18.2.13"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.2.13.tgz#89cd7f9ec8b28c8b6f0392b9591671fb4a9e96b7"
-  integrity sha512-eJIUv7rPP+EC45uNYp/ThhSpE16k22VJUknt5OLoH9tbXoi8bMhwLf5xRuWMywamNbWzhrSmU7IBJfPup1+3fw==
+"@types/react-dom@^18.2.14":
+  version "18.2.14"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.2.14.tgz#c01ba40e5bb57fc1dc41569bb3ccdb19eab1c539"
+  integrity sha512-V835xgdSVmyQmI1KLV2BEIUgqEuinxp9O4G6g3FqO/SqLac049E53aysv0oEFD2kHfejeKU+ZqL2bcFWj9gLAQ==
   dependencies:
     "@types/react" "*"
 
-"@types/react-helmet@^6.1.7":
-  version "6.1.7"
-  resolved "https://registry.yarnpkg.com/@types/react-helmet/-/react-helmet-6.1.7.tgz#4cecc03165084727408d29d92d8fdd4a7e267403"
-  integrity sha512-mUFOrdR3AIvHE8BEaqzfPEnR62xq5PHQJehhgNtj78x0d5NOxUCQ0j+r9OZ4RvB+prNZx9wvQnVW8ApFBX+fig==
+"@types/react-helmet@^6.1.8":
+  version "6.1.8"
+  resolved "https://registry.yarnpkg.com/@types/react-helmet/-/react-helmet-6.1.8.tgz#92942afbf620435602de1f500cd9b47d3c09a218"
+  integrity sha512-UyJFvbGWO8xKvfCPFTt/DG/vsgkMqyXbUQAa1pSPco1Whw85Z3ypMEqoHtCDfoW4Qu8XgJp63jyXEhOa4te5Kw==
   dependencies:
     "@types/react" "*"
 
-"@types/react-qr-reader@^2.1.5":
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/@types/react-qr-reader/-/react-qr-reader-2.1.5.tgz#933351729b01f61ab7700fec3ed3f78737ed08a1"
-  integrity sha512-a21g42lQkBKr87zS0idEkTsnVB/UObQol9RcB7YTkLokz3bwwDVJqnXaOliITIAfZtQAYpsPAj08Mb9G2U8K4A==
+"@types/react-qr-reader@^2.1.6":
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/@types/react-qr-reader/-/react-qr-reader-2.1.6.tgz#72ebc45530bd40aabfa1aa978c6fb58b674fdee8"
+  integrity sha512-KF3WXsCUczlVasxLTiXNy0bO3043g/qWyYdklFK2xyZuqVyQZyzAY5Cg0+55DZ1WFmyQoL5eIqWndnlMk6RyWg==
   dependencies:
     "@types/react" "*"
 
-"@types/react-scroll@^1.8.8":
-  version "1.8.8"
-  resolved "https://registry.yarnpkg.com/@types/react-scroll/-/react-scroll-1.8.8.tgz#cd0d844e534fe12b4a6238dd5b6ba41d64968144"
-  integrity sha512-KJRwopG2kgJVzhDGRXhkhbNXCzPFtxNVJrx99czqW7LK8JXU8ufG5POo864cA9vFDEr4vSR+NOlK0NCHbbnjkw==
+"@types/react-scroll@^1.8.9":
+  version "1.8.9"
+  resolved "https://registry.yarnpkg.com/@types/react-scroll/-/react-scroll-1.8.9.tgz#690dcde92442e0083027eb7f285f36de372c675d"
+  integrity sha512-FvfY7wmN7UqwStZFny6riMMnx56rdTBshE3irmoaZPeIEgBRvt1R9/lDNPQ3CVhm5OPJLHKDSvMk4c3JSwoY0g==
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^18.2.28":
-  version "18.2.28"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.28.tgz#86877465c0fcf751659a36c769ecedfcfacee332"
-  integrity sha512-ad4aa/RaaJS3hyGz0BGegdnSRXQBkd1CCYDCdNjBPg90UUpLgo+WlJqb9fMYUxtehmzF3PJaTWqRZjko6BRzBg==
+"@types/react@*", "@types/react@^18.2.29":
+  version "18.2.29"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.29.tgz#88b48a287e00f6fdcd6f95662878fb701ae18b27"
+  integrity sha512-Z+ZrIRocWtdD70j45izShRwDuiB4JZqDegqMFW/I8aG5DxxLKOzVNoq62UIO82v9bdgi+DO1jvsb9sTEZUSm+Q==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -3050,10 +3058,10 @@ i18next-browser-languagedetector@^7.1.0:
   dependencies:
     "@babel/runtime" "^7.19.4"
 
-i18next@^23.5.1:
-  version "23.5.1"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-23.5.1.tgz#7f7c35ffaa907618d9489f106d5006b09fbca3d3"
-  integrity sha512-JelYzcaCoFDaa+Ysbfz2JsGAKkrHiMG6S61+HLBUEIPaF40WMwW9hCPymlQGrP+wWawKxKPuSuD71WZscCsWHg==
+i18next@^23.6.0:
+  version "23.6.0"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-23.6.0.tgz#c6e996cfd3fef0bf60be3b7c581c35338dba5a71"
+  integrity sha512-z0Cxr0MGkt+kli306WS4nNNM++9cgt2b2VCMprY92j+AIab/oclgPxdwtTZVLP1zn5t5uo8M6uLsZmYrcjr3HA==
   dependencies:
     "@babel/runtime" "^7.22.5"
 
@@ -4449,6 +4457,13 @@ smoldot@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/smoldot/-/smoldot-2.0.1.tgz#c899cbb0827a010d3ca7944034f081786f533a4d"
   integrity sha512-Wqw2fL/sELQByLSeeTX1Z/d0H4McmphPMx8vh6UZS/bIIDx81oU7s/drmx2iL/ME36uk++YxpRuJey8/MOyfOA==
+  dependencies:
+    ws "^8.8.1"
+
+smoldot@2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/smoldot/-/smoldot-2.0.6.tgz#9e24cb4ab2a308c639cf4db1e95daf7066f319eb"
+  integrity sha512-/FQ6urmnG1TQuIu15NB9lXeNS0MX5f57vkX4RoBuVA+gAq4bcF1k2nMb40tfKCBW9PKyfEf478DN1YUMVOlWjg==
   dependencies:
     ws "^8.8.1"
 
