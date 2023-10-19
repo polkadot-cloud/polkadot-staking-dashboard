@@ -18,7 +18,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
   justify-content: ${(props) => (props.$withAction ? 'none' : 'center')};
   width: 100%;
   padding: 0rem 0.25rem;
-  margin-bottom: ${(props) => (props.$withMargin ? '0.75rem' : 0)};
+  margin-bottom: ${(props) => (props.$withMargin ? '1rem' : 0)};
 
   h2 {
     font-family: InterBold, sans-serif;
