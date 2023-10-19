@@ -21,8 +21,6 @@ import { JoinPool } from '../modals/JoinPool';
 import { ManageFastUnstake } from '../modals/ManageFastUnstake';
 import { ManagePool } from '../modals/ManagePool';
 import { Networks } from '../modals/Networks';
-import { Nominate } from '../modals/Nominate';
-import { NominatePool } from '../modals/NominatePool';
 import { PoolNominations } from '../modals/PoolNominations';
 import { Settings } from '../modals/Settings';
 import { Unbond } from '../modals/Unbond';
@@ -61,8 +59,6 @@ export const Overlays = () => {
         ManagePool,
         ManageFastUnstake,
         Networks,
-        Nominate,
-        NominatePool,
         PoolNominations,
         Settings,
         ValidatorMetrics,
