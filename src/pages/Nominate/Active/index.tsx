@@ -20,6 +20,7 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Nominations } from 'library/Nominations';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
+import { ListStatusHeader } from 'library/List';
 import { ControllerNotStash } from './ControllerNotStash';
 import { ManageBond } from './ManageBond';
 import { ActiveNominatorsStat } from './Stats/ActiveNominators';
@@ -95,7 +96,9 @@ export const Active = () => {
                   />
                 </div>
               </CardHeaderWrapper>
-              <h4>{t('notNominating', { ns: 'library' })}.</h4>
+              <ListStatusHeader>
+                {t('notNominating', { ns: 'library' })}.
+              </ListStatusHeader>
             </>
           )}
         </CardWrapper>

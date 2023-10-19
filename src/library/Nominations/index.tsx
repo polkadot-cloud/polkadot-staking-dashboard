@@ -17,6 +17,7 @@ import type { MaybeAddress } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { ListStatusHeader } from 'library/List';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = ({
@@ -130,40 +131,24 @@ export const Nominations = ({
         </div>
       </CardHeaderWrapper>
       {nominated === null || isSyncing ? (
-        <div className="head">
-          <h4>
-            {!isSyncing && nominated === null
-              ? t('nominate.notNominating')
-              : `${t('nominate.syncing')}...`}
-          </h4>
-        </div>
+        <ListStatusHeader>{`${t('nominate.syncing')}...`}</ListStatusHeader>
       ) : !nominator ? (
-        <div className="head">
-          <h4>{t('nominate.notNominating')}.</h4>
-        </div>
+        <ListStatusHeader>{t('nominate.notNominating')}.</ListStatusHeader>
+      ) : nominated.length > 0 ? (
+        <ValidatorList
+          bondFor={bondFor}
+          validators={nominated}
+          nominator={nominator}
+          format="nomination"
+          refetchOnListUpdate
+          allowMoreCols
+          disableThrottle
+          allowListFormat={false}
+        />
+      ) : poolDestroying ? (
+        <ListStatusHeader>{t('nominate.poolDestroy')}</ListStatusHeader>
       ) : (
-        <>
-          {nominated.length > 0 ? (
-            <ValidatorList
-              bondFor={bondFor}
-              validators={nominated}
-              nominator={nominator}
-              format="nomination"
-              refetchOnListUpdate
-              allowMoreCols
-              disableThrottle
-              allowListFormat={false}
-            />
-          ) : (
-            <div className="head">
-              {poolDestroying ? (
-                <h4>{t('nominate.poolDestroy')}</h4>
-              ) : (
-                <h4>{t('nominate.notNominating')}.</h4>
-              )}
-            </div>
-          )}
-        </>
+        <ListStatusHeader>{t('nominate.notNominating')}.</ListStatusHeader>
       )}
     </Wrapper>
   );

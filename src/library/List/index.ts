@@ -103,6 +103,10 @@ export const SelectableWrapper = styled.div`
   }
 `;
 
+export const ListStatusHeader = styled.h4`
+  padding: 0.25rem 0.5rem;
+`;
+
 export const List = styled.div<ListProps>`
   width: 100%;
 

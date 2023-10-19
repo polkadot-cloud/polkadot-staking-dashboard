@@ -19,6 +19,7 @@ import { usePoolFilters } from 'library/Hooks/usePoolFilters';
 import {
   FilterHeaderWrapper,
   List,
+  ListStatusHeader,
   Wrapper as ListWrapper,
 } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
@@ -270,9 +271,9 @@ export const PoolList = ({
               ))}
             </>
           ) : (
-            <h4 className="none">
+            <ListStatusHeader>
               {isSyncing ? `${t('syncingPoolList')}...` : t('noMatch')}
-            </h4>
+            </ListStatusHeader>
           )}
         </MotionContainer>
       </List>

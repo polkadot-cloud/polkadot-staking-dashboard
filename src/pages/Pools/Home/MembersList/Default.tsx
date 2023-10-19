@@ -13,7 +13,12 @@ import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import type { PoolMember } from 'contexts/Pools/types';
 import { useTheme } from 'contexts/Themes';
-import { Header, List, Wrapper as ListWrapper } from 'library/List';
+import {
+  Header,
+  List,
+  ListStatusHeader,
+  Wrapper as ListWrapper,
+} from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { ListProvider, useList } from 'library/List/context';
@@ -144,9 +149,9 @@ export const MembersListInner = ({
               <Pagination page={page} total={totalPages} setter={setPage} />
             )}
             {fetched !== 'synced' ? (
-              <h4 className="none" style={{ marginTop: '0.75rem' }}>
+              <ListStatusHeader style={{ marginTop: '0.5rem' }}>
                 {t('pools.fetchingMemberList')}...
-              </h4>
+              </ListStatusHeader>
             ) : (
               <MotionContainer>
                 {listMembers.map((member: PoolMember, index: number) => (

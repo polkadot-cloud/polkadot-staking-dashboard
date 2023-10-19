@@ -7,6 +7,7 @@ import { useApi } from 'contexts/Api';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { ValidatorList } from 'library/ValidatorList';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
+import { ListStatusHeader } from 'library/List';
 
 export const ValidatorFavorites = () => {
   const { t } = useTranslation('pages');
@@ -18,28 +19,26 @@ export const ValidatorFavorites = () => {
       <PageRow>
         <CardWrapper>
           {favoritesList === null ? (
-            <h3>{t('validators.fetchingFavoriteValidators')}...</h3>
+            <ListStatusHeader>
+              {t('validators.fetchingFavoriteValidators')}...
+            </ListStatusHeader>
           ) : (
-            <>
-              {isReady && (
-                <>
-                  {favoritesList.length > 0 ? (
-                    <ValidatorList
-                      bondFor="nominator"
-                      validators={favoritesList}
-                      title={t('validators.favoriteValidators')}
-                      selectable={false}
-                      allowListFormat={false}
-                      refetchOnListUpdate
-                      allowMoreCols
-                      toggleFavorites
-                    />
-                  ) : (
-                    <h3>{t('validators.noFavorites')}</h3>
-                  )}
-                </>
-              )}
-            </>
+            isReady &&
+            (favoritesList.length > 0 ? (
+              <ValidatorList
+                bondFor="nominator"
+                validators={favoritesList}
+                title={t('validators.favoriteValidators')}
+                selectable={false}
+                allowListFormat={false}
+                allowFilters
+                refetchOnListUpdate
+                allowMoreCols
+                toggleFavorites
+              />
+            ) : (
+              <ListStatusHeader>{t('validators.noFavorites')}</ListStatusHeader>
+            ))
           )}
         </CardWrapper>
       </PageRow>
