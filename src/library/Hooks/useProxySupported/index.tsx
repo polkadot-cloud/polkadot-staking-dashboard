@@ -11,9 +11,9 @@ import { useProxies } from 'contexts/Proxies';
 import type { AnyApi, AnyJson, MaybeAddress } from 'types';
 
 export const useProxySupported = () => {
-  const { activeProxy } = useActiveAccounts();
   const { getBondedAccount } = useBonded();
   const { getProxyDelegate } = useProxies();
+  const { activeProxy } = useActiveAccounts();
 
   // If call is from controller, & controller is different from stash, then proxy is not
   // supported.

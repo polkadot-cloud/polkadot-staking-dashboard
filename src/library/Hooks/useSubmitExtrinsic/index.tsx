@@ -20,32 +20,32 @@ import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = ({
   tx,
+  from,
   shouldSubmit,
   callbackSubmit,
   callbackInBlock,
-  from,
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('library');
   const { api } = useApi();
   const { extensions } = useExtensions();
+  const { buildPayload } = useBuildPayload();
+  const { activeProxy } = useActiveAccounts();
   const { addNotification } = useNotifications();
   const { isProxySupported } = useProxySupported();
   const { addPending, removePending } = useExtrinsics();
-  const { buildPayload } = useBuildPayload();
-  const { activeProxy } = useActiveAccounts();
-  const { getAccount, requiresManualSign } = useImportedAccounts();
-  const {
-    setTxFees,
-    incrementPayloadUid,
-    getTxPayload,
-    resetTxPayloads,
-    setSender,
-    txFees,
-    getTxSignature,
-    setTxSignature,
-  } = useTxMeta();
   const { setIsExecuting, resetStatusCodes, resetFeedback } =
     useLedgerHardware();
+  const { getAccount, requiresManualSign } = useImportedAccounts();
+  const {
+    txFees,
+    setTxFees,
+    setSender,
+    getTxPayload,
+    getTxSignature,
+    setTxSignature,
+    resetTxPayloads,
+    incrementPayloadUid,
+  } = useTxMeta();
 
   // Store given tx as a ref.
   const txRef = useRef<AnyApi>(tx);
@@ -58,11 +58,6 @@ export const useSubmitExtrinsic = ({
 
   // Store the uid of the extrinsic.
   const [uid] = useState<number>(incrementPayloadUid());
-
-  // Store whether this tx is proxy supported.
-  const [proxySupported, setProxySupported] = useState<boolean>(
-    isProxySupported(txRef.current, fromRef.current)
-  );
 
   // Track for one-shot transaction reset after submission.
   const didTxReset = useRef<boolean>(false);
@@ -80,8 +75,12 @@ export const useSubmitExtrinsic = ({
       return;
     }
 
-    // Handle proxy supported.
-    if (api && activeProxy && txRef.current && proxySupported) {
+    if (
+      api &&
+      activeProxy &&
+      txRef.current &&
+      isProxySupported(txRef.current, fromRef.current)
+    ) {
       // update submit address to active proxy account.
       fromRef.current = activeProxy;
 
@@ -119,24 +118,6 @@ export const useSubmitExtrinsic = ({
       setTxFees(partialFeeBn);
     }
   };
-
-  // Refresh state upon `tx` updates.
-  useEffect(() => {
-    // update txRef to latest tx.
-    txRef.current = tx;
-    // update submit address to latest from.
-    fromRef.current = from || '';
-    // update proxy supported status.
-    setProxySupported(isProxySupported(txRef.current, fromRef.current));
-    // wrap tx in proxy call if active proxy & proxy supported.
-    wrapTxIfActiveProxy();
-    // ensure sender is up to date.
-    setSender(fromRef.current);
-    // re-calculate estimated tx fee.
-    calculateEstimatedFee();
-    // rebuild tx payload.
-    buildPayload(txRef.current, fromRef.current, uid);
-  }, [tx?.toString(), tx?.method?.args?.calls?.toString(), from]);
 
   // Extrinsic submission handler.
   const onSubmit = async () => {
@@ -296,11 +277,27 @@ export const useSubmitExtrinsic = ({
     }
   };
 
+  // Refresh state upon `tx` updates.
+  useEffect(() => {
+    // update txRef to latest tx.
+    txRef.current = tx;
+    // update submit address to latest from.
+    fromRef.current = from || '';
+    // wrap tx in proxy call if active proxy & proxy supported.
+    wrapTxIfActiveProxy();
+    // ensure sender is up to date.
+    setSender(fromRef.current);
+    // re-calculate estimated tx fee.
+    calculateEstimatedFee();
+    // rebuild tx payload.
+    buildPayload(txRef.current, fromRef.current, uid);
+  }, [tx?.toString(), tx?.method?.args?.calls?.toString(), from]);
+
   return {
     uid,
     onSubmit,
     submitting,
     submitAddress: fromRef.current,
-    proxySupported,
+    proxySupported: isProxySupported(txRef.current, fromRef.current),
   };
 };
