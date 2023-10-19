@@ -9,7 +9,6 @@
       "noValidators": "This entity contains no validators.",
       "validator_one": "{{count}} Validator",
       "validator_other": "{{count}} Validators",
-      "validators": "'s Validators",
       "website": "Website"
     },
     "nominate": {
@@ -65,8 +64,7 @@
       "updateToStash": "Update Controller To Stash",
       "validator_one": "{{count}} Validator",
       "validator_other": "{{count}} Validators",
-      "waitingForActiveNominations": "Waiting for Active Nominations",
-      "yourNominations": "Your Nominations"
+      "waitingForActiveNominations": "Waiting for Active Nominations"
     },
     "overview": {
       "activeEra": "Active Era",
@@ -156,9 +154,8 @@
       "earningRewards": "Earning Rewards",
       "edit": "Edit",
       "favorites": "Favorites",
-      "favoritesList": "Favorites List",
       "fetchingFavoritePools": "Fetching favorite pools",
-      "fetchingMemberList": "Fetching member list",
+      "fetchingMemberList": "Fetching Member List",
       "generateNominations": "Generate Nominations",
       "inPool": "In Pool",
       "inactivePoolNotNominating": "Inactive: Pool Not Nominating",
@@ -190,8 +187,6 @@
       "poolCreator": " As the pool creator, you will consume your pool's <b>Depositor</b> role.",
       "poolCurrentlyLocked": "Pool Currently Locked",
       "poolInDestroyingState": "Pool in Destroying State",
-      "poolMember_one": "{{count}} Pool Member",
-      "poolMember_other": "{{count}} Pool Members",
       "poolMembers": "Pool Members",
       "poolMembership": "Pool Membership",
       "poolName": "Pool Name",

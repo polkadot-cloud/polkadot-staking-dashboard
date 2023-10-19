@@ -148,7 +148,6 @@ export const HomeInner = () => {
                 <PoolList
                   batchKey="bonded_pools"
                   pools={bondedPools}
-                  title={t('pools.activePools')}
                   defaultFilters={{
                     includes: ['active'],
                     excludes: ['locked', 'destroying'],

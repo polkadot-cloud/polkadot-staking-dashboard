@@ -26,7 +26,6 @@ export const PoolNominations = () => {
               bondFor="pool"
               validators={targets}
               nominator={nominator}
-              title={t('poolNominations')}
               showMenu={false}
               displayFor="modal"
               allowListFormat={false}

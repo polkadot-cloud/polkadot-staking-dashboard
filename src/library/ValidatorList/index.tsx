@@ -13,7 +13,11 @@ import { useFilters } from 'contexts/Filters';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
-import { Header, List, Wrapper as ListWrapper } from 'library/List';
+import {
+  FilterHeaderWrapper,
+  List,
+  Wrapper as ListWrapper,
+} from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { SearchInput } from 'library/List/SearchInput';
@@ -25,8 +29,9 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 import { ListProvider, useList } from '../List/context';
-import { Filters } from './Filters';
 import type { ValidatorListProps } from './types';
+import { FilterHeaders } from './Filters/FilterHeaders';
+import { FilterBadges } from './Filters/FilterBadges';
 
 export const ValidatorListInner = ({
   nominator: initialNominator,
@@ -35,8 +40,6 @@ export const ValidatorListInner = ({
   allowFilters,
   toggleFavorites,
   pagination,
-  title,
-  generateMethod,
   format,
   selectable,
   bondFor,
@@ -51,16 +54,16 @@ export const ValidatorListInner = ({
   disableThrottle = false,
 }: ValidatorListProps) => {
   const { t } = useTranslation('library');
-  const { isReady } = useApi();
   const {
     networkData: { colors },
   } = useNetwork();
-  const { setModalResize } = useOverlay().modal;
   const provider = useList();
   const { mode } = useTheme();
+  const { isReady } = useApi();
   const { isSyncing } = useUi();
-  const { activeAccount } = useActiveAccounts();
   const { activeEra } = useNetworkMetrics();
+  const { activeAccount } = useActiveAccounts();
+  const { setModalResize } = useOverlay().modal;
 
   // determine the nominator of the validator list.
   // By default this will be the activeAccount. But for pools,
@@ -267,38 +270,6 @@ export const ValidatorListInner = ({
 
   return (
     <ListWrapper>
-      <Header $displayFor={displayFor}>
-        <div>
-          <h4>
-            {title ||
-              `${t('displayingValidators', {
-                count: validators.length,
-              })}${generateMethod !== 'Manual' ? ` (${generateMethod})` : ``}`}
-          </h4>
-        </div>
-        <div>
-          {allowListFormat === true && (
-            <>
-              <button type="button" onClick={() => setListFormat('row')}>
-                <FontAwesomeIcon
-                  icon={faBars}
-                  color={
-                    listFormat === 'row' ? colors.primary[mode] : 'inherit'
-                  }
-                />
-              </button>
-              <button type="button" onClick={() => setListFormat('col')}>
-                <FontAwesomeIcon
-                  icon={faGripVertical}
-                  color={
-                    listFormat === 'col' ? colors.primary[mode] : 'inherit'
-                  }
-                />
-              </button>
-            </>
-          )}
-        </div>
-      </Header>
       <List $flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
         {allowSearch && (
           <SearchInput
@@ -306,8 +277,32 @@ export const ValidatorListInner = ({
             placeholder={t('searchAddress')}
           />
         )}
-
-        {allowFilters && <Filters />}
+        <FilterHeaderWrapper>
+          <div>{allowFilters && <FilterHeaders />}</div>
+          <div>
+            {allowListFormat === true && (
+              <>
+                <button type="button" onClick={() => setListFormat('row')}>
+                  <FontAwesomeIcon
+                    icon={faBars}
+                    color={
+                      listFormat === 'row' ? colors.primary[mode] : 'inherit'
+                    }
+                  />
+                </button>
+                <button type="button" onClick={() => setListFormat('col')}>
+                  <FontAwesomeIcon
+                    icon={faGripVertical}
+                    color={
+                      listFormat === 'col' ? colors.primary[mode] : 'inherit'
+                    }
+                  />
+                </button>
+              </>
+            )}
+          </div>
+        </FilterHeaderWrapper>
+        {allowFilters && <FilterBadges />}
 
         {listValidators.length > 0 && pagination && (
           <Pagination page={page} total={totalPages} setter={setPage} />

@@ -9,7 +9,6 @@ import {
   faPlus,
   faUserEdit,
 } from '@fortawesome/free-solid-svg-icons';
-import { camelize } from '@polkadot-cloud/utils';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -349,14 +348,13 @@ export const GenerateNominations = ({
                 }}
               >
                 <ValidatorList
-                  generateMethod={t(`${camelize(method)}`)}
                   bondFor="nominator"
                   validators={nominations}
-                  selectable
                   actions={actions}
                   allowMoreCols
                   allowListFormat={false}
                   displayFor={displayFor}
+                  selectable
                 />
               </div>
             )}

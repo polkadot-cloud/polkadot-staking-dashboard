@@ -84,7 +84,6 @@ export const Entity = () => {
               <ValidatorList
                 bondFor="nominator"
                 validators={activeValidators}
-                title={`${name} ${t('community.validators')}`}
                 allowListFormat={false}
                 selectable={false}
                 allowMoreCols

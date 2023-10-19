@@ -10,6 +10,8 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList/Default';
+import { ListStatusHeader } from 'library/List';
+import { PoolListProvider } from 'library/PoolList/context';
 
 export const PoolFavorites = () => {
   const { t } = useTranslation('pages');
@@ -40,25 +42,23 @@ export const PoolFavorites = () => {
       <PageRow>
         <CardWrapper>
           {favoritesList === null || isPoolSyncing ? (
-            <h3>{t('pools.fetchingFavoritePools')}...</h3>
+            <ListStatusHeader>
+              {t('pools.fetchingFavoritePools')}...
+            </ListStatusHeader>
           ) : (
-            <>
-              {isReady && (
-                <>
-                  {favoritesList.length > 0 ? (
-                    <PoolList
-                      batchKey="favorite_pools"
-                      pools={favoritesList}
-                      title={t('pools.favoritesList')}
-                      allowMoreCols
-                      pagination
-                    />
-                  ) : (
-                    <h3>{t('pools.noFavorites')}</h3>
-                  )}
-                </>
-              )}
-            </>
+            isReady &&
+            (favoritesList.length > 0 ? (
+              <PoolListProvider>
+                <PoolList
+                  batchKey="favorite_pools"
+                  pools={favoritesList}
+                  allowMoreCols
+                  pagination
+                />
+              </PoolListProvider>
+            ) : (
+              <ListStatusHeader>{t('pools.noFavorites')}</ListStatusHeader>
+            ))
           )}
         </CardWrapper>
       </PageRow>

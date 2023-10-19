@@ -46,7 +46,7 @@ export const ControllerNotStash = () => {
             <PageRow>
               <CardWrapper className="warning">
                 <CardHeaderWrapper>
-                  <h3>
+                  <h3 style={{ marginBottom: '0.75rem' }}>
                     <FontAwesomeIcon icon={faExclamationTriangle} />
                     &nbsp; {t('nominate.controllerAccountsDeprecated')}
                   </h3>

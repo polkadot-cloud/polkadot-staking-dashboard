@@ -31,6 +31,7 @@ export interface PayoutLineProps {
 
 export interface CardHeaderWrapperProps {
   $withAction?: boolean;
+  $withMargin?: boolean;
 }
 
 export interface CardWrapperProps {

@@ -13,7 +13,12 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import type { PoolMember } from 'contexts/Pools/types';
 import { useSubscan } from 'contexts/Plugins/Subscan';
 import { useTheme } from 'contexts/Themes';
-import { Header, List, Wrapper as ListWrapper } from 'library/List';
+import {
+  Header,
+  List,
+  ListStatusHeader,
+  Wrapper as ListWrapper,
+} from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { ListProvider, useList } from 'library/List/context';
@@ -26,7 +31,6 @@ export const MembersListInner = ({
   allowMoreCols,
   pagination,
   batchKey,
-  title,
   disableThrottle = false,
   memberCount,
 }: FetchpageMembersListProps) => {
@@ -131,9 +135,7 @@ export const MembersListInner = ({
   return (
     <ListWrapper>
       <Header>
-        <div>
-          <h4>{title}</h4>
-        </div>
+        <div />
         <div>
           <button type="button" onClick={() => setListFormat('row')}>
             <FontAwesomeIcon
@@ -154,7 +156,9 @@ export const MembersListInner = ({
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
         {fetchedPoolMembersApi !== 'synced' ? (
-          <h4 className="none">{t('pools.fetchingMemberList')}....</h4>
+          <ListStatusHeader style={{ marginTop: '0.5rem' }}>
+            {t('pools.fetchingMemberList')}....
+          </ListStatusHeader>
         ) : (
           <MotionContainer>
             {listMembers.map((member: PoolMember, index: number) => (
