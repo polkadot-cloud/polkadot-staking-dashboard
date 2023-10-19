@@ -85,7 +85,7 @@ export const Active = () => {
                         key: 'ManageNominations',
                         scroll: false,
                         options: {
-                          bondFor: 'pool',
+                          bondFor: 'nominator',
                           nominator: activeAccount,
                           nominated,
                         },

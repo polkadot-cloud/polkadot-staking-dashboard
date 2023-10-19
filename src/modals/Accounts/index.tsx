@@ -77,20 +77,13 @@ export const Accounts = () => {
 
     const poolMember = memberships.find((m) => m.address === address) ?? null;
 
-    // If stash exists, add address to nominating list.
-    if (
-      isStash &&
-      nominating.find((a) => a.address === address) === undefined
-    ) {
+    // Check if nominating.
+    if (isStash && nominating.find((a) => a.address === address) === undefined)
       isNominating = true;
-    }
 
-    // if pooling, add address to active pooling.
-    if (poolMember) {
-      if (!inPool.find((n) => n.address === address)) {
-        isInPool = true;
-      }
-    }
+    // Check if in pool.
+    if (poolMember)
+      if (!inPool.find((n) => n.address === address)) isInPool = true;
 
     // If not doing anything, add address to `notStaking`.
     if (
@@ -99,27 +92,40 @@ export const Accounts = () => {
       !notStaking.find((n) => n.address === address)
     ) {
       notStaking.push({ address, delegates });
+      continue;
     }
 
-    if (isNominating && isInPool && poolMember) {
+    // If both nominating and in pool, add to this list.
+    if (
+      isNominating &&
+      isInPool &&
+      poolMember &&
+      !nominatingAndPool.find((n) => n.address === address)
+    ) {
       nominatingAndPool.push({
         ...poolMember,
         address,
         stashImported: true,
         delegates,
       });
+      continue;
     }
 
+    // Nominating only.
     if (isNominating && !isInPool) {
       nominating.push({ address, stashImported: true, delegates });
+      continue;
     }
-    if (!isNominating && isInPool && poolMember) {
+
+    // In pool only.
+    if (!isNominating && isInPool && poolMember)
       inPool.push({ ...poolMember, delegates });
-    }
   }
 
+  // Refresh local accounts state when context accounts change.
   useEffect(() => setLocalAccounts(accounts), [accounts]);
 
+  // Resize if modal open upon state changes.
   useEffectIgnoreInitial(() => {
     if (modalStatus === 'open') setModalResize();
   }, [activeAccount, accounts, bondedAccounts, balances, ledgers, extensions]);

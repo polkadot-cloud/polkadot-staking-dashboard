@@ -28,7 +28,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef(
-  ({ setSection, unlock, task }: any, ref: any) => {
+  ({ setSection, unlock, task, incrementCalculateHeight }: any, ref: any) => {
     const { t } = useTranslation('modals');
     const { api, consts } = useApi();
     const {
@@ -58,11 +58,6 @@ export const Forms = forwardRef(
     const [valid, setValid] = useState<boolean>(
       unlock?.value?.toNumber() > 0 ?? false
     );
-
-    // ensure unlock value is valid
-    useEffect(() => {
-      setValid(unlock?.value?.toNumber() > 0 ?? false);
-    }, [unlock]);
 
     // tx to submit
     const getTx = () => {
@@ -116,6 +111,16 @@ export const Forms = forwardRef(
       isStaking,
       submitExtrinsic.proxySupported
     );
+
+    // Ensure unlock value is valid.
+    useEffect(() => {
+      setValid(unlock?.value?.toNumber() > 0 ?? false);
+    }, [unlock]);
+
+    // Trigger modal resize when commission options are enabled / disabled.
+    useEffect(() => {
+      incrementCalculateHeight();
+    }, [valid]);
 
     return (
       <ContentWrapper>
