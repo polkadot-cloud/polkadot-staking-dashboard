@@ -70,7 +70,7 @@ export const PoolStats = () => {
 
   return (
     <CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
-      <CardHeaderWrapper>
+      <CardHeaderWrapper $withMargin>
         <h3>{t('pools.poolStats')}</h3>
       </CardHeaderWrapper>
       <Wrapper>

@@ -14,17 +14,14 @@ import type { CardHeaderWrapperProps, CardWrapperProps } from '../Graphs/types';
 export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
   display: flex;
   flex-flow: ${(props) => (props.$withAction ? 'row' : 'column')} wrap;
+  align-items: ${(props) => (props.$withAction ? 'center' : 'none')};
+  justify-content: ${(props) => (props.$withAction ? 'none' : 'center')};
   width: 100%;
   padding: 0rem 0.25rem;
+  margin-bottom: ${(props) => (props.$withMargin ? '0.75rem' : 0)};
 
   h2 {
     font-family: InterBold, sans-serif;
-  }
-  h3 {
-    margin-top: 0.25rem;
-  }
-  h2,
-  h3 {
     margin-bottom: 1rem;
   }
   h2,

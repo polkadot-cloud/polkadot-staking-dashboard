@@ -115,7 +115,7 @@ export const ValidatorMetrics = () => {
             height: 350,
           }}
         >
-          <CardHeaderWrapper>
+          <CardHeaderWrapper $withMargin>
             <h4>
               {t('recentEraPoints')}{' '}
               <ButtonHelp marginLeft onClick={() => openHelp('Era Points')} />

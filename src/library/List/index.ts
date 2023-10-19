@@ -104,7 +104,6 @@ export const SelectableWrapper = styled.div`
 `;
 
 export const List = styled.div<ListProps>`
-  margin-top: 1rem;
   width: 100%;
 
   > div {
@@ -145,21 +144,17 @@ export const List = styled.div<ListProps>`
 export const SearchInputWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
-  margin: 0.5rem 0 1.5rem 0;
+  margin: 0.5rem 0 2rem 0;
   width: 100%;
 
   > input {
-    border: 1.75px solid var(--border-primary-color);
+    border: 1px solid var(--border-primary-color);
     color: var(--text-color-secondary);
     font-family: InterBold, sans-serif;
     border-radius: 1.75rem;
-    padding: 0.75rem 1.25rem;
+    padding: 0.9rem 1.25rem;
     font-size: 1.15rem;
     width: 100%;
-
-    &:focus {
-      border-width: 1.75px;
-    }
   }
 `;
 
@@ -167,6 +162,7 @@ export const FilterHeaderWrapper = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+  padding: 0 0.25rem;
 
   > div {
     display: flex;

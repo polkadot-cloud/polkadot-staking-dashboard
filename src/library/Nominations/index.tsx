@@ -82,7 +82,7 @@ export const Nominations = ({
 
   return (
     <Wrapper>
-      <CardHeaderWrapper $withAction>
+      <CardHeaderWrapper $withAction $withMargin>
         <h3>
           {isPool ? t('nominate.poolNominations') : t('nominate.nominations')}
           <ButtonHelp marginLeft onClick={() => openHelp('Nominations')} />
@@ -144,19 +144,17 @@ export const Nominations = ({
       ) : (
         <>
           {nominated.length > 0 ? (
-            <div style={{ marginTop: '1rem' }}>
-              <ValidatorList
-                title={t('nominate.yourNominations')}
-                bondFor={bondFor}
-                validators={nominated}
-                nominator={nominator}
-                format="nomination"
-                refetchOnListUpdate
-                allowMoreCols
-                disableThrottle
-                allowListFormat={false}
-              />
-            </div>
+            <ValidatorList
+              title={t('nominate.yourNominations')}
+              bondFor={bondFor}
+              validators={nominated}
+              nominator={nominator}
+              format="nomination"
+              refetchOnListUpdate
+              allowMoreCols
+              disableThrottle
+              allowListFormat={false}
+            />
           ) : (
             <div className="head">
               {poolDestroying ? (
