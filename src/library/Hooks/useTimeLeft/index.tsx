@@ -80,6 +80,7 @@ export const useTimeLeft = () => {
 
   // refresh effects.
   useEffect(() => {
+    setTimeleft(getTimeleft());
     if (inLastHour()) {
       // refresh timeleft every second.
       if (!secIntervalRef.current) {
@@ -93,19 +94,17 @@ export const useTimeLeft = () => {
 
         setStateWithRef(interval, setSecInterval, secIntervalRef);
       }
-    } else {
-      setTimeleft(getTimeleft());
-      // refresh timeleft every minute.
-      if (!minIntervalRef.current) {
-        const interval = setInterval(() => {
-          if (inLastHour()) {
-            clearInterval(minIntervalRef.current);
-            setStateWithRef(undefined, setMinInterval, minIntervalRef);
-          }
-          setTimeleft(getTimeleft());
-        }, 60000);
-        setStateWithRef(interval, setMinInterval, minIntervalRef);
-      }
+    }
+    // refresh timeleft every minute.
+    else if (!minIntervalRef.current) {
+      const interval = setInterval(() => {
+        if (inLastHour()) {
+          clearInterval(minIntervalRef.current);
+          setStateWithRef(undefined, setMinInterval, minIntervalRef);
+        }
+        setTimeleft(getTimeleft());
+      }, 60000);
+      setStateWithRef(interval, setMinInterval, minIntervalRef);
     }
   }, [to, inLastHour(), lastMinuteCountdown(), network]);
 
