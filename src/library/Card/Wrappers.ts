@@ -31,6 +31,10 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     flex-flow: row wrap;
     align-items: center;
     flex-grow: ${(props) => (props.$withAction ? 1 : 0)};
+
+    @media (max-width: ${SideMenuStickyThreshold}px) {
+      margin-top: 0.5rem;
+    }
   }
   h3,
   h4 {
