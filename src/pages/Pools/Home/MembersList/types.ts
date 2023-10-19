@@ -5,7 +5,6 @@ export interface MembersListProps {
   allowMoreCols: boolean;
   pagination: boolean;
   batchKey: string;
-  title: string;
   disableThrottle?: boolean;
   selectToggleable?: boolean;
 }

@@ -23,9 +23,6 @@ export const Members = () => {
     useActivePools();
   const { colors } = useNetwork().networkData;
 
-  const listTitle = `${t('pools.poolMember', {
-    count: selectedPoolMemberCount,
-  })}`;
   const annuncementBorderColor = colors.secondary[mode];
 
   const showBlockedPrompt =
@@ -33,7 +30,6 @@ export const Members = () => {
     (isOwner() || isBouncer());
 
   const membersListProps = {
-    title: listTitle,
     batchKey: 'active_pool_members',
     pagination: true,
     selectToggleable: false,

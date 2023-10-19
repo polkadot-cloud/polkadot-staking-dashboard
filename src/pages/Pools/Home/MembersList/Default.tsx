@@ -26,7 +26,6 @@ export const MembersListInner = ({
   allowMoreCols,
   pagination,
   batchKey,
-  title,
   members: initialMembers,
   disableThrottle = false,
 }: DefaultMembersListProps) => {
@@ -120,9 +119,7 @@ export const MembersListInner = ({
       ) : (
         <ListWrapper>
           <Header>
-            <div>
-              <h4>{title}</h4>
-            </div>
+            <div />
             <div>
               <button type="button" onClick={() => setListFormat('row')}>
                 <FontAwesomeIcon
@@ -147,7 +144,9 @@ export const MembersListInner = ({
               <Pagination page={page} total={totalPages} setter={setPage} />
             )}
             {fetched !== 'synced' ? (
-              <h4 className="none">{t('pools.fetchingMemberList')}...</h4>
+              <h4 className="none" style={{ marginTop: '0.75rem' }}>
+                {t('pools.fetchingMemberList')}...
+              </h4>
             ) : (
               <MotionContainer>
                 {listMembers.map((member: PoolMember, index: number) => (

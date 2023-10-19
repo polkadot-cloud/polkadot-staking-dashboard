@@ -131,13 +131,11 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
               <PoolId id={id} />
               <Members members={memberCounter} />
               <FavoritePool address={addresses.stash} />
-              <button
-                type="button"
-                className="label"
-                onClick={() => toggleMenu()}
-              >
-                <FontAwesomeIcon icon={faBars} />
-              </button>
+              <div className="label">
+                <button type="button" onClick={() => toggleMenu()}>
+                  <FontAwesomeIcon icon={faBars} transform="shrink-2" />
+                </button>
+              </div>
             </Labels>
           </div>
         </div>

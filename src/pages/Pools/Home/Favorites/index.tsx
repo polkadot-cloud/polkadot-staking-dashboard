@@ -49,7 +49,6 @@ export const PoolFavorites = () => {
                     <PoolList
                       batchKey="favorite_pools"
                       pools={favoritesList}
-                      title={t('pools.favoritesList')}
                       allowMoreCols
                       pagination
                     />

@@ -145,7 +145,6 @@ export const Nominations = ({
         <>
           {nominated.length > 0 ? (
             <ValidatorList
-              title={t('nominate.yourNominations')}
               bondFor={bondFor}
               validators={nominated}
               nominator={nominator}

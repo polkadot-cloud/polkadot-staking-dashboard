@@ -16,7 +16,6 @@ export interface PoolListProps {
   refetchOnListUpdate?: string;
   allowListFormat?: boolean;
   pools?: any;
-  title?: string;
   defaultFilters?: {
     includes: string[] | null;
     excludes: string[] | null;
