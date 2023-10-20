@@ -58,14 +58,6 @@ export const Identity = ({ address }: IdentityProps) => {
           justify: 'flex-start',
         }}
       />
-      {/* <Polkicon address={address} size="2rem" />
-      <div className="inner">
-        {validatorsFetched && display !== null ? (
-          <h4>{display}</h4>
-        ) : (
-          <h4>{ellipsisFn(address, 6)}</h4>
-        )}
-      </div> */}
     </IdentityWrapper>
   );
 };
