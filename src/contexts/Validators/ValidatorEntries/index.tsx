@@ -38,11 +38,9 @@ export const ValidatorsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const {
-    eraStakers: { stakers },
-  } = useStaking();
   const { network } = useNetwork();
   const { isReady, api } = useApi();
+  const { stakers } = useStaking().eraStakers;
   const { poolNominations } = useActivePools();
   const { activeAccount } = useActiveAccounts();
   const { activeEra, metrics } = useNetworkMetrics();
@@ -72,15 +70,17 @@ export const ValidatorsProvider = ({
   const [sessionParaValidators, setSessionParaValidators] = useState<string[]>(
     []
   );
+
+  // Stores unsub object for para session.
   const sessionParaUnsub = useRef<Fn>();
 
   // Stores the average network commission rate.
   const [avgCommission, setAvgCommission] = useState(0);
 
-  // stores the user's nominated validators as list
+  // Stores the user's nominated validators as list
   const [nominated, setNominated] = useState<Validator[] | null>(null);
 
-  // stores the nominated validators by the members pool's as list
+  // Stores the nominated validators by the members pool's as list
   const [poolNominated, setPoolNominated] = useState<Validator[] | null>(null);
 
   // Stores a randomised validator community dataset.
