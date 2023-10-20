@@ -5,7 +5,7 @@ import { greaterThanZero, rmCommas, shuffle } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useRef, useState } from 'react';
 import { ValidatorCommunity } from '@polkadot-cloud/assets/validators';
-import type { AnyApi, AnyJson, Fn, Sync } from 'types';
+import type { AnyApi, AnyJson, BondFor, Fn, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useBonded } from 'contexts/Bonded';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
@@ -14,6 +14,7 @@ import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { MaxEraRewardPointsEras } from 'consts';
+import { useStaking } from 'contexts/Staking';
 import type {
   EraPointsBoundaries,
   EraRewardPoints,
@@ -22,6 +23,7 @@ import type {
   Validator,
   ValidatorAddresses,
   ValidatorSuper,
+  ValidatorListEntry,
   ValidatorsContextInterface,
 } from '../types';
 import {
@@ -36,6 +38,9 @@ export const ValidatorsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const {
+    eraStakers: { stakers },
+  } = useStaking();
   const { network } = useNetwork();
   const { isReady, api } = useApi();
   const { poolNominations } = useActivePools();
@@ -109,6 +114,7 @@ export const ValidatorsProvider = ({
 
   // Fetches era reward points for eligible eras.
   const fetchErasRewardPoints = async () => {
+    // TODO: check if synced.
     if (activeEra.index.isZero() || !api) return;
 
     // start fetching from the current era.
@@ -400,6 +406,36 @@ export const ValidatorsProvider = ({
     });
   };
 
+  // Gets either `nominated` or `poolNominated` depending on bondFor, and injects the validator
+  // status into the entries.
+  const getNominated = (bondFor: BondFor) => {
+    return bondFor === 'nominator' ? nominated : poolNominated;
+  };
+
+  // Inject status into validator entries.
+  const injectValidatorListData = (
+    entries: Validator[]
+  ): ValidatorListEntry[] => {
+    const injected: ValidatorListEntry[] =
+      entries.map((entry) => {
+        const inEra = stakers.find((s) => s.address === entry.address) || false;
+        let totalStake = new BigNumber(0);
+        if (inEra) {
+          const { others, own } = inEra;
+          if (own) totalStake = totalStake.plus(own);
+          others.forEach(({ value }) => {
+            totalStake = totalStake.plus(value);
+          });
+        }
+        return {
+          ...entry,
+          totalStake,
+          validatorStatus: inEra ? 'active' : 'waiting',
+        };
+      }) || [];
+    return injected;
+  };
+
   // Reset validator state data on network change.
   useEffectIgnoreInitial(() => {
     setValidatorsFetched('unsynced');
@@ -464,6 +500,8 @@ export const ValidatorsProvider = ({
       value={{
         fetchValidatorPrefs,
         getValidatorEraPoints,
+        getNominated,
+        injectValidatorListData,
         validators,
         validatorIdentities,
         validatorSupers,

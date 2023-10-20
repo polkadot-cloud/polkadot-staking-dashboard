@@ -9,7 +9,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import type { AnyJson, MaybeAddress } from 'types';
+import type { AnyJson, BondFor, MaybeAddress } from 'types';
 import { useNetwork } from 'contexts/Network';
 
 export const useNominationStatus = () => {
@@ -18,9 +18,6 @@ export const useNominationStatus = () => {
   const {
     networkData: { units },
   } = useNetwork();
-  const { validators } = useValidators();
-  const { poolNominations } = useActivePools();
-  const { getAccountNominations } = useBonded();
   const {
     inSetup,
     eraStakers,
@@ -28,13 +25,17 @@ export const useNominationStatus = () => {
     getNominationsStatusFromTargets,
     getLowestRewardFromStaker,
   } = useStaking();
+  const { validators } = useValidators();
+  const { poolNominations } = useActivePools();
+  const { getAccountNominations } = useBonded();
 
   // Utility to get an account's nominees alongside their status.
-  const getNomineesStatus = (who: MaybeAddress, type: 'nominator' | 'pool') => {
+  const getNomineesStatus = (who: MaybeAddress, type: BondFor) => {
     const nominations =
       type === 'nominator'
         ? getAccountNominations(who)
         : poolNominations?.targets ?? [];
+
     return getNominationsStatusFromTargets(who, nominations);
   };
 
@@ -46,10 +47,7 @@ export const useNominationStatus = () => {
 
   // Utility to get the status of the provided account's nominations, and whether they are earning
   // reards.
-  const getNominationStatus = (
-    who: MaybeAddress,
-    type: 'nominator' | 'pool'
-  ) => {
+  const getNominationStatus = (who: MaybeAddress, type: BondFor) => {
     // Get the sets nominees from the provided account's targets.
     const nominees = Object.entries(getNomineesStatus(who, type));
     const activeNominees = getNomineesByStatus(nominees, 'active');

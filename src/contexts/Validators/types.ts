@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
-import type { AnyJson, Sync } from 'types';
+import type { AnyJson, BondFor, Sync } from 'types';
 
 export interface ValidatorsContextInterface {
   fetchValidatorPrefs: (a: ValidatorAddresses) => Promise<Validator[] | null>;
@@ -10,6 +10,8 @@ export interface ValidatorsContextInterface {
     startEra: BigNumber,
     address: string
   ) => Record<string, BigNumber>;
+  getNominated: (bondFor: BondFor) => Validator[] | null;
+  injectValidatorListData: (entries: Validator[]) => ValidatorListEntry[];
   validators: Validator[];
   validatorIdentities: Record<string, Identity>;
   validatorSupers: Record<string, AnyJson>;
@@ -73,3 +75,8 @@ export type EraPointsBoundaries = {
   high: BigNumber;
   low: BigNumber;
 } | null;
+
+export type ValidatorListEntry = Validator & {
+  validatorStatus: 'waiting' | 'active';
+  totalStake: BigNumber;
+};

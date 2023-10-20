@@ -41,11 +41,11 @@ export const Nominations = ({
     modal: { openModal },
     canvas: { openCanvas },
   } = useOverlay();
+  const { getNominated } = useValidators();
   const { isFastUnstaking } = useUnstaking();
   const { activeAccount } = useActiveAccounts();
   const { getAccountNominations } = useBonded();
   const { isReadOnlyAccount } = useImportedAccounts();
-  const { nominated: nominatorNominated, poolNominated } = useValidators();
 
   // Determine if pool or nominator.
   const isPool = bondFor === 'pool';
@@ -54,7 +54,7 @@ export const Nominations = ({
   const nominations = isPool
     ? poolNominations.targets
     : getAccountNominations(nominator);
-  const nominated = isPool ? poolNominated : nominatorNominated;
+  const nominated = getNominated(bondFor);
 
   // Determine if this nominator is actually nominating.
   const isNominating = nominated?.length ?? false;

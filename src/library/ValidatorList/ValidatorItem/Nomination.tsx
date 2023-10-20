@@ -24,6 +24,7 @@ export const Nomination = ({
   toggleFavorites,
   bondFor,
   displayFor,
+  nominationStatus,
 }: ValidatorItemProps) => {
   const { selectActive } = useList();
   const { validatorIdentities, validatorSupers } = useValidators();
@@ -67,6 +68,7 @@ export const Nomination = ({
               address={address}
               bondFor={bondFor}
               nominator={nominator}
+              status={nominationStatus}
               noMargin
             />
           </div>

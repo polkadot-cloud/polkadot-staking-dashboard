@@ -27,11 +27,15 @@ import type { Validator } from 'contexts/Validators/types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
+import { useNominationStatus } from 'library/Hooks/useNominationStatus';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 import { ListProvider, useList } from '../List/context';
 import type { ValidatorListProps } from './types';
 import { FilterHeaders } from './Filters/FilterHeaders';
 import { FilterBadges } from './Filters/FilterBadges';
+import type { NominationStatus } from './ValidatorItem/types';
 
 export const ValidatorListInner = ({
   nominator: initialNominator,
@@ -64,6 +68,9 @@ export const ValidatorListInner = ({
   const { activeEra } = useNetworkMetrics();
   const { activeAccount } = useActiveAccounts();
   const { setModalResize } = useOverlay().modal;
+  const { injectValidatorListData } = useValidators();
+  const { getNomineesStatus } = useNominationStatus();
+  const { getPoolNominationStatus } = useBondedPools();
 
   // determine the nominator of the validator list.
   // By default this will be the activeAccount. But for pools,
@@ -87,9 +94,35 @@ export const ValidatorListInner = ({
   const excludes = getFilters('exclude', 'validators');
   const order = getOrder('validators');
   const searchTerm = getSearchTerm('validators');
-
   const actionsAll = [...actions].filter((action) => !action.onSelected);
   const actionsSelected = [...actions].filter((action) => action.onSelected);
+
+  // injects status into supplied initial validators.
+  const validatorsInjected = () => injectValidatorListData(initialValidators);
+
+  // get nomination status relative to supplied nominator, if `format` is `nomination`.
+  let nominationStatus: Record<string, NominationStatus>;
+  if (format === 'nomination') {
+    if (bondFor === 'pool') {
+      // get nomination status from pool metadata
+      nominationStatus = Object.fromEntries(
+        initialValidators.map(({ address }) => [
+          address,
+          getPoolNominationStatus(nominator, address),
+        ])
+      );
+    } else {
+      // get all active account's nominations.
+      const nominationStatuses = getNomineesStatus(nominator, 'nominator');
+      // find the nominator status within the returned nominations.
+      nominationStatus = Object.fromEntries(
+        initialValidators.map(({ address }) => [
+          address,
+          nominationStatuses[address],
+        ])
+      );
+    }
+  }
 
   // current page
   const [page, setPage] = useState<number>(1);
@@ -98,10 +131,12 @@ export const ValidatorListInner = ({
   const [renderIteration, _setRenderIteration] = useState<number>(1);
 
   // default list of validators
-  const [validatorsDefault, setValidatorsDefault] = useState(initialValidators);
+  const [validatorsDefault, setValidatorsDefault] = useState(
+    validatorsInjected()
+  );
 
   // manipulated list (ordering, filtering) of validators
-  const [validators, setValidators] = useState(initialValidators);
+  const [validators, setValidators] = useState(validatorsInjected());
 
   // is this the initial fetch
   const [fetched, setFetched] = useState(false);
@@ -131,7 +166,8 @@ export const ValidatorListInner = ({
   useEffect(() => {
     if (alwaysRefetchValidators) {
       if (
-        JSON.stringify(initialValidators) !== JSON.stringify(validatorsDefault)
+        JSON.stringify(initialValidators.map((v) => v.address)) !==
+        JSON.stringify(validatorsDefault.map((v) => v.address))
       ) {
         setFetched(false);
       }
@@ -207,8 +243,8 @@ export const ValidatorListInner = ({
 
   // handle validator list bootstrapping
   const setupValidatorList = () => {
-    setValidatorsDefault(initialValidators);
-    setValidators(initialValidators);
+    setValidatorsDefault(validatorsInjected());
+    setValidators(validatorsInjected());
     setFetched(true);
   };
 
@@ -320,7 +356,7 @@ export const ValidatorListInner = ({
         <MotionContainer>
           {listValidators.length ? (
             <>
-              {listValidators.map((validator: Validator, index: number) => (
+              {listValidators.map((validator, index) => (
                 <motion.div
                   key={`nomination_${index}`}
                   className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
@@ -343,6 +379,7 @@ export const ValidatorListInner = ({
                     showMenu={showMenu}
                     bondFor={bondFor}
                     displayFor={displayFor}
+                    nominationStatus={nominationStatus[validator.address]}
                   />
                 </motion.div>
               ))}
