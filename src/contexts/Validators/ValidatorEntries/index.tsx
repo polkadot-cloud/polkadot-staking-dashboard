@@ -86,6 +86,10 @@ export const ValidatorsProvider = ({
   // Stores a randomised validator community dataset.
   const [validatorCommunity] = useState([...shuffle(ValidatorCommunity)]);
 
+  // Track whether the validator list has been fetched.
+  const [erasRewardPointsFetched, setErasRewawrdPointsFetched] =
+    useState<Sync>('unsynced');
+
   // Store era reward points, keyed by era.
   const [erasRewardPoints, setErasRewardPoints] = useState<ErasRewardPoints>(
     {}
@@ -114,7 +118,14 @@ export const ValidatorsProvider = ({
 
   // Fetches era reward points for eligible eras.
   const fetchErasRewardPoints = async () => {
-    if (activeEra.index.isZero() || !api) return;
+    if (
+      activeEra.index.isZero() ||
+      !api ||
+      erasRewardPointsFetched !== 'unsynced'
+    )
+      return;
+
+    setErasRewawrdPointsFetched('syncing');
 
     // start fetching from the current era.
     let currentEra = BigNumber.max(activeEra.index.minus(1), 1);
@@ -403,6 +414,7 @@ export const ValidatorsProvider = ({
       high: high || new BigNumber(0),
       low: low || new BigNumber(0),
     });
+    setErasRewawrdPointsFetched('synced');
   };
 
   // Gets either `nominated` or `poolNominated` depending on bondFor, and injects the validator
@@ -438,6 +450,7 @@ export const ValidatorsProvider = ({
   // Reset validator state data on network change.
   useEffectIgnoreInitial(() => {
     setValidatorsFetched('unsynced');
+    setErasRewawrdPointsFetched('unsynced');
     setSessionValidators([]);
     setSessionParaValidators([]);
     setAvgCommission(0);
@@ -448,22 +461,28 @@ export const ValidatorsProvider = ({
     setEraPointsBoundaries(null);
   }, [network]);
 
-  // Fetch validators, session validators, and era reward points when `activeEra` ready.
-  useEffectIgnoreInitial(() => {
+  // Fetch validators and era reward points when fetched status changes.
+  useEffect(() => {
     if (isReady && activeEra.index.isGreaterThan(0)) {
       fetchValidators();
       fetchErasRewardPoints();
+    }
+  }, [validatorsFetched, erasRewardPointsFetched, isReady, activeEra]);
+
+  // Mark unsynced and fetch session validators when activeEra changes.
+  useEffectIgnoreInitial(() => {
+    if (isReady && activeEra.index.isGreaterThan(0)) {
+      if (erasRewardPointsFetched === 'synced')
+        setErasRewawrdPointsFetched('unsynced');
+
+      if (validatorsFetched === 'synced') setValidatorsFetched('unsynced');
       fetchSessionValidators();
     }
   }, [isReady, activeEra]);
 
   // Fetch era points boundaries when `erasRewardPoints` ready.
   useEffectIgnoreInitial(() => {
-    if (
-      isReady &&
-      Object.values(erasRewardPoints).length &&
-      !eraPointsBoundaries
-    )
+    if (isReady && Object.values(erasRewardPoints).length)
       calculateEraPointsBoundaries();
   }, [isReady, erasRewardPoints]);
 
