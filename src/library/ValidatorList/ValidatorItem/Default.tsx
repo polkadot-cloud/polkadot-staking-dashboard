@@ -47,7 +47,7 @@ export const Default = ({
   const { setMenuPosition, setMenuItems, open } = useMenu();
   const { validatorIdentities, validatorSupers } = useValidators();
 
-  const { address, prefs } = validator;
+  const { address, prefs, validatorStatus, totalStake } = validator;
   const commission = prefs?.commission ?? null;
 
   const identity = getIdentityDisplay(
@@ -132,7 +132,12 @@ export const Default = ({
               <Commission commission={commission} />
               <ParaValidator address={address} />
             </Labels>
-            <EraStatus address={address} noMargin />
+            <EraStatus
+              address={address}
+              status={validatorStatus}
+              totalStake={totalStake}
+              noMargin
+            />
           </div>
         </div>
       </div>

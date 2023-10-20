@@ -27,11 +27,15 @@ import type { Validator } from 'contexts/Validators/types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
+import { useNominationStatus } from 'library/Hooks/useNominationStatus';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 import { ListProvider, useList } from '../List/context';
 import type { ValidatorListProps } from './types';
 import { FilterHeaders } from './Filters/FilterHeaders';
 import { FilterBadges } from './Filters/FilterBadges';
+import type { NominationStatus } from './ValidatorItem/types';
 
 export const ValidatorListInner = ({
   nominator: initialNominator,
@@ -57,21 +61,6 @@ export const ValidatorListInner = ({
   const {
     networkData: { colors },
   } = useNetwork();
-  const provider = useList();
-  const { mode } = useTheme();
-  const { isReady } = useApi();
-  const { isSyncing } = useUi();
-  const { activeEra } = useNetworkMetrics();
-  const { activeAccount } = useActiveAccounts();
-  const { setModalResize } = useOverlay().modal;
-
-  // determine the nominator of the validator list.
-  // By default this will be the activeAccount. But for pools,
-  // the pool stash address should be the nominator.
-  const nominator = initialNominator || activeAccount;
-
-  const { selected, listFormat, setListFormat } = provider;
-
   const {
     getFilters,
     setMultiFilters,
@@ -82,56 +71,115 @@ export const ValidatorListInner = ({
     resetOrder,
     clearSearchTerm,
   } = useFilters();
+  const { mode } = useTheme();
+  const { isReady } = useApi();
+  const { isSyncing } = useUi();
+  const listProvider = useList();
+  const { activeEra } = useNetworkMetrics();
+  const { activeAccount } = useActiveAccounts();
+  const { setModalResize } = useOverlay().modal;
+  const { injectValidatorListData } = useValidators();
+  const { getNomineesStatus } = useNominationStatus();
+  const { getPoolNominationStatus } = useBondedPools();
   const { applyFilter, applyOrder, applySearch } = useValidatorFilters();
+
+  const { selected, listFormat, setListFormat } = listProvider;
   const includes = getFilters('include', 'validators');
   const excludes = getFilters('exclude', 'validators');
   const order = getOrder('validators');
   const searchTerm = getSearchTerm('validators');
-
   const actionsAll = [...actions].filter((action) => !action.onSelected);
   const actionsSelected = [...actions].filter((action) => action.onSelected);
 
-  // current page
+  // Determine the nominator of the validator list. Fallback to activeAccount if not provided.
+  const nominator = initialNominator || activeAccount;
+
+  // Store the current nomination status of validator records relative to the supplied nominator.
+  const nominationStatus = useRef<Record<string, NominationStatus>>({});
+
+  // Get nomination status relative to supplied nominator, if `format` is `nomination`.
+  const processNominationStatus = () => {
+    if (format === 'nomination')
+      if (bondFor === 'pool') {
+        nominationStatus.current = Object.fromEntries(
+          initialValidators.map(({ address }) => [
+            address,
+            getPoolNominationStatus(nominator, address),
+          ])
+        );
+      } else {
+        // get all active account's nominations.
+        const nominationStatuses = getNomineesStatus(nominator, 'nominator');
+
+        // find the nominator status within the returned nominations.
+        nominationStatus.current = Object.fromEntries(
+          initialValidators.map(({ address }) => [
+            address,
+            nominationStatuses[address],
+          ])
+        );
+      }
+  };
+
+  // Injects status into supplied initial validators.
+  const prepareInitialValidators = () => {
+    processNominationStatus();
+    const statusToIndex = {
+      active: 2,
+      inactive: 1,
+      waiting: 0,
+    };
+    return injectValidatorListData(initialValidators).sort(
+      (a, b) =>
+        statusToIndex[nominationStatus.current[b.address]] -
+        statusToIndex[nominationStatus.current[a.address]]
+    );
+  };
+
+  // Current page.
   const [page, setPage] = useState<number>(1);
 
-  // current render iteration
-  const [renderIteration, _setRenderIteration] = useState<number>(1);
+  // Default list of validators.
+  const [validatorsDefault, setValidatorsDefault] = useState(
+    prepareInitialValidators()
+  );
 
-  // default list of validators
-  const [validatorsDefault, setValidatorsDefault] = useState(initialValidators);
+  // Manipulated list (custom ordering, filtering) of validators.
+  const [validators, setValidators] = useState(prepareInitialValidators());
 
-  // manipulated list (ordering, filtering) of validators
-  const [validators, setValidators] = useState(initialValidators);
-
-  // is this the initial fetch
+  // Store whether the validator list has been fetched initially.
   const [fetched, setFetched] = useState(false);
 
-  // store whether the search bar is being used
+  // Store whether the search bar is being used.
   const [isSearching, setIsSearching] = useState(false);
 
-  // render throttle iteration
+  // Current render iteration.
+  const [renderIteration, setRenderIterationState] = useState<number>(1);
+
+  // Render throttle iteration.
   const renderIterationRef = useRef(renderIteration);
   const setRenderIteration = (iter: number) => {
     renderIterationRef.current = iter;
-    _setRenderIteration(iter);
+    setRenderIterationState(iter);
   };
 
-  // pagination
+  // Pagination.
   const totalPages = Math.ceil(validators.length / ListItemsPerPage);
   const pageEnd = page * ListItemsPerPage - 1;
   const pageStart = pageEnd - (ListItemsPerPage - 1);
 
-  // render batch
+  // Render batch.
   const batchEnd = Math.min(
     renderIteration * ListItemsPerBatch - 1,
     ListItemsPerPage
   );
 
-  // reset list when validator list changes
+  // Reset list when validator list changes.
   useEffect(() => {
     if (alwaysRefetchValidators) {
       if (
-        JSON.stringify(initialValidators) !== JSON.stringify(validatorsDefault)
+        JSON.stringify(initialValidators.map((v) => v.address)) !==
+        JSON.stringify(validatorsDefault.map((v) => v.address))
       ) {
         setFetched(false);
       }
@@ -139,78 +187,6 @@ export const ValidatorListInner = ({
       setFetched(false);
     }
   }, [initialValidators, nominator]);
-
-  // set default filters
-  useEffect(() => {
-    if (allowFilters) {
-      if (defaultFilters?.includes?.length) {
-        setMultiFilters(
-          'include',
-          'validators',
-          defaultFilters?.includes,
-          false
-        );
-      }
-      if (defaultFilters?.excludes?.length) {
-        setMultiFilters(
-          'exclude',
-          'validators',
-          defaultFilters?.excludes,
-          false
-        );
-      }
-    }
-    return () => {
-      if (allowFilters) {
-        resetFilters('exclude', 'validators');
-        resetFilters('include', 'validators');
-        resetOrder('validators');
-        clearSearchTerm('validators');
-      }
-    };
-  }, []);
-
-  // configure validator list when network is ready to fetch
-  useEffect(() => {
-    if (isReady && isNotZero(activeEra.index) && !fetched) {
-      setupValidatorList();
-    }
-  }, [isReady, activeEra.index, fetched]);
-
-  // render throttle
-  useEffect(() => {
-    if (!(batchEnd >= pageEnd || disableThrottle)) {
-      setTimeout(() => {
-        setRenderIteration(renderIterationRef.current + 1);
-      }, 50);
-    }
-  }, [renderIterationRef.current]);
-
-  // trigger onSelected when selection changes
-  useEffect(() => {
-    if (onSelected) {
-      onSelected(provider);
-    }
-  }, [selected]);
-
-  // list ui changes / validator changes trigger re-render of list
-  useEffect(() => {
-    if (allowFilters && fetched) {
-      handleValidatorsFilterUpdate();
-    }
-  }, [order, isSyncing, includes, excludes]);
-
-  // handle modal resize on list format change
-  useEffect(() => {
-    maybeHandleModalResize();
-  }, [listFormat, renderIteration, validators, page]);
-
-  // handle validator list bootstrapping
-  const setupValidatorList = () => {
-    setValidatorsDefault(initialValidators);
-    setValidators(initialValidators);
-    setFetched(true);
-  };
 
   // handle filter / order update
   const handleValidatorsFilterUpdate = (
@@ -268,6 +244,72 @@ export const ValidatorListInner = ({
     setSearchTerm('validators', newValue);
   };
 
+  // Set default filters.
+  useEffect(() => {
+    if (allowFilters) {
+      if (defaultFilters?.includes?.length) {
+        setMultiFilters(
+          'include',
+          'validators',
+          defaultFilters?.includes,
+          false
+        );
+      }
+      if (defaultFilters?.excludes?.length) {
+        setMultiFilters(
+          'exclude',
+          'validators',
+          defaultFilters?.excludes,
+          false
+        );
+      }
+    }
+    return () => {
+      if (allowFilters) {
+        resetFilters('exclude', 'validators');
+        resetFilters('include', 'validators');
+        resetOrder('validators');
+        clearSearchTerm('validators');
+      }
+    };
+  }, []);
+
+  // Handle validator list bootstrapping.
+  const setupValidatorList = () => {
+    setValidatorsDefault(prepareInitialValidators());
+    setValidators(prepareInitialValidators());
+    setFetched(true);
+  };
+
+  // Configure validator list when network is ready to fetch.
+  useEffect(() => {
+    if (isReady && isNotZero(activeEra.index) && !fetched) setupValidatorList();
+  }, [isReady, activeEra.index, fetched]);
+
+  // Control render throttle.
+  useEffect(() => {
+    if (!(batchEnd >= pageEnd || disableThrottle)) {
+      setTimeout(() => {
+        setRenderIteration(renderIterationRef.current + 1);
+      }, 50);
+    }
+  }, [renderIterationRef.current]);
+
+  // Trigger `onSelected` when selection changes.
+  useEffect(() => {
+    if (onSelected) onSelected(listProvider);
+  }, [selected]);
+
+  // List ui changes / validator changes trigger re-render of list.
+  useEffect(() => {
+    if (allowFilters && fetched) handleValidatorsFilterUpdate();
+  }, [order, isSyncing, includes, excludes]);
+
+  // Handle modal resize on list format change.
+  useEffect(() => {
+    maybeHandleModalResize();
+  }, [listFormat, renderIteration, validators, page]);
+
   return (
     <ListWrapper>
       <List $flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
@@ -320,7 +362,7 @@ export const ValidatorListInner = ({
         <MotionContainer>
           {listValidators.length ? (
             <>
-              {listValidators.map((validator: Validator, index: number) => (
+              {listValidators.map((validator, index) => (
                 <motion.div
                   key={`nomination_${index}`}
                   className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
@@ -343,6 +385,9 @@ export const ValidatorListInner = ({
                     showMenu={showMenu}
                     bondFor={bondFor}
                     displayFor={displayFor}
+                    nominationStatus={
+                      nominationStatus.current[validator.address]
+                    }
                   />
                 </motion.div>
               ))}

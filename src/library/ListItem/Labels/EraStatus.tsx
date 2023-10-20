@@ -2,61 +2,29 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { capitalizeFirstLetter, planckToUnit } from '@polkadot-cloud/utils';
-import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
-import type { MaybeAddress } from 'types';
 import { useNetwork } from 'contexts/Network';
+import type { EraStatusProps } from '../types';
 
-export const EraStatus = ({
-  address,
-  noMargin,
-}: {
-  address: MaybeAddress;
-  noMargin: boolean;
-}) => {
+export const EraStatus = ({ noMargin, status, totalStake }: EraStatusProps) => {
   const { t } = useTranslation('library');
-  const {
-    networkData: { unit, units },
-  } = useNetwork();
-  const {
-    eraStakers: { stakers },
-    erasStakersSyncing,
-  } = useStaking();
   const { isSyncing } = useUi();
+  const { erasStakersSyncing } = useStaking();
+  const { unit, units } = useNetwork().networkData;
 
-  // is the validator in the active era
-  const validatorInEra = stakers.find((s) => s.address === address) || null;
-
-  // flag whether validator is active
-  const validatorStatus = isSyncing
-    ? 'waiting'
-    : validatorInEra
-    ? 'active'
-    : 'waiting';
-
-  let totalStakePlanck = new BigNumber(0);
-  if (validatorInEra) {
-    const { others, own } = validatorInEra;
-    others.forEach((o: any) => {
-      totalStakePlanck = totalStakePlanck.plus(o.value);
-    });
-    if (own) {
-      totalStakePlanck = totalStakePlanck.plus(own);
-    }
-  }
-
-  const totalStake = planckToUnit(totalStakePlanck, units);
+  // Fallback to `waiting` status if still syncing.
+  const validatorStatus = isSyncing ? 'waiting' : status;
 
   return (
     <ValidatorStatusWrapper $status={validatorStatus} $noMargin={noMargin}>
       <h5>
         {isSyncing || erasStakersSyncing
           ? t('syncing')
-          : validatorInEra
-          ? `${t('listItemActive')} / ${totalStake
+          : validatorStatus !== 'waiting'
+          ? `${t('listItemActive')} / ${planckToUnit(totalStake, units)
               .integerValue()
               .toFormat()} ${unit}`
           : capitalizeFirstLetter(t(`${validatorStatus}`) ?? '')}

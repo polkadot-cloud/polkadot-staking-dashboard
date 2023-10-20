@@ -57,8 +57,8 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   const targets = nominations[batchIndex]?.targets ?? [];
 
   // extract validator entries from pool targets
-  const targetValidators = validators.filter((v: any) =>
-    targets.includes(v.address)
+  const targetValidators = validators.filter(({ address }) =>
+    targets.includes(address)
   );
 
   // configure floating menu position
