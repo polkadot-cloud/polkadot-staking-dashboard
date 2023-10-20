@@ -97,32 +97,48 @@ export const ValidatorListInner = ({
   const actionsAll = [...actions].filter((action) => !action.onSelected);
   const actionsSelected = [...actions].filter((action) => action.onSelected);
 
-  // injects status into supplied initial validators.
-  const validatorsInjected = () => injectValidatorListData(initialValidators);
+  // Store the current nomination status of validator records relative to the supplied nominator.
+  const nominationStatus = useRef<Record<string, NominationStatus>>({});
 
-  // get nomination status relative to supplied nominator, if `format` is `nomination`.
-  let nominationStatus: Record<string, NominationStatus>;
-  if (format === 'nomination') {
-    if (bondFor === 'pool') {
-      // get nomination status from pool metadata
-      nominationStatus = Object.fromEntries(
-        initialValidators.map(({ address }) => [
-          address,
-          getPoolNominationStatus(nominator, address),
-        ])
+  // Get nomination status relative to supplied nominator, if `format` is `nomination`.
+  const processNominationStatus = () => {
+    if (format === 'nomination')
+      if (bondFor === 'pool') {
+        // get nomination status from pool metadata
+        nominationStatus.current = Object.fromEntries(
+          initialValidators.map(({ address }) => [
+            address,
+            getPoolNominationStatus(nominator, address),
+          ])
+        );
+      } else {
+        // get all active account's nominations.
+        const nominationStatuses = getNomineesStatus(nominator, 'nominator');
+        // find the nominator status within the returned nominations.
+        nominationStatus.current = Object.fromEntries(
+          initialValidators.map(({ address }) => [
+            address,
+            nominationStatuses[address],
+          ])
+        );
+      }
+  };
+
+  // Injects status into supplied initial validators.
+  const injectValidatorDataAndOrder = () => {
+    processNominationStatus();
+    const indexes: Record<string, number> = {
+      active: 2,
+      inactive: 1,
+      waiting: 0,
+    };
+    return injectValidatorListData(initialValidators).sort((a, b) => {
+      return (
+        indexes[nominationStatus.current[b.address]] -
+        indexes[nominationStatus.current[a.address]]
       );
-    } else {
-      // get all active account's nominations.
-      const nominationStatuses = getNomineesStatus(nominator, 'nominator');
-      // find the nominator status within the returned nominations.
-      nominationStatus = Object.fromEntries(
-        initialValidators.map(({ address }) => [
-          address,
-          nominationStatuses[address],
-        ])
-      );
-    }
-  }
+    });
+  };
 
   // current page
   const [page, setPage] = useState<number>(1);
@@ -132,11 +148,11 @@ export const ValidatorListInner = ({
 
   // default list of validators
   const [validatorsDefault, setValidatorsDefault] = useState(
-    validatorsInjected()
+    injectValidatorDataAndOrder()
   );
 
   // manipulated list (ordering, filtering) of validators
-  const [validators, setValidators] = useState(validatorsInjected());
+  const [validators, setValidators] = useState(injectValidatorDataAndOrder());
 
   // is this the initial fetch
   const [fetched, setFetched] = useState(false);
@@ -243,8 +259,8 @@ export const ValidatorListInner = ({
 
   // handle validator list bootstrapping
   const setupValidatorList = () => {
-    setValidatorsDefault(validatorsInjected());
-    setValidators(validatorsInjected());
+    setValidatorsDefault(injectValidatorDataAndOrder());
+    setValidators(injectValidatorDataAndOrder());
     setFetched(true);
   };
 
@@ -379,7 +395,9 @@ export const ValidatorListInner = ({
                     showMenu={showMenu}
                     bondFor={bondFor}
                     displayFor={displayFor}
-                    nominationStatus={nominationStatus[validator.address]}
+                    nominationStatus={
+                      nominationStatus.current[validator.address]
+                    }
                   />
                 </motion.div>
               ))}
