@@ -114,7 +114,6 @@ export const ValidatorsProvider = ({
 
   // Fetches era reward points for eligible eras.
   const fetchErasRewardPoints = async () => {
-    // TODO: check if synced.
     if (activeEra.index.isZero() || !api) return;
 
     // start fetching from the current era.
@@ -408,9 +407,8 @@ export const ValidatorsProvider = ({
 
   // Gets either `nominated` or `poolNominated` depending on bondFor, and injects the validator
   // status into the entries.
-  const getNominated = (bondFor: BondFor) => {
-    return bondFor === 'nominator' ? nominated : poolNominated;
-  };
+  const getNominated = (bondFor: BondFor) =>
+    bondFor === 'nominator' ? nominated : poolNominated;
 
   // Inject status into validator entries.
   const injectValidatorListData = (
@@ -418,7 +416,8 @@ export const ValidatorsProvider = ({
   ): ValidatorListEntry[] => {
     const injected: ValidatorListEntry[] =
       entries.map((entry) => {
-        const inEra = stakers.find((s) => s.address === entry.address) || false;
+        const inEra =
+          stakers.find(({ address }) => address === entry.address) || false;
         let totalStake = new BigNumber(0);
         if (inEra) {
           const { others, own } = inEra;

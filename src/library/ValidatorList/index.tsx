@@ -104,7 +104,6 @@ export const ValidatorListInner = ({
   const processNominationStatus = () => {
     if (format === 'nomination')
       if (bondFor === 'pool') {
-        // get nomination status from pool metadata
         nominationStatus.current = Object.fromEntries(
           initialValidators.map(({ address }) => [
             address,
@@ -114,6 +113,7 @@ export const ValidatorListInner = ({
       } else {
         // get all active account's nominations.
         const nominationStatuses = getNomineesStatus(nominator, 'nominator');
+
         // find the nominator status within the returned nominations.
         nominationStatus.current = Object.fromEntries(
           initialValidators.map(({ address }) => [
@@ -125,19 +125,18 @@ export const ValidatorListInner = ({
   };
 
   // Injects status into supplied initial validators.
-  const injectValidatorDataAndOrder = () => {
+  const prepareInitialValidators = () => {
     processNominationStatus();
-    const indexes: Record<string, number> = {
+    const statusToIndex = {
       active: 2,
       inactive: 1,
       waiting: 0,
     };
-    return injectValidatorListData(initialValidators).sort((a, b) => {
-      return (
-        indexes[nominationStatus.current[b.address]] -
-        indexes[nominationStatus.current[a.address]]
-      );
-    });
+    return injectValidatorListData(initialValidators).sort(
+      (a, b) =>
+        statusToIndex[nominationStatus.current[b.address]] -
+        statusToIndex[nominationStatus.current[a.address]]
+    );
   };
 
   // current page
@@ -148,11 +147,11 @@ export const ValidatorListInner = ({
 
   // default list of validators
   const [validatorsDefault, setValidatorsDefault] = useState(
-    injectValidatorDataAndOrder()
+    prepareInitialValidators()
   );
 
   // manipulated list (ordering, filtering) of validators
-  const [validators, setValidators] = useState(injectValidatorDataAndOrder());
+  const [validators, setValidators] = useState(prepareInitialValidators());
 
   // is this the initial fetch
   const [fetched, setFetched] = useState(false);
@@ -259,8 +258,8 @@ export const ValidatorListInner = ({
 
   // handle validator list bootstrapping
   const setupValidatorList = () => {
-    setValidatorsDefault(injectValidatorDataAndOrder());
-    setValidators(injectValidatorDataAndOrder());
+    setValidatorsDefault(prepareInitialValidators());
+    setValidators(prepareInitialValidators());
     setFetched(true);
   };
 
