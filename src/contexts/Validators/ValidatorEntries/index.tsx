@@ -17,7 +17,6 @@ import { MaxEraRewardPointsEras } from 'consts';
 import { useStaking } from 'contexts/Staking';
 import type {
   EraPointsBoundaries,
-  EraRewardPoints,
   ErasRewardPoints,
   Identity,
   Validator,
@@ -101,9 +100,10 @@ export const ValidatorsProvider = ({
 
   // Processes reward points for a given era.
   const processEraRewardPoints = (result: AnyJson, era: BigNumber) => {
-    if (!api || erasRewardPoints[era.toString()]) return false;
+    if (erasRewardPoints[era.toString()])
+      return erasRewardPoints[era.toString()];
 
-    const formatted = {
+    return {
       total: rmCommas(result.total),
       individual: Object.fromEntries(
         Object.entries(result.individual).map(([key, value]) => [
@@ -112,8 +112,6 @@ export const ValidatorsProvider = ({
         ])
       ),
     };
-
-    return formatted;
   };
 
   // Fetches era reward points for eligible eras.
@@ -141,7 +139,6 @@ export const ValidatorsProvider = ({
     // Iterate eras and process reward points.
     const calls = [];
     const eras = [];
-    const localEras: Record<string, EraRewardPoints> = {};
     do {
       calls.push(api.query.staking.erasRewardPoints(currentEra.toString()));
       eras.push(currentEra);
@@ -164,7 +161,6 @@ export const ValidatorsProvider = ({
 
     // Commit results to state.
     setErasRewardPoints({
-      ...localEras,
       ...newErasRewardPoints,
     });
   };
