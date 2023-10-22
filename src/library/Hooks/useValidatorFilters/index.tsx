@@ -194,7 +194,7 @@ export const useValidatorFilters = () => {
     });
 
   const ordersToLabels: Record<string, string> = {
-    rank: `${MaxEraRewardPointsEras} Day Performance`,
+    rank: `${MaxEraRewardPointsEras} ${t('dayPerformance')}`,
     low_commission: t('lowCommission'),
     high_commission: t('highCommission'),
     default: t('unordered'),
