@@ -14,14 +14,6 @@ export const Quartile = ({ address }: { address: string }) => {
   const quartile = validatorEraPointsHistory[address]?.quartile;
   const tooltipText = `${MaxEraRewardPointsEras} Day Performance Standing`;
 
-  const quartiles: Record<number, string> = {
-    1: '25%',
-    2: '50%',
-    3: '75%',
-    4: '100%',
-  };
-  const quartileText: string = quartiles[quartile || 4];
-
   if (erasRewardPointsFetched !== 'synced') return null;
 
   return (
@@ -31,7 +23,7 @@ export const Quartile = ({ address }: { address: string }) => {
       onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
       style={{ cursor: 'default' }}
     >
-      {![4, undefined].includes(quartile) ? ` Top ${quartileText}` : ``}
+      {![100, undefined].includes(quartile) ? ` Top ${quartile}%` : ``}
     </div>
   );
 };

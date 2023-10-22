@@ -126,10 +126,10 @@ export const ValidatorsProvider = ({
     const q2 = Math.ceil(total * 0.5);
     const q3 = Math.ceil(total * 0.75);
 
-    if (qIndex <= q1) return 1;
-    if (qIndex <= q2) return 2;
-    if (qIndex <= q3) return 3;
-    return 4;
+    if (qIndex <= q1) return 25;
+    if (qIndex <= q2) return 50;
+    if (qIndex <= q3) return 75;
+    return 100;
   };
 
   // Fetches era reward points for eligible eras.
