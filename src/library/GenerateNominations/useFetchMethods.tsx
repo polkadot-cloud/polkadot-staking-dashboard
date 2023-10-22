@@ -10,7 +10,8 @@ import { useValidatorFilters } from 'library/Hooks/useValidatorFilters';
 export const useFetchMehods = () => {
   const { favoritesList } = useFavoriteValidators();
   const { applyFilter, applyOrder } = useValidatorFilters();
-  const { validators, sessionParaValidators } = useValidators();
+  const { validators, sessionParaValidators, validatorEraPointsHistory } =
+    useValidators();
 
   const fetch = (method: string) => {
     let nominations;
@@ -74,9 +75,18 @@ export const useFetchMehods = () => {
     // order validators to find profitable candidates
     filtered = applyOrder('low_commission', filtered);
 
+    // take the lowest commission half of the set
+    filtered = filtered.slice(0, filtered.length * 0.5);
+
+    // keep validators that are in upper 75% performance quartile.
+    filtered = filtered.filter((a: Validator) => {
+      const quartile = validatorEraPointsHistory[a.address]?.quartile || 100;
+      return quartile <= 75;
+    });
+
     // choose shuffled subset of validators
     if (filtered.length) {
-      filtered = shuffle(filtered.slice(0, filtered.length * 0.5)).slice(0, 16);
+      filtered = shuffle(filtered).slice(0, 16);
     }
     return filtered;
   };
@@ -104,13 +114,19 @@ export const useFetchMehods = () => {
       active
     );
 
+    // keep validators that are in upper 50% performance quartile.
+    active = active.filter((a: Validator) => {
+      const quartile = validatorEraPointsHistory[a.address]?.quartile || 100;
+      return quartile <= 50;
+    });
+
     // choose shuffled subset of waiting
     if (waiting.length) {
-      waiting = shuffle(waiting).slice(0, 4);
+      waiting = shuffle(waiting).slice(0, 3);
     }
     // choose shuffled subset of active
-    if (waiting.length) {
-      active = shuffle(active).slice(0, 12);
+    if (active.length) {
+      active = shuffle(active).slice(0, 13);
     }
 
     return shuffle(waiting.concat(active));
