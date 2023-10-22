@@ -25,6 +25,7 @@ export interface ValidatorsContextInterface {
   validatorsFetched: Sync;
   eraPointsBoundaries: EraPointsBoundaries;
   validatorEraPointsHistory: Record<string, ValidatorEraPointHistory>;
+  erasRewardPointsFetched: Sync;
 }
 
 export interface FavoriteValidatorsContextInterface {

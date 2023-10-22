@@ -4,36 +4,34 @@
 import { useTooltip } from 'contexts/Tooltip';
 import { TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { faArrowUpWideShort } from '@fortawesome/free-solid-svg-icons';
+import { faHashtag } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MaxEraRewardPointsEras } from 'consts';
 
 export const Rank = ({ address }: { address: string }) => {
   // const { t } = useTranslation('library');
   const { setTooltipTextAndOpen } = useTooltip();
-  const { validatorEraPointsHistory } = useValidators();
+  const { validatorEraPointsHistory, erasRewardPointsFetched } =
+    useValidators();
 
   const performanceRank = validatorEraPointsHistory[address]?.rank;
-  const tooltipText = `${MaxEraRewardPointsEras} Day Validator Performance Rank`;
+  const tooltipText = `${MaxEraRewardPointsEras} Day Performance Rank`;
 
-  if (!performanceRank) return null;
+  if (erasRewardPointsFetched !== 'synced') return null;
 
   return (
-    <div
-      className="label"
-      style={{ opacity: 0.6, fontFamily: 'InterSemiBold, sans-serif' }}
-    >
+    <div className="label">
       <TooltipTrigger
         className="tooltip-trigger-element"
         data-tooltip-text={tooltipText}
         onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
       />
       <FontAwesomeIcon
-        icon={faArrowUpWideShort}
+        icon={faHashtag}
         transform="shrink-3"
-        style={{ marginRight: '0.05rem' }}
+        style={{ marginRight: '0.1rem' }}
       />
-      {performanceRank}
+      {performanceRank || 'Unranked'}
     </div>
   );
 };

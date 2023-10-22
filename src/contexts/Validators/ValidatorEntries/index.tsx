@@ -177,11 +177,6 @@ export const ValidatorsProvider = ({
       i++;
     }
 
-    // Commit results to state.
-    setErasRewardPoints({
-      ...newErasRewardPoints,
-    });
-
     let newEraPointsHistory: Record<string, ValidatorEraPointHistory> = {};
 
     // Calculate points per era and total points per era of each validator.
@@ -222,6 +217,10 @@ export const ValidatorsProvider = ({
       })
     );
 
+    // Commit results to state.
+    setErasRewardPoints({
+      ...newErasRewardPoints,
+    });
     setValidatorEraPointsHistory(newEraPointsHistory);
   };
 
@@ -590,6 +589,7 @@ export const ValidatorsProvider = ({
         validatorsFetched,
         eraPointsBoundaries,
         validatorEraPointsHistory,
+        erasRewardPointsFetched,
       }}
     >
       {children}
