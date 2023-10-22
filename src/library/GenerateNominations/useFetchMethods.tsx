@@ -8,9 +8,9 @@ import type { Validator } from 'contexts/Validators/types';
 import { useValidatorFilters } from 'library/Hooks/useValidatorFilters';
 
 export const useFetchMehods = () => {
-  const { validators, sessionParaValidators } = useValidators();
-  const { applyFilter, applyOrder } = useValidatorFilters();
   const { favoritesList } = useFavoriteValidators();
+  const { applyFilter, applyOrder } = useValidatorFilters();
+  const { validators, sessionParaValidators } = useValidators();
 
   const fetch = (method: string) => {
     let nominations;
@@ -67,7 +67,7 @@ export const useFetchMehods = () => {
     // filter validators to find active candidates
     filtered = applyFilter(
       ['active'],
-      ['all_commission', 'blockedall', 'missing_identity'],
+      ['all_commission', 'blocked_nominations', 'missing_identity'],
       filtered
     );
 
@@ -88,14 +88,19 @@ export const useFetchMehods = () => {
     // filter validators to find waiting candidates
     waiting = applyFilter(
       null,
-      ['all_commission', 'blockedall', 'missing_identity', 'in_session'],
+      [
+        'all_commission',
+        'blocked_nominations',
+        'missing_identity',
+        'in_session',
+      ],
       waiting
     );
 
     // filter validators to find active candidates
     active = applyFilter(
       ['active'],
-      ['all_commission', 'blockedall', 'missing_identity'],
+      ['all_commission', 'blocked_nominations', 'missing_identity'],
       active
     );
 
@@ -118,7 +123,7 @@ export const useFetchMehods = () => {
       ['active'],
       [
         'all_commission',
-        'blockedall',
+        'blocked_nominations',
         'missing_identity',
         'not_parachain_validator',
       ],
@@ -129,7 +134,7 @@ export const useFetchMehods = () => {
 
     const active = applyFilter(
       ['active'],
-      ['all_commission', 'blockedall', 'missing_identity'],
+      ['all_commission', 'blocked_nominations', 'missing_identity'],
       all
     )
       .filter(
@@ -139,7 +144,7 @@ export const useFetchMehods = () => {
 
     const random = applyFilter(
       null,
-      ['all_commission', 'blockedall', 'missing_identity'],
+      ['all_commission', 'blocked_nominations', 'missing_identity'],
       all
     ).filter(
       (n: any) => !nominations.find((o: any) => o.address === n.address)
