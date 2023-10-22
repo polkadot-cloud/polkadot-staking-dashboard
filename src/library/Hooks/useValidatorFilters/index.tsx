@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { AnyFunction, AnyJson } from 'types';
 import { useStaking } from 'contexts/Staking';
+import { MaxEraRewardPointsEras } from 'consts';
 
 export const useValidatorFilters = () => {
   const { t } = useTranslation('library');
@@ -14,6 +15,7 @@ export const useValidatorFilters = () => {
     sessionParaValidators,
     validatorIdentities,
     validatorSupers,
+    validatorEraPointsHistory,
   } = useValidators();
   const { erasStakersSyncing, getLowestRewardFromStaker } = useStaking();
 
@@ -181,13 +183,26 @@ export const useValidatorFilters = () => {
   const orderHighestCommission = (list: any) =>
     [...list].sort((a, b) => b.prefs.commission - a.prefs.commission);
 
+  /*
+   * orderLowestCommission: Orders a list by commission, lowest first. Returns the updated ordered
+   * list.
+   */
+  const orderByRank = (list: any) =>
+    [...list].sort((a, b) => {
+      const aRank = validatorEraPointsHistory[a.address]?.rank || 9999;
+      const bRank = validatorEraPointsHistory[b.address]?.rank || 9999;
+      return aRank - bRank;
+    });
+
   const ordersToLabels: Record<string, string> = {
-    default: t('unordered'),
+    rank: `${MaxEraRewardPointsEras} Day Performance`,
     low_commission: t('lowCommission'),
     high_commission: t('highCommission'),
+    default: t('unordered'),
   };
 
   const orderToFunction: Record<string, AnyFunction> = {
+    rank: orderByRank,
     low_commission: orderLowestCommission,
     high_commission: orderHighestCommission,
   };
