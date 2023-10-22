@@ -6,12 +6,12 @@ import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { Validator } from 'contexts/Validators/types';
 import { useValidatorFilters } from 'library/Hooks/useValidatorFilters';
+import type { AddNominationsType } from './types';
 
 export const useFetchMehods = () => {
   const { favoritesList } = useFavoriteValidators();
   const { applyFilter, applyOrder } = useValidatorFilters();
-  const { validators, sessionParaValidators, validatorEraPointsHistory } =
-    useValidators();
+  const { validators, validatorEraPointsHistory } = useValidators();
 
   const fetch = (method: string) => {
     let nominations;
@@ -31,10 +31,10 @@ export const useFetchMehods = () => {
     return nominations;
   };
 
-  const add = (nominations: any, type: string) => {
+  const add = (nominations: Validator[], type: AddNominationsType) => {
     switch (type) {
-      case 'Parachain Validator':
-        nominations = addParachainValidator(nominations);
+      case 'High Performance Validator':
+        nominations = addHighPerformanceValidator(nominations);
         break;
       case 'Active Validator':
         nominations = addActiveValidator(nominations);
@@ -132,78 +132,78 @@ export const useFetchMehods = () => {
     return shuffle(waiting.concat(active));
   };
 
-  const available = (nominations: any) => {
+  const available = (nominations: Validator[]) => {
     const all = Object.assign(validators);
 
-    const parachainActive = applyFilter(
-      ['active'],
-      [
-        'all_commission',
-        'blocked_nominations',
-        'missing_identity',
-        'not_parachain_validator',
-      ],
-      all
-    ).filter(
-      (n: any) => !nominations.find((o: any) => o.address === n.address)
-    );
+    const parachainActive =
+      applyFilter(
+        ['active'],
+        [
+          'all_commission',
+          'blocked_nominations',
+          'missing_identity',
+          'not_parachain_validator',
+        ],
+        all
+      ).filter(
+        (n: Validator) => !nominations.find((o) => o.address === n.address)
+      ) || [];
 
-    const active = applyFilter(
-      ['active'],
-      ['all_commission', 'blocked_nominations', 'missing_identity'],
-      all
-    )
-      .filter(
-        (n: any) => !nominations.find((o: any) => o.address === n.address)
-      )
-      .filter((n: any) => !sessionParaValidators?.includes(n.address) || false);
+    const active =
+      applyFilter(
+        ['active'],
+        ['all_commission', 'blocked_nominations', 'missing_identity'],
+        all
+      ).filter(
+        (n: Validator) => !nominations.find((o) => o.address === n.address)
+      ) || [];
 
-    const random = applyFilter(
-      null,
-      ['all_commission', 'blocked_nominations', 'missing_identity'],
-      all
-    ).filter(
-      (n: any) => !nominations.find((o: any) => o.address === n.address)
-    );
+    const highPerformance = active.filter((a: Validator) => {
+      const quartile = validatorEraPointsHistory[a.address]?.quartile || 100;
+      return quartile <= 50;
+    });
+
+    const random =
+      applyFilter(
+        null,
+        ['all_commission', 'blocked_nominations', 'missing_identity'],
+        all
+      ).filter(
+        (n: Validator) => !nominations.find((o) => o.address === n.address)
+      ) || [];
 
     return {
       parachainValidators: parachainActive,
+      highPerformance,
       activeValidators: active,
       randomValidators: random,
     };
   };
 
-  const addActiveValidator = (nominations: any) => {
-    const all = available(nominations).activeValidators;
+  const addActiveValidator = (nominations: Validator[]) => {
+    const all: Validator[] = available(nominations).activeValidators;
 
     // take one validator
     const validator = shuffle(all).slice(0, 1)[0] || null;
-    if (validator) {
-      nominations.push(validator);
-    }
+    if (validator) nominations.push(validator);
     return nominations;
   };
 
-  const addParachainValidator = (nominations: any) => {
-    const all = available(nominations).parachainValidators;
+  const addHighPerformanceValidator = (nominations: Validator[]) => {
+    const all: Validator[] = available(nominations).highPerformance;
 
     // take one validator
     const validator = shuffle(all).slice(0, 1)[0] || null;
-    if (validator) {
-      nominations.push(validator);
-    }
+    if (validator) nominations.push(validator);
     return nominations;
   };
 
-  const addRandomValidator = (nominations: any) => {
-    const all = available(nominations).randomValidators;
+  const addRandomValidator = (nominations: Validator[]) => {
+    const all: Validator[] = available(nominations).randomValidators;
 
     // take one validator
     const validator = shuffle(all).slice(0, 1)[0] || null;
-
-    if (validator) {
-      nominations.push(validator);
-    }
+    if (validator) nominations.push(validator);
     return nominations;
   };
 

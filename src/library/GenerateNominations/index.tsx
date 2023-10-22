@@ -29,7 +29,7 @@ import { Subheading } from 'pages/Nominate/Wrappers';
 import { FavoritesPrompt } from 'canvas/ManageNominations/FavoritesPrompt';
 import { usePrompt } from 'contexts/Prompt';
 import { useFetchMehods } from './useFetchMethods';
-import type { GenerateNominationsProps } from './types';
+import type { AddNominationsType, GenerateNominationsProps } from './types';
 
 export const GenerateNominations = ({
   setters = [],
@@ -121,7 +121,7 @@ export const GenerateNominations = ({
   };
 
   // add nominations based on method
-  const addNominationByType = (type: string) => {
+  const addNominationByType = (type: AddNominationsType) => {
     if (method) {
       const newNominations = addNomination(nominations, type);
       setNominations([...newNominations]);
@@ -240,13 +240,13 @@ export const GenerateNominations = ({
       isDisabled: () => false,
     },
     {
-      title: t('parachainValidator'),
-      onClick: () => addNominationByType('Parachain Validator'),
+      title: t('highPerformanceValidator'),
+      onClick: () => addNominationByType('High Performance Validator'),
       onSelected: false,
       icon: faPlus,
       isDisabled: () =>
         disabledMaxNominations() ||
-        !availableToNominate(nominations).parachainValidators.length,
+        !availableToNominate(nominations).highPerformance.length,
     },
     {
       title: t('activeValidator'),

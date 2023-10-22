@@ -126,7 +126,7 @@
     "overSubscribed": " 己超额认选",
     "overSubscribedMinReward": "超额认选：最低奖励质押为",
     "page": "{{page}} / {{total}}",
-    "parachainValidator": "平行链验证人",
+    "highPerformanceValidator": "最佳表现的验证人",
     "payout": "收益",
     "payoutAccount": "收益到账账户",
     "payoutAddress": "收益到账地址",
