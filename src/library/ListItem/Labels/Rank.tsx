@@ -26,11 +26,13 @@ export const Rank = ({ address }: { address: string }) => {
         data-tooltip-text={tooltipText}
         onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
       />
-      <FontAwesomeIcon
-        icon={faHashtag}
-        transform="shrink-3"
-        style={{ marginRight: '0.1rem' }}
-      />
+      {performanceRank && (
+        <FontAwesomeIcon
+          icon={faHashtag}
+          transform="shrink-3"
+          style={{ marginRight: '0.1rem' }}
+        />
+      )}
       {performanceRank || 'Unranked'}
     </div>
   );
