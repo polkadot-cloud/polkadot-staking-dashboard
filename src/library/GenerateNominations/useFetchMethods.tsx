@@ -122,11 +122,11 @@ export const useFetchMehods = () => {
 
     // choose shuffled subset of waiting
     if (waiting.length) {
-      waiting = shuffle(waiting).slice(0, 3);
+      waiting = shuffle(waiting).slice(0, 2);
     }
     // choose shuffled subset of active
     if (active.length) {
-      active = shuffle(active).slice(0, 13);
+      active = shuffle(active).slice(0, 14);
     }
 
     return shuffle(waiting.concat(active));
