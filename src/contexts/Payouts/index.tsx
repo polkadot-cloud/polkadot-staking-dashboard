@@ -320,7 +320,7 @@ export const PayoutsProvider = ({
         checkEra(activeEra.index.minus(1));
       }
     }
-  }, [unclaimedPayouts, isNominating(), activeEra]);
+  }, [unclaimedPayouts, isNominating(), activeEra, payoutsSynced]);
 
   // Clear payout state on network / active account change.
   useEffect(() => {
