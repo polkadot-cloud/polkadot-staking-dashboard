@@ -140,10 +140,14 @@ export const Labels = styled.div`
 
       button {
         color: var(--accent-color-primary);
+        background: none;
         font-size: 0.95rem;
         display: flex;
         flex-flow: row wrap;
         align-items: center;
+        width: auto;
+        height: auto;
+        border-radius: none;
 
         > svg {
           margin-left: 0.3rem;
