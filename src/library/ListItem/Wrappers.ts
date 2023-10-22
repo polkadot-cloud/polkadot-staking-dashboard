@@ -9,8 +9,8 @@ export const Wrapper = styled.div`
   --height-top-row: 3.25rem;
   --height-bottom-row: 5rem;
 
-  /* Pool lists do not currently have larger bottom row. */
-  &.pool {
+  &.pool,
+  &.member {
     --height-bottom-row: 2.75rem;
   }
 

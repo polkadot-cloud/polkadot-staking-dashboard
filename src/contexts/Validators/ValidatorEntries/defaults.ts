@@ -7,7 +7,7 @@ import type { EraPointsBoundaries, ValidatorsContextInterface } from '../types';
 
 export const defaultValidatorsContext: ValidatorsContextInterface = {
   fetchValidatorPrefs: async (a) => new Promise((resolve) => resolve(null)),
-  getValidatorEraPoints: (startEra, address) => ({}),
+  getValidatorPointsFromEras: (startEra, address) => ({}),
   getNominated: (bondFor) => [],
   injectValidatorListData: (entries) => [],
   validators: [],

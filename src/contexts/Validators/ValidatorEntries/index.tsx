@@ -428,7 +428,7 @@ export const ValidatorsProvider = ({
   };
 
   // Gets era points for a validator
-  const getValidatorEraPoints = (startEra: BigNumber, address: string) => {
+  const getValidatorPointsFromEras = (startEra: BigNumber, address: string) => {
     startEra = BigNumber.max(startEra, 1);
 
     // minus 1 from `MaxRewardPointsEras` to account for the current era.
@@ -573,7 +573,7 @@ export const ValidatorsProvider = ({
     <ValidatorsContext.Provider
       value={{
         fetchValidatorPrefs,
-        getValidatorEraPoints,
+        getValidatorPointsFromEras,
         getNominated,
         injectValidatorListData,
         validators,

@@ -6,7 +6,7 @@ import type { AnyJson, BondFor, Sync } from 'types';
 
 export interface ValidatorsContextInterface {
   fetchValidatorPrefs: (a: ValidatorAddresses) => Promise<Validator[] | null>;
-  getValidatorEraPoints: (
+  getValidatorPointsFromEras: (
     startEra: BigNumber,
     address: string
   ) => Record<string, BigNumber>;

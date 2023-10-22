@@ -21,10 +21,10 @@ export const Pulse = ({ address, displayFor }: PulseProps) => {
   const { isReady } = useApi();
   const { activeEra } = useNetworkMetrics();
   const { setTooltipTextAndOpen } = useTooltip();
-  const { getValidatorEraPoints, eraPointsBoundaries, erasRewardPoints } =
+  const { getValidatorPointsFromEras, eraPointsBoundaries, erasRewardPoints } =
     useValidators();
   const startEra = activeEra.index.minus(1);
-  const eraRewardPoints = getValidatorEraPoints(startEra, address);
+  const eraRewardPoints = getValidatorPointsFromEras(startEra, address);
 
   const high = eraPointsBoundaries?.high || new BigNumber(1);
   const normalisedPoints = normaliseEraPoints(eraRewardPoints, high);

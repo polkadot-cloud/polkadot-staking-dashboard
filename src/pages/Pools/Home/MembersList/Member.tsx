@@ -104,7 +104,7 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
   };
 
   return (
-    <Wrapper className="pool">
+    <Wrapper className="member">
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row top">
