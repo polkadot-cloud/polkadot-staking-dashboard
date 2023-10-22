@@ -184,8 +184,7 @@ export const useValidatorFilters = () => {
     [...list].sort((a, b) => b.prefs.commission - a.prefs.commission);
 
   /*
-   * orderLowestCommission: Orders a list by commission, lowest first. Returns the updated ordered
-   * list.
+   * orderByRank: Orders a list by validator rank.
    */
   const orderByRank = (list: any) =>
     [...list].sort((a, b) => {

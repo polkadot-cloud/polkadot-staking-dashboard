@@ -213,6 +213,7 @@ export const ValidatorsProvider = ({
     newEraPointsHistory = Object.fromEntries(
       Object.entries(newEraPointsHistory).map(([k, v]) => {
         j++;
+        console.log(v.eras);
         return [k, { ...v, rank: j, quartile: getQuartile(j, totalEntries) }];
       })
     );
