@@ -172,14 +172,14 @@ export const useValidatorFilters = () => {
    * list.
    */
   const orderLowestCommission = (list: any) =>
-    [...list].sort((a: any, b: any) => a.prefs.commission - b.prefs.commission);
+    [...list].sort((a, b) => a.prefs.commission - b.prefs.commission);
 
   /*
    * orderHighestCommission: Orders a list by commission, highest first. Returns the updated ordered
    * list.
    */
   const orderHighestCommission = (list: any) =>
-    [...list].sort((a: any, b: any) => b.prefs.commission - a.prefs.commission);
+    [...list].sort((a, b) => b.prefs.commission - a.prefs.commission);
 
   const ordersToLabels: Record<string, string> = {
     default: t('unordered'),
