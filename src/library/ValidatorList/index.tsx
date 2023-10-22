@@ -54,6 +54,7 @@ export const ValidatorListInner = ({
   allowSearch = false,
   allowListFormat = true,
   alwaysRefetchValidators = false,
+  defaultOrder = undefined,
   defaultFilters = undefined,
   disableThrottle = false,
 }: ValidatorListProps) => {
@@ -65,6 +66,7 @@ export const ValidatorListInner = ({
     getFilters,
     setMultiFilters,
     getOrder,
+    setOrder,
     getSearchTerm,
     setSearchTerm,
     resetFilters,
@@ -262,6 +264,10 @@ export const ValidatorListInner = ({
           defaultFilters?.excludes,
           false
         );
+      }
+
+      if (defaultOrder) {
+        setOrder('validators', defaultOrder);
       }
     }
     return () => {

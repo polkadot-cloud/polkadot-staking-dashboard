@@ -24,6 +24,8 @@ export interface ValidatorsContextInterface {
   erasRewardPoints: ErasRewardPoints;
   validatorsFetched: Sync;
   eraPointsBoundaries: EraPointsBoundaries;
+  validatorEraPointsHistory: Record<string, ValidatorEraPointHistory>;
+  erasRewardPointsFetched: Sync;
 }
 
 export interface FavoriteValidatorsContextInterface {
@@ -80,3 +82,10 @@ export type ValidatorListEntry = Validator & {
   validatorStatus: 'waiting' | 'active';
   totalStake: BigNumber;
 };
+
+export interface ValidatorEraPointHistory {
+  eras: Record<string, BigNumber>;
+  totalPoints: BigNumber;
+  rank?: number;
+  quartile?: number;
+}

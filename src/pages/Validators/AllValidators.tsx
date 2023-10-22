@@ -52,6 +52,7 @@ export const AllValidators = () => {
                       'missing_identity',
                     ],
                   }}
+                  defaultOrder="rank"
                   allowListFormat={false}
                   allowMoreCols
                   allowFilters

@@ -17,3 +17,8 @@ export type NominationSelectionWithResetCounter = NominationSelection & {
 export interface NominationSelection {
   nominations: Validator[];
 }
+
+export type AddNominationsType =
+  | 'High Performance Validator'
+  | 'Active Validator'
+  | 'Random Validator';

@@ -24,6 +24,7 @@ import type {
   ValidatorSuper,
   ValidatorListEntry,
   ValidatorsContextInterface,
+  ValidatorEraPointHistory,
 } from '../types';
 import {
   defaultValidatorsData,
@@ -94,6 +95,11 @@ export const ValidatorsProvider = ({
     {}
   );
 
+  // Store validator era points history and metrics.
+  const [validatorEraPointsHistory, setValidatorEraPointsHistory] = useState<
+    Record<string, ValidatorEraPointHistory>
+  >({});
+
   // Store era point high and low for `MaxEraPointsEras` eras.
   const [eraPointsBoundaries, setEraPointsBoundaries] =
     useState<EraPointsBoundaries>(defaultEraPointsBoundaries);
@@ -112,6 +118,18 @@ export const ValidatorsProvider = ({
         ])
       ),
     };
+  };
+
+  // Get quartile data for validator performance data.
+  const getQuartile = (qIndex: number, total: number) => {
+    const q1 = Math.ceil(total * 0.25);
+    const q2 = Math.ceil(total * 0.5);
+    const q3 = Math.ceil(total * 0.75);
+
+    if (qIndex <= q1) return 25;
+    if (qIndex <= q2) return 50;
+    if (qIndex <= q3) return 75;
+    return 100;
   };
 
   // Fetches era reward points for eligible eras.
@@ -159,10 +177,51 @@ export const ValidatorsProvider = ({
       i++;
     }
 
+    let newEraPointsHistory: Record<string, ValidatorEraPointHistory> = {};
+
+    // Calculate points per era and total points per era of each validator.
+    Object.entries(newErasRewardPoints).forEach(([era, { individual }]) => {
+      Object.entries(individual).forEach(([address, points]) => {
+        if (!newEraPointsHistory[address])
+          newEraPointsHistory[address] = {
+            eras: {},
+            totalPoints: new BigNumber(0),
+          };
+        else {
+          newEraPointsHistory[address].eras[era] = new BigNumber(points);
+          newEraPointsHistory[address].totalPoints =
+            newEraPointsHistory[address].totalPoints.plus(points);
+        }
+      });
+    });
+
+    // Iterate `newEraPointsHistory` and re-order the object based on its totalPoints, highest
+    // first.
+    newEraPointsHistory = Object.fromEntries(
+      Object.entries(newEraPointsHistory)
+        .sort(
+          (
+            a: [string, ValidatorEraPointHistory],
+            b: [string, ValidatorEraPointHistory]
+          ) => a[1].totalPoints.minus(b[1].totalPoints).toNumber()
+        )
+        .reverse()
+    );
+
+    const totalEntries = Object.entries(newEraPointsHistory).length;
+    let j = 0;
+    newEraPointsHistory = Object.fromEntries(
+      Object.entries(newEraPointsHistory).map(([k, v]) => {
+        j++;
+        return [k, { ...v, rank: j, quartile: getQuartile(j, totalEntries) }];
+      })
+    );
+
     // Commit results to state.
     setErasRewardPoints({
       ...newErasRewardPoints,
     });
+    setValidatorEraPointsHistory(newEraPointsHistory);
   };
 
   // Fetches the active account's nominees.
@@ -455,6 +514,7 @@ export const ValidatorsProvider = ({
     setValidatorSupers({});
     setErasRewardPoints({});
     setEraPointsBoundaries(null);
+    setValidatorEraPointsHistory({});
   }, [network]);
 
   // Fetch validators and era reward points when fetched status changes.
@@ -528,6 +588,8 @@ export const ValidatorsProvider = ({
         erasRewardPoints,
         validatorsFetched,
         eraPointsBoundaries,
+        validatorEraPointsHistory,
+        erasRewardPointsFetched,
       }}
     >
       {children}

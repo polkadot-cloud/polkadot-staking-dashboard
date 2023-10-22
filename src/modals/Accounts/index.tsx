@@ -165,7 +165,9 @@ export const Accounts = () => {
         <AccountWrapper style={{ marginTop: '1.5rem' }}>
           <div>
             <div>
-              <h4>{t('noActiveAccount')}</h4>
+              <h4 style={{ padding: '0.75rem 1rem' }}>
+                {t('noActiveAccount')}
+              </h4>
             </div>
             <div />
           </div>

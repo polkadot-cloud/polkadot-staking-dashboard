@@ -25,6 +25,7 @@ export interface ValidatorListProps {
   allowListFormat?: boolean;
   alwaysRefetchValidators?: boolean;
   defaultFilters?: AnyJson;
+  defaultOrder?: string;
   disableThrottle?: boolean;
   selectActive?: boolean;
   selectToggleable?: boolean;

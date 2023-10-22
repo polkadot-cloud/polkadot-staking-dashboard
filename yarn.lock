@@ -578,28 +578,28 @@
     picocolors "^1.0.0"
     tslib "^2.6.0"
 
-"@polkadot-cloud/assets@^0.1.22":
-  version "0.1.22"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.22.tgz#2db01e6b6cc876f775756806134040c9fe2d858e"
-  integrity sha512-65bsSRclgNTDLwfpPYUGwJTIu5zlxx82UV+B6/vytIcOycnKP3Kjzgf1Z8I+b5GpptuQ1oCMAlU/okK5scoDUg==
+"@polkadot-cloud/assets@^0.1.24":
+  version "0.1.24"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.24.tgz#13b3ce04b63bda70a023e1fd71fa2998b739849b"
+  integrity sha512-HLpZ7NIYhALceeAHx6gdQKmYKxdrkd2GVphiWvvhoDgPBF586OQu+lv9Prldfi11+mY0EAC0MjGdreelr1Ma8Q==
 
-"@polkadot-cloud/core@^1.0.25":
-  version "1.0.25"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.25.tgz#f6bae22872191b7a4de2e2073a3e6c54783d5c3c"
-  integrity sha512-BG1zBm7u6VvZvhzKVoK9uOO3rz9tNIpAtSpgWcPtvERWxw69wviNVvisOnFvrlEpVdpmA1eF/tQlAjtdyssteA==
+"@polkadot-cloud/core@^1.0.26":
+  version "1.0.26"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.26.tgz#7c60cdf20a95b734d3d45d48efddd077112d0f71"
+  integrity sha512-0ZPL6f2WR0ezihBLLtVdCabYuTIz4NR2KFV8q+lsq3D2Qs8NQAytvqds4HBwsxq61oLdFc6lq11hDCe+lwy8gQ==
 
-"@polkadot-cloud/react@^0.1.94":
-  version "0.1.94"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.94.tgz#9a601c7a35e2f530d37e69e19f4f264a996af385"
-  integrity sha512-7phUUEWF42/2SIFAzVelOA/XkCPMx27e7rSIid/wye2Qsdcyas+4d8z6kmcEKx4ToM4IQ6cowIHoG4vv+gKfIw==
+"@polkadot-cloud/react@^0.1.97":
+  version "0.1.97"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.97.tgz#40c9f077e2e79c6ecead503898598d17ced2cc76"
+  integrity sha512-H+5QOfOJT4DSiJPCEjagcdh8tKYlLVfhnz/mpAnSRtRu7ykDwUEhjSZbOb8Q+aBRCQFVCBOCfnER+Grturv2xw==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.4.2"
     "@fortawesome/free-brands-svg-icons" "^6.4.2"
     "@fortawesome/free-regular-svg-icons" "^6.4.2"
     "@fortawesome/free-solid-svg-icons" "^6.4.2"
     "@fortawesome/react-fontawesome" "^0.2.0"
-    "@polkadot-cloud/assets" "^0.1.22"
-    "@polkadot-cloud/core" "^1.0.25"
+    "@polkadot-cloud/assets" "^0.1.24"
+    "@polkadot-cloud/core" "^1.0.26"
     "@polkadot-cloud/utils" "^0.0.22"
     "@polkadot/keyring" "^12.5.1"
     "@polkadot/util" "^12.5.1"
