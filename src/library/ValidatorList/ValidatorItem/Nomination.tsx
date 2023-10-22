@@ -4,6 +4,7 @@
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator';
 import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
+import { Rank } from 'library/ListItem/Labels/Rank';
 import { useList } from '../../List/context';
 import { Blocked } from '../../ListItem/Labels/Blocked';
 import { Commission } from '../../ListItem/Labels/Commission';
@@ -59,6 +60,7 @@ export const Nomination = ({
           </div>
           <div>
             <Labels style={{ marginBottom: '0.9rem' }}>
+              <Rank address={address} />
               <Oversubscribed address={address} />
               <Blocked prefs={prefs} />
               <Commission commission={commission} />

@@ -85,5 +85,6 @@ export type ValidatorListEntry = Validator & {
 export interface ValidatorEraPointHistory {
   eras: Record<string, BigNumber>;
   totalPoints: BigNumber;
+  rank?: number;
   quartile?: number;
 }

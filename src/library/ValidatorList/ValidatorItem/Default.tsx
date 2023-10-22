@@ -21,6 +21,7 @@ import {
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { usePlugins } from 'contexts/Plugins';
 import type { AnyJson } from 'types';
+import { Rank } from 'library/ListItem/Labels/Rank';
 import { useValidators } from '../../../contexts/Validators/ValidatorEntries';
 import { useList } from '../../List/context';
 import { Blocked } from '../../ListItem/Labels/Blocked';
@@ -127,6 +128,7 @@ export const Default = ({
           </div>
           <div>
             <Labels style={{ marginBottom: '0.9rem' }}>
+              <Rank address={address} />
               <Oversubscribed address={address} />
               <Blocked prefs={prefs} />
               <Commission commission={commission} />
