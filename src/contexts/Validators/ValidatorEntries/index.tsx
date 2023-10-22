@@ -163,6 +163,18 @@ export const ValidatorsProvider = ({
     setErasRewardPoints({
       ...newErasRewardPoints,
     });
+
+    // TODO: use `newErasRewardPoints` to calculate points per era, and totals on last era.
+
+    // TODO: order entries based on total era points.
+
+    // TODO: inject quartile data & total points into validator performance data.
+
+    // interface validatorEraPointsHistory: Record<string, {
+    //   eras: Record<string, BigNumber[]>, // points per era.
+    //   quartile: number, // quartile of validator's points.
+    //   totalPoints: BigNumber,
+    // }
   };
 
   // Fetches the active account's nominees.
