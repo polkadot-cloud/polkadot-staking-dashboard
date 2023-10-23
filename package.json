@@ -70,7 +70,7 @@
     "@types/react-qr-reader": "^2.1.6",
     "@types/react-scroll": "^1.8.9",
     "@typescript-eslint/eslint-plugin": "^6.8.0",
-    "@typescript-eslint/parser": "^6.8.0",
+    "@typescript-eslint/parser": "^6.9.0",
     "@vitejs/plugin-react-swc": "^3.4.0",
     "eslint": "^8.52.0",
     "eslint-config-airbnb": "^19.0.4",
