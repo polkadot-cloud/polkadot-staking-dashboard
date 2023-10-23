@@ -491,8 +491,6 @@ export const BondedPoolsProvider = ({
       });
   }, [bondedPools, activeEra]);
 
-  // activeEra
-
   return (
     <BondedPoolsContext.Provider
       value={{
