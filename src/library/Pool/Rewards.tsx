@@ -70,6 +70,7 @@ export const RewardsGraph = ({ points = [], syncing }: any) => {
     const coord = {
       x: xCursor,
       y: vbHeight - yPadding - yArea * point,
+      zero: point === 0,
     };
     xCursor += xSegment;
     return coord;
@@ -77,11 +78,15 @@ export const RewardsGraph = ({ points = [], syncing }: any) => {
 
   const lineCoords = [];
   for (let i = 0; i <= pointsCoords.length - 1; i++) {
+    const startZero = pointsCoords[i].zero;
+    const endZero = pointsCoords[i + 1]?.zero;
+
     lineCoords.push({
       x1: pointsCoords[i].x,
       y1: pointsCoords[i].y,
       x2: pointsCoords[i + 1]?.x || pointsCoords[i].x,
       y2: pointsCoords[i + 1]?.y || pointsCoords[i].y,
+      zero: startZero && endZero,
     });
   }
 
@@ -138,13 +143,17 @@ export const RewardsGraph = ({ points = [], syncing }: any) => {
         })}
 
       {!syncing &&
-        lineCoords.map(({ x1, y1, x2, y2 }, index) => {
+        lineCoords.map(({ x1, y1, x2, y2, zero }, index) => {
           return (
             <line
               key={`line_coord_${index}`}
               strokeWidth={5}
-              opacity={1}
-              stroke="var(--accent-color-secondary)"
+              opacity={zero ? 0.5 : 1}
+              stroke={
+                zero
+                  ? 'var(--text-color-tertiary)'
+                  : 'var(--accent-color-secondary)'
+              }
               x1={x1}
               y1={y1}
               x2={x2}
