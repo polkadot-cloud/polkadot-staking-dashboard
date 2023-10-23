@@ -104,20 +104,22 @@ export const RewardsGraph = ({ points = [], syncing }: any) => {
       xmlns="http://www.w3.org/2000/svg"
     >
       {!syncing &&
-        lineCoords.map(({ x1, y1, x2, y2 }, index) => {
-          return (
-            <line
-              key={`line_coord_${index}`}
-              strokeWidth={5}
-              opacity={1}
-              stroke="var(--accent-color-secondary)"
-              x1={x1}
-              y1={y1}
-              x2={x2}
-              y2={y2}
-            />
-          );
-        })}
+        [{ y1: vbHeight * 0.5, y2: vbHeight * 0.5 }].map(
+          ({ y1, y2 }, index) => {
+            return (
+              <line
+                key={`grid_coord_${index}`}
+                strokeWidth="3.75"
+                stroke="var(--grid-color-primary)"
+                x1={0}
+                y1={y1}
+                x2={vbWidth}
+                y2={y2}
+                opacity={0.5}
+              />
+            );
+          }
+        )}
 
       {!syncing &&
         barCoords.map(({ x1, y1, x2, y2 }, index) => {
@@ -127,6 +129,22 @@ export const RewardsGraph = ({ points = [], syncing }: any) => {
               strokeWidth={5}
               opacity={1}
               stroke="var(--accent-color-tertiary)"
+              x1={x1}
+              y1={y1}
+              x2={x2}
+              y2={y2}
+            />
+          );
+        })}
+
+      {!syncing &&
+        lineCoords.map(({ x1, y1, x2, y2 }, index) => {
+          return (
+            <line
+              key={`line_coord_${index}`}
+              strokeWidth={5}
+              opacity={1}
+              stroke="var(--accent-color-secondary)"
               x1={x1}
               y1={y1}
               x2={x2}
