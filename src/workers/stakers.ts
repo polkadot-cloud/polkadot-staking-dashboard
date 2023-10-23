@@ -202,5 +202,3 @@ const processExposures = (data: DataInitialiseExposures) => {
     who: activeAccount,
   };
 };
-
-export default null as any;

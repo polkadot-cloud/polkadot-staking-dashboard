@@ -14,54 +14,38 @@ import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyMetaBatch, Fn, MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
+import Worker from 'workers/poolRewards?worker';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';
+
+const worker = new Worker();
 
 export const BondedPoolsProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const { network } = useNetwork();
-  const { api, isReady } = useApi();
-  const { getNominationsStatusFromTargets } = useStaking();
+  const {
+    network,
+    networkData: { endpoints },
+  } = useNetwork();
+  const { activeEra } = useNetworkMetrics();
+  const { api, isReady, isLightClient } = useApi();
   const { createAccounts, stats } = usePoolsConfig();
+  const { getNominationsStatusFromTargets } = useStaking();
   const { lastPoolId } = stats;
 
-  // stores the meta data batches for pool lists
+  // Stores the meta data batches for pool lists.
   const [poolMetaBatches, setPoolMetaBatch]: AnyMetaBatch = useState({});
   const poolMetaBatchesRef = useRef(poolMetaBatches);
 
-  // stores the meta batch subscriptions for pool lists
+  // Stores the meta batch subscriptions for pool lists.
   const poolSubs = useRef<Record<string, Fn[]>>({});
 
-  // store bonded pools
+  // Store bonded pools.
   const [bondedPools, setBondedPools] = useState<BondedPool[]>([]);
-
-  // clear existing state for network refresh
-  useEffectIgnoreInitial(() => {
-    setBondedPools([]);
-    setStateWithRef({}, setPoolMetaBatch, poolMetaBatchesRef);
-  }, [network]);
-
-  // initial setup for fetching bonded pools
-  useEffectIgnoreInitial(() => {
-    if (isReady) {
-      // fetch bonded pools
-      fetchBondedPools();
-    }
-    return () => {
-      unsubscribe();
-    };
-  }, [network, isReady, lastPoolId]);
-
-  // after bonded pools have synced, fetch metabatch
-  useEffectIgnoreInitial(() => {
-    if (bondedPools.length) {
-      fetchPoolsMetaBatch('bonded_pools', bondedPools, true);
-    }
-  }, [bondedPools]);
 
   const unsubscribe = () => {
     Object.values(poolSubs.current).map((batch: Fn[]) =>
@@ -460,6 +444,54 @@ export const BondedPoolsProvider = ({
 
     setBondedPools(newBondedPools);
   };
+
+  // handle worker message on completed exposure check.
+  worker.onmessage = (message: MessageEvent) => {
+    if (message) {
+      // ensure correct task received.
+      const { data } = message;
+      const { task } = data;
+
+      // eslint-disable-next-line
+      if (task !== 'processNominationPoolsRewardData') return;
+
+      // TODO: plug returning data into state.
+    }
+  };
+
+  // Clear existing state for network refresh.
+  useEffectIgnoreInitial(() => {
+    setBondedPools([]);
+    setStateWithRef({}, setPoolMetaBatch, poolMetaBatchesRef);
+  }, [network]);
+
+  // Initial setup for fetching bonded pools.
+  useEffectIgnoreInitial(() => {
+    if (isReady) fetchBondedPools();
+    return () => {
+      unsubscribe();
+    };
+  }, [network, isReady, lastPoolId]);
+
+  // After bonded pools have synced, fetch metabatch.
+  useEffectIgnoreInitial(() => {
+    if (bondedPools.length)
+      fetchPoolsMetaBatch('bonded_pools', bondedPools, true);
+  }, [bondedPools]);
+
+  // Trigger worker to calculate pool reward data for garaphs once active era and bonded pools have
+  // been fetched.
+  useEffectIgnoreInitial(() => {
+    if (bondedPools.length && activeEra.index.isGreaterThan(0))
+      worker.postMessage({
+        task: 'processNominationPoolsRewardData',
+        isLightClient,
+        endpoints,
+        era: 0,
+      });
+  }, [bondedPools, activeEra]);
+
+  // activeEra
 
   return (
     <BondedPoolsContext.Provider
