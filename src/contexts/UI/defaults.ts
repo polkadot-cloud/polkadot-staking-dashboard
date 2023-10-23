@@ -15,4 +15,5 @@ export const defaultUIContext: UIContextInterface = {
   isSyncing: false,
   isNetworkSyncing: false,
   isPoolSyncing: false,
+  poolRewardPoints: {},
 };

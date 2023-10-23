@@ -32,6 +32,7 @@ import { JoinPool } from '../ListItem/Labels/JoinPool';
 import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
 import type { PoolProps } from './types';
+import { Rewards } from './Rewards';
 
 export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   const { t } = useTranslation('library');
@@ -113,8 +114,15 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
     }
   };
 
+  const displayJoin =
+    !isPoolSyncing &&
+    state === 'Open' &&
+    !membership &&
+    !isReadOnlyAccount(activeAccount) &&
+    activeAccount;
+
   return (
-    <Wrapper className="pool">
+    <Wrapper className={displayJoin ? 'pool-join' : 'pool'}>
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row top">
@@ -125,11 +133,6 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
           />
           <div>
             <Labels>
-              {currentCommission > 0 && (
-                <PoolCommission commission={`${currentCommission}%`} />
-              )}
-              <PoolId id={id} />
-              <Members members={memberCounter} />
               <FavoritePool address={addresses.stash} />
               <div className="label">
                 <button type="button" onClick={() => toggleMenu()}>
@@ -140,17 +143,29 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
           </div>
         </div>
         <Separator />
-        <div className="row bottom">
-          <PoolBonded pool={pool} batchIndex={batchIndex} batchKey={batchKey} />
-          {!isPoolSyncing &&
-            state === 'Open' &&
-            !membership &&
-            !isReadOnlyAccount(activeAccount) &&
-            activeAccount && (
-              <Labels>
+        <div className="row bottom lg">
+          <div>
+            <Rewards address={addresses.stash} displayFor="default" />
+          </div>
+          <div>
+            <Labels style={{ marginBottom: '0.9rem' }}>
+              {currentCommission > 0 && (
+                <PoolCommission commission={`${currentCommission}%`} />
+              )}
+              <PoolId id={id} />
+              <Members members={memberCounter} />
+            </Labels>
+            <PoolBonded
+              pool={pool}
+              batchIndex={batchIndex}
+              batchKey={batchKey}
+            />
+            {displayJoin && (
+              <Labels style={{ marginTop: '1rem' }}>
                 <JoinPool id={id} setActiveTab={setActiveTab} />
               </Labels>
             )}
+          </div>
         </div>
       </div>
     </Wrapper>

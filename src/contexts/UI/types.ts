@@ -1,6 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { AnyJson } from '@polkadot-cloud/react/types';
+
 export interface UIContextInterface {
   setSideMenu: (v: boolean) => void;
   setUserSideMenuMinimised: (v: boolean) => void;
@@ -12,4 +14,5 @@ export interface UIContextInterface {
   isSyncing: boolean;
   isNetworkSyncing: boolean;
   isPoolSyncing: boolean;
+  poolRewardPoints: AnyJson;
 }

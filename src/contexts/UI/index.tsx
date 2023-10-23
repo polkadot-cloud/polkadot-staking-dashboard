@@ -14,6 +14,7 @@ import Worker from 'workers/poolRewards?worker';
 import { useNetwork } from 'contexts/Network';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import type { AnyJson } from 'types';
 import { useApi } from '../Api';
 import { useNetworkMetrics } from '../NetworkMetrics';
 import { useStaking } from '../Staking';
@@ -46,6 +47,9 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
   // side menu control
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
+
+  // Store pool reward points data
+  const [poolRewardPoints, setPoolRewardPoints] = useState<AnyJson>({});
 
   // get side menu minimised state from local storage, default to false.
   const [userSideMenuMinimised, setUserSideMenuMinimisedState] = useState(
@@ -156,7 +160,8 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       // eslint-disable-next-line
       if (task !== 'processNominationPoolsRewardData') return;
 
-      // TODO: plug returning data into state.
+      const { poolRewardData } = data;
+      setPoolRewardPoints(poolRewardData);
     }
   };
 
@@ -170,7 +175,8 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     ) {
       worker.postMessage({
         task: 'processNominationPoolsRewardData',
-        era: 0,
+        activeEra: activeEra.index.toString(),
+        bondedPools: bondedPools.map((b) => b.addresses.stash),
         endpoints,
         isLightClient,
         erasRewardPoints,
@@ -192,6 +198,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
         isNetworkSyncing,
         isPoolSyncing,
         containerRefs,
+        poolRewardPoints,
       }}
     >
       {children}

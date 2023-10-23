@@ -1,8 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
+/* eslint-disable no-await-in-loop */
 
-import type { AnyJson } from 'types';
+import type { AnyApi, AnyJson } from 'types';
 import { ApiPromise, ScProvider, WsProvider } from '@polkadot/api';
+import BigNumber from 'bignumber.js';
+import { formatRawExposures } from 'contexts/Staking/Utils';
 
 // eslint-disable-next-line no-restricted-globals
 export const ctx: Worker = self as any;
@@ -24,9 +27,10 @@ ctx.addEventListener('message', async (event: AnyJson) => {
 // Process `erasStakersClipped` and generate nomination pool reward data.
 // TODO: takes pool stash addresses as input.
 const processErasStakersForNominationPoolRewards = async ({
-  era,
+  activeEra,
   maxEras,
   endpoints,
+  bondedPools,
   isLightClient,
   erasRewardPoints,
 }: AnyJson) => {
@@ -41,20 +45,49 @@ const processErasStakersForNominationPoolRewards = async ({
   }
   const api = await ApiPromise.create({ provider: newProvider });
 
-  // Starting at `era` through `maxEras` and accumulate `bondedPools` validator points.
-  //     Iterate bondedPools
-  //         Iterate erasStakers.others to find pool stash address as nominator, & get validator.
-  //         Check validator rewards in `erasRewardPoints` for this era.
-  //         Add to pool rewards data.
+  const startEra = BigNumber.max(new BigNumber(activeEra).minus(1), 1);
+  const endEra = BigNumber.max(new BigNumber(activeEra).minus(maxEras), 1);
+  let cursorEra = startEra;
 
-  // Test: get genesis hash
-  const genesisHash = api.genesisHash.toHex();
+  const eras = [];
+  do {
+    eras.push(cursorEra);
+    cursorEra = cursorEra.minus(1);
+  } while (cursorEra.isGreaterThanOrEqualTo(endEra));
 
-  // TODO: revise what actually needs to be sent back.
+  const poolRewardData: Record<string, Record<string, string>> = {};
+
+  await Promise.all(
+    eras.map(async (era) => {
+      const exposures = await api.query.staking.erasStakersClipped.entries(
+        era.toString()
+      );
+      const formatted = formatRawExposures(exposures);
+
+      for (const address of bondedPools) {
+        let validator = null;
+        for (const exposure of formatted) {
+          const { others } = exposure.val;
+          const inOthers = others.find((o: AnyApi) => o.who === address);
+
+          if (inOthers) {
+            validator = exposure.keys[1];
+            break;
+          }
+        }
+
+        if (validator) {
+          const rewardPoints: string =
+            erasRewardPoints[era.toString()]?.individual?.[validator || ''] ??
+            0;
+          if (!poolRewardData[address]) poolRewardData[address] = {};
+          poolRewardData[address][era.toString()] = rewardPoints;
+        }
+      }
+    })
+  );
+
   return {
-    maxEras,
-    genesisHash,
-    someEra: era,
-    erasRewardPoints,
+    poolRewardData,
   };
 };

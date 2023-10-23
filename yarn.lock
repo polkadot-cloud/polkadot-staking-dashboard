@@ -588,6 +588,11 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.26.tgz#7c60cdf20a95b734d3d45d48efddd077112d0f71"
   integrity sha512-0ZPL6f2WR0ezihBLLtVdCabYuTIz4NR2KFV8q+lsq3D2Qs8NQAytvqds4HBwsxq61oLdFc6lq11hDCe+lwy8gQ==
 
+"@polkadot-cloud/core@^1.0.28":
+  version "1.0.28"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.28.tgz#cb9351f27cb8c07b58433dcc9c00d4364a97028b"
+  integrity sha512-5MyZc5vIQDoNzRWYbRZ9EO1Xqtzu3GXFZjCaprCMZ2lxY6VmseXarnOMV1K20lR3mGU4wBFv6bKEmm09eMrpTw==
+
 "@polkadot-cloud/react@^0.1.97":
   version "0.1.97"
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.97.tgz#40c9f077e2e79c6ecead503898598d17ced2cc76"

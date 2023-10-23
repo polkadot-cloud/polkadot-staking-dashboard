@@ -9,9 +9,11 @@ export const Wrapper = styled.div`
   --height-top-row: 3.25rem;
   --height-bottom-row: 5rem;
 
-  &.pool,
   &.member {
     --height-bottom-row: 2.75rem;
+  }
+  &.pool-join {
+    --height-bottom-row: 7.5rem;
   }
 
   --height-total: calc(var(--height-top-row) + var(--height-bottom-row));
@@ -139,16 +141,20 @@ export const Labels = styled.div`
       margin-right: 0;
 
       button {
-        color: var(--accent-color-primary);
-        background: none;
+        color: var(--accent-color-secondary);
+        font-family: InterSemiBold, sans-serif;
         font-size: 0.95rem;
         display: flex;
         flex-flow: row wrap;
         align-items: center;
         width: auto;
         height: auto;
-        border-radius: none;
+        border-radius: 0.75rem;
+        padding: 0.25rem 0.75rem;
 
+        &:hover {
+          opacity: 1;
+        }
         > svg {
           margin-left: 0.3rem;
         }
