@@ -25,8 +25,10 @@ ctx.addEventListener('message', async (event: AnyJson) => {
 // TODO: takes pool stash addresses as input.
 const processErasStakersForNominationPoolRewards = async ({
   era,
+  maxEras,
   endpoints,
   isLightClient,
+  erasRewardPoints,
 }: AnyJson) => {
   // Conenct to light client or RPC.
   let newProvider;
@@ -39,11 +41,20 @@ const processErasStakersForNominationPoolRewards = async ({
   }
   const api = await ApiPromise.create({ provider: newProvider });
 
+  // Starting at `era` through `maxEras` and accumulate `bondedPools` validator points.
+  //     Iterate bondedPools
+  //         Iterate erasStakers.others to find pool stash address as nominator, & get validator.
+  //         Check validator rewards in `erasRewardPoints` for this era.
+  //         Add to pool rewards data.
+
   // Test: get genesis hash
   const genesisHash = api.genesisHash.toHex();
 
+  // TODO: revise what actually needs to be sent back.
   return {
+    maxEras,
     genesisHash,
     someEra: era,
+    erasRewardPoints,
   };
 };

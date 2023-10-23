@@ -4,25 +4,36 @@
 import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useRef, useState } from 'react';
-import { SideMenuStickyThreshold } from 'consts';
+import { MaxEraRewardPointsEras, SideMenuStickyThreshold } from 'consts';
 import { useBalances } from 'contexts/Balances';
 import type { ImportedAccount } from '@polkadot-cloud/react/types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import Worker from 'workers/poolRewards?worker';
+import { useNetwork } from 'contexts/Network';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useApi } from '../Api';
 import { useNetworkMetrics } from '../NetworkMetrics';
 import { useStaking } from '../Staking';
 import * as defaults from './defaults';
 import type { UIContextInterface } from './types';
 
+const worker = new Worker();
+
 export const UIProvider = ({ children }: { children: React.ReactNode }) => {
-  const { isReady } = useApi();
+  const {
+    networkData: { endpoints },
+  } = useNetwork();
   const { balances } = useBalances();
+  const { bondedPools } = useBondedPools();
+  const { isReady, isLightClient } = useApi();
   const { staking, eraStakers } = useStaking();
   const { activeEra, metrics } = useNetworkMetrics();
   const { synced: activePoolsSynced } = useActivePools();
   const { accounts: connectAccounts } = useImportedAccounts();
+  const { erasRewardPointsFetched, erasRewardPoints } = useValidators();
 
   // set whether the network has been synced.
   const [isNetworkSyncing, setIsNetworkSyncing] = useState(false);
@@ -132,10 +143,41 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     setSideMenuOpen(v);
   };
 
-  const [containerRefs, _setContainerRefs] = useState({});
+  const [containerRefs, setContainerRefsState] = useState({});
   const setContainerRefs = (v: any) => {
-    _setContainerRefs(v);
+    setContainerRefsState(v);
   };
+
+  // handle worker message on completed exposure check.
+  worker.onmessage = (message: MessageEvent) => {
+    if (message) {
+      const { data } = message;
+      const { task } = data;
+      // eslint-disable-next-line
+      if (task !== 'processNominationPoolsRewardData') return;
+
+      // TODO: plug returning data into state.
+    }
+  };
+
+  // Trigger worker to calculate pool reward data for garaphs once active era, era reward points and
+  // bonded pools have been fetched.
+  useEffectIgnoreInitial(() => {
+    if (
+      bondedPools.length &&
+      activeEra.index.isGreaterThan(0) &&
+      erasRewardPointsFetched === 'synced'
+    ) {
+      worker.postMessage({
+        task: 'processNominationPoolsRewardData',
+        era: 0,
+        endpoints,
+        isLightClient,
+        erasRewardPoints,
+        maxEras: MaxEraRewardPointsEras,
+      });
+    }
+  }, [bondedPools, activeEra, erasRewardPointsFetched]);
 
   return (
     <UIContext.Provider

@@ -14,25 +14,17 @@ import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyMetaBatch, Fn, MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import Worker from 'workers/poolRewards?worker';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';
-
-const worker = new Worker();
 
 export const BondedPoolsProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const {
-    network,
-    networkData: { endpoints },
-  } = useNetwork();
-  const { activeEra } = useNetworkMetrics();
-  const { api, isReady, isLightClient } = useApi();
+  const { network } = useNetwork();
+  const { api, isReady } = useApi();
   const { createAccounts, stats } = usePoolsConfig();
   const { getNominationsStatusFromTargets } = useStaking();
   const { lastPoolId } = stats;
@@ -106,12 +98,8 @@ export const BondedPoolsProvider = ({
     p: AnyMetaBatch,
     refetch = false
   ) => {
-    if (!isReady || !api) {
-      return;
-    }
-    if (!p.length) {
-      return;
-    }
+    if (!isReady || !api || !p.length) return;
+
     if (!refetch) {
       // if already exists, do not re-fetch
       if (poolMetaBatchesRef.current[key] !== undefined) {
@@ -328,9 +316,8 @@ export const BondedPoolsProvider = ({
   };
 
   const updateBondedPools = (updatedPools: BondedPool[]) => {
-    if (!updatedPools) {
-      return;
-    }
+    if (!updatedPools) return;
+
     setBondedPools(
       bondedPools.map(
         (original) =>
@@ -349,9 +336,7 @@ export const BondedPoolsProvider = ({
     if (!pool) return;
 
     const exists = bondedPools.find((b) => b.id === pool.id);
-    if (!exists) {
-      setBondedPools(bondedPools.concat(pool));
-    }
+    if (!exists) setBondedPools(bondedPools.concat(pool));
   };
 
   // get all the roles belonging to one pool account
@@ -445,20 +430,6 @@ export const BondedPoolsProvider = ({
     setBondedPools(newBondedPools);
   };
 
-  // handle worker message on completed exposure check.
-  worker.onmessage = (message: MessageEvent) => {
-    if (message) {
-      // ensure correct task received.
-      const { data } = message;
-      const { task } = data;
-
-      // eslint-disable-next-line
-      if (task !== 'processNominationPoolsRewardData') return;
-
-      // TODO: plug returning data into state.
-    }
-  };
-
   // Clear existing state for network refresh.
   useEffectIgnoreInitial(() => {
     setBondedPools([]);
@@ -478,18 +449,6 @@ export const BondedPoolsProvider = ({
     if (bondedPools.length)
       fetchPoolsMetaBatch('bonded_pools', bondedPools, true);
   }, [bondedPools]);
-
-  // Trigger worker to calculate pool reward data for garaphs once active era and bonded pools have
-  // been fetched.
-  useEffectIgnoreInitial(() => {
-    if (bondedPools.length && activeEra.index.isGreaterThan(0))
-      worker.postMessage({
-        task: 'processNominationPoolsRewardData',
-        isLightClient,
-        endpoints,
-        era: 0,
-      });
-  }, [bondedPools, activeEra]);
 
   return (
     <BondedPoolsContext.Provider
