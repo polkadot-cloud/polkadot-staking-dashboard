@@ -15,6 +15,7 @@ import { useTxMeta } from 'contexts/TxMeta';
 import type { AnyApi, AnyJson } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useNetwork } from 'contexts/Network';
 import { useBuildPayload } from '../useBuildPayload';
 import { useProxySupported } from '../useProxySupported';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
@@ -27,8 +28,8 @@ export const useSubmitExtrinsic = ({
   callbackInBlock,
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('library');
-  const { api, network } = useApi();
-  const networkName = network.name;
+  const { api } = useApi();
+  const { network } = useNetwork();
   const { extensions } = useExtensions();
   const { buildPayload } = useBuildPayload();
   const { activeProxy } = useActiveAccounts();
@@ -222,7 +223,7 @@ export const useSubmitExtrinsic = ({
       if (status.isInBlock) {
         // register sa events
         const callInfo = tx.method.toHuman();
-        const txEventKey = `${networkName}_tx_${callInfo.section}_${callInfo.method}`;
+        const txEventKey = `${network}_tx_${callInfo.section}_${callInfo.method}`;
         registerSaEvent(txEventKey);
         if (customEventInBlock) {
           registerSaEvent(customEventInBlock);

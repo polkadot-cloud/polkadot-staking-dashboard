@@ -21,6 +21,7 @@ import { registerSaEvent } from 'Utils';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useNetwork } from 'contexts/Network';
 
 export const NominationStatus = ({
   showButtons = true,
@@ -30,7 +31,8 @@ export const NominationStatus = ({
   buttonType?: string;
 }) => {
   const { t } = useTranslation('pages');
-  const { isReady, network } = useApi();
+  const { isReady } = useApi();
+  const { network } = useNetwork();
   const { inSetup } = useStaking();
   const { isNetworkSyncing } = useUi();
   const { openModal } = useOverlay().modal;
@@ -102,7 +104,7 @@ export const NominationStatus = ({
                   !activeAccount,
                 onClick: () => {
                   registerSaEvent(
-                    `${network.name.toLowerCase()}_nominate_setup_button_pressed`
+                    `${network.toLowerCase()}_nominate_setup_button_pressed`
                   );
                   setOnNominatorSetup(true);
                 },
