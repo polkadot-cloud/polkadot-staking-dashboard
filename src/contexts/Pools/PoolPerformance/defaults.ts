@@ -5,5 +5,6 @@
 import type { PoolPerformanceContextInterface } from './types';
 
 export const defaultPoolPerformanceContext: PoolPerformanceContextInterface = {
+  poolRewardPointsFetched: 'unsynced',
   poolRewardPoints: {},
 };

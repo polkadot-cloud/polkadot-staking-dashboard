@@ -11,6 +11,7 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import type { AnyJson } from 'types';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useApi } from 'contexts/Api';
+import type { Sync } from '@polkadot-cloud/react/types';
 import type { PoolPerformanceContextInterface } from './types';
 import { defaultPoolPerformanceContext } from './defaults';
 
@@ -24,10 +25,15 @@ export const PoolPerformanceProvider = ({
   const {
     networkData: { endpoints },
   } = useNetwork();
+  const { network } = useNetwork();
   const { isLightClient } = useApi();
   const { bondedPools } = useBondedPools();
   const { activeEra } = useNetworkMetrics();
   const { erasRewardPointsFetched, erasRewardPoints } = useValidators();
+
+  // Store whether pool performance data is being fetched.
+  const [poolRewardPointsFetched, setPoolRewardPointsFetched] =
+    useState<Sync>('unsynced');
 
   // Store pool performance data.
   const [poolRewardPoints, setPoolRewardPoints] = useState<AnyJson>({});
@@ -42,6 +48,7 @@ export const PoolPerformanceProvider = ({
 
       const { poolRewardData } = data;
       setPoolRewardPoints(poolRewardData);
+      setPoolRewardPointsFetched('synced');
     }
   };
 
@@ -56,8 +63,11 @@ export const PoolPerformanceProvider = ({
     if (
       bondedPools.length &&
       activeEra.index.isGreaterThan(0) &&
-      erasRewardPointsFetched === 'synced'
+      erasRewardPointsFetched === 'synced' &&
+      poolRewardPointsFetched === 'unsynced'
     ) {
+      setPoolRewardPointsFetched('syncing');
+
       worker.postMessage({
         task: 'processNominationPoolsRewardData',
         activeEra: activeEra.index.toString(),
@@ -68,11 +78,23 @@ export const PoolPerformanceProvider = ({
         maxEras: MaxEraRewardPointsEras,
       });
     }
-  }, [bondedPools, activeEra, erasRewardPointsFetched]);
+  }, [
+    bondedPools,
+    activeEra,
+    erasRewardPointsFetched,
+    poolRewardPointsFetched,
+  ]);
+
+  // Reset state data on network change.
+  useEffectIgnoreInitial(() => {
+    setPoolRewardPoints({});
+    setPoolRewardPointsFetched('unsynced');
+  }, [network]);
 
   return (
     <PoolPerformanceContext.Provider
       value={{
+        poolRewardPointsFetched,
         poolRewardPoints,
       }}
     >
