@@ -6,11 +6,13 @@ import { ButtonPrimaryInvert, Separator } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useStaking } from 'contexts/Staking';
 import { MoreWrapper } from './Wrappers';
 
 export const BalanceLinks = () => {
-  const { network } = useNetwork();
   const { t } = useTranslation('pages');
+  const { network } = useNetwork();
+  const { isNominating } = useStaking();
   const { activeAccount } = useActiveAccounts();
 
   return (
@@ -44,7 +46,11 @@ export const BalanceLinks = () => {
           iconTransform="shrink-2"
           text="Polkawatch"
           disabled={
-            !(activeAccount && ['polkadot', 'kusama'].includes(network))
+            !(
+              activeAccount &&
+              ['polkadot', 'kusama'].includes(network) &&
+              isNominating()
+            )
           }
         />
       </section>
