@@ -16,10 +16,11 @@ import {
 } from 'library/ValidatorList/ValidatorItem/Utils';
 import type { AnyJson } from '@polkadot-cloud/react/types';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
+import { useTranslation } from 'react-i18next';
 import type { RewardProps, RewardsGraphProps } from './types';
 
 export const Rewards = ({ address, displayFor = 'default' }: RewardProps) => {
-  // const { t } = useTranslation('library');
+  const { t } = useTranslation('library');
   const { isReady } = useApi();
   const { setTooltipTextAndOpen } = useTooltip();
   const { eraPointsBoundaries } = useValidators();
@@ -38,7 +39,7 @@ export const Rewards = ({ address, displayFor = 'default' }: RewardProps) => {
 
   const empty = Object.values(poolRewardPoints).length === 0;
   const syncing = !isReady || poolRewardPointsFetched !== 'synced';
-  const tooltipText = `${MaxEraRewardPointsEras} Day Pool Performance`;
+  const tooltipText = `${MaxEraRewardPointsEras} ${t('dayPoolPerformance')}`;
 
   return (
     <ValidatorPulseWrapper className={displayFor}>
