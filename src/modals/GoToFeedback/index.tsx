@@ -32,6 +32,7 @@ export const GoToFeedback = () => {
               href="https://polkadot-staking-dashboard.canny.io/feedback"
               target="_blank"
               rel="noreferrer"
+              style={{ color: 'var(--accent-color-primary' }}
             >
               {t('openFeedback')} &nbsp;
               <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-3" />
