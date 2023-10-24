@@ -25,43 +25,19 @@ export const BondedPoolsProvider = ({
 }) => {
   const { network } = useNetwork();
   const { api, isReady } = useApi();
-  const { getNominationsStatusFromTargets } = useStaking();
   const { createAccounts, stats } = usePoolsConfig();
+  const { getNominationsStatusFromTargets } = useStaking();
   const { lastPoolId } = stats;
 
-  // stores the meta data batches for pool lists
+  // Stores the meta data batches for pool lists.
   const [poolMetaBatches, setPoolMetaBatch]: AnyMetaBatch = useState({});
   const poolMetaBatchesRef = useRef(poolMetaBatches);
 
-  // stores the meta batch subscriptions for pool lists
+  // Stores the meta batch subscriptions for pool lists.
   const poolSubs = useRef<Record<string, Fn[]>>({});
 
-  // store bonded pools
+  // Store bonded pools.
   const [bondedPools, setBondedPools] = useState<BondedPool[]>([]);
-
-  // clear existing state for network refresh
-  useEffectIgnoreInitial(() => {
-    setBondedPools([]);
-    setStateWithRef({}, setPoolMetaBatch, poolMetaBatchesRef);
-  }, [network]);
-
-  // initial setup for fetching bonded pools
-  useEffectIgnoreInitial(() => {
-    if (isReady) {
-      // fetch bonded pools
-      fetchBondedPools();
-    }
-    return () => {
-      unsubscribe();
-    };
-  }, [network, isReady, lastPoolId]);
-
-  // after bonded pools have synced, fetch metabatch
-  useEffectIgnoreInitial(() => {
-    if (bondedPools.length) {
-      fetchPoolsMetaBatch('bonded_pools', bondedPools, true);
-    }
-  }, [bondedPools]);
 
   const unsubscribe = () => {
     Object.values(poolSubs.current).map((batch: Fn[]) =>
@@ -122,12 +98,8 @@ export const BondedPoolsProvider = ({
     p: AnyMetaBatch,
     refetch = false
   ) => {
-    if (!isReady || !api) {
-      return;
-    }
-    if (!p.length) {
-      return;
-    }
+    if (!isReady || !api || !p.length) return;
+
     if (!refetch) {
       // if already exists, do not re-fetch
       if (poolMetaBatchesRef.current[key] !== undefined) {
@@ -344,9 +316,8 @@ export const BondedPoolsProvider = ({
   };
 
   const updateBondedPools = (updatedPools: BondedPool[]) => {
-    if (!updatedPools) {
-      return;
-    }
+    if (!updatedPools) return;
+
     setBondedPools(
       bondedPools.map(
         (original) =>
@@ -365,9 +336,7 @@ export const BondedPoolsProvider = ({
     if (!pool) return;
 
     const exists = bondedPools.find((b) => b.id === pool.id);
-    if (!exists) {
-      setBondedPools(bondedPools.concat(pool));
-    }
+    if (!exists) setBondedPools(bondedPools.concat(pool));
   };
 
   // get all the roles belonging to one pool account
@@ -460,6 +429,26 @@ export const BondedPoolsProvider = ({
 
     setBondedPools(newBondedPools);
   };
+
+  // Clear existing state for network refresh.
+  useEffectIgnoreInitial(() => {
+    setBondedPools([]);
+    setStateWithRef({}, setPoolMetaBatch, poolMetaBatchesRef);
+  }, [network]);
+
+  // Initial setup for fetching bonded pools.
+  useEffectIgnoreInitial(() => {
+    if (isReady) fetchBondedPools();
+    return () => {
+      unsubscribe();
+    };
+  }, [network, isReady, lastPoolId]);
+
+  // After bonded pools have synced, fetch metabatch.
+  useEffectIgnoreInitial(() => {
+    if (bondedPools.length)
+      fetchPoolsMetaBatch('bonded_pools', bondedPools, true);
+  }, [bondedPools]);
 
   return (
     <BondedPoolsContext.Provider
