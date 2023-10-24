@@ -132,9 +132,9 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     setSideMenuOpen(v);
   };
 
-  const [containerRefs, _setContainerRefs] = useState({});
+  const [containerRefs, setContainerRefsState] = useState({});
   const setContainerRefs = (v: any) => {
-    _setContainerRefs(v);
+    setContainerRefsState(v);
   };
 
   return (
