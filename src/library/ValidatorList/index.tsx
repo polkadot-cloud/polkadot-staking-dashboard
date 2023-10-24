@@ -208,15 +208,10 @@ export const ValidatorListInner = ({
     }
   };
 
-  // get validators to render
-  let listValidators = [];
-
   // get throttled subset or entire list
-  if (!disableThrottle) {
-    listValidators = validators.slice(pageStart).slice(0, batchEnd);
-  } else {
-    listValidators = validators;
-  }
+  const listValidators = disableThrottle
+    ? validators
+    : validators.slice(pageStart).slice(0, ListItemsPerPage);
 
   // if in modal, handle resize
   const maybeHandleModalResize = () => {
