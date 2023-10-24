@@ -8,7 +8,6 @@ import Worker from 'workers/poolPerformance?worker';
 import { useNetwork } from 'contexts/Network';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import type { AnyJson } from 'types';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useApi } from 'contexts/Api';
 import type { Sync } from '@polkadot-cloud/react/types';
@@ -36,7 +35,9 @@ export const PoolPerformanceProvider = ({
     useState<Sync>('unsynced');
 
   // Store pool performance data.
-  const [poolRewardPoints, setPoolRewardPoints] = useState<AnyJson>({});
+  const [poolRewardPoints, setPoolRewardPoints] = useState<
+    Record<string, Record<string, string>>
+  >({});
 
   // Store the currently active era being processed for pool performance.
   const [currentEra, setCurrentEra] = useState<BigNumber>(new BigNumber(0));

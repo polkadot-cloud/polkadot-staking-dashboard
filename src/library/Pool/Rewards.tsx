@@ -16,8 +16,9 @@ import {
 } from 'library/ValidatorList/ValidatorItem/Utils';
 import type { AnyJson } from '@polkadot-cloud/react/types';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
+import type { RewardProps, RewardsGraphProps } from './types';
 
-export const Rewards = ({ address, displayFor = 'default' }: any) => {
+export const Rewards = ({ address, displayFor = 'default' }: RewardProps) => {
   // const { t } = useTranslation('library');
   const { isReady } = useApi();
   const { setTooltipTextAndOpen } = useTooltip();
@@ -47,16 +48,12 @@ export const Rewards = ({ address, displayFor = 'default' }: any) => {
         data-tooltip-text={tooltipText}
         onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
       />
-      <RewardsGraph
-        points={prefilledPoints}
-        syncing={empty}
-        displayFor={displayFor}
-      />
+      <RewardsGraph points={prefilledPoints} syncing={empty} />
     </ValidatorPulseWrapper>
   );
 };
 
-export const RewardsGraph = ({ points = [], syncing }: any) => {
+export const RewardsGraph = ({ points = [], syncing }: RewardsGraphProps) => {
   const totalSegments = points.length - 1;
   const vbWidth = 512;
   const vbHeight = 115;

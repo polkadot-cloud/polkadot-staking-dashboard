@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable no-await-in-loop */
 
+import type { Exposure } from 'contexts/Staking/types';
+import type { ErasRewardPoints } from 'contexts/Validators/types';
 import type { AnyApi, AnyJson } from 'types';
 
 // eslint-disable-next-line no-restricted-globals
@@ -27,7 +29,12 @@ const processErasStakersForNominationPoolRewards = async ({
   era,
   erasRewardPoints,
   exposures,
-}: AnyJson) => {
+}: {
+  bondedPools: string[];
+  era: string;
+  erasRewardPoints: ErasRewardPoints;
+  exposures: Exposure[];
+}) => {
   const poolRewardData: Record<string, Record<string, string>> = {};
 
   for (const address of bondedPools) {
