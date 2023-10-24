@@ -97,7 +97,7 @@ export const Summary = ({ section }: SetupStepProps) => {
             </div>
             <div>
               {payee.destination === 'Account'
-                ? `${payeeDisplay}: ${ellipsisFn(payee.account)}`
+                ? `${payeeDisplay}: ${ellipsisFn(payee.account || '')}`
                 : payeeDisplay}
             </div>
           </section>
