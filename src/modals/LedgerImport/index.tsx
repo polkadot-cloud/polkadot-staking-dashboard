@@ -133,7 +133,7 @@ export const LedgerImport: React.FC = () => {
         addressesRef
       );
       resetStatusCodes();
-      registerSaEvent(`${network.name.toLowerCase()}_ledger_account_fetched`);
+      registerSaEvent(`${network.toLowerCase()}_ledger_account_fetched`);
     }
   };
 
