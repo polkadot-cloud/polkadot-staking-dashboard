@@ -14,14 +14,14 @@ import {
   normaliseEraPoints,
   prefillEraPoints,
 } from 'library/ValidatorList/ValidatorItem/Utils';
-import { useUi } from 'contexts/UI';
 import type { AnyJson } from '@polkadot-cloud/react/types';
+import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 
 export const Rewards = ({ address, displayFor = 'default' }: any) => {
   // const { t } = useTranslation('library');
   const { isReady } = useApi();
-  const { poolRewardPoints } = useUi();
   const { setTooltipTextAndOpen } = useTooltip();
+  const { poolRewardPoints } = usePoolPerformance();
   const { eraPointsBoundaries, erasRewardPoints } = useValidators();
 
   const eraRewardPoints = Object.fromEntries(

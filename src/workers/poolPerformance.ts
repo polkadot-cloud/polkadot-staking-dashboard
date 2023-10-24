@@ -25,7 +25,6 @@ ctx.addEventListener('message', async (event: AnyJson) => {
 });
 
 // Process `erasStakersClipped` and generate nomination pool reward data.
-// TODO: takes pool stash addresses as input.
 const processErasStakersForNominationPoolRewards = async ({
   activeEra,
   maxEras,
