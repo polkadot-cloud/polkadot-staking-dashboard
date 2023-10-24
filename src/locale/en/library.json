@@ -47,7 +47,7 @@
     "createPool": "Create Pool",
     "dayAverage": "Day Average",
     "dayPerformance": "Day Performance",
-    "dayPerformanceStanding": "Day Performance Standing",
+    "dayPerformanceStanding": "{{count}} Day Active Validators Performance Standing",
     "dayPoolPerformance": "Day Pool Performance",
     "destroying": "Destroying",
     "destroyingPools": "Destroying Pools",
