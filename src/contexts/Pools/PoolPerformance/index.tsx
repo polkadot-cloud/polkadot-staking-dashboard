@@ -12,6 +12,9 @@ import type { AnyJson } from 'types';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useApi } from 'contexts/Api';
 import type { Sync } from '@polkadot-cloud/react/types';
+import BigNumber from 'bignumber.js';
+import { formatRawExposures } from 'contexts/Staking/Utils';
+import type { AnyObject } from '@polkadot-cloud/utils/types';
 import type { PoolPerformanceContextInterface } from './types';
 import { defaultPoolPerformanceContext } from './defaults';
 
@@ -22,11 +25,8 @@ export const PoolPerformanceProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const {
-    networkData: { endpoints },
-  } = useNetwork();
+  const { api } = useApi();
   const { network } = useNetwork();
-  const { isLightClient } = useApi();
   const { bondedPools } = useBondedPools();
   const { activeEra } = useNetworkMetrics();
   const { erasRewardPointsFetched, erasRewardPoints } = useValidators();
@@ -38,6 +38,38 @@ export const PoolPerformanceProvider = ({
   // Store pool performance data.
   const [poolRewardPoints, setPoolRewardPoints] = useState<AnyJson>({});
 
+  // Store the currently active era being processed for pool performance.
+  const [currentEra, setCurrentEra] = useState<BigNumber>(new BigNumber(0));
+
+  // Store the earliest era that should be processed.
+  const [finishEra, setFinishEra] = useState<BigNumber>(new BigNumber(0));
+
+  /**
+   * Deep merge two objects.
+   * @param target
+   * @param ...sources
+   */
+  const isObject = (item: AnyObject) =>
+    item && typeof item === 'object' && !Array.isArray(item);
+
+  const mergeDeep = (target: AnyObject, ...sources: AnyObject[]): AnyObject => {
+    if (!sources.length) return target;
+    const source = sources.shift();
+
+    if (isObject(target) && isObject(source)) {
+      for (const key in source) {
+        if (isObject(source[key])) {
+          if (!target[key]) Object.assign(target, { [key]: {} });
+          mergeDeep(target[key], source[key]);
+        } else {
+          Object.assign(target, { [key]: source[key] });
+        }
+      }
+    }
+
+    return mergeDeep(target, ...sources);
+  };
+
   // Handle worker message on completed exposure check.
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
@@ -45,10 +77,44 @@ export const PoolPerformanceProvider = ({
       const { task } = data;
       if (task !== 'processNominationPoolsRewardData') return;
 
+      // Update state with new data.
       const { poolRewardData } = data;
-      setPoolRewardPoints(poolRewardData);
-      setPoolRewardPointsFetched('synced');
+      setPoolRewardPoints(mergeDeep(poolRewardPoints, poolRewardData));
+
+      if (currentEra.isEqualTo(finishEra)) {
+        setPoolRewardPointsFetched('synced');
+      } else {
+        const nextEra = BigNumber.max(currentEra.minus(1), 1);
+        processEra(nextEra);
+      }
     }
+  };
+
+  // Start fetching pool performance calls from the current era.
+  const startGetPoolPerformance = async () => {
+    setPoolRewardPointsFetched('syncing');
+    setFinishEra(
+      BigNumber.max(activeEra.index.minus(MaxEraRewardPointsEras), 1)
+    );
+    const startEra = BigNumber.max(activeEra.index.minus(1), 1);
+    processEra(startEra);
+  };
+
+  // Get era data and send to worker.
+  const processEra = async (era: BigNumber) => {
+    if (!api) return;
+    setCurrentEra(era);
+    const result = await api.query.staking.erasStakersClipped.entries(
+      era.toString()
+    );
+    const exposures = formatRawExposures(result);
+    worker.postMessage({
+      task: 'processNominationPoolsRewardData',
+      era: era.toString(),
+      exposures,
+      bondedPools: bondedPools.map((b) => b.addresses.stash),
+      erasRewardPoints,
+    });
   };
 
   // Trigger worker to calculate pool reward data for garaphs once:
@@ -60,22 +126,13 @@ export const PoolPerformanceProvider = ({
   // Re-calculates when any of the above change.
   useEffectIgnoreInitial(() => {
     if (
+      api &&
       bondedPools.length &&
       activeEra.index.isGreaterThan(0) &&
       erasRewardPointsFetched === 'synced' &&
       poolRewardPointsFetched === 'unsynced'
     ) {
-      setPoolRewardPointsFetched('syncing');
-
-      worker.postMessage({
-        task: 'processNominationPoolsRewardData',
-        activeEra: activeEra.index.toString(),
-        bondedPools: bondedPools.map((b) => b.addresses.stash),
-        endpoints,
-        isLightClient,
-        erasRewardPoints,
-        maxEras: MaxEraRewardPointsEras,
-      });
+      startGetPoolPerformance();
     }
   }, [
     bondedPools,
@@ -87,6 +144,8 @@ export const PoolPerformanceProvider = ({
   // Reset state data on network change.
   useEffectIgnoreInitial(() => {
     setPoolRewardPoints({});
+    setCurrentEra(new BigNumber(0));
+    setFinishEra(new BigNumber(0));
     setPoolRewardPointsFetched('unsynced');
   }, [network]);
 

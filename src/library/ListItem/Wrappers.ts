@@ -344,9 +344,9 @@ export const ValidatorPulseWrapper = styled.div`
       var(--shimmer-foreground) 100%
     );
     background-repeat: no-repeat;
-    background-size: 600px 104px;
+    background-size: 500px 104px;
     animation-duration: 1.5s;
-    opacity: 0.15;
+    opacity: 0.2;
     animation-fill-mode: forwards;
     animation-iteration-count: infinite;
     animation-name: shimmer;

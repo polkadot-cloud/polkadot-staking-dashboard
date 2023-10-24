@@ -21,8 +21,8 @@ export const Rewards = ({ address, displayFor = 'default' }: any) => {
   // const { t } = useTranslation('library');
   const { isReady } = useApi();
   const { setTooltipTextAndOpen } = useTooltip();
-  const { poolRewardPoints } = usePoolPerformance();
-  const { eraPointsBoundaries, erasRewardPoints } = useValidators();
+  const { eraPointsBoundaries } = useValidators();
+  const { poolRewardPoints, poolRewardPointsFetched } = usePoolPerformance();
 
   const eraRewardPoints = Object.fromEntries(
     Object.entries(poolRewardPoints[address] || {}).map(([k, v]: AnyJson) => [
@@ -35,7 +35,8 @@ export const Rewards = ({ address, displayFor = 'default' }: any) => {
   const normalisedPoints = normaliseEraPoints(eraRewardPoints, high);
   const prefilledPoints = prefillEraPoints(Object.values(normalisedPoints));
 
-  const syncing = !isReady || !Object.values(erasRewardPoints).length;
+  const empty = Object.values(poolRewardPoints).length === 0;
+  const syncing = !isReady || poolRewardPointsFetched !== 'synced';
   const tooltipText = `${MaxEraRewardPointsEras} Day Pool Performance`;
 
   return (
@@ -48,7 +49,7 @@ export const Rewards = ({ address, displayFor = 'default' }: any) => {
       />
       <RewardsGraph
         points={prefilledPoints}
-        syncing={syncing}
+        syncing={empty}
         displayFor={displayFor}
       />
     </ValidatorPulseWrapper>
