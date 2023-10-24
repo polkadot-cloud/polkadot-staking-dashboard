@@ -5,8 +5,8 @@ import { ButtonSubmitInvert } from '@polkadot-cloud/react';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { InputWrapper } from '../Wrappers';
 import type { BondInputProps } from '../types';
 
@@ -20,8 +20,10 @@ export const BondInput = ({
   syncing = false,
 }: BondInputProps) => {
   const { t } = useTranslation('library');
-  const { network } = useApi();
-  const { activeAccount } = useConnect();
+  const {
+    networkData: { unit },
+  } = useNetwork();
+  const { activeAccount } = useActiveAccounts();
 
   // the current local bond value
   const [localBond, setLocalBond] = useState<string>(value);
@@ -60,9 +62,7 @@ export const BondInput = ({
   // available funds as jsx.
   const availableFundsJsx = (
     <p>
-      {syncing
-        ? '...'
-        : `${freeBalance.toFormat()} ${network.unit} ${t('available')}`}
+      {syncing ? '...' : `${freeBalance.toFormat()} ${unit} ${t('available')}`}
     </p>
   );
 
@@ -74,7 +74,7 @@ export const BondInput = ({
             <div>
               <input
                 type="text"
-                placeholder={`0 ${network.unit}`}
+                placeholder={`0 ${unit}`}
                 value={localBond}
                 onChange={(e) => {
                   handleChangeBond(e);

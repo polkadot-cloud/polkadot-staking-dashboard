@@ -12,7 +12,8 @@ import { useApi } from 'contexts/Api';
 import { Title } from 'library/Modal/Title';
 import type { AnyJson, NetworkName } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { ReactComponent as BraveIconSVG } from '../../img/brave-logo.svg';
+import { useNetwork } from 'contexts/Network';
+import BraveIconSVG from '../../img/brave-logo.svg?react';
 import {
   BraveWarning,
   ConnectionButton,
@@ -23,9 +24,10 @@ import {
 
 export const Networks = () => {
   const { t } = useTranslation('modals');
+  const { network, switchNetwork } = useNetwork();
+  const { isLightClient, setIsLightClient } = useApi();
   const { setModalStatus, setModalResize } = useOverlay().modal;
-  const { switchNetwork, network, isLightClient } = useApi();
-  const networkKey: string = network.name;
+  const networkKey: string = network;
 
   const [braveBrowser, setBraveBrowser] = useState<boolean>(false);
 
@@ -58,7 +60,7 @@ export const Networks = () => {
                     type="button"
                     onClick={() => {
                       if (networkKey !== key) {
-                        switchNetwork(key, isLightClient);
+                        switchNetwork(key);
                         setModalStatus('closing');
                       }
                     }}
@@ -91,7 +93,8 @@ export const Networks = () => {
               disabled={!isLightClient}
               type="button"
               onClick={() => {
-                switchNetwork(networkKey as NetworkName, false);
+                setIsLightClient(false);
+                switchNetwork(networkKey as NetworkName);
                 setModalStatus('closing');
               }}
             >
@@ -103,7 +106,8 @@ export const Networks = () => {
               className="off"
               type="button"
               onClick={() => {
-                switchNetwork(networkKey as NetworkName, true);
+                setIsLightClient(true);
+                switchNetwork(networkKey as NetworkName);
                 setModalStatus('closing');
               }}
             >

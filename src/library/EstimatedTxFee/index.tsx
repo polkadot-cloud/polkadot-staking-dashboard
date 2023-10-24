@@ -5,15 +5,15 @@ import { planckToUnit } from '@polkadot-cloud/utils';
 import type { Context } from 'react';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { TxMetaContext, useTxMeta } from 'contexts/TxMeta';
 import type { TxMetaContextInterface } from 'contexts/TxMeta/types';
+import { useNetwork } from 'contexts/Network';
 import { Wrapper } from './Wrapper';
 import type { EstimatedTxFeeProps } from './types';
 
 export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
   const { t } = useTranslation('library');
-  const { unit, units } = useApi().network;
+  const { unit, units } = useNetwork().networkData;
   const { txFees, resetTxFees } = useTxMeta();
 
   useEffect(() => () => resetTxFees(), []);

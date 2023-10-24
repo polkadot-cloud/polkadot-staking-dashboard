@@ -14,13 +14,15 @@ import {
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useIdentities } from 'contexts/Identities';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { RolesWrapper } from '../Home/ManagePool/Wrappers';
 import { PoolAccount } from '../PoolAccount';
 import { RoleEditInput } from './RoleEditInput';
@@ -34,13 +36,15 @@ export const Roles = ({
   listenIsValid = () => {},
 }: RolesProps) => {
   const { t } = useTranslation('pages');
+  const { isReady } = useApi();
   const { openHelp } = useHelp();
+  const { network } = useNetwork();
   const { isPoolSyncing } = useUi();
   const { openModal } = useOverlay().modal;
-  const { isReady, network } = useApi();
+  const { activeAccount } = useActiveAccounts();
+  const { isReadOnlyAccount } = useImportedAccounts();
   const { fetchIdentitiesMetaBatch } = useIdentities();
   const { isOwner, selectedActivePool } = useActivePools();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { id } = selectedActivePool || { id: 0 };
   const roles = defaultRoles;
 
@@ -149,7 +153,7 @@ export const Roles = ({
 
   return (
     <>
-      <CardHeaderWrapper $withAction>
+      <CardHeaderWrapper $withAction $withMargin>
         {!inline && (
           <h3>
             {t('pools.roles')}

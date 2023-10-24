@@ -13,9 +13,9 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { graphColors } from 'styles/graphs';
+import { useNetwork } from 'contexts/Network';
 import type { EraPointsProps } from './types';
 
 ChartJS.register(
@@ -31,7 +31,7 @@ ChartJS.register(
 export const EraPoints = ({ items = [], height }: EraPointsProps) => {
   const { t } = useTranslation('library');
   const { mode } = useTheme();
-  const { colors } = useApi().network;
+  const { colors } = useNetwork().networkData;
 
   const options = {
     responsive: true,

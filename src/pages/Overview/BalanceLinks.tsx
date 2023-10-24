@@ -4,14 +4,16 @@
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimaryInvert, Separator } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useStaking } from 'contexts/Staking';
 import { MoreWrapper } from './Wrappers';
 
 export const BalanceLinks = () => {
   const { t } = useTranslation('pages');
-  const { name } = useApi().network;
-  const { activeAccount } = useConnect();
+  const { network } = useNetwork();
+  const { isNominating } = useStaking();
+  const { activeAccount } = useActiveAccounts();
 
   return (
     <MoreWrapper>
@@ -22,7 +24,7 @@ export const BalanceLinks = () => {
           lg
           onClick={() =>
             window.open(
-              `https://${name}.subscan.io/account/${activeAccount}`,
+              `https://${network}.subscan.io/account/${activeAccount}`,
               '_blank'
             )
           }
@@ -36,14 +38,20 @@ export const BalanceLinks = () => {
           lg
           onClick={() =>
             window.open(
-              `https://${name}.polkawatch.app/nomination/${activeAccount}`,
+              `https://${network}.polkawatch.app/nomination/${activeAccount}`,
               '_blank'
             )
           }
           iconRight={faExternalLinkAlt}
           iconTransform="shrink-2"
           text="Polkawatch"
-          disabled={!(activeAccount && ['polkadot', 'kusama'].includes(name))}
+          disabled={
+            !(
+              activeAccount &&
+              ['polkadot', 'kusama'].includes(network) &&
+              isNominating()
+            )
+          }
         />
       </section>
     </MoreWrapper>

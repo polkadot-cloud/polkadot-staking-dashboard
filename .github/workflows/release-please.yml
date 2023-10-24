@@ -1,0 +1,21 @@
+name: Release Automation
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        with:
+          # Commit to start releases from. This can be removed after the first release is merged.
+          last-release-sha: 99cfade027ce6ca81d0a14657d6bdd1b05406ad8
+          release-type: node
+          package-name: staking-dashboard

@@ -3,15 +3,14 @@
 
 import { planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { Number } from 'library/StatBoxList/Number';
+import { useNetwork } from 'contexts/Network';
 
 export const LastEraPayoutStat = () => {
   const { t } = useTranslation('pages');
-  const { network } = useApi();
+  const { unit, units } = useNetwork().networkData;
   const { staking } = useStaking();
-  const { unit, units } = network;
   const { lastReward } = staking;
 
   const lastRewardUnit = planckToUnit(lastReward, units).toNumber();

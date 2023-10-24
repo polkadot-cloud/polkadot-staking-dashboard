@@ -87,15 +87,21 @@ interface PageProp {
   key: string;
 }
 
-export type MaybeAccount = string | null;
+export type MaybeAddress = string | null;
 
 export type MaybeString = string | null;
+
+// list of available plugins.
+export type Plugin = 'subscan' | 'binance_spot' | 'tips' | 'polkawatch';
 
 // track the status of a syncing / fetching process.
 export type Sync = 'unsynced' | 'syncing' | 'synced';
 
 // track whether bonding should be for nominator or nomination pool.
 export type BondFor = 'pool' | 'nominator';
+
+// which medium components are being displayed on.
+export type DisplayFor = 'default' | 'modal' | 'canvas';
 
 // generic function with no args or return type.
 export type Fn = () => void;
@@ -111,3 +117,5 @@ export type AnyFunction = any;
 export type AnyMetaBatch = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnySubscan = any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type AnyPolkawatch = any;

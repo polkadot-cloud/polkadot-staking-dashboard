@@ -5,9 +5,9 @@ import React, { useState } from 'react';
 import { NetworkList } from 'config/networks';
 import { AppVersion } from 'consts';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const MigrateProvider = ({
   children,
@@ -15,8 +15,8 @@ export const MigrateProvider = ({
   children: React.ReactNode;
 }) => {
   const { isReady } = useApi();
-  const { accounts } = useConnect();
   const { isNetworkSyncing } = useUi();
+  const { accounts } = useImportedAccounts();
 
   // The local app version of the current user.
   const localAppVersion = localStorage.getItem('app_version');

@@ -1,25 +1,27 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useApi } from 'contexts/Api';
 import { registerSaEvent } from 'Utils';
 import { ButtonSecondary } from '@polkadot-cloud/react';
 import { isValidAddress } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
 import { usePrompt } from 'contexts/Prompt';
 import { QRViewerWrapper } from 'library/Import/Wrappers';
 import { QrScanSignature } from 'library/QRCode/ScanSignature';
+import { useNetwork } from 'contexts/Network';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { formatAccountSs58 } from 'contexts/Connect/Utils';
 
 export const Reader = () => {
   const { t } = useTranslation('modals');
   const {
-    network: { name },
-  } = useApi();
+    network,
+    networkData: { ss58 },
+  } = useNetwork();
+  const { addOtherAccounts } = useOtherAccounts();
   const { setStatus: setPromptStatus } = usePrompt();
-  const { addToAccounts, formatAccountSs58 } = useConnect();
   const { addVaultAccount, vaultAccountExists, vaultAccounts } =
     useVaultHardware();
 
@@ -36,7 +38,7 @@ export const Reader = () => {
   const valid =
     isValidAddress(qrData) &&
     !vaultAccountExists(qrData) &&
-    !formatAccountSs58(qrData);
+    !formatAccountSs58(qrData, ss58);
 
   // Reset QR data on open.
   useEffect(() => {
@@ -48,8 +50,8 @@ export const Reader = () => {
     if (valid) {
       const account = addVaultAccount(qrData, vaultAccounts.length);
       if (account) {
-        registerSaEvent(`${name.toLowerCase()}_vault_account_import`);
-        addToAccounts([account]);
+        registerSaEvent(`${network.toLowerCase()}_vault_account_import`);
+        addOtherAccounts([account]);
       }
       setPromptStatus(0);
     }
@@ -59,7 +61,7 @@ export const Reader = () => {
       qrData === undefined
         ? `${t('waitingForQRCode')}`
         : isValidAddress(qrData)
-        ? formatAccountSs58(qrData)
+        ? formatAccountSs58(qrData, ss58)
           ? `${t('differentNetworkAddress')}`
           : vaultAccountExists(qrData)
           ? `${t('accountAlreadyImported')}`

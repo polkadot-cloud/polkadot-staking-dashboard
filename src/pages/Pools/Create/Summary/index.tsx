@@ -6,8 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
@@ -19,20 +17,26 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
 import { SubmitTx } from 'library/SubmitTx';
+import { useNetwork } from 'contexts/Network';
+import { useApi } from 'contexts/Api';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
+  const { api } = useApi();
   const {
-    api,
-    network: { units, unit, name },
-  } = useApi();
+    network,
+    networkData: { units, unit },
+  } = useNetwork();
   const { stats } = usePoolsConfig();
   const { newBatchCall } = useBatchCall();
+  const { accountHasSigner } = useImportedAccounts();
   const { getSetupProgress, removeSetupProgress } = useSetup();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { queryBondedPool, addToBondedPools } = useBondedPools();
-  const { activeAccount, activeProxy, accountHasSigner } = useConnect();
+  const { activeAccount, activeProxy } = useActiveAccounts();
 
   const { lastPoolId } = stats;
   const poolId = lastPoolId.plus(1);
@@ -139,9 +143,9 @@ export const Summary = ({ section }: SetupStepProps) => {
           <SubmitTx
             submitText={t('pools.createPool')}
             valid
-            noMargin
-            customEvent={`${name.toLowerCase()}_user_created_pool`}
+            customEvent={`${network.toLowerCase()}_user_created_pool`}
             {...submitExtrinsic}
+            displayFor="canvas" /* Edge case: not canvas, but the larger button sizes suit this UI more. */
           />
         </div>
       </MotionContainer>

@@ -4,8 +4,7 @@
 import { PageRow, PageTitle, RowSection } from '@polkadot-cloud/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { PageTitleTabProps } from '@polkadot-cloud/react/base/types';
-import { useConnect } from 'contexts/Connect';
+import type { PageTitleTabProps } from '@polkadot-cloud/react/types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { CardWrapper } from 'library/Card/Wrappers';
@@ -13,6 +12,8 @@ import { PoolList } from 'library/PoolList/Default';
 import { StatBoxList } from 'library/StatBoxList';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { PoolListProvider } from 'library/PoolList/context';
 import { Roles } from '../Roles';
 import { ClosurePrompts } from './ClosurePrompts';
 import { PoolFavorites } from './Favorites';
@@ -29,7 +30,7 @@ import { PoolsTabsProvider, usePoolsTabs } from './context';
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
   const { openModal } = useOverlay().modal;
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccounts();
   const {
     favorites,
     stats: { counterForBondedPools },
@@ -143,18 +144,19 @@ export const HomeInner = () => {
         <>
           <PageRow>
             <CardWrapper>
-              <PoolList
-                batchKey="bonded_pools"
-                pools={bondedPools}
-                title={t('pools.activePools')}
-                defaultFilters={{
-                  includes: ['active'],
-                  excludes: ['locked', 'destroying'],
-                }}
-                allowMoreCols
-                allowSearch
-                pagination
-              />
+              <PoolListProvider>
+                <PoolList
+                  batchKey="bonded_pools"
+                  pools={bondedPools}
+                  defaultFilters={{
+                    includes: ['active'],
+                    excludes: ['locked', 'destroying'],
+                  }}
+                  allowMoreCols
+                  allowSearch
+                  pagination
+                />
+              </PoolListProvider>
             </CardWrapper>
           </PageRow>
         </>

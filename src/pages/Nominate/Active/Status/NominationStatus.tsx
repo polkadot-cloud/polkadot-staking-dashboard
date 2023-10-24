@@ -8,9 +8,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
@@ -20,6 +19,8 @@ import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';
 import { registerSaEvent } from 'Utils';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const NominationStatus = ({
   showButtons = true,
@@ -36,8 +37,9 @@ export const NominationStatus = ({
   const { metrics } = useNetworkMetrics();
   const { getBondedAccount } = useBonded();
   const { checking, isExposed } = useFastUnstake();
+  const { isReadOnlyAccount } = useImportedAccounts();
   const { getNominationStatus } = useNominationStatus();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { activeAccount } = useActiveAccounts();
   const { getFastUnstakeText, isUnstaking } = useUnstaking();
   const { setOnNominatorSetup, getNominatorSetupPercent } = useSetup();
 

@@ -10,17 +10,23 @@ import { useTranslation } from 'react-i18next';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useFilters } from 'contexts/Filters';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { Tabs } from 'library/Filter/Tabs';
 import { usePoolFilters } from 'library/Hooks/usePoolFilters';
-import { Header, List, Wrapper as ListWrapper } from 'library/List';
+import {
+  FilterHeaderWrapper,
+  List,
+  ListStatusHeader,
+  Wrapper as ListWrapper,
+} from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { SearchInput } from 'library/List/SearchInput';
 import { Pool } from 'library/Pool';
+import { useNetwork } from 'contexts/Network';
 import { usePoolList } from './context';
 import type { PoolListProps } from './types';
 
@@ -31,15 +37,15 @@ export const PoolList = ({
   disableThrottle,
   allowSearch,
   pools,
-  title,
   defaultFilters,
+  allowListFormat = true,
 }: PoolListProps) => {
   const { t } = useTranslation('library');
   const { mode } = useTheme();
+  const { isReady } = useApi();
   const {
-    isReady,
-    network: { colors },
-  } = useApi();
+    networkData: { colors },
+  } = useNetwork();
   const { isSyncing } = useUi();
   const { applyFilter } = usePoolFilters();
   const { activeEra } = useNetworkMetrics();
@@ -176,25 +182,6 @@ export const PoolList = ({
 
   return (
     <ListWrapper>
-      <Header>
-        <div>
-          <h4>{title}</h4>
-        </div>
-        <div>
-          <button type="button" onClick={() => setListFormat('row')}>
-            <FontAwesomeIcon
-              icon={faBars}
-              color={listFormat === 'row' ? colors.primary[mode] : 'inherit'}
-            />
-          </button>
-          <button type="button" onClick={() => setListFormat('col')}>
-            <FontAwesomeIcon
-              icon={faGripVertical}
-              color={listFormat === 'col' ? colors.primary[mode] : 'inherit'}
-            />
-          </button>
-        </div>
-      </Header>
       <List $flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
         {allowSearch && poolsDefault.length > 0 && (
           <SearchInput
@@ -202,31 +189,58 @@ export const PoolList = ({
             placeholder={t('search')}
           />
         )}
-        <Tabs
-          config={[
-            {
-              label: t('all'),
-              includes: [],
-              excludes: [],
-            },
-            {
-              label: t('active'),
-              includes: ['active'],
-              excludes: ['locked', 'destroying'],
-            },
-            {
-              label: t('locked'),
-              includes: ['locked'],
-              excludes: [],
-            },
-            {
-              label: t('destroying'),
-              includes: ['destroying'],
-              excludes: [],
-            },
-          ]}
-          activeIndex={1}
-        />
+        <FilterHeaderWrapper>
+          <div>
+            <Tabs
+              config={[
+                {
+                  label: t('all'),
+                  includes: [],
+                  excludes: [],
+                },
+                {
+                  label: t('active'),
+                  includes: ['active'],
+                  excludes: ['locked', 'destroying'],
+                },
+                {
+                  label: t('locked'),
+                  includes: ['locked'],
+                  excludes: [],
+                },
+                {
+                  label: t('destroying'),
+                  includes: ['destroying'],
+                  excludes: [],
+                },
+              ]}
+              activeIndex={1}
+            />
+          </div>
+          <div>
+            {allowListFormat && (
+              <div>
+                <button type="button" onClick={() => setListFormat('row')}>
+                  <FontAwesomeIcon
+                    icon={faBars}
+                    color={
+                      listFormat === 'row' ? colors.primary[mode] : 'inherit'
+                    }
+                  />
+                </button>
+                <button type="button" onClick={() => setListFormat('col')}>
+                  <FontAwesomeIcon
+                    icon={faGripVertical}
+                    color={
+                      listFormat === 'col' ? colors.primary[mode] : 'inherit'
+                    }
+                  />
+                </button>
+              </div>
+            )}
+          </div>
+        </FilterHeaderWrapper>
+
         {pagination && poolsToDisplay.length > 0 && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
@@ -257,9 +271,9 @@ export const PoolList = ({
               ))}
             </>
           ) : (
-            <h4 className="none">
+            <ListStatusHeader>
               {isSyncing ? `${t('syncingPoolList')}...` : t('noMatch')}
-            </h4>
+            </ListStatusHeader>
           )}
         </MotionContainer>
       </List>

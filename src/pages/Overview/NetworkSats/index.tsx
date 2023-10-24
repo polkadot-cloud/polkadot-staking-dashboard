@@ -3,7 +3,7 @@
 
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
@@ -50,7 +50,7 @@ export const NetworkStats = () => {
 
   return (
     <CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
-      <CardHeaderWrapper>
+      <CardHeaderWrapper $withMargin>
         <h3>{t('overview.networkStats')}</h3>
       </CardHeaderWrapper>
       <Wrapper>

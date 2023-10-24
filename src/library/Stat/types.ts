@@ -3,7 +3,7 @@
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import type { AnyObject } from '@polkadot-cloud/utils/types';
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
 
 export interface StatProps {
   label: string;
@@ -23,6 +23,6 @@ export interface StatProps {
 }
 
 export interface StatAddress {
-  address: MaybeAccount;
+  address: MaybeAddress;
   display: string;
 }

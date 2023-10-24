@@ -12,7 +12,6 @@ import BigNumber from 'bignumber.js';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -20,23 +19,27 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useBatchCall } from 'library/Hooks/useBatchCall';
 import type { AnyApi, AnySubscan } from 'types';
-import { useSubscan } from 'contexts/Subscan';
+import { useSubscan } from 'contexts/Plugins/Subscan';
 import { usePayouts } from 'contexts/Payouts';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { FormProps, ActivePayout } from './types';
 import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef(
   ({ setSection, payouts, setPayouts }: FormProps, ref: any) => {
     const { t } = useTranslation('modals');
-    const { api, network } = useApi();
-    const { activeAccount } = useConnect();
+    const { api } = useApi();
+    const {
+      networkData: { units, unit },
+    } = useNetwork();
+    const { activeAccount } = useActiveAccounts();
     const { newBatchCall } = useBatchCall();
     const { removeEraPayout } = usePayouts();
     const { setModalStatus } = useOverlay().modal;
     const { getSignerWarnings } = useSignerWarnings();
     const { unclaimedPayouts: unclaimedPayoutsSubscan, setUnclaimedPayouts } =
       useSubscan();
-    const { units } = network;
 
     const totalPayout =
       payouts?.reduce(
@@ -131,9 +134,10 @@ export const Forms = forwardRef(
             ) : null}
             <div style={{ marginBottom: '2rem' }}>
               <ActionItem
-                text={`${t('claim')} ${planckToUnit(totalPayout, units)} ${
-                  network.unit
-                }`}
+                text={`${t('claim')} ${planckToUnit(
+                  totalPayout,
+                  units
+                )} ${unit}`}
               />
               <p>{t('afterClaiming')}</p>
             </div>

@@ -10,9 +10,7 @@ import {
 } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
-import { useConnect } from 'contexts/Connect';
 import { usePlugins } from 'contexts/Plugins';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
@@ -22,22 +20,26 @@ import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
   const {
-    network: {
+    networkData: {
       units,
       unit,
       brand: { token: Token },
     },
-  } = useApi();
+  } = useNetwork();
   const prices = usePrices();
   const { plugins } = usePlugins();
   const { isNetworkSyncing } = useUi();
   const { openModal } = useOverlay().modal;
   const { getBalance, getLocks } = useBalances();
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { activeAccount } = useActiveAccounts();
+  const { accountHasSigner } = useImportedAccounts();
   const { feeReserve, getTransferOptions } = useTransferOptions();
   const balance = getBalance(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
@@ -81,7 +83,10 @@ export const BalanceChart = () => {
     : new BigNumber(0);
 
   // total funds available, including existential deposit, minus staking.
-  const graphAvailable = planckToUnit(free.minus(lockStakingAmount), units);
+  const graphAvailable = planckToUnit(
+    BigNumber.max(free.minus(lockStakingAmount), 0),
+    units
+  );
   const notStaking = graphAvailable;
 
   // graph percentages
@@ -95,16 +100,25 @@ export const BalanceChart = () => {
     : new BigNumber(0);
 
   const graphNotStaking = greaterThanZero(graphTotal)
-    ? new BigNumber(100).minus(graphNominating).minus(graphInPool)
+    ? BigNumber.max(
+        new BigNumber(100).minus(graphNominating).minus(graphInPool),
+        0
+      )
     : new BigNumber(0);
 
   // available balance data
-  const fundsLocked = planckToUnit(frozen.minus(lockStakingAmount), units);
+  const fundsLocked = planckToUnit(
+    BigNumber.max(frozen.minus(lockStakingAmount), 0),
+    units
+  );
   let fundsReserved = planckToUnit(edReserved.plus(feeReserve), units);
   const fundsFree = planckToUnit(
-    BigNumber.max(allTransferOptions.freeBalance.minus(feeReserve), 0),
+    BigNumber.max(
+      allTransferOptions.freeBalance.minus(feeReserve).minus(fundsLocked),
+      0
+    ),
     units
-  ).minus(fundsLocked);
+  );
   // available balance percentages
   const graphLocked = greaterThanZero(fundsLocked)
     ? fundsLocked.dividedBy(graphAvailable.multipliedBy(0.01))

@@ -5,12 +5,12 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PageRow } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { usePlugins } from 'contexts/Plugins';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useTheme } from 'contexts/Themes';
 import { CardWrapper } from 'library/Card/Wrappers';
+import { useNetwork } from 'contexts/Network';
 import { MembersList as DefaultMemberList } from './MembersList/Default';
 import { MembersList as FetchPageMemberList } from './MembersList/FetchPage';
 
@@ -21,11 +21,8 @@ export const Members = () => {
   const { getMembersOfPoolFromNode } = usePoolMembers();
   const { selectedActivePool, isOwner, isBouncer, selectedPoolMemberCount } =
     useActivePools();
-  const { colors } = useApi().network;
+  const { colors } = useNetwork().networkData;
 
-  const listTitle = `${t('pools.poolMember', {
-    count: selectedPoolMemberCount,
-  })}`;
   const annuncementBorderColor = colors.secondary[mode];
 
   const showBlockedPrompt =
@@ -33,7 +30,6 @@ export const Members = () => {
     (isOwner() || isBouncer());
 
   const membersListProps = {
-    title: listTitle,
     batchKey: 'active_pool_members',
     pagination: true,
     selectToggleable: false,

@@ -4,12 +4,15 @@
 import { isValidAddress } from '@polkadot-cloud/utils';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
+import { useNetwork } from 'contexts/Network';
+import { formatAccountSs58 } from 'contexts/Connect/Utils';
 import { Wrapper } from './Wrapper';
 
 export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {
   const { t } = useTranslation('pages');
-  const { formatAccountSs58 } = useConnect();
+  const {
+    networkData: { ss58 },
+  } = useNetwork();
 
   const processRoleEdit = (newAddress: string) => {
     let edit = {
@@ -18,7 +21,7 @@ export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {
       reformatted: false,
     };
     if (isValidAddress(newAddress)) {
-      const addressFormatted = formatAccountSs58(newAddress);
+      const addressFormatted = formatAccountSs58(newAddress, ss58);
       if (addressFormatted) {
         edit = {
           newAddress: addressFormatted,

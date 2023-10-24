@@ -5,13 +5,14 @@ import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { determinePoolDisplay } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { Stat } from 'library/Stat';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useStatusButtons } from './useStatusButtons';
 
 export const MembershipStatus = ({
@@ -25,10 +26,11 @@ export const MembershipStatus = ({
   const { isReady } = useApi();
   const { isPoolSyncing } = useUi();
   const { openModal } = useOverlay().modal;
+  const { activeAccount } = useActiveAccounts();
   const { label, buttons } = useStatusButtons();
   const { bondedPools, meta } = useBondedPools();
+  const { isReadOnlyAccount } = useImportedAccounts();
   const { getTransferOptions } = useTransferOptions();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { selectedActivePool, isOwner, isBouncer, isMember } = useActivePools();
 
   const { active } = getTransferOptions(activeAccount).pool;

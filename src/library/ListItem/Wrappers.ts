@@ -5,51 +5,80 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { SmallFontSizeMaxWidth } from 'consts';
 
-export const Wrapper = styled.div<{ $format?: string; $inModal?: boolean }>`
+export const Wrapper = styled.div`
+  --height-top-row: 3.25rem;
+  --height-bottom-row: 5rem;
+
+  &.member {
+    --height-bottom-row: 2.75rem;
+  }
+  &.pool-join {
+    --height-bottom-row: 7.5rem;
+  }
+
+  --height-total: calc(var(--height-top-row) + var(--height-bottom-row));
+
+  height: var(--height-total);
   display: flex;
   flex-flow: row wrap;
-  width: 100%;
-  height: ${(props) => (props.$format === 'nomination' ? '6rem' : '3rem')};
   position: relative;
   margin: 0.5rem;
+  width: 100%;
 
   > .inner {
-    background: ${(props) =>
-      props.$inModal
-        ? 'var(--background-modal-item)'
-        : 'var(--background-list-item)'};
-
-    ${(props) =>
-      props.$inModal &&
-      `
+    background: var(--background-list-item);
+    &.modal {
+      background: var(--background-modal-card);
+    }
+    &.canvas {
+      background: var(--background-canvas-card);
+    }
+    &.modal,
+    &.canvas {
       box-shadow: none;
-      border: none;`}
+      border: none;
+    }
 
-    flex: 1;
     border-radius: 1rem;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     overflow: hidden;
     position: absolute;
+    padding: 0;
     top: 0px;
     left: 0px;
     width: 100%;
     height: 100%;
-    padding: 0;
 
     .row {
       flex: 1 0 100%;
-      height: 3.25rem;
       display: flex;
       align-items: center;
       padding: 0 0.5rem;
 
-      &.status {
-        height: 2.5rem;
+      &.top {
+        height: var(--height-top-row);
       }
-      svg {
-        margin: 0;
+      &.bottom {
+        height: var(--height-bottom-row);
+
+        &.lg {
+          display: flex;
+          align-items: center;
+          > div {
+            &:first-child {
+              flex-grow: 1;
+              padding: 0 0.25rem;
+            }
+            &:last-child {
+              flex-shrink: 1;
+              display: flex;
+              flex-direction: column;
+              align-items: flex-end;
+            }
+          }
+        }
       }
     }
   }
@@ -67,6 +96,12 @@ export const Labels = styled.div`
 
   button {
     padding: 0 0.1rem;
+    background: var(--shimmer-foreground);
+    font-size: 1rem;
+    border-radius: 50%;
+    width: 1.9rem;
+    height: 1.9rem;
+
     @media (min-width: ${SmallFontSizeMaxWidth}px) {
       padding: 0 0.2rem;
     }
@@ -82,6 +117,11 @@ export const Labels = styled.div`
     }
   }
 
+  &.canvas button {
+    background: none;
+    border: 1px solid var(--border-secondary-color);
+  }
+
   .label {
     color: var(--text-color-secondary);
     position: relative;
@@ -91,24 +131,30 @@ export const Labels = styled.div`
     font-size: inherit;
 
     @media (min-width: ${SmallFontSizeMaxWidth}px) {
-      margin: 0 0.2rem;
+      margin: 0 0.35rem;
       &.pool {
-        margin: 0 0.4rem;
+        margin: 0 0.45rem;
       }
     }
-    button {
-      font-size: 1.1rem;
-    }
+
     &.button-with-text {
       margin-right: 0;
 
       button {
-        color: var(--accent-color-primary);
+        color: var(--accent-color-secondary);
+        font-family: InterSemiBold, sans-serif;
         font-size: 0.95rem;
         display: flex;
         flex-flow: row wrap;
         align-items: center;
+        width: auto;
+        height: auto;
+        border-radius: 0.75rem;
+        padding: 0.25rem 0.75rem;
 
+        &:hover {
+          opacity: 1;
+        }
         > svg {
           margin-left: 0.3rem;
         }
@@ -160,7 +206,6 @@ export const IdentityWrapper = styled(motion.div)`
     font-family: InterSemiBold, sans-serif;
     position: absolute;
     top: 0;
-    width: 100%;
     height: 3.25rem;
     line-height: 3.25rem;
     padding: 0 0 0 0.3rem;
@@ -169,6 +214,7 @@ export const IdentityWrapper = styled(motion.div)`
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 1rem;
+    width: 100%;
 
     > span {
       color: var(--text-color-secondary);
@@ -181,8 +227,11 @@ export const IdentityWrapper = styled(motion.div)`
   }
 `;
 
-export const ValidatorStatusWrapper = styled.div<{ $status: string }>`
-  margin-right: 0.35rem;
+export const ValidatorStatusWrapper = styled.div<{
+  $status: string;
+  $noMargin?: boolean;
+}>`
+  margin-right: ${(props) => (props.$noMargin ? '0' : '0.35rem')};
   padding: 0 0.5rem;
 
   h5 {
@@ -259,5 +308,60 @@ export const TooltipTrigger = styled.div`
 
   &.as-button {
     cursor: pointer;
+  }
+`;
+
+export const ValidatorPulseWrapper = styled.div`
+  border: 1px solid var(--grid-color-primary);
+  border-radius: 0.25rem;
+  height: 3.2rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 13.5rem;
+  position: relative;
+  padding: 0.15rem 0;
+
+  &.canvas {
+    border: 1px solid var(--grid-color-secondary);
+  }
+
+  > svg {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  > .preload {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--shimmer-foreground);
+    background-image: linear-gradient(
+      to right,
+      var(--shimmer-foreground) 0%,
+      var(--shimmer-background) 20%,
+      var(--shimmer-foreground) 40%,
+      var(--shimmer-foreground) 100%
+    );
+    background-repeat: no-repeat;
+    background-size: 500px 104px;
+    animation-duration: 1.5s;
+    opacity: 0.2;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: shimmer;
+    animation-timing-function: linear;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+
+    @keyframes shimmer {
+      0% {
+        background-position: -50% 0;
+      }
+      100% {
+        background-position: 200% 0;
+      }
+    }
   }
 `;

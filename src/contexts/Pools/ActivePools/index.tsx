@@ -12,10 +12,11 @@ import type {
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
-import { useSubscan } from 'contexts/Subscan';
+import { useSubscan } from 'contexts/Plugins/Subscan';
 import { usePlugins } from 'contexts/Plugins';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from '../../Api';
-import { useConnect } from '../../Connect';
 import { useBondedPools } from '../BondedPools';
 import { usePoolMemberships } from '../PoolMemberships';
 import { usePoolsConfig } from '../PoolsConfig';
@@ -27,13 +28,14 @@ export const ActivePoolsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { network } = useNetwork();
+  const { api, isReady } = useApi();
   const { eraStakers } = useStaking();
   const { pluginEnabled } = usePlugins();
-  const { activeAccount } = useConnect();
   const { fetchPoolDetails } = useSubscan();
-  const { api, network, isReady } = useApi();
   const { membership } = usePoolMemberships();
   const { createAccounts } = usePoolsConfig();
+  const { activeAccount } = useActiveAccounts();
   const { getAccountPools, bondedPools } = useBondedPools();
   const { getMembersOfPoolFromNode, poolMembersNode } = usePoolMembers();
 

@@ -13,15 +13,16 @@ import { useHelp } from 'contexts/Help';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import type { UIContextInterface } from 'contexts/UI/types';
-import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
-import { ReactComponent as ForumSVG } from 'img/forum.svg';
-import { ReactComponent as InfoSVG } from 'img/info.svg';
-import { ReactComponent as LanguageSVG } from 'img/language.svg';
-import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
-import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
-import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
+import CogOutlineSVG from 'img/cog-outline.svg?react';
+import ForumSVG from 'img/forum.svg?react';
+import InfoSVG from 'img/info.svg?react';
+import LanguageSVG from 'img/language.svg?react';
+import LogoGithubSVG from 'img/logo-github.svg?react';
+import MoonOutlineSVG from 'img/moon-outline.svg?react';
+import SunnyOutlineSVG from 'img/sunny-outline.svg?react';
 import { useOutsideAlerter } from 'library/Hooks';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import { Heading } from './Heading/Heading';
 import { Main } from './Main';
 import { Secondary } from './Secondary';
@@ -29,7 +30,8 @@ import { ConnectionSymbol, Separator, Wrapper } from './Wrapper';
 
 export const SideMenu = () => {
   const { t } = useTranslation('base');
-  const { network, apiStatus } = useApi();
+  const { apiStatus } = useApi();
+  const { networkData, network } = useNetwork();
   const { mode, toggleTheme } = useTheme();
   const { openModal } = useOverlay().modal;
   const {
@@ -99,11 +101,11 @@ export const SideMenu = () => {
         <Heading title={t('network')} minimised={sideMenuMinimised} />
         <Secondary
           classes={[apiStatusClass]}
-          name={capitalizeFirstLetter(network.name)}
+          name={capitalizeFirstLetter(network)}
           onClick={() => openModal({ key: 'Networks' })}
           icon={{
-            Svg: network.brand.inline.svg,
-            size: network.brand.inline.size,
+            Svg: networkData.brand.inline.svg,
+            size: networkData.brand.inline.size,
           }}
           minimised={sideMenuMinimised}
           action={

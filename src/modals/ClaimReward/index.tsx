@@ -7,7 +7,6 @@ import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
@@ -16,11 +15,16 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const ClaimReward = () => {
   const { t } = useTranslation('modals');
-  const { api, network } = useApi();
-  const { activeAccount } = useConnect();
+  const { api } = useApi();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
+  const { activeAccount } = useActiveAccounts();
   const { notEnoughFunds } = useTxMeta();
   const { selectedActivePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
@@ -30,7 +34,6 @@ export const ClaimReward = () => {
     setModalResize,
   } = useOverlay().modal;
 
-  const { units, unit } = network;
   let { pendingRewards } = selectedActivePool || {};
   pendingRewards = pendingRewards ?? new BigNumber(0);
   const { claimType } = options;

@@ -5,7 +5,7 @@ import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ModalPadding } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { ReactComponent as ForumSVG } from 'img/forum.svg';
+import ForumSVG from 'img/forum.svg?react';
 import { Title } from 'library/Modal/Title';
 
 export const GoToFeedback = () => {
@@ -32,6 +32,7 @@ export const GoToFeedback = () => {
               href="https://polkadot-staking-dashboard.canny.io/feedback"
               target="_blank"
               rel="noreferrer"
+              style={{ color: 'var(--accent-color-primary' }}
             >
               {t('openFeedback')} &nbsp;
               <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-3" />

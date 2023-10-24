@@ -11,15 +11,14 @@ import {
   ButtonHelp,
   ButtonMonoInvert,
   ButtonSecondary,
-  PolkadotIcon,
+  Polkicon,
 } from '@polkadot-cloud/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useProxies } from 'contexts/Proxies';
 import { AccountInput } from 'library/AccountInput';
-import { useTheme } from 'contexts/Themes';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import {
   ActionWithButton,
   ManualAccount,
@@ -29,9 +28,9 @@ import type { ListWithInputProps } from './types';
 
 export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');
-  const { accounts, getAccount } = useConnect();
   const { openHelp } = useHelp();
-  const { mode } = useTheme();
+  const { accounts } = useImportedAccounts();
+  const { getAccount } = useImportedAccounts();
   const { delegates, handleDeclareDelegate } = useProxies();
 
   // Filter delegates to only show those who are imported in the dashboard.
@@ -81,12 +80,7 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                       <ManualAccount key={`user_delegate_${i}_delegator_${j}`}>
                         <div>
                           <span>
-                            <PolkadotIcon
-                              dark={mode === 'dark'}
-                              nocopy
-                              address={delegate}
-                              size={26}
-                            />
+                            <Polkicon address={delegate} size={26} />
                           </span>
                           <div className="text">
                             <h4 className="title">

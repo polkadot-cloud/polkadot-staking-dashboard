@@ -6,20 +6,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ModalConnectItem } from '@polkadot-cloud/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
-import { useExtensions } from 'contexts/Extensions';
+import {
+  useExtensions,
+  useExtensionAccounts,
+} from '@polkadot-cloud/react/hooks';
 import { useNotifications } from 'contexts/Notifications';
+import { ExtensionIcons } from '@polkadot-cloud/assets/extensions';
 import { ExtensionInner } from './Wrappers';
 import type { ExtensionProps } from './types';
 
 export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const { t } = useTranslation('modals');
-  const { extensions, extensionsStatus } = useExtensions();
-  const { connectExtensionAccounts } = useConnect();
   const { addNotification } = useNotifications();
-  const { title, Icon, website } = meta;
+  const { connectExtensionAccounts } = useExtensionAccounts();
+  const { extensions, extensionsStatus } = useExtensions();
+  const { title, website, id } = meta;
 
-  const { id } = meta;
+  const Icon = ExtensionIcons[id || ''] || undefined;
+
   const extension = extensions.find((e) => e.id === id);
   const status = !extension ? 'not_found' : extensionsStatus[id];
   const disabled = status === 'connected' || !extension;
@@ -48,18 +52,16 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   // click to connect to extension
   const handleClick = async () => {
     if (status !== 'connected' && extension) {
-      (async () => {
-        const connected = await connectExtensionAccounts(extension);
-        // force re-render to display error messages
-        setIncrement(increment + 1);
+      const connected = await connectExtensionAccounts(extension);
+      // force re-render to display error messages
+      setIncrement(increment + 1);
 
-        if (connected) {
-          addNotification({
-            title: t('extensionConnected'),
-            subtitle: `${t('titleExtensionConnected', { title })}`,
-          });
-        }
-      })();
+      if (connected) {
+        addNotification({
+          title: t('extensionConnected'),
+          subtitle: `${t('titleExtensionConnected', { title })}`,
+        });
+      }
     }
   };
 
@@ -68,23 +70,19 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
       <ExtensionInner>
         <div>
           <div className="body">
-            {!(disabled || status === 'connected') ? (
+            {!disabled ? (
               <button
                 type="button"
                 className="button"
                 disabled={disabled}
-                onClick={() => {
-                  if (status !== 'connected') {
-                    handleClick();
-                  }
-                }}
+                onClick={() => handleClick()}
               >
                 &nbsp;
               </button>
             ) : null}
 
             <div className="row icon">
-              <Icon width={size} height={size} />
+              <Icon style={{ width: size, height: size }} />
             </div>
             <div className="status">
               {flag && flag}

@@ -2,28 +2,22 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
-import {
-  ButtonText,
-  HardwareAddress,
-  PolkadotIcon,
-} from '@polkadot-cloud/react';
+import { ButtonText, HardwareAddress, Polkicon } from '@polkadot-cloud/react';
 import { ellipsisFn, unescape } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import { usePrompt } from 'contexts/Prompt';
 import { Confirm } from 'library/Import/Confirm';
 import { Remove } from 'library/Import/Remove';
-import { useTheme } from 'contexts/Themes';
 import { AddressesWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
+import { useNetwork } from 'contexts/Network';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 
 export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
   const { t } = useTranslation('modals');
-  const { network } = useApi();
-  const { mode } = useTheme();
+  const { network } = useNetwork();
   const {
     getIsExecuting,
     ledgerAccountExists,
@@ -34,14 +28,14 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
     getLedgerAccount,
     pairDevice,
   } = useLedgerHardware();
-  const { openPromptWith } = usePrompt();
-  const { renameImportedAccount } = useConnect();
   const isExecuting = getIsExecuting();
+  const { openPromptWith } = usePrompt();
+  const { renameOtherAccount } = useOtherAccounts();
   const source = 'ledger';
 
   const renameHandler = (address: string, newName: string) => {
     renameLedgerAccount(address, newName);
-    renameImportedAccount(address, newName);
+    renameOtherAccount(address, newName);
   };
 
   const openConfirmHandler = (address: string, index: number) => {
@@ -75,7 +69,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
           {addresses.map(({ address, index }: AnyJson, i: number) => {
             const initialName = (() => {
               const localAddress = getLocalLedgerAddresses().find(
-                (a) => a.address === address && a.network === network.name
+                (a) => a.address === address && a.network === network
               );
               return localAddress?.name
                 ? unescape(localAddress.name)
@@ -88,14 +82,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
                 address={address}
                 index={index}
                 initial={initialName}
-                Identicon={
-                  <PolkadotIcon
-                    dark={mode === 'dark'}
-                    nocopy
-                    address={address}
-                    size={40}
-                  />
-                }
+                Identicon={<Polkicon address={address} size={40} />}
                 existsHandler={ledgerAccountExists}
                 renameHandler={renameHandler}
                 openRemoveHandler={openRemoveHandler}

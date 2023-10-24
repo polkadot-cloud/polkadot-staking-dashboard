@@ -12,10 +12,10 @@ import { extractUrlValue, removeVarFromUrlHash } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Element } from 'react-scroll';
-import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { Nominate } from 'library/SetupSteps/Nominate';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Bond } from './Bond';
 import { Payee } from './Payee';
 import { Summary } from './Summary';
@@ -23,7 +23,7 @@ import { Summary } from './Summary';
 export const Setup = () => {
   const { t } = useTranslation('pages');
   const navigate = useNavigate();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccounts();
   const { setOnNominatorSetup, removeSetupProgress } = useSetup();
 
   return (
@@ -69,11 +69,7 @@ export const Setup = () => {
       <PageRow>
         <CardWrapper>
           <Element name="nominate" style={{ position: 'absolute' }} />
-          <Nominate
-            batchKey="generate_nominations_inactive"
-            bondFor="nominator"
-            section={2}
-          />
+          <Nominate bondFor="nominator" section={2} />
         </CardWrapper>
       </PageRow>
       <PageRow>

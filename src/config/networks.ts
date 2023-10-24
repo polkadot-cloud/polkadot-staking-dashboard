@@ -3,18 +3,18 @@
 
 import { WellKnownChain } from '@substrate/connect';
 import { DefaultParams } from 'consts';
-import { ReactComponent as KusamaIconSVG } from 'img/kusama_icon.svg';
-import { ReactComponent as KusamaInlineSVG } from 'img/kusama_inline.svg';
-import { ReactComponent as KusamaLogoSVG } from 'img/kusama_logo.svg';
-import { ReactComponent as PolkadotIconSVG } from 'img/polkadot_icon.svg';
-import { ReactComponent as PolkadotInlineSVG } from 'img/polkadot_inline.svg';
-import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_logo.svg';
-import { ReactComponent as WestendIconSVG } from 'img/westend_icon.svg';
-import { ReactComponent as WestendInlineSVG } from 'img/westend_inline.svg';
-import { ReactComponent as WestendLogoSVG } from 'img/westend_logo.svg';
-import { ReactComponent as PolkadotTokenSVG } from 'config/tokens/svg/DOT.svg';
-import { ReactComponent as KusamaTokenSVG } from 'config/tokens/svg/KSM.svg';
-import { ReactComponent as WestendTokenSVG } from 'config/tokens/svg/WND.svg';
+import KusamaIconSVG from 'img/kusama_icon.svg?react';
+import KusamaInlineSVG from 'img/kusama_inline.svg?react';
+import KusamaLogoSVG from 'img/kusama_logo.svg?react';
+import PolkadotIconSVG from 'img/polkadot_icon.svg?react';
+import PolkadotInlineSVG from 'img/polkadot_inline.svg?react';
+import PolkadotLogoSVG from 'img/polkadot_logo.svg?react';
+import WestendIconSVG from 'img/westend_icon.svg?react';
+import WestendInlineSVG from 'img/westend_inline.svg?react';
+import WestendLogoSVG from 'img/westend_logo.svg?react';
+import PolkadotTokenSVG from 'config/tokens/svg/DOT.svg?react';
+import KusamaTokenSVG from 'config/tokens/svg/KSM.svg?react';
+import WestendTokenSVG from 'config/tokens/svg/WND.svg?react';
 
 import type { Networks } from 'types';
 

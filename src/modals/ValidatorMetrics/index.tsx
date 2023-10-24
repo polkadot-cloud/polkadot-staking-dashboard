@@ -1,16 +1,15 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonHelp, ModalPadding, PolkadotIcon } from '@polkadot-cloud/react';
+import { ButtonHelp, ModalPadding, Polkicon } from '@polkadot-cloud/react';
 import { ellipsisFn, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useStaking } from 'contexts/Staking';
-import { useSubscan } from 'contexts/Subscan';
+import { useSubscan } from 'contexts/Plugins/Subscan';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { EraPoints as EraPointsGraph } from 'library/Graphs/EraPoints';
 import { formatSize } from 'library/Graphs/Utils';
@@ -19,15 +18,15 @@ import { useSize } from 'library/Hooks/useSize';
 import { Title } from 'library/Modal/Title';
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { StatusLabel } from 'library/StatusLabel';
-import { SubscanButton } from 'library/SubscanButton';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useTheme } from 'contexts/Themes';
+import { PluginLabel } from 'library/PluginLabel';
+import { useNetwork } from 'contexts/Network';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');
   const {
-    network: { units, unit },
-  } = useApi();
+    networkData: { units, unit },
+  } = useNetwork();
   const { options } = useOverlay().modal.config;
   const { address, identity } = options;
   const { fetchEraPoints }: any = useSubscan();
@@ -36,7 +35,6 @@ export const ValidatorMetrics = () => {
     eraStakers: { stakers },
   } = useStaking();
   const { openHelp } = useHelp();
-  const { mode } = useTheme();
 
   // is the validator in the active era
   const validatorInEra = stakers.find((s) => s.address === address) || null;
@@ -83,12 +81,7 @@ export const ValidatorMetrics = () => {
     <>
       <Title title={t('validatorMetrics')} />
       <div className="header">
-        <PolkadotIcon
-          dark={mode === 'dark'}
-          nocopy
-          address={address}
-          size={33}
-        />
+        <Polkicon address={address} size={33} />
         <h2>
           &nbsp;&nbsp;
           {identity === null ? ellipsisFn(address) : identity}
@@ -114,7 +107,7 @@ export const ValidatorMetrics = () => {
         className="body"
         style={{ position: 'relative', marginTop: '0.5rem' }}
       >
-        <SubscanButton />
+        <PluginLabel plugin="subscan" />
         <CardWrapper
           className="transparent"
           style={{
@@ -122,7 +115,7 @@ export const ValidatorMetrics = () => {
             height: 350,
           }}
         >
-          <CardHeaderWrapper>
+          <CardHeaderWrapper $withMargin>
             <h4>
               {t('recentEraPoints')}{' '}
               <ButtonHelp marginLeft onClick={() => openHelp('Era Points')} />

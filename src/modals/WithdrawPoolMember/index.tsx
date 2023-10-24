@@ -7,8 +7,7 @@ import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
@@ -17,11 +16,16 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const WithdrawPoolMember = () => {
   const { t } = useTranslation('modals');
-  const { api, network, consts } = useApi();
-  const { activeAccount } = useConnect();
+  const { api, consts } = useApi();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
+  const { activeAccount } = useActiveAccounts();
   const {
     setModalStatus,
     config: { options },
@@ -48,12 +52,9 @@ export const WithdrawPoolMember = () => {
     }
   });
 
-  const bonded = planckToUnit(new BigNumber(rmCommas(points)), network.units);
+  const bonded = planckToUnit(new BigNumber(rmCommas(points)), units);
 
-  const totalWithdraw = planckToUnit(
-    new BigNumber(totalWithdrawUnit),
-    network.units
-  );
+  const totalWithdraw = planckToUnit(new BigNumber(totalWithdrawUnit), units);
 
   // valid to submit transaction
   const [valid] = useState<boolean>(isNotZero(totalWithdraw) ?? false);
@@ -95,9 +96,7 @@ export const WithdrawPoolMember = () => {
       <Close />
       <ModalPadding>
         <h2 className="title">{t('withdrawMemberFunds')}</h2>
-        <ActionItem
-          text={`${t('withdraw')} ${totalWithdraw} ${network.unit}`}
-        />
+        <ActionItem text={`${t('withdraw')} ${totalWithdraw} ${unit}`} />
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
             {warnings.map((text, i) => (

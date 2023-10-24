@@ -10,14 +10,15 @@ import {
 import BigNumber from 'bignumber.js';
 import React, { useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useStaking } from 'contexts/Staking';
-import type { AnyApi, AnyJson, MaybeAccount } from 'types';
+import type { AnyApi, AnyJson, MaybeAddress } from 'types';
 import Worker from 'workers/stakers?worker';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
 import { validateLocalExposure } from 'contexts/Validators/Utils';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { defaultFastUnstakeContext, defaultMeta } from './defaults';
 import type {
   FastUnstakeContextInterface,
@@ -32,9 +33,10 @@ export const FastUnstakeProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { activeAccount } = useConnect();
+  const { network } = useNetwork();
+  const { api, isReady, consts } = useApi();
+  const { activeAccount } = useActiveAccounts();
   const { inSetup, fetchEraStakers } = useStaking();
-  const { api, isReady, consts, network } = useApi();
   const { metrics, activeEra } = useNetworkMetrics();
   const { getNominationStatus } = useNominationStatus();
   const { fastUnstakeErasToCheckPerBlock } = metrics;
@@ -69,7 +71,7 @@ export const FastUnstakeProvider = ({
   const unsubs = useRef<AnyApi[]>([]);
 
   // localStorage key to fetch local metadata.
-  const getLocalkey = (a: MaybeAccount) => `${network.name}_fast_unstake_${a}`;
+  const getLocalkey = (a: MaybeAddress) => `${network}_fast_unstake_${a}`;
 
   // check until bond duration eras surpasssed.
   const checkToEra = activeEra.index.minus(bondDuration);
@@ -146,7 +148,7 @@ export const FastUnstakeProvider = ({
   }, [
     inSetup(),
     isReady,
-    network.name,
+    network,
     activeAccount,
     activeEra.index,
     fastUnstakeErasToCheckPerBlock,
@@ -162,7 +164,7 @@ export const FastUnstakeProvider = ({
 
       // ensure still same conditions.
       const { networkName, who } = data;
-      if (networkName !== network.name || who !== activeAccount) return;
+      if (networkName !== network || who !== activeAccount) return;
 
       const { era, exposed } = data;
 
@@ -214,7 +216,7 @@ export const FastUnstakeProvider = ({
   };
 
   // initiate fast unstake eligibility check.
-  const processEligibility = async (a: MaybeAccount, era: BigNumber) => {
+  const processEligibility = async (a: MaybeAddress, era: BigNumber) => {
     // ensure current era has synced
     if (
       era.isLessThan(0) ||
@@ -240,7 +242,7 @@ export const FastUnstakeProvider = ({
       task: 'processEraForExposure',
       era: era.toString(),
       who: activeAccount,
-      networkName: network.name,
+      networkName: network,
       exitOnExposed: true,
       exposures,
     });
@@ -249,7 +251,7 @@ export const FastUnstakeProvider = ({
   // subscribe to fastUnstake queue
   const subscribeToFastUnstakeQueue = async () => {
     if (!api || !activeAccount) return;
-    const subscribeQueue = async (a: MaybeAccount) => {
+    const subscribeQueue = async (a: MaybeAddress) => {
       const u = await api.query.fastUnstake.queue(a, (q: AnyApi) =>
         setStateWithRef(
           new BigNumber(rmCommas(q.unwrapOrDefault(0).toString())),

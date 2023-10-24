@@ -15,9 +15,12 @@ import BigNumber from 'bignumber.js';
 import React, { useRef, useState } from 'react';
 import { isSupportedProxy } from 'config/proxies';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
-import type { AnyApi, MaybeAccount } from 'types';
+import type { AnyApi, MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import * as defaults from './defaults';
 import type {
   Delegates,
@@ -33,14 +36,11 @@ export const ProxiesProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, isReady, network } = useApi();
-  const {
-    accounts,
-    activeProxy,
-    setActiveProxy,
-    activeAccount,
-    addExternalAccount,
-  } = useConnect();
+  const { network } = useNetwork();
+  const { api, isReady } = useApi();
+  const { accounts } = useImportedAccounts();
+  const { addExternalAccount } = useOtherAccounts();
+  const { activeProxy, setActiveProxy, activeAccount } = useActiveAccounts();
 
   // store the proxy accounts of each imported account.
   const [proxies, setProxies] = useState<Proxies>([]);
@@ -137,12 +137,12 @@ export const ProxiesProvider = ({
   };
 
   // Gets the delegates of the given account
-  const getDelegates = (address: MaybeAccount): Proxy | undefined =>
+  const getDelegates = (address: MaybeAddress): Proxy | undefined =>
     proxiesRef.current.find(({ delegator }) => delegator === address) ||
     undefined;
 
   // Gets delegators and proxy types for the given delegate address
-  const getProxiedAccounts = (address: MaybeAccount) => {
+  const getProxiedAccounts = (address: MaybeAddress) => {
     const delegate = delegatesRef.current[address || ''];
     if (!delegate) {
       return [];
@@ -159,8 +159,8 @@ export const ProxiesProvider = ({
 
   // Gets the delegates and proxy type of an account, if any.
   const getProxyDelegate = (
-    delegator: MaybeAccount,
-    delegate: MaybeAccount
+    delegator: MaybeAddress,
+    delegate: MaybeAddress
   ): ProxyDelegate | null =>
     proxiesRef.current
       .find((p) => p.delegator === delegator)
@@ -177,7 +177,7 @@ export const ProxiesProvider = ({
   // proxy if it is the delegate of `activeAccount`.
   useEffectIgnoreInitial(() => {
     const localActiveProxy = localStorageOrDefault(
-      `${network.name}_active_proxy`,
+      `${network}_active_proxy`,
       null
     );
 
@@ -206,7 +206,7 @@ export const ProxiesProvider = ({
         }
       } catch (e) {
         // Corrupt local active proxy record. Remove it.
-        localStorage.removeItem(`${network.name}_active_proxy`);
+        localStorage.removeItem(`${network}_active_proxy`);
       }
     }
   }, [accounts, activeAccount, proxiesRef.current, network]);

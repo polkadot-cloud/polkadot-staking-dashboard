@@ -3,7 +3,7 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clipAddress, isNotZero, planckToUnit } from '@polkadot-cloud/utils';
+import { ellipsisFn, isNotZero, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { formatDistance, fromUnixTime } from 'date-fns';
 import { motion } from 'framer-motion';
@@ -11,7 +11,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DefaultLocale, ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
@@ -23,6 +23,7 @@ import { Identity } from 'library/ListItem/Labels/Identity';
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
 import { locales } from 'locale';
 import type { AnySubscan } from 'types';
+import { useNetwork } from 'contexts/Network';
 import { ItemWrapper } from '../Wrappers';
 import type { PayoutListProps } from '../types';
 import { PayoutListProvider, usePayoutList } from './context';
@@ -36,10 +37,10 @@ export const PayoutListInner = ({
 }: PayoutListProps) => {
   const { i18n, t } = useTranslation('pages');
   const { mode } = useTheme();
+  const { isReady } = useApi();
   const {
-    isReady,
-    network: { units, unit, colors },
-  } = useApi();
+    networkData: { units, unit, colors },
+  } = useNetwork();
   const { activeEra } = useNetworkMetrics();
   const { listFormat, setListFormat } = usePayoutList();
   const { validators } = useValidators();
@@ -212,7 +213,7 @@ export const PayoutListInner = ({
                               {batchIndex > 0 ? (
                                 <Identity address={p.validator_stash} />
                               ) : (
-                                <div>{clipAddress(p.validator_stash)}</div>
+                                <div>{ellipsisFn(p.validator_stash)}</div>
                               )}
                             </>
                           )}

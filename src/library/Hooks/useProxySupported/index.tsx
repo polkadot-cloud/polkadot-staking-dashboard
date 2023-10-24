@@ -6,22 +6,22 @@ import {
   isSupportedProxyCall,
 } from 'config/proxies';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useProxies } from 'contexts/Proxies';
-import type { AnyApi, AnyJson, MaybeAccount } from 'types';
+import type { AnyApi, AnyJson, MaybeAddress } from 'types';
 
 export const useProxySupported = () => {
-  const { activeProxy } = useConnect();
   const { getBondedAccount } = useBonded();
   const { getProxyDelegate } = useProxies();
+  const { activeProxy } = useActiveAccounts();
 
   // If call is from controller, & controller is different from stash, then proxy is not
   // supported.
-  const controllerNotSupported = (c: string, f: MaybeAccount) =>
+  const controllerNotSupported = (c: string, f: MaybeAddress) =>
     UnsupportedIfUniqueController.includes(c) && getBondedAccount(f) !== f;
 
   // Determine whether the provided tx is proxy supported.
-  const isProxySupported = (tx: AnyApi, delegator: MaybeAccount) => {
+  const isProxySupported = (tx: AnyApi, delegator: MaybeAddress) => {
     // if already wrapped, return.
     if (
       tx?.method.toHuman().section === 'proxy' &&

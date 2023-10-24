@@ -3,15 +3,15 @@
 
 import { HardwareStatusBar } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useHelp } from 'contexts/Help';
 import { usePrompt } from 'contexts/Prompt';
-import { ReactComponent as StatusBarIcon } from 'img/ledgerIcon.svg';
+import LedgerSVG from '@polkadot-cloud/assets/extensions/svg/ledger.svg?react';
 import { Heading } from 'library/Import/Heading';
 import type { AnyJson } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import { Addresess } from './Addresses';
 import { Reset } from './Reset';
 
@@ -21,14 +21,14 @@ export const Manage = ({
   removeLedgerAddress,
 }: AnyJson) => {
   const { t } = useTranslation();
-  const { name } = useApi().network;
+  const { network } = useNetwork();
   const { setIsExecuting, getIsExecuting, resetStatusCodes, getFeedback } =
     useLedgerHardware();
   const { openPromptWith } = usePrompt();
   const { replaceModal } = useOverlay().modal;
   const { openHelp } = useHelp();
 
-  const { appName, Icon } = getLedgerApp(name);
+  const { appName, Icon } = getLedgerApp(network);
   const isExecuting = getIsExecuting();
 
   const fallbackMessage = `${t('ledgerAccounts', {
@@ -59,7 +59,7 @@ export const Manage = ({
       />
       <HardwareStatusBar
         show
-        Icon={StatusBarIcon}
+        Icon={LedgerSVG}
         text={feedback?.message || fallbackMessage}
         help={
           helpKey

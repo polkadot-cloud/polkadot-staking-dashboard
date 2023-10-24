@@ -3,16 +3,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import BigNumber from 'bignumber.js';
-import type { ValidatorsContextInterface } from '../types';
-
-export const defaultValidatorsData = {
-  entries: [],
-  notFullCommissionCount: 0,
-  totalNonAllCommission: new BigNumber(0),
-};
+import type { EraPointsBoundaries, ValidatorsContextInterface } from '../types';
 
 export const defaultValidatorsContext: ValidatorsContextInterface = {
   fetchValidatorPrefs: async (a) => new Promise((resolve) => resolve(null)),
+  getValidatorPointsFromEras: (startEra, address) => ({}),
+  getNominated: (bondFor) => [],
+  injectValidatorListData: (entries) => [],
   validators: [],
   validatorIdentities: {},
   validatorSupers: {},
@@ -22,4 +19,17 @@ export const defaultValidatorsContext: ValidatorsContextInterface = {
   nominated: null,
   poolNominated: null,
   validatorCommunity: [],
+  erasRewardPoints: {},
+  validatorsFetched: 'unsynced',
+  eraPointsBoundaries: null,
+  validatorEraPointsHistory: {},
+  erasRewardPointsFetched: 'unsynced',
 };
+
+export const defaultValidatorsData = {
+  entries: [],
+  notFullCommissionCount: 0,
+  totalNonAllCommission: new BigNumber(0),
+};
+
+export const defaultEraPointsBoundaries: EraPointsBoundaries = null;

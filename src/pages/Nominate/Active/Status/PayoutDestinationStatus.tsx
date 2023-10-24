@@ -3,13 +3,14 @@
 
 import { faGear, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Stat } from 'library/Stat';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const PayoutDestinationStatus = () => {
   const { t } = useTranslation('pages');
@@ -18,7 +19,8 @@ export const PayoutDestinationStatus = () => {
   const { staking, inSetup } = useStaking();
   const { isFastUnstaking } = useUnstaking();
   const { getPayeeItems } = usePayeeConfig();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { activeAccount } = useActiveAccounts();
+  const { isReadOnlyAccount } = useImportedAccounts();
   const { payee } = staking;
 
   // Get payee status text to display.
