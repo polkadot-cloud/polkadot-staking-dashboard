@@ -14,7 +14,7 @@ import { useApi } from 'contexts/Api';
 import type { Sync } from '@polkadot-cloud/react/types';
 import BigNumber from 'bignumber.js';
 import { formatRawExposures } from 'contexts/Staking/Utils';
-import type { AnyObject } from '@polkadot-cloud/utils/types';
+import { mergeDeep } from '@polkadot-cloud/utils';
 import type { PoolPerformanceContextInterface } from './types';
 import { defaultPoolPerformanceContext } from './defaults';
 
@@ -43,32 +43,6 @@ export const PoolPerformanceProvider = ({
 
   // Store the earliest era that should be processed.
   const [finishEra, setFinishEra] = useState<BigNumber>(new BigNumber(0));
-
-  /**
-   * Deep merge two objects.
-   * @param target
-   * @param ...sources
-   */
-  const isObject = (item: AnyObject) =>
-    item && typeof item === 'object' && !Array.isArray(item);
-
-  const mergeDeep = (target: AnyObject, ...sources: AnyObject[]): AnyObject => {
-    if (!sources.length) return target;
-    const source = sources.shift();
-
-    if (isObject(target) && isObject(source)) {
-      for (const key in source) {
-        if (isObject(source[key])) {
-          if (!target[key]) Object.assign(target, { [key]: {} });
-          mergeDeep(target[key], source[key]);
-        } else {
-          Object.assign(target, { [key]: source[key] });
-        }
-      }
-    }
-
-    return mergeDeep(target, ...sources);
-  };
 
   // Handle worker message on completed exposure check.
   worker.onmessage = (message: MessageEvent) => {
