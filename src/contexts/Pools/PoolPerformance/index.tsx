@@ -43,7 +43,6 @@ export const PoolPerformanceProvider = ({
     if (message) {
       const { data } = message;
       const { task } = data;
-      // eslint-disable-next-line
       if (task !== 'processNominationPoolsRewardData') return;
 
       const { poolRewardData } = data;
