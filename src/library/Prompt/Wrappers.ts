@@ -27,6 +27,16 @@ export const PromptWrapper = styled.div`
       z-index: 8;
       cursor: default;
     }
+
+    /* status message placed below title */
+    h4.subheading {
+      margin-bottom: 1rem;
+    }
+
+    /* padded content to give extra spacing */
+    .padded {
+      padding: 1rem 1.5rem;
+    }
   }
 `;
 
@@ -150,5 +160,19 @@ export const FilterListButton = styled.button<{ $active: boolean }>`
     transition: color var(--transition-duration);
     margin-left: 0.2rem;
     margin-right: 0.9rem;
+  }
+`;
+
+export const FooterWrapper = styled.div`
+  margin: 1.5rem 0 0.5rem 0;
+`;
+
+export const PromptListItem = styled.div`
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border-primary-color);
+
+  &.inactive {
+    opacity: var(--opacity-disabled);
   }
 `;

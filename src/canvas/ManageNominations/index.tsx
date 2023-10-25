@@ -25,7 +25,7 @@ import type {
   NominationSelection,
   NominationSelectionWithResetCounter,
 } from 'library/GenerateNominations/types';
-import { RevertPrompt } from './RevertPrompt';
+import { RevertPrompt } from './Prompts/RevertPrompt';
 import { CanvasSubmitTxFooter, ManageNominationsWrapper } from './Wrappers';
 
 export const ManageNominations = () => {

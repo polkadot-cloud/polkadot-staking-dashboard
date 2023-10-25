@@ -10,7 +10,8 @@ import { SelectWrapper } from 'library/ListItem/Wrappers';
 import { Title } from 'library/Prompt/Title';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { FavoritesPromptProps } from './types';
+import { FooterWrapper, PromptListItem } from 'library/Prompt/Wrappers';
+import type { FavoritesPromptProps } from '../types';
 
 export const FavoritesPrompt = ({
   callback,
@@ -40,15 +41,15 @@ export const FavoritesPrompt = ({
   return (
     <>
       <Title title={t('nominateFavorites')} closeText={t('cancel')} />
-      <div style={{ padding: '1rem 1.5rem' }}>
+      <div className="padded">
         {remaining.isZero() ? (
-          <h4 style={{ marginBottom: '1rem' }}>
+          <h4 className="subheading">
             {t('moreFavoritesSurpassLimit', {
               max: maxNominations.toString(),
             })}
           </h4>
         ) : (
-          <h4 style={{ marginBottom: '1rem' }}>
+          <h4 className="subheading">
             {t('addUpToFavorites', { count: remaining.toNumber() })}.
           </h4>
         )}
@@ -57,20 +58,16 @@ export const FavoritesPrompt = ({
           const inInitial = !!nominations.find(
             ({ address }: Validator) => address === favorite.address
           );
-          const isDisabled = !canAdd || inInitial;
+          const isDisabled =
+            selected.includes(favorite) || !canAdd || inInitial;
 
           return (
-            <div
+            <PromptListItem
               key={`favorite_${i}`}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                borderBottom: '1px solid var(--border-primary-color)',
-                opacity: isDisabled ? 'var(--opacity-disabled)' : 1,
-              }}
+              className={isDisabled && inInitial ? 'inactive' : undefined}
             >
               <SelectWrapper
-                disabled={isDisabled}
+                disabled={inInitial}
                 onClick={() => {
                   if (selected.includes(favorite))
                     removeFromSelected([favorite]);
@@ -82,11 +79,11 @@ export const FavoritesPrompt = ({
                 )}
               </SelectWrapper>
               <Identity key={`favorite_${i}`} address={favorite.address} />
-            </div>
+            </PromptListItem>
           );
         })}
 
-        <div style={{ margin: '1.5rem 0 0.5rem 0' }}>
+        <FooterWrapper>
           <ButtonPrimary
             text={t('addToNominations')}
             onClick={() => {
@@ -100,7 +97,7 @@ export const FavoritesPrompt = ({
             }}
             disabled={selected.length === 0}
           />
-        </div>
+        </FooterWrapper>
       </div>
     </>
   );
