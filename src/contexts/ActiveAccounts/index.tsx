@@ -44,14 +44,13 @@ export const ActiveAccountsProvider = ({
   // Setter for the active account.
   const setActiveAccount = (
     newActiveAccount: MaybeAddress,
-    local: boolean = true
+    updateLocalStorage: boolean = true
   ) => {
-    if (local)
-      if (newActiveAccount === null) {
+    if (updateLocalStorage)
+      if (newActiveAccount === null)
         localStorage.removeItem(`${network}_active_account`);
-      } else {
-        localStorage.setItem(`${network}_active_account`, newActiveAccount);
-      }
+      else localStorage.setItem(`${network}_active_account`, newActiveAccount);
+
     setStateWithRef(newActiveAccount, setActiveAccountState, activeAccountRef);
   };
 
