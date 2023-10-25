@@ -26,7 +26,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { Validator } from 'contexts/Validators/types';
 import { ButtonMonoInvert, ButtonPrimaryInvert } from '@polkadot-cloud/react';
 import { Subheading } from 'pages/Nominate/Wrappers';
-import { FavoritesPrompt } from 'canvas/ManageNominations/FavoritesPrompt';
+import { FavoritesPrompt } from 'canvas/ManageNominations/Prompts/FavoritesPrompt';
 import { usePrompt } from 'contexts/Prompt';
 import { useFetchMehods } from './useFetchMethods';
 import type { AddNominationsType, GenerateNominationsProps } from './types';
