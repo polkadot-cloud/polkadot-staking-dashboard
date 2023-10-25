@@ -9,7 +9,7 @@ import {
   Odometer,
 } from '@polkadot-cloud/react';
 import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
-import type BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';
 import { useHelp } from 'contexts/Help';
@@ -39,15 +39,19 @@ export const ManageBond = () => {
   const { getStashLedger } = useBalances();
   const { isFastUnstaking } = useUnstaking();
   const { isReadOnlyAccount } = useImportedAccounts();
-  const { getTransferOptions } = useTransferOptions();
+  const { getTransferOptions, feeReserve } = useTransferOptions();
   const { activeAccount } = useActiveAccounts();
   const ledger = getStashLedger(activeAccount);
   const { active }: { active: BigNumber } = ledger;
   const allTransferOptions = getTransferOptions(activeAccount);
 
-  const { freeBalance } = allTransferOptions;
+  const { freeBalance, edReserved } = allTransferOptions;
   const { totalUnlocking, totalUnlocked, totalUnlockChuncks } =
     allTransferOptions.nominate;
+  const totalFree = BigNumber.max(
+    0,
+    freeBalance.minus(edReserved.plus(feeReserve))
+  );
 
   return (
     <>
@@ -119,7 +123,7 @@ export const ManageBond = () => {
         active={planckToUnit(active, units)}
         unlocking={planckToUnit(totalUnlocking, units)}
         unlocked={planckToUnit(totalUnlocked, units)}
-        free={planckToUnit(freeBalance, units)}
+        free={planckToUnit(totalFree, units)}
         inactive={active.isZero()}
       />
     </>
