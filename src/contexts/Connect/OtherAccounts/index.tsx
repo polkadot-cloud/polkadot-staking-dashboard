@@ -76,13 +76,14 @@ export const OtherAccountsProvider = ({
       // Remove forgotten accounts from context state.
       setStateWithRef(
         [...otherAccountsRef.current].filter(
-          (a) => forget.find((s) => s.address === a.address) === undefined
+          (a) =>
+            forget.find(({ address }) => address === a.address) === undefined
         ),
         setOtherAccounts,
         otherAccountsRef
       );
       // If the currently active account is being forgotten, disconnect.
-      if (forget.find((a) => a.address === activeAccount) !== undefined)
+      if (forget.find(({ address }) => address === activeAccount) !== undefined)
         setActiveAccount(null);
     }
   };
