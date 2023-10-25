@@ -8,8 +8,11 @@ export interface ActiveAccountsContextInterface {
   activeProxy: MaybeAddress;
   activeProxyType: string | null;
   getActiveAccount: () => string | null;
-  setActiveAccount: (address: MaybeAddress, updateLocal?: boolean) => void;
-  setActiveProxy: (address: ActiveProxy, updateLocal?: boolean) => void;
+  setActiveAccount: (
+    address: MaybeAddress,
+    updateLocalStorage?: boolean
+  ) => void;
+  setActiveProxy: (address: ActiveProxy, updateLocalStorage?: boolean) => void;
 }
 
 export type ActiveProxy = {

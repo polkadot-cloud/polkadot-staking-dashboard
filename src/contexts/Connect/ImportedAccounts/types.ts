@@ -9,8 +9,8 @@ import type { MaybeAddress } from 'types';
 
 export interface ImportedAccountsContextInterface {
   accounts: ImportedAccount[];
-  getAccount: (account: MaybeAddress) => ExtensionAccount | null;
-  isReadOnlyAccount: (a: MaybeAddress) => boolean;
-  accountHasSigner: (a: MaybeAddress) => boolean;
-  requiresManualSign: (a: MaybeAddress) => boolean;
+  getAccount: (address: MaybeAddress) => ExtensionAccount | null;
+  isReadOnlyAccount: (address: MaybeAddress) => boolean;
+  accountHasSigner: (address: MaybeAddress) => boolean;
+  requiresManualSign: (address: MaybeAddress) => boolean;
 }

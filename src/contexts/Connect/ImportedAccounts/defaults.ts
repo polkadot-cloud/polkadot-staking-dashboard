@@ -7,8 +7,8 @@ import type { ImportedAccountsContextInterface } from './types';
 export const defaultImportedAccountsContext: ImportedAccountsContextInterface =
   {
     accounts: [],
-    getAccount: (a) => null,
-    isReadOnlyAccount: (a) => false,
-    accountHasSigner: (a) => false,
-    requiresManualSign: (a) => false,
+    getAccount: (address) => null,
+    isReadOnlyAccount: (address) => false,
+    accountHasSigner: (address) => false,
+    requiresManualSign: (address) => false,
   };

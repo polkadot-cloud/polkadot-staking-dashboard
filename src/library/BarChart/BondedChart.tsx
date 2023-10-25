@@ -23,18 +23,27 @@ export const BondedChart = ({
   } = useNetwork();
   const totalUnlocking = unlocking.plus(unlocked);
 
+  const MinimumNoNZeroPercent = 13;
+
   // graph percentages
   const graphTotal = active.plus(totalUnlocking).plus(free);
   const graphActive = greaterThanZero(active)
-    ? active.dividedBy(graphTotal.multipliedBy(0.01))
+    ? BigNumber.max(
+        active.dividedBy(graphTotal.multipliedBy(0.01)),
+        MinimumNoNZeroPercent
+      )
     : new BigNumber(0);
 
   const graphUnlocking = greaterThanZero(totalUnlocking)
-    ? totalUnlocking.dividedBy(graphTotal.multipliedBy(0.01))
+    ? BigNumber.max(
+        totalUnlocking.dividedBy(graphTotal.multipliedBy(0.01)),
+        MinimumNoNZeroPercent
+      )
     : new BigNumber(0);
 
-  const graphFree = greaterThanZero(graphTotal)
-    ? new BigNumber(100).minus(graphActive).minus(graphUnlocking)
+  const remaining = new BigNumber(100).minus(graphActive).minus(graphUnlocking);
+  const graphFree = greaterThanZero(remaining)
+    ? BigNumber.max(remaining, MinimumNoNZeroPercent)
     : new BigNumber(0);
 
   return (
