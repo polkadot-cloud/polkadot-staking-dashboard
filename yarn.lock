@@ -583,20 +583,15 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.24.tgz#13b3ce04b63bda70a023e1fd71fa2998b739849b"
   integrity sha512-HLpZ7NIYhALceeAHx6gdQKmYKxdrkd2GVphiWvvhoDgPBF586OQu+lv9Prldfi11+mY0EAC0MjGdreelr1Ma8Q==
 
-"@polkadot-cloud/core@^1.0.26":
-  version "1.0.28"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.28.tgz#cb9351f27cb8c07b58433dcc9c00d4364a97028b"
-  integrity sha512-5MyZc5vIQDoNzRWYbRZ9EO1Xqtzu3GXFZjCaprCMZ2lxY6VmseXarnOMV1K20lR3mGU4wBFv6bKEmm09eMrpTw==
-
 "@polkadot-cloud/core@^1.0.29":
   version "1.0.29"
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.29.tgz#c6b5a6c739872f5e814e47a193c9c5e829dedbcc"
   integrity sha512-HhfowiWIcR1dLZu9KtMJMm6N1ySP2bkiq6aPaCepxn/gszn8tfpEZMw2X9EX++G2ZWM1zggQXs/05i6iPNaLeA==
 
-"@polkadot-cloud/react@^0.1.97":
-  version "0.1.97"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.97.tgz#40c9f077e2e79c6ecead503898598d17ced2cc76"
-  integrity sha512-H+5QOfOJT4DSiJPCEjagcdh8tKYlLVfhnz/mpAnSRtRu7ykDwUEhjSZbOb8Q+aBRCQFVCBOCfnER+Grturv2xw==
+"@polkadot-cloud/react@^0.1.98":
+  version "0.1.98"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.98.tgz#dea0518ca7223af7f52b3f9d3be4927fa1d0fb2d"
+  integrity sha512-xDKFbvh0bJpsJUEsg+HzNIiVDZ91uLFRcNzi2y6PyUyHjsXWnpuKpDLLCoLCjcKE8Kt9lGKWnjZys38fIDft0g==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.4.2"
     "@fortawesome/free-brands-svg-icons" "^6.4.2"
@@ -604,22 +599,13 @@
     "@fortawesome/free-solid-svg-icons" "^6.4.2"
     "@fortawesome/react-fontawesome" "^0.2.0"
     "@polkadot-cloud/assets" "^0.1.24"
-    "@polkadot-cloud/core" "^1.0.26"
-    "@polkadot-cloud/utils" "^0.0.22"
+    "@polkadot-cloud/core" "^1.0.29"
+    "@polkadot-cloud/utils" "^0.0.23"
     "@polkadot/keyring" "^12.5.1"
     "@polkadot/util" "^12.5.1"
     "@polkadot/util-crypto" "^12.5.1"
     framer-motion "^10.15.0"
     react-error-boundary "^4.0.11"
-
-"@polkadot-cloud/utils@^0.0.22":
-  version "0.0.22"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/utils/-/utils-0.0.22.tgz#b50a1f8dd6c49af2886bd653124fda8a4209a3b6"
-  integrity sha512-fx5e2f3KQ6EJCpepujFw5wqP2e6w/2j+k6gBw1lzaNALHDuGcIAh0MCrkg9k9HT/u75H6ANK2Sh6WDq5/7tayA==
-  dependencies:
-    "@polkadot/keyring" "^12.5.1"
-    "@polkadot/util" "^12.5.1"
-    bignumber.js "^9.1.1"
 
 "@polkadot-cloud/utils@^0.0.23":
   version "0.0.23"
