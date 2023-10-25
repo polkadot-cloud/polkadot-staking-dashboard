@@ -49,6 +49,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { DappName } from 'consts';
 import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts';
 import { PoolPerformanceProvider } from 'contexts/Pools/PoolPerformance';
+import { registerSaEvent } from 'Utils';
 
 // Embed providers from hook.
 export const Providers = () => {
@@ -69,7 +70,19 @@ export const Providers = () => {
     ExtensionsProvider,
     [
       ExtensionAccountsProvider,
-      { dappName: DappName, network, ss58, activeAccount, setActiveAccount },
+      {
+        ss58,
+        network,
+        activeAccount,
+        setActiveAccount,
+        dappName: DappName,
+        // Successful extension enabled event.
+        onExtensionEnabled: (id: string) => {
+          registerSaEvent(`${network.toLowerCase()}_extension_connected`, {
+            id,
+          });
+        },
+      },
     ],
     OtherAccountsProvider,
     ImportedAccountsProvider,
