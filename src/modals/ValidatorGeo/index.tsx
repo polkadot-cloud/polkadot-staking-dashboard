@@ -17,7 +17,7 @@ import type { ValidatorDetail } from '@polkawatch/ddp-client';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { PluginLabel } from 'library/PluginLabel';
 import { usePolkawatchApi } from 'contexts/Plugins/Polkawatch';
-import { usePlugins } from '../../contexts/Plugins';
+import { usePlugins } from 'contexts/Plugins';
 
 export const ValidatorGeo = () => {
   const { t } = useTranslation('modals');
