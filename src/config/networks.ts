@@ -24,8 +24,8 @@ export const NetworkList: Networks = {
     endpoints: {
       rpc: 'wss://apps-rpc.polkadot.io',
       lightClient: WellKnownChain.polkadot,
-      defaultProvider: 'OnFinality',
-      providers: {
+      defaultRpcEndpoint: 'Parity',
+      rpcEndpoints: {
         'Automata 1RPC': 'wss://1rpc.io/dot',
         Dwellir: 'wss://polkadot-rpc.dwellir.com',
         'Dwellir Tunisia': 'wss://polkadot-rpc-tn.dwellir.com',
@@ -35,6 +35,7 @@ export const NetworkList: Networks = {
         OnFinality: 'wss://polkadot.api.onfinality.io/public-ws',
         RadiumBlock: 'wss://polkadot.public.curie.radiumblock.co/ws',
         Stakeworld: 'wss://dot-rpc.stakeworld.io',
+        Parity: 'wss://apps-rpc.polkadot.io',
       },
     },
     namespace: '91b171bb158e2d3848fa23a9f1c25182',
@@ -91,8 +92,8 @@ export const NetworkList: Networks = {
     endpoints: {
       rpc: 'wss://kusama-rpc.polkadot.io',
       lightClient: WellKnownChain.ksmcc3,
-      defaultProvider: 'OnFinality',
-      providers: {
+      defaultRpcEndpoint: 'Parity',
+      rpcEndpoints: {
         'Automata 1RPC': 'wss://1rpc.io/ksm',
         Dwellir: 'wss://kusama-rpc.dwellir.com',
         'Dwellir Tunisia': 'wss://kusama-rpc-tn.dwellir.com',
@@ -102,6 +103,7 @@ export const NetworkList: Networks = {
         OnFinality: 'wss://kusama.api.onfinality.io/public-ws',
         RadiumBlock: 'wss://kusama.public.curie.radiumblock.co/ws',
         Stakeworld: 'wss://ksm-rpc.stakeworld.io',
+        Parity: 'wss://kusama-rpc.polkadot.io',
       },
     },
     namespace: 'b0a8d493285c2df73290dfb7e61f870f',
@@ -160,8 +162,8 @@ export const NetworkList: Networks = {
     endpoints: {
       rpc: 'wss://westend-rpc.polkadot.io',
       lightClient: WellKnownChain.westend2,
-      defaultProvider: 'OnFinality',
-      providers: {
+      defaultRpcEndpoint: 'Parity',
+      rpcEndpoints: {
         Dwellir: 'wss://westend-rpc.dwellir.com',
         'Dwellir Tunisia': 'wss://westend-rpc-tn.dwellir.com',
         'IBP-GeoDNS1': 'wss://rpc.ibp.network/westend',
@@ -170,6 +172,7 @@ export const NetworkList: Networks = {
         OnFinality: 'wss://westend.api.onfinality.io/public-ws',
         RadiumBlock: 'wss://westend.public.curie.radiumblock.co/ws',
         Stakeworld: 'wss://wnd-rpc.stakeworld.io',
+        Parity: 'wss://westend-rpc.polkadot.io',
       },
     },
     namespace: 'e143f23803ac50e8f6f8e62695d1ce9e',
