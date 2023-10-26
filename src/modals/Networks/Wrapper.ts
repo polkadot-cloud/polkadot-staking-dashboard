@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { SectionFullWidthThreshold } from 'consts';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -136,16 +137,25 @@ export const ConnectionsWrapper = styled.div`
   align-items: center;
   margin-top: 1rem;
   margin-bottom: 1.5rem;
+
+  > div {
+    flex-basis: 50%;
+    display: flex;
+
+    @media (max-width: ${SectionFullWidthThreshold - 400}px) {
+      flex-basis: 100%;
+    }
+  }
 `;
 
 export const ConnectionButton = styled.button<{ $connected: boolean }>`
   background: var(--button-primary-background);
   border: 1px solid var(--status-success-color-transparent);
   position: relative;
-  padding: 0.75rem 0.75rem;
+  padding: 1rem 0.75rem;
   margin-bottom: 1rem;
   margin-right: 0.5rem;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   ${(props) =>
     props.$connected !== true &&
     `
@@ -154,6 +164,7 @@ export const ConnectionButton = styled.button<{ $connected: boolean }>`
   display: inline-flex;
   flex-flow: row wrap;
   align-items: center;
+  width: 100%;
 
   &:hover {
     background: var(--button-hover-background);

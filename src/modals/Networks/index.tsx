@@ -88,32 +88,38 @@ export const Networks = () => {
           </div>
           <h4>{t('connectionType')}</h4>
           <ConnectionsWrapper>
-            <ConnectionButton
-              $connected={!isLightClient}
-              disabled={!isLightClient}
-              type="button"
-              onClick={() => {
-                setIsLightClient(false);
-                switchNetwork(networkKey as NetworkName);
-                setModalStatus('closing');
-              }}
-            >
-              <h3>RPC</h3>
-              {!isLightClient && <h4 className="selected">{t('selected')}</h4>}
-            </ConnectionButton>
-            <ConnectionButton
-              $connected={isLightClient}
-              className="off"
-              type="button"
-              onClick={() => {
-                setIsLightClient(true);
-                switchNetwork(networkKey as NetworkName);
-                setModalStatus('closing');
-              }}
-            >
-              <h3>{t('lightClient')}</h3>
-              {isLightClient && <h4 className="selected">{t('selected')}</h4>}
-            </ConnectionButton>
+            <div>
+              <ConnectionButton
+                $connected={!isLightClient}
+                disabled={!isLightClient}
+                type="button"
+                onClick={() => {
+                  setIsLightClient(false);
+                  switchNetwork(networkKey as NetworkName);
+                  setModalStatus('closing');
+                }}
+              >
+                <h3>RPC</h3>
+                {!isLightClient && (
+                  <h4 className="selected">{t('selected')}</h4>
+                )}
+              </ConnectionButton>
+            </div>
+            <div>
+              <ConnectionButton
+                $connected={isLightClient}
+                className="off"
+                type="button"
+                onClick={() => {
+                  setIsLightClient(true);
+                  switchNetwork(networkKey as NetworkName);
+                  setModalStatus('closing');
+                }}
+              >
+                <h3>{t('lightClient')}</h3>
+                {isLightClient && <h4 className="selected">{t('selected')}</h4>}
+              </ConnectionButton>
+            </div>
           </ConnectionsWrapper>
 
           {braveBrowser ? (
