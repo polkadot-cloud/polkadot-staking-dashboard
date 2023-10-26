@@ -37,7 +37,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const [chainState, setchainState] = useState<APIChainState>(undefined);
 
   // Store the active RPC provider.
-  // eslint-disable-next-line
   const [rpcEndpoint, setRpcEndpoint] = useState<string>(
     NetworkList[network].endpoints.defaultRpcEndpoint
   );
@@ -236,10 +235,14 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     }
   });
 
+  // if RPC endpoint changes, and not on light client, re-connect.
+  useEffectIgnoreInitial(() => {
+    if (!isLightClient) handleConnectApi();
+  }, [rpcEndpoint]);
+
   // Trigger API connection handler on network or light client change.
   useEffect(() => {
     handleConnectApi();
-
     return () => {
       cancelFn?.();
     };

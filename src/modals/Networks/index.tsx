@@ -14,6 +14,7 @@ import type { NetworkName } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useUi } from 'contexts/UI';
+import { usePrompt } from 'contexts/Prompt';
 import BraveIconSVG from '../../img/brave-logo.svg?react';
 import {
   BraveWarning,
@@ -22,10 +23,12 @@ import {
   ContentWrapper,
   NetworkButton,
 } from './Wrapper';
+import { ProvidersPrompt } from './ProvidersPrompt';
 
 export const Networks = () => {
   const { t } = useTranslation('modals');
   const { isBraveBrowser } = useUi();
+  const { openPromptWith } = usePrompt();
   const { network, switchNetwork } = useNetwork();
   const { setModalStatus, setModalResize } = useOverlay().modal;
   const { isLightClient, setIsLightClient, rpcEndpoint } = useApi();
@@ -108,9 +111,7 @@ export const Networks = () => {
                 Provider:{' '}
                 <ButtonTertiary
                   text={rpcEndpoint}
-                  onClick={() => {
-                    /* TODO: switch endpoint */
-                  }}
+                  onClick={() => openPromptWith(<ProvidersPrompt />)}
                   marginLeft
                 />
               </div>
