@@ -29,7 +29,7 @@ export const Networks = () => {
   const { network, switchNetwork } = useNetwork();
   const { isLightClient, setIsLightClient } = useApi();
   const { setModalStatus, setModalResize } = useOverlay().modal;
-  const networkKey: string = network;
+  const networkKey = network;
 
   // Likely never going to happen; here just to be safe.
   useEffect(() => setModalResize(), [isBraveBrowser]);
