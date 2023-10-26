@@ -23,7 +23,7 @@ import type {
   APIProviderProps,
   ApiStatus,
 } from 'contexts/Api/types';
-import type { AnyApi, NetworkName } from 'types';
+import type { AnyApi } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import * as defaults from './defaults';
 
@@ -35,6 +35,12 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Store chain state.
   const [chainState, setchainState] = useState<APIChainState>(undefined);
+
+  // Store the active RPC provider.
+  // eslint-disable-next-line
+  const [rpcEndpoint, setRpcEndpoint] = useState<string>(
+    NetworkList[network].endpoints.defaultRpcEndpoint
+  );
 
   // Store whether in light client mode.
   const [isLightClient, setIsLightClient] = useState<boolean>(
@@ -53,7 +59,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Handle an initial RPC connection.
   useEffect(() => {
     if (!provider && !isLightClient) {
-      connectProvider(network);
+      connectProvider();
     }
   });
 
@@ -63,7 +69,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       Sc,
       NetworkList[network].endpoints.lightClient
     );
-    connectProvider(network, newProvider);
+    connectProvider(newProvider);
   };
 
   // Handle a switch in API.
@@ -101,7 +107,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     } else {
       // if not light client, directly connect.
       setApiStatus('connecting');
-      connectProvider(network);
+      connectProvider();
     }
   };
 
@@ -243,9 +249,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   };
 
   // connect function sets provider and updates active network.
-  const connectProvider = async (name: NetworkName, lc?: ScProvider) => {
-    const { endpoints } = NetworkList[name];
-    const newProvider = lc || new WsProvider(endpoints.rpc);
+  const connectProvider = async (lc?: ScProvider) => {
+    const newProvider =
+      lc || new WsProvider(NetworkList[network].endpoints.rpc);
     if (lc) {
       await newProvider.connect();
     }
@@ -258,10 +264,12 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         api,
         consts,
         chainState,
-        isReady: apiStatus === 'connected' && api !== null,
         apiStatus,
         isLightClient,
         setIsLightClient,
+        rpcEndpoint,
+        setRpcEndpoint,
+        isReady: apiStatus === 'connected' && api !== null,
       }}
     >
       {children}

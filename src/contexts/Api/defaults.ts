@@ -28,4 +28,6 @@ export const defaultApiContext: APIContextInterface = {
   apiStatus: 'disconnected',
   isLightClient: false,
   setIsLightClient: () => {},
+  rpcEndpoint: '',
+  setRpcEndpoint: (key) => {},
 };

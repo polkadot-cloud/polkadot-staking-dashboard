@@ -27,8 +27,8 @@ export const Networks = () => {
   const { t } = useTranslation('modals');
   const { isBraveBrowser } = useUi();
   const { network, switchNetwork } = useNetwork();
-  const { isLightClient, setIsLightClient } = useApi();
   const { setModalStatus, setModalResize } = useOverlay().modal;
+  const { isLightClient, setIsLightClient, rpcEndpoint } = useApi();
   const networkKey = network;
 
   // Likely never going to happen; here just to be safe.
@@ -107,7 +107,7 @@ export const Networks = () => {
               >
                 Endpoint:{' '}
                 <ButtonTertiary
-                  text="RPC Provider"
+                  text={rpcEndpoint}
                   onClick={() => {
                     /* TODO: switch endpoint */
                   }}

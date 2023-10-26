@@ -20,8 +20,8 @@ export interface Network {
   endpoints: {
     rpc: string;
     lightClient: AnyApi;
-    defaultProvider: string;
-    providers: Record<string, string>;
+    defaultRpcEndpoint: string;
+    rpcEndpoints: Record<string, string>;
   };
   namespace: string;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
