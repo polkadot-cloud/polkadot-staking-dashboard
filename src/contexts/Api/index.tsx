@@ -161,7 +161,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     connectedCallback(newApi);
   };
 
-  // connection callback. Called once `provider` and `api` have been initialised.
+  // Connection callback. Called once `provider` and `api` have been initialised.
   const connectedCallback = async (newApi: ApiPromise) => {
     // fetch constants.
     const result = await Promise.all([
@@ -237,7 +237,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     setApi(newApi);
   };
 
-  // connect function sets provider and updates active network.
+  // Connect function sets provider and updates active network.
   const connectProvider = async (lc?: ScProvider) => {
     const newProvider =
       lc ||
@@ -255,7 +255,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     }
   });
 
-  // if RPC endpoint changes, and not on light client, re-connect.
+  // If RPC endpoint changes, and not on light client, re-connect.
   useEffectIgnoreInitial(() => {
     if (!isLightClient) handleConnectApi();
   }, [rpcEndpoint]);
