@@ -24,6 +24,19 @@ export const NetworkList: Networks = {
     endpoints: {
       rpc: 'wss://apps-rpc.polkadot.io',
       lightClient: WellKnownChain.polkadot,
+      defaultRpcEndpoint: 'Automata 1RPC',
+      rpcEndpoints: {
+        'Automata 1RPC': 'wss://1rpc.io/dot',
+        Dwellir: 'wss://polkadot-rpc.dwellir.com',
+        'Dwellir Tunisia': 'wss://polkadot-rpc-tn.dwellir.com',
+        'IBP-GeoDNS1': 'wss://rpc.ibp.network/polkadot',
+        'IBP-GeoDNS2': 'wss://rpc.dotters.network/polkadot',
+        LuckyFriday: 'wss://rpc-polkadot.luckyfriday.io',
+        OnFinality: 'wss://polkadot.api.onfinality.io/public-ws',
+        RadiumBlock: 'wss://polkadot.public.curie.radiumblock.co/ws',
+        Stakeworld: 'wss://dot-rpc.stakeworld.io',
+        Parity: 'wss://apps-rpc.polkadot.io',
+      },
     },
     namespace: '91b171bb158e2d3848fa23a9f1c25182',
     colors: {
@@ -79,6 +92,19 @@ export const NetworkList: Networks = {
     endpoints: {
       rpc: 'wss://kusama-rpc.polkadot.io',
       lightClient: WellKnownChain.ksmcc3,
+      defaultRpcEndpoint: 'Automata 1RPC',
+      rpcEndpoints: {
+        'Automata 1RPC': 'wss://1rpc.io/ksm',
+        Dwellir: 'wss://kusama-rpc.dwellir.com',
+        'Dwellir Tunisia': 'wss://kusama-rpc-tn.dwellir.com',
+        'IBP-GeoDNS1': 'wss://rpc.ibp.network/kusama',
+        'IBP-GeoDNS2': 'wss://rpc.dotters.network/kusama',
+        LuckyFriday: 'wss://rpc-kusama.luckyfriday.io',
+        OnFinality: 'wss://kusama.api.onfinality.io/public-ws',
+        RadiumBlock: 'wss://kusama.public.curie.radiumblock.co/ws',
+        Stakeworld: 'wss://ksm-rpc.stakeworld.io',
+        Parity: 'wss://kusama-rpc.polkadot.io',
+      },
     },
     namespace: 'b0a8d493285c2df73290dfb7e61f870f',
     colors: {
@@ -136,6 +162,18 @@ export const NetworkList: Networks = {
     endpoints: {
       rpc: 'wss://westend-rpc.polkadot.io',
       lightClient: WellKnownChain.westend2,
+      defaultRpcEndpoint: 'OnFinality',
+      rpcEndpoints: {
+        Dwellir: 'wss://westend-rpc.dwellir.com',
+        'Dwellir Tunisia': 'wss://westend-rpc-tn.dwellir.com',
+        'IBP-GeoDNS1': 'wss://rpc.ibp.network/westend',
+        'IBP-GeoDNS2': 'wss://rpc.dotters.network/westend',
+        LuckyFriday: 'wss://rpc-westend.luckyfriday.io',
+        OnFinality: 'wss://westend.api.onfinality.io/public-ws',
+        RadiumBlock: 'wss://westend.public.curie.radiumblock.co/ws',
+        Stakeworld: 'wss://wnd-rpc.stakeworld.io',
+        Parity: 'wss://westend-rpc.polkadot.io',
+      },
     },
     namespace: 'e143f23803ac50e8f6f8e62695d1ce9e',
     colors: {

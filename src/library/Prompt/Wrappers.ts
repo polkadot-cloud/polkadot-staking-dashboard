@@ -176,3 +176,26 @@ export const PromptListItem = styled.div`
     opacity: var(--opacity-disabled);
   }
 `;
+
+export const PromptSelectItem = styled.button`
+  border-bottom: 1px solid var(--border-primary-color);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem 0.5rem;
+  border-radius: 0.25rem;
+  width: 100%;
+
+  > h4 {
+    margin-top: 0.3rem;
+  }
+  &:hover {
+    background: var(--button-hover-background);
+  }
+  &.inactive {
+    h3,
+    h4 {
+      color: var(--accent-color-primary);
+    }
+  }
+`;
