@@ -20,6 +20,7 @@ export interface Network {
   endpoints: {
     rpc: string;
     lightClient: AnyApi;
+    defaultProvider: string;
     providers: Record<string, string>;
   };
   namespace: string;

@@ -134,16 +134,25 @@ export const BraveWarning = styled.div`
 export const ConnectionsWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
-  align-items: center;
+  align-items: flex-start;
   margin-top: 1rem;
   margin-bottom: 1.5rem;
 
   > div {
     flex-basis: 50%;
     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    &:first-child {
+      padding-right: 1rem;
+    }
 
     @media (max-width: ${SectionFullWidthThreshold - 400}px) {
       flex-basis: 100%;
+      &:first-child {
+        padding-right: 0;
+      }
     }
   }
 `;

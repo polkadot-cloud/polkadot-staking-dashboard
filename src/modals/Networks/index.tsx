@@ -3,7 +3,7 @@
 
 import { faChevronRight, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ModalPadding } from '@polkadot-cloud/react';
+import { ButtonTertiary, ModalPadding } from '@polkadot-cloud/react';
 import { capitalizeFirstLetter } from '@polkadot-cloud/utils';
 import { useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -98,6 +98,22 @@ export const Networks = () => {
                   <h4 className="selected">{t('selected')}</h4>
                 )}
               </ConnectionButton>
+              <div
+                style={{
+                  padding: '0 0.25rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                Endpoint:{' '}
+                <ButtonTertiary
+                  text="RPC Provider"
+                  onClick={() => {
+                    /* TODO: switch endpoint */
+                  }}
+                  marginLeft
+                />
+              </div>
             </div>
             <div>
               <ConnectionButton
