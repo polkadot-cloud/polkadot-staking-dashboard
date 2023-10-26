@@ -23,7 +23,7 @@ import type {
   APIProviderProps,
   ApiStatus,
 } from 'contexts/Api/types';
-import type { AnyApi, NetworkName } from 'types';
+import type { AnyApi } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import * as defaults from './defaults';
 
@@ -35,6 +35,22 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Store chain state.
   const [chainState, setchainState] = useState<APIChainState>(undefined);
+
+  // Store the active RPC provider.
+  const initialRpcEndpoint = () => {
+    const local = localStorage.getItem(`${network}_rpc_endpoint`);
+    if (local)
+      if (NetworkList[network].endpoints.rpcEndpoints[local]) {
+        return local;
+      } else {
+        localStorage.removeItem(`${network}_rpc_endpoint`);
+      }
+
+    return NetworkList[network].endpoints.defaultRpcEndpoint;
+  };
+  const [rpcEndpoint, setRpcEndpointState] = useState<string>(
+    initialRpcEndpoint()
+  );
 
   // Store whether in light client mode.
   const [isLightClient, setIsLightClient] = useState<boolean>(
@@ -50,12 +66,13 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Store API connection status.
   const [apiStatus, setApiStatus] = useState<ApiStatus>('disconnected');
 
-  // Handle an initial RPC connection.
-  useEffect(() => {
-    if (!provider && !isLightClient) {
-      connectProvider(network);
-    }
-  });
+  // Set RPC provider with local storage and validity checks.
+  const setRpcEndpoint = (key: string) => {
+    if (!NetworkList[network].endpoints.rpcEndpoints[key]) return;
+    localStorage.setItem(`${network}_rpc_endpoint`, key);
+
+    setRpcEndpointState(key);
+  };
 
   // Handle light client connection.
   const handleLightClientConnection = async (Sc: AnyApi) => {
@@ -63,7 +80,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       Sc,
       NetworkList[network].endpoints.lightClient
     );
-    connectProvider(network, newProvider);
+    connectProvider(newProvider);
   };
 
   // Handle a switch in API.
@@ -101,31 +118,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     } else {
       // if not light client, directly connect.
       setApiStatus('connecting');
-      connectProvider(network);
+      connectProvider();
     }
   };
-
-  // Trigger API connection handler on network or light client change.
-  useEffect(() => {
-    handleConnectApi();
-
-    return () => {
-      cancelFn?.();
-    };
-  }, [isLightClient, network]);
-
-  // Initialise provider event handlers when provider is set.
-  useEffectIgnoreInitial(() => {
-    if (provider) {
-      provider.on('connected', () => {
-        setApiStatus('connected');
-      });
-      provider.on('error', () => {
-        setApiStatus('disconnected');
-      });
-      getChainState();
-    }
-  }, [provider]);
 
   // Fetch chain state. Called once `provider` has been initialised.
   const getChainState = async () => {
@@ -243,14 +238,47 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   };
 
   // connect function sets provider and updates active network.
-  const connectProvider = async (name: NetworkName, lc?: ScProvider) => {
-    const { endpoints } = NetworkList[name];
-    const newProvider = lc || new WsProvider(endpoints.rpc);
+  const connectProvider = async (lc?: ScProvider) => {
+    const newProvider =
+      lc || new WsProvider(NetworkList[network].endpoints.rpc);
     if (lc) {
       await newProvider.connect();
     }
     setProvider(newProvider);
   };
+
+  // Handle an initial RPC connection.
+  useEffect(() => {
+    if (!provider && !isLightClient) {
+      connectProvider();
+    }
+  });
+
+  // if RPC endpoint changes, and not on light client, re-connect.
+  useEffectIgnoreInitial(() => {
+    if (!isLightClient) handleConnectApi();
+  }, [rpcEndpoint]);
+
+  // Trigger API connection handler on network or light client change.
+  useEffect(() => {
+    handleConnectApi();
+    return () => {
+      cancelFn?.();
+    };
+  }, [isLightClient, network]);
+
+  // Initialise provider event handlers when provider is set.
+  useEffectIgnoreInitial(() => {
+    if (provider) {
+      provider.on('connected', () => {
+        setApiStatus('connected');
+      });
+      provider.on('error', () => {
+        setApiStatus('disconnected');
+      });
+      getChainState();
+    }
+  }, [provider]);
 
   return (
     <APIContext.Provider
@@ -258,10 +286,12 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         api,
         consts,
         chainState,
-        isReady: apiStatus === 'connected' && api !== null,
         apiStatus,
         isLightClient,
         setIsLightClient,
+        rpcEndpoint,
+        setRpcEndpoint,
+        isReady: apiStatus === 'connected' && api !== null,
       }}
     >
       {children}

@@ -48,4 +48,6 @@ export interface APIContextInterface {
   apiStatus: ApiStatus;
   isLightClient: boolean;
   setIsLightClient: (isLightClient: boolean) => void;
+  rpcEndpoint: string;
+  setRpcEndpoint: (key: string) => void;
 }
