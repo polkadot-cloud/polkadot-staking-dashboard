@@ -22,7 +22,6 @@ export const NetworkList: Networks = {
   polkadot: {
     name: 'polkadot',
     endpoints: {
-      rpc: 'wss://apps-rpc.polkadot.io',
       lightClient: WellKnownChain.polkadot,
       defaultRpcEndpoint: 'Automata 1RPC',
       rpcEndpoints: {
@@ -90,7 +89,6 @@ export const NetworkList: Networks = {
   kusama: {
     name: 'kusama',
     endpoints: {
-      rpc: 'wss://kusama-rpc.polkadot.io',
       lightClient: WellKnownChain.ksmcc3,
       defaultRpcEndpoint: 'Automata 1RPC',
       rpcEndpoints: {
@@ -160,7 +158,6 @@ export const NetworkList: Networks = {
   westend: {
     name: 'westend',
     endpoints: {
-      rpc: 'wss://westend-rpc.polkadot.io',
       lightClient: WellKnownChain.westend2,
       defaultRpcEndpoint: 'OnFinality',
       rpcEndpoints: {

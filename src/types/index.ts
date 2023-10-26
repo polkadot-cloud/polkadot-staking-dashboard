@@ -18,7 +18,6 @@ type NetworkColor =
 export interface Network {
   name: NetworkName;
   endpoints: {
-    rpc: string;
     lightClient: AnyApi;
     defaultRpcEndpoint: string;
     rpcEndpoints: Record<string, string>;
