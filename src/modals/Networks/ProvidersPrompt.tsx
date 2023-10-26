@@ -5,9 +5,10 @@ import { PromptSelectItem } from 'library/Prompt/Wrappers';
 import { useNetwork } from 'contexts/Network';
 import { NetworkList } from 'config/networks';
 import { usePrompt } from 'contexts/Prompt';
+import { capitalizeFirstLetter } from '@polkadot-cloud/utils';
 
 export const ProvidersPrompt = () => {
-  const { t } = useTranslation('modals');
+  const { t } = useTranslation();
   const { network } = useNetwork();
   const { closePrompt } = usePrompt();
   const { rpcEndpoint, setRpcEndpoint } = useApi();
@@ -15,11 +16,16 @@ export const ProvidersPrompt = () => {
   const rpcProviders = NetworkList[network].endpoints.rpcEndpoints;
   return (
     <>
-      <Title title="RPC Providers" closeText={t('cancel')} />
+      <Title
+        title={t('rpcProviders', { ns: 'modals' })}
+        closeText={t('cancel', { ns: 'modals' })}
+      />
       <div className="padded">
         <h4 className="subheading">
-          Select an RPC provider to change the node Staking Dashboard connects
-          to.
+          {t('selectRpcProvider', {
+            ns: 'modals',
+            network: capitalizeFirstLetter(network),
+          })}
         </h4>
         {Object.entries(rpcProviders)?.map(([key, url], i) => {
           const isDisabled = rpcEndpoint === key;
@@ -34,7 +40,7 @@ export const ProvidersPrompt = () => {
               }}
             >
               <h3>
-                {key} {isDisabled && `  [Active]`}
+                {key} {isDisabled && `  (${t('selected', { ns: 'modals' })})`}
               </h3>
               <h4>{url}</h4>
             </PromptSelectItem>

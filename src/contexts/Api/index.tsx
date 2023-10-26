@@ -240,7 +240,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // connect function sets provider and updates active network.
   const connectProvider = async (lc?: ScProvider) => {
     const newProvider =
-      lc || new WsProvider(NetworkList[network].endpoints.rpc);
+      lc ||
+      new WsProvider(NetworkList[network].endpoints.rpcEndpoints[rpcEndpoint]);
     if (lc) {
       await newProvider.connect();
     }

@@ -108,7 +108,7 @@ export const Networks = () => {
                   alignItems: 'center',
                 }}
               >
-                Provider:{' '}
+                {t('provider')}:{' '}
                 <ButtonTertiary
                   text={rpcEndpoint}
                   onClick={() => openPromptWith(<ProvidersPrompt />)}
