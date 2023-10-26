@@ -37,8 +37,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const [chainState, setchainState] = useState<APIChainState>(undefined);
 
   // Store the active RPC provider.
-  const [rpcEndpoint, setRpcEndpoint] = useState<string>(
-    NetworkList[network].endpoints.defaultRpcEndpoint
+  const [rpcEndpoint, setRpcEndpointState] = useState<string>(
+    localStorage.getItem(`${network}_rpc_endpoint`) ||
+      NetworkList[network].endpoints.defaultRpcEndpoint
   );
 
   // Store whether in light client mode.
@@ -54,6 +55,14 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Store API connection status.
   const [apiStatus, setApiStatus] = useState<ApiStatus>('disconnected');
+
+  // Set RPC provider with local storage and validity checks.
+  const setRpcEndpoint = (key: string) => {
+    if (!NetworkList[network].endpoints.rpcEndpoints[key]) return;
+    localStorage.setItem(`${network}_rpc_endpoint`, key);
+
+    setRpcEndpointState(key);
+  };
 
   // Handle light client connection.
   const handleLightClientConnection = async (Sc: AnyApi) => {
