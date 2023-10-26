@@ -37,9 +37,19 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const [chainState, setchainState] = useState<APIChainState>(undefined);
 
   // Store the active RPC provider.
+  const initialRpcEndpoint = () => {
+    const local = localStorage.getItem(`${network}_rpc_endpoint`);
+    if (local)
+      if (NetworkList[network].endpoints.rpcEndpoints[local]) {
+        return local;
+      } else {
+        localStorage.removeItem(`${network}_rpc_endpoint`);
+      }
+
+    return NetworkList[network].endpoints.defaultRpcEndpoint;
+  };
   const [rpcEndpoint, setRpcEndpointState] = useState<string>(
-    localStorage.getItem(`${network}_rpc_endpoint`) ||
-      NetworkList[network].endpoints.defaultRpcEndpoint
+    initialRpcEndpoint()
   );
 
   // Store whether in light client mode.
