@@ -56,13 +56,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Store API connection status.
   const [apiStatus, setApiStatus] = useState<ApiStatus>('disconnected');
 
-  // Handle an initial RPC connection.
-  useEffect(() => {
-    if (!provider && !isLightClient) {
-      connectProvider();
-    }
-  });
-
   // Handle light client connection.
   const handleLightClientConnection = async (Sc: AnyApi) => {
     const newProvider = new ScProvider(
@@ -110,28 +103,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       connectProvider();
     }
   };
-
-  // Trigger API connection handler on network or light client change.
-  useEffect(() => {
-    handleConnectApi();
-
-    return () => {
-      cancelFn?.();
-    };
-  }, [isLightClient, network]);
-
-  // Initialise provider event handlers when provider is set.
-  useEffectIgnoreInitial(() => {
-    if (provider) {
-      provider.on('connected', () => {
-        setApiStatus('connected');
-      });
-      provider.on('error', () => {
-        setApiStatus('disconnected');
-      });
-      getChainState();
-    }
-  }, [provider]);
 
   // Fetch chain state. Called once `provider` has been initialised.
   const getChainState = async () => {
@@ -257,6 +228,35 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     }
     setProvider(newProvider);
   };
+
+  // Handle an initial RPC connection.
+  useEffect(() => {
+    if (!provider && !isLightClient) {
+      connectProvider();
+    }
+  });
+
+  // Trigger API connection handler on network or light client change.
+  useEffect(() => {
+    handleConnectApi();
+
+    return () => {
+      cancelFn?.();
+    };
+  }, [isLightClient, network]);
+
+  // Initialise provider event handlers when provider is set.
+  useEffectIgnoreInitial(() => {
+    if (provider) {
+      provider.on('connected', () => {
+        setApiStatus('connected');
+      });
+      provider.on('error', () => {
+        setApiStatus('disconnected');
+      });
+      getChainState();
+    }
+  }, [provider]);
 
   return (
     <APIContext.Provider
