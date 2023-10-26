@@ -105,7 +105,7 @@ export const Networks = () => {
                   alignItems: 'center',
                 }}
               >
-                Endpoint:{' '}
+                Provider:{' '}
                 <ButtonTertiary
                   text={rpcEndpoint}
                   onClick={() => {
