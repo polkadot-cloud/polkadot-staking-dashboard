@@ -40,7 +40,7 @@ export const ProvidersPrompt = () => {
               }}
             >
               <h3>
-                {key} {isDisabled && `  (${t('active', { ns: 'library' })})`}
+                {key} {isDisabled && `  (${t('selected', { ns: 'modals' })})`}
               </h3>
               <h4>{url}</h4>
             </PromptSelectItem>
