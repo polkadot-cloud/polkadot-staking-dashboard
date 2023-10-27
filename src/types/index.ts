@@ -4,10 +4,11 @@
 import type React from 'react';
 import type { FunctionComponent, SVGProps } from 'react';
 import type { Theme } from 'contexts/Themes/types';
+import type { ExtensionInjected } from '@polkadot-cloud/react/types';
 
 declare global {
   interface Window {
-    injectedWeb3?: AnyJson;
+    injectedWeb3?: Record<string, ExtensionInjected>;
   }
 }
 

@@ -140,15 +140,17 @@ export const useSubmitExtrinsic = ({
 
     // if `activeAccount` is imported from an extension, ensure it is enabled.
     if (!ManualSigners.includes(source)) {
-      const extension = Object.keys(extensionsStatus).find(
-        (id) => id === source
+      const isInstalled = Object.entries(extensionsStatus).find(
+        ([id, status]) => id === source && status === 'connected'
       );
-      if (extension === undefined || !!window.injectedWeb3?.[source]) {
+
+      if (!isInstalled) throw new Error(`${t('walletNotFound')}`);
+
+      if (!window?.injectedWeb3?.[source])
         throw new Error(`${t('walletNotFound')}`);
-      } else {
-        // summons extension popup if not already connected.
-        window.injectedWeb3[source].enable(DappName);
-      }
+
+      // summons extension popup if not already connected.
+      window.injectedWeb3[source].enable(DappName);
     }
 
     const onReady = () => {
