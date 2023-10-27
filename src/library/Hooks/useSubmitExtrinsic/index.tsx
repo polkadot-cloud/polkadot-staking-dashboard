@@ -27,9 +27,9 @@ export const useSubmitExtrinsic = ({
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('library');
   const { api } = useApi();
-  const { extensions } = useExtensions();
   const { buildPayload } = useBuildPayload();
   const { activeProxy } = useActiveAccounts();
+  const { extensionsStatus } = useExtensions();
   const { addNotification } = useNotifications();
   const { isProxySupported } = useProxySupported();
   const { addPending, removePending } = useExtrinsics();
@@ -140,12 +140,14 @@ export const useSubmitExtrinsic = ({
 
     // if `activeAccount` is imported from an extension, ensure it is enabled.
     if (!ManualSigners.includes(source)) {
-      const extension = extensions.find((e) => e.id === source);
-      if (extension === undefined) {
+      const extension = Object.keys(extensionsStatus).find(
+        (id) => id === source
+      );
+      if (extension === undefined || !!window.injectedWeb3?.[source]) {
         throw new Error(`${t('walletNotFound')}`);
       } else {
         // summons extension popup if not already connected.
-        extension.enable(DappName);
+        window.injectedWeb3[source].enable(DappName);
       }
     }
 

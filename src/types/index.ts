@@ -5,6 +5,12 @@ import type React from 'react';
 import type { FunctionComponent, SVGProps } from 'react';
 import type { Theme } from 'contexts/Themes/types';
 
+declare global {
+  interface Window {
+    injectedWeb3?: AnyJson;
+  }
+}
+
 export type NetworkName = 'polkadot' | 'kusama' | 'westend';
 
 export type Networks = Record<string, Network>;
