@@ -262,6 +262,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Trigger API connection handler on network or light client change.
   useEffect(() => {
+    setRpcEndpoint(initialRpcEndpoint());
     handleConnectApi();
     return () => {
       cancelFn?.();
