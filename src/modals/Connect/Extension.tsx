@@ -19,13 +19,12 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const { t } = useTranslation('modals');
   const { addNotification } = useNotifications();
   const { connectExtensionAccounts } = useExtensionAccounts();
-  const { extensionsStatus, extensionInstalled } = useExtensions();
+  const { extensionsStatus, extensionInstalled, extensionCanConnect } =
+    useExtensions();
   const { title, website, id } = meta;
-  const isInstalled = extensionInstalled(id);
 
-  const status = !isInstalled ? 'not_found' : extensionsStatus[id];
-  const disabled = status === 'connected' || !isInstalled;
-  const canConnect = isInstalled && status !== 'connected';
+  const isInstalled = extensionInstalled(id);
+  const canConnect = extensionCanConnect(id);
 
   // Force re-render on click.
   const [increment, setIncrement] = useState(0);
@@ -48,7 +47,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const Icon = ExtensionIcons[id || ''] || undefined;
   // determine message to be displayed based on extension status.
   let statusJsx;
-  switch (status) {
+  switch (extensionsStatus[id]) {
     case 'connected':
       statusJsx = <p className="success">{t('connected')}</p>;
       break;
@@ -66,6 +65,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
 
   const shortUrl = Array.isArray(website) ? website[0] : website;
   const longUrl = Array.isArray(website) ? website[1] : website;
+  const disabled = extensionsStatus[id] === 'connected' || !isInstalled;
 
   return (
     <ModalConnectItem canConnect={canConnect}>
@@ -76,7 +76,6 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
               <button
                 type="button"
                 className="button"
-                disabled={disabled}
                 onClick={() => handleClick()}
               >
                 &nbsp;
