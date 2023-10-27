@@ -14,7 +14,7 @@ export interface ExtensionMetaProps {
   id: string;
   title: string;
   status?: string;
-  website: string;
+  website: string | [string, string];
 }
 
 export interface ListWithInputProps {
