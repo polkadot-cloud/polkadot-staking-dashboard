@@ -19,18 +19,34 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const { t } = useTranslation('modals');
   const { addNotification } = useNotifications();
   const { connectExtensionAccounts } = useExtensionAccounts();
-  const { extensions, extensionsStatus } = useExtensions();
+  const { extensionsStatus, extensionInstalled, extensionCanConnect } =
+    useExtensions();
   const { title, website, id } = meta;
+  const isInstalled = extensionInstalled(id);
+  const canConnect = extensionCanConnect(id);
+
+  // Force re-render on click.
+  const [increment, setIncrement] = useState(0);
+
+  // click to connect to extension
+  const handleClick = async () => {
+    if (canConnect) {
+      const connected = await connectExtensionAccounts(id);
+      // force re-render to display error messages
+      setIncrement(increment + 1);
+
+      if (connected)
+        addNotification({
+          title: t('extensionConnected'),
+          subtitle: `${t('titleExtensionConnected', { title })}`,
+        });
+    }
+  };
 
   const Icon = ExtensionIcons[id || ''] || undefined;
-
-  const extension = extensions.find((e) => e.id === id);
-  const status = !extension ? 'not_found' : extensionsStatus[id];
-  const disabled = status === 'connected' || !extension;
-
   // determine message to be displayed based on extension status.
   let statusJsx;
-  switch (status) {
+  switch (extensionsStatus[id]) {
     case 'connected':
       statusJsx = <p className="success">{t('connected')}</p>;
       break;
@@ -46,27 +62,10 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
       );
   }
 
-  // force re-render on click
-  const [increment, setIncrement] = useState(0);
-
-  // click to connect to extension
-  const handleClick = async () => {
-    if (status !== 'connected' && extension) {
-      const connected = await connectExtensionAccounts(extension);
-      // force re-render to display error messages
-      setIncrement(increment + 1);
-
-      if (connected) {
-        addNotification({
-          title: t('extensionConnected'),
-          subtitle: `${t('titleExtensionConnected', { title })}`,
-        });
-      }
-    }
-  };
+  const disabled = extensionsStatus[id] === 'connected' || !isInstalled;
 
   return (
-    <ModalConnectItem canConnect={!!(extension && status !== 'connected')}>
+    <ModalConnectItem canConnect={canConnect}>
       <ExtensionInner>
         <div>
           <div className="body">
@@ -74,7 +73,6 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
               <button
                 type="button"
                 className="button"
-                disabled={disabled}
                 onClick={() => handleClick()}
               >
                 &nbsp;
@@ -86,7 +84,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
             </div>
             <div className="status">
               {flag && flag}
-              {extension ? statusJsx : <p>{t('notInstalled')}</p>}
+              {isInstalled ? statusJsx : <p>{t('notInstalled')}</p>}
             </div>
             <div className="row">
               <h3>{title}</h3>

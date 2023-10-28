@@ -32,11 +32,11 @@ import { ExtensionsWrapper } from './Wrappers';
 
 export const Connect = () => {
   const { t } = useTranslation('modals');
-  const { extensions } = useExtensions();
+  const { extensionsStatus } = useExtensions();
   const { replaceModal, setModalHeight, modalMaxHeight } = useOverlay().modal;
 
   const installed = ExtensionsArray.filter((a) =>
-    extensions.find((b) => b.id === a.id)
+    Object.keys(extensionsStatus).find((key) => key === a.id)
   );
 
   const other = ExtensionsArray.filter(
@@ -72,7 +72,7 @@ export const Connect = () => {
   // Resize modal on state change.
   useEffectIgnoreInitial(() => {
     refreshModalHeight();
-  }, [section, readOnlyOpen, newProxyOpen, extensions]);
+  }, [section, readOnlyOpen, newProxyOpen, extensionsStatus]);
 
   useEffect(() => {
     window.addEventListener('resize', refreshModalHeight);

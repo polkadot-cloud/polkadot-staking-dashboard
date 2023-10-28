@@ -36,9 +36,9 @@ export const Accounts = () => {
   const { t } = useTranslation('modals');
   const { balances } = useBalances();
   const { getDelegates } = useProxies();
-  const { extensions } = useExtensions();
   const { bondedAccounts } = useBonded();
   const { ledgers, getLocks } = useBalances();
+  const { extensionsStatus } = useExtensions();
   const { memberships } = usePoolMemberships();
   const {
     replaceModal,
@@ -128,7 +128,14 @@ export const Accounts = () => {
   // Resize if modal open upon state changes.
   useEffectIgnoreInitial(() => {
     if (modalStatus === 'open') setModalResize();
-  }, [activeAccount, accounts, bondedAccounts, balances, ledgers, extensions]);
+  }, [
+    activeAccount,
+    accounts,
+    bondedAccounts,
+    balances,
+    ledgers,
+    extensionsStatus,
+  ]);
 
   return (
     <ModalPadding>
