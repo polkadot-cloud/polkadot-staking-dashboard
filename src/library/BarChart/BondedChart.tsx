@@ -23,27 +23,36 @@ export const BondedChart = ({
   } = useNetwork();
   const totalUnlocking = unlocking.plus(unlocked);
 
+  const MinimumLowerBound = 0.5;
   const MinimumNoNZeroPercent = 13;
 
   // graph percentages
   const graphTotal = active.plus(totalUnlocking).plus(free);
+
   const graphActive = greaterThanZero(active)
     ? BigNumber.max(
         active.dividedBy(graphTotal.multipliedBy(0.01)),
-        MinimumNoNZeroPercent
+        active.isGreaterThan(MinimumLowerBound) ? MinimumNoNZeroPercent : 0
       )
     : new BigNumber(0);
 
   const graphUnlocking = greaterThanZero(totalUnlocking)
     ? BigNumber.max(
         totalUnlocking.dividedBy(graphTotal.multipliedBy(0.01)),
-        MinimumNoNZeroPercent
+        totalUnlocking.isGreaterThan(MinimumLowerBound)
+          ? MinimumNoNZeroPercent
+          : 0
       )
     : new BigNumber(0);
 
+  const freeBalance = free.decimalPlaces(3);
   const remaining = new BigNumber(100).minus(graphActive).minus(graphUnlocking);
+
   const graphFree = greaterThanZero(remaining)
-    ? BigNumber.max(remaining, MinimumNoNZeroPercent)
+    ? BigNumber.max(
+        remaining,
+        freeBalance.isGreaterThan(MinimumLowerBound) ? MinimumNoNZeroPercent : 0
+      )
     : new BigNumber(0);
 
   return (
@@ -84,7 +93,7 @@ export const BondedChart = ({
             dataClass="d4"
             widthPercent={Number(graphFree.toFixed(2))}
             flexGrow={0}
-            label={`${free.decimalPlaces(3).toFormat()} ${unit}`}
+            label={`${freeBalance.toFormat()} ${unit}`}
             forceShow={inactive && totalUnlocking.isZero()}
           />
         </Bar>

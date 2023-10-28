@@ -57,10 +57,6 @@ export const SubscanProvider = ({
 
   // handle fetching the various types of payout and set state in one render.
   const handleFetchPayouts = async () => {
-    if (activeAccount === null || !plugins.includes('subscan')) {
-      resetPayouts();
-      return;
-    }
     const results = await Promise.all([fetchPayouts(), fetchPoolClaims()]);
 
     const { newClaimedPayouts, newUnclaimedPayouts } = results[0];
@@ -78,17 +74,21 @@ export const SubscanProvider = ({
     setPoolClaims([]);
   };
 
-  // Fetch payouts on plugins toggle.
-  useEffectIgnoreInitial(() => {
-    if (isNotZero(activeEra.index)) {
-      handleFetchPayouts();
-    }
-  }, [plugins, activeEra]);
-
   // Reset payouts on network switch.
   useEffectIgnoreInitial(() => {
     resetPayouts();
   }, [network]);
+
+  // Reset payouts on no active account.
+  useEffectIgnoreInitial(() => {
+    if (!activeAccount) resetPayouts();
+  }, [activeAccount]);
+
+  // Reset payouts on subscan plugin not enabled.
+  useEffectIgnoreInitial(() => {
+    if (!plugins.includes('subscan')) resetPayouts();
+    else if (isReady && isNotZero(activeEra.index)) handleFetchPayouts();
+  }, [plugins.includes('subscan'), isReady, activeEra]);
 
   // Fetch payouts as soon as network is ready.
   useEffectIgnoreInitial(() => {
