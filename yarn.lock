@@ -578,15 +578,10 @@
     picocolors "^1.0.0"
     tslib "^2.6.0"
 
-"@polkadot-cloud/assets@^0.1.28":
-  version "0.1.28"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.28.tgz#b10b9c0b4ef3a07d4f3276439ff3cf57e32771cd"
-  integrity sha512-nI1KsuyLrobehdKCXdt+9urFf2o/rDV6whGhE79IpWKjEylKnAfWUtVkfAKZWa8UmukpMxsySvn/inek9m5ucw==
-
-"@polkadot-cloud/assets@^0.1.29":
-  version "0.1.29"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.29.tgz#958b8f174b86538fa8bd542d86af13d4033c1e45"
-  integrity sha512-RMpJLbzhI3SX4/PwZvSkUkSZxapERV9vgDFRR0kcjoUq6YlcEjaCqArPGsW+1p6nCGzIQ9En+mz2eGR/x3p38w==
+"@polkadot-cloud/assets@^0.1.32":
+  version "0.1.32"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.32.tgz#b619e24db310ac9a23e4bb20a64245f096b73072"
+  integrity sha512-TC8m6RFbHtJ5omW4VuIugKp1u7YzGBIgG9vGVEXkeSMWKwgzvkrxn7qpcjcelu1XO8ujb/+64dnhIpuhdj4e9g==
 
 "@polkadot-cloud/core@^1.0.29":
   version "1.0.29"
@@ -1465,9 +1460,9 @@ acorn-walk@^8.2.0:
   integrity sha512-FS7hV565M5l1R08MXqo8odwMTB02C2UqzB17RVgu9EyuYFBqJZ3/ZY97sQD5FewVu1UyDFc1yztUDrAwT0EypA==
 
 acorn@^8.10.0, acorn@^8.9.0:
-  version "8.11.1"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.11.1.tgz#29c6f12c3002d884b6f8baa37089e1917425cd3d"
-  integrity sha512-IJTNCJMRHfRfb8un89z1QtS0x890C2QUrUxFMK8zy+RizcId6mfnqOf68Bu9YkDgpLYuvCm6aYbwDatXVZPjMQ==
+  version "8.11.2"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.11.2.tgz#ca0d78b51895be5390a5903c5b3bdcdaf78ae40b"
+  integrity sha512-nc0Axzp/0FILLEVsm4fNwLCwMttvhEI263QtVPQcbpfZZ3ts0hLsZGOpE6czNlid7CJ9MlyH8reXkpsf3YUY4w==
 
 ajv@^6.12.4:
   version "6.12.6"
@@ -1849,9 +1844,9 @@ camelize@^1.0.0:
   integrity sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==
 
 caniuse-lite@^1.0.30001541:
-  version "1.0.30001554"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001554.tgz#ba80d88dff9acbc0cd4b7535fc30e0191c5e2e2a"
-  integrity sha512-A2E3U//MBwbJVzebddm1YfNp7Nud5Ip+IPn4BozBmn4KqVX7AvluoIDFWjsv5OkGnKUXQVmMSoMKLa3ScCblcQ==
+  version "1.0.30001555"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001555.tgz#e36f4d49e345337d6788f32093867cec8d951789"
+  integrity sha512-NzbUFKUnJ3DTcq6YyZB6+qqhfD112uR3uoEnkmfzm2wVzUNsFkU7AwBjKQ654Sp5cau0JxhFyRSn/tQZ+XfygA==
 
 chai@^4.3.10:
   version "4.3.10"
@@ -2171,9 +2166,9 @@ dot-case@^3.0.4:
     tslib "^2.0.3"
 
 electron-to-chromium@^1.4.535:
-  version "1.4.568"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.568.tgz#6ab444e120dd7fd9c3789eac54d3132b6cfcd0f9"
-  integrity sha512-3TCOv8+BY6Ltpt1/CmGBMups2IdKOyfEmz4J8yIS4xLSeMm0Rf+psSaxLuswG9qMKt+XbNbmADybtXGpTFlbDg==
+  version "1.4.569"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.569.tgz#1298b67727187ffbaac005a7425490d157f3ad03"
+  integrity sha512-LsrJjZ0IbVy12ApW3gpYpcmHS3iRxH4bkKOW98y1/D+3cvDUWGcbzbsFinfUS8knpcZk/PG/2p/RnkMCYN7PVg==
 
 elliptic@^6.4.1:
   version "6.5.4"
