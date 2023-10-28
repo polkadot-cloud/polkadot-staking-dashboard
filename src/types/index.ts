@@ -11,6 +11,12 @@ declare global {
     injectedWeb3?: Record<string, ExtensionInjected>;
   }
 }
+
+declare global {
+  interface Window {
+    injectedWeb3?: Record<string, ExtensionInjected>;
+  }
+}
 export type NetworkName = 'polkadot' | 'kusama' | 'westend';
 
 export type Networks = Record<string, Network>;

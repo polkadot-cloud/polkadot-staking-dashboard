@@ -62,6 +62,8 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
       );
   }
 
+  const shortUrl = Array.isArray(website) ? website[0] : website;
+  const longUrl = Array.isArray(website) ? website[1] : website;
   const disabled = extensionsStatus[id] === 'connected' || !isInstalled;
 
   return (
@@ -93,11 +95,11 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
           <div className="foot">
             <a
               className="link"
-              href={`https://${website}`}
+              href={`https://${longUrl}`}
               target="_blank"
               rel="noreferrer"
             >
-              {website}
+              {shortUrl}
               <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
             </a>
           </div>
