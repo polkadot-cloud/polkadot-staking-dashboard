@@ -33,7 +33,6 @@ import { ExtensionsWrapper } from './Wrappers';
 export const Connect = () => {
   const { t } = useTranslation('modals');
   const { extensionsStatus } = useExtensions();
-
   const { replaceModal, setModalHeight, modalMaxHeight } = useOverlay().modal;
 
   const installed = ExtensionsArray.filter((a) =>

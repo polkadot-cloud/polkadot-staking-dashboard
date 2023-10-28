@@ -22,7 +22,6 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const { extensionsStatus, extensionInstalled, extensionCanConnect } =
     useExtensions();
   const { title, website, id } = meta;
-
   const isInstalled = extensionInstalled(id);
   const canConnect = extensionCanConnect(id);
 
