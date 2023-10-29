@@ -41,7 +41,7 @@ export const Connect = () => {
   const installed = web.filter((a) =>
     Object.keys(extensionsStatus).find((key) => key === a.id)
   );
-  const other = installed.filter((a) => !installed.find((b) => b.id === a.id));
+  const other = web.filter((a) => !installed.find((b) => b.id === a.id));
 
   // toggle read only management
   const [readOnlyOpen, setReadOnlyOpen] = useState(false);
@@ -155,7 +155,7 @@ export const Connect = () => {
               <ActionItem text={t('web')} />
               <ExtensionsWrapper>
                 <SelectItems layout="two-col">
-                  {web.concat(other).map((extension, i) => (
+                  {installed.concat(other).map((extension, i) => (
                     <Extension key={`extension_item_${i}`} meta={extension} />
                   ))}
                 </SelectItems>
