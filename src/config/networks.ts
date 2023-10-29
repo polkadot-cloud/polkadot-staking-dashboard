@@ -23,7 +23,7 @@ export const NetworkList: Networks = {
     name: 'polkadot',
     endpoints: {
       lightClient: WellKnownChain.polkadot,
-      defaultRpcEndpoint: 'Automata 1RPC',
+      defaultRpcEndpoint: 'Parity',
       rpcEndpoints: {
         'Automata 1RPC': 'wss://1rpc.io/dot',
         Dwellir: 'wss://polkadot-rpc.dwellir.com',
@@ -90,7 +90,7 @@ export const NetworkList: Networks = {
     name: 'kusama',
     endpoints: {
       lightClient: WellKnownChain.ksmcc3,
-      defaultRpcEndpoint: 'Automata 1RPC',
+      defaultRpcEndpoint: 'Parity',
       rpcEndpoints: {
         'Automata 1RPC': 'wss://1rpc.io/ksm',
         Dwellir: 'wss://kusama-rpc.dwellir.com',
@@ -159,7 +159,7 @@ export const NetworkList: Networks = {
     name: 'westend',
     endpoints: {
       lightClient: WellKnownChain.westend2,
-      defaultRpcEndpoint: 'OnFinality',
+      defaultRpcEndpoint: 'Parity',
       rpcEndpoints: {
         Dwellir: 'wss://westend-rpc.dwellir.com',
         'Dwellir Tunisia': 'wss://westend-rpc-tn.dwellir.com',
