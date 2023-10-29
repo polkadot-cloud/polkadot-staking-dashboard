@@ -9,6 +9,7 @@
     "activeRoles_one": "Active Roles in {{count}} Pool",
     "activeRoles_other": "Active Roles in {{count}} Pools",
     "activeRoles_zero": "Active Roles In No Pool",
+    "developerTools": "Developer Tools",
     "add": "Add",
     "addToBond": "Add to Bond",
     "addToNominations": "Add to Nominations",
