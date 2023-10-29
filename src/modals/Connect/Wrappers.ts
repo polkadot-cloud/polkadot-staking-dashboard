@@ -61,6 +61,9 @@ export const ExtensionInner = styled.div`
     width: 100%;
     display: flex;
   }
+  .foot {
+    padding: 0.25rem 1rem 1rem 1rem;
+  }
   .status {
     position: absolute;
     top: 0.9rem;

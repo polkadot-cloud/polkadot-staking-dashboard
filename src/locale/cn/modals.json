@@ -67,6 +67,7 @@
     "destroyIrreversible": "销毁池是不可逆转的",
     "destroyPool": "销毁提名池",
     "destroyPoolResult": "销毁提名池后，所有成员都可以无权限解除质押，提名池永远无法重新开启",
+    "developerTools": "开发者工具",
     "differentNetworkAddress": "不同的网络地址",
     "disconnect": "断开",
     "done": "完成",
