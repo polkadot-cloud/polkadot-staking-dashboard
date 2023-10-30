@@ -35,13 +35,13 @@ export const Connect = () => {
   const { extensionsStatus } = useExtensions();
   const { replaceModal, setModalHeight, modalMaxHeight } = useOverlay().modal;
 
-  const installed = ExtensionsArray.filter((a) =>
+  const web = ExtensionsArray.filter((a) => a.id !== 'polkadot-js');
+  const pjs = ExtensionsArray.filter((a) => a.id === 'polkadot-js');
+
+  const installed = web.filter((a) =>
     Object.keys(extensionsStatus).find((key) => key === a.id)
   );
-
-  const other = ExtensionsArray.filter(
-    (a) => !installed.find((b) => b.id === a.id)
-  );
+  const other = web.filter((a) => !installed.find((b) => b.id === a.id));
 
   // toggle read only management
   const [readOnlyOpen, setReadOnlyOpen] = useState(false);
@@ -156,6 +156,15 @@ export const Connect = () => {
               <ExtensionsWrapper>
                 <SelectItems layout="two-col">
                   {installed.concat(other).map((extension, i) => (
+                    <Extension key={`extension_item_${i}`} meta={extension} />
+                  ))}
+                </SelectItems>
+              </ExtensionsWrapper>
+
+              <ActionItem text={t('developerTools')} />
+              <ExtensionsWrapper>
+                <SelectItems layout="two-col">
+                  {pjs.map((extension, i) => (
                     <Extension key={`extension_item_${i}`} meta={extension} />
                   ))}
                 </SelectItems>

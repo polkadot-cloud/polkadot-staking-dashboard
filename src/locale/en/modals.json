@@ -70,6 +70,7 @@
     "destroyIrreversible": "Destroying a Pool is Irreversible",
     "destroyPool": "Destroy Pool",
     "destroyPoolResult": " Once you Destroy the pool, all members can be permissionlessly unbonded, and the pool can never be reopened.",
+    "developerTools": "Developer Tools",
     "differentNetworkAddress": "Different Network Address",
     "disconnect": "Disconnect",
     "done": "Done",
