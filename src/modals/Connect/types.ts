@@ -1,9 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type React from 'react';
-import type { AnyJson } from 'types';
-
 export interface ExtensionProps {
   meta: ExtensionMetaProps;
   installed?: any;
@@ -16,9 +13,8 @@ export interface ExtensionProps {
 export interface ExtensionMetaProps {
   id: string;
   title: string;
-  Icon: React.FC<AnyJson>;
   status?: string;
-  website: string;
+  website: string | [string, string];
 }
 
 export interface ListWithInputProps {

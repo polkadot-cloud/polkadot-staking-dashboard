@@ -3,7 +3,6 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { Spacer } from 'library/Form/Wrappers';
@@ -15,12 +14,14 @@ import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { Subheading } from 'pages/Nominate/Wrappers';
 
 export const Payee = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const { getPayeeItems } = usePayeeConfig();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccounts();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
 
   const setup = getSetupProgress('nominator', activeAccount);
@@ -28,7 +29,7 @@ export const Payee = ({ section }: SetupStepProps) => {
   const { payee } = progress;
 
   // Store the current user-inputted custom payout account.
-  const [account, setAccount] = useState<MaybeAccount>(payee.account);
+  const [account, setAccount] = useState<MaybeAddress>(payee.account);
 
   const DefaultPayeeConfig: PayeeConfig = {
     destination: 'Staked',
@@ -50,7 +51,7 @@ export const Payee = ({ section }: SetupStepProps) => {
   };
 
   // update setup progress with payee account.
-  const handleChangeAccount = (newAccount: MaybeAccount) => {
+  const handleChangeAccount = (newAccount: MaybeAddress) => {
     // set local value to update input element set setup payee
     setActiveAccountSetup('nominator', {
       ...progress,
@@ -78,9 +79,9 @@ export const Payee = ({ section }: SetupStepProps) => {
         bondFor="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <h4 className="withMargin">
-          {t('nominate.payoutDestinationSubtitle')}
-        </h4>
+        <Subheading>
+          <h4>{t('nominate.payoutDestinationSubtitle')}</h4>
+        </Subheading>
 
         <SelectItems layout="three-col">
           {getPayeeItems().map((item) => (

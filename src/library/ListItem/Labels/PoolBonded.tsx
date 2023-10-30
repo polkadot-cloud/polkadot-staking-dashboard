@@ -9,11 +9,11 @@ import {
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import type { Pool } from 'library/Pool/types';
+import { useNetwork } from 'contexts/Network';
 
 export const PoolBonded = ({
   pool,
@@ -25,11 +25,12 @@ export const PoolBonded = ({
   batchIndex: number;
 }) => {
   const { t } = useTranslation('library');
-  const { network } = useApi();
-  const { eraStakers, getNominationsStatusFromTargets } = useStaking();
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
   const { meta, getPoolNominationStatusCode } = useBondedPools();
+  const { eraStakers, getNominationsStatusFromTargets } = useStaking();
   const { addresses, points } = pool;
-  const { units, unit } = network;
 
   // get pool targets from nominations meta batch
   const nominations = meta[batchKey]?.nominations ?? [];
@@ -76,7 +77,7 @@ export const PoolBonded = ({
 
   return (
     <>
-      <ValidatorStatusWrapper $status={nominationStatus}>
+      <ValidatorStatusWrapper $status={nominationStatus} $noMargin>
         <h5>
           {nominationStatus === null || !eraStakers.stakers.length
             ? `${t('syncing')}...`

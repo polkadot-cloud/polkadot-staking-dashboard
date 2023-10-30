@@ -4,25 +4,18 @@
 import { ellipsisFn } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { PolkadotIcon } from '@polkadot-cloud/react';
-import { useTheme } from 'contexts/Themes';
+import { Polkicon } from '@polkadot-cloud/react';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';
-import { getIdentityDisplay } from '../../ValidatorList/Validator/Utils';
+import { getIdentityDisplay } from '../../ValidatorList/ValidatorItem/Utils';
 import type { IdentityProps } from '../types';
 
 export const Identity = ({ address }: IdentityProps) => {
-  const { mode } = useTheme();
-  const { validatorIdentities, validatorSupers } = useValidators();
+  const { validatorIdentities, validatorSupers, validatorsFetched } =
+    useValidators();
 
   const [display, setDisplay] = useState(
     getIdentityDisplay(validatorIdentities[address], validatorSupers[address])
   );
-
-  // aggregate synced status
-  const identitiesSynced =
-    Object.values(validatorIdentities).length > 0 ?? false;
-
-  const supersSynced = Object.values(validatorSupers).length > 0 ?? false;
 
   useEffect(() => {
     setDisplay(
@@ -37,9 +30,9 @@ export const Identity = ({ address }: IdentityProps) => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      <PolkadotIcon dark={mode === 'dark'} nocopy address={address} size={24} />
+      <Polkicon address={address} size="2rem" />
       <div className="inner">
-        {identitiesSynced && supersSynced && display !== null ? (
+        {validatorsFetched && display !== null ? (
           <h4>{display}</h4>
         ) : (
           <h4>{ellipsisFn(address, 6)}</h4>

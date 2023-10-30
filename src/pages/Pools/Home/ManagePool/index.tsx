@@ -4,28 +4,23 @@
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonPrimary, PageRow } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
-import { GenerateNominations } from 'library/GenerateNominations';
-import { Nominations } from 'pages/Nominate/Active/Nominations';
+import { Nominations } from 'library/Nominations';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 
 export const ManagePool = () => {
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation();
   const { isSyncing } = useUi();
-  const { openModal } = useOverlay().modal;
-  const { activeAccount } = useConnect();
-  const {
-    isOwner,
-    isNominator,
-    setTargets,
-    targets,
-    poolNominations,
-    selectedActivePool,
-  } = useActivePools();
+  const { poolNominated } = useValidators();
+  const { openCanvas } = useOverlay().canvas;
+  const { activeAccount } = useActiveAccounts();
+  const { isOwner, isNominator, poolNominations, selectedActivePool } =
+    useActivePools();
 
   const isNominating = !!poolNominations?.targets?.length;
   const nominator = selectedActivePool?.addresses?.stash ?? null;
@@ -41,9 +36,9 @@ export const ManagePool = () => {
           <Nominations bondFor="pool" nominator={activeAccount} />
         ) : canNominate && !isNominating && state !== 'Destroying' ? (
           <>
-            <CardHeaderWrapper $withAction>
+            <CardHeaderWrapper $withAction $withMargin>
               <h3>
-                {t('pools.generateNominations')}
+                {t('nominate.nominations', { ns: 'pages' })}
                 <ButtonHelp
                   marginLeft
                   onClick={() => openHelp('Nominations')}
@@ -53,22 +48,24 @@ export const ManagePool = () => {
                 <ButtonPrimary
                   iconLeft={faChevronCircleRight}
                   iconTransform="grow-1"
-                  text={t('pools.nominate')}
+                  text={t('pools.nominate', { ns: 'pages' })}
                   disabled={!canNominate}
-                  onClick={() => openModal({ key: 'NominatePool', size: 'sm' })}
+                  onClick={() =>
+                    openCanvas({
+                      key: 'ManageNominations',
+                      scroll: false,
+                      options: {
+                        bondFor: 'pool',
+                        nominator,
+                        nominated: poolNominated || [],
+                      },
+                      size: 'xl',
+                    })
+                  }
                 />
               </div>
             </CardHeaderWrapper>
-            <GenerateNominations
-              batchKey="generate_pool_nominations"
-              nominations={targets.nominations}
-              setters={[
-                {
-                  set: setTargets,
-                  current: targets,
-                },
-              ]}
-            />
+            <h4>{t('notNominating', { ns: 'library' })}.</h4>
           </>
         ) : (
           <Nominations bondFor="pool" nominator={nominator} />

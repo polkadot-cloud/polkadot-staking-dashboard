@@ -4,18 +4,18 @@
 import { registerSaEvent } from 'Utils';
 import { ellipsisFn, setStateWithRef } from '@polkadot-cloud/utils';
 import React, { useEffect, useRef, useState } from 'react';
-import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import type { LedgerAddress, LedgerResponse } from 'contexts/Hardware/types';
 import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
 import type { AnyJson } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 import { Manage } from './Manage';
 import { Splash } from './Splash';
 
 export const ImportLedger: React.FC = () => {
-  const { network } = useApi();
+  const { network } = useNetwork();
   const { setModalResize } = useOverlay().modal;
   const {
     transportResponse,
@@ -52,7 +52,7 @@ export const ImportLedger: React.FC = () => {
 
   // Store addresses retreived from Ledger device. Defaults to local addresses.
   const [addresses, setAddresses] = useState<LedgerAddress[]>(
-    getLocalLedgerAddresses(network.name)
+    getLocalLedgerAddresses(network)
   );
   const addressesRef = useRef(addresses);
 
@@ -63,7 +63,7 @@ export const ImportLedger: React.FC = () => {
       if (a.address !== address) {
         return true;
       }
-      if (a.network !== network.name) {
+      if (a.network !== network) {
         return true;
       }
       return false;
@@ -77,9 +77,7 @@ export const ImportLedger: React.FC = () => {
       );
     }
     setStateWithRef(
-      newLedgerAddresses.filter(
-        (a: LedgerAddress) => a.network === network.name
-      ),
+      newLedgerAddresses.filter((a: LedgerAddress) => a.network === network),
       setAddresses,
       addressesRef
     );
@@ -88,7 +86,7 @@ export const ImportLedger: React.FC = () => {
   // refresh imported ledger accounts on network change.
   useEffect(() => {
     setStateWithRef(
-      getLocalLedgerAddresses(network.name),
+      getLocalLedgerAddresses(network),
       setAddresses,
       addressesRef
     );
@@ -107,7 +105,7 @@ export const ImportLedger: React.FC = () => {
         pubKey,
         address,
         name: ellipsisFn(address),
-        network: network.name,
+        network,
       }));
 
       // update the full list of local ledger addresses with new entry.
@@ -116,7 +114,7 @@ export const ImportLedger: React.FC = () => {
           if (a.address !== newAddress.address) {
             return true;
           }
-          if (a.network !== network.name) {
+          if (a.network !== network) {
             return true;
           }
           return false;
@@ -128,12 +126,12 @@ export const ImportLedger: React.FC = () => {
 
       // store only those accounts on the current network in state.
       setStateWithRef(
-        newAddresses.filter((a) => a.network === network.name),
+        newAddresses.filter((a) => a.network === network),
         setAddresses,
         addressesRef
       );
       resetStatusCodes();
-      registerSaEvent(`${network.name.toLowerCase()}_ledger_account_fetched`);
+      registerSaEvent(`${network.toLowerCase()}_ledger_account_fetched`);
     }
   };
 

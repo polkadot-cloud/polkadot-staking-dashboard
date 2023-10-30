@@ -16,19 +16,19 @@ import {
 } from '@polkadot-cloud/react';
 import { inChrome } from '@polkadot-cloud/utils';
 import React from 'react';
-import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
-import { ReactComponent as LedgerLogoSVG } from 'img/ledgerLogo.svg';
+import LedgerLogoSVG from 'img/ledgerLogo.svg?react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
 
 export const Ledger = (): React.ReactElement => {
   const { openHelp } = useHelp();
   const { replaceModal } = useOverlay().modal;
-  const { name } = useApi().network;
+  const { network } = useNetwork();
   const url = 'ledger.com';
 
   // Only render on Polkadot and Kusama networks.
-  if (!['polkadot', 'kusama'].includes(name)) {
+  if (!['polkadot', 'kusama'].includes(network)) {
     return <></>;
   }
 
@@ -44,10 +44,12 @@ export const Ledger = (): React.ReactElement => {
           </div>
           <div className="row margin">
             <ButtonText
-              text={name === 'polkadot' ? 'BETA' : 'EXPERIMENTAL'}
+              text={network === 'polkadot' ? 'BETA' : 'EXPERIMENTAL'}
               disabled
               marginRight
-              iconLeft={name === 'polkadot' ? undefined : faExclamationTriangle}
+              iconLeft={
+                network === 'polkadot' ? undefined : faExclamationTriangle
+              }
               style={{ opacity: 0.5 }}
             />
             <ButtonText

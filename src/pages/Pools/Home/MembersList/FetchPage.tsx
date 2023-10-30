@@ -7,18 +7,23 @@ import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
-import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { usePlugins } from 'contexts/Plugins';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import type { PoolMember } from 'contexts/Pools/types';
-import { useSubscan } from 'contexts/Subscan';
+import { useSubscan } from 'contexts/Plugins/Subscan';
 import { useTheme } from 'contexts/Themes';
-import { Header, List, Wrapper as ListWrapper } from 'library/List';
+import {
+  Header,
+  List,
+  ListStatusHeader,
+  Wrapper as ListWrapper,
+} from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { ListProvider, useList } from 'library/List/context';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Member } from './Member';
 import type { FetchpageMembersListProps } from './types';
 
@@ -26,19 +31,19 @@ export const MembersListInner = ({
   allowMoreCols,
   pagination,
   batchKey,
-  title,
   disableThrottle = false,
   memberCount,
 }: FetchpageMembersListProps) => {
   const { t } = useTranslation('pages');
   const {
-    network: { colors, name },
-  } = useApi();
+    network,
+    networkData: { colors },
+  } = useNetwork();
   const provider = useList();
   const { mode } = useTheme();
-  const { activeAccount } = useConnect();
   const { pluginEnabled } = usePlugins();
   const { fetchPoolMembers } = useSubscan();
+  const { activeAccount } = useActiveAccounts();
   const { selectedActivePool } = useActivePools();
   const {
     poolMembersApi,
@@ -109,7 +114,7 @@ export const MembersListInner = ({
     setFetchedPoolMembersApi('unsynced');
     setPoolMembersApi([]);
     setPage(1);
-  }, [name]);
+  }, [network]);
 
   // Configure list when network is ready to fetch.
   useEffect(() => {
@@ -130,9 +135,7 @@ export const MembersListInner = ({
   return (
     <ListWrapper>
       <Header>
-        <div>
-          <h4>{title}</h4>
-        </div>
+        <div />
         <div>
           <button type="button" onClick={() => setListFormat('row')}>
             <FontAwesomeIcon
@@ -153,7 +156,9 @@ export const MembersListInner = ({
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
         {fetchedPoolMembersApi !== 'synced' ? (
-          <h4 className="none">{t('pools.fetchingMemberList')}....</h4>
+          <ListStatusHeader style={{ marginTop: '0.5rem' }}>
+            {t('pools.fetchingMemberList')}....
+          </ListStatusHeader>
         ) : (
           <MotionContainer>
             {listMembers.map((member: PoolMember, index: number) => (

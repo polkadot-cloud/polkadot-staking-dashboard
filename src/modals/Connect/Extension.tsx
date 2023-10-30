@@ -6,27 +6,47 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ModalConnectItem } from '@polkadot-cloud/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useConnect } from 'contexts/Connect';
-import { useExtensions } from 'contexts/Extensions';
+import {
+  useExtensions,
+  useExtensionAccounts,
+} from '@polkadot-cloud/react/hooks';
 import { useNotifications } from 'contexts/Notifications';
+import { ExtensionIcons } from '@polkadot-cloud/assets/extensions';
 import { ExtensionInner } from './Wrappers';
 import type { ExtensionProps } from './types';
 
 export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const { t } = useTranslation('modals');
-  const { extensions, extensionsStatus } = useExtensions();
-  const { connectExtensionAccounts } = useConnect();
   const { addNotification } = useNotifications();
-  const { title, Icon, website } = meta;
+  const { connectExtensionAccounts } = useExtensionAccounts();
+  const { extensionsStatus, extensionInstalled, extensionCanConnect } =
+    useExtensions();
+  const { title, website, id } = meta;
+  const isInstalled = extensionInstalled(id);
+  const canConnect = extensionCanConnect(id);
 
-  const { id } = meta;
-  const extension = extensions.find((e) => e.id === id);
-  const status = !extension ? 'not_found' : extensionsStatus[id];
-  const disabled = status === 'connected' || !extension;
+  // Force re-render on click.
+  const [increment, setIncrement] = useState(0);
 
+  // click to connect to extension
+  const handleClick = async () => {
+    if (canConnect) {
+      const connected = await connectExtensionAccounts(id);
+      // force re-render to display error messages
+      setIncrement(increment + 1);
+
+      if (connected)
+        addNotification({
+          title: t('extensionConnected'),
+          subtitle: `${t('titleExtensionConnected', { title })}`,
+        });
+    }
+  };
+
+  const Icon = ExtensionIcons[id || ''] || undefined;
   // determine message to be displayed based on extension status.
   let statusJsx;
-  switch (status) {
+  switch (extensionsStatus[id]) {
     case 'connected':
       statusJsx = <p className="success">{t('connected')}</p>;
       break;
@@ -42,53 +62,31 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
       );
   }
 
-  // force re-render on click
-  const [increment, setIncrement] = useState(0);
-
-  // click to connect to extension
-  const handleClick = async () => {
-    if (status !== 'connected' && extension) {
-      (async () => {
-        const connected = await connectExtensionAccounts(extension);
-        // force re-render to display error messages
-        setIncrement(increment + 1);
-
-        if (connected) {
-          addNotification({
-            title: t('extensionConnected'),
-            subtitle: `${t('titleExtensionConnected', { title })}`,
-          });
-        }
-      })();
-    }
-  };
+  const shortUrl = Array.isArray(website) ? website[0] : website;
+  const longUrl = Array.isArray(website) ? website[1] : website;
+  const disabled = extensionsStatus[id] === 'connected' || !isInstalled;
 
   return (
-    <ModalConnectItem canConnect={!!(extension && status !== 'connected')}>
+    <ModalConnectItem canConnect={canConnect}>
       <ExtensionInner>
         <div>
           <div className="body">
-            {!(disabled || status === 'connected') ? (
+            {!disabled ? (
               <button
                 type="button"
                 className="button"
-                disabled={disabled}
-                onClick={() => {
-                  if (status !== 'connected') {
-                    handleClick();
-                  }
-                }}
+                onClick={() => handleClick()}
               >
                 &nbsp;
               </button>
             ) : null}
 
             <div className="row icon">
-              <Icon width={size} height={size} />
+              <Icon style={{ width: size, height: size }} />
             </div>
             <div className="status">
               {flag && flag}
-              {extension ? statusJsx : <p>{t('notInstalled')}</p>}
+              {isInstalled ? statusJsx : <p>{t('notInstalled')}</p>}
             </div>
             <div className="row">
               <h3>{title}</h3>
@@ -97,11 +95,11 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
           <div className="foot">
             <a
               className="link"
-              href={`https://${website}`}
+              href={`https://${longUrl}`}
               target="_blank"
               rel="noreferrer"
             >
-              {website}
+              {shortUrl}
               <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
             </a>
           </div>

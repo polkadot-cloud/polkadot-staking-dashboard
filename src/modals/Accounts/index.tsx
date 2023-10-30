@@ -13,11 +13,15 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
-import { useExtensions } from 'contexts/Extensions';
+import {
+  useExtensions,
+  useEffectIgnoreInitial,
+  useOverlay,
+} from '@polkadot-cloud/react/hooks';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useProxies } from 'contexts/Proxies';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { AccountButton } from './Account';
 import { Delegates } from './Delegates';
 import { AccountSeparator, AccountWrapper } from './Wrappers';
@@ -32,17 +36,18 @@ export const Accounts = () => {
   const { t } = useTranslation('modals');
   const { balances } = useBalances();
   const { getDelegates } = useProxies();
-  const { extensions } = useExtensions();
   const { bondedAccounts } = useBonded();
   const { ledgers, getLocks } = useBalances();
+  const { extensionsStatus } = useExtensions();
   const { memberships } = usePoolMemberships();
   const {
     replaceModal,
     status: modalStatus,
     setModalResize,
   } = useOverlay().modal;
-  const { activeAccount, disconnectFromAccount, setActiveProxy, accounts } =
-    useConnect();
+  const { accounts } = useImportedAccounts();
+  const { activeAccount, setActiveAccount, setActiveProxy } =
+    useActiveAccounts();
 
   // Store local copy of accounts.
   const [localAccounts, setLocalAccounts] = useState(accounts);
@@ -72,20 +77,13 @@ export const Accounts = () => {
 
     const poolMember = memberships.find((m) => m.address === address) ?? null;
 
-    // If stash exists, add address to nominating list.
-    if (
-      isStash &&
-      nominating.find((a) => a.address === address) === undefined
-    ) {
+    // Check if nominating.
+    if (isStash && nominating.find((a) => a.address === address) === undefined)
       isNominating = true;
-    }
 
-    // if pooling, add address to active pooling.
-    if (poolMember) {
-      if (!inPool.find((n) => n.address === address)) {
-        isInPool = true;
-      }
-    }
+    // Check if in pool.
+    if (poolMember)
+      if (!inPool.find((n) => n.address === address)) isInPool = true;
 
     // If not doing anything, add address to `notStaking`.
     if (
@@ -94,30 +92,50 @@ export const Accounts = () => {
       !notStaking.find((n) => n.address === address)
     ) {
       notStaking.push({ address, delegates });
+      continue;
     }
 
-    if (isNominating && isInPool && poolMember) {
+    // If both nominating and in pool, add to this list.
+    if (
+      isNominating &&
+      isInPool &&
+      poolMember &&
+      !nominatingAndPool.find((n) => n.address === address)
+    ) {
       nominatingAndPool.push({
         ...poolMember,
         address,
         stashImported: true,
         delegates,
       });
+      continue;
     }
 
+    // Nominating only.
     if (isNominating && !isInPool) {
       nominating.push({ address, stashImported: true, delegates });
+      continue;
     }
-    if (!isNominating && isInPool && poolMember) {
+
+    // In pool only.
+    if (!isNominating && isInPool && poolMember)
       inPool.push({ ...poolMember, delegates });
-    }
   }
 
+  // Refresh local accounts state when context accounts change.
   useEffect(() => setLocalAccounts(accounts), [accounts]);
 
-  useEffect(() => {
+  // Resize if modal open upon state changes.
+  useEffectIgnoreInitial(() => {
     if (modalStatus === 'open') setModalResize();
-  }, [activeAccount, accounts, bondedAccounts, balances, ledgers, extensions]);
+  }, [
+    activeAccount,
+    accounts,
+    bondedAccounts,
+    balances,
+    ledgers,
+    extensionsStatus,
+  ]);
 
   return (
     <ModalPadding>
@@ -143,7 +161,7 @@ export const Accounts = () => {
               text={t('disconnect')}
               iconRight={faLinkSlash}
               onClick={() => {
-                disconnectFromAccount();
+                setActiveAccount(null);
                 setActiveProxy(null);
               }}
             />
@@ -154,7 +172,9 @@ export const Accounts = () => {
         <AccountWrapper style={{ marginTop: '1.5rem' }}>
           <div>
             <div>
-              <h4>{t('noActiveAccount')}</h4>
+              <h4 style={{ padding: '0.75rem 1rem' }}>
+                {t('noActiveAccount')}
+              </h4>
             </div>
             <div />
           </div>

@@ -12,17 +12,17 @@ import {
   ModalPadding,
   ModalSection,
 } from '@polkadot-cloud/react';
-import { ExtensionsArray } from '@polkadot-cloud/community/extensions';
+import { ExtensionsArray } from '@polkadot-cloud/assets/extensions';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useExtensions } from 'contexts/Extensions';
-import { Close } from 'library/Modal/Close';
-import { SelectItems } from 'library/SelectItems';
-import type { AnyFunction } from 'types';
 import {
+  useExtensions,
   useEffectIgnoreInitial,
   useOverlay,
 } from '@polkadot-cloud/react/hooks';
+import { Close } from 'library/Modal/Close';
+import { SelectItems } from 'library/SelectItems';
+import type { AnyFunction } from 'types';
 import { Extension } from './Extension';
 import { Ledger } from './Ledger';
 import { Proxies } from './Proxies';
@@ -32,16 +32,16 @@ import { ExtensionsWrapper } from './Wrappers';
 
 export const Connect = () => {
   const { t } = useTranslation('modals');
-  const { extensions } = useExtensions();
+  const { extensionsStatus } = useExtensions();
   const { replaceModal, setModalHeight, modalMaxHeight } = useOverlay().modal;
 
-  const installed = ExtensionsArray.filter((a) =>
-    extensions.find((b) => b.id === a.id)
-  );
+  const web = ExtensionsArray.filter((a) => a.id !== 'polkadot-js');
+  const pjs = ExtensionsArray.filter((a) => a.id === 'polkadot-js');
 
-  const other = ExtensionsArray.filter(
-    (a) => !installed.find((b) => b.id === a.id)
+  const installed = web.filter((a) =>
+    Object.keys(extensionsStatus).find((key) => key === a.id)
   );
+  const other = web.filter((a) => !installed.find((b) => b.id === a.id));
 
   // toggle read only management
   const [readOnlyOpen, setReadOnlyOpen] = useState(false);
@@ -72,7 +72,7 @@ export const Connect = () => {
   // Resize modal on state change.
   useEffectIgnoreInitial(() => {
     refreshModalHeight();
-  }, [section, readOnlyOpen, newProxyOpen, extensions]);
+  }, [section, readOnlyOpen, newProxyOpen, extensionsStatus]);
 
   useEffect(() => {
     window.addEventListener('resize', refreshModalHeight);
@@ -156,6 +156,15 @@ export const Connect = () => {
               <ExtensionsWrapper>
                 <SelectItems layout="two-col">
                   {installed.concat(other).map((extension, i) => (
+                    <Extension key={`extension_item_${i}`} meta={extension} />
+                  ))}
+                </SelectItems>
+              </ExtensionsWrapper>
+
+              <ActionItem text={t('developerTools')} />
+              <ExtensionsWrapper>
+                <SelectItems layout="two-col">
+                  {pjs.map((extension, i) => (
                     <Extension key={`extension_item_${i}`} meta={extension} />
                   ))}
                 </SelectItems>

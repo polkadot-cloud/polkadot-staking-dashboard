@@ -5,19 +5,19 @@ import { faBolt, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimary, ButtonRow, PageRow } from '@polkadot-cloud/react';
 import { isNotZero } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const UnstakePrompts = () => {
   const { t } = useTranslation('pages');
-  const { unit, colors } = useApi().network;
-  const { activeAccount } = useConnect();
+  const { unit, colors } = useNetwork().networkData;
+  const { activeAccount } = useActiveAccounts();
   const { mode } = useTheme();
   const { openModal } = useOverlay().modal;
   const { isNetworkSyncing } = useUi();

@@ -4,14 +4,15 @@
 import styled from 'styled-components';
 
 export const BarChartWrapper = styled.div<{ $lessPadding?: boolean }>`
-  width: 100%;
   padding: ${(props) => (props.$lessPadding ? '0' : '0 0.5rem')};
   margin-top: 1rem;
+  width: 100%;
 
   .available {
-    width: 100%;
     display: flex;
     margin-top: 2.7rem;
+    width: 100%;
+
     > div {
       display: flex;
       flex-flow: row wrap;
@@ -80,11 +81,11 @@ export const Legend = styled.div`
 
 export const Bar = styled.div`
   background: var(--button-secondary-background);
-  display: flex;
-  width: 100%;
-  height: 3.75rem;
   border-radius: 0.65rem;
+  display: flex;
   overflow: hidden;
+  height: 3.75rem;
+  width: 100%;
 
   > div {
     position: relative;

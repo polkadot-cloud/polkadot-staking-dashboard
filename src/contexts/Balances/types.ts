@@ -2,15 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
-import type { MaybeAccount } from 'types';
+import type { MaybeAddress } from 'types';
 
 export interface BalancesContextInterface {
   ledgers: Ledger[];
   balances: Balances[];
-  getStashLedger: (a: MaybeAccount) => Ledger;
-  getBalance: (address: MaybeAccount) => Balance;
-  getLocks: (address: MaybeAccount) => BalanceLock[];
-  getNonce: (address: MaybeAccount) => number;
+  getStashLedger: (a: MaybeAddress) => Ledger;
+  getBalance: (address: MaybeAddress) => Balance;
+  getLocks: (address: MaybeAddress) => BalanceLock[];
+  getNonce: (address: MaybeAddress) => number;
 }
 
 export interface Balances {
@@ -42,7 +42,7 @@ export interface BalanceLock {
 }
 
 export interface Ledger {
-  address: MaybeAccount;
+  address: MaybeAddress;
   stash: string | null;
   active: BigNumber;
   total: BigNumber;

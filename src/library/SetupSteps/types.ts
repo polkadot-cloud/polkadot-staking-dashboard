@@ -4,7 +4,6 @@
 import type { BondFor } from 'types';
 
 export interface NominationsProps {
-  batchKey: string;
   bondFor: BondFor;
   section: number;
 }
@@ -14,12 +13,6 @@ export interface FooterProps {
   bondFor: BondFor;
 }
 
-export interface GenerateNominationsInnerProps {
-  setters: any[];
-  nominations: string[];
-  batchKey: string;
-}
-
 export interface HeaderProps {
   title?: string;
   helpKey?: string;
@@ -27,8 +20,6 @@ export interface HeaderProps {
   thisSection: number;
   bondFor: BondFor;
 }
-
-export type Nominations = string[];
 
 export interface SetupStepProps {
   section: number;

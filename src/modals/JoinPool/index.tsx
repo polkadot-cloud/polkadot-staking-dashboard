@@ -7,7 +7,6 @@ import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import type { ClaimPermission } from 'contexts/Pools/types';
 import { useSetup } from 'contexts/Setup';
@@ -23,11 +22,16 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const JoinPool = () => {
   const { t } = useTranslation('modals');
-  const { api, network } = useApi();
-  const { activeAccount } = useConnect();
+  const { api } = useApi();
+  const {
+    networkData: { units },
+  } = useNetwork();
+  const { activeAccount } = useActiveAccounts();
   const { newBatchCall } = useBatchCall();
   const { setActiveAccountSetup } = useSetup();
   const { txFees, notEnoughFunds } = useTxMeta();
@@ -41,7 +45,6 @@ export const JoinPool = () => {
   } = useOverlay().modal;
 
   const { id: poolId, setActiveTab } = options;
-  const { units } = network;
 
   const { totalPossibleBond, totalAdditionalBond } =
     getTransferOptions(activeAccount).pool;

@@ -1,9 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { LocalMeta } from 'contexts/FastUnstake/types';
 import type {
+  EraRewardPoints,
   LocalValidatorEntriesData,
   Validator,
 } from 'contexts/Validators/types';
@@ -93,4 +94,46 @@ export const validateLocalExposure = (
     isExposed: localIsExposed,
     checked: localChecked,
   };
+};
+
+// Check if era reward points entry exists for an era.
+export const hasLocalEraRewardPoints = (network: NetworkName, era: string) => {
+  const current = JSON.parse(
+    localStorage.getItem(`${network}_era_reward_points`) || '{}'
+  );
+  return !!current?.[era];
+};
+
+// Get local era reward points entry for an era.
+export const getLocalEraRewardPoints = (network: NetworkName, era: string) => {
+  const current = JSON.parse(
+    localStorage.getItem(`${network}_era_reward_points`) || '{}'
+  );
+  return current?.[era] || {};
+};
+
+// Set local era reward points entry for an era.
+export const setLocalEraRewardPoints = (
+  network: NetworkName,
+  era: string,
+  eraRewardPoints: EraRewardPoints | null,
+  endEra: string
+) => {
+  const current = JSON.parse(
+    localStorage.getItem(`${network}_era_reward_points`) || '{}'
+  );
+
+  const removeStaleEras = Object.fromEntries(
+    Object.entries(current || {}).filter(([k]: [string, unknown]) =>
+      new BigNumber(k).isGreaterThanOrEqualTo(endEra)
+    )
+  );
+
+  localStorage.setItem(
+    `${network}_era_reward_points`,
+    JSON.stringify({
+      ...removeStaleEras,
+      [era]: eraRewardPoints,
+    })
+  );
 };

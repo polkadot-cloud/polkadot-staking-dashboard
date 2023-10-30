@@ -14,8 +14,8 @@ export interface PoolListProps {
   batchKey?: string;
   disableThrottle?: boolean;
   refetchOnListUpdate?: string;
+  allowListFormat?: boolean;
   pools?: any;
-  title?: string;
   defaultFilters?: {
     includes: string[] | null;
     excludes: string[] | null;

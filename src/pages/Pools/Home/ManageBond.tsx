@@ -10,8 +10,6 @@ import {
 } from '@polkadot-cloud/react';
 import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
@@ -19,21 +17,26 @@ import { useUi } from 'contexts/UI';
 import { BondedChart } from 'library/BarChart/BondedChart';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');
 
-  const { network } = useApi();
+  const {
+    networkData: {
+      units,
+      brand: { token: Token },
+    },
+  } = useNetwork();
   const { openHelp } = useHelp();
   const { isPoolSyncing } = useUi();
   const { openModal } = useOverlay().modal;
+  const { activeAccount } = useActiveAccounts();
+  const { isReadOnlyAccount } = useImportedAccounts();
   const { getTransferOptions } = useTransferOptions();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { isBonding, isMember, selectedActivePool } = useActivePools();
-  const {
-    units,
-    brand: { token: Token },
-  } = network;
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const {

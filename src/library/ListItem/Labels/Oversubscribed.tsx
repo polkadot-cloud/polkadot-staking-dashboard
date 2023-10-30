@@ -6,18 +6,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { MinBondPrecision } from 'consts';
-import { useApi } from 'contexts/Api';
 import { useTooltip } from 'contexts/Tooltip';
 import {
   OverSubscribedWrapper,
   TooltipTrigger,
 } from 'library/ListItem/Wrappers';
 import { useStaking } from 'contexts/Staking';
+import { useNetwork } from 'contexts/Network';
 import type { OversubscribedProps } from '../types';
 
 export const Oversubscribed = ({ address }: OversubscribedProps) => {
   const { t } = useTranslation('library');
-  const { network } = useApi();
+  const {
+    networkData: { unit },
+  } = useNetwork();
   const { setTooltipTextAndOpen } = useTooltip();
   const { erasStakersSyncing, getLowestRewardFromStaker } = useStaking();
 
@@ -31,7 +33,7 @@ export const Oversubscribed = ({ address }: OversubscribedProps) => {
 
   const tooltipText = `${t(
     'overSubscribedMinReward'
-  )} ${lowestRewardFormatted} ${network.unit}`;
+  )} ${lowestRewardFormatted} ${unit}`;
 
   return (
     <>
@@ -55,7 +57,7 @@ export const Oversubscribed = ({ address }: OversubscribedProps) => {
                   className="warning"
                 />
               </span>
-              {lowestRewardFormatted} {network.unit}
+              {lowestRewardFormatted} {unit}
             </OverSubscribedWrapper>
           </div>
         </motion.div>

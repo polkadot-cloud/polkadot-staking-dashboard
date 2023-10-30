@@ -1,10 +1,17 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from 'types';
+import type BigNumber from 'bignumber.js';
+import type { AnyJson, BondFor, Sync } from 'types';
 
 export interface ValidatorsContextInterface {
   fetchValidatorPrefs: (a: ValidatorAddresses) => Promise<Validator[] | null>;
+  getValidatorPointsFromEras: (
+    startEra: BigNumber,
+    address: string
+  ) => Record<string, BigNumber>;
+  getNominated: (bondFor: BondFor) => Validator[] | null;
+  injectValidatorListData: (entries: Validator[]) => ValidatorListEntry[];
   validators: Validator[];
   validatorIdentities: Record<string, Identity>;
   validatorSupers: Record<string, AnyJson>;
@@ -14,6 +21,11 @@ export interface ValidatorsContextInterface {
   nominated: Validator[] | null;
   poolNominated: Validator[] | null;
   validatorCommunity: any[];
+  erasRewardPoints: ErasRewardPoints;
+  validatorsFetched: Sync;
+  eraPointsBoundaries: EraPointsBoundaries;
+  validatorEraPointsHistory: Record<string, ValidatorEraPointHistory>;
+  erasRewardPointsFetched: Sync;
 }
 
 export interface FavoriteValidatorsContextInterface {
@@ -52,4 +64,28 @@ export interface LocalValidatorEntriesData {
   avgCommission: number;
   era: string;
   entries: Validator[];
+}
+
+export type ErasRewardPoints = Record<string, EraRewardPoints>;
+
+export interface EraRewardPoints {
+  total: string;
+  individual: Record<string, string>;
+}
+
+export type EraPointsBoundaries = {
+  high: BigNumber;
+  low: BigNumber;
+} | null;
+
+export type ValidatorListEntry = Validator & {
+  validatorStatus: 'waiting' | 'active';
+  totalStake: BigNumber;
+};
+
+export interface ValidatorEraPointHistory {
+  eras: Record<string, BigNumber>;
+  totalPoints: BigNumber;
+  rank?: number;
+  quartile?: number;
 }

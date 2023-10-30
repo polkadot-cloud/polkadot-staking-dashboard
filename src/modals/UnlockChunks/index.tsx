@@ -10,23 +10,23 @@ import { setStateWithRef } from '@polkadot-cloud/utils';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';
-import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Title } from 'library/Modal/Title';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Forms } from './Forms';
 import { Overview } from './Overview';
 
 export const UnlockChunks = () => {
   const { t } = useTranslation('modals');
-  const { activeAccount } = useConnect();
-  const { notEnoughFunds } = useTxMeta();
-  const { getStashLedger } = useBalances();
   const {
     config: { options },
     setModalHeight,
   } = useOverlay().modal;
+  const { notEnoughFunds } = useTxMeta();
+  const { getStashLedger } = useBalances();
+  const { activeAccount } = useActiveAccounts();
   const { getPoolUnlocking } = useActivePools();
   const { bondFor } = options || {};
 
@@ -61,6 +61,11 @@ export const UnlockChunks = () => {
   // unlock value of interest
   const [unlock, setUnlock] = useState(null);
 
+  // counter to trigger modal height calculation
+  const [calculateHeight, setCalculateHeight] = useState<number>(0);
+  const incrementCalculateHeight = () =>
+    setCalculateHeight(calculateHeight + 1);
+
   // refs for wrappers
   const headerRef = useRef<HTMLDivElement>(null);
   const overviewRef = useRef<HTMLDivElement>(null);
@@ -77,10 +82,14 @@ export const UnlockChunks = () => {
     return h;
   };
 
+  const resizeCallback = () => {
+    setModalHeight(getModalHeight());
+  };
+
   // resize modal on state change
   useEffect(() => {
     setModalHeight(getModalHeight());
-  }, [task, notEnoughFunds, sectionRef.current, unlocking]);
+  }, [task, calculateHeight, notEnoughFunds, sectionRef.current, unlocking]);
 
   // resize this modal on window resize
   useEffect(() => {
@@ -89,9 +98,6 @@ export const UnlockChunks = () => {
       window.removeEventListener('resize', resizeCallback);
     };
   }, []);
-  const resizeCallback = () => {
-    setModalHeight(getModalHeight());
-  };
 
   return (
     <ModalSection type="carousel">
@@ -123,6 +129,7 @@ export const UnlockChunks = () => {
           ref={overviewRef}
         />
         <Forms
+          incrementCalculateHeight={incrementCalculateHeight}
           setSection={setSection}
           unlock={unlock}
           task={task}

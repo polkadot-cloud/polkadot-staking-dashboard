@@ -25,9 +25,7 @@ export const OrderValidators = () => {
             $active={order === o ?? false}
             key={`validator_filter_${i}`}
             type="button"
-            onClick={() => {
-              setOrder('validators', o);
-            }}
+            onClick={() => setOrder('validators', o)}
           >
             <FontAwesomeIcon
               transform="grow-5"

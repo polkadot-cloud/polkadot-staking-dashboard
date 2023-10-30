@@ -9,12 +9,10 @@
       "noValidators": "This entity contains no validators.",
       "validator_one": "{{count}} Validator",
       "validator_other": "{{count}} Validators",
-      "validators": "'s Validators",
       "website": "Website"
     },
     "nominate": {
       "activeNominations": "Active Nominations",
-      "addFromFavorites": "Add From Favorites",
       "addressCopied": "Address Copied to Clipboard",
       "automaticallyBonded": "Automatically bond payouts to your existing staked balance.",
       "back": "Back",
@@ -28,6 +26,7 @@
       "controllerNotImported": "You have not imported your controller account. If you have lost access to your controller account, set a new one now. Otherwise, import the controller into one of your active extensions.",
       "earningRewards": "Earning Rewards",
       "inactiveNominations": "Inactive Nominations",
+      "manage": "Manage",
       "minimumToEarnRewards": "Minimum To Earn Rewards",
       "minimumToNominate": "Minimum To Nominate",
       "noNominationsSet": "Inactive: No Nominations Set",
@@ -50,7 +49,6 @@
       "startNominating": "Start Nominating",
       "status": "Nominator Status",
       "stop": "Stop",
-      "stopNominatingSelected": "Stop Nominating Selected",
       "summary": "Summary",
       "syncing": "Syncing",
       "totalSupplyStaked": "Total Supply Staked",
@@ -66,8 +64,7 @@
       "updateToStash": "Update Controller To Stash",
       "validator_one": "{{count}} Validator",
       "validator_other": "{{count}} Validators",
-      "waitingForActiveNominations": "Waiting for Active Nominations",
-      "yourNominations": "Your Nominations"
+      "waitingForActiveNominations": "Waiting for Active Nominations"
     },
     "overview": {
       "activeEra": "Active Era",
@@ -157,9 +154,8 @@
       "earningRewards": "Earning Rewards",
       "edit": "Edit",
       "favorites": "Favorites",
-      "favoritesList": "Favorites List",
       "fetchingFavoritePools": "Fetching favorite pools",
-      "fetchingMemberList": "Fetching member list",
+      "fetchingMemberList": "Fetching Member List",
       "generateNominations": "Generate Nominations",
       "inPool": "In Pool",
       "inactivePoolNotNominating": "Inactive: Pool Not Nominating",
@@ -191,8 +187,6 @@
       "poolCreator": " As the pool creator, you will consume your pool's <b>Depositor</b> role.",
       "poolCurrentlyLocked": "Pool Currently Locked",
       "poolInDestroyingState": "Pool in Destroying State",
-      "poolMember_one": "{{count}} Pool Member",
-      "poolMember_other": "{{count}} Pool Members",
       "poolMembers": "Pool Members",
       "poolMembership": "Pool Membership",
       "poolName": "Pool Name",

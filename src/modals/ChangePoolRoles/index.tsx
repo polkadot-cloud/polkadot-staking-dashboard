@@ -4,7 +4,6 @@
 import { ModalPadding } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
@@ -12,13 +11,14 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect } from 'react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { RoleChange } from './RoleChange';
 import { Wrapper } from './Wrapper';
 
 export const ChangePoolRoles = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useActiveAccounts();
   const { notEnoughFunds } = useTxMeta();
   const { replacePoolRoles } = useBondedPools();
   const {

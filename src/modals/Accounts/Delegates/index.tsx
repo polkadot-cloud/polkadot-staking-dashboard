@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { isSupportedProxy } from 'config/proxies';
-import { useConnect } from 'contexts/Connect';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { AccountButton } from '../Account';
 import { DelegatesWrapper } from './Wrapper';
 import type { DelegatesProps } from '../types';
 
 export const Delegates = ({ delegates, delegator }: DelegatesProps) => {
-  const { getAccount, accounts } = useConnect();
+  const { accounts } = useImportedAccounts();
+  const { getAccount } = useImportedAccounts();
 
   // Filter delegates that are external or not imported. Default to empty array if there are no
   // delegates for this address.

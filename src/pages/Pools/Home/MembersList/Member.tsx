@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMenu } from 'contexts/Menu';
-import { useNetworkMetrics } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useList } from 'library/List/context';
@@ -104,10 +104,10 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
   };
 
   return (
-    <Wrapper $format="nomination">
+    <Wrapper className="member">
       <div className="inner">
         <MenuPosition ref={posRef} />
-        <div className="row">
+        <div className="row top">
           {selectActive && <Select item={who} />}
           <Identity address={who} />
           <div>
@@ -126,7 +126,7 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
           </div>
         </div>
         <Separator />
-        <div className="row status">
+        <div className="row bottom">
           <PoolMemberBonded
             who={who}
             meta={meta}

@@ -5,25 +5,27 @@ import { setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import React, { useState } from 'react';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import type { AnyJson, MaybeAccount } from 'types';
+import type { AnyJson, MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import * as defaults from './defaults';
 import type { TxMetaContextInterface } from './types';
 
 export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   const { getBondedAccount } = useBonded();
-  const { accountHasSigner, activeProxy } = useConnect();
+  const { activeProxy } = useActiveAccounts();
   const { getControllerNotImported } = useStaking();
+  const { accountHasSigner } = useImportedAccounts();
   const { getTransferOptions } = useTransferOptions();
 
   // Store the transaction fees for the transaction.
   const [txFees, setTxFees] = useState(new BigNumber(0));
 
   // Store the sender of the transaction.
-  const [sender, setSender] = useState<MaybeAccount>(null);
+  const [sender, setSender] = useState<MaybeAddress>(null);
 
   // Store whether the sender does not have enough funds.
   const [notEnoughFunds, setNotEnoughFunds] = useState(false);
@@ -94,18 +96,16 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   })();
 
   const controllerSignerAvailable = (
-    stash: MaybeAccount,
+    stash: MaybeAddress,
     proxySupported: boolean
   ) => {
     const controller = getBondedAccount(stash);
 
     if (controller !== stash) {
-      if (getControllerNotImported(controller)) {
+      if (getControllerNotImported(controller))
         return 'controller_not_imported';
-      }
-      if (!accountHasSigner(controller)) {
-        return 'read_only';
-      }
+
+      if (!accountHasSigner(controller)) return 'read_only';
     } else if (
       (!proxySupported || !accountHasSigner(activeProxy)) &&
       !accountHasSigner(stash)

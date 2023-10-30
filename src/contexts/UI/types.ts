@@ -12,4 +12,5 @@ export interface UIContextInterface {
   isSyncing: boolean;
   isNetworkSyncing: boolean;
   isPoolSyncing: boolean;
+  isBraveBrowser: boolean;
 }

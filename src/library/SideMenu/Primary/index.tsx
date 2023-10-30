@@ -4,10 +4,10 @@
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { registerSaEvent } from 'Utils';
-import { useApi } from 'contexts/Api';
 import { Link } from 'react-router-dom';
 import { useUi } from 'contexts/UI';
 import { useDotLottieButton } from 'library/Hooks/useDotLottieButton';
+import { useNetwork } from 'contexts/Network';
 import type { PrimaryProps } from '../types';
 import { Wrapper } from './Wrappers';
 
@@ -20,7 +20,7 @@ export const Primary = ({
   lottie,
 }: PrimaryProps) => {
   const { setSideMenu } = useUi();
-  const { network } = useApi();
+  const { network } = useNetwork();
   const { icon, play } = useDotLottieButton(lottie);
 
   let Action = null;
@@ -54,7 +54,7 @@ export const Primary = ({
         if (!active) {
           play();
           setSideMenu(false);
-          registerSaEvent(`${network.name.toLowerCase()}_${name}_page_visit`);
+          registerSaEvent(`${network.toLowerCase()}_${name}_page_visit`);
         }
       }}
     >

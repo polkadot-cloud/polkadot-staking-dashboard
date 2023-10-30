@@ -21,11 +21,7 @@ import { JoinPool } from '../modals/JoinPool';
 import { ManageFastUnstake } from '../modals/ManageFastUnstake';
 import { ManagePool } from '../modals/ManagePool';
 import { Networks } from '../modals/Networks';
-import { Nominate } from '../modals/Nominate';
-import { NominateFromFavorites } from '../modals/NominateFromFavorites';
-import { NominatePool } from '../modals/NominatePool';
 import { PoolNominations } from '../modals/PoolNominations';
-import { SelectFavorites } from '../modals/SelectFavorites';
 import { Settings } from '../modals/Settings';
 import { Unbond } from '../modals/Unbond';
 import { UnbondPoolMember } from '../modals/UnbondPoolMember';
@@ -35,7 +31,9 @@ import { UpdateController } from '../modals/UpdateController';
 import { UpdatePayee } from '../modals/UpdatePayee';
 import { UpdateReserve } from '../modals/UpdateReserve';
 import { ValidatorMetrics } from '../modals/ValidatorMetrics';
+import { ValidatorGeo } from '../modals/ValidatorGeo';
 import { WithdrawPoolMember } from '../modals/WithdrawPoolMember';
+import { ManageNominations } from '../canvas/ManageNominations';
 
 export const Overlays = () => {
   const { status } = useHelp();
@@ -61,13 +59,10 @@ export const Overlays = () => {
         ManagePool,
         ManageFastUnstake,
         Networks,
-        Nominate,
-        NominateFromFavorites,
-        NominatePool,
         PoolNominations,
-        SelectFavorites,
         Settings,
         ValidatorMetrics,
+        ValidatorGeo,
         UnbondPoolMember,
         UnlockChunks,
         Unstake,
@@ -76,6 +71,9 @@ export const Overlays = () => {
         UpdatePayee,
         UpdateReserve,
         WithdrawPoolMember,
+      }}
+      canvas={{
+        ManageNominations,
       }}
     />
   );

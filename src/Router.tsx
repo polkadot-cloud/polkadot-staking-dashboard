@@ -20,8 +20,6 @@ import {
 } from 'react-router-dom';
 import { Prompt } from 'library/Prompt';
 import { PagesConfig } from 'config/pages';
-import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useNotifications } from 'contexts/Notifications';
 import { useUi } from 'contexts/UI';
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
@@ -33,14 +31,20 @@ import { Notifications } from 'library/Notifications';
 import { SideMenu } from 'library/SideMenu';
 import { Tooltip } from 'library/Tooltip';
 import { Overlays } from 'overlay';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { SideMenuMaximisedWidth } from 'consts';
 
 export const RouterInner = () => {
   const { t } = useTranslation();
-  const { network } = useApi();
+  const { network } = useNetwork();
   const { pathname, search } = useLocation();
+  const { accounts } = useImportedAccounts();
   const { addNotification } = useNotifications();
-  const { accountsInitialised, accounts, activeAccount, connectToAccount } =
-    useConnect();
+  const { accountsInitialised } = useOtherAccounts();
+  const { activeAccount, setActiveAccount } = useActiveAccounts();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
   const { openPromptWith } = usePrompt();
 
@@ -78,7 +82,7 @@ export const RouterInner = () => {
       if (aUrl) {
         const account = accounts.find((a) => a.address === aUrl);
         if (account && aUrl !== activeAccount) {
-          connectToAccount(account);
+          setActiveAccount(account?.address || null);
           addNotification({
             title: t('accountConnected', { ns: 'library' }),
             subtitle: `${t('connectedTo', { ns: 'library' })} ${
@@ -112,7 +116,11 @@ export const RouterInner = () => {
         <Prompt />
 
         {/* Left side menu */}
-        <Side open={sideMenuOpen} minimised={sideMenuMinimised}>
+        <Side
+          open={sideMenuOpen}
+          minimised={sideMenuMinimised}
+          width={`${SideMenuMaximisedWidth}px`}
+        >
           <SideMenu />
         </Side>
 
@@ -135,7 +143,7 @@ export const RouterInner = () => {
                         <Page>
                           <Helmet>
                             <title>{`${t(key, { ns: 'base' })} : ${t('title', {
-                              context: `${network.name}`,
+                              context: `${network}`,
                               ns: 'base',
                             })}`}</title>
                           </Helmet>

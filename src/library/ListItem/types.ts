@@ -3,13 +3,13 @@
 
 import type React from 'react';
 import type { BondedPool } from 'contexts/Pools/types';
-import type { BondFor, MaybeAccount } from 'types';
+import type { BondFor, MaybeAddress } from 'types';
+import type { ValidatorPrefs } from 'contexts/Validators/types';
+import type BigNumber from 'bignumber.js';
+import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
 
 export interface BlockedProps {
-  prefs: {
-    commission: string;
-    blocked: boolean;
-  };
+  prefs: ValidatorPrefs;
 }
 
 export interface CopyAddressProps {
@@ -38,11 +38,13 @@ export interface MetricsProps {
 export interface NominationStatusProps {
   address: string;
   bondFor: BondFor;
-  nominator: MaybeAccount;
+  nominator: MaybeAddress;
+  status?: NominationStatus;
+  noMargin?: boolean;
 }
 
 export interface OversubscribedProps {
-  address: MaybeAccount;
+  address: MaybeAddress;
 }
 
 export interface SelectProps {
@@ -52,5 +54,12 @@ export interface SelectProps {
 }
 
 export interface ParaValidatorProps {
-  address: MaybeAccount;
+  address: MaybeAddress;
+}
+
+export interface EraStatusProps {
+  address: MaybeAddress;
+  noMargin: boolean;
+  totalStake: BigNumber;
+  status: 'waiting' | 'active';
 }

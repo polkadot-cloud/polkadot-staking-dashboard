@@ -8,7 +8,7 @@ export const PromptWrapper = styled.div`
   position: fixed;
   width: 100%;
   height: 100%;
-  z-index: 9;
+  z-index: 11;
 
   /* content wrapper */
   > div {
@@ -17,7 +17,7 @@ export const PromptWrapper = styled.div`
     flex-flow: row wrap;
     justify-content: center;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 2rem 2rem;
 
     /* click anywhere behind overlay to close */
     .close {
@@ -26,6 +26,16 @@ export const PromptWrapper = styled.div`
       height: 100%;
       z-index: 8;
       cursor: default;
+    }
+
+    /* status message placed below title */
+    h4.subheading {
+      margin-bottom: 1rem;
+    }
+
+    /* padded content to give extra spacing */
+    .padded {
+      padding: 1rem 1.5rem;
     }
   }
 `;
@@ -38,7 +48,7 @@ export const HeightWrapper = styled.div<{ size: string }>`
   border-radius: 1.5rem;
   z-index: 9;
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 `;
 
 export const ContentWrapper = styled.div`
@@ -150,5 +160,42 @@ export const FilterListButton = styled.button<{ $active: boolean }>`
     transition: color var(--transition-duration);
     margin-left: 0.2rem;
     margin-right: 0.9rem;
+  }
+`;
+
+export const FooterWrapper = styled.div`
+  margin: 1.5rem 0 0.5rem 0;
+`;
+
+export const PromptListItem = styled.div`
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border-primary-color);
+
+  &.inactive {
+    opacity: var(--opacity-disabled);
+  }
+`;
+
+export const PromptSelectItem = styled.button`
+  border-bottom: 1px solid var(--border-primary-color);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem 0.5rem;
+  border-radius: 0.25rem;
+  width: 100%;
+
+  > h4 {
+    margin-top: 0.3rem;
+  }
+  &:hover {
+    background: var(--button-hover-background);
+  }
+  &.inactive {
+    h3,
+    h4 {
+      color: var(--accent-color-primary);
+    }
   }
 `;

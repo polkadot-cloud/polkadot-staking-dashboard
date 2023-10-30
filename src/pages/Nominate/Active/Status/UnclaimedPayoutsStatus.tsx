@@ -8,15 +8,21 @@ import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
 import { faCircleDown } from '@fortawesome/free-solid-svg-icons';
-import { useConnect } from 'contexts/Connect';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const UnclaimedPayoutsStatus = () => {
   const { t } = useTranslation();
-  const { network, isReady } = useApi();
+  const { isReady } = useApi();
+  const {
+    networkData: { units },
+  } = useNetwork();
   const { openModal } = useOverlay().modal;
   const { unclaimedPayouts } = usePayouts();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { activeAccount } = useActiveAccounts();
+  const { isReadOnlyAccount } = useImportedAccounts();
 
   const totalUnclaimed = Object.values(unclaimedPayouts || {}).reduce(
     (total, validators) =>
@@ -33,7 +39,7 @@ export const UnclaimedPayoutsStatus = () => {
       type="odometer"
       stat={{
         value: minDecimalPlaces(
-          planckToUnit(totalUnclaimed, network.units).toFormat(),
+          planckToUnit(totalUnclaimed, units).toFormat(),
           2
         ),
       }}

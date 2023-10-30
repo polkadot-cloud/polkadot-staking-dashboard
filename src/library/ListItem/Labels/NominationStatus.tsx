@@ -4,50 +4,35 @@
 import { greaterThanZero, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
-import { useNominationStatus } from 'library/Hooks/useNominationStatus';
-import { useConnect } from 'contexts/Connect';
+import { useNetwork } from 'contexts/Network';
 import type { NominationStatusProps } from '../types';
 
 export const NominationStatus = ({
   address,
   nominator,
   bondFor,
+  noMargin = false,
+  status,
 }: NominationStatusProps) => {
   const { t } = useTranslation('library');
   const {
-    network: { unit, units },
-  } = useApi();
-  const { activeAccount } = useConnect();
-  const { getPoolNominationStatus } = useBondedPools();
-  const { getNomineesStatus } = useNominationStatus();
+    networkData: { unit, units },
+  } = useNetwork();
   const {
     eraStakers: { activeAccountOwnStake, stakers },
     erasStakersSyncing,
   } = useStaking();
-
-  let nominationStatus;
-  if (bondFor === 'pool') {
-    // get nomination status from pool metadata
-    nominationStatus = getPoolNominationStatus(nominator, address);
-  } else {
-    // get all active account's nominations.
-    const nominationStatuses = getNomineesStatus(activeAccount, 'nominator');
-    // find the nominator status within the returned nominations.
-    nominationStatus = nominationStatuses[address];
-  }
 
   // determine staked amount
   let stakedAmount = new BigNumber(0);
   if (bondFor === 'nominator') {
     // bonded amount within the validator.
     stakedAmount =
-      nominationStatus === 'active'
+      status === 'active'
         ? new BigNumber(
-            activeAccountOwnStake?.find((own: any) => own.address)?.value ?? 0
+            activeAccountOwnStake?.find((own) => own.address)?.value ?? 0
           )
         : new BigNumber(0);
   } else {
@@ -59,9 +44,9 @@ export const NominationStatus = ({
   }
 
   return (
-    <ValidatorStatusWrapper $status={nominationStatus}>
+    <ValidatorStatusWrapper $status={status || 'waiting'} $noMargin={noMargin}>
       <h5>
-        {t(`${nominationStatus}`)}
+        {t(`${status || 'waiting'}`)}
         {greaterThanZero(stakedAmount)
           ? ` / ${
               erasStakersSyncing ? '...' : `${stakedAmount.toFormat()} ${unit}`

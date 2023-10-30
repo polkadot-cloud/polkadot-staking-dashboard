@@ -4,7 +4,7 @@
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
 import type {
   TimeLeftAll,
   TimeLeftFormatted,
@@ -14,8 +14,8 @@ import type {
 import { getDuration } from './utils';
 
 export const useTimeLeft = () => {
+  const { network } = useNetwork();
   const { t, i18n } = useTranslation();
-  const { network } = useApi();
 
   // check whether timeleft is within a minute of finishing.
   const inLastHour = () => {
@@ -80,6 +80,7 @@ export const useTimeLeft = () => {
 
   // refresh effects.
   useEffect(() => {
+    setTimeleft(getTimeleft());
     if (inLastHour()) {
       // refresh timeleft every second.
       if (!secIntervalRef.current) {
@@ -93,19 +94,17 @@ export const useTimeLeft = () => {
 
         setStateWithRef(interval, setSecInterval, secIntervalRef);
       }
-    } else {
-      setTimeleft(getTimeleft());
-      // refresh timeleft every minute.
-      if (!minIntervalRef.current) {
-        const interval = setInterval(() => {
-          if (inLastHour()) {
-            clearInterval(minIntervalRef.current);
-            setStateWithRef(undefined, setMinInterval, minIntervalRef);
-          }
-          setTimeleft(getTimeleft());
-        }, 60000);
-        setStateWithRef(interval, setMinInterval, minIntervalRef);
-      }
+    }
+    // refresh timeleft every minute.
+    else if (!minIntervalRef.current) {
+      const interval = setInterval(() => {
+        if (inLastHour()) {
+          clearInterval(minIntervalRef.current);
+          setStateWithRef(undefined, setMinInterval, minIntervalRef);
+        }
+        setTimeleft(getTimeleft());
+      }, 60000);
+      setStateWithRef(interval, setMinInterval, minIntervalRef);
     }
   }, [to, inLastHour(), lastMinuteCountdown(), network]);
 

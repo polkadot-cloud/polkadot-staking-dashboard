@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components';
+import type { DisplayFor } from 'types';
 import type { ListProps, PaginationWrapperProps } from './types';
 
 export const Wrapper = styled.div`
@@ -10,12 +11,17 @@ export const Wrapper = styled.div`
   flex-flow: column nowrap;
 `;
 
-export const Header = styled.div`
-  border-bottom: 1px solid var(--border-primary-color);
+// NOTE: used for member lists and payout list only.
+export const Header = styled.div<{ $displayFor?: DisplayFor }>`
+  border-bottom: ${(props) =>
+    props.$displayFor === 'canvas'
+      ? '1px solid var(--border-secondary-color)'
+      : '1px solid var(--border-primary-color)'};
+
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-end;
-  padding: 0 0.25rem 0.5rem 0.25rem;
+  padding: 0 0.25rem 0.75rem 0.25rem;
   flex: 1;
 
   h4 {
@@ -56,6 +62,7 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
     display: flex;
     flex: 1;
   }
+
   > div:last-child {
     display: flex;
     justify-content: flex-end;
@@ -88,43 +95,24 @@ export const SelectableWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  padding: 0 0.15rem;
+  margin-top: 0.5rem;
 
   > button {
-    border: 1px solid var(--border-primary-color);
-    font-size: 1rem;
-    color: var(--text-color-secondary);
-    border-radius: 1.5rem;
-    padding: 0.45rem 1rem;
-    margin-right: 0.5rem;
     margin-bottom: 0.75rem;
-
-    > svg {
-      margin-right: 0.5rem;
-    }
-
-    &:disabled {
-      opacity: var(--opacity-disabled);
-    }
-
-    &:hover {
-      color: var(--text-color-primary);
-    }
   }
 `;
 
+export const ListStatusHeader = styled.h4`
+  padding: 0.25rem 0.5rem;
+`;
+
 export const List = styled.div<ListProps>`
-  margin-top: 1rem;
   width: 100%;
 
   > div {
     display: flex;
     flex-wrap: wrap;
-
-    h4 {
-      &.none {
-        padding: 0.5rem;
-      }
-    }
 
     > .item {
       display: flex;
@@ -154,20 +142,47 @@ export const List = styled.div<ListProps>`
 export const SearchInputWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
-  margin: 0.5rem 0 1.5rem 0;
+  margin: 0.5rem 0 2rem 0;
   width: 100%;
 
   > input {
-    border: 1.75px solid var(--border-primary-color);
+    border: 1px solid var(--border-primary-color);
     color: var(--text-color-secondary);
     font-family: InterBold, sans-serif;
     border-radius: 1.75rem;
-    padding: 0.75rem 1.25rem;
+    padding: 0.9rem 1.25rem;
     font-size: 1.15rem;
     width: 100%;
+  }
+`;
 
-    &:focus {
-      border-width: 1.75px;
+export const FilterHeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0 0.25rem;
+
+  > div {
+    display: flex;
+
+    &:first-child {
+      flex-grow: 1;
+      flex-direction: column;
+    }
+    &:last-child {
+      flex-shrink: 1;
+
+      button {
+        color: var(--text-color-secondary);
+        font-size: 1.1rem;
+        margin: 0 0.5rem 0 0.75rem;
+        opacity: 0.6;
+        transition: all var(--transition-duration);
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
     }
   }
 `;

@@ -5,15 +5,15 @@ import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn, planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
-import { Extensions } from '@polkadot-cloud/community/extensions';
-import { useConnect } from 'contexts/Connect';
-import { ReactComponent as LedgerIconSVG } from 'img/ledgerIcon.svg';
-import { ReactComponent as PolkadotVaultIconSVG } from 'img/polkadotVault.svg';
-import { PolkadotIcon } from '@polkadot-cloud/react';
-import { useApi } from 'contexts/Api';
+import { ExtensionIcons } from '@polkadot-cloud/assets/extensions';
+import LedgerSVG from '@polkadot-cloud/assets/extensions/svg/ledger.svg?react';
+import PolkadotVaultSVG from '@polkadot-cloud/assets/extensions/svg/polkadotvault.svg?react';
+import { Polkicon } from '@polkadot-cloud/react';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useTheme } from 'contexts/Themes';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
 
@@ -25,18 +25,16 @@ export const AccountButton = ({
   noBorder = false,
 }: AccountItemProps) => {
   const { t } = useTranslation('modals');
+  const { getAccount } = useImportedAccounts();
   const {
-    getAccount,
     activeProxy,
     activeAccount,
+    setActiveAccount,
     setActiveProxy,
     activeProxyType,
-    connectToAccount,
-  } = useConnect();
-  const { mode } = useTheme();
-
+  } = useActiveAccounts();
   const { setModalStatus } = useOverlay().modal;
-  const { units, unit } = useApi().network;
+  const { units, unit } = useNetwork().networkData;
   const { getTransferOptions } = useTransferOptions();
   const { freeBalance } = getTransferOptions(address || '');
 
@@ -50,10 +48,10 @@ export const AccountButton = ({
   // Determine account source icon.
   const Icon =
     meta?.source === 'ledger'
-      ? LedgerIconSVG
+      ? LedgerSVG
       : meta?.source === 'vault'
-      ? PolkadotVaultIconSVG
-      : Extensions[meta?.source || '']?.Icon ?? undefined;
+      ? PolkadotVaultSVG
+      : ExtensionIcons[meta?.source || ''] || undefined;
 
   // Determine if this account is active (active account or proxy).
   const isActive =
@@ -67,7 +65,7 @@ export const AccountButton = ({
   // Handle account click. Handles both active account and active proxy.
   const handleClick = () => {
     if (!imported) return;
-    connectToAccount(getAccount(connectTo));
+    setActiveAccount(getAccount(connectTo)?.address || null);
     setActiveProxy(proxyType ? { address: connectProxy, proxyType } : null);
     setModalStatus('closing');
   };
@@ -83,21 +81,11 @@ export const AccountButton = ({
           >
             {delegator && (
               <div className="delegator">
-                <PolkadotIcon
-                  dark={mode === 'dark'}
-                  nocopy
-                  address={delegator}
-                  size={23}
-                />
+                <Polkicon address={delegator} size={23} />
               </div>
             )}
             <div className="identicon">
-              <PolkadotIcon
-                dark={mode === 'dark'}
-                nocopy
-                address={address ?? ''}
-                size={23}
-              />
+              <Polkicon address={address ?? ''} size={23} />
             </div>
             <span className="name">
               {delegator && (
