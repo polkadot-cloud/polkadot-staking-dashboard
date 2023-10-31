@@ -1,6 +1,6 @@
 {
   "name": "polkadot-staking-dashboard",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "type": "module",
   "license": "GPL-3.0-only",
   "private": false,
@@ -69,8 +69,8 @@
     "@types/react-helmet": "^6.1.8",
     "@types/react-qr-reader": "^2.1.6",
     "@types/react-scroll": "^1.8.9",
-    "@typescript-eslint/eslint-plugin": "^6.9.0",
-    "@typescript-eslint/parser": "^6.9.0",
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
+    "@typescript-eslint/parser": "^6.9.1",
     "@vitejs/plugin-react-swc": "^3.4.0",
     "eslint": "^8.52.0",
     "eslint-config-airbnb": "^19.0.4",
