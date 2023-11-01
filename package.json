@@ -27,7 +27,7 @@
     "@ledgerhq/hw-transport-webhid": "^6.27.19",
     "@polkadot-cloud/assets": "^0.1.32",
     "@polkadot-cloud/core": "^1.0.31",
-    "@polkadot-cloud/react": "^0.1.102",
+    "@polkadot-cloud/react": "^0.1.104",
     "@polkadot-cloud/utils": "^0.0.25",
     "@polkadot/api": "^10.10.1",
     "@polkadot/keyring": "^12.1.1",
