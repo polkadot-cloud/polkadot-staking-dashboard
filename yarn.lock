@@ -592,15 +592,15 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.32.tgz#b619e24db310ac9a23e4bb20a64245f096b73072"
   integrity sha512-TC8m6RFbHtJ5omW4VuIugKp1u7YzGBIgG9vGVEXkeSMWKwgzvkrxn7qpcjcelu1XO8ujb/+64dnhIpuhdj4e9g==
 
-"@polkadot-cloud/core@^1.0.30", "@polkadot-cloud/core@^1.0.31":
+"@polkadot-cloud/core@^1.0.31":
   version "1.0.31"
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.31.tgz#11ddf55e4440d95c77ca50646fc4a127a898b96b"
   integrity sha512-EzwiNYzDsgNSc0WR/GPhkUZqSolgP3LL0AiTXNkr4CFyDIA8OJ9mcve15ZxWgkPwLvsefuOeI7CbAZOeZxHKGQ==
 
-"@polkadot-cloud/react@^0.1.102":
-  version "0.1.102"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.102.tgz#ed492d5c0dafb46947ed34aa0c84ec5bacd87f52"
-  integrity sha512-4RF1j34iMqgSVRReBm2noj23uihvxpgetg49FKbch+YmtSJByBJY4NLrMFgvmIBug3PqBdg+yL0Em7G7emevYg==
+"@polkadot-cloud/react@^0.1.104":
+  version "0.1.104"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.104.tgz#85a8119a3e383ece158dc9bfb71fa3bfedcb6b8e"
+  integrity sha512-3d51owJoFwJWT2+JftUJreqp/9+B+sGa2eJP5bNO6cYIjEN51Luuf0b04tkowZgenMPLaBNQIQQDcopODO7DIA==
   dependencies:
     "@chainsafe/metamask-polkadot-adapter" "^0.5.1"
     "@fortawesome/fontawesome-svg-core" "^6.4.2"
@@ -608,23 +608,19 @@
     "@fortawesome/free-regular-svg-icons" "^6.4.2"
     "@fortawesome/free-solid-svg-icons" "^6.4.2"
     "@fortawesome/react-fontawesome" "^0.2.0"
+    "@ledgerhq/hw-transport-webhid" "^6.27.19"
     "@polkadot-cloud/assets" "0.1.32"
-    "@polkadot-cloud/core" "^1.0.30"
-    "@polkadot-cloud/utils" "^0.0.23"
+    "@polkadot-cloud/core" "^1.0.31"
+    "@polkadot-cloud/utils" "^0.0.25"
     "@polkadot/keyring" "^12.5.1"
     "@polkadot/util" "^12.5.1"
     "@polkadot/util-crypto" "^12.5.1"
+    "@zondax/ledger-substrate" "^0.41.3"
+    buffer "^6.0.3"
     framer-motion "^10.15.0"
+    qrcode-generator "^1.4.4"
     react-error-boundary "^4.0.11"
-
-"@polkadot-cloud/utils@^0.0.23":
-  version "0.0.23"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/utils/-/utils-0.0.23.tgz#eb703f74c7f05f763f7624727ba83589131ae1c5"
-  integrity sha512-IWqtn/cBgxletCH+MqBwZhxPxEbFLhfCU6L4RmCSCoes0bC1xUHMtFevPiJuaEkXQTdFvOnosA8BbSI01/GUuA==
-  dependencies:
-    "@polkadot/keyring" "^12.5.1"
-    "@polkadot/util" "^12.5.1"
-    bignumber.js "^9.1.1"
+    react-qr-reader "^2.2.1"
 
 "@polkadot-cloud/utils@^0.0.25":
   version "0.0.25"
@@ -4101,7 +4097,7 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.3.1.tgz#027422e2faec0b25e1549c3e1bd8309b9133b6e5"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
 
-qrcode-generator@1.4.4:
+qrcode-generator@1.4.4, qrcode-generator@^1.4.4:
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/qrcode-generator/-/qrcode-generator-1.4.4.tgz#63f771224854759329a99048806a53ed278740e7"
   integrity sha512-HM7yY8O2ilqhmULxGMpcHSF1EhJJ9yBj8gvDEuZ6M+KGJ0YY2hKpnXvRD+hZPLrDVck3ExIGhmPtSdcjC+guuw==
