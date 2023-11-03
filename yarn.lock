@@ -587,11 +587,6 @@
     picocolors "^1.0.0"
     tslib "^2.6.0"
 
-"@polkadot-cloud/assets@0.1.33":
-  version "0.1.33"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.33.tgz#ce464fdf0b2246efbbdcfea5b7c78dcb9c20d37e"
-  integrity sha512-2vw7kvmOLNR/N/6bEhdv3CkDtlN0uvEIX1ZgegaCIDEZMQF32iIf3OKTa2hQcms+w0jK6EdZpMfR16bdXU38KQ==
-
 "@polkadot-cloud/assets@0.1.34":
   version "0.1.34"
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.34.tgz#a88c7066228d2e9229a026e9f86436ceae357737"
@@ -602,10 +597,10 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.33.tgz#c234587f99d0611279eaba8178fdb40ec4b9d373"
   integrity sha512-srsG1xZ2n4hEDt0IhLU1b6Keowwt8Mlc+MXMHs6rHJcWnQVKIreF6baprqLtwZRtjoxxFM0sLzawU4/929mqJw==
 
-"@polkadot-cloud/react@^0.1.106":
-  version "0.1.106"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.106.tgz#06b7c584fe2f4e759f6444164e88a794618a934d"
-  integrity sha512-YTKg/owNr1Lz3M/tw8vtQjKS3mxGnguEod88GftixkaV15d4PDCGx76kkeRyMRlHEBBZOdztWnKbfJfktjgVwA==
+"@polkadot-cloud/react@^0.1.108":
+  version "0.1.108"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.108.tgz#a7661a8553189f6c98bc81c61baef0a1a5a33e97"
+  integrity sha512-NaSTPJrrobPfPBbowyYSWBTwTElwfGbs0pMRxy17XIovUQ998B8b4Acl1bhUseNiKFUo+z6rUYDnAQmQ7w/3zQ==
   dependencies:
     "@chainsafe/metamask-polkadot-adapter" "^0.5.1"
     "@fortawesome/fontawesome-svg-core" "^6.4.2"
@@ -614,7 +609,7 @@
     "@fortawesome/free-solid-svg-icons" "^6.4.2"
     "@fortawesome/react-fontawesome" "^0.2.0"
     "@ledgerhq/hw-transport-webhid" "^6.27.19"
-    "@polkadot-cloud/assets" "0.1.33"
+    "@polkadot-cloud/assets" "0.1.34"
     "@polkadot-cloud/utils" "^0.0.25"
     "@polkadot/keyring" "^12.5.1"
     "@polkadot/util" "^12.5.1"
