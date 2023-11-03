@@ -42,7 +42,7 @@ export const ImportLedger: React.FC = () => {
   const getIsMounted = () => isMounted.current;
 
   const { handleLedgerLoop } = useLedgerLoop({
-    tasks: ['get_address'],
+    task: 'get_address',
     options: {
       accountIndex: getNextAddressIndex,
     },

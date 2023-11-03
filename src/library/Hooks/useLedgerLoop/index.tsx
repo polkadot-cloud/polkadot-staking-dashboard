@@ -7,7 +7,7 @@ import { useTxMeta } from 'contexts/TxMeta';
 import { useNetwork } from 'contexts/Network';
 import type { LederLoopProps } from './types';
 
-export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
+export const useLedgerLoop = ({ task, options, mounted }: LederLoopProps) => {
   const { setIsPaired, getIsExecuting, getStatusCodes, executeLedgerLoop } =
     useLedgerHardware();
   const { network } = useNetwork();
@@ -32,7 +32,7 @@ export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
       const accountIndex = options?.accountIndex ? options.accountIndex() : 0;
       const payload = await getTxPayload();
       if (getIsExecuting()) {
-        await executeLedgerLoop(appName, tasks, {
+        await executeLedgerLoop(appName, task, {
           uid,
           accountIndex,
           payload,

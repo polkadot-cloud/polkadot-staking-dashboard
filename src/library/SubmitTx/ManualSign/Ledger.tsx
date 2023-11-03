@@ -59,7 +59,7 @@ export const Ledger = ({
   const getIsMounted = () => isMounted.current;
 
   const { handleLedgerLoop } = useLedgerLoop({
-    tasks: ['sign_tx'],
+    task: 'sign_tx',
     options: {
       accountIndex: getAddressIndex,
     },

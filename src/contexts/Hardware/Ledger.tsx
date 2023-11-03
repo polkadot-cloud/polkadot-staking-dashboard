@@ -109,17 +109,9 @@ export const LedgerHardwareProvider = ({
     try {
       // return `paired` if pairing is already in progress.
       if (pairInProgress.current) return isPairedRef.current === 'paired';
-
-      // set pairing in progress.
       pairInProgress.current = true;
-
-      // remove any previously stored status codes.
       resetStatusCodes();
-
-      // Close any open connections.
       await ensureTransportClosed();
-
-      // establish a new connection with device.
       ledgerTransport.current = await TransportWebHID.create();
       setIsPaired('paired');
       pairInProgress.current = false;
@@ -128,51 +120,6 @@ export const LedgerHardwareProvider = ({
       pairInProgress.current = false;
       handleErrors('', err);
       return false;
-    }
-  };
-
-  // Connects to a Ledger device to perform a task. This is the main execute function that handles
-  // all Ledger tasks, along with errors that occur during the process.
-  const executeLedgerLoop = async (
-    appName: string,
-    tasks: LedgerTask[],
-    options?: AnyJson
-  ) => {
-    try {
-      // do not execute again if already in progress.
-      if (ledgerLoopInProgress.current) {
-        return;
-      }
-
-      // set ledger loop in progress.
-      ledgerLoopInProgress.current = true;
-
-      // test for tasks and execute them. This is designed such that `result` will only store the
-      // result of one task. This will have to be refactored if we ever need to execute multiple
-      // tasks at once.
-      let result = null;
-      if (tasks.includes('get_address')) {
-        result = await handleGetAddress(appName, options?.accountIndex || 0);
-      } else if (tasks.includes('sign_tx')) {
-        const uid = options?.uid || 0;
-        const index = options?.accountIndex || 0;
-        const payload = options?.payload || '';
-
-        result = await handleSignTx(appName, uid, index, payload);
-      }
-
-      // a populated result indicates a successful execution. Set the transport response state for
-      // other components to respond to via useEffect.
-      if (result) {
-        setTransportResponse({
-          ack: 'success',
-          options,
-          ...result,
-        });
-      }
-      ledgerLoopInProgress.current = false;
-    } catch (err) {
-      handleErrors(appName, err);
     }
   };
 
@@ -281,14 +228,56 @@ export const LedgerHardwareProvider = ({
     return undefined;
   };
 
+  // Connects to a Ledger device to perform a task. This is the main execute function that handles
+  // all Ledger tasks, along with errors that occur during the process.
+  const executeLedgerLoop = async (
+    appName: string,
+    task: LedgerTask,
+    options?: AnyJson
+  ) => {
+    try {
+      // Do not execute if already in progress.
+      if (ledgerLoopInProgress.current) return;
+      ledgerLoopInProgress.current = true;
+
+      // Format task options.
+      const uid = options?.uid || 0;
+      const index = options?.accountIndex || 0;
+      const payload = options?.payload || '';
+
+      // Test for task and execute.
+      let result = null;
+      switch (task) {
+        case 'get_address':
+          result = await handleGetAddress(appName, options?.accountIndex || 0);
+          break;
+        case 'sign_tx':
+          result = await handleSignTx(appName, uid, index, payload);
+          break;
+        default: // Do nothing.
+      }
+
+      // Set successful response.
+      if (result) {
+        setTransportResponse({
+          ack: 'success',
+          options,
+          ...result,
+        });
+      }
+      ledgerLoopInProgress.current = false;
+    } catch (err) {
+      handleErrors(appName, err);
+    }
+  };
+
   // Handle an incoming new status code and persist to state.
   const handleNewStatusCode = (ack: string, statusCode: LedgerStatusCode) => {
     const newStatusCodes = [{ ack, statusCode }, ...statusCodes];
 
     // Remove last status code if there are more than allowed number of status codes.
-    if (newStatusCodes.length > TOTAL_ALLOWED_STATUS_CODES) {
+    if (newStatusCodes.length > TOTAL_ALLOWED_STATUS_CODES)
       newStatusCodes.pop();
-    }
     setStateWithRef(newStatusCodes, setStatusCodes, statusCodesRef);
   };
 

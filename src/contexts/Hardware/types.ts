@@ -11,7 +11,7 @@ export type LedgerHardwareContextInterface = {
   transportResponse: AnyJson;
   executeLedgerLoop: (
     appName: string,
-    tasks: LedgerTask[],
+    task: LedgerTask,
     options?: AnyJson
   ) => Promise<void>;
   handleNewStatusCode: (ack: string, statusCode: LedgerStatusCode) => void;

@@ -5,7 +5,7 @@ import type { LedgerTask } from 'contexts/Hardware/types';
 import type { AnyJson } from 'types';
 
 export interface LederLoopProps {
-  tasks: LedgerTask[];
+  task: LedgerTask;
   options: {
     uid?: number;
     accountIndex?: () => number;
