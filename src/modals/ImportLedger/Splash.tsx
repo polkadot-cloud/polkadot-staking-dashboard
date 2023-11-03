@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useHelp } from 'contexts/Help';
 import { useTheme } from 'contexts/Themes';
-import LogoSVG from 'img/ledgerLogo.svg?react';
+import LedgerLogoSvg from '@polkadot-cloud/assets/extensions/svg/ledger.svg?react';
 import type { AnyFunction } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { SplashWrapper } from './Wrappers';
@@ -72,7 +72,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
       </div>
       <SplashWrapper>
         <div className="icon">
-          <LogoSVG
+          <LedgerLogoSvg
             style={{ transform: 'scale(0.6)' }}
             opacity={mode === 'dark' ? 0.5 : 0.1}
           />

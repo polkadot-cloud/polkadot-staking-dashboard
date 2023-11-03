@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn, planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { ExtensionIcons } from '@polkadot-cloud/assets/extensions';
-import LedgerSVG from '@polkadot-cloud/assets/extensions/svg/ledger.svg?react';
+import LedgerSVG from '@polkadot-cloud/assets/extensions/svg/ledgersquare.svg?react';
 import PolkadotVaultSVG from '@polkadot-cloud/assets/extensions/svg/polkadotvault.svg?react';
 import { Polkicon } from '@polkadot-cloud/react';
 import { useTransferOptions } from 'contexts/TransferOptions';
