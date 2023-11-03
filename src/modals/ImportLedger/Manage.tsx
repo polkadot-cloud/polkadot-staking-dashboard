@@ -21,13 +21,12 @@ export const Manage = ({
   removeLedgerAddress,
 }: AnyJson) => {
   const { t } = useTranslation();
+  const { openHelp } = useHelp();
   const { network } = useNetwork();
-  const { setIsExecuting, getIsExecuting, resetStatusCodes, getFeedback } =
-    useLedgerHardware();
   const { openPromptWith } = usePrompt();
   const { replaceModal } = useOverlay().modal;
-  const { openHelp } = useHelp();
-
+  const { setIsExecuting, getIsExecuting, resetStatusCodes, getFeedback } =
+    useLedgerHardware();
   const { appName, Icon } = getLedgerApp(network);
   const isExecuting = getIsExecuting();
 
@@ -42,15 +41,15 @@ export const Manage = ({
     <>
       <Heading
         connectTo="Ledger"
-        title={appName}
         Icon={Icon}
-        disabled={!addresses.length}
+        title={appName}
         handleReset={() => {
           openPromptWith(
             <Reset removeLedgerAddress={removeLedgerAddress} />,
             'small'
           );
         }}
+        disabled={!addresses.length}
       />
       <Addresess
         addresses={addresses}
@@ -58,7 +57,6 @@ export const Manage = ({
         removeLedgerAddress={removeLedgerAddress}
       />
       <HardwareStatusBar
-        show
         Icon={LedgerSVG}
         text={feedback?.message || fallbackMessage}
         help={
@@ -77,6 +75,7 @@ export const Manage = ({
         handleDone={() =>
           replaceModal({ key: 'Connect', options: { disableScroll: true } })
         }
+        show
         t={{
           tDone: t('done', { ns: 'library' }),
           tCancel: t('cancel', { ns: 'library' }),

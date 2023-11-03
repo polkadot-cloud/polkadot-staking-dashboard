@@ -43,64 +43,63 @@ export const LedgerHardwareProvider = ({
   const { t } = useTranslation('modals');
   const { network } = useNetwork();
 
+  // ledgerAccounts
   // Store the fetched ledger accounts.
   const [ledgerAccounts, setLedgerAccountsState] = useState<LedgerAccount[]>(
     getLocalLedgerAccounts(network)
   );
   const ledgerAccountsRef = useRef(ledgerAccounts);
 
+  // isPaired
   // Store whether the device has been paired.
   const [isPaired, setIsPairedState] = useState<PairingStatus>('unknown');
   const isPairedRef = useRef(isPaired);
+  const setIsPaired = (p: PairingStatus) =>
+    setStateWithRef(p, setIsPairedState, isPairedRef);
 
-  // Store whether an import is in process.
+  // isExecuting
+  // Store whether an import is in progress.
   const [isExecuting, setIsExecutingState] = useState(false);
   const isExecutingRef = useRef(isExecuting);
+  const getIsExecuting = () => isExecutingRef.current;
+  const setIsExecuting = (val: boolean) =>
+    setStateWithRef(val, setIsExecutingState, isExecutingRef);
 
+  // statusCodes
   // Store status codes received from Ledger device.
   const [statusCodes, setStatusCodes] = useState<LedgerResponse[]>([]);
   const statusCodesRef = useRef(statusCodes);
+  const getStatusCodes = () => statusCodesRef.current;
+  const resetStatusCodes = () =>
+    setStateWithRef([], setStatusCodes, statusCodesRef);
 
+  // feedback
   // Get the default message to display, set when a failed loop has happened.
   const [feedback, setFeedbackState] =
     useState<FeedbackMessage>(defaultFeedback);
-
   const feedbackRef = useRef(feedback);
+  const getFeedback = () => feedbackRef.current;
+  const setFeedback = (message: MaybeString, helpKey: MaybeString = null) =>
+    setStateWithRef({ message, helpKey }, setFeedbackState, feedbackRef);
+  const resetFeedback = () =>
+    setStateWithRef(defaultFeedback, setFeedbackState, feedbackRef);
 
+  // ledgerTransport
+  // The ledger transport interface.
+  const ledgerTransport = useRef<any>(null);
+  const getTransport = () => ledgerTransport.current;
+
+  // transportResponse
   // Store the latest successful response from an attempted `executeLedgerLoop`.
   const [transportResponse, setTransportResponse] = useState<AnyJson>(null);
 
-  // Whether pairing is in progress: protects against re-renders & duplicate attempts.
+  // Whether pairing is in progress.
+  // Protects against re-renders & duplicate pairing attempts.
   const pairInProgress = useRef(false);
 
-  // Whether a ledger-loop is in progress: protects against re-renders & duplicate attempts.
+  // Whether a ledger-loop is in progress.
+  // Protects against re-renders & duplicate attempts.
   const ledgerLoopInProgress = useRef(false);
-
-  // The ledger transport interface.
-  const ledgerTransport = useRef<any>(null);
-
-  // Refresh imported ledger accounts on network change.
-  useEffect(() => {
-    setStateWithRef(
-      getLocalLedgerAccounts(network),
-      setLedgerAccountsState,
-      ledgerAccountsRef
-    );
-  }, [network]);
-
-  // Helper to update feedback message and status code.
-  const updateFeedbackAndStatusCode = ({
-    message,
-    helpKey,
-    code,
-  }: {
-    message: MaybeString;
-    helpKey?: MaybeString;
-    code: LedgerStatusCode;
-  }) => {
-    setFeedback(message, helpKey);
-    handleNewStatusCode('failure', code);
-  };
 
   // Handles errors that occur during `executeLedgerLoop` and `pairDevice` calls.
   const handleErrors = (appName: string, err: unknown) => {
@@ -188,18 +187,6 @@ export const LedgerHardwareProvider = ({
     }
   };
 
-  // Timeout function for hanging tasks. Used for tasks that require no input from the device, such
-  // as getting an address that does not require confirmation.
-  const withTimeout = (millis: AnyFunction, promise: AnyFunction) => {
-    const timeout = new Promise((_, reject) =>
-      setTimeout(async () => {
-        ledgerTransport.current?.device?.close();
-        reject(Error('Timeout'));
-      }, millis)
-    );
-    return Promise.race([promise, timeout]);
-  };
-
   // Attempt to pair a device.
   //
   // Trigger a one-time connection to the device to determine if it is available. If the device
@@ -279,9 +266,7 @@ export const LedgerHardwareProvider = ({
 
   // Gets runtime version.
   const handleGetVersion = async (substrateApp: SubstrateApp) => {
-    if (!ledgerTransport.current?.device?.opened) {
-      await ledgerTransport.current?.device?.open();
-    }
+    await ensureTransportOpen();
 
     const result: AnyJson = await withTimeout(3000, substrateApp.getVersion());
     if (!(result instanceof Error)) {
@@ -308,10 +293,8 @@ export const LedgerHardwareProvider = ({
       body: null,
     });
     setFeedback(t('gettingAddress'));
+    await ensureTransportOpen();
 
-    if (!ledgerTransport.current?.device?.opened) {
-      await ledgerTransport.current?.device?.open();
-    }
     const result: AnyJson = await withTimeout(
       3000,
       substrateApp.getAddress(
@@ -358,12 +341,9 @@ export const LedgerHardwareProvider = ({
       statusCode: 'SigningPayload',
       body: null,
     });
-
     setFeedback(t('approveTransactionLedger'));
+    await ensureTransportOpen();
 
-    if (!ledgerTransport.current?.device?.opened) {
-      await ledgerTransport.current?.device?.open();
-    }
     const result = await substrateApp.sign(
       LEDGER_DEFAULT_ACCOUNT + index,
       LEDGER_DEFAULT_CHANGE,
@@ -523,48 +503,38 @@ export const LedgerHardwareProvider = ({
             name,
           }
     );
-
     if (localLedger) {
       localStorage.setItem('ledger_addresses', JSON.stringify(localLedger));
     }
   };
 
-  const getTransport = () => {
-    return ledgerTransport.current;
+  // Timeout function to prevent hanging tasks. Used for tasks that require no input from the
+  // device, such as getting an address that does not require confirmation.
+  const withTimeout = (millis: AnyFunction, promise: AnyFunction) => {
+    const timeout = new Promise((_, reject) =>
+      setTimeout(async () => {
+        ledgerTransport.current?.device?.close();
+        reject(Error('Timeout'));
+      }, millis)
+    );
+    return Promise.race([promise, timeout]);
   };
 
-  const getIsExecuting = () => {
-    return isExecutingRef.current;
+  // Helper to update feedback message and status code.
+  const updateFeedbackAndStatusCode = ({
+    message,
+    helpKey,
+    code,
+  }: {
+    message: MaybeString;
+    helpKey?: MaybeString;
+    code: LedgerStatusCode;
+  }) => {
+    setFeedback(message, helpKey);
+    handleNewStatusCode('failure', code);
   };
 
-  const getStatusCodes = () => {
-    return statusCodesRef.current;
-  };
-
-  const getFeedback = () => {
-    return feedbackRef.current;
-  };
-
-  const setFeedback = (message: MaybeString, helpKey: MaybeString = null) => {
-    setStateWithRef({ message, helpKey }, setFeedbackState, feedbackRef);
-  };
-
-  const resetFeedback = () => {
-    setStateWithRef(defaultFeedback, setFeedbackState, feedbackRef);
-  };
-
-  const setIsPaired = (p: PairingStatus) => {
-    setStateWithRef(p, setIsPairedState, isPairedRef);
-  };
-
-  const setIsExecuting = (val: boolean) => {
-    setStateWithRef(val, setIsExecutingState, isExecutingRef);
-  };
-
-  const resetStatusCodes = () => {
-    setStateWithRef([], setStatusCodes, statusCodesRef);
-  };
-
+  // Helper to reset ledger state when the a overlay connecting to the Ledger device unmounts.
   const handleUnmount = () => {
     // reset refs
     ledgerLoopInProgress.current = false;
@@ -579,13 +549,28 @@ export const LedgerHardwareProvider = ({
     }
   };
 
+  // Helper to open ledger transport if it is closed.
+  const ensureTransportOpen = async () => {
+    if (!ledgerTransport.current?.device?.opened)
+      await ledgerTransport.current?.device?.open();
+  };
+
+  // Refresh imported ledger accounts on network change.
+  useEffect(() => {
+    setStateWithRef(
+      getLocalLedgerAccounts(network),
+      setLedgerAccountsState,
+      ledgerAccountsRef
+    );
+  }, [network]);
+
   return (
     <LedgerHardwareContext.Provider
       value={{
         pairDevice,
+        setIsPaired,
         transportResponse,
         executeLedgerLoop,
-        setIsPaired,
         setIsExecuting,
         handleNewStatusCode,
         resetStatusCodes,
