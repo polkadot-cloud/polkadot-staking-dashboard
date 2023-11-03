@@ -6,11 +6,13 @@ import { u8aToBuffer } from '@polkadot/util';
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import type { SubstrateApp } from '@zondax/ledger-substrate';
 import { newSubstrateApp } from '@zondax/ledger-substrate';
+import type { ReactNode } from 'react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { LedgerAccount } from '@polkadot-cloud/react/types';
 import type { AnyFunction, AnyJson, MaybeString } from 'types';
 import { useNetwork } from 'contexts/Network';
+import { useApi } from 'contexts/Api';
 import {
   getLedgerErrorType,
   getLocalLedgerAccounts,
@@ -38,10 +40,11 @@ import type {
 export const LedgerHardwareProvider = ({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) => {
   const { t } = useTranslation('modals');
   const { network } = useNetwork();
+  const { specVersion } = useApi().chainState.version;
 
   // ledgerAccounts
   // Store the fetched ledger accounts.
@@ -93,13 +96,17 @@ export const LedgerHardwareProvider = ({
   // Store the latest successful response from an attempted `executeLedgerLoop`.
   const [transportResponse, setTransportResponse] = useState<AnyJson>(null);
 
+  // runtimesInconsistent
+  // Whether the Ledger device metadata is for a different runtime.
+  const runtimesInconsistent = useRef<boolean>(false);
+
   // Whether pairing is in progress.
   // Protects against re-renders & duplicate pairing attempts.
-  const pairInProgress = useRef(false);
+  const pairInProgress = useRef<boolean>(false);
 
   // Whether a ledger-loop is in progress.
   // Protects against re-renders & duplicate attempts.
-  const ledgerLoopInProgress = useRef(false);
+  const ledgerLoopInProgress = useRef<boolean>(false);
 
   // Attempt to pair a device.
   //
@@ -123,15 +130,14 @@ export const LedgerHardwareProvider = ({
     }
   };
 
-  // Gets runtime version.
-  const handleGetVersion = async (substrateApp: SubstrateApp) => {
+  // Checks whether runtime version is inconsistent with device metadata.
+  const checkRuntimeVersion = async (substrateApp: SubstrateApp) => {
     await ensureTransportOpen();
-
     const result: AnyJson = await withTimeout(3000, substrateApp.getVersion());
     if (!(result instanceof Error)) {
-      return result;
+      // Flag via a ref if the spec version does not match on-device.
+      if (result.minor < specVersion) runtimesInconsistent.current = true;
     }
-    return undefined;
   };
 
   // Gets an app address on device.
@@ -140,11 +146,8 @@ export const LedgerHardwareProvider = ({
     const { deviceModel } = ledgerTransport.current;
     const { id, productName } = deviceModel;
 
-    // Check version before getting address.
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const version = await handleGetVersion(substrateApp);
-    // TODO: if an error is returned, prompt the user that the Ledger runtime version does not match
-    // the current one, that may be resulting in the error.
+    // Check runtime version.
+    await checkRuntimeVersion(substrateApp);
 
     setTransportResponse({
       ack: 'success',
@@ -193,6 +196,9 @@ export const LedgerHardwareProvider = ({
     const substrateApp = newSubstrateApp(ledgerTransport.current, appName);
     const { deviceModel } = ledgerTransport.current;
     const { id, productName } = deviceModel;
+
+    // Check runtime version.
+    await checkRuntimeVersion(substrateApp);
 
     setTransportResponse({
       ack: 'success',
@@ -266,6 +272,7 @@ export const LedgerHardwareProvider = ({
         });
       }
       ledgerLoopInProgress.current = false;
+      runtimesInconsistent.current = false;
     } catch (err) {
       handleErrors(appName, err);
     }
@@ -382,16 +389,6 @@ export const LedgerHardwareProvider = ({
   const handleErrors = (appName: string, err: unknown) => {
     const errStr = String(err);
 
-    // Reset any in-progress calls.
-    ledgerLoopInProgress.current = false;
-    pairInProgress.current = false;
-
-    // Execution failed - no longer executing.
-    setIsExecuting(false);
-
-    // Close any open device connections.
-    ensureTransportClosed();
-
     // Update feedback and status code state based on error received.
     switch (getLedgerErrorType(errStr)) {
       // Occurs when the device does not respond to a request within the timeout period.
@@ -457,10 +454,20 @@ export const LedgerHardwareProvider = ({
         break;
       // Handle all other errors.
       default:
-        // TODO: if runtime version is out of date, flag that this may be causing the error.
         setFeedback(t('openAppOnLedger', { appName }), 'Open App On Ledger');
         handleNewStatusCode('failure', 'AppNotOpen');
     }
+
+    // Reset any in-progress calls.
+    ledgerLoopInProgress.current = false;
+    pairInProgress.current = false;
+    runtimesInconsistent.current = false;
+
+    // Execution failed - no longer executing.
+    setIsExecuting(false);
+
+    // Close any open device connections.
+    ensureTransportClosed();
   };
 
   // Timeout function to prevent hanging tasks. Used for tasks that require no input from the
@@ -494,6 +501,7 @@ export const LedgerHardwareProvider = ({
     // reset refs
     ledgerLoopInProgress.current = false;
     pairInProgress.current = false;
+    runtimesInconsistent.current = false;
     // reset state
     resetStatusCodes();
     setIsExecuting(false);
