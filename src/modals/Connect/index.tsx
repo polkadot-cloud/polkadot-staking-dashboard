@@ -36,7 +36,7 @@ export const Connect = () => {
   const { replaceModal, setModalHeight, modalMaxHeight } = useOverlay().modal;
 
   const web = ExtensionsArray.filter((a) => a.id !== 'polkadot-js');
-  const pjs = ExtensionsArray.filter((a) => a.id === 'polkadot-js');
+  const pjsOrNova = ExtensionsArray.filter((a) => a.id === 'polkadot-js');
 
   const installed = web.filter((a) =>
     Object.keys(extensionsStatus).find((key) => key === a.id)
@@ -164,7 +164,7 @@ export const Connect = () => {
               <ActionItem text={t('developerTools')} />
               <ExtensionsWrapper>
                 <SelectItems layout="two-col">
-                  {pjs.map((extension, i) => (
+                  {pjsOrNova.map((extension, i) => (
                     <Extension key={`extension_item_${i}`} meta={extension} />
                   ))}
                 </SelectItems>

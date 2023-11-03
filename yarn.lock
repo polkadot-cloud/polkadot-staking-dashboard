@@ -587,10 +587,15 @@
     picocolors "^1.0.0"
     tslib "^2.6.0"
 
-"@polkadot-cloud/assets@0.1.33", "@polkadot-cloud/assets@^0.1.33":
+"@polkadot-cloud/assets@0.1.33":
   version "0.1.33"
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.33.tgz#ce464fdf0b2246efbbdcfea5b7c78dcb9c20d37e"
   integrity sha512-2vw7kvmOLNR/N/6bEhdv3CkDtlN0uvEIX1ZgegaCIDEZMQF32iIf3OKTa2hQcms+w0jK6EdZpMfR16bdXU38KQ==
+
+"@polkadot-cloud/assets@0.1.34":
+  version "0.1.34"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.34.tgz#a88c7066228d2e9229a026e9f86436ceae357737"
+  integrity sha512-qsXlinOgVlChbMTdBXCDaQM59jDZWrKKMizR7LR8qL2yhzLh0Ohouf0POURhuCsJ1zUjHwbsZg+4ezsKZBM+nA==
 
 "@polkadot-cloud/core@^1.0.33":
   version "1.0.33"

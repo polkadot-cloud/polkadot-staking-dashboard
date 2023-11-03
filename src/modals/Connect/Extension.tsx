@@ -11,7 +11,7 @@ import {
   useExtensionAccounts,
 } from '@polkadot-cloud/react/hooks';
 import { useNotifications } from 'contexts/Notifications';
-import { ExtensionIcons } from '@polkadot-cloud/assets/extensions';
+import { getExtensionIcon } from '@polkadot-cloud/assets/extensions';
 import { ExtensionInner } from './Wrappers';
 import type { ExtensionProps } from './types';
 
@@ -43,7 +43,8 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
     }
   };
 
-  const Icon = ExtensionIcons[id || ''] || undefined;
+  const Icon = getExtensionIcon(id);
+
   // determine message to be displayed based on extension status.
   let statusJsx;
   switch (extensionsStatus[id]) {
@@ -82,7 +83,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
             ) : null}
 
             <div className="row icon">
-              <Icon style={{ width: size, height: size }} />
+              {Icon && <Icon style={{ width: size, height: size }} />}
             </div>
             <div className="status">
               {flag && flag}
