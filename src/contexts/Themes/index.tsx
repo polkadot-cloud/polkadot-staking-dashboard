@@ -27,7 +27,7 @@ export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
     initialTheme = localThemeRaw as Theme;
   }
 
-  // the theme mode
+  // The current theme mode
   const [theme, setTheme] = React.useState<Theme>(initialTheme);
   const themeRef = useRef(theme);
 
