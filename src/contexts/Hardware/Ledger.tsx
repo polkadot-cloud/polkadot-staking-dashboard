@@ -197,14 +197,12 @@ export const LedgerHardwareProvider = ({
     const { deviceModel } = ledgerTransport.current;
     const { id, productName } = deviceModel;
 
-    // Check runtime version.
-    await checkRuntimeVersion(substrateApp);
-
     setTransportResponse({
       ack: 'success',
       statusCode: 'SigningPayload',
       body: null,
     });
+
     setFeedback(t('approveTransactionLedger'));
     await ensureTransportOpen();
 
