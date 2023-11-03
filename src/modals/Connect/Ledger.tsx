@@ -40,7 +40,7 @@ export const Ledger = (): React.ReactElement => {
             <ButtonHelp onClick={() => openHelp('Ledger Hardware Wallets')} />
           </div>
           <div className="row">
-            <LedgerLogoSVG className="logo mono" />
+            <LedgerLogoSVG className="logo" />
           </div>
           <div className="row margin">
             <ButtonText
