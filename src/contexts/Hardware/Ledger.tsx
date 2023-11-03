@@ -3,7 +3,7 @@
 
 import TransportWebHID from '@ledgerhq/hw-transport-webhid';
 import { u8aToBuffer } from '@polkadot/util';
-import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
+import { setStateWithRef } from '@polkadot-cloud/utils';
 import type { SubstrateApp } from '@zondax/ledger-substrate';
 import { newSubstrateApp } from '@zondax/ledger-substrate';
 import React, { useEffect, useRef, useState } from 'react';
@@ -16,6 +16,7 @@ import {
   getLocalLedgerAccounts,
   getLocalLedgerAddresses,
   isLocalNetworkAddress,
+  renameLocalLedgerAddress,
 } from './Utils';
 import {
   LEDGER_DEFAULT_ACCOUNT,
@@ -27,7 +28,6 @@ import {
 } from './defaults';
 import type {
   FeedbackMessage,
-  LedgerAddress,
   LedgerHardwareContextInterface,
   LedgerResponse,
   LedgerStatusCode,
@@ -101,92 +101,6 @@ export const LedgerHardwareProvider = ({
   // Protects against re-renders & duplicate attempts.
   const ledgerLoopInProgress = useRef(false);
 
-  // Handles errors that occur during `executeLedgerLoop` and `pairDevice` calls.
-  const handleErrors = (appName: string, err: unknown) => {
-    const errStr = String(err);
-
-    // Reset any in-progress calls.
-    ledgerLoopInProgress.current = false;
-    pairInProgress.current = false;
-
-    // Execution failed - no longer executing.
-    setIsExecuting(false);
-
-    // Close any open device connections.
-    if (ledgerTransport.current?.device?.opened)
-      ledgerTransport.current?.device?.close();
-
-    // Update feedback and status code state based on error received.
-    switch (getLedgerErrorType(errStr)) {
-      // Occurs when the device does not respond to a request within the timeout period.
-      case 'timeout':
-        updateFeedbackAndStatusCode({
-          message: t('ledgerRequestTimeout'),
-          helpKey: 'Ledger Request Timeout',
-          code: 'DeviceTimeout',
-        });
-        break;
-      // Occurs when one or more of nested calls being signed does not support nesting.
-      case 'nestingNotSupported':
-        updateFeedbackAndStatusCode({
-          message: t('missingNesting'),
-          code: 'NestingNotSupported',
-        });
-        break;
-      // Cccurs when the device is not connected.
-      case 'deviceNotConnected':
-        updateFeedbackAndStatusCode({
-          message: t('connectLedgerToContinue'),
-          code: 'DeviceNotConnected',
-        });
-        break;
-      // Occurs when tx was approved outside of active channel.
-      case 'outsideActiveChannel':
-        updateFeedbackAndStatusCode({
-          message: t('queuedTransactionRejected'),
-          helpKey: 'Wrong Transaction',
-          code: 'WrongTransaction',
-        });
-        break;
-      // Occurs when the device is already in use.
-      case 'deviceBusy':
-        updateFeedbackAndStatusCode({
-          message:
-            'The Ledger device is currently being used by other software.',
-          code: 'DeviceBusy',
-        });
-        break;
-      // Occurs when the device is locked.
-      case 'deviceLocked':
-        updateFeedbackAndStatusCode({
-          message: t('unlockLedgerToContinue'),
-          code: 'DeviceLocked',
-        });
-        break;
-      // Occurs when the app (e.g. Polkadot) is not open.
-      case 'appNotOpen':
-        updateFeedbackAndStatusCode({
-          message: t('openAppOnLedger', { appName }),
-          helpKey: 'Open App On Ledger',
-          code: 'TransactionRejected',
-        });
-        break;
-      // Occurs when a user rejects a transaction.
-      case 'transactionRejected':
-        updateFeedbackAndStatusCode({
-          message: t('transactionRejectedPending'),
-          helpKey: 'Ledger Rejected Transaction',
-          code: 'AppNotOpen',
-        });
-        break;
-      // Handle all other errors.
-      default:
-        // TODO: if runtime version is out of date, flag that this may be causing the error.
-        setFeedback(t('openAppOnLedger', { appName }), 'Open App On Ledger');
-        handleNewStatusCode('failure', 'AppNotOpen');
-    }
-  };
-
   // Attempt to pair a device.
   //
   // Trigger a one-time connection to the device to determine if it is available. If the device
@@ -194,19 +108,17 @@ export const LedgerHardwareProvider = ({
   const pairDevice = async () => {
     try {
       // return `paired` if pairing is already in progress.
-      if (pairInProgress.current) {
-        return isPairedRef.current === 'paired';
-      }
+      if (pairInProgress.current) return isPairedRef.current === 'paired';
+
       // set pairing in progress.
       pairInProgress.current = true;
 
       // remove any previously stored status codes.
       resetStatusCodes();
 
-      // close any open connections.
-      if (ledgerTransport.current?.device?.opened) {
-        await ledgerTransport.current?.device?.close();
-      }
+      // Close any open connections.
+      await ensureTransportClosed();
+
       // establish a new connection with device.
       ledgerTransport.current = await TransportWebHID.create();
       setIsPaired('paired');
@@ -315,7 +227,6 @@ export const LedgerHardwareProvider = ({
 
     if (!(result instanceof Error)) {
       setFeedback(t('successfullyFetchedAddress'));
-
       return {
         statusCode: 'ReceivedAddress',
         device: { id, productName },
@@ -355,13 +266,9 @@ export const LedgerHardwareProvider = ({
     await ledgerTransport.current?.device?.close();
 
     const error = result?.error_message;
-    if (error) {
-      if (!error.startsWith('No errors')) {
-        throw new Error(error);
-      }
-    }
+    if (error && !error.startsWith('No errors')) throw new Error(error);
 
-    if (!(result instanceof Error)) {
+    if (!(result instanceof Error))
       return {
         statusCode: 'SignedPayload',
         device: { id, productName },
@@ -370,7 +277,7 @@ export const LedgerHardwareProvider = ({
           sig: result.signature,
         },
       };
-    }
+
     return undefined;
   };
 
@@ -423,32 +330,26 @@ export const LedgerHardwareProvider = ({
         setLedgerAccountsState,
         ledgerAccountsRef
       );
-
       return account;
     }
     return null;
   };
 
+  // Removes a Ledger account from state and local storage.
   const removeLedgerAccount = (address: string) => {
-    let newLedgerAccounts = getLocalLedgerAccounts();
-
-    newLedgerAccounts = newLedgerAccounts.filter((a) => {
-      if (a.address !== address) {
-        return true;
-      }
-      if (a.network !== network) {
-        return true;
-      }
+    const newLedgerAccounts = getLocalLedgerAccounts().filter((a) => {
+      if (a.address !== address) return true;
+      if (a.network !== network) return true;
       return false;
     });
-    if (!newLedgerAccounts.length) {
-      localStorage.removeItem('ledger_accounts');
-    } else {
+
+    if (!newLedgerAccounts.length) localStorage.removeItem('ledger_accounts');
+    else
       localStorage.setItem(
         'ledger_accounts',
         JSON.stringify(newLedgerAccounts)
       );
-    }
+
     setStateWithRef(
       newLedgerAccounts.filter((a) => a.network === network),
       setLedgerAccountsState,
@@ -459,10 +360,7 @@ export const LedgerHardwareProvider = ({
   // Gets an imported address along with its Ledger metadata.
   const getLedgerAccount = (address: string) => {
     const localLedgerAccounts = getLocalLedgerAccounts();
-
-    if (!localLedgerAccounts) {
-      return null;
-    }
+    if (!localLedgerAccounts) return null;
     return (
       localLedgerAccounts.find((a) =>
         isLocalNetworkAddress(network, a, address)
@@ -482,7 +380,7 @@ export const LedgerHardwareProvider = ({
           }
         : a
     );
-    renameLocalLedgerAddress(address, newName);
+    renameLocalLedgerAddress(address, newName, network);
     localStorage.setItem('ledger_accounts', JSON.stringify(newLedgerAccounts));
     setStateWithRef(
       newLedgerAccounts.filter((a) => a.network === network),
@@ -491,20 +389,88 @@ export const LedgerHardwareProvider = ({
     );
   };
 
-  // Renames a record from local ledger addresses.
-  const renameLocalLedgerAddress = (address: string, name: string) => {
-    const localLedger = (
-      localStorageOrDefault('ledger_addresses', [], true) as LedgerAddress[]
-    )?.map((i) =>
-      !(i.address === address && i.network === network)
-        ? i
-        : {
-            ...i,
-            name,
-          }
-    );
-    if (localLedger) {
-      localStorage.setItem('ledger_addresses', JSON.stringify(localLedger));
+  // Handles errors that occur during `executeLedgerLoop` and `pairDevice` calls.
+  const handleErrors = (appName: string, err: unknown) => {
+    const errStr = String(err);
+
+    // Reset any in-progress calls.
+    ledgerLoopInProgress.current = false;
+    pairInProgress.current = false;
+
+    // Execution failed - no longer executing.
+    setIsExecuting(false);
+
+    // Close any open device connections.
+    ensureTransportClosed();
+
+    // Update feedback and status code state based on error received.
+    switch (getLedgerErrorType(errStr)) {
+      // Occurs when the device does not respond to a request within the timeout period.
+      case 'timeout':
+        updateFeedbackAndStatusCode({
+          message: t('ledgerRequestTimeout'),
+          helpKey: 'Ledger Request Timeout',
+          code: 'DeviceTimeout',
+        });
+        break;
+      // Occurs when one or more of nested calls being signed does not support nesting.
+      case 'nestingNotSupported':
+        updateFeedbackAndStatusCode({
+          message: t('missingNesting'),
+          code: 'NestingNotSupported',
+        });
+        break;
+      // Cccurs when the device is not connected.
+      case 'deviceNotConnected':
+        updateFeedbackAndStatusCode({
+          message: t('connectLedgerToContinue'),
+          code: 'DeviceNotConnected',
+        });
+        break;
+      // Occurs when tx was approved outside of active channel.
+      case 'outsideActiveChannel':
+        updateFeedbackAndStatusCode({
+          message: t('queuedTransactionRejected'),
+          helpKey: 'Wrong Transaction',
+          code: 'WrongTransaction',
+        });
+        break;
+      // Occurs when the device is already in use.
+      case 'deviceBusy':
+        updateFeedbackAndStatusCode({
+          message:
+            'The Ledger device is currently being used by other software.',
+          code: 'DeviceBusy',
+        });
+        break;
+      // Occurs when the device is locked.
+      case 'deviceLocked':
+        updateFeedbackAndStatusCode({
+          message: t('unlockLedgerToContinue'),
+          code: 'DeviceLocked',
+        });
+        break;
+      // Occurs when the app (e.g. Polkadot) is not open.
+      case 'appNotOpen':
+        updateFeedbackAndStatusCode({
+          message: t('openAppOnLedger', { appName }),
+          helpKey: 'Open App On Ledger',
+          code: 'TransactionRejected',
+        });
+        break;
+      // Occurs when a user rejects a transaction.
+      case 'transactionRejected':
+        updateFeedbackAndStatusCode({
+          message: t('transactionRejectedPending'),
+          helpKey: 'Ledger Rejected Transaction',
+          code: 'AppNotOpen',
+        });
+        break;
+      // Handle all other errors.
+      default:
+        // TODO: if runtime version is out of date, flag that this may be causing the error.
+        setFeedback(t('openAppOnLedger', { appName }), 'Open App On Ledger');
+        handleNewStatusCode('failure', 'AppNotOpen');
     }
   };
 
@@ -544,15 +510,19 @@ export const LedgerHardwareProvider = ({
     setIsExecuting(false);
     resetFeedback();
     // close transport
-    if (getTransport()?.device?.opened) {
-      getTransport().device.close();
-    }
+    if (getTransport()?.device?.opened) getTransport().device.close();
   };
 
   // Helper to open ledger transport if it is closed.
   const ensureTransportOpen = async () => {
     if (!ledgerTransport.current?.device?.opened)
       await ledgerTransport.current?.device?.open();
+  };
+
+  // Helper to close ledger transport if it is open.
+  const ensureTransportClosed = async () => {
+    if (ledgerTransport.current?.device?.opened)
+      await ledgerTransport.current?.device?.close();
   };
 
   // Refresh imported ledger accounts on network change.

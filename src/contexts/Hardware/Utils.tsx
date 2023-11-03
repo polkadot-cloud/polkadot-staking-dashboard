@@ -60,7 +60,7 @@ export const getLocalLedgerAddresses = (network?: string) => {
 };
 
 // Gets imported Ledger accounts from local storage.
-export const getLocalLedgerAccounts = (network?: string) => {
+export const getLocalLedgerAccounts = (network?: string): LedgerAccount[] => {
   const localAddresses = localStorageOrDefault(
     'ledger_accounts',
     [],
@@ -70,6 +70,27 @@ export const getLocalLedgerAccounts = (network?: string) => {
   return network
     ? localAddresses.filter((a) => a.network === network)
     : localAddresses;
+};
+
+// Renames a record from local ledger addresses.
+export const renameLocalLedgerAddress = (
+  address: string,
+  name: string,
+  network: string
+) => {
+  const localLedger = (
+    localStorageOrDefault('ledger_addresses', [], true) as LedgerAddress[]
+  )?.map((i) =>
+    !(i.address === address && i.network === network)
+      ? i
+      : {
+          ...i,
+          name,
+        }
+  );
+  if (localLedger) {
+    localStorage.setItem('ledger_addresses', JSON.stringify(localLedger));
+  }
 };
 
 // Gets imported Vault accounts from local storage.
