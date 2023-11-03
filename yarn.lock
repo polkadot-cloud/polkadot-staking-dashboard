@@ -587,10 +587,15 @@
     picocolors "^1.0.0"
     tslib "^2.6.0"
 
-"@polkadot-cloud/assets@0.1.32", "@polkadot-cloud/assets@^0.1.32":
+"@polkadot-cloud/assets@0.1.32":
   version "0.1.32"
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.32.tgz#b619e24db310ac9a23e4bb20a64245f096b73072"
   integrity sha512-TC8m6RFbHtJ5omW4VuIugKp1u7YzGBIgG9vGVEXkeSMWKwgzvkrxn7qpcjcelu1XO8ujb/+64dnhIpuhdj4e9g==
+
+"@polkadot-cloud/assets@^0.1.33":
+  version "0.1.33"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.33.tgz#ce464fdf0b2246efbbdcfea5b7c78dcb9c20d37e"
+  integrity sha512-2vw7kvmOLNR/N/6bEhdv3CkDtlN0uvEIX1ZgegaCIDEZMQF32iIf3OKTa2hQcms+w0jK6EdZpMfR16bdXU38KQ==
 
 "@polkadot-cloud/core@^1.0.31":
   version "1.0.31"
@@ -621,15 +626,6 @@
     qrcode-generator "^1.4.4"
     react-error-boundary "^4.0.11"
     react-qr-reader "^2.2.1"
-
-"@polkadot-cloud/utils@^0.0.25":
-  version "0.0.25"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/utils/-/utils-0.0.25.tgz#8c4f8a9a64942f4397a6368c2093ddd4feab2b4a"
-  integrity sha512-UlNEH8SYseJT6ZBNljE4dNYrRecCgbc7MMn2+Des6AXXUJb88HPQ39hSE1aJwDiq43wrnff2BQadnxqV9orf7g==
-  dependencies:
-    "@polkadot/keyring" "^12.5.1"
-    "@polkadot/util" "^12.5.1"
-    bignumber.js "^9.1.1"
 
 "@polkadot-cloud/utils@^0.0.25":
   version "0.0.25"
