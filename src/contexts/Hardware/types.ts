@@ -43,6 +43,7 @@ export type LedgerStatusCode =
   | 'ReceivedAddress'
   | 'SigningPayload'
   | 'SignedPayload'
+  | 'DeviceBusy'
   | 'DeviceTimeout'
   | 'NestingNotSupported'
   | 'WrongTransaction'

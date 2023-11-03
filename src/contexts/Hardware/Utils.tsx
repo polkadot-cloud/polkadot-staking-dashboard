@@ -7,6 +7,40 @@ import type { MaybeString } from 'types';
 import type { LedgerAccount, VaultAccount } from '@polkadot-cloud/react/types';
 import type { LedgerAddress } from './types';
 
+// Ledger error keyed by type of error.
+const LedgerErrorsByType = {
+  timeout: ['Error: Timeout'],
+  nestingNotSupported: ['Error: Call nesting not supported'],
+  outsideActiveChannel: [
+    'Error: TransportError: Invalid channel',
+    'Error: InvalidStateError',
+  ],
+  deviceNotConnected: ['TransportOpenUserCancelled'],
+  deviceBusy: ['Error: Ledger Device is busy'],
+  deviceLocked: ['Error: LockedDeviceError'],
+  transactionRejected: ['Error: Transaction rejected'],
+  appNotOpen: ['Error: Unknown Status Code: 28161'],
+};
+
+// Determine type of error returned by Ledger.
+export const getLedgerErrorType = (err: string) => {
+  let errorType = null;
+  Object.entries(LedgerErrorsByType).every(([type, errors]) => {
+    let found = false;
+    errors.every((e) => {
+      if (err.startsWith(e)) {
+        errorType = type;
+        found = true;
+        return false;
+      }
+      return true;
+    });
+    if (found) return false;
+    return true;
+  });
+  return errorType || 'misc';
+};
+
 // Gets ledger app from local storage, fallback to first entry.
 export const getLedgerApp = (network: string) => {
   return LedgerApps.find((a) => a.network === network) || LedgerApps[0];

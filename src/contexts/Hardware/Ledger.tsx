@@ -4,6 +4,7 @@
 import TransportWebHID from '@ledgerhq/hw-transport-webhid';
 import { u8aToBuffer } from '@polkadot/util';
 import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
+import type { SubstrateApp } from '@zondax/ledger-substrate';
 import { newSubstrateApp } from '@zondax/ledger-substrate';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +12,7 @@ import type { LedgerAccount } from '@polkadot-cloud/react/types';
 import type { AnyFunction, AnyJson, MaybeString } from 'types';
 import { useNetwork } from 'contexts/Network';
 import {
+  getLedgerErrorType,
   getLocalLedgerAccounts,
   getLocalLedgerAddresses,
   isLocalNetworkAddress,
@@ -41,6 +43,7 @@ export const LedgerHardwareProvider = ({
   const { t } = useTranslation('modals');
   const { network } = useNetwork();
 
+  // Store the fetched ledger accounts.
   const [ledgerAccounts, setLedgerAccountsState] = useState<LedgerAccount[]>(
     getLocalLedgerAccounts(network)
   );
@@ -85,62 +88,103 @@ export const LedgerHardwareProvider = ({
     );
   }, [network]);
 
+  // Helper to update feedback message and status code.
+  const updateFeedbackAndStatusCode = ({
+    message,
+    helpKey,
+    code,
+  }: {
+    message: MaybeString;
+    helpKey?: MaybeString;
+    code: LedgerStatusCode;
+  }) => {
+    setFeedback(message, helpKey);
+    handleNewStatusCode('failure', code);
+  };
+
   // Handles errors that occur during `executeLedgerLoop` and `pairDevice` calls.
-  const handleErrors = (appName: string, err: AnyJson) => {
-    // reset any in-progress calls.
+  const handleErrors = (appName: string, err: unknown) => {
+    const errStr = String(err);
+
+    // Reset any in-progress calls.
     ledgerLoopInProgress.current = false;
     pairInProgress.current = false;
 
-    // execution failed - no longer executing.
+    // Execution failed - no longer executing.
     setIsExecuting(false);
 
-    // close any open device connections.
-    if (ledgerTransport.current?.device?.opened) {
+    // Close any open device connections.
+    if (ledgerTransport.current?.device?.opened)
       ledgerTransport.current?.device?.close();
-    }
 
-    // format error message.
-    err = String(err);
-    if (err === 'Error: Timeout') {
-      // only set default message here - maintain previous status code.
-      setFeedback(t('ledgerRequestTimeout'), 'Ledger Request Timeout');
-      handleNewStatusCode('failure', 'DeviceTimeout');
-    } else if (err.startsWith('Error: Call nesting not supported')) {
-      setFeedback(t('missingNesting'));
-      handleNewStatusCode('failure', 'NestingNotSupported');
-    } else if (
-      err.startsWith('Error: TransportError: Invalid channel') ||
-      err.startsWith('Error: InvalidStateError')
-    ) {
-      // occurs when tx was approved outside of active channel.
-      setFeedback(t('queuedTransactionRejected'), 'Wrong Transaction');
-      handleNewStatusCode('failure', 'WrongTransaction');
-    } else if (
-      err.startsWith('TransportOpenUserCancelled') ||
-      err.startsWith('Error: Ledger Device is busy')
-    ) {
-      // occurs when the device is not connected.
-      setFeedback(t('connectLedgerToContinue'));
-      handleNewStatusCode('failure', 'DeviceNotConnected');
-    } else if (err.startsWith('Error: LockedDeviceError')) {
-      // occurs when the device is connected but not unlocked.
-      setFeedback(t('unlockLedgerToContinue'));
-      handleNewStatusCode('failure', 'DeviceLocked');
-    } else if (err.startsWith('Error: Transaction rejected')) {
-      // occurs when user rejects a transaction.
-      setFeedback(
-        t('transactionRejectedPending'),
-        'Ledger Rejected Transaction'
-      );
-      handleNewStatusCode('failure', 'TransactionRejected');
-    } else if (err.startsWith('Error: Unknown Status Code: 28161')) {
-      // occurs when the required app is not open.
-      handleNewStatusCode('failure', 'AppNotOpenContinue');
-      setFeedback(t('openAppOnLedger', { appName }), 'Open App On Ledger');
-    } else {
-      // miscellanous errors - assume app is not open or ready.
-      setFeedback(t('openAppOnLedger', { appName }), 'Open App On Ledger');
-      handleNewStatusCode('failure', 'AppNotOpen');
+    // Update feedback and status code state based on error received.
+    switch (getLedgerErrorType(errStr)) {
+      // Occurs when the device does not respond to a request within the timeout period.
+      case 'timeout':
+        updateFeedbackAndStatusCode({
+          message: t('ledgerRequestTimeout'),
+          helpKey: 'Ledger Request Timeout',
+          code: 'DeviceTimeout',
+        });
+        break;
+      // Occurs when one or more of nested calls being signed does not support nesting.
+      case 'nestingNotSupported':
+        updateFeedbackAndStatusCode({
+          message: t('missingNesting'),
+          code: 'NestingNotSupported',
+        });
+        break;
+      // Cccurs when the device is not connected.
+      case 'deviceNotConnected':
+        updateFeedbackAndStatusCode({
+          message: t('connectLedgerToContinue'),
+          code: 'DeviceNotConnected',
+        });
+        break;
+      // Occurs when tx was approved outside of active channel.
+      case 'outsideActiveChannel':
+        updateFeedbackAndStatusCode({
+          message: t('queuedTransactionRejected'),
+          helpKey: 'Wrong Transaction',
+          code: 'WrongTransaction',
+        });
+        break;
+      // Occurs when the device is already in use.
+      case 'deviceBusy':
+        updateFeedbackAndStatusCode({
+          message:
+            'The Ledger device is currently being used by other software.',
+          code: 'DeviceBusy',
+        });
+        break;
+      // Occurs when the device is locked.
+      case 'deviceLocked':
+        updateFeedbackAndStatusCode({
+          message: t('unlockLedgerToContinue'),
+          code: 'DeviceLocked',
+        });
+        break;
+      // Occurs when the app (e.g. Polkadot) is not open.
+      case 'appNotOpen':
+        updateFeedbackAndStatusCode({
+          message: t('openAppOnLedger', { appName }),
+          helpKey: 'Open App On Ledger',
+          code: 'TransactionRejected',
+        });
+        break;
+      // Occurs when a user rejects a transaction.
+      case 'transactionRejected':
+        updateFeedbackAndStatusCode({
+          message: t('transactionRejectedPending'),
+          helpKey: 'Ledger Rejected Transaction',
+          code: 'AppNotOpen',
+        });
+        break;
+      // Handle all other errors.
+      default:
+        // TODO: if runtime version is out of date, flag that this may be causing the error.
+        setFeedback(t('openAppOnLedger', { appName }), 'Open App On Ledger');
+        handleNewStatusCode('failure', 'AppNotOpen');
     }
   };
 
@@ -233,11 +277,30 @@ export const LedgerHardwareProvider = ({
     }
   };
 
+  // Gets runtime version.
+  const handleGetVersion = async (substrateApp: SubstrateApp) => {
+    if (!ledgerTransport.current?.device?.opened) {
+      await ledgerTransport.current?.device?.open();
+    }
+
+    const result: AnyJson = await withTimeout(3000, substrateApp.getVersion());
+    if (!(result instanceof Error)) {
+      return result;
+    }
+    return undefined;
+  };
+
   // Gets an app address on device.
   const handleGetAddress = async (appName: string, index: number) => {
     const substrateApp = newSubstrateApp(ledgerTransport.current, appName);
     const { deviceModel } = ledgerTransport.current;
     const { id, productName } = deviceModel;
+
+    // Check version before getting address.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const version = await handleGetVersion(substrateApp);
+    // TODO: if an error is returned, prompt the user that the Ledger runtime version does not match
+    // the current one, that may be resulting in the error.
 
     setTransportResponse({
       ack: 'success',
@@ -260,7 +323,6 @@ export const LedgerHardwareProvider = ({
     );
 
     await ledgerTransport.current?.device?.close();
-
     const error = result?.error_message;
     if (error) {
       if (!error.startsWith('No errors')) {
