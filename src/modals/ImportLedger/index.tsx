@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ellipsisFn, setStateWithRef } from '@polkadot-cloud/utils';
+import type { FC } from 'react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
@@ -13,7 +14,7 @@ import { useNetwork } from 'contexts/Network';
 import { Manage } from './Manage';
 import { Splash } from './Splash';
 
-export const ImportLedger: React.FC = () => {
+export const ImportLedger: FC = () => {
   const { network } = useNetwork();
   const { setModalResize } = useOverlay().modal;
   const {
