@@ -35,8 +35,13 @@ export const Connect = () => {
   const { extensionsStatus } = useExtensions();
   const { replaceModal, setModalHeight, modalMaxHeight } = useOverlay().modal;
 
-  const web = ExtensionsArray.filter((a) => a.id !== 'polkadot-js');
-  const pjsOrNova = ExtensionsArray.filter((a) => a.id === 'polkadot-js');
+  const inNova = !!window?.walletExtension?.isNovaWallet || false;
+
+  // If in Nova Wallet, only display it in extension options, otherwise, remove developer tool extensions from web options.
+  const developerTools = ['polkadot-js'];
+  const web = !inNova
+    ? ExtensionsArray.filter((a) => !developerTools.includes(a.id))
+    : ExtensionsArray.filter((a) => a.id === 'polkadot-js');
 
   const installed = web.filter((a) =>
     Object.keys(extensionsStatus).find((key) => key === a.id)
@@ -161,14 +166,23 @@ export const Connect = () => {
                 </SelectItems>
               </ExtensionsWrapper>
 
-              <ActionItem text={t('developerTools')} />
-              <ExtensionsWrapper>
-                <SelectItems layout="two-col">
-                  {pjsOrNova.map((extension, i) => (
-                    <Extension key={`extension_item_${i}`} meta={extension} />
-                  ))}
-                </SelectItems>
-              </ExtensionsWrapper>
+              {!inNova && (
+                <>
+                  <ActionItem text={t('developerTools')} />
+                  <ExtensionsWrapper>
+                    <SelectItems layout="two-col">
+                      {ExtensionsArray.filter(
+                        (a) => a.id === 'polkadot-js'
+                      ).map((extension, i) => (
+                        <Extension
+                          key={`extension_item_${i}`}
+                          meta={extension}
+                        />
+                      ))}
+                    </SelectItems>
+                  </ExtensionsWrapper>
+                </>
+              )}
             </ModalPadding>
           </div>
           <div className="section">
