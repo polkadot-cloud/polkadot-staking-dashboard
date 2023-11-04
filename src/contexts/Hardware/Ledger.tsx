@@ -384,15 +384,13 @@ export const LedgerHardwareProvider = ({
     resetStatusCodes();
     resetFeedback();
     setIntegrityChecked(false);
+    runtimesInconsistent.current = false;
   };
 
   // Helper to reset ledger state when the a overlay connecting to the Ledger device unmounts.
   const handleUnmount = () => {
     Ledger.unmount();
-    resetStatusCodes();
-    resetFeedback();
-    setIntegrityChecked(false);
-    runtimesInconsistent.current = false;
+    handleResetLedgerTx();
   };
 
   // Refresh imported ledger accounts on network change.
