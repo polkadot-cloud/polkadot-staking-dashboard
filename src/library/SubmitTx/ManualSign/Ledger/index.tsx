@@ -135,11 +135,10 @@ export const Ledger = ({
         <Submit
           displayFor={displayFor}
           submitting={submitting}
-          submitAddress={submitAddress}
-          valid={valid}
           submitText={submitText}
           onSubmit={onSubmit}
           isMounted={isMounted.current}
+          disabled={disabled}
         />
       </div>
     </div>

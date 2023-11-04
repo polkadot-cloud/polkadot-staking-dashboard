@@ -25,3 +25,12 @@ export interface SubmitProps {
 export interface SignerPromptProps {
   submitAddress: MaybeAddress;
 }
+
+export interface LedgerSubmitProps {
+  onSubmit: () => void;
+  submitting: boolean;
+  displayFor?: DisplayFor;
+  disabled: boolean;
+  isMounted: boolean;
+  submitText?: string;
+}

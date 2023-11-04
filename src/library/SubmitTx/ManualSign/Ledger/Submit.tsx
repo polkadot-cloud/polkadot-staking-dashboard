@@ -12,18 +12,17 @@ import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useNetwork } from 'contexts/Network';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
-import type { SubmitProps } from 'library/SubmitTx/types';
+import type { LedgerSubmitProps } from 'library/SubmitTx/types';
 import { useTranslation } from 'react-i18next';
 
 export const Submit = ({
   displayFor,
   submitting,
-  submitAddress,
-  valid,
   submitText,
   onSubmit,
+  disabled,
   isMounted,
-}: SubmitProps & { isMounted: boolean }) => {
+}: LedgerSubmitProps) => {
   const { t } = useTranslation('library');
   const {
     isPaired,
@@ -34,9 +33,9 @@ export const Submit = ({
     checkRuntimeVersion,
   } = useLedgerHardware();
   const { network } = useNetwork();
+  const { getTxSignature } = useTxMeta();
+  const { getAccount } = useImportedAccounts();
   const { activeAccount } = useActiveAccounts();
-  const { txFeesValid, getTxSignature } = useTxMeta();
-  const { accountHasSigner, getAccount } = useImportedAccounts();
   const { appName } = getLedgerApp(network);
 
   const getAddressIndex = () =>
@@ -95,14 +94,6 @@ export const Submit = ({
 
   // Button icon.
   const icon = !integrityChecked ? faUsb : faSquarePen;
-
-  // The state under which submission is disabled.
-  const disabled =
-    !accountHasSigner(submitAddress) ||
-    !valid ||
-    submitting ||
-    !txFeesValid ||
-    getIsExecuting();
 
   return (
     <ButtonSubmit
