@@ -17,8 +17,8 @@ import { Reset } from './Reset';
 
 export const Manage = ({
   addresses,
-  removeLedgerAddress,
   onGetAddress,
+  removeLedgerAddress,
 }: AnyJson) => {
   const { t } = useTranslation();
   const { openHelp } = useHelp();

@@ -43,6 +43,7 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
     new Promise((resolve) => resolve()),
   handleSignTx: (appName, uid, index, payload) =>
     new Promise((resolve) => resolve()),
+  handleResetLedgerTx: () => {},
 };
 
 export const defaultVaultHardwareContext: VaultHardwareContextInterface = {

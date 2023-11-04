@@ -45,10 +45,10 @@ export const Ledger = ({
   } = useLedgerHardware();
   const { openHelp } = useHelp();
   const { network } = useNetwork();
-  const { accountHasSigner } = useImportedAccounts();
-  const { setModalResize } = useOverlay().modal;
   const { txFeesValid } = useTxMeta();
   const { setTxSignature } = useTxMeta();
+  const { setModalResize } = useOverlay().modal;
+  const { accountHasSigner } = useImportedAccounts();
   const { appName } = getLedgerApp(network);
 
   // Ledger loop needs to keep track of whether this component is mounted. If it is unmounted then

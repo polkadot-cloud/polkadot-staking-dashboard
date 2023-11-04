@@ -45,6 +45,7 @@ export const LedgerHardwareProvider = ({
   );
   const ledgerAccountsRef = useRef(ledgerAccounts);
 
+  // TODO: migrate to "inProgress";
   // isExecuting
   // Store whether an import is in progress.
   const [isExecuting, setIsExecutingState] = useState(false);
@@ -377,6 +378,14 @@ export const LedgerHardwareProvider = ({
     handleNewStatusCode('failure', code);
   };
 
+  // Helper to reset ledger state when a transaction is completed.
+  const handleResetLedgerTx = () => {
+    setIsExecuting(false);
+    resetStatusCodes();
+    resetFeedback();
+    setIntegrityChecked(false);
+  };
+
   // Helper to reset ledger state when the a overlay connecting to the Ledger device unmounts.
   const handleUnmount = () => {
     Ledger.unmount();
@@ -419,6 +428,7 @@ export const LedgerHardwareProvider = ({
         handleUnmount,
         handleGetAddress,
         handleSignTx,
+        handleResetLedgerTx,
         ledgerAccounts: ledgerAccountsRef.current,
         runtimesInconsistent: runtimesInconsistent.current,
       }}

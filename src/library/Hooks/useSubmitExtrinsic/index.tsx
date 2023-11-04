@@ -32,13 +32,8 @@ export const useSubmitExtrinsic = ({
   const { extensionsStatus } = useExtensions();
   const { addNotification } = useNotifications();
   const { isProxySupported } = useProxySupported();
+  const { handleResetLedgerTx } = useLedgerHardware();
   const { addPending, removePending } = useExtrinsics();
-  const {
-    setIsExecuting,
-    resetStatusCodes,
-    resetFeedback,
-    setIntegrityChecked,
-  } = useLedgerHardware();
   const { getAccount, requiresManualSign } = useImportedAccounts();
   const {
     txFees,
@@ -198,22 +193,14 @@ export const useSubmitExtrinsic = ({
       setSubmitting(false);
     };
 
-    const resetLedgerTx = () => {
-      setIsExecuting(false);
-      resetStatusCodes();
-      resetFeedback();
-      setIntegrityChecked(false);
-    };
     const resetManualTx = () => {
       resetTx();
-      resetLedgerTx();
+      handleResetLedgerTx();
     };
 
     const onError = (type?: string) => {
       resetTx();
-      if (type === 'ledger') {
-        resetLedgerTx();
-      }
+      if (type === 'ledger') handleResetLedgerTx();
       removePending(nonce);
       addNotification({
         title: t('cancelled'),

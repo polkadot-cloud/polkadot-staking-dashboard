@@ -34,6 +34,7 @@ export type LedgerHardwareContextInterface = {
     index: number,
     payload: AnyJson
   ) => Promise<void>;
+  handleResetLedgerTx: () => void;
 };
 
 export interface FeedbackMessage {
