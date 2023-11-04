@@ -20,7 +20,10 @@ export const defaultFeedback = {
 export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   transportResponse: null,
   pairDevice: async () => new Promise((resolve) => resolve(false)),
+  integrityChecked: false,
+  setIntegrityChecked: (checked) => {},
   executeLedgerLoop: async (a, s, o) => new Promise((resolve) => resolve()),
+  checkRuntimeVersion: async (appName) => new Promise((resolve) => resolve()),
   setIsPaired: (v) => {},
   handleNewStatusCode: (a, s) => {},
   setIsExecuting: (b) => {},

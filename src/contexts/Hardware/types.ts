@@ -8,6 +8,9 @@ import type { AnyJson, MaybeString, NetworkName } from 'types';
 export type LedgerHardwareContextInterface = {
   pairDevice: () => Promise<boolean>;
   setIsPaired: (v: PairingStatus) => void;
+  integrityChecked: boolean;
+  setIntegrityChecked: (checked: boolean) => void;
+  checkRuntimeVersion: (appName: string) => Promise<void>;
   transportResponse: AnyJson;
   executeLedgerLoop: (
     appName: string,

@@ -4,7 +4,6 @@
 import TransportWebHID from '@ledgerhq/hw-transport-webhid';
 import { u8aToBuffer } from '@polkadot/util';
 import { setStateWithRef } from '@polkadot-cloud/utils';
-import type { SubstrateApp } from '@zondax/ledger-substrate';
 import { newSubstrateApp } from '@zondax/ledger-substrate';
 import type { ReactNode } from 'react';
 import React, { useEffect, useRef, useState } from 'react';
@@ -76,6 +75,10 @@ export const LedgerHardwareProvider = ({
   const resetStatusCodes = () =>
     setStateWithRef([], setStatusCodes, statusCodesRef);
 
+  // integrityChecked
+  // Stores whether the Ledger device version has been checked. This is used when signing transactions, not when addresses are being imported.
+  const [integrityChecked, setIntegrityChecked] = useState<boolean>(false);
+
   // feedback
   // Get the default message to display, set when a failed loop has happened.
   const [feedback, setFeedbackState] =
@@ -131,13 +134,16 @@ export const LedgerHardwareProvider = ({
   };
 
   // Checks whether runtime version is inconsistent with device metadata.
-  const checkRuntimeVersion = async (substrateApp: SubstrateApp) => {
+  const checkRuntimeVersion = async (appName: string) => {
+    const substrateApp = newSubstrateApp(ledgerTransport.current, appName);
     await ensureTransportOpen();
     const result: AnyJson = await withTimeout(3000, substrateApp.getVersion());
+
     if (!(result instanceof Error)) {
       // Flag via a ref if the spec version does not match on-device.
       if (result.minor < specVersion) runtimesInconsistent.current = true;
     }
+    setIntegrityChecked(true);
   };
 
   // Gets an app address on device.
@@ -145,9 +151,6 @@ export const LedgerHardwareProvider = ({
     const substrateApp = newSubstrateApp(ledgerTransport.current, appName);
     const { deviceModel } = ledgerTransport.current;
     const { id, productName } = deviceModel;
-
-    // Check runtime version.
-    await checkRuntimeVersion(substrateApp);
 
     setTransportResponse({
       ack: 'success',
@@ -217,7 +220,9 @@ export const LedgerHardwareProvider = ({
     await ledgerTransport.current?.device?.close();
 
     const error = result?.error_message;
-    if (error && !error.startsWith('No errors')) throw new Error(error);
+    if (error) {
+      if (!error.startsWith('No errors')) throw new Error(error);
+    }
 
     if (!(result instanceof Error))
       return {
@@ -503,6 +508,7 @@ export const LedgerHardwareProvider = ({
     // reset state
     resetStatusCodes();
     setIsExecuting(false);
+    setIntegrityChecked(false);
     resetFeedback();
     // close transport
     if (getTransport()?.device?.opened) getTransport().device.close();
@@ -534,6 +540,9 @@ export const LedgerHardwareProvider = ({
       value={{
         pairDevice,
         setIsPaired,
+        integrityChecked,
+        setIntegrityChecked,
+        checkRuntimeVersion,
         transportResponse,
         executeLedgerLoop,
         setIsExecuting,
