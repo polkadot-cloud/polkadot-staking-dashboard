@@ -33,8 +33,12 @@ export const useSubmitExtrinsic = ({
   const { addNotification } = useNotifications();
   const { isProxySupported } = useProxySupported();
   const { addPending, removePending } = useExtrinsics();
-  const { setIsExecuting, resetStatusCodes, resetFeedback } =
-    useLedgerHardware();
+  const {
+    setIsExecuting,
+    resetStatusCodes,
+    resetFeedback,
+    setIntegrityChecked,
+  } = useLedgerHardware();
   const { getAccount, requiresManualSign } = useImportedAccounts();
   const {
     txFees,
@@ -198,6 +202,7 @@ export const useSubmitExtrinsic = ({
       setIsExecuting(false);
       resetStatusCodes();
       resetFeedback();
+      setIntegrityChecked(false);
     };
     const resetManualTx = () => {
       resetTx();
