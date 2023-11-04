@@ -6,13 +6,14 @@ import type { AnyJson } from '@polkadot-cloud/react/types';
 import { newSubstrateApp, type SubstrateApp } from '@zondax/ledger-substrate';
 import type { AnyFunction } from 'types';
 import { u8aToBuffer } from '@polkadot/util';
-import {
-  LEDGER_DEFAULT_ACCOUNT,
-  LEDGER_DEFAULT_CHANGE,
-  LEDGER_DEFAULT_INDEX,
-} from '../defaults';
 
 export class Ledger {
+  static LEDGER_DEFAULT_ACCOUNT = 0x80000000;
+
+  static LEDGER_DEFAULT_CHANGE = 0x80000000;
+
+  static LEDGER_DEFAULT_INDEX = 0x80000000;
+
   // The ledger device transport. `null` when not actively in use.
   static transport: AnyJson | null;
 
@@ -67,9 +68,9 @@ export class Ledger {
     const result = await this.withTimeout(
       3000,
       app.getAddress(
-        LEDGER_DEFAULT_ACCOUNT + index,
-        LEDGER_DEFAULT_CHANGE,
-        LEDGER_DEFAULT_INDEX + 0,
+        this.LEDGER_DEFAULT_ACCOUNT + index,
+        this.LEDGER_DEFAULT_CHANGE,
+        this.LEDGER_DEFAULT_INDEX + 0,
         false
       )
     );
@@ -85,9 +86,9 @@ export class Ledger {
   ) => {
     await this.ensureOpen();
     const result = await app.sign(
-      LEDGER_DEFAULT_ACCOUNT + index,
-      LEDGER_DEFAULT_CHANGE,
-      LEDGER_DEFAULT_INDEX + 0,
+      this.LEDGER_DEFAULT_ACCOUNT + index,
+      this.LEDGER_DEFAULT_CHANGE,
+      this.LEDGER_DEFAULT_INDEX + 0,
       u8aToBuffer(payload.toU8a(true))
     );
     await this.ensureClosed();

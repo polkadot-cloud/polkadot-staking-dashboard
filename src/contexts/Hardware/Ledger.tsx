@@ -17,7 +17,7 @@ import {
   renameLocalLedgerAddress,
 } from './Utils';
 import {
-  TOTAL_ALLOWED_STATUS_CODES,
+  TotalAllowedStatusCodes,
   defaultFeedback,
   defaultLedgerHardwareContext,
 } from './defaults';
@@ -183,8 +183,7 @@ export const LedgerHardwareProvider = ({
     const newStatusCodes = [{ ack, statusCode }, ...statusCodes];
 
     // Remove last status code if there are more than allowed number of status codes.
-    if (newStatusCodes.length > TOTAL_ALLOWED_STATUS_CODES)
-      newStatusCodes.pop();
+    if (newStatusCodes.length > TotalAllowedStatusCodes) newStatusCodes.pop();
     setStateWithRef(newStatusCodes, setStatusCodes, statusCodesRef);
   };
 
