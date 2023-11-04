@@ -17,9 +17,8 @@ import { Reset } from './Reset';
 
 export const Manage = ({
   addresses,
-  handleLedgerLoop,
   removeLedgerAddress,
-  getNextAddressIndex,
+  onGetAddress,
 }: AnyJson) => {
   const { t } = useTranslation();
   const { openHelp } = useHelp();
@@ -54,9 +53,8 @@ export const Manage = ({
       />
       <Addresess
         addresses={addresses}
-        handleLedgerLoop={handleLedgerLoop}
         removeLedgerAddress={removeLedgerAddress}
-        getNextAddressIndex={getNextAddressIndex}
+        onGetAddress={onGetAddress}
       />
       <HardwareStatusBar
         Icon={LedgerSVG}

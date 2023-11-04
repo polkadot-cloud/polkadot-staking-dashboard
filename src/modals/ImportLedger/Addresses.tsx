@@ -6,7 +6,7 @@ import { ButtonText, HardwareAddress, Polkicon } from '@polkadot-cloud/react';
 import { ellipsisFn, unescape } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
-import { getLedgerApp, getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
+import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import { usePrompt } from 'contexts/Prompt';
 import { Confirm } from 'library/Import/Confirm';
 import { Remove } from 'library/Import/Remove';
@@ -15,7 +15,7 @@ import type { AnyJson } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 
-export const Addresess = ({ addresses, getNextAddressIndex }: AnyJson) => {
+export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {
   const { t } = useTranslation('modals');
   const { network } = useNetwork();
 
@@ -26,12 +26,10 @@ export const Addresess = ({ addresses, getNextAddressIndex }: AnyJson) => {
     addLedgerAccount,
     removeLedgerAccount,
     getLedgerAccount,
-    handleGetAddress,
   } = useLedgerHardware();
   const isExecuting = getIsExecuting();
   const { openPromptWith } = usePrompt();
   const { renameOtherAccount } = useOtherAccounts();
-  const { appName } = getLedgerApp(network);
 
   const renameHandler = (address: string, newName: string) => {
     renameLedgerAccount(address, newName);
@@ -95,7 +93,7 @@ export const Addresess = ({ addresses, getNextAddressIndex }: AnyJson) => {
             text={isExecuting ? t('gettingAccount') : t('getAnotherAccount')}
             disabled={isExecuting}
             onClick={async () => {
-              await handleGetAddress(appName, getNextAddressIndex());
+              await onGetAddress();
             }}
           />
         </div>

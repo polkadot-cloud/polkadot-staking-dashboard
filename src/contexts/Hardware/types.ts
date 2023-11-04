@@ -6,17 +6,10 @@ import type { FunctionComponent, SVGProps } from 'react';
 import type { AnyJson, MaybeString, NetworkName } from 'types';
 
 export type LedgerHardwareContextInterface = {
-  pairDevice: () => Promise<boolean>;
-  setIsPaired: (v: PairingStatus) => void;
   integrityChecked: boolean;
   setIntegrityChecked: (checked: boolean) => void;
   checkRuntimeVersion: (appName: string) => Promise<void>;
   transportResponse: AnyJson;
-  executeLedgerLoop: (
-    appName: string,
-    task: LedgerTask,
-    options?: AnyJson
-  ) => Promise<void>;
   handleNewStatusCode: (ack: string, statusCode: LedgerStatusCode) => void;
   setIsExecuting: (v: boolean) => void;
   resetStatusCodes: () => void;
@@ -28,7 +21,6 @@ export type LedgerHardwareContextInterface = {
   removeLedgerAccount: (a: string) => void;
   renameLedgerAccount: (a: string, name: string) => void;
   getLedgerAccount: (a: string) => LedgerAccount | null;
-  isPaired: PairingStatus;
   ledgerAccounts: LedgerAccount[];
   getFeedback: () => FeedbackMessage;
   setFeedback: (s: MaybeString, helpKey?: MaybeString) => void;
@@ -37,6 +29,12 @@ export type LedgerHardwareContextInterface = {
   handleErrors: (appName: string, err: unknown) => void;
   runtimesInconsistent: boolean;
   handleGetAddress: (appName: string, accountIndex: number) => Promise<void>;
+  handleSignTx: (
+    appName: string,
+    uid: number,
+    index: number,
+    payload: AnyJson
+  ) => Promise<void>;
 };
 
 export interface FeedbackMessage {

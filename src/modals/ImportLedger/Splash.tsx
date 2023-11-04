@@ -13,16 +13,9 @@ import type { AnyFunction } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { SplashWrapper } from './Wrappers';
 
-export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
+export const Splash = ({ onGetAddress }: AnyFunction) => {
   const { t } = useTranslation('modals');
-  const {
-    getStatusCodes,
-    isPaired,
-    getIsExecuting,
-    setIsExecuting,
-    pairDevice,
-    getFeedback,
-  } = useLedgerHardware();
+  const { getStatusCodes, getIsExecuting, getFeedback } = useLedgerHardware();
   const { mode } = useTheme();
   const { openHelp } = useHelp();
   const { replaceModal, setModalResize } = useOverlay().modal;
@@ -30,30 +23,19 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   const statusCodes = getStatusCodes();
 
   const initFetchAddress = async () => {
-    const paired = await pairDevice();
-    if (paired) {
-      setIsExecuting(true);
-      handleLedgerLoop();
-    }
+    await onGetAddress();
   };
 
   const fallbackMessage = t('checking');
   const feedback = getFeedback();
   const helpKey = feedback?.helpKey;
 
-  // Initialise listeners for Ledger IO.
-  useEffect(() => {
-    if (isPaired !== 'paired') {
-      pairDevice();
-    }
-  }, []);
-
-  // Once the device is paired, start `handleLedgerLoop`.
+  // Automatically fetch first address.
   useEffect(() => {
     initFetchAddress();
-  }, [isPaired]);
+  }, []);
 
-  // Resize modal on new message
+  // Resize modal on new message.
   useEffect(() => setModalResize(), [statusCodes, feedback]);
 
   return (

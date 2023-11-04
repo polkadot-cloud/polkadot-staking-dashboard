@@ -19,12 +19,9 @@ export const defaultFeedback = {
 
 export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   transportResponse: null,
-  pairDevice: async () => new Promise((resolve) => resolve(false)),
   integrityChecked: false,
   setIntegrityChecked: (checked) => {},
-  executeLedgerLoop: async (a, s, o) => new Promise((resolve) => resolve()),
   checkRuntimeVersion: async (appName) => new Promise((resolve) => resolve()),
-  setIsPaired: (v) => {},
   handleNewStatusCode: (a, s) => {},
   setIsExecuting: (b) => {},
   resetStatusCodes: () => {},
@@ -36,7 +33,6 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   removeLedgerAccount: (a) => {},
   renameLedgerAccount: (a, n) => {},
   getLedgerAccount: (a) => null,
-  isPaired: 'unknown',
   ledgerAccounts: [],
   getFeedback: () => defaultFeedback,
   setFeedback: (s, h) => {},
@@ -45,6 +41,8 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   handleErrors: (appName, err) => {},
   runtimesInconsistent: false,
   handleGetAddress: (appName, accountIndex) =>
+    new Promise((resolve) => resolve()),
+  handleSignTx: (appName, uid, index, payload) =>
     new Promise((resolve) => resolve()),
 };
 

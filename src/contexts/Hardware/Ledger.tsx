@@ -1,15 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import TransportWebHID from '@ledgerhq/hw-transport-webhid';
-import { u8aToBuffer } from '@polkadot/util';
 import { setStateWithRef } from '@polkadot-cloud/utils';
-import { newSubstrateApp } from '@zondax/ledger-substrate';
 import type { ReactNode } from 'react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { LedgerAccount } from '@polkadot-cloud/react/types';
-import type { AnyFunction, AnyJson, MaybeString } from 'types';
+import type { AnyJson, MaybeString } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
 import {
@@ -20,9 +17,6 @@ import {
   renameLocalLedgerAddress,
 } from './Utils';
 import {
-  LEDGER_DEFAULT_ACCOUNT,
-  LEDGER_DEFAULT_CHANGE,
-  LEDGER_DEFAULT_INDEX,
   TOTAL_ALLOWED_STATUS_CODES,
   defaultFeedback,
   defaultLedgerHardwareContext,
@@ -32,8 +26,6 @@ import type {
   LedgerHardwareContextInterface,
   LedgerResponse,
   LedgerStatusCode,
-  LedgerTask,
-  PairingStatus,
 } from './types';
 import { Ledger } from './static/ledger';
 
@@ -52,13 +44,6 @@ export const LedgerHardwareProvider = ({
     getLocalLedgerAccounts(network)
   );
   const ledgerAccountsRef = useRef(ledgerAccounts);
-
-  // isPaired
-  // Store whether the device has been paired.
-  const [isPaired, setIsPairedState] = useState<PairingStatus>('unknown');
-  const isPairedRef = useRef(isPaired);
-  const setIsPaired = (p: PairingStatus) =>
-    setStateWithRef(p, setIsPairedState, isPairedRef);
 
   // isExecuting
   // Store whether an import is in progress.
@@ -97,7 +82,7 @@ export const LedgerHardwareProvider = ({
   const getTransport = () => ledgerTransport.current;
 
   // transportResponse
-  // Store the latest successful response from an attempted `executeLedgerLoop`.
+  // Store the latest successful device response.
   const [transportResponse, setTransportResponse] = useState<AnyJson>(null);
 
   // runtimesInconsistent
@@ -112,39 +97,23 @@ export const LedgerHardwareProvider = ({
   // Protects against re-renders & duplicate attempts.
   const ledgerLoopInProgress = useRef<boolean>(false);
 
-  // Attempt to pair a device.
-  //
-  // Trigger a one-time connection to the device to determine if it is available. If the device
-  // needs to be paired, a browser prompt will open. If cancelled, an error will be thrown.
-  const pairDevice = async () => {
-    try {
-      // return `paired` if pairing is already in progress.
-      if (pairInProgress.current) return isPairedRef.current === 'paired';
-      pairInProgress.current = true;
-      resetStatusCodes();
-      await ensureTransportClosed();
-      ledgerTransport.current = await TransportWebHID.create();
-      setIsPaired('paired');
-      pairInProgress.current = false;
-      return true;
-    } catch (err) {
-      pairInProgress.current = false;
-      handleErrors('', err);
-      return false;
-    }
-  };
-
   // Checks whether runtime version is inconsistent with device metadata.
   const checkRuntimeVersion = async (appName: string) => {
-    const substrateApp = newSubstrateApp(ledgerTransport.current, appName);
-    await ensureTransportOpen();
-    const result: AnyJson = await withTimeout(3000, substrateApp.getVersion());
+    try {
+      const { app } = await Ledger.initialise(appName);
+      const result = await Ledger.getVersion(app);
 
-    if (!(result instanceof Error)) {
-      // Flag via a ref if the spec version does not match on-device.
+      // handle error.
+      if (Ledger.isError(result)) {
+        throw new Error(result.error_message);
+      }
+
       if (result.minor < specVersion) runtimesInconsistent.current = true;
+
+      setIntegrityChecked(true);
+    } catch (err) {
+      handleErrors(appName, err);
     }
-    setIntegrityChecked(true);
   };
 
   // Gets an address from Ledger device.
@@ -176,94 +145,49 @@ export const LedgerHardwareProvider = ({
         body: [result],
       });
     } catch (err) {
-      // catch error and report.
       handleErrors(appName, err);
     }
   };
 
-  // Signs a payload on device.
+  // Signs a payload on Ledger device.
   const handleSignTx = async (
     appName: string,
     uid: number,
     index: number,
     payload: AnyJson
   ) => {
-    const substrateApp = newSubstrateApp(ledgerTransport.current, appName);
-    const { deviceModel } = ledgerTransport.current;
-    const { id, productName } = deviceModel;
+    try {
+      // start executing.
+      setIsExecuting(true);
+      const { app, id, productName } = await Ledger.initialise(appName);
 
-    setTransportResponse({
-      ack: 'success',
-      statusCode: 'SigningPayload',
-      body: null,
-    });
+      // prompt approve on ledger.
+      setFeedback(t('approveTransactionLedger'));
 
-    setFeedback(t('approveTransactionLedger'));
-    await ensureTransportOpen();
+      // sign payload.
+      const result = await Ledger.signPayload(app, index, payload);
 
-    const result = await substrateApp.sign(
-      LEDGER_DEFAULT_ACCOUNT + index,
-      LEDGER_DEFAULT_CHANGE,
-      LEDGER_DEFAULT_INDEX + 0,
-      u8aToBuffer(payload.toU8a(true))
-    );
+      // handle error.
+      if (Ledger.isError(result)) {
+        throw new Error(result.error_message);
+      }
+      // finish executing.
+      setIsExecuting(false);
 
-    setFeedback(t('signedTransactionSuccessfully'));
-    await ledgerTransport.current?.device?.close();
+      setFeedback(t('signedTransactionSuccessfully'));
 
-    const error = result?.error_message;
-    if (error) {
-      if (!error.startsWith('No errors')) throw new Error(error);
-    }
-
-    if (!(result instanceof Error))
-      return {
+      // set status.
+      setTransportResponse({
         statusCode: 'SignedPayload',
         device: { id, productName },
         body: {
           uid,
           sig: result.signature,
         },
-      };
-
-    return undefined;
-  };
-
-  // Connects to a Ledger device to perform a task. This is the main execute function that handles
-  // all Ledger tasks, along with errors that occur during the process.
-  const executeLedgerLoop = async (
-    appName: string,
-    task: LedgerTask,
-    options?: AnyJson
-  ) => {
-    // Do not execute if already in progress.
-    if (ledgerLoopInProgress.current) return;
-    ledgerLoopInProgress.current = true;
-
-    // Format task options.
-    const uid = options?.uid || 0;
-    const index = options?.accountIndex || 0;
-    const payload = options?.payload || '';
-
-    // Test for task and execute.
-    let result = null;
-    switch (task) {
-      case 'sign_tx':
-        result = await handleSignTx(appName, uid, index, payload);
-        break;
-      default: // Do nothing.
-    }
-
-    // Set successful response.
-    if (result) {
-      setTransportResponse({
-        ack: 'success',
-        options,
-        ...result,
       });
+    } catch (err) {
+      handleErrors(appName, err);
     }
-    ledgerLoopInProgress.current = false;
-    runtimesInconsistent.current = false;
   };
 
   // Handle an incoming new status code and persist to state.
@@ -373,7 +297,7 @@ export const LedgerHardwareProvider = ({
     );
   };
 
-  // Handles errors that occur during `executeLedgerLoop` and `pairDevice` calls.
+  // Handles errors that occur during device calls.
   const handleErrors = (appName: string, err: unknown) => {
     const errStr = String(err);
 
@@ -458,18 +382,6 @@ export const LedgerHardwareProvider = ({
     ensureTransportClosed();
   };
 
-  // Timeout function to prevent hanging tasks. Used for tasks that require no input from the
-  // device, such as getting an address that does not require confirmation.
-  const withTimeout = (millis: AnyFunction, promise: AnyFunction) => {
-    const timeout = new Promise((_, reject) =>
-      setTimeout(async () => {
-        ledgerTransport.current?.device?.close();
-        reject(Error('Timeout'));
-      }, millis)
-    );
-    return Promise.race([promise, timeout]);
-  };
-
   // Helper to update feedback message and status code.
   const updateFeedbackAndStatusCode = ({
     message,
@@ -486,23 +398,11 @@ export const LedgerHardwareProvider = ({
 
   // Helper to reset ledger state when the a overlay connecting to the Ledger device unmounts.
   const handleUnmount = () => {
-    // reset refs
-    ledgerLoopInProgress.current = false;
-    pairInProgress.current = false;
-    runtimesInconsistent.current = false;
-    // reset state
+    Ledger.unmount();
     resetStatusCodes();
-    setIsExecuting(false);
-    setIntegrityChecked(false);
     resetFeedback();
-    // close transport
-    if (getTransport()?.device?.opened) getTransport().device.close();
-  };
-
-  // Helper to open ledger transport if it is closed.
-  const ensureTransportOpen = async () => {
-    if (!ledgerTransport.current?.device?.opened)
-      await ledgerTransport.current?.device?.open();
+    setIntegrityChecked(false);
+    runtimesInconsistent.current = false;
   };
 
   // Helper to close ledger transport if it is open.
@@ -523,13 +423,10 @@ export const LedgerHardwareProvider = ({
   return (
     <LedgerHardwareContext.Provider
       value={{
-        pairDevice,
-        setIsPaired,
         integrityChecked,
         setIntegrityChecked,
         checkRuntimeVersion,
         transportResponse,
-        executeLedgerLoop,
         setIsExecuting,
         handleNewStatusCode,
         resetStatusCodes,
@@ -547,7 +444,7 @@ export const LedgerHardwareProvider = ({
         handleErrors,
         handleUnmount,
         handleGetAddress,
-        isPaired: isPairedRef.current,
+        handleSignTx,
         ledgerAccounts: ledgerAccountsRef.current,
         runtimesInconsistent: runtimesInconsistent.current,
       }}

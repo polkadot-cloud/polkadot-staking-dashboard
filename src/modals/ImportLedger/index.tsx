@@ -5,9 +5,8 @@ import { ellipsisFn, setStateWithRef } from '@polkadot-cloud/utils';
 import type { FC } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
-import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
+import { getLedgerApp, getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import type { LedgerAddress, LedgerResponse } from 'contexts/Hardware/types';
-import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
 import type { AnyJson } from 'types';
 import {
   useEffectIgnoreInitial,
@@ -25,10 +24,11 @@ export const ImportLedger: FC = () => {
     setIsExecuting,
     resetStatusCodes,
     handleNewStatusCode,
-    isPaired,
     getStatusCodes,
     handleUnmount,
+    handleGetAddress,
   } = useLedgerHardware();
+  const { appName } = getLedgerApp(network);
 
   // Gets the next non-imported address index.
   const getNextAddressIndex = () => {
@@ -36,19 +36,15 @@ export const ImportLedger: FC = () => {
     return addressesRef.current[addressesRef.current.length - 1].index + 1;
   };
 
+  const onGetAddress = async () => {
+    await handleGetAddress(appName, getNextAddressIndex());
+  };
+
   // Ledger loop needs to keep track of whether this component is mounted. If it is unmounted then
   // the loop will cancel & ledger metadata will be cleared up. isMounted needs to be given as a
   // function so the interval fetches the real value.
   const isMounted = useRef(true);
-  const getIsMounted = () => isMounted.current;
-
-  const { handleLedgerLoop } = useLedgerLoop({
-    task: 'get_address',
-    options: {
-      accountIndex: getNextAddressIndex,
-    },
-    mounted: getIsMounted,
-  });
+  // const getIsMounted = () => isMounted.current;
 
   // Store addresses retreived from Ledger device. Defaults to local addresses.
   const [addresses, setAddresses] = useState<LedgerAddress[]>(
@@ -60,12 +56,8 @@ export const ImportLedger: FC = () => {
     let newLedgerAddresses = getLocalLedgerAddresses();
 
     newLedgerAddresses = newLedgerAddresses.filter((a) => {
-      if (a.address !== address) {
-        return true;
-      }
-      if (a.network !== network) {
-        return true;
-      }
+      if (a.address !== address) return true;
+      if (a.network !== network) return true;
       return false;
     });
     if (!newLedgerAddresses.length) {
@@ -137,7 +129,7 @@ export const ImportLedger: FC = () => {
   // Resize modal on content change.
   useEffect(() => {
     setModalResize();
-  }, [isPaired, getStatusCodes(), addressesRef.current]);
+  }, [getStatusCodes(), addressesRef.current]);
 
   // Listen for new Ledger status reports.
   useEffectIgnoreInitial(() => {
@@ -155,13 +147,12 @@ export const ImportLedger: FC = () => {
   return (
     <>
       {!addressesRef.current.length ? (
-        <Splash handleLedgerLoop={handleLedgerLoop} />
+        <Splash onGetAddress={onGetAddress} />
       ) : (
         <Manage
           addresses={addressesRef.current}
           removeLedgerAddress={removeLedgerAddress}
-          handleLedgerLoop={handleLedgerLoop}
-          getNextAddressIndex={getNextAddressIndex}
+          onGetAddress={onGetAddress}
         />
       )}
     </>

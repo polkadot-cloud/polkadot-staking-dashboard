@@ -11,7 +11,6 @@ import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useNetwork } from 'contexts/Network';
 import { useTxMeta } from 'contexts/TxMeta';
-import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
 import type { LedgerSubmitProps } from 'library/SubmitTx/types';
 import { useTranslation } from 'react-i18next';
 
@@ -21,54 +20,37 @@ export const Submit = ({
   submitText,
   onSubmit,
   disabled,
-  isMounted,
 }: LedgerSubmitProps) => {
   const { t } = useTranslation('library');
   const {
+    handleSignTx,
     getIsExecuting,
     integrityChecked,
-    pairDevice,
-    setIsExecuting,
     checkRuntimeVersion,
   } = useLedgerHardware();
   const { network } = useNetwork();
   const { getTxSignature } = useTxMeta();
   const { getAccount } = useImportedAccounts();
   const { activeAccount } = useActiveAccounts();
+  const { getTxPayload, getPayloadUid } = useTxMeta();
   const { appName } = getLedgerApp(network);
 
   const getAddressIndex = () =>
     (getAccount(activeAccount) as LedgerAccount)?.index || 0;
 
-  const getIsMounted = () => isMounted;
-
-  const { handleLedgerLoop } = useLedgerLoop({
-    task: 'sign_tx',
-    options: {
-      accountIndex: getAddressIndex,
-    },
-    mounted: getIsMounted,
-  });
-
-  // Handle pairing of device.
-  const onPair = async () => {
-    const paired = await pairDevice();
-    return paired;
-  };
+  // const getIsMounted = () => isMounted;
 
   // Handle transaction submission
   const handleTxSubmit = async () => {
-    const paired = await onPair();
-    if (paired) {
-      setIsExecuting(true);
-      handleLedgerLoop();
-    }
+    const uid = getPayloadUid();
+    const accountIndex = getAddressIndex();
+    const payload = await getTxPayload();
+    await handleSignTx(appName, uid, accountIndex, payload);
   };
 
   // Check device runtime version.
   const handleCheckRuntimeVersion = async () => {
-    const paired = await onPair();
-    if (paired) checkRuntimeVersion(appName);
+    await checkRuntimeVersion(appName);
   };
 
   // Is the transaction ready to be submitted?

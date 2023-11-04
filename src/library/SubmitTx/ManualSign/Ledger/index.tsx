@@ -31,7 +31,6 @@ export const Ledger = ({
 }: SubmitProps & { buttons?: ReactNode[] }) => {
   const { t } = useTranslation('library');
   const {
-    isPaired,
     setFeedback,
     getFeedback,
     integrityChecked,
@@ -98,7 +97,6 @@ export const Ledger = ({
   useEffect(() => {
     setModalResize();
   }, [
-    isPaired,
     integrityChecked,
     valid,
     submitting,
