@@ -27,7 +27,6 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   resetStatusCodes: () => {},
   getIsExecuting: () => false,
   getStatusCodes: () => [],
-  getTransport: () => null,
   ledgerAccountExists: (a) => false,
   addLedgerAccount: (a, i) => null,
   removeLedgerAccount: (a) => {},

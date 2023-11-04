@@ -76,11 +76,6 @@ export const LedgerHardwareProvider = ({
   const resetFeedback = () =>
     setStateWithRef(defaultFeedback, setFeedbackState, feedbackRef);
 
-  // ledgerTransport
-  // The ledger transport interface.
-  const ledgerTransport = useRef<any>(null);
-  const getTransport = () => ledgerTransport.current;
-
   // transportResponse
   // Store the latest successful device response.
   const [transportResponse, setTransportResponse] = useState<AnyJson>(null);
@@ -88,14 +83,6 @@ export const LedgerHardwareProvider = ({
   // runtimesInconsistent
   // Whether the Ledger device metadata is for a different runtime.
   const runtimesInconsistent = useRef<boolean>(false);
-
-  // Whether pairing is in progress.
-  // Protects against re-renders & duplicate pairing attempts.
-  const pairInProgress = useRef<boolean>(false);
-
-  // Whether a ledger-loop is in progress.
-  // Protects against re-renders & duplicate attempts.
-  const ledgerLoopInProgress = useRef<boolean>(false);
 
   // Checks whether runtime version is inconsistent with device metadata.
   const checkRuntimeVersion = async (appName: string) => {
@@ -370,11 +357,8 @@ export const LedgerHardwareProvider = ({
         handleNewStatusCode('failure', 'AppNotOpen');
     }
 
-    // Reset any in-progress calls.
-    ledgerLoopInProgress.current = false;
-    pairInProgress.current = false;
+    // Reset refs.
     runtimesInconsistent.current = false;
-
     // Execution failed - no longer executing.
     setIsExecuting(false);
   };
@@ -423,7 +407,6 @@ export const LedgerHardwareProvider = ({
         resetStatusCodes,
         getIsExecuting,
         getStatusCodes,
-        getTransport,
         ledgerAccountExists,
         addLedgerAccount,
         removeLedgerAccount,
