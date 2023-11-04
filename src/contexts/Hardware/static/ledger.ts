@@ -7,13 +7,11 @@ import { newSubstrateApp, type SubstrateApp } from '@zondax/ledger-substrate';
 import type { AnyFunction } from 'types';
 import { u8aToBuffer } from '@polkadot/util';
 
+const LEDGER_DEFAULT_ACCOUNT = 0x80000000;
+const LEDGER_DEFAULT_CHANGE = 0x80000000;
+const LEDGER_DEFAULT_INDEX = 0x80000000;
+
 export class Ledger {
-  static LEDGER_DEFAULT_ACCOUNT = 0x80000000;
-
-  static LEDGER_DEFAULT_CHANGE = 0x80000000;
-
-  static LEDGER_DEFAULT_INDEX = 0x80000000;
-
   // The ledger device transport. `null` when not actively in use.
   static transport: AnyJson | null;
 
@@ -27,8 +25,8 @@ export class Ledger {
   static initialise = async (appName: string) => {
     this.transport = await TransportWebHID.create();
     const app = newSubstrateApp(Ledger.transport, appName);
-    const { id, productName } = this.transport.device;
-    return { app, id, productName };
+    const { productName } = this.transport.device;
+    return { app, productName };
   };
 
   // Ensure transport is closed.
@@ -39,12 +37,6 @@ export class Ledger {
   // Ensure transport is open.
   static ensureOpen = async () => {
     if (!this.transport?.device?.opened) await this.transport?.open();
-  };
-
-  // Get id and productName from transport. Ensure transport is initialised.
-  static getDeviceInfo = async () => {
-    const { id, productName } = this.transport.device;
-    return { id, productName };
   };
 
   // Check if a response is an error.
@@ -68,9 +60,9 @@ export class Ledger {
     const result = await this.withTimeout(
       3000,
       app.getAddress(
-        this.LEDGER_DEFAULT_ACCOUNT + index,
-        this.LEDGER_DEFAULT_CHANGE,
-        this.LEDGER_DEFAULT_INDEX + 0,
+        LEDGER_DEFAULT_ACCOUNT + index,
+        LEDGER_DEFAULT_CHANGE,
+        LEDGER_DEFAULT_INDEX + 0,
         false
       )
     );
@@ -86,9 +78,9 @@ export class Ledger {
   ) => {
     await this.ensureOpen();
     const result = await app.sign(
-      this.LEDGER_DEFAULT_ACCOUNT + index,
-      this.LEDGER_DEFAULT_CHANGE,
-      this.LEDGER_DEFAULT_INDEX + 0,
+      LEDGER_DEFAULT_ACCOUNT + index,
+      LEDGER_DEFAULT_CHANGE,
+      LEDGER_DEFAULT_INDEX + 0,
       u8aToBuffer(payload.toU8a(true))
     );
     await this.ensureClosed();

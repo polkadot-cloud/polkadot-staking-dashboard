@@ -105,12 +105,12 @@ export const LedgerHardwareProvider = ({
   };
 
   // Gets an address from Ledger device.
-  const handleGetAddress = async (appName: string, accountIndex?: number) => {
+  const handleGetAddress = async (appName: string, accountIndex: number) => {
     try {
       // start executing.
       setIsExecuting(true);
-      const { app, id, productName } = await Ledger.initialise(appName);
-      const result = await Ledger.getAddress(app, 1);
+      const { app, productName } = await Ledger.initialise(appName);
+      const result = await Ledger.getAddress(app, accountIndex);
 
       // handle error.
       if (Ledger.isError(result)) {
@@ -129,7 +129,7 @@ export const LedgerHardwareProvider = ({
         options: {
           accountIndex,
         },
-        device: { id, productName },
+        device: { productName },
         body: [result],
       });
     } catch (err) {
@@ -147,7 +147,7 @@ export const LedgerHardwareProvider = ({
     try {
       // start executing.
       setIsExecuting(true);
-      const { app, id, productName } = await Ledger.initialise(appName);
+      const { app, productName } = await Ledger.initialise(appName);
 
       // prompt approve on ledger.
       setFeedback(t('approveTransactionLedger'));
@@ -167,7 +167,7 @@ export const LedgerHardwareProvider = ({
       // set status.
       setTransportResponse({
         statusCode: 'SignedPayload',
-        device: { id, productName },
+        device: { productName },
         body: {
           uid,
           sig: result.signature,

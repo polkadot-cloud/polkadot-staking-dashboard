@@ -30,16 +30,6 @@ export const ImportLedger: FC = () => {
   } = useLedgerHardware();
   const { appName } = getLedgerApp(network);
 
-  // Gets the next non-imported address index.
-  const getNextAddressIndex = () => {
-    if (!addressesRef.current.length) return 0;
-    return addressesRef.current[addressesRef.current.length - 1].index + 1;
-  };
-
-  const onGetAddress = async () => {
-    await handleGetAddress(appName, getNextAddressIndex());
-  };
-
   // Ledger loop needs to keep track of whether this component is mounted. If it is unmounted then
   // the loop will cancel & ledger metadata will be cleared up. isMounted needs to be given as a
   // function so the interval fetches the real value.
@@ -51,6 +41,16 @@ export const ImportLedger: FC = () => {
     getLocalLedgerAddresses(network)
   );
   const addressesRef = useRef(addresses);
+
+  // Gets the next non-imported address index.
+  const getNextAddressIndex = () => {
+    if (!addressesRef.current.length) return 0;
+    return addressesRef.current[addressesRef.current.length - 1].index + 1;
+  };
+
+  const onGetAddress = async () => {
+    await handleGetAddress(appName, getNextAddressIndex());
+  };
 
   const removeLedgerAddress = (address: string) => {
     let newLedgerAddresses = getLocalLedgerAddresses();

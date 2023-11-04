@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonHelp } from '@polkadot-cloud/react';
+import { ButtonHelp, useEffectIgnoreInitial } from '@polkadot-cloud/react';
 import type { ReactNode } from 'react';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -65,17 +65,16 @@ export const Ledger = ({
       if (uid !== body.uid) {
         // UIDs do not match, so this is not the transaction we are waiting for.
         setFeedback(t('wrongTransaction'), 'Wrong Transaction');
-        resetStatusCodes();
         setTxSignature(null);
       } else {
         // Important: only set the signature (and therefore trigger the transaction submission) if
         // UIDs match.
         handleNewStatusCode(ack, statusCode);
         setTxSignature(body.sig);
-        resetStatusCodes();
       }
 
       // Reset state pertaining to this transaction.
+      resetStatusCodes();
       setIsExecuting(false);
     } else {
       handleNewStatusCode(ack, statusCode);
@@ -106,9 +105,9 @@ export const Ledger = ({
   ]);
 
   // Listen for new Ledger status reports.
-  useEffect(() => {
-    if (getIsExecuting()) handleLedgerStatusResponse(transportResponse);
-  }, [transportResponse, getIsExecuting()]);
+  useEffectIgnoreInitial(() => {
+    handleLedgerStatusResponse(transportResponse);
+  }, [transportResponse]);
 
   // Tidy up context state when this component is no longer mounted.
   useEffect(() => {

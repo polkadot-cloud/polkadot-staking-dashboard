@@ -35,8 +35,9 @@ export const Submit = ({
   const { getTxPayload, getPayloadUid } = useTxMeta();
   const { appName } = getLedgerApp(network);
 
-  const getAddressIndex = () =>
-    (getAccount(activeAccount) as LedgerAccount)?.index || 0;
+  const getAddressIndex = () => {
+    return (getAccount(activeAccount) as LedgerAccount)?.index || 0;
+  };
 
   // const getIsMounted = () => isMounted;
 
