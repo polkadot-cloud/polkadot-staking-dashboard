@@ -35,6 +35,7 @@ import type {
   LedgerTask,
   PairingStatus,
 } from './types';
+import { Ledger } from './static/ledger';
 
 export const LedgerHardwareProvider = ({
   children,
@@ -146,47 +147,38 @@ export const LedgerHardwareProvider = ({
     setIntegrityChecked(true);
   };
 
-  // Gets an app address on device.
-  const handleGetAddress = async (appName: string, index: number) => {
-    const substrateApp = newSubstrateApp(ledgerTransport.current, appName);
-    const { deviceModel } = ledgerTransport.current;
-    const { id, productName } = deviceModel;
+  // Gets an address from Ledger device.
+  const handleGetAddress = async (appName: string, accountIndex?: number) => {
+    try {
+      // start executing.
+      setIsExecuting(true);
+      const { app, id, productName } = await Ledger.initialise(appName);
+      const result = await Ledger.getAddress(app, 1);
 
-    setTransportResponse({
-      ack: 'success',
-      statusCode: 'GettingAddress',
-      body: null,
-    });
-    setFeedback(t('gettingAddress'));
-    await ensureTransportOpen();
-
-    const result: AnyJson = await withTimeout(
-      3000,
-      substrateApp.getAddress(
-        LEDGER_DEFAULT_ACCOUNT + index,
-        LEDGER_DEFAULT_CHANGE,
-        LEDGER_DEFAULT_INDEX + 0,
-        false
-      )
-    );
-
-    await ledgerTransport.current?.device?.close();
-    const error = result?.error_message;
-    if (error) {
-      if (!error.startsWith('No errors')) {
-        throw new Error(error);
+      // handle error.
+      if (Ledger.isError(result)) {
+        throw new Error(result.error_message);
       }
-    }
+      // finish executing.
+      setIsExecuting(false);
 
-    if (!(result instanceof Error)) {
+      // set response.
       setFeedback(t('successfullyFetchedAddress'));
-      return {
+
+      // set status.
+      setTransportResponse({
+        ack: 'success',
         statusCode: 'ReceivedAddress',
+        options: {
+          accountIndex,
+        },
         device: { id, productName },
         body: [result],
-      };
+      });
+    } catch (err) {
+      // catch error and report.
+      handleErrors(appName, err);
     }
-    return undefined;
   };
 
   // Signs a payload on device.
@@ -256,9 +248,6 @@ export const LedgerHardwareProvider = ({
     // Test for task and execute.
     let result = null;
     switch (task) {
-      case 'get_address':
-        result = await handleGetAddress(appName, options?.accountIndex || 0);
-        break;
       case 'sign_tx':
         result = await handleSignTx(appName, uid, index, payload);
         break;
@@ -557,6 +546,7 @@ export const LedgerHardwareProvider = ({
         resetFeedback,
         handleErrors,
         handleUnmount,
+        handleGetAddress,
         isPaired: isPairedRef.current,
         ledgerAccounts: ledgerAccountsRef.current,
         runtimesInconsistent: runtimesInconsistent.current,

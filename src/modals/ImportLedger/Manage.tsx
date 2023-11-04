@@ -19,6 +19,7 @@ export const Manage = ({
   addresses,
   handleLedgerLoop,
   removeLedgerAddress,
+  getNextAddressIndex,
 }: AnyJson) => {
   const { t } = useTranslation();
   const { openHelp } = useHelp();
@@ -55,6 +56,7 @@ export const Manage = ({
         addresses={addresses}
         handleLedgerLoop={handleLedgerLoop}
         removeLedgerAddress={removeLedgerAddress}
+        getNextAddressIndex={getNextAddressIndex}
       />
       <HardwareStatusBar
         Icon={LedgerSVG}

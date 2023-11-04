@@ -36,6 +36,7 @@ export type LedgerHardwareContextInterface = {
   handleUnmount: () => void;
   handleErrors: (appName: string, err: unknown) => void;
   runtimesInconsistent: boolean;
+  handleGetAddress: (appName: string, accountIndex: number) => Promise<void>;
 };
 
 export interface FeedbackMessage {

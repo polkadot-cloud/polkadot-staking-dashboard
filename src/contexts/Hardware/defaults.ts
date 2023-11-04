@@ -44,6 +44,8 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   handleUnmount: () => {},
   handleErrors: (appName, err) => {},
   runtimesInconsistent: false,
+  handleGetAddress: (appName, accountIndex) =>
+    new Promise((resolve) => resolve()),
 };
 
 export const defaultVaultHardwareContext: VaultHardwareContextInterface = {

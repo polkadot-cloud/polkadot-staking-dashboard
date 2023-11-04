@@ -9,7 +9,10 @@ import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import type { LedgerAddress, LedgerResponse } from 'contexts/Hardware/types';
 import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
 import type { AnyJson } from 'types';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import {
+  useEffectIgnoreInitial,
+  useOverlay,
+} from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { Manage } from './Manage';
 import { Splash } from './Splash';
@@ -19,7 +22,6 @@ export const ImportLedger: FC = () => {
   const { setModalResize } = useOverlay().modal;
   const {
     transportResponse,
-    getIsExecuting,
     setIsExecuting,
     resetStatusCodes,
     handleNewStatusCode,
@@ -30,9 +32,7 @@ export const ImportLedger: FC = () => {
 
   // Gets the next non-imported address index.
   const getNextAddressIndex = () => {
-    if (!addressesRef.current.length) {
-      return 0;
-    }
+    if (!addressesRef.current.length) return 0;
     return addressesRef.current[addressesRef.current.length - 1].index + 1;
   };
 
@@ -140,10 +140,8 @@ export const ImportLedger: FC = () => {
   }, [isPaired, getStatusCodes(), addressesRef.current]);
 
   // Listen for new Ledger status reports.
-  useEffect(() => {
-    if (getIsExecuting()) {
-      handleLedgerStatusResponse(transportResponse);
-    }
+  useEffectIgnoreInitial(() => {
+    handleLedgerStatusResponse(transportResponse);
   }, [transportResponse]);
 
   // Tidy up context state when this component is no longer mounted.
@@ -163,6 +161,7 @@ export const ImportLedger: FC = () => {
           addresses={addressesRef.current}
           removeLedgerAddress={removeLedgerAddress}
           handleLedgerLoop={handleLedgerLoop}
+          getNextAddressIndex={getNextAddressIndex}
         />
       )}
     </>
