@@ -42,6 +42,8 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   setFeedback: (s, h) => {},
   resetFeedback: () => {},
   handleUnmount: () => {},
+  handleErrors: (appName, err) => {},
+  runtimesInconsistent: false,
 };
 
 export const defaultVaultHardwareContext: VaultHardwareContextInterface = {

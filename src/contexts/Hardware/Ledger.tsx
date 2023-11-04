@@ -244,41 +244,37 @@ export const LedgerHardwareProvider = ({
     task: LedgerTask,
     options?: AnyJson
   ) => {
-    try {
-      // Do not execute if already in progress.
-      if (ledgerLoopInProgress.current) return;
-      ledgerLoopInProgress.current = true;
+    // Do not execute if already in progress.
+    if (ledgerLoopInProgress.current) return;
+    ledgerLoopInProgress.current = true;
 
-      // Format task options.
-      const uid = options?.uid || 0;
-      const index = options?.accountIndex || 0;
-      const payload = options?.payload || '';
+    // Format task options.
+    const uid = options?.uid || 0;
+    const index = options?.accountIndex || 0;
+    const payload = options?.payload || '';
 
-      // Test for task and execute.
-      let result = null;
-      switch (task) {
-        case 'get_address':
-          result = await handleGetAddress(appName, options?.accountIndex || 0);
-          break;
-        case 'sign_tx':
-          result = await handleSignTx(appName, uid, index, payload);
-          break;
-        default: // Do nothing.
-      }
-
-      // Set successful response.
-      if (result) {
-        setTransportResponse({
-          ack: 'success',
-          options,
-          ...result,
-        });
-      }
-      ledgerLoopInProgress.current = false;
-      runtimesInconsistent.current = false;
-    } catch (err) {
-      handleErrors(appName, err);
+    // Test for task and execute.
+    let result = null;
+    switch (task) {
+      case 'get_address':
+        result = await handleGetAddress(appName, options?.accountIndex || 0);
+        break;
+      case 'sign_tx':
+        result = await handleSignTx(appName, uid, index, payload);
+        break;
+      default: // Do nothing.
     }
+
+    // Set successful response.
+    if (result) {
+      setTransportResponse({
+        ack: 'success',
+        options,
+        ...result,
+      });
+    }
+    ledgerLoopInProgress.current = false;
+    runtimesInconsistent.current = false;
   };
 
   // Handle an incoming new status code and persist to state.
@@ -559,9 +555,11 @@ export const LedgerHardwareProvider = ({
         getFeedback,
         setFeedback,
         resetFeedback,
+        handleErrors,
         handleUnmount,
         isPaired: isPairedRef.current,
         ledgerAccounts: ledgerAccountsRef.current,
+        runtimesInconsistent: runtimesInconsistent.current,
       }}
     >
       {children}

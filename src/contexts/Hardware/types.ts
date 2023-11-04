@@ -34,6 +34,8 @@ export type LedgerHardwareContextInterface = {
   setFeedback: (s: MaybeString, helpKey?: MaybeString) => void;
   resetFeedback: () => void;
   handleUnmount: () => void;
+  handleErrors: (appName: string, err: unknown) => void;
+  runtimesInconsistent: boolean;
 };
 
 export interface FeedbackMessage {

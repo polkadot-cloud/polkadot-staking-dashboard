@@ -25,7 +25,6 @@ export const Submit = ({
 }: LedgerSubmitProps) => {
   const { t } = useTranslation('library');
   const {
-    isPaired,
     getIsExecuting,
     integrityChecked,
     pairDevice,
@@ -53,7 +52,6 @@ export const Submit = ({
 
   // Handle pairing of device.
   const onPair = async () => {
-    if (isPaired === 'paired') return true;
     const paired = await pairDevice();
     return paired;
   };
