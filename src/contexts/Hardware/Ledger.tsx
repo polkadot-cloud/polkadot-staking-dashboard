@@ -377,9 +377,6 @@ export const LedgerHardwareProvider = ({
 
     // Execution failed - no longer executing.
     setIsExecuting(false);
-
-    // Close any open device connections.
-    ensureTransportClosed();
   };
 
   // Helper to update feedback message and status code.
@@ -403,12 +400,6 @@ export const LedgerHardwareProvider = ({
     resetFeedback();
     setIntegrityChecked(false);
     runtimesInconsistent.current = false;
-  };
-
-  // Helper to close ledger transport if it is open.
-  const ensureTransportClosed = async () => {
-    if (ledgerTransport.current?.device?.opened)
-      await ledgerTransport.current?.device?.close();
   };
 
   // Refresh imported ledger accounts on network change.
