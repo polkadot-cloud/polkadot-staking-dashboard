@@ -18,9 +18,6 @@ export class Ledger {
   // Whether the device is currently paired.
   static isPaired: boolean = false;
 
-  // Whether the device is currently executing a command.
-  static isExecuting: boolean = false;
-
   // Initialise ledger transport, initialise app, and return with device info.
   static initialise = async (appName: string) => {
     this.transport = await TransportWebHID.create();
@@ -103,6 +100,5 @@ export class Ledger {
     await this.transport?.close();
     this.transport = null;
     this.isPaired = false;
-    this.isExecuting = false;
   };
 }

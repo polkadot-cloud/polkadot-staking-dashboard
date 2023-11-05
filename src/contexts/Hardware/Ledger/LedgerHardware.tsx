@@ -34,10 +34,8 @@ export const LedgerHardwareProvider = ({
   const { t } = useTranslation('modals');
   const { specVersion } = useApi().chainState.version;
 
-  // TODO: migrate to "inProgress";
-  // isExecuting
   // Store whether a Ledger device task is in progress.
-  const [isExecuting, setIsExecutingState] = useState(false);
+  const [isExecuting, setIsExecutingState] = useState<boolean>(false);
   const isExecutingRef = useRef(isExecuting);
   const getIsExecuting = () => isExecutingRef.current;
   const setIsExecuting = (val: boolean) =>
