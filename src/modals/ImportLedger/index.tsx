@@ -25,9 +25,9 @@ export const ImportLedger: FC = () => {
   const {
     transportResponse,
     setIsExecuting,
-    resetStatusCodes,
+    resetStatusCode,
     handleNewStatusCode,
-    getStatusCodes,
+    getStatusCode,
     handleUnmount,
     handleGetAddress,
   } = useLedgerHardware();
@@ -125,14 +125,14 @@ export const ImportLedger: FC = () => {
         setAddresses,
         addressesRef
       );
-      resetStatusCodes();
+      resetStatusCode();
     }
   };
 
   // Resize modal on content change.
   useEffect(() => {
     setModalResize();
-  }, [getStatusCodes(), addressesRef.current]);
+  }, [getStatusCode(), addressesRef.current]);
 
   // Listen for new Ledger status reports.
   useEffectIgnoreInitial(() => {

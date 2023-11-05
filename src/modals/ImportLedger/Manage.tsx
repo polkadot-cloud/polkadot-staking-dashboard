@@ -25,7 +25,7 @@ export const Manage = ({
   const { network } = useNetwork();
   const { openPromptWith } = usePrompt();
   const { replaceModal } = useOverlay().modal;
-  const { setIsExecuting, getIsExecuting, resetStatusCodes, getFeedback } =
+  const { handleResetLedgerTask, getIsExecuting, getFeedback } =
     useLedgerHardware();
   const { appName, Icon } = getLedgerApp(network);
   const isExecuting = getIsExecuting();
@@ -68,10 +68,7 @@ export const Manage = ({
             : undefined
         }
         inProgress={isExecuting}
-        handleCancel={() => {
-          setIsExecuting(false);
-          resetStatusCodes();
-        }}
+        handleCancel={() => handleResetLedgerTask()}
         handleDone={() =>
           replaceModal({ key: 'Connect', options: { disableScroll: true } })
         }

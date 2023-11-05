@@ -37,8 +37,8 @@ export const Ledger = ({
     handleUnmount,
     setIsExecuting,
     getIsExecuting,
-    getStatusCodes,
-    resetStatusCodes,
+    getStatusCode,
+    resetStatusCode,
     runtimesInconsistent,
     transportResponse,
     handleNewStatusCode,
@@ -74,7 +74,7 @@ export const Ledger = ({
       }
 
       // Reset state pertaining to this transaction.
-      resetStatusCodes();
+      resetStatusCode();
       setIsExecuting(false);
     } else {
       handleNewStatusCode(ack, statusCode);
@@ -100,7 +100,7 @@ export const Ledger = ({
     valid,
     submitting,
     txFeesValid,
-    getStatusCodes(),
+    getStatusCode(),
     getIsExecuting(),
   ]);
 

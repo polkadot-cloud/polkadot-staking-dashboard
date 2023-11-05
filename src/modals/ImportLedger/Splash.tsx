@@ -15,12 +15,12 @@ import { SplashWrapper } from './Wrappers';
 
 export const Splash = ({ onGetAddress }: AnyFunction) => {
   const { t } = useTranslation('modals');
-  const { getStatusCodes, getIsExecuting, getFeedback } = useLedgerHardware();
+  const { getStatusCode, getIsExecuting, getFeedback } = useLedgerHardware();
   const { mode } = useTheme();
   const { openHelp } = useHelp();
   const { replaceModal, setModalResize } = useOverlay().modal;
 
-  const statusCodes = getStatusCodes();
+  const statusCode = getStatusCode();
 
   const initFetchAddress = async () => {
     await onGetAddress();
@@ -36,7 +36,7 @@ export const Splash = ({ onGetAddress }: AnyFunction) => {
   }, []);
 
   // Resize modal on new message.
-  useEffect(() => setModalResize(), [statusCodes, feedback]);
+  useEffect(() => setModalResize(), [statusCode, feedback]);
 
   return (
     <>
@@ -78,7 +78,7 @@ export const Splash = ({ onGetAddress }: AnyFunction) => {
               <div className="button">
                 <ButtonSecondary
                   text={
-                    statusCodes[0]?.statusCode === 'DeviceNotConnected'
+                    statusCode?.statusCode === 'DeviceNotConnected'
                       ? t('continue')
                       : t('tryAgain')
                   }

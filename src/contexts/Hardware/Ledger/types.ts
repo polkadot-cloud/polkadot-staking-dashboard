@@ -12,9 +12,9 @@ export type LedgerHardwareContextInterface = {
   transportResponse: AnyJson;
   handleNewStatusCode: (ack: string, statusCode: LedgerStatusCode) => void;
   setIsExecuting: (v: boolean) => void;
-  resetStatusCodes: () => void;
+  getStatusCode: () => LedgerResponse | null;
+  resetStatusCode: () => void;
   getIsExecuting: () => boolean;
-  getStatusCodes: () => LedgerResponse[];
   getFeedback: () => FeedbackMessage;
   setFeedback: (s: MaybeString, helpKey?: MaybeString) => void;
   resetFeedback: () => void;
@@ -28,7 +28,7 @@ export type LedgerHardwareContextInterface = {
     index: number,
     payload: AnyJson
   ) => Promise<void>;
-  handleResetLedgerTx: () => void;
+  handleResetLedgerTask: () => void;
 };
 
 export type LedgerAccountsContextInterface = {

@@ -21,9 +21,9 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   checkRuntimeVersion: async (appName) => new Promise((resolve) => resolve()),
   handleNewStatusCode: (a, s) => {},
   setIsExecuting: (b) => {},
-  resetStatusCodes: () => {},
   getIsExecuting: () => false,
-  getStatusCodes: () => [],
+  getStatusCode: () => null,
+  resetStatusCode: () => {},
   getFeedback: () => defaultFeedback,
   setFeedback: (s, h) => {},
   resetFeedback: () => {},
@@ -33,7 +33,7 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
     new Promise((resolve) => resolve()),
   handleSignTx: (appName, uid, index, payload) =>
     new Promise((resolve) => resolve()),
-  handleResetLedgerTx: () => {},
+  handleResetLedgerTask: () => {},
   runtimesInconsistent: false,
 };
 

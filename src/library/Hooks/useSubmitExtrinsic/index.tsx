@@ -32,7 +32,7 @@ export const useSubmitExtrinsic = ({
   const { extensionsStatus } = useExtensions();
   const { addNotification } = useNotifications();
   const { isProxySupported } = useProxySupported();
-  const { handleResetLedgerTx } = useLedgerHardware();
+  const { handleResetLedgerTask } = useLedgerHardware();
   const { addPending, removePending } = useExtrinsics();
   const { getAccount, requiresManualSign } = useImportedAccounts();
   const {
@@ -195,12 +195,12 @@ export const useSubmitExtrinsic = ({
 
     const resetManualTx = () => {
       resetTx();
-      handleResetLedgerTx();
+      handleResetLedgerTask();
     };
 
     const onError = (type?: string) => {
       resetTx();
-      if (type === 'ledger') handleResetLedgerTx();
+      if (type === 'ledger') handleResetLedgerTask();
       removePending(nonce);
       addNotification({
         title: t('cancelled'),

@@ -8,11 +8,7 @@ import { useTranslation } from 'react-i18next';
 import type { AnyJson, MaybeString } from 'types';
 import { useApi } from 'contexts/Api';
 import { getLedgerErrorType } from '../Utils';
-import {
-  TotalAllowedStatusCodes,
-  defaultFeedback,
-  defaultLedgerHardwareContext,
-} from './defaults';
+import { defaultFeedback, defaultLedgerHardwareContext } from './defaults';
 import type {
   FeedbackMessage,
   LedgerHardwareContextInterface,
@@ -41,15 +37,13 @@ export const LedgerHardwareProvider = ({
   const setIsExecuting = (val: boolean) =>
     setStateWithRef(val, setIsExecutingState, isExecutingRef);
 
-  // statusCodes
-  // Store status codes received from Ledger device.
-  const [statusCodes, setStatusCodes] = useState<LedgerResponse[]>([]);
-  const statusCodesRef = useRef(statusCodes);
-  const getStatusCodes = () => statusCodesRef.current;
-  const resetStatusCodes = () =>
-    setStateWithRef([], setStatusCodes, statusCodesRef);
+  // Store the latest status code received from a Ledger device.
+  const [statusCode, setStatusCode] = useState<LedgerResponse | null>(null);
+  const statusCodeRef = useRef(statusCode);
+  const getStatusCode = () => statusCodeRef.current;
+  const resetStatusCode = () =>
+    setStateWithRef(null, setStatusCode, statusCodeRef);
 
-  // integrityChecked
   // Stores whether the Ledger device version has been checked. This is used when signing transactions, not when addresses are being imported.
   const [integrityChecked, setIntegrityChecked] = useState<boolean>(false);
 
@@ -81,6 +75,7 @@ export const LedgerHardwareProvider = ({
         throw new Error(result.error_message);
       }
       setIsExecuting(false);
+      resetFeedback();
 
       if (result.minor < specVersion) runtimesInconsistent.current = true;
       setIntegrityChecked(true);
@@ -148,12 +143,15 @@ export const LedgerHardwareProvider = ({
   };
 
   // Handle an incoming new status code and persist to state.
-  const handleNewStatusCode = (ack: string, statusCode: LedgerStatusCode) => {
-    const newStatusCodes = [{ ack, statusCode }, ...statusCodes];
-
-    // Remove last status code if there are more than allowed number of status codes.
-    if (newStatusCodes.length > TotalAllowedStatusCodes) newStatusCodes.pop();
-    setStateWithRef(newStatusCodes, setStatusCodes, statusCodesRef);
+  const handleNewStatusCode = (
+    ack: string,
+    newStatusCode: LedgerStatusCode
+  ) => {
+    setStateWithRef(
+      { ack, statusCode: newStatusCode },
+      setStatusCode,
+      statusCodeRef
+    );
   };
 
   // Handles errors that occur during device calls.
@@ -247,10 +245,10 @@ export const LedgerHardwareProvider = ({
     handleNewStatusCode('failure', code);
   };
 
-  // Helper to reset ledger state when a transaction is completed.
-  const handleResetLedgerTx = () => {
+  // Helper to reset ledger state when a task is completed or cancelled.
+  const handleResetLedgerTask = () => {
     setIsExecuting(false);
-    resetStatusCodes();
+    resetStatusCode();
     resetFeedback();
     setIntegrityChecked(false);
     runtimesInconsistent.current = false;
@@ -259,7 +257,7 @@ export const LedgerHardwareProvider = ({
   // Helper to reset ledger state when the a overlay connecting to the Ledger device unmounts.
   const handleUnmount = () => {
     Ledger.unmount();
-    handleResetLedgerTx();
+    handleResetLedgerTask();
   };
 
   return (
@@ -272,8 +270,8 @@ export const LedgerHardwareProvider = ({
         getIsExecuting,
         setIsExecuting,
         handleNewStatusCode,
-        getStatusCodes,
-        resetStatusCodes,
+        getStatusCode,
+        resetStatusCode,
         getFeedback,
         setFeedback,
         resetFeedback,
@@ -281,7 +279,7 @@ export const LedgerHardwareProvider = ({
         handleUnmount,
         handleGetAddress,
         handleSignTx,
-        handleResetLedgerTx,
+        handleResetLedgerTask,
         runtimesInconsistent: runtimesInconsistent.current,
       }}
     >
