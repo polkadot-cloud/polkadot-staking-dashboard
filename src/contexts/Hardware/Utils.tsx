@@ -5,7 +5,7 @@ import { localStorageOrDefault } from '@polkadot-cloud/utils';
 import { LedgerApps } from 'config/ledger';
 import type { MaybeString } from 'types';
 import type { LedgerAccount, VaultAccount } from '@polkadot-cloud/react/types';
-import type { LedgerAddress } from './types';
+import type { LedgerAddress } from './Ledger/types';
 
 // Ledger error keyed by type of error.
 const LedgerErrorsByType = {

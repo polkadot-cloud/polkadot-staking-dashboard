@@ -7,7 +7,7 @@ import { ButtonSubmit } from '@polkadot-cloud/react';
 import type { LedgerAccount } from '@polkadot-cloud/react/types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useNetwork } from 'contexts/Network';
 import { useTxMeta } from 'contexts/TxMeta';

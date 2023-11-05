@@ -5,7 +5,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonSecondary } from '@polkadot-cloud/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { useHelp } from 'contexts/Help';
 import { useTheme } from 'contexts/Themes';
 import LedgerLogoSvg from '@polkadot-cloud/assets/extensions/svg/ledger.svg?react';

@@ -9,13 +9,7 @@ import type { LedgerAccount } from '@polkadot-cloud/react/types';
 import type { AnyJson, MaybeString } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
-import {
-  getLedgerErrorType,
-  getLocalLedgerAccounts,
-  getLocalLedgerAddresses,
-  isLocalNetworkAddress,
-  renameLocalLedgerAddress,
-} from './Utils';
+import { getLedgerErrorType, getLocalLedgerAccounts } from '../Utils';
 import {
   TotalAllowedStatusCodes,
   defaultFeedback,
@@ -28,6 +22,11 @@ import type {
   LedgerStatusCode,
 } from './types';
 import { Ledger } from './static/ledger';
+
+export const LedgerHardwareContext =
+  React.createContext<LedgerHardwareContextInterface>(
+    defaultLedgerHardwareContext
+  );
 
 export const LedgerHardwareProvider = ({
   children,
@@ -77,11 +76,9 @@ export const LedgerHardwareProvider = ({
   const resetFeedback = () =>
     setStateWithRef(defaultFeedback, setFeedbackState, feedbackRef);
 
-  // transportResponse
   // Store the latest successful device response.
   const [transportResponse, setTransportResponse] = useState<AnyJson>(null);
 
-  // runtimesInconsistent
   // Whether the Ledger device metadata is for a different runtime.
   const runtimesInconsistent = useRef<boolean>(false);
 
@@ -187,109 +184,10 @@ export const LedgerHardwareProvider = ({
     setStateWithRef(newStatusCodes, setStatusCodes, statusCodesRef);
   };
 
-  // Check if a Ledger address exists in imported addresses.
-  const ledgerAccountExists = (address: string) =>
-    !!getLocalLedgerAccounts().find((a) =>
-      isLocalNetworkAddress(network, a, address)
-    );
-
-  const addLedgerAccount = (address: string, index: number) => {
-    let newLedgerAccounts = getLocalLedgerAccounts();
-
-    const ledgerAddress = getLocalLedgerAddresses().find((a) =>
-      isLocalNetworkAddress(network, a, address)
-    );
-
-    if (
-      ledgerAddress &&
-      !newLedgerAccounts.find((a) => isLocalNetworkAddress(network, a, address))
-    ) {
-      const account = {
-        address,
-        network,
-        name: ledgerAddress.name,
-        source: 'ledger',
-        index,
-      };
-
-      // update the full list of local ledger accounts with new entry.
-      newLedgerAccounts = [...newLedgerAccounts].concat(account);
-      localStorage.setItem(
-        'ledger_accounts',
-        JSON.stringify(newLedgerAccounts)
-      );
-
-      // store only those accounts on the current network in state.
-      setStateWithRef(
-        newLedgerAccounts.filter((a) => a.network === network),
-        setLedgerAccountsState,
-        ledgerAccountsRef
-      );
-      return account;
-    }
-    return null;
-  };
-
-  // Removes a Ledger account from state and local storage.
-  const removeLedgerAccount = (address: string) => {
-    const newLedgerAccounts = getLocalLedgerAccounts().filter((a) => {
-      if (a.address !== address) return true;
-      if (a.network !== network) return true;
-      return false;
-    });
-
-    if (!newLedgerAccounts.length) localStorage.removeItem('ledger_accounts');
-    else
-      localStorage.setItem(
-        'ledger_accounts',
-        JSON.stringify(newLedgerAccounts)
-      );
-
-    setStateWithRef(
-      newLedgerAccounts.filter((a) => a.network === network),
-      setLedgerAccountsState,
-      ledgerAccountsRef
-    );
-  };
-
-  // Gets an imported address along with its Ledger metadata.
-  const getLedgerAccount = (address: string) => {
-    const localLedgerAccounts = getLocalLedgerAccounts();
-    if (!localLedgerAccounts) return null;
-    return (
-      localLedgerAccounts.find((a) =>
-        isLocalNetworkAddress(network, a, address)
-      ) ?? null
-    );
-  };
-
-  // Renames an imported ledger account.
-  const renameLedgerAccount = (address: string, newName: string) => {
-    let newLedgerAccounts = getLocalLedgerAccounts();
-
-    newLedgerAccounts = newLedgerAccounts.map((a) =>
-      isLocalNetworkAddress(network, a, address)
-        ? {
-            ...a,
-            name: newName,
-          }
-        : a
-    );
-    renameLocalLedgerAddress(address, newName, network);
-    localStorage.setItem('ledger_accounts', JSON.stringify(newLedgerAccounts));
-    setStateWithRef(
-      newLedgerAccounts.filter((a) => a.network === network),
-      setLedgerAccountsState,
-      ledgerAccountsRef
-    );
-  };
-
   // Handles errors that occur during device calls.
   const handleErrors = (appName: string, err: unknown) => {
-    const errStr = String(err);
-
     // Update feedback and status code state based on error received.
-    switch (getLedgerErrorType(errStr)) {
+    switch (getLedgerErrorType(String(err))) {
       // Occurs when the device does not respond to a request within the timeout period.
       case 'timeout':
         updateFeedbackAndStatusCode({
@@ -359,7 +257,7 @@ export const LedgerHardwareProvider = ({
 
     // Reset refs.
     runtimesInconsistent.current = false;
-    // Execution failed - no longer executing.
+    // Reset state.
     setIsExecuting(false);
   };
 
@@ -408,16 +306,11 @@ export const LedgerHardwareProvider = ({
         setIntegrityChecked,
         checkRuntimeVersion,
         transportResponse,
+        getIsExecuting,
         setIsExecuting,
         handleNewStatusCode,
-        resetStatusCodes,
-        getIsExecuting,
         getStatusCodes,
-        ledgerAccountExists,
-        addLedgerAccount,
-        removeLedgerAccount,
-        renameLedgerAccount,
-        getLedgerAccount,
+        resetStatusCodes,
         getFeedback,
         setFeedback,
         resetFeedback,
@@ -426,7 +319,6 @@ export const LedgerHardwareProvider = ({
         handleGetAddress,
         handleSignTx,
         handleResetLedgerTx,
-        ledgerAccounts: ledgerAccountsRef.current,
         runtimesInconsistent: runtimesInconsistent.current,
       }}
     >
@@ -434,10 +326,5 @@ export const LedgerHardwareProvider = ({
     </LedgerHardwareContext.Provider>
   );
 };
-
-export const LedgerHardwareContext =
-  React.createContext<LedgerHardwareContextInterface>(
-    defaultLedgerHardwareContext
-  );
 
 export const useLedgerHardware = () => React.useContext(LedgerHardwareContext);

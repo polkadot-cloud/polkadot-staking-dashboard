@@ -3,7 +3,7 @@
 
 import { HardwareStatusBar } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useHelp } from 'contexts/Help';
 import { usePrompt } from 'contexts/Prompt';

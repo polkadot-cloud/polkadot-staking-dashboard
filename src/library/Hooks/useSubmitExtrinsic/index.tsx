@@ -8,7 +8,7 @@ import { DappName, ManualSigners } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useExtensions } from '@polkadot-cloud/react/hooks';
 import { useExtrinsics } from 'contexts/Extrinsics';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { useNotifications } from 'contexts/Notifications';
 import { useTxMeta } from 'contexts/TxMeta';
 import type { AnyApi, AnyJson } from 'types';

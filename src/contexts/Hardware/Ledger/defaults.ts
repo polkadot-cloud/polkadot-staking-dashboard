@@ -3,8 +3,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import type {
+  LedgerAccountsContextInterface,
   LedgerHardwareContextInterface,
-  VaultHardwareContextInterface,
 } from './types';
 
 export const TotalAllowedStatusCodes = 50;
@@ -24,30 +24,24 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   resetStatusCodes: () => {},
   getIsExecuting: () => false,
   getStatusCodes: () => [],
+  getFeedback: () => defaultFeedback,
+  setFeedback: (s, h) => {},
+  resetFeedback: () => {},
+  handleUnmount: () => {},
+  handleErrors: (appName, err) => {},
+  handleGetAddress: (appName, accountIndex) =>
+    new Promise((resolve) => resolve()),
+  handleSignTx: (appName, uid, index, payload) =>
+    new Promise((resolve) => resolve()),
+  handleResetLedgerTx: () => {},
+  runtimesInconsistent: false,
+};
+
+export const defaultLedgerAccountsContext: LedgerAccountsContextInterface = {
   ledgerAccountExists: (a) => false,
   addLedgerAccount: (a, i) => null,
   removeLedgerAccount: (a) => {},
   renameLedgerAccount: (a, n) => {},
   getLedgerAccount: (a) => null,
   ledgerAccounts: [],
-  getFeedback: () => defaultFeedback,
-  setFeedback: (s, h) => {},
-  resetFeedback: () => {},
-  handleUnmount: () => {},
-  handleErrors: (appName, err) => {},
-  runtimesInconsistent: false,
-  handleGetAddress: (appName, accountIndex) =>
-    new Promise((resolve) => resolve()),
-  handleSignTx: (appName, uid, index, payload) =>
-    new Promise((resolve) => resolve()),
-  handleResetLedgerTx: () => {},
-};
-
-export const defaultVaultHardwareContext: VaultHardwareContextInterface = {
-  vaultAccountExists: (a) => false,
-  addVaultAccount: (a, i) => null,
-  removeVaultAccount: (a) => {},
-  renameVaultAccount: (a, n) => {},
-  getVaultAccount: (a) => null,
-  vaultAccounts: [],
 };

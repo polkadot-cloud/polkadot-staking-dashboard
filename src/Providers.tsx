@@ -11,7 +11,7 @@ import {
 import { ExtrinsicsProvider } from 'contexts/Extrinsics';
 import { FastUnstakeProvider } from 'contexts/FastUnstake';
 import { FiltersProvider } from 'contexts/Filters';
-import { LedgerHardwareProvider } from 'contexts/Hardware/Ledger';
+import { LedgerHardwareProvider } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { VaultHardwareProvider } from 'contexts/Hardware/Vault';
 import { HelpProvider } from 'contexts/Help';
 import { IdentitiesProvider } from 'contexts/Identities';
@@ -49,6 +49,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { DappName } from 'consts';
 import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts';
 import { PoolPerformanceProvider } from 'contexts/Pools/PoolPerformance';
+import { LedgerAccountsProvider } from 'contexts/Hardware/Ledger/LedgerAccounts';
 
 // Embed providers from hook.
 export const Providers = () => {
@@ -72,6 +73,7 @@ export const Providers = () => {
       { dappName: DappName, network, ss58, activeAccount, setActiveAccount },
     ],
     OtherAccountsProvider,
+    LedgerAccountsProvider,
     ImportedAccountsProvider,
     HelpProvider,
     NetworkMetricsProvider,

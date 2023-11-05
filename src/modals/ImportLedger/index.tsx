@@ -4,9 +4,12 @@
 import { ellipsisFn, setStateWithRef } from '@polkadot-cloud/utils';
 import type { FC } from 'react';
 import { useEffect, useRef, useState } from 'react';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { getLedgerApp, getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
-import type { LedgerAddress, LedgerResponse } from 'contexts/Hardware/types';
+import type {
+  LedgerAddress,
+  LedgerResponse,
+} from 'contexts/Hardware/Ledger/types';
 import type { AnyJson } from 'types';
 import {
   useEffectIgnoreInitial,
