@@ -31,6 +31,5 @@ export interface LedgerSubmitProps {
   submitting: boolean;
   displayFor?: DisplayFor;
   disabled: boolean;
-  isMounted: boolean;
   submitText?: string;
 }

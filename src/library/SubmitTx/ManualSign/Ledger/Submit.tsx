@@ -39,8 +39,6 @@ export const Submit = ({
     return (getAccount(activeAccount) as LedgerAccount)?.index || 0;
   };
 
-  // const getIsMounted = () => isMounted;
-
   // Handle transaction submission
   const handleTxSubmit = async () => {
     const uid = getPayloadUid();

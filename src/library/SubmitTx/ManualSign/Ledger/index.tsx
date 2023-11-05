@@ -3,7 +3,7 @@
 
 import { ButtonHelp, useEffectIgnoreInitial } from '@polkadot-cloud/react';
 import type { ReactNode } from 'react';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import type { LedgerResponse } from 'contexts/Hardware/Ledger/types';
@@ -50,11 +50,6 @@ export const Ledger = ({
   const { setModalResize } = useOverlay().modal;
   const { accountHasSigner } = useImportedAccounts();
   const { appName } = getLedgerApp(network);
-
-  // Ledger loop needs to keep track of whether this component is mounted. If it is unmounted then
-  // the loop will cancel & ledger metadata will be cleared up. isMounted needs to be given as a
-  // function so the interval fetches the real value.
-  const isMounted = useRef<boolean>(true);
 
   // Handle new Ledger status report.
   const handleLedgerStatusResponse = (response: LedgerResponse) => {
@@ -112,7 +107,6 @@ export const Ledger = ({
   // Tidy up context state when this component is no longer mounted.
   useEffect(() => {
     return () => {
-      isMounted.current = false;
       handleUnmount();
     };
   }, []);
@@ -176,7 +170,6 @@ export const Ledger = ({
             submitting={submitting}
             submitText={submitText}
             onSubmit={onSubmit}
-            isMounted={isMounted.current}
             disabled={disabled}
           />
         </div>

@@ -33,12 +33,6 @@ export const ImportLedger: FC = () => {
   } = useLedgerHardware();
   const { appName } = getLedgerApp(network);
 
-  // Ledger loop needs to keep track of whether this component is mounted. If it is unmounted then
-  // the loop will cancel & ledger metadata will be cleared up. isMounted needs to be given as a
-  // function so the interval fetches the real value.
-  const isMounted = useRef(true);
-  // const getIsMounted = () => isMounted.current;
-
   // Store addresses retreived from Ledger device. Defaults to local addresses.
   const [addresses, setAddresses] = useState<LedgerAddress[]>(
     getLocalLedgerAddresses(network)
@@ -142,7 +136,6 @@ export const ImportLedger: FC = () => {
   // Tidy up context state when this component is no longer mounted.
   useEffect(() => {
     return () => {
-      isMounted.current = false;
       handleUnmount();
     };
   }, []);
