@@ -3,13 +3,11 @@
 
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import type { ReactNode } from 'react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { LedgerAccount } from '@polkadot-cloud/react/types';
 import type { AnyJson, MaybeString } from 'types';
-import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
-import { getLedgerErrorType, getLocalLedgerAccounts } from '../Utils';
+import { getLedgerErrorType } from '../Utils';
 import {
   TotalAllowedStatusCodes,
   defaultFeedback,
@@ -34,15 +32,7 @@ export const LedgerHardwareProvider = ({
   children: ReactNode;
 }) => {
   const { t } = useTranslation('modals');
-  const { network } = useNetwork();
   const { specVersion } = useApi().chainState.version;
-
-  // ledgerAccounts
-  // Store the fetched ledger accounts.
-  const [ledgerAccounts, setLedgerAccountsState] = useState<LedgerAccount[]>(
-    getLocalLedgerAccounts(network)
-  );
-  const ledgerAccountsRef = useRef(ledgerAccounts);
 
   // TODO: migrate to "inProgress";
   // isExecuting
@@ -289,15 +279,6 @@ export const LedgerHardwareProvider = ({
     Ledger.unmount();
     handleResetLedgerTx();
   };
-
-  // Refresh imported ledger accounts on network change.
-  useEffect(() => {
-    setStateWithRef(
-      getLocalLedgerAccounts(network),
-      setLedgerAccountsState,
-      ledgerAccountsRef
-    );
-  }, [network]);
 
   return (
     <LedgerHardwareContext.Provider

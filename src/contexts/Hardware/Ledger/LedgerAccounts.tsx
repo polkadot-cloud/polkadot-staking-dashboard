@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ReactNode } from 'react';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNetwork } from 'contexts/Network';
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import type { LedgerAccount } from '@polkadot-cloud/react/types';
@@ -130,6 +130,15 @@ export const LedgerAccountsProvider = ({
       ) ?? null
     );
   };
+
+  // Refresh imported ledger accounts on network change.
+  useEffect(() => {
+    setStateWithRef(
+      getLocalLedgerAccounts(network),
+      setLedgerAccountsState,
+      ledgerAccountsRef
+    );
+  }, [network]);
 
   return (
     <LedgerAccountsContext.Provider
