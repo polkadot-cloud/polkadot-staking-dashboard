@@ -36,7 +36,7 @@ export const LedgerHardwareProvider = ({
 
   // TODO: migrate to "inProgress";
   // isExecuting
-  // Store whether an import is in progress.
+  // Store whether a Ledger device task is in progress.
   const [isExecuting, setIsExecutingState] = useState(false);
   const isExecutingRef = useRef(isExecuting);
   const getIsExecuting = () => isExecutingRef.current;
@@ -75,16 +75,16 @@ export const LedgerHardwareProvider = ({
   // Checks whether runtime version is inconsistent with device metadata.
   const checkRuntimeVersion = async (appName: string) => {
     try {
+      setIsExecuting(true);
       const { app } = await Ledger.initialise(appName);
       const result = await Ledger.getVersion(app);
 
-      // handle error.
       if (Ledger.isError(result)) {
         throw new Error(result.error_message);
       }
+      setIsExecuting(false);
 
       if (result.minor < specVersion) runtimesInconsistent.current = true;
-
       setIntegrityChecked(true);
     } catch (err) {
       handleErrors(appName, err);
@@ -94,22 +94,15 @@ export const LedgerHardwareProvider = ({
   // Gets an address from Ledger device.
   const handleGetAddress = async (appName: string, accountIndex: number) => {
     try {
-      // start executing.
       setIsExecuting(true);
       const { app, productName } = await Ledger.initialise(appName);
       const result = await Ledger.getAddress(app, accountIndex);
 
-      // handle error.
       if (Ledger.isError(result)) {
         throw new Error(result.error_message);
       }
-      // finish executing.
       setIsExecuting(false);
-
-      // set response.
       setFeedback(t('successfullyFetchedAddress'));
-
-      // set status.
       setTransportResponse({
         ack: 'success',
         statusCode: 'ReceivedAddress',
@@ -132,26 +125,17 @@ export const LedgerHardwareProvider = ({
     payload: AnyJson
   ) => {
     try {
-      // start executing.
       setIsExecuting(true);
       const { app, productName } = await Ledger.initialise(appName);
-
-      // prompt approve on ledger.
       setFeedback(t('approveTransactionLedger'));
 
-      // sign payload.
       const result = await Ledger.signPayload(app, index, payload);
 
-      // handle error.
       if (Ledger.isError(result)) {
         throw new Error(result.error_message);
       }
-      // finish executing.
       setIsExecuting(false);
-
       setFeedback(t('signedTransactionSuccessfully'));
-
-      // set status.
       setTransportResponse({
         statusCode: 'SignedPayload',
         device: { productName },

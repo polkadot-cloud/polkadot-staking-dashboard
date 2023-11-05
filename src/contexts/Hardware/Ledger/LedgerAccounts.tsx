@@ -144,10 +144,10 @@ export const LedgerAccountsProvider = ({
     <LedgerAccountsContext.Provider
       value={{
         ledgerAccountExists,
+        getLedgerAccount,
         addLedgerAccount,
         removeLedgerAccount,
         renameLedgerAccount,
-        getLedgerAccount,
         ledgerAccounts: ledgerAccountsRef.current,
       }}
     >
