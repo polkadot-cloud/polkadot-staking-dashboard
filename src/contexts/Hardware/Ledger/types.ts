@@ -10,7 +10,7 @@ export type LedgerHardwareContextInterface = {
   setIntegrityChecked: (checked: boolean) => void;
   checkRuntimeVersion: (appName: string) => Promise<void>;
   transportResponse: AnyJson;
-  handleNewStatusCode: (ack: string, statusCode: LedgerStatusCode) => void;
+  setStatusCode: (ack: string, statusCode: LedgerStatusCode) => void;
   setIsExecuting: (v: boolean) => void;
   getStatusCode: () => LedgerResponse | null;
   resetStatusCode: () => void;
@@ -84,3 +84,9 @@ export type LedgerApp = {
   appName: string;
   Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
 };
+
+export interface HandleErrorFeedback {
+  message: MaybeString;
+  helpKey?: MaybeString;
+  code: LedgerStatusCode;
+}

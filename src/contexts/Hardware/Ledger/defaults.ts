@@ -19,7 +19,7 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   integrityChecked: false,
   setIntegrityChecked: (checked) => {},
   checkRuntimeVersion: async (appName) => new Promise((resolve) => resolve()),
-  handleNewStatusCode: (a, s) => {},
+  setStatusCode: (a, s) => {},
   setIsExecuting: (b) => {},
   getIsExecuting: () => false,
   getStatusCode: () => null,

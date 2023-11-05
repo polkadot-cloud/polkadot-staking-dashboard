@@ -41,7 +41,7 @@ export const Ledger = ({
     resetStatusCode,
     runtimesInconsistent,
     transportResponse,
-    handleNewStatusCode,
+    setStatusCode,
   } = useLedgerHardware();
   const { openHelp } = useHelp();
   const { network } = useNetwork();
@@ -69,7 +69,7 @@ export const Ledger = ({
       } else {
         // Important: only set the signature (and therefore trigger the transaction submission) if
         // UIDs match.
-        handleNewStatusCode(ack, statusCode);
+        setStatusCode(ack, statusCode);
         setTxSignature(body.sig);
       }
 
@@ -77,7 +77,7 @@ export const Ledger = ({
       resetStatusCode();
       setIsExecuting(false);
     } else {
-      handleNewStatusCode(ack, statusCode);
+      setStatusCode(ack, statusCode);
     }
   };
 

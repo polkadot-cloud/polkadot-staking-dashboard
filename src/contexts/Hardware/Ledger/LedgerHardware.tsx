@@ -11,6 +11,7 @@ import { getLedgerErrorType } from '../Utils';
 import { defaultFeedback, defaultLedgerHardwareContext } from './defaults';
 import type {
   FeedbackMessage,
+  HandleErrorFeedback,
   LedgerHardwareContextInterface,
   LedgerResponse,
   LedgerStatusCode,
@@ -38,17 +39,22 @@ export const LedgerHardwareProvider = ({
     setStateWithRef(val, setIsExecutingState, isExecutingRef);
 
   // Store the latest status code received from a Ledger device.
-  const [statusCode, setStatusCode] = useState<LedgerResponse | null>(null);
-  const statusCodeRef = useRef(statusCode);
+  const [statusCode, setStatusCodeState] = useState<LedgerResponse | null>(
+    null
+  );
+  const statusCodeRef = useRef<LedgerResponse | null>(statusCode);
   const getStatusCode = () => statusCodeRef.current;
+  const setStatusCode = (ack: string, newStatusCode: LedgerStatusCode) => {
+    setStateWithRef(
+      { ack, statusCode: newStatusCode },
+      setStatusCodeState,
+      statusCodeRef
+    );
+  };
   const resetStatusCode = () =>
-    setStateWithRef(null, setStatusCode, statusCodeRef);
+    setStateWithRef(null, setStatusCodeState, statusCodeRef);
 
-  // Stores whether the Ledger device version has been checked. This is used when signing transactions, not when addresses are being imported.
-  const [integrityChecked, setIntegrityChecked] = useState<boolean>(false);
-
-  // feedback
-  // Get the default message to display, set when a failed loop has happened.
+  // Store the feedback message to display as the Ledger device is being interacted with.
   const [feedback, setFeedbackState] =
     useState<FeedbackMessage>(defaultFeedback);
   const feedbackRef = useRef(feedback);
@@ -57,6 +63,20 @@ export const LedgerHardwareProvider = ({
     setStateWithRef({ message, helpKey }, setFeedbackState, feedbackRef);
   const resetFeedback = () =>
     setStateWithRef(defaultFeedback, setFeedbackState, feedbackRef);
+
+  // Set feedback message and status code together.
+  const setStatusFeedback = ({
+    code,
+    helpKey,
+    message,
+  }: HandleErrorFeedback) => {
+    setStatusCode('failure', code);
+    setFeedback(message, helpKey);
+  };
+
+  // Stores whether the Ledger device version has been checked. Used when signing transactions, not
+  // when addresses are being imported.
+  const [integrityChecked, setIntegrityChecked] = useState<boolean>(false);
 
   // Store the latest successful device response.
   const [transportResponse, setTransportResponse] = useState<AnyJson>(null);
@@ -142,25 +162,13 @@ export const LedgerHardwareProvider = ({
     }
   };
 
-  // Handle an incoming new status code and persist to state.
-  const handleNewStatusCode = (
-    ack: string,
-    newStatusCode: LedgerStatusCode
-  ) => {
-    setStateWithRef(
-      { ack, statusCode: newStatusCode },
-      setStatusCode,
-      statusCodeRef
-    );
-  };
-
   // Handles errors that occur during device calls.
   const handleErrors = (appName: string, err: unknown) => {
     // Update feedback and status code state based on error received.
     switch (getLedgerErrorType(String(err))) {
       // Occurs when the device does not respond to a request within the timeout period.
       case 'timeout':
-        updateFeedbackAndStatusCode({
+        setStatusFeedback({
           message: t('ledgerRequestTimeout'),
           helpKey: 'Ledger Request Timeout',
           code: 'DeviceTimeout',
@@ -168,21 +176,21 @@ export const LedgerHardwareProvider = ({
         break;
       // Occurs when one or more of nested calls being signed does not support nesting.
       case 'nestingNotSupported':
-        updateFeedbackAndStatusCode({
+        setStatusFeedback({
           message: t('missingNesting'),
           code: 'NestingNotSupported',
         });
         break;
       // Cccurs when the device is not connected.
       case 'deviceNotConnected':
-        updateFeedbackAndStatusCode({
+        setStatusFeedback({
           message: t('connectLedgerToContinue'),
           code: 'DeviceNotConnected',
         });
         break;
       // Occurs when tx was approved outside of active channel.
       case 'outsideActiveChannel':
-        updateFeedbackAndStatusCode({
+        setStatusFeedback({
           message: t('queuedTransactionRejected'),
           helpKey: 'Wrong Transaction',
           code: 'WrongTransaction',
@@ -190,7 +198,7 @@ export const LedgerHardwareProvider = ({
         break;
       // Occurs when the device is already in use.
       case 'deviceBusy':
-        updateFeedbackAndStatusCode({
+        setStatusFeedback({
           message:
             'The Ledger device is currently being used by other software.',
           code: 'DeviceBusy',
@@ -198,14 +206,14 @@ export const LedgerHardwareProvider = ({
         break;
       // Occurs when the device is locked.
       case 'deviceLocked':
-        updateFeedbackAndStatusCode({
+        setStatusFeedback({
           message: t('unlockLedgerToContinue'),
           code: 'DeviceLocked',
         });
         break;
       // Occurs when the app (e.g. Polkadot) is not open.
       case 'appNotOpen':
-        updateFeedbackAndStatusCode({
+        setStatusFeedback({
           message: t('openAppOnLedger', { appName }),
           helpKey: 'Open App On Ledger',
           code: 'TransactionRejected',
@@ -213,7 +221,7 @@ export const LedgerHardwareProvider = ({
         break;
       // Occurs when a user rejects a transaction.
       case 'transactionRejected':
-        updateFeedbackAndStatusCode({
+        setStatusFeedback({
           message: t('transactionRejectedPending'),
           helpKey: 'Ledger Rejected Transaction',
           code: 'AppNotOpen',
@@ -222,27 +230,13 @@ export const LedgerHardwareProvider = ({
       // Handle all other errors.
       default:
         setFeedback(t('openAppOnLedger', { appName }), 'Open App On Ledger');
-        handleNewStatusCode('failure', 'AppNotOpen');
+        setStatusCode('failure', 'AppNotOpen');
     }
 
     // Reset refs.
     runtimesInconsistent.current = false;
     // Reset state.
     setIsExecuting(false);
-  };
-
-  // Helper to update feedback message and status code.
-  const updateFeedbackAndStatusCode = ({
-    message,
-    helpKey,
-    code,
-  }: {
-    message: MaybeString;
-    helpKey?: MaybeString;
-    code: LedgerStatusCode;
-  }) => {
-    setFeedback(message, helpKey);
-    handleNewStatusCode('failure', code);
   };
 
   // Helper to reset ledger state when a task is completed or cancelled.
@@ -269,17 +263,17 @@ export const LedgerHardwareProvider = ({
         transportResponse,
         getIsExecuting,
         setIsExecuting,
-        handleNewStatusCode,
         getStatusCode,
+        setStatusCode,
         resetStatusCode,
         getFeedback,
         setFeedback,
         resetFeedback,
-        handleErrors,
-        handleUnmount,
         handleGetAddress,
         handleSignTx,
         handleResetLedgerTask,
+        handleErrors,
+        handleUnmount,
         runtimesInconsistent: runtimesInconsistent.current,
       }}
     >

@@ -26,7 +26,7 @@ export const ImportLedger: FC = () => {
     transportResponse,
     setIsExecuting,
     resetStatusCode,
-    handleNewStatusCode,
+    setStatusCode,
     getStatusCode,
     handleUnmount,
     handleGetAddress,
@@ -92,7 +92,7 @@ export const ImportLedger: FC = () => {
     if (!response) return;
 
     const { ack, statusCode, body, options } = response;
-    handleNewStatusCode(ack, statusCode);
+    setStatusCode(ack, statusCode);
 
     if (statusCode === 'ReceivedAddress') {
       const newAddress = body.map(({ pubKey, address }: LedgerAddress) => ({
