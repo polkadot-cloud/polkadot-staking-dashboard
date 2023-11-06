@@ -105,6 +105,11 @@ export const TransferOptionsProvider = ({
 
     // free balance after `total` ledger amount.
     const freeBalance = BigNumber.max(freeMinusReserve.minus(total), 0);
+
+    // free balance to pay for tsx fees.
+    const balanceTxFees = BigNumber.max(freeMinusReserve.minus(frozen), 0);
+
+    // free balance that can be transferred.
     const transferrableBalance = BigNumber.max(
       freeBalance.minus(feeReserve).minus(frozen),
       0
@@ -164,6 +169,7 @@ export const TransferOptionsProvider = ({
     return {
       freeBalance,
       transferrableBalance,
+      balanceTxFees,
       edReserved,
       nominate: nominateOptions(),
       pool: poolOptions(),

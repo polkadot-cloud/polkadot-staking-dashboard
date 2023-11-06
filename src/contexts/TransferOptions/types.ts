@@ -13,6 +13,7 @@ export interface TransferOptionsContextInterface {
 export interface TransferOptions {
   freeBalance: BigNumber;
   transferrableBalance: BigNumber;
+  balanceTxFees: BigNumber;
   edReserved: BigNumber;
   nominate: {
     active: BigNumber;
