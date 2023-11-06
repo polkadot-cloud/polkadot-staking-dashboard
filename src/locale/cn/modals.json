@@ -122,7 +122,7 @@
     "ledgerAccountImported": "Ledger Account Imported",
     "ledgerAccountRemoved": "Ledger Account Removed",
     "ledgerAccounts": "正在显示Ledger帐户",
-    "ledgerDeviceBusy": "The Ledger device is currently being used by other software.",
+    "ledgerDeviceBusy": "The Ledger device is currently being used for something else.",
     "ledgerFetchedAccount": "Fetched Ledger Account {{account}}",
     "ledgerImportedAccount": "Imported Ledger Account {{account}}",
     "ledgerRemovedAccount": "Removed Ledger Account {{account}}",
