@@ -40,7 +40,7 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
 export const defaultLedgerAccountsContext: LedgerAccountsContextInterface = {
   ledgerAccountExists: (a) => false,
   addLedgerAccount: (a, i) => null,
-  removeLedgerAccount: (a) => {},
+  removeLedgerAccount: (a, n) => {},
   renameLedgerAccount: (a, n) => {},
   getLedgerAccount: (a) => null,
   ledgerAccounts: [],

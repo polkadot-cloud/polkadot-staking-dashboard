@@ -35,7 +35,6 @@ export const Ledger = ({
     getFeedback,
     integrityChecked,
     handleUnmount,
-    setIsExecuting,
     getIsExecuting,
     getStatusCode,
     resetStatusCode,
@@ -67,10 +66,8 @@ export const Ledger = ({
         setStatusCode(ack, statusCode);
         setTxSignature(body.sig);
       }
-
       // Reset state pertaining to this transaction.
       resetStatusCode();
-      setIsExecuting(false);
     } else {
       setStatusCode(ack, statusCode);
     }

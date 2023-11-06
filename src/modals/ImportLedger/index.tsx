@@ -16,6 +16,7 @@ import {
   useOverlay,
 } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
+import { useNotifications } from 'contexts/Notifications';
 import { Manage } from './Manage';
 import { Splash } from './Splash';
 
@@ -24,13 +25,13 @@ export const ImportLedger: FC = () => {
   const { setModalResize } = useOverlay().modal;
   const {
     transportResponse,
-    setIsExecuting,
     resetStatusCode,
     setStatusCode,
     getStatusCode,
     handleUnmount,
     handleGetAddress,
   } = useLedgerHardware();
+  const { addNotification } = useNotifications();
   const { appName } = getLedgerApp(network);
 
   // Store addresses retreived from Ledger device. Defaults to local addresses.
@@ -100,18 +101,12 @@ export const ImportLedger: FC = () => {
       // update the full list of local ledger addresses with new entry.
       const newAddresses = getLocalLedgerAddresses()
         .filter((a: AnyJson) => {
-          if (a.address !== newAddress.address) {
-            return true;
-          }
-          if (a.network !== network) {
-            return true;
-          }
+          if (a.address !== newAddress[0].address) return true;
+          if (a.network !== network) return true;
           return false;
         })
         .concat(newAddress);
       localStorage.setItem('ledger_addresses', JSON.stringify(newAddresses));
-
-      setIsExecuting(false);
 
       // store only those accounts on the current network in state.
       setStateWithRef(
@@ -120,6 +115,14 @@ export const ImportLedger: FC = () => {
         addressesRef
       );
       resetStatusCode();
+
+      // trigger notification.
+      addNotification({
+        title: 'Ledger Account Fetched',
+        subtitle: `Fetched Ledger Account ${ellipsisFn(
+          newAddress[0].address
+        )}.`,
+      });
     }
   };
 

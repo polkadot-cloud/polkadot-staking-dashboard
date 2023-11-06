@@ -23,7 +23,7 @@ export const Reset = ({ removeLedgerAddress }: AnyJson) => {
   const removeAccounts = () => {
     // Remove imported Ledger accounts.
     ledgerAccounts.forEach((account: LedgerAccount) => {
-      removeLedgerAccount(account.address);
+      removeLedgerAccount(account.address, false);
     });
     forgetOtherAccounts(ledgerAccounts);
 

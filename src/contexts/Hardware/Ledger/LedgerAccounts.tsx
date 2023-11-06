@@ -4,8 +4,9 @@
 import type { ReactNode } from 'react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNetwork } from 'contexts/Network';
-import { setStateWithRef } from '@polkadot-cloud/utils';
+import { ellipsisFn, setStateWithRef } from '@polkadot-cloud/utils';
 import type { LedgerAccount } from '@polkadot-cloud/react/types';
+import { useNotifications } from 'contexts/Notifications';
 import type { LedgerAccountsContextInterface } from './types';
 import { defaultLedgerAccountsContext } from './defaults';
 import {
@@ -26,6 +27,7 @@ export const LedgerAccountsProvider = ({
   children: ReactNode;
 }) => {
   const { network } = useNetwork();
+  const { addNotification } = useNotifications();
 
   // Store the fetched ledger accounts.
   const [ledgerAccounts, setLedgerAccountsState] = useState<LedgerAccount[]>(
@@ -72,13 +74,19 @@ export const LedgerAccountsProvider = ({
         setLedgerAccountsState,
         ledgerAccountsRef
       );
+
+      addNotification({
+        title: 'Ledger Account Imported',
+        subtitle: `Imported Ledger Account ${ellipsisFn(address)}.`,
+      });
+
       return account;
     }
     return null;
   };
 
   // Removes a Ledger account from state and local storage.
-  const removeLedgerAccount = (address: string) => {
+  const removeLedgerAccount = (address: string, notify: boolean = true) => {
     const newLedgerAccounts = getLocalLedgerAccounts().filter((a) => {
       if (a.address !== address) return true;
       if (a.network !== network) return true;
@@ -97,6 +105,13 @@ export const LedgerAccountsProvider = ({
       setLedgerAccountsState,
       ledgerAccountsRef
     );
+
+    if (notify) {
+      addNotification({
+        title: 'Ledger Account Removed',
+        subtitle: `Removed Ledger Account ${ellipsisFn(address)}.`,
+      });
+    }
   };
 
   // Renames an imported ledger account.
