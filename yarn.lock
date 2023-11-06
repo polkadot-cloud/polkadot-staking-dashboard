@@ -210,6 +210,13 @@
     "@polkadot/extension-inject" "^0.46.5"
     "@polkadot/types-augment" "^10.9.1"
 
+"@chainsafe/metamask-polkadot-types@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@chainsafe/metamask-polkadot-types/-/metamask-polkadot-types-0.6.0.tgz#e6e950024c363e076ba6727c3b1b8b57eb6c29b0"
+  integrity sha512-DhLNF2LcybGMOs3aBMh5iIAqEw0/a2W6mb5FccOGVTYQqT6W/lcwKC5Ves4KmpGbH/DtNJdbC0L9YMS0F8bXEg==
+  dependencies:
+    "@polkadot/api" "^10.9.1"
+
 "@dotlottie/player-component@^2.7.0":
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/@dotlottie/player-component/-/player-component-2.7.0.tgz#b7f5edfa9a54a0d99eb5cd85b94f0aebcd9270b3"
@@ -592,22 +599,18 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.34.tgz#a88c7066228d2e9229a026e9f86436ceae357737"
   integrity sha512-qsXlinOgVlChbMTdBXCDaQM59jDZWrKKMizR7LR8qL2yhzLh0Ohouf0POURhuCsJ1zUjHwbsZg+4ezsKZBM+nA==
 
-"@polkadot-cloud/core@1.0.42":
-  version "1.0.42"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.42.tgz#dacce564e0ef680bc4d39dd304bb7e1fd3d0940c"
-  integrity sha512-sBuzsE3CnWqsMbL6toyMpYjQeyNkFiCpTKOuaZUk6N9zlAc2C17e9jsHRl76zv1x64qMcpBhW0uJ5VvZocoWZg==
-
-"@polkadot-cloud/core@^1.0.43":
+"@polkadot-cloud/core@^1.0.42", "@polkadot-cloud/core@^1.0.43":
   version "1.0.43"
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.43.tgz#20f2c5ce12b68d6217ec47d3a3046108485d3ea1"
   integrity sha512-Tm2qkFH/B3+dvvE1+MY3xLAVPkTTQI+EUvfW+HLJ820uWME/Tbpi4bjlPTd7mjzPT+RNB9SM/ZboSFimAmaviA==
 
-"@polkadot-cloud/react@^0.1.118":
-  version "0.1.118"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.118.tgz#25975f87e6caea7e40e485474c0db273175ff25d"
-  integrity sha512-9GFIBRn8O2hw+TIBptwVHl/Fml67AqwtKS82u9O+X1YsAN/L2GS4l+sbhNSnIPAM7Tntq/by8dNqF2q0tlhEZA==
+"@polkadot-cloud/react@^0.1.121":
+  version "0.1.121"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.121.tgz#448685352a5fe745ba16a5794af57142c48c0a06"
+  integrity sha512-91vEOoBWKRfh3NfEVrz/29ohQzLWqLDQJH9zggJIVYA2ycx1Q4jhX2bRjUV+f5hOttjbjcwWE0D7C2MxSnSNbg==
   dependencies:
     "@chainsafe/metamask-polkadot-adapter" "^0.5.1"
+    "@chainsafe/metamask-polkadot-types" "^0.6.0"
     "@fortawesome/fontawesome-svg-core" "^6.4.2"
     "@fortawesome/free-brands-svg-icons" "^6.4.2"
     "@fortawesome/free-regular-svg-icons" "^6.4.2"
@@ -615,7 +618,7 @@
     "@fortawesome/react-fontawesome" "^0.2.0"
     "@ledgerhq/hw-transport-webhid" "^6.27.19"
     "@polkadot-cloud/assets" "0.1.34"
-    "@polkadot-cloud/core" "1.0.42"
+    "@polkadot-cloud/core" "^1.0.42"
     "@polkadot-cloud/utils" "^0.0.25"
     "@polkadot/keyring" "^12.5.1"
     "@polkadot/util" "^12.5.1"
