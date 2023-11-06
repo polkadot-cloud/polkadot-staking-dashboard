@@ -63,7 +63,7 @@ export const TransferOptionsProvider = ({
     const ledger = getStashLedger(address);
     const locks = getLocks(address);
 
-    const { free } = balance;
+    const { free, frozen } = balance;
     const { active, total, unlocking } = ledger;
 
     const totalLocked =
@@ -106,7 +106,7 @@ export const TransferOptionsProvider = ({
     // free balance after `total` ledger amount.
     const freeBalance = BigNumber.max(freeMinusReserve.minus(total), 0);
     const transferrableBalance = BigNumber.max(
-      freeBalance.minus(feeReserve).minus(balance.frozen),
+      freeBalance.minus(feeReserve).minus(frozen),
       0
     );
 
