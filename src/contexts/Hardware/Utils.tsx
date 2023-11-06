@@ -11,12 +11,9 @@ import type { LedgerAddress } from './Ledger/types';
 const LedgerErrorsByType = {
   timeout: ['Error: Timeout'],
   nestingNotSupported: ['Error: Call nesting not supported'],
-  outsideActiveChannel: [
-    'Error: TransportError: Invalid channel',
-    'Error: InvalidStateError',
-  ],
+  outsideActiveChannel: ['Error: TransportError: Invalid channel'],
   deviceNotConnected: ['TransportOpenUserCancelled'],
-  deviceBusy: ['Error: Ledger Device is busy'],
+  deviceBusy: ['Error: Ledger Device is busy', 'InvalidStateError'],
   deviceLocked: ['Error: LockedDeviceError'],
   transactionRejected: ['Error: Transaction rejected'],
   appNotOpen: ['Error: Unknown Status Code: 28161'],
