@@ -51,12 +51,9 @@ export const BondFeedback = ({
       : allTransferOptions.transferrableBalance;
 
   // the default bond balance. If we are bonding, subtract tx fees from bond amount.
-  const freeToBond = planckToUnit(
-    !disableTxFeeUpdate
-      ? BigNumber.max(availableBalance.minus(txFees), 0)
-      : availableBalance,
-    units
-  );
+  const freeToBond = !disableTxFeeUpdate
+    ? BigNumber.max(availableBalance.minus(txFees), 0)
+    : availableBalance;
 
   // store errors
   const [errors, setErrors] = useState<string[]>([]);
@@ -182,7 +179,7 @@ export const BondFeedback = ({
           syncing={syncing}
           disabled={bondDisabled}
           setters={setters}
-          freeToBond={freeToBond}
+          freeToBond={planckToUnit(freeToBond, units)}
           disableTxFeeUpdate={disableTxFeeUpdate}
         />
       </div>
