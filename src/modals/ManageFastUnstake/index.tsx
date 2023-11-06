@@ -48,12 +48,11 @@ export const ManageFastUnstake = () => {
   const { checked } = meta;
   const controller = getBondedAccount(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
-  const { nominate, freeBalance } = allTransferOptions;
+  const { nominate, transferrableBalance } = allTransferOptions;
   const { totalUnlockChuncks } = nominate;
 
-  const enoughForDeposit = freeBalance
-    .minus(feeReserve)
-    .isGreaterThanOrEqualTo(fastUnstakeDeposit);
+  const enoughForDeposit =
+    transferrableBalance.isGreaterThanOrEqualTo(fastUnstakeDeposit);
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
@@ -73,7 +72,7 @@ export const ManageFastUnstake = () => {
     totalUnlockChuncks,
     isFastUnstaking,
     fastUnstakeDeposit,
-    freeBalance,
+    transferrableBalance,
     feeReserve,
   ]);
 

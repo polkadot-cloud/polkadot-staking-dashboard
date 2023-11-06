@@ -4,9 +4,13 @@
 
 import { stringToU8a } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
-import type { APIConstants, APIContextInterface } from 'contexts/Api/types';
+import type {
+  APIChainState,
+  APIConstants,
+  APIContextInterface,
+} from 'contexts/Api/types';
 
-export const consts: APIConstants = {
+export const defaultConsts: APIConstants = {
   bondDuration: new BigNumber(0),
   maxNominations: new BigNumber(0),
   sessionsPerEra: new BigNumber(0),
@@ -20,10 +24,18 @@ export const consts: APIConstants = {
   poolsPalletId: stringToU8a('0'),
 };
 
+export const defaultChainState: APIChainState = {
+  chain: null,
+  version: {
+    specVersion: 0,
+  },
+  ss58Prefix: 0,
+};
+
 export const defaultApiContext: APIContextInterface = {
   api: null,
-  consts,
-  chainState: undefined,
+  consts: defaultConsts,
+  chainState: defaultChainState,
   isReady: false,
   apiStatus: 'disconnected',
   isLightClient: false,

@@ -12,6 +12,7 @@ export interface TransferOptionsContextInterface {
 
 export interface TransferOptions {
   freeBalance: BigNumber;
+  transferrableBalance: BigNumber;
   edReserved: BigNumber;
   nominate: {
     active: BigNumber;
@@ -26,7 +27,6 @@ export interface TransferOptions {
     totalUnlocking: BigNumber;
     totalUnlocked: BigNumber;
     totalPossibleBond: BigNumber;
-    totalAdditionalBond: BigNumber;
     totalUnlockChuncks: number;
   };
 }

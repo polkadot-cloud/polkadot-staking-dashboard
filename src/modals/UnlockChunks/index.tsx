@@ -15,6 +15,7 @@ import { Title } from 'library/Modal/Title';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { Forms } from './Forms';
 import { Overview } from './Overview';
 
@@ -28,6 +29,7 @@ export const UnlockChunks = () => {
   const { getStashLedger } = useBalances();
   const { activeAccount } = useActiveAccounts();
   const { getPoolUnlocking } = useActivePools();
+  const { integrityChecked } = useLedgerHardware();
   const { bondFor } = options || {};
 
   // get the unlocking per bondFor
@@ -89,7 +91,14 @@ export const UnlockChunks = () => {
   // resize modal on state change
   useEffect(() => {
     setModalHeight(getModalHeight());
-  }, [task, calculateHeight, notEnoughFunds, sectionRef.current, unlocking]);
+  }, [
+    task,
+    calculateHeight,
+    notEnoughFunds,
+    sectionRef.current,
+    unlocking,
+    integrityChecked,
+  ]);
 
   // resize this modal on window resize
   useEffect(() => {

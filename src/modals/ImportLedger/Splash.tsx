@@ -5,7 +5,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonSecondary } from '@polkadot-cloud/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { useHelp } from 'contexts/Help';
 import { useTheme } from 'contexts/Themes';
 import LedgerLogoSvg from '@polkadot-cloud/assets/extensions/svg/ledger.svg?react';
@@ -13,48 +13,30 @@ import type { AnyFunction } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { SplashWrapper } from './Wrappers';
 
-export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
+export const Splash = ({ onGetAddress }: AnyFunction) => {
   const { t } = useTranslation('modals');
-  const {
-    getStatusCodes,
-    isPaired,
-    getIsExecuting,
-    setIsExecuting,
-    pairDevice,
-    getFeedback,
-  } = useLedgerHardware();
+  const { getStatusCode, getIsExecuting, getFeedback } = useLedgerHardware();
   const { mode } = useTheme();
   const { openHelp } = useHelp();
   const { replaceModal, setModalResize } = useOverlay().modal;
 
-  const statusCodes = getStatusCodes();
+  const statusCode = getStatusCode();
 
   const initFetchAddress = async () => {
-    const paired = await pairDevice();
-    if (paired) {
-      setIsExecuting(true);
-      handleLedgerLoop();
-    }
+    await onGetAddress();
   };
 
   const fallbackMessage = t('checking');
   const feedback = getFeedback();
   const helpKey = feedback?.helpKey;
 
-  // Initialise listeners for Ledger IO.
-  useEffect(() => {
-    if (isPaired !== 'paired') {
-      pairDevice();
-    }
-  }, []);
-
-  // Once the device is paired, start `handleLedgerLoop`.
+  // Automatically fetch first address.
   useEffect(() => {
     initFetchAddress();
-  }, [isPaired]);
+  }, []);
 
-  // Resize modal on new message
-  useEffect(() => setModalResize(), [statusCodes, feedback]);
+  // Resize modal on new message.
+  useEffect(() => setModalResize(), [statusCode, feedback]);
 
   return (
     <>
@@ -96,7 +78,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
               <div className="button">
                 <ButtonSecondary
                   text={
-                    statusCodes[0]?.statusCode === 'DeviceNotConnected'
+                    statusCode?.statusCode === 'DeviceNotConnected'
                       ? t('continue')
                       : t('tryAgain')
                   }

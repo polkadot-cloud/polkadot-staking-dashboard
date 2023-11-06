@@ -45,8 +45,8 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   const txSignatureRef = React.useRef(txSignature);
 
   useEffectIgnoreInitial(() => {
-    const { freeBalance } = getTransferOptions(sender);
-    setNotEnoughFunds(freeBalance.minus(txFees).isLessThan(0));
+    const { transferrableBalance } = getTransferOptions(sender);
+    setNotEnoughFunds(transferrableBalance.minus(txFees).isLessThan(0));
   }, [txFees, sender]);
 
   const resetTxFees = () => {

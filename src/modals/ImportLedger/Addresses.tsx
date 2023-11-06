@@ -5,7 +5,7 @@ import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { ButtonText, HardwareAddress, Polkicon } from '@polkadot-cloud/react';
 import { ellipsisFn, unescape } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import { usePrompt } from 'contexts/Prompt';
 import { Confirm } from 'library/Import/Confirm';
@@ -14,24 +14,23 @@ import { AddressesWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { useLedgerAccounts } from 'contexts/Hardware/Ledger/LedgerAccounts';
 
-export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
+export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {
   const { t } = useTranslation('modals');
   const { network } = useNetwork();
 
-  const {
-    getIsExecuting,
-    ledgerAccountExists,
-    renameLedgerAccount,
-    addLedgerAccount,
-    removeLedgerAccount,
-    setIsExecuting,
-    getLedgerAccount,
-    pairDevice,
-  } = useLedgerHardware();
+  const { getIsExecuting } = useLedgerHardware();
   const isExecuting = getIsExecuting();
   const { openPromptWith } = usePrompt();
   const { renameOtherAccount } = useOtherAccounts();
+  const {
+    ledgerAccountExists,
+    getLedgerAccount,
+    addLedgerAccount,
+    removeLedgerAccount,
+    renameLedgerAccount,
+  } = useLedgerAccounts();
 
   const renameHandler = (address: string, newName: string) => {
     renameLedgerAccount(address, newName);
@@ -95,12 +94,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
             text={isExecuting ? t('gettingAccount') : t('getAnotherAccount')}
             disabled={isExecuting}
             onClick={async () => {
-              // re-pair the device if it has been disconnected.
-              const paired = await pairDevice();
-              if (paired) {
-                setIsExecuting(true);
-                handleLedgerLoop();
-              }
+              await onGetAddress();
             }}
           />
         </div>

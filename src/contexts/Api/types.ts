@@ -5,7 +5,7 @@ import type { ApiPromise } from '@polkadot/api';
 import type { U8aLike } from '@polkadot/util/types';
 import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
-import type { Network, NetworkName } from '../../types';
+import type { AnyJson, Network, NetworkName } from '../../types';
 
 export type ApiStatus = 'connecting' | 'connected' | 'disconnected';
 
@@ -32,13 +32,11 @@ export interface APIConstants {
   poolsPalletId: U8aLike;
 }
 
-export type APIChainState =
-  | {
-      chain: string;
-      version: string;
-      ss58Prefix: number;
-    }
-  | undefined;
+export type APIChainState = {
+  chain: string | null;
+  version: AnyJson;
+  ss58Prefix: number;
+};
 
 export interface APIContextInterface {
   api: ApiPromise | null;

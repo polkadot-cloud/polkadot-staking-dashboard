@@ -13,6 +13,7 @@ export const defaultBondedContext: TransferOptionsContextInterface = {
 
 export const transferOptions: TransferOptions = {
   freeBalance: new BigNumber(0),
+  transferrableBalance: new BigNumber(0),
   edReserved: new BigNumber(0),
   nominate: {
     active: new BigNumber(0),
@@ -27,7 +28,6 @@ export const transferOptions: TransferOptions = {
     totalUnlocking: new BigNumber(0),
     totalUnlocked: new BigNumber(0),
     totalPossibleBond: new BigNumber(0),
-    totalAdditionalBond: new BigNumber(0),
     totalUnlockChuncks: 0,
   },
 };

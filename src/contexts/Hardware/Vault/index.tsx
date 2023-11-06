@@ -5,9 +5,14 @@ import { ellipsisFn, setStateWithRef } from '@polkadot-cloud/utils';
 import React, { useEffect, useRef, useState } from 'react';
 import type { VaultAccount } from '@polkadot-cloud/react/types';
 import { useNetwork } from 'contexts/Network';
-import { getLocalVaultAccounts, isLocalNetworkAddress } from './Utils';
-import { defaultVaultHardwareContext } from './defaults';
+import { getLocalVaultAccounts, isLocalNetworkAddress } from '../Utils';
 import type { VaultHardwareContextInterface } from './types';
+import { defaultVaultHardwareContext } from './defaults';
+
+export const VaultHardwareContext =
+  React.createContext<VaultHardwareContextInterface>(
+    defaultVaultHardwareContext
+  );
 
 export const VaultHardwareProvider = ({
   children,
@@ -145,10 +150,5 @@ export const VaultHardwareProvider = ({
     </VaultHardwareContext.Provider>
   );
 };
-
-export const VaultHardwareContext =
-  React.createContext<VaultHardwareContextInterface>(
-    defaultVaultHardwareContext
-  );
 
 export const useVaultHardware = () => React.useContext(VaultHardwareContext);

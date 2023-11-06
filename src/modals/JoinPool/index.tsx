@@ -46,13 +46,15 @@ export const JoinPool = () => {
 
   const { id: poolId, setActiveTab } = options;
 
-  const { totalPossibleBond, totalAdditionalBond } =
-    getTransferOptions(activeAccount).pool;
+  const {
+    pool: { totalPossibleBond },
+    transferrableBalance,
+  } = getTransferOptions(activeAccount);
 
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' });
 
   // if we are bonding, subtract tx fees from bond amount
-  const freeBondAmount = BigNumber.max(totalAdditionalBond.minus(txFees), 0);
+  const freeBondAmount = BigNumber.max(transferrableBalance.minus(txFees), 0);
 
   // local bond value
   const [bond, setBond] = useState<{ bond: string }>({

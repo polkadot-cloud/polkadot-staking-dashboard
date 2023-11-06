@@ -25,7 +25,7 @@ export const Default = ({
     submitting || !valid || !accountHasSigner(submitAddress) || !txFeesValid;
 
   return (
-    <>
+    <div className="inner">
       <div>
         <EstimatedTxFee />
       </div>
@@ -41,6 +41,6 @@ export const Default = ({
           pulse={!disabled}
         />
       </div>
-    </>
+    </div>
   );
 };

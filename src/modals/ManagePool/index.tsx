@@ -12,6 +12,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Title } from 'library/Modal/Title';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { Forms } from './Forms';
 import { Tasks } from './Tasks';
 
@@ -20,6 +21,7 @@ export const ManagePool = () => {
   const { notEnoughFunds } = useTxMeta();
   const { setModalHeight } = useOverlay().modal;
   const { isOwner, selectedActivePool } = useActivePools();
+  const { integrityChecked } = useLedgerHardware();
 
   // modal task
   const [task, setTask] = useState<string>();
@@ -47,6 +49,7 @@ export const ManagePool = () => {
     }
     setModalHeight(height);
   }, [
+    integrityChecked,
     section,
     task,
     notEnoughFunds,

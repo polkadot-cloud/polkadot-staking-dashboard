@@ -36,7 +36,7 @@ export const AccountButton = ({
   const { setModalStatus } = useOverlay().modal;
   const { units, unit } = useNetwork().networkData;
   const { getTransferOptions } = useTransferOptions();
-  const { freeBalance } = getTransferOptions(address || '');
+  const { transferrableBalance } = getTransferOptions(address || '');
 
   // Accumulate account data.
   const meta = getAccount(address || '');
@@ -125,7 +125,7 @@ export const AccountButton = ({
         </section>
         <section className="foot">
           <span className="balance">
-            {`${t('free')}: ${planckToUnit(freeBalance, units)
+            {`${t('free')}: ${planckToUnit(transferrableBalance, units)
               .decimalPlaces(3)
               .toFormat()} ${unit}`}
           </span>
