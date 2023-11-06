@@ -17,10 +17,12 @@ import {
 } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useNotifications } from 'contexts/Notifications';
+import { useTranslation } from 'react-i18next';
 import { Manage } from './Manage';
 import { Splash } from './Splash';
 
 export const ImportLedger: FC = () => {
+  const { t } = useTranslation('modals');
   const { network } = useNetwork();
   const { setModalResize } = useOverlay().modal;
   const {
@@ -118,10 +120,10 @@ export const ImportLedger: FC = () => {
 
       // trigger notification.
       addNotification({
-        title: 'Ledger Account Fetched',
-        subtitle: `Fetched Ledger Account ${ellipsisFn(
-          newAddress[0].address
-        )}.`,
+        title: t('ledgerAccountFetched'),
+        subtitle: t('ledgerFetchedAccount', {
+          account: ellipsisFn(newAddress[0].address),
+        }),
       });
     }
   };

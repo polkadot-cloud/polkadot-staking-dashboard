@@ -7,6 +7,7 @@ import { useNetwork } from 'contexts/Network';
 import { ellipsisFn, setStateWithRef } from '@polkadot-cloud/utils';
 import type { LedgerAccount } from '@polkadot-cloud/react/types';
 import { useNotifications } from 'contexts/Notifications';
+import { useTranslation } from 'react-i18next';
 import type { LedgerAccountsContextInterface } from './types';
 import { defaultLedgerAccountsContext } from './defaults';
 import {
@@ -26,6 +27,7 @@ export const LedgerAccountsProvider = ({
 }: {
   children: ReactNode;
 }) => {
+  const { t } = useTranslation('modals');
   const { network } = useNetwork();
   const { addNotification } = useNotifications();
 
@@ -76,8 +78,8 @@ export const LedgerAccountsProvider = ({
       );
 
       addNotification({
-        title: 'Ledger Account Imported',
-        subtitle: `Imported Ledger Account ${ellipsisFn(address)}.`,
+        title: t('ledgerAccountImported'),
+        subtitle: t('ledgerImportedAccount', { account: ellipsisFn(address) }),
       });
 
       return account;
@@ -108,8 +110,8 @@ export const LedgerAccountsProvider = ({
 
     if (notify) {
       addNotification({
-        title: 'Ledger Account Removed',
-        subtitle: `Removed Ledger Account ${ellipsisFn(address)}.`,
+        title: t('ledgerAccountRemoved'),
+        subtitle: t('ledgerRemovedAccount', { account: ellipsisFn(address) }),
       });
     }
   };

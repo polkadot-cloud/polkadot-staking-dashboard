@@ -64,7 +64,7 @@ export const Submit = ({
 
   // Determine button text.
   const text = !integrityChecked
-    ? 'Confirm'
+    ? t('confirm')
     : txReady
     ? submitText || ''
     : getIsExecuting()

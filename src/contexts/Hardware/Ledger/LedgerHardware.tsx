@@ -199,8 +199,7 @@ export const LedgerHardwareProvider = ({
       // Occurs when the device is already in use.
       case 'deviceBusy':
         setStatusFeedback({
-          message:
-            'The Ledger device is currently being used by other software.',
+          message: t('ledgerDeviceBusy'),
           code: 'DeviceBusy',
         });
         break;

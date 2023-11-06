@@ -117,11 +117,7 @@ export const Ledger = ({
       {runtimesInconsistent && (
         <div className="inner warning">
           <div>
-            <p className="prompt">
-              The {appName} app on your Ledger device is not configured to the
-              latest runtime metadata, and your transaction may fail. Update
-              your Ledger device to the latest version to prevent this warning.
-            </p>
+            <p className="prompt">{t('ledgerDeviceOutOfDate', { appName })}</p>
           </div>
         </div>
       )}
@@ -142,8 +138,8 @@ export const Ledger = ({
                     {feedback?.message
                       ? feedback.message
                       : !integrityChecked
-                      ? 'Connect your Ledger device and confirm it is connected.'
-                      : `Device verified. ${t('submitTransaction')}`}
+                      ? t('ledgerConnectAndConfirm')
+                      : `${t('deviceVerified')}. ${t('submitTransaction')}`}
                   </>
                 )}
                 {feedback?.helpKey && (
