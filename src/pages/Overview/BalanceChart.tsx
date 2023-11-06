@@ -23,6 +23,7 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useApi } from 'contexts/Api';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
@@ -34,6 +35,7 @@ export const BalanceChart = () => {
     },
   } = useNetwork();
   const prices = usePrices();
+  const { consts } = useApi();
   const { plugins } = usePlugins();
   const { isNetworkSyncing } = useUi();
   const { openModal } = useOverlay().modal;
@@ -48,6 +50,7 @@ export const BalanceChart = () => {
   const unlockingPools = poolBondOpions.totalUnlocking.plus(
     poolBondOpions.totalUnlocked
   );
+  const { existentialDeposit } = consts;
 
   // user's total balance
   const { free, frozen } = balance;
@@ -112,13 +115,18 @@ export const BalanceChart = () => {
     units
   );
   let fundsReserved = planckToUnit(edReserved.plus(feeReserve), units);
+
   const fundsFree = planckToUnit(
     BigNumber.max(
-      allTransferOptions.freeBalance.minus(feeReserve).minus(fundsLocked),
+      allTransferOptions.freeBalance
+        .minus(existentialDeposit)
+        .minus(feeReserve)
+        .minus(fundsLocked),
       0
     ),
     units
   );
+
   // available balance percentages
   const graphLocked = greaterThanZero(fundsLocked)
     ? fundsLocked.dividedBy(graphAvailable.multipliedBy(0.01))
