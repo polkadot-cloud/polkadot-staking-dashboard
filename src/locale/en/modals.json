@@ -132,7 +132,7 @@
     "ledgerAccountRemoved": "Ledger Account Removed",
     "ledgerAccounts_one": "Displaying {{count}} Ledger Account",
     "ledgerAccounts_other": " Displaying {{count}} Ledger Accounts",
-    "ledgerDeviceBusy": "The Ledger device is currently being used by other software.",
+    "ledgerDeviceBusy": "The Ledger device is currently being used by something else.",
     "ledgerFetchedAccount": "Fetched Ledger Account {{account}}",
     "ledgerImportedAccount": "Imported Ledger Account {{account}}",
     "ledgerRemovedAccount": "Removed Ledger Account {{account}}",
