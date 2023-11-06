@@ -49,7 +49,7 @@ export interface BondFeedbackProps {
 }
 
 export interface BondInputProps {
-  freeBalance: BigNumber;
+  freeToBond: BigNumber;
   value: string;
   defaultValue: string;
   syncing?: boolean;

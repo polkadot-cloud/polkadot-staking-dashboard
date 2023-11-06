@@ -45,18 +45,18 @@ export const BondFeedback = ({
   const defaultBondStr = defaultBond ? String(defaultBond) : '';
 
   // get bond options for either staking or pooling.
-  const freeBalanceBn =
+  const availableBalance =
     bondFor === 'nominator'
       ? allTransferOptions.nominate.totalAdditionalBond
-      : allTransferOptions.pool.totalAdditionalBond;
+      : allTransferOptions.transferrableBalance;
 
-  // if we are bonding, subtract tx fees from bond amount
-  const freeBondAmount = !disableTxFeeUpdate
-    ? BigNumber.max(freeBalanceBn.minus(txFees), 0)
-    : freeBalanceBn;
-
-  // the default bond balance
-  const freeBalance = planckToUnit(freeBondAmount, units);
+  // the default bond balance. If we are bonding, subtract tx fees from bond amount.
+  const freeToBond = planckToUnit(
+    !disableTxFeeUpdate
+      ? BigNumber.max(availableBalance.minus(txFees), 0)
+      : availableBalance,
+    units
+  );
 
   // store errors
   const [errors, setErrors] = useState<string[]>([]);
@@ -73,9 +73,7 @@ export const BondFeedback = ({
   const [bondDisabled, setBondDisabled] = useState(false);
 
   // bond minus tx fees if too much
-  const enoughToCoverTxFees = freeBondAmount
-    .minus(bondBn)
-    .isGreaterThan(txFees);
+  const enoughToCoverTxFees = freeToBond.minus(bondBn).isGreaterThan(txFees);
 
   const bondAfterTxFees = enoughToCoverTxFees
     ? bondBn
@@ -96,8 +94,8 @@ export const BondFeedback = ({
   // update max bond after txFee sync
   useEffect(() => {
     if (!disableTxFeeUpdate) {
-      if (bondBn.isGreaterThan(freeBondAmount)) {
-        setBond({ bond: String(freeBalance) });
+      if (bondBn.isGreaterThan(freeToBond)) {
+        setBond({ bond: String(freeToBond) });
       }
     }
   }, [txFees]);
@@ -124,13 +122,13 @@ export const BondFeedback = ({
     const decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
 
     // bond errors
-    if (freeBondAmount.isZero()) {
+    if (freeToBond.isZero()) {
       disabled = true;
       newErrors.push(`${t('noFree', { unit })}`);
     }
 
     // bond amount must not surpass freeBalalance
-    if (bondBn.isGreaterThan(freeBondAmount)) {
+    if (bondBn.isGreaterThan(freeToBond)) {
       newErrors.push(t('moreThanBalance'));
     }
 
@@ -150,7 +148,7 @@ export const BondFeedback = ({
     }
 
     if (inSetup || joiningPool) {
-      if (freeBondAmount.isLessThan(minBondBn)) {
+      if (freeToBond.isLessThan(minBondBn)) {
         disabled = true;
         newErrors.push(`${t('notMeet')} ${minBondUnit} ${unit}.`);
       }
@@ -184,7 +182,7 @@ export const BondFeedback = ({
           syncing={syncing}
           disabled={bondDisabled}
           setters={setters}
-          freeBalance={freeBalance}
+          freeToBond={freeToBond}
           disableTxFeeUpdate={disableTxFeeUpdate}
         />
       </div>

@@ -45,13 +45,13 @@ export const BondedChart = ({
       )
     : new BigNumber(0);
 
-  const freeBalance = free.decimalPlaces(3);
+  const freeToBond = free.decimalPlaces(3);
   const remaining = new BigNumber(100).minus(graphActive).minus(graphUnlocking);
 
   const graphFree = greaterThanZero(remaining)
     ? BigNumber.max(
         remaining,
-        freeBalance.isGreaterThan(MinimumLowerBound) ? MinimumNoNZeroPercent : 0
+        freeToBond.isGreaterThan(MinimumLowerBound) ? MinimumNoNZeroPercent : 0
       )
     : new BigNumber(0);
 
@@ -93,7 +93,7 @@ export const BondedChart = ({
             dataClass="d4"
             widthPercent={Number(graphFree.toFixed(2))}
             flexGrow={0}
-            label={`${freeBalance.toFormat()} ${unit}`}
+            label={`${freeToBond.toFormat()} ${unit}`}
             forceShow={inactive && totalUnlocking.isZero()}
           />
         </Bar>

@@ -14,7 +14,7 @@ export const BondInput = ({
   setters = [],
   disabled,
   defaultValue,
-  freeBalance,
+  freeToBond,
   disableTxFeeUpdate = false,
   value = '0',
   syncing = false,
@@ -62,7 +62,7 @@ export const BondInput = ({
   // available funds as jsx.
   const availableFundsJsx = (
     <p>
-      {syncing ? '...' : `${freeBalance.toFormat()} ${unit} ${t('available')}`}
+      {syncing ? '...' : `${freeToBond.toFormat()} ${unit} ${t('available')}`}
     </p>
   );
 
@@ -88,10 +88,10 @@ export const BondInput = ({
         <section>
           <ButtonSubmitInvert
             text={t('max')}
-            disabled={disabled || syncing || freeBalance.isZero()}
+            disabled={disabled || syncing || freeToBond.isZero()}
             onClick={() => {
-              setLocalBond(freeBalance.toString());
-              updateParentState(freeBalance.toString());
+              setLocalBond(freeToBond.toString());
+              updateParentState(freeToBond.toString());
             }}
           />
         </section>

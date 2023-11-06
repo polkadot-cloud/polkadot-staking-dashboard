@@ -41,14 +41,16 @@ export const Bond = () => {
   const { bondFor } = options;
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
-  const { nominate, pool } = getTransferOptions(activeAccount);
+  const { nominate, transferrableBalance } = getTransferOptions(activeAccount);
 
-  const freeBalanceBn =
-    bondFor === 'nominator'
+  const freeToBond = planckToUnit(
+    (bondFor === 'nominator'
       ? nominate.totalAdditionalBond
-      : pool.totalAdditionalBond;
+      : transferrableBalance
+    ).minus(feeReserve),
+    units
+  );
 
-  const freeBalance = planckToUnit(freeBalanceBn.minus(feeReserve), units);
   const largestTxFee = useBondGreatestFee({ bondFor });
 
   // calculate any unclaimed pool rewards.
@@ -58,7 +60,7 @@ export const Bond = () => {
 
   // local bond value.
   const [bond, setBond] = useState<{ bond: string }>({
-    bond: freeBalance.toString(),
+    bond: freeToBond.toString(),
   });
 
   // bond valid.
@@ -68,7 +70,7 @@ export const Bond = () => {
   const [feedbackErrors, setFeedbackErrors] = useState<string[]>([]);
 
   // bond minus tx fees.
-  const enoughToCoverTxFees: boolean = freeBalance
+  const enoughToCoverTxFees: boolean = freeToBond
     .minus(bond.bond)
     .isGreaterThan(planckToUnit(largestTxFee, units));
 
@@ -86,8 +88,8 @@ export const Bond = () => {
 
   // update bond value on task change.
   useEffect(() => {
-    setBond({ bond: freeBalance.toString() });
-  }, [freeBalance.toString()]);
+    setBond({ bond: freeToBond.toString() });
+  }, [freeToBond.toString()]);
 
   // determine whether this is a pool or staking transaction.
   const determineTx = (bondToSubmit: BigNumber) => {
