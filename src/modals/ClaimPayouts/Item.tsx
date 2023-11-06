@@ -33,7 +33,7 @@ export const Item = ({
         <section>
           <h4>
             <span>
-              Era {era}: {numPayouts}
+              Era {era}:{' '}
               {t('pendingPayout', {
                 count: numPayouts,
               })}
