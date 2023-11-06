@@ -12,7 +12,7 @@ export const SearchInput = ({
   <SearchInputWrapper>
     <input
       type="text"
-      className="search searchbox"
+      className="search"
       placeholder={placeholder}
       onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
     />
