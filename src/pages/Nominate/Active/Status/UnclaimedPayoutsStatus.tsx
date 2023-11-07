@@ -58,6 +58,7 @@ export const UnclaimedPayoutsStatus = () => {
                     size: 'sm',
                     options: {
                       disableWindowResize: true,
+                      disableScroll: true,
                     },
                   }),
               },

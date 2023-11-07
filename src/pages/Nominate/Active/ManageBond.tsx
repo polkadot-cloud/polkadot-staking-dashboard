@@ -111,7 +111,11 @@ export const ManageBond = () => {
             onClick={() =>
               openModal({
                 key: 'UnlockChunks',
-                options: { bondFor: 'nominator', disableWindowResize: true },
+                options: {
+                  bondFor: 'nominator',
+                  disableWindowResize: true,
+                  disableScroll: true,
+                },
                 size: 'sm',
               })
             }

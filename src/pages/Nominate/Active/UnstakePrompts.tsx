@@ -83,6 +83,7 @@ export const UnstakePrompts = () => {
                           bondFor: 'nominator',
                           poolClosure: true,
                           disableWindowResize: true,
+                          disableScroll: true,
                         },
                         size: 'sm',
                       })

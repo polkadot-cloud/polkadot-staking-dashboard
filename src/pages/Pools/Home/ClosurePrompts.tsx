@@ -95,6 +95,7 @@ export const ClosurePrompts = () => {
                         bondFor: 'pool',
                         poolClosure: true,
                         disableWindowResize: true,
+                        disableScroll: true,
                       },
                       size: 'sm',
                     })
