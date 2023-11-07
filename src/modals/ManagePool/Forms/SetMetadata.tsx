@@ -3,7 +3,11 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { ButtonSubmitInvert, ModalWarnings } from '@polkadot-cloud/react';
+import {
+  ButtonSubmitInvert,
+  ModalPadding,
+  ModalWarnings,
+} from '@polkadot-cloud/react';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -80,7 +84,7 @@ export const SetMetadata = ({ setSection, section }: any) => {
 
   return (
     <>
-      <div className="padding">
+      <ModalPadding horizontalOnly>
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
             {warnings.map((text, i) => (
@@ -99,7 +103,7 @@ export const SetMetadata = ({ setSection, section }: any) => {
           value={metadata ?? ''}
         />
         <p>{t('storedOnChain')}</p>
-      </div>
+      </ModalPadding>
       <SubmitTx
         valid={valid}
         buttons={[

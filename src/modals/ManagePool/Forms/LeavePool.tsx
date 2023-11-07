@@ -5,6 +5,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import {
   ActionItem,
   ButtonSubmitInvert,
+  ModalPadding,
   ModalWarnings,
 } from '@polkadot-cloud/react';
 import {
@@ -118,7 +119,7 @@ export const LeavePool = ({ setSection }: any) => {
 
   return (
     <>
-      <div className="padding">
+      <ModalPadding horizontalOnly>
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
             {warnings.map((text, i) => (
@@ -133,7 +134,7 @@ export const LeavePool = ({ setSection }: any) => {
           valueKey="bondDurationFormatted"
           deps={[bondDuration]}
         />
-      </div>
+      </ModalPadding>
       <SubmitTx
         valid={bondValid}
         buttons={[

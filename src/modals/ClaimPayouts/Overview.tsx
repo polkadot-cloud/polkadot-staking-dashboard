@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ModalNotes } from '@polkadot-cloud/react';
+import { ModalNotes, ModalPadding } from '@polkadot-cloud/react';
 import type { Ref } from 'react';
 import { Fragment, forwardRef } from 'react';
 import { usePayouts } from 'contexts/Payouts';
@@ -18,7 +18,7 @@ export const Overview = forwardRef(
 
     return (
       <ContentWrapper>
-        <div className="padding" ref={ref}>
+        <ModalPadding horizontalOnly ref={ref}>
           {Object.entries(unclaimedPayouts || {}).map(
             ([era, unclaimedPayout], i) =>
               getTotalPayout(unclaimedPayout).isZero() ? (
@@ -37,7 +37,7 @@ export const Overview = forwardRef(
             <p>{t('claimsOnBehalf')}</p>
             <p>{t('notToClaim')}</p>
           </ModalNotes>
-        </div>
+        </ModalPadding>
       </ContentWrapper>
     );
   }

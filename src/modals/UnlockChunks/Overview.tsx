@@ -3,7 +3,7 @@
 
 import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonSubmit, ModalNotes } from '@polkadot-cloud/react';
+import { ButtonSubmit, ModalNotes, ModalPadding } from '@polkadot-cloud/react';
 import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { getUnixTime } from 'date-fns';
@@ -62,7 +62,7 @@ export const Overview = forwardRef(
 
     return (
       <ContentWrapper>
-        <div className="padding" ref={ref}>
+        <ModalPadding horizontalOnly ref={ref}>
           <StatsWrapper>
             <StatWrapper>
               <div className="inner">
@@ -140,7 +140,7 @@ export const Overview = forwardRef(
             <p> {isStaking ? ` ${t('rebondUnlock')}` : null}</p>
             {!isStaking ? <p>{t('unlockChunk')}</p> : null}
           </ModalNotes>
-        </div>
+        </ModalPadding>
       </ContentWrapper>
     );
   }

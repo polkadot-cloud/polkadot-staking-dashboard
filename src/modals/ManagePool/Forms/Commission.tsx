@@ -6,6 +6,7 @@ import {
   ActionItem,
   ButtonHelp,
   ButtonSubmitInvert,
+  ModalPadding,
   ModalWarnings,
 } from '@polkadot-cloud/react';
 import { rmCommas } from '@polkadot-cloud/utils';
@@ -448,7 +449,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
 
   return (
     <>
-      <div className="padding">
+      <ModalPadding horizontalOnly>
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
             {warnings.map((text, i) => (
@@ -634,7 +635,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
             </p>
           </SliderWrapper>
         )}
-      </div>
+      </ModalPadding>
       <SubmitTx
         valid={valid}
         buttons={[
