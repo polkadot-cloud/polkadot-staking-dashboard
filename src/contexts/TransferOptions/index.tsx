@@ -124,10 +124,7 @@ export const TransferOptionsProvider = ({
         active: membership?.balance || new BigNumber(0),
         totalUnlocking: totalUnlockingPool,
         totalUnlocked: totalUnlockedPool,
-        totalPossibleBond: BigNumber.max(
-          freeMinusReserve.minus(maxLock),
-          new BigNumber(0)
-        ),
+        totalPossibleBond: BigNumber.max(freeMinusReserve.minus(maxLock), 0),
         totalUnlockChuncks: unlockingPool.length,
       };
     };
