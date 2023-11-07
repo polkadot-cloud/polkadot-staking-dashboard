@@ -64,7 +64,7 @@
     "@ledgerhq/logs": "^6.10.1",
     "@types/chroma-js": "^2.4.0",
     "@types/lodash.throttle": "^4.1.7",
-    "@types/react": "^18.2.36",
+    "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.14",
     "@types/react-helmet": "^6.1.8",
     "@types/react-qr-reader": "^2.1.6",
