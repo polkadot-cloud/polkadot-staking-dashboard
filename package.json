@@ -65,7 +65,7 @@
     "@types/chroma-js": "^2.4.0",
     "@types/lodash.throttle": "^4.1.7",
     "@types/react": "^18.2.37",
-    "@types/react-dom": "^18.2.14",
+    "@types/react-dom": "^18.2.15",
     "@types/react-helmet": "^6.1.9",
     "@types/react-qr-reader": "^2.1.6",
     "@types/react-scroll": "^1.8.9",
