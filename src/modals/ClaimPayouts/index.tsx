@@ -88,17 +88,21 @@ export const ClaimPayouts = () => {
           },
         }}
       >
-        <Overview
-          setSection={setSection}
-          setPayouts={setPayouts}
-          ref={overviewRef}
-        />
-        <Forms
-          ref={formsRef}
-          payouts={payouts}
-          setPayouts={setPayouts}
-          setSection={setSection}
-        />
+        <div className="section">
+          <Overview
+            setSection={setSection}
+            setPayouts={setPayouts}
+            ref={overviewRef}
+          />
+        </div>
+        <div className="section">
+          <Forms
+            ref={formsRef}
+            payouts={payouts}
+            setPayouts={setPayouts}
+            setSection={setSection}
+          />
+        </div>
       </ModalMotionTwoSection>
     </ModalSection>
   );

@@ -133,21 +133,25 @@ export const UnlockChunks = () => {
           },
         }}
       >
-        <Overview
-          unlocking={unlocking}
-          bondFor={bondFor}
-          setSection={setSection}
-          setUnlock={setUnlock}
-          setTask={setTask}
-          ref={overviewRef}
-        />
-        <Forms
-          incrementCalculateHeight={incrementCalculateHeight}
-          setSection={setSection}
-          unlock={unlock}
-          task={task}
-          ref={formsRef}
-        />
+        <div className="section">
+          <Overview
+            unlocking={unlocking}
+            bondFor={bondFor}
+            setSection={setSection}
+            setUnlock={setUnlock}
+            setTask={setTask}
+            ref={overviewRef}
+          />
+        </div>
+        <div className="section">
+          <Forms
+            incrementCalculateHeight={incrementCalculateHeight}
+            setSection={setSection}
+            unlock={unlock}
+            task={task}
+            ref={formsRef}
+          />
+        </div>
       </ModalMotionTwoSection>
     </ModalSection>
   );
