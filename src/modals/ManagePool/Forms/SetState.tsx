@@ -5,6 +5,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import {
   ActionItem,
   ButtonSubmitInvert,
+  ModalPadding,
   ModalWarnings,
 } from '@polkadot-cloud/react';
 import { useEffect, useState } from 'react';
@@ -129,7 +130,7 @@ export const SetState = ({ setSection, task }: any) => {
 
   return (
     <>
-      <div className="padding">
+      <ModalPadding horizontalOnly>
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
             {warnings.map((text, i) => (
@@ -139,7 +140,7 @@ export const SetState = ({ setSection, task }: any) => {
         ) : null}
         {content.title}
         {content.message}
-      </div>
+      </ModalPadding>
       <SubmitTx
         valid={valid}
         buttons={[

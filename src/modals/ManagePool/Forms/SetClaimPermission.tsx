@@ -2,7 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSubmitInvert, ModalWarnings } from '@polkadot-cloud/react';
+import {
+  ButtonSubmitInvert,
+  ModalPadding,
+  ModalWarnings,
+} from '@polkadot-cloud/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -72,7 +76,7 @@ export const SetClaimPermission = ({ setSection, section }: any) => {
 
   return (
     <>
-      <div className="padding">
+      <ModalPadding horizontalOnly>
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
             {warnings.map((text, i) => (
@@ -90,7 +94,7 @@ export const SetClaimPermission = ({ setSection, section }: any) => {
             setClaimPermission(val);
           }}
         />
-      </div>
+      </ModalPadding>
       <SubmitTx
         valid={valid && claimPermission !== membership?.claimPermission}
         buttons={[

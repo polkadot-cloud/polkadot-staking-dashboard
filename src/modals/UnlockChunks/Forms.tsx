@@ -5,6 +5,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import {
   ActionItem,
   ButtonSubmitInvert,
+  ModalPadding,
   ModalWarnings,
 } from '@polkadot-cloud/react';
 import { planckToUnit, rmCommas } from '@polkadot-cloud/utils';
@@ -125,7 +126,7 @@ export const Forms = forwardRef(
     return (
       <ContentWrapper>
         <div ref={ref}>
-          <div className="padding">
+          <ModalPadding horizontalOnly>
             {warnings.length > 0 ? (
               <ModalWarnings withMargin>
                 {warnings.map((text, i) => (
@@ -157,7 +158,7 @@ export const Forms = forwardRef(
                 </>
               )}
             </div>
-          </div>
+          </ModalPadding>
           <SubmitTx
             fromController={isStaking}
             valid={valid}

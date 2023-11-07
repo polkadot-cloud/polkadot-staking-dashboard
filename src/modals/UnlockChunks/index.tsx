@@ -24,6 +24,7 @@ export const UnlockChunks = () => {
   const {
     config: { options },
     setModalHeight,
+    modalMaxHeight,
   } = useOverlay().modal;
   const { notEnoughFunds } = useTxMeta();
   const { getStashLedger } = useBalances();
@@ -114,6 +115,9 @@ export const UnlockChunks = () => {
         <Title title={t('unlocks')} fixed />
       </ModalFixedTitle>
       <ModalMotionTwoSection
+        style={{
+          maxHeight: modalMaxHeight - (headerRef.current?.clientHeight || 0),
+        }}
         animate={sectionRef.current === 0 ? 'home' : 'next'}
         transition={{
           duration: 0.5,
