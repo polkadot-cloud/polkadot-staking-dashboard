@@ -68,7 +68,7 @@
     "@types/react-dom": "^18.2.15",
     "@types/react-helmet": "^6.1.9",
     "@types/react-qr-reader": "^2.1.7",
-    "@types/react-scroll": "^1.8.9",
+    "@types/react-scroll": "^1.8.10",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
     "@vitejs/plugin-react-swc": "^3.4.0",
