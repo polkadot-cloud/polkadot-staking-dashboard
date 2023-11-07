@@ -22,13 +22,13 @@ export const defaultTransferOptions: TransferOptions = {
     totalUnlocked: new BigNumber(0),
     totalPossibleBond: new BigNumber(0),
     totalAdditionalBond: new BigNumber(0),
-    totalUnlockChuncks: 0,
+    totalUnlockChunks: 0,
   },
   pool: {
     active: new BigNumber(0),
     totalUnlocking: new BigNumber(0),
     totalUnlocked: new BigNumber(0),
     totalPossibleBond: new BigNumber(0),
-    totalUnlockChuncks: 0,
+    totalUnlockChunks: 0,
   },
 };

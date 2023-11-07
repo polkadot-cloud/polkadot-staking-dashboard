@@ -108,7 +108,7 @@ export const TransferOptionsProvider = ({
         totalUnlocked,
         totalPossibleBond,
         totalAdditionalBond: BigNumber.max(totalPossibleBond.minus(active), 0),
-        totalUnlockChuncks: unlocking.length,
+        totalUnlockChunks: unlocking.length,
       };
     };
 
@@ -125,7 +125,7 @@ export const TransferOptionsProvider = ({
         totalUnlocking: totalUnlockingPool,
         totalUnlocked: totalUnlockedPool,
         totalPossibleBond: BigNumber.max(freeMinusReserve.minus(maxLock), 0),
-        totalUnlockChuncks: unlockingPool.length,
+        totalUnlockChunks: unlockingPool.length,
       };
     };
 

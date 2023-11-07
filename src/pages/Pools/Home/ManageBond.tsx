@@ -40,7 +40,7 @@ export const ManageBond = () => {
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const {
-    pool: { active, totalUnlocking, totalUnlocked, totalUnlockChuncks },
+    pool: { active, totalUnlocking, totalUnlocked, totalUnlockChunks },
     transferrableBalance,
   } = allTransferOptions;
 
@@ -109,7 +109,7 @@ export const ManageBond = () => {
                 size: 'sm',
               })
             }
-            text={String(totalUnlockChuncks ?? 0)}
+            text={String(totalUnlockChunks ?? 0)}
           />
         </ButtonRow>
       </CardHeaderWrapper>
