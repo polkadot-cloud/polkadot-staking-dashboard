@@ -21,13 +21,13 @@ export interface TransferOptions {
     totalUnlocked: BigNumber;
     totalPossibleBond: BigNumber;
     totalAdditionalBond: BigNumber;
-    totalUnlockChuncks: number;
+    totalUnlockChunks: number;
   };
   pool: {
     active: BigNumber;
     totalUnlocking: BigNumber;
     totalUnlocked: BigNumber;
     totalPossibleBond: BigNumber;
-    totalUnlockChuncks: number;
+    totalUnlockChunks: number;
   };
 }

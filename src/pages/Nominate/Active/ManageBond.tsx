@@ -46,7 +46,7 @@ export const ManageBond = () => {
   const allTransferOptions = getTransferOptions(activeAccount);
 
   const { freeBalance, edReserved } = allTransferOptions;
-  const { totalUnlocking, totalUnlocked, totalUnlockChuncks } =
+  const { totalUnlocking, totalUnlocked, totalUnlockChunks } =
     allTransferOptions.nominate;
   const totalFree = BigNumber.max(
     0,
@@ -115,7 +115,7 @@ export const ManageBond = () => {
                 size: 'sm',
               })
             }
-            text={String(totalUnlockChuncks ?? 0)}
+            text={String(totalUnlockChunks ?? 0)}
           />
         </ButtonRow>
       </CardHeaderWrapper>

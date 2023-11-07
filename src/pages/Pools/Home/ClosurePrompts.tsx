@@ -27,7 +27,7 @@ export const ClosurePrompts = () => {
   const { getTransferOptions } = useTransferOptions();
 
   const { state, memberCounter } = selectedActivePool?.bondedPool || {};
-  const { active, totalUnlockChuncks } = getTransferOptions(activeAccount).pool;
+  const { active, totalUnlockChunks } = getTransferOptions(activeAccount).pool;
   const targets = poolNominations?.targets ?? [];
   const annuncementBorderColor = colors.secondary[mode];
 
@@ -43,7 +43,7 @@ export const ClosurePrompts = () => {
 
   // depositor can withdraw & close pool
   const depositorCanWithdraw =
-    active.toNumber() === 0 && totalUnlockChuncks === 0 && !targets.length;
+    active.toNumber() === 0 && totalUnlockChunks === 0 && !targets.length;
 
   return (
     <>
@@ -85,7 +85,7 @@ export const ClosurePrompts = () => {
                   text={
                     depositorCanWithdraw
                       ? t('pools.unlocked')
-                      : String(totalUnlockChuncks ?? 0)
+                      : String(totalUnlockChunks ?? 0)
                   }
                   disabled={isPoolSyncing || !isBonding()}
                   onClick={() =>

@@ -49,7 +49,7 @@ export const ManageFastUnstake = () => {
   const controller = getBondedAccount(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
   const { nominate, transferrableBalance } = allTransferOptions;
-  const { totalUnlockChuncks } = nominate;
+  const { totalUnlockChunks } = nominate;
 
   const enoughForDeposit =
     transferrableBalance.isGreaterThanOrEqualTo(fastUnstakeDeposit);
@@ -63,13 +63,13 @@ export const ManageFastUnstake = () => {
         ((!isFastUnstaking &&
           enoughForDeposit &&
           isExposed === false &&
-          totalUnlockChuncks === 0) ||
+          totalUnlockChunks === 0) ||
           isFastUnstaking)
     );
   }, [
     isExposed,
     fastUnstakeErasToCheckPerBlock,
-    totalUnlockChuncks,
+    totalUnlockChunks,
     isFastUnstaking,
     fastUnstakeDeposit,
     transferrableBalance,
@@ -122,10 +122,10 @@ export const ManageFastUnstake = () => {
       );
     }
 
-    if (totalUnlockChuncks > 0) {
+    if (totalUnlockChunks > 0) {
       warnings.push(
         `${t('fastUnstakeWarningUnlocksActive', {
-          count: totalUnlockChuncks,
+          count: totalUnlockChunks,
         })} ${t('fastUnstakeWarningUnlocksActiveMore')}`
       );
     }
