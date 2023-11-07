@@ -12,7 +12,6 @@ import type { MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import * as defaults from './defaults';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';
 import {
   getLargestLock,
@@ -21,10 +20,14 @@ import {
   getUnlocking,
   setLocalFeeReserve,
 } from './Utils';
+import {
+  defaultTransferOptions,
+  defaultTransferOptionsContext,
+} from './defaults';
 
 export const TransferOptionsContext =
   React.createContext<TransferOptionsContextInterface>(
-    defaults.defaultBondedContext
+    defaultTransferOptionsContext
   );
 
 export const useTransferOptions = () =>
@@ -54,7 +57,7 @@ export const TransferOptionsProvider = ({
 
   // Get the bond and unbond amounts available to the user
   const getTransferOptions = (address: MaybeAddress): TransferOptions => {
-    if (getAccount(address) === null) return defaults.transferOptions;
+    if (getAccount(address) === null) return defaultTransferOptions;
 
     const { free, frozen } = getBalance(address);
     const { active, total, unlocking } = getStashLedger(address);
