@@ -44,6 +44,8 @@ export const LedgerAccountsProvider = ({
     );
 
   // Adds a ledger address to the list of fetched addresses.
+  // TODO: move to ImportedAccounts to check all imported accounts, not just `otherAccounts`.
+  // TODO: explore a way to prevent account import if account is already imported.
   const addLedgerAccount = (address: string, index: number) => {
     let newLedgerAccounts = getLocalLedgerAccounts();
 

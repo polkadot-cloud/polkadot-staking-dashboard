@@ -138,6 +138,8 @@ export const OtherAccountsProvider = ({
   };
 
   // Adds an external account (non-wallet) to accounts.
+  // TODO: move to ImportedAccounts to check all imported accounts, not just `otherAccounts`.
+  // TODO: add UI error for when an account is already imported.
   const addExternalAccount = (address: string, addedBy: string) => {
     // ensure account is formatted correctly
     const keyring = new Keyring();
@@ -160,6 +162,7 @@ export const OtherAccountsProvider = ({
 
     // check that address is not sitting in imported accounts (currently cannot check which
     // network).
+    // TODO: needs to check all imported accounts.
     const existsImported = otherAccountsRef.current.find(
       (a) => a.address === address
     );
