@@ -27,7 +27,7 @@ export const getLocked = (locks: BalanceLock[]) =>
   new BigNumber(0);
 
 // Gets the largest lock balance, dictating the total amount of unavailable funds from locks.
-export const getLargestLock = (locks: BalanceLock[]) =>
+export const getMaxLock = (locks: BalanceLock[]) =>
   locks.reduce(
     (prev, current) => {
       return prev.amount.isGreaterThan(current.amount) ? prev : current;

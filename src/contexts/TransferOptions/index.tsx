@@ -14,9 +14,8 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';
 import {
-  getLargestLock,
+  getMaxLock,
   getLocalFeeReserve,
-  getLocked,
   getUnlocking,
   setLocalFeeReserve,
 } from './Utils';
@@ -62,11 +61,11 @@ export const TransferOptionsProvider = ({
     const { free, frozen } = getBalance(address);
     const { active, total, unlocking } = getStashLedger(address);
     const locks = getLocks(address);
-    const totalLocked = getLocked(locks);
+    const maxLock = getMaxLock(locks);
 
     // Calculate a forced amount of free balance that needs to be reserved to keep the account
     // alive. Deducts `locks` from free balance reserve needed.
-    const edReserved = BigNumber.max(existentialDeposit.minus(totalLocked), 0);
+    const edReserved = BigNumber.max(existentialDeposit.minus(maxLock), 0);
 
     // Total free balance after `edReserved` is subtracted.
     const freeMinusReserve = BigNumber.max(
@@ -93,9 +92,6 @@ export const TransferOptionsProvider = ({
       unlocking,
       activeEra.index
     );
-
-    // The largest balance locked.
-    const maxLock = getLargestLock(locks);
 
     // Free balance to stake after `total` (total staked) ledger amount.
     const freeBalance = BigNumber.max(freeMinusReserve.minus(total), 0);
