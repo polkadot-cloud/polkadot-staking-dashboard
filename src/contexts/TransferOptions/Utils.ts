@@ -58,13 +58,11 @@ export const setLocalFeeReserve = (
     const newReserves = JSON.parse(
       localStorage.getItem('reserve_balances') ?? '{}'
     );
-    const newReservesNetwork = newReserves?.[network] ?? {};
-    newReservesNetwork[address] = amount.toString();
-
-    newReserves[network] = newReservesNetwork;
+    const networkReserves = newReserves?.[network] ?? {};
+    networkReserves[address] = amount.toString();
+    newReserves[network] = networkReserves;
     localStorage.setItem('reserve_balances', JSON.stringify(newReserves));
   } catch (e) {
-    // corrupted local storage record - remove it.
     localStorage.removeItem('reserve_balances');
   }
 };
