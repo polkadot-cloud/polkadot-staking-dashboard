@@ -79,9 +79,7 @@ export const calculateDailyPayouts = (
     const thisDay = startOfDay(fromUnixTime(payout.block_timestamp));
 
     // initialise current day if first payout.
-    if (p === 1) {
-      curDay = thisDay;
-    }
+    if (p === 1) curDay = thisDay;
 
     // handle surpassed maximum days.
     if (daysPassed(thisDay, fromDate) >= maxDays) {
@@ -93,7 +91,7 @@ export const calculateDailyPayouts = (
       break;
     }
 
-    // get day difference between cursor and currentpayout.
+    // get day difference between cursor and current payout.
     const daysDiff = daysPassed(thisDay, curDay);
 
     // handle new day.
@@ -119,8 +117,11 @@ export const calculateDailyPayouts = (
       curPayout.amount = curPayout.amount.plus(payout.amount);
     }
 
-    // if only 1 payout exists, exit early here.
-    if (payouts.length === 1) {
+    // if only 1 payout exists, or at the last unresolved payout, exit here.
+    if (
+      payouts.length === 1 ||
+      (p === payouts.length && !curPayout.amount.isZero())
+    ) {
       dailyPayouts.push({
         amount: planckToUnit(curPayout.amount, units),
         event_id: getEventId(curPayout),
