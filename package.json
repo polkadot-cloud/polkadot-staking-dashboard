@@ -24,7 +24,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@ledgerhq/hw-transport-webhid": "^6.27.19",
+    "@ledgerhq/hw-transport-webhid": "^6.27.20",
     "@polkadot-cloud/assets": "^0.1.34",
     "@polkadot-cloud/core": "^1.0.45",
     "@polkadot-cloud/react": "^0.1.124",
