@@ -701,10 +701,10 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.45.tgz#7617e7803f64a4c933fa2b63038acfc9f8f9597d"
   integrity sha512-rtVQlaVnvqHiMW4CreowspZG+JXZQYMLjMXY3i9vRRnBcVa09D7ahNRbj6RixmUSSNADtQJS9AaQNMz6nJuyAQ==
 
-"@polkadot-cloud/react@^0.1.124":
-  version "0.1.124"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.124.tgz#226481881a6e01a018392cfbf243a860fa3f5d79"
-  integrity sha512-OkcVuNblLqLmQANOcVnut7mkVFc6yjC0DzAYkW6vdNP+XF5vnS86ahoR56YoW0GKhJXlXBqR0L5tjQuUqVG+OQ==
+"@polkadot-cloud/react@^0.1.125":
+  version "0.1.125"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.125.tgz#3db8dcbc68c0469fdfaf637c8a408c0ceba87cb3"
+  integrity sha512-IPA2O1kucpVtSJ4oSp9iZxeFZgxnN7hmaTWxuw60hsbApnvs3bIu2JeRbSEe+mucRH4pS3ZRLAJeXTUG5rgKMg==
   dependencies:
     "@chainsafe/metamask-polkadot-adapter" "^0.5.1"
     "@chainsafe/metamask-polkadot-types" "^0.6.0"
