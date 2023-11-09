@@ -241,7 +241,6 @@ const processPayouts = (
   const normalised = normalisePayouts(payouts);
   // calculate payouts per day from the current day.
   let p = calculateDailyPayouts(normalised, fromDate, days, units, subject);
-
   // pre-fill payouts if max days have not been reached.
   p = p.concat(prefillMissingDays(p, fromDate, days));
   // fill in gap days between payouts with zero values.
