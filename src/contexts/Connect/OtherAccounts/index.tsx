@@ -164,8 +164,11 @@ export const OtherAccountsProvider = ({
       (a) => a.address === address
     );
 
+    // determine whether the account is newly added.
+    const isNew = !existsLocal && !existsImported;
+
     // add external account if not there already.
-    if (!existsLocal && !existsImported) {
+    if (isNew) {
       localStorage.setItem(
         'external_accounts',
         JSON.stringify(localExternalAccounts.concat(newAccount))
@@ -173,7 +176,11 @@ export const OtherAccountsProvider = ({
 
       // add external account to imported accounts
       addOtherAccounts([newAccount]);
-    } else if (existsLocal && existsLocal.addedBy !== 'system') {
+    } else if (
+      existsLocal &&
+      addedBy === 'system' &&
+      existsLocal.addedBy !== 'system'
+    ) {
       // the external account needs to change to `system` so it cannot be removed. This will replace
       // the whole entry.
       localStorage.setItem(
@@ -184,6 +191,7 @@ export const OtherAccountsProvider = ({
           )
         )
       );
+
       // re-sync account state.
       setStateWithRef(
         [...otherAccountsRef.current].map((item) =>
