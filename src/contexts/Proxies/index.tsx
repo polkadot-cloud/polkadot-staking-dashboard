@@ -20,7 +20,6 @@ import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import * as defaults from './defaults';
 import type {
   Delegates,
@@ -38,8 +37,7 @@ export const ProxiesProvider = ({
 }) => {
   const { network } = useNetwork();
   const { api, isReady } = useApi();
-  const { accounts } = useImportedAccounts();
-  const { addExternalAccount } = useOtherAccounts();
+  const { accounts, importAccount } = useImportedAccounts();
   const { activeProxy, setActiveProxy, activeAccount } = useActiveAccounts();
 
   // store the proxy accounts of each imported account.
@@ -59,7 +57,7 @@ export const ProxiesProvider = ({
         // if delegates still exist for removed account, re-add the account as a read only system
         // account.
         if (delegatesRef.current[address]) {
-          addExternalAccount(address, 'system');
+          importAccount('external', address, { addedBy: 'system' });
         } else {
           const unsub = unsubs.current[address];
           if (unsub) unsub();
@@ -192,9 +190,8 @@ export const ProxiesProvider = ({
       try {
         const { address, proxyType } = JSON.parse(localActiveProxy);
         // Add proxy address as external account if not imported.
-        if (!accounts.find((a) => a.address === address)) {
-          addExternalAccount(address, 'system');
-        }
+        if (!accounts.find((a) => a.address === address))
+          importAccount('external', address, { addedBy: 'system' });
 
         const isActive = (
           proxiesRef.current.find(
@@ -271,9 +268,8 @@ export const ProxiesProvider = ({
         addDelegatorAsExternal = true;
       }
     }
-    if (addDelegatorAsExternal) {
-      addExternalAccount(delegator, 'system');
-    }
+    if (addDelegatorAsExternal)
+      importAccount('external', delegator, { addedBy: 'system' });
 
     return [];
   };

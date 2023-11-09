@@ -1,3 +1,4 @@
+import type { AccountSource } from 'contexts/Connect/ImportedAccounts/types';
 import type { FunctionComponent, SVGProps } from 'react';
 import type { AnyFunction } from 'types';
 
@@ -27,6 +28,7 @@ export interface AddressProps {
 export interface ConfirmProps {
   address: string;
   index: number;
+  source: AccountSource;
   addHandler: AnyFunction;
 }
 

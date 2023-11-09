@@ -16,7 +16,6 @@ import type { AnyApi, MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { getLedger } from './Utils';
 import * as defaults from './defaults';
 import type {
@@ -38,8 +37,7 @@ export const BalancesProvider = ({
   const { api, isReady } = useApi();
   const { network } = useNetwork();
   const { accounts } = useImportedAccounts();
-  const { getAccount } = useImportedAccounts();
-  const { addExternalAccount } = useOtherAccounts();
+  const { getAccount, importAccount } = useImportedAccounts();
 
   const [balances, setBalances] = useState<Balances[]>([]);
   const balancesRef = useRef(balances);
@@ -102,7 +100,9 @@ export const BalancesProvider = ({
 
             // add stash as external account if not present
             if (!getAccount(stash.toString())) {
-              addExternalAccount(stash.toString(), 'system');
+              importAccount('external', stash.toString(), {
+                addedBy: 'system',
+              });
             }
 
             setStateWithRef(

@@ -22,6 +22,7 @@ import { AddressesWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Reader } from './Reader';
 
 export const ImportVault = () => {
@@ -29,12 +30,11 @@ export const ImportVault = () => {
   const { replaceModal } = useOverlay().modal;
   const { renameOtherAccount } = useOtherAccounts();
   const { openPromptWith, status: promptStatus } = usePrompt();
-
+  const { importAccount } = useImportedAccounts();
   const {
     vaultAccounts,
     vaultAccountExists,
     renameVaultAccount,
-    addVaultAccount,
     removeVaultAccount,
     getVaultAccount,
   } = useVaultHardware();
@@ -47,7 +47,12 @@ export const ImportVault = () => {
 
   const openConfirmHandler = (address: string, index: number) => {
     openPromptWith(
-      <Confirm address={address} index={index} addHandler={addVaultAccount} />,
+      <Confirm
+        address={address}
+        source="vault"
+        index={index}
+        addHandler={importAccount}
+      />,
       'small'
     );
   };

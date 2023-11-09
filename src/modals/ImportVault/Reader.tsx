@@ -12,6 +12,7 @@ import { QrScanSignature } from 'library/QRCode/ScanSignature';
 import { useNetwork } from 'contexts/Network';
 import { formatAccountSs58 } from 'contexts/Connect/Utils';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const Reader = () => {
   const { t } = useTranslation('modals');
@@ -19,9 +20,9 @@ export const Reader = () => {
     networkData: { ss58 },
   } = useNetwork();
   const { addOtherAccounts } = useOtherAccounts();
+  const { importAccount } = useImportedAccounts();
   const { setStatus: setPromptStatus } = usePrompt();
-  const { addVaultAccount, vaultAccountExists, vaultAccounts } =
-    useVaultHardware();
+  const { vaultAccountExists, vaultAccounts } = useVaultHardware();
 
   // Store data from QR Code scanner.
   const [qrData, setQrData] = useState<any>(undefined);
@@ -46,10 +47,11 @@ export const Reader = () => {
   useEffect(() => {
     // Add account and close overlay if valid.
     if (valid) {
-      const account = addVaultAccount(qrData, vaultAccounts.length);
-      if (account) {
-        addOtherAccounts([account]);
-      }
+      const account = importAccount('vault', qrData, {
+        index: vaultAccounts.length,
+      });
+      if (account) addOtherAccounts([account]);
+
       setPromptStatus(0);
     }
 

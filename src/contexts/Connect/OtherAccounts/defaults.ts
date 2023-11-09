@@ -5,7 +5,7 @@
 import type { OtherAccountsContextInterface } from './types';
 
 export const defaultOtherAccountsContext: OtherAccountsContextInterface = {
-  addExternalAccount: (a, b) => {},
+  addExternalAccount: (a, b) => null,
   addOtherAccounts: (a) => {},
   renameOtherAccount: (a, n) => {},
   importLocalOtherAccounts: (n) => {},

@@ -8,6 +8,7 @@ export const defaultImportedAccountsContext: ImportedAccountsContextInterface =
   {
     accounts: [],
     getAccount: (address) => null,
+    importAccount: (source, address, options) => null,
     isReadOnlyAccount: (address) => false,
     accountHasSigner: (address) => false,
     requiresManualSign: (address) => false,

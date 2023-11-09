@@ -15,6 +15,7 @@ import type { AnyJson } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useLedgerAccounts } from 'contexts/Hardware/Ledger/LedgerAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {
   const { t } = useTranslation('modals');
@@ -24,10 +25,10 @@ export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {
   const isExecuting = getIsExecuting();
   const { openPromptWith } = usePrompt();
   const { renameOtherAccount } = useOtherAccounts();
+  const { importAccount } = useImportedAccounts();
   const {
     ledgerAccountExists,
     getLedgerAccount,
-    addLedgerAccount,
     removeLedgerAccount,
     renameLedgerAccount,
   } = useLedgerAccounts();
@@ -39,7 +40,12 @@ export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {
 
   const openConfirmHandler = (address: string, index: number) => {
     openPromptWith(
-      <Confirm address={address} index={index} addHandler={addLedgerAccount} />,
+      <Confirm
+        address={address}
+        source="ledger"
+        index={index}
+        addHandler={importAccount}
+      />,
       'small'
     );
   };

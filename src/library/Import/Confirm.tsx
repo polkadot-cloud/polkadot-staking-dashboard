@@ -9,7 +9,12 @@ import { ConfirmWrapper } from 'library/Import/Wrappers';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { ConfirmProps } from './types';
 
-export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
+export const Confirm = ({
+  address,
+  index,
+  source,
+  addHandler,
+}: ConfirmProps) => {
   const { t } = useTranslation('modals');
   const { setStatus } = usePrompt();
   const { addOtherAccounts } = useOtherAccounts();
@@ -24,10 +29,8 @@ export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
         <ButtonMono
           text={t('importAccount')}
           onClick={() => {
-            const account = addHandler(address, index);
-            if (account) {
-              addOtherAccounts([account]);
-            }
+            const account = addHandler(source, address, index);
+            if (account) addOtherAccounts([account]);
             setStatus(0);
           }}
         />
