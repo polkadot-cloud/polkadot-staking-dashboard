@@ -44,7 +44,7 @@
     "chroma-js": "^2.4.2",
     "date-fns": "^2.29.3",
     "framer-motion": "^10.16.3",
-    "i18next": "^23.6.0",
+    "i18next": "^23.7.1",
     "i18next-browser-languagedetector": "^7.2.0",
     "lodash.throttle": "^4.1.1",
     "qrcode-generator": "1.4.4",
