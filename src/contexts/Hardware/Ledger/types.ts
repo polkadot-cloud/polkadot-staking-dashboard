@@ -52,6 +52,7 @@ export type LedgerStatusCode =
   | 'SignedPayload'
   | 'DeviceBusy'
   | 'DeviceTimeout'
+  | 'MethodNotSupported'
   | 'NestingNotSupported'
   | 'WrongTransaction'
   | 'DeviceNotConnected'

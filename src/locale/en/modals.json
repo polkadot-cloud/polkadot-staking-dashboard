@@ -146,6 +146,7 @@
     "managePool": "Manage Pool",
     "maxCommission": "Max Commission",
     "maximumCommissionUpdated": "Maximum Commission Updated",
+    "methodNotSupported": "Call method not supported, cannot sign.",
     "minDelayBetweenUpdates": "Min Delay Between Updates",
     "minutes": "Minutes",
     "missingNesting": "Call missing nesting support, cannot sign.",

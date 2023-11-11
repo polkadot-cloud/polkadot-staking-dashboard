@@ -10,6 +10,7 @@ import type { LedgerAddress } from './Ledger/types';
 // Ledger error keyed by type of error.
 const LedgerErrorsByType = {
   timeout: ['Error: Timeout'],
+  methodNotSupported: ['Error: Method not supported'],
   nestingNotSupported: ['Error: Call nesting not supported'],
   outsideActiveChannel: ['Error: TransportError: Invalid channel'],
   deviceNotConnected: ['TransportOpenUserCancelled'],
