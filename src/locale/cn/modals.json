@@ -136,6 +136,7 @@
     "managePool": "管理池",
     "maxCommission": "最高佣金值",
     "maximumCommissionUpdated": "最高佣金值最新值",
+    "methodNotSupported": "调用方法不受支持,无法签署交易",
     "minDelayBetweenUpdates": "更新之间的最小延迟",
     "minutes": "分钟",
     "missingNesting": "该调用缺少内置支持,无法签署交易",

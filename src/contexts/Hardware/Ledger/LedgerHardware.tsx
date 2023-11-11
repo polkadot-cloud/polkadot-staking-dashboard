@@ -174,6 +174,13 @@ export const LedgerHardwareProvider = ({
           code: 'DeviceTimeout',
         });
         break;
+      // Occurs when a method in a all is not supported by the device.
+      case 'methodNotSupported':
+        setStatusFeedback({
+          message: t('methodNotSupported'),
+          code: 'MethodNotSupported',
+        });
+        break;
       // Occurs when one or more of nested calls being signed does not support nesting.
       case 'nestingNotSupported':
         setStatusFeedback({
