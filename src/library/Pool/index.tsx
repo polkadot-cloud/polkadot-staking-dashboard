@@ -126,11 +126,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row top">
-          <PoolIdentity
-            batchKey={batchKey}
-            batchIndex={batchIndex}
-            pool={pool}
-          />
+          <PoolIdentity pool={pool} />
           <div>
             <Labels>
               <FavoritePool address={addresses.stash} />

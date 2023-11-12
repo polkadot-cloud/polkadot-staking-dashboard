@@ -101,7 +101,7 @@ export const NetworkMetricsProvider = ({
 
       // initiate subscription, add to unsubs.
       await Promise.all([subscribeToMetrics(), subscribeToActiveEra()]).then(
-        (u: any) => {
+        (u) => {
           unsubsRef.current = unsubsRef.current.concat(u);
         }
       );

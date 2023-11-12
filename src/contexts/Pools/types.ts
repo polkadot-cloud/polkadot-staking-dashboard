@@ -73,6 +73,7 @@ export interface BondedPoolsContextState {
   replacePoolRoles: (poolId: number, roleEdits: AnyJson) => void;
   poolSearchFilter: (l: any, k: string, v: string) => void;
   bondedPools: BondedPool[];
+  poolsMetaData: Record<number, string>;
   meta: AnyMetaBatch;
 }
 
@@ -87,7 +88,7 @@ export interface ActivePool {
 
 export interface BondedPool {
   addresses: PoolAddresses;
-  id: number | string;
+  id: number;
   memberCounter: string;
   points: string;
   roles: {

@@ -28,9 +28,9 @@ export const MembershipStatus = ({
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
   const { label, buttons } = useStatusButtons();
-  const { bondedPools, meta } = useBondedPools();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getTransferOptions } = useTransferOptions();
+  const { bondedPools, poolsMetaData } = useBondedPools();
   const { selectedActivePool, isOwner, isBouncer, isMember } = useActivePools();
 
   const { active } = getTransferOptions(activeAccount).pool;
@@ -41,15 +41,13 @@ export const MembershipStatus = ({
 
   if (selectedActivePool) {
     const pool = bondedPools.find(
-      (p: any) => p.addresses.stash === selectedActivePool.addresses.stash
+      (p) => p.addresses.stash === selectedActivePool.addresses.stash
     );
     if (pool) {
       // Determine pool membership display.
-      const metadata = meta.bonded_pools?.metadata ?? [];
-      const batchIndex = bondedPools.indexOf(pool);
       membershipDisplay = determinePoolDisplay(
         selectedActivePool.addresses.stash,
-        metadata[batchIndex]
+        poolsMetaData[Number(pool.id)]
       );
     }
 

@@ -18,5 +18,6 @@ export const defaultBondedPoolsContext: BondedPoolsContextState = {
   replacePoolRoles: (p, e) => {},
   poolSearchFilter: (l, k, v) => {},
   bondedPools: [],
+  poolsMetaData: {},
   meta: {},
 };

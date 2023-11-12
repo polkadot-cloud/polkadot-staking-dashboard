@@ -159,9 +159,7 @@ export const PayoutListInner = ({
             );
 
             // get pool if it exists
-            const pool = bondedPools.find(
-              ({ id }) => String(id) === String(p.pool_id)
-            );
+            const pool = bondedPools.find(({ id }) => id === p.pool_id);
 
             const batchIndex = validator
               ? validators.indexOf(validator)
@@ -220,11 +218,7 @@ export const PayoutListInner = ({
                           {label === t('payouts.poolClaim') && (
                             <>
                               {pool ? (
-                                <PoolIdentity
-                                  batchKey="bonded_pools"
-                                  batchIndex={batchIndex}
-                                  pool={pool}
-                                />
+                                <PoolIdentity pool={pool} />
                               ) : (
                                 <h4>
                                   {t('payouts.fromPool')} {p.pool_id}

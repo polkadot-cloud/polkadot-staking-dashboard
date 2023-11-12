@@ -22,7 +22,7 @@ export const Account = ({
   const { t } = useTranslation('library');
   const { isReady } = useApi();
   const { activeAccount } = useActiveAccounts();
-  const { fetchPoolsMetaBatch, meta } = useBondedPools();
+  const { fetchPoolsMetaBatch, poolsMetaData } = useBondedPools();
 
   // is this the initial fetch
   const [fetched, setFetched] = useState(false);
@@ -51,13 +51,13 @@ export const Account = ({
     fetchPoolsMetaBatch(batchKey, pools, true);
   };
 
-  const metaBatch = meta[batchKey];
-  const metaData = metaBatch?.metadata?.[0];
-  const syncing = metaData === undefined;
+  const syncing = !Object.values(poolsMetaData).length;
 
   // display value
   const defaultDisplay = ellipsisFn(pool.addresses.stash);
-  let display = syncing ? t('syncing') : metaData ?? defaultDisplay;
+  let display = syncing
+    ? t('syncing')
+    : poolsMetaData[pool.id] ?? defaultDisplay;
 
   // check if super identity has been byte encoded
   const displayAsBytes = u8aToString(u8aUnwrapBytes(display));

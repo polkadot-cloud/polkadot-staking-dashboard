@@ -39,6 +39,11 @@ export const BondedPoolsProvider = ({
   // Store bonded pools.
   const [bondedPools, setBondedPools] = useState<BondedPool[]>([]);
 
+  // Store bonded pool metadata.
+  const [poolsMetaData, setPoolsMetadata] = useState<Record<number, string>>(
+    {}
+  );
+
   const unsubscribe = () => {
     Object.values(poolSubs.current).map((batch: Fn[]) =>
       Object.entries(batch).map(([, v]) => v())
@@ -46,19 +51,30 @@ export const BondedPoolsProvider = ({
     setBondedPools([]);
   };
 
-  // fetch all bonded pool entries
+  // Fetch all bonded pool entries, and then fetch their metadata.
   const fetchBondedPools = async () => {
     if (!api) return;
 
-    const result = await api.query.nominationPools.bondedPools.entries();
-    let exposures = result.map(([_keys, _val]: AnyApi) => {
-      const id = _keys.toHuman()[0];
-      const pool = _val.toHuman();
-      return getPoolWithAddresses(id, pool);
+    // Fetch bonded pools entries.
+    const bondedPoolsMulti =
+      await api.query.nominationPools.bondedPools.entries();
+    const ids: string[] = [];
+    let exposures = bondedPoolsMulti.map(([keys, val]: AnyApi) => {
+      const id = keys.toHuman()[0];
+      ids.push(id);
+      return getPoolWithAddresses(id, val.toHuman());
     });
 
     exposures = shuffle(exposures);
     setBondedPools(exposures);
+
+    // Fetch pools metadata.
+    const metadataMulti = await api.query.nominationPools.metadata.multi(ids);
+    setPoolsMetadata(
+      Object.fromEntries(
+        metadataMulti.map((m, i) => [Number(ids[i]), String(m.toHuman())])
+      )
+    );
   };
 
   // queries a bonded pool and injects ID and addresses to a result.
@@ -145,23 +161,6 @@ export const BondedPoolsProvider = ({
       poolMetaBatchesRef
     );
 
-    const subscribeToMetadata = async (_ids: AnyApi) => {
-      const unsub = await api.query.nominationPools.metadata.multi(
-        _ids,
-        (_metadata: AnyApi) => {
-          const metadata = [];
-          for (let i = 0; i < _metadata.length; i++) {
-            metadata.push(_metadata[i].toHuman());
-          }
-          const updated = Object.assign(poolMetaBatchesRef.current);
-          updated[key].metadata = metadata;
-
-          setStateWithRef({ ...updated }, setPoolMetaBatch, poolMetaBatchesRef);
-        }
-      );
-      return unsub;
-    };
-
     const subscribeToNominations = async (_addresses: AnyApi) => {
       const unsub = await api.query.staking.nominators.multi(
         _addresses,
@@ -179,12 +178,11 @@ export const BondedPoolsProvider = ({
     };
 
     // initiate subscriptions
-    await Promise.all([
-      subscribeToMetadata(ids),
-      subscribeToNominations(addresses),
-    ]).then((unsubs: Fn[]) => {
-      addMetaBatchUnsubs(key, unsubs);
-    });
+    await Promise.all([subscribeToNominations(addresses)]).then(
+      (unsubs: Fn[]) => {
+        addMetaBatchUnsubs(key, unsubs);
+      }
+    );
   };
 
   /*
@@ -255,7 +253,7 @@ export const BondedPoolsProvider = ({
   });
 
   const getBondedPool = (poolId: MaybePool) =>
-    bondedPools.find((p) => p.id === String(poolId)) ?? null;
+    bondedPools.find((p) => p.id === poolId) ?? null;
 
   /*
    * poolSearchFilter
@@ -286,23 +284,21 @@ export const BondedPoolsProvider = ({
       }
 
       const ids = meta[batchKey].ids ?? false;
-      const metadatas = meta[batchKey]?.metadata ?? false;
 
-      if (!metadatas || !ids) {
+      if (!Object.values(poolsMetaData).length || !ids) {
         filteredList.push(pool);
         continue;
       }
 
-      const id = ids[batchIndex] ?? 0;
       const address = pool?.addresses?.stash ?? '';
-      const metadata = metadatas[batchIndex] ?? '';
+      const metadata = poolsMetaData[pool.id] || '';
 
       const metadataAsBytes = u8aToString(u8aUnwrapBytes(metadata));
       const metadataSearch = (
         metadataAsBytes === '' ? metadata : metadataAsBytes
       ).toLowerCase();
 
-      if (String(id).includes(searchTerm.toLowerCase())) {
+      if (pool.id.includes(searchTerm.toLowerCase())) {
         filteredList.push(pool);
       }
       if (address.toLowerCase().includes(searchTerm.toLowerCase())) {
@@ -409,7 +405,7 @@ export const BondedPoolsProvider = ({
 
   // replaces the pool roles from roleEdits
   const replacePoolRoles = (poolId: number, roleEdits: any) => {
-    let pool = bondedPools.find((b) => String(b.id) === String(poolId)) || null;
+    let pool = bondedPools.find((b) => b.id === poolId) || null;
 
     if (!pool) return;
 
@@ -422,9 +418,7 @@ export const BondedPoolsProvider = ({
     };
 
     const newBondedPools = [
-      ...bondedPools.map((b) =>
-        String(b.id) === String(poolId) && pool !== null ? pool : b
-      ),
+      ...bondedPools.map((b) => (b.id === poolId && pool !== null ? pool : b)),
     ];
 
     setBondedPools(newBondedPools);
@@ -466,6 +460,7 @@ export const BondedPoolsProvider = ({
         replacePoolRoles,
         poolSearchFilter,
         bondedPools,
+        poolsMetaData,
         meta: poolMetaBatchesRef.current,
       }}
     >
