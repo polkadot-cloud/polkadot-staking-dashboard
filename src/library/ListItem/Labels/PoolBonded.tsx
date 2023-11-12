@@ -46,8 +46,7 @@ export const PoolBonded = ({ pool }: { pool: Pool }) => {
     if (
       targets.length &&
       nominationsStatus === null &&
-      eraStakers.stakers.length &&
-      nominations.length
+      eraStakers.stakers.length
     ) {
       handleNominationsStatus();
     }
