@@ -101,9 +101,8 @@ export const BalancesProvider = ({
             const { stash, total, active, unlocking } = newLedger;
 
             // add stash as external account if not present
-            if (!getAccount(stash.toString())) {
+            if (!getAccount(stash.toString()))
               addExternalAccount(stash.toString(), 'system');
-            }
 
             setStateWithRef(
               Object.values([...ledgersRef.current])

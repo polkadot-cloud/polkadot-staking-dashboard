@@ -271,9 +271,7 @@ export const ProxiesProvider = ({
         addDelegatorAsExternal = true;
       }
     }
-    if (addDelegatorAsExternal) {
-      addExternalAccount(delegator, 'system');
-    }
+    if (addDelegatorAsExternal) addExternalAccount(delegator, 'system');
 
     return [];
   };

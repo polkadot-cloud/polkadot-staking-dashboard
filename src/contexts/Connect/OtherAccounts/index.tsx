@@ -113,9 +113,8 @@ export const OtherAccountsProvider = ({
       );
 
       // set active account for networkData.
-      if (activeAccountInSet) {
-        setActiveAccount(activeAccountInSet?.address || null);
-      }
+      if (activeAccountInSet) setActiveAccount(activeAccountInSet.address);
+
       // add accounts to imported.
       addOtherAccounts(localAccounts);
     }
