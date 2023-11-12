@@ -19,4 +19,5 @@ export const defaultBondedPoolsContext: BondedPoolsContextState = {
   bondedPools: [],
   poolsMetaData: {},
   poolsNominations: {},
+  updatePoolNominations: (id, nominations) => {},
 };

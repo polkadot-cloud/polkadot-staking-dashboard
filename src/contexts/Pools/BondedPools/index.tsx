@@ -211,13 +211,28 @@ export const BondedPoolsProvider = ({
 
   const updateBondedPools = (updatedPools: BondedPool[]) => {
     if (!updatedPools) return;
-
     setBondedPools(
       bondedPools.map(
         (original) =>
           updatedPools.find((updated) => updated.id === original.id) || original
       )
     );
+  };
+
+  const updatePoolNominations = (id: number, newTargets: string[]) => {
+    const newPoolsNominations = { ...poolsNominations };
+
+    let record = newPoolsNominations?.[id];
+    if (record !== null) {
+      record.targets = newTargets;
+    } else {
+      record = {
+        submittedIn: activeEra.index.toString(),
+        targets: newTargets,
+        suppressed: false,
+      };
+    }
+    setPoolsNominations(newPoolsNominations);
   };
 
   const removeFromBondedPools = (id: number) => {
@@ -361,6 +376,7 @@ export const BondedPoolsProvider = ({
         bondedPools,
         poolsMetaData,
         poolsNominations,
+        updatePoolNominations,
       }}
     >
       {children}

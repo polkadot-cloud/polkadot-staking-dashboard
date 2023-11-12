@@ -74,6 +74,7 @@ export interface BondedPoolsContextState {
   bondedPools: BondedPool[];
   poolsMetaData: Record<number, string>;
   poolsNominations: Record<number, AnyJson>;
+  updatePoolNominations: (id: number, nominations: string[]) => void;
 }
 
 export interface ActivePool {
