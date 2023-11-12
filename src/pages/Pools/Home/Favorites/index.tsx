@@ -49,12 +49,7 @@ export const PoolFavorites = () => {
             isReady &&
             (favoritesList.length > 0 ? (
               <PoolListProvider>
-                <PoolList
-                  batchKey="favorite_pools"
-                  pools={favoritesList}
-                  allowMoreCols
-                  pagination
-                />
+                <PoolList pools={favoritesList} allowMoreCols pagination />
               </PoolListProvider>
             ) : (
               <ListStatusHeader>{t('pools.noFavorites')}</ListStatusHeader>

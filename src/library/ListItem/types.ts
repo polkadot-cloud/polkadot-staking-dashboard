@@ -25,8 +25,6 @@ export interface IdentityProps {
 }
 
 export interface PoolIdentityProps {
-  batchIndex: number;
-  batchKey: string;
   pool: BondedPool;
 }
 

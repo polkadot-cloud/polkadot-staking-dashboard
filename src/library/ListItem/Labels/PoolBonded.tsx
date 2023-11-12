@@ -15,26 +15,18 @@ import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import type { Pool } from 'library/Pool/types';
 import { useNetwork } from 'contexts/Network';
 
-export const PoolBonded = ({
-  pool,
-  batchKey,
-  batchIndex,
-}: {
-  pool: Pool;
-  batchKey: string;
-  batchIndex: number;
-}) => {
+export const PoolBonded = ({ pool }: { pool: Pool }) => {
   const { t } = useTranslation('library');
   const {
     networkData: { units, unit },
   } = useNetwork();
-  const { meta, getPoolNominationStatusCode } = useBondedPools();
+  const { getPoolNominationStatusCode, poolsNominations } = useBondedPools();
   const { eraStakers, getNominationsStatusFromTargets } = useStaking();
   const { addresses, points } = pool;
 
   // get pool targets from nominations meta batch
-  const nominations = meta[batchKey]?.nominations ?? [];
-  const targets = nominations[batchIndex]?.targets ?? [];
+  const nominations = poolsNominations[pool.id];
+  const targets = nominations?.targets || [];
 
   // store nomination status in state
   const [nominationsStatus, setNominationsStatus] =
@@ -65,7 +57,7 @@ export const PoolBonded = ({
   // recalculate nominations status
   useEffect(() => {
     handleNominationsStatus();
-  }, [meta, pool, eraStakers.stakers.length]);
+  }, [pool, eraStakers.stakers.length, Object.keys(poolsNominations).length]);
 
   // calculate total bonded pool amount
   const poolBonded = planckToUnit(new BigNumber(rmCommas(points)), units);

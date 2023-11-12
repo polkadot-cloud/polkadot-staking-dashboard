@@ -25,6 +25,7 @@ import type {
   NominationSelection,
   NominationSelectionWithResetCounter,
 } from 'library/GenerateNominations/types';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { RevertPrompt } from './Prompts/RevertPrompt';
 import { CanvasSubmitTxFooter, ManageNominationsWrapper } from './Wrappers';
 
@@ -42,6 +43,7 @@ export const ManageNominations = () => {
   const { addNotification } = useNotifications();
   const { selectedActivePool } = useActivePools();
   const { openPromptWith, closePrompt } = usePrompt();
+  const { updatePoolNominations } = useBondedPools();
   const controller = getBondedAccount(activeAccount);
   const { maxNominations } = consts;
   const bondFor = options?.bondFor || 'nominator';
@@ -128,7 +130,16 @@ export const ManageNominations = () => {
     callbackSubmit: () => {
       setCanvasStatus('closing');
     },
-    callbackInBlock: () => {},
+    callbackInBlock: () => {
+      if (isPool) {
+        // Upate bonded pool targets if updating pool nominations.
+        if (selectedActivePool?.id)
+          updatePoolNominations(
+            selectedActivePool.id,
+            newNominations.nominations.map((n) => n.address)
+          );
+      }
+    },
   });
 
   // Valid if there are between 1 and `maxNominations` nominations.

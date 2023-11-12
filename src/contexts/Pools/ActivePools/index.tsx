@@ -91,6 +91,7 @@ export const ActivePoolsProvider = ({
       const p = membership?.poolId ? String(membership.poolId) : '0';
       return String(a.id) === p;
     }) || null;
+
   const getSelectedActivePool = () =>
     activePoolsRef.current.find((a) => a.id === Number(selectedPoolId)) || null;
 

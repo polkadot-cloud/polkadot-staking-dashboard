@@ -26,7 +26,7 @@ export const SetMetadata = ({ setSection, section }: any) => {
   const { setModalStatus } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
   const { isOwner, selectedActivePool } = useActivePools();
-  const { bondedPools, meta } = useBondedPools();
+  const { bondedPools, poolsMetaData } = useBondedPools();
   const { getSignerWarnings } = useSignerWarnings();
 
   const poolId = selectedActivePool?.id;
@@ -43,9 +43,7 @@ export const SetMetadata = ({ setSection, section }: any) => {
       ({ addresses }) => addresses.stash === selectedActivePool?.addresses.stash
     );
     if (pool) {
-      const metadataBatch = meta.bonded_pools?.metadata ?? [];
-      const batchIndex = bondedPools.indexOf(pool);
-      setMetadata(u8aToString(u8aUnwrapBytes(metadataBatch[batchIndex])));
+      setMetadata(u8aToString(u8aUnwrapBytes(poolsMetaData[Number(pool.id)])));
     }
   }, [section]);
 

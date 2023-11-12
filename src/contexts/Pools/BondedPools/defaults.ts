@@ -5,7 +5,6 @@
 import type { BondedPoolsContextState } from '../types';
 
 export const defaultBondedPoolsContext: BondedPoolsContextState = {
-  fetchPoolsMetaBatch: (k, v: [], r) => {},
   queryBondedPool: (p) => {},
   getBondedPool: (p) => null,
   updateBondedPools: (p) => {},
@@ -16,7 +15,9 @@ export const defaultBondedPoolsContext: BondedPoolsContextState = {
   getAccountRoles: (w) => null,
   getAccountPools: (w) => null,
   replacePoolRoles: (p, e) => {},
-  poolSearchFilter: (l, k, v) => {},
+  poolSearchFilter: (l, v) => {},
   bondedPools: [],
-  meta: {},
+  poolsMetaData: {},
+  poolsNominations: {},
+  updatePoolNominations: (id, nominations) => {},
 };
