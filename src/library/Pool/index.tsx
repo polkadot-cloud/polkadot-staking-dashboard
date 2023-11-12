@@ -34,15 +34,15 @@ import { PoolId } from '../ListItem/Labels/PoolId';
 import type { PoolProps } from './types';
 import { Rewards } from './Rewards';
 
-export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
+export const Pool = ({ pool }: PoolProps) => {
   const { t } = useTranslation('library');
   const { memberCounter, addresses, id, state } = pool;
   const { isPoolSyncing } = useUi();
-  const { meta } = useBondedPools();
   const { validators } = useValidators();
   const { setActiveTab } = usePoolsTabs();
   const { openModal } = useOverlay().modal;
   const { membership } = usePoolMemberships();
+  const { poolsNominations } = useBondedPools();
   const { activeAccount } = useActiveAccounts();
   const { addNotification } = useNotifications();
   const { isReadOnlyAccount } = useImportedAccounts();
@@ -52,10 +52,10 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   const currentCommission = getCurrentCommission(id);
 
   // get metadata from pools metabatch
-  const nominations = meta[batchKey]?.nominations ?? [];
+  const nominations = poolsNominations[pool.id];
 
   // get pool targets from nominations metadata
-  const targets = nominations[batchIndex]?.targets ?? [];
+  const targets = nominations?.targets || [];
 
   // extract validator entries from pool targets
   const targetValidators = validators.filter(({ address }) =>
@@ -151,11 +151,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
               <PoolId id={id} />
               <Members members={memberCounter} />
             </Labels>
-            <PoolBonded
-              pool={pool}
-              batchIndex={batchIndex}
-              batchKey={batchKey}
-            />
+            <PoolBonded pool={pool} />
             {displayJoin && (
               <Labels style={{ marginTop: '1rem' }}>
                 <JoinPool id={id} setActiveTab={setActiveTab} />
