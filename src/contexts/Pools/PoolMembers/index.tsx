@@ -97,7 +97,7 @@ export const PoolMembersProvider = ({
   };
 
   const getMembersOfPoolFromNode = (poolId: number) =>
-    poolMembersNode.filter((p: any) => p.poolId === poolId) ?? null;
+    poolMembersNode.filter((p) => p.poolId === poolId) ?? null;
 
   // queries a  pool member and formats to `PoolMember`.
   const queryPoolMember = async (who: MaybeAddress) => {

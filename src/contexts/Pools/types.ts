@@ -73,7 +73,7 @@ export interface BondedPoolsContextState {
   poolSearchFilter: (l: any, v: string) => void;
   bondedPools: BondedPool[];
   poolsMetaData: Record<number, string>;
-  poolsNominations: Record<number, AnyJson>;
+  poolsNominations: Record<number, PoolNominations>;
   updatePoolNominations: (id: number, nominations: string[]) => void;
 }
 

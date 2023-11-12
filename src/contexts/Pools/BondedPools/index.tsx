@@ -347,9 +347,7 @@ export const BondedPoolsProvider = ({
 
   // Initial setup for fetching bonded pools.
   useEffectIgnoreInitial(() => {
-    if (isReady && lastPoolId) {
-      fetchBondedPools();
-    }
+    if (isReady && lastPoolId) fetchBondedPools();
   }, [bondedPools, isReady, lastPoolId]);
 
   // Re-fetch bonded pools nominations when active era changes or when `bondedPools` update.
