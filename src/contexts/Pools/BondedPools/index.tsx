@@ -50,7 +50,6 @@ export const BondedPoolsProvider = ({
   >({});
 
   // Fetch all bonded pool entries and their metadata.
-  // TODO: add syncing state to prevent duplicate fetches.
   const fetchBondedPools = async () => {
     if (!api || bondedPoolsSynced.current !== 'unsynced') return;
     bondedPoolsSynced.current = 'syncing';
