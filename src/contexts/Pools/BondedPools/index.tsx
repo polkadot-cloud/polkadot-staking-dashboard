@@ -3,7 +3,7 @@
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { rmCommas, shuffle } from '@polkadot-cloud/utils';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import type {
   BondedPool,
   BondedPoolsContextState,
@@ -12,7 +12,7 @@ import type {
   PoolNominations,
 } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
-import type { AnyApi, MaybeAddress } from 'types';
+import type { AnyApi, MaybeAddress, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
@@ -36,6 +36,9 @@ export const BondedPoolsProvider = ({
   // Store bonded pools.
   const [bondedPools, setBondedPools] = useState<BondedPool[]>([]);
 
+  // Track the sync status of `bondedPools`.
+  const bondedPoolsSynced = useRef<Sync>('unsynced');
+
   // Store bonded pools metadata.
   const [poolsMetaData, setPoolsMetadata] = useState<Record<number, string>>(
     {}
@@ -49,7 +52,9 @@ export const BondedPoolsProvider = ({
   // Fetch all bonded pool entries and their metadata.
   // TODO: add syncing state to prevent duplicate fetches.
   const fetchBondedPools = async () => {
-    if (!api) return;
+    if (!api || bondedPoolsSynced.current !== 'unsynced') return;
+    bondedPoolsSynced.current = 'syncing';
+
     const ids: number[] = [];
 
     // Fetch bonded pools entries.
@@ -71,6 +76,8 @@ export const BondedPoolsProvider = ({
         metadataMulti.map((m, i) => [ids[i], String(m.toHuman())])
       )
     );
+
+    bondedPoolsSynced.current = 'synced';
   };
 
   // Fetches pool nominations and updates state.
@@ -318,6 +325,7 @@ export const BondedPoolsProvider = ({
 
   // Clear existing state for network refresh.
   useEffectIgnoreInitial(() => {
+    bondedPoolsSynced.current = 'unsynced';
     setBondedPools([]);
     setPoolsMetadata({});
     setPoolsNominations({});
@@ -325,13 +333,16 @@ export const BondedPoolsProvider = ({
 
   // Initial setup for fetching bonded pools.
   useEffectIgnoreInitial(() => {
-    if (isReady) fetchBondedPools();
-  }, [network, isReady, lastPoolId]);
+    if (isReady && lastPoolId) {
+      fetchBondedPools();
+    }
+  }, [bondedPools, isReady, lastPoolId]);
 
   // Re-fetch bonded pools nominations when active era changes or when `bondedPools` update.
   useEffectIgnoreInitial(() => {
-    if (!activeEra.index.isZero() && bondedPools.length)
+    if (!activeEra.index.isZero() && bondedPools.length) {
       fetchPoolsNominations();
+    }
   }, [activeEra.index, bondedPools.length]);
 
   return (
