@@ -701,10 +701,10 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.45.tgz#7617e7803f64a4c933fa2b63038acfc9f8f9597d"
   integrity sha512-rtVQlaVnvqHiMW4CreowspZG+JXZQYMLjMXY3i9vRRnBcVa09D7ahNRbj6RixmUSSNADtQJS9AaQNMz6nJuyAQ==
 
-"@polkadot-cloud/react@^0.1.127":
-  version "0.1.127"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.127.tgz#142a6bbc0bb62958a11391121f342ba29a9422ce"
-  integrity sha512-1jUmMCl7Kw2XsCAadU5xEzNNIs5L2Lf2PelgMQhmoYW35Hug6XW81iaOYqKJQRZv5JnnnxCWgmfkq7QLsQCaRQ==
+"@polkadot-cloud/react@^0.1.128":
+  version "0.1.128"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.128.tgz#eef5982e48af1c1d848f3d7025f1c91c5b9121a6"
+  integrity sha512-4RfenxbAcbE1gFpzqMStdHkou6DuQrHhPqHlj8GX/ahCQvXwqNDlgLS5rMtMPLxcgsn/EXzqV8MxyNwmSHPcZQ==
   dependencies:
     "@chainsafe/metamask-polkadot-adapter" "^0.5.1"
     "@chainsafe/metamask-polkadot-types" "^0.6.0"
@@ -1882,7 +1882,6 @@ binary-extensions@^2.0.0:
 
 "bip32-ed25519@https://github.com/Zondax/bip32-ed25519":
   version "0.0.4"
-  uid "0949df01b5c93885339bc28116690292088f6134"
   resolved "https://github.com/Zondax/bip32-ed25519#0949df01b5c93885339bc28116690292088f6134"
   dependencies:
     bn.js "^5.1.1"

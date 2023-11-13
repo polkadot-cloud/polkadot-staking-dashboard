@@ -50,6 +50,7 @@ import { DappName } from 'consts';
 import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts';
 import { PoolPerformanceProvider } from 'contexts/Pools/PoolPerformance';
 import { LedgerAccountsProvider } from 'contexts/Hardware/Ledger/LedgerAccounts';
+import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts';
 
 // Embed providers from hook.
 export const Providers = () => {
@@ -72,8 +73,9 @@ export const Providers = () => {
       ExtensionAccountsProvider,
       { dappName: DappName, network, ss58, activeAccount, setActiveAccount },
     ],
-    OtherAccountsProvider,
     LedgerAccountsProvider,
+    ExternalAccountsProvider,
+    OtherAccountsProvider,
     ImportedAccountsProvider,
     ProxiesProvider,
     NetworkMetricsProvider,
