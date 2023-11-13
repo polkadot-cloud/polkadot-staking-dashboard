@@ -45,12 +45,12 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
     ({ addedBy }) => addedBy === 'user'
   );
 
-  // forget account
-  const forgetAccount = (account: ExternalAccount) => {
+  const handleForgetAccount = (account: ExternalAccount) => {
     forgetExternalAccounts([account]);
     forgetOtherAccounts([account]);
     setModalResize();
   };
+
   return (
     <>
       <ActionWithButton>
@@ -98,9 +98,7 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                   </div>
                   <ButtonSecondary
                     text={t('forget')}
-                    onClick={() => {
-                      forgetAccount(a);
-                    }}
+                    onClick={() => handleForgetAccount(a)}
                   />
                 </ManualAccount>
               ))}

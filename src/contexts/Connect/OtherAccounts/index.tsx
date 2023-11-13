@@ -165,41 +165,21 @@ export const OtherAccountsProvider = ({
     // determine whether the account is newly added.
     const isNew = !existsLocal && !existsImported;
 
-    // if exists as `system` account, change to `user` account.
-    if (existsLocal && existsLocal.addedBy === 'system') {
-      localStorage.setItem(
-        'external_accounts',
-        JSON.stringify(
-          localExternalAccounts.map((a) =>
-            a.address === newEntry.address
-              ? a
-              : {
-                  ...a,
-                  addedBy: 'user',
-                }
-          )
-        )
-      );
-
-      // re-sync account state.
-      setStateWithRef(
-        [...otherAccountsRef.current].map((item) =>
-          item.address !== newEntry.address ? item : newEntry
-        ),
-        setOtherAccounts,
-        otherAccountsRef
-      );
-    }
-
     // add external account if not there already.
-    else if (isNew) {
+    if (isNew) {
       localStorage.setItem(
         'external_accounts',
         JSON.stringify(localExternalAccounts.concat(newEntry))
       );
-
-      // add external account to imported accounts
       addOtherAccounts([newEntry]);
+    } else if (
+      existsLocal &&
+      addedBy === 'system' &&
+      existsLocal.addedBy !== 'system'
+    ) {
+      // the external account needs to change to `system` so it cannot be removed. This will replace
+      // the whole entry.
+      updateLocalExternalAccount(newEntry, 'system');
     }
   };
 
@@ -216,17 +196,7 @@ export const OtherAccountsProvider = ({
       setActiveAccount(null);
   };
 
-  // Re-sync other accounts on network switch. Waits for `injectedWeb3` to be injected.
-  useEffect(() => {
-    if (!checkingInjectedWeb3) {
-      // unsubscribe from all accounts and reset state.
-      unsubscribe();
-      setStateWithRef([], setOtherAccounts, otherAccountsRef);
-    }
-    return () => unsubscribe();
-  }, [network, checkingInjectedWeb3]);
-
-  // Unsubscrbe all account subscriptions.
+  // Unsubscribe all account subscriptions.
   const unsubscribe = () => {
     Object.values(unsubs.current).forEach((unsub) => {
       unsub();
@@ -241,6 +211,43 @@ export const OtherAccountsProvider = ({
       otherAccountsRef
     );
   };
+
+  // Update local external account with the provided `addedBy` property.
+  const updateLocalExternalAccount = (
+    entry: ExternalAccount,
+    addedBy: 'user' | 'system'
+  ) => {
+    localStorage.setItem(
+      'external_accounts',
+      JSON.stringify(
+        getLocalExternalAccounts().map((a) =>
+          a.address === entry.address
+            ? a
+            : {
+                ...a,
+                addedBy,
+              }
+        )
+      )
+    );
+    setStateWithRef(
+      [...otherAccountsRef.current].map((item) =>
+        item.address !== entry.address ? item : { ...entry, addedBy }
+      ),
+      setOtherAccounts,
+      otherAccountsRef
+    );
+  };
+
+  // Re-sync other accounts on network switch. Waits for `injectedWeb3` to be injected.
+  useEffect(() => {
+    if (!checkingInjectedWeb3) {
+      // unsubscribe from all accounts and reset state.
+      unsubscribe();
+      setStateWithRef([], setOtherAccounts, otherAccountsRef);
+    }
+    return () => unsubscribe();
+  }, [network, checkingInjectedWeb3]);
 
   // Once extensions are fully initialised, fetch accounts from other sources.
   useEffectIgnoreInitial(() => {
