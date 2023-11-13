@@ -22,9 +22,11 @@ import type {
   ImportedAccount,
 } from '@polkadot-cloud/react/types';
 import {
+  addLocalExternalAccount,
   getActiveAccountLocal,
   getLocalExternalAccounts,
   removeLocalExternalAccounts,
+  updateLocalExternalAccount,
 } from '../Utils';
 import type { OtherAccountsContextInterface } from './types';
 import { defaultOtherAccountsContext } from './defaults';
@@ -162,24 +164,23 @@ export const OtherAccountsProvider = ({
       (a) => a.address === newEntry.address
     );
 
-    // determine whether the account is newly added.
+    // whether the account is newly added.
     const isNew = !existsLocal && !existsImported;
+
+    // whether the account needs to remain imported as a system account.
+    const toSystem =
+      existsLocal && addedBy === 'system' && existsLocal.addedBy !== 'system';
 
     // add external account if not there already.
     if (isNew) {
-      localStorage.setItem(
-        'external_accounts',
-        JSON.stringify(localExternalAccounts.concat(newEntry))
-      );
+      addLocalExternalAccount(newEntry);
       addOtherAccounts([newEntry]);
-    } else if (
-      existsLocal &&
-      addedBy === 'system' &&
-      existsLocal.addedBy !== 'system'
-    ) {
-      // the external account needs to change to `system` so it cannot be removed. This will replace
-      // the whole entry.
-      updateLocalExternalAccount(newEntry, 'system');
+    } else if (toSystem) {
+      // if account is being added by `system`, but is already imported, update it to be a system
+      // account.
+      const entryToSystem = { ...newEntry, addedBy: 'system' };
+      updateLocalExternalAccount(entryToSystem);
+      replaceOtherAccount(entryToSystem);
     }
   };
 
@@ -204,35 +205,19 @@ export const OtherAccountsProvider = ({
   };
 
   // Add other accounts to context state.
-  const addOtherAccounts = (a: ImportedAccount[]) => {
+  const addOtherAccounts = (account: ImportedAccount[]) => {
     setStateWithRef(
-      [...otherAccountsRef.current].concat(a),
+      [...otherAccountsRef.current].concat(account),
       setOtherAccounts,
       otherAccountsRef
     );
   };
 
-  // Update local external account with the provided `addedBy` property.
-  const updateLocalExternalAccount = (
-    entry: ExternalAccount,
-    addedBy: 'user' | 'system'
-  ) => {
-    localStorage.setItem(
-      'external_accounts',
-      JSON.stringify(
-        getLocalExternalAccounts().map((a) =>
-          a.address === entry.address
-            ? a
-            : {
-                ...a,
-                addedBy,
-              }
-        )
-      )
-    );
+  // Replace other account with new entry.
+  const replaceOtherAccount = (account: ImportedAccount) => {
     setStateWithRef(
       [...otherAccountsRef.current].map((item) =>
-        item.address !== entry.address ? item : { ...entry, addedBy }
+        item.address !== account.address ? item : account
       ),
       setOtherAccounts,
       otherAccountsRef

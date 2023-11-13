@@ -3,31 +3,8 @@
 
 import Keyring from '@polkadot/keyring';
 import { localStorageOrDefault } from '@polkadot-cloud/utils';
-import type {
-  ExtensionAccount,
-  ExternalAccount,
-} from '@polkadot-cloud/react/types';
+import type { ExternalAccount } from '@polkadot-cloud/react/types';
 import type { NetworkName } from 'types';
-
-// adds an extension to local `active_extensions`
-export const addToLocalExtensions = (id: string) => {
-  const localExtensions = localStorageOrDefault<string[]>(
-    `active_extensions`,
-    [],
-    true
-  );
-  if (Array.isArray(localExtensions)) {
-    if (!localExtensions.includes(id)) {
-      localExtensions.push(id);
-      localStorage.setItem(
-        'active_extensions',
-        JSON.stringify(localExtensions)
-      );
-    }
-  }
-};
-
-// account utils
 
 // gets local `activeAccount` for a network
 export const getActiveAccountLocal = (network: NetworkName, ss58: number) => {
@@ -40,61 +17,61 @@ export const getActiveAccountLocal = (network: NetworkName, ss58: number) => {
   return account;
 };
 
-// gets local external accounts, formatting their addresses
-// using active network ss58 format.
+// Adds a local external account to local storage.
+export const addLocalExternalAccount = (account: ExternalAccount) => {
+  localStorage.setItem(
+    'external_accounts',
+    JSON.stringify(getLocalExternalAccounts().concat(account))
+  );
+};
+
+// Updates a local external account with the provided `addedBy` property.
+export const updateLocalExternalAccount = (entry: ExternalAccount) => {
+  localStorage.setItem(
+    'external_accounts',
+    JSON.stringify(
+      getLocalExternalAccounts().map((a) =>
+        a.address === entry.address ? entry : a
+      )
+    )
+  );
+};
+
+// Gets local external accounts from local storage.
 export const getLocalExternalAccounts = (network?: NetworkName) => {
-  let localAccounts = localStorageOrDefault<ExternalAccount[]>(
+  let localAccounts = localStorageOrDefault(
     'external_accounts',
     [],
     true
   ) as ExternalAccount[];
-  if (network) {
+  if (network)
     localAccounts = localAccounts.filter((l) => l.network === network);
-  }
   return localAccounts;
 };
 
-// gets accounts that exist in local `external_accounts`
-export const getInExternalAccounts = (
-  accounts: ExtensionAccount[],
-  network: NetworkName
-) => {
-  const localExternalAccounts = getLocalExternalAccounts(network);
-
-  return (
-    localExternalAccounts.filter(
-      (a) => (accounts || []).find((b) => b.address === a.address) !== undefined
-    ) || []
-  );
-};
-
-// removes supplied accounts from local `external_accounts`.
+// Removes supplied external cccounts from local storage.
 export const removeLocalExternalAccounts = (
   network: NetworkName,
   accounts: ExternalAccount[]
 ) => {
   if (!accounts.length) return;
 
-  let localExternalAccounts = getLocalExternalAccounts(network);
-  localExternalAccounts = localExternalAccounts.filter(
+  const updatedAccounts = getLocalExternalAccounts(network).filter(
     (a) =>
       accounts.find((b) => b.address === a.address && a.network === network) ===
       undefined
   );
-  localStorage.setItem(
-    'external_accounts',
-    JSON.stringify(localExternalAccounts)
-  );
+  localStorage.setItem('external_accounts', JSON.stringify(updatedAccounts));
 };
 
+// Formats an address with the supplied ss58 prefix.
 export const formatAccountSs58 = (address: string, ss58: number) => {
   try {
     const keyring = new Keyring();
     keyring.setSS58Format(ss58);
     const formatted = keyring.addFromAddress(address).address;
-    if (formatted !== address) {
-      return formatted;
-    }
+    if (formatted !== address) return formatted;
+
     return null;
   } catch (e) {
     return null;
