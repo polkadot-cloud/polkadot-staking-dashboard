@@ -5,7 +5,7 @@ import Keyring from '@polkadot/keyring';
 import { localStorageOrDefault } from '@polkadot-cloud/utils';
 import type { NetworkName } from 'types';
 
-// gets local `activeAccount` for a network
+// Gets local `activeAccount` for a network.
 export const getActiveAccountLocal = (network: NetworkName, ss58: number) => {
   const keyring = new Keyring();
   keyring.setSS58Format(ss58);

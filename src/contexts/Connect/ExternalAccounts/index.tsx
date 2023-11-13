@@ -62,23 +62,19 @@ export const ExternalAccountsProvider = ({
     const toSystem =
       existsLocal && addedBy === 'system' && existsLocal.addedBy !== 'system';
 
-    let isImported = true;
+    let isImported: boolean = true;
     let importType: ExternalAccountImportType = 'new';
 
     // Add external account if not there already.
     if (!existsLocal) {
       addLocalExternalAccount(newEntry);
-      // addOtherAccounts([newEntry]);
     } else if (toSystem) {
       // If account is being added by `system`, but is already imported, update it to be a system
       // account.
       newEntry = { ...newEntry, addedBy: 'system' };
       updateLocalExternalAccount(newEntry);
       importType = 'replace';
-      // replaceOtherAccount(newEntry);
-    } else {
-      isImported = false;
-    }
+    } else isImported = false;
 
     return isImported
       ? {

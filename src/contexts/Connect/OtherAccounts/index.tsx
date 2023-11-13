@@ -21,6 +21,7 @@ import { getActiveAccountLocal } from '../Utils';
 import type { OtherAccountsContextInterface } from './types';
 import { defaultOtherAccountsContext } from './defaults';
 import { getLocalExternalAccounts } from '../ExternalAccounts/Utils';
+import type { ExternalAccountImportType } from '../ExternalAccounts/types';
 
 export const OtherAccountsContext =
   createContext<OtherAccountsContextInterface>(defaultOtherAccountsContext);
@@ -159,7 +160,7 @@ export const OtherAccountsProvider = ({
   // Add or replace other account with an entry.
   const addOrReplaceOtherAccount = (
     account: ImportedAccount,
-    type: 'new' | 'replace' | null
+    type: ExternalAccountImportType
   ) => {
     if (type === 'new') {
       addOtherAccounts([account]);
