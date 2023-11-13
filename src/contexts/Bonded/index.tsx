@@ -15,6 +15,7 @@ import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
 import * as defaults from './defaults';
 import type { BondedAccount, BondedContextInterface } from './types';
 
@@ -22,7 +23,8 @@ export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
   const { network } = useNetwork();
   const { api, isReady } = useApi();
   const { accounts } = useImportedAccounts();
-  const { addExternalAccount } = useOtherAccounts();
+  const { addExternalAccount } = useExternalAccounts();
+  const { addOrReplaceOtherAccount } = useOtherAccounts();
 
   // Balance accounts state.
   const [bondedAccounts, setBondedAccounts] = useState<BondedAccount[]>([]);
@@ -107,7 +109,8 @@ export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
         // add bonded (controller) account as external account if not presently imported
         if (newController) {
           if (accounts.find((s) => s.address === newController) === undefined) {
-            addExternalAccount(newController, 'system');
+            const result = addExternalAccount(newController, 'system');
+            if (result) addOrReplaceOtherAccount(result.account, result.type);
           }
         }
 

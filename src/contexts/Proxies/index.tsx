@@ -21,6 +21,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
 import * as defaults from './defaults';
 import type {
   Delegates,
@@ -39,7 +40,8 @@ export const ProxiesProvider = ({
   const { network } = useNetwork();
   const { api, isReady } = useApi();
   const { accounts } = useImportedAccounts();
-  const { addExternalAccount } = useOtherAccounts();
+  const { addExternalAccount } = useExternalAccounts();
+  const { addOrReplaceOtherAccount } = useOtherAccounts();
   const { activeProxy, setActiveProxy, activeAccount } = useActiveAccounts();
 
   // store the proxy accounts of each imported account.
@@ -59,7 +61,9 @@ export const ProxiesProvider = ({
         // if delegates still exist for removed account, re-add the account as a read only system
         // account.
         if (delegatesRef.current[address]) {
-          addExternalAccount(address, 'system');
+          const importResult = addExternalAccount(address, 'system');
+          if (importResult)
+            addOrReplaceOtherAccount(importResult.account, importResult.type);
         } else {
           const unsub = unsubs.current[address];
           if (unsub) unsub();
@@ -193,7 +197,9 @@ export const ProxiesProvider = ({
         const { address, proxyType } = JSON.parse(localActiveProxy);
         // Add proxy address as external account if not imported.
         if (!accounts.find((a) => a.address === address)) {
-          addExternalAccount(address, 'system');
+          const importResult = addExternalAccount(address, 'system');
+          if (importResult)
+            addOrReplaceOtherAccount(importResult.account, importResult.type);
         }
 
         const isActive = (
@@ -271,7 +277,11 @@ export const ProxiesProvider = ({
         addDelegatorAsExternal = true;
       }
     }
-    if (addDelegatorAsExternal) addExternalAccount(delegator, 'system');
+    if (addDelegatorAsExternal) {
+      const importResult = addExternalAccount(delegator, 'system');
+      if (importResult)
+        addOrReplaceOtherAccount(importResult.account, importResult.type);
+    }
 
     return [];
   };

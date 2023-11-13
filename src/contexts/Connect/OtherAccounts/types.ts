@@ -5,12 +5,14 @@ import type { ImportedAccount } from '@polkadot-cloud/react/types';
 import type { MaybeAddress, NetworkName } from 'types';
 
 export interface OtherAccountsContextInterface {
-  addExternalAccount: (a: string, addedBy: string) => void;
   addOtherAccounts: (a: ImportedAccount[]) => void;
+  addOrReplaceOtherAccount: (
+    a: ImportedAccount,
+    type: 'new' | 'replace' | null
+  ) => void;
   renameOtherAccount: (a: MaybeAddress, n: string) => void;
   importLocalOtherAccounts: (g: (n: NetworkName) => ImportedAccount[]) => void;
   forgetOtherAccounts: (a: ImportedAccount[]) => void;
-  forgetExternalAccounts: (a: ImportedAccount[]) => void;
   accountsInitialised: boolean;
   otherAccounts: ImportedAccount[];
 }

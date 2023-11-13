@@ -20,6 +20,7 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { ExternalAccount } from '@polkadot-cloud/react/types';
+import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
 import {
   ActionWithButton,
   ManualAccount,
@@ -32,8 +33,8 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { openHelp } = useHelp();
   const { accounts } = useImportedAccounts();
   const { setModalResize } = useOverlay().modal;
-  const { forgetExternalAccounts, addExternalAccount, forgetOtherAccounts } =
-    useOtherAccounts();
+  const { addExternalAccount, forgetExternalAccounts } = useExternalAccounts();
+  const { forgetOtherAccounts, addOrReplaceOtherAccount } = useOtherAccounts();
 
   // get all external accounts
   const externalAccountsOnly = accounts.filter(
@@ -79,7 +80,10 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
               resetOnSuccess
               defaultLabel={t('inputAddress')}
               successCallback={async (value: string) => {
-                addExternalAccount(value, 'user');
+                const result = addExternalAccount(value, 'user');
+                if (result)
+                  addOrReplaceOtherAccount(result.account, result.type);
+
                 return true;
               }}
             />

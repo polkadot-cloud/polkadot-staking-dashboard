@@ -13,23 +13,14 @@ import {
   getLocalVaultAccounts,
 } from 'contexts/Hardware/Utils';
 import type { AnyFunction, MaybeAddress, NetworkName } from 'types';
-import { ellipsisFn, setStateWithRef } from '@polkadot-cloud/utils';
+import { setStateWithRef } from '@polkadot-cloud/utils';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import Keyring from '@polkadot/keyring';
-import type {
-  ExternalAccount,
-  ImportedAccount,
-} from '@polkadot-cloud/react/types';
-import {
-  addLocalExternalAccount,
-  getActiveAccountLocal,
-  getLocalExternalAccounts,
-  removeLocalExternalAccounts,
-  updateLocalExternalAccount,
-} from '../Utils';
+import type { ImportedAccount } from '@polkadot-cloud/react/types';
+import { getActiveAccountLocal } from '../Utils';
 import type { OtherAccountsContextInterface } from './types';
 import { defaultOtherAccountsContext } from './defaults';
+import { getLocalExternalAccounts } from '../ExternalAccounts/Utils';
 
 export const OtherAccountsContext =
   createContext<OtherAccountsContextInterface>(defaultOtherAccountsContext);
@@ -138,65 +129,6 @@ export const OtherAccountsProvider = ({
     );
   };
 
-  // Adds an external account (non-wallet) to accounts.
-  const addExternalAccount = (address: string, addedBy: string) => {
-    // ensure account is formatted correctly
-    const keyring = new Keyring();
-    keyring.setSS58Format(ss58);
-
-    const newEntry = {
-      address: keyring.addFromAddress(address).address,
-      network,
-      name: ellipsisFn(address),
-      source: 'external',
-      addedBy,
-    };
-
-    // get all external accounts from localStorage.
-    const localExternalAccounts = getLocalExternalAccounts();
-    const existsLocal = localExternalAccounts.find(
-      (l) => l.address === newEntry.address && l.network === network
-    );
-
-    // check that address is not sitting in imported accounts (currently cannot check which
-    // network).
-    const existsImported = otherAccountsRef.current.find(
-      (a) => a.address === newEntry.address
-    );
-
-    // whether the account is newly added.
-    const isNew = !existsLocal && !existsImported;
-
-    // whether the account needs to remain imported as a system account.
-    const toSystem =
-      existsLocal && addedBy === 'system' && existsLocal.addedBy !== 'system';
-
-    // add external account if not there already.
-    if (isNew) {
-      addLocalExternalAccount(newEntry);
-      addOtherAccounts([newEntry]);
-    } else if (toSystem) {
-      // if account is being added by `system`, but is already imported, update it to be a system
-      // account.
-      const entryToSystem = { ...newEntry, addedBy: 'system' };
-      updateLocalExternalAccount(entryToSystem);
-      replaceOtherAccount(entryToSystem);
-    }
-  };
-
-  // Get any external accounts and remove from localStorage.
-  const forgetExternalAccounts = (forget: ImportedAccount[]) => {
-    if (!forget.length) return;
-    removeLocalExternalAccounts(
-      network,
-      forget.filter((i) => 'network' in i) as ExternalAccount[]
-    );
-
-    // If the currently active account is being forgotten, disconnect.
-    if (forget.find((a) => a.address === activeAccount) !== undefined)
-      setActiveAccount(null);
-  };
-
   // Unsubscribe all account subscriptions.
   const unsubscribe = () => {
     Object.values(unsubs.current).forEach((unsub) => {
@@ -222,6 +154,18 @@ export const OtherAccountsProvider = ({
       setOtherAccounts,
       otherAccountsRef
     );
+  };
+
+  // Add or replace other account with an entry.
+  const addOrReplaceOtherAccount = (
+    account: ImportedAccount,
+    type: 'new' | 'replace' | null
+  ) => {
+    if (type === 'new') {
+      addOtherAccounts([account]);
+    } else if (type === 'replace') {
+      replaceOtherAccount(account);
+    }
   };
 
   // Re-sync other accounts on network switch. Waits for `injectedWeb3` to be injected.
@@ -259,12 +203,11 @@ export const OtherAccountsProvider = ({
   return (
     <OtherAccountsContext.Provider
       value={{
-        addExternalAccount,
         addOtherAccounts,
+        addOrReplaceOtherAccount,
         renameOtherAccount,
         importLocalOtherAccounts,
         forgetOtherAccounts,
-        forgetExternalAccounts,
         accountsInitialised,
         otherAccounts: otherAccountsRef.current,
       }}
