@@ -141,10 +141,9 @@ export const OtherAccountsProvider = ({
     // ensure account is formatted correctly
     const keyring = new Keyring();
     keyring.setSS58Format(ss58);
-    const formatted = keyring.addFromAddress(address).address;
 
-    const newAccount = {
-      address: formatted,
+    const newEntry = {
+      address: keyring.addFromAddress(address).address,
       network,
       name: ellipsisFn(address),
       source: 'external',
@@ -154,39 +153,30 @@ export const OtherAccountsProvider = ({
     // get all external accounts from localStorage.
     const localExternalAccounts = getLocalExternalAccounts();
     const existsLocal = localExternalAccounts.find(
-      (l) => l.address === address && l.network === network
+      (l) => l.address === newEntry.address && l.network === network
     );
 
     // check that address is not sitting in imported accounts (currently cannot check which
     // network).
     const existsImported = otherAccountsRef.current.find(
-      (a) => a.address === address
+      (a) => a.address === newEntry.address
     );
 
     // determine whether the account is newly added.
     const isNew = !existsLocal && !existsImported;
 
-    // add external account if not there already.
-    if (isNew) {
-      localStorage.setItem(
-        'external_accounts',
-        JSON.stringify(localExternalAccounts.concat(newAccount))
-      );
-
-      // add external account to imported accounts
-      addOtherAccounts([newAccount]);
-    } else if (
-      existsLocal &&
-      addedBy === 'system' &&
-      existsLocal.addedBy !== 'system'
-    ) {
-      // the external account needs to change to `system` so it cannot be removed. This will replace
-      // the whole entry.
+    // if exists as `system` account, change to `user` account.
+    if (existsLocal && existsLocal.addedBy === 'system') {
       localStorage.setItem(
         'external_accounts',
         JSON.stringify(
-          localExternalAccounts.map((item) =>
-            item.address !== address ? item : newAccount
+          localExternalAccounts.map((a) =>
+            a.address === newEntry.address
+              ? a
+              : {
+                  ...a,
+                  addedBy: 'user',
+                }
           )
         )
       );
@@ -194,11 +184,22 @@ export const OtherAccountsProvider = ({
       // re-sync account state.
       setStateWithRef(
         [...otherAccountsRef.current].map((item) =>
-          item.address !== newAccount.address ? item : newAccount
+          item.address !== newEntry.address ? item : newEntry
         ),
         setOtherAccounts,
         otherAccountsRef
       );
+    }
+
+    // add external account if not there already.
+    else if (isNew) {
+      localStorage.setItem(
+        'external_accounts',
+        JSON.stringify(localExternalAccounts.concat(newEntry))
+      );
+
+      // add external account to imported accounts
+      addOtherAccounts([newEntry]);
     }
   };
 
