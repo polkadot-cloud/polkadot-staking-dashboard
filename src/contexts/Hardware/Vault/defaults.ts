@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { VaultHardwareContextInterface } from './types';
+import type { VaultAccountsContextInterface } from './types';
 
-export const defaultVaultHardwareContext: VaultHardwareContextInterface = {
+export const defaultVaultAccountsContext: VaultAccountsContextInterface = {
   vaultAccountExists: (a) => false,
   addVaultAccount: (a, i) => null,
   removeVaultAccount: (a) => {},

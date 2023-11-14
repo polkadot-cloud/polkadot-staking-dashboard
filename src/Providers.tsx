@@ -12,7 +12,7 @@ import { ExtrinsicsProvider } from 'contexts/Extrinsics';
 import { FastUnstakeProvider } from 'contexts/FastUnstake';
 import { FiltersProvider } from 'contexts/Filters';
 import { LedgerHardwareProvider } from 'contexts/Hardware/Ledger/LedgerHardware';
-import { VaultHardwareProvider } from 'contexts/Hardware/Vault';
+import { VaultAccountsProvider } from 'contexts/Hardware/Vault';
 import { HelpProvider } from 'contexts/Help';
 import { IdentitiesProvider } from 'contexts/Identities';
 import { MenuProvider } from 'contexts/Menu';
@@ -66,7 +66,7 @@ export const Providers = () => {
     FiltersProvider,
     NotificationsProvider,
     PluginsProvider,
-    VaultHardwareProvider,
+    VaultAccountsProvider,
     LedgerHardwareProvider,
     ExtensionsProvider,
     [
