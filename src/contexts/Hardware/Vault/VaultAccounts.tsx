@@ -19,6 +19,8 @@ import { defaultVaultAccountsContext } from './defaults';
 export const VaultAccountsContext =
   createContext<VaultAccountsContextInterface>(defaultVaultAccountsContext);
 
+export const useVaultAccounts = () => useContext(VaultAccountsContext);
+
 export const VaultAccountsProvider = ({
   children,
 }: {
@@ -155,5 +157,3 @@ export const VaultAccountsProvider = ({
     </VaultAccountsContext.Provider>
   );
 };
-
-export const useVaultHardware = () => useContext(VaultAccountsContext);
