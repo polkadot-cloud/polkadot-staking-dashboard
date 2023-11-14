@@ -92,7 +92,7 @@
     "insertPayoutAddress": "Insert a payout address",
     "invalid": "Address Invalid",
     "join": "Join",
-    "ledgerAppOutOfDate": "Your {{appName}} Ledger app is not configured to the latest runtime veresion",
+    "ledgerAppOutOfDate": "Your {{appName}} Ledger app is not configured to the latest runtime version",
     "ledgerConnectAndConfirm": "Connect your Ledger device and confirm it is connected.",
     "legalDisclosures": "Legal Disclosures",
     "listItemActive": "Active",
