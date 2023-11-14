@@ -31,9 +31,10 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { openHelp } = useHelp();
   const { accounts } = useImportedAccounts();
   const { getAccount } = useImportedAccounts();
-  const { delegates, handleDeclareDelegate } = useProxies();
+  const { handleDeclareDelegate, formatProxiesToDelegates } = useProxies();
 
   // Filter delegates to only show those who are imported in the dashboard.
+  const delegates = formatProxiesToDelegates();
   const importedDelegates = Object.fromEntries(
     Object.entries(delegates).filter(([delegate]) =>
       accounts.find((a) => a.address === delegate)
