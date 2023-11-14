@@ -29,8 +29,7 @@ import type { ListWithInputProps } from './types';
 export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');
   const { openHelp } = useHelp();
-  const { accounts } = useImportedAccounts();
-  const { getAccount } = useImportedAccounts();
+  const { accounts, getAccount } = useImportedAccounts();
   const { handleDeclareDelegate, formatProxiesToDelegates } = useProxies();
 
   // Filter delegates to only show those who are imported in the dashboard.
@@ -40,6 +39,7 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
       accounts.find((a) => a.address === delegate)
     )
   );
+
   return (
     <>
       <ActionWithButton>
