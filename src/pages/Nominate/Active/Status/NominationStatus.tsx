@@ -88,28 +88,28 @@ export const NominationStatus = ({
         !showButtons
           ? []
           : !inSetup()
-          ? !isUnstaking
-            ? [unstakeButton]
-            : []
-          : isNetworkSyncing
-          ? []
-          : [
-              {
-                title: startTitle,
-                icon: faChevronCircleRight,
-                transform: 'grow-1',
-                disabled:
-                  !isReady ||
-                  isReadOnlyAccount(activeAccount) ||
-                  !activeAccount,
-                onClick: () => {
-                  registerSaEvent(
-                    `${network.toLowerCase()}_nominate_setup_button_pressed`
-                  );
-                  setOnNominatorSetup(true);
-                },
-              },
-            ]
+            ? !isUnstaking
+              ? [unstakeButton]
+              : []
+            : isNetworkSyncing
+              ? []
+              : [
+                  {
+                    title: startTitle,
+                    icon: faChevronCircleRight,
+                    transform: 'grow-1',
+                    disabled:
+                      !isReady ||
+                      isReadOnlyAccount(activeAccount) ||
+                      !activeAccount,
+                    onClick: () => {
+                      registerSaEvent(
+                        `${network.toLowerCase()}_nominate_setup_button_pressed`
+                      );
+                      setOnNominatorSetup(true);
+                    },
+                  },
+                ]
       }
       buttonType={buttonType}
     />

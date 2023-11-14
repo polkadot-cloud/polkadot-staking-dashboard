@@ -69,8 +69,8 @@ export const SideMenu = () => {
     apiStatus === 'connecting'
       ? 'warning'
       : apiStatus === 'connected'
-      ? 'success'
-      : 'danger';
+        ? 'success'
+        : 'danger';
 
   return (
     <Wrapper ref={ref} $minimised={sideMenuMinimised}>

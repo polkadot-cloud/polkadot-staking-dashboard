@@ -86,10 +86,10 @@ export const PayeeInput = ({
     payee.destination === 'Account'
       ? account
       : payee.destination === 'None'
-      ? ''
-      : payee.destination === 'Controller'
-      ? controller
-      : activeAccount;
+        ? ''
+        : payee.destination === 'Controller'
+          ? controller
+          : activeAccount;
 
   const placeholderDisplay =
     payee.destination === 'None' ? t('noPayoutAddress') : t('payoutAddress');

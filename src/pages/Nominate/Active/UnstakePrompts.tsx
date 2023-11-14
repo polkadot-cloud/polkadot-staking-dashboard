@@ -51,11 +51,11 @@ export const UnstakePrompts = () => {
                 {isFastUnstaking
                   ? t('nominate.unstakePromptInQueue')
                   : !canWithdrawUnlocks
-                  ? t('nominate.unstakePromptWaitingForUnlocks')
-                  : `${t('nominate.unstakePromptReadyToWithdraw')} ${t(
-                      'nominate.unstakePromptRevert',
-                      { unit }
-                    )}`}
+                    ? t('nominate.unstakePromptWaitingForUnlocks')
+                    : `${t('nominate.unstakePromptReadyToWithdraw')} ${t(
+                        'nominate.unstakePromptRevert',
+                        { unit }
+                      )}`}
               </h4>
               <ButtonRow yMargin>
                 {isFastUnstaking ? (
