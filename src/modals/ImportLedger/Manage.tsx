@@ -3,11 +3,11 @@
 
 import { HardwareStatusBar } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useHelp } from 'contexts/Help';
 import { usePrompt } from 'contexts/Prompt';
-import LedgerSVG from '@polkadot-cloud/assets/extensions/svg/ledger.svg?react';
+import LedgerSVG from '@polkadot-cloud/assets/extensions/svg/ledgersquare.svg?react';
 import { Heading } from 'library/Import/Heading';
 import type { AnyJson } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
@@ -17,17 +17,16 @@ import { Reset } from './Reset';
 
 export const Manage = ({
   addresses,
-  handleLedgerLoop,
+  onGetAddress,
   removeLedgerAddress,
 }: AnyJson) => {
   const { t } = useTranslation();
+  const { openHelp } = useHelp();
   const { network } = useNetwork();
-  const { setIsExecuting, getIsExecuting, resetStatusCodes, getFeedback } =
-    useLedgerHardware();
   const { openPromptWith } = usePrompt();
   const { replaceModal } = useOverlay().modal;
-  const { openHelp } = useHelp();
-
+  const { handleResetLedgerTask, getIsExecuting, getFeedback } =
+    useLedgerHardware();
   const { appName, Icon } = getLedgerApp(network);
   const isExecuting = getIsExecuting();
 
@@ -42,23 +41,22 @@ export const Manage = ({
     <>
       <Heading
         connectTo="Ledger"
-        title={appName}
         Icon={Icon}
-        disabled={!addresses.length}
+        title={appName}
         handleReset={() => {
           openPromptWith(
             <Reset removeLedgerAddress={removeLedgerAddress} />,
             'small'
           );
         }}
+        disabled={!addresses.length}
       />
       <Addresess
         addresses={addresses}
-        handleLedgerLoop={handleLedgerLoop}
         removeLedgerAddress={removeLedgerAddress}
+        onGetAddress={onGetAddress}
       />
       <HardwareStatusBar
-        show
         Icon={LedgerSVG}
         text={feedback?.message || fallbackMessage}
         help={
@@ -70,13 +68,11 @@ export const Manage = ({
             : undefined
         }
         inProgress={isExecuting}
-        handleCancel={() => {
-          setIsExecuting(false);
-          resetStatusCodes();
-        }}
+        handleCancel={() => handleResetLedgerTask()}
         handleDone={() =>
           replaceModal({ key: 'Connect', options: { disableScroll: true } })
         }
+        show
         t={{
           tDone: t('done', { ns: 'library' }),
           tCancel: t('cancel', { ns: 'library' }),

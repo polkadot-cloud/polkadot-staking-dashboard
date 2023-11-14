@@ -23,7 +23,7 @@ export const UnstakePrompts = () => {
   const { isNetworkSyncing } = useUi();
   const { isFastUnstaking, isUnstaking, getFastUnstakeText } = useUnstaking();
   const { getTransferOptions } = useTransferOptions();
-  const { active, totalUnlockChuncks, totalUnlocked, totalUnlocking } =
+  const { active, totalUnlockChunks, totalUnlocked, totalUnlocking } =
     getTransferOptions(activeAccount).nominate;
   const annuncementBorderColor = colors.secondary[mode];
 
@@ -73,7 +73,7 @@ export const UnstakePrompts = () => {
                     text={
                       canWithdrawUnlocks
                         ? t('nominate.unlocked')
-                        : String(totalUnlockChuncks ?? 0)
+                        : String(totalUnlockChunks ?? 0)
                     }
                     disabled={false}
                     onClick={() =>
@@ -83,6 +83,7 @@ export const UnstakePrompts = () => {
                           bondFor: 'nominator',
                           poolClosure: true,
                           disableWindowResize: true,
+                          disableScroll: true,
                         },
                         size: 'sm',
                       })

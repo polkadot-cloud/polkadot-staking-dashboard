@@ -15,6 +15,7 @@ import { Title } from 'library/Modal/Title';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { Forms } from './Forms';
 import { Overview } from './Overview';
 
@@ -23,11 +24,13 @@ export const UnlockChunks = () => {
   const {
     config: { options },
     setModalHeight,
+    modalMaxHeight,
   } = useOverlay().modal;
   const { notEnoughFunds } = useTxMeta();
   const { getStashLedger } = useBalances();
   const { activeAccount } = useActiveAccounts();
   const { getPoolUnlocking } = useActivePools();
+  const { integrityChecked } = useLedgerHardware();
   const { bondFor } = options || {};
 
   // get the unlocking per bondFor
@@ -89,7 +92,14 @@ export const UnlockChunks = () => {
   // resize modal on state change
   useEffect(() => {
     setModalHeight(getModalHeight());
-  }, [task, calculateHeight, notEnoughFunds, sectionRef.current, unlocking]);
+  }, [
+    task,
+    calculateHeight,
+    notEnoughFunds,
+    sectionRef.current,
+    unlocking,
+    integrityChecked,
+  ]);
 
   // resize this modal on window resize
   useEffect(() => {
@@ -105,6 +115,9 @@ export const UnlockChunks = () => {
         <Title title={t('unlocks')} fixed />
       </ModalFixedTitle>
       <ModalMotionTwoSection
+        style={{
+          maxHeight: modalMaxHeight - (headerRef.current?.clientHeight || 0),
+        }}
         animate={sectionRef.current === 0 ? 'home' : 'next'}
         transition={{
           duration: 0.5,
@@ -120,21 +133,25 @@ export const UnlockChunks = () => {
           },
         }}
       >
-        <Overview
-          unlocking={unlocking}
-          bondFor={bondFor}
-          setSection={setSection}
-          setUnlock={setUnlock}
-          setTask={setTask}
-          ref={overviewRef}
-        />
-        <Forms
-          incrementCalculateHeight={incrementCalculateHeight}
-          setSection={setSection}
-          unlock={unlock}
-          task={task}
-          ref={formsRef}
-        />
+        <div className="section">
+          <Overview
+            unlocking={unlocking}
+            bondFor={bondFor}
+            setSection={setSection}
+            setUnlock={setUnlock}
+            setTask={setTask}
+            ref={overviewRef}
+          />
+        </div>
+        <div className="section">
+          <Forms
+            incrementCalculateHeight={incrementCalculateHeight}
+            setSection={setSection}
+            unlock={unlock}
+            task={task}
+            ref={formsRef}
+          />
+        </div>
       </ModalMotionTwoSection>
     </ModalSection>
   );

@@ -13,21 +13,15 @@ import {
   getLocalVaultAccounts,
 } from 'contexts/Hardware/Utils';
 import type { AnyFunction, MaybeAddress, NetworkName } from 'types';
-import { ellipsisFn, setStateWithRef } from '@polkadot-cloud/utils';
+import { setStateWithRef } from '@polkadot-cloud/utils';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import Keyring from '@polkadot/keyring';
-import type {
-  ExternalAccount,
-  ImportedAccount,
-} from '@polkadot-cloud/react/types';
-import {
-  getActiveAccountLocal,
-  getLocalExternalAccounts,
-  removeLocalExternalAccounts,
-} from '../Utils';
+import type { ImportedAccount } from '@polkadot-cloud/react/types';
+import { getActiveAccountLocal } from '../Utils';
 import type { OtherAccountsContextInterface } from './types';
 import { defaultOtherAccountsContext } from './defaults';
+import { getLocalExternalAccounts } from '../ExternalAccounts/Utils';
+import type { ExternalAccountImportType } from '../ExternalAccounts/types';
 
 export const OtherAccountsContext =
   createContext<OtherAccountsContextInterface>(defaultOtherAccountsContext);
@@ -113,9 +107,8 @@ export const OtherAccountsProvider = ({
       );
 
       // set active account for networkData.
-      if (activeAccountInSet) {
-        setActiveAccount(activeAccountInSet?.address || null);
-      }
+      if (activeAccountInSet) setActiveAccount(activeAccountInSet.address);
+
       // add accounts to imported.
       addOtherAccounts(localAccounts);
     }
@@ -137,75 +130,43 @@ export const OtherAccountsProvider = ({
     );
   };
 
-  // Adds an external account (non-wallet) to accounts.
-  const addExternalAccount = (address: string, addedBy: string) => {
-    // ensure account is formatted correctly
-    const keyring = new Keyring();
-    keyring.setSS58Format(ss58);
-    const formatted = keyring.addFromAddress(address).address;
-
-    const newAccount = {
-      address: formatted,
-      network,
-      name: ellipsisFn(address),
-      source: 'external',
-      addedBy,
-    };
-
-    // get all external accounts from localStorage.
-    const localExternalAccounts = getLocalExternalAccounts();
-    const existsLocal = localExternalAccounts.find(
-      (l) => l.address === address && l.network === network
-    );
-
-    // check that address is not sitting in imported accounts (currently cannot check which
-    // network).
-    const existsImported = otherAccountsRef.current.find(
-      (a) => a.address === address
-    );
-
-    // add external account if not there already.
-    if (!existsLocal && !existsImported) {
-      localStorage.setItem(
-        'external_accounts',
-        JSON.stringify(localExternalAccounts.concat(newAccount))
-      );
-
-      // add external account to imported accounts
-      addOtherAccounts([newAccount]);
-    } else if (existsLocal && existsLocal.addedBy !== 'system') {
-      // the external account needs to change to `system` so it cannot be removed. This will replace
-      // the whole entry.
-      localStorage.setItem(
-        'external_accounts',
-        JSON.stringify(
-          localExternalAccounts.map((item) =>
-            item.address !== address ? item : newAccount
-          )
-        )
-      );
-      // re-sync account state.
-      setStateWithRef(
-        [...otherAccountsRef.current].map((item) =>
-          item.address !== newAccount.address ? item : newAccount
-        ),
-        setOtherAccounts,
-        otherAccountsRef
-      );
-    }
+  // Unsubscribe all account subscriptions.
+  const unsubscribe = () => {
+    Object.values(unsubs.current).forEach((unsub) => {
+      unsub();
+    });
   };
 
-  // Get any external accounts and remove from localStorage.
-  const forgetExternalAccounts = (forget: ImportedAccount[]) => {
-    if (!forget.length) return;
-    removeLocalExternalAccounts(
-      network,
-      forget.filter((i) => 'network' in i) as ExternalAccount[]
+  // Add other accounts to context state.
+  const addOtherAccounts = (account: ImportedAccount[]) => {
+    setStateWithRef(
+      [...otherAccountsRef.current].concat(account),
+      setOtherAccounts,
+      otherAccountsRef
     );
+  };
 
-    // If the currently active account is being forgotten, disconnect.
-    if (forget.find((a) => a.address === activeAccount) !== undefined)
-      setActiveAccount(null);
+  // Replace other account with new entry.
+  const replaceOtherAccount = (account: ImportedAccount) => {
+    setStateWithRef(
+      [...otherAccountsRef.current].map((item) =>
+        item.address !== account.address ? item : account
+      ),
+      setOtherAccounts,
+      otherAccountsRef
+    );
+  };
+
+  // Add or replace other account with an entry.
+  const addOrReplaceOtherAccount = (
+    account: ImportedAccount,
+    type: ExternalAccountImportType
+  ) => {
+    if (type === 'new') {
+      addOtherAccounts([account]);
+    } else if (type === 'replace') {
+      replaceOtherAccount(account);
+    }
   };
 
   // Re-sync other accounts on network switch. Waits for `injectedWeb3` to be injected.
@@ -217,22 +178,6 @@ export const OtherAccountsProvider = ({
     }
     return () => unsubscribe();
   }, [network, checkingInjectedWeb3]);
-
-  // Unsubscrbe all account subscriptions.
-  const unsubscribe = () => {
-    Object.values(unsubs.current).forEach((unsub) => {
-      unsub();
-    });
-  };
-
-  // Add other accounts to context state.
-  const addOtherAccounts = (a: ImportedAccount[]) => {
-    setStateWithRef(
-      [...otherAccountsRef.current].concat(a),
-      setOtherAccounts,
-      otherAccountsRef
-    );
-  };
 
   // Once extensions are fully initialised, fetch accounts from other sources.
   useEffectIgnoreInitial(() => {
@@ -259,12 +204,11 @@ export const OtherAccountsProvider = ({
   return (
     <OtherAccountsContext.Provider
       value={{
-        addExternalAccount,
         addOtherAccounts,
+        addOrReplaceOtherAccount,
         renameOtherAccount,
         importLocalOtherAccounts,
         forgetOtherAccounts,
-        forgetExternalAccounts,
         accountsInitialised,
         otherAccounts: otherAccountsRef.current,
       }}

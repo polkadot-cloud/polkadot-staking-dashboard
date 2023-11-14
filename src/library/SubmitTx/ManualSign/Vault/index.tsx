@@ -31,7 +31,7 @@ export const Vault = ({
     submitting || !valid || !accountHasSigner(submitAddress) || !txFeesValid;
 
   return (
-    <>
+    <div className="inner">
       <div>
         <EstimatedTxFee />
         {valid ? <p>{t('submitTransaction')}</p> : <p>...</p>}
@@ -65,6 +65,6 @@ export const Vault = ({
           />
         )}
       </div>
-    </>
+    </div>
   );
 };

@@ -26,124 +26,122 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
 
   return (
     <ContentWrapper>
-      <div className="padding">
-        <div className="items" ref={ref} style={{ paddingBottom: '1.5rem' }}>
-          <div style={{ paddingBottom: '0.75rem' }}>
-            {poolDestroying && <Warning text={t('beingDestroyed')} />}
+      <div className="items" ref={ref} style={{ paddingBottom: '1.5rem' }}>
+        <div style={{ paddingBottom: '0.75rem' }}>
+          {poolDestroying && <Warning text={t('beingDestroyed')} />}
+        </div>
+        {isOwner() && (
+          <>
+            {globalMaxCommission > 0 && (
+              <>
+                <ButtonOption
+                  onClick={() => {
+                    setSection(1);
+                    setTask('claim_commission');
+                  }}
+                >
+                  <div>
+                    <h3>{t('claimCommission')}</h3>
+                    <p>{t('claimOutstandingCommission')}</p>
+                  </div>
+                </ButtonOption>
+                <ButtonOption
+                  onClick={() => {
+                    setSection(1);
+                    setTask('manage_commission');
+                  }}
+                >
+                  <div>
+                    <h3>{t('manageCommission')}</h3>
+                    <p>{t('updatePoolCommission')}</p>
+                  </div>
+                </ButtonOption>
+              </>
+            )}
+          </>
+        )}
+        <ButtonOption
+          onClick={() => {
+            setSection(1);
+            setTask('set_claim_permission');
+          }}
+        >
+          <div>
+            <h3>{t('updateClaimPermission')}</h3>
+            <p>{t('updateWhoClaimRewards')}</p>
           </div>
-          {isOwner() && (
-            <>
-              {globalMaxCommission > 0 && (
-                <>
-                  <ButtonOption
-                    onClick={() => {
-                      setSection(1);
-                      setTask('claim_commission');
-                    }}
-                  >
-                    <div>
-                      <h3>{t('claimCommission')}</h3>
-                      <p>{t('claimOutstandingCommission')}</p>
-                    </div>
-                  </ButtonOption>
-                  <ButtonOption
-                    onClick={() => {
-                      setSection(1);
-                      setTask('manage_commission');
-                    }}
-                  >
-                    <div>
-                      <h3>{t('manageCommission')}</h3>
-                      <p>{t('updatePoolCommission')}</p>
-                    </div>
-                  </ButtonOption>
-                </>
-              )}
-            </>
-          )}
+        </ButtonOption>
+
+        {isOwner() && (
           <ButtonOption
+            disabled={poolDestroying}
             onClick={() => {
               setSection(1);
-              setTask('set_claim_permission');
+              setTask('set_pool_metadata');
             }}
           >
             <div>
-              <h3>{t('updateClaimPermission')}</h3>
-              <p>{t('updateWhoClaimRewards')}</p>
+              <h3>{t('renamePool')}</h3>
+              <p>{t('updateName')}</p>
             </div>
           </ButtonOption>
-
-          {isOwner() && (
-            <ButtonOption
-              disabled={poolDestroying}
-              onClick={() => {
-                setSection(1);
-                setTask('set_pool_metadata');
-              }}
-            >
-              <div>
-                <h3>{t('renamePool')}</h3>
-                <p>{t('updateName')}</p>
-              </div>
-            </ButtonOption>
-          )}
-          {(isOwner() || isBouncer()) && (
-            <>
-              {poolLocked ? (
-                <ButtonOption
-                  disabled={poolDestroying}
-                  onClick={() => {
-                    setSection(1);
-                    setTask('unlock_pool');
-                  }}
-                >
-                  <div>
-                    <h3>{t('unlockPool')}</h3>
-                    <p>{t('allowToJoin')}</p>
-                  </div>
-                </ButtonOption>
-              ) : (
-                <ButtonOption
-                  disabled={poolDestroying}
-                  onClick={() => {
-                    setSection(1);
-                    setTask('lock_pool');
-                  }}
-                >
-                  <div>
-                    <h3>{t('lockPool')}</h3>
-                    <p>{t('stopJoiningPool')}</p>
-                  </div>
-                </ButtonOption>
-              )}
+        )}
+        {(isOwner() || isBouncer()) && (
+          <>
+            {poolLocked ? (
               <ButtonOption
                 disabled={poolDestroying}
                 onClick={() => {
                   setSection(1);
-                  setTask('destroy_pool');
+                  setTask('unlock_pool');
                 }}
               >
                 <div>
-                  <h3>{t('destroyPool')}</h3>
-                  <p>{t('changeToDestroy')}</p>
+                  <h3>{t('unlockPool')}</h3>
+                  <p>{t('allowToJoin')}</p>
                 </div>
               </ButtonOption>
-            </>
-          )}
-          {isMember() && !isDepositor() && active?.isGreaterThan(0) && (
+            ) : (
+              <ButtonOption
+                disabled={poolDestroying}
+                onClick={() => {
+                  setSection(1);
+                  setTask('lock_pool');
+                }}
+              >
+                <div>
+                  <h3>{t('lockPool')}</h3>
+                  <p>{t('stopJoiningPool')}</p>
+                </div>
+              </ButtonOption>
+            )}
             <ButtonOption
+              disabled={poolDestroying}
               onClick={() => {
                 setSection(1);
-                setTask('leave_pool');
+                setTask('destroy_pool');
               }}
             >
               <div>
-                <h3>{t('leavePool')}</h3>
-                <p>{t('unbondFundsLeavePool')}</p>
+                <h3>{t('destroyPool')}</h3>
+                <p>{t('changeToDestroy')}</p>
               </div>
             </ButtonOption>
-          )}
-        </div>
+          </>
+        )}
+        {isMember() && !isDepositor() && active?.isGreaterThan(0) && (
+          <ButtonOption
+            onClick={() => {
+              setSection(1);
+              setTask('leave_pool');
+            }}
+          >
+            <div>
+              <h3>{t('leavePool')}</h3>
+              <p>{t('unbondFundsLeavePool')}</p>
+            </div>
+          </ButtonOption>
+        )}
       </div>
     </ContentWrapper>
   );

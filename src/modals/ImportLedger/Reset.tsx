@@ -4,9 +4,8 @@
 import { registerSaEvent } from 'Utils';
 import { ButtonMono, ButtonMonoInvert } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
-import type { LedgerAddress } from 'contexts/Hardware/types';
+import type { LedgerAddress } from 'contexts/Hardware/Ledger/types';
 import { usePrompt } from 'contexts/Prompt';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
@@ -14,6 +13,7 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { LedgerAccount } from '@polkadot-cloud/react/types';
 import { useNetwork } from 'contexts/Network';
+import { useLedgerAccounts } from 'contexts/Hardware/Ledger/LedgerAccounts';
 
 export const Reset = ({ removeLedgerAddress }: AnyJson) => {
   const { t } = useTranslation('modals');
@@ -21,12 +21,12 @@ export const Reset = ({ removeLedgerAddress }: AnyJson) => {
   const { setStatus } = usePrompt();
   const { replaceModal } = useOverlay().modal;
   const { forgetOtherAccounts } = useOtherAccounts();
-  const { ledgerAccounts, removeLedgerAccount } = useLedgerHardware();
+  const { removeLedgerAccount, ledgerAccounts } = useLedgerAccounts();
 
   const removeAccounts = () => {
     // Remove imported Ledger accounts.
     ledgerAccounts.forEach((account: LedgerAccount) => {
-      removeLedgerAccount(account.address);
+      removeLedgerAccount(account.address, false);
     });
     forgetOtherAccounts(ledgerAccounts);
 

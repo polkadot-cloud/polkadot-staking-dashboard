@@ -146,7 +146,6 @@ export const HomeInner = () => {
             <CardWrapper>
               <PoolListProvider>
                 <PoolList
-                  batchKey="bonded_pools"
                   pools={bondedPools}
                   defaultFilters={{
                     includes: ['active'],

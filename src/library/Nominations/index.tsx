@@ -130,14 +130,14 @@ export const Nominations = ({
           )}
         </div>
       </CardHeaderWrapper>
-      {nominated === null || isSyncing ? (
+      {isSyncing ? (
         <ListStatusHeader>{`${t('nominate.syncing')}...`}</ListStatusHeader>
       ) : !nominator ? (
         <ListStatusHeader>{t('nominate.notNominating')}.</ListStatusHeader>
-      ) : nominated.length > 0 ? (
+      ) : (nominated?.length || 0) > 0 ? (
         <ValidatorList
           bondFor={bondFor}
-          validators={nominated}
+          validators={nominated || []}
           nominator={nominator}
           format="nomination"
           refetchOnListUpdate

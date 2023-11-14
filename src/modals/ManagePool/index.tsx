@@ -4,6 +4,7 @@
 import {
   ModalFixedTitle,
   ModalMotionTwoSection,
+  ModalPadding,
   ModalSection,
 } from '@polkadot-cloud/react';
 import { useEffect, useRef, useState } from 'react';
@@ -12,14 +13,16 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Title } from 'library/Modal/Title';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { Forms } from './Forms';
 import { Tasks } from './Tasks';
 
 export const ManagePool = () => {
   const { t } = useTranslation('modals');
   const { notEnoughFunds } = useTxMeta();
-  const { setModalHeight } = useOverlay().modal;
+  const { integrityChecked } = useLedgerHardware();
   const { isOwner, selectedActivePool } = useActivePools();
+  const { setModalHeight, modalMaxHeight } = useOverlay().modal;
 
   // modal task
   const [task, setTask] = useState<string>();
@@ -37,8 +40,7 @@ export const ManagePool = () => {
   const tasksRef = useRef<HTMLDivElement>(null);
   const formsRef = useRef<HTMLDivElement>(null);
 
-  // Resize modal on state change.
-  useEffect(() => {
+  const refreshModalHeight = () => {
     let height = headerRef.current?.clientHeight || 0;
     if (section === 0) {
       height += tasksRef.current?.clientHeight || 0;
@@ -46,13 +48,26 @@ export const ManagePool = () => {
       height += formsRef.current?.clientHeight || 0;
     }
     setModalHeight(height);
+  };
+
+  // Resize modal on state change.
+  useEffect(() => {
+    refreshModalHeight();
   }, [
+    integrityChecked,
     section,
     task,
     notEnoughFunds,
     calculateHeight,
     selectedActivePool?.bondedPool?.state,
   ]);
+
+  useEffect(() => {
+    window.addEventListener('resize', refreshModalHeight);
+    return () => {
+      window.removeEventListener('resize', refreshModalHeight);
+    };
+  }, []);
 
   return (
     <ModalSection type="carousel">
@@ -63,6 +78,9 @@ export const ManagePool = () => {
         />
       </ModalFixedTitle>
       <ModalMotionTwoSection
+        style={{
+          maxHeight: modalMaxHeight - (headerRef.current?.clientHeight || 0),
+        }}
         animate={section === 0 ? 'home' : 'next'}
         transition={{
           duration: 0.5,
@@ -78,14 +96,21 @@ export const ManagePool = () => {
           },
         }}
       >
-        <Tasks setSection={setSection} setTask={setTask} ref={tasksRef} />
-        <Forms
-          setSection={setSection}
-          task={task}
-          section={section}
-          ref={formsRef}
-          incrementCalculateHeight={incrementCalculateHeight}
-        />
+        <div className="section">
+          <ModalPadding horizontalOnly>
+            <Tasks setSection={setSection} setTask={setTask} ref={tasksRef} />
+          </ModalPadding>
+        </div>
+
+        <div className="section">
+          <Forms
+            setSection={setSection}
+            task={task}
+            section={section}
+            ref={formsRef}
+            incrementCalculateHeight={incrementCalculateHeight}
+          />
+        </div>
       </ModalMotionTwoSection>
     </ModalSection>
   );

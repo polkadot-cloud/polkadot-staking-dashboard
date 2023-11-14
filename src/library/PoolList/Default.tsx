@@ -33,7 +33,6 @@ import type { PoolListProps } from './types';
 export const PoolList = ({
   allowMoreCols,
   pagination,
-  batchKey = '',
   disableThrottle,
   allowSearch,
   pools,
@@ -52,7 +51,7 @@ export const PoolList = ({
   const { listFormat, setListFormat } = usePoolList();
   const { getFilters, setMultiFilters, getSearchTerm, setSearchTerm } =
     useFilters();
-  const { fetchPoolsMetaBatch, poolSearchFilter, meta } = useBondedPools();
+  const { poolSearchFilter, poolsNominations } = useBondedPools();
 
   const includes = getFilters('include', 'pools');
   const excludes = getFilters('exclude', 'pools');
@@ -101,16 +100,15 @@ export const PoolList = ({
     setPoolsDefault(pools);
     setListPools(pools);
     setFetched(true);
-    fetchPoolsMetaBatch(batchKey, pools, true);
   };
 
   // handle filter / order update
   const handlePoolsFilterUpdate = (
     filteredPools: any = Object.assign(poolsDefault)
   ) => {
-    filteredPools = applyFilter(includes, excludes, filteredPools, batchKey);
+    filteredPools = applyFilter(includes, excludes, filteredPools);
     if (searchTerm) {
-      filteredPools = poolSearchFilter(filteredPools, batchKey, searchTerm);
+      filteredPools = poolSearchFilter(filteredPools, searchTerm);
     }
     setListPools(filteredPools);
     setPage(1);
@@ -120,8 +118,8 @@ export const PoolList = ({
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
     let filteredPools = Object.assign(poolsDefault);
-    filteredPools = applyFilter(includes, excludes, filteredPools, batchKey);
-    filteredPools = poolSearchFilter(filteredPools, batchKey, newValue);
+    filteredPools = applyFilter(includes, excludes, filteredPools);
+    filteredPools = poolSearchFilter(filteredPools, newValue);
 
     // ensure no duplicates
     filteredPools = filteredPools.filter(
@@ -160,10 +158,10 @@ export const PoolList = ({
   // List ui changes / validator changes trigger re-render of list.
   useEffect(() => {
     // only filter when pool nominations have been synced.
-    if (!isSyncing && meta[batchKey]?.nominations) {
+    if (!isSyncing && Object.keys(poolsNominations).length) {
       handlePoolsFilterUpdate();
     }
-  }, [isSyncing, includes, excludes, meta]);
+  }, [isSyncing, includes, excludes, Object.keys(poolsNominations).length]);
 
   // Scroll to top of the window on every filter.
   useEffect(() => {
@@ -262,11 +260,7 @@ export const PoolList = ({
                     },
                   }}
                 >
-                  <Pool
-                    pool={pool}
-                    batchKey={batchKey}
-                    batchIndex={poolsDefault.indexOf(pool)}
-                  />
+                  <Pool pool={pool} />
                 </motion.div>
               ))}
             </>

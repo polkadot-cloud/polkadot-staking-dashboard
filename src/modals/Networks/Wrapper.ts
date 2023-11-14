@@ -148,6 +148,18 @@ export const ConnectionsWrapper = styled.div`
       padding-right: 1rem;
     }
 
+    .provider {
+      padding: 0 0.25rem;
+      display: flex;
+      align-items: center;
+
+      @media (max-width: ${SectionFullWidthThreshold - 400}px) {
+        position: relative;
+        top: -0.5rem;
+        margin-bottom: 1rem;
+      }
+    }
+
     @media (max-width: ${SectionFullWidthThreshold - 400}px) {
       flex-basis: 100%;
       &:first-child {

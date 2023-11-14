@@ -6,6 +6,7 @@ import {
   ActionItem,
   ButtonSubmitInvert,
   ModalNotes,
+  ModalPadding,
   ModalWarnings,
 } from '@polkadot-cloud/react';
 import { greaterThanZero, planckToUnit, rmCommas } from '@polkadot-cloud/utils';
@@ -70,7 +71,7 @@ export const ClaimCommission = ({ setSection }: any) => {
 
   return (
     <>
-      <div className="padding">
+      <ModalPadding horizontalOnly>
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
             {warnings.map((text, i) => (
@@ -87,7 +88,7 @@ export const ClaimCommission = ({ setSection }: any) => {
         <ModalNotes>
           <p>{t('sentToCommissionPayee')}</p>
         </ModalNotes>
-      </div>
+      </ModalPadding>
       <SubmitTx
         valid={valid}
         buttons={[
