@@ -1074,10 +1074,10 @@
     tslib "^2.6.2"
     ws "^8.14.1"
 
-"@polkawatch/ddp-client@^2.0.8":
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/@polkawatch/ddp-client/-/ddp-client-2.0.9.tgz#fedb4bd8ad3addebee7df2165e4cb83a2047b8d4"
-  integrity sha512-1e2nE7nfPT8PhdCuh37hdicvGzEiH7xNPsSKPAmcKii11C02qBFijJCF4nykx7VgaOFXAdaxZuD6tl3lqwcRCQ==
+"@polkawatch/ddp-client@^2.0.10":
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/@polkawatch/ddp-client/-/ddp-client-2.0.10.tgz#7d0a8392ec7c67c34f14d13fcfd03cfe05739a02"
+  integrity sha512-z/35TTf643mumnm8cxSyzZV6fsPDCxL6jSCvXE9Y7eXR96EbHoAnnp5bg8rAo8nmQlA+6TYYeqR58aIhw0AS/A==
   dependencies:
     axios "^0.21.4"
 
