@@ -14,7 +14,7 @@ export const externalAccountExistsLocal = (
     (l) => l.address === address && l.network === network
   );
 
-// Gets local external accounts from local storage.
+// Gets local external accounts from local storage. Ensure that only `user` accounts are returned.
 export const getLocalExternalAccounts = (network?: NetworkName) => {
   let localAccounts = localStorageOrDefault(
     'external_accounts',
@@ -22,7 +22,9 @@ export const getLocalExternalAccounts = (network?: NetworkName) => {
     true
   ) as ExternalAccount[];
   if (network)
-    localAccounts = localAccounts.filter((l) => l.network === network);
+    localAccounts = localAccounts.filter(
+      (l) => l.network === network && l.addedBy !== 'system'
+    );
   return localAccounts;
 };
 

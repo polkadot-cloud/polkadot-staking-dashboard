@@ -59,10 +59,10 @@ export const ClosurePrompts = () => {
                 {targets.length > 0
                   ? t('pools.stopNominating')
                   : depositorCanWithdraw
-                  ? t('pools.closePool')
-                  : depositorCanUnbond
-                  ? t('pools.unbondYourFunds')
-                  : t('pools.withdrawUnlock')}
+                    ? t('pools.closePool')
+                    : depositorCanUnbond
+                      ? t('pools.unbondYourFunds')
+                      : t('pools.withdrawUnlock')}
               </h4>
               <ButtonRow yMargin>
                 <ButtonPrimary

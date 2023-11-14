@@ -5,7 +5,7 @@ import { ButtonSecondary } from '@polkadot-cloud/react';
 import { isValidAddress } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useVaultHardware } from 'contexts/Hardware/Vault';
+import { useVaultAccounts } from 'contexts/Hardware/Vault/VaultAccounts';
 import { usePrompt } from 'contexts/Prompt';
 import { QRViewerWrapper } from 'library/Import/Wrappers';
 import { QrScanSignature } from 'library/QRCode/ScanSignature';
@@ -21,7 +21,7 @@ export const Reader = () => {
   const { addOtherAccounts } = useOtherAccounts();
   const { setStatus: setPromptStatus } = usePrompt();
   const { addVaultAccount, vaultAccountExists, vaultAccounts } =
-    useVaultHardware();
+    useVaultAccounts();
 
   // Store data from QR Code scanner.
   const [qrData, setQrData] = useState<any>(undefined);
@@ -58,12 +58,12 @@ export const Reader = () => {
       qrData === undefined
         ? `${t('waitingForQRCode')}`
         : isValidAddress(qrData)
-        ? formatAccountSs58(qrData, ss58)
-          ? `${t('differentNetworkAddress')}`
-          : vaultAccountExists(qrData)
-          ? `${t('accountAlreadyImported')}`
-          : `${t('addressReceived')}`
-        : `${t('invalidAddress')}`
+          ? formatAccountSs58(qrData, ss58)
+            ? `${t('differentNetworkAddress')}`
+            : vaultAccountExists(qrData)
+              ? `${t('accountAlreadyImported')}`
+              : `${t('addressReceived')}`
+          : `${t('invalidAddress')}`
     );
   }, [qrData]);
 

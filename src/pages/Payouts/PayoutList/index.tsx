@@ -143,15 +143,15 @@ export const PayoutListInner = ({
               p.event_id === 'PaidOut'
                 ? t('payouts.poolClaim')
                 : p.event_id === 'Rewarded'
-                ? t('payouts.payout')
-                : p.event_id;
+                  ? t('payouts.payout')
+                  : p.event_id;
 
             const labelClass =
               p.event_id === 'PaidOut'
                 ? 'claim'
                 : p.event_id === 'Rewarded'
-                ? 'reward'
-                : undefined;
+                  ? 'reward'
+                  : undefined;
 
             // get validator if it exists
             const validator = validators.find(
@@ -164,8 +164,8 @@ export const PayoutListInner = ({
             const batchIndex = validator
               ? validators.indexOf(validator)
               : pool
-              ? bondedPools.indexOf(pool)
-              : 0;
+                ? bondedPools.indexOf(pool)
+                : 0;
 
             return (
               <motion.div

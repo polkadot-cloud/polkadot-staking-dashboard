@@ -40,21 +40,21 @@ export const PoolStatus = () => {
     poolState === 'Blocked'
       ? `${t('pools.locked')} / `
       : poolState === 'Destroying'
-      ? `${t('pools.destroying')} / `
-      : '';
+        ? `${t('pools.destroying')} / `
+        : '';
 
   // Determine pool status - right side.
   const poolStatusRight = isPoolSyncing
     ? t('pools.inactivePoolNotNominating')
     : !poolNominating
-    ? t('pools.inactivePoolNotNominating')
-    : nominees.active.length
-    ? `${t('pools.nominatingAnd')} ${
-        earningRewards
-          ? t('pools.earningRewards')
-          : t('pools.notEarningRewards')
-      }`
-    : t('pools.waitingForActiveNominations');
+      ? t('pools.inactivePoolNotNominating')
+      : nominees.active.length
+        ? `${t('pools.nominatingAnd')} ${
+            earningRewards
+              ? t('pools.earningRewards')
+              : t('pools.notEarningRewards')
+          }`
+        : t('pools.waitingForActiveNominations');
 
   return (
     <Stat

@@ -269,10 +269,10 @@ export const BalanceChart = () => {
                         isNetworkSyncing
                           ? undefined
                           : !feeReserve.isZero() && !edReserved.isZero()
-                          ? faCheckDouble
-                          : feeReserve.isZero() && edReserved.isZero()
-                          ? undefined
-                          : faCheck
+                            ? faCheckDouble
+                            : feeReserve.isZero() && edReserved.isZero()
+                              ? undefined
+                              : faCheck
                       }
                       iconTransform="shrink-1"
                       disabled={

@@ -80,14 +80,12 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   const [commission, setCommission] = useState<number>(initialCommission);
 
   // Max commission enabled.
-  const [maxCommissionEnabled, setMaxCommissionEnabled] = useState<boolean>(
-    !!maxCommissionSet
-  );
+  const [maxCommissionEnabled, setMaxCommissionEnabled] =
+    useState<boolean>(!!maxCommissionSet);
 
   // Change rate enabled.
-  const [changeRateEnabled, setChangeRateEnabled] = useState<boolean>(
-    !!changeRateSet
-  );
+  const [changeRateEnabled, setChangeRateEnabled] =
+    useState<boolean>(!!changeRateSet);
 
   // Store the commission payee.
   const [payee, setPayee] = useState<MaybeAddress>(initialPayee);

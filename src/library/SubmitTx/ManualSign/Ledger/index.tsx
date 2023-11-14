@@ -117,7 +117,14 @@ export const Ledger = ({
       {runtimesInconsistent && (
         <div className="inner warning">
           <div>
-            <p className="prompt">{t('ledgerDeviceOutOfDate', { appName })}</p>
+            <p className="prompt">
+              {t('ledgerAppOutOfDate', { appName })}
+              <ButtonHelp
+                onClick={() =>
+                  openHelp('Ledger App Not on Latest Runtime Version')
+                }
+              />
+            </p>
           </div>
         </div>
       )}
@@ -138,8 +145,8 @@ export const Ledger = ({
                     {feedback?.message
                       ? feedback.message
                       : !integrityChecked
-                      ? t('ledgerConnectAndConfirm')
-                      : `${t('deviceVerified')}. ${t('submitTransaction')}`}
+                        ? t('ledgerConnectAndConfirm')
+                        : `${t('deviceVerified')}. ${t('submitTransaction')}`}
                   </>
                 )}
                 {feedback?.helpKey && (

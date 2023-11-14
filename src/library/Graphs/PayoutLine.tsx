@@ -91,8 +91,8 @@ export const PayoutLine = ({
   const color = notStaking
     ? colors.primary[mode]
     : !poolingOnly
-    ? colors.primary[mode]
-    : colors.secondary[mode];
+      ? colors.primary[mode]
+      : colors.secondary[mode];
 
   // configure graph options
   const options = {

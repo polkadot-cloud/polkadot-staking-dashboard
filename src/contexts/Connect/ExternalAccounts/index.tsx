@@ -20,7 +20,6 @@ import {
   addLocalExternalAccount,
   externalAccountExistsLocal,
   removeLocalExternalAccounts,
-  updateLocalExternalAccount,
 } from './Utils';
 
 export const ExternalAccountsContext =
@@ -65,14 +64,15 @@ export const ExternalAccountsProvider = ({
     let isImported: boolean = true;
     let importType: ExternalAccountImportType = 'new';
 
-    // Add external account if not there already.
     if (!existsLocal) {
-      addLocalExternalAccount(newEntry);
+      // Only add `user` accounts to localStorage.
+      if (addedBy === 'user') addLocalExternalAccount(newEntry);
     } else if (toSystem) {
       // If account is being added by `system`, but is already imported, update it to be a system
-      // account.
+      // account. `system` accounts are not persisted to local storage.
+      //
+      // update the entry to a system account.
       newEntry = { ...newEntry, addedBy: 'system' };
-      updateLocalExternalAccount(newEntry);
       importType = 'replace';
     } else isImported = false;
 

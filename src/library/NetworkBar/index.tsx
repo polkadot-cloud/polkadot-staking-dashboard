@@ -81,8 +81,8 @@ export const NetworkBar = () => {
                       prices.change < 0
                         ? ' neg'
                         : prices.change > 0
-                        ? ' pos'
-                        : ''
+                          ? ' pos'
+                          : ''
                     }`}
                   >
                     {prices.change < 0 ? '' : prices.change > 0 ? '+' : ''}

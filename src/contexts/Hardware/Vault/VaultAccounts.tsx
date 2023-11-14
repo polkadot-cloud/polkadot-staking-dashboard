@@ -2,22 +2,29 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ellipsisFn, setStateWithRef } from '@polkadot-cloud/utils';
-import React, { useEffect, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import type { VaultAccount } from '@polkadot-cloud/react/types';
 import { useNetwork } from 'contexts/Network';
 import { getLocalVaultAccounts, isLocalNetworkAddress } from '../Utils';
-import type { VaultHardwareContextInterface } from './types';
-import { defaultVaultHardwareContext } from './defaults';
+import type { VaultAccountsContextInterface } from './types';
+import { defaultVaultAccountsContext } from './defaults';
 
-export const VaultHardwareContext =
-  React.createContext<VaultHardwareContextInterface>(
-    defaultVaultHardwareContext
-  );
+export const VaultAccountsContext =
+  createContext<VaultAccountsContextInterface>(defaultVaultAccountsContext);
 
-export const VaultHardwareProvider = ({
+export const useVaultAccounts = () => useContext(VaultAccountsContext);
+
+export const VaultAccountsProvider = ({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) => {
   const { network } = useNetwork();
 
@@ -136,7 +143,7 @@ export const VaultHardwareProvider = ({
   }, [network]);
 
   return (
-    <VaultHardwareContext.Provider
+    <VaultAccountsContext.Provider
       value={{
         vaultAccountExists,
         addVaultAccount,
@@ -147,8 +154,6 @@ export const VaultHardwareProvider = ({
       }}
     >
       {children}
-    </VaultHardwareContext.Provider>
+    </VaultAccountsContext.Provider>
   );
 };
-
-export const useVaultHardware = () => React.useContext(VaultHardwareContext);

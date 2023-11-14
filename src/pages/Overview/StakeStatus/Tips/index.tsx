@@ -96,9 +96,8 @@ export const Tips = () => {
   }, []);
 
   // store the current amount of allowed items on display
-  const [itemsPerPage, setItemsPerPageState] = useState<number>(
-    getItemsPerPage()
-  );
+  const [itemsPerPage, setItemsPerPageState] =
+    useState<number>(getItemsPerPage());
   const itemsPerPageRef = useRef(itemsPerPage);
 
   // store the current page

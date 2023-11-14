@@ -53,9 +53,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
     return NetworkList[network].endpoints.defaultRpcEndpoint;
   };
-  const [rpcEndpoint, setRpcEndpointState] = useState<string>(
-    initialRpcEndpoint()
-  );
+  const [rpcEndpoint, setRpcEndpointState] =
+    useState<string>(initialRpcEndpoint());
 
   // Store whether in light client mode.
   const [isLightClient, setIsLightClient] = useState<boolean>(
