@@ -11,7 +11,7 @@ import {
 } from '@polkadot-cloud/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useVaultHardware } from 'contexts/Hardware/Vault';
+import { useVaultHardware } from 'contexts/Hardware/Vault/VaultAccounts';
 import { usePrompt } from 'contexts/Prompt';
 import PolkadotVaultSVG from '@polkadot-cloud/assets/extensions/svg/polkadotvault.svg?react';
 import { Confirm } from 'library/Import/Confirm';
