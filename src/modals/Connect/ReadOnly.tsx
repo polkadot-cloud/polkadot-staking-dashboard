@@ -46,9 +46,10 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
     ({ addedBy }) => addedBy === 'user'
   );
 
-  const handleForgetAccount = (account: ExternalAccount) => {
+  const handleForgetExternalAccount = (account: ExternalAccount) => {
     forgetExternalAccounts([account]);
-    forgetOtherAccounts([account]);
+    // forget the account from state only if it has not replaced by a `system` external account.
+    if (account.addedBy === 'user') forgetOtherAccounts([account]);
     setModalResize();
   };
 
@@ -102,7 +103,7 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                   </div>
                   <ButtonSecondary
                     text={t('forget')}
-                    onClick={() => handleForgetAccount(a)}
+                    onClick={() => handleForgetExternalAccount(a)}
                   />
                 </ManualAccount>
               ))}
