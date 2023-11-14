@@ -156,6 +156,7 @@ export const HelpConfig: HelpItems = [
       'Ledger Rejected Transaction',
       'Ledger Request Timeout',
       'Open App On Ledger',
+      'Ledger App Not on Latest Runtime Version',
       'Wrong Transaction',
     ],
     external: [],

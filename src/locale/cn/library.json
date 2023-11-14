@@ -91,7 +91,7 @@
     "invalid": "地址无效",
     "join": "加入提名池",
     "ledgerConnectAndConfirm": "连接您的Ledger设备并确认其已被连接",
-    "ledgerDeviceOutOfDate": "Ledger设备上的{{appName}}应用程序未配置为最新的运行时元数据, 您的交易可能会失败。请将您的Ledger设备更新到最新版本以防止出现此警告",
+    "ledgerAppOutOfDate": "Your {{appName}} Ledger app is not configured to the latest runtime veresion.",
     "legalDisclosures": "法律论述",
     "listItemActive": "活跃",
     "locked": "己锁",

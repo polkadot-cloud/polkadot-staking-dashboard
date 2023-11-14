@@ -93,7 +93,7 @@
     "invalid": "Address Invalid",
     "join": "Join",
     "ledgerConnectAndConfirm": "Connect your Ledger device and confirm it is connected.",
-    "ledgerDeviceOutOfDate": "The {{appName}} app on your Ledger device is not configured to the latest runtime metadata, and your transaction may fail. Update your Ledger device to the latest version to prevent this warning.",
+    "ledgerAppOutOfDate": "Your {{appName}} Ledger app is not configured to the latest runtime veresion",
     "legalDisclosures": "Legal Disclosures",
     "listItemActive": "Active",
     "locked": "Locked",

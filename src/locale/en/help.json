@@ -151,6 +151,14 @@
           "Try performing the operation again, and if the error persists, try restarting the Ledger device."
         ]
       ],
+      "ledgerAppNotOnLatestRuntimeVersion": [
+        "Ledger App Not on Latest Runtime Version",
+        [
+          "This message occurs when your Ledger app is not configured to the latest runtime metadata. You may still attempt to submit your transaction, but it may fail.",
+          "To prevent this warning, update your Ledger device to the latest version.",
+          "There is usually a delay between runtime upgrades deploying and Ledger app updates. When an app update is available, you will be able to update your app in Ledger Live."
+        ]
+      ],
       "lockedBalance": [
         "Locked Balance",
         [
