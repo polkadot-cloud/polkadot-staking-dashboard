@@ -73,8 +73,8 @@ export const PoolBonded = ({ pool }: { pool: Pool }) => {
           {nominationStatus === null || !eraStakers.stakers.length
             ? `${t('syncing')}...`
             : targets.length
-            ? capitalizeFirstLetter(t(`${nominationStatus}`) ?? '')
-            : t('notNominating')}
+              ? capitalizeFirstLetter(t(`${nominationStatus}`) ?? '')
+              : t('notNominating')}
           {' / '}
           {t('bonded')}: {poolBonded.decimalPlaces(3).toFormat()} {unit}
         </h5>

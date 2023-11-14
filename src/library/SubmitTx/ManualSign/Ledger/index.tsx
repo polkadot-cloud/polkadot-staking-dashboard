@@ -145,8 +145,8 @@ export const Ledger = ({
                     {feedback?.message
                       ? feedback.message
                       : !integrityChecked
-                      ? t('ledgerConnectAndConfirm')
-                      : `${t('deviceVerified')}. ${t('submitTransaction')}`}
+                        ? t('ledgerConnectAndConfirm')
+                        : `${t('deviceVerified')}. ${t('submitTransaction')}`}
                   </>
                 )}
                 {feedback?.helpKey && (

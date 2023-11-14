@@ -59,17 +59,17 @@ export const Submit = ({
   const handleOnClick = !integrityChecked
     ? handleCheckRuntimeVersion
     : txReady
-    ? onSubmit
-    : handleTxSubmit;
+      ? onSubmit
+      : handleTxSubmit;
 
   // Determine button text.
   const text = !integrityChecked
     ? t('confirm')
     : txReady
-    ? submitText || ''
-    : getIsExecuting()
-    ? t('signing')
-    : t('sign');
+      ? submitText || ''
+      : getIsExecuting()
+        ? t('signing')
+        : t('sign');
 
   // Button icon.
   const icon = !integrityChecked ? faUsb : faSquarePen;

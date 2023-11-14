@@ -98,8 +98,8 @@ export const Wrapper = styled.div<{
         props.$hoverBorder
           ? 'var(--accent-color-primary)'
           : props.$selected
-          ? 'var(--accent-color-primary)'
-          : 'var(--border-primary-color)'};
+            ? 'var(--accent-color-primary)'
+            : 'var(--border-primary-color)'};
     }
 
     > button {

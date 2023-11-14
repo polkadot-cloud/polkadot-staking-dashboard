@@ -58,12 +58,12 @@ export const Reader = () => {
       qrData === undefined
         ? `${t('waitingForQRCode')}`
         : isValidAddress(qrData)
-        ? formatAccountSs58(qrData, ss58)
-          ? `${t('differentNetworkAddress')}`
-          : vaultAccountExists(qrData)
-          ? `${t('accountAlreadyImported')}`
-          : `${t('addressReceived')}`
-        : `${t('invalidAddress')}`
+          ? formatAccountSs58(qrData, ss58)
+            ? `${t('differentNetworkAddress')}`
+            : vaultAccountExists(qrData)
+              ? `${t('accountAlreadyImported')}`
+              : `${t('addressReceived')}`
+          : `${t('invalidAddress')}`
     );
   }, [qrData]);
 

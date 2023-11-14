@@ -101,8 +101,8 @@ export const Bond = () => {
     const bondAsString = !bondValid
       ? '0'
       : bondToSubmit.isNaN()
-      ? '0'
-      : bondToSubmit.toString();
+        ? '0'
+        : bondToSubmit.toString();
 
     if (isPooling) {
       tx = api.tx.nominationPools.bondExtra({
