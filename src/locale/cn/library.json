@@ -90,7 +90,7 @@
     "insertPayoutAddress": "输入收益到账地址",
     "invalid": "地址无效",
     "join": "加入提名池",
-    "ledgerAppOutOfDate": "Your {{appName}} Ledger app is not configured to the latest runtime version.",
+    "ledgerAppOutOfDate": "您的{{appName}} Ledger应用程序未配置为最新运行时版本",
     "ledgerConnectAndConfirm": "连接您的Ledger设备并确认其已被连接",
     "legalDisclosures": "法律论述",
     "listItemActive": "活跃",

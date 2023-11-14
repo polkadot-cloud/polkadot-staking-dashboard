@@ -127,11 +127,11 @@
         ]
       ],
       "ledgerAppNotOnLatestRuntimeVersion": [
-        "Ledger App Not on Latest Runtime Version",
+        "Ledger App非最新运行时版本",
         [
-          "This message occurs when your Ledger app is not configured to the latest runtime metadata. You may still attempt to submit your transaction, but it may fail.",
-          "To prevent this warning, update your Ledger device to the latest version.",
-          "There is usually a delay between runtime upgrades deploying and Ledger app updates. When an app update is available, you will be able to update your app in Ledger Live."
+          "当您的Ledger应用程序未配置为最新的运行时元数据时,会出现此消息. 您仍然可以尝试提交您的交易,但可能会失败",
+          "若要防止此警告,请将您的Ledger设备更新为最新版本",
+          "运行时升级部署和Ledger应用程序更新之间通常会有延迟。当应用程序更新可用时, 您将能够在Ledger Live中更新应用程序"
         ]
       ],
       "ledgerHardwareWallets": [
