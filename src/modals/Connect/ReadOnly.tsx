@@ -48,7 +48,8 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
 
   const handleForgetAccount = (account: ExternalAccount) => {
     forgetExternalAccounts([account]);
-    forgetOtherAccounts([account]);
+    // forget the account from state only if it has not replaced by a `system` external account.
+    if (account.addedBy === 'user') forgetOtherAccounts([account]);
     setModalResize();
   };
 
