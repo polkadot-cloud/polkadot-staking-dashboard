@@ -126,6 +126,14 @@
           "得到的收益金额取决于提名人和验证人自己在那个Era绑定了多少{NETWORK_UNIT}."
         ]
       ],
+      "ledgerAppNotOnLatestRuntimeVersion": [
+        "Ledger App Not on Latest Runtime Version",
+        [
+          "This message occurs when your Ledger app is not configured to the latest runtime metadata. You may still attempt to submit your transaction, but it may fail.",
+          "To prevent this warning, update your Ledger device to the latest version.",
+          "There is usually a delay between runtime upgrades deploying and Ledger app updates. When an app update is available, you will be able to update your app in Ledger Live."
+        ]
+      ],
       "ledgerHardwareWallets": [
         "Ledger硬件钱包",
         [
@@ -148,14 +156,6 @@
         [
           "当Ledger设备繁忙时, 或者当操作未能及时完成时, 可能会发生超时报错.",
           "请尝试再次执行该操作, 如果错误仍然存在, 请尝试重新启动Ledger设备."
-        ]
-      ],
-      "ledgerAppNotOnLatestRuntimeVersion": [
-        "Ledger App Not on Latest Runtime Version",
-        [
-          "This message occurs when your Ledger app is not configured to the latest runtime metadata. You may still attempt to submit your transaction, but it may fail.",
-          "To prevent this warning, update your Ledger device to the latest version.",
-          "There is usually a delay between runtime upgrades deploying and Ledger app updates. When an app update is available, you will be able to update your app in Ledger Live."
         ]
       ],
       "lockedBalance": [
