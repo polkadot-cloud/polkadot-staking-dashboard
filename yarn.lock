@@ -701,10 +701,10 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.48.tgz#aa04ff6a4b8a45d8c39dc3e232936299a44d85c7"
   integrity sha512-YeYS6OR6AxVV0Y1+FFCy0mLeL+Xxn7siYXjNm6XtTrcna0kALnQTKM8udedawwkMJujMxhQhfSWVP8i1HQT6hw==
 
-"@polkadot-cloud/react@^0.1.129":
-  version "0.1.129"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.129.tgz#4a85fc69bc20708a867158685257a68d6a5a68e4"
-  integrity sha512-qLOKJtcKu6RJ9BJDAd4TLPRe8iS7WAeK/Mt+3VeO7B7LBB7+DIut+E/djGoNUlsLSAkYCn4mmyWMS+fWm0XBxg==
+"@polkadot-cloud/react@^0.1.130":
+  version "0.1.130"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.130.tgz#2eb7a167bb90695edc742d8bc4f7c486946333e9"
+  integrity sha512-UZnva2AGDJTjsPA4Ea+DXFBIFo/rg5mxvsphQSMt1MxrPIH2NIBVM0MmvPwR29Ajqvkg0fc12byn6L1GjHEh6w==
   dependencies:
     "@chainsafe/metamask-polkadot-adapter" "^0.5.1"
     "@chainsafe/metamask-polkadot-types" "^0.6.0"
@@ -722,7 +722,7 @@
     "@polkadot/util-crypto" "^12.5.1"
     "@zondax/ledger-substrate" "^0.41.3"
     buffer "^6.0.3"
-    framer-motion "^10.15.0"
+    framer-motion "^10.16.5"
     qrcode-generator "^1.4.4"
     react-error-boundary "^4.0.11"
     react-qr-reader "^2.2.1"
@@ -3064,7 +3064,7 @@ formdata-polyfill@^4.0.10:
   dependencies:
     fetch-blob "^3.1.2"
 
-framer-motion@^10.15.0, framer-motion@^10.16.5:
+framer-motion@^10.16.5:
   version "10.16.5"
   resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-10.16.5.tgz#f1ad625adf213a8906f1ea52a31a4ef222f056d5"
   integrity sha512-GEzVjOYP2MIpV9bT/GbhcsBNoImG3/2X3O/xVNWmktkv9MdJ7P/44zELm/7Fjb+O3v39SmKFnoDQB32giThzpg==
