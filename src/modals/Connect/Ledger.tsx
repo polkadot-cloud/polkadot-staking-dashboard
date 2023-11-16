@@ -17,7 +17,7 @@ import {
 import { inChrome } from '@polkadot-cloud/utils';
 import React from 'react';
 import { useHelp } from 'contexts/Help';
-import LedgerLogoSVG from 'img/ledgerLogo.svg?react';
+import LedgerLogoSVG from '@polkadot-cloud/assets/extensions/svg/ledger.svg?react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 
@@ -40,7 +40,7 @@ export const Ledger = (): React.ReactElement => {
             <ButtonHelp onClick={() => openHelp('Ledger Hardware Wallets')} />
           </div>
           <div className="row">
-            <LedgerLogoSVG className="logo mono" />
+            <LedgerLogoSVG className="logo" />
           </div>
           <div className="row margin">
             <ButtonText

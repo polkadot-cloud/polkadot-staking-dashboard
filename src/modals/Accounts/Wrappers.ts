@@ -95,8 +95,14 @@ export const AccountWrapper = styled.div`
             font-size: 0.9rem;
           }
           .delegator {
-            width: 1rem;
+            width: 1.1rem;
             z-index: 0;
+
+            > div {
+              width: 2rem;
+              height: 2rem;
+              top: 0.25rem;
+            }
           }
           .identicon {
             z-index: 1;

@@ -60,7 +60,6 @@ export interface PoolMembership {
 
 // BondedPool types
 export interface BondedPoolsContextState {
-  fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => void;
   queryBondedPool: (p: number) => any;
   getBondedPool: (p: number) => BondedPool | null;
   updateBondedPools: (p: BondedPool[]) => void;
@@ -71,9 +70,11 @@ export interface BondedPoolsContextState {
   getAccountRoles: (w: MaybeAddress) => any;
   getAccountPools: (w: MaybeAddress) => any;
   replacePoolRoles: (poolId: number, roleEdits: AnyJson) => void;
-  poolSearchFilter: (l: any, k: string, v: string) => void;
+  poolSearchFilter: (l: any, v: string) => void;
   bondedPools: BondedPool[];
-  meta: AnyMetaBatch;
+  poolsMetaData: Record<number, string>;
+  poolsNominations: Record<number, PoolNominations>;
+  updatePoolNominations: (id: number, nominations: string[]) => void;
 }
 
 export interface ActivePool {
@@ -87,7 +88,7 @@ export interface ActivePool {
 
 export interface BondedPool {
   addresses: PoolAddresses;
-  id: number | string;
+  id: number;
   memberCounter: string;
   points: string;
   roles: {
@@ -107,6 +108,12 @@ export interface BondedPool {
     throttleFrom?: AnyJson | null;
   };
 }
+
+export type PoolNominations = {
+  submittedIn: string;
+  suppressed: boolean;
+  targets: string[];
+} | null;
 
 export type NominationStatuses = Record<string, string>;
 

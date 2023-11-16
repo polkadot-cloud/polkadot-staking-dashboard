@@ -3,12 +3,9 @@
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
-import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Polkicon } from '@polkadot-cloud/react';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Wrapper } from './Wrapper';
 import type { AccountProps } from './types';
 
@@ -20,44 +17,15 @@ export const Account = ({
   fontSize = '1.05rem',
 }: AccountProps) => {
   const { t } = useTranslation('library');
-  const { isReady } = useApi();
-  const { activeAccount } = useActiveAccounts();
-  const { fetchPoolsMetaBatch, meta } = useBondedPools();
+  const { poolsMetaData } = useBondedPools();
 
-  // is this the initial fetch
-  const [fetched, setFetched] = useState(false);
-
-  const batchKey = 'pool_header';
-
-  // refetch when pool or active account changes
-  useEffect(() => {
-    setFetched(false);
-  }, [activeAccount, pool]);
-
-  // configure pool list when network is ready to fetch
-  useEffect(() => {
-    if (isReady) {
-      setFetched(true);
-
-      if (!fetched) {
-        getPoolMeta();
-      }
-    }
-  }, [isReady, fetched]);
-
-  // handle pool list bootstrapping
-  const getPoolMeta = () => {
-    const pools: any = [{ id: pool.id }];
-    fetchPoolsMetaBatch(batchKey, pools, true);
-  };
-
-  const metaBatch = meta[batchKey];
-  const metaData = metaBatch?.metadata?.[0];
-  const syncing = metaData === undefined;
+  const syncing = !Object.values(poolsMetaData).length;
 
   // display value
   const defaultDisplay = ellipsisFn(pool.addresses.stash);
-  let display = syncing ? t('syncing') : metaData ?? defaultDisplay;
+  let display = syncing
+    ? t('syncing')
+    : poolsMetaData[pool.id] ?? defaultDisplay;
 
   // check if super identity has been byte encoded
   const displayAsBytes = u8aToString(u8aUnwrapBytes(display));

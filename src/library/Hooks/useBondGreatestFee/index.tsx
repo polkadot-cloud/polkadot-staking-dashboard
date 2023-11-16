@@ -20,7 +20,7 @@ export const useBondGreatestFee = ({ bondFor }: Props) => {
     () => getTransferOptions(activeAccount),
     [activeAccount]
   );
-  const { freeBalance } = transferOptions;
+  const { transferrableBalance } = transferOptions;
 
   // store the largest possible tx fees for bonding.
   const [largestTxFee, setLargestTxFee] = useState<BigNumber>(new BigNumber(0));
@@ -38,7 +38,10 @@ export const useBondGreatestFee = ({ bondFor }: Props) => {
 
   // estimate the largest possible tx fee based on users free balance.
   const txLargestFee = async () => {
-    const bond = BigNumber.max(freeBalance.minus(feeReserve), 0).toString();
+    const bond = BigNumber.max(
+      transferrableBalance.minus(feeReserve),
+      0
+    ).toString();
 
     let tx = null;
     if (!api) {

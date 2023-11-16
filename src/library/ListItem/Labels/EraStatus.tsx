@@ -24,10 +24,10 @@ export const EraStatus = ({ noMargin, status, totalStake }: EraStatusProps) => {
         {isSyncing || erasStakersSyncing
           ? t('syncing')
           : validatorStatus !== 'waiting'
-          ? `${t('listItemActive')} / ${planckToUnit(totalStake, units)
-              .integerValue()
-              .toFormat()} ${unit}`
-          : capitalizeFirstLetter(t(`${validatorStatus}`) ?? '')}
+            ? `${t('listItemActive')} / ${planckToUnit(totalStake, units)
+                .integerValue()
+                .toFormat()} ${unit}`
+            : capitalizeFirstLetter(t(`${validatorStatus}`) ?? '')}
       </h5>
     </ValidatorStatusWrapper>
   );

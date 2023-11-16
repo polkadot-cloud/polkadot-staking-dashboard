@@ -6,8 +6,6 @@ import type { DisplayFor } from 'types';
 
 export interface PoolProps {
   pool: Pool;
-  batchKey: string;
-  batchIndex: number;
 }
 
 export interface Pool {

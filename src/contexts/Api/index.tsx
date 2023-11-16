@@ -25,7 +25,11 @@ import type {
 } from 'contexts/Api/types';
 import type { AnyApi } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
-import * as defaults from './defaults';
+import {
+  defaultApiContext,
+  defaultChainState,
+  defaultConsts,
+} from './defaults';
 
 export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Store povider instance.
@@ -34,7 +38,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   );
 
   // Store chain state.
-  const [chainState, setchainState] = useState<APIChainState>(undefined);
+  const [chainState, setchainState] =
+    useState<APIChainState>(defaultChainState);
 
   // Store the active RPC provider.
   const initialRpcEndpoint = () => {
@@ -48,9 +53,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
     return NetworkList[network].endpoints.defaultRpcEndpoint;
   };
-  const [rpcEndpoint, setRpcEndpointState] = useState<string>(
-    initialRpcEndpoint()
-  );
+  const [rpcEndpoint, setRpcEndpointState] =
+    useState<string>(initialRpcEndpoint());
 
   // Store whether in light client mode.
   const [isLightClient, setIsLightClient] = useState<boolean>(
@@ -61,7 +65,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const [api, setApi] = useState<ApiPromise | null>(null);
 
   // Store network constants.
-  const [consts, setConsts] = useState<APIConstants>(defaults.consts);
+  const [consts, setConsts] = useState<APIConstants>(defaultConsts);
 
   // Store API connection status.
   const [apiStatus, setApiStatus] = useState<ApiStatus>('disconnected');
@@ -88,8 +92,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   const handleApiSwitch = () => {
     setApi(null);
-    setConsts(defaults.consts);
-    setchainState(undefined);
+    setConsts(defaultConsts);
+    setchainState(defaultChainState);
   };
 
   // Handle connect to API.
@@ -134,22 +138,17 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
     const newChainState = await Promise.all([
       newApi.rpc.system.chain(),
-      newApi.rpc.system.version(),
+      newApi.consts.system.version,
       newApi.consts.system.ss58Prefix,
     ]);
 
     // check that chain values have been fetched before committing to state.
     // could be expanded to check supported chains.
-    if (
-      newChainState.every((c) => {
-        return !!c?.toHuman();
-      })
-    ) {
+    if (newChainState.every((c) => !!c?.toHuman())) {
       const chain = newChainState[0]?.toString();
-      const version = newChainState[1]?.toString();
+      const version = newChainState[1]?.toJSON();
       const ss58Prefix = Number(newChainState[2]?.toString());
 
-      // set fetched chain state in storage.
       setchainState({ chain, version, ss58Prefix });
     }
 
@@ -301,8 +300,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   );
 };
 
-export const APIContext = createContext<APIContextInterface>(
-  defaults.defaultApiContext
-);
+export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 
 export const useApi = () => useContext(APIContext);

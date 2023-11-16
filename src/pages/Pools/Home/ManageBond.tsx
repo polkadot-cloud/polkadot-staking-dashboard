@@ -40,12 +40,9 @@ export const ManageBond = () => {
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const {
-    active,
-    totalUnlocking,
-    totalUnlocked,
-    totalUnlockChuncks,
-    totalAdditionalBond,
-  } = allTransferOptions.pool;
+    pool: { active, totalUnlocking, totalUnlocked, totalUnlockChunks },
+    transferrableBalance,
+  } = allTransferOptions;
 
   const { state } = selectedActivePool?.bondedPool || {};
 
@@ -108,11 +105,15 @@ export const ManageBond = () => {
             onClick={() =>
               openModal({
                 key: 'UnlockChunks',
-                options: { bondFor: 'pool', disableWindowResize: true },
+                options: {
+                  bondFor: 'pool',
+                  disableWindowResize: true,
+                  disableScroll: true,
+                },
                 size: 'sm',
               })
             }
-            text={String(totalUnlockChuncks ?? 0)}
+            text={String(totalUnlockChunks ?? 0)}
           />
         </ButtonRow>
       </CardHeaderWrapper>
@@ -120,7 +121,7 @@ export const ManageBond = () => {
         active={planckToUnit(active, units)}
         unlocking={planckToUnit(totalUnlocking, units)}
         unlocked={planckToUnit(totalUnlocked, units)}
-        free={planckToUnit(totalAdditionalBond, units)}
+        free={planckToUnit(transferrableBalance, units)}
         inactive={active.isZero()}
       />
     </>

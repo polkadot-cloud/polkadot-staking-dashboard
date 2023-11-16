@@ -39,8 +39,8 @@ export const Connected = () => {
                 isNetworkSyncing
                   ? undefined
                   : isNominating()
-                  ? 'Nominator'
-                  : undefined
+                    ? 'Nominator'
+                    : undefined
               }
               format="name"
             />

@@ -4,17 +4,10 @@
 import styled from 'styled-components';
 
 export const ContentWrapper = styled.div`
-  border-radius: 1rem;
   display: flex;
   flex-flow: column nowrap;
-  flex-basis: 50%;
-  flex-grow: 0;
-  flex-shrink: 1;
-  height: fit-content;
-
-  .padding {
-    padding: 0 1rem;
-  }
+  border-radius: 1rem;
+  width: 100%;
 
   > div:last-child {
     margin-bottom: 0;

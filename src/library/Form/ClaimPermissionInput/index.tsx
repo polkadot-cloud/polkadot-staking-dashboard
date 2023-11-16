@@ -56,8 +56,8 @@ export const ClaimPermissionInput = ({
           const newClaimPermission = val
             ? claimPermissionConfig[0].value
             : current === undefined
-            ? undefined
-            : 'Permissioned';
+              ? undefined
+              : 'Permissioned';
 
           setSelected(newClaimPermission);
           onChange(newClaimPermission);

@@ -101,13 +101,7 @@ export const Networks = () => {
                   <h4 className="selected">{t('selected')}</h4>
                 )}
               </ConnectionButton>
-              <div
-                style={{
-                  padding: '0 0.25rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
+              <div className="provider">
                 <p>{t('provider')}:</p>
                 <ButtonTertiary
                   text={rpcEndpoint}

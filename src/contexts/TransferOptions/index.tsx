@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import React, { useState } from 'react';
 import { useApi } from 'contexts/Api';
@@ -13,8 +12,25 @@ import type { MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import * as defaults from './defaults';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';
+import {
+  getMaxLock,
+  getLocalFeeReserve,
+  getUnlocking,
+  setLocalFeeReserve,
+} from './Utils';
+import {
+  defaultTransferOptions,
+  defaultTransferOptionsContext,
+} from './defaults';
+
+export const TransferOptionsContext =
+  React.createContext<TransferOptionsContextInterface>(
+    defaultTransferOptionsContext
+  );
+
+export const useTransferOptions = () =>
+  React.useContext(TransferOptionsContext);
 
 export const TransferOptionsProvider = ({
   children,
@@ -22,178 +38,120 @@ export const TransferOptionsProvider = ({
   children: React.ReactNode;
 }) => {
   const { consts } = useApi();
-  const {
-    networkData: { name, units, defaultFeeReserve },
-  } = useNetwork();
-  const { activeEra } = useNetworkMetrics();
-  const { getStashLedger, getBalance, getLocks } = useBalances();
   const { getAccount } = useBonded();
+  const { activeEra } = useNetworkMetrics();
   const { membership } = usePoolMemberships();
-  const { existentialDeposit } = consts;
   const { activeAccount } = useActiveAccounts();
-
-  // Get the local storage rcord for an account reserve balance.
-  const getFeeReserveLocalStorage = (address: MaybeAddress) => {
-    const reserves = JSON.parse(
-      localStorage.getItem('reserve_balances') ?? '{}'
-    );
-    return new BigNumber(
-      reserves?.[name]?.[address || ''] ??
-        unitToPlanck(String(defaultFeeReserve), units)
-    );
-  };
+  const {
+    network,
+    networkData: { units, defaultFeeReserve },
+  } = useNetwork();
+  const { getStashLedger, getBalance, getLocks } = useBalances();
+  const { existentialDeposit } = consts;
 
   // A user-configurable reserve amount to be used to pay for transaction fees.
   const [feeReserve, setFeeReserve] = useState<BigNumber>(
-    getFeeReserveLocalStorage(activeAccount)
+    getLocalFeeReserve(activeAccount, defaultFeeReserve, { network, units })
   );
-
-  // Update an account's reserve amount on account or network change.
-  useEffectIgnoreInitial(() => {
-    setFeeReserve(getFeeReserveLocalStorage(activeAccount));
-  }, [activeAccount, name]);
 
   // Get the bond and unbond amounts available to the user
   const getTransferOptions = (address: MaybeAddress): TransferOptions => {
-    const account = getAccount(address);
-    if (account === null) {
-      return defaults.transferOptions;
-    }
-    const balance = getBalance(address);
-    const ledger = getStashLedger(address);
+    if (getAccount(address) === null) return defaultTransferOptions;
+
+    const { free, frozen } = getBalance(address);
+    const { active, total, unlocking } = getStashLedger(address);
     const locks = getLocks(address);
-
-    const { free } = balance;
-    const { active, total, unlocking } = ledger;
-
-    const totalLocked =
-      locks?.reduce(
-        (prev, { amount }) => prev.plus(amount),
-        new BigNumber(0)
-      ) || new BigNumber(0);
+    const maxLock = getMaxLock(locks);
 
     // Calculate a forced amount of free balance that needs to be reserved to keep the account
     // alive. Deducts `locks` from free balance reserve needed.
-    const edReserved = BigNumber.max(existentialDeposit.minus(totalLocked), 0);
+    const edReserved = BigNumber.max(existentialDeposit.minus(maxLock), 0);
 
     // Total free balance after `edReserved` is subtracted.
-    const freeMinusReserve = BigNumber.max(free.minus(edReserved), 0);
+    const freeMinusReserve = BigNumber.max(
+      free.minus(edReserved).minus(feeReserve),
+      0
+    );
 
-    // calculate total balance locked
-    const maxLockBalance =
-      locks.reduce(
-        (prev, current) => {
-          return prev.amount.isGreaterThan(current.amount) ? prev : current;
-        },
-        { amount: new BigNumber(0) }
-      )?.amount || new BigNumber(0);
+    // Free balance that can be transferred.
+    const transferrableBalance = BigNumber.max(
+      freeMinusReserve.minus(frozen),
+      0
+    );
 
-    const poolBalance = membership?.balance;
-    const activePool = poolBalance || new BigNumber(0);
+    // Gree balance to pay for tsx fees. Does not factor `feeReserve`.
+    const balanceTxFees = BigNumber.max(
+      free.minus(edReserved).minus(frozen),
+      0
+    );
 
-    // total amount actively unlocking
-    let totalUnlocking = new BigNumber(0);
-    let totalUnlocked = new BigNumber(0);
-    for (const u of unlocking) {
-      const { value, era } = u;
-      if (activeEra.index.isGreaterThan(era)) {
-        totalUnlocked = totalUnlocked.plus(value);
-      } else {
-        totalUnlocking = totalUnlocking.plus(value);
-      }
-    }
+    // Staking specific balances.
+    //
+    // Total amount unlocking and unlocked.
+    const { totalUnlocking, totalUnlocked } = getUnlocking(
+      unlocking,
+      activeEra.index
+    );
 
-    // free balance after `total` ledger amount.
+    // Free balance to stake after `total` (total staked) ledger amount.
     const freeBalance = BigNumber.max(freeMinusReserve.minus(total), 0);
 
-    const nominateOptions = () => {
-      // total possible balance that can be bonded
+    // Get nominator-specific balances.
+    const nominatorBalances = () => {
       const totalPossibleBond = BigNumber.max(
-        freeMinusReserve
-          .minus(totalUnlocking)
-          .minus(totalUnlocked)
-          .minus(feeReserve),
+        freeMinusReserve.minus(totalUnlocking).minus(totalUnlocked),
         0
       );
-
-      // total additional balance that can be bonded.
-      const totalAdditionalBond = totalPossibleBond.minus(active);
-
       return {
         active,
         totalUnlocking,
         totalUnlocked,
         totalPossibleBond,
-        totalAdditionalBond,
-        totalUnlockChuncks: unlocking.length,
+        totalAdditionalBond: BigNumber.max(totalPossibleBond.minus(active), 0),
+        totalUnlockChunks: unlocking.length,
       };
     };
 
-    const poolOptions = () => {
+    // Get pool-member-specific balances.
+    const poolBalances = () => {
       const unlockingPool = membership?.unlocking || [];
-
-      // total possible balance that can be bonded
-      const totalPossibleBondPool = BigNumber.max(
-        freeMinusReserve.minus(maxLockBalance).minus(feeReserve),
-        new BigNumber(0)
-      );
-
-      // total additional balance that can be bonded.
-      const totalAdditionalBondPool = totalPossibleBondPool;
-
-      let totalUnlockingPool = new BigNumber(0);
-      let totalUnlockedPool = new BigNumber(0);
-      for (const u of unlockingPool) {
-        const { value, era } = u;
-        if (activeEra.index.isGreaterThan(era)) {
-          totalUnlockedPool = totalUnlockedPool.plus(value);
-        } else {
-          totalUnlockingPool = totalUnlockingPool.plus(value);
-        }
-      }
-      return {
-        active: activePool,
+      const {
         totalUnlocking: totalUnlockingPool,
         totalUnlocked: totalUnlockedPool,
-        totalPossibleBond: totalPossibleBondPool,
-        totalAdditionalBond: totalAdditionalBondPool,
-        totalUnlockChuncks: unlockingPool.length,
+      } = getUnlocking(unlockingPool, activeEra.index);
+
+      return {
+        active: membership?.balance || new BigNumber(0),
+        totalUnlocking: totalUnlockingPool,
+        totalUnlocked: totalUnlockedPool,
+        totalPossibleBond: BigNumber.max(freeMinusReserve.minus(maxLock), 0),
+        totalUnlockChunks: unlockingPool.length,
       };
     };
 
     return {
       freeBalance,
+      transferrableBalance,
+      balanceTxFees,
       edReserved,
-      nominate: nominateOptions(),
-      pool: poolOptions(),
+      nominate: nominatorBalances(),
+      pool: poolBalances(),
     };
   };
 
   // Updates account's reserve amount in state and in local storage.
   const setFeeReserveBalance = (amount: BigNumber) => {
     if (!activeAccount) return;
-    setFeeReserveLocalStorage(amount);
+    setLocalFeeReserve(activeAccount, amount, network);
     setFeeReserve(amount);
   };
 
-  // Update the local storage record for account reserve balances.
-  const setFeeReserveLocalStorage = (amount: BigNumber) => {
-    if (!activeAccount) return;
-
-    try {
-      const newReserves = JSON.parse(
-        localStorage.getItem('reserve_balances') ?? '{}'
-      );
-      const newReservesNetwork = newReserves?.[name] ?? {};
-      newReservesNetwork[activeAccount] = amount.toString();
-
-      newReserves[name] = newReservesNetwork;
-      localStorage.setItem('reserve_balances', JSON.stringify(newReserves));
-    } catch (e) {
-      // corrupted local storage record - remove it.
-      localStorage.removeItem('reserve_balances');
-    }
-  };
+  // Update an account's reserve amount on account or network change.
+  useEffectIgnoreInitial(() => {
+    setFeeReserve(
+      getLocalFeeReserve(activeAccount, defaultFeeReserve, { network, units })
+    );
+  }, [activeAccount, network]);
 
   return (
     <TransferOptionsContext.Provider
@@ -207,11 +165,3 @@ export const TransferOptionsProvider = ({
     </TransferOptionsContext.Provider>
   );
 };
-
-export const TransferOptionsContext =
-  React.createContext<TransferOptionsContextInterface>(
-    defaults.defaultBondedContext
-  );
-
-export const useTransferOptions = () =>
-  React.useContext(TransferOptionsContext);

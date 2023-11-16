@@ -34,6 +34,7 @@ export const BalanceChart = () => {
     },
   } = useNetwork();
   const prices = usePrices();
+  // const { consts } = useApi();
   const { plugins } = usePlugins();
   const { isNetworkSyncing } = useUi();
   const { openModal } = useOverlay().modal;
@@ -107,18 +108,21 @@ export const BalanceChart = () => {
     : new BigNumber(0);
 
   // available balance data
-  const fundsLocked = planckToUnit(
-    BigNumber.max(frozen.minus(lockStakingAmount), 0),
-    units
-  );
+  const fundsLockedPlank = BigNumber.max(frozen.minus(lockStakingAmount), 0);
+  const fundsLocked = planckToUnit(fundsLockedPlank, units);
   let fundsReserved = planckToUnit(edReserved.plus(feeReserve), units);
+
   const fundsFree = planckToUnit(
     BigNumber.max(
-      allTransferOptions.freeBalance.minus(feeReserve).minus(fundsLocked),
+      allTransferOptions.freeBalance
+        .minus(fundsReserved)
+        .minus(feeReserve)
+        .minus(fundsLockedPlank),
       0
     ),
     units
   );
+
   // available balance percentages
   const graphLocked = greaterThanZero(fundsLocked)
     ? fundsLocked.dividedBy(graphAvailable.multipliedBy(0.01))
@@ -265,10 +269,10 @@ export const BalanceChart = () => {
                         isNetworkSyncing
                           ? undefined
                           : !feeReserve.isZero() && !edReserved.isZero()
-                          ? faCheckDouble
-                          : feeReserve.isZero() && edReserved.isZero()
-                          ? undefined
-                          : faCheck
+                            ? faCheckDouble
+                            : feeReserve.isZero() && edReserved.isZero()
+                              ? undefined
+                              : faCheck
                       }
                       iconTransform="shrink-1"
                       disabled={

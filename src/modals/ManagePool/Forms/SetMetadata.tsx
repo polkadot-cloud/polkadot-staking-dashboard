@@ -3,7 +3,11 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { ButtonSubmitInvert, ModalWarnings } from '@polkadot-cloud/react';
+import {
+  ButtonSubmitInvert,
+  ModalPadding,
+  ModalWarnings,
+} from '@polkadot-cloud/react';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -22,7 +26,7 @@ export const SetMetadata = ({ setSection, section }: any) => {
   const { setModalStatus } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
   const { isOwner, selectedActivePool } = useActivePools();
-  const { bondedPools, meta } = useBondedPools();
+  const { bondedPools, poolsMetaData } = useBondedPools();
   const { getSignerWarnings } = useSignerWarnings();
 
   const poolId = selectedActivePool?.id;
@@ -39,9 +43,7 @@ export const SetMetadata = ({ setSection, section }: any) => {
       ({ addresses }) => addresses.stash === selectedActivePool?.addresses.stash
     );
     if (pool) {
-      const metadataBatch = meta.bonded_pools?.metadata ?? [];
-      const batchIndex = bondedPools.indexOf(pool);
-      setMetadata(u8aToString(u8aUnwrapBytes(metadataBatch[batchIndex])));
+      setMetadata(u8aToString(u8aUnwrapBytes(poolsMetaData[Number(pool.id)])));
     }
   }, [section]);
 
@@ -80,7 +82,7 @@ export const SetMetadata = ({ setSection, section }: any) => {
 
   return (
     <>
-      <div className="padding">
+      <ModalPadding horizontalOnly>
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
             {warnings.map((text, i) => (
@@ -99,7 +101,7 @@ export const SetMetadata = ({ setSection, section }: any) => {
           value={metadata ?? ''}
         />
         <p>{t('storedOnChain')}</p>
-      </div>
+      </ModalPadding>
       <SubmitTx
         valid={valid}
         buttons={[

@@ -8,27 +8,20 @@ import type { AnyFunction, AnyJson } from 'types';
 
 export const usePoolFilters = () => {
   const { t } = useTranslation('library');
-  const { meta } = useBondedPools();
+  const { poolsNominations } = useBondedPools();
   const { getNominationsStatusFromTargets } = useStaking();
   const { getPoolNominationStatusCode } = useBondedPools();
 
   /*
-   * include active pools.
-   * Iterates through the supplied list and refers to the meta
-   * batch of the list to filter those list items that are
-   * actively nominating.
+   * Include active pools.
    * Returns the updated filtered list.
    */
-  const includeActive = (list: any, batchKey: string) => {
-    // get pool targets from nominations meta batch
-    const nominations = meta[batchKey]?.nominations ?? [];
-    if (!nominations) {
-      return list;
-    }
-    let i = -1;
+  const includeActive = (list: any) => {
+    if (!Object.keys(poolsNominations).length) return list;
+
     const filteredList = list.filter((p: BondedPool) => {
-      i++;
-      const targets = nominations[i]?.targets ?? [];
+      const nominations = poolsNominations[p.id];
+      const targets = nominations?.targets || [];
       const status = getPoolNominationStatusCode(
         getNominationsStatusFromTargets(p.addresses.stash, targets)
       );
@@ -38,22 +31,15 @@ export const usePoolFilters = () => {
   };
 
   /*
-   * dont include active pools.
-   * Iterates through the supplied list and refers to the meta
-   * batch of the list to filter those list items that are
-   * actively nominating.
+   * Dont include active pools.
    * Returns the updated filtered list.
    */
-  const excludeActive = (list: any, batchKey: string) => {
-    // get pool targets from nominations meta batch
-    const nominations = meta[batchKey]?.nominations ?? [];
-    if (!nominations) {
-      return list;
-    }
-    let i = -1;
+  const excludeActive = (list: any) => {
+    if (!Object.keys(poolsNominations).length) return list;
+
     const filteredList = list.filter((p: BondedPool) => {
-      i++;
-      const targets = nominations[i]?.targets ?? [];
+      const nominations = poolsNominations[p.id];
+      const targets = nominations?.targets || [];
       const status = getPoolNominationStatusCode(
         getNominationsStatusFromTargets(p.addresses.stash, targets)
       );
@@ -135,20 +121,19 @@ export const usePoolFilters = () => {
   const applyFilter = (
     includes: string[] | null,
     excludes: string[] | null,
-    list: AnyJson,
-    batchKey: string
+    list: AnyJson
   ) => {
     if (!excludes && !includes) {
       return list;
     }
     if (includes) {
       for (const fn of getFiltersFromKey(includes, 'include')) {
-        list = fn(list, batchKey);
+        list = fn(list);
       }
     }
     if (excludes) {
       for (const fn of getFiltersFromKey(excludes, 'exclude')) {
-        list = fn(list, batchKey);
+        list = fn(list);
       }
     }
     return list;

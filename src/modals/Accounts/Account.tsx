@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn, planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { ExtensionIcons } from '@polkadot-cloud/assets/extensions';
-import LedgerSVG from '@polkadot-cloud/assets/extensions/svg/ledger.svg?react';
+import LedgerSVG from '@polkadot-cloud/assets/extensions/svg/ledgersquare.svg?react';
 import PolkadotVaultSVG from '@polkadot-cloud/assets/extensions/svg/polkadotvault.svg?react';
 import { Polkicon } from '@polkadot-cloud/react';
 import { useTransferOptions } from 'contexts/TransferOptions';
@@ -36,7 +36,7 @@ export const AccountButton = ({
   const { setModalStatus } = useOverlay().modal;
   const { units, unit } = useNetwork().networkData;
   const { getTransferOptions } = useTransferOptions();
-  const { freeBalance } = getTransferOptions(address || '');
+  const { transferrableBalance } = getTransferOptions(address || '');
 
   // Accumulate account data.
   const meta = getAccount(address || '');
@@ -50,8 +50,8 @@ export const AccountButton = ({
     meta?.source === 'ledger'
       ? LedgerSVG
       : meta?.source === 'vault'
-      ? PolkadotVaultSVG
-      : ExtensionIcons[meta?.source || ''] || undefined;
+        ? PolkadotVaultSVG
+        : ExtensionIcons[meta?.source || ''] || undefined;
 
   // Determine if this account is active (active account or proxy).
   const isActive =
@@ -125,7 +125,7 @@ export const AccountButton = ({
         </section>
         <section className="foot">
           <span className="balance">
-            {`${t('free')}: ${planckToUnit(freeBalance, units)
+            {`${t('free')}: ${planckToUnit(transferrableBalance, units)
               .decimalPlaces(3)
               .toFormat()} ${unit}`}
           </span>

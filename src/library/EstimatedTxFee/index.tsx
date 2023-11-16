@@ -42,11 +42,6 @@ export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
 export class EstimatedTxFee extends React.Component<EstimatedTxFeeProps> {
   static contextType: Context<TxMetaContextInterface> = TxMetaContext;
 
-  componentDidMount(): void {
-    const { resetTxFees } = this.context as TxMetaContextInterface;
-    resetTxFees();
-  }
-
   componentWillUnmount(): void {
     const { resetTxFees } = this.context as TxMetaContextInterface;
     resetTxFees();

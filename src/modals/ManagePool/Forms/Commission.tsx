@@ -6,6 +6,7 @@ import {
   ActionItem,
   ButtonHelp,
   ButtonSubmitInvert,
+  ModalPadding,
   ModalWarnings,
 } from '@polkadot-cloud/react';
 import { rmCommas } from '@polkadot-cloud/utils';
@@ -79,14 +80,12 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   const [commission, setCommission] = useState<number>(initialCommission);
 
   // Max commission enabled.
-  const [maxCommissionEnabled, setMaxCommissionEnabled] = useState<boolean>(
-    !!maxCommissionSet
-  );
+  const [maxCommissionEnabled, setMaxCommissionEnabled] =
+    useState<boolean>(!!maxCommissionSet);
 
   // Change rate enabled.
-  const [changeRateEnabled, setChangeRateEnabled] = useState<boolean>(
-    !!changeRateSet
-  );
+  const [changeRateEnabled, setChangeRateEnabled] =
+    useState<boolean>(!!changeRateSet);
 
   // Store the commission payee.
   const [payee, setPayee] = useState<MaybeAddress>(initialPayee);
@@ -448,7 +447,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
 
   return (
     <>
-      <div className="padding">
+      <ModalPadding horizontalOnly>
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
             {warnings.map((text, i) => (
@@ -634,7 +633,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
             </p>
           </SliderWrapper>
         )}
-      </div>
+      </ModalPadding>
       <SubmitTx
         valid={valid}
         buttons={[

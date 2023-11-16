@@ -36,9 +36,11 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { SideMenuMaximisedWidth } from 'consts';
+import { useTheme } from 'styled-components';
 
 export const RouterInner = () => {
   const { t } = useTranslation();
+  const { mode } = useTheme();
   const { network } = useNetwork();
   const { pathname, search } = useLocation();
   const { accounts } = useImportedAccounts();
@@ -74,6 +76,15 @@ export const RouterInner = () => {
       mainInterface: mainInterfaceRef,
     });
   }, []);
+
+  // Update body background to `--background-default` upon theme change.
+  useEffect(() => {
+    const elem = document.querySelector('.core-entry');
+    if (elem) {
+      document.getElementsByTagName('body')[0].style.backgroundColor =
+        getComputedStyle(elem).getPropertyValue('--background-default');
+    }
+  }, [mode]);
 
   // Open default account modal if url var present and accounts initialised.
   useEffect(() => {

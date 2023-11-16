@@ -15,10 +15,10 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const UnclaimedPayoutsStatus = () => {
   const { t } = useTranslation();
-  const { isReady } = useApi();
   const {
     networkData: { units },
   } = useNetwork();
+  const { isReady } = useApi();
   const { openModal } = useOverlay().modal;
   const { unclaimedPayouts } = usePayouts();
   const { activeAccount } = useActiveAccounts();
@@ -44,7 +44,8 @@ export const UnclaimedPayoutsStatus = () => {
         ),
       }}
       buttons={
-        Object.keys(unclaimedPayouts || {}).length > 0
+        Object.keys(unclaimedPayouts || {}).length > 0 &&
+        !totalUnclaimed.isZero()
           ? [
               {
                 title: t('claim', { ns: 'modals' }),
@@ -57,6 +58,7 @@ export const UnclaimedPayoutsStatus = () => {
                     size: 'sm',
                     options: {
                       disableWindowResize: true,
+                      disableScroll: true,
                     },
                   }),
               },

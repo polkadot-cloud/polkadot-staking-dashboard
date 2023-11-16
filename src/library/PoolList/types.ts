@@ -11,7 +11,6 @@ export interface PoolListProps {
   allowMoreCols?: boolean;
   allowSearch?: boolean;
   pagination?: boolean;
-  batchKey?: string;
   disableThrottle?: boolean;
   refetchOnListUpdate?: string;
   allowListFormat?: boolean;

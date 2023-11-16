@@ -21,7 +21,7 @@ export const ClaimPayouts = () => {
   const { t } = useTranslation('modals');
   const { notEnoughFunds } = useTxMeta();
   const { unclaimedPayouts } = usePayouts();
-  const { setModalHeight } = useOverlay().modal;
+  const { setModalHeight, modalMaxHeight } = useOverlay().modal;
 
   // Active modal section.
   const [section, setSectionState] = useState(0);
@@ -70,6 +70,9 @@ export const ClaimPayouts = () => {
         <Title title={t('claimPayouts')} fixed />
       </ModalFixedTitle>
       <ModalMotionTwoSection
+        style={{
+          maxHeight: modalMaxHeight - (headerRef.current?.clientHeight || 0),
+        }}
         animate={sectionRef.current === 0 ? 'home' : 'next'}
         transition={{
           duration: 0.5,
@@ -85,17 +88,21 @@ export const ClaimPayouts = () => {
           },
         }}
       >
-        <Overview
-          setSection={setSection}
-          setPayouts={setPayouts}
-          ref={overviewRef}
-        />
-        <Forms
-          ref={formsRef}
-          payouts={payouts}
-          setPayouts={setPayouts}
-          setSection={setSection}
-        />
+        <div className="section">
+          <Overview
+            setSection={setSection}
+            setPayouts={setPayouts}
+            ref={overviewRef}
+          />
+        </div>
+        <div className="section">
+          <Forms
+            ref={formsRef}
+            payouts={payouts}
+            setPayouts={setPayouts}
+            setSection={setSection}
+          />
+        </div>
       </ModalMotionTwoSection>
     </ModalSection>
   );

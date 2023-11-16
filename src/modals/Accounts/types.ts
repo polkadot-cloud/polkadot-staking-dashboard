@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { PoolMembership } from 'contexts/Pools/types';
-import type { Proxy } from 'contexts/Proxies/type';
+import type { Proxy } from 'contexts/Proxies/types';
 import type { MaybeAddress } from 'types';
 
 export interface AccountItemProps {
