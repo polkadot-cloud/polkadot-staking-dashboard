@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.2.0](https://github.com/paritytech/polkadot-staking-dashboard/compare/v1.1.1...v1.2.0) (2023-11-15)
+
+
+### Features
+
+* add MethodNotSupported error to ledger ([#1627](https://github.com/paritytech/polkadot-staking-dashboard/issues/1627)) ([c756f5d](https://github.com/paritytech/polkadot-staking-dashboard/commit/c756f5da167279fc1fb3adbf9907bc7034a0904b))
+* more info for inconsistent ledger versions ([#1640](https://github.com/paritytech/polkadot-staking-dashboard/issues/1640)) ([cb17371](https://github.com/paritytech/polkadot-staking-dashboard/commit/cb17371b5713b52fd1c34ec0bb647f2171ae21b4))
+* Nova first if in wallet ([f74f276](https://github.com/paritytech/polkadot-staking-dashboard/commit/f74f27626ea890796bbba1714ec92c7b08964948))
+* Nova icon ([814977c](https://github.com/paritytech/polkadot-staking-dashboard/commit/814977ce01da31716ed3a95140e9b42b71f2a233))
+* nova standlone if in wallet ([1192b8a](https://github.com/paritytech/polkadot-staking-dashboard/commit/1192b8aa73af505c7e308a6f66833cc3f4de6453))
+* pool context optimisations ([#1628](https://github.com/paritytech/polkadot-staking-dashboard/issues/1628)) ([ad4db96](https://github.com/paritytech/polkadot-staking-dashboard/commit/ad4db969875daf7994d57df1b4c572b92ae76b26))
+* **refactor:** don't persist `system` external accounts, remove proxy `delegates` state ([#1639](https://github.com/paritytech/polkadot-staking-dashboard/issues/1639)) ([56314ae](https://github.com/paritytech/polkadot-staking-dashboard/commit/56314ae8584f42a40067c7c91abba94d7570afaf))
+
+
+### Bug Fixes
+
+* add balanceTxFees ([05056fa](https://github.com/paritytech/polkadot-staking-dashboard/commit/05056fafe870c5a0bb7e4426f002c392563ddce7))
+* missing payout day ([#1618](https://github.com/paritytech/polkadot-staking-dashboard/issues/1618)) ([ffdac9c](https://github.com/paritytech/polkadot-staking-dashboard/commit/ffdac9c517672acdbdf911635d41b135b43ef85e))
+* modal scroll fixes ([#1607](https://github.com/paritytech/polkadot-staking-dashboard/issues/1607)) ([4d03b33](https://github.com/paritytech/polkadot-staking-dashboard/commit/4d03b33bcd1ce0edc962b61cb3415efdcebf7a29))
+* system read only accounts fix ([29b8052](https://github.com/paritytech/polkadot-staking-dashboard/commit/29b8052ee2e7605b967e2f684fbb316f824eabd5))
+* use ledger square logo ([#1593](https://github.com/paritytech/polkadot-staking-dashboard/issues/1593)) ([badcac5](https://github.com/paritytech/polkadot-staking-dashboard/commit/badcac5c639855519d99f72f63d2efa1465e05eb))
+* **ux:** NaN on whole value with format ([021f90b](https://github.com/paritytech/polkadot-staking-dashboard/commit/021f90b138cf109bfa69a8bcef9ac8bcf173f496))
+
 ## [1.1.0](https://github.com/paritytech/polkadot-staking-dashboard/compare/v1.0.9...v1.1.0) (2023-10-30)
 
 
