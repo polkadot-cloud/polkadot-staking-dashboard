@@ -8,6 +8,9 @@ import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { localStorageOrDefault } from '@polkadot-cloud/utils';
+import type { ExternalAccount } from '@polkadot-cloud/react/types';
+import { Network } from 'types';
 
 export const MigrateProvider = ({
   children,
@@ -26,23 +29,39 @@ export const MigrateProvider = ({
 
   // Removes the previous nominator setup objects from local storage.
   const removeDeprecatedNominatorSetups = () =>
-    Object.values(NetworkList).forEach((n: any) => {
+    Object.values(NetworkList).forEach((n: Network) => {
       for (const a of accounts)
         localStorage.removeItem(`${n.name}_stake_setup_${a.address}`);
     });
 
   // Removes the previous pool setup objects from local storage.
   const removeDeprecatedPoolSetups = () =>
-    Object.values(NetworkList).forEach((n: any) => {
+    Object.values(NetworkList).forEach((n: Network) => {
       for (const a of accounts)
         localStorage.removeItem(`${n.name}_pool_setup_${a.address}`);
     });
 
   // Removes the previous active proxies from local storage.
   const removeDeprecatedActiveProxies = () =>
-    Object.values(NetworkList).forEach((n: any) => {
+    Object.values(NetworkList).forEach((n: Network) => {
       localStorage.removeItem(`${n.name}_active_proxy`);
     });
+
+  // Removes `system` added external accounts from local storage.
+  const removeSystemExternalAccounts = () => {
+    const current = localStorageOrDefault('external_accounts', [], true);
+    if (!current.length) return;
+
+    const updated =
+      (current as ExternalAccount[])?.filter((a) => a.addedBy !== 'system') ||
+      [];
+
+    if (!updated.length) {
+      localStorage.removeItem('external_accounts');
+    } else {
+      localStorage.setItem('external_accounts', JSON.stringify(updated));
+    }
+  };
 
   useEffectIgnoreInitial(() => {
     if (isReady && !isNetworkSyncing && !done) {
@@ -64,6 +83,11 @@ export const MigrateProvider = ({
         // Remove legacy local active proxy records.
         removeDeprecatedActiveProxies();
 
+        // Added in 1.1.2
+        //
+        // Remove local `system` external accounts.
+        removeSystemExternalAccounts();
+
         // Finally,
         //
         // Update local version to current app version.
@@ -71,7 +95,7 @@ export const MigrateProvider = ({
         setDone(true);
       }
     }
-  }, [isNetworkSyncing]);
+  }, [isReady, isNetworkSyncing]);
 
   return (
     <MigrateContext.Provider value={{}}>{children}</MigrateContext.Provider>
