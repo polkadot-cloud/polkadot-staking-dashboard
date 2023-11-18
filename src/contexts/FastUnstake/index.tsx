@@ -23,6 +23,7 @@ import { defaultFastUnstakeContext, defaultMeta } from './defaults';
 import type {
   FastUnstakeContextInterface,
   LocalMeta,
+  LocalMetaInstance,
   MetaInterface,
 } from './types';
 
@@ -93,7 +94,7 @@ export const FastUnstakeProvider = ({
       unsubs.current = [];
 
       // get any existing localStorage records for account.
-      const localMeta: LocalMeta | null = getLocalMeta();
+      const localMeta: LocalMetaInstance = getLocalMeta();
 
       const initialMeta = localMeta
         ? { checked: localMeta.checked }
@@ -291,7 +292,7 @@ export const FastUnstakeProvider = ({
   };
 
   // gets any existing fast unstake metadata for an account.
-  const getLocalMeta = (): LocalMeta | null => {
+  const getLocalMeta = (): LocalMetaInstance => {
     const localMeta: AnyJson = localStorage.getItem(getLocalkey(activeAccount));
     if (!localMeta) return null;
 

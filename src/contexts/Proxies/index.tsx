@@ -24,12 +24,14 @@ import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
 import * as defaults from './defaults';
 import type {
+  DelegateInstance,
   Delegates,
   ProxiedAccounts,
   Proxies,
   ProxiesContextInterface,
   Proxy,
   ProxyDelegate,
+  ProxyDelegateInstance,
 } from './types';
 
 export const ProxiesProvider = ({
@@ -167,7 +169,7 @@ export const ProxiesProvider = ({
   };
 
   // Gets the delegates of the given account.
-  const getDelegates = (address: MaybeAddress): Proxy | undefined =>
+  const getDelegates = (address: MaybeAddress): DelegateInstance =>
     proxiesRef.current.find(({ delegator }) => delegator === address) ||
     undefined;
 
@@ -215,7 +217,7 @@ export const ProxiesProvider = ({
   const getProxyDelegate = (
     delegator: MaybeAddress,
     delegate: MaybeAddress
-  ): ProxyDelegate | null => {
+  ): ProxyDelegateInstance => {
     return (
       proxiesRef.current
         .find((p) => p.delegator === delegator)

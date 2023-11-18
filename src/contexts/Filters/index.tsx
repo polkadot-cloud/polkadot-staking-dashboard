@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import type { AnyFunction, AnyJson } from 'types';
 import { defaultFiltersInterface } from './defaults';
 import type {
+  FilterInstances,
   FilterItem,
   FilterItems,
   FilterOrder,
@@ -33,7 +34,7 @@ export const FiltersProvider = ({
   const [searchTerms, setSearchTerms] = useState<FilterSearches>([]);
 
   // Get stored includes or excludes for a group.
-  const getFilters = (t: FilterType, g: string): string[] | null => {
+  const getFilters = (t: FilterType, g: string): FilterInstances=> {
     const current = t === 'exclude' ? excludes : includes;
     return current.find((e) => e.key === g)?.filters || null;
   };

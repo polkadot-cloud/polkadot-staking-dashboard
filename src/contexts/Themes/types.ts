@@ -3,6 +3,8 @@
 
 export type Theme = 'light' | 'dark';
 
+export type NullableTheme = Theme | null;
+
 export interface ThemeContextInterface {
   toggleTheme: (str?: Theme) => void;
   mode: Theme;

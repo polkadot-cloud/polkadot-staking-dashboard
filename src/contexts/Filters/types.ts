@@ -5,6 +5,8 @@ import type { AnyFunction, AnyJson } from 'types';
 
 export type FilterType = 'exclude' | 'include';
 
+export type FilterInstances = string[] | null;
+
 export interface FiltersContextInterface {
   getFilters: (t: FilterType, g: string) => string[] | null;
   toggleFilter: (t: FilterType, g: string, f: string) => void;

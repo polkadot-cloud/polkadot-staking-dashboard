@@ -4,7 +4,7 @@
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import React, { useRef } from 'react';
 import { defaultThemeContext } from './defaults';
-import type { Theme, ThemeContextInterface } from './types';
+import type { NullableTheme, Theme, ThemeContextInterface } from './types';
 
 export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
   let initialTheme: Theme = 'light';
@@ -40,7 +40,7 @@ export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
       setStateWithRef(newTheme, setTheme, themeRef);
     });
 
-  const toggleTheme = (maybeTheme: Theme | null = null): void => {
+  const toggleTheme = (maybeTheme: NullableTheme = null): void => {
     const newTheme =
       maybeTheme || (themeRef.current === 'dark' ? 'light' : 'dark');
 

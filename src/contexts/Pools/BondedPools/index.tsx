@@ -9,6 +9,8 @@ import type {
   BondedPoolsContextState,
   MaybePool,
   NominationStatuses,
+  NominationStatusesInstance,
+  PoolLists,
   PoolNominations,
 } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
@@ -132,7 +134,7 @@ export const BondedPoolsProvider = ({
     nominator: MaybeAddress,
     nomination: MaybeAddress
   ) => {
-    const pool = bondedPools.find((p: any) => p.addresses.stash === nominator);
+    const pool = bondedPools.find((p: BondedPool) => p.addresses.stash === nominator);
 
     if (!pool) return 'waiting';
 
@@ -150,7 +152,7 @@ export const BondedPoolsProvider = ({
   /*
    * Determine bonded pool's current nomination statuse
    */
-  const getPoolNominationStatusCode = (statuses: NominationStatuses | null) => {
+  const getPoolNominationStatusCode = (statuses: NominationStatusesInstance) => {
     let status = 'waiting';
 
     if (statuses) {
@@ -183,8 +185,8 @@ export const BondedPoolsProvider = ({
    * poolSearchFilter Iterates through the supplied list and refers to the meta batch of the list to
    * filter those list items that match the search term. Returns the updated filtered list.
    */
-  const poolSearchFilter = (list: any, searchTerm: string) => {
-    const filteredList: any = [];
+  const poolSearchFilter = (list: PoolLists, searchTerm: string) => {
+    const filteredList: PoolLists = [];
 
     for (const pool of list) {
       // If pool metadata has not yet been synced, include the pool in results.

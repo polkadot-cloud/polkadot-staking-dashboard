@@ -6,7 +6,7 @@ import { xxhashAsHex } from '@polkadot/util-crypto';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { DisplayWrapper } from './Wrappers.js';
 import { qrcode } from './qrcode.js';
-import type { DisplayProps, FrameState, TimerState } from './types.js';
+import type { DisplayInstance, DisplayProps, FrameState, TimerState } from './types.js';
 import { createFrames, createImgSize } from './util.js';
 
 const DEFAULT_FRAME_DELAY = 2750;
@@ -30,7 +30,7 @@ const Display = ({
   style = {},
   timerDelay = DEFAULT_FRAME_DELAY,
   value,
-}: DisplayProps): React.ReactElement<DisplayProps> | null => {
+}: DisplayProps): DisplayInstance => {
   const [{ image }, setFrameState] = useState<FrameState>({
     frameIdx: 0,
     frames: [],

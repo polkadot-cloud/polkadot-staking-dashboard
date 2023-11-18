@@ -4,6 +4,13 @@
 import type { HexString } from '@polkadot/util/types';
 import type React from 'react';
 
+export type DisplayInstance = React.ReactElement<DisplayProps> | null;
+
+export type DataInstance = string | null;
+
+export type DisplayPayloadPropsInstance =
+  React.ReactElement<DisplayPayloadProps> | null;
+
 export interface FrameState {
   frames: Uint8Array[];
   frameIdx: number;

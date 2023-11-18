@@ -26,7 +26,12 @@ export interface ProxyDelegate {
   delegate: string;
   proxyType: ProxyType;
 }
+
+export type ProxyDelegateInstance = ProxyDelegate | null;
+
 export type Delegates = Record<string, DelegateItem[]>;
+
+export type DelegateInstance = Proxy | undefined;
 
 export interface DelegateItem {
   delegator: string;

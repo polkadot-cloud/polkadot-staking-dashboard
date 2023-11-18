@@ -4,10 +4,13 @@
 import type BigNumber from 'bignumber.js';
 import type { AnyApi, MaybeAddress } from 'types';
 
+export type LocalMetaInstance = LocalMeta | null;
+
 export interface LocalMeta {
   isExposed: boolean;
   checked: number[];
 }
+
 export interface MetaInterface {
   checked: number[];
 }

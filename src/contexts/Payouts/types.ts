@@ -9,6 +9,8 @@ export type PayoutsContextInterface = {
   removeEraPayout: (era: string, validator: string) => void;
 };
 
+export type LocalValidatorExposureInstance = LocalValidatorExposure | null;
+
 export type UnclaimedPayouts = Record<string, EraUnclaimedPayouts> | null;
 
 export type EraUnclaimedPayouts = Record<string, string>;

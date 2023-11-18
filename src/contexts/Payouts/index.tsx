@@ -14,6 +14,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { MaxSupportedPayoutEras, defaultPayoutsContext } from './defaults';
 import type {
   LocalValidatorExposure,
+  LocalValidatorExposureInstance,
   PayoutsContextInterface,
   UnclaimedPayouts,
 } from './types';
@@ -240,7 +241,7 @@ export const PayoutsProvider = ({
         // Get validator from era exposure data. Falls back no null if it cannot be found.
         const validator = unclaimedValidators?.[j] || '';
 
-        const localExposed: LocalValidatorExposure | null = getLocalEraExposure(
+        const localExposed: LocalValidatorExposureInstance = getLocalEraExposure(
           network,
           era,
           activeAccount
