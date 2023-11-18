@@ -10,6 +10,7 @@ import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { localStorageOrDefault } from '@polkadot-cloud/utils';
 import type { ExternalAccount } from '@polkadot-cloud/react/types';
+import { Network } from 'types';
 
 export const MigrateProvider = ({
   children,
@@ -28,21 +29,21 @@ export const MigrateProvider = ({
 
   // Removes the previous nominator setup objects from local storage.
   const removeDeprecatedNominatorSetups = () =>
-    Object.values(NetworkList).forEach((n: any) => {
+    Object.values(NetworkList).forEach((n: Network) => {
       for (const a of accounts)
         localStorage.removeItem(`${n.name}_stake_setup_${a.address}`);
     });
 
   // Removes the previous pool setup objects from local storage.
   const removeDeprecatedPoolSetups = () =>
-    Object.values(NetworkList).forEach((n: any) => {
+    Object.values(NetworkList).forEach((n: Network) => {
       for (const a of accounts)
         localStorage.removeItem(`${n.name}_pool_setup_${a.address}`);
     });
 
   // Removes the previous active proxies from local storage.
   const removeDeprecatedActiveProxies = () =>
-    Object.values(NetworkList).forEach((n: any) => {
+    Object.values(NetworkList).forEach((n: Network) => {
       localStorage.removeItem(`${n.name}_active_proxy`);
     });
 
