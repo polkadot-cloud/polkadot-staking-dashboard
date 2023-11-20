@@ -29,7 +29,7 @@
     "@polkadot-cloud/core": "^1.0.48",
     "@polkadot-cloud/react": "^0.1.130",
     "@polkadot-cloud/utils": "^0.0.25",
-    "@polkadot/api": "^10.10.1",
+    "@polkadot/api": "^10.11.1",
     "@polkadot/keyring": "^12.1.1",
     "@polkadot/rpc-provider": "^10.11.1",
     "@polkadot/util": "^12.4.2",
