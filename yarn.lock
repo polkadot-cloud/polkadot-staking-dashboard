@@ -556,10 +556,10 @@
     "@ledgerhq/logs" "^6.11.0"
     events "^3.3.0"
 
-"@ledgerhq/logs@^6.10.1", "@ledgerhq/logs@^6.11.0":
-  version "6.11.0"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/logs/-/logs-6.11.0.tgz#0d28e7edcf71548506f4304686cba480ba91bbcf"
-  integrity sha512-HHK9y4GGe4X7CXbRUCh7z8Mp+WggpJn1dmUjmuk1rNugESF6o8nAOnXA+BxwtRRNV3CgNJR3Wxdos4J9qV0Zsg==
+"@ledgerhq/logs@^6.11.0", "@ledgerhq/logs@^6.12.0":
+  version "6.12.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/logs/-/logs-6.12.0.tgz#ad903528bf3687a44da435d7b2479d724d374f5d"
+  integrity sha512-ExDoj1QV5eC6TEbMdLUMMk9cfvNKhhv5gXol4SmULRVCx/3iyCPhJ74nsb3S0Vb+/f+XujBEj3vQn5+cwS0fNA==
 
 "@lit-labs/ssr-dom-shim@^1.0.0", "@lit-labs/ssr-dom-shim@^1.1.0":
   version "1.1.2"
