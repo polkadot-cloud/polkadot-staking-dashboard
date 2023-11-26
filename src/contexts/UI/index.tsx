@@ -25,20 +25,14 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { synced: activePoolsSynced } = useActivePools();
   const { accounts: connectAccounts } = useImportedAccounts();
 
-  // Set whether the network has been synced.
-  const [isNetworkSyncing, setIsNetworkSyncing] = useState<boolean>(false);
-
-  // Set whether pools are being synced.
-  const [isPoolSyncing, setIsPoolSyncing] = useState<boolean>(false);
-
-  // Set whether app is syncing. Includes workers (active nominations).
-  const [isSyncing, setIsSyncing] = useState<boolean>(false);
-
-  // Side whether the side menu is open.
-  const [sideMenuOpen, setSideMenu] = useState<boolean>(false);
-
-  // Store whether in Brave browser. Used for light client warning.
-  const [isBraveBrowser, setIsBraveBrowser] = useState<boolean>(false);
+  //We change all these states to a new State. That turn the process to reference this properties and send then to other compenents easier
+  const [state, setState] = useState({
+    isNetworkSyncing: false,
+    isPoolSyncing: false,
+    sideMenuOpen: false,
+    isSyncing: false,
+    isBraveBrowser: false,
+  })
 
   // Store referneces for main app conainers.
   const [containerRefs, setContainerRefsState] = useState({});
@@ -77,7 +71,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     (window.navigator as AnyJson)?.brave
       ?.isBrave()
       .then(async (isBrave: boolean) => {
-        setIsBraveBrowser(isBrave);
+        setState({...state, isBraveBrowser: isBrave});
       });
 
     window.addEventListener('resize', resizeCallback);
@@ -126,7 +120,8 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       poolSyncing = true;
     }
 
-    setIsNetworkSyncing(networkSyncing);
+    //setIsNetworkSyncing(networkSyncing);
+    setState({...state, isNetworkSyncing: networkSyncing})
 
     // active pools have been synced
     if (activePoolsSynced !== 'synced') {
@@ -134,12 +129,14 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       poolSyncing = true;
     }
 
-    setIsPoolSyncing(poolSyncing);
+    //setIsPoolSyncing(poolSyncing);
+    setState({...state, isPoolSyncing: poolSyncing})
 
     // eraStakers total active nominators has synced
     if (!eraStakers.totalActiveNominators) syncing = true;
 
-    setIsSyncing(syncing);
+    //setIsSyncing(syncing);
+    setState({...state, isSyncing: syncing})
   }, [isReady, staking, metrics, balances, eraStakers, activePoolsSynced]);
 
   return (
@@ -148,13 +145,9 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
         setSideMenu,
         setUserSideMenuMinimised,
         setContainerRefs,
-        sideMenuOpen,
         sideMenuMinimised,
-        isSyncing,
-        isNetworkSyncing,
-        isPoolSyncing,
         containerRefs,
-        isBraveBrowser,
+        ...state,
         userSideMenuMinimised: userSideMenuMinimisedRef.current,
       }}
     >
