@@ -59,3 +59,7 @@ export interface SetupContextInterface {
   onNominatorSetup: boolean;
   onPoolSetup: boolean;
 }
+
+export type NominatorOrPullSetup = NominatorSetup | PoolSetup;
+export type NominatorOrPullSetups = NominatorSetups | PoolSetups;
+export type NominatorOrPullProgress = NominatorProgress | PoolProgress;

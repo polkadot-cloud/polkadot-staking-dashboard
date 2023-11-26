@@ -20,10 +20,11 @@ import {
   defaultSetupContext,
 } from './defaults';
 import type {
-  NominatorProgress,
+  NominatorOrPullProgress,
+  NominatorOrPullSetup,
+  NominatorOrPullSetups,
   NominatorSetup,
   NominatorSetups,
-  PoolProgress,
   PoolSetup,
   PoolSetups,
   SetupContextInterface,
@@ -63,7 +64,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   const getSetupProgress = (
     type: BondFor,
     address: MaybeAddress
-  ): NominatorSetup | PoolSetup => {
+  ): NominatorOrPullSetup => {
     const setup = Object.fromEntries(
       Object.entries(
         type === 'nominator' ? nominatorSetups : poolSetups
@@ -90,7 +91,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   // Sets setup progress for an address. Updates localStorage followed by app state.
   const setActiveAccountSetup = (
     type: BondFor,
-    progress: NominatorProgress | PoolProgress
+    progress: NominatorOrPullProgress
   ) => {
     if (!activeAccount) return;
 
@@ -118,8 +119,8 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Utility to update the progress item of either a nominator setup or pool setup,
   const updateSetups = <
-    T extends NominatorSetups | PoolSetups,
-    U extends NominatorProgress | PoolProgress,
+    T extends NominatorOrPullSetups,
+    U extends NominatorOrPullProgress,
   >(
     all: T,
     newSetup: U,
@@ -186,7 +187,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     localStorageOrDefault('pool_setups', {}, true) as PoolSetups;
 
   // Utility to update setups state depending on type.
-  const setSetups = (type: BondFor, setups: NominatorSetups | PoolSetups) => {
+  const setSetups = (type: BondFor, setups: NominatorOrPullSetups) => {
     setLocalSetups(type, setups);
 
     if (type === 'nominator') {
@@ -197,10 +198,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // Utility to either update local setups or remove if empty.
-  const setLocalSetups = (
-    type: BondFor,
-    setups: NominatorSetups | PoolSetups
-  ) => {
+  const setLocalSetups = (type: BondFor, setups: NominatorOrPullSetups) => {
     const key = type === 'nominator' ? 'nominator_setups' : 'pool_setups';
     const setupsStr = JSON.stringify(setups);
 

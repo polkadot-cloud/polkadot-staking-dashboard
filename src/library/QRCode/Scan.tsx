@@ -4,7 +4,7 @@
 import React, { useCallback, useMemo } from 'react';
 import Reader from 'react-qr-reader';
 import { ScanWrapper } from './Wrappers.js';
-import type { ScanProps } from './types.js';
+import type { DataInstance, ScanProps } from './types.js';
 import { createImgSize } from './util.js';
 
 const DEFAULT_DELAY = 150;
@@ -29,7 +29,7 @@ const Scan = ({
   );
 
   const onScanCallback = useCallback(
-    (data: string | null) => data && onScan(data),
+    (data: DataInstance) => data && onScan(data),
     [onScan]
   );
 

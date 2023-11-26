@@ -25,6 +25,8 @@ import type {
   ValidatorListEntry,
   ValidatorsContextInterface,
   ValidatorEraPointHistory,
+  NullableValidator,
+  NullableBigNumber,
 } from '../types';
 import {
   defaultValidatorsData,
@@ -78,10 +80,10 @@ export const ValidatorsProvider = ({
   const [avgCommission, setAvgCommission] = useState(0);
 
   // Stores the user's nominated validators as list
-  const [nominated, setNominated] = useState<Validator[] | null>(null);
+  const [nominated, setNominated] = useState<NullableValidator>(null);
 
   // Stores the nominated validators by the members pool's as list
-  const [poolNominated, setPoolNominated] = useState<Validator[] | null>(null);
+  const [poolNominated, setPoolNominated] = useState<NullableValidator>(null);
 
   // Stores a randomised validator community dataset.
   const [validatorCommunity] = useState([...shuffle(ValidatorCommunity)]);
@@ -452,8 +454,8 @@ export const ValidatorsProvider = ({
 
   // Gets the highest and lowest (non-zero) era points earned `MaxEraRewardPointsEras` timeframe.
   const calculateEraPointsBoundaries = () => {
-    let high: BigNumber | null = null;
-    let low: BigNumber | null = null;
+    let high: NullableBigNumber = null;
+    let low: NullableBigNumber = null;
 
     Object.entries(erasRewardPoints).forEach(([, { individual }]) => {
       for (const [, points] of Object.entries(individual)) {

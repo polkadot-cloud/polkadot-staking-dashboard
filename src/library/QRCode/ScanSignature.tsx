@@ -3,7 +3,7 @@
 
 import React, { useCallback } from 'react';
 import { QrScan } from './Scan.js';
-import type { ScanSignatureProps } from './types.js';
+import type { DataInstance, ScanSignatureProps } from './types.js';
 
 const ScanSignature = ({
   className,
@@ -13,7 +13,7 @@ const ScanSignature = ({
   style,
 }: ScanSignatureProps): React.ReactElement<ScanSignatureProps> => {
   const onScanCallback = useCallback(
-    (signature: string | null) =>
+    (signature: DataInstance) =>
       signature && onScan({ signature: `0x${signature}` }),
     [onScan]
   );

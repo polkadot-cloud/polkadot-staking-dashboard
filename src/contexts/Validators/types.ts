@@ -89,3 +89,6 @@ export interface ValidatorEraPointHistory {
   rank?: number;
   quartile?: number;
 }
+
+export type NullableBigNumber = BigNumber | null;
+export type NullableValidator = Validator[] | null;
