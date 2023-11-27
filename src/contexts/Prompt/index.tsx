@@ -3,16 +3,20 @@
 
 import React, { useState } from 'react';
 import { defaultPromptContext } from './defaults';
-import type { PromptContextInterface } from './types';
+import type {
+  PromptContextInfo,
+  PromptContextInterface,
+  PromptType,
+} from './types';
 
 export const PromptProvider = ({ children }: { children: React.ReactNode }) => {
-  const [state, setState] = useState<any>({
+  const [state, setState] = useState<PromptContextInfo>({
     size: 'large',
     status: 0,
     Prompt: null,
   });
 
-  const setPrompt = (Prompt: any) => {
+  const setPrompt = (Prompt: PromptType) => {
     setState({
       ...state,
       Prompt,
@@ -27,7 +31,7 @@ export const PromptProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
-  const openPromptWith = (Prompt: any, size = 'small') => {
+  const openPromptWith = (Prompt: PromptType, size = 'small') => {
     setState({
       ...state,
       size,

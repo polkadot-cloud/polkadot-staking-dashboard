@@ -13,3 +13,12 @@ export interface PromptContextInterface {
   status: number;
   Prompt: React.ReactNode | null;
 }
+
+export type PromptType = React.ReactNode | null;
+
+export type PromptContextInfo = {
+  size: string;
+  status: number;
+  Prompt: PromptType;
+  dismissOpen?: boolean;
+};
