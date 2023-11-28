@@ -6,7 +6,7 @@ import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import { makeCancelable, rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { NetworkList } from 'config/networks';
+import { NetworkList, NetworksWithPagedRewards } from 'config/networks';
 import {
   FallbackBondingDuration,
   FallbackEpochDuration,
@@ -177,8 +177,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
     // DEPRECATION: Paged Rewards
     //
-    // Westend now fetches `maxExposurePageSize` instead of `maxNominatorRewardedPerValidator`.
-    if (network === 'westend') {
+    // Fetch `maxExposurePageSize` instead of `maxNominatorRewardedPerValidator` for networks that
+    // have paged rewards.
+    if (NetworksWithPagedRewards.includes(network)) {
       allPromises.push(newApi.consts.staking.maxExposurePageSize);
     } else {
       allPromises.push(newApi.consts.staking.maxNominatorRewardedPerValidator);
