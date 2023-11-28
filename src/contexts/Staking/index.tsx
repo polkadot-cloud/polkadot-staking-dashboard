@@ -208,7 +208,10 @@ export const StakingProvider = ({
       exposures = localExposures;
     } else {
       exposures = formatRawExposures(
+        // TODO: abstract into function & use new paged rewards storage if network is westend and
+        // era >= PagedRewardsStartEra[network].
         await api.query.staking.erasStakers.entries(era)
+        // ------------
       );
     }
 

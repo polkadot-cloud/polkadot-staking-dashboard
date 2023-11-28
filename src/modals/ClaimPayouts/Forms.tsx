@@ -55,9 +55,12 @@ export const Forms = forwardRef(
       payouts?.forEach(({ era, validators }) => {
         if (!validators) return [];
 
+        // TODO: If westend, determine which page to use for `payoutStakers`, and add additional
+        // page arg to call.
         return validators.forEach((v) =>
           calls.push(api.tx.staking.payoutStakers(v, era))
         );
+        // ------------
       });
       return calls;
     };

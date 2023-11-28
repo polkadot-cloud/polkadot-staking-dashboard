@@ -79,9 +79,14 @@ export const PoolPerformanceProvider = ({
   const processEra = async (era: BigNumber) => {
     if (!api) return;
     setCurrentEra(era);
+
+    // TODO: abstract into function & use new paged rewards storage if network is westend and era >=
+    // PagedRewardsStartEra[network].
     const result = await api.query.staking.erasStakersClipped.entries(
       era.toString()
     );
+    // ------------
+
     const exposures = formatRawExposures(result);
     worker.postMessage({
       task: 'processNominationPoolsRewardData',
