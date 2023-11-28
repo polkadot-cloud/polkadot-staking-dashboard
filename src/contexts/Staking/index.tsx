@@ -57,7 +57,7 @@ export const StakingProvider = ({
   const { isReady, api, apiStatus, consts } = useApi();
   const { bondedAccounts, getBondedAccount, getAccountNominations } =
     useBonded();
-  const { maxNominatorRewardedPerValidator } = consts;
+  const { maxExposurePageSize } = consts;
 
   // Store staking metrics in state.
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
@@ -236,8 +236,7 @@ export const StakingProvider = ({
       activeAccount,
       units: networkData.units,
       exposures,
-      maxNominatorRewardedPerValidator:
-        maxNominatorRewardedPerValidator.toNumber(),
+      maxExposurePageSize: maxExposurePageSize.toNumber(),
     });
   };
 

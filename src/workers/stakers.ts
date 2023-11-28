@@ -107,7 +107,7 @@ const processExposures = (data: DataInitialiseExposures) => {
     units,
     exposures,
     activeAccount,
-    maxNominatorRewardedPerValidator,
+    maxExposurePageSize,
   } = data;
 
   const stakers: Staker[] = [];
@@ -134,7 +134,7 @@ const processExposures = (data: DataInitialiseExposures) => {
       });
 
       const lowestRewardIndex = Math.min(
-        maxNominatorRewardedPerValidator - 1,
+        maxExposurePageSize - 1,
         others.length
       );
 
@@ -146,7 +146,7 @@ const processExposures = (data: DataInitialiseExposures) => {
             ).toString()
           : '0';
 
-      const oversubscribed = others.length > maxNominatorRewardedPerValidator;
+      const oversubscribed = others.length > maxExposurePageSize;
 
       stakers.push({
         address,

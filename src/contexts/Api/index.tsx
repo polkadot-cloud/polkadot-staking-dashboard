@@ -162,12 +162,10 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Connection callback. Called once `provider` and `api` have been initialised.
   const connectedCallback = async (newApi: ApiPromise) => {
-    // fetch constants.
-    const result = await Promise.all([
+    const allPromises = [
       newApi.consts.staking.bondingDuration,
       newApi.consts.staking.maxNominations,
       newApi.consts.staking.sessionsPerEra,
-      newApi.consts.staking.maxNominatorRewardedPerValidator,
       newApi.consts.electionProviderMultiPhase.maxElectingVoters,
       newApi.consts.babe.expectedBlockTime,
       newApi.consts.babe.epochDuration,
@@ -175,7 +173,19 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       newApi.consts.staking.historyDepth,
       newApi.consts.fastUnstake.deposit,
       newApi.consts.nominationPools.palletId,
-    ]);
+    ];
+
+    // DEPRECATION: Paged Rewards
+    //
+    // Westend now fetches `maxExposurePageSize` instead of `maxNominatorRewardedPerValidator`.
+    if (network === 'westend') {
+      allPromises.push(newApi.consts.staking.maxExposurePageSize);
+    } else {
+      allPromises.push(newApi.consts.staking.maxNominatorRewardedPerValidator);
+    }
+
+    // fetch constants.
+    const result = await Promise.all(allPromises);
 
     // format constants.
     const bondDuration = result[0]
@@ -190,41 +200,44 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       ? new BigNumber(rmCommas(result[2].toString()))
       : FallbackSessionsPerEra;
 
-    const maxNominatorRewardedPerValidator = result[3]
+    const maxElectingVoters = result[3]
       ? new BigNumber(rmCommas(result[3].toString()))
-      : FallbackNominatorRewardedPerValidator;
-
-    const maxElectingVoters = result[4]
-      ? new BigNumber(rmCommas(result[4].toString()))
       : FallbackMaxElectingVoters;
 
-    const expectedBlockTime = result[5]
-      ? new BigNumber(rmCommas(result[5].toString()))
+    const expectedBlockTime = result[4]
+      ? new BigNumber(rmCommas(result[4].toString()))
       : FallbackExpectedBlockTime;
 
-    const epochDuration = result[6]
-      ? new BigNumber(rmCommas(result[6].toString()))
+    const epochDuration = result[5]
+      ? new BigNumber(rmCommas(result[5].toString()))
       : FallbackEpochDuration;
 
-    const existentialDeposit = result[7]
+    const existentialDeposit = result[6]
+      ? new BigNumber(rmCommas(result[6].toString()))
+      : new BigNumber(0);
+
+    const historyDepth = result[7]
       ? new BigNumber(rmCommas(result[7].toString()))
       : new BigNumber(0);
 
-    const historyDepth = result[8]
+    const fastUnstakeDeposit = result[8]
       ? new BigNumber(rmCommas(result[8].toString()))
       : new BigNumber(0);
 
-    const fastUnstakeDeposit = result[9]
-      ? new BigNumber(rmCommas(result[9].toString()))
-      : new BigNumber(0);
+    const poolsPalletId = result[9] ? result[9].toU8a() : new Uint8Array(0);
 
-    const poolsPalletId = result[10] ? result[10].toU8a() : new Uint8Array(0);
+    // DEPRECATION: Paged Rewards
+    //
+    // Rename `maxNominatorRewardedPerValidator` to `maxExposurePageSize` if not on westend.
+    const maxExposurePageSize = result[10]
+      ? new BigNumber(rmCommas(result[10].toString()))
+      : FallbackNominatorRewardedPerValidator;
 
     setConsts({
       bondDuration,
       maxNominations,
       sessionsPerEra,
-      maxNominatorRewardedPerValidator,
+      maxExposurePageSize,
       historyDepth,
       maxElectingVoters,
       epochDuration,
