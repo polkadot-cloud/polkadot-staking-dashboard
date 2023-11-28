@@ -16,11 +16,12 @@ import PolkadotTokenSVG from 'config/tokens/svg/DOT.svg?react';
 import KusamaTokenSVG from 'config/tokens/svg/KSM.svg?react';
 import WestendTokenSVG from 'config/tokens/svg/WND.svg?react';
 
-import type { Networks } from 'types';
+import type { NetworkName, Networks } from 'types';
 import BigNumber from 'bignumber.js';
 
-// DEPRECATION: Temporary until paged pewards migration has completed on all networks.
-export const PagedRewardsStartEra: Record<string, BigNumber | null> = {
+// DEPRECATION: Temporary until paged rewards migration has completed on all networks.
+export const NetworksWithPagedRewards = ['westend'];
+export const PagedRewardsStartEra: Record<NetworkName, BigNumber | null> = {
   polkadot: null,
   kusama: null,
   westend: new BigNumber(7167),
