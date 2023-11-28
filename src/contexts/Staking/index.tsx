@@ -6,6 +6,7 @@ import {
   greaterThanZero,
   isNotZero,
   localStorageOrDefault,
+  rmCommas,
   setStateWithRef,
 } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
@@ -16,6 +17,7 @@ import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type {
   EraStakers,
   Exposure,
+  ExposureOther,
   StakingContextInterface,
   StakingMetrics,
   StakingTargets,
@@ -49,12 +51,13 @@ export const StakingProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { accounts: connectAccounts } = useImportedAccounts();
-  const { activeAccount, getActiveAccount } = useActiveAccounts();
   const { getStashLedger } = useBalances();
   const { activeEra } = useNetworkMetrics();
   const { networkData, network } = useNetwork();
+  const { isPagedRewardsActive } = useNetworkMetrics();
   const { isReady, api, apiStatus, consts } = useApi();
+  const { accounts: connectAccounts } = useImportedAccounts();
+  const { activeAccount, getActiveAccount } = useActiveAccounts();
   const { bondedAccounts, getBondedAccount, getAccountNominations } =
     useBonded();
   const { maxExposurePageSize } = consts;
@@ -207,12 +210,7 @@ export const StakingProvider = ({
     if (localExposures) {
       exposures = localExposures;
     } else {
-      exposures = formatRawExposures(
-        // TODO: abstract into function & use new paged rewards storage if network is westend and
-        // era >= PagedRewardsStartEra[network].
-        await api.query.staking.erasStakers.entries(era)
-        // ------------
-      );
+      exposures = await getPagedErasStakers(era);
     }
 
     // For resource limitation concerns, only store the current era in local storage.
@@ -345,6 +343,66 @@ export const StakingProvider = ({
     };
   };
 
+  // If paged rewards are active for the era, fetch eras stakers from the new storage items,
+  // otherwise use the old storage items.
+  const getPagedErasStakers = async (era: string) => {
+    if (!api) return [];
+
+    if (isPagedRewardsActive(new BigNumber(era))) {
+      const overview: AnyApi =
+        await api.query.staking.erasStakersOverview.entries(era);
+
+      const validators = overview.reduce(
+        (prev: Record<string, Exposure>, [keys, value]: AnyApi) => {
+          const validator = keys.toHuman()[1];
+          const { own, total } = value.toHuman();
+          return { ...prev, [validator]: { own, total } };
+        },
+        {}
+      );
+      const validatorKeys = Object.keys(validators);
+
+      const pagedResults = await Promise.all(
+        validatorKeys.map((v) =>
+          api.query.staking.erasStakersPaged.entries(era, v)
+        )
+      );
+
+      const result: Exposure[] = [];
+      let i = 0;
+      for (const pagedResult of pagedResults) {
+        const validator = validatorKeys[i];
+        const { own, total } = validators[validator];
+        const others = pagedResult.reduce(
+          (prev: ExposureOther[], [, v]: AnyApi) => {
+            const o = v.toHuman()?.others || [];
+            if (!o.length) return prev;
+            return prev.concat(o);
+          },
+          []
+        );
+
+        result.push({
+          keys: [rmCommas(era), validator],
+          val: {
+            total,
+            own: rmCommas(own),
+            others: others.map(({ who, value }) => ({
+              who,
+              value: rmCommas(value),
+            })),
+          },
+        });
+        i++;
+      }
+      return result;
+    }
+
+    // DEPRECATED: use legacy `erasStakers` storage item.
+    const result = await api.query.staking.erasStakers.entries(era);
+    return formatRawExposures(result);
+  };
+
   useEffectIgnoreInitial(() => {
     if (apiStatus === 'connecting') {
       setStateWithRef(defaultEraStakers, setEraStakers, eraStakersRef);
@@ -398,6 +456,7 @@ export const StakingProvider = ({
         eraStakers: eraStakersRef.current,
         erasStakersSyncing: erasStakersSyncingRef.current,
         targets,
+        getPagedErasStakers,
       }}
     >
       {children}

@@ -12,8 +12,8 @@ import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useApi } from 'contexts/Api';
 import type { Sync } from '@polkadot-cloud/react/types';
 import BigNumber from 'bignumber.js';
-import { formatRawExposures } from 'contexts/Staking/Utils';
 import { mergeDeep } from '@polkadot-cloud/utils';
+import { useStaking } from 'contexts/Staking';
 import type { PoolPerformanceContextInterface } from './types';
 import { defaultPoolPerformanceContext } from './defaults';
 
@@ -28,6 +28,7 @@ export const PoolPerformanceProvider = ({
   const { network } = useNetwork();
   const { bondedPools } = useBondedPools();
   const { activeEra } = useNetworkMetrics();
+  const { getPagedErasStakers } = useStaking();
   const { erasRewardPointsFetched, erasRewardPoints } = useValidators();
 
   // Store whether pool performance data is being fetched.
@@ -80,14 +81,8 @@ export const PoolPerformanceProvider = ({
     if (!api) return;
     setCurrentEra(era);
 
-    // TODO: abstract into function & use new paged rewards storage if network is westend and era >=
-    // PagedRewardsStartEra[network].
-    const result = await api.query.staking.erasStakersClipped.entries(
-      era.toString()
-    );
-    // ------------
+    const exposures = await getPagedErasStakers(era.toString());
 
-    const exposures = formatRawExposures(result);
     worker.postMessage({
       task: 'processNominationPoolsRewardData',
       era: era.toString(),

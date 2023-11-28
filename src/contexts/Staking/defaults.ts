@@ -59,4 +59,5 @@ export const defaultStakingContext: StakingContextInterface = {
   eraStakers: defaultEraStakers,
   targets: defaultTargets,
   erasStakersSyncing: true,
+  getPagedErasStakers: (e) => new Promise((resolve) => resolve([])),
 };
