@@ -13,7 +13,7 @@ import {
   FallbackExpectedBlockTime,
   FallbackMaxElectingVoters,
   FallbackMaxNominations,
-  FallbackNominatorRewardedPerValidator,
+  FallbackMaxExposurePageSize,
   FallbackSessionsPerEra,
 } from 'consts';
 import type {
@@ -227,12 +227,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
     const poolsPalletId = result[9] ? result[9].toU8a() : new Uint8Array(0);
 
-    // DEPRECATION: Paged Rewards
-    //
-    // Rename `maxNominatorRewardedPerValidator` to `maxExposurePageSize` if not on westend.
     const maxExposurePageSize = result[10]
       ? new BigNumber(rmCommas(result[10].toString()))
-      : FallbackNominatorRewardedPerValidator;
+      : FallbackMaxExposurePageSize;
 
     setConsts({
       bondDuration,
