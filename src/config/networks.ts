@@ -94,6 +94,7 @@ export const NetworkList: Networks = {
       stakeTarget: 0.75,
     },
     defaultFeeReserve: 0.1,
+    maxExposurePageSize: new BigNumber(512),
   },
   kusama: {
     name: 'kusama',
@@ -163,6 +164,7 @@ export const NetworkList: Networks = {
       stakeTarget: 0.75,
     },
     defaultFeeReserve: 0.05,
+    maxExposurePageSize: new BigNumber(512),
   },
   westend: {
     name: 'westend',
@@ -229,5 +231,6 @@ export const NetworkList: Networks = {
       stakeTarget: 0.75,
     },
     defaultFeeReserve: 0.1,
+    maxExposurePageSize: new BigNumber(64),
   },
 };

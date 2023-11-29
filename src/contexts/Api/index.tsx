@@ -13,7 +13,6 @@ import {
   FallbackExpectedBlockTime,
   FallbackMaxElectingVoters,
   FallbackMaxNominations,
-  FallbackMaxExposurePageSize,
   FallbackSessionsPerEra,
 } from 'consts';
 import type {
@@ -229,7 +228,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
     const maxExposurePageSize = result[10]
       ? new BigNumber(rmCommas(result[10].toString()))
-      : FallbackMaxExposurePageSize;
+      : NetworkList[network].maxExposurePageSize;
 
     setConsts({
       bondDuration,

@@ -5,6 +5,7 @@ import type React from 'react';
 import type { FunctionComponent, SVGProps } from 'react';
 import type { Theme } from 'contexts/Themes/types';
 import type { ExtensionInjected } from '@polkadot-cloud/react/types';
+import type BigNumber from 'bignumber.js';
 
 declare global {
   interface Window {
@@ -62,6 +63,7 @@ export interface Network {
   };
   params: Record<string, number>;
   defaultFeeReserve: number;
+  maxExposurePageSize: BigNumber;
 }
 
 export interface PageCategory {
