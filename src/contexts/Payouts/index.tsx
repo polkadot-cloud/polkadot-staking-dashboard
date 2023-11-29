@@ -11,6 +11,7 @@ import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { NetworksWithPagedRewards } from 'config/networks';
 import { MaxSupportedPayoutEras, defaultPayoutsContext } from './defaults';
 import type {
   LocalValidatorExposure,
@@ -31,11 +32,12 @@ export const PayoutsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api } = useApi();
   const { network } = useNetwork();
-  const { activeEra } = useNetworkMetrics();
+  const { api, consts } = useApi();
   const { activeAccount } = useActiveAccounts();
   const { isNominating, fetchEraStakers } = useStaking();
+  const { activeEra, isPagedRewardsActive } = useNetworkMetrics();
+  const { maxExposurePageSize } = consts;
 
   // Store active accont's payout state.
   const [unclaimedPayouts, setUnclaimedPayouts] =
@@ -89,6 +91,7 @@ export const PayoutsProvider = ({
         era: String(era),
         who: activeAccount,
         networkName: network,
+        maxExposurePageSize: maxExposurePageSize.toString(),
         exposures,
       });
     }
@@ -170,29 +173,70 @@ export const PayoutsProvider = ({
       if (ctlr) validatorControllers[uniqueValidators[i]] = ctlr;
     }
 
-    // Fetch ledgers to determine which eras have not yet been claimed per validator. Only includes
-    // eras that are in `erasToCheck`.
-    const ledgerResults = await api.query.staking.ledger.multi<AnyApi>(
-      Object.values(validatorControllers)
-    );
+    // Unclaimed rewards by validator. Record<validator, eras[]>.
     const unclaimedRewards: Record<string, string[]> = {};
-    for (const ledgerResult of ledgerResults) {
-      const ledger = ledgerResult.unwrapOr(null)?.toHuman();
-      if (ledger) {
-        // get claimed eras within `erasToCheck`.
-        const erasClaimed = ledger.claimedRewards
-          .map((e: string) => rmCommas(e))
-          .filter(
-            (e: string) =>
-              new BigNumber(e).isLessThanOrEqualTo(startEra) &&
-              new BigNumber(e).isGreaterThanOrEqualTo(endEra)
-          );
 
-        // filter eras yet to be claimed
-        unclaimedRewards[ledger.stash] = erasToCheck
-          .map((e) => e.toString())
-          .filter((r: string) => validatorExposedEras(ledger.stash).includes(r))
-          .filter((r: string) => !erasClaimed.includes(r));
+    // Refer to new `ClaimedRewards` storage item and calculate unclaimed rewards from that and
+    // `exposedPage` stored locally in exposure data.
+    if (isPagedRewardsActive(activeEra.index)) {
+      // Accumulate calls to fetch unclaimed rewards for each era for all validators.
+      const unclaimedRewardsEntries = erasToCheck
+        .map((era) => uniqueValidators.map((v) => [era, v]))
+        .flat();
+
+      const results = await Promise.all(
+        unclaimedRewardsEntries.map(([era, v]) =>
+          api.query.staking.claimedRewards<AnyApi>(era, v)
+        )
+      );
+
+      for (let i = 0; i < results.length; i++) {
+        const pages = results[i].toHuman() || [];
+        const era = unclaimedRewardsEntries[i][0];
+        const validator = unclaimedRewardsEntries[i][1];
+        const exposure = getLocalEraExposure(network, era, activeAccount);
+
+        // Add to `unclaimedRewards` if payout page has not yet been claimed.
+        if (!pages.includes(exposure.exposedPage)) {
+          if (unclaimedRewards?.[validator]) {
+            unclaimedRewards[validator].push(era);
+          } else {
+            unclaimedRewards[validator] = [era];
+          }
+        }
+      }
+    } else {
+      // DEPRECATION: Use `staking.ledger` to get unclaimed reward eras. Read `legacyClaimedRewards`
+      // if paged rewards are active, otherwise use `claimedRewards`.
+      const ledgerResults = await api.query.staking.ledger.multi<AnyApi>(
+        Object.values(validatorControllers)
+      );
+
+      // Fetch ledgers to determine which eras have not yet been claimed per validator. Only includes
+      // eras that are in `erasToCheck`.
+      for (const ledgerResult of ledgerResults) {
+        const ledger = ledgerResult.unwrapOr(null)?.toHuman();
+        if (ledger) {
+          // get claimed eras within `erasToCheck`.
+          const erasClaimed = ledger[
+            NetworksWithPagedRewards.includes(network)
+              ? 'legacyClaimedRewards'
+              : 'claimedRewards'
+          ]
+            .map((e: string) => rmCommas(e))
+            .filter(
+              (e: string) =>
+                new BigNumber(e).isLessThanOrEqualTo(startEra) &&
+                new BigNumber(e).isGreaterThanOrEqualTo(endEra)
+            );
+
+          // filter eras yet to be claimed
+          unclaimedRewards[ledger.stash] = erasToCheck.filter(
+            (era) =>
+              validatorExposedEras(ledger.stash).includes(era) &&
+              !erasClaimed.includes(era)
+          );
+        }
       }
     }
 
@@ -222,6 +266,7 @@ export const PayoutsProvider = ({
     });
 
     // Iterate calls and determine unclaimed payouts.
+    // `unclaimed`: Record<era, Record<validator, unclaimedPayout>>.
     const unclaimed: UnclaimedPayouts = {};
     let i = 0;
     for (const [reward, points, ...prefs] of await Promise.all(calls)) {
@@ -249,6 +294,7 @@ export const PayoutsProvider = ({
         const staked = new BigNumber(localExposed?.staked || '0');
         const total = new BigNumber(localExposed?.total || '0');
         const isValidator = localExposed?.isValidator || false;
+        const exposedPage = localExposed?.exposedPage || 1;
 
         // Calculate the validator's share of total era payout.
         const totalRewardPoints = new BigNumber(
@@ -274,7 +320,7 @@ export const PayoutsProvider = ({
         if (!unclaimedPayout.isZero()) {
           unclaimed[era] = {
             ...unclaimed[era],
-            [validator]: unclaimedPayout.toString(),
+            [validator]: [exposedPage, unclaimedPayout.toString()],
           };
           j++;
         }

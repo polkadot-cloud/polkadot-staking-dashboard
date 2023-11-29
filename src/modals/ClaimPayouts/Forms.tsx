@@ -24,6 +24,7 @@ import { useSubscan } from 'contexts/Plugins/Subscan';
 import { usePayouts } from 'contexts/Payouts';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import type { FormProps, ActivePayout } from './types';
 import { ContentWrapper } from './Wrappers';
 
@@ -34,45 +35,56 @@ export const Forms = forwardRef(
     const {
       networkData: { units, unit },
     } = useNetwork();
-    const { activeAccount } = useActiveAccounts();
     const { newBatchCall } = useBatchCall();
     const { removeEraPayout } = usePayouts();
     const { setModalStatus } = useOverlay().modal;
+    const { activeAccount } = useActiveAccounts();
     const { getSignerWarnings } = useSignerWarnings();
+    const { isPagedRewardsActive } = useNetworkMetrics();
     const { unclaimedPayouts: unclaimedPayoutsSubscan, setUnclaimedPayouts } =
       useSubscan();
 
+    // Get the total payout amount.
     const totalPayout =
       payouts?.reduce(
         (total: BigNumber, cur: ActivePayout) => total.plus(cur.payout),
         new BigNumber(0)
       ) || new BigNumber(0);
 
+    // Get the total number of validators to payout (the same validator can repeat for separate
+    // eras).
+    const totalPayoutValidators =
+      payouts?.reduce(
+        (prev, { paginatedValidators }) =>
+          prev + (paginatedValidators?.length || 0),
+        0
+      ) || 0;
+
     const getCalls = () => {
       if (!api) return [];
 
       const calls: AnyApi[] = [];
-      payouts?.forEach(({ era, validators }) => {
-        if (!validators) return [];
+      payouts?.forEach(({ era, paginatedValidators }) => {
+        if (!paginatedValidators) return [];
 
-        // TODO: If westend, determine which page to use for `payoutStakers`, and add additional
-        // page arg to call.
-        return validators.forEach((v) =>
-          calls.push(api.tx.staking.payoutStakers(v, era))
-        );
-        // ------------
+        return paginatedValidators.forEach(([page, v]) => {
+          if (isPagedRewardsActive(new BigNumber(era))) {
+            return calls.push(api.tx.staking.payoutStakersByPage(v, era, page));
+          }
+          return calls.push(api.tx.staking.payoutStakers(v, era));
+        });
       });
       return calls;
     };
 
     // Store whether form is valid to submit transaction.
     const [valid, setValid] = useState<boolean>(
-      totalPayout.isGreaterThan(0) && getCalls().length > 0
+      totalPayout.isGreaterThan(0) && totalPayoutValidators > 0
     );
 
     // Ensure payouts value is valid.
     useEffect(
-      () => setValid(totalPayout.isGreaterThan(0) && getCalls().length > 0),
+      () => setValid(totalPayout.isGreaterThan(0) && totalPayoutValidators > 0),
       [payouts]
     );
 
@@ -97,8 +109,8 @@ export const Forms = forwardRef(
         // Remove Subscan unclaimed payout record(s) if they exists.
         let newUnclaimedPayoutsSubscan = unclaimedPayoutsSubscan;
 
-        payouts?.forEach(({ era, validators }) => {
-          validators?.forEach((validator) => {
+        payouts?.forEach(({ era, paginatedValidators }) => {
+          paginatedValidators?.forEach(([, validator]) => {
             newUnclaimedPayoutsSubscan = newUnclaimedPayoutsSubscan.filter(
               (u: AnySubscan) =>
                 !(u.validator_stash === validator && String(u.era) === era)
@@ -108,9 +120,9 @@ export const Forms = forwardRef(
         setUnclaimedPayouts(newUnclaimedPayoutsSubscan);
 
         // Deduct from `unclaimedPayouts` in Payouts context.
-        payouts?.forEach(({ era, validators }) => {
-          for (const v of validators || []) {
-            removeEraPayout(era, v);
+        payouts?.forEach(({ era, paginatedValidators }) => {
+          for (const v of paginatedValidators || []) {
+            removeEraPayout(era, v[1]);
           }
         });
 
