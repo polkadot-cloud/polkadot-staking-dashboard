@@ -16,7 +16,18 @@ import PolkadotTokenSVG from 'config/tokens/svg/DOT.svg?react';
 import KusamaTokenSVG from 'config/tokens/svg/KSM.svg?react';
 import WestendTokenSVG from 'config/tokens/svg/WND.svg?react';
 
-import type { Networks } from 'types';
+import type { NetworkName, Networks } from 'types';
+import BigNumber from 'bignumber.js';
+
+// DEPRECATION: Paged Rewards
+//
+// Temporary until paged rewards migration has completed on all networks.
+export const NetworksWithPagedRewards = ['westend'];
+export const PagedRewardsStartEra: Record<NetworkName, BigNumber | null> = {
+  polkadot: null,
+  kusama: null,
+  westend: new BigNumber(7167),
+};
 
 export const NetworkList: Networks = {
   polkadot: {
@@ -85,6 +96,7 @@ export const NetworkList: Networks = {
       stakeTarget: 0.75,
     },
     defaultFeeReserve: 0.1,
+    maxExposurePageSize: new BigNumber(512),
   },
   kusama: {
     name: 'kusama',
@@ -154,6 +166,7 @@ export const NetworkList: Networks = {
       stakeTarget: 0.75,
     },
     defaultFeeReserve: 0.05,
+    maxExposurePageSize: new BigNumber(512),
   },
   westend: {
     name: 'westend',
@@ -220,5 +233,6 @@ export const NetworkList: Networks = {
       stakeTarget: 0.75,
     },
     defaultFeeReserve: 0.1,
+    maxExposurePageSize: new BigNumber(64),
   },
 };

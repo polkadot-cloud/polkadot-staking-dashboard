@@ -40,10 +40,7 @@ export interface Exposure {
 }
 
 export interface ExposureValue {
-  others: {
-    value: string;
-    who: string;
-  }[];
+  others: ExposureOther[];
   own: string;
   total: string;
 }
@@ -83,7 +80,8 @@ export interface StakingContextInterface {
   staking: StakingMetrics;
   eraStakers: EraStakers;
   targets: any;
-  erasStakersSyncing: any;
+  erasStakersSyncing: boolean;
+  getPagedErasStakers: (e: string) => Promise<Exposure[]>;
 }
 
 export interface LocalExposuresData {

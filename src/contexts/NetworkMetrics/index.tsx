@@ -7,6 +7,10 @@ import React, { useRef, useState } from 'react';
 import type { AnyApi, AnyJson } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
+import {
+  NetworksWithPagedRewards,
+  PagedRewardsStartEra,
+} from 'config/networks';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
 import type {
@@ -108,7 +112,18 @@ export const NetworkMetricsProvider = ({
     }
   };
 
-  // Unsubscribe from unsubs
+  // Given an era, determine whether paged rewards are active.
+  const isPagedRewardsActive = (era: BigNumber): boolean => {
+    const networkStartEra = PagedRewardsStartEra[network];
+    if (!networkStartEra) return false;
+
+    return (
+      NetworksWithPagedRewards.includes(network) &&
+      era.isGreaterThanOrEqualTo(networkStartEra)
+    );
+  };
+
+  // Unsubscribe from unsubs.
   const unsubscribe = () => {
     Object.values(unsubsRef.current).forEach((unsub: AnyJson) => {
       unsub();
@@ -141,6 +156,7 @@ export const NetworkMetricsProvider = ({
       value={{
         activeEra: activeEraRef.current,
         metrics: metricsRef.current,
+        isPagedRewardsActive,
       }}
     >
       {children}

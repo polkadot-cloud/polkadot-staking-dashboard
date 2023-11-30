@@ -12,8 +12,9 @@ import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useApi } from 'contexts/Api';
 import type { Sync } from '@polkadot-cloud/react/types';
 import BigNumber from 'bignumber.js';
-import { formatRawExposures } from 'contexts/Staking/Utils';
 import { mergeDeep } from '@polkadot-cloud/utils';
+import { useStaking } from 'contexts/Staking';
+import { formatRawExposures } from 'contexts/Staking/Utils';
 import type { PoolPerformanceContextInterface } from './types';
 import { defaultPoolPerformanceContext } from './defaults';
 
@@ -27,7 +28,8 @@ export const PoolPerformanceProvider = ({
   const { api } = useApi();
   const { network } = useNetwork();
   const { bondedPools } = useBondedPools();
-  const { activeEra } = useNetworkMetrics();
+  const { activeEra, isPagedRewardsActive } = useNetworkMetrics();
+  const { getPagedErasStakers } = useStaking();
   const { erasRewardPointsFetched, erasRewardPoints } = useValidators();
 
   // Store whether pool performance data is being fetched.
@@ -79,10 +81,20 @@ export const PoolPerformanceProvider = ({
   const processEra = async (era: BigNumber) => {
     if (!api) return;
     setCurrentEra(era);
-    const result = await api.query.staking.erasStakersClipped.entries(
-      era.toString()
-    );
-    const exposures = formatRawExposures(result);
+
+    let exposures;
+    if (isPagedRewardsActive(era)) {
+      exposures = await getPagedErasStakers(era.toString());
+    } else {
+      // DEPRECATION: Paged Rewards
+      //
+      // Use deprecated `erasStakersClipped` if paged rewards not active for this era.
+      const result = await api.query.staking.erasStakersClipped.entries(
+        era.toString()
+      );
+      exposures = formatRawExposures(result);
+    }
+
     worker.postMessage({
       task: 'processNominationPoolsRewardData',
       era: era.toString(),

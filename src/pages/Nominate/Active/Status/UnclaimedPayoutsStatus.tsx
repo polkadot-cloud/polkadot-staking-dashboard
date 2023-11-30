@@ -25,9 +25,9 @@ export const UnclaimedPayoutsStatus = () => {
   const { isReadOnlyAccount } = useImportedAccounts();
 
   const totalUnclaimed = Object.values(unclaimedPayouts || {}).reduce(
-    (total, validators) =>
-      Object.values(validators)
-        .reduce((amount, value) => amount.plus(value), new BigNumber(0))
+    (total, paginatedValidators) =>
+      Object.values(paginatedValidators)
+        .reduce((amount, [, value]) => amount.plus(value), new BigNumber(0))
         .plus(total),
     new BigNumber(0)
   );
