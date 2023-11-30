@@ -206,7 +206,9 @@ export const PayoutsProvider = ({
         }
       }
     } else {
-      // DEPRECATION: Use `staking.ledger` to get unclaimed reward eras. Read `legacyClaimedRewards`
+      // DEPRECATION: Paged Rewards
+      //
+      // Use `staking.ledger` to get unclaimed reward eras. Read `legacyClaimedRewards`
       // if paged rewards are active, otherwise use `claimedRewards`.
       const ledgerResults = await api.query.staking.ledger.multi<AnyApi>(
         Object.values(validatorControllers)

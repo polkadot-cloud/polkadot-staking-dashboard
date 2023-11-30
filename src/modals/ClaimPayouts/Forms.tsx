@@ -71,6 +71,9 @@ export const Forms = forwardRef(
           if (isPagedRewardsActive(new BigNumber(era))) {
             return calls.push(api.tx.staking.payoutStakersByPage(v, era, page));
           }
+          // DEPRECATION: Paged Rewards
+          //
+          // Fall back to deprecated `payoutStakers` if not on paged reward era.
           return calls.push(api.tx.staking.payoutStakers(v, era));
         });
       });

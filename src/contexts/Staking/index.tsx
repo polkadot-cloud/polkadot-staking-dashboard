@@ -404,7 +404,9 @@ export const StakingProvider = ({
       return result;
     }
 
-    // DEPRECATED: use legacy `erasStakers` storage item.
+    // DEPRECATION: Paged Rewards
+    //
+    // Use legacy `erasStakers` storage item.
     const result = await api.query.staking.erasStakers.entries(era);
     return formatRawExposures(result);
   };

@@ -19,7 +19,9 @@ import WestendTokenSVG from 'config/tokens/svg/WND.svg?react';
 import type { NetworkName, Networks } from 'types';
 import BigNumber from 'bignumber.js';
 
-// DEPRECATION: Temporary until paged rewards migration has completed on all networks.
+// DEPRECATION: Paged Rewards
+//
+// Temporary until paged rewards migration has completed on all networks.
 export const NetworksWithPagedRewards = ['westend'];
 export const PagedRewardsStartEra: Record<NetworkName, BigNumber | null> = {
   polkadot: null,
