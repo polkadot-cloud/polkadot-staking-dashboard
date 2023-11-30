@@ -4498,10 +4498,10 @@ quote-unquote@^1.0.0:
   resolved "https://registry.yarnpkg.com/quote-unquote/-/quote-unquote-1.0.0.tgz#67a9a77148effeaf81a4d428404a710baaac8a0b"
   integrity sha512-twwRO/ilhlG/FIgYeKGFqyHhoEhqgnKVkcmqMKi2r524gz3ZbDTcyFt38E9xjJI2vT+KbRNHVbnJ/e0I25Azwg==
 
-rc-slider@^10.4.0:
-  version "10.4.0"
-  resolved "https://registry.yarnpkg.com/rc-slider/-/rc-slider-10.4.0.tgz#efc016583fdea5f5dfb4f3dc61b6755a19e5f453"
-  integrity sha512-ZlpWjFhOlEf0w4Ng31avFBkXNNBj60NAcTPaIoiCxBkJ29wOtHSPMqv9PZeEoqmx64bpJkgK7kPa47HG4LPzww==
+rc-slider@^10.5.0:
+  version "10.5.0"
+  resolved "https://registry.yarnpkg.com/rc-slider/-/rc-slider-10.5.0.tgz#1bd4853d114cb3403b67c485125887adb6a2a117"
+  integrity sha512-xiYght50cvoODZYI43v3Ylsqiw14+D7ELsgzR40boDZaya1HFa1Etnv9MDkQE8X/UrXAffwv2AcNAhslgYuDTw==
   dependencies:
     "@babel/runtime" "^7.10.1"
     classnames "^2.2.5"
