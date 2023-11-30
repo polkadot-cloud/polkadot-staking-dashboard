@@ -8,7 +8,7 @@ import type { Plugin } from 'types';
 /*
  * Global Constants
  */
-export const AppVersion = '1.1.2';
+export const AppVersion = '1.1.3';
 export const DappName = 'Polkadot Staking Dashboard';
 export const PolkadotUrl = 'https://polkadot.network/features/staking/';
 export const DefaultNetwork = 'polkadot';
