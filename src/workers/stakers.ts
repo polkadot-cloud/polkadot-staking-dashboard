@@ -79,9 +79,11 @@ const processEraForExposure = (data: AnyJson) => {
     if (inOthers) {
       const index = others.findIndex((o: ExposureOther) => o.who === who);
       const exposedPage = Math.floor(index / Number(maxExposurePageSize));
-      const share = new BigNumber(inOthers.value).isZero()
-        ? '0'
-        : new BigNumber(inOthers.value).dividedBy(total).toString();
+
+      const share =
+        new BigNumber(inOthers.value).isZero() || total === 0
+          ? '0'
+          : new BigNumber(inOthers.value).dividedBy(total).toString();
 
       exposedValidators[validator] = {
         staked: inOthers.value,

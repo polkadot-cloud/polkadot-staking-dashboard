@@ -46,6 +46,12 @@ import {
 
 const worker = new Worker();
 
+export const StakingContext = React.createContext<StakingContextInterface>(
+  defaultStakingContext
+);
+
+export const useStaking = () => React.useContext(StakingContext);
+
 export const StakingProvider = ({
   children,
 }: {
@@ -385,7 +391,7 @@ export const StakingProvider = ({
         result.push({
           keys: [rmCommas(era), validator],
           val: {
-            total,
+            total: rmCommas(total),
             own: rmCommas(own),
             others: others.map(({ who, value }) => ({
               who,
@@ -463,9 +469,3 @@ export const StakingProvider = ({
     </StakingContext.Provider>
   );
 };
-
-export const StakingContext = React.createContext<StakingContextInterface>(
-  defaultStakingContext
-);
-
-export const useStaking = () => React.useContext(StakingContext);
