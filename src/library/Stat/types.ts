@@ -2,12 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
-import type { AnyObject } from '@polkadot-cloud/utils/types';
-import type { MaybeAddress } from 'types';
+import type { AnyJson, MaybeAddress } from 'types';
 
 export interface StatProps {
   label: string;
-  stat: AnyObject;
+  stat: AnyJson;
   type?: string;
   buttons?: any;
   helpKey: string;
