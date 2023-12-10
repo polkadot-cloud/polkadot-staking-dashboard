@@ -755,12 +755,7 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.38.tgz#cf829915e139f6674a2513a2847a4cd7e786e8e3"
   integrity sha512-yAT191uht0bJIDDM/wErJKll8TZ6FC7diSsGdPZQ80WYcR/orZN3J146/dcpfaJkJN8eyL/orFKBw4MYKur3eA==
 
-"@polkadot-cloud/core@^1.0.50":
-  version "1.0.50"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.50.tgz#6db1fea7473601cee315f5e8be972e9a8efc1034"
-  integrity sha512-SdHsp49XxdLRwwjwe/dcqQcy8tyBL4MoQc4YYmOWRjOcnasJmPZE2VHLYtHvnhS3pkWJav0WuhScPUh9dUtGDQ==
-
-"@polkadot-cloud/core@^1.0.51":
+"@polkadot-cloud/core@^1.0.50", "@polkadot-cloud/core@^1.0.51":
   version "1.0.51"
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.51.tgz#ab41a661552f5708c8a1dea2ff4c860c16a2b8a6"
   integrity sha512-Gwm0pTz4Wl9+Q0n3TFBZ+0AQx8cSmo5lo7ALQpT33pZv0QluKrW489Hskt37//2uphELO4t/VkuP9Pu+Pw7jnQ==
@@ -2005,9 +2000,9 @@ binary-extensions@^2.0.0:
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
 
-"bip32-ed25519@https://github.com/Zondax/bip32-ed25519":
+"bip32-ed25519@git+https://github.com/Zondax/bip32-ed25519.git":
   version "0.0.4"
-  resolved "https://github.com/Zondax/bip32-ed25519#0949df01b5c93885339bc28116690292088f6134"
+  resolved "git+https://github.com/Zondax/bip32-ed25519.git#0949df01b5c93885339bc28116690292088f6134"
   dependencies:
     bn.js "^5.1.1"
     elliptic "^6.4.1"
