@@ -755,15 +755,15 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.38.tgz#cf829915e139f6674a2513a2847a4cd7e786e8e3"
   integrity sha512-yAT191uht0bJIDDM/wErJKll8TZ6FC7diSsGdPZQ80WYcR/orZN3J146/dcpfaJkJN8eyL/orFKBw4MYKur3eA==
 
-"@polkadot-cloud/core@^1.0.50", "@polkadot-cloud/core@^1.0.51":
+"@polkadot-cloud/core@^1.0.51":
   version "1.0.51"
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.51.tgz#ab41a661552f5708c8a1dea2ff4c860c16a2b8a6"
   integrity sha512-Gwm0pTz4Wl9+Q0n3TFBZ+0AQx8cSmo5lo7ALQpT33pZv0QluKrW489Hskt37//2uphELO4t/VkuP9Pu+Pw7jnQ==
 
-"@polkadot-cloud/react@^0.1.143":
-  version "0.1.143"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.143.tgz#25c12ce29ed72c30029cd2c95a4fa304dfe105b7"
-  integrity sha512-BoMPmcJqMqOBBFNpupkmQ/d7HavEodoYkM8BXucmc73qZ/goh4DTs7gDpYOKDKFciPMiDPSEPXNNSAFgA6ndrQ==
+"@polkadot-cloud/react@^0.1.144":
+  version "0.1.144"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.144.tgz#e2e2650a76e7348d19d0c11bac824d4b9ad05a06"
+  integrity sha512-sDWwO+8QQ9XVV+Ppkk/xZmfO3WuBOdKfGuC6Qnu6a7/DgcH4vrDxdE/IMHMKNJhPIhZ8xzmLNCoC3dhp04Zvng==
   dependencies:
     "@chainsafe/metamask-polkadot-adapter" "^0.6.0"
     "@fortawesome/fontawesome-svg-core" "^6.5.1"
@@ -772,7 +772,7 @@
     "@fortawesome/free-solid-svg-icons" "^6.5.1"
     "@fortawesome/react-fontawesome" "^0.2.0"
     "@polkadot-cloud/assets" "0.1.35"
-    "@polkadot-cloud/core" "^1.0.50"
+    "@polkadot-cloud/core" "^1.0.51"
     "@polkadot-cloud/utils" "^0.0.25"
     "@polkadot/keyring" "^12.6.1"
     "@polkadot/util" "^12.5.1"
