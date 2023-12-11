@@ -115,7 +115,7 @@ export const Forms = forwardRef(
 
     // Ensure unlock value is valid.
     useEffect(() => {
-      setValid((unlock?.value?.toNumber() || 0) > 0 ?? false);
+      setValid((unlock?.value?.toNumber() || 0) > 0 || false);
     }, [unlock]);
 
     // Trigger modal resize when commission options are enabled / disabled.
