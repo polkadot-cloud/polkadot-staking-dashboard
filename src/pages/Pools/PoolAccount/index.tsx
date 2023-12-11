@@ -23,11 +23,11 @@ export const PoolAccount = ({
   const { meta } = useIdentities();
   const { addNotification } = useNotifications();
 
-  const identities = meta[batchKey]?.identities ?? [];
-  const supers = meta[batchKey]?.supers ?? [];
+  const identities = meta[batchKey]?.identities || [];
+  const supers = meta[batchKey]?.supers || [];
 
-  const identitiesSynced = identities.length > 0 ?? false;
-  const supersSynced = supers.length > 0 ?? false;
+  const identitiesSynced = identities.length > 0 || false;
+  const supersSynced = supers.length > 0 || false;
   const synced = identitiesSynced && supersSynced;
 
   const display = getIdentityDisplay(

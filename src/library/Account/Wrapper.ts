@@ -18,7 +18,7 @@ export const Wrapper = styled.button<WrapperProps>`
   max-width: 235px;
   flex: 1;
   &:hover {
-    transform: scale(1.03);
+    transform: scale(1.025);
   }
   .identicon {
     margin: 0.15rem 0.25rem 0 0;
