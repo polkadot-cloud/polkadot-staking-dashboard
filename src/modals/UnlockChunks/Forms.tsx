@@ -57,7 +57,7 @@ export const Forms = forwardRef(
 
     // valid to submit transaction
     const [valid, setValid] = useState<boolean>(
-      unlock?.value?.toNumber() > 0 ?? false
+      (unlock?.value?.toNumber() || 0) > 0 || false
     );
 
     // tx to submit
@@ -115,7 +115,7 @@ export const Forms = forwardRef(
 
     // Ensure unlock value is valid.
     useEffect(() => {
-      setValid(unlock?.value?.toNumber() > 0 ?? false);
+      setValid((unlock?.value?.toNumber() || 0) > 0 ?? false);
     }, [unlock]);
 
     // Trigger modal resize when commission options are enabled / disabled.
