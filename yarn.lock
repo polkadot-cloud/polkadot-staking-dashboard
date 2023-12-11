@@ -760,10 +760,10 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.51.tgz#ab41a661552f5708c8a1dea2ff4c860c16a2b8a6"
   integrity sha512-Gwm0pTz4Wl9+Q0n3TFBZ+0AQx8cSmo5lo7ALQpT33pZv0QluKrW489Hskt37//2uphELO4t/VkuP9Pu+Pw7jnQ==
 
-"@polkadot-cloud/react@^0.1.141":
-  version "0.1.141"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.141.tgz#9ecd8d967401ca83a398ba34e1a11e26cc23afa7"
-  integrity sha512-bpg//kU+twohntI0UEtqhiNkDngveJFjD/Noax62iQrugrO/mO06ca3NYhunpSmJravM18hanoC3NoT1hVtymg==
+"@polkadot-cloud/react@^0.1.142":
+  version "0.1.142"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.142.tgz#fb10663731e82e938c9e67f128075dc782c0b572"
+  integrity sha512-6ijx8jjp4nF9KxMGLoj1KOSuvuK1e1hmP3QQ2nuVxwXmJ4k8EXGLnauBnLmu5ReOILQce/wpIus8wJrJZoTDEg==
   dependencies:
     "@chainsafe/metamask-polkadot-adapter" "^0.6.0"
     "@fortawesome/fontawesome-svg-core" "^6.5.1"
