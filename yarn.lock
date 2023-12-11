@@ -760,10 +760,10 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.51.tgz#ab41a661552f5708c8a1dea2ff4c860c16a2b8a6"
   integrity sha512-Gwm0pTz4Wl9+Q0n3TFBZ+0AQx8cSmo5lo7ALQpT33pZv0QluKrW489Hskt37//2uphELO4t/VkuP9Pu+Pw7jnQ==
 
-"@polkadot-cloud/react@^0.1.142":
-  version "0.1.142"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.142.tgz#fb10663731e82e938c9e67f128075dc782c0b572"
-  integrity sha512-6ijx8jjp4nF9KxMGLoj1KOSuvuK1e1hmP3QQ2nuVxwXmJ4k8EXGLnauBnLmu5ReOILQce/wpIus8wJrJZoTDEg==
+"@polkadot-cloud/react@^0.1.143":
+  version "0.1.143"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.143.tgz#25c12ce29ed72c30029cd2c95a4fa304dfe105b7"
+  integrity sha512-BoMPmcJqMqOBBFNpupkmQ/d7HavEodoYkM8BXucmc73qZ/goh4DTs7gDpYOKDKFciPMiDPSEPXNNSAFgA6ndrQ==
   dependencies:
     "@chainsafe/metamask-polkadot-adapter" "^0.6.0"
     "@fortawesome/fontawesome-svg-core" "^6.5.1"
@@ -777,7 +777,7 @@
     "@polkadot/keyring" "^12.6.1"
     "@polkadot/util" "^12.5.1"
     "@polkadot/util-crypto" "^12.5.1"
-    framer-motion "^10.16.15"
+    framer-motion "^10.16.16"
 
 "@polkadot-cloud/utils@^0.0.25":
   version "0.0.25"
@@ -3199,7 +3199,7 @@ formdata-polyfill@^4.0.10:
   dependencies:
     fetch-blob "^3.1.2"
 
-framer-motion@^10.16.15, framer-motion@^10.16.16:
+framer-motion@^10.16.16:
   version "10.16.16"
   resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-10.16.16.tgz#a10a03e1190a717109163cfff212a84c8ad11b0c"
   integrity sha512-je6j91rd7NmUX7L1XHouwJ4v3R+SO4umso2LUcgOct3rHZ0PajZ80ETYZTajzEXEl9DlKyzjyt4AvGQ+lrebOw==
