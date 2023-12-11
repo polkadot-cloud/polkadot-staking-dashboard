@@ -15,7 +15,7 @@ export interface DataInitialiseExposures {
   activeAccount: MaybeAddress;
   units: number;
   exposures: Exposure[];
-  maxNominatorRewardedPerValidator: number;
+  maxExposurePageSize: number;
 }
 
 export interface ResponseInitialiseExposures {

@@ -84,7 +84,7 @@ export const EraPoints = ({ items = [], height }: EraPointsProps) => {
         titleColor: graphColors.label[mode],
         bodyColor: graphColors.label[mode],
         bodyFont: {
-          weight: '600',
+          weight: 600,
         },
         callbacks: {
           title: () => [],

@@ -169,7 +169,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
         titleColor: graphColors.label[mode],
         bodyColor: graphColors.label[mode],
         bodyFont: {
-          weight: '600',
+          weight: 600,
         },
         callbacks: {
           title: () => [],

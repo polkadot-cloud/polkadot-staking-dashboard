@@ -12,11 +12,7 @@ export const useFillVariables = () => {
   const { consts } = useApi();
   const { stats } = usePoolsConfig();
   const { networkData } = useNetwork();
-  const {
-    maxNominations,
-    maxNominatorRewardedPerValidator,
-    existentialDeposit,
-  } = consts;
+  const { maxNominations, maxExposurePageSize, existentialDeposit } = consts;
   const { minJoinBond, minCreateBond } = stats;
   const { metrics } = useNetworkMetrics();
   const { minimumActiveStake } = metrics;
@@ -32,7 +28,7 @@ export const useFillVariables = () => {
           ['{NETWORK_NAME}', capitalizeFirstLetter(networkData.name)],
           [
             '{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}',
-            maxNominatorRewardedPerValidator.toString(),
+            maxExposurePageSize.toString(),
           ],
           ['{MAX_NOMINATIONS}', maxNominations.toString()],
           [

@@ -6,6 +6,12 @@ import type BigNumber from 'bignumber.js';
 export interface NetworkMetricsContextInterface {
   activeEra: ActiveEra;
   metrics: NetworkMetrics;
+  isPagedRewardsActive: (era: BigNumber) => boolean;
+}
+
+export interface ActiveEra {
+  index: BigNumber;
+  start: BigNumber;
 }
 
 export interface NetworkMetrics {
@@ -14,9 +20,4 @@ export interface NetworkMetrics {
   earliestStoredSession: BigNumber;
   fastUnstakeErasToCheckPerBlock: number;
   minimumActiveStake: BigNumber;
-}
-
-export interface ActiveEra {
-  index: BigNumber;
-  start: BigNumber;
 }

@@ -8,7 +8,7 @@ import type { Plugin } from 'types';
 /*
  * Global Constants
  */
-export const AppVersion = '1.1.2';
+export const AppVersion = '1.1.3';
 export const DappName = 'Polkadot Staking Dashboard';
 export const PolkadotUrl = 'https://polkadot.network/features/staking/';
 export const DefaultNetwork = 'polkadot';
@@ -46,7 +46,6 @@ export const PluginsList: Plugin[] = [
 export const FallbackMaxNominations = new BigNumber(16);
 export const FallbackBondingDuration = new BigNumber(28);
 export const FallbackSessionsPerEra = new BigNumber(6);
-export const FallbackNominatorRewardedPerValidator = new BigNumber(512);
 export const FallbackMaxElectingVoters = new BigNumber(22500);
 export const FallbackExpectedBlockTime = new BigNumber(6000);
 export const FallbackEpochDuration = new BigNumber(2400);

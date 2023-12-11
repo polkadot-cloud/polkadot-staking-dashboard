@@ -72,7 +72,7 @@ export const setLocalUnclaimedPayouts = (
   network: NetworkName,
   era: string,
   who: string,
-  unclaimdPayouts: Record<string, string>,
+  unclaimdPayouts: Record<string, [number, string]>,
   endEra: string
 ) => {
   const current = JSON.parse(

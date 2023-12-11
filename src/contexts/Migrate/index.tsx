@@ -62,6 +62,11 @@ export const MigrateProvider = ({
     }
   };
 
+  // Removes `westend_era_exposures` from local storage.
+  const removeWestendEraExposures = () => {
+    localStorage.removeItem('westend_era_exposures');
+  };
+
   useEffectIgnoreInitial(() => {
     if (isReady && !isNetworkSyncing && !done) {
       // Carry out migrations if local version is different to current version.
@@ -86,6 +91,11 @@ export const MigrateProvider = ({
         //
         // Remove local `system` external accounts.
         removeSystemExternalAccounts();
+
+        // Added in 1.1.3
+        //
+        // Remove local `era_exposures`.
+        removeWestendEraExposures();
 
         // Finally,
         //
