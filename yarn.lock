@@ -755,15 +755,15 @@
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/assets/-/assets-0.1.38.tgz#cf829915e139f6674a2513a2847a4cd7e786e8e3"
   integrity sha512-yAT191uht0bJIDDM/wErJKll8TZ6FC7diSsGdPZQ80WYcR/orZN3J146/dcpfaJkJN8eyL/orFKBw4MYKur3eA==
 
-"@polkadot-cloud/core@^1.0.50", "@polkadot-cloud/core@^1.0.51":
+"@polkadot-cloud/core@^1.0.51":
   version "1.0.51"
   resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-1.0.51.tgz#ab41a661552f5708c8a1dea2ff4c860c16a2b8a6"
   integrity sha512-Gwm0pTz4Wl9+Q0n3TFBZ+0AQx8cSmo5lo7ALQpT33pZv0QluKrW489Hskt37//2uphELO4t/VkuP9Pu+Pw7jnQ==
 
-"@polkadot-cloud/react@^0.1.140":
-  version "0.1.140"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.140.tgz#a87528f2521cd1dc630753066d10cf36fddd5c2d"
-  integrity sha512-6ymFr/DuLNn0XShGSToHacqH3g7QNIQQ04fJCEd2PmrcREU82aK0kOabI49xZgTp4jSauX4sWiAJcfIZP2vt9A==
+"@polkadot-cloud/react@^0.1.144":
+  version "0.1.144"
+  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.144.tgz#e2e2650a76e7348d19d0c11bac824d4b9ad05a06"
+  integrity sha512-sDWwO+8QQ9XVV+Ppkk/xZmfO3WuBOdKfGuC6Qnu6a7/DgcH4vrDxdE/IMHMKNJhPIhZ8xzmLNCoC3dhp04Zvng==
   dependencies:
     "@chainsafe/metamask-polkadot-adapter" "^0.6.0"
     "@fortawesome/fontawesome-svg-core" "^6.5.1"
@@ -772,12 +772,12 @@
     "@fortawesome/free-solid-svg-icons" "^6.5.1"
     "@fortawesome/react-fontawesome" "^0.2.0"
     "@polkadot-cloud/assets" "0.1.35"
-    "@polkadot-cloud/core" "^1.0.50"
+    "@polkadot-cloud/core" "^1.0.51"
     "@polkadot-cloud/utils" "^0.0.25"
     "@polkadot/keyring" "^12.6.1"
     "@polkadot/util" "^12.5.1"
     "@polkadot/util-crypto" "^12.5.1"
-    framer-motion "^10.16.15"
+    framer-motion "^10.16.16"
 
 "@polkadot-cloud/utils@^0.0.25":
   version "0.0.25"
@@ -3199,7 +3199,7 @@ formdata-polyfill@^4.0.10:
   dependencies:
     fetch-blob "^3.1.2"
 
-framer-motion@^10.16.15, framer-motion@^10.16.16:
+framer-motion@^10.16.16:
   version "10.16.16"
   resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-10.16.16.tgz#a10a03e1190a717109163cfff212a84c8ad11b0c"
   integrity sha512-je6j91rd7NmUX7L1XHouwJ4v3R+SO4umso2LUcgOct3rHZ0PajZ80ETYZTajzEXEl9DlKyzjyt4AvGQ+lrebOw==
