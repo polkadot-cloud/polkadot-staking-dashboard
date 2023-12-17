@@ -6,7 +6,7 @@ _If you fetch this repository for the first time, or if the yarn version is upda
 
 ## Troubleshooting
 
-This section documents some common issues that may arise when  using Yarn Modern for the first time, or if Yarn Classic is installed globally.
+This section documents some common issues that may arise when using Yarn Modern for the first time, or if Yarn Classic is installed globally.
 
 ### I cannot switch between Yarn Classic and Yarn Modern on my machine
 
@@ -46,5 +46,5 @@ Verify the version with `npm --version`. You may need to restart your IDE or CLI
 
 ## Other Resources
 
-* Step by step migration guide from Yarn Classic: https://yarnpkg.com/migration/guide
-* `yarn set version` reference: https://yarnpkg.com/cli/set/version
+- Step by step migration guide from Yarn Classic: https://yarnpkg.com/migration/guide
+- `yarn set version` reference: https://yarnpkg.com/cli/set/version
