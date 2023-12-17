@@ -34,6 +34,16 @@ cd /Users/<username>/.yarn/bin/yarn && yarn set version berry
 
 Yarn Berry is the latest version of Yarn Modern. To switch back to Yarn Classic, run `yarn set version classic` instead.
 
+### Yarn install is failing
+
+Ensure that you have the latest version of `npm` installed on your machine. Instead of installing it via `yarn`, use the [direct download](https://www.npmjs.com/package/npm#direct-download):
+
+```
+curl -qL https://www.npmjs.com/install.sh | sh
+```
+
+Verify the version with `npm --version`. You may need to restart your IDE or CLI to pick up the updated version.
+
 ## Other Resources
 
 * Step by step migration guide from Yarn Classic: https://yarnpkg.com/migration/guide
