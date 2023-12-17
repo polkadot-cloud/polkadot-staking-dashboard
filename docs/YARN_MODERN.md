@@ -47,4 +47,5 @@ Verify the version with `npm --version`. You may need to restart your IDE or CLI
 ## Other Resources
 
 - Step by step migration guide from Yarn Classic: https://yarnpkg.com/migration/guide
+- Yarn Questions & Answers: https://yarnpkg.com/getting-started/qa
 - `yarn set version` reference: https://yarnpkg.com/cli/set/version
