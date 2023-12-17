@@ -44,6 +44,6 @@ export default defineConfig({
     include: ['react/jsx-runtime'],
   },
   worker: {
-    format: 'es'
-  }
+    format: 'es',
+  },
 });
