@@ -4,7 +4,7 @@
 import { forwardRef } from 'react';
 import { ContentWrapper } from '../Wrappers';
 import { ClaimCommission } from './ClaimCommission';
-import { Commission } from './Commission';
+import { ManageCommission } from './ManageCommission';
 import { LeavePool } from './LeavePool';
 import { SetClaimPermission } from './SetClaimPermission';
 import { RenamePool } from './RenamePool';
@@ -19,7 +19,7 @@ export const Forms = forwardRef(
             {task === 'set_pool_metadata' ? (
               <RenamePool setSection={setSection} section={section} />
             ) : task === 'manage_commission' ? (
-              <Commission
+              <ManageCommission
                 setSection={setSection}
                 section={section}
                 incrementCalculateHeight={incrementCalculateHeight}

@@ -34,7 +34,10 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { SliderWrapper } from '../../Wrappers';
 import type { ChangeRateInput } from '../types';
 
-export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
+export const ManageCommission = ({
+  setSection,
+  incrementCalculateHeight,
+}: any) => {
   const { t } = useTranslation('modals');
   const { openHelp } = useHelp();
   const { api, consts } = useApi();
