@@ -32,6 +32,7 @@ import { SliderWrapper } from '../../Wrappers';
 import type { ChangeRateInput } from '../types';
 import { usePoolCommission } from '../provider';
 import { CommissionCurrent } from './CommissionCurrent';
+import { MaxCommission } from './MaxCommission';
 
 export const ManageCommission = ({
   setSection,
@@ -48,8 +49,6 @@ export const ManageCommission = ({
   const { isOwner, selectedActivePool } = useActivePools();
   const { getBondedPool, updateBondedPools } = useBondedPools();
   const {
-    setCommission,
-    setMaxCommission,
     setChangeRate,
     getInitial,
     getCurrent,
@@ -57,6 +56,7 @@ export const ManageCommission = ({
     setEnabled,
     hasValue,
     resetAll,
+    isUpdated,
   } = usePoolCommission();
 
   const commission = getCurrent('commission');
@@ -136,13 +136,8 @@ export const ManageCommission = ({
   };
 
   // Monitor when input items change.
-  const commissionUpdated = commission !== getInitial('commission');
 
-  const maxCommissionUpdated =
-    (!hasValue('max_commission') &&
-      maxCommission === getInitial('max_commission')) ||
-    maxCommission !== getInitial('max_commission') ||
-    (!hasValue('max_commission') && getEnabled('max_commission'));
+  const commissionUpdated = commission !== getInitial('commission');
 
   const changeRateUpdated =
     (!hasValue('change_rate') &&
@@ -160,7 +155,7 @@ export const ManageCommission = ({
 
   // Global form change.
   const noChange =
-    !commissionUpdated && !maxCommissionUpdated && !changeRateUpdated;
+    !commissionUpdated && !isUpdated('max_commission') && !changeRateUpdated;
 
   // Monitor when input items are invalid.
   const commissionAboveMax = commission > maxCommission;
@@ -179,7 +174,7 @@ export const ManageCommission = ({
       commission > globalMaxCommission);
 
   const invalidMaxCommission =
-    maxCommissionUpdated && maxCommission > getInitial('max_commission');
+    isUpdated('max_commission') && maxCommission > getInitial('max_commission');
   const maxCommissionAboveGlobal = maxCommission > globalMaxCommission;
 
   // Change rate is invalid if updated is not more restrictive than current.
@@ -196,7 +191,7 @@ export const ManageCommission = ({
   // Check there are txs to submit.
   const txsToSubmit =
     commissionUpdated ||
-    (maxCommissionUpdated && getEnabled('max_commission')) ||
+    (isUpdated('max_commission') && getEnabled('max_commission')) ||
     (changeRateUpdated && getEnabled('change_rate'));
 
   useEffect(() => {
@@ -252,7 +247,7 @@ export const ManageCommission = ({
         )
       );
     }
-    if (maxCommissionUpdated && getEnabled('max_commission')) {
+    if (isUpdated('max_commission') && getEnabled('max_commission')) {
       txs.push(
         api.tx.nominationPools.setCommissionMax(
           poolId,
@@ -293,7 +288,7 @@ export const ManageCommission = ({
             commission: {
               ...pool.commission,
               current: commissionCurrent(),
-              max: maxCommissionUpdated
+              max: isUpdated('max_commission')
                 ? `${maxCommission.toFixed(2)}%`
                 : pool.commission?.max || null,
               changeRate: changeRateUpdated
@@ -314,28 +309,6 @@ export const ManageCommission = ({
     false,
     submitExtrinsic.proxySupported
   );
-
-  const maxCommissionFeedback = (() => {
-    if (!maxCommissionUpdated) {
-      return undefined;
-    }
-    if (invalidMaxCommission) {
-      return {
-        text: t('aboveExisting'),
-        label: 'danger',
-      };
-    }
-    if (maxCommissionAboveGlobal) {
-      return {
-        text: t('aboveGlobalMax'),
-        label: 'danger',
-      };
-    }
-    return {
-      text: t('updated'),
-      label: 'neutral',
-    };
-  })();
 
   const maxIncreaseFeedback = (() => {
     if (!maxIncreaseUpdated) {
@@ -408,29 +381,11 @@ export const ManageCommission = ({
           }
         />
 
-        {getEnabled('max_commission') && (
-          <SliderWrapper>
-            <div>
-              <h2>{maxCommission}% </h2>
-              <h5 className={maxCommissionFeedback?.label || 'neutral'}>
-                {!!maxCommissionFeedback && maxCommissionFeedback.text}
-              </h5>
-            </div>
-
-            <StyledSlider
-              value={maxCommission}
-              step={0.1}
-              onChange={(val) => {
-                if (typeof val === 'number') {
-                  setMaxCommission(val);
-                  if (val < commission) {
-                    setCommission(val);
-                  }
-                }
-              }}
-            />
-          </SliderWrapper>
-        )}
+        {/* TODO: spread these commission meta values */}
+        <MaxCommission
+          invalidMaxCommission={invalidMaxCommission}
+          maxCommissionAboveGlobal={maxCommissionAboveGlobal}
+        />
 
         <ActionItem
           style={{

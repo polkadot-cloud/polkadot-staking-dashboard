@@ -163,6 +163,18 @@ export const PoolCommissionProvider = ({
     switch (feature) {
       case 'commission':
         return commission !== initialCommission;
+
+      case 'max_commission':
+        return (
+          // no value set and current value is initial.
+          (!hasValue('max_commission') &&
+            maxCommission === getInitial('max_commission')) ||
+          // current value is not initial value.
+          maxCommission !== getInitial('max_commission') ||
+          // no value set and max commission is enabled.
+          (!hasValue('max_commission') && getEnabled('max_commission'))
+        );
+
       default:
         return false;
     }
