@@ -74,18 +74,11 @@ export const ManageCommission = ({
   // Monitor when input items change.
   const commissionUpdated = commission !== getInitial('commission');
 
-  const changeRateUpdated =
-    (!hasValue('change_rate') &&
-      JSON.stringify(changeRate) ===
-        JSON.stringify(getInitial('change_rate'))) ||
-    (hasValue('change_rate') &&
-      JSON.stringify(changeRate) !==
-        JSON.stringify(getInitial('change_rate'))) ||
-    (!hasValue('change_rate') && getEnabled('change_Rate'));
-
   // Global form change.
   const noChange =
-    !commissionUpdated && !isUpdated('max_commission') && !changeRateUpdated;
+    !commissionUpdated &&
+    !isUpdated('max_commission') &&
+    !isUpdated('change_rate');
 
   // Monitor when input items are invalid.
   const commissionAboveMax = commission > maxCommission;
@@ -109,11 +102,11 @@ export const ManageCommission = ({
 
   // Change rate is invalid if updated is not more restrictive than current.
   const invalidMaxIncrease =
-    changeRateUpdated &&
+    isUpdated('change_rate') &&
     changeRate.maxIncrease > getInitial('change_rate').maxIncrease;
 
   const invalidMinDelay =
-    changeRateUpdated &&
+    isUpdated('change_rate') &&
     changeRate.minDelay < getInitial('change_rate').minDelay;
 
   const invalidChangeRate = invalidMaxIncrease || invalidMinDelay;
@@ -122,7 +115,7 @@ export const ManageCommission = ({
   const txsToSubmit =
     commissionUpdated ||
     (isUpdated('max_commission') && getEnabled('max_commission')) ||
-    (changeRateUpdated && getEnabled('change_rate'));
+    (isUpdated('change_rate') && getEnabled('change_rate'));
 
   useEffect(() => {
     setValid(
@@ -185,7 +178,7 @@ export const ManageCommission = ({
         )
       );
     }
-    if (changeRateUpdated && getEnabled('change_rate')) {
+    if (isUpdated('change_rate') && getEnabled('change_rate')) {
       txs.push(
         api.tx.nominationPools.setCommissionChangeRate(poolId, {
           maxIncrease: new BigNumber(changeRate.maxIncrease)
@@ -221,7 +214,7 @@ export const ManageCommission = ({
               max: isUpdated('max_commission')
                 ? `${maxCommission.toFixed(2)}%`
                 : pool.commission?.max || null,
-              changeRate: changeRateUpdated
+              changeRate: isUpdated('change_rate')
                 ? {
                     maxIncrease: `${changeRate.maxIncrease.toFixed(2)}%`,
                     minDelay: String(changeRate.minDelay),

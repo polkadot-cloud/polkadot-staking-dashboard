@@ -175,6 +175,20 @@ export const PoolCommissionProvider = ({
           (!hasValue('max_commission') && getEnabled('max_commission'))
         );
 
+      case 'change_rate':
+        return (
+          // no value set and current value equals initial.
+          (!hasValue('change_rate') &&
+            JSON.stringify(changeRate) ===
+              JSON.stringify(getInitial('change_rate'))) ||
+          // has value set and change rate is not initial.
+          (hasValue('change_rate') &&
+            JSON.stringify(changeRate) !==
+              JSON.stringify(getInitial('change_rate'))) ||
+          // no value set and change rate is enabled.
+          (!hasValue('change_rate') && getEnabled('change_rate'))
+        );
+
       default:
         return false;
     }
