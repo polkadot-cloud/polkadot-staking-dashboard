@@ -13,13 +13,14 @@ import { ContentWrapper } from './Wrappers';
 
 export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
   const { t } = useTranslation('modals');
+  const { stats } = usePoolsConfig();
   const { activeAccount } = useActiveAccounts();
+  const { getTransferOptions } = useTransferOptions();
   const { selectedActivePool, isOwner, isBouncer, isMember, isDepositor } =
     useActivePools();
-  const { getTransferOptions } = useTransferOptions();
-  const { stats } = usePoolsConfig();
-  const { globalMaxCommission } = stats;
+
   const { active } = getTransferOptions(activeAccount).pool;
+  const { globalMaxCommission } = stats;
 
   const poolLocked = selectedActivePool?.bondedPool?.state === 'Blocked';
   const poolDestroying = selectedActivePool?.bondedPool?.state === 'Destroying';
