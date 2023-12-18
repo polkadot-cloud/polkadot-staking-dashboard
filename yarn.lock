@@ -6917,7 +6917,7 @@ __metadata:
     "@polkadot/keyring": "npm:^12.6.2"
     "@polkadot/rpc-provider": "npm:^10.11.2"
     "@polkadot/util": "npm:^12.6.2"
-    "@polkadot/util-crypto": "npm:^12.6.1"
+    "@polkadot/util-crypto": "npm:^12.6.2"
     "@polkawatch/ddp-client": "npm:^2.0.10"
     "@substrate/connect": "npm:^0.8.3"
     "@types/chroma-js": "npm:^2.4.3"
