@@ -42,7 +42,7 @@ export const PoolCommissionProvider = ({
   );
 
   // Get initial change rate value from the bonded pool commission config.
-  const initialChangeRate = (() => {
+  const initialChangeRate = ((): ChangeRateInput => {
     const raw = bondedPool?.commission?.changeRate;
     return raw
       ? {
@@ -92,7 +92,7 @@ export const PoolCommissionProvider = ({
   );
 
   // Reset all values to their initial (current) values.
-  const resetAll = () => {
+  const resetAll = (): void => {
     setCommission(initialCommission);
     setPayee(initialPayee);
     setMaxCommission(initialMaxCommission);
