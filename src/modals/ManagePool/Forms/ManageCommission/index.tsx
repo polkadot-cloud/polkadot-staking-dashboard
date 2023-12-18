@@ -250,11 +250,6 @@ export const ManageCommission = ({
     txsToSubmit,
   ]);
 
-  // Reset all values to their initial (current) values when bonded pool changes.
-  useEffect(() => {
-    resetAll();
-  }, [bondedPool]);
-
   // Trigger modal resize when commission options are enabled / disabled.
   useEffect(() => {
     incrementCalculateHeight();

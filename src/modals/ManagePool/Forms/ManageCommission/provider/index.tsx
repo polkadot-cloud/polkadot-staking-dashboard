@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import type { MaybeAddress } from 'types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -193,6 +193,11 @@ export const PoolCommissionProvider = ({
         return false;
     }
   };
+
+  // Reset all values to their initial (current) values when bonded pool changes.
+  useEffect(() => {
+    resetAll();
+  }, [bondedPool]);
 
   return (
     <PoolCommissionContext.Provider
