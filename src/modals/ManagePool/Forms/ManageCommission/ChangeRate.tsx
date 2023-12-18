@@ -12,7 +12,13 @@ import { useApi } from 'contexts/Api';
 import { usePoolCommission } from './provider';
 import type { ChangeRateInput } from '../types';
 
-export const ChangeRate = ({ invalidMaxIncrease, invalidMinDelay }: any) => {
+export const ChangeRate = ({
+  invalidMaxIncrease,
+  invalidMinDelay,
+}: {
+  invalidMaxIncrease: boolean;
+  invalidMinDelay: boolean;
+}) => {
   const { t } = useTranslation('modals');
   const { consts } = useApi();
   const { getEnabled, getInitial, getCurrent, setChangeRate } =

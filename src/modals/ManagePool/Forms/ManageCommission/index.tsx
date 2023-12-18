@@ -67,24 +67,24 @@ export const ManageCommission = ({
   const [valid, setValid] = useState<boolean>(false);
 
   // Monitor when input items change.
-  const commissionUpdated = commission !== getInitial('commission');
+  const commissionUpdated: boolean = commission !== getInitial('commission');
 
   // Global form change.
-  const noChange =
+  const noChange: boolean =
     !commissionUpdated &&
     !isUpdated('max_commission') &&
     !isUpdated('change_rate');
 
   // Monitor when input items are invalid.
-  const commissionAboveMax =
+  const commissionAboveMax: boolean =
     hasValue('max_commission') && commission > maxCommission;
   const commissionAboveGlobal = commission > globalMaxCommission;
 
-  const commissionAboveMaxIncrease =
+  const commissionAboveMaxIncrease: boolean =
     hasValue('change_rate') &&
     commission - getInitial('commission') > changeRate.maxIncrease;
 
-  const invalidCurrentCommission =
+  const invalidCurrentCommission: boolean =
     commissionUpdated &&
     ((commission === 0 && payee !== null) ||
       (commission !== 0 && payee === null) ||
@@ -92,28 +92,28 @@ export const ManageCommission = ({
       commissionAboveMaxIncrease ||
       commission > globalMaxCommission);
 
-  const invalidMaxCommission =
+  const invalidMaxCommission: boolean =
     hasValue('max_commission') &&
     isUpdated('max_commission') &&
     maxCommission > getInitial('max_commission');
 
-  const maxCommissionAboveGlobal =
+  const maxCommissionAboveGlobal: boolean =
     getEnabled('max_commission') && maxCommission > globalMaxCommission;
 
   // Change rate is invalid if updated is not more restrictive than current.
-  const invalidMaxIncrease =
+  const invalidMaxIncrease: boolean =
     getEnabled('change_rate') &&
     isUpdated('change_rate') &&
     changeRate.maxIncrease > getInitial('change_rate').maxIncrease;
 
-  const invalidMinDelay =
+  const invalidMinDelay: boolean =
     getEnabled('change_rate') &&
     isUpdated('change_rate') &&
     changeRate.minDelay < getInitial('change_rate').minDelay;
 
-  const invalidChangeRate = invalidMaxIncrease || invalidMinDelay;
+  const invalidChangeRate: boolean = invalidMaxIncrease || invalidMinDelay;
 
-  const currentCommissionSet = payee && commission !== 0;
+  const currentCommissionSet: boolean = payee && commission !== 0;
 
   // Check there are txs to submit.
   const txsToSubmit =

@@ -7,14 +7,16 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { rmCommas } from '@polkadot-cloud/utils';
 import type {
+  ChangeRateInput,
   CommissionFeature,
   OptionalCommissionFeature,
   PoolCommissionContextInterface,
   PoolCommissionProviderProps,
 } from './types';
+import { defaultPoolCommissionContext } from './defaults';
 
 export const PoolCommissionContext =
-  createContext<PoolCommissionContextInterface>(null);
+  createContext<PoolCommissionContextInterface>(defaultPoolCommissionContext);
 
 export const usePoolCommission = () => useContext(PoolCommissionContext);
 
@@ -76,10 +78,8 @@ export const PoolCommissionProvider = ({
     useState<number>(initialMaxCommission);
 
   // Store the commission change rate value.
-  const [changeRate, setChangeRate] = useState<{
-    maxIncrease: number;
-    minDelay: number;
-  }>(initialChangeRate);
+  const [changeRate, setChangeRate] =
+    useState<ChangeRateInput>(initialChangeRate);
 
   // Whether max commission has been enabled.
   const [maxCommissionEnabled, setMaxCommissionEnabled] = useState<boolean>(

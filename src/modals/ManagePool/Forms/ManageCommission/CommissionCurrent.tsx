@@ -11,7 +11,11 @@ export const CommissionCurrent = ({
   commissionAboveMax,
   commissionAboveGlobal,
   commissionAboveMaxIncrease,
-}: any) => {
+}: {
+  commissionAboveMax: boolean;
+  commissionAboveGlobal: boolean;
+  commissionAboveMaxIncrease: boolean;
+}) => {
   const { t } = useTranslation('modals');
   const {
     getEnabled,

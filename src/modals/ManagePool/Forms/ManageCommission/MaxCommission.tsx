@@ -9,7 +9,10 @@ import { usePoolCommission } from './provider';
 export const MaxCommission = ({
   invalidMaxCommission,
   maxCommissionAboveGlobal,
-}: any) => {
+}: {
+  invalidMaxCommission: boolean;
+  maxCommissionAboveGlobal: boolean;
+}) => {
   const { t } = useTranslation('modals');
   const { getEnabled, getCurrent, setCommission, setMaxCommission, isUpdated } =
     usePoolCommission();
