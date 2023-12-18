@@ -9,7 +9,6 @@ import {
   ModalPadding,
   ModalWarnings,
 } from '@polkadot-cloud/react';
-import { rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { intervalToDuration } from 'date-fns';
 import { useEffect, useState } from 'react';
@@ -27,12 +26,12 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import 'rc-slider/assets/index.css';
-import type { MaybeAddress } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { StyledSlider } from 'library/StyledSlider';
 import { SliderWrapper } from '../../Wrappers';
 import type { ChangeRateInput } from '../types';
+import { usePoolCommission } from '../provider';
 
 export const ManageCommission = ({
   setSection,
@@ -48,6 +47,19 @@ export const ManageCommission = ({
   const { getSignerWarnings } = useSignerWarnings();
   const { isOwner, selectedActivePool } = useActivePools();
   const { getBondedPool, updateBondedPools } = useBondedPools();
+  const {
+    commission,
+    setCommission,
+    payee,
+    setPayee,
+    maxCommission,
+    setMaxCommission,
+    resetAll,
+    getEnabled,
+    setEnabled,
+    getInitial,
+    hasValue,
+  } = usePoolCommission();
 
   const { expectedBlockTime } = consts;
   const { globalMaxCommission } = stats;
@@ -55,54 +67,15 @@ export const ManageCommission = ({
   const poolId = selectedActivePool?.id || 0;
   const bondedPool = getBondedPool(poolId);
 
-  const commissionCurrentSet = !!bondedPool?.commission?.current;
   const initialCommission = Number(
     (bondedPool?.commission?.current?.[0] || '0%').slice(0, -1)
   );
-  const initialPayee = bondedPool?.commission?.current?.[1] || null;
-
-  const maxCommissionSet = !!bondedPool?.commission?.max;
-  const initialMaxCommission = Number(
-    (bondedPool?.commission?.max || '100%').slice(0, -1)
-  );
-
-  const changeRateSet = !!bondedPool?.commission?.changeRate;
-  const initialChangeRate = (() => {
-    const raw = bondedPool?.commission?.changeRate;
-    return raw
-      ? {
-          maxIncrease: Number(raw.maxIncrease.slice(0, -1)),
-          minDelay: Number(rmCommas(raw.minDelay)),
-        }
-      : {
-          maxIncrease: 100,
-          minDelay: 0,
-        };
-  })();
-
-  // Store the current commission value.
-  const [commission, setCommission] = useState<number>(initialCommission);
-
-  // Max commission enabled.
-  const [maxCommissionEnabled, setMaxCommissionEnabled] =
-    useState<boolean>(!!maxCommissionSet);
-
-  // Change rate enabled.
-  const [changeRateEnabled, setChangeRateEnabled] =
-    useState<boolean>(!!changeRateSet);
-
-  // Store the commission payee.
-  const [payee, setPayee] = useState<MaybeAddress>(initialPayee);
-
-  // Store the maximum commission value.
-  const [maxCommission, setMaxCommission] =
-    useState<number>(initialMaxCommission);
 
   // Store the change rate value.
   const [changeRate, setChangeRate] = useState<{
     maxIncrease: number;
     minDelay: number;
-  }>(initialChangeRate);
+  }>(getInitial('change_rate'));
 
   // Convert a block number into an estimated change rate duration.
   const minDelayToInput = (delay: number) => {
@@ -165,37 +138,33 @@ export const ManageCommission = ({
     });
   };
 
-  const resetToDefault = () => {
-    setCommission(initialCommission);
-    setPayee(initialPayee);
-    setMaxCommission(initialMaxCommission);
-  };
-
   const hasCurrentCommission = payee && commission !== 0;
   const commissionCurrent = () => {
     return hasCurrentCommission ? [`${commission.toFixed(2)}%`, payee] : null;
   };
 
   // Monitor when input items change.
-  const commissionUpdated =
-    (!commissionCurrentSet && commission !== initialCommission) ||
-    (commissionCurrentSet && commission !== initialCommission);
+  const commissionUpdated = commission !== initialCommission;
 
   const maxCommissionUpdated =
-    (!maxCommissionSet && maxCommission === initialMaxCommission) ||
-    maxCommission !== initialMaxCommission ||
-    (!maxCommissionSet && maxCommissionEnabled);
+    (!hasValue('max_commission') &&
+      maxCommission === getInitial('max_commission')) ||
+    maxCommission !== getInitial('max_commission') ||
+    (!hasValue('max_commission') && getEnabled('max_commission'));
 
   const changeRateUpdated =
-    (!changeRateSet &&
-      JSON.stringify(changeRate) === JSON.stringify(initialChangeRate)) ||
-    (changeRateSet &&
-      JSON.stringify(changeRate) !== JSON.stringify(initialChangeRate)) ||
-    (!changeRateSet && changeRateEnabled);
+    (!hasValue('change_rate') &&
+      JSON.stringify(changeRate) ===
+        JSON.stringify(getInitial('change_rate'))) ||
+    (hasValue('change_rate') &&
+      JSON.stringify(changeRate) !==
+        JSON.stringify(getInitial('change_rate'))) ||
+    (!hasValue('change_rate') && getEnabled('change_Rate'));
 
   const maxIncreaseUpdated =
-    changeRate.maxIncrease !== initialChangeRate.maxIncrease;
-  const minDelayUpdated = changeRate.minDelay !== initialChangeRate.minDelay;
+    changeRate.maxIncrease !== getInitial('change_rate').maxIncrease;
+  const minDelayUpdated =
+    changeRate.minDelay !== getInitial('change_rate').minDelay;
 
   // Global form change.
   const noChange =
@@ -206,7 +175,8 @@ export const ManageCommission = ({
   const commissionAboveGlobal = commission > globalMaxCommission;
 
   const commissionAboveMaxIncrease =
-    changeRateSet && commission - initialCommission > changeRate.maxIncrease;
+    hasValue('change_rate') &&
+    commission - initialCommission > changeRate.maxIncrease;
 
   const invalidCurrentCommission =
     commissionUpdated &&
@@ -217,23 +187,25 @@ export const ManageCommission = ({
       commission > globalMaxCommission);
 
   const invalidMaxCommission =
-    maxCommissionUpdated && maxCommission > initialMaxCommission;
+    maxCommissionUpdated && maxCommission > getInitial('max_commission');
   const maxCommissionAboveGlobal = maxCommission > globalMaxCommission;
 
   // Change rate is invalid if updated is not more restrictive than current.
   const invalidMaxIncrease =
-    changeRateUpdated && changeRate.maxIncrease > initialChangeRate.maxIncrease;
+    changeRateUpdated &&
+    changeRate.maxIncrease > getInitial('change_rate').maxIncrease;
 
   const invalidMinDelay =
-    changeRateUpdated && changeRate.minDelay < initialChangeRate.minDelay;
+    changeRateUpdated &&
+    changeRate.minDelay < getInitial('change_rate').minDelay;
 
   const invalidChangeRate = invalidMaxIncrease || invalidMinDelay;
 
   // Check there are txs to submit.
   const txsToSubmit =
     commissionUpdated ||
-    (maxCommissionUpdated && maxCommissionEnabled) ||
-    (changeRateUpdated && changeRateEnabled);
+    (maxCommissionUpdated && getEnabled('max_commission')) ||
+    (changeRateUpdated && getEnabled('change_rate'));
 
   useEffect(() => {
     setValid(
@@ -259,13 +231,14 @@ export const ManageCommission = ({
   ]);
 
   useEffect(() => {
-    resetToDefault();
+    resetAll();
   }, [bondedPool]);
 
   // Trigger modal resize when commission options are enabled / disabled.
+  // TODO: modal resize on window resize.
   useEffect(() => {
     incrementCalculateHeight();
-  }, [maxCommissionEnabled, changeRateEnabled]);
+  }, [getEnabled('max_commission'), getEnabled('change_rate')]);
 
   // tx to submit.
   const getTx = () => {
@@ -287,7 +260,7 @@ export const ManageCommission = ({
         )
       );
     }
-    if (maxCommissionUpdated && maxCommissionEnabled) {
+    if (maxCommissionUpdated && getEnabled('max_commission')) {
       txs.push(
         api.tx.nominationPools.setCommissionMax(
           poolId,
@@ -295,7 +268,7 @@ export const ManageCommission = ({
         )
       );
     }
-    if (changeRateUpdated && changeRateEnabled) {
+    if (changeRateUpdated && getEnabled('change_rate')) {
       txs.push(
         api.tx.nominationPools.setCommissionChangeRate(poolId, {
           maxIncrease: new BigNumber(changeRate.maxIncrease)
@@ -464,8 +437,8 @@ export const ManageCommission = ({
             onChange={(val) => {
               if (typeof val === 'number') {
                 setCommission(val);
-                if (val > maxCommission && maxCommissionEnabled) {
-                  setMaxCommission(Math.min(initialMaxCommission, val));
+                if (val > maxCommission && getEnabled('max_commission')) {
+                  setMaxCommission(Math.min(getInitial('max_commission'), val));
                 }
               }
             }}
@@ -491,18 +464,18 @@ export const ManageCommission = ({
         <ActionItem
           style={{
             marginTop: '2rem',
-            borderBottomWidth: maxCommissionEnabled ? '1px' : 0,
+            borderBottomWidth: getEnabled('max_commission') ? '1px' : 0,
           }}
           text={t('maxCommission')}
-          toggled={maxCommissionEnabled}
-          onToggle={(val) => setMaxCommissionEnabled(val)}
-          disabled={!!maxCommissionSet}
+          toggled={getEnabled('max_commission')}
+          onToggle={(val) => setEnabled('max_commission', val)}
+          disabled={!!hasValue('max_commission')}
           inlineButton={
             <ButtonHelp onClick={() => openHelp('Pool Max Commission')} />
           }
         />
 
-        {maxCommissionEnabled && (
+        {getEnabled('max_commission') && (
           <SliderWrapper>
             <div>
               <h2>{maxCommission}% </h2>
@@ -529,12 +502,12 @@ export const ManageCommission = ({
         <ActionItem
           style={{
             marginTop: '2rem',
-            borderBottomWidth: changeRateEnabled ? '1px' : 0,
+            borderBottomWidth: getEnabled('change_rate') ? '1px' : 0,
           }}
           text={t('changeRate')}
-          toggled={changeRateEnabled}
-          onToggle={(val) => setChangeRateEnabled(val)}
-          disabled={!!changeRateSet}
+          toggled={getEnabled('change_rate')}
+          onToggle={(val) => setEnabled('change_rate', val)}
+          disabled={!!hasValue('change_rate')}
           inlineButton={
             <ButtonHelp
               onClick={() => openHelp('Pool Commission Change Rate')}
@@ -542,7 +515,7 @@ export const ManageCommission = ({
           }
         />
 
-        {changeRateEnabled && (
+        {getEnabled('change_rate') && (
           <SliderWrapper>
             <div>
               <h2>{changeRate.maxIncrease}% </h2>
@@ -622,7 +595,7 @@ export const ManageCommission = ({
             iconTransform="shrink-1"
             onClick={() => {
               setSection(0);
-              resetToDefault();
+              resetAll();
             }}
           />,
         ]}

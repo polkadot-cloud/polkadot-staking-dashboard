@@ -9,3 +9,11 @@ export type PoolCommissionContextInterface = AnyJson;
 export interface PoolCommissionProviderProps {
   children: ReactNode;
 }
+
+export type CompulsoryCommissionFeature = 'commission' | 'payee';
+
+export type OptionalCommissionFeature = 'max_commission' | 'change_rate';
+
+export type CommissionFeature =
+  | CompulsoryCommissionFeature
+  | OptionalCommissionFeature;
