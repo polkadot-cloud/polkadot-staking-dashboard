@@ -158,6 +158,16 @@ export const PoolCommissionProvider = ({
     }
   };
 
+  // Get whether a feature has been updated from its initial value.
+  const isUpdated = (feature: CommissionFeature): boolean => {
+    switch (feature) {
+      case 'commission':
+        return commission !== initialCommission;
+      default:
+        return false;
+    }
+  };
+
   return (
     <PoolCommissionContext.Provider
       value={{
@@ -170,6 +180,7 @@ export const PoolCommissionProvider = ({
         getEnabled,
         setEnabled,
         hasValue,
+        isUpdated,
         resetAll,
       }}
     >

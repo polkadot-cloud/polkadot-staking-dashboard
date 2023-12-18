@@ -18,7 +18,6 @@ import { useHelp } from 'contexts/Help';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { AccountInput } from 'library/AccountInput';
 import { MinDelayInput } from 'library/Form/MinDelayInput';
 import { Warning } from 'library/Form/Warning';
 import { useBatchCall } from 'library/Hooks/useBatchCall';
@@ -32,6 +31,7 @@ import { StyledSlider } from 'library/StyledSlider';
 import { SliderWrapper } from '../../Wrappers';
 import type { ChangeRateInput } from '../types';
 import { usePoolCommission } from '../provider';
+import { CommissionCurrent } from './CommissionCurrent';
 
 export const ManageCommission = ({
   setSection,
@@ -49,7 +49,6 @@ export const ManageCommission = ({
   const { getBondedPool, updateBondedPools } = useBondedPools();
   const {
     setCommission,
-    setPayee,
     setMaxCommission,
     setChangeRate,
     getInitial,
@@ -316,34 +315,6 @@ export const ManageCommission = ({
     submitExtrinsic.proxySupported
   );
 
-  const commissionFeedback = (() => {
-    if (!commissionUpdated) {
-      return undefined;
-    }
-    if (commissionAboveMaxIncrease) {
-      return {
-        text: t('beyondMaxIncrease'),
-        label: 'danger',
-      };
-    }
-    if (commissionAboveGlobal) {
-      return {
-        text: t('aboveGlobalMax'),
-        label: 'danger',
-      };
-    }
-    if (commissionAboveMax) {
-      return {
-        text: t('aboveMax'),
-        label: 'danger',
-      };
-    }
-    return {
-      text: t('updated'),
-      label: 'neutral',
-    };
-  })();
-
   const maxCommissionFeedback = (() => {
     if (!maxCommissionUpdated) {
       return undefined;
@@ -416,42 +387,11 @@ export const ManageCommission = ({
           }
         />
 
-        <SliderWrapper>
-          <div>
-            <h2>{commission}% </h2>
-            <h5 className={commissionFeedback?.label || 'neutral'}>
-              {!!commissionFeedback && commissionFeedback.text}
-            </h5>
-          </div>
-
-          <StyledSlider
-            value={commission}
-            step={0.1}
-            onChange={(val) => {
-              if (typeof val === 'number') {
-                setCommission(val);
-                if (val > maxCommission && getEnabled('max_commission')) {
-                  setMaxCommission(Math.min(getInitial('max_commission'), val));
-                }
-              }
-            }}
-          />
-        </SliderWrapper>
-
-        <AccountInput
-          defaultLabel={t('inputPayeeAccount')}
-          successLabel={t('payeeAdded')}
-          locked={payee !== null}
-          successCallback={async (input) => {
-            setPayee(input);
-          }}
-          resetCallback={() => {
-            setPayee(null);
-          }}
-          disallowAlreadyImported={false}
-          initialValue={payee}
-          inactive={commission === 0}
-          border={payee === null}
+        {/* TODO: spread these commission meta values */}
+        <CommissionCurrent
+          commissionAboveMax={commissionAboveMax}
+          commissionAboveGlobal={commissionAboveGlobal}
+          commissionAboveMaxIncrease={commissionAboveMaxIncrease}
         />
 
         <ActionItem
