@@ -30,6 +30,10 @@ import {
   defaultConsts,
 } from './defaults';
 
+export const APIContext = createContext<APIContextInterface>(defaultApiContext);
+
+export const useApi = () => useContext(APIContext);
+
 export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Store povider instance.
   const [provider, setProvider] = useState<WsProvider | ScProvider | null>(
@@ -309,7 +313,3 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     </APIContext.Provider>
   );
 };
-
-export const APIContext = createContext<APIContextInterface>(defaultApiContext);
-
-export const useApi = () => useContext(APIContext);
