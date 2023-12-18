@@ -145,7 +145,6 @@ export const ManageCommission = ({
   }, [bondedPool]);
 
   // Trigger modal resize when commission options are enabled / disabled.
-  // TODO: modal resize on window resize.
   useEffect(() => {
     incrementCalculateHeight();
   }, [getEnabled('max_commission'), getEnabled('change_rate')]);
