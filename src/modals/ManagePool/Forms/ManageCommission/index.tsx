@@ -53,23 +53,18 @@ export const ManageCommission = ({
     resetAll,
     isUpdated,
   } = usePoolCommission();
+  const { globalMaxCommission } = stats;
+  const poolId = selectedActivePool?.id || 0;
+  const bondedPool = getBondedPool(poolId);
 
+  // Get currently set commission values.
   const commission = getCurrent('commission');
   const payee = getCurrent('payee');
   const maxCommission = getCurrent('max_commission');
   const changeRate = getCurrent('change_rate');
 
-  const { globalMaxCommission } = stats;
-  const poolId = selectedActivePool?.id || 0;
-  const bondedPool = getBondedPool(poolId);
-
   // Valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
-
-  const hasCurrentCommission = payee && commission !== 0;
-  const commissionCurrent = () => {
-    return hasCurrentCommission ? [`${commission.toFixed(2)}%`, payee] : null;
-  };
 
   // Monitor when input items change.
   const commissionUpdated = commission !== getInitial('commission');
@@ -81,7 +76,8 @@ export const ManageCommission = ({
     !isUpdated('change_rate');
 
   // Monitor when input items are invalid.
-  const commissionAboveMax = commission > maxCommission;
+  const commissionAboveMax =
+    hasValue('max_commission') && commission > maxCommission;
   const commissionAboveGlobal = commission > globalMaxCommission;
 
   const commissionAboveMaxIncrease =
@@ -97,57 +93,33 @@ export const ManageCommission = ({
       commission > globalMaxCommission);
 
   const invalidMaxCommission =
-    isUpdated('max_commission') && maxCommission > getInitial('max_commission');
-  const maxCommissionAboveGlobal = maxCommission > globalMaxCommission;
+    hasValue('max_commission') &&
+    isUpdated('max_commission') &&
+    maxCommission > getInitial('max_commission');
+
+  const maxCommissionAboveGlobal =
+    getEnabled('max_commission') && maxCommission > globalMaxCommission;
 
   // Change rate is invalid if updated is not more restrictive than current.
   const invalidMaxIncrease =
+    getEnabled('change_rate') &&
     isUpdated('change_rate') &&
     changeRate.maxIncrease > getInitial('change_rate').maxIncrease;
 
   const invalidMinDelay =
+    getEnabled('change_rate') &&
     isUpdated('change_rate') &&
     changeRate.minDelay < getInitial('change_rate').minDelay;
 
   const invalidChangeRate = invalidMaxIncrease || invalidMinDelay;
+
+  const currentCommissionSet = payee && commission !== 0;
 
   // Check there are txs to submit.
   const txsToSubmit =
     commissionUpdated ||
     (isUpdated('max_commission') && getEnabled('max_commission')) ||
     (isUpdated('change_rate') && getEnabled('change_rate'));
-
-  useEffect(() => {
-    setValid(
-      isOwner() &&
-        !invalidCurrentCommission &&
-        !commissionAboveGlobal &&
-        !invalidMaxCommission &&
-        !maxCommissionAboveGlobal &&
-        !invalidChangeRate &&
-        !noChange &&
-        txsToSubmit
-    );
-  }, [
-    isOwner(),
-    invalidCurrentCommission,
-    invalidMaxCommission,
-    commissionAboveGlobal,
-    maxCommissionAboveGlobal,
-    invalidChangeRate,
-    bondedPool,
-    noChange,
-    txsToSubmit,
-  ]);
-
-  useEffect(() => {
-    resetAll();
-  }, [bondedPool]);
-
-  // Trigger modal resize when commission options are enabled / disabled.
-  useEffect(() => {
-    incrementCalculateHeight();
-  }, [getEnabled('max_commission'), getEnabled('change_rate')]);
 
   // tx to submit.
   const getTx = () => {
@@ -160,7 +132,7 @@ export const ManageCommission = ({
       txs.push(
         api.tx.nominationPools.setCommission(
           poolId,
-          hasCurrentCommission
+          currentCommissionSet
             ? [
                 new BigNumber(commission).multipliedBy(10000000).toString(),
                 payee,
@@ -209,7 +181,9 @@ export const ManageCommission = ({
             ...pool,
             commission: {
               ...pool.commission,
-              current: commissionCurrent(),
+              current: currentCommissionSet
+                ? [`${commission.toFixed(2)}%`, payee]
+                : null,
               max: isUpdated('max_commission')
                 ? `${maxCommission.toFixed(2)}%`
                 : pool.commission?.max || null,
@@ -226,27 +200,65 @@ export const ManageCommission = ({
     },
   });
 
-  const warnings = getSignerWarnings(
-    activeAccount,
-    false,
-    submitExtrinsic.proxySupported
-  );
-
+  // Commission current meta required for form.
   const commissionCurrentMeta = {
     commissionAboveMax,
     commissionAboveGlobal,
     commissionAboveMaxIncrease,
   };
 
+  // Max commission meta required for form.
   const maxCommissionMeta = {
     invalidMaxCommission,
     maxCommissionAboveGlobal,
   };
 
+  // Change rate meta required for form.
   const changeRateMeta = {
     invalidMaxIncrease,
     invalidMinDelay,
   };
+
+  // Get transaction signer warnings.
+  const warnings = getSignerWarnings(
+    activeAccount,
+    false,
+    submitExtrinsic.proxySupported
+  );
+
+  // Update whether commission configs are valid on each invalid input, and when tx object changes.
+  useEffect(() => {
+    setValid(
+      isOwner() &&
+        !invalidCurrentCommission &&
+        !commissionAboveGlobal &&
+        !invalidMaxCommission &&
+        !maxCommissionAboveGlobal &&
+        !invalidChangeRate &&
+        !noChange &&
+        txsToSubmit
+    );
+  }, [
+    isOwner(),
+    invalidCurrentCommission,
+    invalidMaxCommission,
+    commissionAboveGlobal,
+    maxCommissionAboveGlobal,
+    invalidChangeRate,
+    bondedPool,
+    noChange,
+    txsToSubmit,
+  ]);
+
+  // Reset all values to their initial (current) values when bonded pool changes.
+  useEffect(() => {
+    resetAll();
+  }, [bondedPool]);
+
+  // Trigger modal resize when commission options are enabled / disabled.
+  useEffect(() => {
+    incrementCalculateHeight();
+  }, [getEnabled('max_commission'), getEnabled('change_rate')]);
 
   return (
     <>
