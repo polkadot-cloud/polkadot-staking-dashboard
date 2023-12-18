@@ -4,9 +4,17 @@
 import Slider from 'rc-slider';
 import type { StyledSliderProps } from './types';
 
-export const StyledSlider = ({ value, step, onChange }: StyledSliderProps) => {
+export const StyledSlider = ({
+  value,
+  step,
+  onChange,
+  min,
+  max,
+}: StyledSliderProps) => {
   return (
     <Slider
+      min={min}
+      max={max}
       value={value}
       step={step}
       onChange={(val) => onChange(val)}

@@ -10,7 +10,6 @@ import {
 } from '@polkadot-cloud/react';
 import { planckToUnit, unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import Slider from 'rc-slider';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
@@ -24,6 +23,7 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { StyledSlider } from 'library/StyledSlider';
 
 export const UpdateReserve = () => {
   const { t } = useTranslation('modals');
@@ -81,7 +81,7 @@ export const UpdateReserve = () => {
           <p>{t('reserveText', { unit })}</p>
           <div>
             <div className="slider no-value">
-              <Slider
+              <StyledSlider
                 min={0}
                 max={maxReserve.toNumber()}
                 value={sliderReserve}
