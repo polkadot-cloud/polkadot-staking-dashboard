@@ -20,7 +20,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
-export const SetState = ({ setSection, task }: any) => {
+export const SetPoolState = ({ setSection, task }: any) => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
   const { setModalStatus } = useOverlay().modal;
