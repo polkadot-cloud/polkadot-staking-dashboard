@@ -6,5 +6,6 @@ export interface StyledSliderProps {
   max?: number;
   value: number;
   step: number;
+  classNaame?: string;
   onChange: (val: number | number[]) => void;
 }

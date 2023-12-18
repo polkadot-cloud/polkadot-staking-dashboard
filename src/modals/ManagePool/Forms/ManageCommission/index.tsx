@@ -458,20 +458,18 @@ export const ManageCommission = ({
             </h5>
           </div>
 
-          <div className="slider">
-            <StyledSlider
-              value={commission}
-              step={0.1}
-              onChange={(val) => {
-                if (typeof val === 'number') {
-                  setCommission(val);
-                  if (val > maxCommission && maxCommissionEnabled) {
-                    setMaxCommission(Math.min(initialMaxCommission, val));
-                  }
+          <StyledSlider
+            value={commission}
+            step={0.1}
+            onChange={(val) => {
+              if (typeof val === 'number') {
+                setCommission(val);
+                if (val > maxCommission && maxCommissionEnabled) {
+                  setMaxCommission(Math.min(initialMaxCommission, val));
                 }
-              }}
-            />
-          </div>
+              }
+            }}
+          />
         </SliderWrapper>
 
         <AccountInput
@@ -513,20 +511,18 @@ export const ManageCommission = ({
               </h5>
             </div>
 
-            <div className="slider">
-              <StyledSlider
-                value={maxCommission}
-                step={0.1}
-                onChange={(val) => {
-                  if (typeof val === 'number') {
-                    setMaxCommission(val);
-                    if (val < commission) {
-                      setCommission(val);
-                    }
+            <StyledSlider
+              value={maxCommission}
+              step={0.1}
+              onChange={(val) => {
+                if (typeof val === 'number') {
+                  setMaxCommission(val);
+                  if (val < commission) {
+                    setCommission(val);
                   }
-                }}
-              />
-            </div>
+                }
+              }}
+            />
           </SliderWrapper>
         )}
 
@@ -555,20 +551,18 @@ export const ManageCommission = ({
               </h5>
             </div>
 
-            <div className="slider">
-              <StyledSlider
-                value={changeRate.maxIncrease}
-                step={0.1}
-                onChange={(val) => {
-                  if (typeof val === 'number') {
-                    setChangeRate({
-                      ...changeRate,
-                      maxIncrease: val,
-                    });
-                  }
-                }}
-              />
-            </div>
+            <StyledSlider
+              value={changeRate.maxIncrease}
+              step={0.1}
+              onChange={(val) => {
+                if (typeof val === 'number') {
+                  setChangeRate({
+                    ...changeRate,
+                    maxIncrease: val,
+                  });
+                }
+              }}
+            />
 
             <h5 style={{ marginTop: '1rem' }}>
               {t('minDelayBetweenUpdates')}
