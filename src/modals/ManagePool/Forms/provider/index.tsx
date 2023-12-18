@@ -88,7 +88,7 @@ export const PoolCommissionProvider = ({
 
   // Whether change rate has been enabled.
   const [changeRateEnabled, setChangeRateEnabled] = useState<boolean>(
-    !!hasValue('change_rate')
+    hasValue('change_rate')
   );
 
   // Reset all values to their initial (current) values.
