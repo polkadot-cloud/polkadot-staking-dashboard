@@ -30,7 +30,7 @@
     "@polkadot-cloud/utils": "^0.0.34",
     "@polkadot/api": "^10.11.1",
     "@polkadot/keyring": "^12.6.1",
-    "@polkadot/rpc-provider": "^10.11.1",
+    "@polkadot/rpc-provider": "^10.11.2",
     "@polkadot/util": "^12.6.1",
     "@polkadot/util-crypto": "^12.6.1",
     "@polkawatch/ddp-client": "^2.0.10",
