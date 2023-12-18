@@ -1082,6 +1082,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@polkadot-cloud/utils@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@polkadot-cloud/utils@npm:0.1.0"
+  dependencies:
+    "@polkadot/keyring": "npm:^12.6.1"
+    "@polkadot/util": "npm:^12.5.1"
+    bignumber.js: "npm:^9.1.1"
+  peerDependencies:
+    "@polkadot/keyring": ^12.6.1
+    "@polkadot/util": ^12.5.1
+  checksum: 178bea969ecb3f70781cdbdd45488e40276c180cff2cf54e55312d8cd0884a4549f0946ab82d257db4ff0acf6d8eaf8a49d7afb709cbaffba727d5ae0a0cd6d4
+  languageName: node
+  linkType: hard
+
 "@polkadot/api-augment@npm:10.11.1":
   version: 10.11.1
   resolution: "@polkadot/api-augment@npm:10.11.1"
@@ -6786,7 +6800,7 @@ __metadata:
     "@polkadot-cloud/assets": "npm:^0.1.38"
     "@polkadot-cloud/core": "npm:^1.1.0"
     "@polkadot-cloud/react": "npm:^0.2.0"
-    "@polkadot-cloud/utils": "npm:^0.0.34"
+    "@polkadot-cloud/utils": "npm:^0.1.0"
     "@polkadot/api": "npm:^10.11.1"
     "@polkadot/keyring": "npm:^12.6.2"
     "@polkadot/rpc-provider": "npm:^10.11.2"
