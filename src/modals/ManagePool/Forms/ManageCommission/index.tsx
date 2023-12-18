@@ -54,6 +54,8 @@ export const ManageCommission = ({
     setPayee,
     maxCommission,
     setMaxCommission,
+    changeRate,
+    setChangeRate,
     resetAll,
     getEnabled,
     setEnabled,
@@ -63,19 +65,8 @@ export const ManageCommission = ({
 
   const { expectedBlockTime } = consts;
   const { globalMaxCommission } = stats;
-
   const poolId = selectedActivePool?.id || 0;
   const bondedPool = getBondedPool(poolId);
-
-  const initialCommission = Number(
-    (bondedPool?.commission?.current?.[0] || '0%').slice(0, -1)
-  );
-
-  // Store the change rate value.
-  const [changeRate, setChangeRate] = useState<{
-    maxIncrease: number;
-    minDelay: number;
-  }>(getInitial('change_rate'));
 
   // Convert a block number into an estimated change rate duration.
   const minDelayToInput = (delay: number) => {
@@ -144,7 +135,7 @@ export const ManageCommission = ({
   };
 
   // Monitor when input items change.
-  const commissionUpdated = commission !== initialCommission;
+  const commissionUpdated = commission !== getInitial('commission');
 
   const maxCommissionUpdated =
     (!hasValue('max_commission') &&
@@ -176,7 +167,7 @@ export const ManageCommission = ({
 
   const commissionAboveMaxIncrease =
     hasValue('change_rate') &&
-    commission - initialCommission > changeRate.maxIncrease;
+    commission - getInitial('commission') > changeRate.maxIncrease;
 
   const invalidCurrentCommission =
     commissionUpdated &&

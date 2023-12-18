@@ -75,6 +75,12 @@ export const PoolCommissionProvider = ({
   const [maxCommission, setMaxCommission] =
     useState<number>(initialMaxCommission);
 
+  // Store the commission change rate value.
+  const [changeRate, setChangeRate] = useState<{
+    maxIncrease: number;
+    minDelay: number;
+  }>(initialChangeRate);
+
   // Whether max commission has been enabled.
   const [maxCommissionEnabled, setMaxCommissionEnabled] = useState<boolean>(
     hasValue('max_commission')
@@ -145,6 +151,8 @@ export const PoolCommissionProvider = ({
         setPayee,
         maxCommission,
         setMaxCommission,
+        changeRate,
+        setChangeRate,
         resetAll,
         getEnabled,
         setEnabled,
