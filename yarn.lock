@@ -6833,7 +6833,7 @@ __metadata:
     "@polkadot-cloud/react": "npm:^0.2.0"
     "@polkadot-cloud/utils": "npm:^0.0.34"
     "@polkadot/api": "npm:^10.11.1"
-    "@polkadot/keyring": "npm:^12.6.1"
+    "@polkadot/keyring": "npm:^12.6.2"
     "@polkadot/rpc-provider": "npm:^10.11.2"
     "@polkadot/util": "npm:^12.6.1"
     "@polkadot/util-crypto": "npm:^12.6.1"
