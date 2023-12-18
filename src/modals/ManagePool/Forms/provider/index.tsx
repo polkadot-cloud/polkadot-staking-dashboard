@@ -114,6 +114,22 @@ export const PoolCommissionProvider = ({
     }
   };
 
+  // Get the current value of a commission feayture.
+  const getCurrent = (feature: CommissionFeature) => {
+    switch (feature) {
+      case 'commission':
+        return commission;
+      case 'payee':
+        return payee;
+      case 'max_commission':
+        return maxCommission;
+      case 'change_rate':
+        return changeRate;
+      default:
+        return false;
+    }
+  };
+
   // Get whether a commission feature is enabled.
   const getEnabled = (feature: OptionalCommissionFeature): boolean => {
     switch (feature) {
@@ -145,19 +161,16 @@ export const PoolCommissionProvider = ({
   return (
     <PoolCommissionContext.Provider
       value={{
-        commission,
         setCommission,
-        payee,
         setPayee,
-        maxCommission,
         setMaxCommission,
-        changeRate,
         setChangeRate,
-        resetAll,
+        getInitial,
+        getCurrent,
         getEnabled,
         setEnabled,
-        getInitial,
         hasValue,
+        resetAll,
       }}
     >
       {children}

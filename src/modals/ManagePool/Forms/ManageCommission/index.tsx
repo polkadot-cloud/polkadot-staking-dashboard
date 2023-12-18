@@ -48,20 +48,22 @@ export const ManageCommission = ({
   const { isOwner, selectedActivePool } = useActivePools();
   const { getBondedPool, updateBondedPools } = useBondedPools();
   const {
-    commission,
     setCommission,
-    payee,
     setPayee,
-    maxCommission,
     setMaxCommission,
-    changeRate,
     setChangeRate,
-    resetAll,
+    getInitial,
+    getCurrent,
     getEnabled,
     setEnabled,
-    getInitial,
     hasValue,
+    resetAll,
   } = usePoolCommission();
+
+  const commission = getCurrent('commission');
+  const payee = getCurrent('payee');
+  const maxCommission = getCurrent('max_commission');
+  const changeRate = getCurrent('change_rate');
 
   const { expectedBlockTime } = consts;
   const { globalMaxCommission } = stats;
