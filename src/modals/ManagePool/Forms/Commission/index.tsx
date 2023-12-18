@@ -31,8 +31,8 @@ import 'rc-slider/assets/index.css';
 import type { MaybeAddress } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { SliderWrapper } from '../Wrappers';
-import type { ChangeRateInput } from './types';
+import { SliderWrapper } from '../../Wrappers';
+import type { ChangeRateInput } from '../types';
 
 export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   const { t } = useTranslation('modals');

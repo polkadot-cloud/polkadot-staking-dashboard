@@ -7,8 +7,8 @@ import { ClaimCommission } from './ClaimCommission';
 import { Commission } from './Commission';
 import { LeavePool } from './LeavePool';
 import { SetClaimPermission } from './SetClaimPermission';
-import { SetMetadata } from './SetMetadata';
-import { SetState } from './SetState';
+import { RenamePool } from './RenamePool';
+import { SetPoolState } from './SetPoolState';
 
 export const Forms = forwardRef(
   ({ setSection, task, section, incrementCalculateHeight }: any, ref: any) => {
@@ -17,7 +17,7 @@ export const Forms = forwardRef(
         <ContentWrapper>
           <div className="items" ref={ref}>
             {task === 'set_pool_metadata' ? (
-              <SetMetadata setSection={setSection} section={section} />
+              <RenamePool setSection={setSection} section={section} />
             ) : task === 'manage_commission' ? (
               <Commission
                 setSection={setSection}
@@ -31,7 +31,7 @@ export const Forms = forwardRef(
             ) : task === 'claim_commission' ? (
               <ClaimCommission setSection={setSection} />
             ) : (
-              <SetState setSection={setSection} task={task} />
+              <SetPoolState setSection={setSection} task={task} />
             )}
           </div>
         </ContentWrapper>
