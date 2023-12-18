@@ -12,7 +12,6 @@ import {
 import { rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { intervalToDuration } from 'date-fns';
-import Slider from 'rc-slider';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -31,6 +30,7 @@ import 'rc-slider/assets/index.css';
 import type { MaybeAddress } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { StyledSlider } from 'library/StyledSlider';
 import { SliderWrapper } from '../../Wrappers';
 import type { ChangeRateInput } from '../types';
 
@@ -41,13 +41,14 @@ export const ManageCommission = ({
   const { t } = useTranslation('modals');
   const { openHelp } = useHelp();
   const { api, consts } = useApi();
-  const { activeAccount } = useActiveAccounts();
-  const { newBatchCall } = useBatchCall();
   const { stats } = usePoolsConfig();
+  const { newBatchCall } = useBatchCall();
+  const { activeAccount } = useActiveAccounts();
   const { setModalStatus } = useOverlay().modal;
   const { getSignerWarnings } = useSignerWarnings();
   const { isOwner, selectedActivePool } = useActivePools();
   const { getBondedPool, updateBondedPools } = useBondedPools();
+
   const { expectedBlockTime } = consts;
   const { globalMaxCommission } = stats;
 
@@ -431,23 +432,6 @@ export const ManageCommission = ({
     };
   })();
 
-  const sliderProps = {
-    trackStyle: {
-      backgroundColor: 'var(--accent-color-primary)',
-    },
-    railStyle: {
-      backgroundColor: 'var(--button-secondary-background)',
-    },
-    handleStyle: {
-      backgroundColor: 'var(--background-primary)',
-      borderColor: 'var(--accent-color-primary)',
-      opacity: 1,
-    },
-    activeDotStyle: {
-      backgroundColor: 'var(--background-primary)',
-    },
-  };
-
   return (
     <>
       <ModalPadding horizontalOnly>
@@ -475,7 +459,7 @@ export const ManageCommission = ({
           </div>
 
           <div className="slider">
-            <Slider
+            <StyledSlider
               value={commission}
               step={0.1}
               onChange={(val) => {
@@ -486,7 +470,6 @@ export const ManageCommission = ({
                   }
                 }
               }}
-              {...sliderProps}
             />
           </div>
         </SliderWrapper>
@@ -531,7 +514,7 @@ export const ManageCommission = ({
             </div>
 
             <div className="slider">
-              <Slider
+              <StyledSlider
                 value={maxCommission}
                 step={0.1}
                 onChange={(val) => {
@@ -542,7 +525,6 @@ export const ManageCommission = ({
                     }
                   }
                 }}
-                {...sliderProps}
               />
             </div>
           </SliderWrapper>
@@ -574,7 +556,7 @@ export const ManageCommission = ({
             </div>
 
             <div className="slider">
-              <Slider
+              <StyledSlider
                 value={changeRate.maxIncrease}
                 step={0.1}
                 onChange={(val) => {
@@ -585,7 +567,6 @@ export const ManageCommission = ({
                     });
                   }
                 }}
-                {...sliderProps}
               />
             </div>
 
