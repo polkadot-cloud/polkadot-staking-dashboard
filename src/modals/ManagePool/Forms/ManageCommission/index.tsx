@@ -30,7 +30,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { StyledSlider } from 'library/StyledSlider';
 import { SliderWrapper } from '../../Wrappers';
 import type { ChangeRateInput } from '../types';
-import { usePoolCommission } from '../provider';
+import { usePoolCommission } from './provider';
 import { CommissionCurrent } from './CommissionCurrent';
 import { MaxCommission } from './MaxCommission';
 

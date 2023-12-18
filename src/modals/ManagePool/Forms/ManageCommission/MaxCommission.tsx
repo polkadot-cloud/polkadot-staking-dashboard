@@ -4,7 +4,7 @@
 import { useTranslation } from 'react-i18next';
 import { SliderWrapper } from 'modals/ManagePool/Wrappers';
 import { StyledSlider } from 'library/StyledSlider';
-import { usePoolCommission } from '../provider';
+import { usePoolCommission } from './provider';
 
 export const MaxCommission = ({
   invalidMaxCommission,

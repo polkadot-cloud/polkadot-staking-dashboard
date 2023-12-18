@@ -9,7 +9,7 @@ import { LeavePool } from './LeavePool';
 import { SetClaimPermission } from './SetClaimPermission';
 import { RenamePool } from './RenamePool';
 import { SetPoolState } from './SetPoolState';
-import { PoolCommissionProvider } from './provider';
+import { PoolCommissionProvider } from './ManageCommission/provider';
 
 export const Forms = forwardRef(
   ({ setSection, task, section, incrementCalculateHeight }: any, ref: any) => (
