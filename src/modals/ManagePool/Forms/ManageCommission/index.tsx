@@ -240,6 +240,22 @@ export const ManageCommission = ({
     submitExtrinsic.proxySupported
   );
 
+  const commissionCurrentMeta = {
+    commissionAboveMax,
+    commissionAboveGlobal,
+    commissionAboveMaxIncrease,
+  };
+
+  const maxCommissionMeta = {
+    invalidMaxCommission,
+    maxCommissionAboveGlobal,
+  };
+
+  const changeRateMeta = {
+    invalidMaxIncrease,
+    invalidMinDelay,
+  };
+
   return (
     <>
       <ModalPadding horizontalOnly>
@@ -257,13 +273,7 @@ export const ManageCommission = ({
             <ButtonHelp onClick={() => openHelp('Pool Commission Rate')} />
           }
         />
-
-        {/* TODO: spread these commission meta values */}
-        <CommissionCurrent
-          commissionAboveMax={commissionAboveMax}
-          commissionAboveGlobal={commissionAboveGlobal}
-          commissionAboveMaxIncrease={commissionAboveMaxIncrease}
-        />
+        <CommissionCurrent {...commissionCurrentMeta} />
 
         <ActionItem
           style={{
@@ -278,12 +288,7 @@ export const ManageCommission = ({
             <ButtonHelp onClick={() => openHelp('Pool Max Commission')} />
           }
         />
-
-        {/* TODO: spread these commission meta values */}
-        <MaxCommission
-          invalidMaxCommission={invalidMaxCommission}
-          maxCommissionAboveGlobal={maxCommissionAboveGlobal}
-        />
+        <MaxCommission {...maxCommissionMeta} />
 
         <ActionItem
           style={{
@@ -300,12 +305,7 @@ export const ManageCommission = ({
             />
           }
         />
-
-        {/* TODO: spread these commission meta values */}
-        <ChangeRate
-          invalidMaxIncrease={invalidMaxIncrease}
-          invalidMinDelay={invalidMinDelay}
-        />
+        <ChangeRate {...changeRateMeta} />
       </ModalPadding>
       <SubmitTx
         valid={valid}
