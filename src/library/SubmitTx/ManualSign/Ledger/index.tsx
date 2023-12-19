@@ -132,33 +132,31 @@ export const Ledger = ({
       <div className="inner msg">
         <div>
           {valid ? (
-            <>
-              <p className="prompt">
-                {!valid ? (
-                  '...'
-                ) : (
-                  <>
-                    <FontAwesomeIcon
-                      icon={faCircleExclamation}
-                      className="icon"
-                    />
-                    {feedback?.message
-                      ? feedback.message
-                      : !integrityChecked
-                        ? t('ledgerConnectAndConfirm')
-                        : `${t('deviceVerified')}. ${t('submitTransaction')}`}
-                  </>
-                )}
-                {feedback?.helpKey && (
-                  <ButtonHelp
-                    marginLeft
-                    onClick={() => {
-                      if (feedback?.helpKey) openHelp(feedback.helpKey);
-                    }}
+            <p className="prompt">
+              {!valid ? (
+                '...'
+              ) : (
+                <>
+                  <FontAwesomeIcon
+                    icon={faCircleExclamation}
+                    className="icon"
                   />
-                )}
-              </p>
-            </>
+                  {feedback?.message
+                    ? feedback.message
+                    : !integrityChecked
+                      ? t('ledgerConnectAndConfirm')
+                      : `${t('deviceVerified')}. ${t('submitTransaction')}`}
+                </>
+              )}
+              {feedback?.helpKey && (
+                <ButtonHelp
+                  marginLeft
+                  onClick={() => {
+                    if (feedback?.helpKey) openHelp(feedback.helpKey);
+                  }}
+                />
+              )}
+            </p>
           ) : (
             <p className="prompt">...</p>
           )}

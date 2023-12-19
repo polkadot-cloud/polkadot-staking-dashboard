@@ -21,20 +21,16 @@ export const Delegates = ({ delegates, delegator }: DelegatesProps) => {
         getAccount(delegate || null)?.source !== 'external'
     ) || [];
 
-  return (
-    <>
-      {delegatesList.length ? (
-        <DelegatesWrapper>
-          {delegatesList.map(({ delegate, proxyType }, i) => (
-            <AccountButton
-              key={`_del_${i}`}
-              address={delegate}
-              delegator={delegator}
-              proxyType={proxyType}
-            />
-          ))}
-        </DelegatesWrapper>
-      ) : null}
-    </>
-  );
+  return delegatesList.length ? (
+    <DelegatesWrapper>
+      {delegatesList.map(({ delegate, proxyType }, i) => (
+        <AccountButton
+          key={`_del_${i}`}
+          address={delegate}
+          delegator={delegator}
+          proxyType={proxyType}
+        />
+      ))}
+    </DelegatesWrapper>
+  ) : null;
 };

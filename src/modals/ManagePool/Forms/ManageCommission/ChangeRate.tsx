@@ -131,76 +131,74 @@ export const ChangeRate = ({
   })();
 
   return (
-    <>
-      {getEnabled('change_rate') && (
-        <SliderWrapper>
-          <div>
-            <h2>{changeRate.maxIncrease}% </h2>
-            <h5 className={maxIncreaseFeedback?.label || 'neutral'}>
-              {!!maxIncreaseFeedback && maxIncreaseFeedback.text}
-            </h5>
-          </div>
-
-          <StyledSlider
-            value={changeRate.maxIncrease}
-            step={0.1}
-            onChange={(val) => {
-              if (typeof val === 'number') {
-                setChangeRate({
-                  ...changeRate,
-                  maxIncrease: val,
-                });
-              }
-            }}
-          />
-
-          <h5 style={{ marginTop: '1rem' }}>
-            {t('minDelayBetweenUpdates')}
-            {minDelayFeedback && (
-              <span className={minDelayFeedback?.label || 'neutral'}>
-                {minDelayFeedback.text}
-              </span>
-            )}
+    getEnabled('change_rate') && (
+      <SliderWrapper>
+        <div>
+          <h2>{changeRate.maxIncrease}% </h2>
+          <h5 className={maxIncreaseFeedback?.label || 'neutral'}>
+            {!!maxIncreaseFeedback && maxIncreaseFeedback.text}
           </h5>
-          <div className="changeRate">
-            <MinDelayInput
-              initial={changeRateInput.years}
-              field="years"
-              label={t('years')}
-              handleChange={handleChangeRateInput}
-            />
-            <MinDelayInput
-              initial={changeRateInput.months}
-              field="months"
-              label={t('months')}
-              handleChange={handleChangeRateInput}
-            />
-            <MinDelayInput
-              initial={changeRateInput.days}
-              field="days"
-              label={t('days')}
-              handleChange={handleChangeRateInput}
-            />
-            <MinDelayInput
-              initial={changeRateInput.hours}
-              field="hours"
-              label={t('hours')}
-              handleChange={handleChangeRateInput}
-            />
-            <MinDelayInput
-              initial={changeRateInput.minutes}
-              field="minutes"
-              label={t('minutes')}
-              handleChange={handleChangeRateInput}
-            />
-          </div>
-          <p>
-            {t('thisMinimumDelay', {
-              count: changeRate.minDelay,
-            })}
-          </p>
-        </SliderWrapper>
-      )}
-    </>
+        </div>
+
+        <StyledSlider
+          value={changeRate.maxIncrease}
+          step={0.1}
+          onChange={(val) => {
+            if (typeof val === 'number') {
+              setChangeRate({
+                ...changeRate,
+                maxIncrease: val,
+              });
+            }
+          }}
+        />
+
+        <h5 style={{ marginTop: '1rem' }}>
+          {t('minDelayBetweenUpdates')}
+          {minDelayFeedback && (
+            <span className={minDelayFeedback?.label || 'neutral'}>
+              {minDelayFeedback.text}
+            </span>
+          )}
+        </h5>
+        <div className="changeRate">
+          <MinDelayInput
+            initial={changeRateInput.years}
+            field="years"
+            label={t('years')}
+            handleChange={handleChangeRateInput}
+          />
+          <MinDelayInput
+            initial={changeRateInput.months}
+            field="months"
+            label={t('months')}
+            handleChange={handleChangeRateInput}
+          />
+          <MinDelayInput
+            initial={changeRateInput.days}
+            field="days"
+            label={t('days')}
+            handleChange={handleChangeRateInput}
+          />
+          <MinDelayInput
+            initial={changeRateInput.hours}
+            field="hours"
+            label={t('hours')}
+            handleChange={handleChangeRateInput}
+          />
+          <MinDelayInput
+            initial={changeRateInput.minutes}
+            field="minutes"
+            label={t('minutes')}
+            handleChange={handleChangeRateInput}
+          />
+        </div>
+        <p>
+          {t('thisMinimumDelay', {
+            count: changeRate.minDelay,
+          })}
+        </p>
+      </SliderWrapper>
+    )
   );
 };

@@ -27,7 +27,7 @@ export const Number = ({
                 .decimalPlaces(decimals || 0)
                 .toFormat()}
             />
-            {unit ? <>{unit}</> : null}
+            {unit || null}
           </h3>
           <h4>
             {label}

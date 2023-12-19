@@ -50,22 +50,20 @@ export const Tooltip = () => {
   };
 
   return (
-    <>
-      {open === 1 && (
-        <Wrapper
-          className="tooltip-trigger-element"
-          ref={tooltipRef}
-          style={{
-            position: 'absolute',
-            left: `${position[0]}px`,
-            top: `${position[1]}px`,
-            zIndex: 99,
-            opacity: show === 1 ? 1 : 0,
-          }}
-        >
-          <h3 className="tooltip-trigger-element">{text}</h3>
-        </Wrapper>
-      )}
-    </>
+    open === 1 && (
+      <Wrapper
+        className="tooltip-trigger-element"
+        ref={tooltipRef}
+        style={{
+          position: 'absolute',
+          left: `${position[0]}px`,
+          top: `${position[1]}px`,
+          zIndex: 99,
+          opacity: show === 1 ? 1 : 0,
+        }}
+      >
+        <h3 className="tooltip-trigger-element">{text}</h3>
+      </Wrapper>
+    )
   );
 };

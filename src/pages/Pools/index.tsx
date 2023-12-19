@@ -7,5 +7,5 @@ import { Home } from './Home';
 
 export const Pools = () => {
   const { onPoolSetup } = useSetup();
-  return <>{onPoolSetup ? <Create /> : <Home />}</>;
+  return onPoolSetup ? <Create /> : <Home />;
 };

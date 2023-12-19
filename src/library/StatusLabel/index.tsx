@@ -29,13 +29,13 @@ export const StatusLabel = ({
   // syncing or not staking
   if (status === 'sync_or_setup') {
     if (isSyncing || !inSetup() || membership !== null) {
-      return <></>;
+      return null;
     }
   }
 
   if (status === 'active_service' && statusFor)
     if (plugins.includes(statusFor)) {
-      return <></>;
+      return null;
     }
 
   return (

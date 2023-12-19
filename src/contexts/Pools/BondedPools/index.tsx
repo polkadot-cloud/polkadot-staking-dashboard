@@ -132,7 +132,7 @@ export const BondedPoolsProvider = ({
     nominator: MaybeAddress,
     nomination: MaybeAddress
   ) => {
-    const pool = bondedPools.find((p: any) => p.addresses.stash === nominator);
+    const pool = bondedPools.find((p) => p.addresses.stash === nominator);
 
     if (!pool) return 'waiting';
 
@@ -289,10 +289,12 @@ export const BondedPoolsProvider = ({
     const roles = getAccountRoles(who);
     // format new list has pool => roles
     const pools: any = {};
-    Object.entries(roles).forEach(([key, poolIds]: any) => {
+    Object.entries(roles).forEach(([key, poolIds]) => {
       // now looping through a role
-      poolIds.forEach((poolId: string) => {
-        const exists = Object.keys(pools).find((k) => k === poolId);
+      poolIds.forEach((poolId) => {
+        const exists = Object.keys(pools).find(
+          (k) => String(k) === String(poolId)
+        );
         if (!exists) {
           pools[poolId] = [key];
         } else {

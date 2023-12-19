@@ -8,7 +8,7 @@ export const Prompt = () => {
   const { closePrompt, size, status, Prompt: PromptInner } = usePrompt();
 
   if (status === 0) {
-    return <></>;
+    return null;
   }
 
   return (

@@ -62,22 +62,20 @@ export const Headers = () => {
     onPoolsSyncing();
 
   return (
-    <>
-      <Wrapper>
-        {/* side menu toggle: shows on small screens */}
-        <SideMenuToggle />
+    <Wrapper>
+      {/* side menu toggle: shows on small screens */}
+      <SideMenuToggle />
 
-        {/* spinner to show app syncing */}
-        {syncing || pending.length > 0 ? <Spinner /> : null}
+      {/* spinner to show app syncing */}
+      {syncing || pending.length > 0 ? <Spinner /> : null}
 
-        {/* connected accounts */}
-        <LargeScreensOnly>
-          <Connected />
-        </LargeScreensOnly>
+      {/* connected accounts */}
+      <LargeScreensOnly>
+        <Connected />
+      </LargeScreensOnly>
 
-        {/* connect button */}
-        <Connect />
-      </Wrapper>
-    </>
+      {/* connect button */}
+      <Connect />
+    </Wrapper>
   );
 };

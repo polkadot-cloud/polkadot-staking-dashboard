@@ -46,30 +46,28 @@ export const MaxCommission = ({
   })();
 
   return (
-    <>
-      {getEnabled('max_commission') && (
-        <SliderWrapper>
-          <div>
-            <h2>{maxCommission}% </h2>
-            <h5 className={maxCommissionFeedback?.label || 'neutral'}>
-              {!!maxCommissionFeedback && maxCommissionFeedback.text}
-            </h5>
-          </div>
+    getEnabled('max_commission') && (
+      <SliderWrapper>
+        <div>
+          <h2>{maxCommission}% </h2>
+          <h5 className={maxCommissionFeedback?.label || 'neutral'}>
+            {!!maxCommissionFeedback && maxCommissionFeedback.text}
+          </h5>
+        </div>
 
-          <StyledSlider
-            value={maxCommission}
-            step={0.1}
-            onChange={(val) => {
-              if (typeof val === 'number') {
-                setMaxCommission(val);
-                if (val < commission) {
-                  setCommission(val);
-                }
+        <StyledSlider
+          value={maxCommission}
+          step={0.1}
+          onChange={(val) => {
+            if (typeof val === 'number') {
+              setMaxCommission(val);
+              if (val < commission) {
+                setCommission(val);
               }
-            }}
-          />
-        </SliderWrapper>
-      )}
-    </>
+            }
+          }}
+        />
+      </SliderWrapper>
+    )
   );
 };

@@ -27,7 +27,7 @@ export const Account = ({
     ? t('syncing')
     : poolsMetaData[pool.id] ?? defaultDisplay;
 
-  // check if super identity has been byte encoded
+  // check if super identity has been byte encoded.
   const displayAsBytes = u8aToString(u8aUnwrapBytes(display));
   if (displayAsBytes !== '') {
     display = displayAsBytes;

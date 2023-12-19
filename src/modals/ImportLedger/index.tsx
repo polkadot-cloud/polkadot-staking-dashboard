@@ -145,17 +145,13 @@ export const ImportLedger: FC = () => {
     };
   }, []);
 
-  return (
-    <>
-      {!addressesRef.current.length ? (
-        <Splash onGetAddress={onGetAddress} />
-      ) : (
-        <Manage
-          addresses={addressesRef.current}
-          removeLedgerAddress={removeLedgerAddress}
-          onGetAddress={onGetAddress}
-        />
-      )}
-    </>
+  return !addressesRef.current.length ? (
+    <Splash onGetAddress={onGetAddress} />
+  ) : (
+    <Manage
+      addresses={addressesRef.current}
+      removeLedgerAddress={removeLedgerAddress}
+      onGetAddress={onGetAddress}
+    />
   );
 };
