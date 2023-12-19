@@ -63,9 +63,7 @@ export const Providers = () => {
   // !! Provider order matters
   const providers: Array<FC<AnyJson> | [FC<AnyJson>, AnyJson]> = [
     [APIProvider, { network }],
-    FiltersProvider,
     NotificationsProvider,
-    PluginsProvider,
     VaultAccountsProvider,
     LedgerHardwareProvider,
     ExtensionsProvider,
@@ -80,6 +78,7 @@ export const Providers = () => {
     ProxiesProvider,
     NetworkMetricsProvider,
     HelpProvider,
+    PluginsProvider,
     SubscanProvider,
     PolkawatchProvider,
     IdentitiesProvider,
@@ -106,6 +105,7 @@ export const Providers = () => {
     OverlayProvider,
     PromptProvider,
     MigrateProvider,
+    FiltersProvider,
   ];
 
   return <>{withProviders(providers, ThemedRouter)}</>;
