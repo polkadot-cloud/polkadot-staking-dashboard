@@ -51,7 +51,7 @@ export const GenerateNominations = ({
     available: availableToNominate,
   } = useFetchMehods();
   const { maxNominations } = consts;
-  const defaultNominationsCount = defaultNominations.nominations?.length || 0;
+  const defaultNominationsCount = defaultNominations.nominations.length || 0;
 
   // store the method of fetching validators
   const [method, setMethod] = useState<string | null>(
@@ -78,7 +78,7 @@ export const GenerateNominations = ({
       nominations !== defaultNominations.nominations &&
       defaultNominationsCount > 0
     ) {
-      setNominations([...(defaultNominations?.nominations || [])]);
+      setNominations([...(defaultNominations.nominations || [])]);
       if (defaultNominationsCount) setMethod('manual');
     }
   }, [activeAccount, defaultNominations]);
@@ -291,7 +291,7 @@ export const GenerateNominations = ({
               text={t('reGenerate')}
               onClick={() => {
                 // set a temporary height to prevent height snapping on re-renders.
-                setHeight(heightRef?.current?.clientHeight || null);
+                setHeight(heightRef.current?.clientHeight || null);
                 setTimeout(() => setHeight(null), 200);
                 setFetching(true);
               }}

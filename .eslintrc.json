@@ -28,7 +28,10 @@
   ],
   "rules": {
     "react/react-in-jsx-scope": "off",
+    // The following rules need to be revised, or the codebase needs to be fixed to enable them.
     "@typescript-eslint/no-explicit-any": "off",
+    // "@typescript-eslint/no-unnecessary-condition": "error",
+    // --------------------------------------------
     "react/jsx-no-useless-fragment": "error",
     "unused-imports/no-unused-imports": "error",
     "@typescript-eslint/consistent-type-imports": [

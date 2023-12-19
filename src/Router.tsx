@@ -74,11 +74,11 @@ export const RouterInner = () => {
       if (aUrl) {
         const account = accounts.find((a) => a.address === aUrl);
         if (account && aUrl !== activeAccount) {
-          setActiveAccount(account?.address || null);
+          setActiveAccount(account.address || null);
           addNotification({
             title: t('accountConnected', { ns: 'library' }),
             subtitle: `${t('connectedTo', { ns: 'library' })} ${
-              account?.name || aUrl
+              account.name || aUrl
             }.`,
           });
         }
