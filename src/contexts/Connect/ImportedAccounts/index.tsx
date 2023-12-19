@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ReactNode } from 'react';
-import { createContext, useContext } from 'react';
+import { createContext, useCallback, useContext } from 'react';
 import type { MaybeAddress } from 'types';
 import type { ExternalAccount } from '@polkadot-cloud/react/types';
 import { ManualSigners } from 'consts';
@@ -23,11 +23,17 @@ export const ImportedAccountsProvider = ({
 }) => {
   const { otherAccounts } = useOtherAccounts();
   const { extensionAccounts } = useExtensionAccounts();
-
   const allAccounts = extensionAccounts.concat(otherAccounts);
 
-  const getAccount = (who: MaybeAddress) =>
-    allAccounts.find(({ address }) => address === who) || null;
+  // Gets an account from `allAccounts`.
+  //
+  // Caches the function when list of accounts update.
+  const getAccount = useCallback(
+    (who: MaybeAddress) => {
+      return allAccounts.find(({ address }) => address === who) || null;
+    },
+    [allAccounts]
+  );
 
   const isReadOnlyAccount = (address: MaybeAddress) => {
     const account = getAccount(address) ?? {};
