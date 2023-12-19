@@ -126,18 +126,16 @@ export const PayeeInput = ({
       <div className="label">
         <h5>
           {payee.destination === 'Account' ? (
-            <>
-              {account === '' ? (
-                t('insertPayoutAddress')
-              ) : !valid ? (
-                t('notValidAddress')
-              ) : (
-                <>
-                  <FontAwesomeIcon icon={faCheck} />
-                  {t('validAddress')}
-                </>
-              )}
-            </>
+            account === '' ? (
+              t('insertPayoutAddress')
+            ) : !valid ? (
+              t('notValidAddress')
+            ) : (
+              <>
+                <FontAwesomeIcon icon={faCheck} />
+                {t('validAddress')}
+              </>
+            )
           ) : payee.destination === 'None' ? null : (
             <>
               <FontAwesomeIcon icon={faCheck} />

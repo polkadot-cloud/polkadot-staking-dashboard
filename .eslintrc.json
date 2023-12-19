@@ -40,7 +40,6 @@
     "react/no-array-index-key": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
-    "react/jsx-no-useless-fragment": "off",
     "react/static-property-placement": "off",
     "no-unused-vars": "off",
     "no-param-reassign": "off",

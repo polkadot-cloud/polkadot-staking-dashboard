@@ -36,32 +36,30 @@ export const Oversubscribed = ({ address }: OversubscribedProps) => {
   )} ${lowestRewardFormatted} ${unit}`;
 
   return (
-    <>
-      {displayOversubscribed && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.1 }}
-        >
-          <div className="label warning">
-            <TooltipTrigger
-              className="tooltip-trigger-element"
-              data-tooltip-text={tooltipText}
-              onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
-            />
-            <OverSubscribedWrapper>
-              <span className="warning">
-                <FontAwesomeIcon
-                  icon={faExclamationTriangle}
-                  transform="shrink-2"
-                  className="warning"
-                />
-              </span>
-              {lowestRewardFormatted} {unit}
-            </OverSubscribedWrapper>
-          </div>
-        </motion.div>
-      )}
-    </>
+    displayOversubscribed && (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.1 }}
+      >
+        <div className="label warning">
+          <TooltipTrigger
+            className="tooltip-trigger-element"
+            data-tooltip-text={tooltipText}
+            onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
+          />
+          <OverSubscribedWrapper>
+            <span className="warning">
+              <FontAwesomeIcon
+                icon={faExclamationTriangle}
+                transform="shrink-2"
+                className="warning"
+              />
+            </span>
+            {lowestRewardFormatted} {unit}
+          </OverSubscribedWrapper>
+        </div>
+      </motion.div>
+    )
   );
 };

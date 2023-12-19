@@ -67,77 +67,73 @@ export const ImportVault = () => {
     setModalResize();
   }, [vaultAccounts]);
 
-  return (
+  return vaultAccounts.length === 0 ? (
+    <NoAccounts
+      Icon={PolkadotVaultSVG}
+      text={t('noVaultAccountsImported', { ns: 'modals' })}
+    >
+      <div>
+        <ButtonPrimary
+          lg
+          iconLeft={faQrcode}
+          text={t('importAccount', { ns: 'modals' })}
+          disabled={promptStatus !== 0}
+          onClick={() => {
+            openPromptWith(<Reader />, 'small');
+          }}
+        />
+      </div>
+    </NoAccounts>
+  ) : (
     <>
-      {vaultAccounts.length === 0 ? (
-        <NoAccounts
-          Icon={PolkadotVaultSVG}
-          text={t('noVaultAccountsImported', { ns: 'modals' })}
-        >
-          <div>
-            <ButtonPrimary
-              lg
-              iconLeft={faQrcode}
-              text={t('importAccount', { ns: 'modals' })}
-              disabled={promptStatus !== 0}
-              onClick={() => {
-                openPromptWith(<Reader />, 'small');
+      <Heading title={vaultAccounts.length ? 'Polkadot Vault' : ''} />
+      <AddressesWrapper>
+        <div className="items">
+          {vaultAccounts.map(({ address, name, index }: AnyJson, i) => (
+            <HardwareAddress
+              key={i}
+              address={address}
+              index={index}
+              initial={name}
+              Identicon={<Polkicon address={address} size={40} />}
+              existsHandler={vaultAccountExists}
+              renameHandler={renameHandler}
+              openRemoveHandler={openRemoveHandler}
+              openConfirmHandler={openConfirmHandler}
+              t={{
+                tRemove: t('remove', { ns: 'modals' }),
+                tImport: t('import', { ns: 'modals' }),
               }}
             />
-          </div>
-        </NoAccounts>
-      ) : (
-        <>
-          <Heading title={vaultAccounts.length ? 'Polkadot Vault' : ''} />
-          <AddressesWrapper>
-            <div className="items">
-              {vaultAccounts.map(({ address, name, index }: AnyJson, i) => (
-                <HardwareAddress
-                  key={i}
-                  address={address}
-                  index={index}
-                  initial={name}
-                  Identicon={<Polkicon address={address} size={40} />}
-                  existsHandler={vaultAccountExists}
-                  renameHandler={renameHandler}
-                  openRemoveHandler={openRemoveHandler}
-                  openConfirmHandler={openConfirmHandler}
-                  t={{
-                    tRemove: t('remove', { ns: 'modals' }),
-                    tImport: t('import', { ns: 'modals' }),
-                  }}
-                />
-              ))}
-            </div>
-            <div className="more">
-              <ButtonText
-                iconLeft={faQrcode}
-                text={t('importAnotherAccount', { ns: 'modals' })}
-                disabled={promptStatus !== 0}
-                onClick={() => {
-                  openPromptWith(<Reader />, 'small');
-                }}
-              />
-            </div>
-          </AddressesWrapper>
-          <HardwareStatusBar
-            show
-            Icon={PolkadotVaultSVG}
-            text={t('vaultAccounts', {
-              ns: 'modals',
-              count: vaultAccounts.length,
-            })}
-            inProgress={false}
-            handleDone={() =>
-              replaceModal({ key: 'Connect', options: { disableScroll: true } })
-            }
-            t={{
-              tDone: t('done', { ns: 'library' }),
-              tCancel: t('cancel', { ns: 'library' }),
+          ))}
+        </div>
+        <div className="more">
+          <ButtonText
+            iconLeft={faQrcode}
+            text={t('importAnotherAccount', { ns: 'modals' })}
+            disabled={promptStatus !== 0}
+            onClick={() => {
+              openPromptWith(<Reader />, 'small');
             }}
           />
-        </>
-      )}
+        </div>
+      </AddressesWrapper>
+      <HardwareStatusBar
+        show
+        Icon={PolkadotVaultSVG}
+        text={t('vaultAccounts', {
+          ns: 'modals',
+          count: vaultAccounts.length,
+        })}
+        inProgress={false}
+        handleDone={() =>
+          replaceModal({ key: 'Connect', options: { disableScroll: true } })
+        }
+        t={{
+          tDone: t('done', { ns: 'library' }),
+          tCancel: t('cancel', { ns: 'library' }),
+        }}
+      />
     </>
   );
 };

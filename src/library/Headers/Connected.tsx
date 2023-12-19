@@ -26,54 +26,52 @@ export const Connected = () => {
   }
 
   return (
-    <>
-      {activeAccount && (
-        <>
-          {/* default account display / stash label if actively nominating */}
+    activeAccount && (
+      <>
+        {/* default account display / stash label if actively nominating */}
+        <HeadingWrapper>
+          <Account
+            canClick={false}
+            value={activeAccount}
+            readOnly={!accountHasSigner(activeAccount)}
+            label={
+              isNetworkSyncing
+                ? undefined
+                : isNominating()
+                  ? 'Nominator'
+                  : undefined
+            }
+            format="name"
+          />
+        </HeadingWrapper>
+
+        {/* pool account display / hide if not in pool */}
+        {selectedActivePool !== null && !isNetworkSyncing && (
+          <HeadingWrapper>
+            <PoolAccount
+              format="name"
+              value={poolAddress}
+              pool={selectedActivePool}
+              label={t('pool')}
+              canClick={false}
+              onClick={() => {}}
+            />
+          </HeadingWrapper>
+        )}
+
+        {/* proxy account display / hide if no proxy */}
+        {activeProxy && (
           <HeadingWrapper>
             <Account
               canClick={false}
-              value={activeAccount}
-              readOnly={!accountHasSigner(activeAccount)}
-              label={
-                isNetworkSyncing
-                  ? undefined
-                  : isNominating()
-                    ? 'Nominator'
-                    : undefined
-              }
+              value={activeProxy}
+              readOnly={!accountHasSigner(activeProxy)}
+              label={t('proxy')}
               format="name"
             />
           </HeadingWrapper>
-
-          {/* pool account display / hide if not in pool */}
-          {selectedActivePool !== null && !isNetworkSyncing && (
-            <HeadingWrapper>
-              <PoolAccount
-                format="name"
-                value={poolAddress}
-                pool={selectedActivePool}
-                label={t('pool')}
-                canClick={false}
-                onClick={() => {}}
-              />
-            </HeadingWrapper>
-          )}
-
-          {/* proxy account display / hide if no proxy */}
-          {activeProxy && (
-            <HeadingWrapper>
-              <Account
-                canClick={false}
-                value={activeProxy}
-                readOnly={!accountHasSigner(activeProxy)}
-                label={t('proxy')}
-                format="name"
-              />
-            </HeadingWrapper>
-          )}
-        </>
-      )}
-    </>
+        )}
+      </>
+    )
   );
 };

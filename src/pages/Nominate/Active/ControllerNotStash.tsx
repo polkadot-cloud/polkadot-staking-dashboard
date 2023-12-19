@@ -38,33 +38,28 @@ export const ControllerNotStash = () => {
     setShowPrompt(addressDifferentToStash(controller));
   }, [controller]);
 
-  return (
-    <>
-      {showPrompt
-        ? !isSyncing &&
-          !isReadOnlyAccount(activeAccount) && (
-            <PageRow>
-              <CardWrapper className="warning">
-                <CardHeaderWrapper>
-                  <h3 style={{ marginBottom: '0.75rem' }}>
-                    <FontAwesomeIcon icon={faExclamationTriangle} />
-                    &nbsp; {t('nominate.controllerAccountsDeprecated')}
-                  </h3>
-                  <h4>
-                    {t('nominate.proxyprompt')} {stringUpperFirst(network)}.
-                  </h4>
-                </CardHeaderWrapper>
-                <div>
-                  <ButtonPrimary
-                    text={t('nominate.updateToStash')}
-                    iconLeft={faCircleArrowRight}
-                    onClick={() => openModal({ key: 'UpdateController' })}
-                  />
-                </div>
-              </CardWrapper>
-            </PageRow>
-          )
-        : null}
-    </>
-  );
+  return showPrompt
+    ? !isSyncing && !isReadOnlyAccount(activeAccount) && (
+        <PageRow>
+          <CardWrapper className="warning">
+            <CardHeaderWrapper>
+              <h3 style={{ marginBottom: '0.75rem' }}>
+                <FontAwesomeIcon icon={faExclamationTriangle} />
+                &nbsp; {t('nominate.controllerAccountsDeprecated')}
+              </h3>
+              <h4>
+                {t('nominate.proxyprompt')} {stringUpperFirst(network)}.
+              </h4>
+            </CardHeaderWrapper>
+            <div>
+              <ButtonPrimary
+                text={t('nominate.updateToStash')}
+                iconLeft={faCircleArrowRight}
+                onClick={() => openModal({ key: 'UpdateController' })}
+              />
+            </div>
+          </CardWrapper>
+        </PageRow>
+      )
+    : null;
 };

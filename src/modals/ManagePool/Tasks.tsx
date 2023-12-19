@@ -31,34 +31,30 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
         <div style={{ paddingBottom: '0.75rem' }}>
           {poolDestroying && <Warning text={t('beingDestroyed')} />}
         </div>
-        {isOwner() && (
+        {isOwner() && globalMaxCommission > 0 && (
           <>
-            {globalMaxCommission > 0 && (
-              <>
-                <ButtonOption
-                  onClick={() => {
-                    setSection(1);
-                    setTask('claim_commission');
-                  }}
-                >
-                  <div>
-                    <h3>{t('claimCommission')}</h3>
-                    <p>{t('claimOutstandingCommission')}</p>
-                  </div>
-                </ButtonOption>
-                <ButtonOption
-                  onClick={() => {
-                    setSection(1);
-                    setTask('manage_commission');
-                  }}
-                >
-                  <div>
-                    <h3>{t('manageCommission')}</h3>
-                    <p>{t('updatePoolCommission')}</p>
-                  </div>
-                </ButtonOption>
-              </>
-            )}
+            <ButtonOption
+              onClick={() => {
+                setSection(1);
+                setTask('claim_commission');
+              }}
+            >
+              <div>
+                <h3>{t('claimCommission')}</h3>
+                <p>{t('claimOutstandingCommission')}</p>
+              </div>
+            </ButtonOption>
+            <ButtonOption
+              onClick={() => {
+                setSection(1);
+                setTask('manage_commission');
+              }}
+            >
+              <div>
+                <h3>{t('manageCommission')}</h3>
+                <p>{t('updatePoolCommission')}</p>
+              </div>
+            </ButtonOption>
           </>
         )}
         <ButtonOption

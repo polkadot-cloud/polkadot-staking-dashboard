@@ -106,9 +106,7 @@ export const Payouts = ({ page }: PageProps) => {
           </div>
         </CardWrapper>
       </PageRow>
-      {!payoutsList?.length ? (
-        <></>
-      ) : (
+      {!!payoutsList?.length && (
         <PageRow>
           <CardWrapper>
             <PayoutList

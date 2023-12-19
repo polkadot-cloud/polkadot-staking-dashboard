@@ -336,11 +336,10 @@ export const GenerateNominations = ({
           )}
         </div>
 
-        {fetching ? (
-          <></>
-        ) : (
-          <>
-            {isReady && method !== null && (
+        {fetching
+          ? null
+          : isReady &&
+            method !== null && (
               <div
                 ref={heightRef}
                 style={{
@@ -358,8 +357,6 @@ export const GenerateNominations = ({
                 />
               </div>
             )}
-          </>
-        )}
       </Wrapper>
     </>
   );
