@@ -108,7 +108,7 @@ export const Roles = ({
       if (listenIsValid) {
         listenIsValid(isRoleEditsValid());
       }
-      const rolesUpdated: any = {};
+      const rolesUpdated: Record<string, string> = {};
       for (const [k, v] of Object.entries(roleEdits)) {
         rolesUpdated[k] = v.newAddress;
       }

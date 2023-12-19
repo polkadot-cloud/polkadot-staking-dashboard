@@ -13,6 +13,7 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import type { NominatorProgress } from 'contexts/Setup/types';
 
 export const Bond = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
@@ -31,10 +32,10 @@ export const Bond = ({ section }: SetupStepProps) => {
   });
 
   // bond valid
-  const [bondValid, setBondValid]: any = useState(false);
+  const [bondValid, setBondValid] = useState<boolean>(false);
 
   // handler for updating bond
-  const handleSetupUpdate = (value: any) => {
+  const handleSetupUpdate = (value: NominatorProgress) => {
     setActiveAccountSetup('nominator', value);
   };
 

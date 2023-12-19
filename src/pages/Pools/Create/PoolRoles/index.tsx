@@ -10,6 +10,7 @@ import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Roles } from '../../Roles';
+import type { PoolProgress } from 'contexts/Setup/types';
 
 export const PoolRoles = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
@@ -36,7 +37,7 @@ export const PoolRoles = ({ section }: SetupStepProps) => {
   const [rolesValid, setRolesValid] = useState<boolean>(true);
 
   // handler for updating pool roles
-  const handleSetupUpdate = (value: any) => {
+  const handleSetupUpdate = (value: PoolProgress) => {
     setActiveAccountSetup('pool', value);
   };
 

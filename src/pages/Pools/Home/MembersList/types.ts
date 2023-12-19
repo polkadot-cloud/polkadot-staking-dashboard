@@ -1,6 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { AnyJson } from 'types';
+
 export interface MembersListProps {
   allowMoreCols: boolean;
   pagination: boolean;
@@ -10,7 +12,7 @@ export interface MembersListProps {
 }
 
 export type DefaultMembersListProps = MembersListProps & {
-  members: any;
+  members: AnyJson;
 };
 
 export type FetchpageMembersListProps = MembersListProps & {

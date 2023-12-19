@@ -42,9 +42,11 @@ export const Summary = ({ section }: SetupStepProps) => {
       return null;
     }
 
-    const targetsToSubmit = nominations.map((item: any) => ({
-      Id: item.address,
-    }));
+    const targetsToSubmit = nominations.map(
+      ({ address }: { address: string }) => ({
+        Id: address,
+      })
+    );
 
     const payeeToSubmit =
       payee.destination === 'Account'

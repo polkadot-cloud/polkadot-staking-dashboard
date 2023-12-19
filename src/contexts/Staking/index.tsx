@@ -24,7 +24,7 @@ import type {
 } from 'contexts/Staking/types';
 import type { AnyApi, AnyJson, MaybeAddress } from 'types';
 import Worker from 'workers/stakers?worker';
-import type { ResponseInitialiseExposures } from 'workers/types';
+import type { ProcessExposuresResponse } from 'workers/types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -103,7 +103,7 @@ export const StakingProvider = ({
 
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
-      const { data }: { data: ResponseInitialiseExposures } = message;
+      const { data }: { data: ProcessExposuresResponse } = message;
       const { task, networkName, era } = data;
 
       // ensure task matches, & era is still the same.
@@ -274,7 +274,7 @@ export const StakingProvider = ({
         continue;
       }
 
-      if (!(staker.others ?? []).find((o: any) => o.who === who)) {
+      if (!(staker.others ?? []).find((o) => o.who === who)) {
         statuses[target] = 'inactive';
         continue;
       }
