@@ -42,3 +42,5 @@ export const Overview = forwardRef(
     );
   }
 );
+
+Overview.displayName = 'Overview';

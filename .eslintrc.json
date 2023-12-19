@@ -8,7 +8,6 @@
     "plugin:import/recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "airbnb",
     // "airbnb-typescript",
     "plugin:prettier/recommended"
   ],
@@ -41,7 +40,6 @@
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
     "react/static-property-placement": "off",
-    "no-unused-vars": "off",
     "no-param-reassign": "off",
     "no-restricted-syntax": "off",
     "@typescript-eslint/no-empty-function": "off",
@@ -94,6 +92,9 @@
     "react/prop-types": "off"
   },
   "settings": {
+    "react": {
+      "version": "detect"
+    },
     "import/resolver": {
       "typescript": {}
     }

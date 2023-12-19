@@ -143,3 +143,5 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
     </ContentWrapper>
   );
 });
+
+Tasks.displayName = 'Tasks';
