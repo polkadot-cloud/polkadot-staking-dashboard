@@ -29,6 +29,7 @@
   "rules": {
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    "react/jsx-no-useless-fragment": "error",
     "unused-imports/no-unused-imports": "error",
     "@typescript-eslint/consistent-type-imports": [
       "error",
