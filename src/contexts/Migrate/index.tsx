@@ -107,8 +107,8 @@ export const MigrateProvider = ({
   }, [isReady, isNetworkSyncing]);
 
   return (
-    <MigrateContext.Provider value={{}}>{children}</MigrateContext.Provider>
+    <MigrateContext.Provider value={null}>{children}</MigrateContext.Provider>
   );
 };
 
-export const MigrateContext = React.createContext<any>(null);
+export const MigrateContext = React.createContext<null>(null);
