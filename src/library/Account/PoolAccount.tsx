@@ -6,14 +6,13 @@ import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Polkicon } from '@polkadot-cloud/react';
+import { memo } from 'react';
 import { Wrapper } from './Wrapper';
 import type { PoolAccountProps } from './types';
 
-export const Account = ({ label, pool, onClick }: PoolAccountProps) => {
+const PoolAccount = ({ label, pool, syncing }: PoolAccountProps) => {
   const { t } = useTranslation('library');
   const { poolsMetaData } = useBondedPools();
-
-  const syncing = !Object.values(poolsMetaData).length;
 
   // Default display text value.
   const defaultDisplay = ellipsisFn(pool.addresses.stash);
@@ -31,9 +30,8 @@ export const Account = ({ label, pool, onClick }: PoolAccountProps) => {
   }
 
   return (
-    <Wrapper onClick={onClick}>
+    <Wrapper>
       {label !== undefined && <div className="account-label">{label}</div>}
-
       <span className="identicon">
         <Polkicon address={pool.addresses.stash} size={remToUnit('1.45rem')} />
       </span>
@@ -43,3 +41,5 @@ export const Account = ({ label, pool, onClick }: PoolAccountProps) => {
     </Wrapper>
   );
 };
+
+export default memo(PoolAccount);

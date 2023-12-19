@@ -4,7 +4,6 @@
 import type { MaybeAddress } from 'types';
 
 export interface AccountProps {
-  onClick?: () => void;
   value: MaybeAddress;
   label?: string;
   readOnly?: boolean;
@@ -13,5 +12,5 @@ export interface AccountProps {
 export type PoolAccountProps = {
   pool: any;
   label: string;
-  onClick?: () => void;
+  syncing: boolean;
 };
