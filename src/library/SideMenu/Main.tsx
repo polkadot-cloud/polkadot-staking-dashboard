@@ -147,15 +147,13 @@ export const Main = () => {
             style={{ maxHeight: '100%', width: '2rem' }}
           />
         ) : (
-          <>
-            <networkData.brand.logo.svg
-              style={{
-                maxHeight: '100%',
-                height: '100%',
-                width: networkData.brand.logo.width,
-              }}
-            />
-          </>
+          <networkData.brand.logo.svg
+            style={{
+              maxHeight: '100%',
+              height: '100%',
+              width: networkData.brand.logo.width,
+            }}
+          />
         )}
       </LogoWrapper>
 

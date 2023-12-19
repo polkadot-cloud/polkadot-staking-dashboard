@@ -212,7 +212,7 @@ export const ActivePoolsProvider = ({
     };
 
     // initiate subscription, add to unsubs.
-    await Promise.all([subscribeActivePool(poolId)]).then((unsubs: any) => {
+    await Promise.all([subscribeActivePool(poolId)]).then((unsubs) => {
       unsubActivePools.current = unsubActivePools.current.concat(unsubs);
     });
   };
@@ -290,7 +290,7 @@ export const ActivePoolsProvider = ({
    * setTargets
    * Sets currently selected pool's target validators in storage.
    */
-  const setTargets = (newTargets: any) => {
+  const setTargets = (newTargets: AnyJson) => {
     if (!selectedPoolId) {
       return;
     }

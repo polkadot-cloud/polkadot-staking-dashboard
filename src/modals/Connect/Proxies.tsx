@@ -61,16 +61,14 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
       <ManualAccountsWrapper>
         <div className="content">
           {inputOpen && (
-            <>
-              <AccountInput
-                resetOnSuccess
-                defaultLabel={t('inputDelegatorAddress')}
-                successCallback={async (delegator) => {
-                  const result = await handleDeclareDelegate(delegator);
-                  return result;
-                }}
-              />
-            </>
+            <AccountInput
+              resetOnSuccess
+              defaultLabel={t('inputDelegatorAddress')}
+              successCallback={async (delegator) => {
+                const result = await handleDeclareDelegate(delegator);
+                return result;
+              }}
+            />
           )}
           {Object.entries(importedDelegates).length ? (
             <div className="accounts">

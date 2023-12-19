@@ -46,4 +46,4 @@ export interface HelpContextProps {
   children: ReactNode;
 }
 
-export type HelpConfig = Record<string, string | any>;
+export type HelpConfig = Record<string, string | string[]>;

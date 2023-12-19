@@ -54,12 +54,10 @@ export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
                 <Polkicon address={primaryAddress} size={remToUnit('1.7rem')} />
               </div>
               {delegatorAddress && (
-                <>
-                  <span>
-                    {proxyDelegate?.proxyType} {t('overview.proxy')}
-                    <FontAwesomeIcon icon={faArrowLeft} transform="shrink-2" />
-                  </span>
-                </>
+                <span>
+                  {proxyDelegate?.proxyType} {t('overview.proxy')}
+                  <FontAwesomeIcon icon={faArrowLeft} transform="shrink-2" />
+                </span>
               )}
               {ellipsisFn(primaryAddress)}
               <button

@@ -47,7 +47,7 @@ export const Help = () => {
   }, [status]);
 
   // render early if help not open
-  if (status === 'closed') return <></>;
+  if (status === 'closed') return null;
 
   let meta: HelpItem | undefined;
 

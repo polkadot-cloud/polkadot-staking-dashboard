@@ -285,7 +285,7 @@ export const FastUnstakeProvider = ({
       subscribeQueue(activeAccount),
       subscribeHead(),
       subscribeCounterForQueue(),
-    ]).then((u: any) => {
+    ]).then((u) => {
       unsubs.current = u;
     });
   };

@@ -178,3 +178,5 @@ export const Forms = forwardRef(
     );
   }
 );
+
+Forms.displayName = 'Forms';

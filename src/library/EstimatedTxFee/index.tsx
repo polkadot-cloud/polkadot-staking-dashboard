@@ -20,22 +20,18 @@ export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
 
   const txFeesUnit = planckToUnit(txFees, units).toFormat();
 
-  return (
+  return format === 'table' ? (
     <>
-      {format === 'table' ? (
-        <>
-          <div>{t('estimatedFee')}:</div>
-          <div>{txFees.isZero() ? `...` : `${txFeesUnit} ${unit}`}</div>
-        </>
-      ) : (
-        <Wrapper>
-          <p>
-            <span>{t('estimatedFee')}:</span>
-            {txFees.isZero() ? `...` : `${txFeesUnit} ${unit}`}
-          </p>
-        </Wrapper>
-      )}
+      <div>{t('estimatedFee')}:</div>
+      <div>{txFees.isZero() ? `...` : `${txFeesUnit} ${unit}`}</div>
     </>
+  ) : (
+    <Wrapper>
+      <p>
+        <span>{t('estimatedFee')}:</span>
+        {txFees.isZero() ? `...` : `${txFeesUnit} ${unit}`}
+      </p>
+    </Wrapper>
   );
 };
 

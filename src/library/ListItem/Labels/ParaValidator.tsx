@@ -17,7 +17,7 @@ export const ParaValidator = ({ address }: ParaValidatorProps) => {
   const tooltipText = t('validatingParachainBlocks');
 
   if (!sessionParaValidators?.includes(address || '')) {
-    return <></>;
+    return null;
   }
 
   return (

@@ -207,25 +207,23 @@ export const Unbond = () => {
         />
         <ModalNotes withPadding>
           {bondFor === 'pool' ? (
-            <>
-              {isDepositor() ? (
-                <p>
-                  {t('notePoolDepositorMinBond', {
-                    context: 'depositor',
-                    bond: minCreateBond,
-                    unit,
-                  })}
-                </p>
-              ) : (
-                <p>
-                  {t('notePoolDepositorMinBond', {
-                    context: 'member',
-                    bond: minJoinBond,
-                    unit,
-                  })}
-                </p>
-              )}
-            </>
+            isDepositor() ? (
+              <p>
+                {t('notePoolDepositorMinBond', {
+                  context: 'depositor',
+                  bond: minCreateBond,
+                  unit,
+                })}
+              </p>
+            ) : (
+              <p>
+                {t('notePoolDepositorMinBond', {
+                  context: 'member',
+                  bond: minJoinBond,
+                  unit,
+                })}
+              </p>
+            )
           ) : null}
           <StaticNote
             value={bondDurationFormatted}

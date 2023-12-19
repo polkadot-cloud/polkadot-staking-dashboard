@@ -161,9 +161,7 @@ export const Roles = ({
           </h3>
         )}
 
-        {!(isOwner() === true || setters.length) ? (
-          <></>
-        ) : (
+        {!(isOwner() === true || setters.length) ? null : (
           <>
             {isEditing && (
               <div>

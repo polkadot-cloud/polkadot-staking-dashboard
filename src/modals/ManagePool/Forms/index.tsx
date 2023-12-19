@@ -38,3 +38,5 @@ export const Forms = forwardRef(
     </PoolCommissionProvider>
   )
 );
+
+Forms.displayName = 'Forms';

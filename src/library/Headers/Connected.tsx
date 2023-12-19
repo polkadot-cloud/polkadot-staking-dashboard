@@ -22,47 +22,45 @@ export const Connected = () => {
   const { activeAccount, activeProxy } = useActiveAccounts();
 
   return (
-    <>
-      {activeAccount && (
-        <>
-          {/* Default account display / stash label if actively nominating. */}
+    activeAccount && (
+      <>
+        {/* Default account display / stash label if actively nominating. */}
+        <HeadingWrapper>
+          <DefaultAccount
+            value={activeAccount}
+            label={
+              isNetworkSyncing
+                ? undefined
+                : isNominating()
+                  ? 'Nominator'
+                  : undefined
+            }
+            readOnly={!accountHasSigner(activeAccount)}
+          />
+        </HeadingWrapper>
+
+        {/* Pool account display / hide if not in pool or if syncing. */}
+        {selectedActivePool !== null && !isNetworkSyncing && (
           <HeadingWrapper>
-            <DefaultAccount
-              value={activeAccount}
-              label={
-                isNetworkSyncing
-                  ? undefined
-                  : isNominating()
-                    ? 'Nominator'
-                    : undefined
-              }
-              readOnly={!accountHasSigner(activeAccount)}
+            <PoolAccount
+              label={t('pool')}
+              pool={selectedActivePool}
+              syncing={!Object.values(poolsMetaData).length}
             />
           </HeadingWrapper>
+        )}
 
-          {/* Pool account display / hide if not in pool or if syncing. */}
-          {selectedActivePool !== null && !isNetworkSyncing && (
-            <HeadingWrapper>
-              <PoolAccount
-                label={t('pool')}
-                pool={selectedActivePool}
-                syncing={!Object.values(poolsMetaData).length}
-              />
-            </HeadingWrapper>
-          )}
-
-          {/* Proxy account display / hide if no proxy. */}
-          {activeProxy && (
-            <HeadingWrapper>
-              <DefaultAccount
-                value={activeProxy}
-                label={t('proxy')}
-                readOnly={!accountHasSigner(activeProxy)}
-              />
-            </HeadingWrapper>
-          )}
-        </>
-      )}
-    </>
+        {/* Proxy account display / hide if no proxy. */}
+        {activeProxy && (
+          <HeadingWrapper>
+            <DefaultAccount
+              value={activeProxy}
+              label={t('proxy')}
+              readOnly={!accountHasSigner(activeProxy)}
+            />
+          </HeadingWrapper>
+        )}
+      </>
+    )
   );
 };
