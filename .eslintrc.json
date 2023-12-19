@@ -24,7 +24,8 @@
     "react",
     "@typescript-eslint",
     "prefer-arrow-functions",
-    "unused-imports"
+    "unused-imports",
+    "react-hooks"
   ],
   "rules": {
     "react/react-in-jsx-scope": "off",
@@ -34,6 +35,7 @@
     // --------------------------------------------
     "react/jsx-no-useless-fragment": "error",
     "unused-imports/no-unused-imports": "error",
+    "react-hooks/rules-of-hooks": "error",
     "@typescript-eslint/consistent-type-imports": [
       "error",
       {

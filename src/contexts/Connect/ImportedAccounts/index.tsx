@@ -39,8 +39,8 @@ export const ImportedAccountsProvider = ({
   //
   // Caches the function when imported accounts update.
   const isReadOnlyAccount = useCallback(
-    (address: MaybeAddress) => {
-      const account = getAccount(address) ?? {};
+    (who: MaybeAddress) => {
+      const account = allAccounts.find(({ address }) => address === who) || {};
       if (Object.prototype.hasOwnProperty.call(account, 'addedBy')) {
         const { addedBy } = account as ExternalAccount;
         return addedBy === 'user';
