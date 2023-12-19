@@ -89,11 +89,9 @@ export const AccountButton = ({
             </div>
             <span className="name">
               {delegator && (
-                <>
-                  <span>
-                    {proxyType} {t('proxy')}
-                  </span>
-                </>
+                <span>
+                  {proxyType} {t('proxy')}
+                </span>
               )}
               {meta?.name ?? ellipsisFn(address ?? '')}
             </span>

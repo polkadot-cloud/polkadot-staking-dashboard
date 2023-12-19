@@ -18,20 +18,18 @@ export const Blocked = ({ prefs }: BlockedProps) => {
   return (
     <>
       {blocked && (
-        <>
-          <div className="label">
-            <TooltipTrigger
-              className="tooltip-trigger-element"
-              data-tooltip-text={tooltipText}
-              onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
-            />
-            <FontAwesomeIcon
-              icon={faUserSlash}
-              color="#d2545d"
-              transform="shrink-1"
-            />
-          </div>
-        </>
+        <div className="label">
+          <TooltipTrigger
+            className="tooltip-trigger-element"
+            data-tooltip-text={tooltipText}
+            onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
+          />
+          <FontAwesomeIcon
+            icon={faUserSlash}
+            color="#d2545d"
+            transform="shrink-1"
+          />
+        </div>
       )}
     </>
   );

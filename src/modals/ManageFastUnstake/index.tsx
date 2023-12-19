@@ -178,11 +178,9 @@ export const ManageFastUnstake = () => {
                 <ActionItem text={t('fastUnstake', { context: 'register' })} />
                 <ModalNotes>
                   <p>
-                    <>
-                      {t('registerFastUnstake')}{' '}
-                      {planckToUnit(fastUnstakeDeposit, units).toString()}{' '}
-                      {unit}. {t('fastUnstakeOnceRegistered')}
-                    </>
+                    {t('registerFastUnstake')}{' '}
+                    {planckToUnit(fastUnstakeDeposit, units).toString()} {unit}.{' '}
+                    {t('fastUnstakeOnceRegistered')}
                   </p>
                   <p>
                     {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>

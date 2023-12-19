@@ -95,61 +95,57 @@ export const PayeeInput = ({
     payee.destination === 'None' ? t('noPayoutAddress') : t('payoutAddress');
 
   return (
-    <>
-      <Wrapper $activeInput={inputActive}>
-        <div className="inner">
-          <h4>{t('payoutAccount')}:</h4>
-          <div className="account">
-            {showEmpty ? (
-              <div className="emptyIcon" />
-            ) : (
-              <Polkicon
-                address={accountDisplay || ''}
-                size={remToUnit('2.5rem')}
-              />
-            )}
-            <div className="input" ref={showingRef}>
-              <input
-                type="text"
-                placeholder={placeholderDisplay}
-                disabled={payee.destination !== 'Account'}
-                value={accountDisplay || ''}
-                onFocus={() => setInputActive(true)}
-                onBlur={() => setInputActive(false)}
-                onChange={handleChangeAccount}
-              />
-              <div ref={hiddenRef} className="hidden">
-                {payee.destination === 'Account'
-                  ? activeAccount
-                  : accountDisplay}
-              </div>
+    <Wrapper $activeInput={inputActive}>
+      <div className="inner">
+        <h4>{t('payoutAccount')}:</h4>
+        <div className="account">
+          {showEmpty ? (
+            <div className="emptyIcon" />
+          ) : (
+            <Polkicon
+              address={accountDisplay || ''}
+              size={remToUnit('2.5rem')}
+            />
+          )}
+          <div className="input" ref={showingRef}>
+            <input
+              type="text"
+              placeholder={placeholderDisplay}
+              disabled={payee.destination !== 'Account'}
+              value={accountDisplay || ''}
+              onFocus={() => setInputActive(true)}
+              onBlur={() => setInputActive(false)}
+              onChange={handleChangeAccount}
+            />
+            <div ref={hiddenRef} className="hidden">
+              {payee.destination === 'Account' ? activeAccount : accountDisplay}
             </div>
           </div>
         </div>
-        <div className="label">
-          <h5>
-            {payee.destination === 'Account' ? (
-              <>
-                {account === '' ? (
-                  t('insertPayoutAddress')
-                ) : !valid ? (
-                  t('notValidAddress')
-                ) : (
-                  <>
-                    <FontAwesomeIcon icon={faCheck} />
-                    {t('validAddress')}
-                  </>
-                )}
-              </>
-            ) : payee.destination === 'None' ? null : (
-              <>
-                <FontAwesomeIcon icon={faCheck} />
-                {accountMeta?.name || ''}
-              </>
-            )}
-          </h5>
-        </div>
-      </Wrapper>
-    </>
+      </div>
+      <div className="label">
+        <h5>
+          {payee.destination === 'Account' ? (
+            <>
+              {account === '' ? (
+                t('insertPayoutAddress')
+              ) : !valid ? (
+                t('notValidAddress')
+              ) : (
+                <>
+                  <FontAwesomeIcon icon={faCheck} />
+                  {t('validAddress')}
+                </>
+              )}
+            </>
+          ) : payee.destination === 'None' ? null : (
+            <>
+              <FontAwesomeIcon icon={faCheck} />
+              {accountMeta?.name || ''}
+            </>
+          )}
+        </h5>
+      </div>
+    </Wrapper>
   );
 };

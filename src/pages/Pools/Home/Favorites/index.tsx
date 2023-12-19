@@ -38,25 +38,23 @@ export const PoolFavorites = () => {
   }, [favorites]);
 
   return (
-    <>
-      <PageRow>
-        <CardWrapper>
-          {favoritesList === null || isPoolSyncing ? (
-            <ListStatusHeader>
-              {t('pools.fetchingFavoritePools')}...
-            </ListStatusHeader>
+    <PageRow>
+      <CardWrapper>
+        {favoritesList === null || isPoolSyncing ? (
+          <ListStatusHeader>
+            {t('pools.fetchingFavoritePools')}...
+          </ListStatusHeader>
+        ) : (
+          isReady &&
+          (favoritesList.length > 0 ? (
+            <PoolListProvider>
+              <PoolList pools={favoritesList} allowMoreCols pagination />
+            </PoolListProvider>
           ) : (
-            isReady &&
-            (favoritesList.length > 0 ? (
-              <PoolListProvider>
-                <PoolList pools={favoritesList} allowMoreCols pagination />
-              </PoolListProvider>
-            ) : (
-              <ListStatusHeader>{t('pools.noFavorites')}</ListStatusHeader>
-            ))
-          )}
-        </CardWrapper>
-      </PageRow>
-    </>
+            <ListStatusHeader>{t('pools.noFavorites')}</ListStatusHeader>
+          ))
+        )}
+      </CardWrapper>
+    </PageRow>
   );
 };

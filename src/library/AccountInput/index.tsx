@@ -190,9 +190,7 @@ export const AccountInput = ({
         </section>
         <section>
           {successLock ? (
-            <>
-              <ButtonSecondary onClick={() => resetInput()} text={t('reset')} />
-            </>
+            <ButtonSecondary onClick={() => resetInput()} text={t('reset')} />
           ) : (
             <>
               {!reformatted ? (
