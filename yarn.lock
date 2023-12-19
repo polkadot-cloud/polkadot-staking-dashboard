@@ -207,7 +207,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.10.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.22.5, @babel/runtime@npm:^7.23.2":
+"@babel/runtime@npm:^7.10.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.22.5, @babel/runtime@npm:^7.23.2":
   version: 7.23.6
   resolution: "@babel/runtime@npm:7.23.6"
   dependencies:
@@ -3615,12 +3615,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:^2.29.3":
-  version: 2.30.0
-  resolution: "date-fns@npm:2.30.0"
-  dependencies:
-    "@babel/runtime": "npm:^7.21.0"
-  checksum: e4b521fbf22bc8c3db332bbfb7b094fd3e7627de0259a9d17c7551e2d2702608a7307a449206065916538e384f37b181565447ce2637ae09828427aed9cb5581
+"date-fns@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "date-fns@npm:3.0.0"
+  checksum: 61a2b24df5a963a451fdce729402ba4c4634aa7e758a0f8467c498b46040e7d238591effd7da289ef0d08a57d1100886ca01b40c6cff26faa6daff53c2e91bbd
   languageName: node
   linkType: hard
 
@@ -6795,7 +6793,7 @@ __metadata:
     buffer: "npm:^6.0.3"
     chart.js: "npm:^4.4.1"
     chroma-js: "npm:^2.4.2"
-    date-fns: "npm:^2.29.3"
+    date-fns: "npm:^3.0.0"
     eslint: "npm:^8.55.0"
     eslint-config-prettier: "npm:^9.1.0"
     eslint-import-resolver-typescript: "npm:^3.6.1"
