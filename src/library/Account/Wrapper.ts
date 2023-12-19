@@ -2,13 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components';
-import type { WrapperProps } from './types';
 
-export const Wrapper = styled.button<WrapperProps>`
+export const Wrapper = styled.button`
   border: 1px solid var(--border-primary-color);
   transition: transform var(--transition-duration) ease-out;
-  cursor: ${(props) => (props.$canClick ? 'pointer' : 'default')};
-  font-size: ${(props) => props.$fontSize};
+  font-size: 1.05rem;
   border-radius: 1.25rem;
   box-shadow: none;
   display: flex;
@@ -17,6 +15,7 @@ export const Wrapper = styled.button<WrapperProps>`
   padding: 0 1rem;
   max-width: 235px;
   flex: 1;
+
   &:hover {
     transform: scale(1.025);
   }
