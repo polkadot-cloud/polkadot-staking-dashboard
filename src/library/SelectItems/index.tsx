@@ -14,7 +14,9 @@ export const SelectItems = ({ layout, children }: SelectItemsProps) => {
 
   if (children) {
     for (let i = 0; i < children.length; i++) {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
       bodyRefs.push(useRef(null));
+      // eslint-disable-next-line react-hooks/rules-of-hooks
       containerRefs.push(useRef(null));
     }
   }

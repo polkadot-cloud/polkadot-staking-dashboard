@@ -6,50 +6,40 @@ import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Polkicon } from '@polkadot-cloud/react';
+import { memo } from 'react';
 import { Wrapper } from './Wrapper';
-import type { AccountProps } from './types';
+import type { PoolAccountProps } from './types';
 
-export const Account = ({
-  label,
-  pool,
-  onClick,
-  canClick,
-  fontSize = '1.05rem',
-}: AccountProps) => {
+const PoolAccount = ({ label, pool, syncing }: PoolAccountProps) => {
   const { t } = useTranslation('library');
   const { poolsMetaData } = useBondedPools();
 
-  const syncing = !Object.values(poolsMetaData).length;
-
-  // display value
+  // Default display text value.
   const defaultDisplay = ellipsisFn(pool.addresses.stash);
-  let display = syncing
-    ? t('syncing')
-    : poolsMetaData[pool.id] ?? defaultDisplay;
 
-  // check if super identity has been byte encoded.
-  const displayAsBytes = u8aToString(u8aUnwrapBytes(display));
+  let text = syncing ? t('syncing') : poolsMetaData[pool.id] ?? defaultDisplay;
+
+  // Check if super identity has been byte encoded.
+  const displayAsBytes = u8aToString(u8aUnwrapBytes(text));
   if (displayAsBytes !== '') {
-    display = displayAsBytes;
+    text = displayAsBytes;
   }
-  // if still empty string, default to clipped address
-  if (display === '') {
-    display = defaultDisplay;
+  // If still empty string, default to clipped address.
+  if (text === '') {
+    text = defaultDisplay;
   }
 
   return (
-    <Wrapper $canClick={canClick} $fontSize={fontSize} onClick={onClick}>
+    <Wrapper>
       {label !== undefined && <div className="account-label">{label}</div>}
-
       <span className="identicon">
-        <Polkicon
-          address={pool.addresses.stash}
-          size={remToUnit(fontSize) * 1.4}
-        />
+        <Polkicon address={pool.addresses.stash} size={remToUnit('1.45rem')} />
       </span>
       <span className={`title${syncing === true ? ` syncing` : ``}`}>
-        {display}
+        {text}
       </span>
     </Wrapper>
   );
 };
+
+export default memo(PoolAccount);
