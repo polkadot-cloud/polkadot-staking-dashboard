@@ -10,41 +10,36 @@ import { memo } from 'react';
 import { Wrapper } from './Wrapper';
 import type { PoolAccountProps } from './types';
 
-export const PoolAccount = memo(
-  ({ label, pool, syncing }: PoolAccountProps) => {
-    const { t } = useTranslation('library');
-    const { poolsMetaData } = useBondedPools();
+const PoolAccount = ({ label, pool, syncing }: PoolAccountProps) => {
+  const { t } = useTranslation('library');
+  const { poolsMetaData } = useBondedPools();
 
-    // Default display text value.
-    const defaultDisplay = ellipsisFn(pool.addresses.stash);
+  // Default display text value.
+  const defaultDisplay = ellipsisFn(pool.addresses.stash);
 
-    let text = syncing
-      ? t('syncing')
-      : poolsMetaData[pool.id] ?? defaultDisplay;
+  let text = syncing ? t('syncing') : poolsMetaData[pool.id] ?? defaultDisplay;
 
-    // Check if super identity has been byte encoded.
-    const displayAsBytes = u8aToString(u8aUnwrapBytes(text));
-    if (displayAsBytes !== '') {
-      text = displayAsBytes;
-    }
-    // If still empty string, default to clipped address.
-    if (text === '') {
-      text = defaultDisplay;
-    }
-
-    return (
-      <Wrapper>
-        {label !== undefined && <div className="account-label">{label}</div>}
-        <span className="identicon">
-          <Polkicon
-            address={pool.addresses.stash}
-            size={remToUnit('1.45rem')}
-          />
-        </span>
-        <span className={`title${syncing === true ? ` syncing` : ``}`}>
-          {text}
-        </span>
-      </Wrapper>
-    );
+  // Check if super identity has been byte encoded.
+  const displayAsBytes = u8aToString(u8aUnwrapBytes(text));
+  if (displayAsBytes !== '') {
+    text = displayAsBytes;
   }
-);
+  // If still empty string, default to clipped address.
+  if (text === '') {
+    text = defaultDisplay;
+  }
+
+  return (
+    <Wrapper>
+      {label !== undefined && <div className="account-label">{label}</div>}
+      <span className="identicon">
+        <Polkicon address={pool.addresses.stash} size={remToUnit('1.45rem')} />
+      </span>
+      <span className={`title${syncing === true ? ` syncing` : ``}`}>
+        {text}
+      </span>
+    </Wrapper>
+  );
+};
+
+export default memo(PoolAccount);
