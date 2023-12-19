@@ -8,8 +8,8 @@ import { useUi } from 'contexts/UI';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import DefaultAccount from '../Account/DefaultAccount';
-import PoolAccount from '../Account/PoolAccount';
+import { DefaultAccount } from '../Account/DefaultAccount';
+import { PoolAccount } from '../Account/PoolAccount';
 import { HeadingWrapper } from './Wrappers';
 
 export const Connected = () => {
