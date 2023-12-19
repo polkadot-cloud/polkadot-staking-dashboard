@@ -11,7 +11,7 @@ import { memo, useEffect } from 'react';
 import { Wrapper } from './Wrapper';
 import type { AccountProps } from './types';
 
-export const DefaultAccount = ({ value, label, readOnly }: AccountProps) => {
+const DefaultAccount = ({ value, label, readOnly }: AccountProps) => {
   const { t } = useTranslation('library');
   const { getAccount } = useImportedAccounts();
 
