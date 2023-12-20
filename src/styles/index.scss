@@ -7,3 +7,38 @@ html {
     font-size: 11px;
   }
 }
+
+:root {
+  .theme-vara-relay {
+    --accent-color-primary-light: #00b387;
+    --accent-color-primary-dark: #00b387;
+    --accent-color-secondary-light: #552bbf;
+    --accent-color-secondary-dark: #6d39ee;
+    --accent-color-stroke-light: #00b387;
+    --accent-color-stroke-dark: #00b387;
+    --accent-color-transparent-light: rgb(211 48 121 / 5%);
+    --accent-color-transparent-dark: rgb(211 48 121 / 5%);
+    --accent-color-pending-light: rgb(211 48 121 / 50%);
+    --accent-color-pending-dark: rgb(211 48 121 / 50%);
+    --button-border-radius-small: 0.75rem;
+    --button-border-radius-large: 1.5rem;
+    --button-padding-small: 0.41rem 1rem;
+    --button-padding-large: 0.53rem 1rem;
+    --button-spacing-small: 0.125rem;
+    --button-spacing-large: 0.625rem;
+    --button-font-size-small: 1rem;
+    --button-font-size-large: 1.15rem;
+    --opacity-disabled: 0.3;
+    --title-font-size: 1.75rem;
+    --transition-duration: 0.15s;
+
+    --background-app-footer: rgb(0 179 135 / 5%);
+    --gradient-background: linear-gradient(
+      180deg,
+      #f1f0f0 0%,
+      #f1f0f0 100px,
+      #e8e8e8 80%,
+      #eafdf78c 100%
+    );
+  }
+}

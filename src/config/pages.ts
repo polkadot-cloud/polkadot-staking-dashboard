@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Community } from 'pages/Community';
+// import { Community } from 'pages/Community';
 import { Nominate } from 'pages/Nominate';
 import { Overview } from 'pages/Overview';
 import { Payouts } from 'pages/Payouts';
@@ -66,12 +66,12 @@ export const PagesConfig: PagesConfigItems = [
     Entry: Validators,
     lottie: 'view',
   },
-  {
-    category: 3,
-    key: 'community',
-    uri: `${BASE_URL}community`,
-    hash: '/community',
-    Entry: Community,
-    lottie: 'label',
-  },
+  // {
+  //   category: 3,
+  //   key: 'community',
+  //   uri: `${BASE_URL}community`,
+  //   hash: '/community',
+  //   Entry: Community,
+  //   lottie: 'label',
+  // },
 ];

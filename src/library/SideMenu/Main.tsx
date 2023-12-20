@@ -143,7 +143,7 @@ export const Main = () => {
         onClick={() => window.open(PolkadotUrl, '_blank')}
       >
         {sideMenuMinimised ? (
-          <networkData.brand.icon
+          <networkData.brand.inline.svg
             style={{ maxHeight: '100%', width: '2rem' }}
           />
         ) : (
