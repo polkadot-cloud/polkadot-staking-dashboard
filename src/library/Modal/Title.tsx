@@ -10,11 +10,12 @@ import { useHelp } from 'contexts/Help';
 import CrossSVG from 'img/cross.svg?react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { TitleWrapper } from './Wrappers';
+import type { AnyJson } from 'types';
 
 interface TitleProps {
   title: string;
   icon?: IconProp;
-  Svg?: FunctionComponent<React.SVGProps<SVGElement>>;
+  Svg?: FunctionComponent<React.SVGProps<AnyJson>>;
   fixed?: boolean;
   helpKey?: string;
   style?: React.CSSProperties;

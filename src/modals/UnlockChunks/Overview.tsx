@@ -7,7 +7,7 @@ import { ButtonSubmit, ModalNotes, ModalPadding } from '@polkadot-cloud/react';
 import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { getUnixTime } from 'date-fns';
-import type { ForwardedRef } from 'react';
+import type { Dispatch, ForwardedRef, SetStateAction } from 'react';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -27,7 +27,7 @@ interface OverviewProps {
   unlocking: UnlockChunk[];
   bondFor: BondFor;
   setSection: (section: number) => void;
-  setUnlock: (unlock: UnlockChunk) => void;
+  setUnlock: Dispatch<SetStateAction<UnlockChunk | null>>;
   setTask: (task: string) => void;
 }
 
