@@ -47,26 +47,24 @@ export const NetworkMetricsProvider = ({
         const unsub = await api.queryMulti(
           [
             api.query.balances.totalIssuance,
-            api.query.auctions.auctionCounter,
-            api.query.paraSessionInfo.earliestStoredSession,
-            api.query.fastUnstake.erasToCheckPerBlock,
+            // api.query.auctions.auctionCounter,
+            // api.query.paraSessionInfo.earliestStoredSession,
+            // api.query.fastUnstake.erasToCheckPerBlock,
             api.query.staking.minimumActiveStake,
           ],
           ([
             totalIssuance,
-            auctionCounter,
-            earliestStoredSession,
-            erasToCheckPerBlock,
+            // auctionCounter,
+            // earliestStoredSession,
+            // erasToCheckPerBlock,
             minimumActiveStake,
           ]: AnyApi) => {
             setStateWithRef(
               {
                 totalIssuance: new BigNumber(totalIssuance.toString()),
-                auctionCounter: new BigNumber(auctionCounter.toString()),
-                earliestStoredSession: new BigNumber(
-                  earliestStoredSession.toString()
-                ),
-                fastUnstakeErasToCheckPerBlock: erasToCheckPerBlock.toNumber(),
+                auctionCounter: new BigNumber(0),
+                earliestStoredSession: new BigNumber(0),
+                fastUnstakeErasToCheckPerBlock: 0,
                 minimumActiveStake: new BigNumber(
                   minimumActiveStake.toString()
                 ),

@@ -3,7 +3,7 @@
 
 import { faChevronRight, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonTertiary, ModalPadding } from '@polkadot-cloud/react';
+import { ModalPadding } from '@polkadot-cloud/react';
 import { capitalizeFirstLetter } from '@polkadot-cloud/utils';
 import { useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -14,7 +14,7 @@ import type { NetworkName } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useUi } from 'contexts/UI';
-import { usePrompt } from 'contexts/Prompt';
+// import { usePrompt } from 'contexts/Prompt';
 import BraveIconSVG from '../../img/brave-logo.svg?react';
 import {
   BraveWarning,
@@ -23,15 +23,15 @@ import {
   ContentWrapper,
   NetworkButton,
 } from './Wrapper';
-import { ProvidersPrompt } from './ProvidersPrompt';
+// import { ProvidersPrompt } from './ProvidersPrompt';
 
 export const Networks = () => {
   const { t } = useTranslation('modals');
   const { isBraveBrowser } = useUi();
-  const { openPromptWith } = usePrompt();
+  // const { openPromptWith } = usePrompt();
   const { network, switchNetwork } = useNetwork();
   const { setModalStatus, setModalResize } = useOverlay().modal;
-  const { isLightClient, setIsLightClient, rpcEndpoint } = useApi();
+  const { isLightClient, setIsLightClient } = useApi();
   const networkKey = network;
 
   // Likely never going to happen; here just to be safe.
@@ -99,16 +99,16 @@ export const Networks = () => {
                   <h4 className="selected">{t('selected')}</h4>
                 )}
               </ConnectionButton>
-              <div className="provider">
+              {/* <div className="provider">
                 <p>{t('provider')}:</p>
                 <ButtonTertiary
                   text={rpcEndpoint}
                   onClick={() => openPromptWith(<ProvidersPrompt />)}
                   marginLeft
                 />
-              </div>
+              </div> */}
             </div>
-            <div>
+            {/* <div>
               <ConnectionButton
                 $connected={isLightClient}
                 className="off"
@@ -122,7 +122,7 @@ export const Networks = () => {
                 <h3>{t('lightClient')}</h3>
                 {isLightClient && <h4 className="selected">{t('selected')}</h4>}
               </ConnectionButton>
-            </div>
+            </div> */}
           </ConnectionsWrapper>
 
           {isBraveBrowser ? (

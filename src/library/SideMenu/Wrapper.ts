@@ -72,9 +72,8 @@ export const LogoWrapper = styled.button<MinimisedProps>`
   flex-flow: row wrap;
   justify-content: ${(props) => (props.$minimised ? 'center' : 'flex-start')};
   width: 100%;
-  height: 2.8rem;
-  padding: ${(props) => (props.$minimised ? '0' : '0.4rem 0.5rem')};
-  margin-bottom: ${(props) => (props.$minimised ? '1.5rem' : '1rem')};
+  height: 3.8rem;
+  margin-bottom: ${(props) => (props.$minimised ? '1.5rem' : '2rem')};
   position: relative;
 
   ellipse {

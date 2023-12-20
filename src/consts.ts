@@ -11,7 +11,7 @@ import type { Plugin } from 'types';
 export const AppVersion = '1.1.3';
 export const DappName = 'Polkadot Staking Dashboard';
 export const PolkadotUrl = 'https://polkadot.network/features/staking/';
-export const DefaultNetwork = 'polkadot';
+export const DefaultNetwork = 'vara';
 export const ManualSigners = ['ledger', 'vault'];
 /*
  * Data Structure Helpers
