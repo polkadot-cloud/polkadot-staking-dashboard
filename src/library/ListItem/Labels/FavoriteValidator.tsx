@@ -5,16 +5,15 @@ import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
-import { useNotifications } from 'contexts/Notifications';
 import { useTooltip } from 'contexts/Tooltip';
 import { TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import type { FavoriteProps } from '../types';
+import { NotificationsController } from 'static/NotificationsController';
 
 export const FavoriteValidator = ({ address }: FavoriteProps) => {
   const { t } = useTranslation('library');
   const { setTooltipTextAndOpen } = useTooltip();
-  const { addNotification } = useNotifications();
   const { favorites, addFavorite, removeFavorite } = useFavoriteValidators();
 
   const isFavorite = favorites.includes(address);
@@ -45,7 +44,7 @@ export const FavoriteValidator = ({ address }: FavoriteProps) => {
           } else {
             addFavorite(address);
           }
-          addNotification(notificationFavorite);
+          NotificationsController.emit(notificationFavorite);
         }}
       />
       <button type="button" className={isFavorite ? 'active' : undefined}>

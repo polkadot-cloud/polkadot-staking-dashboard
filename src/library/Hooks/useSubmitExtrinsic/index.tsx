@@ -9,7 +9,6 @@ import { useApi } from 'contexts/Api';
 import { useExtensions } from '@polkadot-cloud/react/hooks';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
-import { useNotifications } from 'contexts/Notifications';
 import { useTxMeta } from 'contexts/TxMeta';
 import type { AnyApi, AnyJson } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -17,6 +16,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useBuildPayload } from '../useBuildPayload';
 import { useProxySupported } from '../useProxySupported';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
+import { NotificationsController } from 'static/NotificationsController';
 
 export const useSubmitExtrinsic = ({
   tx,
@@ -30,7 +30,6 @@ export const useSubmitExtrinsic = ({
   const { buildPayload } = useBuildPayload();
   const { activeProxy } = useActiveAccounts();
   const { extensionsStatus } = useExtensions();
-  const { addNotification } = useNotifications();
   const { isProxySupported } = useProxySupported();
   const { handleResetLedgerTask } = useLedgerHardware();
   const { addPending, removePending } = useExtrinsics();
@@ -154,7 +153,7 @@ export const useSubmitExtrinsic = ({
 
     const onReady = () => {
       addPending(nonce);
-      addNotification({
+      NotificationsController.emit({
         title: t('pending'),
         subtitle: t('transactionInitiated'),
       });
@@ -164,7 +163,7 @@ export const useSubmitExtrinsic = ({
     const onInBlock = () => {
       setSubmitting(false);
       removePending(nonce);
-      addNotification({
+      NotificationsController.emit({
         title: t('inBlock'),
         subtitle: t('transactionInBlock'),
       });
@@ -173,12 +172,12 @@ export const useSubmitExtrinsic = ({
 
     const onFinalizedEvent = (method: string) => {
       if (method === 'ExtrinsicSuccess') {
-        addNotification({
+        NotificationsController.emit({
           title: t('finalized'),
           subtitle: t('transactionSuccessful'),
         });
       } else if (method === 'ExtrinsicFailed') {
-        addNotification({
+        NotificationsController.emit({
           title: t('failed'),
           subtitle: t('errorWithTransaction'),
         });
@@ -202,7 +201,7 @@ export const useSubmitExtrinsic = ({
       resetTx();
       if (type === 'ledger') handleResetLedgerTask();
       removePending(nonce);
-      addNotification({
+      NotificationsController.emit({
         title: t('cancelled'),
         subtitle: t('transactionCancelled'),
       });

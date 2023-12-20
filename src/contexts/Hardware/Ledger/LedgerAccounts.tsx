@@ -6,7 +6,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNetwork } from 'contexts/Network';
 import { ellipsisFn, setStateWithRef } from '@polkadot-cloud/utils';
 import type { LedgerAccount } from '@polkadot-cloud/react/types';
-import { useNotifications } from 'contexts/Notifications';
 import { useTranslation } from 'react-i18next';
 import type { LedgerAccountsContextInterface } from './types';
 import { defaultLedgerAccountsContext } from './defaults';
@@ -16,6 +15,7 @@ import {
   isLocalNetworkAddress,
   renameLocalLedgerAddress,
 } from '../Utils';
+import { NotificationsController } from 'static/NotificationsController';
 
 export const LedgerAccountsContext =
   React.createContext<LedgerAccountsContextInterface>(
@@ -29,7 +29,6 @@ export const LedgerAccountsProvider = ({
 }) => {
   const { t } = useTranslation('modals');
   const { network } = useNetwork();
-  const { addNotification } = useNotifications();
 
   // Store the fetched ledger accounts.
   const [ledgerAccounts, setLedgerAccountsState] = useState<LedgerAccount[]>(
@@ -77,7 +76,7 @@ export const LedgerAccountsProvider = ({
         ledgerAccountsRef
       );
 
-      addNotification({
+      NotificationsController.emit({
         title: t('ledgerAccountImported'),
         subtitle: t('ledgerImportedAccount', { account: ellipsisFn(address) }),
       });
@@ -109,7 +108,7 @@ export const LedgerAccountsProvider = ({
     );
 
     if (notify) {
-      addNotification({
+      NotificationsController.emit({
         title: t('ledgerAccountRemoved'),
         subtitle: t('ledgerRemovedAccount', { account: ellipsisFn(address) }),
       });

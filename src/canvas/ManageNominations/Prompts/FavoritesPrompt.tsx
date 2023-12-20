@@ -2,7 +2,6 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonPrimary } from '@polkadot-cloud/react';
 import { useApi } from 'contexts/Api';
-import { useNotifications } from 'contexts/Notifications';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import type { Validator } from 'contexts/Validators/types';
 import { Identity } from 'library/ListItem/Labels/Identity';
@@ -12,6 +11,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FooterWrapper, PromptListItem } from 'library/Prompt/Wrappers';
 import type { FavoritesPromptProps } from '../types';
+import { NotificationsController } from 'static/NotificationsController';
 
 export const FavoritesPrompt = ({
   callback,
@@ -19,7 +19,6 @@ export const FavoritesPrompt = ({
 }: FavoritesPromptProps) => {
   const { t } = useTranslation('modals');
   const { consts } = useApi();
-  const { addNotification } = useNotifications();
   const { favoritesList } = useFavoriteValidators();
   const { maxNominations } = consts;
 
@@ -88,7 +87,7 @@ export const FavoritesPrompt = ({
             text={t('addToNominations')}
             onClick={() => {
               callback(nominations.concat(selected));
-              addNotification({
+              NotificationsController.emit({
                 title: t('favoritesAddedTitle', { count: selected.length }),
                 subtitle: t('favoritesAddedSubtitle', {
                   count: selected.length,
