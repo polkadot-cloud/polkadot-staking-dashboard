@@ -32,6 +32,7 @@ import {
   defaultEraPointsBoundaries,
 } from './defaults';
 import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
+import type { ValidatorEntry } from '@polkadot-cloud/assets/types';
 
 export const ValidatorsProvider = ({
   children,
@@ -84,7 +85,9 @@ export const ValidatorsProvider = ({
   const [poolNominated, setPoolNominated] = useState<Validator[] | null>(null);
 
   // Stores a randomised validator community dataset.
-  const [validatorCommunity] = useState([...shuffle(ValidatorCommunity)]);
+  const [validatorCommunity] = useState<ValidatorEntry[]>([
+    ...shuffle(ValidatorCommunity),
+  ]);
 
   // Track whether the validator list has been fetched.
   const [erasRewardPointsFetched, setErasRewawrdPointsFetched] =

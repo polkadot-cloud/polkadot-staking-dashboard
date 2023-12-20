@@ -24,15 +24,24 @@ import {
   Wrapper,
 } from 'library/ListItem/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import type { AnyJson } from 'types';
 
-export const Member = ({ who, batchKey, batchIndex }: any) => {
+export const Member = ({
+  who,
+  batchKey,
+  batchIndex,
+}: {
+  who: string;
+  batchKey: string;
+  batchIndex: number;
+}) => {
   const { t } = useTranslation('pages');
   const { meta } = usePoolMembers();
   const { openModal } = useOverlay().modal;
   const { selectActive } = useList();
   const { activeEra } = useNetworkMetrics();
   const { selectedActivePool, isOwner, isBouncer } = useActivePools();
-  const { setMenuPosition, setMenuItems, open }: any = useMenu();
+  const { setMenuPosition, setMenuItems, open } = useMenu();
   const { state, roles } = selectedActivePool?.bondedPool || {};
   const { bouncer, root, depositor } = roles || {};
 
@@ -46,7 +55,7 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
   const poolMembers = meta[batchKey]?.poolMembers ?? [];
   const member = poolMembers[batchIndex] ?? null;
 
-  const menuItems: any[] = [];
+  const menuItems: AnyJson[] = [];
 
   if (member && (canUnbondBlocked || canUnbondDestroying)) {
     const { points, unbondingEras } = member;
@@ -108,7 +117,7 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row top">
-          {selectActive && <Select item={who} />}
+          {selectActive && <Select item={{ address: who }} />}
           <Identity address={who} />
           <div>
             <Labels>

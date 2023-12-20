@@ -183,8 +183,8 @@ export const BondedPoolsProvider = ({
    * poolSearchFilter Iterates through the supplied list and refers to the meta batch of the list to
    * filter those list items that match the search term. Returns the updated filtered list.
    */
-  const poolSearchFilter = (list: any, searchTerm: string) => {
-    const filteredList: any = [];
+  const poolSearchFilter = (list: AnyJson, searchTerm: string) => {
+    const filteredList: AnyJson = [];
 
     for (const pool of list) {
       // If pool metadata has not yet been synced, include the pool in results.
@@ -288,7 +288,7 @@ export const BondedPoolsProvider = ({
     // first get the roles of the account
     const roles = getAccountRoles(who);
     // format new list has pool => roles
-    const pools: any = {};
+    const pools: Record<number, AnyJson> = {};
     Object.entries(roles).forEach(([key, poolIds]) => {
       // now looping through a role
       poolIds.forEach((poolId) => {
@@ -306,7 +306,7 @@ export const BondedPoolsProvider = ({
   };
 
   // determine roles to replace from roleEdits
-  const toReplace = (roleEdits: any) => {
+  const toReplace = (roleEdits: AnyJson) => {
     const root = roleEdits?.root?.newAddress ?? '';
     const nominator = roleEdits?.nominator?.newAddress ?? '';
     const bouncer = roleEdits?.bouncer?.newAddress ?? '';
@@ -319,7 +319,7 @@ export const BondedPoolsProvider = ({
   };
 
   // replaces the pool roles from roleEdits
-  const replacePoolRoles = (poolId: number, roleEdits: any) => {
+  const replacePoolRoles = (poolId: number, roleEdits: AnyJson) => {
     let pool = bondedPools.find((b) => b.id === poolId) || null;
 
     if (!pool) return;

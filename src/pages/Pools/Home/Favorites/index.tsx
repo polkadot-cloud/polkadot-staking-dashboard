@@ -12,6 +12,7 @@ import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList/Default';
 import { ListStatusHeader } from 'library/List';
 import { PoolListProvider } from 'library/PoolList/context';
+import type { BondedPool } from 'contexts/Pools/types';
 
 export const PoolFavorites = () => {
   const { t } = useTranslation('pages');
@@ -21,19 +22,19 @@ export const PoolFavorites = () => {
   const { favorites, removeFavorite } = usePoolsConfig();
 
   // Store local favorite list and update when favorites list is mutated.
-  const [favoritesList, setFavoritesList] = useState<any[]>([]);
+  const [favoritesList, setFavoritesList] = useState<BondedPool[]>([]);
 
   useEffect(() => {
     // map favorites to bonded pools
-    let newFavoritesList = favorites.map((f) => {
-      const pool = bondedPools.find((b) => b.addresses.stash === f);
-      if (!pool) removeFavorite(f);
-      return pool;
-    });
+    const newFavoritesList = favorites
+      .map((f) => {
+        const pool = bondedPools.find((b) => b.addresses.stash === f);
+        if (!pool) removeFavorite(f);
+        return pool;
+      })
+      .filter((f): f is BondedPool => f !== undefined);
 
     // filter not found bonded pools
-    newFavoritesList = newFavoritesList.filter((f: any) => f !== undefined);
-
     setFavoritesList(newFavoritesList);
   }, [favorites]);
 

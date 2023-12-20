@@ -15,6 +15,7 @@ import {
 } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { getUnixTime } from 'date-fns';
+import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -31,7 +32,11 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
-export const LeavePool = ({ setSection }: any) => {
+export const LeavePool = ({
+  setSection,
+}: {
+  setSection: Dispatch<SetStateAction<number>>;
+}) => {
   const { t } = useTranslation('modals');
   const { api, consts } = useApi();
   const {

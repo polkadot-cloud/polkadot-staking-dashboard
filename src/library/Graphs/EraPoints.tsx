@@ -17,6 +17,7 @@ import { useTheme } from 'contexts/Themes';
 import { graphColors } from 'styles/graphs';
 import { useNetwork } from 'contexts/Network';
 import type { EraPointsProps } from './types';
+import type { AnyJson } from 'types';
 
 ChartJS.register(
   CategoryScale,
@@ -88,7 +89,7 @@ export const EraPoints = ({ items = [], height }: EraPointsProps) => {
         },
         callbacks: {
           title: () => [],
-          label: (context: any) => `${context.parsed.y}`,
+          label: (context: AnyJson) => `${context.parsed.y}`,
         },
         intersect: false,
         interaction: {

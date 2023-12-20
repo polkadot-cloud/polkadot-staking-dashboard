@@ -4,10 +4,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNetwork } from 'contexts/Network';
 import * as defaults from './defaults';
+import type { CommunitySectionsContextInterface } from './types';
 
-export const CommunitySectionsContext: React.Context<any> = React.createContext(
-  defaults.defaultContext
-);
+export const CommunitySectionsContext: React.Context<CommunitySectionsContextInterface> =
+  React.createContext(defaults.defaultContext);
 
 export const useCommunitySections = () =>
   React.useContext(CommunitySectionsContext);
@@ -23,7 +23,7 @@ export const CommunitySectionsProvider = ({
   const [activeSection, setActiveSectionState] = useState<number>(0);
 
   // store the active entity item of the community page
-  const [activeItem, setActiveItem] = useState(defaults.item);
+  const [activeItem, setActiveItem] = useState(defaults.communityItem);
 
   // store the Y scroll position when the last entity was visited
   // used to automatically scroll back down upon returning to the entity lsit.
@@ -32,10 +32,10 @@ export const CommunitySectionsProvider = ({
   // go back to first section and reset item when network switches
   useEffect(() => {
     setActiveSectionState(0);
-    setActiveItem(defaults.item);
+    setActiveItem(defaults.communityItem);
   }, [network]);
 
-  const setActiveSection = (t: any) => {
+  const setActiveSection = (t: number) => {
     setActiveSectionState(t);
   };
 

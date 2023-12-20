@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
+import type { AnyFilter } from 'library/Filter/types';
 import type { AnyApi, AnyJson, AnyMetaBatch, MaybeAddress, Sync } from 'types';
 
 // PoolsConfig types
@@ -52,25 +53,22 @@ export interface PoolMembership {
   lastRecordedRewardCounter: string;
   unbondingEras: Record<number, string>;
   claimPermission: ClaimPermission;
-  unlocking: {
-    era: number;
-    value: BigNumber;
-  }[];
+  unlocking: PoolUnlocking[];
 }
 
 // BondedPool types
 export interface BondedPoolsContextState {
-  queryBondedPool: (p: number) => any;
+  queryBondedPool: (p: number) => AnyApi;
   getBondedPool: (p: number) => BondedPool | null;
   updateBondedPools: (p: BondedPool[]) => void;
   addToBondedPools: (p: BondedPool) => void;
   removeFromBondedPools: (p: number) => void;
-  getPoolNominationStatus: (n: MaybeAddress, o: MaybeAddress) => any;
+  getPoolNominationStatus: (n: MaybeAddress, o: MaybeAddress) => AnyApi;
   getPoolNominationStatusCode: (t: NominationStatuses | null) => string;
-  getAccountRoles: (w: MaybeAddress) => any;
-  getAccountPools: (w: MaybeAddress) => any;
+  getAccountRoles: (w: MaybeAddress) => AnyApi;
+  getAccountPools: (w: MaybeAddress) => AnyApi;
   replacePoolRoles: (poolId: number, roleEdits: AnyJson) => void;
-  poolSearchFilter: (l: any, v: string) => void;
+  poolSearchFilter: (l: AnyFilter, v: string) => void;
   bondedPools: BondedPool[];
   poolsMetaData: Record<number, string>;
   poolsNominations: Record<number, PoolNominations>;
@@ -80,24 +78,15 @@ export interface BondedPoolsContextState {
 export interface ActivePool {
   id: number;
   addresses: PoolAddresses;
-  bondedPool: any;
-  rewardPool: any;
-  rewardAccountBalance: any;
-  pendingRewards: any;
+  bondedPool: ActiveBondedPool;
+  rewardPool: RewardPool;
+  rewardAccountBalance: BigNumber;
+  pendingRewards: BigNumber;
 }
 
-export interface BondedPool {
+export type BondedPool = ActiveBondedPool & {
   addresses: PoolAddresses;
   id: number;
-  memberCounter: string;
-  points: string;
-  roles: {
-    depositor: string;
-    nominator: string;
-    root: string;
-    bouncer: string;
-  };
-  state: PoolState;
   commission?: {
     current?: AnyJson | null;
     max?: AnyJson | null;
@@ -107,6 +96,21 @@ export interface BondedPool {
     } | null;
     throttleFrom?: AnyJson | null;
   };
+};
+
+export interface ActiveBondedPool {
+  points: string;
+  memberCounter: string;
+  roles: PoolRoles;
+  state: PoolState;
+}
+
+export interface RewardPool {
+  lastRecordedRewardCounter: string;
+  lastRecordedTotalPayouts: string;
+  totalCommissionClaimed: string;
+  totalCommissionPending: string;
+  totalRewardsClaimed: string;
 }
 
 export type PoolNominations = {
@@ -125,13 +129,13 @@ export interface ActivePoolsContextState {
   isDepositor: () => boolean;
   isBouncer: () => boolean;
   getPoolBondedAccount: () => MaybeAddress;
-  getPoolUnlocking: () => any;
+  getPoolUnlocking: () => PoolUnlocking[];
   getPoolRoles: () => PoolRoles;
-  setTargets: (t: any) => void;
+  setTargets: (t: PoolTargets) => void;
   getNominationsStatus: () => NominationStatuses;
   setSelectedPoolId: (p: string) => void;
   selectedActivePool: ActivePool | null;
-  targets: any;
+  targets: PoolTargets;
   poolNominations: any;
   synced: Sync;
   selectedPoolMemberCount: number;
@@ -155,16 +159,23 @@ export interface PoolMemberContext {
 
 // Misc types
 export interface PoolRoles {
-  depositor: string;
-  nominator: string;
-  root: string;
-  bouncer: string;
+  depositor?: string;
+  nominator?: string;
+  root?: string;
+  bouncer?: string;
 }
 
 export interface PoolAddresses {
   stash: string;
   reward: string;
 }
+
+export type PoolUnlocking = {
+  era: number;
+  value: BigNumber;
+};
+
+export type PoolTargets = Record<number, AnyJson>;
 
 export type MaybePool = number | null;
 

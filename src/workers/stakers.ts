@@ -10,9 +10,9 @@ import type {
 } from 'contexts/Staking/types';
 import type { AnyJson } from 'types';
 import type { LocalValidatorExposure } from 'contexts/Payouts/types';
-import type { DataInitialiseExposures } from './types';
+import type { ProcessExposuresArgs, ProcessEraForExposureArgs } from './types';
 
-// eslint-disable-next-line no-restricted-globals
+// eslint-disable-next-line no-restricted-globals, @typescript-eslint/no-explicit-any
 export const ctx: Worker = self as any;
 
 // handle incoming message and route to correct handler.
@@ -22,10 +22,10 @@ ctx.addEventListener('message', (event: AnyJson) => {
   let message: AnyJson = {};
   switch (task) {
     case 'processExposures':
-      message = processExposures(data as DataInitialiseExposures);
+      message = processExposures(data as ProcessExposuresArgs);
       break;
     case 'processEraForExposure':
-      message = processEraForExposure(data);
+      message = processEraForExposure(data as ProcessEraForExposureArgs);
       break;
     default:
   }
@@ -33,7 +33,7 @@ ctx.addEventListener('message', (event: AnyJson) => {
 });
 
 // Process era exposures and return if an account was exposed, along with the validator they backed.
-const processEraForExposure = (data: AnyJson) => {
+const processEraForExposure = (data: ProcessEraForExposureArgs) => {
   const {
     era,
     maxExposurePageSize,
@@ -49,11 +49,11 @@ const processEraForExposure = (data: AnyJson) => {
   const exposedValidators: Record<string, LocalValidatorExposure> = {};
 
   // Check exposed as validator or nominator.
-  exposures.every(({ keys, val }: any) => {
+  exposures.every(({ keys, val }) => {
     const validator = keys[1];
     const others = val?.others ?? [];
-    const own = val?.own || 0;
-    const total = val?.total || 0;
+    const own = val?.own || '0';
+    const total = val?.total || '0';
     const isValidator = validator === who;
 
     if (isValidator) {
@@ -74,14 +74,14 @@ const processEraForExposure = (data: AnyJson) => {
       if (exitOnExposed) return false;
     }
 
-    const inOthers = others.find((o: ExposureOther) => o.who === who);
+    const inOthers = others.find((o) => o.who === who);
 
     if (inOthers) {
-      const index = others.findIndex((o: ExposureOther) => o.who === who);
+      const index = others.findIndex((o) => o.who === who);
       const exposedPage = Math.floor(index / Number(maxExposurePageSize));
 
       const share =
-        new BigNumber(inOthers.value).isZero() || total === 0
+        new BigNumber(inOthers.value).isZero() || total === '0'
           ? '0'
           : new BigNumber(inOthers.value).dividedBy(total).toString();
 
@@ -114,7 +114,7 @@ const processEraForExposure = (data: AnyJson) => {
 // process exposures.
 //
 // abstracts active nominators erasStakers.
-const processExposures = (data: DataInitialiseExposures) => {
+const processExposures = (data: ProcessExposuresArgs) => {
   const {
     task,
     networkName,

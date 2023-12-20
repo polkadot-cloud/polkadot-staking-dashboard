@@ -2,12 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { PoolRoles } from 'contexts/Pools/types';
+import type { AnyFunction } from 'types';
 
 export interface RolesProps {
   batchKey: string;
   defaultRoles: PoolRoles;
-  listenIsValid?: any;
-  setters?: any;
+  listenIsValid?: AnyFunction;
+  setters?: AnyFunction;
   inline?: boolean;
 }
 
@@ -17,3 +18,9 @@ export type RoleEditEntry = {
   valid: boolean;
   reformatted: boolean;
 };
+
+export interface RoleEditInputProps {
+  roleKey: string;
+  roleEdit: RoleEditEntry;
+  setRoleEdit: (role: string, edit: RoleEditEntry) => void;
+}

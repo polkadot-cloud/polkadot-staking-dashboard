@@ -89,6 +89,7 @@ export const PoolMembershipsProvider = ({
       if (membership) {
         // format pool's unlocking chunks
         const unbondingEras: AnyApi = membership.unbondingEras;
+
         const unlocking = [];
         for (const [e, v] of Object.entries(unbondingEras || {})) {
           unlocking.push({

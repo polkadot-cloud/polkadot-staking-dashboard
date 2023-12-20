@@ -6,8 +6,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
 import { Polkicon } from '@polkadot-cloud/react';
 import { RoleChangeWrapper } from './Wrapper';
+import type { RoleChangeProps } from './types';
 
-export const RoleChange = ({ roleName, oldAddress, newAddress }: any) => {
+export const RoleChange = ({
+  roleName,
+  oldAddress,
+  newAddress,
+}: RoleChangeProps) => {
   return (
     <RoleChangeWrapper>
       <div className="label">{roleName}</div>

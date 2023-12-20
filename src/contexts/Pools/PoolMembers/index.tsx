@@ -110,6 +110,7 @@ export const PoolMembersProvider = ({
     if (!poolMember) {
       return null;
     }
+
     return {
       who,
       poolId: poolMember.poolId,
@@ -284,16 +285,16 @@ export const PoolMembersProvider = ({
   const removePoolMember = (who: MaybeAddress) => {
     if (!pluginEnabled('subscan')) return;
 
-    const newMembers = poolMembersNode.filter((p: any) => p.who !== who);
+    const newMembers = poolMembersNode.filter((p) => p.who !== who);
     setPoolMembersNode(newMembers ?? []);
   };
 
   // Adds a record to poolMembers.
   // Currently only used when an account joins or creates a pool.
-  const addToPoolMembers = (member: any) => {
+  const addToPoolMembers = (member: { who: string; poolId: number }) => {
     if (!member || pluginEnabled('subscan')) return;
 
-    const exists = poolMembersNode.find((m: any) => m.who === member.who);
+    const exists = poolMembersNode.find((m) => m.who === member.who);
     if (!exists) {
       setPoolMembersNode(poolMembersNode.concat(member));
     }

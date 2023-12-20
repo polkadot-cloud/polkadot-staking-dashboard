@@ -7,8 +7,13 @@ import { useTranslation } from 'react-i18next';
 import { useNetwork } from 'contexts/Network';
 import { formatAccountSs58 } from 'contexts/Connect/Utils';
 import { Wrapper } from './Wrapper';
+import type { RoleEditInputProps } from '../types';
 
-export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {
+export const RoleEditInput = ({
+  setRoleEdit,
+  roleKey,
+  roleEdit,
+}: RoleEditInputProps) => {
   const { t } = useTranslation('pages');
   const {
     networkData: { ss58 },

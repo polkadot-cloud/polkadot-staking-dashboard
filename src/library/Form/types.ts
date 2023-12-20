@@ -7,7 +7,7 @@ import type {
   ExtensionAccount,
   ExternalAccount,
 } from '@polkadot-cloud/react/types';
-import type { BondFor, MaybeAddress } from 'types';
+import type { AnyFunction, AnyJson, BondFor, MaybeAddress } from 'types';
 
 export interface ExtensionAccountItem extends ExtensionAccount {
   active?: boolean;
@@ -35,7 +35,7 @@ export interface AccountDropdownProps {
 
 export interface BondFeedbackProps {
   syncing?: boolean;
-  setters: any;
+  setters: AnyFunction;
   bondFor: BondFor;
   defaultBond: number | null;
   inSetup?: boolean;
@@ -53,13 +53,13 @@ export interface BondInputProps {
   value: string;
   defaultValue: string;
   syncing?: boolean;
-  setters: any;
+  setters: AnyFunction;
   disabled: boolean;
   disableTxFeeUpdate?: boolean;
 }
 
 export interface UnbondFeedbackProps {
-  setters: any;
+  setters: AnyFunction;
   bondFor: BondFor;
   defaultBond?: number;
   inSetup?: boolean;
@@ -74,8 +74,8 @@ export interface UnbondInputProps {
   unbondToMin: BigNumber;
   defaultValue: number | string;
   disabled: boolean;
-  setters: any;
-  value: any;
+  setters: AnyFunction;
+  value: AnyJson;
 }
 
 export interface NominateStatusBarProps {
@@ -84,7 +84,7 @@ export interface NominateStatusBarProps {
 
 export interface DropdownProps {
   items: DropdownInput[];
-  onChange: (o: any) => void;
+  onChange: (o: AnyJson) => void;
   label?: string;
   placeholder: string;
   value: DropdownInput;

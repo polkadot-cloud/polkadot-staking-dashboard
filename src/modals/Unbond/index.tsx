@@ -150,7 +150,7 @@ export const Unbond = () => {
     submitExtrinsic.proxySupported
   );
 
-  if (pendingRewards > 0 && bondFor === 'pool') {
+  if (pendingRewards.isGreaterThan(0) && bondFor === 'pool') {
     warnings.push(`${t('unbondingWithdraw')} ${pendingRewards} ${unit}.`);
   }
   if (nominatorActiveBelowMin) {
