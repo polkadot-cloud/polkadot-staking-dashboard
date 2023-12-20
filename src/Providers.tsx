@@ -106,5 +106,5 @@ export const Providers = () => {
     FiltersProvider,
   ];
 
-  return <>{withProviders(providers, ThemedRouter)}</>;
+  return withProviders(providers, ThemedRouter);
 };
