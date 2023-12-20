@@ -11,7 +11,6 @@ import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import type { PoolMember } from 'contexts/Pools/types';
 import { useTheme } from 'contexts/Themes';
 import {
   Header,
@@ -26,6 +25,7 @@ import type { Sync } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { Member } from './Member';
 import type { DefaultMembersListProps } from './types';
+import type { PoolMember } from 'contexts/Pools/PoolMembers/types';
 
 export const MembersListInner = ({
   allowMoreCols,

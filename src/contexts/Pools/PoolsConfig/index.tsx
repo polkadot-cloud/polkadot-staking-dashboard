@@ -7,10 +7,7 @@ import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
 import React, { useRef, useState } from 'react';
 import { EmptyH256, ModPrefix, U32Opts } from 'consts';
-import type {
-  PoolConfigState,
-  PoolsConfigContextState,
-} from 'contexts/Pools/types';
+import type { PoolConfigState, PoolsConfigContextState } from './types';
 import type { AnyApi } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';

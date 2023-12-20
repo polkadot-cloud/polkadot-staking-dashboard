@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import type { ClaimPermission } from 'contexts/Pools/types';
 import { useSetup } from 'contexts/Setup';
 import { defaultPoolProgress } from 'contexts/Setup/defaults';
 import { useTransferOptions } from 'contexts/TransferOptions';
@@ -24,6 +23,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import type { ClaimPermission } from 'contexts/Pools/PoolMemberships/types';
 
 export const JoinPool = () => {
   const { t } = useTranslation('modals');

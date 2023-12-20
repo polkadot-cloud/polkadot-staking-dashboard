@@ -4,12 +4,6 @@
 import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import type {
-  ActivePool,
-  ActivePoolsContextState,
-  PoolAddresses,
-  PoolTargets,
-} from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
@@ -23,6 +17,14 @@ import { usePoolMemberships } from '../PoolMemberships';
 import { usePoolsConfig } from '../PoolsConfig';
 import * as defaults from './defaults';
 import { usePoolMembers } from '../PoolMembers';
+import type { ActivePool, ActivePoolsContextState, PoolTargets } from './types';
+import type { PoolAddresses } from '../BondedPools/types';
+
+export const ActivePoolsContext = React.createContext<ActivePoolsContextState>(
+  defaults.defaultActivePoolContext
+);
+
+export const useActivePools = () => React.useContext(ActivePoolsContext);
 
 export const ActivePoolsProvider = ({
   children,
@@ -554,9 +556,3 @@ export const ActivePoolsProvider = ({
     </ActivePoolsContext.Provider>
   );
 };
-
-export const ActivePoolsContext = React.createContext<ActivePoolsContextState>(
-  defaults.defaultActivePoolContext
-);
-
-export const useActivePools = () => React.useContext(ActivePoolsContext);

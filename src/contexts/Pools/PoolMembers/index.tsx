@@ -4,13 +4,18 @@
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import React, { useRef, useState } from 'react';
 import { usePlugins } from 'contexts/Plugins';
-import type { PoolMember, PoolMemberContext } from 'contexts/Pools/types';
 import type { AnyApi, AnyMetaBatch, Fn, MaybeAddress, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from '../../Api';
 import { defaultPoolMembers } from './defaults';
+import type { PoolMember, PoolMemberContext } from './types';
+
+export const PoolMembersContext =
+  React.createContext<PoolMemberContext>(defaultPoolMembers);
+
+export const usePoolMembers = () => React.useContext(PoolMembersContext);
 
 export const PoolMembersProvider = ({
   children,
@@ -332,8 +337,3 @@ export const PoolMembersProvider = ({
     </PoolMembersContext.Provider>
   );
 };
-
-export const PoolMembersContext =
-  React.createContext<PoolMemberContext>(defaultPoolMembers);
-
-export const usePoolMembers = () => React.useContext(PoolMembersContext);

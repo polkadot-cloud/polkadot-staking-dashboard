@@ -18,9 +18,7 @@ export const useFillVariables = () => {
   const { minimumActiveStake } = metrics;
 
   const fillVariables = (d: AnyJson, keys: string[]) => {
-    const fields: AnyJson = Object.entries(d).filter(([k]: any) =>
-      keys.includes(k)
-    );
+    const fields: AnyJson = Object.entries(d).filter(([k]) => keys.includes(k));
     const transformed = Object.entries(fields).map(
       ([, [key, val]]: AnyJson) => {
         const varsToValues = [

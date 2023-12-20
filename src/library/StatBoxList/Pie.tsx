@@ -13,7 +13,7 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
   const showTotal = !!stat?.total;
   const { openHelp } = useHelp();
 
-  const [values, setValues] = useState<any>({
+  const [values, setValues] = useState({
     value: Number(stat?.value || 0),
     total: Number(stat?.total || 0),
   });

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { BondedPoolsContextState } from '../types';
+import type { BondedPoolsContextState } from './types';
 
 export const defaultBondedPoolsContext: BondedPoolsContextState = {
   queryBondedPool: (p) => {},

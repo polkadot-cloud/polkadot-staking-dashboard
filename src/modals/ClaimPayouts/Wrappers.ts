@@ -14,7 +14,7 @@ export const ContentWrapper = styled.div`
   }
 `;
 
-export const ItemWrapper = styled.div<any>`
+export const ItemWrapper = styled.div`
   flex: 1;
   display: flex;
   flex-flow: column wrap;

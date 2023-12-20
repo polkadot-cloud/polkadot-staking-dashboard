@@ -46,7 +46,7 @@ export const UpdatePayee = () => {
   const [account, setAccount] = useState<MaybeAddress>(payee.account);
 
   // Store the currently selected payee option.
-  const [selected, setSelected]: any = useState<PayeeConfig>(DefaultSelected);
+  const [selected, setSelected] = useState<PayeeConfig>(DefaultSelected);
 
   // update setup progress with payee config.
   const handleChangeDestination = (destination: PayeeOptions) => {

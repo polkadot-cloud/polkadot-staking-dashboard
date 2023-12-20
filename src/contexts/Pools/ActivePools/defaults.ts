@@ -8,7 +8,7 @@ import type {
   ActivePool,
   ActivePoolsContextState,
   RewardPool,
-} from '../types';
+} from './types';
 
 export const nominationStatus = {};
 

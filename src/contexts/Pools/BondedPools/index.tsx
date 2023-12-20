@@ -10,7 +10,7 @@ import type {
   MaybePool,
   NominationStatuses,
   PoolNominations,
-} from 'contexts/Pools/types';
+} from './types';
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, MaybeAddress, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';

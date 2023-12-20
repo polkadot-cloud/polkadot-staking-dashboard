@@ -52,7 +52,7 @@ export const StyledSelect = styled.div`
   }
 `;
 
-export const StyledController = styled.button<any>`
+export const StyledController = styled.button`
   color: var(--text-color-primary);
   border: none;
   position: absolute;

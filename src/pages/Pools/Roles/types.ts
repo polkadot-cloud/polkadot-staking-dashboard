@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PoolRoles } from 'contexts/Pools/types';
+import type { PoolRoles } from 'contexts/Pools/ActivePools/types';
 import type { AnyFunction } from 'types';
 
 export interface RolesProps {

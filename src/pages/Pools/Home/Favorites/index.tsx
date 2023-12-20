@@ -12,7 +12,7 @@ import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList/Default';
 import { ListStatusHeader } from 'library/List';
 import { PoolListProvider } from 'library/PoolList/context';
-import type { BondedPool } from 'contexts/Pools/types';
+import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 
 export const PoolFavorites = () => {
   const { t } = useTranslation('pages');

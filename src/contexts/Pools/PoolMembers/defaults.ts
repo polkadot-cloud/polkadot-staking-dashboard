@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { PoolMemberContext } from '../types';
+import type { PoolMemberContext } from './types';
 
 export const defaultPoolMembers: PoolMemberContext = {
   fetchPoolMembersMetaBatch: (k, v, r) => {},
