@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type React from 'react';
-import type { BondedPool } from 'contexts/Pools/types';
 import type { BondFor, MaybeAddress } from 'types';
 import type { ValidatorPrefs } from 'contexts/Validators/types';
 import type BigNumber from 'bignumber.js';
 import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
+import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 
 export interface BlockedProps {
   prefs: ValidatorPrefs;

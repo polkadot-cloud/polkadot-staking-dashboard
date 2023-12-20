@@ -9,7 +9,7 @@ import type {
   ClaimPermissionConfig,
   PoolMembership,
   PoolMembershipsContextState,
-} from 'contexts/Pools/types';
+} from './types';
 import type { AnyApi, Fn } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';

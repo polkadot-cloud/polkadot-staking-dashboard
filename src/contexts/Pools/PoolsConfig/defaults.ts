@@ -2,11 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import type {
-  PoolAddresses,
-  PoolsConfigContextState,
-  PoolStats,
-} from 'contexts/Pools/types';
+import type { PoolsConfigContextState, PoolStats } from './types';
+import type { PoolAddresses } from '../BondedPools/types';
 
 export const stats: PoolStats = {
   counterForPoolMembers: new BigNumber(0),
