@@ -2,14 +2,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-export const defaultContext = {
-  setSelectable: (_selectable: boolean) => {},
-  addToSelected: (item: any) => {},
-  removeFromSelected: (items: any[]) => {},
+import type { ListContextInterface } from './types';
+
+export const defaultContext: ListContextInterface = {
+  setSelectActive: (selectedActive) => {},
+  addToSelected: (item) => {},
+  removeFromSelected: (items) => {},
   resetSelected: () => {},
   setListFormat: (v: string) => {},
+  selectActive: false,
   selected: [],
-  selectable: false,
   listFormat: 'col',
   selectToggleable: true,
 };

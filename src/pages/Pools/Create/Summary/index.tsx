@@ -50,7 +50,9 @@ export const Summary = ({ section }: SetupStepProps) => {
       return null;
     }
 
-    const targetsToSubmit = nominations.map((item: any) => item.address);
+    const targetsToSubmit = nominations.map(
+      ({ address }: { address: string }) => address
+    );
 
     const bondToSubmit = unitToPlanck(bond, units);
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
