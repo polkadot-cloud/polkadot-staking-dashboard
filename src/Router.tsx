@@ -24,7 +24,6 @@ import { Headers } from 'library/Headers';
 import { Help } from 'library/Help';
 import { Menu } from 'library/Menu';
 import { NetworkBar } from 'library/NetworkBar';
-import { Notifications } from 'library/Notifications';
 import { SideMenu } from 'library/SideMenu';
 import { Tooltip } from 'library/Tooltip';
 import { Overlays } from 'overlay';
@@ -34,6 +33,7 @@ import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { SideMenuMaximisedWidth } from 'consts';
 import { useTheme } from 'styled-components';
+import { Notifications } from 'library/Notifications';
 
 export const RouterInner = () => {
   const { t } = useTranslation();
@@ -91,6 +91,9 @@ export const RouterInner = () => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
+      {/* Notification popups */}
+      <Notifications />
+
       <Body>
         {/* Help: closed by default */}
         <Help />
@@ -158,9 +161,6 @@ export const RouterInner = () => {
 
       {/* Network status and network details */}
       <NetworkBar />
-
-      {/* Notification popups */}
-      <Notifications />
     </ErrorBoundary>
   );
 };
