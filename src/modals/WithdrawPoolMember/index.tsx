@@ -43,11 +43,11 @@ export const WithdrawPoolMember = () => {
   // calculate total for withdraw
   let totalWithdrawUnit = new BigNumber(0);
 
-  Object.entries(unbondingEras).forEach((entry: any) => {
+  Object.entries(unbondingEras).forEach((entry) => {
     const [era, amount] = entry;
-    if (activeEra.index > era) {
+    if (activeEra.index.isGreaterThan(era)) {
       totalWithdrawUnit = totalWithdrawUnit.plus(
-        new BigNumber(rmCommas(amount))
+        new BigNumber(rmCommas(amount as string))
       );
     }
   });

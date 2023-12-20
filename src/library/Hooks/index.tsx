@@ -1,22 +1,22 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { FC } from 'react';
+import type { FC, RefObject } from 'react';
 import { useEffect } from 'react';
-import type { AnyJson } from 'types';
+import type { AnyFunction, AnyJson } from 'types';
 
 /*
  * A hook that alerts clicks outside of the passed ref.
  */
 export const useOutsideAlerter = (
-  ref: any,
-  callback: any,
-  ignore: any = []
+  ref: RefObject<HTMLElement>,
+  callback: AnyFunction,
+  ignore: string[] = []
 ) => {
   useEffect(() => {
-    const handleClickOutside = (event: any) => {
+    const handleClickOutside = (event: AnyJson) => {
       if (ref.current && !ref.current.contains(event.target)) {
-        const invalid = ignore.find((i: any) =>
+        const invalid = ignore.find((i: string) =>
           event.target.classList.contains(i)
         );
         if (invalid === undefined) {

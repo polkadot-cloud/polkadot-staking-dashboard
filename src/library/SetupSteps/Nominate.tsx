@@ -11,6 +11,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Subheading } from 'pages/Nominate/Wrappers';
 import { GenerateNominations } from '../GenerateNominations';
 import type { NominationsProps } from './types';
+import type { AnyJson } from 'types';
 
 export const Nominate = ({ bondFor, section }: NominationsProps) => {
   const { t } = useTranslation('library');
@@ -22,7 +23,7 @@ export const Nominate = ({ bondFor, section }: NominationsProps) => {
   const { maxNominations } = consts;
 
   // Handler for updating setup.
-  const handleSetupUpdate = (value: any) =>
+  const handleSetupUpdate = (value: AnyJson) =>
     setActiveAccountSetup(bondFor, value);
 
   return (

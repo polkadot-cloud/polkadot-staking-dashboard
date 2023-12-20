@@ -8,6 +8,7 @@ import type {
   ActivePool,
   ActivePoolsContextState,
   PoolAddresses,
+  PoolTargets,
 } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, Sync } from 'types';
@@ -67,7 +68,7 @@ export const ActivePoolsProvider = ({
   const unsubNominations = useRef<AnyApi[]>([]);
 
   // Store account target validators.
-  const [targets, setTargetsState] = useState<Record<number, AnyJson>>({});
+  const [targets, setTargetsState] = useState<PoolTargets>({});
   const targetsRef = useRef(targets);
 
   // Store the member count of the selected pool.
@@ -165,9 +166,7 @@ export const ActivePoolsProvider = ({
           rewardPool = rewardPool?.unwrapOr(undefined)?.toHuman();
           if (rewardPool && bondedPool) {
             const rewardAccountBalance = balance?.free;
-
             const pendingRewards = await fetchPendingRewards();
-
             const pool = {
               id,
               addresses,
