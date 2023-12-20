@@ -4,13 +4,14 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import type { AnyJson } from 'types';
 
 export const Input = ({
   listenIsValid,
   defaultValue,
   setters = [],
   value = 0,
-}: any) => {
+}: AnyJson) => {
   const { t } = useTranslation('pages');
   const { activeAccount } = useActiveAccounts();
 
@@ -18,7 +19,7 @@ export const Input = ({
   const [metadata, setMetadata] = useState(value);
 
   // handle change for bonding
-  const handleChange = (e: any) => {
+  const handleChange = (e: AnyJson) => {
     const val = e.target.value;
     listenIsValid(val !== '');
     setMetadata(val);

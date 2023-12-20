@@ -45,7 +45,7 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
 
   const autoPlay = options?.autoLoop ?? undefined;
 
-  const [iconLight] = useState<any>(
+  const [iconLight] = useState(
     <dotlottie-player
       ref={refLight}
       loop
@@ -55,7 +55,7 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
     />
   );
 
-  const [iconDark] = useState<any>(
+  const [iconDark] = useState(
     <dotlottie-player
       ref={refDark}
       loop

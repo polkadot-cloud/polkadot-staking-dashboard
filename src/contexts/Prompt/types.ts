@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type React from 'react';
+import type { ReactNode } from 'react';
 import type { MaybeString } from 'types';
 
 export interface PromptContextInterface {
@@ -11,5 +12,13 @@ export interface PromptContextInterface {
   setPrompt: (d: MaybeString) => void;
   size: string;
   status: number;
-  Prompt: React.ReactNode | null;
+  Prompt: Prompt;
 }
+
+export interface PromptState {
+  size: string;
+  status: number;
+  Prompt: Prompt;
+}
+
+export type Prompt = ReactNode | null;

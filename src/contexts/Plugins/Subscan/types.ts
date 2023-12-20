@@ -5,12 +5,12 @@ import type { AnyJson } from '@polkadot-cloud/react/types';
 import type { AnySubscan } from 'types';
 
 export interface SubscanContextInterface {
-  fetchEraPoints: (v: string, e: number) => void;
   payouts: AnySubscan;
   poolClaims: AnySubscan;
   unclaimedPayouts: AnySubscan;
   payoutsFromDate: string | undefined;
   payoutsToDate: string | undefined;
+  fetchEraPoints: (v: string, e: number) => Promise<AnyJson>;
   fetchPoolDetails: (poolId: number) => Promise<AnyJson>;
   fetchPoolMembers: (poolId: number, page: number) => Promise<AnyJson[]>;
   setUnclaimedPayouts: (payouts: AnySubscan) => void;

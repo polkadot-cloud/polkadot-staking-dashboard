@@ -7,6 +7,7 @@ import { ButtonSubmit, ModalNotes, ModalPadding } from '@polkadot-cloud/react';
 import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { getUnixTime } from 'date-fns';
+import type { ForwardedRef } from 'react';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -16,13 +17,25 @@ import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { StaticNote } from 'modals/Utils/StaticNote';
-import type { AnyJson } from 'types';
+import type { AnyJson, BondFor } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { Chunk } from './Chunk';
 import { ContentWrapper } from './Wrappers';
+import type { UnlockChunk } from 'contexts/Balances/types';
+
+interface OverviewProps {
+  unlocking: UnlockChunk[];
+  bondFor: BondFor;
+  setSection: (section: number) => void;
+  setUnlock: (unlock: UnlockChunk) => void;
+  setTask: (task: string) => void;
+}
 
 export const Overview = forwardRef(
-  ({ unlocking, bondFor, setSection, setUnlock, setTask }: any, ref: any) => {
+  (
+    { unlocking, bondFor, setSection, setUnlock, setTask }: OverviewProps,
+    ref: ForwardedRef<HTMLDivElement>
+  ) => {
     const { t } = useTranslation('modals');
     const { consts } = useApi();
     const {
@@ -122,7 +135,7 @@ export const Overview = forwardRef(
             </div>
           )}
 
-          {unlocking.map((chunk: any, i: number) => (
+          {unlocking.map((chunk, i: number) => (
             <Chunk
               key={`unlock_chunk_${i}`}
               chunk={chunk}

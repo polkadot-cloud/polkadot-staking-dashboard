@@ -14,7 +14,7 @@ import { TitleWrapper } from './Wrappers';
 interface TitleProps {
   title: string;
   icon?: IconProp;
-  Svg?: FunctionComponent<any>;
+  Svg?: FunctionComponent<React.SVGProps<SVGElement>>;
   fixed?: boolean;
   helpKey?: string;
   style?: React.CSSProperties;
