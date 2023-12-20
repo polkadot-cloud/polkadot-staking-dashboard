@@ -10,24 +10,48 @@ import { setStateWithRef } from '@polkadot-cloud/utils';
 import { isCustomEvent } from 'static/utils';
 
 export const Notifications = () => {
-  // const { notifications, removeNotification } = useNotifications();
-
+  // Store the notifications currently being displayed.
   const [notifications, setNotifications] = useState<NotificationInterface[]>(
     []
   );
-
+  // Ref needed to access notifications state in event listener.
   const notificationsRef = useRef(notifications);
+
+  // Adds a notification to the list of notifications.
+  const handleAddNotification = (detail: any) => {
+    const { index, ...rest } = detail;
+
+    const newNotifications: NotificationInterface[] = [
+      ...notificationsRef.current,
+      { index, item: rest },
+    ];
+    setStateWithRef(newNotifications, setNotifications, notificationsRef);
+  };
+
+  // Removes a notification from state if its index exists.
+  //
+  // NOTE: If `index` has already been dismissed via a UI interaction, nothing will happen here.
+  const handleDismissNotification = (index: number) => {
+    const newNotifications = notificationsRef.current.filter(
+      (item: NotificationInterface) => item.index !== index
+    );
+    setStateWithRef(newNotifications, setNotifications, notificationsRef);
+  };
 
   const notificationCallback = (e: Event) => {
     if (isCustomEvent(e)) {
-      const { title, subtitle } = e.detail;
+      const { task, ...rest } = e.detail;
 
-      const newNotifications: NotificationInterface[] = [
-        ...notificationsRef.current,
-        { index: notificationsRef.current.length, item: { title, subtitle } },
-      ];
-      setStateWithRef(newNotifications, setNotifications, notificationsRef);
-      console.log(newNotifications);
+      switch (task) {
+        case 'add':
+          handleAddNotification(rest);
+          break;
+
+        case 'dismiss':
+          handleDismissNotification(rest.index);
+          break;
+        default:
+      }
     }
   };
 
@@ -62,7 +86,7 @@ export const Notifications = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => {
-                    /* removeNotification(index) */
+                    handleDismissNotification(index);
                   }}
                 >
                   {item.title && <h3>{item.title}</h3>}
