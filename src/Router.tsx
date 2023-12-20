@@ -89,8 +89,6 @@ export const RouterInner = () => {
   // References to outer containers
   const mainInterfaceRef = useRef<HTMLDivElement>(null);
 
-  console.log('router re-rendered');
-
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
       {/* Notification popups */}

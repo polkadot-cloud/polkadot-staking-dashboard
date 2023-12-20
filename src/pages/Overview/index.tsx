@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
-  ButtonPrimary,
   Odometer,
   PageHeading,
   PageRow,
@@ -31,7 +30,6 @@ import { StakeStatus } from './StakeStatus';
 import { ActiveEraStat } from './Stats/ActiveEraTimeLeft';
 import { HistoricalRewardsRateStat } from './Stats/HistoricalRewardsRate';
 import { SupplyStakedStat } from './Stats/SupplyStaked';
-import { NotificationsController } from 'static/NotificationsController';
 
 export const Overview = () => {
   const { i18n, t } = useTranslation('pages');
@@ -74,15 +72,6 @@ export const Overview = () => {
       <PageRow>
         <PageHeading>
           <ActiveAccounts />
-          <ButtonPrimary
-            text="emit notification"
-            onClick={() =>
-              NotificationsController.emit({
-                title: 'Test Title',
-                subtitle: 'Test Subtitle',
-              })
-            }
-          />
         </PageHeading>
       </PageRow>
       <StatBoxList>
