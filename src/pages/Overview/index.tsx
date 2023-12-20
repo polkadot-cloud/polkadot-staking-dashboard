@@ -76,7 +76,12 @@ export const Overview = () => {
           <ActiveAccounts />
           <ButtonPrimary
             text="emit notification"
-            onClick={() => Notifications.emitNotification()}
+            onClick={() =>
+              Notifications.emitNotification({
+                title: 'Test Title',
+                subtitle: 'Test Subtitle',
+              })
+            }
           />
         </PageHeading>
       </PageRow>

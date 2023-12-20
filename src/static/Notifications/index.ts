@@ -1,6 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type {
+  NotificationEventAddDetail,
+  NotificationEventDismissDetail,
+  NotificationText,
+} from './types';
+
 // A class to manage notifications.
 //
 // Designed to emit notifications to subscribers to the `notification` event.
@@ -10,7 +16,7 @@ export class Notifications {
   private static subscribers = new Map<string, HTMLElement>();
 
   // Store how long a notification should remain displayed for.
-  private static displayDuration = 3000;
+  private static displayDuration: number = 3000;
 
   // Store the notification indexes.
   private static indexes: number[] = [];
@@ -22,30 +28,35 @@ export class Notifications {
   }
 
   // Emit a new notification to all subscribed elements.
-  static emitNotification() {
+  static emitNotification({ title, subtitle }: NotificationText) {
     const index = (this.indexes[this.indexes.length - 1] || 0) + 1;
     this.indexes.push(index);
 
-    // Emit the notification.
+    // Create type-safe event detail.
+    const addDetail: NotificationEventAddDetail = {
+      task: 'add',
+      index,
+      title,
+      subtitle,
+    };
+
     document.dispatchEvent(
       new CustomEvent('notification', {
-        detail: {
-          task: 'add',
-          index,
-          title: 'Notification Title',
-          subtitle: 'Notification Subtitle',
-        },
+        detail: addDetail,
       })
     );
 
     // After a period of time, dismiss the notification.
     setTimeout(() => {
+      // Create type-safe event detail.
+      const dismissDetail: NotificationEventDismissDetail = {
+        task: 'dismiss',
+        index,
+      };
+
       document.dispatchEvent(
         new CustomEvent('notification', {
-          detail: {
-            task: 'dismiss',
-            index,
-          },
+          detail: dismissDetail,
         })
       );
     }, this.displayDuration);

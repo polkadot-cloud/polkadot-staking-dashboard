@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useIdentities } from 'contexts/Identities';
 import { useNotifications } from 'contexts/Notifications';
-import type { NotificationText } from 'contexts/Notifications/types';
+import type { NotificationText } from 'static/Notifications/types';
 import { Polkicon } from '@polkadot-cloud/react';
 import { getIdentityDisplay } from 'library/ValidatorList/ValidatorItem/Utils';
 import type { PoolAccountProps } from '../types';

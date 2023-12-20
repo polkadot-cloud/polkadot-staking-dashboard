@@ -5,11 +5,11 @@ import { setStateWithRef } from '@polkadot-cloud/utils';
 import type { ReactNode } from 'react';
 import React, { useRef, useState } from 'react';
 import { defaultNotificationsContext } from './defaults';
+import type { NotificationsContextInterface } from './types';
 import type {
   NotificationInterface,
   NotificationItem,
-  NotificationsContextInterface,
-} from './types';
+} from 'static/Notifications/types';
 
 export const NotificationsProvider = ({
   children,

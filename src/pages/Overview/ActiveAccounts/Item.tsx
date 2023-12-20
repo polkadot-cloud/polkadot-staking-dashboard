@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useNotifications } from 'contexts/Notifications';
-import type { NotificationText } from 'contexts/Notifications/types';
+import type { NotificationText } from 'static/Notifications/types';
 import { useProxies } from 'contexts/Proxies';
 import { Polkicon } from '@polkadot-cloud/react';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';

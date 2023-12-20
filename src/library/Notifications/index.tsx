@@ -3,7 +3,7 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 // import { useNotifications } from 'contexts/Notifications';
-import type { NotificationInterface } from 'contexts/Notifications/types';
+import type { NotificationInterface } from 'static/Notifications/types';
 import { Wrapper } from './Wrapper';
 import { useEffect, useRef, useState } from 'react';
 import { setStateWithRef } from '@polkadot-cloud/utils';
