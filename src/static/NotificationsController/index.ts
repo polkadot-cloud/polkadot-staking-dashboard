@@ -10,7 +10,7 @@ import type {
 // A class to manage notifications.
 //
 // Designed to emit notifications to subscribers to the `notification` event.
-export class Notifications {
+export class NotificationsController {
   // Store the elements that are listening to notification events.
   // NOTE: Currently not in use.
   private static subscribers = new Map<string, HTMLElement>();
@@ -28,7 +28,7 @@ export class Notifications {
   }
 
   // Emit a new notification to all subscribed elements.
-  static emitNotification({ title, subtitle }: NotificationText) {
+  static emit({ title, subtitle }: NotificationText) {
     const index = (this.indexes[this.indexes.length - 1] || 0) + 1;
     this.indexes.push(index);
 

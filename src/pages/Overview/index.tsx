@@ -31,7 +31,7 @@ import { StakeStatus } from './StakeStatus';
 import { ActiveEraStat } from './Stats/ActiveEraTimeLeft';
 import { HistoricalRewardsRateStat } from './Stats/HistoricalRewardsRate';
 import { SupplyStakedStat } from './Stats/SupplyStaked';
-import { Notifications } from 'static/Notifications';
+import { NotificationsController } from 'static/NotificationsController';
 
 export const Overview = () => {
   const { i18n, t } = useTranslation('pages');
@@ -77,7 +77,7 @@ export const Overview = () => {
           <ButtonPrimary
             text="emit notification"
             onClick={() =>
-              Notifications.emitNotification({
+              NotificationsController.emit({
                 title: 'Test Title',
                 subtitle: 'Test Subtitle',
               })

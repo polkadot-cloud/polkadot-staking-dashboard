@@ -18,7 +18,6 @@ import { IdentitiesProvider } from 'contexts/Identities';
 import { MenuProvider } from 'contexts/Menu';
 import { MigrateProvider } from 'contexts/Migrate';
 import { NetworkMetricsProvider } from 'contexts/NetworkMetrics';
-import { NotificationsProvider } from 'contexts/Notifications';
 import { PromptProvider } from 'contexts/Prompt';
 import { PluginsProvider } from 'contexts/Plugins';
 import { ActivePoolsProvider } from 'contexts/Pools/ActivePools';
@@ -63,7 +62,6 @@ export const Providers = () => {
   // !! Provider order matters
   const providers: Array<FC<AnyJson> | [FC<AnyJson>, AnyJson]> = [
     [APIProvider, { network }],
-    NotificationsProvider,
     VaultAccountsProvider,
     LedgerHardwareProvider,
     ExtensionsProvider,

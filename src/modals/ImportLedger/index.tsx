@@ -16,10 +16,10 @@ import {
   useOverlay,
 } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { useNotifications } from 'contexts/Notifications';
 import { useTranslation } from 'react-i18next';
 import { Manage } from './Manage';
 import { Splash } from './Splash';
+import { NotificationsController } from 'static/NotificationsController';
 
 export const ImportLedger: FC = () => {
   const { t } = useTranslation('modals');
@@ -33,7 +33,6 @@ export const ImportLedger: FC = () => {
     handleUnmount,
     handleGetAddress,
   } = useLedgerHardware();
-  const { addNotification } = useNotifications();
   const { appName } = getLedgerApp(network);
 
   // Store addresses retreived from Ledger device. Defaults to local addresses.
@@ -119,7 +118,7 @@ export const ImportLedger: FC = () => {
       resetStatusCode();
 
       // trigger notification.
-      addNotification({
+      NotificationsController.emit({
         title: t('ledgerAccountFetched'),
         subtitle: t('ledgerFetchedAccount', {
           account: ellipsisFn(newAddress[0].address),

@@ -7,8 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMenu } from 'contexts/Menu';
-import { useNotifications } from 'contexts/Notifications';
-import type { NotificationText } from 'static/Notifications/types';
+import type { NotificationText } from 'static/NotificationsController/types';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useUi } from 'contexts/UI';
@@ -33,6 +32,7 @@ import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
 import type { PoolProps } from './types';
 import { Rewards } from './Rewards';
+import { NotificationsController } from 'static/NotificationsController';
 
 export const Pool = ({ pool }: PoolProps) => {
   const { t } = useTranslation('library');
@@ -44,7 +44,6 @@ export const Pool = ({ pool }: PoolProps) => {
   const { membership } = usePoolMemberships();
   const { poolsNominations } = useBondedPools();
   const { activeAccount } = useActiveAccounts();
-  const { addNotification } = useNotifications();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getCurrentCommission } = usePoolCommission();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
@@ -101,7 +100,7 @@ export const Pool = ({ pool }: PoolProps) => {
     cb: () => {
       navigator.clipboard.writeText(addresses.stash);
       if (notificationCopyAddress) {
-        addNotification(notificationCopyAddress);
+        NotificationsController.emit(notificationCopyAddress);
       }
     },
   });

@@ -17,7 +17,6 @@ import {
 } from 'react-router-dom';
 import { Prompt } from 'library/Prompt';
 import { PagesConfig } from 'config/pages';
-import { useNotifications } from 'contexts/Notifications';
 import { useUi } from 'contexts/UI';
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
 import { Headers } from 'library/Headers';
@@ -34,6 +33,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { SideMenuMaximisedWidth } from 'consts';
 import { useTheme } from 'styled-components';
 import { Notifications } from 'library/Notifications';
+import { NotificationsController } from 'static/NotificationsController';
 
 export const RouterInner = () => {
   const { t } = useTranslation();
@@ -41,7 +41,6 @@ export const RouterInner = () => {
   const { network } = useNetwork();
   const { pathname } = useLocation();
   const { accounts } = useImportedAccounts();
-  const { addNotification } = useNotifications();
   const { accountsInitialised } = useOtherAccounts();
   const { activeAccount, setActiveAccount } = useActiveAccounts();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
@@ -75,7 +74,8 @@ export const RouterInner = () => {
         const account = accounts.find((a) => a.address === aUrl);
         if (account && aUrl !== activeAccount) {
           setActiveAccount(account.address || null);
-          addNotification({
+
+          NotificationsController.emit({
             title: t('accountConnected', { ns: 'library' }),
             subtitle: `${t('connectedTo', { ns: 'library' })} ${
               account.name || aUrl
