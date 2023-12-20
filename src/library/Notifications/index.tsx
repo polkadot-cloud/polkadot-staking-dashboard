@@ -14,7 +14,7 @@ export const Notifications = () => {
   const [notifications, setNotifications] = useState<NotificationInterface[]>(
     []
   );
-  // Ref needed to access notifications state in event listener.
+  // A ref is needed to access notifications state in event listener.
   const notificationsRef = useRef(notifications);
 
   // Adds a notification to the list of notifications.
@@ -33,11 +33,12 @@ export const Notifications = () => {
   // NOTE: If `index` has already been dismissed via a UI interaction, nothing will happen here.
   const handleDismissNotification = (index: number) => {
     const newNotifications = notificationsRef.current.filter(
-      (item: NotificationInterface) => item.index !== index
+      (notification) => notification.index !== index
     );
     setStateWithRef(newNotifications, setNotifications, notificationsRef);
   };
 
+  // Callback for notifications event listener.
   const notificationCallback = (e: Event) => {
     if (isCustomEvent(e)) {
       const { task, ...rest } = e.detail;
@@ -46,7 +47,6 @@ export const Notifications = () => {
         case 'add':
           handleAddNotification(rest);
           break;
-
         case 'dismiss':
           handleDismissNotification(rest.index);
           break;
@@ -55,6 +55,7 @@ export const Notifications = () => {
     }
   };
 
+  // Add event listener for notifications.
   useEffect(() => {
     document.addEventListener('notification', notificationCallback);
     return () => {

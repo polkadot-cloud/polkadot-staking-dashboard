@@ -11,21 +11,11 @@ import type {
 //
 // Designed to emit notifications to subscribers to the `notification` event.
 export class NotificationsController {
-  // Store the elements that are listening to notification events.
-  // NOTE: Currently not in use.
-  private static subscribers = new Map<string, HTMLElement>();
-
   // Store how long a notification should remain displayed for.
   private static displayDuration: number = 3000;
 
   // Store the notification indexes.
   private static indexes: number[] = [];
-
-  // Add a new notification to the list.
-  // NOTE: Currently not in use.
-  static addSubscriber(id: string, element: HTMLElement) {
-    this.subscribers.set(id, element);
-  }
 
   // Emit a new notification to all subscribed elements.
   static emit({ title, subtitle }: NotificationText) {
