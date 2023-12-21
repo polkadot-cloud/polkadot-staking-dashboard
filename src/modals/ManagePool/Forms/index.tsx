@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { Dispatch, SetStateAction } from 'react';
 import { forwardRef } from 'react';
 import { ContentWrapper } from '../Wrappers';
 import { ClaimCommission } from './ClaimCommission';
@@ -12,7 +13,20 @@ import { SetPoolState } from './SetPoolState';
 import { PoolCommissionProvider } from './ManageCommission/provider';
 
 export const Forms = forwardRef(
-  ({ setSection, task, section, incrementCalculateHeight }: any, ref: any) => (
+  (
+    {
+      setSection,
+      task,
+      section,
+      incrementCalculateHeight,
+    }: {
+      setSection: Dispatch<SetStateAction<number>>;
+      task?: string;
+      section: number;
+      incrementCalculateHeight: () => void;
+    },
+    ref: any
+  ) => (
     <PoolCommissionProvider>
       <ContentWrapper>
         <div className="items" ref={ref}>
@@ -21,7 +35,6 @@ export const Forms = forwardRef(
           ) : task === 'manage_commission' ? (
             <ManageCommission
               setSection={setSection}
-              section={section}
               incrementCalculateHeight={incrementCalculateHeight}
             />
           ) : task === 'set_claim_permission' ? (

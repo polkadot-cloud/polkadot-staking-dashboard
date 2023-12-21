@@ -5,5 +5,5 @@ import type { Dispatch, SetStateAction } from 'react';
 
 export interface TasksProps {
   setSection: Dispatch<SetStateAction<number>>;
-  setTask: Dispatch<SetStateAction<string>>;
+  setTask: Dispatch<SetStateAction<string | undefined>>;
 }

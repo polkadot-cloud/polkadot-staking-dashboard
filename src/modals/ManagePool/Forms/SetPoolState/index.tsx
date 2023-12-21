@@ -23,10 +23,10 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const SetPoolState = ({
   setSection,
-  task,
+  task = '',
 }: {
   setSection: Dispatch<SetStateAction<number>>;
-  task: string;
+  task?: string;
 }) => {
   const { t } = useTranslation('modals');
   const { api } = useApi();

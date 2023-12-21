@@ -27,7 +27,7 @@ export interface SetupStepProps {
 }
 
 export interface MotionContainerProps {
-  thisSection: string;
-  activeSection: string;
+  thisSection: number;
+  activeSection: number;
   children: ReactNode;
 }
