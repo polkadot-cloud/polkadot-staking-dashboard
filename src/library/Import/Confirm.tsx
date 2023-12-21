@@ -16,7 +16,6 @@ export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
   const { setStatus } = usePrompt();
   const { addOtherAccounts } = useOtherAccounts();
 
-  // TODO: make compatible with Polkadot Vault also.
   const addAccountCallback = () => {
     NotificationsController.emit({
       title: t('ledgerAccountImported'),

@@ -15,7 +15,6 @@ export const Remove = ({ address, getHandler, removeHandler }: RemoveProps) => {
   const { setStatus } = usePrompt();
   const { forgetOtherAccounts } = useOtherAccounts();
 
-  // TODO: make compatible with Polkadot Vault also.
   const removeAccountCallback = () => {
     NotificationsController.emit({
       title: t('ledgerAccountRemoved'),
