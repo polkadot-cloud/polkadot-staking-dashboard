@@ -7,11 +7,20 @@ import { usePrompt } from 'contexts/Prompt';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { RemoveProps } from './types';
+import { ellipsisFn } from '@polkadot-cloud/utils';
+import { NotificationsController } from 'static/NotificationsController';
 
 export const Remove = ({ address, getHandler, removeHandler }: RemoveProps) => {
   const { t } = useTranslation('modals');
   const { setStatus } = usePrompt();
   const { forgetOtherAccounts } = useOtherAccounts();
+
+  const removeAccountCallback = () => {
+    NotificationsController.emit({
+      title: t('ledgerAccountRemoved'),
+      subtitle: t('ledgerRemovedAccount', { account: ellipsisFn(address) }),
+    });
+  };
 
   return (
     <ConfirmWrapper>
@@ -25,7 +34,7 @@ export const Remove = ({ address, getHandler, removeHandler }: RemoveProps) => {
           onClick={() => {
             const account = getHandler(address);
             if (account) {
-              removeHandler(address);
+              removeHandler(address, removeAccountCallback);
               forgetOtherAccounts([account]);
               setStatus(0);
             }

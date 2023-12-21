@@ -14,7 +14,7 @@ import { AddressesWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import { useLedgerAccounts } from 'contexts/Hardware/Ledger/LedgerAccounts';
+import { useLedgerAccounts } from '@polkadot-cloud/react/hooks';
 
 export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {
   const { t } = useTranslation('modals');

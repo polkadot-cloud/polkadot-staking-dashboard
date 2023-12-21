@@ -7,6 +7,7 @@ import {
   ExtensionsProvider,
   ExtensionAccountsProvider,
   OverlayProvider,
+  LedgerAccountsProvider,
 } from '@polkadot-cloud/react/providers';
 import { ExtrinsicsProvider } from 'contexts/Extrinsics';
 import { FastUnstakeProvider } from 'contexts/FastUnstake';
@@ -48,7 +49,6 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { DappName } from 'consts';
 import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts';
 import { PoolPerformanceProvider } from 'contexts/Pools/PoolPerformance';
-import { LedgerAccountsProvider } from 'contexts/Hardware/Ledger/LedgerAccounts';
 import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts';
 
 // Embed providers from hook.
@@ -69,7 +69,7 @@ export const Providers = () => {
       ExtensionAccountsProvider,
       { dappName: DappName, network, ss58, activeAccount, setActiveAccount },
     ],
-    LedgerAccountsProvider,
+    [LedgerAccountsProvider, { network }],
     ExternalAccountsProvider,
     OtherAccountsProvider,
     ImportedAccountsProvider,
