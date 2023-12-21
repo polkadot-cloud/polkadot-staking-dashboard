@@ -2,10 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type {
-  LedgerAccountsContextInterface,
-  LedgerHardwareContextInterface,
-} from './types';
+import type { LedgerHardwareContextInterface } from './types';
 
 export const TotalAllowedStatusCodes = 50;
 
@@ -35,13 +32,4 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
     new Promise((resolve) => resolve()),
   handleResetLedgerTask: () => {},
   runtimesInconsistent: false,
-};
-
-export const defaultLedgerAccountsContext: LedgerAccountsContextInterface = {
-  ledgerAccountExists: (a) => false,
-  addLedgerAccount: (a, i) => null,
-  removeLedgerAccount: (a, n) => {},
-  renameLedgerAccount: (a, n) => {},
-  getLedgerAccount: (a) => null,
-  ledgerAccounts: [],
 };

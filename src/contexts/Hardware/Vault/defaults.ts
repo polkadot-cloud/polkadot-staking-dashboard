@@ -5,10 +5,10 @@
 import type { VaultAccountsContextInterface } from './types';
 
 export const defaultVaultAccountsContext: VaultAccountsContextInterface = {
-  vaultAccountExists: (a) => false,
-  addVaultAccount: (a, i) => null,
-  removeVaultAccount: (a) => {},
-  renameVaultAccount: (a, n) => {},
-  getVaultAccount: (a) => null,
+  vaultAccountExists: (address) => false,
+  addVaultAccount: (address, index, callback) => null,
+  removeVaultAccount: (address, callback) => {},
+  renameVaultAccount: (address, newName) => {},
+  getVaultAccount: (address) => null,
   vaultAccounts: [],
 };
