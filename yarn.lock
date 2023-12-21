@@ -6833,7 +6833,7 @@ __metadata:
     react-router-dom: "npm:^6.21.0"
     react-scroll: "npm:^1.9.0"
     sass: "npm:^1.69.5"
-    styled-components: "npm:^6.1.0"
+    styled-components: "npm:^6.1.2"
     typescript: "npm:^5.3.3"
     vite: "npm:^5.0.10"
     vite-bundle-visualizer: "npm:^1.0.0"
@@ -8073,9 +8073,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"styled-components@npm:^6.1.0":
-  version: 6.1.1
-  resolution: "styled-components@npm:6.1.1"
+"styled-components@npm:^6.1.2":
+  version: 6.1.2
+  resolution: "styled-components@npm:6.1.2"
   dependencies:
     "@emotion/is-prop-valid": "npm:^1.2.1"
     "@emotion/unitless": "npm:^0.8.0"
@@ -8089,7 +8089,7 @@ __metadata:
   peerDependencies:
     react: ">= 16.8.0"
     react-dom: ">= 16.8.0"
-  checksum: de8fe762fed9ad75b09db0ec7235623ba18e8812bf6fc133c259f933b0bebb658ca94a7e6b1ce1a7a165c44aaaa0c5a5f24965b8fadb52551fa47c1112e52f85
+  checksum: 61b08fb7431a1323e92a6f55f8eaae852228ac3b2241bf9cab37ef4c6fa604585e51d22a13a2a792a11b70a976d5ea7503eb3e2285313282d5297b84083740ce
   languageName: node
   linkType: hard
 
