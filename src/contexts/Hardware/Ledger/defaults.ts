@@ -4,8 +4,6 @@
 
 import type { LedgerHardwareContextInterface } from './types';
 
-export const TotalAllowedStatusCodes = 50;
-
 export const defaultFeedback = {
   message: null,
   helpKey: null,
