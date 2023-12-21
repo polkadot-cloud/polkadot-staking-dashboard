@@ -37,6 +37,6 @@ export interface ConfirmProps {
 
 export interface RemoveProps {
   address: string;
-  getHandler: AnyFunction;
+  getHandler: (address: string) => ImportedAccount | null;
   removeHandler: (address: string, callback?: () => void) => void;
 }
