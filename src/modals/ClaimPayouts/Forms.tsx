@@ -10,6 +10,7 @@ import {
 } from '@polkadot-cloud/react';
 import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import type { ForwardedRef } from 'react';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -29,7 +30,10 @@ import type { FormProps, ActivePayout } from './types';
 import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef(
-  ({ setSection, payouts, setPayouts }: FormProps, ref: any) => {
+  (
+    { setSection, payouts, setPayouts }: FormProps,
+    ref: ForwardedRef<HTMLDivElement>
+  ) => {
     const { t } = useTranslation('modals');
     const { api } = useApi();
     const {

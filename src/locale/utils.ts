@@ -14,14 +14,14 @@ import { availableLanguages, fallbackResources, lngNamespaces } from '.';
 export const getInitialLanguage = () => {
   // get language from url if present
   const urlLng = extractUrlValue('l');
-  if (availableLanguages.find((n: any) => n[0] === urlLng) && urlLng) {
+  if (availableLanguages.find((n) => n[0] === urlLng) && urlLng) {
     localStorage.setItem('lng', urlLng);
     return urlLng;
   }
 
   // fall back to localStorage if present.
   const localLng = localStorage.getItem('lng');
-  if (availableLanguages.find((n: any) => n[0] === localLng) && localLng) {
+  if (availableLanguages.find((n) => n[0] === localLng) && localLng) {
     return localLng;
   }
 

@@ -10,6 +10,7 @@ import {
 } from '@polkadot-cloud/react';
 import { planckToUnit, rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import type { ForwardedRef } from 'react';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -27,9 +28,13 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ContentWrapper } from './Wrappers';
+import type { FormsProps } from './types';
 
 export const Forms = forwardRef(
-  ({ setSection, unlock, task, incrementCalculateHeight }: any, ref: any) => {
+  (
+    { setSection, unlock, task, incrementCalculateHeight }: FormsProps,
+    ref: ForwardedRef<HTMLDivElement>
+  ) => {
     const { t } = useTranslation('modals');
     const { api, consts } = useApi();
     const {

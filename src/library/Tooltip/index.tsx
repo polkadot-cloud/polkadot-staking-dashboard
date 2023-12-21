@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { RefObject } from 'react';
 import { useEffect, useRef } from 'react';
 import { useTooltip } from 'contexts/Tooltip';
 import { Wrapper } from './Wrapper';
@@ -17,7 +18,7 @@ export const Tooltip = () => {
   } = useTooltip();
 
   // Ref for the tooltip element itself.
-  const tooltipRef: any = useRef(null);
+  const tooltipRef: RefObject<HTMLDivElement> = useRef(null);
 
   useEffect(() => {
     if (open === 1) {
@@ -30,7 +31,7 @@ export const Tooltip = () => {
     };
   }, [open]);
 
-  const mouseMoveCallback = (e: any) => {
+  const mouseMoveCallback = (e: MouseEvent) => {
     const { target, pageX, pageY } = e;
 
     if (tooltipRef?.current) {
@@ -38,14 +39,17 @@ export const Tooltip = () => {
       if (!show) showTooltip();
     }
 
-    const isTriggerElement = target?.classList.contains(
-      'tooltip-trigger-element'
-    );
-    const dataAttribute = target?.getAttribute('data-tooltip-text') ?? false;
-    if (!isTriggerElement) {
-      closeTooltip();
-    } else if (dataAttribute !== text) {
-      closeTooltip();
+    if (target instanceof HTMLElement) {
+      const isTriggerElement = target?.classList.contains(
+        'tooltip-trigger-element'
+      );
+
+      const dataAttribute = target?.getAttribute('data-tooltip-text') ?? false;
+      if (!isTriggerElement) {
+        closeTooltip();
+      } else if (dataAttribute !== text) {
+        closeTooltip();
+      }
     }
   };
 

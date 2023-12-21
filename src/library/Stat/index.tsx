@@ -17,6 +17,7 @@ import { useNetwork } from 'contexts/Network';
 import { Wrapper } from './Wrapper';
 import type { StatAddress, StatProps } from './types';
 import { NotificationsController } from 'static/NotificationsController';
+import type { AnyJson } from 'types';
 
 export const Stat = ({
   label,
@@ -120,7 +121,7 @@ export const Stat = ({
           {display}
           {buttons ? (
             <span ref={subjectRef}>
-              {buttons.map((btn: any, index: number) => (
+              {buttons.map((btn: AnyJson, index: number) => (
                 <React.Fragment key={`stat_${index}`}>
                   <Button
                     key={`btn_${index}_${Math.random()}`}

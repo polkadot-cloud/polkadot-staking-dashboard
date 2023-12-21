@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 import { useMenu } from 'contexts/Menu';
 import { useOutsideAlerter } from 'library/Hooks';
 import { ItemWrapper, Wrapper } from './Wrappers';
+import type { AnyJson } from 'types';
 
 export const Menu = () => {
   const menu = useMenu();
@@ -50,7 +51,7 @@ export const Menu = () => {
           opacity: menu.show === 1 ? 1 : 0,
         }}
       >
-        {menu.items.map((item: any, i: number) => {
+        {menu.items.map((item: AnyJson, i: number) => {
           const { icon, title, cb } = item;
 
           return (

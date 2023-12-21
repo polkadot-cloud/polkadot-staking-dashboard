@@ -11,6 +11,7 @@ import {
 } from '@polkadot-cloud/react';
 import { greaterThanZero, planckToUnit, rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -23,7 +24,11 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
-export const ClaimCommission = ({ setSection }: any) => {
+export const ClaimCommission = ({
+  setSection,
+}: {
+  setSection: Dispatch<SetStateAction<number>>;
+}) => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
   const {

@@ -8,6 +8,7 @@ import {
   ModalPadding,
   ModalWarnings,
 } from '@polkadot-cloud/react';
+import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -20,7 +21,13 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
-export const SetPoolState = ({ setSection, task }: any) => {
+export const SetPoolState = ({
+  setSection,
+  task,
+}: {
+  setSection: Dispatch<SetStateAction<number>>;
+  task: string;
+}) => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
   const { setModalStatus } = useOverlay().modal;

@@ -7,6 +7,7 @@ import {
   ModalPadding,
   ModalWarnings,
 } from '@polkadot-cloud/react';
+import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -21,7 +22,13 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { ClaimPermission } from 'contexts/Pools/PoolMemberships/types';
 
-export const SetClaimPermission = ({ setSection, section }: any) => {
+export const SetClaimPermission = ({
+  setSection,
+  section,
+}: {
+  section: number;
+  setSection: Dispatch<SetStateAction<number>>;
+}) => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
   const { activeAccount } = useActiveAccounts();
