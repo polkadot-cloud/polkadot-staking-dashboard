@@ -32,7 +32,7 @@ export interface ConfirmProps {
     address: string,
     index: number,
     callback?: () => void
-  ) => ImportedAccount;
+  ) => ImportedAccount | null;
 }
 
 export interface RemoveProps {

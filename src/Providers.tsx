@@ -69,7 +69,7 @@ export const Providers = () => {
       ExtensionAccountsProvider,
       { dappName: DappName, network, ss58, activeAccount, setActiveAccount },
     ],
-    LedgerAccountsProvider,
+    [LedgerAccountsProvider, { network }],
     ExternalAccountsProvider,
     OtherAccountsProvider,
     ImportedAccountsProvider,
