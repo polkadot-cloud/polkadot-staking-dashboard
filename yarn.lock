@@ -1042,6 +1042,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@polkadot-cloud/core@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@polkadot-cloud/core@npm:1.1.1"
+  checksum: 529a9103cc0e78ece57c4d65b7f36578801873ce6a399f00c4466d785d9a85e159f9b42960f9464103d7cf5170b6bf8b2e1d75a1ae8fdefaf6e68d00c0df5ea9
+  languageName: node
+  linkType: hard
+
 "@polkadot-cloud/react@npm:^0.2.1":
   version: 0.2.1
   resolution: "@polkadot-cloud/react@npm:0.2.1"
@@ -6770,7 +6777,7 @@ __metadata:
     "@ledgerhq/hw-transport-webhid": "npm:^6.28.1"
     "@ledgerhq/logs": "npm:^6.12.0"
     "@polkadot-cloud/assets": "npm:^0.2.1"
-    "@polkadot-cloud/core": "npm:^1.1.0"
+    "@polkadot-cloud/core": "npm:^1.1.1"
     "@polkadot-cloud/react": "npm:^0.2.1"
     "@polkadot-cloud/utils": "npm:^0.1.1"
     "@polkadot/api": "npm:^10.11.2"
