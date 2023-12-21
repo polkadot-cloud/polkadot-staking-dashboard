@@ -4,8 +4,12 @@
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import type BigNumber from 'bignumber.js';
 import { MaxEraRewardPointsEras } from 'consts';
+import type { AnyJson } from 'types';
 
-export const getIdentityDisplay = (_identity: any, _superIdentity: any) => {
+export const getIdentityDisplay = (
+  _identity: AnyJson,
+  _superIdentity: AnyJson
+) => {
   let displayFinal = '';
   let foundSuper = false;
 

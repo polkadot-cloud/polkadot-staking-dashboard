@@ -30,6 +30,8 @@ import { FavoritesPrompt } from 'canvas/ManageNominations/Prompts/FavoritesPromp
 import { usePrompt } from 'contexts/Prompt';
 import { useFetchMehods } from './useFetchMethods';
 import type { AddNominationsType, GenerateNominationsProps } from './types';
+import type { AnyFunction } from '@polkadot-cloud/react/types';
+import type { AnyJson } from 'types';
 
 export const GenerateNominations = ({
   setters = [],
@@ -51,7 +53,7 @@ export const GenerateNominations = ({
     available: availableToNominate,
   } = useFetchMehods();
   const { maxNominations } = consts;
-  const defaultNominationsCount = defaultNominations.nominations.length || 0;
+  const defaultNominationsCount = defaultNominations.nominations?.length || 0;
 
   // store the method of fetching validators
   const [method, setMethod] = useState<string | null>(
@@ -87,8 +89,8 @@ export const GenerateNominations = ({
   useEffect(() => {
     if (
       !isReady ||
-      !validators.length ||
-      !stakers.length ||
+      !validators?.length ||
+      !stakers?.length ||
       validatorsFetched !== 'synced'
     )
       return;
@@ -140,7 +142,7 @@ export const GenerateNominations = ({
   };
 
   // callback function for adding nominations.
-  const cbAddNominations = ({ setSelectActive }: any) => {
+  const cbAddNominations = ({ setSelectActive }: AnyFunction) => {
     setSelectActive(false);
 
     const updateList = (newNominations: Validator[]) => {
@@ -166,9 +168,16 @@ export const GenerateNominations = ({
     selected,
     resetSelected,
     setSelectActive,
-  }: any) => {
+  }: {
+    selected: AnyJson;
+    resetSelected: AnyFunction;
+    setSelectActive: AnyFunction;
+  }) => {
     const newNominations = [...nominations].filter(
-      (n: any) => !selected.map((_s: any) => _s.address).includes(n.address)
+      (n) =>
+        !selected
+          .map(({ address }: { address: string }) => address)
+          .includes(n.address)
     );
     setNominations([...newNominations]);
     updateSetters([...newNominations]);
@@ -177,10 +186,10 @@ export const GenerateNominations = ({
   };
 
   const disabledMaxNominations = () =>
-    maxNominations.isLessThanOrEqualTo(nominations.length);
+    maxNominations.isLessThanOrEqualTo(nominations?.length);
   const disabledAddFavorites = () =>
     !favoritesList?.length ||
-    maxNominations.isLessThanOrEqualTo(nominations.length);
+    maxNominations.isLessThanOrEqualTo(nominations?.length);
 
   // accumulate generation methods
   const methods = [
@@ -316,7 +325,7 @@ export const GenerateNominations = ({
                 </h4>
               </Subheading>
               <SelectItems layout="three-col">
-                {methods.map((m: any, n: number) => (
+                {methods.map((m, n: number) => (
                   <SelectItem
                     key={`gen_method_${n}`}
                     title={m.title}

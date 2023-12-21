@@ -13,8 +13,9 @@ import { useNavigate } from 'react-router-dom';
 import { Title } from 'library/Prompt/Title';
 import { usePrompt } from 'contexts/Prompt';
 import { usePlugins } from 'contexts/Plugins';
+import type { TipProps } from './types';
 
-export const Tip = ({ title, description, page }: any) => {
+export const Tip = ({ title, description, page }: TipProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { togglePlugin } = usePlugins();
@@ -50,7 +51,7 @@ export const Tip = ({ title, description, page }: any) => {
     <>
       <Title title={title} />
       <div className="body">
-        {description.map((item: any, index: number) => (
+        {description.map((item, index: number) => (
           <h4 key={`inner_def_${index}`} className="definition">
             {item}
           </h4>

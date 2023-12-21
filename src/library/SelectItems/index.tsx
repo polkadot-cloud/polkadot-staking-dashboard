@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { MutableRefObject } from 'react';
+import type { MutableRefObject, ReactElement, ReactNode } from 'react';
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import type { AnyJson } from 'types';
 import { SelectItemsWrapper, TwoThreshold } from './Wrapper';
@@ -80,14 +80,19 @@ export const SelectItems = ({ layout, children }: SelectItemsProps) => {
   return (
     <SelectItemsWrapper className={layout}>
       {children
-        ? children.map((child: any, i: number) => (
-            <React.Fragment key={`select_${i}`}>
-              {React.cloneElement(child, {
-                bodyRef: bodyRefs[i],
-                containerRef: containerRefs[i],
-              })}
-            </React.Fragment>
-          ))
+        ? children.map((child: ReactNode, i: number) => {
+            if (child !== undefined) {
+              return (
+                <React.Fragment key={`select_${i}`}>
+                  {React.cloneElement(child as ReactElement, {
+                    bodyRef: bodyRefs[i],
+                    containerRef: containerRefs[i],
+                  })}
+                </React.Fragment>
+              );
+            }
+            return null;
+          })
         : null}
     </SelectItemsWrapper>
   );

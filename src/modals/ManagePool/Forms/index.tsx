@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { Dispatch, SetStateAction } from 'react';
+import type { ForwardedRef } from 'react';
 import { forwardRef } from 'react';
 import { ContentWrapper } from '../Wrappers';
 import { ClaimCommission } from './ClaimCommission';
@@ -11,21 +11,12 @@ import { SetClaimPermission } from './SetClaimPermission';
 import { RenamePool } from './RenamePool';
 import { SetPoolState } from './SetPoolState';
 import { PoolCommissionProvider } from './ManageCommission/provider';
+import type { FormsProps } from './types';
 
 export const Forms = forwardRef(
   (
-    {
-      setSection,
-      task,
-      section,
-      incrementCalculateHeight,
-    }: {
-      setSection: Dispatch<SetStateAction<number>>;
-      task?: string;
-      section: number;
-      incrementCalculateHeight: () => void;
-    },
-    ref: any
+    { setSection, task, section, incrementCalculateHeight }: FormsProps,
+    ref: ForwardedRef<HTMLDivElement>
   ) => (
     <PoolCommissionProvider>
       <ContentWrapper>
