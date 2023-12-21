@@ -37,7 +37,7 @@ import { NotificationsController } from 'static/NotificationsController';
 
 export const RouterInner = () => {
   const { t } = useTranslation();
-  const { mode } = useTheme();
+  const mode = useTheme();
   const { network } = useNetwork();
   const { pathname } = useLocation();
   const { accounts } = useImportedAccounts();
