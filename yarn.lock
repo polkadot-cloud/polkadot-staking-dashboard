@@ -1021,13 +1021,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot-cloud/assets@npm:0.2.0":
-  version: 0.2.0
-  resolution: "@polkadot-cloud/assets@npm:0.2.0"
-  checksum: 16e5c8c17b32bc30ba8d2e5f4015e7a40762b45e93e6682477bc194ca7b18ca5b7a859c399f6082c61b33977c99456a50c72a12d174d1a99e7dd5cdd4f2e9b90
-  languageName: node
-  linkType: hard
-
 "@polkadot-cloud/assets@npm:^0.2.1":
   version: 0.2.1
   resolution: "@polkadot-cloud/assets@npm:0.2.1"
@@ -1035,10 +1028,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot-cloud/core@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@polkadot-cloud/core@npm:1.1.0"
-  checksum: dbb3f436856af1287dcfbd85e8df8d9f6bc2599e83b71c12d2f3f49ee6ff4f9074c6f82d55f32864199d9b9be980a30767ec311d677553cd1475b7c2e1a1cad3
+"@polkadot-cloud/assets@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "@polkadot-cloud/assets@npm:0.3.0"
+  checksum: 776a402e626db6058db2d97fc4d5b20a4e8575b57bdcaef76f7cc49631f4e7ba2566bed3dd56fa287a4e4518929b6c207fca2966a261bb8decd7ad7c90e4029a
   languageName: node
   linkType: hard
 
@@ -1049,9 +1042,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot-cloud/react@npm:^0.2.1":
-  version: 0.2.1
-  resolution: "@polkadot-cloud/react@npm:0.2.1"
+"@polkadot-cloud/core@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "@polkadot-cloud/core@npm:1.2.0"
+  checksum: cb10590e9edd606e5a00591e07d507b01c5ac549cd5bf5c3ed3de16441e23c40570d9136b5437d6a80ed1e87abcc0cd79f7bd4fdd4b6e0bc7d0d9ff89162c694
+  languageName: node
+  linkType: hard
+
+"@polkadot-cloud/react@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "@polkadot-cloud/react@npm:0.3.0"
   dependencies:
     "@chainsafe/metamask-polkadot-adapter": "npm:^0.6.0"
     "@chainsafe/metamask-polkadot-types": "npm:^0.6.0"
@@ -1060,9 +1060,9 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": "npm:^6.5.1"
     "@fortawesome/free-solid-svg-icons": "npm:^6.5.1"
     "@fortawesome/react-fontawesome": "npm:^0.2.0"
-    "@polkadot-cloud/assets": "npm:0.2.0"
-    "@polkadot-cloud/core": "npm:^1.1.0"
-    "@polkadot-cloud/utils": "npm:^0.1.0"
+    "@polkadot-cloud/assets": "npm:^0.2.1"
+    "@polkadot-cloud/core": "npm:^1.1.1"
+    "@polkadot-cloud/utils": "npm:^0.1.1"
     "@polkadot/keyring": "npm:^12.6.2"
     "@polkadot/util": "npm:^12.6.2"
     "@polkadot/util-crypto": "npm:^12.6.2"
@@ -1071,21 +1071,7 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: cb226dc6b388ddd379cadb5a3ff869577637f480c46ee9f048b5ec08efb2baa13955d676d4d44d38befbb54ec97e344867a639c0dd51c98ed6dd5f92f6380658
-  languageName: node
-  linkType: hard
-
-"@polkadot-cloud/utils@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@polkadot-cloud/utils@npm:0.1.0"
-  dependencies:
-    "@polkadot/keyring": "npm:^12.6.1"
-    "@polkadot/util": "npm:^12.5.1"
-    bignumber.js: "npm:^9.1.1"
-  peerDependencies:
-    "@polkadot/keyring": ^12.6.1
-    "@polkadot/util": ^12.5.1
-  checksum: 178bea969ecb3f70781cdbdd45488e40276c180cff2cf54e55312d8cd0884a4549f0946ab82d257db4ff0acf6d8eaf8a49d7afb709cbaffba727d5ae0a0cd6d4
+  checksum: 39c13a5fd9298fdb4ce98e9d113d0e24fbf7f4bd9d4bed682f3e708e27e7ff0e6e3471acfc2ecf203d385da9f02ec6ca29b2c1b4e8e6177038bd14a0d53a4d6f
   languageName: node
   linkType: hard
 
@@ -1100,6 +1086,20 @@ __metadata:
     "@polkadot/keyring": ^12.6.2
     "@polkadot/util": ^12.6.2
   checksum: 7afdaff56505c638a3c5e40c56156aa46f5077fda1dc26b25c134366402666b058be6ad174217ebaa0309cb6359d5f77ba366697dc76346a5e7c75e0c1919326
+  languageName: node
+  linkType: hard
+
+"@polkadot-cloud/utils@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "@polkadot-cloud/utils@npm:0.2.0"
+  dependencies:
+    "@polkadot/keyring": "npm:^12.6.2"
+    "@polkadot/util": "npm:^12.6.2"
+    bignumber.js: "npm:^9.1.1"
+  peerDependencies:
+    "@polkadot/keyring": ^12.6.2
+    "@polkadot/util": ^12.6.2
+  checksum: 58b6b94ea0faef514a148b449df64db1843a9a1c0fa04581a69437d08c7dba83d9b3d3a22ccd9aa61618362acb13e89bdc7ddbbc05a30bdfece5689676f98f0b
   languageName: node
   linkType: hard
 
@@ -1603,7 +1603,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot/util@npm:12.6.1, @polkadot/util@npm:^12.5.1, @polkadot/util@npm:^12.6.1":
+"@polkadot/util@npm:12.6.1, @polkadot/util@npm:^12.6.1":
   version: 12.6.1
   resolution: "@polkadot/util@npm:12.6.1"
   dependencies:
@@ -6806,10 +6806,10 @@ __metadata:
     "@fortawesome/react-fontawesome": "npm:^0.2.0"
     "@ledgerhq/hw-transport-webhid": "npm:^6.28.1"
     "@ledgerhq/logs": "npm:^6.12.0"
-    "@polkadot-cloud/assets": "npm:^0.2.1"
-    "@polkadot-cloud/core": "npm:^1.1.1"
-    "@polkadot-cloud/react": "npm:^0.2.1"
-    "@polkadot-cloud/utils": "npm:^0.1.1"
+    "@polkadot-cloud/assets": "npm:^0.3.0"
+    "@polkadot-cloud/core": "npm:^1.2.0"
+    "@polkadot-cloud/react": "npm:^0.3.0"
+    "@polkadot-cloud/utils": "npm:^0.2.0"
     "@polkadot/api": "npm:^10.11.2"
     "@polkadot/keyring": "npm:^12.6.2"
     "@polkadot/rpc-provider": "npm:^10.11.2"
