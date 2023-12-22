@@ -85,6 +85,4 @@ Documenting some of the development patterns used:
 
 ## TypeScript Support
 
-The majority of components have types. Type additions are welcome for data that makes sense to type (e.g. data that is unlikely to change as we continue development).
-
-Strict mode is used in development, so types are always required for objects.
+Strict mode is used in development and full type coverage is required.
