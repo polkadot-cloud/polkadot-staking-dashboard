@@ -1,5 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 
+import type { ValidatorSupportedChains } from '@polkadot-cloud/assets/types';
 import type { Dispatch, SetStateAction } from 'react';
 
 export interface ItemProps {
@@ -14,7 +15,9 @@ export interface Item {
   twitter?: string;
   website?: string;
   thumbnail: string;
-  validators: Record<string, string>;
+  validators: Partial<{
+    [K in ValidatorSupportedChains]: string[];
+  }>;
 }
 
 export interface CommunitySectionsContextInterface {

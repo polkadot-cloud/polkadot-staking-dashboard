@@ -7,7 +7,7 @@ export interface NotificationInterface {
 }
 
 export interface NotificationItem extends NotificationText {
-  index?: number;
+  index: number;
 }
 
 export interface NotificationText {

@@ -37,7 +37,7 @@ export interface BondFeedbackProps {
   syncing?: boolean;
   setters: AnyFunction;
   bondFor: BondFor;
-  defaultBond: number | null;
+  defaultBond: string | null;
   inSetup?: boolean;
   joiningPool?: boolean;
   listenIsValid: { (valid: boolean, errors: string[]): void } | { (): void };

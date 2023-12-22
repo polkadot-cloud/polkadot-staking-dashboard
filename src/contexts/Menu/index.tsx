@@ -4,12 +4,12 @@
 import type { RefObject } from 'react';
 import React, { useState } from 'react';
 import { defaultMenuContext } from './defaults';
-import type { MenuContextInterface } from './types';
+import type { MenuContextInterface, MenuItem } from './types';
 
 export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
-  const [open, setOpen] = useState(0);
-  const [show, setShow] = useState(0);
-  const [items, setItems] = useState<React.ReactNode[]>([]);
+  const [open, setOpen] = useState<number>(0);
+  const [show, setShow] = useState<number>(0);
+  const [items, setItems] = useState<MenuItem[]>([]);
 
   const [position, setPosition] = useState<[number, number]>([0, 0]);
 
@@ -63,7 +63,7 @@ export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
     setShow(1);
   };
 
-  const setMenuItems = (_items: React.ReactNode[]) => {
+  const setMenuItems = (_items: MenuItem[]) => {
     setItems(_items);
   };
 

@@ -3,7 +3,10 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 // import { useNotifications } from 'contexts/Notifications';
-import type { NotificationInterface } from 'static/NotificationsController/types';
+import type {
+  NotificationInterface,
+  NotificationItem,
+} from 'static/NotificationsController/types';
 import { Wrapper } from './Wrapper';
 import { useEffect, useRef, useState } from 'react';
 import { setStateWithRef } from '@polkadot-cloud/utils';
@@ -18,13 +21,11 @@ export const Notifications = () => {
   const notificationsRef = useRef(notifications);
 
   // Adds a notification to the list of notifications.
-  const handleAddNotification = (detail: any) => {
-    const { index, ...rest } = detail;
-
+  const handleAddNotification = (detail: NotificationItem) => {
     const newNotifications: NotificationInterface[] = [
       ...notificationsRef.current,
-      { index, item: rest },
     ];
+    newNotifications.push({ index: detail.index, item: detail });
     setStateWithRef(newNotifications, setNotifications, notificationsRef);
   };
 

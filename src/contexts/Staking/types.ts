@@ -75,7 +75,7 @@ export interface StakingContextInterface {
   addressDifferentToStash: (a: MaybeAddress) => boolean;
   isBonding: () => boolean;
   isNominating: () => boolean;
-  inSetup: () => any;
+  inSetup: () => boolean;
   getLowestRewardFromStaker: (a: MaybeAddress) => LowestReward;
   staking: StakingMetrics;
   eraStakers: EraStakers;
