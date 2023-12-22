@@ -3,9 +3,10 @@
 
 import styled from 'styled-components';
 
-export const Wrapper = styled.button`
+export const Wrapper = styled.div`
   border: 1px solid var(--border-primary-color);
   transition: transform var(--transition-duration) ease-out;
+  cursor: default;
   font-size: 1.05rem;
   border-radius: 1.25rem;
   box-shadow: none;
