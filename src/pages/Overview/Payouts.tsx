@@ -22,7 +22,7 @@ export const Payouts = () => {
 
   const ref = React.useRef<HTMLDivElement>(null);
 
-  const size = useSize(ref.current);
+  const size = useSize(ref?.current || undefined);
   const { width, height, minHeight } = formatSize(size, 260);
 
   return (

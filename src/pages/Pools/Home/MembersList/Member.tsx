@@ -137,7 +137,6 @@ export const Member = ({
         <Separator />
         <div className="row bottom">
           <PoolMemberBonded
-            who={who}
             meta={meta}
             batchKey={batchKey}
             batchIndex={batchIndex}

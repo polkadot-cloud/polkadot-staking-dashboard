@@ -71,7 +71,7 @@ export const ClaimPermissionInput = ({
           opacity: enabled && !disabled ? 1 : 'var(--opacity-disabled)',
         }}
       >
-        {claimPermissionConfig.map(({ label, value }: any, i) => (
+        {claimPermissionConfig.map(({ label, value }, i) => (
           <TabWrapper
             key={`pools_tab_filter_${i}`}
             $active={value === selected && enabled}

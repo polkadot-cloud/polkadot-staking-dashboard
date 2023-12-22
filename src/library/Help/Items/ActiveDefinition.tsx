@@ -11,7 +11,7 @@ export const ActiveDefinition = ({
   return (
     <DefinitionWrapper>
       <div>
-        {description.map((item: any, index: number) => (
+        {description.map((item, index: number) => (
           <h4 key={`inner_def_${index}`} className="definition">
             {item}
           </h4>

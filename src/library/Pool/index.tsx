@@ -33,6 +33,7 @@ import { PoolId } from '../ListItem/Labels/PoolId';
 import type { PoolProps } from './types';
 import { Rewards } from './Rewards';
 import { NotificationsController } from 'static/NotificationsController';
+import type { MenuItem } from 'contexts/Menu/types';
 
 export const Pool = ({ pool }: PoolProps) => {
   const { t } = useTranslation('library');
@@ -46,7 +47,7 @@ export const Pool = ({ pool }: PoolProps) => {
   const { activeAccount } = useActiveAccounts();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getCurrentCommission } = usePoolCommission();
-  const { setMenuPosition, setMenuItems, open }: any = useMenu();
+  const { setMenuPosition, setMenuItems, open } = useMenu();
 
   const currentCommission = getCurrentCommission(id);
 
@@ -73,13 +74,12 @@ export const Pool = ({ pool }: PoolProps) => {
           subtitle: addresses.stash,
         };
 
-  // consruct pool menu items
-  const menuItems: any[] = [];
+  // Consruct pool menu items.
+  const menuItems: MenuItem[] = [];
 
   // add view pool nominations button to menu
   menuItems.push({
     icon: <FontAwesomeIcon icon={faProjectDiagram} transform="shrink-3" />,
-    wrap: null,
     title: `${t('viewPoolNominations')}`,
     cb: () => {
       openModal({
@@ -95,7 +95,6 @@ export const Pool = ({ pool }: PoolProps) => {
   // add copy pool address button to menu
   menuItems.push({
     icon: <FontAwesomeIcon icon={faCopy} transform="shrink-3" />,
-    wrap: null,
     title: t('copyPoolAddress'),
     cb: () => {
       navigator.clipboard.writeText(addresses.stash);

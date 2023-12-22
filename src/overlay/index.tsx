@@ -9,7 +9,7 @@ import { AccountPoolRoles } from '../modals/AccountPoolRoles';
 import { Accounts } from '../modals/Accounts';
 import { Bio } from '../modals/Bio';
 import { Bond } from '../modals/Bond';
-import { ChangeNominations } from '../modals/ChangeNominations';
+import { StopNominations } from '../modals/StopNominations';
 import { ChangePoolRoles } from '../modals/ChangePoolRoles';
 import { ChooseLanguage } from '../modals/ChooseLanguage';
 import { ClaimReward } from '../modals/ClaimReward';
@@ -45,7 +45,7 @@ export const Overlays = () => {
         Bio,
         AccountPoolRoles,
         Bond,
-        ChangeNominations,
+        StopNominations,
         ChangePoolRoles,
         ChooseLanguage,
         ClaimPayouts,

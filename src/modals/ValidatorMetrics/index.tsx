@@ -54,7 +54,7 @@ export const ValidatorMetrics = () => {
   const [list, setList] = useState([]);
 
   const ref = useRef<HTMLDivElement>(null);
-  const size = useSize(ref.current);
+  const size = useSize(ref?.current || undefined);
   const { width, height, minHeight } = formatSize(size, 300);
 
   const handleEraPoints = async () => {

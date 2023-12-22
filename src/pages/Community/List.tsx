@@ -8,13 +8,14 @@ import { useNetwork } from 'contexts/Network';
 import { Item } from './Item';
 import { ItemsWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
+import type { ValidatorEntry } from '@polkadot-cloud/assets/types';
 
 export const List = () => {
   const { network } = useNetwork();
   const { validatorCommunity } = useValidators();
   const { scrollPos } = useCommunitySections();
 
-  const [entityItems, setEntityItems] = useState(
+  const [entityItems, setEntityItems] = useState<ValidatorEntry[]>(
     validatorCommunity.filter((v) => v.validators[network] !== undefined)
   );
 

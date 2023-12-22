@@ -183,7 +183,6 @@ export const Help = () => {
               {activeDefinitions.map((item, index: number) => (
                 <Definition
                   key={`def_${index}`}
-                  onClick={() => {}}
                   title={item.title}
                   description={item.description}
                 />
