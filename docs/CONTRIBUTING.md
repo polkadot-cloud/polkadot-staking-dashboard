@@ -16,11 +16,10 @@ Some example PR titles:
 
 - `feat: implement help overlay`
 - `feat(auth): implement login API`
-- `fix(button): resolve issue with button alignment`
-- `docs(readme): add installation section`
-- `chore(tests): refactor user tests`
+- `fix: resolve issue with button alignment`
+- `fix(docs): fix installation section to README`
 
-The `(scope)` could be anything specifying the place of the commit change. For example, api, app, cli, etc.
+The `chore` type will not be added to release change logs, and should be used for silent updates.
 
 If you would like to know more about the Conventional Commits specification, please visit the [Conventional Commits website](https://www.conventionalcommits.org/).
 
