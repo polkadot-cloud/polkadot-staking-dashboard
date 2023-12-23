@@ -56,7 +56,9 @@ export const TransferOptionsProvider = ({
 
   // Get the bond and unbond amounts available to the user
   const getTransferOptions = (address: MaybeAddress): TransferOptions => {
-    if (getAccount(address) === null) return defaultTransferOptions;
+    if (getAccount(address) === null) {
+      return defaultTransferOptions;
+    }
 
     const { free, frozen } = getBalance(address);
     const { active, total, unlocking } = getStashLedger(address);
@@ -141,7 +143,9 @@ export const TransferOptionsProvider = ({
 
   // Updates account's reserve amount in state and in local storage.
   const setFeeReserveBalance = (amount: BigNumber) => {
-    if (!activeAccount) return;
+    if (!activeAccount) {
+      return;
+    }
     setLocalFeeReserve(activeAccount, amount, network);
     setFeeReserve(amount);
   };

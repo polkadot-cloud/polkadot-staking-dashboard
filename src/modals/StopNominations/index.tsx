@@ -20,7 +20,7 @@ import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
-export const ChangeNominations = () => {
+export const StopNominations = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
   const { activeAccount } = useActiveAccounts();
@@ -34,7 +34,7 @@ export const ChangeNominations = () => {
   } = useOverlay().modal;
   const { poolNominations, isNominator, isOwner, selectedActivePool } =
     useActivePools();
-  const { nominations: newNominations, provider, bondFor } = options;
+  const { bondFor } = options;
 
   const isPool = bondFor === 'pool';
   const isStaking = bondFor === 'nominator';
@@ -43,10 +43,8 @@ export const ChangeNominations = () => {
 
   const nominations =
     isPool === true
-      ? poolNominations.targets
+      ? poolNominations?.targets || []
       : getAccountNominations(activeAccount);
-  const removing = nominations.length - newNominations.length;
-  const remaining = newNominations.length;
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
@@ -62,10 +60,6 @@ export const ChangeNominations = () => {
     isValid = (isNominator() || isOwner()) ?? false;
   }
 
-  useEffect(() => setModalResize(), [notEnoughFunds]);
-
-  useEffect(() => setValid(isValid), [isValid]);
-
   // tx to submit
   const getTx = () => {
     let tx = null;
@@ -73,32 +67,11 @@ export const ChangeNominations = () => {
       return tx;
     }
 
-    // targets submission differs between staking and pools
-    const targetsToSubmit = newNominations.map((item: any) =>
-      isPool
-        ? item
-        : {
-            Id: item,
-          }
-    );
-
     if (isPool) {
-      // if nominations remain, call nominate
-      if (remaining !== 0) {
-        tx = api.tx.nominationPools.nominate(
-          selectedActivePool?.id || 0,
-          targetsToSubmit
-        );
-      } else {
-        // wishing to stop all nominations, call chill
-        tx = api.tx.nominationPools.chill(selectedActivePool?.id || 0);
-      }
+      // wishing to stop all nominations, call chill
+      tx = api.tx.nominationPools.chill(selectedActivePool?.id || 0);
     } else if (isStaking) {
-      if (remaining !== 0) {
-        tx = api.tx.staking.nominate(targetsToSubmit);
-      } else {
-        tx = api.tx.staking.chill();
-      }
+      tx = api.tx.staking.chill();
     }
     return tx;
   };
@@ -109,14 +82,7 @@ export const ChangeNominations = () => {
     shouldSubmit: valid,
     callbackSubmit: () => {
       setModalStatus('closing');
-
-      // if removing a subset of nominations, reset selected list
-      if (provider) {
-        provider.setSelectActive(false);
-        provider.resetSelected();
-      }
     },
-    callbackInBlock: () => {},
   });
 
   const warnings = getSignerWarnings(
@@ -129,15 +95,16 @@ export const ChangeNominations = () => {
     warnings.push(`${t('noNominationsSet')}`);
   }
 
+  useEffect(() => setModalResize(), [notEnoughFunds]);
+
+  useEffect(() => setValid(isValid), [isValid]);
+
   return (
     <>
       <Close />
       <ModalPadding>
         <h2 className="title unbounded">
-          {t('stop')}{' '}
-          {!remaining
-            ? t('allNominations')
-            : `${t('nomination', { count: removing })}`}
+          {t('stop')} {t('allNominations')}
         </h2>
         <ModalSeparator />
         {warnings.length ? (

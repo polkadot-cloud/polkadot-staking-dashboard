@@ -12,32 +12,30 @@ export const StyledSlider = ({
   min,
   max,
   classNaame,
-}: StyledSliderProps) => {
-  return (
-    <Wrapper className={classNaame}>
-      <Slider
-        min={min}
-        max={max}
-        value={value}
-        step={step}
-        onChange={(val) => onChange(val)}
-        activeDotStyle={{
+}: StyledSliderProps) => (
+  <Wrapper className={classNaame}>
+    <Slider
+      min={min}
+      max={max}
+      value={value}
+      step={step}
+      onChange={(val) => onChange(val)}
+      activeDotStyle={{
+        backgroundColor: 'var(--background-primary)',
+      }}
+      styles={{
+        track: {
+          backgroundColor: 'var(--accent-color-primary)',
+        },
+        rail: {
+          backgroundColor: 'var(--button-secondary-background)',
+        },
+        handle: {
           backgroundColor: 'var(--background-primary)',
-        }}
-        styles={{
-          track: {
-            backgroundColor: 'var(--accent-color-primary)',
-          },
-          rail: {
-            backgroundColor: 'var(--button-secondary-background)',
-          },
-          handle: {
-            backgroundColor: 'var(--background-primary)',
-            borderColor: 'var(--accent-color-primary)',
-            opacity: 1,
-          },
-        }}
-      />
-    </Wrapper>
-  );
-};
+          borderColor: 'var(--accent-color-primary)',
+          opacity: 1,
+        },
+      }}
+    />
+  </Wrapper>
+);

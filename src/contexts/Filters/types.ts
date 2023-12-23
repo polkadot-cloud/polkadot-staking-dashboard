@@ -26,10 +26,19 @@ export interface FiltersContextInterface {
 }
 
 export type FilterItems = FilterItem[];
-export type FilterItem = { key: string; filters: string[] };
+export interface FilterItem {
+  key: string;
+  filters: string[];
+}
 
 export type FilterOrders = FilterOrder[];
-export type FilterOrder = { key: string; order: string };
+export interface FilterOrder {
+  key: string;
+  order: string;
+}
 
 export type FilterSearches = FilterSearch[];
-export type FilterSearch = { key: string; searchTerm: string };
+export interface FilterSearch {
+  key: string;
+  searchTerm: string;
+}

@@ -141,30 +141,24 @@ export const HomeInner = () => {
       )}
       {activeTab === 1 && <Members />}
       {activeTab === 2 && (
-        <>
-          <PageRow>
-            <CardWrapper>
-              <PoolListProvider>
-                <PoolList
-                  pools={bondedPools}
-                  defaultFilters={{
-                    includes: ['active'],
-                    excludes: ['locked', 'destroying'],
-                  }}
-                  allowMoreCols
-                  allowSearch
-                  pagination
-                />
-              </PoolListProvider>
-            </CardWrapper>
-          </PageRow>
-        </>
+        <PageRow>
+          <CardWrapper>
+            <PoolListProvider>
+              <PoolList
+                pools={bondedPools}
+                defaultFilters={{
+                  includes: ['active'],
+                  excludes: ['locked', 'destroying'],
+                }}
+                allowMoreCols
+                allowSearch
+                pagination
+              />
+            </PoolListProvider>
+          </CardWrapper>
+        </PageRow>
       )}
-      {activeTab === 3 && (
-        <>
-          <PoolFavorites />
-        </>
-      )}
+      {activeTab === 3 && <PoolFavorites />}
     </>
   );
 };

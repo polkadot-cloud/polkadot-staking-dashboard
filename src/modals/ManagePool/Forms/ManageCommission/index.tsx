@@ -10,6 +10,7 @@ import {
   ModalWarnings,
 } from '@polkadot-cloud/react';
 import BigNumber from 'bignumber.js';
+import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -33,7 +34,10 @@ import { ChangeRate } from './ChangeRate';
 export const ManageCommission = ({
   setSection,
   incrementCalculateHeight,
-}: any) => {
+}: {
+  setSection: Dispatch<SetStateAction<number>>;
+  incrementCalculateHeight: () => void;
+}) => {
   const { t } = useTranslation('modals');
   const { openHelp } = useHelp();
   const { api } = useApi();

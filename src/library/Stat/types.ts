@@ -8,7 +8,7 @@ export interface StatProps {
   label: string;
   stat: AnyJson;
   type?: string;
-  buttons?: any;
+  buttons?: AnyJson[];
   helpKey: string;
   icon?: IconProp;
   buttonType?: string;

@@ -15,7 +15,6 @@ import { useApi } from 'contexts/Api';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { usePrompt } from 'contexts/Prompt';
 import { useHelp } from 'contexts/Help';
-import { useNotifications } from 'contexts/Notifications';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBonded } from 'contexts/Bonded';
@@ -28,6 +27,7 @@ import type {
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { RevertPrompt } from './Prompts/RevertPrompt';
 import { CanvasSubmitTxFooter, ManageNominationsWrapper } from './Wrappers';
+import { NotificationsController } from 'static/NotificationsController';
 
 export const ManageNominations = () => {
   const { t } = useTranslation('library');
@@ -40,7 +40,6 @@ export const ManageNominations = () => {
   const { consts, api } = useApi();
   const { getBondedAccount } = useBonded();
   const { activeAccount } = useActiveAccounts();
-  const { addNotification } = useNotifications();
   const { selectedActivePool } = useActivePools();
   const { openPromptWith, closePrompt } = usePrompt();
   const { updatePoolNominations } = useBondedPools();
@@ -77,7 +76,7 @@ export const ManageNominations = () => {
       nominations: defaultNominations.nominations,
       reset: defaultNominations.reset + 1,
     });
-    addNotification({
+    NotificationsController.emit({
       title: t('nominationsReverted'),
       subtitle: t('revertedToActiveSelection'),
     });
@@ -85,16 +84,12 @@ export const ManageNominations = () => {
   };
 
   // Check if default nominations match new ones.
-  const nominationsMatch = () => {
-    return (
-      newNominations.nominations.every((n) =>
-        defaultNominations.nominations.find((d) => d.address === n.address)
-      ) &&
-      newNominations.nominations.length > 0 &&
-      newNominations.nominations.length ===
-        defaultNominations.nominations.length
-    );
-  };
+  const nominationsMatch = () =>
+    newNominations.nominations.every((n) =>
+      defaultNominations.nominations.find((d) => d.address === n.address)
+    ) &&
+    newNominations.nominations.length > 0 &&
+    newNominations.nominations.length === defaultNominations.nominations.length;
 
   // Tx to submit.
   const getTx = () => {
@@ -133,11 +128,12 @@ export const ManageNominations = () => {
     callbackInBlock: () => {
       if (isPool) {
         // Upate bonded pool targets if updating pool nominations.
-        if (selectedActivePool?.id)
+        if (selectedActivePool?.id) {
           updatePoolNominations(
             selectedActivePool.id,
             newNominations.nominations.map((n) => n.address)
           );
+        }
       }
     },
   });

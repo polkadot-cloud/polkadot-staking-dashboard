@@ -67,18 +67,16 @@ export const PoolBonded = ({ pool }: { pool: Pool }) => {
   );
 
   return (
-    <>
-      <ValidatorStatusWrapper $status={nominationStatus} $noMargin>
-        <h5>
-          {nominationStatus === null || !eraStakers.stakers.length
-            ? `${t('syncing')}...`
-            : targets.length
-              ? capitalizeFirstLetter(t(`${nominationStatus}`) ?? '')
-              : t('notNominating')}
-          {' / '}
-          {t('bonded')}: {poolBonded.decimalPlaces(3).toFormat()} {unit}
-        </h5>
-      </ValidatorStatusWrapper>
-    </>
+    <ValidatorStatusWrapper $status={nominationStatus} $noMargin>
+      <h5>
+        {nominationStatus === null || !eraStakers.stakers.length
+          ? `${t('syncing')}...`
+          : targets.length
+            ? capitalizeFirstLetter(t(`${nominationStatus}`) ?? '')
+            : t('notNominating')}
+        {' / '}
+        {t('bonded')}: {poolBonded.decimalPlaces(3).toFormat()} {unit}
+      </h5>
+    </ValidatorStatusWrapper>
   );
 };

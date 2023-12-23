@@ -150,8 +150,12 @@ export const AccountInput = ({
   };
 
   const className = [];
-  if (inactive) className.push('inactive');
-  if (border) className.push('border');
+  if (inactive) {
+    className.push('inactive');
+  }
+  if (border) {
+    className.push('border');
+  }
 
   return (
     <AccountInputWrapper
@@ -190,24 +194,18 @@ export const AccountInput = ({
         </section>
         <section>
           {successLock ? (
-            <>
-              <ButtonSecondary onClick={() => resetInput()} text={t('reset')} />
-            </>
+            <ButtonSecondary onClick={() => resetInput()} text={t('reset')} />
+          ) : !reformatted ? (
+            <ButtonSecondary
+              onClick={() => handleImport()}
+              text={submitting ? t('importing') : t('import')}
+              disabled={valid !== 'valid' || submitting}
+            />
           ) : (
-            <>
-              {!reformatted ? (
-                <ButtonSecondary
-                  onClick={() => handleImport()}
-                  text={submitting ? t('importing') : t('import')}
-                  disabled={valid !== 'valid' || submitting}
-                />
-              ) : (
-                <ButtonSecondary
-                  onClick={() => handleConfirm()}
-                  text={t('confirm')}
-                />
-              )}
-            </>
+            <ButtonSecondary
+              onClick={() => handleConfirm()}
+              text={t('confirm')}
+            />
           )}
         </section>
       </div>

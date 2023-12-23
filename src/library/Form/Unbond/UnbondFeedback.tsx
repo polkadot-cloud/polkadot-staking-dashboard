@@ -20,7 +20,7 @@ export const UnbondFeedback = ({
   bondFor,
   inSetup = false,
   setters = [],
-  listenIsValid = () => {},
+  listenIsValid,
   defaultBond,
   setLocalResize,
   parentErrors = [],
@@ -71,7 +71,9 @@ export const UnbondFeedback = ({
 
   // if resize is present, handle on error change
   useEffect(() => {
-    if (setLocalResize) setLocalResize();
+    if (setLocalResize) {
+      setLocalResize();
+    }
   }, [errors]);
 
   // add this component's setBond to setters
@@ -140,7 +142,9 @@ export const UnbondFeedback = ({
       newErrors.push(err);
     }
 
-    listenIsValid(!newErrors.length && bond.bond !== '', newErrors);
+    if (listenIsValid && typeof listenIsValid === 'function') {
+      listenIsValid(!newErrors.length && bond.bond !== '', newErrors);
+    }
     setErrors(newErrors);
   };
 

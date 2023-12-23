@@ -22,9 +22,9 @@ import type {
   StakingMetrics,
   StakingTargets,
 } from 'contexts/Staking/types';
-import type { AnyApi, AnyJson, MaybeAddress } from 'types';
+import type { AnyApi, MaybeAddress } from 'types';
 import Worker from 'workers/stakers?worker';
-import type { ResponseInitialiseExposures } from 'workers/types';
+import type { ProcessExposuresResponse } from 'workers/types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -43,6 +43,7 @@ import {
   getLocalEraExposures,
   formatRawExposures,
 } from './Utils';
+import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
 
 const worker = new Worker();
 
@@ -103,7 +104,7 @@ export const StakingProvider = ({
 
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
-      const { data }: { data: ResponseInitialiseExposures } = message;
+      const { data }: { data: ProcessExposuresResponse } = message;
       const { task, networkName, era } = data;
 
       // ensure task matches, & era is still the same.
@@ -111,8 +112,9 @@ export const StakingProvider = ({
         task !== 'processExposures' ||
         networkName !== network ||
         era !== activeEra.index.toString()
-      )
+      ) {
         return;
+      }
 
       const {
         stakers,
@@ -204,7 +206,9 @@ export const StakingProvider = ({
 
   // Fetches erasStakers exposures for an era, and saves to `localStorage`.
   const fetchEraStakers = async (era: string) => {
-    if (!isReady || activeEra.index.isZero() || !api) return [];
+    if (!isReady || activeEra.index.isZero() || !api) {
+      return [];
+    }
 
     let exposures: Exposure[] = [];
     const localExposures = getLocalEraExposures(
@@ -220,15 +224,18 @@ export const StakingProvider = ({
     }
 
     // For resource limitation concerns, only store the current era in local storage.
-    if (era === activeEra.index.toString())
+    if (era === activeEra.index.toString()) {
       setLocalEraExposures(network, era, exposures);
+    }
 
     return exposures;
   };
 
   // Fetches the active nominator set and metadata around it.
   const fetchActiveEraStakers = async () => {
-    if (!isReady || activeEra.index.isZero() || !api) return;
+    if (!isReady || activeEra.index.isZero() || !api) {
+      return;
+    }
 
     // flag eraStakers is recyncing
     setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
@@ -248,7 +255,7 @@ export const StakingProvider = ({
   };
 
   // Sets an account's stored target validators.
-  const setTargets = (value: StakingTargets) => {
+  const setTargets = (value: StakingTargets): void => {
     localStorage.setItem(`${activeAccount}_targets`, JSON.stringify(value));
     setTargetsState(value);
   };
@@ -256,9 +263,9 @@ export const StakingProvider = ({
   // Gets the nomination statuses of passed in nominations.
   const getNominationsStatusFromTargets = (
     who: MaybeAddress,
-    fromTargets: AnyJson[]
+    fromTargets: string[]
   ) => {
-    const statuses: Record<string, string> = {};
+    const statuses: Record<string, NominationStatus> = {};
 
     if (!fromTargets.length) {
       return statuses;
@@ -274,7 +281,7 @@ export const StakingProvider = ({
         continue;
       }
 
-      if (!(staker.others ?? []).find((o: any) => o.who === who)) {
+      if (!(staker.others ?? []).find((o) => o.who === who)) {
         statuses[target] = 'inactive';
         continue;
       }
@@ -352,7 +359,9 @@ export const StakingProvider = ({
   // If paged rewards are active for the era, fetch eras stakers from the new storage items,
   // otherwise use the old storage items.
   const getPagedErasStakers = async (era: string) => {
-    if (!api) return [];
+    if (!api) {
+      return [];
+    }
 
     if (isPagedRewardsActive(new BigNumber(era))) {
       const overview: AnyApi =
@@ -382,7 +391,9 @@ export const StakingProvider = ({
         const others = pagedResult.reduce(
           (prev: ExposureOther[], [, v]: AnyApi) => {
             const o = v.toHuman()?.others || [];
-            if (!o.length) return prev;
+            if (!o.length) {
+              return prev;
+            }
             return prev.concat(o);
           },
           []
@@ -431,7 +442,9 @@ export const StakingProvider = ({
 
   // handle syncing with eraStakers
   useEffectIgnoreInitial(() => {
-    if (isReady) fetchActiveEraStakers();
+    if (isReady) {
+      fetchActiveEraStakers();
+    }
   }, [isReady, activeEra.index, activeAccount]);
 
   useEffectIgnoreInitial(() => {

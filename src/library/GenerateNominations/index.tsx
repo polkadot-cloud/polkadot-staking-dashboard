@@ -30,6 +30,8 @@ import { FavoritesPrompt } from 'canvas/ManageNominations/Prompts/FavoritesPromp
 import { usePrompt } from 'contexts/Prompt';
 import { useFetchMehods } from './useFetchMethods';
 import type { AddNominationsType, GenerateNominationsProps } from './types';
+import type { AnyFunction } from '@polkadot-cloud/react/types';
+import type { AnyJson } from 'types';
 
 export const GenerateNominations = ({
   setters = [],
@@ -78,8 +80,10 @@ export const GenerateNominations = ({
       nominations !== defaultNominations.nominations &&
       defaultNominationsCount > 0
     ) {
-      setNominations([...(defaultNominations?.nominations || [])]);
-      if (defaultNominationsCount) setMethod('manual');
+      setNominations([...(defaultNominations.nominations || [])]);
+      if (defaultNominationsCount) {
+        setMethod('manual');
+      }
     }
   }, [activeAccount, defaultNominations]);
 
@@ -87,13 +91,16 @@ export const GenerateNominations = ({
   useEffect(() => {
     if (
       !isReady ||
-      !validators.length ||
-      !stakers.length ||
+      !validators?.length ||
+      !stakers?.length ||
       validatorsFetched !== 'synced'
-    )
+    ) {
       return;
+    }
 
-    if (fetching) fetchNominationsForMethod();
+    if (fetching) {
+      fetchNominationsForMethod();
+    }
   });
 
   // reset fixed height on window size change
@@ -140,7 +147,7 @@ export const GenerateNominations = ({
   };
 
   // callback function for adding nominations.
-  const cbAddNominations = ({ setSelectActive }: any) => {
+  const cbAddNominations = ({ setSelectActive }: AnyFunction) => {
     setSelectActive(false);
 
     const updateList = (newNominations: Validator[]) => {
@@ -166,9 +173,16 @@ export const GenerateNominations = ({
     selected,
     resetSelected,
     setSelectActive,
-  }: any) => {
+  }: {
+    selected: AnyJson;
+    resetSelected: AnyFunction;
+    setSelectActive: AnyFunction;
+  }) => {
     const newNominations = [...nominations].filter(
-      (n: any) => !selected.map((_s: any) => _s.address).includes(n.address)
+      (n) =>
+        !selected
+          .map(({ address }: { address: string }) => address)
+          .includes(n.address)
     );
     setNominations([...newNominations]);
     updateSetters([...newNominations]);
@@ -177,10 +191,10 @@ export const GenerateNominations = ({
   };
 
   const disabledMaxNominations = () =>
-    maxNominations.isLessThanOrEqualTo(nominations.length);
+    maxNominations.isLessThanOrEqualTo(nominations?.length);
   const disabledAddFavorites = () =>
     !favoritesList?.length ||
-    maxNominations.isLessThanOrEqualTo(nominations.length);
+    maxNominations.isLessThanOrEqualTo(nominations?.length);
 
   // accumulate generation methods
   const methods = [
@@ -291,7 +305,7 @@ export const GenerateNominations = ({
               text={t('reGenerate')}
               onClick={() => {
                 // set a temporary height to prevent height snapping on re-renders.
-                setHeight(heightRef?.current?.clientHeight || null);
+                setHeight(heightRef.current?.clientHeight || null);
                 setTimeout(() => setHeight(null), 200);
                 setFetching(true);
               }}
@@ -316,7 +330,7 @@ export const GenerateNominations = ({
                 </h4>
               </Subheading>
               <SelectItems layout="three-col">
-                {methods.map((m: any, n: number) => (
+                {methods.map((m, n: number) => (
                   <SelectItem
                     key={`gen_method_${n}`}
                     title={m.title}
@@ -336,11 +350,10 @@ export const GenerateNominations = ({
           )}
         </div>
 
-        {fetching ? (
-          <></>
-        ) : (
-          <>
-            {isReady && method !== null && (
+        {fetching
+          ? null
+          : isReady &&
+            method !== null && (
               <div
                 ref={heightRef}
                 style={{
@@ -358,8 +371,6 @@ export const GenerateNominations = ({
                 />
               </div>
             )}
-          </>
-        )}
       </Wrapper>
     </>
   );

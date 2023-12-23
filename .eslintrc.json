@@ -8,8 +8,7 @@
     "plugin:import/recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "airbnb",
-    // "airbnb-typescript",
+    "plugin:@typescript-eslint/stylistic",
     "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
@@ -26,54 +25,27 @@
     "react",
     "@typescript-eslint",
     "prefer-arrow-functions",
-    "unused-imports"
+    "unused-imports",
+    "react-hooks"
   ],
   "rules": {
-    // NOTE: These rules are being reviewed and comments justifying their deactivation will be
-    // added.
-    "react/require-default-props": "off",
-    "jsx-a11y/control-has-associated-label": "off",
-    "react/no-access-state-in-setstate": "off",
-    "react/destructuring-assignment": "off",
-    "react/function-component-definition": "off",
-    "react/jsx-no-constructed-context-values": "off",
-    "react/no-array-index-key": "off",
-    "react/react-in-jsx-scope": "off",
-    "react/jsx-props-no-spreading": "off",
-    "react/jsx-no-useless-fragment": "off",
-    "react/static-property-placement": "off",
-    "no-unused-vars": "off",
-    "no-param-reassign": "off",
-    "no-restricted-syntax": "off",
-    "@typescript-eslint/no-empty-function": "off",
-    "no-use-before-define": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "no-promise-executor-return": "off",
-    "prefer-destructuring": "off",
-    "no-nested-ternary": "off",
-    // `continue` statements cut down on conditional nesting and improve readability where it is
-    // used in this project. Conditionals would further bloat the code.
-    "no-continue": "off",
-    // Unary operators are not impacting code as semi-colons are currently enforced.
-    "no-plusplus": "off",
-    // Default imports cause naming inconsistencies to imports when component names are changed.
-    "import/prefer-default-export": "off",
-
-    "unused-imports/no-unused-imports": "error",
-    "@typescript-eslint/consistent-type-imports": [
+    // Stylistic
+    // ---------
+    "curly": "error",
+    "arrow-body-style": ["error", "as-needed"],
+    "comma-dangle": [
       "error",
       {
-        "prefer": "type-imports",
-        "fixStyle": "separate-type-imports"
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "never"
       }
     ],
+    "object-shorthand": "error",
+    "unused-imports/no-unused-imports": "error",
     "semi": [2, "always"],
-    "react/jsx-filename-extension": [
-      "warn",
-      {
-        "extensions": [".tsx"]
-      }
-    ],
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -82,7 +54,6 @@
         "tsx": "never"
       }
     ],
-    "@typescript-eslint/no-shadow": ["error"],
     "prefer-arrow-functions/prefer-arrow-functions": [
       "warn",
       {
@@ -92,9 +63,33 @@
         "singleReturnOnly": false
       }
     ],
-    "react/prop-types": "off"
+    // React
+    // -----
+    // "@typescript-eslint/no-unnecessary-condition": "error", // in progress
+    "react/react-in-jsx-scope": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react/jsx-no-useless-fragment": "error",
+    "react/jsx-filename-extension": [
+      "warn",
+      {
+        "extensions": [".tsx"]
+      }
+    ],
+    // Typescript
+    // ----------
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports",
+        "fixStyle": "separate-type-imports"
+      }
+    ],
+    "@typescript-eslint/no-shadow": ["error"]
   },
   "settings": {
+    "react": {
+      "version": "detect"
+    },
     "import/resolver": {
       "typescript": {}
     }

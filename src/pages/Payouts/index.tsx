@@ -37,7 +37,7 @@ export const Payouts = ({ page }: PageProps) => {
   const { key } = page;
 
   const ref = useRef<HTMLDivElement>(null);
-  const size = useSize(ref.current);
+  const size = useSize(ref?.current || undefined);
   const { width, height, minHeight } = formatSize(size, 280);
 
   useEffect(() => {
@@ -75,7 +75,7 @@ export const Payouts = ({ page }: PageProps) => {
               )}
             </h2>
           </CardHeaderWrapper>
-          <div className="inner" ref={ref} style={{ minHeight }}>
+          <div ref={ref} className="inner" style={{ minHeight }}>
             {!plugins.includes('subscan') ? (
               <StatusLabel
                 status="active_service"
@@ -106,9 +106,7 @@ export const Payouts = ({ page }: PageProps) => {
           </div>
         </CardWrapper>
       </PageRow>
-      {!payoutsList?.length ? (
-        <></>
-      ) : (
+      {!!payoutsList?.length && (
         <PageRow>
           <CardWrapper>
             <PayoutList

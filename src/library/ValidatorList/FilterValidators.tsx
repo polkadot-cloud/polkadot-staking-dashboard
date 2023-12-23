@@ -22,7 +22,7 @@ export const FilterValidators = () => {
       <Title title={t('filterValidators')} />
       <div className="body">
         <h4>{t('include')}:</h4>
-        {Object.entries(includesToLabels).map(([f, l]: any, i) => (
+        {Object.entries(includesToLabels).map(([f, l], i) => (
           <FilterListButton
             $active={includes?.includes(f) ?? false}
             key={`validator_include_${i}`}
@@ -40,7 +40,7 @@ export const FilterValidators = () => {
         ))}
 
         <h4>{t('exclude')}:</h4>
-        {Object.entries(excludesToLabels).map(([f, l]: any, i) => (
+        {Object.entries(excludesToLabels).map(([f, l], i) => (
           <FilterListButton
             $active={excludes?.includes(f) ?? false}
             key={`validator_exclude_${i}`}

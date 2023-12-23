@@ -11,7 +11,6 @@ import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import type { PoolMember } from 'contexts/Pools/types';
 import { useTheme } from 'contexts/Themes';
 import {
   Header,
@@ -26,6 +25,7 @@ import type { Sync } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { Member } from './Member';
 import type { DefaultMembersListProps } from './types';
+import type { PoolMember } from 'contexts/Pools/PoolMembers/types';
 
 export const MembersListInner = ({
   allowMoreCols,
@@ -117,71 +117,61 @@ export const MembersListInner = ({
     }
   }, [renderIterationRef.current]);
 
-  return (
-    <>
-      {!members.length ? (
-        <></>
-      ) : (
-        <ListWrapper>
-          <Header>
-            <div />
-            <div>
-              <button type="button" onClick={() => setListFormat('row')}>
-                <FontAwesomeIcon
-                  icon={faBars}
-                  color={
-                    listFormat === 'row' ? colors.primary[mode] : 'inherit'
-                  }
+  return !members.length ? null : (
+    <ListWrapper>
+      <Header>
+        <div />
+        <div>
+          <button type="button" onClick={() => setListFormat('row')}>
+            <FontAwesomeIcon
+              icon={faBars}
+              color={listFormat === 'row' ? colors.primary[mode] : 'inherit'}
+            />
+          </button>
+          <button type="button" onClick={() => setListFormat('col')}>
+            <FontAwesomeIcon
+              icon={faGripVertical}
+              color={listFormat === 'col' ? colors.primary[mode] : 'inherit'}
+            />
+          </button>
+        </div>
+      </Header>
+      <List $flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
+        {listMembers.length > 0 && pagination && (
+          <Pagination page={page} total={totalPages} setter={setPage} />
+        )}
+        {fetched !== 'synced' ? (
+          <ListStatusHeader style={{ marginTop: '0.5rem' }}>
+            {t('pools.fetchingMemberList')}...
+          </ListStatusHeader>
+        ) : (
+          <MotionContainer>
+            {listMembers.map((member: PoolMember, index: number) => (
+              <motion.div
+                className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
+                key={`nomination_${index}`}
+                variants={{
+                  hidden: {
+                    y: 15,
+                    opacity: 0,
+                  },
+                  show: {
+                    y: 0,
+                    opacity: 1,
+                  },
+                }}
+              >
+                <Member
+                  who={member.who}
+                  batchKey={batchKey}
+                  batchIndex={membersDefault.indexOf(member)}
                 />
-              </button>
-              <button type="button" onClick={() => setListFormat('col')}>
-                <FontAwesomeIcon
-                  icon={faGripVertical}
-                  color={
-                    listFormat === 'col' ? colors.primary[mode] : 'inherit'
-                  }
-                />
-              </button>
-            </div>
-          </Header>
-          <List $flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
-            {listMembers.length > 0 && pagination && (
-              <Pagination page={page} total={totalPages} setter={setPage} />
-            )}
-            {fetched !== 'synced' ? (
-              <ListStatusHeader style={{ marginTop: '0.5rem' }}>
-                {t('pools.fetchingMemberList')}...
-              </ListStatusHeader>
-            ) : (
-              <MotionContainer>
-                {listMembers.map((member: PoolMember, index: number) => (
-                  <motion.div
-                    className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
-                    key={`nomination_${index}`}
-                    variants={{
-                      hidden: {
-                        y: 15,
-                        opacity: 0,
-                      },
-                      show: {
-                        y: 0,
-                        opacity: 1,
-                      },
-                    }}
-                  >
-                    <Member
-                      who={member.who}
-                      batchKey={batchKey}
-                      batchIndex={membersDefault.indexOf(member)}
-                    />
-                  </motion.div>
-                ))}
-              </MotionContainer>
-            )}
-          </List>
-        </ListWrapper>
-      )}
-    </>
+              </motion.div>
+            ))}
+          </MotionContainer>
+        )}
+      </List>
+    </ListWrapper>
   );
 };
 

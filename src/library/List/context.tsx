@@ -3,10 +3,11 @@
 
 import React, { useState } from 'react';
 import * as defaults from './defaults';
+import type { AnyJson } from 'types';
+import type { ListContextInterface, ListProviderProps } from './types';
 
-export const ListContext: React.Context<any> = React.createContext(
-  defaults.defaultContext
-);
+export const ListContext: React.Context<ListContextInterface> =
+  React.createContext(defaults.defaultContext);
 
 export const useList = () => React.useContext(ListContext);
 
@@ -14,23 +15,23 @@ export const ListProvider = ({
   selectToggleable = true,
   selectActive: initialSelctActive = false,
   children,
-}: any) => {
-  // store the currently selected validators from the list
-  const [selected, setSelected] = useState<any[]>([]);
+}: ListProviderProps) => {
+  // Store the currently selected validators from the list.
+  const [selected, setSelected] = useState<AnyJson[]>([]);
 
-  // store whether validator selection is active
-  const [selectActive, setSelectActiveState] = useState(
+  // Store whether validator selection is active.
+  const [selectActive, setSelectActiveState] = useState<boolean>(
     initialSelctActive ?? false
   );
 
-  // store the list format of the list
-  const [listFormat, _setListFormat] = useState('col');
+  // Store the list format of the list.
+  const [listFormat, _setListFormat] = useState<'col' | 'row'>('col');
 
-  const addToSelected = (_item: any) => {
+  const addToSelected = (_item: AnyJson) => {
     setSelected([...selected].concat(_item));
   };
 
-  const removeFromSelected = (items: any[]) => {
+  const removeFromSelected = (items: AnyJson[]) => {
     setSelected([...selected].filter((item) => !items.includes(item)));
   };
 
@@ -45,7 +46,7 @@ export const ListProvider = ({
     }
   };
 
-  const setListFormat = (v: string) => {
+  const setListFormat = (v: 'col' | 'row') => {
     _setListFormat(v);
   };
 

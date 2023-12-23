@@ -20,7 +20,9 @@ export const Item = ({
       duration: 0.3,
     }}
     onClick={() => {
-      if (onClick !== undefined) onClick();
+      if (onClick !== undefined) {
+        onClick();
+      }
     }}
     disabled={disabled}
   >

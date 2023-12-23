@@ -5,8 +5,8 @@ import { ActionItem } from '@polkadot-cloud/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import type { ClaimPermission } from 'contexts/Pools/types';
 import { TabWrapper, TabsWrapper } from 'library/Filter/Wrappers';
+import type { ClaimPermission } from 'contexts/Pools/PoolMemberships/types';
 
 export interface ClaimPermissionInputProps {
   current: ClaimPermission | undefined;
@@ -71,7 +71,7 @@ export const ClaimPermissionInput = ({
           opacity: enabled && !disabled ? 1 : 'var(--opacity-disabled)',
         }}
       >
-        {claimPermissionConfig.map(({ label, value }: any, i) => (
+        {claimPermissionConfig.map(({ label, value }, i) => (
           <TabWrapper
             key={`pools_tab_filter_${i}`}
             $active={value === selected && enabled}

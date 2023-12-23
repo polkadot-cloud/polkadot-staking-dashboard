@@ -7,12 +7,12 @@ import {
   ModalPadding,
   ModalWarnings,
 } from '@polkadot-cloud/react';
+import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import type { ClaimPermission } from 'contexts/Pools/types';
 import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
@@ -20,8 +20,15 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import type { ClaimPermission } from 'contexts/Pools/PoolMemberships/types';
 
-export const SetClaimPermission = ({ setSection, section }: any) => {
+export const SetClaimPermission = ({
+  setSection,
+  section,
+}: {
+  section: number;
+  setSection: Dispatch<SetStateAction<number>>;
+}) => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
   const { activeAccount } = useActiveAccounts();
@@ -65,7 +72,6 @@ export const SetClaimPermission = ({ setSection, section }: any) => {
     callbackSubmit: () => {
       setModalStatus('closing');
     },
-    callbackInBlock: () => {},
   });
 
   const warnings = getSignerWarnings(

@@ -4,11 +4,6 @@
 import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import type {
-  ActivePool,
-  ActivePoolsContextState,
-  PoolAddresses,
-} from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
@@ -22,6 +17,14 @@ import { usePoolMemberships } from '../PoolMemberships';
 import { usePoolsConfig } from '../PoolsConfig';
 import * as defaults from './defaults';
 import { usePoolMembers } from '../PoolMembers';
+import type { ActivePool, ActivePoolsContextState, PoolTargets } from './types';
+import type { PoolAddresses } from '../BondedPools/types';
+
+export const ActivePoolsContext = React.createContext<ActivePoolsContextState>(
+  defaults.defaultActivePoolContext
+);
+
+export const useActivePools = () => React.useContext(ActivePoolsContext);
 
 export const ActivePoolsProvider = ({
   children,
@@ -67,7 +70,7 @@ export const ActivePoolsProvider = ({
   const unsubNominations = useRef<AnyApi[]>([]);
 
   // Store account target validators.
-  const [targets, setTargetsState] = useState<Record<number, AnyJson>>({});
+  const [targets, setTargetsState] = useState<PoolTargets>({});
   const targetsRef = useRef(targets);
 
   // Store the member count of the selected pool.
@@ -165,9 +168,7 @@ export const ActivePoolsProvider = ({
           rewardPool = rewardPool?.unwrapOr(undefined)?.toHuman();
           if (rewardPool && bondedPool) {
             const rewardAccountBalance = balance?.free;
-
             const pendingRewards = await fetchPendingRewards();
-
             const pool = {
               id,
               addresses,
@@ -212,7 +213,7 @@ export const ActivePoolsProvider = ({
     };
 
     // initiate subscription, add to unsubs.
-    await Promise.all([subscribeActivePool(poolId)]).then((unsubs: any) => {
+    await Promise.all([subscribeActivePool(poolId)]).then((unsubs) => {
       unsubActivePools.current = unsubActivePools.current.concat(unsubs);
     });
   };
@@ -221,7 +222,9 @@ export const ActivePoolsProvider = ({
     poolId: number,
     poolBondAddress: string
   ) => {
-    if (!api) return;
+    if (!api) {
+      return;
+    }
     const subscribePoolNominations = async (bondedAddress: string) => {
       const unsub = await api.query.staking.nominators(
         bondedAddress,
@@ -269,7 +272,9 @@ export const ActivePoolsProvider = ({
     pendingRewards: BigNumber,
     poolId: number
   ) => {
-    if (!poolId) return;
+    if (!poolId) {
+      return;
+    }
 
     // update the active pool the account is a member of.
     setStateWithRef(
@@ -290,7 +295,7 @@ export const ActivePoolsProvider = ({
    * setTargets
    * Sets currently selected pool's target validators in storage.
    */
-  const setTargets = (newTargets: any) => {
+  const setTargets = (newTargets: AnyJson) => {
     if (!selectedPoolId) {
       return;
     }
@@ -417,9 +422,8 @@ export const ActivePoolsProvider = ({
    * getPoolRoles
    * Returns the active pool's roles or a default roles object.
    */
-  const getPoolRoles = () => {
-    return getSelectedActivePool()?.bondedPool?.roles || defaults.poolRoles;
-  };
+  const getPoolRoles = () =>
+    getSelectedActivePool()?.bondedPool?.roles || defaults.poolRoles;
 
   const getPoolUnlocking = () => {
     const membershipPoolId = membership?.poolId
@@ -511,7 +515,7 @@ export const ActivePoolsProvider = ({
     // If no plugin available, fetch all pool members from RPC and filter them to determine current
     // pool member count. NOTE: Expensive operation.
     setSelectedPoolMemberCount(
-      getMembersOfPoolFromNode(selectedActivePool?.id ?? 0).length
+      getMembersOfPoolFromNode(selectedActivePool?.id || 0)?.length || 0
     );
   };
 
@@ -555,9 +559,3 @@ export const ActivePoolsProvider = ({
     </ActivePoolsContext.Provider>
   );
 };
-
-export const ActivePoolsContext = React.createContext<ActivePoolsContextState>(
-  defaults.defaultActivePoolContext
-);
-
-export const useActivePools = () => React.useContext(ActivePoolsContext);

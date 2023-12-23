@@ -29,7 +29,7 @@ export const ValidatorMetrics = () => {
   } = useNetwork();
   const { options } = useOverlay().modal.config;
   const { address, identity } = options;
-  const { fetchEraPoints }: any = useSubscan();
+  const { fetchEraPoints } = useSubscan();
   const { activeEra } = useNetworkMetrics();
   const {
     eraStakers: { stakers },
@@ -54,11 +54,11 @@ export const ValidatorMetrics = () => {
   const [list, setList] = useState([]);
 
   const ref = useRef<HTMLDivElement>(null);
-  const size = useSize(ref.current);
+  const size = useSize(ref?.current || undefined);
   const { width, height, minHeight } = formatSize(size, 300);
 
   const handleEraPoints = async () => {
-    setList(await fetchEraPoints(address, activeEra.index));
+    setList(await fetchEraPoints(address, activeEra.index.toNumber()));
   };
 
   useEffect(() => {

@@ -19,7 +19,9 @@ export const TooltipProvider = ({
   const [position, setPosition] = useState<[number, number]>([0, 0]);
 
   const openTooltip = () => {
-    if (open) return;
+    if (open) {
+      return;
+    }
     setOpen(1);
   };
 
@@ -38,7 +40,9 @@ export const TooltipProvider = ({
   };
 
   const setTooltipTextAndOpen = (t: string) => {
-    if (open) return;
+    if (open) {
+      return;
+    }
     setText(t);
     openTooltip();
   };

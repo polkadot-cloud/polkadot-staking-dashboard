@@ -7,8 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMenu } from 'contexts/Menu';
-import { useNotifications } from 'contexts/Notifications';
-import type { NotificationText } from 'contexts/Notifications/types';
+import type { NotificationText } from 'static/NotificationsController/types';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useUi } from 'contexts/UI';
@@ -33,6 +32,8 @@ import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
 import type { PoolProps } from './types';
 import { Rewards } from './Rewards';
+import { NotificationsController } from 'static/NotificationsController';
+import type { MenuItem } from 'contexts/Menu/types';
 
 export const Pool = ({ pool }: PoolProps) => {
   const { t } = useTranslation('library');
@@ -44,10 +45,9 @@ export const Pool = ({ pool }: PoolProps) => {
   const { membership } = usePoolMemberships();
   const { poolsNominations } = useBondedPools();
   const { activeAccount } = useActiveAccounts();
-  const { addNotification } = useNotifications();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getCurrentCommission } = usePoolCommission();
-  const { setMenuPosition, setMenuItems, open }: any = useMenu();
+  const { setMenuPosition, setMenuItems, open } = useMenu();
 
   const currentCommission = getCurrentCommission(id);
 
@@ -74,13 +74,12 @@ export const Pool = ({ pool }: PoolProps) => {
           subtitle: addresses.stash,
         };
 
-  // consruct pool menu items
-  const menuItems: any[] = [];
+  // Consruct pool menu items.
+  const menuItems: MenuItem[] = [];
 
   // add view pool nominations button to menu
   menuItems.push({
     icon: <FontAwesomeIcon icon={faProjectDiagram} transform="shrink-3" />,
-    wrap: null,
     title: `${t('viewPoolNominations')}`,
     cb: () => {
       openModal({
@@ -96,12 +95,11 @@ export const Pool = ({ pool }: PoolProps) => {
   // add copy pool address button to menu
   menuItems.push({
     icon: <FontAwesomeIcon icon={faCopy} transform="shrink-3" />,
-    wrap: null,
     title: t('copyPoolAddress'),
     cb: () => {
       navigator.clipboard.writeText(addresses.stash);
       if (notificationCopyAddress) {
-        addNotification(notificationCopyAddress);
+        NotificationsController.emit(notificationCopyAddress);
       }
     },
   });

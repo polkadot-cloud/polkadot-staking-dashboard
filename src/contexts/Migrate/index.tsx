@@ -28,28 +28,32 @@ export const MigrateProvider = ({
 
   // Removes the previous nominator setup objects from local storage.
   const removeDeprecatedNominatorSetups = () =>
-    Object.values(NetworkList).forEach((n: any) => {
-      for (const a of accounts)
+    Object.values(NetworkList).forEach((n) => {
+      for (const a of accounts) {
         localStorage.removeItem(`${n.name}_stake_setup_${a.address}`);
+      }
     });
 
   // Removes the previous pool setup objects from local storage.
   const removeDeprecatedPoolSetups = () =>
-    Object.values(NetworkList).forEach((n: any) => {
-      for (const a of accounts)
+    Object.values(NetworkList).forEach((n) => {
+      for (const a of accounts) {
         localStorage.removeItem(`${n.name}_pool_setup_${a.address}`);
+      }
     });
 
   // Removes the previous active proxies from local storage.
   const removeDeprecatedActiveProxies = () =>
-    Object.values(NetworkList).forEach((n: any) => {
+    Object.values(NetworkList).forEach((n) => {
       localStorage.removeItem(`${n.name}_active_proxy`);
     });
 
   // Removes `system` added external accounts from local storage.
   const removeSystemExternalAccounts = () => {
     const current = localStorageOrDefault('external_accounts', [], true);
-    if (!current.length) return;
+    if (!current.length) {
+      return;
+    }
 
     const updated =
       (current as ExternalAccount[])?.filter((a) => a.addedBy !== 'system') ||
@@ -107,8 +111,8 @@ export const MigrateProvider = ({
   }, [isReady, isNetworkSyncing]);
 
   return (
-    <MigrateContext.Provider value={{}}>{children}</MigrateContext.Provider>
+    <MigrateContext.Provider value={null}>{children}</MigrateContext.Provider>
   );
 };
 
-export const MigrateContext = React.createContext<any>(null);
+export const MigrateContext = React.createContext<null>(null);

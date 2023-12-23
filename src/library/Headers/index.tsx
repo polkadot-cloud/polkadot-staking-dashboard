@@ -28,8 +28,11 @@ export const Headers = () => {
 
   // Keep syncing if on nominate page and still fetching payouts.
   const onNominateSyncing = () => {
-    if (pageFromUri(pathname, 'overview') === 'nominate')
-      if (payoutsSynced !== 'synced') return true;
+    if (pageFromUri(pathname, 'overview') === 'nominate') {
+      if (payoutsSynced !== 'synced') {
+        return true;
+      }
+    }
 
     return false;
   };
@@ -37,20 +40,25 @@ export const Headers = () => {
   // Keep syncing if on pools page and still fetching bonded pools or pool members. Ignore pool
   // member sync if Subscan is enabled.
   const onPoolsSyncing = () => {
-    if (pageFromUri(pathname, 'overview') === 'pools')
+    if (pageFromUri(pathname, 'overview') === 'pools') {
       if (
         !bondedPools.length ||
         (!poolMembersNode.length && !pluginEnabled('subscan'))
-      )
+      ) {
         return true;
+      }
+    }
 
     return false;
   };
 
   // Keep syncing if on validators page and still fetching.
   const onValidatorsSyncing = () => {
-    if (pageFromUri(pathname, 'overview') === 'validators')
-      if (!validators.length) return true;
+    if (pageFromUri(pathname, 'overview') === 'validators') {
+      if (!validators.length) {
+        return true;
+      }
+    }
 
     return false;
   };
@@ -62,22 +70,20 @@ export const Headers = () => {
     onPoolsSyncing();
 
   return (
-    <>
-      <Wrapper>
-        {/* side menu toggle: shows on small screens */}
-        <SideMenuToggle />
+    <Wrapper>
+      {/* side menu toggle: shows on small screens */}
+      <SideMenuToggle />
 
-        {/* spinner to show app syncing */}
-        {syncing || pending.length > 0 ? <Spinner /> : null}
+      {/* spinner to show app syncing */}
+      {syncing || pending.length > 0 ? <Spinner /> : null}
 
-        {/* connected accounts */}
-        <LargeScreensOnly>
-          <Connected />
-        </LargeScreensOnly>
+      {/* connected accounts */}
+      <LargeScreensOnly>
+        <Connected />
+      </LargeScreensOnly>
 
-        {/* connect button */}
-        <Connect />
-      </Wrapper>
-    </>
+      {/* connect button */}
+      <Connect />
+    </Wrapper>
   );
 };

@@ -6,6 +6,7 @@ import { Number } from './Number';
 import { Pie } from './Pie';
 import { Text } from './Text';
 import { StatBoxWrapper } from './Wrapper';
+import type { AnyJson } from '@polkadot-cloud/react/types';
 
 export const StatBox = ({ children }: { children: React.ReactNode }) => (
   <StatBoxWrapper
@@ -20,7 +21,13 @@ export const StatBox = ({ children }: { children: React.ReactNode }) => (
   </StatBoxWrapper>
 );
 
-export const StatBoxListItem = ({ format, params }: any) => {
+export const StatBoxListItem = ({
+  format,
+  params,
+}: {
+  format: string;
+  params: AnyJson;
+}) => {
   switch (format) {
     case 'chart-pie':
       return <Pie {...params} />;

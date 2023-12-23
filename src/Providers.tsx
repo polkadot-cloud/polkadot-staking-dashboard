@@ -7,6 +7,7 @@ import {
   ExtensionsProvider,
   ExtensionAccountsProvider,
   OverlayProvider,
+  LedgerAccountsProvider,
 } from '@polkadot-cloud/react/providers';
 import { ExtrinsicsProvider } from 'contexts/Extrinsics';
 import { FastUnstakeProvider } from 'contexts/FastUnstake';
@@ -18,7 +19,6 @@ import { IdentitiesProvider } from 'contexts/Identities';
 import { MenuProvider } from 'contexts/Menu';
 import { MigrateProvider } from 'contexts/Migrate';
 import { NetworkMetricsProvider } from 'contexts/NetworkMetrics';
-import { NotificationsProvider } from 'contexts/Notifications';
 import { PromptProvider } from 'contexts/Prompt';
 import { PluginsProvider } from 'contexts/Plugins';
 import { ActivePoolsProvider } from 'contexts/Pools/ActivePools';
@@ -50,7 +50,6 @@ import { DappName } from 'consts';
 import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts';
 import { PoolPerformanceProvider } from 'contexts/Pools/PoolPerformance';
 import { registerSaEvent } from 'Utils';
-import { LedgerAccountsProvider } from 'contexts/Hardware/Ledger/LedgerAccounts';
 import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts';
 
 // Embed providers from hook.
@@ -62,11 +61,8 @@ export const Providers = () => {
   const { activeAccount, setActiveAccount } = useActiveAccounts();
 
   // !! Provider order matters
-  const providers: Array<FC<AnyJson> | [FC<AnyJson>, AnyJson]> = [
+  const providers: (FC<AnyJson> | [FC<AnyJson>, AnyJson])[] = [
     [APIProvider, { network }],
-    FiltersProvider,
-    NotificationsProvider,
-    PluginsProvider,
     VaultAccountsProvider,
     LedgerHardwareProvider,
     ExtensionsProvider,
@@ -86,13 +82,14 @@ export const Providers = () => {
         },
       },
     ],
-    LedgerAccountsProvider,
+    [LedgerAccountsProvider, { network }],
     ExternalAccountsProvider,
     OtherAccountsProvider,
     ImportedAccountsProvider,
     ProxiesProvider,
     NetworkMetricsProvider,
     HelpProvider,
+    PluginsProvider,
     SubscanProvider,
     PolkawatchProvider,
     IdentitiesProvider,
@@ -119,7 +116,8 @@ export const Providers = () => {
     OverlayProvider,
     PromptProvider,
     MigrateProvider,
+    FiltersProvider,
   ];
 
-  return <>{withProviders(providers, ThemedRouter)}</>;
+  return withProviders(providers, ThemedRouter);
 };

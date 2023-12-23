@@ -13,6 +13,7 @@ import { QrScanSignature } from 'library/QRCode/ScanSignature';
 import { useNetwork } from 'contexts/Network';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { formatAccountSs58 } from 'contexts/Connect/Utils';
+import type { AnyJson } from 'types';
 
 export const Reader = () => {
   const { t } = useTranslation('modals');
@@ -26,7 +27,7 @@ export const Reader = () => {
     useVaultAccounts();
 
   // Store data from QR Code scanner.
-  const [qrData, setQrData] = useState<any>(undefined);
+  const [qrData, setQrData] = useState<AnyJson>(undefined);
 
   // Store QR data feedback.
   const [feedback, setFeedback] = useState<string>('');

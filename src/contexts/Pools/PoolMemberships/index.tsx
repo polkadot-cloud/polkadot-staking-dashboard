@@ -9,7 +9,7 @@ import type {
   ClaimPermissionConfig,
   PoolMembership,
   PoolMembershipsContextState,
-} from 'contexts/Pools/types';
+} from './types';
 import type { AnyApi, Fn } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
@@ -68,7 +68,9 @@ export const PoolMembershipsProvider = ({
 
   // subscribe to an account's pool membership
   const subscribeToPoolMembership = async (address: string) => {
-    if (!api) return undefined;
+    if (!api) {
+      return undefined;
+    }
 
     const unsub = await api.queryMulti<AnyApi>(
       [
@@ -89,6 +91,7 @@ export const PoolMembershipsProvider = ({
       if (membership) {
         // format pool's unlocking chunks
         const unbondingEras: AnyApi = membership.unbondingEras;
+
         const unlocking = [];
         for (const [e, v] of Object.entries(unbondingEras || {})) {
           unlocking.push({

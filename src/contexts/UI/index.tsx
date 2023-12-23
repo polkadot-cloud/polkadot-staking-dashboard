@@ -3,6 +3,7 @@
 
 import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import type { RefObject } from 'react';
 import React, { useEffect, useRef, useState } from 'react';
 import { SideMenuStickyThreshold } from 'consts';
 import { useBalances } from 'contexts/Balances';
@@ -41,8 +42,10 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const [isBraveBrowser, setIsBraveBrowser] = useState<boolean>(false);
 
   // Store referneces for main app conainers.
-  const [containerRefs, setContainerRefsState] = useState({});
-  const setContainerRefs = (v: any) => {
+  const [containerRefs, setContainerRefsState] = useState<
+    Record<string, RefObject<HTMLDivElement>>
+  >({});
+  const setContainerRefs = (v: Record<string, RefObject<HTMLDivElement>>) => {
     setContainerRefsState(v);
   };
 
@@ -137,7 +140,9 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     setIsPoolSyncing(poolSyncing);
 
     // eraStakers total active nominators has synced
-    if (!eraStakers.totalActiveNominators) syncing = true;
+    if (!eraStakers.totalActiveNominators) {
+      syncing = true;
+    }
 
     setIsSyncing(syncing);
   }, [isReady, staking, metrics, balances, eraStakers, activePoolsSynced]);

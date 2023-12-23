@@ -99,8 +99,8 @@ export const IdentitiesProvider = ({
         addr,
         (_identities) => {
           const identities = [];
-          for (let i = 0; i < _identities.length; i++) {
-            identities.push(_identities[i].toHuman());
+          for (const _identity of _identities) {
+            identities.push(_identity.toHuman());
           }
           const updated = Object.assign(identitiesMetaBatchesRef.current);
           updated[key].identities = identities;

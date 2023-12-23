@@ -6,7 +6,7 @@ import type { Exposure } from 'contexts/Staking/types';
 import type { ErasRewardPoints } from 'contexts/Validators/types';
 import type { AnyApi, AnyJson } from 'types';
 
-// eslint-disable-next-line no-restricted-globals
+// eslint-disable-next-line no-restricted-globals, @typescript-eslint/no-explicit-any
 export const ctx: Worker = self as any;
 
 // handle incoming message and route to correct handler.
@@ -52,7 +52,9 @@ const processErasStakersForNominationPoolRewards = async ({
     if (validator) {
       const rewardPoints: string =
         erasRewardPoints[era]?.individual?.[validator || ''] ?? 0;
-      if (!poolRewardData[address]) poolRewardData[address] = {};
+      if (!poolRewardData[address]) {
+        poolRewardData[address] = {};
+      }
       poolRewardData[address][era] = rewardPoints;
     }
   }

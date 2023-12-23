@@ -13,17 +13,18 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import type { NominatorProgress } from 'contexts/Setup/types';
 
 export const Bond = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const { activeAccount } = useActiveAccounts();
   const { txFees } = useTxMeta();
-  const { getSetupProgress, setActiveAccountSetup } = useSetup();
-  const setup = getSetupProgress('nominator', activeAccount);
+  const { getNominatorSetup, setActiveAccountSetup } = useSetup();
+  const setup = getNominatorSetup(activeAccount);
   const { progress } = setup;
 
   // either free to bond or existing setup value
-  const initialBondValue = progress.bond === '0' ? '0' : progress.bond;
+  const initialBondValue = progress.bond || '0';
 
   // store local bond amount for form control
   const [bond, setBond] = useState<{ bond: string }>({
@@ -31,10 +32,10 @@ export const Bond = ({ section }: SetupStepProps) => {
   });
 
   // bond valid
-  const [bondValid, setBondValid]: any = useState(false);
+  const [bondValid, setBondValid] = useState<boolean>(false);
 
   // handler for updating bond
-  const handleSetupUpdate = (value: any) => {
+  const handleSetupUpdate = (value: NominatorProgress) => {
     setActiveAccountSetup('nominator', value);
   };
 

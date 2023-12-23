@@ -46,4 +46,4 @@ export interface TimeleftProps {
 }
 
 export type TimeLeftRaw = TimeLeftRawItem[];
-export type TimeLeftRawItem = Array<number | string>;
+export type TimeLeftRawItem = (number | string)[];

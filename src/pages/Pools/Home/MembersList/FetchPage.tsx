@@ -10,7 +10,6 @@ import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { usePlugins } from 'contexts/Plugins';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import type { PoolMember } from 'contexts/Pools/types';
 import { useSubscan } from 'contexts/Plugins/Subscan';
 import { useTheme } from 'contexts/Themes';
 import {
@@ -26,6 +25,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Member } from './Member';
 import type { FetchpageMembersListProps } from './types';
+import type { PoolMember } from 'contexts/Pools/PoolMembers/types';
 
 export const MembersListInner = ({
   allowMoreCols,

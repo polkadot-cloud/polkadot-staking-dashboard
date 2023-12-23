@@ -22,7 +22,9 @@ export const formatAccountSs58 = (address: string, ss58: number) => {
     const keyring = new Keyring();
     keyring.setSS58Format(ss58);
     const formatted = keyring.addFromAddress(address).address;
-    if (formatted !== address) return formatted;
+    if (formatted !== address) {
+      return formatted;
+    }
 
     return null;
   } catch (e) {

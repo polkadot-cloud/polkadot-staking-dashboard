@@ -33,7 +33,7 @@ export const Roles = ({
   defaultRoles,
   setters = [],
   inline = false,
-  listenIsValid = () => {},
+  listenIsValid,
 }: RolesProps) => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
@@ -108,7 +108,7 @@ export const Roles = ({
       if (listenIsValid) {
         listenIsValid(isRoleEditsValid());
       }
-      const rolesUpdated: any = {};
+      const rolesUpdated: Record<string, string> = {};
       for (const [k, v] of Object.entries(roleEdits)) {
         rolesUpdated[k] = v.newAddress;
       }
@@ -161,9 +161,7 @@ export const Roles = ({
           </h3>
         )}
 
-        {!(isOwner() === true || setters.length) ? (
-          <></>
-        ) : (
+        {!(isOwner() === true || setters.length) ? null : (
           <>
             {isEditing && (
               <div>

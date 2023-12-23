@@ -42,12 +42,18 @@ export const Help = () => {
 
   // control canvas fade.
   useEffect(() => {
-    if (status === 'open') onFadeIn();
-    if (status === 'closing') onFadeOut();
+    if (status === 'open') {
+      onFadeIn();
+    }
+    if (status === 'closing') {
+      onFadeOut();
+    }
   }, [status]);
 
   // render early if help not open
-  if (status === 'closed') return <></>;
+  if (status === 'closed') {
+    return null;
+  }
 
   let meta: HelpItem | undefined;
 
@@ -183,7 +189,6 @@ export const Help = () => {
               {activeDefinitions.map((item, index: number) => (
                 <Definition
                   key={`def_${index}`}
-                  onClick={() => {}}
                   title={item.title}
                   description={item.description}
                 />

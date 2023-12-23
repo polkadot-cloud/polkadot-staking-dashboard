@@ -109,7 +109,7 @@ export const PayoutListInner = ({
   }
 
   if (!payouts.length) {
-    return <></>;
+    return null;
   }
 
   return (
@@ -206,26 +206,20 @@ export const PayoutListInner = ({
                     <div className="row">
                       <div>
                         <div>
-                          {label === t('payouts.payout') && (
-                            <>
-                              {batchIndex > 0 ? (
-                                <Identity address={p.validator_stash} />
-                              ) : (
-                                <div>{ellipsisFn(p.validator_stash)}</div>
-                              )}
-                            </>
-                          )}
-                          {label === t('payouts.poolClaim') && (
-                            <>
-                              {pool ? (
-                                <PoolIdentity pool={pool} />
-                              ) : (
-                                <h4>
-                                  {t('payouts.fromPool')} {p.pool_id}
-                                </h4>
-                              )}
-                            </>
-                          )}
+                          {label === t('payouts.payout') &&
+                            (batchIndex > 0 ? (
+                              <Identity address={p.validator_stash} />
+                            ) : (
+                              <div>{ellipsisFn(p.validator_stash)}</div>
+                            ))}
+                          {label === t('payouts.poolClaim') &&
+                            (pool ? (
+                              <PoolIdentity pool={pool} />
+                            ) : (
+                              <h4>
+                                {t('payouts.fromPool')} {p.pool_id}
+                              </h4>
+                            ))}
                           {label === t('payouts.slashed') && (
                             <h4>{t('payouts.deductedFromBond')}</h4>
                           )}

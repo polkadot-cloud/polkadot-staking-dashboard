@@ -22,9 +22,9 @@ export const Payee = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const { getPayeeItems } = usePayeeConfig();
   const { activeAccount } = useActiveAccounts();
-  const { getSetupProgress, setActiveAccountSetup } = useSetup();
+  const { getNominatorSetup, setActiveAccountSetup } = useSetup();
 
-  const setup = getSetupProgress('nominator', activeAccount);
+  const setup = getNominatorSetup(activeAccount);
   const { progress } = setup;
   const { payee } = progress;
 

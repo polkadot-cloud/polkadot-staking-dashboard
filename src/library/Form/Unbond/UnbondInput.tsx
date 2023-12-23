@@ -41,11 +41,11 @@ export const UnbondInput = ({
       return;
     }
     setLocalBond(val);
-    updateParentState(val);
+    updateParentState(new BigNumber(val));
   };
 
   // apply bond to parent setters.
-  const updateParentState = (val: any) => {
+  const updateParentState = (val: BigNumber) => {
     for (const s of setters) {
       s.set({
         ...s.current,

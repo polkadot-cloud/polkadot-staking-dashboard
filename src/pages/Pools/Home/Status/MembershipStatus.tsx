@@ -72,30 +72,24 @@ export const MembershipStatus = ({
     }
   }
 
-  return (
-    <>
-      {selectedActivePool ? (
-        <>
-          <Stat
-            label={label}
-            helpKey="Pool Membership"
-            type="address"
-            stat={{
-              address: selectedActivePool?.addresses?.stash ?? '',
-              display: membershipDisplay,
-            }}
-            buttons={showButtons ? membershipButtons : []}
-          />
-        </>
-      ) : (
-        <Stat
-          label={t('pools.poolMembership')}
-          helpKey="Pool Membership"
-          stat={t('pools.notInPool')}
-          buttons={!showButtons || isPoolSyncing ? [] : buttons}
-          buttonType={buttonType}
-        />
-      )}
-    </>
+  return selectedActivePool ? (
+    <Stat
+      label={label}
+      helpKey="Pool Membership"
+      type="address"
+      stat={{
+        address: selectedActivePool?.addresses?.stash ?? '',
+        display: membershipDisplay,
+      }}
+      buttons={showButtons ? membershipButtons : []}
+    />
+  ) : (
+    <Stat
+      label={t('pools.poolMembership')}
+      helpKey="Pool Membership"
+      stat={t('pools.notInPool')}
+      buttons={!showButtons || isPoolSyncing ? [] : buttons}
+      buttonType={buttonType}
+    />
   );
 };

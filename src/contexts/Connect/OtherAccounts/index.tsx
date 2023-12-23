@@ -77,8 +77,11 @@ export const OtherAccountsProvider = ({
         otherAccountsRef
       );
       // If the currently active account is being forgotten, disconnect.
-      if (forget.find(({ address }) => address === activeAccount) !== undefined)
+      if (
+        forget.find(({ address }) => address === activeAccount) !== undefined
+      ) {
         setActiveAccount(null);
+      }
     }
   };
 
@@ -107,7 +110,9 @@ export const OtherAccountsProvider = ({
       );
 
       // set active account for networkData.
-      if (activeAccountInSet) setActiveAccount(activeAccountInSet.address);
+      if (activeAccountInSet) {
+        setActiveAccount(activeAccountInSet.address);
+      }
 
       // add accounts to imported.
       addOtherAccounts(localAccounts);

@@ -13,10 +13,11 @@ import {
 import { applyWidthAsPadding, minDecimalPlaces } from '@polkadot-cloud/utils';
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { useHelp } from 'contexts/Help';
-import { useNotifications } from 'contexts/Notifications';
 import { useNetwork } from 'contexts/Network';
 import { Wrapper } from './Wrapper';
 import type { StatAddress, StatProps } from './types';
+import { NotificationsController } from 'static/NotificationsController';
+import type { AnyJson } from 'types';
 
 export const Stat = ({
   label,
@@ -32,7 +33,6 @@ export const Stat = ({
     brand: { token: Token },
   } = useNetwork().networkData;
   const { openHelp } = useHelp();
-  const { addNotification } = useNotifications();
 
   const containerRef = useRef<HTMLDivElement>(null);
   const subjectRef = useRef<HTMLDivElement>(null);
@@ -94,7 +94,7 @@ export const Stat = ({
             type="button"
             className="btn"
             onClick={() => {
-              addNotification(copy.notification);
+              NotificationsController.emit(copy.notification);
               navigator.clipboard.writeText(copy.content);
             }}
           >
@@ -121,7 +121,7 @@ export const Stat = ({
           {display}
           {buttons ? (
             <span ref={subjectRef}>
-              {buttons.map((btn: any, index: number) => (
+              {buttons.map((btn: AnyJson, index: number) => (
                 <React.Fragment key={`stat_${index}`}>
                   <Button
                     key={`btn_${index}_${Math.random()}`}

@@ -3,6 +3,7 @@
 
 import type { AnyJson } from '@polkadot-cloud/react/types';
 import type React from 'react';
+import type { ReactNode } from 'react';
 import type { DisplayFor } from 'types';
 
 export interface PaginationWrapperProps {
@@ -30,4 +31,22 @@ export interface SelectableProps {
   actionsSelected: AnyJson[];
   canSelect: boolean;
   displayFor: DisplayFor;
+}
+
+export interface ListContextInterface {
+  setSelectActive: (selectedActive: boolean) => void;
+  addToSelected: (item: AnyJson) => void;
+  removeFromSelected: (items: AnyJson[]) => void;
+  resetSelected: () => void;
+  setListFormat: (v: 'col' | 'row') => void;
+  selected: AnyJson[];
+  selectActive: boolean;
+  listFormat: 'col' | 'row';
+  selectToggleable: boolean;
+}
+
+export interface ListProviderProps {
+  selectToggleable?: boolean;
+  selectActive?: boolean;
+  children: ReactNode;
 }

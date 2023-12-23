@@ -11,7 +11,7 @@ export const JoinPool = ({
   setActiveTab,
 }: {
   id: number;
-  setActiveTab: any;
+  setActiveTab: (t: number) => void;
 }) => {
   const { t } = useTranslation('library');
   const { openModal } = useOverlay().modal;

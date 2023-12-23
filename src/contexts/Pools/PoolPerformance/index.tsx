@@ -52,7 +52,9 @@ export const PoolPerformanceProvider = ({
     if (message) {
       const { data } = message;
       const { task } = data;
-      if (task !== 'processNominationPoolsRewardData') return;
+      if (task !== 'processNominationPoolsRewardData') {
+        return;
+      }
 
       // Update state with new data.
       const { poolRewardData } = data;
@@ -79,7 +81,9 @@ export const PoolPerformanceProvider = ({
 
   // Get era data and send to worker.
   const processEra = async (era: BigNumber) => {
-    if (!api) return;
+    if (!api) {
+      return;
+    }
     setCurrentEra(era);
 
     let exposures;

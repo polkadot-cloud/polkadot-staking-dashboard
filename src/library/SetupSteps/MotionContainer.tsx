@@ -2,12 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { motion } from 'framer-motion';
+import type { MotionContainerProps } from './types';
 
 export const MotionContainer = ({
   thisSection,
   activeSection,
   children,
-}: any) => {
+}: MotionContainerProps) => {
   // container variants
   const containerVariants = {
     hidden: {

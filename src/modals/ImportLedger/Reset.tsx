@@ -9,11 +9,10 @@ import type { LedgerAddress } from 'contexts/Hardware/Ledger/types';
 import { usePrompt } from 'contexts/Prompt';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay, useLedgerAccounts } from '@polkadot-cloud/react/hooks';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { LedgerAccount } from '@polkadot-cloud/react/types';
 import { useNetwork } from 'contexts/Network';
-import { useLedgerAccounts } from 'contexts/Hardware/Ledger/LedgerAccounts';
 
 export const Reset = ({ removeLedgerAddress }: AnyJson) => {
   const { t } = useTranslation('modals');
@@ -26,7 +25,7 @@ export const Reset = ({ removeLedgerAddress }: AnyJson) => {
   const removeAccounts = () => {
     // Remove imported Ledger accounts.
     ledgerAccounts.forEach((account: LedgerAccount) => {
-      removeLedgerAccount(account.address, false);
+      removeLedgerAccount(account.address);
     });
     forgetOtherAccounts(ledgerAccounts);
 

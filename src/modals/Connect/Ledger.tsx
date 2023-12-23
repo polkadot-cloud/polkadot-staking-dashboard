@@ -15,13 +15,12 @@ import {
   ModalHardwareItem,
 } from '@polkadot-cloud/react';
 import { inChrome } from '@polkadot-cloud/utils';
-import React from 'react';
 import { useHelp } from 'contexts/Help';
 import LedgerLogoSVG from '@polkadot-cloud/assets/extensions/svg/ledger.svg?react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 
-export const Ledger = (): React.ReactElement => {
+export const Ledger = () => {
   const { openHelp } = useHelp();
   const { replaceModal } = useOverlay().modal;
   const { network } = useNetwork();
@@ -29,7 +28,7 @@ export const Ledger = (): React.ReactElement => {
 
   // Only render on Polkadot and Kusama networks.
   if (!['polkadot', 'kusama'].includes(network)) {
-    return <></>;
+    return null;
   }
 
   return (

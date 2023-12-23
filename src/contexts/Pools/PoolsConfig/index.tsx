@@ -7,10 +7,7 @@ import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
 import React, { useRef, useState } from 'react';
 import { EmptyH256, ModPrefix, U32Opts } from 'consts';
-import type {
-  PoolConfigState,
-  PoolsConfigContextState,
-} from 'contexts/Pools/types';
+import type { PoolConfigState, PoolsConfigContextState } from './types';
 import type { AnyApi } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
@@ -59,7 +56,9 @@ export const PoolsConfigProvider = ({
 
   // subscribe to pool chain state
   const subscribeToPoolConfig = async () => {
-    if (!api) return;
+    if (!api) {
+      return;
+    }
 
     const unsub = await api.queryMulti<AnyApi>(
       [
@@ -147,7 +146,9 @@ export const PoolsConfigProvider = ({
    */
   const addFavorite = (address: string) => {
     const newFavorites = Object.assign(favorites);
-    if (!newFavorites.includes(address)) newFavorites.push(address);
+    if (!newFavorites.includes(address)) {
+      newFavorites.push(address);
+    }
 
     localStorage.setItem(
       `${network}_favorite_pools`,
@@ -181,7 +182,9 @@ export const PoolsConfigProvider = ({
   };
 
   const createAccount = (poolId: BigNumber, index: number): string => {
-    if (!api) return '';
+    if (!api) {
+      return '';
+    }
     return api.registry
       .createType(
         'AccountId32',

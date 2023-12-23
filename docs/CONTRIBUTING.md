@@ -16,11 +16,10 @@ Some example PR titles:
 
 - `feat: implement help overlay`
 - `feat(auth): implement login API`
-- `fix(button): resolve issue with button alignment`
-- `docs(readme): add installation section`
-- `chore(tests): refactor user tests`
+- `fix: resolve issue with button alignment`
+- `fix(docs): fix installation section to README`
 
-The `(scope)` could be anything specifying the place of the commit change. For example, api, app, cli, etc.
+The `chore` type will not be added to release change logs, and should be used for silent updates.
 
 If you would like to know more about the Conventional Commits specification, please visit the [Conventional Commits website](https://www.conventionalcommits.org/).
 
@@ -85,6 +84,4 @@ Documenting some of the development patterns used:
 
 ## TypeScript Support
 
-The majority of components have types. Type additions are welcome for data that makes sense to type (e.g. data that is unlikely to change as we continue development).
-
-Strict mode is used in development, so types are always required for objects.
+Strict mode is used in development and full type coverage is required.

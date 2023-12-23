@@ -8,6 +8,7 @@ import {
   ModalPadding,
   ModalWarnings,
 } from '@polkadot-cloud/react';
+import type { Dispatch, SetStateAction } from 'react';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -20,7 +21,13 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
-export const RenamePool = ({ setSection, section }: any) => {
+export const RenamePool = ({
+  setSection,
+  section,
+}: {
+  setSection: Dispatch<SetStateAction<number>>;
+  section: number;
+}) => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
   const { setModalStatus } = useOverlay().modal;
@@ -66,7 +73,6 @@ export const RenamePool = ({ setSection, section }: any) => {
     callbackSubmit: () => {
       setModalStatus('closing');
     },
-    callbackInBlock: () => {},
   });
 
   const handleMetadataChange = (e: React.FormEvent<HTMLInputElement>) => {

@@ -51,26 +51,18 @@ export const NetworkBar = () => {
             <Status />
           )}
           {DISCLAIMER_URL !== undefined && (
-            <>
-              <p>
-                <a href={DISCLAIMER_URL} target="_blank" rel="noreferrer">
-                  {t('disclaimer')}
-                </a>
-              </p>
-            </>
+            <p>
+              <a href={DISCLAIMER_URL} target="_blank" rel="noreferrer">
+                {t('disclaimer')}
+              </a>
+            </p>
           )}
           {LEGAL_DISCLOSURES_URL !== undefined && (
-            <>
-              <p>
-                <a
-                  href={LEGAL_DISCLOSURES_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {t('legalDisclosures')}
-                </a>
-              </p>
-            </>
+            <p>
+              <a href={LEGAL_DISCLOSURES_URL} target="_blank" rel="noreferrer">
+                {t('legalDisclosures')}
+              </a>
+            </p>
           )}
           <p>
             <button

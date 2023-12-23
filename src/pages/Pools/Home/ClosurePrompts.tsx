@@ -46,66 +46,62 @@ export const ClosurePrompts = () => {
     active.toNumber() === 0 && totalUnlockChunks === 0 && !targets.length;
 
   return (
-    <>
-      {depositorCanClose && (
-        <PageRow>
-          <CardWrapper
-            style={{ border: `1px solid ${annuncementBorderColor}` }}
-          >
-            <div className="content">
-              <h3>{t('pools.destroyPool')}</h3>
-              <h4>
-                {t('pools.leftThePool')}.{' '}
-                {targets.length > 0
-                  ? t('pools.stopNominating')
-                  : depositorCanWithdraw
-                    ? t('pools.closePool')
-                    : depositorCanUnbond
-                      ? t('pools.unbondYourFunds')
-                      : t('pools.withdrawUnlock')}
-              </h4>
-              <ButtonRow yMargin>
-                <ButtonPrimary
-                  marginRight
-                  text={t('pools.unbond')}
-                  disabled={
-                    isPoolSyncing ||
-                    (!depositorCanWithdraw && !depositorCanUnbond)
-                  }
-                  onClick={() =>
-                    openModal({
-                      key: 'UnbondPoolMember',
-                      options: { who: activeAccount, member: membership },
-                      size: 'sm',
-                    })
-                  }
-                />
-                <ButtonPrimary
-                  iconLeft={faLockOpen}
-                  text={
-                    depositorCanWithdraw
-                      ? t('pools.unlocked')
-                      : String(totalUnlockChunks ?? 0)
-                  }
-                  disabled={isPoolSyncing || !isBonding()}
-                  onClick={() =>
-                    openModal({
-                      key: 'UnlockChunks',
-                      options: {
-                        bondFor: 'pool',
-                        poolClosure: true,
-                        disableWindowResize: true,
-                        disableScroll: true,
-                      },
-                      size: 'sm',
-                    })
-                  }
-                />
-              </ButtonRow>
-            </div>
-          </CardWrapper>
-        </PageRow>
-      )}
-    </>
+    depositorCanClose && (
+      <PageRow>
+        <CardWrapper style={{ border: `1px solid ${annuncementBorderColor}` }}>
+          <div className="content">
+            <h3>{t('pools.destroyPool')}</h3>
+            <h4>
+              {t('pools.leftThePool')}.{' '}
+              {targets.length > 0
+                ? t('pools.stopNominating')
+                : depositorCanWithdraw
+                  ? t('pools.closePool')
+                  : depositorCanUnbond
+                    ? t('pools.unbondYourFunds')
+                    : t('pools.withdrawUnlock')}
+            </h4>
+            <ButtonRow yMargin>
+              <ButtonPrimary
+                marginRight
+                text={t('pools.unbond')}
+                disabled={
+                  isPoolSyncing ||
+                  (!depositorCanWithdraw && !depositorCanUnbond)
+                }
+                onClick={() =>
+                  openModal({
+                    key: 'UnbondPoolMember',
+                    options: { who: activeAccount, member: membership },
+                    size: 'sm',
+                  })
+                }
+              />
+              <ButtonPrimary
+                iconLeft={faLockOpen}
+                text={
+                  depositorCanWithdraw
+                    ? t('pools.unlocked')
+                    : String(totalUnlockChunks ?? 0)
+                }
+                disabled={isPoolSyncing || !isBonding()}
+                onClick={() =>
+                  openModal({
+                    key: 'UnlockChunks',
+                    options: {
+                      bondFor: 'pool',
+                      poolClosure: true,
+                      disableWindowResize: true,
+                      disableScroll: true,
+                    },
+                    size: 'sm',
+                  })
+                }
+              />
+            </ButtonRow>
+          </div>
+        </CardWrapper>
+      </PageRow>
+    )
   );
 };

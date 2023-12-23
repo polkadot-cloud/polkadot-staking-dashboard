@@ -40,7 +40,7 @@ export const FavoriteValidatorsProvider = ({
 
   // Adds a favorite validator.
   const addFavorite = (address: string) => {
-    const newFavorites: any = Object.assign(favorites);
+    const newFavorites = Object.assign(favorites);
     if (!newFavorites.includes(address)) {
       newFavorites.push(address);
     }

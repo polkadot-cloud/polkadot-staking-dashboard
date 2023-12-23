@@ -20,7 +20,7 @@ import { useSubscan } from 'contexts/Plugins/Subscan';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { graphColors } from 'styles/graphs';
-import type { AnySubscan } from 'types';
+import type { AnyJson, AnySubscan } from 'types';
 import { useNetwork } from 'contexts/Network';
 import type { PayoutLineProps } from './types';
 import {
@@ -136,7 +136,7 @@ export const PayoutLine = ({
         },
         callbacks: {
           title: () => [],
-          label: (context: any) =>
+          label: (context: AnyJson) =>
             ` ${new BigNumber(context.parsed.y)
               .decimalPlaces(units)
               .toFormat()} ${unit}`,

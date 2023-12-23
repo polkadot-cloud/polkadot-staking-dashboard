@@ -7,7 +7,7 @@ import type {
   ExtensionAccount,
   ExternalAccount,
 } from '@polkadot-cloud/react/types';
-import type { BondFor, MaybeAddress } from 'types';
+import type { AnyFunction, AnyJson, BondFor, MaybeAddress } from 'types';
 
 export interface ExtensionAccountItem extends ExtensionAccount {
   active?: boolean;
@@ -35,12 +35,12 @@ export interface AccountDropdownProps {
 
 export interface BondFeedbackProps {
   syncing?: boolean;
-  setters: any;
+  setters: AnyFunction;
   bondFor: BondFor;
-  defaultBond: number | null;
+  defaultBond: string | null;
   inSetup?: boolean;
   joiningPool?: boolean;
-  listenIsValid: { (valid: boolean, errors: string[]): void } | { (): void };
+  listenIsValid?: ((valid: boolean, errors: string[]) => void) | (() => void);
   parentErrors?: string[];
   disableTxFeeUpdate?: boolean;
   setLocalResize?: () => void;
@@ -53,17 +53,17 @@ export interface BondInputProps {
   value: string;
   defaultValue: string;
   syncing?: boolean;
-  setters: any;
+  setters: AnyFunction;
   disabled: boolean;
   disableTxFeeUpdate?: boolean;
 }
 
 export interface UnbondFeedbackProps {
-  setters: any;
+  setters: AnyFunction;
   bondFor: BondFor;
   defaultBond?: number;
   inSetup?: boolean;
-  listenIsValid: { (valid: boolean, errors: string[]): void } | { (): void };
+  listenIsValid?: ((valid: boolean, errors: string[]) => void) | (() => void);
   parentErrors?: string[];
   setLocalResize?: () => void;
   txFees: BigNumber;
@@ -74,8 +74,8 @@ export interface UnbondInputProps {
   unbondToMin: BigNumber;
   defaultValue: number | string;
   disabled: boolean;
-  setters: any;
-  value: any;
+  setters: AnyFunction;
+  value: AnyJson;
 }
 
 export interface NominateStatusBarProps {
@@ -84,7 +84,7 @@ export interface NominateStatusBarProps {
 
 export interface DropdownProps {
   items: DropdownInput[];
-  onChange: (o: any) => void;
+  onChange: (o: AnyJson) => void;
   label?: string;
   placeholder: string;
   value: DropdownInput;

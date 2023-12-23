@@ -78,12 +78,19 @@ export const Accounts = () => {
     const poolMember = memberships.find((m) => m.address === address) ?? null;
 
     // Check if nominating.
-    if (isStash && nominating.find((a) => a.address === address) === undefined)
+    if (
+      isStash &&
+      nominating.find((a) => a.address === address) === undefined
+    ) {
       isNominating = true;
+    }
 
     // Check if in pool.
-    if (poolMember)
-      if (!inPool.find((n) => n.address === address)) isInPool = true;
+    if (poolMember) {
+      if (!inPool.find((n) => n.address === address)) {
+        isInPool = true;
+      }
+    }
 
     // If not doing anything, add address to `notStaking`.
     if (
@@ -118,8 +125,9 @@ export const Accounts = () => {
     }
 
     // In pool only.
-    if (!isNominating && isInPool && poolMember)
+    if (!isNominating && isInPool && poolMember) {
       inPool.push({ ...poolMember, delegates });
+    }
   }
 
   // Refresh local accounts state when context accounts change.
@@ -127,7 +135,9 @@ export const Accounts = () => {
 
   // Resize if modal open upon state changes.
   useEffectIgnoreInitial(() => {
-    if (modalStatus === 'open') setModalResize();
+    if (modalStatus === 'open') {
+      setModalResize();
+    }
   }, [
     activeAccount,
     accounts,

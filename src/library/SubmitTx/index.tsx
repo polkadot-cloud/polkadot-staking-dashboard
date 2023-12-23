@@ -69,11 +69,12 @@ export const SubmitTx = ({
   }, [notEnoughFunds, fromController]);
 
   // Reset tx metadata on unmount.
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       setTxSignature(null);
-    };
-  }, []);
+    },
+    []
+  );
 
   return (
     <Tx

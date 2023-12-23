@@ -40,7 +40,9 @@ export const NetworkMetricsProvider = ({
 
   // active subscription
   const initialiseSubscriptions = async () => {
-    if (!api) return;
+    if (!api) {
+      return;
+    }
 
     if (isReady) {
       const subscribeToMetrics = async () => {
@@ -115,7 +117,9 @@ export const NetworkMetricsProvider = ({
   // Given an era, determine whether paged rewards are active.
   const isPagedRewardsActive = (era: BigNumber): boolean => {
     const networkStartEra = PagedRewardsStartEra[network];
-    if (!networkStartEra) return false;
+    if (!networkStartEra) {
+      return false;
+    }
 
     return (
       NetworksWithPagedRewards.includes(network) &&

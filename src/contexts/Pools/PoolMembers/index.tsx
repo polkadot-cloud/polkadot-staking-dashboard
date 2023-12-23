@@ -4,13 +4,18 @@
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import React, { useRef, useState } from 'react';
 import { usePlugins } from 'contexts/Plugins';
-import type { PoolMember, PoolMemberContext } from 'contexts/Pools/types';
 import type { AnyApi, AnyMetaBatch, Fn, MaybeAddress, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from '../../Api';
 import { defaultPoolMembers } from './defaults';
+import type { PoolMember, PoolMemberContext } from './types';
+
+export const PoolMembersContext =
+  React.createContext<PoolMemberContext>(defaultPoolMembers);
+
+export const usePoolMembers = () => React.useContext(PoolMembersContext);
 
 export const PoolMembersProvider = ({
   children,
@@ -59,7 +64,9 @@ export const PoolMembersProvider = ({
   // subscan is disabled.
   useEffectIgnoreInitial(() => {
     if (!pluginEnabled('subscan')) {
-      if (isReady) fetchPoolMembers();
+      if (isReady) {
+        fetchPoolMembers();
+      }
     } else {
       setPoolMembersNode([]);
     }
@@ -82,7 +89,9 @@ export const PoolMembersProvider = ({
 
   // Fetch all pool members entries from node.
   const fetchPoolMembers = async () => {
-    if (!api) return;
+    if (!api) {
+      return;
+    }
 
     const result = await api.query.nominationPools.poolMembers.entries();
     const newMembers = result.map(([keys, val]: AnyApi) => {
@@ -101,7 +110,9 @@ export const PoolMembersProvider = ({
 
   // queries a  pool member and formats to `PoolMember`.
   const queryPoolMember = async (who: MaybeAddress) => {
-    if (!api) return null;
+    if (!api) {
+      return null;
+    }
 
     const poolMember: AnyApi = (
       await api.query.nominationPools.poolMembers(who)
@@ -110,10 +121,11 @@ export const PoolMembersProvider = ({
     if (!poolMember) {
       return null;
     }
+
     return {
       who,
       poolId: poolMember.poolId,
-    };
+    } as PoolMember;
   };
 
   // Gets the count of members in a pool from node data.
@@ -190,8 +202,8 @@ export const PoolMembersProvider = ({
         addr,
         (_pools) => {
           const pools = [];
-          for (let i = 0; i < _pools.length; i++) {
-            pools.push(_pools[i].toHuman());
+          for (const _pool of _pools) {
+            pools.push(_pool.toHuman());
           }
           const updated = Object.assign(poolMembersMetaBatchesRef.current);
           updated[key].poolMembers = pools;
@@ -210,8 +222,8 @@ export const PoolMembersProvider = ({
         addr,
         (_identities) => {
           const identities = [];
-          for (let i = 0; i < _identities.length; i++) {
-            identities.push(_identities[i].toHuman());
+          for (const _identity of _identities) {
+            identities.push(_identity.toHuman());
           }
           const updated = Object.assign(poolMembersMetaBatchesRef.current);
           updated[key].identities = identities;
@@ -282,18 +294,22 @@ export const PoolMembersProvider = ({
 
   // Removes a member from the member list and updates state.
   const removePoolMember = (who: MaybeAddress) => {
-    if (!pluginEnabled('subscan')) return;
+    if (!pluginEnabled('subscan')) {
+      return;
+    }
 
-    const newMembers = poolMembersNode.filter((p: any) => p.who !== who);
+    const newMembers = poolMembersNode.filter((p) => p.who !== who);
     setPoolMembersNode(newMembers ?? []);
   };
 
   // Adds a record to poolMembers.
   // Currently only used when an account joins or creates a pool.
-  const addToPoolMembers = (member: any) => {
-    if (!member || pluginEnabled('subscan')) return;
+  const addToPoolMembers = (member: { who: string; poolId: number }) => {
+    if (!member || pluginEnabled('subscan')) {
+      return;
+    }
 
-    const exists = poolMembersNode.find((m: any) => m.who === member.who);
+    const exists = poolMembersNode.find((m) => m.who === member.who);
     if (!exists) {
       setPoolMembersNode(poolMembersNode.concat(member));
     }
@@ -331,8 +347,3 @@ export const PoolMembersProvider = ({
     </PoolMembersContext.Provider>
   );
 };
-
-export const PoolMembersContext =
-  React.createContext<PoolMemberContext>(defaultPoolMembers);
-
-export const usePoolMembers = () => React.useContext(PoolMembersContext);

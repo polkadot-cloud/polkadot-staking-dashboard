@@ -9,6 +9,7 @@ import chroma from 'chroma-js';
 import { ellipsisFn } from '@polkadot-cloud/utils';
 import { useNetwork } from 'contexts/Network';
 import type { GeoDonutProps } from './types';
+import type { AnyJson } from 'types';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -48,7 +49,7 @@ export const GeoDonut = ({
         maxHeight: 25,
         labels: {
           boxWidth: 10,
-          generateLabels: (chart: any) => {
+          generateLabels: (chart: AnyJson) => {
             const ls =
               ChartJS.overrides.doughnut.plugins.legend.labels.generateLabels(
                 chart
@@ -63,7 +64,7 @@ export const GeoDonut = ({
       tooltip: {
         enabled: true,
         callbacks: {
-          label: (context: any) => ` ${title}: ${context.raw.toFixed(1)} %`,
+          label: (context: AnyJson) => ` ${title}: ${context.raw.toFixed(1)} %`,
         },
       },
     },

@@ -20,7 +20,7 @@ export const OrderValidators = () => {
     <FilterListWrapper>
       <Title title={t('orderValidators')} />
       <div className="body">
-        {Object.entries(ordersToLabels).map(([o, l]: any, i: number) => (
+        {Object.entries(ordersToLabels).map(([o, l], i: number) => (
           <FilterListButton
             $active={order === o || false}
             key={`validator_filter_${i}`}

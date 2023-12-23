@@ -4,7 +4,7 @@
 import type { Dispatch, ReactNode, SetStateAction } from 'react';
 import type { AnyJson, MaybeAddress } from 'types';
 
-export type PoolCommissionContextInterface = {
+export interface PoolCommissionContextInterface {
   setCommission: Dispatch<SetStateAction<number>>;
   setPayee: Dispatch<SetStateAction<MaybeAddress>>;
   setMaxCommission: Dispatch<SetStateAction<number>>;
@@ -16,7 +16,7 @@ export type PoolCommissionContextInterface = {
   isUpdated: (feature: CommissionFeature) => boolean;
   hasValue: (feature: OptionalCommissionFeature) => boolean;
   resetAll: () => void;
-};
+}
 
 export interface PoolCommissionProviderProps {
   children: ReactNode;

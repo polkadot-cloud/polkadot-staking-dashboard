@@ -29,6 +29,12 @@ export const ItemWrapper = styled.div`
   .delegator {
     width: 0.75rem;
     z-index: 0;
+    margin-top: 0.1rem;
+    margin-right: 0.35rem;
+
+    > div {
+      width: 1.75rem;
+    }
   }
 
   .icon {

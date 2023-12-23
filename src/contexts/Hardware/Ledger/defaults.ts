@@ -1,13 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function */
 
-import type {
-  LedgerAccountsContextInterface,
-  LedgerHardwareContextInterface,
-} from './types';
-
-export const TotalAllowedStatusCodes = 50;
+import type { LedgerHardwareContextInterface } from './types';
 
 export const defaultFeedback = {
   message: null,
@@ -35,13 +30,4 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
     new Promise((resolve) => resolve()),
   handleResetLedgerTask: () => {},
   runtimesInconsistent: false,
-};
-
-export const defaultLedgerAccountsContext: LedgerAccountsContextInterface = {
-  ledgerAccountExists: (a) => false,
-  addLedgerAccount: (a, i) => null,
-  removeLedgerAccount: (a, n) => {},
-  renameLedgerAccount: (a, n) => {},
-  getLedgerAccount: (a) => null,
-  ledgerAccounts: [],
 };

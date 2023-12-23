@@ -42,7 +42,9 @@ export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
 
       removed?.forEach((address) => {
         const unsub = unsubs.current[address];
-        if (unsub) unsub();
+        if (unsub) {
+          unsub();
+        }
       });
 
       unsubs.current = Object.fromEntries(
@@ -86,7 +88,9 @@ export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Subscribe to account, get controller and nominations.
   const subscribeToBondedAccount = async (address: string) => {
-    if (!api) return undefined;
+    if (!api) {
+      return undefined;
+    }
 
     const unsub = await api.queryMulti<AnyApi>(
       [
@@ -110,7 +114,9 @@ export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
         if (newController) {
           if (accounts.find((s) => s.address === newController) === undefined) {
             const result = addExternalAccount(newController, 'system');
-            if (result) addOrReplaceOtherAccount(result.account, result.type);
+            if (result) {
+              addOrReplaceOtherAccount(result.account, result.type);
+            }
           }
         }
 
