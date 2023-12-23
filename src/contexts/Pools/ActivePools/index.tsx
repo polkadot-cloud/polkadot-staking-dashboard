@@ -512,7 +512,7 @@ export const ActivePoolsProvider = ({
     // If no plugin available, fetch all pool members from RPC and filter them to determine current
     // pool member count. NOTE: Expensive operation.
     setSelectedPoolMemberCount(
-      getMembersOfPoolFromNode(selectedActivePool?.id ?? 0).length
+      getMembersOfPoolFromNode(selectedActivePool?.id || 0)?.length || 0
     );
   };
 

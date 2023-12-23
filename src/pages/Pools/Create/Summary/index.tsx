@@ -81,7 +81,9 @@ export const Summary = ({ section }: SetupStepProps) => {
 
       // query and add account to poolMembers list
       const member = await queryPoolMember(activeAccount);
-      addToPoolMembers(member);
+      if (member) {
+        addToPoolMembers(member);
+      }
 
       // reset localStorage setup progress
       removeSetupProgress('pool', activeAccount);
