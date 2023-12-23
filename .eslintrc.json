@@ -63,7 +63,6 @@
     ],
     // React
     // -----
-    "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     // The following rule requires codebase to be fixed to enable.
     // "@typescript-eslint/no-unnecessary-condition": "error",
