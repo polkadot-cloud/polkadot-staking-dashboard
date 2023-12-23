@@ -157,7 +157,9 @@ export const useSubmitExtrinsic = ({
         title: t('pending'),
         subtitle: t('transactionInitiated'),
       });
-      callbackSubmit();
+      if (callbackSubmit && typeof callbackSubmit === 'function') {
+        callbackSubmit();
+      }
     };
 
     const onInBlock = () => {
@@ -167,7 +169,9 @@ export const useSubmitExtrinsic = ({
         title: t('inBlock'),
         subtitle: t('transactionInBlock'),
       });
-      callbackInBlock();
+      if (callbackInBlock && typeof callbackInBlock === 'function') {
+        callbackInBlock();
+      }
     };
 
     const onFinalizedEvent = (method: string) => {

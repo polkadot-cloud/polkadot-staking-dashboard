@@ -197,8 +197,8 @@ export const PoolMembersProvider = ({
         addr,
         (_pools) => {
           const pools = [];
-          for (let i = 0; i < _pools.length; i++) {
-            pools.push(_pools[i].toHuman());
+          for (const _pool of _pools) {
+            pools.push(_pool.toHuman());
           }
           const updated = Object.assign(poolMembersMetaBatchesRef.current);
           updated[key].poolMembers = pools;
@@ -217,8 +217,8 @@ export const PoolMembersProvider = ({
         addr,
         (_identities) => {
           const identities = [];
-          for (let i = 0; i < _identities.length; i++) {
-            identities.push(_identities[i].toHuman());
+          for (const _identity of _identities) {
+            identities.push(_identity.toHuman());
           }
           const updated = Object.assign(poolMembersMetaBatchesRef.current);
           updated[key].identities = identities;

@@ -8,6 +8,7 @@
     "plugin:import/recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/stylistic",
     "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
@@ -28,27 +29,21 @@
     "react-hooks"
   ],
   "rules": {
-    "react/react-in-jsx-scope": "off",
-    // The following rules need to be revised, or the codebase needs to be fixed to enable them.
-    // "@typescript-eslint/no-unnecessary-condition": "error",
-    // --------------------------------------------
-    "react/jsx-no-useless-fragment": "error",
-    "unused-imports/no-unused-imports": "error",
-    "react-hooks/rules-of-hooks": "error",
-    "@typescript-eslint/consistent-type-imports": [
+    // Stylistic
+    // ---------
+    "comma-dangle": [
       "error",
       {
-        "prefer": "type-imports",
-        "fixStyle": "separate-type-imports"
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "never"
       }
     ],
+    "object-shorthand": "error",
+    "unused-imports/no-unused-imports": "error",
     "semi": [2, "always"],
-    "react/jsx-filename-extension": [
-      "warn",
-      {
-        "extensions": [".tsx"]
-      }
-    ],
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -57,7 +52,6 @@
         "tsx": "never"
       }
     ],
-    "@typescript-eslint/no-shadow": ["error"],
     "prefer-arrow-functions/prefer-arrow-functions": [
       "warn",
       {
@@ -67,7 +61,28 @@
         "singleReturnOnly": false
       }
     ],
-    "react/prop-types": "off"
+    // React
+    // -----
+    // "@typescript-eslint/no-unnecessary-condition": "error", // in progress
+    "react/react-in-jsx-scope": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react/jsx-no-useless-fragment": "error",
+    "react/jsx-filename-extension": [
+      "warn",
+      {
+        "extensions": [".tsx"]
+      }
+    ],
+    // Typescript
+    // ----------
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports",
+        "fixStyle": "separate-type-imports"
+      }
+    ],
+    "@typescript-eslint/no-shadow": ["error"]
   },
   "settings": {
     "react": {

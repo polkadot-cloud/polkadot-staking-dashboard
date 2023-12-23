@@ -83,7 +83,6 @@ export const StopNominations = () => {
     callbackSubmit: () => {
       setModalStatus('closing');
     },
-    callbackInBlock: () => {},
   });
 
   const warnings = getSignerWarnings(

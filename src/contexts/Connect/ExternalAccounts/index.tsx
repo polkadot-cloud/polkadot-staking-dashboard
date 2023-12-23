@@ -61,7 +61,7 @@ export const ExternalAccountsProvider = ({
     const toSystem =
       existsLocal && addedBy === 'system' && existsLocal.addedBy !== 'system';
 
-    let isImported: boolean = true;
+    let isImported = true;
     let importType: ExternalAccountImportType = 'new';
 
     if (!existsLocal) {

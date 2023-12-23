@@ -12,12 +12,12 @@ export interface RolesProps {
   inline?: boolean;
 }
 
-export type RoleEditEntry = {
+export interface RoleEditEntry {
   oldAddress: string;
   newAddress: string;
   valid: boolean;
   reformatted: boolean;
-};
+}
 
 export interface RoleEditInputProps {
   roleKey: string;

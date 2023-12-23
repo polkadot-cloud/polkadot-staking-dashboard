@@ -20,7 +20,7 @@ export const UnbondFeedback = ({
   bondFor,
   inSetup = false,
   setters = [],
-  listenIsValid = () => {},
+  listenIsValid,
   defaultBond,
   setLocalResize,
   parentErrors = [],
@@ -140,7 +140,9 @@ export const UnbondFeedback = ({
       newErrors.push(err);
     }
 
-    listenIsValid(!newErrors.length && bond.bond !== '', newErrors);
+    if (listenIsValid && typeof listenIsValid === 'function') {
+      listenIsValid(!newErrors.length && bond.bond !== '', newErrors);
+    }
     setErrors(newErrors);
   };
 

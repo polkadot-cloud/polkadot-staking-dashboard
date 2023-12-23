@@ -73,7 +73,6 @@ export const RenamePool = ({
     callbackSubmit: () => {
       setModalStatus('closing');
     },
-    callbackInBlock: () => {},
   });
 
   const handleMetadataChange = (e: React.FormEvent<HTMLInputElement>) => {

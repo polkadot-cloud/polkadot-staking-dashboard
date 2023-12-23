@@ -69,7 +69,6 @@ export const Summary = ({ section }: SetupStepProps) => {
     tx: getTxs(),
     from: activeAccount,
     shouldSubmit: true,
-    callbackSubmit: () => {},
     callbackInBlock: () => {
       removeSetupProgress('nominator', activeAccount);
     },

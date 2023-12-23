@@ -33,7 +33,7 @@ export const Roles = ({
   defaultRoles,
   setters = [],
   inline = false,
-  listenIsValid = () => {},
+  listenIsValid,
 }: RolesProps) => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();

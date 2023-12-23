@@ -3,7 +3,7 @@
 
 import type { LedgerAccount, VaultAccount } from '@polkadot-cloud/react/types';
 
-export type VaultAccountsContextInterface = {
+export interface VaultAccountsContextInterface {
   vaultAccountExists: (address: string) => boolean;
   addVaultAccount: (
     address: string,
@@ -14,4 +14,4 @@ export type VaultAccountsContextInterface = {
   renameVaultAccount: (address: string, newName: string) => void;
   getVaultAccount: (address: string) => LedgerAccount | null;
   vaultAccounts: VaultAccount[];
-};
+}

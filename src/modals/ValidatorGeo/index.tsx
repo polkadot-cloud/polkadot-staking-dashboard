@@ -54,7 +54,6 @@ export const ValidatorGeo = () => {
         })
         .catch(() => setAnalyticsAvailable(false));
     else setAnalyticsAvailable(false);
-    return () => {};
   }, [pwApi, address]);
 
   return (

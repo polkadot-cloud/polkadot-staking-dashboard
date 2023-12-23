@@ -3,11 +3,11 @@
 
 import type { Sync } from 'types';
 
-export type PayoutsContextInterface = {
+export interface PayoutsContextInterface {
   payoutsSynced: Sync;
   unclaimedPayouts: UnclaimedPayouts;
   removeEraPayout: (era: string, validator: string) => void;
-};
+}
 
 // Record<era, EraUnclaimedPayouts>
 export type UnclaimedPayouts = Record<string, EraUnclaimedPayouts> | null;

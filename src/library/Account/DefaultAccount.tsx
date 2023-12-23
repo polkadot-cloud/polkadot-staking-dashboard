@@ -7,7 +7,7 @@ import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { Polkicon } from '@polkadot-cloud/react';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 import { Wrapper } from './Wrapper';
 import type { AccountProps } from './types';
 
@@ -23,7 +23,6 @@ const DefaultAccount = ({ value, label, readOnly }: AccountProps) => {
         ? getAccount(value)?.name || ellipsisFn(value)
         : ellipsisFn(value);
 
-  useEffect(() => {}, [getAccount(value)]);
   return (
     <Wrapper>
       {label !== undefined && (

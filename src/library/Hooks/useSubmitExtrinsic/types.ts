@@ -5,15 +5,15 @@ import type { AnyApi, MaybeAddress } from 'types';
 
 export interface UseSubmitExtrinsicProps {
   tx: AnyApi;
-  shouldSubmit: boolean;
-  callbackSubmit: { (): void };
-  callbackInBlock: { (): void };
   from: MaybeAddress;
+  shouldSubmit: boolean;
+  callbackSubmit?: () => void;
+  callbackInBlock?: () => void;
 }
 
 export interface UseSubmitExtrinsic {
   uid: number;
-  onSubmit: { (): void };
+  onSubmit: () => void;
   submitting: boolean;
   proxySupported: boolean;
   submitAddress: MaybeAddress;

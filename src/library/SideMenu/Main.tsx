@@ -50,9 +50,9 @@ export const Main = () => {
 
     // inject actions into menu items
     const pages = Object.assign(pageConfig.pages);
-    for (let i = 0; i < pages.length; i++) {
-      const { uri } = pages[i];
 
+    let i = 0;
+    for (const { uri } of pages) {
       // set undefined action as default
       pages[i].action = undefined;
       if (uri === `${import.meta.env.BASE_URL}`) {
@@ -113,7 +113,9 @@ export const Main = () => {
           };
         }
       }
+      i++;
     }
+
     setPageConfig({
       categories: pageConfig.categories,
       pages,

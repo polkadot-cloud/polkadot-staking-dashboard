@@ -44,7 +44,7 @@ export const ActiveAccountsProvider = ({
   // Setter for the active account.
   const setActiveAccount = (
     newActiveAccount: MaybeAddress,
-    updateLocalStorage: boolean = true
+    updateLocalStorage = true
   ) => {
     if (updateLocalStorage)
       if (newActiveAccount === null)

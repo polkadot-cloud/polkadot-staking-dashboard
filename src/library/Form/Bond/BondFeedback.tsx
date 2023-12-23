@@ -22,7 +22,7 @@ export const BondFeedback = ({
   joiningPool = false,
   parentErrors = [],
   setters = [],
-  listenIsValid = () => {},
+  listenIsValid,
   disableTxFeeUpdate = false,
   defaultBond,
   txFees,
@@ -157,7 +157,11 @@ export const BondFeedback = ({
 
     const bondValid = !newErrors.length && bond.bond !== '';
     setBondDisabled(disabled);
-    listenIsValid(bondValid, newErrors);
+
+    if (listenIsValid && typeof listenIsValid === 'function') {
+      listenIsValid(bondValid, newErrors);
+    }
+
     setErrors(newErrors);
   };
 
