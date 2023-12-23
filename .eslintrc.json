@@ -7,8 +7,9 @@
     "eslint:recommended",
     "plugin:import/recommended",
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended"
-    // "plugin:@typescript-eslint/stylistic"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/stylistic",
+    "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
