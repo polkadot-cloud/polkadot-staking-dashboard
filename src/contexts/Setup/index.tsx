@@ -58,6 +58,26 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     setPoolSetups(localPoolSetups());
   };
 
+  // Type guard to check if setup is a pool or nominator.
+  const isPoolSetup = (
+    setup: NominatorSetup | PoolSetup
+  ): setup is PoolSetup => {
+    return (setup as PoolSetup).progress?.metadata !== undefined;
+  };
+
+  // Utility to get the default progress based on type.
+  const defaultProgress = (type: BondFor): PoolProgress | NominatorProgress => {
+    return type === 'nominator'
+      ? (defaultNominatorProgress as NominatorProgress)
+      : (defaultPoolProgress as PoolProgress);
+  };
+
+  // Utility to get the default setup based on type.
+  const defaultSetup = (type: BondFor): NominatorSetup | PoolSetup =>
+    type === 'nominator'
+      ? { section: 1, progress: defaultProgress(type) as NominatorProgress }
+      : { section: 1, progress: defaultProgress(type) as PoolProgress };
+
   // Gets the setup progress for a connected account. Falls back to default setup if progress does
   // not yet exist.
   const getSetupProgress = (
@@ -75,6 +95,24 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
         section: 1,
       }
     );
+  };
+
+  // Getter to ensure a nominator setup is returned.
+  const getNominatorSetup = (address: MaybeAddress): NominatorSetup => {
+    const setup = getSetupProgress('nominator', address);
+    if (isPoolSetup(setup)) {
+      return defaultSetup('nominator') as NominatorSetup;
+    }
+    return setup;
+  };
+
+  // Getter to ensure a pool setup is returned.
+  const getPoolSetup = (address: MaybeAddress): PoolSetup => {
+    const setup = getSetupProgress('pool', address);
+    if (!isPoolSetup(setup)) {
+      return defaultSetup('pool') as PoolSetup;
+    }
+    return setup;
   };
 
   // Remove setup progress for an account.
@@ -173,10 +211,6 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   const assignSetups = (type: BondFor) =>
     type === 'nominator' ? { ...nominatorSetups } : { ...poolSetups };
 
-  // Utility to get the default progress based on type.
-  const defaultProgress = (type: BondFor) =>
-    type === 'nominator' ? defaultNominatorProgress : defaultPoolProgress;
-
   // Utility to get nominator setups, type casted as NominatorSetups.
   const localNominatorSetups = () =>
     localStorageOrDefault('nominator_setups', {}, true) as NominatorSetups;
@@ -239,6 +273,8 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
         setOnPoolSetup,
         onNominatorSetup,
         onPoolSetup,
+        getNominatorSetup,
+        getPoolSetup,
       }}
     >
       {children}

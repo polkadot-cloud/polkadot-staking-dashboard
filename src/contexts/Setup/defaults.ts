@@ -38,4 +38,12 @@ export const defaultSetupContext: SetupContextInterface = {
   setOnPoolSetup: (v) => {},
   onNominatorSetup: false,
   onPoolSetup: false,
+  getNominatorSetup: (address) => ({
+    section: 1,
+    progress: defaultNominatorProgress,
+  }),
+  getPoolSetup: (address) => ({
+    section: 1,
+    progress: defaultPoolProgress,
+  }),
 };

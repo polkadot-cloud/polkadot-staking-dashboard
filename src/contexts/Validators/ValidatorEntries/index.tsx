@@ -243,11 +243,12 @@ export const ValidatorsProvider = ({
   // Fetches the active pool's nominees.
   const fetchPoolNominatedList = async () => {
     // get raw nominations list
-    let n = poolNominations.targets;
-    // format to list format
-    n = n.map((item: string) => ({ address: item }));
+    const n = poolNominations.targets;
+
     // fetch preferences
-    const nominationsWithPrefs = await fetchValidatorPrefs(n);
+    const nominationsWithPrefs = await fetchValidatorPrefs(
+      n.map((item: string) => ({ address: item }))
+    );
     setPoolNominated(nominationsWithPrefs || []);
   };
 

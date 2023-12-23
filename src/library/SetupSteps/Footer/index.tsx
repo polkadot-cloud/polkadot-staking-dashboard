@@ -11,8 +11,13 @@ import { Wrapper } from './Wrapper';
 export const Footer = ({ complete, bondFor }: FooterProps) => {
   const { t } = useTranslation('library');
   const { activeAccount } = useActiveAccounts();
-  const { getSetupProgress, setActiveAccountSetupSection } = useSetup();
-  const setup = getSetupProgress(bondFor, activeAccount);
+  const { getPoolSetup, getNominatorSetup, setActiveAccountSetupSection } =
+    useSetup();
+
+  const setup =
+    bondFor === 'nominator'
+      ? getNominatorSetup(activeAccount)
+      : getPoolSetup(activeAccount);
 
   return (
     <Wrapper>

@@ -15,8 +15,8 @@ import type { PoolProgress } from 'contexts/Setup/types';
 export const PoolName = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const { activeAccount } = useActiveAccounts();
-  const { getSetupProgress, setActiveAccountSetup } = useSetup();
-  const setup = getSetupProgress('pool', activeAccount);
+  const { getPoolSetup, setActiveAccountSetup } = useSetup();
+  const setup = getPoolSetup(activeAccount);
   const { progress } = setup;
 
   const initialValue = progress.metadata;
