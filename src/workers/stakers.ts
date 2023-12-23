@@ -71,7 +71,9 @@ const processEraForExposure = (data: ProcessEraForExposureArgs) => {
       };
 
       exposed = true;
-      if (exitOnExposed) return false;
+      if (exitOnExposed) {
+        return false;
+      }
     }
 
     const inOthers = others.find((o) => o.who === who);
@@ -93,7 +95,9 @@ const processEraForExposure = (data: ProcessEraForExposureArgs) => {
         exposedPage,
       };
       exposed = true;
-      if (exitOnExposed) return false;
+      if (exitOnExposed) {
+        return false;
+      }
     }
 
     return true;

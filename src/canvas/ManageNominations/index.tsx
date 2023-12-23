@@ -132,11 +132,12 @@ export const ManageNominations = () => {
     callbackInBlock: () => {
       if (isPool) {
         // Upate bonded pool targets if updating pool nominations.
-        if (selectedActivePool?.id)
+        if (selectedActivePool?.id) {
           updatePoolNominations(
             selectedActivePool.id,
             newNominations.nominations.map((n) => n.address)
           );
+        }
       }
     },
   });

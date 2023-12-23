@@ -59,7 +59,9 @@ export const FiltersProvider = ({
     }
     const newFilters = [...current]
       .map((e) => {
-        if (e.key !== g) return e;
+        if (e.key !== g) {
+          return e;
+        }
         let { filters } = e;
 
         if (filters.includes(f)) {
@@ -98,7 +100,9 @@ export const FiltersProvider = ({
     if (current.length) {
       newFilters = [...current].map((e) => {
         // return groups we are not manipulating.
-        if (e.key !== g) return e;
+        if (e.key !== g) {
+          return e;
+        }
 
         let { filters } = e;
         filters = filters.filter((f: string) => !fs.includes(f)).concat(fs);

@@ -34,11 +34,12 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
       // force re-render to display error messages
       setIncrement(increment + 1);
 
-      if (connected)
+      if (connected) {
         NotificationsController.emit({
           title: t('extensionConnected'),
           subtitle: `${t('titleExtensionConnected', { title })}`,
         });
+      }
     }
   };
 

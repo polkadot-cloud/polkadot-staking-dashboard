@@ -102,10 +102,13 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
     const controller = getBondedAccount(stash);
 
     if (controller !== stash) {
-      if (getControllerNotImported(controller))
+      if (getControllerNotImported(controller)) {
         return 'controller_not_imported';
+      }
 
-      if (!accountHasSigner(controller)) return 'read_only';
+      if (!accountHasSigner(controller)) {
+        return 'read_only';
+      }
     } else if (
       (!proxySupported || !accountHasSigner(activeProxy)) &&
       !accountHasSigner(stash)

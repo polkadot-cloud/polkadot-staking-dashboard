@@ -64,7 +64,9 @@ export const PoolMembersProvider = ({
   // subscan is disabled.
   useEffectIgnoreInitial(() => {
     if (!pluginEnabled('subscan')) {
-      if (isReady) fetchPoolMembers();
+      if (isReady) {
+        fetchPoolMembers();
+      }
     } else {
       setPoolMembersNode([]);
     }
@@ -87,7 +89,9 @@ export const PoolMembersProvider = ({
 
   // Fetch all pool members entries from node.
   const fetchPoolMembers = async () => {
-    if (!api) return;
+    if (!api) {
+      return;
+    }
 
     const result = await api.query.nominationPools.poolMembers.entries();
     const newMembers = result.map(([keys, val]: AnyApi) => {
@@ -107,7 +111,9 @@ export const PoolMembersProvider = ({
 
   // queries a  pool member and formats to `PoolMember`.
   const queryPoolMember = async (who: MaybeAddress) => {
-    if (!api) return null;
+    if (!api) {
+      return null;
+    }
 
     const poolMember: AnyApi = (
       await api.query.nominationPools.poolMembers(who)
@@ -289,7 +295,9 @@ export const PoolMembersProvider = ({
 
   // Removes a member from the member list and updates state.
   const removePoolMember = (who: MaybeAddress) => {
-    if (!pluginEnabled('subscan')) return;
+    if (!pluginEnabled('subscan')) {
+      return;
+    }
 
     const newMembers = poolMembersNode.filter((p) => p.who !== who);
     setPoolMembersNode(newMembers ?? []);
@@ -298,7 +306,9 @@ export const PoolMembersProvider = ({
   // Adds a record to poolMembers.
   // Currently only used when an account joins or creates a pool.
   const addToPoolMembers = (member: { who: string; poolId: number }) => {
-    if (!member || pluginEnabled('subscan')) return;
+    if (!member || pluginEnabled('subscan')) {
+      return;
+    }
 
     const exists = poolMembersNode.find((m) => m.who === member.who);
     if (!exists) {

@@ -14,7 +14,9 @@ export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
   const [position, setPosition] = useState<[number, number]>([0, 0]);
 
   const openMenu = () => {
-    if (open) return;
+    if (open) {
+      return;
+    }
     setOpen(1);
   };
 
@@ -26,7 +28,9 @@ export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const setMenuPosition = (ref: RefObject<HTMLDivElement>) => {
-    if (open || !ref?.current) return;
+    if (open || !ref?.current) {
+      return;
+    }
     const bodyRect = document.body.getBoundingClientRect();
     const elemRect = ref.current.getBoundingClientRect();
 
@@ -38,7 +42,9 @@ export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const checkMenuPosition = (ref: RefObject<HTMLDivElement>) => {
-    if (!ref?.current) return;
+    if (!ref?.current) {
+      return;
+    }
 
     const bodyRect = document.body.getBoundingClientRect();
     const menuRect = ref.current.getBoundingClientRect();

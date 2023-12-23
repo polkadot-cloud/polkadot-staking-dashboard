@@ -33,7 +33,9 @@ export const getLedgerErrorType = (err: string) => {
       }
       return true;
     });
-    if (found) return false;
+    if (found) {
+      return false;
+    }
     return true;
   });
   return errorType || 'misc';

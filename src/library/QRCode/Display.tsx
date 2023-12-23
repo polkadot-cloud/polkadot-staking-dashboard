@@ -81,7 +81,9 @@ const Display = ({
     );
 
     return () => {
-      if (timerRef.current.timerId) clearTimeout(timerRef.current.timerId);
+      if (timerRef.current.timerId) {
+        clearTimeout(timerRef.current.timerId);
+      }
     };
   }, []);
 

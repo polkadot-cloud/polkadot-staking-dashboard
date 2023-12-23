@@ -12,12 +12,13 @@ export const getUnlocking = (chunks: UnlockChunk[], thisEra: BigNumber) => {
   let totalUnlocking = new BigNumber(0);
   let totalUnlocked = new BigNumber(0);
 
-  for (const { value, era } of chunks)
+  for (const { value, era } of chunks) {
     if (thisEra.isGreaterThan(era)) {
       totalUnlocked = totalUnlocked.plus(value);
     } else {
       totalUnlocking = totalUnlocking.plus(value);
     }
+  }
   return { totalUnlocking, totalUnlocked };
 };
 
@@ -53,7 +54,9 @@ export const setLocalFeeReserve = (
   amount: BigNumber,
   network: NetworkName
 ) => {
-  if (!address) return;
+  if (!address) {
+    return;
+  }
   try {
     const newReserves = JSON.parse(
       localStorage.getItem('reserve_balances') ?? '{}'

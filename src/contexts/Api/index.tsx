@@ -47,12 +47,13 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Store the active RPC provider.
   const initialRpcEndpoint = () => {
     const local = localStorage.getItem(`${network}_rpc_endpoint`);
-    if (local)
+    if (local) {
       if (NetworkList[network].endpoints.rpcEndpoints[local]) {
         return local;
       } else {
         localStorage.removeItem(`${network}_rpc_endpoint`);
       }
+    }
 
     return NetworkList[network].endpoints.defaultRpcEndpoint;
   };
@@ -75,7 +76,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Set RPC provider with local storage and validity checks.
   const setRpcEndpoint = (key: string) => {
-    if (!NetworkList[network].endpoints.rpcEndpoints[key]) return;
+    if (!NetworkList[network].endpoints.rpcEndpoints[key]) {
+      return;
+    }
     localStorage.setItem(`${network}_rpc_endpoint`, key);
 
     setRpcEndpointState(key);
@@ -131,7 +134,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Fetch chain state. Called once `provider` has been initialised.
   const getChainState = async () => {
-    if (!provider) return;
+    if (!provider) {
+      return;
+    }
 
     // initiate new api and set connected.
     const newApi = await ApiPromise.create({ provider });
@@ -270,7 +275,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // If RPC endpoint changes, and not on light client, re-connect.
   useEffectIgnoreInitial(() => {
-    if (!isLightClient) handleConnectApi();
+    if (!isLightClient) {
+      handleConnectApi();
+    }
   }, [rpcEndpoint]);
 
   // Trigger API connection handler on network or light client change.

@@ -222,7 +222,9 @@ export const ActivePoolsProvider = ({
     poolId: number,
     poolBondAddress: string
   ) => {
-    if (!api) return;
+    if (!api) {
+      return;
+    }
     const subscribePoolNominations = async (bondedAddress: string) => {
       const unsub = await api.query.staking.nominators(
         bondedAddress,
@@ -270,7 +272,9 @@ export const ActivePoolsProvider = ({
     pendingRewards: BigNumber,
     poolId: number
   ) => {
-    if (!poolId) return;
+    if (!poolId) {
+      return;
+    }
 
     // update the active pool the account is a member of.
     setStateWithRef(

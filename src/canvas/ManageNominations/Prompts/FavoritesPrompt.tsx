@@ -68,9 +68,11 @@ export const FavoritesPrompt = ({
               <SelectWrapper
                 disabled={inInitial}
                 onClick={() => {
-                  if (selected.includes(favorite))
+                  if (selected.includes(favorite)) {
                     removeFromSelected([favorite]);
-                  else addToSelected(favorite);
+                  } else {
+                    addToSelected(favorite);
+                  }
                 }}
               >
                 {(inInitial || selected.includes(favorite)) && (

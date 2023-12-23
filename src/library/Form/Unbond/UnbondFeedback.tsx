@@ -71,7 +71,9 @@ export const UnbondFeedback = ({
 
   // if resize is present, handle on error change
   useEffect(() => {
-    if (setLocalResize) setLocalResize();
+    if (setLocalResize) {
+      setLocalResize();
+    }
   }, [errors]);
 
   // add this component's setBond to setters

@@ -101,7 +101,7 @@ export const ValidatorListInner = ({
 
   // Get nomination status relative to supplied nominator, if `format` is `nomination`.
   const processNominationStatus = () => {
-    if (format === 'nomination')
+    if (format === 'nomination') {
       if (bondFor === 'pool') {
         nominationStatus.current = Object.fromEntries(
           initialValidators.map(({ address }) => [
@@ -121,6 +121,7 @@ export const ValidatorListInner = ({
           ])
         );
       }
+    }
   };
 
   // Injects status into supplied initial validators.
@@ -215,7 +216,9 @@ export const ValidatorListInner = ({
 
   // if in modal, handle resize
   const maybeHandleModalResize = () => {
-    if (displayFor === 'modal') setModalResize();
+    if (displayFor === 'modal') {
+      setModalResize();
+    }
   };
 
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -284,7 +287,9 @@ export const ValidatorListInner = ({
 
   // Configure validator list when network is ready to fetch.
   useEffect(() => {
-    if (isReady && isNotZero(activeEra.index) && !fetched) setupValidatorList();
+    if (isReady && isNotZero(activeEra.index) && !fetched) {
+      setupValidatorList();
+    }
   }, [isReady, activeEra.index, fetched]);
 
   // Control render throttle.
@@ -298,12 +303,16 @@ export const ValidatorListInner = ({
 
   // Trigger `onSelected` when selection changes.
   useEffect(() => {
-    if (onSelected) onSelected(listProvider);
+    if (onSelected) {
+      onSelected(listProvider);
+    }
   }, [selected]);
 
   // List ui changes / validator changes trigger re-render of list.
   useEffect(() => {
-    if (allowFilters && fetched) handleValidatorsFilterUpdate();
+    if (allowFilters && fetched) {
+      handleValidatorsFilterUpdate();
+    }
   }, [order, isSyncing, includes, excludes]);
 
   // Handle modal resize on list format change.

@@ -56,7 +56,9 @@ export const calculateDailyPayouts = (
   );
 
   // return now if no payouts.
-  if (!payouts.length) return payouts;
+  if (!payouts.length) {
+    return payouts;
+  }
 
   // post-fill any missing days. [current day -> last payout]
   dailyPayouts = postFillMissingDays(payouts, fromDate, maxDays);
@@ -79,7 +81,9 @@ export const calculateDailyPayouts = (
     const thisDay = startOfDay(fromUnixTime(payout.block_timestamp));
 
     // initialise current day if first payout.
-    if (p === 1) curDay = thisDay;
+    if (p === 1) {
+      curDay = thisDay;
+    }
 
     // handle surpassed maximum days.
     if (daysPassed(thisDay, fromDate) >= maxDays) {
@@ -146,7 +150,9 @@ export const calculatePayoutAverages = (
   avgDays: number
 ) => {
   // if we don't need to take an average, just return `payouts`.
-  if (avgDays <= 1) return payouts;
+  if (avgDays <= 1) {
+    return payouts;
+  }
 
   // create moving average value over `avgDays` past days, if any.
   let payoutsAverages = [];

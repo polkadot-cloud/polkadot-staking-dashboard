@@ -42,12 +42,18 @@ export const Help = () => {
 
   // control canvas fade.
   useEffect(() => {
-    if (status === 'open') onFadeIn();
-    if (status === 'closing') onFadeOut();
+    if (status === 'open') {
+      onFadeIn();
+    }
+    if (status === 'closing') {
+      onFadeOut();
+    }
   }, [status]);
 
   // render early if help not open
-  if (status === 'closed') return null;
+  if (status === 'closed') {
+    return null;
+  }
 
   let meta: HelpItem | undefined;
 

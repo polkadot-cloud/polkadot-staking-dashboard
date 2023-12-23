@@ -81,7 +81,9 @@ export const GenerateNominations = ({
       defaultNominationsCount > 0
     ) {
       setNominations([...(defaultNominations.nominations || [])]);
-      if (defaultNominationsCount) setMethod('manual');
+      if (defaultNominationsCount) {
+        setMethod('manual');
+      }
     }
   }, [activeAccount, defaultNominations]);
 
@@ -92,10 +94,13 @@ export const GenerateNominations = ({
       !validators?.length ||
       !stakers?.length ||
       validatorsFetched !== 'synced'
-    )
+    ) {
       return;
+    }
 
-    if (fetching) fetchNominationsForMethod();
+    if (fetching) {
+      fetchNominationsForMethod();
+    }
   });
 
   // reset fixed height on window size change

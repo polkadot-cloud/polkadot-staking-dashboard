@@ -112,8 +112,9 @@ export const StakingProvider = ({
         task !== 'processExposures' ||
         networkName !== network ||
         era !== activeEra.index.toString()
-      )
+      ) {
         return;
+      }
 
       const {
         stakers,
@@ -205,7 +206,9 @@ export const StakingProvider = ({
 
   // Fetches erasStakers exposures for an era, and saves to `localStorage`.
   const fetchEraStakers = async (era: string) => {
-    if (!isReady || activeEra.index.isZero() || !api) return [];
+    if (!isReady || activeEra.index.isZero() || !api) {
+      return [];
+    }
 
     let exposures: Exposure[] = [];
     const localExposures = getLocalEraExposures(
@@ -221,15 +224,18 @@ export const StakingProvider = ({
     }
 
     // For resource limitation concerns, only store the current era in local storage.
-    if (era === activeEra.index.toString())
+    if (era === activeEra.index.toString()) {
       setLocalEraExposures(network, era, exposures);
+    }
 
     return exposures;
   };
 
   // Fetches the active nominator set and metadata around it.
   const fetchActiveEraStakers = async () => {
-    if (!isReady || activeEra.index.isZero() || !api) return;
+    if (!isReady || activeEra.index.isZero() || !api) {
+      return;
+    }
 
     // flag eraStakers is recyncing
     setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
@@ -353,7 +359,9 @@ export const StakingProvider = ({
   // If paged rewards are active for the era, fetch eras stakers from the new storage items,
   // otherwise use the old storage items.
   const getPagedErasStakers = async (era: string) => {
-    if (!api) return [];
+    if (!api) {
+      return [];
+    }
 
     if (isPagedRewardsActive(new BigNumber(era))) {
       const overview: AnyApi =
@@ -383,7 +391,9 @@ export const StakingProvider = ({
         const others = pagedResult.reduce(
           (prev: ExposureOther[], [, v]: AnyApi) => {
             const o = v.toHuman()?.others || [];
-            if (!o.length) return prev;
+            if (!o.length) {
+              return prev;
+            }
             return prev.concat(o);
           },
           []
@@ -432,7 +442,9 @@ export const StakingProvider = ({
 
   // handle syncing with eraStakers
   useEffectIgnoreInitial(() => {
-    if (isReady) fetchActiveEraStakers();
+    if (isReady) {
+      fetchActiveEraStakers();
+    }
   }, [isReady, activeEra.index, activeAccount]);
 
   useEffectIgnoreInitial(() => {

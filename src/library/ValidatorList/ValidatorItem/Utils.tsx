@@ -81,7 +81,9 @@ export const normaliseEraPoints = (
 export const prefillEraPoints = (eraPoints: number[]): number[] => {
   const missing = Math.max(MaxEraRewardPointsEras - eraPoints.length, 0);
 
-  if (!missing) return eraPoints;
+  if (!missing) {
+    return eraPoints;
+  }
 
   return Array(missing).fill(0).concat(eraPoints);
 };

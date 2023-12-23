@@ -48,16 +48,22 @@ export const SelectItems = ({ layout, children }: SelectItemsProps) => {
             currentContainer.style.height = `${
               bodyRefs[i].current?.offsetHeight || 0
             }px`;
-            if (icon)
+            if (icon) {
               icon.style.height = `${bodyRefs[i].current?.offsetHeight || 0}px`;
-            if (toggle)
+            }
+            if (toggle) {
               toggle.style.height = `${
                 bodyRefs[i].current?.offsetHeight || 0
               }px`;
+            }
           } else {
             currentContainer.style.height = `${maxHeight}px`;
-            if (icon) icon.style.height = `${maxHeight}px`;
-            if (toggle) toggle.style.height = `${maxHeight}px`;
+            if (icon) {
+              icon.style.height = `${maxHeight}px`;
+            }
+            if (toggle) {
+              toggle.style.height = `${maxHeight}px`;
+            }
           }
         }
         i++;

@@ -185,7 +185,9 @@ export const useFetchMehods = () => {
 
     // take one validator
     const validator = shuffle(all).slice(0, 1)[0] || null;
-    if (validator) nominations.push(validator);
+    if (validator) {
+      nominations.push(validator);
+    }
     return nominations;
   };
 
@@ -194,7 +196,9 @@ export const useFetchMehods = () => {
 
     // take one validator
     const validator = shuffle(all).slice(0, 1)[0] || null;
-    if (validator) nominations.push(validator);
+    if (validator) {
+      nominations.push(validator);
+    }
     return nominations;
   };
 
@@ -203,7 +207,9 @@ export const useFetchMehods = () => {
 
     // take one validator
     const validator = shuffle(all).slice(0, 1)[0] || null;
-    if (validator) nominations.push(validator);
+    if (validator) {
+      nominations.push(validator);
+    }
     return nominations;
   };
 
