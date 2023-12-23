@@ -12,7 +12,7 @@ import type {
 // Designed to emit notifications to subscribers to the `notification` event.
 export class NotificationsController {
   // Store how long a notification should remain displayed for.
-  private static displayDuration: number = 3000;
+  private static displayDuration = 3000;
 
   // Store the notification indexes.
   private static indexes: number[] = [];

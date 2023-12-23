@@ -10,8 +10,8 @@ export interface AccountProps {
   readOnly?: boolean;
 }
 
-export type PoolAccountProps = {
+export interface PoolAccountProps {
   pool: ActivePool;
   label: string;
   syncing: boolean;
-};
+}

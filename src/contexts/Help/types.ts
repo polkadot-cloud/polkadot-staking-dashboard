@@ -15,10 +15,10 @@ export interface HelpItem {
 export type ExternalItems = ExternalItem[];
 export type ExternalItem = [string, string, string];
 
-export type DefinitionWithKeys = {
+export interface DefinitionWithKeys {
   title: string;
   description: string[];
-};
+}
 
 export interface ExternalWithKeys {
   title: string;

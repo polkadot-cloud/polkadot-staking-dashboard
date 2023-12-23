@@ -32,11 +32,11 @@ export interface APIConstants {
   poolsPalletId: U8aLike;
 }
 
-export type APIChainState = {
+export interface APIChainState {
   chain: string | null;
   version: AnyJson;
   ss58Prefix: number;
-};
+}
 
 export interface APIContextInterface {
   api: ApiPromise | null;

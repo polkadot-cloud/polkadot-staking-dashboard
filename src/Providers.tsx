@@ -60,7 +60,7 @@ export const Providers = () => {
   const { activeAccount, setActiveAccount } = useActiveAccounts();
 
   // !! Provider order matters
-  const providers: Array<FC<AnyJson> | [FC<AnyJson>, AnyJson]> = [
+  const providers: (FC<AnyJson> | [FC<AnyJson>, AnyJson])[] = [
     [APIProvider, { network }],
     VaultAccountsProvider,
     LedgerHardwareProvider,

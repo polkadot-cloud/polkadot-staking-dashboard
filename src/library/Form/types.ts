@@ -40,7 +40,7 @@ export interface BondFeedbackProps {
   defaultBond: string | null;
   inSetup?: boolean;
   joiningPool?: boolean;
-  listenIsValid: { (valid: boolean, errors: string[]): void } | { (): void };
+  listenIsValid: ((valid: boolean, errors: string[]) => void) | (() => void);
   parentErrors?: string[];
   disableTxFeeUpdate?: boolean;
   setLocalResize?: () => void;
@@ -63,7 +63,7 @@ export interface UnbondFeedbackProps {
   bondFor: BondFor;
   defaultBond?: number;
   inSetup?: boolean;
-  listenIsValid: { (valid: boolean, errors: string[]): void } | { (): void };
+  listenIsValid: ((valid: boolean, errors: string[]) => void) | (() => void);
   parentErrors?: string[];
   setLocalResize?: () => void;
   txFees: BigNumber;

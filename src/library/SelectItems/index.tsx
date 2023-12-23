@@ -9,16 +9,16 @@ import type { SelectItemsProps } from './types';
 
 export const SelectItems = ({ layout, children }: SelectItemsProps) => {
   // Initialise refs for container and body of items.
-  const containerRefs: MutableRefObject<AnyJson>[] = [];
-  const bodyRefs: MutableRefObject<AnyJson>[] = [];
+  const containerRefs: MutableRefObject<HTMLDivElement | null>[] = [];
+  const bodyRefs: MutableRefObject<HTMLDivElement | null>[] = [];
 
   if (children) {
-    for (let i = 0; i < children.length; i++) {
+    children.forEach(() => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       bodyRefs.push(useRef(null));
       // eslint-disable-next-line react-hooks/rules-of-hooks
       containerRefs.push(useRef(null));
-    }
+    });
   }
 
   // Adjust all container heights to be uniform.
@@ -30,36 +30,37 @@ export const SelectItems = ({ layout, children }: SelectItemsProps) => {
     if (refsInitialised) {
       // Get max height from button refs.
       let maxHeight = 0;
-      for (let i = 0; i < bodyRefs.length; i++) {
-        const { current } = bodyRefs[i];
-        if (current) {
-          const thisHeight = current.offsetHeight || 0;
-          if (thisHeight > maxHeight) {
-            maxHeight = thisHeight;
-          }
+      for (const { current: currentBody } of bodyRefs) {
+        const thisHeight = currentBody?.offsetHeight || 0;
+        if (thisHeight > maxHeight) {
+          maxHeight = thisHeight;
         }
       }
 
       // Update container heights to max height.
-      for (let i = 0; i < containerRefs.length; i++) {
-        const { current } = containerRefs[i];
-
-        if (current) {
-          const icon: AnyJson = current.querySelector('.icon');
-          const toggle: AnyJson = current.querySelector('.toggle');
+      let i = 0;
+      for (const { current: currentContainer } of containerRefs) {
+        if (currentContainer) {
+          const icon: AnyJson = currentContainer.querySelector('.icon');
+          const toggle: AnyJson = currentContainer.querySelector('.toggle');
 
           if (window.innerWidth <= TwoThreshold) {
-            current.style.height = `${bodyRefs[i].current.offsetHeight}px`;
+            currentContainer.style.height = `${
+              bodyRefs[i].current?.offsetHeight || 0
+            }px`;
             if (icon)
-              icon.style.height = `${bodyRefs[i].current.offsetHeight}px`;
+              icon.style.height = `${bodyRefs[i].current?.offsetHeight || 0}px`;
             if (toggle)
-              toggle.style.height = `${bodyRefs[i].current.offsetHeight}px`;
+              toggle.style.height = `${
+                bodyRefs[i].current?.offsetHeight || 0
+              }px`;
           } else {
-            current.style.height = `${maxHeight}px`;
+            currentContainer.style.height = `${maxHeight}px`;
             if (icon) icon.style.height = `${maxHeight}px`;
             if (toggle) toggle.style.height = `${maxHeight}px`;
           }
         }
+        i++;
       }
     }
   };

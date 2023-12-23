@@ -53,10 +53,10 @@ export interface RewardPool {
 
 export type PoolState = 'Open' | 'Blocked' | 'Destroying';
 
-export type PoolUnlocking = {
+export interface PoolUnlocking {
   era: number;
   value: BigNumber;
-};
+}
 
 export type PoolTargets = Record<number, AnyJson>;
 

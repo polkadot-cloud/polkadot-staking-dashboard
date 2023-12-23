@@ -16,7 +16,7 @@ export class Ledger {
   static transport: AnyJson | null;
 
   // Whether the device is currently paired.
-  static isPaired: boolean = false;
+  static isPaired = false;
 
   // Initialise ledger transport, initialise app, and return with device info.
   static initialise = async (appName: string) => {

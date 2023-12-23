@@ -4,7 +4,7 @@
 import type { FunctionComponent, SVGProps } from 'react';
 import type { AnyJson, MaybeString, NetworkName } from 'types';
 
-export type LedgerHardwareContextInterface = {
+export interface LedgerHardwareContextInterface {
   integrityChecked: boolean;
   setIntegrityChecked: (checked: boolean) => void;
   checkRuntimeVersion: (appName: string) => Promise<void>;
@@ -28,7 +28,7 @@ export type LedgerHardwareContextInterface = {
     payload: AnyJson
   ) => Promise<void>;
   handleResetLedgerTask: () => void;
-};
+}
 
 export interface FeedbackMessage {
   message: MaybeString;
@@ -70,11 +70,11 @@ export interface LedgerAddress {
   pubKey: string;
 }
 
-export type LedgerApp = {
+export interface LedgerApp {
   network: NetworkName;
   appName: string;
   Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
-};
+}
 
 export interface HandleErrorFeedback {
   message: MaybeString;
