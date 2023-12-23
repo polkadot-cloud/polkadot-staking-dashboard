@@ -95,7 +95,6 @@ export const UpdatePayee = () => {
     callbackSubmit: () => {
       setModalStatus('closing');
     },
-    callbackInBlock: () => {},
   });
 
   // Reset selected value on account change.

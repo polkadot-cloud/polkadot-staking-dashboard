@@ -105,7 +105,6 @@ export const Unstake = () => {
     callbackSubmit: () => {
       setModalStatus('closing');
     },
-    callbackInBlock: () => {},
   });
 
   const warnings = getSignerWarnings(

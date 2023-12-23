@@ -107,7 +107,6 @@ export const LeavePool = ({
     callbackSubmit: () => {
       setModalStatus('closing');
     },
-    callbackInBlock: () => {},
   });
 
   const warnings = getSignerWarnings(

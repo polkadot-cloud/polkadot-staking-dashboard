@@ -73,7 +73,6 @@ export const Summary = ({ section }: SetupStepProps) => {
     tx: getTxs(),
     from: activeAccount,
     shouldSubmit: true,
-    callbackSubmit: () => {},
     callbackInBlock: async () => {
       // query and add created pool to bondedPools list
       const pool = await queryBondedPool(poolId.toNumber());

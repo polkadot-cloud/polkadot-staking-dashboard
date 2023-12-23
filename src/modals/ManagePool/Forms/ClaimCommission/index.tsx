@@ -65,7 +65,6 @@ export const ClaimCommission = ({
     callbackSubmit: () => {
       setModalStatus('closing');
     },
-    callbackInBlock: () => {},
   });
 
   const warnings = getSignerWarnings(

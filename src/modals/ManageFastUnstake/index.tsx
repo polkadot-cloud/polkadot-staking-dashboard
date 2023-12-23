@@ -99,7 +99,6 @@ export const ManageFastUnstake = () => {
     tx: getTx(),
     from: controller,
     shouldSubmit: valid,
-    callbackSubmit: () => {},
     callbackInBlock: () => {
       setModalStatus('closing');
     },

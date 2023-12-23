@@ -131,7 +131,6 @@ export const Unbond = () => {
     callbackSubmit: () => {
       setModalStatus('closing');
     },
-    callbackInBlock: () => {},
   });
 
   const nominatorActiveBelowMin =
