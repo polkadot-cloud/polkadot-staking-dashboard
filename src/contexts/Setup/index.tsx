@@ -59,18 +59,14 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // Type guard to check if setup is a pool or nominator.
-  const isPoolSetup = (
-    setup: NominatorSetup | PoolSetup
-  ): setup is PoolSetup => {
-    return (setup as PoolSetup).progress?.metadata !== undefined;
-  };
+  const isPoolSetup = (setup: NominatorSetup | PoolSetup): setup is PoolSetup =>
+    (setup as PoolSetup).progress?.metadata !== undefined;
 
   // Utility to get the default progress based on type.
-  const defaultProgress = (type: BondFor): PoolProgress | NominatorProgress => {
-    return type === 'nominator'
+  const defaultProgress = (type: BondFor): PoolProgress | NominatorProgress =>
+    type === 'nominator'
       ? (defaultNominatorProgress as NominatorProgress)
       : (defaultPoolProgress as PoolProgress);
-  };
 
   // Utility to get the default setup based on type.
   const defaultSetup = (type: BondFor): NominatorSetup | PoolSetup =>
@@ -130,7 +126,9 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     type: BondFor,
     progress: NominatorProgress | PoolProgress
   ) => {
-    if (!activeAccount) return;
+    if (!activeAccount) {
+      return;
+    }
 
     const updatedSetups = updateSetups(
       assignSetups(type),
@@ -142,7 +140,9 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Sets active setup section for an address.
   const setActiveAccountSetupSection = (type: BondFor, section: number) => {
-    if (!activeAccount) return;
+    if (!activeAccount) {
+      return;
+    }
 
     const setups = assignSetups(type);
     const updatedSetups = updateSetups(
@@ -178,32 +178,50 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Gets the stake setup progress as a percentage for an address.
   const getNominatorSetupPercent = (address: MaybeAddress) => {
-    if (!address) return 0;
+    if (!address) {
+      return 0;
+    }
     const setup = getSetupProgress('nominator', address) as NominatorSetup;
     const { progress } = setup;
     const bond = unitToPlanck(progress?.bond || '0', units);
 
     const p = 33;
     let percentage = 0;
-    if (greaterThanZero(bond)) percentage += p;
-    if (progress.nominations.length) percentage += p;
-    if (progress.payee.destination !== null) percentage += p;
+    if (greaterThanZero(bond)) {
+      percentage += p;
+    }
+    if (progress.nominations.length) {
+      percentage += p;
+    }
+    if (progress.payee.destination !== null) {
+      percentage += p;
+    }
     return percentage;
   };
 
   // Gets the stake setup progress as a percentage for an address.
   const getPoolSetupPercent = (address: MaybeAddress) => {
-    if (!address) return 0;
+    if (!address) {
+      return 0;
+    }
     const setup = getSetupProgress('pool', address) as PoolSetup;
     const { progress } = setup;
     const bond = unitToPlanck(progress?.bond || '0', units);
 
     const p = 25;
     let percentage = 0;
-    if (progress.metadata !== '') percentage += p;
-    if (greaterThanZero(bond)) percentage += p;
-    if (progress.nominations.length) percentage += p;
-    if (progress.roles !== null) percentage += p - 1;
+    if (progress.metadata !== '') {
+      percentage += p;
+    }
+    if (greaterThanZero(bond)) {
+      percentage += p;
+    }
+    if (progress.nominations.length) {
+      percentage += p;
+    }
+    if (progress.roles !== null) {
+      percentage += p - 1;
+    }
     return percentage;
   };
 
@@ -257,7 +275,9 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Update setup state when activeAccount changes
   useEffectIgnoreInitial(() => {
-    if (accounts.length) refreshSetups();
+    if (accounts.length) {
+      refreshSetups();
+    }
   }, [activeAccount, network, accounts]);
 
   return (

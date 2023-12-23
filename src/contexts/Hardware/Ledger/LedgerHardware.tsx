@@ -97,7 +97,9 @@ export const LedgerHardwareProvider = ({
       setIsExecuting(false);
       resetFeedback();
 
-      if (result.minor < specVersion) runtimesInconsistent.current = true;
+      if (result.minor < specVersion) {
+        runtimesInconsistent.current = true;
+      }
       setIntegrityChecked(true);
     } catch (err) {
       handleErrors(appName, err);

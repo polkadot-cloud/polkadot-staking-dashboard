@@ -81,13 +81,18 @@ export const SubscanProvider = ({
 
   // Reset payouts on no active account.
   useEffectIgnoreInitial(() => {
-    if (!activeAccount) resetPayouts();
+    if (!activeAccount) {
+      resetPayouts();
+    }
   }, [activeAccount]);
 
   // Reset payouts on subscan plugin not enabled.
   useEffectIgnoreInitial(() => {
-    if (!plugins.includes('subscan')) resetPayouts();
-    else if (isReady && isNotZero(activeEra.index)) handleFetchPayouts();
+    if (!plugins.includes('subscan')) {
+      resetPayouts();
+    } else if (isReady && isNotZero(activeEra.index)) {
+      handleFetchPayouts();
+    }
   }, [plugins.includes('subscan'), isReady, activeEra]);
 
   // Fetch payouts as soon as network is ready.

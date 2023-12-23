@@ -32,13 +32,15 @@ export const useStatusButtons = () => {
   const poolSetupPercent = getPoolSetupPercent(activeAccount);
 
   const disableCreate = () => {
-    if (!isReady || isReadOnlyAccount(activeAccount) || !activeAccount)
+    if (!isReady || isReadOnlyAccount(activeAccount) || !activeAccount) {
       return true;
+    }
     if (
       maxPools &&
       (maxPools.isZero() || bondedPools.length === stats.maxPools?.toNumber())
-    )
+    ) {
       return true;
+    }
     return false;
   };
 

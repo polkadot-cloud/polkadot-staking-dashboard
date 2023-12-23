@@ -65,11 +65,15 @@ export const Forms = forwardRef(
       ) || 0;
 
     const getCalls = () => {
-      if (!api) return [];
+      if (!api) {
+        return [];
+      }
 
       const calls: AnyApi[] = [];
       payouts?.forEach(({ era, paginatedValidators }) => {
-        if (!paginatedValidators) return [];
+        if (!paginatedValidators) {
+          return [];
+        }
 
         return paginatedValidators.forEach(([page, v]) => {
           if (isPagedRewardsActive(new BigNumber(era))) {
@@ -98,7 +102,9 @@ export const Forms = forwardRef(
     const getTx = () => {
       const tx = null;
       const calls = getCalls();
-      if (!valid || !api || !calls.length) return tx;
+      if (!valid || !api || !calls.length) {
+        return tx;
+      }
 
       return calls.length === 1
         ? calls.pop()

@@ -60,7 +60,9 @@ export const BalancesProvider = ({
 
       removed?.forEach((address) => {
         const unsub = unsubs.current[address];
-        if (unsub) unsub();
+        if (unsub) {
+          unsub();
+        }
       });
       unsubs.current = Object.fromEntries(
         Object.entries(unsubs.current).filter(([key]) => !removed.includes(key))
@@ -86,7 +88,9 @@ export const BalancesProvider = ({
   };
 
   const handleSubscriptions = async (address: string) => {
-    if (!api) return undefined;
+    if (!api) {
+      return undefined;
+    }
 
     const unsub = await api.queryMulti<AnyApi>(
       [
@@ -104,7 +108,9 @@ export const BalancesProvider = ({
             // add stash as external account if not present
             if (!getAccount(stash.toString())) {
               const result = addExternalAccount(stash.toString(), 'system');
-              if (result) addOrReplaceOtherAccount(result.account, result.type);
+              if (result) {
+                addOrReplaceOtherAccount(result.account, result.type);
+              }
             }
 
             setStateWithRef(
@@ -194,9 +200,8 @@ export const BalancesProvider = ({
   }, [network]);
 
   // Gets a ledger for a stash address.
-  const getStashLedger = (address: MaybeAddress) => {
-    return getLedger(ledgersRef.current, 'stash', address);
-  };
+  const getStashLedger = (address: MaybeAddress) =>
+    getLedger(ledgersRef.current, 'stash', address);
 
   // Gets an account's balance metadata.
   const getBalance = (address: MaybeAddress) =>

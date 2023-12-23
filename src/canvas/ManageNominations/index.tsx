@@ -84,16 +84,12 @@ export const ManageNominations = () => {
   };
 
   // Check if default nominations match new ones.
-  const nominationsMatch = () => {
-    return (
-      newNominations.nominations.every((n) =>
-        defaultNominations.nominations.find((d) => d.address === n.address)
-      ) &&
-      newNominations.nominations.length > 0 &&
-      newNominations.nominations.length ===
-        defaultNominations.nominations.length
-    );
-  };
+  const nominationsMatch = () =>
+    newNominations.nominations.every((n) =>
+      defaultNominations.nominations.find((d) => d.address === n.address)
+    ) &&
+    newNominations.nominations.length > 0 &&
+    newNominations.nominations.length === defaultNominations.nominations.length;
 
   // Tx to submit.
   const getTx = () => {
@@ -132,11 +128,12 @@ export const ManageNominations = () => {
     callbackInBlock: () => {
       if (isPool) {
         // Upate bonded pool targets if updating pool nominations.
-        if (selectedActivePool?.id)
+        if (selectedActivePool?.id) {
           updatePoolNominations(
             selectedActivePool.id,
             newNominations.nominations.map((n) => n.address)
           );
+        }
       }
     },
   });

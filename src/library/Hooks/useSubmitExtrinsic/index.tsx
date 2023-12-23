@@ -142,10 +142,13 @@ export const useSubmitExtrinsic = ({
         ([id, status]) => id === source && status === 'connected'
       );
 
-      if (!isInstalled) throw new Error(`${t('walletNotFound')}`);
-
-      if (!window?.injectedWeb3?.[source])
+      if (!isInstalled) {
         throw new Error(`${t('walletNotFound')}`);
+      }
+
+      if (!window?.injectedWeb3?.[source]) {
+        throw new Error(`${t('walletNotFound')}`);
+      }
 
       // summons extension popup if not already connected.
       window.injectedWeb3[source].enable(DappName);
@@ -203,7 +206,9 @@ export const useSubmitExtrinsic = ({
 
     const onError = (type?: string) => {
       resetTx();
-      if (type === 'ledger') handleResetLedgerTask();
+      if (type === 'ledger') {
+        handleResetLedgerTask();
+      }
       removePending(nonce);
       NotificationsController.emit({
         title: t('cancelled'),
@@ -212,8 +217,12 @@ export const useSubmitExtrinsic = ({
     };
 
     const handleStatus = (status: AnyApi) => {
-      if (status.isReady) onReady();
-      if (status.isInBlock) onInBlock();
+      if (status.isReady) {
+        onReady();
+      }
+      if (status.isInBlock) {
+        onInBlock();
+      }
     };
 
     const unsubEvents = ['ExtrinsicSuccess', 'ExtrinsicFailed'];
@@ -240,7 +249,9 @@ export const useSubmitExtrinsic = ({
             if (status.isFinalized) {
               events.forEach(({ event: { method } }: AnyApi) => {
                 onFinalizedEvent(method);
-                if (unsubEvents?.includes(method)) unsub();
+                if (unsubEvents?.includes(method)) {
+                  unsub();
+                }
               });
             }
           }
@@ -265,7 +276,9 @@ export const useSubmitExtrinsic = ({
             if (status.isFinalized) {
               events.forEach(({ event: { method } }: AnyApi) => {
                 onFinalizedEvent(method);
-                if (unsubEvents?.includes(method)) unsub();
+                if (unsubEvents?.includes(method)) {
+                  unsub();
+                }
               });
             }
           }

@@ -52,7 +52,9 @@ export const Ledger = ({
 
   // Handle new Ledger status report.
   const handleLedgerStatusResponse = (response: LedgerResponse) => {
-    if (!response) return;
+    if (!response) {
+      return;
+    }
     const { ack, statusCode, body } = response;
 
     if (statusCode === 'SignedPayload') {
@@ -102,11 +104,12 @@ export const Ledger = ({
   }, [transportResponse]);
 
   // Tidy up context state when this component is no longer mounted.
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       handleUnmount();
-    };
-  }, []);
+    },
+    []
+  );
 
   return (
     <>
@@ -152,7 +155,9 @@ export const Ledger = ({
                 <ButtonHelp
                   marginLeft
                   onClick={() => {
-                    if (feedback?.helpKey) openHelp(feedback.helpKey);
+                    if (feedback?.helpKey) {
+                      openHelp(feedback.helpKey);
+                    }
                   }}
                 />
               )}

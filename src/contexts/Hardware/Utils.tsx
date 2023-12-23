@@ -33,16 +33,17 @@ export const getLedgerErrorType = (err: string) => {
       }
       return true;
     });
-    if (found) return false;
+    if (found) {
+      return false;
+    }
     return true;
   });
   return errorType || 'misc';
 };
 
 // Gets ledger app from local storage, fallback to first entry.
-export const getLedgerApp = (network: string) => {
-  return LedgerApps.find((a) => a.network === network) || LedgerApps[0];
-};
+export const getLedgerApp = (network: string) =>
+  LedgerApps.find((a) => a.network === network) || LedgerApps[0];
 
 // Gets saved ledger addresses from local storage.
 export const getLocalLedgerAddresses = (network?: string) => {

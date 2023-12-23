@@ -18,7 +18,9 @@ export const usePoolFilters = () => {
    * Returns the updated filtered list.
    */
   const includeActive = (list: AnyFilter) => {
-    if (!Object.keys(poolsNominations).length) return list;
+    if (!Object.keys(poolsNominations).length) {
+      return list;
+    }
 
     const filteredList = list.filter((p: BondedPool) => {
       const nominations = poolsNominations[p.id];
@@ -36,7 +38,9 @@ export const usePoolFilters = () => {
    * Returns the updated filtered list.
    */
   const excludeActive = (list: AnyFilter) => {
-    if (!Object.keys(poolsNominations).length) return list;
+    if (!Object.keys(poolsNominations).length) {
+      return list;
+    }
 
     const filteredList = list.filter((p: BondedPool) => {
       const nominations = poolsNominations[p.id];

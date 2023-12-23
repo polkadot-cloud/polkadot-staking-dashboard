@@ -64,7 +64,9 @@ export const AccountButton = ({
 
   // Handle account click. Handles both active account and active proxy.
   const handleClick = () => {
-    if (!imported) return;
+    if (!imported) {
+      return;
+    }
     setActiveAccount(getAccount(connectTo)?.address || null);
     setActiveProxy(proxyType ? { address: connectProxy, proxyType } : null);
     setModalStatus('closing');

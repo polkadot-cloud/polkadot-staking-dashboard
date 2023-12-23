@@ -41,7 +41,7 @@ export const ValidatorGeo = () => {
   const chartWidth = '330px';
 
   useEffect(() => {
-    if (networkSupported && enabled)
+    if (networkSupported && enabled) {
       pwApi
         .ddpIpfsValidatorDetail({
           lastDays: 60,
@@ -53,7 +53,9 @@ export const ValidatorGeo = () => {
           setPwData(response.data);
         })
         .catch(() => setAnalyticsAvailable(false));
-    else setAnalyticsAvailable(false);
+    } else {
+      setAnalyticsAvailable(false);
+    }
   }, [pwApi, address]);
 
   return (

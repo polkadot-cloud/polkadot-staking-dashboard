@@ -52,7 +52,9 @@ const processErasStakersForNominationPoolRewards = async ({
     if (validator) {
       const rewardPoints: string =
         erasRewardPoints[era]?.individual?.[validator || ''] ?? 0;
-      if (!poolRewardData[address]) poolRewardData[address] = {};
+      if (!poolRewardData[address]) {
+        poolRewardData[address] = {};
+      }
       poolRewardData[address][era] = rewardPoints;
     }
   }

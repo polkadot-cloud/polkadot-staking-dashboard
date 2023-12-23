@@ -29,7 +29,9 @@ export const PoolFavorites = () => {
     const newFavoritesList = favorites
       .map((f) => {
         const pool = bondedPools.find((b) => b.addresses.stash === f);
-        if (!pool) removeFavorite(f);
+        if (!pool) {
+          removeFavorite(f);
+        }
         return pool;
       })
       .filter((f): f is BondedPool => f !== undefined);

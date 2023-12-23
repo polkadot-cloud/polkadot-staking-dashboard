@@ -150,8 +150,12 @@ export const AccountInput = ({
   };
 
   const className = [];
-  if (inactive) className.push('inactive');
-  if (border) className.push('border');
+  if (inactive) {
+    className.push('inactive');
+  }
+  if (border) {
+    className.push('border');
+  }
 
   return (
     <AccountInputWrapper

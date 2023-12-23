@@ -13,12 +13,13 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
   const refDark = useRef<AnyJson>(null);
   const refsInitialised = useRef<boolean>(false);
 
-  const getRef = (m: Theme) => {
-    return m === 'light' ? refLight.current : refDark.current;
-  };
+  const getRef = (m: Theme) =>
+    m === 'light' ? refLight.current : refDark.current;
 
   const handlePlayAnimation = async () => {
-    if (!getRef(mode)) return;
+    if (!getRef(mode)) {
+      return;
+    }
     getRef(mode).play();
   };
 
@@ -28,7 +29,9 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
     }
   };
   useEffect(() => {
-    if (!getRef('light') || !getRef('dark') || refsInitialised.current) return;
+    if (!getRef('light') || !getRef('dark') || refsInitialised.current) {
+      return;
+    }
     refsInitialised.current = true;
 
     getRef('light').addEventListener('loop', () =>

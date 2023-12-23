@@ -29,7 +29,7 @@ export const ActiveAccountsProvider = ({
 
   // Setter for the active proxy account.
   const setActiveProxy = (newActiveProxy: ActiveProxy, updateLocal = true) => {
-    if (updateLocal)
+    if (updateLocal) {
       if (newActiveProxy) {
         localStorage.setItem(
           `${network}_active_proxy`,
@@ -38,6 +38,7 @@ export const ActiveAccountsProvider = ({
       } else {
         localStorage.removeItem(`${network}_active_proxy`);
       }
+    }
     setStateWithRef(newActiveProxy, setActiveProxyState, activeProxyRef);
   };
 
@@ -46,10 +47,13 @@ export const ActiveAccountsProvider = ({
     newActiveAccount: MaybeAddress,
     updateLocalStorage = true
   ) => {
-    if (updateLocalStorage)
-      if (newActiveAccount === null)
+    if (updateLocalStorage) {
+      if (newActiveAccount === null) {
         localStorage.removeItem(`${network}_active_account`);
-      else localStorage.setItem(`${network}_active_account`, newActiveAccount);
+      } else {
+        localStorage.setItem(`${network}_active_account`, newActiveAccount);
+      }
+    }
 
     setStateWithRef(newActiveAccount, setActiveAccountState, activeAccountRef);
   };

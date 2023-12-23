@@ -140,7 +140,9 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     setIsPoolSyncing(poolSyncing);
 
     // eraStakers total active nominators has synced
-    if (!eraStakers.totalActiveNominators) syncing = true;
+    if (!eraStakers.totalActiveNominators) {
+      syncing = true;
+    }
 
     setIsSyncing(syncing);
   }, [isReady, staking, metrics, balances, eraStakers, activePoolsSynced]);

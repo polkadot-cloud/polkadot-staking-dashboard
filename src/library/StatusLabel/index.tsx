@@ -33,10 +33,11 @@ export const StatusLabel = ({
     }
   }
 
-  if (status === 'active_service' && statusFor)
+  if (status === 'active_service' && statusFor) {
     if (plugins.includes(statusFor)) {
       return null;
     }
+  }
 
   return (
     <Wrapper $topOffset={topOffset}>

@@ -29,15 +29,17 @@ export const MigrateProvider = ({
   // Removes the previous nominator setup objects from local storage.
   const removeDeprecatedNominatorSetups = () =>
     Object.values(NetworkList).forEach((n) => {
-      for (const a of accounts)
+      for (const a of accounts) {
         localStorage.removeItem(`${n.name}_stake_setup_${a.address}`);
+      }
     });
 
   // Removes the previous pool setup objects from local storage.
   const removeDeprecatedPoolSetups = () =>
     Object.values(NetworkList).forEach((n) => {
-      for (const a of accounts)
+      for (const a of accounts) {
         localStorage.removeItem(`${n.name}_pool_setup_${a.address}`);
+      }
     });
 
   // Removes the previous active proxies from local storage.
@@ -49,7 +51,9 @@ export const MigrateProvider = ({
   // Removes `system` added external accounts from local storage.
   const removeSystemExternalAccounts = () => {
     const current = localStorageOrDefault('external_accounts', [], true);
-    if (!current.length) return;
+    if (!current.length) {
+      return;
+    }
 
     const updated =
       (current as ExternalAccount[])?.filter((a) => a.addedBy !== 'system') ||

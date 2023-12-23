@@ -88,7 +88,9 @@ export const useValidatorFilters = () => {
    */
   const filterActive = (list: AnyFilter) => {
     // if list has not yet been populated, return original list
-    if (sessionValidators.length === 0) return list;
+    if (sessionValidators.length === 0) {
+      return list;
+    }
     return list.filter((validator: AnyFilter) =>
       sessionValidators.includes(validator.address)
     );
@@ -100,7 +102,9 @@ export const useValidatorFilters = () => {
    */
   const filterNonParachainValidator = (list: AnyFilter) => {
     // if list has not yet been populated, return original list
-    if ((sessionParaValidators?.length ?? 0) === 0) return list;
+    if ((sessionParaValidators?.length ?? 0) === 0) {
+      return list;
+    }
     return list.filter((validator: AnyFilter) =>
       sessionParaValidators.includes(validator.address)
     );
@@ -112,7 +116,9 @@ export const useValidatorFilters = () => {
    */
   const filterInSession = (list: AnyFilter) => {
     // if list has not yet been populated, return original list
-    if (sessionValidators.length === 0) return list;
+    if (sessionValidators.length === 0) {
+      return list;
+    }
     return list.filter(
       (validator: AnyFilter) => !sessionValidators.includes(validator.address)
     );
@@ -248,13 +254,15 @@ export const useValidatorFilters = () => {
         superIdentityAsBytes === '' ? superIdentityRaw : superIdentityAsBytes
       ).toLowerCase();
 
-      if (validator.address.toLowerCase().includes(searchTerm.toLowerCase()))
+      if (validator.address.toLowerCase().includes(searchTerm.toLowerCase())) {
         filteredList.push(validator);
+      }
       if (
         identitySearch.includes(searchTerm.toLowerCase()) ||
         superIdentitySearch.includes(searchTerm.toLowerCase())
-      )
+      ) {
         filteredList.push(validator);
+      }
     }
     return filteredList;
   };

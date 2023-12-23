@@ -15,11 +15,13 @@ export const getLocalEraExposures = (
   const current = data ? (JSON.parse(data) as LocalExposuresData) : null;
   const currentEra = current?.era;
 
-  if (currentEra && currentEra !== activeEra)
+  if (currentEra && currentEra !== activeEra) {
     localStorage.removeItem(`${network}_exposures`);
+  }
 
-  if (currentEra === era && current?.exposures)
+  if (currentEra === era && current?.exposures) {
     return maxifyExposures(current.exposures) as Exposure[];
+  }
 
   return null;
 };

@@ -46,7 +46,9 @@ export const Main = () => {
   });
 
   useEffect(() => {
-    if (!accounts.length) return;
+    if (!accounts.length) {
+      return;
+    }
 
     // inject actions into menu items
     const pages = Object.assign(pageConfig.pages);

@@ -51,7 +51,9 @@ export const BondedPoolsProvider = ({
 
   // Fetch all bonded pool entries and their metadata.
   const fetchBondedPools = async () => {
-    if (!api || bondedPoolsSynced.current !== 'unsynced') return;
+    if (!api || bondedPoolsSynced.current !== 'unsynced') {
+      return;
+    }
     bondedPoolsSynced.current = 'syncing';
 
     const ids: number[] = [];
@@ -81,7 +83,9 @@ export const BondedPoolsProvider = ({
 
   // Fetches pool nominations and updates state.
   const fetchPoolsNominations = async () => {
-    if (!api) return;
+    if (!api) {
+      return;
+    }
 
     const ids: number[] = [];
     const nominationsMulti = await api.query.staking.nominators.multi(
@@ -98,7 +102,9 @@ export const BondedPoolsProvider = ({
     Object.fromEntries(
       raw.map((n: AnyJson, i: number) => {
         const human = n.toHuman() as PoolNominations;
-        if (!human) return [ids[i], null];
+        if (!human) {
+          return [ids[i], null];
+        }
         return [
           ids[i],
           {
@@ -111,7 +117,9 @@ export const BondedPoolsProvider = ({
 
   // Queries a bonded pool and injects ID and addresses to a result.
   const queryBondedPool = async (id: number) => {
-    if (!api) return null;
+    if (!api) {
+      return null;
+    }
 
     const bondedPool: AnyApi = (
       await api.query.nominationPools.bondedPools(id)
@@ -134,14 +142,18 @@ export const BondedPoolsProvider = ({
   ) => {
     const pool = bondedPools.find((p) => p.addresses.stash === nominator);
 
-    if (!pool) return 'waiting';
+    if (!pool) {
+      return 'waiting';
+    }
 
     // get pool targets from nominations metadata
     const nominations = poolsNominations[pool.id];
     const targets = nominations ? nominations.targets : [];
     const target = targets.find((t) => t === nomination);
 
-    if (!target) return 'waiting';
+    if (!target) {
+      return 'waiting';
+    }
 
     const nominationStatus = getNominationsStatusFromTargets(nominator, [
       target,
@@ -202,17 +214,23 @@ export const BondedPoolsProvider = ({
         metadataAsBytes === '' ? metadata : metadataAsBytes
       ).toLowerCase();
 
-      if (pool.id.includes(searchTerm.toLowerCase())) filteredList.push(pool);
-      if (address.toLowerCase().includes(searchTerm.toLowerCase()))
+      if (pool.id.includes(searchTerm.toLowerCase())) {
         filteredList.push(pool);
-      if (metadataSearch.includes(searchTerm.toLowerCase()))
+      }
+      if (address.toLowerCase().includes(searchTerm.toLowerCase())) {
         filteredList.push(pool);
+      }
+      if (metadataSearch.includes(searchTerm.toLowerCase())) {
+        filteredList.push(pool);
+      }
     }
     return filteredList;
   };
 
   const updateBondedPools = (updatedPools: BondedPool[]) => {
-    if (!updatedPools) return;
+    if (!updatedPools) {
+      return;
+    }
     setBondedPools(
       bondedPools.map(
         (original) =>
@@ -244,10 +262,14 @@ export const BondedPoolsProvider = ({
   // adds a record to bondedPools.
   // currently only used when a new pool is created.
   const addToBondedPools = (pool: BondedPool) => {
-    if (!pool) return;
+    if (!pool) {
+      return;
+    }
 
     const exists = bondedPools.find((b) => b.id === pool.id);
-    if (!exists) setBondedPools(bondedPools.concat(pool));
+    if (!exists) {
+      setBondedPools(bondedPools.concat(pool));
+    }
   };
 
   // get all the roles belonging to one pool account
@@ -324,7 +346,9 @@ export const BondedPoolsProvider = ({
   const replacePoolRoles = (poolId: number, roleEdits: AnyJson) => {
     let pool = bondedPools.find((b) => b.id === poolId) || null;
 
-    if (!pool) return;
+    if (!pool) {
+      return;
+    }
 
     pool = {
       ...pool,
@@ -351,7 +375,9 @@ export const BondedPoolsProvider = ({
 
   // Initial setup for fetching bonded pools.
   useEffectIgnoreInitial(() => {
-    if (isReady && lastPoolId) fetchBondedPools();
+    if (isReady && lastPoolId) {
+      fetchBondedPools();
+    }
   }, [bondedPools, isReady, lastPoolId]);
 
   // Re-fetch bonded pools nominations when active era changes or when `bondedPools` update.

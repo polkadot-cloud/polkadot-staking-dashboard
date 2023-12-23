@@ -18,7 +18,9 @@ export const Quartile = ({ address }: { address: string }) => {
     ns: 'library',
   })}`;
 
-  if (erasRewardPointsFetched !== 'synced') return null;
+  if (erasRewardPointsFetched !== 'synced') {
+    return null;
+  }
 
   return (
     <div

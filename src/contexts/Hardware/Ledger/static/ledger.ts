@@ -28,18 +28,26 @@ export class Ledger {
 
   // Ensure transport is closed.
   static ensureClosed = async () => {
-    if (this.transport?.device?.opened) await this.transport?.close();
+    if (this.transport?.device?.opened) {
+      await this.transport?.close();
+    }
   };
 
   // Ensure transport is open.
   static ensureOpen = async () => {
-    if (!this.transport?.device?.opened) await this.transport?.open();
+    if (!this.transport?.device?.opened) {
+      await this.transport?.open();
+    }
   };
 
   // Check if a response is an error.
   static isError = (result: AnyJson) => {
     const error = result?.error_message;
-    if (error) if (!error.startsWith('No errors')) return true;
+    if (error) {
+      if (!error.startsWith('No errors')) {
+        return true;
+      }
+    }
     return false;
   };
 

@@ -43,7 +43,9 @@ export const ImportLedger: FC = () => {
 
   // Gets the next non-imported address index.
   const getNextAddressIndex = () => {
-    if (!addressesRef.current.length) return 0;
+    if (!addressesRef.current.length) {
+      return 0;
+    }
     return addressesRef.current[addressesRef.current.length - 1].index + 1;
   };
 
@@ -55,8 +57,12 @@ export const ImportLedger: FC = () => {
     let newLedgerAddresses = getLocalLedgerAddresses();
 
     newLedgerAddresses = newLedgerAddresses.filter((a) => {
-      if (a.address !== address) return true;
-      if (a.network !== network) return true;
+      if (a.address !== address) {
+        return true;
+      }
+      if (a.network !== network) {
+        return true;
+      }
       return false;
     });
     if (!newLedgerAddresses.length) {
@@ -85,7 +91,9 @@ export const ImportLedger: FC = () => {
 
   // Handle new Ledger status report.
   const handleLedgerStatusResponse = (response: LedgerResponse) => {
-    if (!response) return;
+    if (!response) {
+      return;
+    }
 
     const { ack, statusCode, body, options } = response;
     setStatusCode(ack, statusCode);
@@ -102,8 +110,12 @@ export const ImportLedger: FC = () => {
       // update the full list of local ledger addresses with new entry.
       const newAddresses = getLocalLedgerAddresses()
         .filter((a: AnyJson) => {
-          if (a.address !== newAddress[0].address) return true;
-          if (a.network !== network) return true;
+          if (a.address !== newAddress[0].address) {
+            return true;
+          }
+          if (a.network !== network) {
+            return true;
+          }
           return false;
         })
         .concat(newAddress);
@@ -138,11 +150,12 @@ export const ImportLedger: FC = () => {
   }, [transportResponse]);
 
   // Tidy up context state when this component is no longer mounted.
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       handleUnmount();
-    };
-  }, []);
+    },
+    []
+  );
 
   return !addressesRef.current.length ? (
     <Splash onGetAddress={onGetAddress} />
