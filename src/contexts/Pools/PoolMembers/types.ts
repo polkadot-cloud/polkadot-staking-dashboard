@@ -5,12 +5,12 @@ import type { AnyMetaBatch, MaybeAddress, Sync } from 'types';
 
 export interface PoolMemberContext {
   fetchPoolMembersMetaBatch: (k: string, v: AnyMetaBatch[], r: boolean) => void;
-  queryPoolMember: (w: MaybeAddress) => any;
-  getMembersOfPoolFromNode: (p: number) => any;
-  addToPoolMembers: (m: any) => void;
+  queryPoolMember: (who: MaybeAddress) => Promise<PoolMember | null>;
+  getMembersOfPoolFromNode: (poolId: number) => PoolMember[] | null;
+  addToPoolMembers: (member: PoolMember) => void;
   removePoolMember: (w: MaybeAddress) => void;
   getPoolMemberCount: (p: number) => number;
-  poolMembersNode: any;
+  poolMembersNode: PoolMember[];
   meta: AnyMetaBatch;
   poolMembersApi: PoolMember[];
   setPoolMembersApi: (p: PoolMember[]) => void;

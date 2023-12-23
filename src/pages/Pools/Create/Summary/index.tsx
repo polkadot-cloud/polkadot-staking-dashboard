@@ -32,15 +32,14 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { stats } = usePoolsConfig();
   const { newBatchCall } = useBatchCall();
   const { accountHasSigner } = useImportedAccounts();
-  const { getSetupProgress, removeSetupProgress } = useSetup();
+  const { getPoolSetup, removeSetupProgress } = useSetup();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { queryBondedPool, addToBondedPools } = useBondedPools();
   const { activeAccount, activeProxy } = useActiveAccounts();
 
   const { lastPoolId } = stats;
   const poolId = lastPoolId.plus(1);
-
-  const setup = getSetupProgress('pool', activeAccount);
+  const setup = getPoolSetup(activeAccount);
   const { progress } = setup;
 
   const { metadata, bond, roles, nominations } = progress;
@@ -82,7 +81,9 @@ export const Summary = ({ section }: SetupStepProps) => {
 
       // query and add account to poolMembers list
       const member = await queryPoolMember(activeAccount);
-      addToPoolMembers(member);
+      if (member) {
+        addToPoolMembers(member);
+      }
 
       // reset localStorage setup progress
       removeSetupProgress('pool', activeAccount);

@@ -19,8 +19,8 @@ export const Bond = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const { activeAccount } = useActiveAccounts();
   const { txFees } = useTxMeta();
-  const { getSetupProgress, setActiveAccountSetup } = useSetup();
-  const setup = getSetupProgress('pool', activeAccount);
+  const { getPoolSetup, setActiveAccountSetup } = useSetup();
+  const setup = getPoolSetup(activeAccount);
   const { progress } = setup;
 
   // either free to bond or existing setup value
