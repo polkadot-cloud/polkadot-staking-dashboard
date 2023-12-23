@@ -150,11 +150,12 @@ export const ImportLedger: FC = () => {
   }, [transportResponse]);
 
   // Tidy up context state when this component is no longer mounted.
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       handleUnmount();
-    };
-  }, []);
+    },
+    []
+  );
 
   return !addressesRef.current.length ? (
     <Splash onGetAddress={onGetAddress} />

@@ -227,13 +227,10 @@ export const ProxiesProvider = ({
   const getProxyDelegate = (
     delegator: MaybeAddress,
     delegate: MaybeAddress
-  ): ProxyDelegate | null => {
-    return (
-      proxiesRef.current
-        .find((p) => p.delegator === delegator)
-        ?.delegates.find((d) => d.delegate === delegate) ?? null
-    );
-  };
+  ): ProxyDelegate | null =>
+    proxiesRef.current
+      .find((p) => p.delegator === delegator)
+      ?.delegates.find((d) => d.delegate === delegate) ?? null;
 
   // Subscribe new accounts to proxies, and remove accounts that are no longer imported.
   useEffectIgnoreInitial(() => {

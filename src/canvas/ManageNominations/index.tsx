@@ -84,16 +84,12 @@ export const ManageNominations = () => {
   };
 
   // Check if default nominations match new ones.
-  const nominationsMatch = () => {
-    return (
-      newNominations.nominations.every((n) =>
-        defaultNominations.nominations.find((d) => d.address === n.address)
-      ) &&
-      newNominations.nominations.length > 0 &&
-      newNominations.nominations.length ===
-        defaultNominations.nominations.length
-    );
-  };
+  const nominationsMatch = () =>
+    newNominations.nominations.every((n) =>
+      defaultNominations.nominations.find((d) => d.address === n.address)
+    ) &&
+    newNominations.nominations.length > 0 &&
+    newNominations.nominations.length === defaultNominations.nominations.length;
 
   // Tx to submit.
   const getTx = () => {

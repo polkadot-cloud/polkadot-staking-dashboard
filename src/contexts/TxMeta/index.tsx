@@ -53,17 +53,11 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
     setTxFees(new BigNumber(0));
   };
 
-  const getPayloadUid = () => {
-    return txPayloadRef.current?.uid || 1;
-  };
+  const getPayloadUid = () => txPayloadRef.current?.uid || 1;
 
-  const incrementPayloadUid = () => {
-    return (txPayloadRef.current?.uid || 0) + 1;
-  };
+  const incrementPayloadUid = () => (txPayloadRef.current?.uid || 0) + 1;
 
-  const getTxPayload = () => {
-    return txPayloadRef.current?.payload || null;
-  };
+  const getTxPayload = () => txPayloadRef.current?.payload || null;
 
   const setTxPayload = (p: AnyJson, uid: number) => {
     setStateWithRef(
@@ -80,9 +74,7 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
     setStateWithRef(null, setTxPayloadState, txPayloadRef);
   };
 
-  const getTxSignature = () => {
-    return txSignatureRef.current;
-  };
+  const getTxSignature = () => txSignatureRef.current;
 
   const setTxSignature = (s: AnyJson) => {
     setStateWithRef(s, setTxSignatureState, txSignatureRef);

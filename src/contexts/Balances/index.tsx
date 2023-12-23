@@ -200,9 +200,8 @@ export const BalancesProvider = ({
   }, [network]);
 
   // Gets a ledger for a stash address.
-  const getStashLedger = (address: MaybeAddress) => {
-    return getLedger(ledgersRef.current, 'stash', address);
-  };
+  const getStashLedger = (address: MaybeAddress) =>
+    getLedger(ledgersRef.current, 'stash', address);
 
   // Gets an account's balance metadata.
   const getBalance = (address: MaybeAddress) =>

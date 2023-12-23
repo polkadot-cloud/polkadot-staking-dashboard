@@ -29,9 +29,8 @@ export const ImportedAccountsProvider = ({
   //
   // Caches the function when imported accounts update.
   const getAccount = useCallback(
-    (who: MaybeAddress) => {
-      return allAccounts.find(({ address }) => address === who) || null;
-    },
+    (who: MaybeAddress) =>
+      allAccounts.find(({ address }) => address === who) || null,
     [allAccounts]
   );
 
@@ -54,14 +53,11 @@ export const ImportedAccountsProvider = ({
   //
   // Caches the function when imported accounts update.
   const accountHasSigner = useCallback(
-    (address: MaybeAddress) => {
-      return (
-        allAccounts.find(
-          (account) =>
-            account.address === address && account.source !== 'external'
-        ) !== undefined
-      );
-    },
+    (address: MaybeAddress) =>
+      allAccounts.find(
+        (account) =>
+          account.address === address && account.source !== 'external'
+      ) !== undefined,
     [allAccounts]
   );
 
@@ -72,13 +68,10 @@ export const ImportedAccountsProvider = ({
   //
   // Caches the function when imported accounts update.
   const requiresManualSign = useCallback(
-    (address: MaybeAddress) => {
-      return (
-        allAccounts.find(
-          (a) => a.address === address && ManualSigners.includes(a.source)
-        ) !== undefined
-      );
-    },
+    (address: MaybeAddress) =>
+      allAccounts.find(
+        (a) => a.address === address && ManualSigners.includes(a.source)
+      ) !== undefined,
     [allAccounts]
   );
 

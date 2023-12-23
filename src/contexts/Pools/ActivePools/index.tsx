@@ -422,9 +422,8 @@ export const ActivePoolsProvider = ({
    * getPoolRoles
    * Returns the active pool's roles or a default roles object.
    */
-  const getPoolRoles = () => {
-    return getSelectedActivePool()?.bondedPool?.roles || defaults.poolRoles;
-  };
+  const getPoolRoles = () =>
+    getSelectedActivePool()?.bondedPool?.roles || defaults.poolRoles;
 
   const getPoolUnlocking = () => {
     const membershipPoolId = membership?.poolId

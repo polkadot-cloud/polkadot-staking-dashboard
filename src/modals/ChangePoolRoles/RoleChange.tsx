@@ -12,31 +12,29 @@ export const RoleChange = ({
   roleName,
   oldAddress,
   newAddress,
-}: RoleChangeProps) => {
-  return (
-    <RoleChangeWrapper>
-      <div className="label">{roleName}</div>
-      <div className="role-change">
-        <div className="input-wrap selected">
-          <Polkicon address={oldAddress ?? ''} size={remToUnit('2rem')} />
-          <input
-            className="input"
-            disabled
-            value={oldAddress ? ellipsisFn(oldAddress) : ''}
-          />
-        </div>
-        <span>
-          <FontAwesomeIcon icon={faAnglesRight} />
-        </span>
-        <div className="input-wrap selected">
-          <Polkicon address={newAddress ?? ''} size={remToUnit('2rem')} />
-          <input
-            className="input"
-            disabled
-            value={newAddress ? ellipsisFn(newAddress) : ''}
-          />
-        </div>
+}: RoleChangeProps) => (
+  <RoleChangeWrapper>
+    <div className="label">{roleName}</div>
+    <div className="role-change">
+      <div className="input-wrap selected">
+        <Polkicon address={oldAddress ?? ''} size={remToUnit('2rem')} />
+        <input
+          className="input"
+          disabled
+          value={oldAddress ? ellipsisFn(oldAddress) : ''}
+        />
       </div>
-    </RoleChangeWrapper>
-  );
-};
+      <span>
+        <FontAwesomeIcon icon={faAnglesRight} />
+      </span>
+      <div className="input-wrap selected">
+        <Polkicon address={newAddress ?? ''} size={remToUnit('2rem')} />
+        <input
+          className="input"
+          disabled
+          value={newAddress ? ellipsisFn(newAddress) : ''}
+        />
+      </div>
+    </div>
+  </RoleChangeWrapper>
+);

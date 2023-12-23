@@ -291,15 +291,13 @@ const getPreMaxDaysPayouts = (
   fromDate: Date,
   days: number,
   avgDays: number
-) => {
+) =>
   // remove payouts that are not within `avgDays` `days` pre-graph window.
-  return payouts.filter(
+  payouts.filter(
     (p: AnySubscan) =>
       daysPassed(fromUnixTime(p.block_timestamp), fromDate) > days &&
       daysPassed(fromUnixTime(p.block_timestamp), fromDate) <= days + avgDays
   );
-};
-
 // Combine payouts and pool claims.
 //
 // combines payouts and pool claims into daily records. Removes the `event_id` field from records.

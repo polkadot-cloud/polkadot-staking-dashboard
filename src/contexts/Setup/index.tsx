@@ -59,18 +59,14 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // Type guard to check if setup is a pool or nominator.
-  const isPoolSetup = (
-    setup: NominatorSetup | PoolSetup
-  ): setup is PoolSetup => {
-    return (setup as PoolSetup).progress?.metadata !== undefined;
-  };
+  const isPoolSetup = (setup: NominatorSetup | PoolSetup): setup is PoolSetup =>
+    (setup as PoolSetup).progress?.metadata !== undefined;
 
   // Utility to get the default progress based on type.
-  const defaultProgress = (type: BondFor): PoolProgress | NominatorProgress => {
-    return type === 'nominator'
+  const defaultProgress = (type: BondFor): PoolProgress | NominatorProgress =>
+    type === 'nominator'
       ? (defaultNominatorProgress as NominatorProgress)
       : (defaultPoolProgress as PoolProgress);
-  };
 
   // Utility to get the default setup based on type.
   const defaultSetup = (type: BondFor): NominatorSetup | PoolSetup =>
