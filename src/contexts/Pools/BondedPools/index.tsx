@@ -141,6 +141,8 @@ export const BondedPoolsProvider = ({
     const targets = nominations ? nominations.targets : [];
     const target = targets.find((t) => t === nomination);
 
+    if (!target) return 'waiting';
+
     const nominationStatus = getNominationsStatusFromTargets(nominator, [
       target,
     ]);
