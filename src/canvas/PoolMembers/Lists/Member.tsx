@@ -3,7 +3,6 @@
 
 import {
   faBars,
-  faCopy,
   faShare,
   faUnlockAlt,
 } from '@fortawesome/free-solid-svg-icons';
@@ -28,7 +27,6 @@ import type { AnyJson } from 'types';
 import { usePrompt } from 'contexts/Prompt';
 import { UnbondMember } from '../Prompts/UnbondMember';
 import { WithdrawMember } from '../Prompts/WithdrawMember';
-import { NotificationsController } from 'static/NotificationsController';
 
 export const Member = ({
   who,
@@ -63,18 +61,6 @@ export const Member = ({
   const member = poolMembers[batchIndex] ?? null;
 
   const menuItems: AnyJson[] = [];
-
-  menuItems.push({
-    icon: <FontAwesomeIcon icon={faCopy} transform="shrink-3" />,
-    title: t('copyAddress', { ns: 'library' }),
-    cb: () => {
-      navigator.clipboard.writeText(who);
-      NotificationsController.emit({
-        title: t('addressCopiedToClipboard', { ns: 'library' }),
-        subtitle: who,
-      });
-    },
-  });
 
   menuItems.push({
     icon: <FontAwesomeIcon icon={faUnlockAlt} transform="shrink-3" />,
