@@ -15,6 +15,7 @@ import type { Sync } from 'types';
 import { Member } from './Member';
 import type { DefaultMembersListProps } from './types';
 import type { PoolMember } from 'contexts/Pools/PoolMembers/types';
+import { MotionContainer } from 'library/List/MotionContainer';
 
 export const MembersListInner = ({
   pagination,
@@ -106,7 +107,7 @@ export const MembersListInner = ({
             {t('pools.fetchingMemberList')}...
           </ListStatusHeader>
         ) : (
-          <div>
+          <MotionContainer>
             {listMembers.map((member: PoolMember, index: number) => (
               <Member
                 key={`nomination_${index}`}
@@ -115,7 +116,7 @@ export const MembersListInner = ({
                 batchIndex={membersDefault.indexOf(member)}
               />
             ))}
-          </div>
+          </MotionContainer>
         )}
       </List>
     </ListWrapper>

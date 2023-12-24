@@ -27,6 +27,7 @@ import type { AnyJson } from 'types';
 import { usePrompt } from 'contexts/Prompt';
 import { UnbondMember } from '../Prompts/UnbondMember';
 import { WithdrawMember } from '../Prompts/WithdrawMember';
+import { motion } from 'framer-motion';
 
 export const Member = ({
   who,
@@ -118,7 +119,20 @@ export const Member = ({
   };
 
   return (
-    <div className={`item col`} ref={memberRef}>
+    <motion.div
+      className={`item col`}
+      ref={memberRef}
+      variants={{
+        hidden: {
+          y: 15,
+          opacity: 0,
+        },
+        show: {
+          y: 0,
+          opacity: 1,
+        },
+      }}
+    >
       <Wrapper className="member">
         <div className="inner canvas">
           <MenuPosition ref={posRef} />
@@ -150,6 +164,6 @@ export const Member = ({
           </div>
         </div>
       </Wrapper>
-    </div>
+    </motion.div>
   );
 };
