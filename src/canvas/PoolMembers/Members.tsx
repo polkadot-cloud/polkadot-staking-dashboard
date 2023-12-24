@@ -58,7 +58,7 @@ export const Members = () => {
       )}
 
       {/* Pool in Destroying state: allow anyone to unbond & withdraw members */}
-      {selectedActivePool?.bondedPool?.state !== 'Destroying' && (
+      {selectedActivePool?.bondedPool?.state === 'Destroying' && (
         <CardWrapper
           className="canvas"
           style={{
