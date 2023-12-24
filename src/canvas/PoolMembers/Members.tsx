@@ -10,8 +10,8 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useTheme } from 'contexts/Themes';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { useNetwork } from 'contexts/Network';
-import { MembersList as DefaultMemberList } from './MembersList/Default';
-import { MembersList as FetchPageMemberList } from './MembersList/FetchPage';
+import { MembersList as DefaultMemberList } from './Lists/Default';
+import { MembersList as FetchPageMemberList } from './Lists/FetchPage';
 
 export const Members = () => {
   const { t } = useTranslation('pages');
