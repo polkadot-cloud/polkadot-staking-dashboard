@@ -23,8 +23,11 @@ import {
   Separator,
   Wrapper,
 } from 'library/ListItem/Wrappers';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
 import type { AnyJson } from 'types';
+import { usePrompt } from 'contexts/Prompt';
+import { UnbondMember } from '../Prompts/UnbondMember';
+import { WithdrawMember } from '../Prompts/WithdrawMember';
+import { motion } from 'framer-motion';
 
 export const Member = ({
   who,
@@ -35,13 +38,17 @@ export const Member = ({
   batchKey: string;
   batchIndex: number;
 }) => {
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation();
   const { meta } = usePoolMembers();
-  const { openModal } = useOverlay().modal;
   const { selectActive } = useList();
+  const { openPromptWith } = usePrompt();
   const { activeEra } = useNetworkMetrics();
-  const { selectedActivePool, isOwner, isBouncer } = useActivePools();
   const { setMenuPosition, setMenuItems, open } = useMenu();
+  const { selectedActivePool, isOwner, isBouncer } = useActivePools();
+
+  // Ref for the member container.
+  const memberRef = useRef<HTMLDivElement>(null);
+
   const { state, roles } = selectedActivePool?.bondedPool || {};
   const { bouncer, root, depositor } = roles || {};
 
@@ -51,11 +58,19 @@ export const Member = ({
     ![root, bouncer].includes(who);
 
   const canUnbondDestroying = state === 'Destroying' && who !== depositor;
-
   const poolMembers = meta[batchKey]?.poolMembers ?? [];
   const member = poolMembers[batchIndex] ?? null;
 
   const menuItems: AnyJson[] = [];
+
+  menuItems.push({
+    icon: <FontAwesomeIcon icon={faUnlockAlt} transform="shrink-3" />,
+    wrap: null,
+    title: `${t('pools.withdrawFunds', { ns: 'pages' })}`,
+    cb: () => {
+      openPromptWith(<UnbondMember who={who} member={member} />);
+    },
+  });
 
   if (member && (canUnbondBlocked || canUnbondDestroying)) {
     const { points, unbondingEras } = member;
@@ -64,16 +79,9 @@ export const Member = ({
       menuItems.push({
         icon: <FontAwesomeIcon icon={faUnlockAlt} transform="shrink-3" />,
         wrap: null,
-        title: `${t('pools.unbondFunds')}`,
+        title: `${t('pools.unbondFunds', { ns: 'pages' })}`,
         cb: () => {
-          openModal({
-            key: 'UnbondPoolMember',
-            options: {
-              who,
-              member,
-            },
-            size: 'sm',
-          });
+          openPromptWith(<UnbondMember who={who} member={member} />);
         },
       });
     }
@@ -90,13 +98,11 @@ export const Member = ({
         menuItems.push({
           icon: <FontAwesomeIcon icon={faShare} transform="shrink-3" />,
           wrap: null,
-          title: `${t('pools.withdrawFunds')}`,
+          title: `${t('pools.withdrawFunds', { ns: 'pages' })}`,
           cb: () => {
-            openModal({
-              key: 'WithdrawPoolMember',
-              options: { who, member },
-              size: 'sm',
-            });
+            openPromptWith(
+              <WithdrawMember who={who} member={member} memberRef={memberRef} />
+            );
           },
         });
       }
@@ -113,36 +119,51 @@ export const Member = ({
   };
 
   return (
-    <Wrapper className="member">
-      <div className="inner">
-        <MenuPosition ref={posRef} />
-        <div className="row top">
-          {selectActive && <Select item={{ address: who }} />}
-          <Identity address={who} />
-          <div>
-            <Labels>
-              {menuItems.length > 0 && (
-                <button
-                  type="button"
-                  className="label"
-                  disabled={!member}
-                  onClick={() => toggleMenu()}
-                >
-                  <FontAwesomeIcon icon={faBars} />
-                </button>
-              )}
-            </Labels>
+    <motion.div
+      className={`item col`}
+      ref={memberRef}
+      variants={{
+        hidden: {
+          y: 15,
+          opacity: 0,
+        },
+        show: {
+          y: 0,
+          opacity: 1,
+        },
+      }}
+    >
+      <Wrapper className="member">
+        <div className="inner canvas">
+          <MenuPosition ref={posRef} />
+          <div className="row top">
+            {selectActive && <Select item={{ address: who }} />}
+            <Identity address={who} />
+            <div>
+              <Labels>
+                {menuItems.length > 0 && (
+                  <button
+                    type="button"
+                    className="label"
+                    disabled={!member}
+                    onClick={() => toggleMenu()}
+                  >
+                    <FontAwesomeIcon icon={faBars} />
+                  </button>
+                )}
+              </Labels>
+            </div>
+          </div>
+          <Separator />
+          <div className="row bottom">
+            <PoolMemberBonded
+              meta={meta}
+              batchKey={batchKey}
+              batchIndex={batchIndex}
+            />
           </div>
         </div>
-        <Separator />
-        <div className="row bottom">
-          <PoolMemberBonded
-            meta={meta}
-            batchKey={batchKey}
-            batchIndex={batchIndex}
-          />
-        </div>
-      </div>
-    </Wrapper>
+      </Wrapper>
+    </motion.div>
   );
 };

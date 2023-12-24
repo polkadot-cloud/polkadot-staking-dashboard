@@ -1,42 +1,56 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ActionItem, ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
-import { isNotZero, planckToUnit, rmCommas } from '@polkadot-cloud/utils';
+import {
+  ModalNotes,
+  ModalPadding,
+  ModalWarnings,
+  Polkicon,
+} from '@polkadot-cloud/react';
+import {
+  ellipsisFn,
+  isNotZero,
+  planckToUnit,
+  remToUnit,
+  rmCommas,
+} from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import type { RefObject } from 'react';
+import { useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { useTxMeta } from 'contexts/TxMeta';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import type { PoolMembership } from 'contexts/Pools/PoolMemberships/types';
+import { usePrompt } from 'contexts/Prompt';
+import { Title } from 'library/Prompt/Title';
+import { useTranslation } from 'react-i18next';
 
-export const WithdrawPoolMember = () => {
+export const WithdrawMember = ({
+  who,
+  member,
+  memberRef,
+}: {
+  who: string;
+  member: PoolMembership;
+  memberRef: RefObject<HTMLDivElement>;
+}) => {
   const { t } = useTranslation('modals');
   const { api, consts } = useApi();
   const {
     networkData: { units, unit },
   } = useNetwork();
+  const { closePrompt } = usePrompt();
   const { activeAccount } = useActiveAccounts();
-  const {
-    setModalStatus,
-    config: { options },
-    setModalResize,
-  } = useOverlay().modal;
   const { activeEra } = useNetworkMetrics();
   const { removePoolMember } = usePoolMembers();
   const { getSignerWarnings } = useSignerWarnings();
-  const { notEnoughFunds } = useTxMeta();
 
-  const { member, who } = options;
   const { historyDepth } = consts;
   const { unbondingEras, points } = member;
 
@@ -53,7 +67,6 @@ export const WithdrawPoolMember = () => {
   });
 
   const bonded = planckToUnit(new BigNumber(rmCommas(points)), units);
-
   const totalWithdraw = planckToUnit(new BigNumber(totalWithdrawUnit), units);
 
   // valid to submit transaction
@@ -73,17 +86,17 @@ export const WithdrawPoolMember = () => {
     from: activeAccount,
     shouldSubmit: valid,
     callbackSubmit: () => {
-      setModalStatus('closing');
+      // remove the pool member from member list.
+      memberRef.current?.remove();
+      closePrompt();
     },
     callbackInBlock: () => {
-      // remove the pool member from context if no more funds bonded
+      // remove the pool member from context if no more funds bonded.
       if (bonded.isZero()) {
         removePoolMember(who);
       }
     },
   });
-
-  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   const warnings = getSignerWarnings(
     activeAccount,
@@ -93,10 +106,8 @@ export const WithdrawPoolMember = () => {
 
   return (
     <>
-      <Close />
+      <Title title={t('withdrawPoolMember')} />
       <ModalPadding>
-        <h2 className="title">{t('withdrawMemberFunds')}</h2>
-        <ActionItem text={`${t('withdraw')} ${totalWithdraw} ${unit}`} />
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
             {warnings.map((text, i) => (
@@ -104,6 +115,20 @@ export const WithdrawPoolMember = () => {
             ))}
           </ModalWarnings>
         ) : null}
+
+        <h3 className="modal-action-item">
+          <Polkicon address={who} size={remToUnit('2rem')} />
+          &nbsp; {ellipsisFn(who, 7)}
+        </h3>
+
+        <ModalNotes>
+          <p>
+            <p>
+              {t('amountWillBeWithdrawn', { bond: bonded.toString(), unit })}
+            </p>{' '}
+          </p>
+          <p>{t('withdrawRemoveNote')}</p>
+        </ModalNotes>
       </ModalPadding>
       <SubmitTx valid={valid} {...submitExtrinsic} />
     </>

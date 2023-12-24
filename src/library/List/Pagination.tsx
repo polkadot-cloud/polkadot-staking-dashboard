@@ -6,7 +6,12 @@ import { useTranslation } from 'react-i18next';
 import { PaginationWrapper } from '.';
 import type { PaginationProps } from './types';
 
-export const Pagination = ({ page, total, setter }: PaginationProps) => {
+export const Pagination = ({
+  page,
+  total,
+  setter,
+  disabled = false,
+}: PaginationProps) => {
   const { t } = useTranslation('library');
   const [next, setNext] = useState<number>(page + 1 > total ? total : page + 1);
   const [prev, setPrev] = useState<number>(page - 1 < 1 ? 1 : page - 1);
@@ -16,8 +21,11 @@ export const Pagination = ({ page, total, setter }: PaginationProps) => {
     setPrev(page - 1 < 1 ? 1 : page - 1);
   }, [page, total]);
 
+  const prevActive = page !== 1;
+  const nextActive = page !== total;
+
   return (
-    <PaginationWrapper $prev={page !== 1} $next={page !== total}>
+    <PaginationWrapper $prev={prevActive} $next={nextActive}>
       <div>
         <h4>{t('page', { page, total })}</h4>
       </div>
@@ -28,6 +36,7 @@ export const Pagination = ({ page, total, setter }: PaginationProps) => {
           onClick={() => {
             setter(prev);
           }}
+          disabled={disabled || !prevActive}
         >
           {t('prev')}
         </button>
@@ -37,6 +46,7 @@ export const Pagination = ({ page, total, setter }: PaginationProps) => {
           onClick={() => {
             setter(next);
           }}
+          disabled={disabled || !nextActive}
         >
           {t('next')}
         </button>
