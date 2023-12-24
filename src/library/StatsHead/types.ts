@@ -11,6 +11,7 @@ export interface PoolStatLabel {
   button?: {
     text: string;
     onClick: () => void;
+    disabled: boolean;
   };
   helpKey?: string;
 }

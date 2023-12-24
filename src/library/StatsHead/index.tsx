@@ -20,6 +20,7 @@ export const StatsHead = ({ items }: StatsHeadProps) => {
                 <ButtonTertiary
                   text={button.text}
                   onClick={() => button.onClick()}
+                  disabled={button.disabled}
                 />
               )}
             </h2>
