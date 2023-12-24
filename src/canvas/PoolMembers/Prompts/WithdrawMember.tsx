@@ -15,6 +15,7 @@ import {
   rmCommas,
 } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import type { RefObject } from 'react';
 import { useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
@@ -32,9 +33,11 @@ import { Title } from 'library/Prompt/Title';
 export const WithdrawMember = ({
   who,
   member,
+  memberRef,
 }: {
   who: string;
   member: PoolMembership;
+  memberRef: RefObject<HTMLDivElement>;
 }) => {
   const { api, consts } = useApi();
   const {
@@ -62,7 +65,6 @@ export const WithdrawMember = ({
   });
 
   const bonded = planckToUnit(new BigNumber(rmCommas(points)), units);
-
   const totalWithdraw = planckToUnit(new BigNumber(totalWithdrawUnit), units);
 
   // valid to submit transaction
@@ -82,10 +84,12 @@ export const WithdrawMember = ({
     from: activeAccount,
     shouldSubmit: valid,
     callbackSubmit: () => {
+      // remove the pool member from member list.
+      memberRef.current?.remove();
       closePrompt();
     },
     callbackInBlock: () => {
-      // remove the pool member from context if no more funds bonded
+      // remove the pool member from context if no more funds bonded.
       if (bonded.isZero()) {
         removePoolMember(who);
       }

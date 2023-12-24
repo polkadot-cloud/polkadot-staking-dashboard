@@ -47,6 +47,9 @@ export const Member = ({
   const { setMenuPosition, setMenuItems, open } = useMenu();
   const { selectedActivePool, isOwner, isBouncer } = useActivePools();
 
+  // Ref for the member container.
+  const memberRef = useRef<HTMLDivElement>(null);
+
   const { state, roles } = selectedActivePool?.bondedPool || {};
   const { bouncer, root, depositor } = roles || {};
 
@@ -56,7 +59,6 @@ export const Member = ({
     ![root, bouncer].includes(who);
 
   const canUnbondDestroying = state === 'Destroying' && who !== depositor;
-
   const poolMembers = meta[batchKey]?.poolMembers ?? [];
   const member = poolMembers[batchIndex] ?? null;
 
@@ -102,7 +104,9 @@ export const Member = ({
           wrap: null,
           title: `${t('pools.withdrawFunds', { ns: 'pages' })}`,
           cb: () => {
-            openPromptWith(<WithdrawMember who={who} member={member} />);
+            openPromptWith(
+              <WithdrawMember who={who} member={member} memberRef={memberRef} />
+            );
           },
         });
       }
@@ -119,36 +123,38 @@ export const Member = ({
   };
 
   return (
-    <Wrapper className="member">
-      <div className="inner canvas">
-        <MenuPosition ref={posRef} />
-        <div className="row top">
-          {selectActive && <Select item={{ address: who }} />}
-          <Identity address={who} />
-          <div>
-            <Labels>
-              {menuItems.length > 0 && (
-                <button
-                  type="button"
-                  className="label"
-                  disabled={!member}
-                  onClick={() => toggleMenu()}
-                >
-                  <FontAwesomeIcon icon={faBars} />
-                </button>
-              )}
-            </Labels>
+    <div className={`item col`} ref={memberRef}>
+      <Wrapper className="member">
+        <div className="inner canvas">
+          <MenuPosition ref={posRef} />
+          <div className="row top">
+            {selectActive && <Select item={{ address: who }} />}
+            <Identity address={who} />
+            <div>
+              <Labels>
+                {menuItems.length > 0 && (
+                  <button
+                    type="button"
+                    className="label"
+                    disabled={!member}
+                    onClick={() => toggleMenu()}
+                  >
+                    <FontAwesomeIcon icon={faBars} />
+                  </button>
+                )}
+              </Labels>
+            </div>
+          </div>
+          <Separator />
+          <div className="row bottom">
+            <PoolMemberBonded
+              meta={meta}
+              batchKey={batchKey}
+              batchIndex={batchIndex}
+            />
           </div>
         </div>
-        <Separator />
-        <div className="row bottom">
-          <PoolMemberBonded
-            meta={meta}
-            batchKey={batchKey}
-            batchIndex={batchIndex}
-          />
-        </div>
-      </div>
-    </Wrapper>
+      </Wrapper>
+    </div>
   );
 };

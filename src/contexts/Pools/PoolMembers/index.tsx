@@ -295,11 +295,12 @@ export const PoolMembersProvider = ({
 
   // Removes a member from the member list and updates state.
   const removePoolMember = (who: MaybeAddress) => {
-    if (!pluginEnabled('subscan')) {
-      return;
+    // If Subscan is enabled, update API state, otherwise, update node state.
+    if (pluginEnabled('subscan')) {
+      setPoolMembersApi(poolMembersApi.filter((p) => p.who !== who) ?? []);
+    } else {
+      setPoolMembersNode(poolMembersNode.filter((p) => p.who !== who) ?? []);
     }
-    const newMembers = poolMembersNode.filter((p) => p.who !== who);
-    setPoolMembersNode(newMembers ?? []);
   };
 
   // Adds a record to poolMembers.

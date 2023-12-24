@@ -126,13 +126,12 @@ export const MembersListInner = ({
         ) : (
           <div>
             {listMembers.map((member: PoolMember, index: number) => (
-              <div className={`item col`} key={`nomination_${index}`}>
-                <Member
-                  who={member.who}
-                  batchKey={batchKey}
-                  batchIndex={poolMembersApi.indexOf(member)}
-                />
-              </div>
+              <Member
+                key={`nomination_${index}`}
+                who={member.who}
+                batchKey={batchKey}
+                batchIndex={poolMembersApi.indexOf(member)}
+              />
             ))}
           </div>
         )}
