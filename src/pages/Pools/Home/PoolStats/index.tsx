@@ -11,17 +11,22 @@ import { StatsHead } from 'library/StatsHead';
 import { useNetwork } from 'contexts/Network';
 import { Announcements } from './Announcements';
 import { Wrapper } from './Wrappers';
+import type { PoolStatLabel } from 'library/StatsHead/types';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const PoolStats = () => {
   const { t } = useTranslation('pages');
+  const { openCanvas } = useOverlay().canvas;
   const {
     networkData: { units, unit },
   } = useNetwork();
-  const { selectedActivePool, selectedPoolMemberCount } = useActivePools();
   const { getCurrentCommission } = usePoolCommission();
+  const { selectedActivePool, selectedPoolMemberCount } = useActivePools();
+
+  const poolId = selectedActivePool?.id || 0;
 
   const { state, points } = selectedActivePool?.bondedPool || {};
-  const currentCommission = getCurrentCommission(selectedActivePool?.id ?? 0);
+  const currentCommission = getCurrentCommission(poolId);
 
   const bonded = planckToUnit(
     new BigNumber(points ? rmCommas(points) : 0),
@@ -43,7 +48,7 @@ export const PoolStats = () => {
       break;
   }
 
-  const items = [
+  const items: PoolStatLabel[] = [
     {
       label: t('pools.poolState'),
       value: stateDisplay,
@@ -61,6 +66,13 @@ export const PoolStats = () => {
     {
       label: t('pools.poolMembers'),
       value: `${selectedPoolMemberCount}`,
+      button: {
+        text: t('pools.browseMembers'),
+        onClick: () => {
+          openCanvas({ key: 'PoolMembers', size: 'xl' });
+        },
+        disabled: selectedPoolMemberCount === 0,
+      },
     },
     {
       label: t('pools.totalBonded'),

@@ -18,6 +18,7 @@ export interface ListProps {
 export interface PaginationProps {
   page: number;
   total: number;
+  disabled?: boolean;
   setter: (p: number) => void;
 }
 

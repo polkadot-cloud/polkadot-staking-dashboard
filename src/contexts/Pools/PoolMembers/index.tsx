@@ -102,11 +102,12 @@ export const PoolMembersProvider = ({
         poolId,
       };
     });
+
     setPoolMembersNode(newMembers);
   };
 
   const getMembersOfPoolFromNode = (poolId: number) =>
-    poolMembersNode.filter((p) => p.poolId === poolId) ?? null;
+    poolMembersNode.filter((p) => String(p.poolId) === String(poolId)) ?? null;
 
   // queries a  pool member and formats to `PoolMember`.
   const queryPoolMember = async (who: MaybeAddress) => {
@@ -294,12 +295,12 @@ export const PoolMembersProvider = ({
 
   // Removes a member from the member list and updates state.
   const removePoolMember = (who: MaybeAddress) => {
-    if (!pluginEnabled('subscan')) {
-      return;
+    // If Subscan is enabled, update API state, otherwise, update node state.
+    if (pluginEnabled('subscan')) {
+      setPoolMembersApi(poolMembersApi.filter((p) => p.who !== who) ?? []);
+    } else {
+      setPoolMembersNode(poolMembersNode.filter((p) => p.who !== who) ?? []);
     }
-
-    const newMembers = poolMembersNode.filter((p) => p.who !== who);
-    setPoolMembersNode(newMembers ?? []);
   };
 
   // Adds a record to poolMembers.

@@ -95,8 +95,8 @@ export const Labels = styled.div`
   height: inherit;
 
   button {
-    padding: 0 0.1rem;
     background: var(--shimmer-foreground);
+    padding: 0 0.1rem;
     font-size: 1rem;
     border-radius: 50%;
     width: 1.9rem;
@@ -118,8 +118,8 @@ export const Labels = styled.div`
   }
 
   &.canvas button {
-    background: none;
     border: 1px solid var(--border-secondary-color);
+    background: none;
   }
 
   .label {
@@ -127,7 +127,7 @@ export const Labels = styled.div`
     position: relative;
     display: flex;
     align-items: center;
-    margin: 0 0.2rem;
+    justify-content: center;
     font-size: inherit;
 
     @media (min-width: ${SmallFontSizeMaxWidth}px) {

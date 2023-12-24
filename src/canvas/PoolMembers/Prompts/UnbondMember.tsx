@@ -1,10 +1,17 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ActionItem, ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
 import {
+  ModalNotes,
+  ModalPadding,
+  ModalWarnings,
+  Polkicon,
+} from '@polkadot-cloud/react';
+import {
+  ellipsisFn,
   greaterThanZero,
   planckToUnit,
+  remToUnit,
   rmCommas,
   unitToPlanck,
 } from '@polkadot-cloud/utils';
@@ -18,32 +25,32 @@ import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
-import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
-import { useTxMeta } from 'contexts/TxMeta';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { usePrompt } from 'contexts/Prompt';
+import type { PoolMembership } from 'contexts/Pools/PoolMemberships/types';
+import { Title } from 'library/Prompt/Title';
 
-export const UnbondPoolMember = () => {
+export const UnbondMember = ({
+  who,
+  member,
+}: {
+  who: string;
+  member: PoolMembership;
+}) => {
   const { t } = useTranslation('modals');
   const { api, consts } = useApi();
   const {
     networkData: { units, unit },
   } = useNetwork();
+  const { closePrompt } = usePrompt();
   const { activeAccount } = useActiveAccounts();
-  const { notEnoughFunds } = useTxMeta();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
-  const {
-    setModalStatus,
-    setModalResize,
-    config: { options },
-  } = useOverlay().modal;
 
   const { bondDuration } = consts;
-  const { member, who } = options;
   const { points } = member;
   const freeToUnbond = planckToUnit(new BigNumber(rmCommas(points)), units);
 
@@ -71,8 +78,6 @@ export const UnbondPoolMember = () => {
     setBondValid(isValid);
   }, [freeToUnbond.toString(), isValid]);
 
-  useEffect(() => setModalResize(), [bond, notEnoughFunds]);
-
   // tx to submit
   const getTx = () => {
     let tx = null;
@@ -91,7 +96,7 @@ export const UnbondPoolMember = () => {
     from: activeAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
-      setModalStatus('closing');
+      closePrompt();
     },
   });
 
@@ -103,9 +108,8 @@ export const UnbondPoolMember = () => {
 
   return (
     <>
-      <Close />
+      <Title title={t('unbondPoolMember')} />
       <ModalPadding>
-        <h2 className="title unbounded">{t('unbondMemberFunds')}</h2>
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
             {warnings.map((text, i) => (
@@ -113,15 +117,22 @@ export const UnbondPoolMember = () => {
             ))}
           </ModalWarnings>
         ) : null}
-        <ActionItem text={`${t('unbond')} ${freeToUnbond} ${unit}`} />
-        <StaticNote
-          value={bondDurationFormatted}
-          tKey="onceUnbonding"
-          valueKey="bondDurationFormatted"
-          deps={[bondDuration]}
-        />
+        <h3 className="modal-action-item">
+          <Polkicon address={who} size={remToUnit('2rem')} />
+          &nbsp; {ellipsisFn(who, 7)}
+        </h3>
+
+        <ModalNotes>
+          <p>{t('amountWillBeUnbonded', { bond: bond.bond, unit })}</p>
+          <StaticNote
+            value={bondDurationFormatted}
+            tKey="onceUnbondingPoolMember"
+            valueKey="bondDurationFormatted"
+            deps={[bondDuration]}
+          />
+        </ModalNotes>
       </ModalPadding>
-      <SubmitTx valid={bondValid} {...submitExtrinsic} />
+      <SubmitTx noMargin valid={bondValid} {...submitExtrinsic} />
     </>
   );
 };

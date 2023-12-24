@@ -83,6 +83,11 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   margin-top: 1.4rem;
   padding: 1.5rem;
 
+  &.canvas {
+    background: var(--background-canvas-card);
+    padding: 1.25rem;
+  }
+
   &.transparent {
     background: none;
     border: none;
@@ -120,6 +125,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
       margin-top: 0;
     }
     h3 {
+      margin-left: 0;
       margin-bottom: 0.75rem;
     }
 

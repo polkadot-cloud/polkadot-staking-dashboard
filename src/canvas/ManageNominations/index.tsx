@@ -26,7 +26,7 @@ import type {
 } from 'library/GenerateNominations/types';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { RevertPrompt } from './Prompts/RevertPrompt';
-import { CanvasSubmitTxFooter, ManageNominationsWrapper } from './Wrappers';
+import { CanvasSubmitTxFooter, CanvasFullScreenWrapper } from '../Wrappers';
 import { NotificationsController } from 'static/NotificationsController';
 
 export const ManageNominations = () => {
@@ -151,7 +151,7 @@ export const ManageNominations = () => {
 
   return (
     <>
-      <ManageNominationsWrapper>
+      <CanvasFullScreenWrapper>
         <div className="head">
           <ButtonPrimaryInvert
             text={t('revertChanges', { ns: 'modals' })}
@@ -200,7 +200,7 @@ export const ManageNominations = () => {
           ]}
           nominations={defaultNominations}
         />
-      </ManageNominationsWrapper>
+      </CanvasFullScreenWrapper>
       <CanvasSubmitTxFooter>
         <SubmitTx
           noMargin
