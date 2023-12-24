@@ -23,7 +23,7 @@ export const PoolMembers = () => {
           style={{ marginLeft: '1.1rem' }}
         />
       </div>
-      <h1>Pool Members</h1>
+      <h1>{t('poolMembers', { ns: 'modals' })}</h1>
       <Members />
     </CanvasFullScreenWrapper>
   );

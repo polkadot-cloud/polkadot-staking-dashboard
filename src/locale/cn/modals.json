@@ -182,6 +182,7 @@
     "polkawatchDisabled": "Polkawatch己断开",
     "pool": "池",
     "poolIsNotNominating": "该提名池未提名任何验证人",
+    "poolMembers": "Pool Members",
     "poolName": "提名池名称",
     "poolNominations": "池的提名",
     "provider": "服务端",
