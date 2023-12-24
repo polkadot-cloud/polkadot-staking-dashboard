@@ -1,10 +1,17 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ActionItem, ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
 import {
+  ModalNotes,
+  ModalPadding,
+  ModalWarnings,
+  Polkicon,
+} from '@polkadot-cloud/react';
+import {
+  ellipsisFn,
   greaterThanZero,
   planckToUnit,
+  remToUnit,
   rmCommas,
   unitToPlanck,
 } from '@polkadot-cloud/utils';
@@ -24,8 +31,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { usePrompt } from 'contexts/Prompt';
 import type { PoolMembership } from 'contexts/Pools/PoolMemberships/types';
-import { CloseWrapper } from 'library/Modal/Wrappers';
-import CrossSVG from 'img/cross.svg?react';
+import { Title } from 'library/Prompt/Title';
 
 export const UnbondMember = ({
   who,
@@ -102,11 +108,7 @@ export const UnbondMember = ({
 
   return (
     <>
-      <CloseWrapper>
-        <button type="button" onClick={() => closePrompt()}>
-          <CrossSVG style={{ width: '1.25rem', height: '1.25rem' }} />
-        </button>
-      </CloseWrapper>
+      <Title title="Unbond For Pool Member" />
       <ModalPadding>
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
@@ -115,15 +117,24 @@ export const UnbondMember = ({
             ))}
           </ModalWarnings>
         ) : null}
-        <ActionItem text={`${t('unbond')} ${freeToUnbond} ${unit}`} />
-        <StaticNote
-          value={bondDurationFormatted}
-          tKey="onceUnbonding"
-          valueKey="bondDurationFormatted"
-          deps={[bondDuration]}
-        />
+        <h3 className="modal-action-item">
+          <Polkicon address={who} size={remToUnit('2rem')} />
+          &nbsp; {ellipsisFn(who, 7)}
+        </h3>
+
+        <ModalNotes>
+          <p>
+            {freeToUnbond.toString()} {unit} wll be unbonded.
+          </p>
+          <StaticNote
+            value={bondDurationFormatted}
+            tKey="onceUnbondingPoolMember"
+            valueKey="bondDurationFormatted"
+            deps={[bondDuration]}
+          />
+        </ModalNotes>
       </ModalPadding>
-      <SubmitTx valid={bondValid} {...submitExtrinsic} />
+      <SubmitTx noMargin valid={bondValid} {...submitExtrinsic} />
     </>
   );
 };

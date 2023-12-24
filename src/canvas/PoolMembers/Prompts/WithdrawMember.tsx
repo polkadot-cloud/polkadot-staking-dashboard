@@ -1,11 +1,21 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ActionItem, ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
-import { isNotZero, planckToUnit, rmCommas } from '@polkadot-cloud/utils';
+import {
+  ModalNotes,
+  ModalPadding,
+  ModalWarnings,
+  Polkicon,
+} from '@polkadot-cloud/react';
+import {
+  ellipsisFn,
+  isNotZero,
+  planckToUnit,
+  remToUnit,
+  rmCommas,
+} from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
@@ -17,8 +27,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { PoolMembership } from 'contexts/Pools/PoolMemberships/types';
 import { usePrompt } from 'contexts/Prompt';
-import { CloseWrapper } from 'library/Modal/Wrappers';
-import CrossSVG from 'img/cross.svg?react';
+import { Title } from 'library/Prompt/Title';
 
 export const WithdrawMember = ({
   who,
@@ -27,7 +36,6 @@ export const WithdrawMember = ({
   who: string;
   member: PoolMembership;
 }) => {
-  const { t } = useTranslation('modals');
   const { api, consts } = useApi();
   const {
     networkData: { units, unit },
@@ -92,13 +100,8 @@ export const WithdrawMember = ({
 
   return (
     <>
-      <CloseWrapper>
-        <button type="button" onClick={() => closePrompt()}>
-          <CrossSVG style={{ width: '1.25rem', height: '1.25rem' }} />
-        </button>
-      </CloseWrapper>
+      <Title title="Withdraw For Pool Member" />
       <ModalPadding>
-        <ActionItem text={`${t('withdraw')} ${totalWithdraw} ${unit}`} />
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
             {warnings.map((text, i) => (
@@ -106,6 +109,18 @@ export const WithdrawMember = ({
             ))}
           </ModalWarnings>
         ) : null}
+
+        <h3 className="modal-action-item">
+          <Polkicon address={who} size={remToUnit('2rem')} />
+          &nbsp; {ellipsisFn(who, 7)}
+        </h3>
+
+        <ModalNotes>
+          <p>
+            {totalWithdraw.toString()} {unit} wll be withdrawn.
+          </p>
+          <p>Withdrawing will remove this member from the pool.</p>
+        </ModalNotes>
       </ModalPadding>
       <SubmitTx valid={valid} {...submitExtrinsic} />
     </>
