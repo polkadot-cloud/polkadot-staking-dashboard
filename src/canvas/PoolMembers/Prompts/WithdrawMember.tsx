@@ -17,6 +17,8 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { PoolMembership } from 'contexts/Pools/PoolMemberships/types';
 import { usePrompt } from 'contexts/Prompt';
+import { CloseWrapper } from 'library/Modal/Wrappers';
+import CrossSVG from 'img/cross.svg?react';
 
 export const WithdrawMember = ({
   who,
@@ -90,6 +92,11 @@ export const WithdrawMember = ({
 
   return (
     <>
+      <CloseWrapper>
+        <button type="button" onClick={() => closePrompt()}>
+          <CrossSVG style={{ width: '1.25rem', height: '1.25rem' }} />
+        </button>
+      </CloseWrapper>
       <ModalPadding>
         <ActionItem text={`${t('withdraw')} ${totalWithdraw} ${unit}`} />
         {warnings.length > 0 ? (

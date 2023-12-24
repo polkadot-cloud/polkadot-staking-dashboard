@@ -24,6 +24,8 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { usePrompt } from 'contexts/Prompt';
 import type { PoolMembership } from 'contexts/Pools/PoolMemberships/types';
+import { CloseWrapper } from 'library/Modal/Wrappers';
+import CrossSVG from 'img/cross.svg?react';
 
 export const UnbondMember = ({
   who,
@@ -100,6 +102,11 @@ export const UnbondMember = ({
 
   return (
     <>
+      <CloseWrapper>
+        <button type="button" onClick={() => closePrompt()}>
+          <CrossSVG style={{ width: '1.25rem', height: '1.25rem' }} />
+        </button>
+      </CloseWrapper>
       <ModalPadding>
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
