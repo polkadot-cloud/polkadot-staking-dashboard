@@ -41,7 +41,7 @@ export const FavoritesPrompt = ({
     <>
       <Title title={t('nominateFavorites')} closeText={t('cancel')} />
       <div className="padded">
-        {remaining.isZero() ? (
+        {remaining.isLessThanOrEqualTo(0) ? (
           <h4 className="subheading">
             {t('moreFavoritesSurpassLimit', {
               max: maxNominations.toString(),
@@ -55,7 +55,7 @@ export const FavoritesPrompt = ({
 
         {favoritesList?.map((favorite: Validator, i) => {
           const inInitial = !!nominations.find(
-            ({ address }: Validator) => address === favorite.address
+            ({ address }) => address === favorite.address
           );
           const isDisabled =
             selected.includes(favorite) || !canAdd || inInitial;
