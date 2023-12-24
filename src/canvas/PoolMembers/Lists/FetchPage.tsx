@@ -116,8 +116,13 @@ export const MembersListInner = ({
   return (
     <ListWrapper>
       <List $flexBasisLarge={'33.33%'}>
-        {listMembers.length > 0 && pagination && (
-          <Pagination page={page} total={totalPages} setter={setPage} />
+        {pagination && (
+          <Pagination
+            page={page}
+            total={totalPages}
+            setter={setPage}
+            disabled={fetchedPoolMembersApi !== 'synced'}
+          />
         )}
         {fetchedPoolMembersApi !== 'synced' ? (
           <ListStatusHeader style={{ marginTop: '0.5rem' }}>
