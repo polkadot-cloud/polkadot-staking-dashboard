@@ -34,6 +34,7 @@ import { ValidatorMetrics } from '../modals/ValidatorMetrics';
 import { ValidatorGeo } from '../modals/ValidatorGeo';
 import { WithdrawPoolMember } from '../modals/WithdrawPoolMember';
 import { ManageNominations } from '../canvas/ManageNominations';
+import { PoolMembers } from 'modals/PoolMembers';
 
 export const Overlays = () => {
   const { status } = useHelp();
@@ -59,6 +60,7 @@ export const Overlays = () => {
         ManagePool,
         ManageFastUnstake,
         Networks,
+        PoolMembers,
         PoolNominations,
         Settings,
         ValidatorMetrics,

@@ -50,6 +50,13 @@ export const Wrapper = styled.div`
 
       h2 {
         color: var(--accent-color-primary);
+        display: flex;
+        align-items: center;
+
+        > button {
+          color: var(--accent-color-primary);
+          margin-left: 0.75rem;
+        }
       }
 
       h4 {

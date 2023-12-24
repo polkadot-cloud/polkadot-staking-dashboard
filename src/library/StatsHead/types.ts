@@ -2,9 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export interface StatsHeadProps {
-  items: {
-    value: string;
-    label: string;
-    helpKey?: string;
-  }[];
+  items: PoolStatLabel[];
+}
+
+export interface PoolStatLabel {
+  label: string;
+  value: string;
+  button?: {
+    text: string;
+    onClick: () => void;
+  };
+  helpKey?: string;
 }
