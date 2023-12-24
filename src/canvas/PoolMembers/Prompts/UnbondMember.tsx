@@ -108,7 +108,7 @@ export const UnbondMember = ({
 
   return (
     <>
-      <Title title="Unbond For Pool Member" />
+      <Title title={t('unbondPoolMember')} />
       <ModalPadding>
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
@@ -123,9 +123,7 @@ export const UnbondMember = ({
         </h3>
 
         <ModalNotes>
-          <p>
-            {freeToUnbond.toString()} {unit} wll be unbonded.
-          </p>
+          <p>{t('amountWillBeUnbonded', { bond: bond.bond, unit })}</p>
           <StaticNote
             value={bondDurationFormatted}
             tKey="onceUnbondingPoolMember"

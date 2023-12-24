@@ -29,6 +29,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { PoolMembership } from 'contexts/Pools/PoolMemberships/types';
 import { usePrompt } from 'contexts/Prompt';
 import { Title } from 'library/Prompt/Title';
+import { useTranslation } from 'react-i18next';
 
 export const WithdrawMember = ({
   who,
@@ -39,6 +40,7 @@ export const WithdrawMember = ({
   member: PoolMembership;
   memberRef: RefObject<HTMLDivElement>;
 }) => {
+  const { t } = useTranslation('modals');
   const { api, consts } = useApi();
   const {
     networkData: { units, unit },
@@ -104,7 +106,7 @@ export const WithdrawMember = ({
 
   return (
     <>
-      <Title title="Withdraw For Pool Member" />
+      <Title title={t('withdrawPoolMember')} />
       <ModalPadding>
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
@@ -121,9 +123,11 @@ export const WithdrawMember = ({
 
         <ModalNotes>
           <p>
-            {totalWithdraw.toString()} {unit} wll be withdrawn.
+            <p>
+              {t('amountWillBeWithdrawn', { bond: bonded.toString(), unit })}
+            </p>{' '}
           </p>
-          <p>Withdrawing will remove this member from the pool.</p>
+          <p>{t('withdrawRemoveNote')}</p>
         </ModalNotes>
       </ModalPadding>
       <SubmitTx valid={valid} {...submitExtrinsic} />
