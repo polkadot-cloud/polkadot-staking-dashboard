@@ -298,7 +298,6 @@ export const PoolMembersProvider = ({
     if (!pluginEnabled('subscan')) {
       return;
     }
-
     const newMembers = poolMembersNode.filter((p) => p.who !== who);
     setPoolMembersNode(newMembers ?? []);
   };

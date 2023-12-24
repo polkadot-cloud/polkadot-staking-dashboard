@@ -18,32 +18,31 @@ import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
-import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
-import { useTxMeta } from 'contexts/TxMeta';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { usePrompt } from 'contexts/Prompt';
+import type { PoolMembership } from 'contexts/Pools/PoolMemberships/types';
 
-export const UnbondPoolMember = () => {
+export const UnbondMember = ({
+  who,
+  member,
+}: {
+  who: string;
+  member: PoolMembership;
+}) => {
   const { t } = useTranslation('modals');
   const { api, consts } = useApi();
   const {
     networkData: { units, unit },
   } = useNetwork();
+  const { closePrompt } = usePrompt();
   const { activeAccount } = useActiveAccounts();
-  const { notEnoughFunds } = useTxMeta();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
-  const {
-    setModalStatus,
-    setModalResize,
-    config: { options },
-  } = useOverlay().modal;
 
   const { bondDuration } = consts;
-  const { member, who } = options;
   const { points } = member;
   const freeToUnbond = planckToUnit(new BigNumber(rmCommas(points)), units);
 
@@ -71,8 +70,6 @@ export const UnbondPoolMember = () => {
     setBondValid(isValid);
   }, [freeToUnbond.toString(), isValid]);
 
-  useEffect(() => setModalResize(), [bond, notEnoughFunds]);
-
   // tx to submit
   const getTx = () => {
     let tx = null;
@@ -91,7 +88,7 @@ export const UnbondPoolMember = () => {
     from: activeAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
-      setModalStatus('closing');
+      closePrompt();
     },
   });
 
@@ -103,9 +100,7 @@ export const UnbondPoolMember = () => {
 
   return (
     <>
-      <Close />
       <ModalPadding>
-        <h2 className="title unbounded">{t('unbondMemberFunds')}</h2>
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
             {warnings.map((text, i) => (

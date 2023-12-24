@@ -257,7 +257,6 @@
     "unbondErrorBelowMinimum": "Unable to unbond. Your bonded funds are below the minumum of {{bond}} {{unit}}.",
     "unbondErrorNoFunds": "You have no {{unit}} to unbond.",
     "unbondFundsLeavePool": "Unbond your funds and leave the nomination pool.",
-    "unbondMemberFunds": "Unbond Member Funds",
     "unbondSomeOfYour": "Unbond some of your",
     "unbondToMaintain": "Unbond up to the {{minJoinBondUnit}} {{unit}} minimum to maintain your pool membership",
     "unbondToMinimum": "Unbond To Minimum",
@@ -294,7 +293,6 @@
     "welcomeToReport": "Bug reports, feature requests and improvements are all welcome.",
     "willSurpass": "Adding this many favorites will surpass {{maxNominations}} nominations.",
     "withdraw": "Withdraw",
-    "withdrawMemberFunds": "Withdraw Member Funds",
     "withdrawSubtitle": "Funds will be immediately available as free balance after withdrawing.",
     "withdrawUnlocked": "Withdraw Unlocked",
     "years": "Years"

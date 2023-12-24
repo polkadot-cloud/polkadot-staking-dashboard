@@ -23,8 +23,10 @@ import {
   Separator,
   Wrapper,
 } from 'library/ListItem/Wrappers';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
 import type { AnyJson } from 'types';
+import { usePrompt } from 'contexts/Prompt';
+import { UnbondMember } from '../Prompts/UnbondMember';
+import { WithdrawMember } from '../Prompts/WithdrawMember';
 
 export const Member = ({
   who,
@@ -37,11 +39,12 @@ export const Member = ({
 }) => {
   const { t } = useTranslation('pages');
   const { meta } = usePoolMembers();
-  const { openModal } = useOverlay().modal;
   const { selectActive } = useList();
+  const { openPromptWith } = usePrompt();
   const { activeEra } = useNetworkMetrics();
-  const { selectedActivePool, isOwner, isBouncer } = useActivePools();
   const { setMenuPosition, setMenuItems, open } = useMenu();
+  const { selectedActivePool, isOwner, isBouncer } = useActivePools();
+
   const { state, roles } = selectedActivePool?.bondedPool || {};
   const { bouncer, root, depositor } = roles || {};
 
@@ -66,14 +69,7 @@ export const Member = ({
         wrap: null,
         title: `${t('pools.unbondFunds')}`,
         cb: () => {
-          openModal({
-            key: 'UnbondPoolMember',
-            options: {
-              who,
-              member,
-            },
-            size: 'sm',
-          });
+          openPromptWith(<UnbondMember who={who} member={member} />);
         },
       });
     }
@@ -92,11 +88,7 @@ export const Member = ({
           wrap: null,
           title: `${t('pools.withdrawFunds')}`,
           cb: () => {
-            openModal({
-              key: 'WithdrawPoolMember',
-              options: { who, member },
-              size: 'sm',
-            });
+            openPromptWith(<WithdrawMember who={who} member={member} />);
           },
         });
       }

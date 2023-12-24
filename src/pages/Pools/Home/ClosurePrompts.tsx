@@ -5,7 +5,6 @@ import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimary, ButtonRow, PageRow } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
@@ -20,7 +19,6 @@ export const ClosurePrompts = () => {
   const { activeAccount } = useActiveAccounts();
   const { mode } = useTheme();
   const { openModal } = useOverlay().modal;
-  const { membership } = usePoolMemberships();
   const { isPoolSyncing } = useUi();
   const { isBonding, selectedActivePool, isDepositor, poolNominations } =
     useActivePools();
@@ -71,8 +69,8 @@ export const ClosurePrompts = () => {
                 }
                 onClick={() =>
                   openModal({
-                    key: 'UnbondPoolMember',
-                    options: { who: activeAccount, member: membership },
+                    key: 'Unbond',
+                    options: { bondFor: 'pool' },
                     size: 'sm',
                   })
                 }
