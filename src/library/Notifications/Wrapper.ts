@@ -11,7 +11,7 @@ export const Wrapper = styled.ul`
   flex-direction: column;
   list-style: none;
   justify-content: flex-end;
-  z-index: 10;
+  z-index: 11;
 
   li {
     background: var(--background-primary);
