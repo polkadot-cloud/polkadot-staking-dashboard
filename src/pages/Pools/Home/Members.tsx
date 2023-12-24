@@ -21,8 +21,8 @@ export const Members = () => {
   const { getMembersOfPoolFromNode } = usePoolMembers();
   const { selectedActivePool, isOwner, isBouncer, selectedPoolMemberCount } =
     useActivePools();
-  const { colors } = useNetwork().networkData;
 
+  const { colors } = useNetwork().networkData;
   const annuncementBorderColor = colors.secondary[mode];
 
   const showBlockedPrompt =
