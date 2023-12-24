@@ -1,9 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
@@ -11,16 +8,9 @@ import { usePlugins } from 'contexts/Plugins';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useSubscan } from 'contexts/Plugins/Subscan';
-import { useTheme } from 'contexts/Themes';
-import {
-  Header,
-  List,
-  ListStatusHeader,
-  Wrapper as ListWrapper,
-} from 'library/List';
-import { MotionContainer } from 'library/List/MotionContainer';
+import { List, ListStatusHeader, Wrapper as ListWrapper } from 'library/List';
 import { Pagination } from 'library/List/Pagination';
-import { ListProvider, useList } from 'library/List/context';
+import { ListProvider } from 'library/List/context';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Member } from './Member';
@@ -28,19 +18,13 @@ import type { FetchpageMembersListProps } from './types';
 import type { PoolMember } from 'contexts/Pools/PoolMembers/types';
 
 export const MembersListInner = ({
-  allowMoreCols,
   pagination,
   batchKey,
   disableThrottle = false,
   memberCount,
 }: FetchpageMembersListProps) => {
   const { t } = useTranslation('pages');
-  const {
-    network,
-    networkData: { colors },
-  } = useNetwork();
-  const provider = useList();
-  const { mode } = useTheme();
+  const { network } = useNetwork();
   const { pluginEnabled } = usePlugins();
   const { fetchPoolMembers } = useSubscan();
   const { activeAccount } = useActiveAccounts();
@@ -52,9 +36,6 @@ export const MembersListInner = ({
     setFetchedPoolMembersApi,
     fetchPoolMembersMetaBatch,
   } = usePoolMembers();
-
-  // get list provider properties.
-  const { listFormat, setListFormat } = provider;
 
   // current page.
   const [page, setPage] = useState<number>(1);
@@ -97,9 +78,9 @@ export const MembersListInner = ({
   };
 
   // get throttled subset or entire list
-  const listMembers = disableThrottle
-    ? poolMembersApi
-    : poolMembersApi.slice(pageStart).slice(0, ListItemsPerPage);
+  const listMembers = poolMembersApi
+    .slice(pageStart)
+    .slice(0, ListItemsPerPage);
 
   // Refetch list when page changes.
   useEffect(() => {
@@ -134,24 +115,7 @@ export const MembersListInner = ({
 
   return (
     <ListWrapper>
-      <Header>
-        <div />
-        <div>
-          <button type="button" onClick={() => setListFormat('row')}>
-            <FontAwesomeIcon
-              icon={faBars}
-              color={listFormat === 'row' ? colors.primary[mode] : 'inherit'}
-            />
-          </button>
-          <button type="button" onClick={() => setListFormat('col')}>
-            <FontAwesomeIcon
-              icon={faGripVertical}
-              color={listFormat === 'col' ? colors.primary[mode] : 'inherit'}
-            />
-          </button>
-        </div>
-      </Header>
-      <List $flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
+      <List $flexBasisLarge={'33.33%'}>
         {listMembers.length > 0 && pagination && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
@@ -160,30 +124,17 @@ export const MembersListInner = ({
             {t('pools.fetchingMemberList')}....
           </ListStatusHeader>
         ) : (
-          <MotionContainer>
+          <div>
             {listMembers.map((member: PoolMember, index: number) => (
-              <motion.div
-                className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
-                key={`nomination_${index}`}
-                variants={{
-                  hidden: {
-                    y: 15,
-                    opacity: 0,
-                  },
-                  show: {
-                    y: 0,
-                    opacity: 1,
-                  },
-                }}
-              >
+              <div className={`item col`} key={`nomination_${index}`}>
                 <Member
                   who={member.who}
                   batchKey={batchKey}
                   batchIndex={poolMembersApi.indexOf(member)}
                 />
-              </motion.div>
+              </div>
             ))}
-          </MotionContainer>
+          </div>
         )}
       </List>
     </ListWrapper>

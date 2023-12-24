@@ -16,7 +16,7 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const PoolStats = () => {
   const { t } = useTranslation('pages');
-  const { openModal } = useOverlay().modal;
+  const { openCanvas } = useOverlay().canvas;
   const {
     networkData: { units, unit },
   } = useNetwork();
@@ -69,7 +69,7 @@ export const PoolStats = () => {
       button: {
         text: t('pools.browseMembers'),
         onClick: () => {
-          openModal({ key: 'PoolMembers', options: { poolId }, size: 'lg' });
+          openCanvas({ key: 'PoolMembers', size: 'xl' });
         },
       },
     },

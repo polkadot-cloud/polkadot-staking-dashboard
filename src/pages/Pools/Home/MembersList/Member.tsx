@@ -114,7 +114,7 @@ export const Member = ({
 
   return (
     <Wrapper className="member">
-      <div className="inner">
+      <div className="inner canvas">
         <MenuPosition ref={posRef} />
         <div className="row top">
           {selectActive && <Select item={{ address: who }} />}

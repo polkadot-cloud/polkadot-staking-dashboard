@@ -4,7 +4,6 @@
 import type { AnyJson } from 'types';
 
 export interface MembersListProps {
-  allowMoreCols: boolean;
   pagination: boolean;
   batchKey: string;
   disableThrottle?: boolean;
