@@ -3,6 +3,7 @@
 
 import {
   faBars,
+  faCopy,
   faShare,
   faUnlockAlt,
 } from '@fortawesome/free-solid-svg-icons';
@@ -27,6 +28,7 @@ import type { AnyJson } from 'types';
 import { usePrompt } from 'contexts/Prompt';
 import { UnbondMember } from '../Prompts/UnbondMember';
 import { WithdrawMember } from '../Prompts/WithdrawMember';
+import { NotificationsController } from 'static/NotificationsController';
 
 export const Member = ({
   who,
@@ -37,7 +39,7 @@ export const Member = ({
   batchKey: string;
   batchIndex: number;
 }) => {
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation();
   const { meta } = usePoolMembers();
   const { selectActive } = useList();
   const { openPromptWith } = usePrompt();
@@ -60,6 +62,18 @@ export const Member = ({
 
   const menuItems: AnyJson[] = [];
 
+  menuItems.push({
+    icon: <FontAwesomeIcon icon={faCopy} transform="shrink-3" />,
+    title: t('copyAddress', { ns: 'library' }),
+    cb: () => {
+      navigator.clipboard.writeText(who);
+      NotificationsController.emit({
+        title: t('addressCopiedToClipboard', { ns: 'library' }),
+        subtitle: who,
+      });
+    },
+  });
+
   if (member && (canUnbondBlocked || canUnbondDestroying)) {
     const { points, unbondingEras } = member;
 
@@ -67,7 +81,7 @@ export const Member = ({
       menuItems.push({
         icon: <FontAwesomeIcon icon={faUnlockAlt} transform="shrink-3" />,
         wrap: null,
-        title: `${t('pools.unbondFunds')}`,
+        title: `${t('pools.unbondFunds', { ns: 'pages' })}`,
         cb: () => {
           openPromptWith(<UnbondMember who={who} member={member} />);
         },
@@ -86,7 +100,7 @@ export const Member = ({
         menuItems.push({
           icon: <FontAwesomeIcon icon={faShare} transform="shrink-3" />,
           wrap: null,
-          title: `${t('pools.withdrawFunds')}`,
+          title: `${t('pools.withdrawFunds', { ns: 'pages' })}`,
           cb: () => {
             openPromptWith(<WithdrawMember who={who} member={member} />);
           },
