@@ -276,9 +276,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dotlottie/common@npm:0.7.4":
-  version: 0.7.4
-  resolution: "@dotlottie/common@npm:0.7.4"
+"@dotlottie/common@npm:0.7.5":
+  version: 0.7.5
+  resolution: "@dotlottie/common@npm:0.7.5"
   dependencies:
     "@dotlottie/dotlottie-js": "npm:0.6.0"
     "@lottiefiles/relottie": "npm:1.0.0"
@@ -287,7 +287,7 @@ __metadata:
     howler: "npm:^2.2.3"
     lottie-web: "npm:^5.12.2"
     xstate: "npm:^4.38.1"
-  checksum: 90b57b5d08dbbe2fe0c23d845707213ab660bd05c3bd377bf3bbe45145eeb193e0840cc09828a586b62f356c72dff7d02b6b6cd3be3fa6fd561cca24680333ac
+  checksum: b5e53ad492b4fd8fbf8fb831c60f44b0478a81f24c08be341911b35e4113da64ba404b166ddc46e6a9915669fcca156b9c9f4a02c5414c00c6138dedf27b6680
   languageName: node
   linkType: hard
 
@@ -304,13 +304,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dotlottie/player-component@npm:^2.7.3":
-  version: 2.7.3
-  resolution: "@dotlottie/player-component@npm:2.7.3"
+"@dotlottie/player-component@npm:^2.7.4":
+  version: 2.7.4
+  resolution: "@dotlottie/player-component@npm:2.7.4"
   dependencies:
-    "@dotlottie/common": "npm:0.7.4"
+    "@dotlottie/common": "npm:0.7.5"
     lit: "npm:^2.7.5"
-  checksum: bc5fd292882474e6c12824826c8d9a2e82a8357967671e076fd3cd7fb37d40a2c67d33ad8671a8d771ae31bd21b466e5ebcce20558dd04f17e5920d4ae9236df
+  checksum: e34b03b6c01e6f2672714764a7ef0962a46b1bba9df0134407ad34359528567d2edef56969487159c7ecda8b63013040167aa3bd7164498b3ed12fffccf2901a
   languageName: node
   linkType: hard
 
@@ -6804,7 +6804,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "polkadot-staking-dashboard@workspace:."
   dependencies:
-    "@dotlottie/player-component": "npm:^2.7.3"
+    "@dotlottie/player-component": "npm:^2.7.4"
     "@fortawesome/fontawesome-svg-core": "npm:^6.5.1"
     "@fortawesome/free-brands-svg-icons": "npm:^6.5.1"
     "@fortawesome/free-regular-svg-icons": "npm:^6.5.1"
