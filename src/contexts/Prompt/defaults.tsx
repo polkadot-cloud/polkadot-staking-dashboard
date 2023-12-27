@@ -12,4 +12,5 @@ export const defaultPromptContext: PromptContextInterface = {
   size: 'small',
   status: 0,
   Prompt: null,
+  setOnClosePrompt: (value) => {},
 };

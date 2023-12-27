@@ -13,12 +13,14 @@ export interface PromptContextInterface {
   size: string;
   status: number;
   Prompt: Prompt;
+  setOnClosePrompt: (onClosePrompt: (() => void) | null) => void;
 }
 
 export interface PromptState {
   size: string;
   status: number;
   Prompt: Prompt;
+  onClosePrompt: (() => void) | null;
 }
 
 export type Prompt = ReactNode | null;
