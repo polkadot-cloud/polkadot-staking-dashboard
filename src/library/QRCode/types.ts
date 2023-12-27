@@ -43,7 +43,7 @@ export interface DisplayPayloadProps {
 export interface ScanProps {
   className?: string | undefined;
   delay?: number;
-  onError?: undefined | ((error: Error) => void);
+  onError?: undefined | ((error: string) => void);
   onScan: (data: string) => void;
   size?: string | number | undefined;
   style?: React.CSSProperties | undefined;
@@ -51,7 +51,7 @@ export interface ScanProps {
 
 export interface ScanSignatureProps {
   className?: string;
-  onError?: (error: Error) => void;
+  onError?: (error: string) => void;
   onScan: (scanned: ScanType) => void;
   size?: string | number;
   style?: React.CSSProperties;
