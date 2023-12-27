@@ -45,6 +45,7 @@ export const PromptProvider = ({ children }: { children: React.ReactNode }) => {
       ...state,
       status: 0,
       Prompt: null,
+      onClosePrompt: null,
     });
   };
 
