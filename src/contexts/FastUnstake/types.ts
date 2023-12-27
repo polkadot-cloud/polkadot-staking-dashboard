@@ -13,7 +13,7 @@ export interface MetaInterface {
 }
 
 export interface FastUnstakeContextInterface {
-  getLocalkey: (a: MaybeAddress) => string;
+  getLocalkey: (address: MaybeAddress) => string;
   checking: boolean;
   meta: MetaInterface;
   isExposed: boolean | null;

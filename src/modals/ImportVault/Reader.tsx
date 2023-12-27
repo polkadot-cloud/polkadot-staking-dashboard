@@ -22,7 +22,7 @@ export const Reader = () => {
     networkData: { ss58 },
   } = useNetwork();
   const { addOtherAccounts } = useOtherAccounts();
-  const { setStatus: setPromptStatus } = usePrompt();
+  const { closePrompt } = usePrompt();
   const { addVaultAccount, vaultAccountExists, vaultAccounts } =
     useVaultAccounts();
 
@@ -54,7 +54,7 @@ export const Reader = () => {
         registerSaEvent(`${network.toLowerCase()}_vault_account_import`);
         addOtherAccounts([account]);
       }
-      setPromptStatus(0);
+      closePrompt();
     }
 
     // Display feedback.
@@ -76,7 +76,7 @@ export const Reader = () => {
       <h3 className="title">{t('scanFromPolkadotVault')}</h3>
       <div className="viewer">
         <QrScanSignature
-          size={279}
+          size={250}
           onScan={({ signature }) => {
             handleQrData(signature);
           }}
@@ -88,7 +88,7 @@ export const Reader = () => {
           <ButtonSecondary
             lg
             text={t('cancel')}
-            onClick={() => setPromptStatus(0)}
+            onClick={() => closePrompt()}
           />
         </div>
       </div>

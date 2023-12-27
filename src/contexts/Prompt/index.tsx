@@ -10,6 +10,7 @@ export const PromptProvider = ({ children }: { children: React.ReactNode }) => {
     size: 'large',
     status: 0,
     Prompt: null,
+    onClosePrompt: null,
   });
 
   const setPrompt = (Prompt: Prompt) => {
@@ -36,16 +37,29 @@ export const PromptProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const closePrompt = () => {
+    if (state.onClosePrompt) {
+      state.onClosePrompt();
+    }
+
     setState({
       ...state,
       status: 0,
       Prompt: null,
+      onClosePrompt: null,
+    });
+  };
+
+  const setOnClosePrompt = (onClosePrompt: (() => void) | null) => {
+    setState({
+      ...state,
+      onClosePrompt,
     });
   };
 
   return (
     <PromptContext.Provider
       value={{
+        setOnClosePrompt,
         openPromptWith,
         closePrompt,
         setStatus,

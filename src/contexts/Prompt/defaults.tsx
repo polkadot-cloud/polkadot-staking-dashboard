@@ -5,6 +5,7 @@
 import type { PromptContextInterface } from './types';
 
 export const defaultPromptContext: PromptContextInterface = {
+  setOnClosePrompt: (value) => {},
   openPromptWith: (o, s) => {},
   closePrompt: () => {},
   setStatus: (s) => {},

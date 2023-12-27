@@ -11,10 +11,10 @@ import type {
 
 export interface ExternalAccountsContextInterface {
   addExternalAccount: (
-    a: string,
+    address: string,
     addedBy: ExternalAccountAddedBy
   ) => AddExternalAccountResult | null;
-  forgetExternalAccounts: (a: ExternalAccount[]) => void;
+  forgetExternalAccounts: (accounts: ExternalAccount[]) => void;
 }
 
 export interface AddExternalAccountResult {

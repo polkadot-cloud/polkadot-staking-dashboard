@@ -6,6 +6,6 @@ import type { ExternalAccountsContextInterface } from './types';
 
 export const defaultExternalAccountsContext: ExternalAccountsContextInterface =
   {
-    addExternalAccount: (a, b) => null,
-    forgetExternalAccounts: (a) => {},
+    addExternalAccount: (address, addedBy) => null,
+    forgetExternalAccounts: (accounts) => {},
   };

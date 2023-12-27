@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export interface ExtrinsicsContextInterface {
-  addPending: (n: string) => void;
-  removePending: (n: string) => void;
+  addPending: (nonce: string) => void;
+  removePending: (nonce: string) => void;
   pending: string[];
 }

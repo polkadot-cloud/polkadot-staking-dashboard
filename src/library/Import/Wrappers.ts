@@ -135,7 +135,7 @@ export const QRViewerWrapper = styled.div`
   }
 
   .viewer {
-    border-radius: 1.25rem;
+    border-radius: 0.75rem;
     display: flex;
     justify-content: center;
     align-items: center;
