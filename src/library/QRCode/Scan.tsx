@@ -60,62 +60,59 @@ export const Html5QrCodePlugin = ({
   // Reference of the HTML element used to scan the QR code.
   const ref = useRef<HTMLDivElement>(null);
 
-  const handleHtmlQrCode = (): void => {
-    if (!ref.current) {
+  const handleHtmlQrCode = async (): Promise<void> => {
+    if (!ref.current || !html5QrCode) {
       return;
     }
 
-    Html5Qrcode.getCameras()
-      .then((devices) => {
-        if (devices && devices.length) {
-          const cameraId = devices[0].id;
+    try {
+      const devices = await Html5Qrcode.getCameras();
 
-          html5QrCode
-            ?.start(
-              cameraId,
-              {
-                fps,
-              },
-              (decodedText) => {
-                // do something when code is read
-                qrCodeSuccessCallback(decodedText);
-              },
-              (errorMessage) => {
-                // parse error
-                qrCodeErrorCallback(errorMessage);
-              }
-            )
-            .catch((err) => {
-              console.error(err);
-            });
-        } else {
-          // TODO: display error if no camera devices are available.
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+      if (devices && devices.length) {
+        const cameraId = devices[0].id;
+        await html5QrCode.start(
+          cameraId,
+          {
+            fps,
+          },
+          (decodedText) => {
+            // do something when code is read
+            qrCodeSuccessCallback(decodedText);
+          },
+          (errorMessage) => {
+            // parse error
+            qrCodeErrorCallback(errorMessage);
+          }
+        );
+      } else {
+        // TODO: display error if no camera devices are available.
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const stopHtmlQrCode = async () => {
+    try {
+      if (!html5QrCode) {
+        return;
+      }
+      await html5QrCode.stop();
+      html5QrCode?.clear();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
     if (ref.current) {
       // Instantiate Html5Qrcode once DOM element exists.
       setHtml5QrCode(new Html5Qrcode(ref.current.id));
-
       // Cleanup function when component will unmount.
-      return () => {
-        if (html5QrCode) {
-          html5QrCode
-            .stop()
-            .then(() => {
-              // QR code scanning is stopped
-            })
-            .catch((err) => {
-              console.error(err);
-            });
-        }
-      };
     }
+    return () => {
+      stopHtmlQrCode();
+    };
   }, []);
 
   // Start QR scanner when API object is instantiated.
