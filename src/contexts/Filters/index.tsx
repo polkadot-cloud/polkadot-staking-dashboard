@@ -33,9 +33,9 @@ export const FiltersProvider = ({
   const [searchTerms, setSearchTerms] = useState<FilterSearches>([]);
 
   // Get stored includes or excludes for a group.
-  const getFilters = (t: FilterType, g: string): string[] | null => {
-    const current = t === 'exclude' ? excludes : includes;
-    return current.find((e) => e.key === g)?.filters || null;
+  const getFilters = (type: FilterType, group: string): string[] | null => {
+    const current = type === 'exclude' ? excludes : includes;
+    return current.find((e) => e.key === group)?.filters || null;
   };
 
   const setFilters = (t: FilterType, n: FilterItems) => {

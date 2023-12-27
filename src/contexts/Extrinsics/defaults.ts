@@ -5,7 +5,7 @@
 import type { ExtrinsicsContextInterface } from './types';
 
 export const defaultExtrinsicsContext: ExtrinsicsContextInterface = {
-  addPending: (t) => {},
-  removePending: (t) => {},
+  addPending: (nonce) => {},
+  removePending: (nonce) => {},
   pending: [],
 };

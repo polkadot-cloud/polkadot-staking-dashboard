@@ -9,7 +9,7 @@ export const defaultMeta: MetaInterface = {
 };
 
 export const defaultFastUnstakeContext: FastUnstakeContextInterface = {
-  getLocalkey: (a) => '',
+  getLocalkey: (address) => '',
   checking: false,
   meta: defaultMeta,
   isExposed: null,

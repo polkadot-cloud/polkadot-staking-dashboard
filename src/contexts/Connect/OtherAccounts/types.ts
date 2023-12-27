@@ -6,14 +6,16 @@ import type { MaybeAddress, NetworkName } from 'types';
 import type { ExternalAccountImportType } from '../ExternalAccounts/types';
 
 export interface OtherAccountsContextInterface {
-  addOtherAccounts: (a: ImportedAccount[]) => void;
+  addOtherAccounts: (accounts: ImportedAccount[]) => void;
   addOrReplaceOtherAccount: (
-    a: ImportedAccount,
+    account: ImportedAccount,
     type: ExternalAccountImportType
   ) => void;
-  renameOtherAccount: (a: MaybeAddress, n: string) => void;
-  importLocalOtherAccounts: (g: (n: NetworkName) => ImportedAccount[]) => void;
-  forgetOtherAccounts: (a: ImportedAccount[]) => void;
+  renameOtherAccount: (address: MaybeAddress, newName: string) => void;
+  importLocalOtherAccounts: (
+    g: (network: NetworkName) => ImportedAccount[]
+  ) => void;
+  forgetOtherAccounts: (accounts: ImportedAccount[]) => void;
   accountsInitialised: boolean;
   otherAccounts: ImportedAccount[];
 }
