@@ -55,9 +55,9 @@ export const Html5QrCodePlugin = ({
   qrCodeSuccessCallback,
   qrCodeErrorCallback,
 }: Html5QrScannerProps) => {
-  // Store the HTML QR Code instance.
   const { setOnClosePrompt } = usePrompt();
 
+  // Store the HTML QR Code instance.
   const [html5QrCode, setHtml5QrCode] = useState<Html5Qrcode | null>(null);
 
   // Reference of the HTML element used to scan the QR code.

@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
 import type { MaybeString } from 'types';
 
 export interface PromptContextInterface {
+  setOnClosePrompt: (onClosePrompt: (() => void) | null) => void;
   openPromptWith: (o: React.ReactNode | null, s?: string) => void;
   closePrompt: () => void;
   setStatus: (s: number) => void;
@@ -13,7 +14,6 @@ export interface PromptContextInterface {
   size: string;
   status: number;
   Prompt: Prompt;
-  setOnClosePrompt: (onClosePrompt: (() => void) | null) => void;
 }
 
 export interface PromptState {
