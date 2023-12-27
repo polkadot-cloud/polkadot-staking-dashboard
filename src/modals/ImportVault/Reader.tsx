@@ -20,7 +20,7 @@ export const Reader = () => {
     networkData: { ss58 },
   } = useNetwork();
   const { addOtherAccounts } = useOtherAccounts();
-  const { setStatus: setPromptStatus } = usePrompt();
+  const { closePrompt } = usePrompt();
   const { addVaultAccount, vaultAccountExists, vaultAccounts } =
     useVaultAccounts();
 
@@ -51,7 +51,7 @@ export const Reader = () => {
       if (account) {
         addOtherAccounts([account]);
       }
-      setPromptStatus(0);
+      closePrompt();
     }
 
     // Display feedback.
@@ -85,7 +85,7 @@ export const Reader = () => {
           <ButtonSecondary
             lg
             text={t('cancel')}
-            onClick={() => setPromptStatus(0)}
+            onClick={() => closePrompt()}
           />
         </div>
       </div>
