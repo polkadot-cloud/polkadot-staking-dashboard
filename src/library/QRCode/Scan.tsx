@@ -98,12 +98,12 @@ export const Html5QrCodePlugin = ({
   useEffect(() => {
     if (ref.current) {
       // Instantiate Html5Qrcode once DOM element exists.
-      const hewHtml5QrCode = new Html5Qrcode(ref.current.id);
-      setHtml5QrCode(hewHtml5QrCode);
+      const newHtml5QrCode = new Html5Qrcode(ref.current.id);
+      setHtml5QrCode(newHtml5QrCode);
 
       // Stop HTML5 Qr Code when prompt closes.
       setOnClosePrompt(() => {
-        hewHtml5QrCode?.stop();
+        newHtml5QrCode?.stop();
       });
       // Cleanup function when component will unmount.
     }
