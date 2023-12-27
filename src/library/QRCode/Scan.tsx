@@ -7,6 +7,7 @@ import { ScanWrapper } from './Wrappers.js';
 import type { ScanProps } from './types.js';
 import { createImgSize } from './util.js';
 import { Html5Qrcode } from 'html5-qrcode';
+import { usePrompt } from 'contexts/Prompt';
 
 const DEFAULT_ERROR = (error: string): void => {
   throw new Error(error);
@@ -55,6 +56,8 @@ export const Html5QrCodePlugin = ({
   qrCodeErrorCallback,
 }: Html5QrScannerProps) => {
   // Store the HTML QR Code instance.
+  const { setOnClosePrompt } = usePrompt();
+
   const [html5QrCode, setHtml5QrCode] = useState<Html5Qrcode | null>(null);
 
   // Reference of the HTML element used to scan the QR code.
@@ -92,27 +95,18 @@ export const Html5QrCodePlugin = ({
     }
   };
 
-  const stopHtmlQrCode = async () => {
-    try {
-      if (!html5QrCode) {
-        return;
-      }
-      await html5QrCode.stop();
-      html5QrCode?.clear();
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   useEffect(() => {
     if (ref.current) {
       // Instantiate Html5Qrcode once DOM element exists.
-      setHtml5QrCode(new Html5Qrcode(ref.current.id));
+      const hewHtml5QrCode = new Html5Qrcode(ref.current.id);
+      setHtml5QrCode(hewHtml5QrCode);
+
+      // Stop HTML5 Qr Code when prompt closes.
+      setOnClosePrompt(() => {
+        hewHtml5QrCode?.stop();
+      });
       // Cleanup function when component will unmount.
     }
-    return () => {
-      stopHtmlQrCode();
-    };
   }, []);
 
   // Start QR scanner when API object is instantiated.
