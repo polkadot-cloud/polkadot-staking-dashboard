@@ -105,7 +105,6 @@ export const Html5QrCodePlugin = ({
       setOnClosePrompt(() => {
         newHtml5QrCode?.stop();
       });
-      // Cleanup function when component will unmount.
     }
   }, []);
 
