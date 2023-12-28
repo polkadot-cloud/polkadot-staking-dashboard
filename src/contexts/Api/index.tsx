@@ -29,6 +29,8 @@ import {
   defaultChainState,
   defaultConsts,
 } from './defaults';
+import { APIController } from 'static/APController';
+import { isCustomEvent } from 'static/utils';
 
 export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 
@@ -269,6 +271,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Handle an initial RPC connection.
   useEffect(() => {
     if (!provider && !isLightClient) {
+      APIController.initailize(network, 'ws', { rpcEndpoint });
       connectProvider();
     }
   });
@@ -301,6 +304,22 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       getChainState();
     }
   }, [provider]);
+
+  const eventCallback = (e: Event) => {
+    if (isCustomEvent(e)) {
+      const { event } = e.detail;
+      console.log('RECEIVED EVENT: ', event);
+      console.log(APIController.api);
+    }
+  };
+
+  // Add event listener for notifications.
+  useEffect(() => {
+    document.addEventListener('polkadot-api', eventCallback);
+    return () => {
+      document.removeEventListener('polkadot-api', eventCallback);
+    };
+  }, []);
 
   return (
     <APIContext.Provider
