@@ -6868,7 +6868,7 @@ __metadata:
     vite-plugin-checker: "npm:^0.6.2"
     vite-plugin-eslint: "npm:^1.8.1"
     vite-plugin-svgr: "npm:^4.2.0"
-    vite-tsconfig-paths: "npm:^4.2.2"
+    vite-tsconfig-paths: "npm:^4.2.3"
     vitest: "npm:^1.1.0"
   languageName: unknown
   linkType: soft
@@ -8778,9 +8778,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-tsconfig-paths@npm:^4.2.2":
-  version: 4.2.2
-  resolution: "vite-tsconfig-paths@npm:4.2.2"
+"vite-tsconfig-paths@npm:^4.2.3":
+  version: 4.2.3
+  resolution: "vite-tsconfig-paths@npm:4.2.3"
   dependencies:
     debug: "npm:^4.1.1"
     globrex: "npm:^0.1.2"
@@ -8790,7 +8790,7 @@ __metadata:
   peerDependenciesMeta:
     vite:
       optional: true
-  checksum: 8f63d799b139cceeb2a65421f940f64dfe85be8b99e6e5e6ed1b348914ff1ede638c451568bb9ed5e6f14e27c4b66b2d6ed2b453a61357bd30e25ed1be062e2c
+  checksum: 1083ae98e02b8f120cfc0fa2793fbafa77165b02ffd7936ea9979ac612df5f138f6f8f2f909ab372c0a54018ddea34c95c2eb0d51072852848498d8b1c13f2ff
   languageName: node
   linkType: hard
 
