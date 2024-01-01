@@ -5235,12 +5235,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:^23.7.12":
-  version: 23.7.12
-  resolution: "i18next@npm:23.7.12"
+"i18next@npm:^23.7.13":
+  version: 23.7.13
+  resolution: "i18next@npm:23.7.13"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-  checksum: 0eca6398605120188449c47a6741d3e0edea790f0ac37d3185ee92d8ffa5411e21b708aadfe0dae91665578f2e997df633eb35876a5f6a981051d2019a09e48c
+  checksum: a79c54856f9c2c8b9d807d690cb2a065ccd539e60f3509319eda0334acc9ae3e4cb59c40dda948a8726ae4ba2de153b1226edfabe9ff8eeb6a9211fbd57f179f
   languageName: node
   linkType: hard
 
@@ -6855,7 +6855,7 @@ __metadata:
     framer-motion: "npm:^10.16.16"
     gh-pages: "npm:^6.1.1"
     html5-qrcode: "npm:^2.3.8"
-    i18next: "npm:^23.7.12"
+    i18next: "npm:^23.7.13"
     i18next-browser-languagedetector: "npm:^7.2.0"
     lodash.throttle: "npm:^4.1.1"
     prettier: "npm:^3.1.0"
