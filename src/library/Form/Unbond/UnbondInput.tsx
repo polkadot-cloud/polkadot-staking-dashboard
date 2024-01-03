@@ -16,7 +16,7 @@ export const UnbondInput = ({
   disabled,
   unbondToMin,
   setters = [],
-  value = 0,
+  value = '0',
   active,
 }: UnbondInputProps) => {
   const { t } = useTranslation('library');
