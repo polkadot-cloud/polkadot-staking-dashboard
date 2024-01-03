@@ -72,7 +72,7 @@ export interface UnbondFeedbackProps {
 export interface UnbondInputProps {
   active: BigNumber;
   unbondToMin: BigNumber;
-  defaultValue: number | string;
+  defaultValue: string;
   disabled: boolean;
   setters: AnyFunction;
   value: AnyJson;

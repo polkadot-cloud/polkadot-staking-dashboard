@@ -27,11 +27,11 @@ export const UnbondInput = ({
   const activeUnit = planckToUnit(active, networkData.units);
 
   // the current local bond value.
-  const [localBond, setLocalBond] = useState(value);
+  const [localBond, setLocalBond] = useState<string>(value);
 
   // reset value to default when changing account.
   useEffect(() => {
-    setLocalBond(defaultValue ?? 0);
+    setLocalBond(defaultValue ?? '0');
   }, [activeAccount]);
 
   // handle change for unbonding.
@@ -88,7 +88,7 @@ export const UnbondInput = ({
             text={t('max')}
             disabled={disabled}
             onClick={() => {
-              setLocalBond(unbondToMinUnit);
+              setLocalBond(unbondToMinUnit.toString());
               updateParentState(unbondToMinUnit);
             }}
           />

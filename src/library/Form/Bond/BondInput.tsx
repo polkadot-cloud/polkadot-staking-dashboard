@@ -46,11 +46,11 @@ export const BondInput = ({
       return;
     }
     setLocalBond(val);
-    updateParentState(val);
+    updateParentState(new BigNumber(val));
   };
 
   // apply bond to parent setters.
-  const updateParentState = (val: string) => {
+  const updateParentState = (val: BigNumber) => {
     for (const s of setters) {
       s.set({
         ...s.current,
@@ -91,7 +91,7 @@ export const BondInput = ({
             disabled={disabled || syncing || freeToBond.isZero()}
             onClick={() => {
               setLocalBond(freeToBond.toString());
-              updateParentState(freeToBond.toString());
+              updateParentState(freeToBond);
             }}
           />
         </section>
