@@ -204,7 +204,6 @@ export const Unbond = () => {
           setters={[
             {
               set: handleSetBond,
-              current: bond,
             },
           ]}
           txFees={txFees}

@@ -13,13 +13,13 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import type { PoolProgress } from 'contexts/Setup/types';
 
 export const Bond = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
-  const { activeAccount } = useActiveAccounts();
   const { txFees } = useTxMeta();
+  const { activeAccount } = useActiveAccounts();
   const { getPoolSetup, setActiveAccountSetup } = useSetup();
+
   const setup = getPoolSetup(activeAccount);
   const { progress } = setup;
 
@@ -35,8 +35,16 @@ export const Bond = ({ section }: SetupStepProps) => {
   const [bondValid, setBondValid] = useState<boolean>(false);
 
   // handler for updating bond
-  const handleSetupUpdate = (value: PoolProgress) => {
-    setActiveAccountSetup('pool', value);
+  const handleSetBond = (value: { bond: BigNumber }) => {
+    // set this form's bond value.
+    setBond({
+      bond: value.bond.toString(),
+    });
+    // set pool progress bond value.
+    setActiveAccountSetup('pool', {
+      ...progress,
+      bond: value.bond.toString(),
+    });
   };
 
   // update bond on account change
@@ -75,12 +83,7 @@ export const Bond = ({ section }: SetupStepProps) => {
           defaultBond={initialBondValue}
           setters={[
             {
-              set: handleSetupUpdate,
-              current: progress,
-            },
-            {
-              set: setBond,
-              current: bond,
+              set: handleSetBond,
             },
           ]}
           txFees={txFees}

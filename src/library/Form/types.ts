@@ -7,7 +7,7 @@ import type {
   ExtensionAccount,
   ExternalAccount,
 } from '@polkadot-cloud/react/types';
-import type { AnyFunction, BondFor, MaybeAddress } from 'types';
+import type { BondFor, MaybeAddress } from 'types';
 
 export interface ExtensionAccountItem extends ExtensionAccount {
   active?: boolean;
@@ -33,9 +33,13 @@ export interface AccountDropdownProps {
   to: MaybeAddress;
 }
 
+export interface BondSetter {
+  set: ({ bond }: { bond: BigNumber }) => void;
+}
+
 export interface BondFeedbackProps {
   syncing?: boolean;
-  setters: AnyFunction[];
+  setters: BondSetter[];
   bondFor: BondFor;
   defaultBond: string | null;
   inSetup?: boolean;
@@ -48,17 +52,12 @@ export interface BondFeedbackProps {
   maxWidth?: boolean;
 }
 
-export interface BondSetter {
-  set: ({ bond }: { bond: BigNumber }) => void;
-  current: { bond: string };
-}
-
 export interface BondInputProps {
   freeToBond: BigNumber;
   value: string;
   defaultValue: string;
   syncing?: boolean;
-  setters: AnyFunction[];
+  setters: BondSetter[];
   disabled: boolean;
   disableTxFeeUpdate?: boolean;
 }

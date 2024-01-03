@@ -65,7 +65,6 @@ export const UnbondFeedback = ({
   // add this component's setBond to setters
   setters.push({
     set: handleSetBond,
-    current: bond,
   });
 
   // bond amount to minimum threshold

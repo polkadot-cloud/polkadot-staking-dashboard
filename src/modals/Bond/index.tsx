@@ -171,7 +171,6 @@ export const Bond = () => {
           setters={[
             {
               set: handleSetBond,
-              current: bond,
             },
           ]}
           parentErrors={warnings}

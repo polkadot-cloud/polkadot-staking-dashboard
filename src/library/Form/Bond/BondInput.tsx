@@ -53,7 +53,6 @@ export const BondInput = ({
   const updateParentState = (val: BigNumber) => {
     for (const s of setters) {
       s.set({
-        ...s.current,
         bond: val,
       });
     }
