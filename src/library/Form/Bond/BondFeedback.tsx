@@ -72,7 +72,7 @@ export const BondFeedback = ({
   const bondBn = unitToPlanck(bond.bond, units);
 
   // whether bond is disabled
-  const [bondDisabled, setBondDisabled] = useState(false);
+  const [bondDisabled, setBondDisabled] = useState<boolean>(false);
 
   // bond minus tx fees if too much
   const enoughToCoverTxFees = freeToBond.minus(bondBn).isGreaterThan(txFees);
