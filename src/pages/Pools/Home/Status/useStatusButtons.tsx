@@ -75,7 +75,7 @@ export const useStatusButtons = () => {
       !bondedPools.length,
     onClick: () => {
       registerSaEvent(`${network.toLowerCase()}_pool_join_button_pressed`);
-      setActiveTab(2);
+      setActiveTab(1);
     },
   };
 

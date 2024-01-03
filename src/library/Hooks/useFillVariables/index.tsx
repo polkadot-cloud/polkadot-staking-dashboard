@@ -24,10 +24,7 @@ export const useFillVariables = () => {
         const varsToValues = [
           ['{NETWORK_UNIT}', networkData.unit],
           ['{NETWORK_NAME}', capitalizeFirstLetter(networkData.name)],
-          [
-            '{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}',
-            maxExposurePageSize.toString(),
-          ],
+          ['{MAX_EXPOSURE_PAGE_SIZE}', maxExposurePageSize.toString()],
           ['{MAX_NOMINATIONS}', maxNominations.toString()],
           [
             '{MIN_ACTIVE_STAKE}',
