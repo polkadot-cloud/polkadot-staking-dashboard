@@ -168,11 +168,7 @@ export const Bond = () => {
             setFeedbackErrors(errors);
           }}
           defaultBond={null}
-          setters={[
-            {
-              set: handleSetBond,
-            },
-          ]}
+          setters={[handleSetBond]}
           parentErrors={warnings}
           txFees={largestTxFee}
         />

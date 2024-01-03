@@ -201,11 +201,7 @@ export const Unbond = () => {
             setBondValid(valid);
             setFeedbackErrors(errors);
           }}
-          setters={[
-            {
-              set: handleSetBond,
-            },
-          ]}
+          setters={[handleSetBond]}
           txFees={txFees}
         />
         <ModalNotes withPadding>

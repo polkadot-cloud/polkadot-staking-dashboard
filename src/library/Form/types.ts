@@ -33,9 +33,7 @@ export interface AccountDropdownProps {
   to: MaybeAddress;
 }
 
-export interface BondSetter {
-  set: ({ bond }: { bond: BigNumber }) => void;
-}
+export type BondSetter = ({ bond }: { bond: BigNumber }) => void;
 
 export interface BondFeedbackProps {
   syncing?: boolean;

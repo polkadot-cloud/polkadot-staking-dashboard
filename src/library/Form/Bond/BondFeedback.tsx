@@ -82,9 +82,7 @@ export const BondFeedback = ({
     : BigNumber.max(bondBn.minus(txFees), 0);
 
   // add this component's setBond to setters
-  setters.push({
-    set: handleSetBond,
-  });
+  setters.push(handleSetBond);
 
   // bond amount to minimum threshold.
   const minBondBn =

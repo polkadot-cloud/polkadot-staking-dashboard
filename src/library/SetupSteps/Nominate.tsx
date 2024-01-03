@@ -29,10 +29,8 @@ export const Nominate = ({ bondFor, section }: NominationsProps) => {
 
   // Handler for updating setup.
   const handleSetupUpdate = (value: AnyJson) => {
-    console.log(value);
     setActiveAccountSetup(bondFor, value);
   };
-  console.log(progress);
 
   return (
     <>

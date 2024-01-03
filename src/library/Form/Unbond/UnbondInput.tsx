@@ -46,8 +46,8 @@ export const UnbondInput = ({
 
   // apply bond to parent setters.
   const updateParentState = (val: BigNumber) => {
-    for (const s of setters) {
-      s.set({
+    for (const setter of setters) {
+      setter({
         bond: val,
       });
     }

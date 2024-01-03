@@ -63,9 +63,7 @@ export const UnbondFeedback = ({
   const bondBn = unitToPlanck(String(bond.bond), units);
 
   // add this component's setBond to setters
-  setters.push({
-    set: handleSetBond,
-  });
+  setters.push(handleSetBond);
 
   // bond amount to minimum threshold
   const minBondBn =

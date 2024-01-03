@@ -80,11 +80,7 @@ export const Bond = ({ section }: SetupStepProps) => {
           inSetup
           listenIsValid={(valid) => setBondValid(valid)}
           defaultBond={initialBondValue}
-          setters={[
-            {
-              set: handleSetBond,
-            },
-          ]}
+          setters={[handleSetBond]}
           txFees={txFees}
           maxWidth
         />
