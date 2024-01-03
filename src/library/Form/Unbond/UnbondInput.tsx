@@ -16,7 +16,7 @@ export const UnbondInput = ({
   disabled,
   unbondToMin,
   setters = [],
-  value = 0,
+  value = '0',
   active,
 }: UnbondInputProps) => {
   const { t } = useTranslation('library');
@@ -27,11 +27,11 @@ export const UnbondInput = ({
   const activeUnit = planckToUnit(active, networkData.units);
 
   // the current local bond value.
-  const [localBond, setLocalBond] = useState(value);
+  const [localBond, setLocalBond] = useState<string>(value);
 
   // reset value to default when changing account.
   useEffect(() => {
-    setLocalBond(defaultValue ?? 0);
+    setLocalBond(defaultValue ?? '0');
   }, [activeAccount]);
 
   // handle change for unbonding.
@@ -46,9 +46,8 @@ export const UnbondInput = ({
 
   // apply bond to parent setters.
   const updateParentState = (val: BigNumber) => {
-    for (const s of setters) {
-      s.set({
-        ...s.current,
+    for (const setter of setters) {
+      setter({
         bond: val,
       });
     }
@@ -88,7 +87,7 @@ export const UnbondInput = ({
             text={t('max')}
             disabled={disabled}
             onClick={() => {
-              setLocalBond(unbondToMinUnit);
+              setLocalBond(unbondToMinUnit.toString());
               updateParentState(unbondToMinUnit);
             }}
           />

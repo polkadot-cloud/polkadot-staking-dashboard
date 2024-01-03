@@ -30,15 +30,15 @@ export const UnbondFeedback = ({
   const {
     networkData: { units, unit },
   } = useNetwork();
-  const { activeAccount } = useActiveAccounts();
   const { staking } = useStaking();
-  const { getTransferOptions } = useTransferOptions();
-  const { isDepositor } = useActivePools();
   const { stats } = usePoolsConfig();
-  const { minJoinBond, minCreateBond } = stats;
-  const { minNominatorBond } = staking;
-  const allTransferOptions = getTransferOptions(activeAccount);
+  const { isDepositor } = useActivePools();
+  const { activeAccount } = useActiveAccounts();
+  const { getTransferOptions } = useTransferOptions();
 
+  const { minNominatorBond } = staking;
+  const { minJoinBond, minCreateBond } = stats;
+  const allTransferOptions = getTransferOptions(activeAccount);
   const defaultValue = defaultBond ? String(defaultBond) : '';
 
   // get bond options for either nominating or pooling.
@@ -54,33 +54,16 @@ export const UnbondFeedback = ({
     bond: defaultValue,
   });
 
+  // handler to set bond as a string
+  const handleSetBond = (newBond: { bond: BigNumber }) => {
+    setBond({ bond: newBond.bond.toString() });
+  };
+
   // current bond value BigNumber
   const bondBn = unitToPlanck(String(bond.bond), units);
 
-  // update bond on account change
-  useEffect(() => {
-    setBond({
-      bond: defaultValue,
-    });
-  }, [activeAccount]);
-
-  // handle errors on input change
-  useEffect(() => {
-    handleErrors();
-  }, [bond, txFees]);
-
-  // if resize is present, handle on error change
-  useEffect(() => {
-    if (setLocalResize) {
-      setLocalResize();
-    }
-  }, [errors]);
-
   // add this component's setBond to setters
-  setters.push({
-    set: setBond,
-    current: bond,
-  });
+  setters.push(handleSetBond);
 
   // bond amount to minimum threshold
   const minBondBn =
@@ -147,6 +130,23 @@ export const UnbondFeedback = ({
     }
     setErrors(newErrors);
   };
+
+  // update bond on account change
+  useEffect(() => {
+    setBond({ bond: defaultValue });
+  }, [activeAccount]);
+
+  // handle errors on input change
+  useEffect(() => {
+    handleErrors();
+  }, [bond, txFees]);
+
+  // if resize is present, handle on error change
+  useEffect(() => {
+    if (setLocalResize) {
+      setLocalResize();
+    }
+  }, [errors]);
 
   return (
     <>
