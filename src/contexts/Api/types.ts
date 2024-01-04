@@ -7,7 +7,7 @@ import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import type { AnyJson, Network, NetworkName } from '../../types';
 
-export type ApiStatus = 'connecting' | 'connected' | 'disconnected';
+export type ApiStatus = 'connecting' | 'connected' | 'disconnected' | 'ready';
 
 export interface APIProviderProps {
   children: ReactNode;

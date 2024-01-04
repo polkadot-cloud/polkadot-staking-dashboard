@@ -6,12 +6,15 @@ import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import { NetworkList } from 'config/networks';
 import type { NetworkName } from 'types';
-import type { SubstrateConnect } from './types';
+import type { ConnectionType, SubstrateConnect } from './types';
 
 export class APIController {
   // ---------------------
   // Class members.
   // ---------------------
+
+  // The active network.
+  static network: NetworkName;
 
   // API provider.
   static provider: WsProvider | ScProvider;
@@ -30,14 +33,16 @@ export class APIController {
   // Class methods.
   // ---------------------
 
-  // Class initialisation. Sets the `provider` and `api` class members.
-  static async initailize(
+  // Class initialization. Sets the `provider` and `api` class members.
+  static async initialize(
     network: NetworkName,
-    type: 'ws' | 'sc',
+    type: ConnectionType,
     config: {
       rpcEndpoint: string;
     }
   ) {
+    this.network = network;
+
     if (type === 'ws') {
       this.initWsProvider(network, config.rpcEndpoint);
     } else {
@@ -45,7 +50,6 @@ export class APIController {
     }
 
     this.initEvents();
-
     this._api = await ApiPromise.create({ provider: this.provider });
 
     document.dispatchEvent(
@@ -53,7 +57,31 @@ export class APIController {
     );
   }
 
-  // Set up API events. Relays information to `docunent` for the UI to handle.
+  // Reconnect to a different endpoint.
+  static async reconnect(
+    network: NetworkName,
+    type: ConnectionType,
+    rpcEndpoint: string
+  ) {
+    // Tell UI api is disconnected while we awit disconnect.
+    document.dispatchEvent(
+      new CustomEvent('polkadot-api', { detail: { event: 'disconnected' } })
+    );
+    await this.api.disconnect();
+
+    this.network = network;
+
+    document.dispatchEvent(
+      new CustomEvent('polkadot-api', { detail: { event: 'connecting' } })
+    );
+    if (type === 'ws') {
+      this.initWsProvider(network, rpcEndpoint);
+    } else {
+      await this.initScProvider(network);
+    }
+  }
+
+  // Set up API events. Relays information to `document` for the UI to handle.
   static initEvents() {
     this.provider.on('connected', () => {
       document.dispatchEvent(
