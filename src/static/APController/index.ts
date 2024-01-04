@@ -41,6 +41,10 @@ export class APIController {
       rpcEndpoint: string;
     }
   ) {
+    document.dispatchEvent(
+      new CustomEvent('polkadot-api', { detail: { event: 'connecting' } })
+    );
+
     this.network = network;
 
     if (type === 'ws') {
@@ -64,6 +68,8 @@ export class APIController {
     rpcEndpoint: string
   ) {
     await this.api.disconnect();
+    this.resetEvents();
+
     this.network = network;
 
     document.dispatchEvent(
@@ -75,32 +81,12 @@ export class APIController {
     } else {
       await this.initScProvider(network);
     }
-
     this.initEvents();
     this._api = await ApiPromise.create({ provider: this.provider });
 
     document.dispatchEvent(
       new CustomEvent('polkadot-api', { detail: { event: 'ready' } })
     );
-  }
-
-  // Set up API events. Relays information to `document` for the UI to handle.
-  static initEvents() {
-    this.provider.on('connected', () => {
-      document.dispatchEvent(
-        new CustomEvent('polkadot-api', { detail: { event: 'connected' } })
-      );
-    });
-    this.provider.on('disconnected', () => {
-      document.dispatchEvent(
-        new CustomEvent('polkadot-api', { detail: { event: 'disconnected' } })
-      );
-    });
-    this.provider.on('error', (err) => {
-      document.dispatchEvent(
-        new CustomEvent('polkadot-api', { detail: { event: 'error', err } })
-      );
-    });
   }
 
   // Initiate Websocket Provider
@@ -123,5 +109,38 @@ export class APIController {
       Sc,
       NetworkList[network].endpoints.lightClient
     );
+    await this.provider.connect();
+  }
+
+  // Set up API event listeners. Relays information to `document` for the UI to handle.
+  static initEvents() {
+    this.provider.on('connected', () => {
+      document.dispatchEvent(
+        new CustomEvent('polkadot-api', { detail: { event: 'connected' } })
+      );
+    });
+    this.provider.on('disconnected', () => {
+      document.dispatchEvent(
+        new CustomEvent('polkadot-api', { detail: { event: 'disconnected' } })
+      );
+    });
+    this.provider.on('error', (err: string) => {
+      document.dispatchEvent(
+        new CustomEvent('polkadot-api', { detail: { event: 'error', err } })
+      );
+    });
+  }
+
+  // Remove API event listeners.
+  static resetEvents() {
+    this.provider.on('connected', () => {
+      /* noop */
+    });
+    this.provider.on('disconnected', () => {
+      /* noop */
+    });
+    this.provider.on('error', () => {
+      /* noop */
+    });
   }
 }

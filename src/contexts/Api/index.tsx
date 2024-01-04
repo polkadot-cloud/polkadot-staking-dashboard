@@ -200,34 +200,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     });
   };
 
-  // Handle an initial RPC connection.
-  useEffect(() => {
-    if (!APIController.provider && !isLightClient) {
-      APIController.initialize(network, 'ws', { rpcEndpoint });
-    }
-  });
-
-  // If RPC endpoint changes, and not on light client, re-connect.
-  useEffectIgnoreInitial(() => {
-    if (!isLightClient) {
-      APIController.reconnect(network, 'ws', rpcEndpoint);
-    }
-  }, [rpcEndpoint]);
-
-  // Trigger API connection handler on network or light client change.
-  useEffectIgnoreInitial(() => {
-    setRpcEndpoint(initialRpcEndpoint());
-    if (network !== APIController.network) {
-      onChangeNetwork();
-    }
-
-    APIController.reconnect(network, isLightClient ? 'sc' : 'ws', rpcEndpoint);
-
-    return () => {
-      APIController.cancelFn?.();
-    };
-  }, [isLightClient, network]);
-
   // Handle `polkadot-api` events.
   const eventCallback = (e: Event) => {
     if (isCustomEvent(e)) {
@@ -252,6 +224,35 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       }
     }
   };
+
+  // Handle an initial RPC connection.
+  useEffect(() => {
+    if (!APIController.provider && !isLightClient) {
+      APIController.initialize(network, 'ws', { rpcEndpoint });
+    }
+  });
+
+  // If RPC endpoint changes, and not on light client, re-connect.
+  useEffectIgnoreInitial(() => {
+    if (!isLightClient) {
+      APIController.reconnect(network, 'ws', rpcEndpoint);
+    }
+  }, [rpcEndpoint]);
+
+  // Trigger API connection handler on network or light client change.
+  useEffectIgnoreInitial(() => {
+    setRpcEndpoint(initialRpcEndpoint());
+
+    if (network !== APIController.network) {
+      onChangeNetwork();
+    }
+
+    APIController.reconnect(network, isLightClient ? 'sc' : 'ws', rpcEndpoint);
+
+    return () => {
+      APIController.cancelFn?.();
+    };
+  }, [isLightClient, network]);
 
   // Add event listener for `polkadot-api` notifications.
   useEffect(() => {
