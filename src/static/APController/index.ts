@@ -134,13 +134,13 @@ export class APIController {
   // Remove API event listeners.
   static resetEvents() {
     this.provider.on('connected', () => {
-      /* noop */
+      /* No nothing */
     });
     this.provider.on('disconnected', () => {
-      /* noop */
+      /* No nothing */
     });
     this.provider.on('error', () => {
-      /* noop */
+      /* No nothing */
     });
   }
 }
