@@ -63,22 +63,25 @@ export class APIController {
     type: ConnectionType,
     rpcEndpoint: string
   ) {
-    // Tell UI api is disconnected while we awit disconnect.
-    document.dispatchEvent(
-      new CustomEvent('polkadot-api', { detail: { event: 'disconnected' } })
-    );
     await this.api.disconnect();
-
     this.network = network;
 
     document.dispatchEvent(
       new CustomEvent('polkadot-api', { detail: { event: 'connecting' } })
     );
+
     if (type === 'ws') {
       this.initWsProvider(network, rpcEndpoint);
     } else {
       await this.initScProvider(network);
     }
+
+    this.initEvents();
+    this._api = await ApiPromise.create({ provider: this.provider });
+
+    document.dispatchEvent(
+      new CustomEvent('polkadot-api', { detail: { event: 'ready' } })
+    );
   }
 
   // Set up API events. Relays information to `document` for the UI to handle.

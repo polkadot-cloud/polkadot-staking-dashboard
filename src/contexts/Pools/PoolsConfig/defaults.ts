@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js';
 import type { PoolsConfigContextState, PoolStats } from './types';
 import type { PoolAddresses } from '../BondedPools/types';
 
-export const stats: PoolStats = {
+export const defaultStats: PoolStats = {
   counterForPoolMembers: new BigNumber(0),
   counterForBondedPools: new BigNumber(0),
   counterForRewardPools: new BigNumber(0),
@@ -24,7 +24,7 @@ export const defaultPoolsConfigContext: PoolsConfigContextState = {
   removeFavorite: () => {},
   createAccounts: () => poolAddresses,
   favorites: [],
-  stats,
+  stats: defaultStats,
 };
 
 export const poolAddresses: PoolAddresses = {
