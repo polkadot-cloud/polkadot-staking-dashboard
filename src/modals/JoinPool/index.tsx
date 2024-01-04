@@ -61,6 +61,11 @@ export const JoinPool = () => {
     bond: planckToUnit(totalPossibleBond, units).toString(),
   });
 
+  // handler to set bond as a string
+  const handleSetBond = (newBond: { bond: BigNumber }) => {
+    setBond({ bond: newBond.bond.toString() });
+  };
+
   // Updated claim permission value
   const [claimPermission, setClaimPermission] = useState<
     ClaimPermission | undefined
@@ -140,12 +145,7 @@ export const JoinPool = () => {
             setFeedbackErrors(errors);
           }}
           defaultBond={null}
-          setters={[
-            {
-              set: setBond,
-              current: bond,
-            },
-          ]}
+          setters={[handleSetBond]}
           parentErrors={warnings}
           txFees={largestTxFee}
         />

@@ -13,7 +13,6 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import type { NominatorProgress } from 'contexts/Setup/types';
 
 export const Bond = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
@@ -35,8 +34,16 @@ export const Bond = ({ section }: SetupStepProps) => {
   const [bondValid, setBondValid] = useState<boolean>(false);
 
   // handler for updating bond
-  const handleSetupUpdate = (value: NominatorProgress) => {
-    setActiveAccountSetup('nominator', value);
+  const handleSetBond = (value: { bond: BigNumber }) => {
+    // set this form's bond value.
+    setBond({
+      bond: value.bond.toString() || '0',
+    });
+    // set nominator progress bond value.
+    setActiveAccountSetup('nominator', {
+      ...progress,
+      bond: value.bond.toString(),
+    });
   };
 
   // update bond on account change
@@ -73,16 +80,7 @@ export const Bond = ({ section }: SetupStepProps) => {
           inSetup
           listenIsValid={(valid) => setBondValid(valid)}
           defaultBond={initialBondValue}
-          setters={[
-            {
-              set: handleSetupUpdate,
-              current: progress,
-            },
-            {
-              set: setBond,
-              current: bond,
-            },
-          ]}
+          setters={[handleSetBond]}
           txFees={txFees}
           maxWidth
         />

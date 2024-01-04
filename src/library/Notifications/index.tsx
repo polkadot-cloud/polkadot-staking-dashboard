@@ -8,9 +8,10 @@ import type {
   NotificationItem,
 } from 'static/NotificationsController/types';
 import { Wrapper } from './Wrapper';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import { isCustomEvent } from 'static/utils';
+import { useEventListener } from 'usehooks-ts';
 
 export const Notifications = () => {
   // Store the notifications currently being displayed.
@@ -57,12 +58,8 @@ export const Notifications = () => {
   };
 
   // Add event listener for notifications.
-  useEffect(() => {
-    document.addEventListener('notification', notificationCallback);
-    return () => {
-      document.removeEventListener('notification', notificationCallback);
-    };
-  }, []);
+  const ref = useRef<Document>(document);
+  useEventListener('notification', notificationCallback, ref);
 
   return (
     <Wrapper>
@@ -70,7 +67,6 @@ export const Notifications = () => {
         {notifications.length > 0 &&
           notifications.map(
             (notification: NotificationInterface, i: number) => {
-              // eslint-disable-next-line
               const { item, index } = notification;
 
               return (

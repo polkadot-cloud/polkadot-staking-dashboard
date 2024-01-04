@@ -69,6 +69,11 @@ export const Bond = () => {
   // feedback errors to trigger modal resize
   const [feedbackErrors, setFeedbackErrors] = useState<string[]>([]);
 
+  // handler to set bond as a string
+  const handleSetBond = (newBond: { bond: BigNumber }) => {
+    setBond({ bond: newBond.bond.toString() });
+  };
+
   // bond minus tx fees.
   const enoughToCoverTxFees: boolean = freeToBond
     .minus(bond.bond)
@@ -85,11 +90,6 @@ export const Bond = () => {
       0
     );
   }
-
-  // update bond value on task change.
-  useEffect(() => {
-    setBond({ bond: freeToBond.toString() });
-  }, [freeToBond.toString()]);
 
   // determine whether this is a pool or staking transaction.
   const determineTx = (bondToSubmit: BigNumber) => {
@@ -137,6 +137,11 @@ export const Bond = () => {
     submitExtrinsic.proxySupported
   );
 
+  // update bond value on task change.
+  useEffect(() => {
+    handleSetBond({ bond: freeToBond });
+  }, [freeToBond.toString()]);
+
   // modal resize on form update
   useEffect(
     () => setModalResize(),
@@ -163,12 +168,7 @@ export const Bond = () => {
             setFeedbackErrors(errors);
           }}
           defaultBond={null}
-          setters={[
-            {
-              set: setBond,
-              current: bond,
-            },
-          ]}
+          setters={[handleSetBond]}
           parentErrors={warnings}
           txFees={largestTxFee}
         />
