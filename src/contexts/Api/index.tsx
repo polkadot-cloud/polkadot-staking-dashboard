@@ -89,9 +89,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const onApiReady = async () => {
     const { api } = APIController;
 
-    // API is now ready to be used.
-    setApiStatus('ready');
-
     const newChainState = await Promise.all([
       api.rpc.system.chain(),
       api.consts.system.version,
@@ -198,6 +195,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       existentialDeposit,
       fastUnstakeDeposit,
     });
+
+    // API is now ready to be used.
+    setApiStatus('ready');
   };
 
   // Handle `polkadot-api` events.

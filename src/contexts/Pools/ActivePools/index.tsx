@@ -458,16 +458,6 @@ export const ActivePoolsProvider = ({
     );
   };
 
-  // re-sync when number of accountRoles change.
-  // this can happen when bondedPools sync, when roles
-  // are edited within the dashboard, or when pool
-  // membership changes.
-  useEffectIgnoreInitial(() => {
-    unsubscribeActivePools();
-    unsubscribePoolNominations();
-    setStateWithRef('unsynced', setSynced, syncedRef);
-  }, [activeAccount, accountPools.length]);
-
   // subscribe to pool that the active account is a member of.
   useEffectIgnoreInitial(() => {
     if (isReady && syncedRef.current === 'unsynced') {
@@ -476,18 +466,11 @@ export const ActivePoolsProvider = ({
     }
   }, [network, isReady, syncedRef.current]);
 
-  // unsubscribe all on component unmount
-  useEffect(
-    () => () => {
-      unsubscribeActivePools();
-      unsubscribePoolNominations();
-    },
-    [network]
-  );
-
   // re-calculate pending rewards when membership changes
   useEffectIgnoreInitial(() => {
-    updatePendingRewards();
+    if (isReady) {
+      updatePendingRewards();
+    }
   }, [
     network,
     isReady,
@@ -519,6 +502,14 @@ export const ActivePoolsProvider = ({
     );
   };
 
+  // Re-sync when number of accountRoles change. This can happen when bondedPools sync, when roles
+  // are edited within the dashboard, or when pool membership changes.
+  useEffectIgnoreInitial(() => {
+    unsubscribeActivePools();
+    unsubscribePoolNominations();
+    setStateWithRef('unsynced', setSynced, syncedRef);
+  }, [activeAccount, accountPools.length]);
+
   // when we are subscribed to all active pools, syncing is considered
   // completed.
   useEffectIgnoreInitial(() => {
@@ -532,6 +523,15 @@ export const ActivePoolsProvider = ({
   useEffect(() => {
     getMemberCount();
   }, [activeAccount, getSelectedActivePool(), membership, poolMembersNode]);
+
+  // unsubscribe all on component unmount.
+  useEffect(
+    () => () => {
+      unsubscribeActivePools();
+      unsubscribePoolNominations();
+    },
+    [network]
+  );
 
   return (
     <ActivePoolsContext.Provider
