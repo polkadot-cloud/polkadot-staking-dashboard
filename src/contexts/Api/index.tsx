@@ -211,7 +211,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     if (err === 'offline-event') {
       NotificationsController.emit({
         title: t('disconnected'),
-        subtitle: t('lostConnectionToNode'),
+        subtitle: t('connectionLost'),
       });
     }
   };
