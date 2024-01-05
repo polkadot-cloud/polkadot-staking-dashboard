@@ -52,6 +52,7 @@ export const PoolMembersProvider = ({
   // Clear existing state for network refresh
   useEffectIgnoreInitial(() => {
     setPoolMembersNode([]);
+    setPoolMembersApi([]);
     unsubscribeAndResetMeta();
   }, [network]);
 
@@ -69,6 +70,7 @@ export const PoolMembersProvider = ({
       }
     } else {
       setPoolMembersNode([]);
+      setPoolMembersApi([]);
     }
     return () => {
       unsubscribe();
@@ -78,6 +80,7 @@ export const PoolMembersProvider = ({
   const unsubscribe = () => {
     unsubscribeAndResetMeta();
     setPoolMembersNode([]);
+    setPoolMembersApi([]);
   };
 
   const unsubscribeAndResetMeta = () => {

@@ -68,7 +68,7 @@ export const SideMenu = () => {
   const apiStatusClass =
     apiStatus === 'connecting'
       ? 'warning'
-      : apiStatus === 'connected'
+      : ['connected', 'ready'].includes(apiStatus)
         ? 'success'
         : 'danger';
 

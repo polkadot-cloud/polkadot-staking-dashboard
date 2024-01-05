@@ -21,7 +21,7 @@ export const Status = () => {
           {t('connecting')}...
         </motion.p>
       )}
-      {apiStatus === 'connected' && (
+      {['connected', 'ready'].includes(apiStatus) && (
         <motion.p animate={{ opacity: [0, 1] }} transition={{ duration: 0.3 }}>
           {t('connectedToNetwork')}
         </motion.p>

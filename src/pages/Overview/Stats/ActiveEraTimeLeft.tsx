@@ -5,7 +5,6 @@ import BigNumber from 'bignumber.js';
 import { fromUnixTime } from 'date-fns';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useEraTimeLeft } from 'library/Hooks/useEraTimeLeft';
 import { useTimeLeft } from 'library/Hooks/useTimeLeft';
@@ -14,7 +13,6 @@ import { Timeleft } from 'library/StatBoxList/Timeleft';
 
 export const ActiveEraStat = () => {
   const { t } = useTranslation('pages');
-  const { apiStatus } = useApi();
   const { activeEra } = useNetworkMetrics();
   const { get: getEraTimeleft } = useEraTimeLeft();
   const { timeleft, setFromNow } = useTimeLeft();
@@ -25,7 +23,7 @@ export const ActiveEraStat = () => {
   // re-set timer on era change (also covers network change).
   useEffect(() => {
     setFromNow(dateFrom, dateTo);
-  }, [apiStatus, activeEra]);
+  }, [activeEra]);
 
   // NOTE: this maybe should be called in an interval. Needs more testing.
   const { percentSurpassed, percentRemaining } = getEraTimeleft();
