@@ -161,16 +161,14 @@ export class APIController {
 
   // Set up online / offline event listeners. Relays information to `document` for the UI to handle.
   static initOnlineEvents() {
-    window.addEventListener('offline', () => {
-      console.log('app is offline');
+    window.addEventListener('offline', async () => {
       // Disconnect from api instance.
-      this.api?.disconnect();
-      // Tell UI API has been disconnected.
+      await this.api?.disconnect();
+      // Tell UI api has been disconnected.
       this.dispatchEvent(this.ensureEventStatus('disconnected'));
     });
 
     window.addEventListener('online', () => {
-      console.log('app is online');
       // Reconnect to the current API configuration.
       this.reconnect(this.network, this._connectionType, this._rpcEndpoint);
     });
