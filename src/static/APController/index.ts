@@ -41,7 +41,7 @@ export class APIController {
   }
 
   // ------------------------------------------------------
-  // Initialize API methods.
+  // Initialization and connection  API methods.
   // ------------------------------------------------------
 
   // Class initialization. Sets the `provider` and `api` class members.
@@ -55,14 +55,8 @@ export class APIController {
     // Only needed once: Initialize window online listeners.
     this.initOnlineEvents();
 
-    // Set class members and local storage.
-    localStorage.setItem('network', network);
-    this.network = network;
-    this._connectionType = type;
-    this._rpcEndpoint = config.rpcEndpoint;
-
-    // Connect to the API instance.
-    this.connect(network, type, config.rpcEndpoint);
+    this.handleConfig(type, network, config.rpcEndpoint);
+    this.connect(type, network, config.rpcEndpoint);
   }
 
   // Reconnect to a different endpoint. Assumes initialization has already happened.
@@ -74,26 +68,32 @@ export class APIController {
     await this.api?.disconnect();
     this.resetEvents();
 
-    // Set class members and local storage.
-    localStorage.setItem('network', network);
-    this.network = network;
-    this._connectionType = type;
-    this._rpcEndpoint = rpcEndpoint;
-
-    // Connect to the API instance.
-    this.connect(network, type, rpcEndpoint);
+    this.handleConfig(type, network, rpcEndpoint);
+    this.connect(type, network, rpcEndpoint);
   }
 
   // Instantiates provider and connects to an api instance.
   static async connect(
-    network: NetworkName,
     type: ConnectionType,
+    network: NetworkName,
     rpcEndpoint: string
   ) {
     this.dispatchEvent(this.ensureEventStatus('connecting'));
     await this.handleProvider(type, network, rpcEndpoint);
     await this.handleIsReady();
   }
+
+  // Handles class and local storage config.
+  static handleConfig = async (
+    type: ConnectionType,
+    network: NetworkName,
+    rpcEndpoint: string
+  ) => {
+    localStorage.setItem('network', network);
+    this.network = network;
+    this._connectionType = type;
+    this._rpcEndpoint = rpcEndpoint;
+  };
 
   // Handles provider initialization.
   static handleProvider = async (
@@ -131,7 +131,6 @@ export class APIController {
     // Dynamically load substrate connect.
     const ScPromise = makeCancelable(import('@substrate/connect'));
     this.cancelFn = ScPromise.cancel;
-
     const Sc = (await ScPromise.promise) as SubstrateConnect;
 
     this._provider = new ScProvider(
