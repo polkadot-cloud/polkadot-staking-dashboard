@@ -15,7 +15,6 @@ import { useTranslation } from 'react-i18next';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
 import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
 import { useNetwork } from 'contexts/Network';
 import { Item } from './Wrappers';
@@ -23,7 +22,6 @@ import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 
 export const Announcements = () => {
   const { t } = useTranslation('pages');
-  const { isSyncing } = useUi();
   const { staking } = useStaking();
   const { stats } = usePoolsConfig();
   const {
@@ -65,7 +63,7 @@ export const Announcements = () => {
   const networkUnit = unit;
 
   // total staked on the network
-  if (!isSyncing) {
+  if (!totalStaked.isZero()) {
     announcements.push({
       class: 'neutral',
       title: t('overview.networkCurrentlyStaked', {
