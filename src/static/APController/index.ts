@@ -6,7 +6,12 @@ import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import { NetworkList } from 'config/networks';
 import type { NetworkName } from 'types';
-import type { ConnectionType, SubstrateConnect } from './types';
+import type {
+  ConnectionType,
+  EventDetail,
+  EventStatus,
+  SubstrateConnect,
+} from './types';
 
 export class APIController {
   // ---------------------
@@ -17,17 +22,21 @@ export class APIController {
   static network: NetworkName;
 
   // API provider.
-  static provider: WsProvider | ScProvider;
+  static _provider: WsProvider | ScProvider;
 
   // API instance.
   static _api: ApiPromise;
 
-  static get api(): ApiPromise {
+  // Cancel function of dynamic substrate connect import.
+  static cancelFn: () => void;
+
+  static get api() {
     return this._api;
   }
 
-  // Cancel function of substrate connect.
-  static cancelFn: () => void;
+  static get provider() {
+    return this._provider;
+  }
 
   // ---------------------
   // Class methods.
@@ -41,9 +50,7 @@ export class APIController {
       rpcEndpoint: string;
     }
   ) {
-    document.dispatchEvent(
-      new CustomEvent('polkadot-api', { detail: { event: 'connecting' } })
-    );
+    this.dispatchEvent(this.ensureEventStatus('connecting'));
 
     // Set the new network to the class member and local storage.
     this.network = network;
@@ -58,9 +65,7 @@ export class APIController {
     this.initEvents();
     this._api = await ApiPromise.create({ provider: this.provider });
 
-    document.dispatchEvent(
-      new CustomEvent('polkadot-api', { detail: { event: 'ready' } })
-    );
+    this.dispatchEvent(this.ensureEventStatus('ready'));
   }
 
   // Reconnect to a different endpoint.
@@ -76,9 +81,7 @@ export class APIController {
     this.network = network;
     localStorage.setItem('network', network);
 
-    document.dispatchEvent(
-      new CustomEvent('polkadot-api', { detail: { event: 'connecting' } })
-    );
+    this.dispatchEvent(this.ensureEventStatus('connecting'));
 
     if (type === 'ws') {
       this.initWsProvider(network, rpcEndpoint);
@@ -95,7 +98,7 @@ export class APIController {
 
   // Initiate Websocket Provider
   static initWsProvider(network: NetworkName, rpcEndpoint: string) {
-    this.provider = new WsProvider(
+    this._provider = new WsProvider(
       NetworkList[network].endpoints.rpcEndpoints[rpcEndpoint]
     );
   }
@@ -108,7 +111,7 @@ export class APIController {
 
     const Sc = (await ScPromise.promise) as SubstrateConnect;
 
-    this.provider = new ScProvider(
+    this._provider = new ScProvider(
       // @ts-expect-error mismatch between `@polkadot/rpc-provider/substrate-connect` and  `@substrate/connect` types: Chain[]' is not assignable to type 'string'.
       Sc,
       NetworkList[network].endpoints.lightClient
@@ -119,19 +122,13 @@ export class APIController {
   // Set up API event listeners. Relays information to `document` for the UI to handle.
   static initEvents() {
     this.provider.on('connected', () => {
-      document.dispatchEvent(
-        new CustomEvent('polkadot-api', { detail: { event: 'connected' } })
-      );
+      this.dispatchEvent(this.ensureEventStatus('connected'));
     });
     this.provider.on('disconnected', () => {
-      document.dispatchEvent(
-        new CustomEvent('polkadot-api', { detail: { event: 'disconnected' } })
-      );
+      this.dispatchEvent(this.ensureEventStatus('disconnected'));
     });
     this.provider.on('error', (err: string) => {
-      document.dispatchEvent(
-        new CustomEvent('polkadot-api', { detail: { event: 'error', err } })
-      );
+      this.dispatchEvent(this.ensureEventStatus('error'), err);
     });
   }
 
@@ -147,4 +144,27 @@ export class APIController {
       /* No nothing */
     });
   }
+
+  // Handler for dispatching events.
+  static dispatchEvent(event: EventStatus, err?: string) {
+    const detail: EventDetail = { event };
+    if (err) {
+      detail['err'] = err;
+    }
+    document.dispatchEvent(new CustomEvent('polkadot-api', { detail }));
+  }
+
+  // Ensures the provided status is a valid `EventStatus` being passed, or falls back to `error`.
+  static ensureEventStatus = (status: string | EventStatus): EventStatus => {
+    if (
+      status === 'connecting' ||
+      status === 'connected' ||
+      status === 'disconnected' ||
+      status === 'ready' ||
+      status === 'error'
+    ) {
+      return status as EventStatus;
+    }
+    return 'error' as EventStatus;
+  };
 }

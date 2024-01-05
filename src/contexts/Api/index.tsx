@@ -18,7 +18,6 @@ import type {
   APIConstants,
   APIContextInterface,
   APIProviderProps,
-  ApiStatus,
 } from 'contexts/Api/types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import {
@@ -28,6 +27,7 @@ import {
 } from './defaults';
 import { APIController } from 'static/APController';
 import { isCustomEvent } from 'static/utils';
+import type { ApiStatus } from 'static/APController/types';
 
 export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 
