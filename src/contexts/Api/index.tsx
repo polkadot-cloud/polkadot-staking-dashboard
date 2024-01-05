@@ -79,7 +79,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   };
 
   // Store chain state.
-  const [chainState, setchainState] =
+  const [chainState, setChainState] =
     useState<APIChainState>(defaultChainState);
 
   // Store network constants.
@@ -105,7 +105,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       const version = newChainState[1]?.toJSON();
       const ss58Prefix = Number(newChainState[2]?.toString());
 
-      setchainState({ chain, version, ss58Prefix });
+      setChainState({ chain, version, ss58Prefix });
     }
 
     // Assume chain state is correct and bootstrap network consts.
@@ -247,7 +247,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     // If network changes, reset consts and chain state.
     if (network !== APIController.network) {
       setConsts(defaultConsts);
-      setchainState(defaultChainState);
+      setChainState(defaultChainState);
     }
     // Reconnect API instance.
     APIController.reconnect(network, isLightClient ? 'sc' : 'ws', rpcEndpoint);
