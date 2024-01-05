@@ -62,7 +62,11 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Setter for light client. Updates state and local storage.
   const setIsLightClient = (value: boolean) => {
     setIsLightClientState(value);
-    localStorage.setItem('light_client', value ? 'true' : 'false');
+    if (!value) {
+      localStorage.removeItem('light_client');
+      return;
+    }
+    localStorage.setItem('light_client', 'true');
   };
 
   // Store network constants.
@@ -105,11 +109,11 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     }
 
     // Assume chain state is correct and bootstrap network consts.
-    connectedCallback();
+    getConsts();
   };
 
-  // Connection callback. Called once `provider` and `api` have been initialised.
-  const connectedCallback = async () => {
+  // Connection callback. Called once `apiStatus` is `ready`.
+  const getConsts = async () => {
     const { api } = APIController;
 
     const allPromises = [
@@ -237,26 +241,24 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     }
   }, [rpcEndpoint]);
 
-  // Trigger API connection handler on network or light client change.
+  // Trigger API reconnect on network or light client change.
   useEffectIgnoreInitial(() => {
     setRpcEndpoint(initialRpcEndpoint());
+    // If network changes, reset consts and chain state.
     if (network !== APIController.network) {
       setConsts(defaultConsts);
       setchainState(defaultChainState);
     }
-
+    // Reconnect API instance.
     APIController.reconnect(network, isLightClient ? 'sc' : 'ws', rpcEndpoint);
-
-    return () => {
-      APIController.cancelFn?.();
-    };
   }, [isLightClient, network]);
 
-  // Add event listener for `polkadot-api` notifications.
+  // Add event listener for `polkadot-api` notifications. Also handles unmounting logic.
   useEffect(() => {
     document.addEventListener('polkadot-api', eventCallback);
     return () => {
       document.removeEventListener('polkadot-api', eventCallback);
+      APIController.cancelFn?.();
     };
   }, []);
 
