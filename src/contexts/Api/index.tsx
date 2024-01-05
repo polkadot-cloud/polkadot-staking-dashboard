@@ -81,12 +81,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     setRpcEndpointState(key);
   };
 
-  // Resets app state when switching networks.
-  const onChangeNetwork = () => {
-    setConsts(defaultConsts);
-    setchainState(defaultChainState);
-  };
-
   // Fetch chain state. Called once `provider` has been initialised.
   const onApiReady = async () => {
     const { api } = APIController;
@@ -227,10 +221,12 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     }
   };
 
-  // Handle an initial RPC connection.
+  // Handle an initial api connection.
   useEffect(() => {
-    if (!APIController.provider && !isLightClient) {
-      APIController.initialize(network, 'ws', { rpcEndpoint });
+    if (!APIController.provider) {
+      APIController.initialize(network, isLightClient ? 'sc' : 'ws', {
+        rpcEndpoint,
+      });
     }
   });
 
@@ -244,9 +240,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Trigger API connection handler on network or light client change.
   useEffectIgnoreInitial(() => {
     setRpcEndpoint(initialRpcEndpoint());
-
     if (network !== APIController.network) {
-      onChangeNetwork();
+      setConsts(defaultConsts);
+      setchainState(defaultChainState);
     }
 
     APIController.reconnect(network, isLightClient ? 'sc' : 'ws', rpcEndpoint);
