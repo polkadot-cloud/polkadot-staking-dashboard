@@ -1,7 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import React, { useState, useEffect, useRef } from 'react';
+import type { ReactNode } from 'react';
+import { useState, useEffect, useRef, useContext, createContext } from 'react';
 import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import type { AnyApi, AnyJson, Sync } from 'types';
@@ -27,11 +28,13 @@ import {
 
 const worker = new Worker();
 
-export const PayoutsProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const PayoutsContext = createContext<PayoutsContextInterface>(
+  defaultPayoutsContext
+);
+
+export const usePayouts = () => useContext(PayoutsContext);
+
+export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
   const { api, consts } = useApi();
   const { activeAccount } = useActiveAccounts();
@@ -408,9 +411,3 @@ export const PayoutsProvider = ({
     </PayoutsContext.Provider>
   );
 };
-
-export const PayoutsContext = React.createContext<PayoutsContextInterface>(
-  defaultPayoutsContext
-);
-
-export const usePayouts = () => React.useContext(PayoutsContext);

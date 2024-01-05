@@ -5,27 +5,30 @@ import { bnToU8a, u8aConcat } from '@polkadot/util';
 import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
-import React, { useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { EmptyH256, ModPrefix, U32Opts } from 'consts';
 import type { PoolConfigState, PoolsConfigContextState } from './types';
 import type { AnyApi } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from '../../Api';
-import * as defaults from './defaults';
+import { defaultStats, defaultPoolsConfigContext } from './defaults';
 
-export const PoolsConfigProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const PoolsConfigContext = createContext<PoolsConfigContextState>(
+  defaultPoolsConfigContext
+);
+
+export const usePoolsConfig = () => useContext(PoolsConfigContext);
+
+export const PoolsConfigProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
   const { api, isReady, consts } = useApi();
   const { poolsPalletId } = consts;
 
   // store pool metadata
   const [poolsConfig, setPoolsConfig] = useState<PoolConfigState>({
-    stats: defaults.stats,
+    stats: defaultStats,
     unsub: null,
   });
   const poolsConfigRef = useRef(poolsConfig);
@@ -38,15 +41,6 @@ export const PoolsConfigProvider = ({
 
   // stores the user's favorite pools
   const [favorites, setFavorites] = useState<string[]>(getLocalFavorites());
-
-  useEffectIgnoreInitial(() => {
-    if (isReady) {
-      subscribeToPoolConfig();
-    }
-    return () => {
-      unsubscribe();
-    };
-  }, [network, isReady]);
 
   const unsubscribe = () => {
     if (poolsConfigRef.current.unsub !== null) {
@@ -199,6 +193,25 @@ export const PoolsConfigProvider = ({
       .toString();
   };
 
+  // Handle ready state.
+  useEffectIgnoreInitial(() => {
+    if (isReady) {
+      subscribeToPoolConfig();
+    }
+  }, [network, isReady]);
+
+  // Handle network change.
+  useEffect(() => {
+    unsubscribe();
+    setPoolsConfig({
+      stats: defaultStats,
+      unsub: null,
+    });
+  }, [network]);
+
+  // Unsubscribe on component unmount.
+  useEffect(() => () => unsubscribe());
+
   return (
     <PoolsConfigContext.Provider
       value={{
@@ -206,16 +219,10 @@ export const PoolsConfigProvider = ({
         removeFavorite,
         createAccounts,
         favorites,
-        stats: poolsConfigRef.current.stats,
+        stats: poolsConfig.stats,
       }}
     >
       {children}
     </PoolsConfigContext.Provider>
   );
 };
-
-export const PoolsConfigContext = React.createContext<PoolsConfigContextState>(
-  defaults.defaultPoolsConfigContext
-);
-
-export const usePoolsConfig = () => React.useContext(PoolsConfigContext);

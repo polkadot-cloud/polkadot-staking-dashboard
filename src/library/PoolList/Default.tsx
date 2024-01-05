@@ -5,7 +5,8 @@ import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { isNotZero } from '@polkadot-cloud/utils';
 import { motion } from 'framer-motion';
-import React, { useEffect, useRef, useState } from 'react';
+import type { FormEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -116,7 +117,7 @@ export const PoolList = ({
     setRenderIteration(1);
   };
 
-  const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e: FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
     let filteredPools = Object.assign(poolsDefault);
     filteredPools = applyFilter(includes, excludes, filteredPools);

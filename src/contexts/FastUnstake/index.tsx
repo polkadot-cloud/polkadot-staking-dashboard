@@ -8,7 +8,8 @@ import {
   setStateWithRef,
 } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import React, { useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useStaking } from 'contexts/Staking';
@@ -28,11 +29,13 @@ import type {
 
 const worker = new Worker();
 
-export const FastUnstakeProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const FastUnstakeContext = createContext<FastUnstakeContextInterface>(
+  defaultFastUnstakeContext
+);
+
+export const useFastUnstake = () => useContext(FastUnstakeContext);
+
+export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
   const { api, isReady, consts } = useApi();
   const { activeAccount } = useActiveAccounts();
@@ -343,8 +346,3 @@ export const FastUnstakeProvider = ({
     </FastUnstakeContext.Provider>
   );
 };
-
-export const FastUnstakeContext =
-  React.createContext<FastUnstakeContextInterface>(defaultFastUnstakeContext);
-
-export const useFastUnstake = () => React.useContext(FastUnstakeContext);

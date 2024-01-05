@@ -1,11 +1,17 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import React, { useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { defaultPromptContext } from './defaults';
 import type { PromptState, Prompt, PromptContextInterface } from './types';
 
-export const PromptProvider = ({ children }: { children: React.ReactNode }) => {
+export const PromptContext =
+  createContext<PromptContextInterface>(defaultPromptContext);
+
+export const usePrompt = () => useContext(PromptContext);
+
+export const PromptProvider = ({ children }: { children: ReactNode }) => {
   const [state, setState] = useState<PromptState>({
     size: 'large',
     status: 0,
@@ -73,8 +79,3 @@ export const PromptProvider = ({ children }: { children: React.ReactNode }) => {
     </PromptContext.Provider>
   );
 };
-
-export const PromptContext =
-  React.createContext<PromptContextInterface>(defaultPromptContext);
-
-export const usePrompt = () => React.useContext(PromptContext);

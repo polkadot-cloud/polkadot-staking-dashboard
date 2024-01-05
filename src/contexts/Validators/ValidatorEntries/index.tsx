@@ -3,7 +3,8 @@
 
 import { greaterThanZero, rmCommas, shuffle } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import React, { useEffect, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { ValidatorCommunity } from '@polkadot-cloud/assets/validators';
 import type { AnyApi, AnyJson, BondFor, Fn, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
@@ -34,11 +35,13 @@ import {
 import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
 import type { ValidatorEntry } from '@polkadot-cloud/assets/types';
 
-export const ValidatorsProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const ValidatorsContext = createContext<ValidatorsContextInterface>(
+  defaultValidatorsContext
+);
+
+export const useValidators = () => useContext(ValidatorsContext);
+
+export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
   const { isReady, api } = useApi();
   const { stakers } = useStaking().eraStakers;
@@ -646,8 +649,3 @@ export const ValidatorsProvider = ({
     </ValidatorsContext.Provider>
   );
 };
-
-export const ValidatorsContext =
-  React.createContext<ValidatorsContextInterface>(defaultValidatorsContext);
-
-export const useValidators = () => React.useContext(ValidatorsContext);

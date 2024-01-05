@@ -8,8 +8,8 @@ import {
   ModalPadding,
   ModalWarnings,
 } from '@polkadot-cloud/react';
-import type { Dispatch, SetStateAction } from 'react';
-import React, { useEffect, useState } from 'react';
+import type { Dispatch, FormEvent, SetStateAction } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
@@ -75,7 +75,7 @@ export const RenamePool = ({
     },
   });
 
-  const handleMetadataChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleMetadataChange = (e: FormEvent<HTMLInputElement>) => {
     setMetadata(e.currentTarget.value);
     setValid(true);
   };
@@ -101,9 +101,7 @@ export const RenamePool = ({
           style={{ width: '100%' }}
           placeholder={t('poolName')}
           type="text"
-          onChange={(e: React.FormEvent<HTMLInputElement>) =>
-            handleMetadataChange(e)
-          }
+          onChange={(e: FormEvent<HTMLInputElement>) => handleMetadataChange(e)}
           value={metadata ?? ''}
         />
         <p>{t('storedOnChain')}</p>

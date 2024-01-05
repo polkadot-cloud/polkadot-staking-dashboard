@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import throttle from 'lodash.throttle';
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUi } from 'contexts/UI';
 
 export const getSize = (element?: HTMLElement | undefined) => {
@@ -19,7 +19,7 @@ export const useSize = (element?: HTMLElement | undefined) => {
     setSize(getSize(element));
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const resizeThrottle = throttle(throttleCallback, 100, {
       trailing: true,
       leading: false,

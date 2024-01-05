@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyJson } from '@polkadot-cloud/react/types';
-import type React from 'react';
-import type { ReactNode } from 'react';
+import type { FormEvent, ReactNode } from 'react';
 import type { DisplayFor } from 'types';
 
 export interface PaginationWrapperProps {
@@ -23,7 +22,7 @@ export interface PaginationProps {
 }
 
 export interface SearchInputProps {
-  handleChange: (e: React.FormEvent<HTMLInputElement>) => void;
+  handleChange: (e: FormEvent<HTMLInputElement>) => void;
   placeholder: string;
 }
 

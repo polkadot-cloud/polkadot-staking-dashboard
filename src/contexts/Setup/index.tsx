@@ -6,7 +6,8 @@ import {
   localStorageOrDefault,
   unitToPlanck,
 } from '@polkadot-cloud/utils';
-import React, { useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import type { BondFor, MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
@@ -29,7 +30,12 @@ import type {
   SetupContextInterface,
 } from './types';
 
-export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
+export const SetupContext =
+  createContext<SetupContextInterface>(defaultSetupContext);
+
+export const useSetup = () => useContext(SetupContext);
+
+export const SetupProvider = ({ children }: { children: ReactNode }) => {
   const { inSetup } = useStaking();
   const {
     network,
@@ -301,8 +307,3 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     </SetupContext.Provider>
   );
 };
-
-export const SetupContext =
-  React.createContext<SetupContextInterface>(defaultSetupContext);
-
-export const useSetup = () => React.useContext(SetupContext);

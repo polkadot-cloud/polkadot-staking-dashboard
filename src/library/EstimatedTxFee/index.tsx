@@ -3,7 +3,7 @@
 
 import { planckToUnit } from '@polkadot-cloud/utils';
 import type { Context } from 'react';
-import React, { useEffect } from 'react';
+import { Component, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TxMetaContext, useTxMeta } from 'contexts/TxMeta';
 import type { TxMetaContextInterface } from 'contexts/TxMeta/types';
@@ -35,7 +35,7 @@ export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
   );
 };
 
-export class EstimatedTxFee extends React.Component<EstimatedTxFeeProps> {
+export class EstimatedTxFee extends Component<EstimatedTxFeeProps> {
   static contextType: Context<TxMetaContextInterface> = TxMetaContext;
 
   componentWillUnmount(): void {

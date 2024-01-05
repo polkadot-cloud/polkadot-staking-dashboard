@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { isValidAddress } from '@polkadot-cloud/utils';
-import React from 'react';
+import type { FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNetwork } from 'contexts/Network';
 import { formatAccountSs58 } from 'contexts/Connect/Utils';
@@ -40,7 +40,7 @@ export const RoleEditInput = ({
     return { ...roleEdit, ...edit };
   };
 
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleChange = (e: FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
     // set value on key change
     const edit = processRoleEdit(newValue);
@@ -64,7 +64,7 @@ export const RoleEditInput = ({
           <input
             placeholder={t('pools.address')}
             type="text"
-            onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
+            onChange={(e: FormEvent<HTMLInputElement>) => handleChange(e)}
             value={roleEdit?.newAddress ?? ''}
           />
         </section>

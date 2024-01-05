@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import React, { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { PageCategories, PagesConfig } from 'config/pages';
@@ -163,7 +163,7 @@ export const Main = () => {
 
       {pageConfig.categories.map(
         ({ id: categoryId, key: categoryKey }: PageCategory) => (
-          <React.Fragment key={`sidemenu_category_${categoryId}`}>
+          <Fragment key={`sidemenu_category_${categoryId}`}>
             {/* display heading if not `default` (used for top links) */}
             {categoryKey !== 'default' && (
               <Heading title={t(categoryKey)} minimised={sideMenuMinimised} />
@@ -172,7 +172,7 @@ export const Main = () => {
             {/* display category links */}
             {pagesToDisplay.map(
               ({ category, hash, key, lottie, action }: PageItem) => (
-                <React.Fragment key={`sidemenu_page_${categoryId}_${key}`}>
+                <Fragment key={`sidemenu_page_${categoryId}_${key}`}>
                   {category === categoryId && (
                     <Primary
                       name={t(key)}
@@ -183,10 +183,10 @@ export const Main = () => {
                       minimised={sideMenuMinimised}
                     />
                   )}
-                </React.Fragment>
+                </Fragment>
               )
             )}
-          </React.Fragment>
+          </Fragment>
         )
       )}
     </>

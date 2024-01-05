@@ -27,6 +27,8 @@ export const ExternalAccountsContext =
     defaultExternalAccountsContext
   );
 
+export const useExternalAccounts = () => useContext(ExternalAccountsContext);
+
 export const ExternalAccountsProvider = ({
   children,
 }: {
@@ -112,5 +114,3 @@ export const ExternalAccountsProvider = ({
     </ExternalAccountsContext.Provider>
   );
 };
-
-export const useExternalAccounts = () => useContext(ExternalAccountsContext);

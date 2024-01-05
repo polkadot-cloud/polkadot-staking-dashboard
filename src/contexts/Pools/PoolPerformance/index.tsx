@@ -1,7 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import React, { useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { MaxEraRewardPointsEras } from 'consts';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import Worker from 'workers/poolPerformance?worker';
@@ -20,10 +21,15 @@ import { defaultPoolPerformanceContext } from './defaults';
 
 const worker = new Worker();
 
+export const PoolPerformanceContext =
+  createContext<PoolPerformanceContextInterface>(defaultPoolPerformanceContext);
+
+export const usePoolPerformance = () => useContext(PoolPerformanceContext);
+
 export const PoolPerformanceProvider = ({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) => {
   const { api } = useApi();
   const { network } = useNetwork();
@@ -151,11 +157,3 @@ export const PoolPerformanceProvider = ({
     </PoolPerformanceContext.Provider>
   );
 };
-
-export const PoolPerformanceContext =
-  React.createContext<PoolPerformanceContextInterface>(
-    defaultPoolPerformanceContext
-  );
-
-export const usePoolPerformance = () =>
-  React.useContext(PoolPerformanceContext);

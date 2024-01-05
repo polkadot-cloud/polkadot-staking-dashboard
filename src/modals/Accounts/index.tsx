@@ -9,7 +9,7 @@ import {
   ModalCustomHeader,
   ModalPadding,
 } from '@polkadot-cloud/react';
-import React, { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
@@ -196,12 +196,12 @@ export const Accounts = () => {
           <AccountSeparator />
           <ActionItem text={t('nominatingAndInPool')} />
           {nominatingAndPool.map(({ address, delegates }, i) => (
-            <React.Fragment key={`acc_nominating_and_pool_${i}`}>
+            <Fragment key={`acc_nominating_and_pool_${i}`}>
               <AccountButton address={address} />
               {address && (
                 <Delegates delegator={address} delegates={delegates} />
               )}
-            </React.Fragment>
+            </Fragment>
           ))}
         </>
       ) : null}
@@ -211,12 +211,12 @@ export const Accounts = () => {
           <AccountSeparator />
           <ActionItem text={t('nominating')} />
           {nominating.map(({ address, delegates }, i) => (
-            <React.Fragment key={`acc_nominating_${i}`}>
+            <Fragment key={`acc_nominating_${i}`}>
               <AccountButton address={address} />
               {address && (
                 <Delegates delegator={address} delegates={delegates} />
               )}
-            </React.Fragment>
+            </Fragment>
           ))}
         </>
       ) : null}
@@ -226,12 +226,12 @@ export const Accounts = () => {
           <AccountSeparator />
           <ActionItem text={t('inPool')} />
           {inPool.map(({ address, delegates }, i) => (
-            <React.Fragment key={`acc_in_pool_${i}`}>
+            <Fragment key={`acc_in_pool_${i}`}>
               <AccountButton address={address} />
               {address && (
                 <Delegates delegator={address} delegates={delegates} />
               )}
-            </React.Fragment>
+            </Fragment>
           ))}
         </>
       ) : null}
@@ -241,12 +241,12 @@ export const Accounts = () => {
           <AccountSeparator />
           <ActionItem text={t('notStaking')} />
           {notStaking.map(({ address, delegates }, i) => (
-            <React.Fragment key={`acc_not_staking_${i}`}>
+            <Fragment key={`acc_not_staking_${i}`}>
               <AccountButton address={address} />
               {address && (
                 <Delegates delegator={address} delegates={delegates} />
               )}
-            </React.Fragment>
+            </Fragment>
           ))}
         </>
       ) : null}

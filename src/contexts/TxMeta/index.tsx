@@ -3,7 +3,8 @@
 
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import React, { useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import { useBonded } from 'contexts/Bonded';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
@@ -14,7 +15,13 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import * as defaults from './defaults';
 import type { TxMetaContextInterface } from './types';
 
-export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
+export const TxMetaContext = createContext<TxMetaContextInterface>(
+  defaults.defaultTxMeta
+);
+
+export const useTxMeta = () => useContext(TxMetaContext);
+
+export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
   const { getBondedAccount } = useBonded();
   const { activeProxy } = useActiveAccounts();
   const { getControllerNotImported } = useStaking();
@@ -38,11 +45,11 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
     payload: AnyJson;
     uid: number;
   } | null>(null);
-  const txPayloadRef = React.useRef(txPayload);
+  const txPayloadRef = useRef(txPayload);
 
   // Store an optional signed transaction if extrinsics require manual signing (e.g. Ledger).
   const [txSignature, setTxSignatureState] = useState<AnyJson>(null);
-  const txSignatureRef = React.useRef(txSignature);
+  const txSignatureRef = useRef(txSignature);
 
   useEffectIgnoreInitial(() => {
     const { balanceTxFees } = getTransferOptions(sender);
@@ -134,9 +141,3 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
     </TxMetaContext.Provider>
   );
 };
-
-export const TxMetaContext = React.createContext<TxMetaContextInterface>(
-  defaults.defaultTxMeta
-);
-
-export const useTxMeta = () => React.useContext(TxMetaContext);

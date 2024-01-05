@@ -2,11 +2,17 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@polkadot-cloud/utils';
-import React, { useRef } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import { defaultThemeContext } from './defaults';
 import type { Theme, ThemeContextInterface } from './types';
 
-export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
+export const ThemeContext =
+  createContext<ThemeContextInterface>(defaultThemeContext);
+
+export const useTheme = () => useContext(ThemeContext);
+
+export const ThemesProvider = ({ children }: { children: ReactNode }) => {
   let initialTheme: Theme = 'light';
 
   // get the current theme
@@ -28,7 +34,7 @@ export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   // The current theme mode
-  const [theme, setTheme] = React.useState<Theme>(initialTheme);
+  const [theme, setTheme] = useState<Theme>(initialTheme);
   const themeRef = useRef(theme);
 
   // Automatically change theme on system change.
@@ -59,8 +65,3 @@ export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
     </ThemeContext.Provider>
   );
 };
-
-export const ThemeContext =
-  React.createContext<ThemeContextInterface>(defaultThemeContext);
-
-export const useTheme = () => React.useContext(ThemeContext);

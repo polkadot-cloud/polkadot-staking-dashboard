@@ -12,7 +12,8 @@ import {
   setStateWithRef,
 } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import React, { useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import { isSupportedProxy } from 'config/proxies';
 import { useApi } from 'contexts/Api';
 import type { AnyApi, MaybeAddress } from 'types';
@@ -32,11 +33,13 @@ import type {
   ProxyDelegate,
 } from './types';
 
-export const ProxiesProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const ProxiesContext = createContext<ProxiesContextInterface>(
+  defaults.defaultProxiesContext
+);
+
+export const useProxies = () => useContext(ProxiesContext);
+
+export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
   const { api, isReady } = useApi();
   const { accounts } = useImportedAccounts();
@@ -309,9 +312,3 @@ export const ProxiesProvider = ({
     </ProxiesContext.Provider>
   );
 };
-
-export const ProxiesContext = React.createContext<ProxiesContextInterface>(
-  defaults.defaultProxiesContext
-);
-
-export const useProxies = () => React.useContext(ProxiesContext);

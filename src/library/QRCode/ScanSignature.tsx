@@ -1,7 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import React, { useCallback } from 'react';
+import type { ReactElement } from 'react';
+import { memo, useCallback } from 'react';
 import { QrScan } from './Scan.js';
 import type { ScanSignatureProps } from './types.js';
 
@@ -11,7 +12,7 @@ const ScanSignature = ({
   onScan,
   size,
   style,
-}: ScanSignatureProps): React.ReactElement<ScanSignatureProps> => {
+}: ScanSignatureProps): ReactElement<ScanSignatureProps> => {
   const onScanCallback = useCallback(
     (signature: string | null) =>
       signature && onScan({ signature: `0x${signature}` }),
@@ -29,4 +30,4 @@ const ScanSignature = ({
   );
 };
 
-export const QrScanSignature = React.memo(ScanSignature);
+export const QrScanSignature = memo(ScanSignature);

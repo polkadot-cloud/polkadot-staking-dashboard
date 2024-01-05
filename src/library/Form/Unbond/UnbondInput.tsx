@@ -4,7 +4,8 @@
 import { ButtonSubmitInvert } from '@polkadot-cloud/react';
 import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import React, { useEffect, useState } from 'react';
+import type { ChangeEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -35,7 +36,7 @@ export const UnbondInput = ({
   }, [activeAccount]);
 
   // handle change for unbonding.
-  const handleChangeUnbond = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeUnbond = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     if (new BigNumber(val).isNaN() && val !== '') {
       return;

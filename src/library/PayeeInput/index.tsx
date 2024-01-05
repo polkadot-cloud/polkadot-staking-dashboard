@@ -4,7 +4,8 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { isValidAddress, remToUnit } from '@polkadot-cloud/utils';
-import React, { useEffect, useRef, useState } from 'react';
+import type { ChangeEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
 import { Polkicon } from '@polkadot-cloud/react';
@@ -50,7 +51,7 @@ export const PayeeInput = ({
   };
 
   // Handle change of account value. Updates setup progress if the account is a valid value.
-  const handleChangeAccount = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeAccount = (e: ChangeEvent<HTMLInputElement>) => {
     const newAddress = e.target.value;
     const formatted = formatAccountSs58(newAddress, ss58) || newAddress || null;
     const isValid = isValidAddress(formatted || '');

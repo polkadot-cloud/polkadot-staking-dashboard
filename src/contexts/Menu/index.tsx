@@ -1,12 +1,17 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { RefObject } from 'react';
-import React, { useState } from 'react';
+import type { ReactNode, RefObject } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { defaultMenuContext } from './defaults';
 import type { MenuContextInterface, MenuItem } from './types';
 
-export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
+export const MenuContext =
+  createContext<MenuContextInterface>(defaultMenuContext);
+
+export const useMenu = () => useContext(MenuContext);
+
+export const MenuProvider = ({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState<number>(0);
   const [show, setShow] = useState<number>(0);
   const [items, setItems] = useState<MenuItem[]>([]);
@@ -91,8 +96,3 @@ export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
     </MenuContext.Provider>
   );
 };
-
-export const MenuContext =
-  React.createContext<MenuContextInterface>(defaultMenuContext);
-
-export const useMenu = () => React.useContext(MenuContext);

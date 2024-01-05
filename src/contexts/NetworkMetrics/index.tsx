@@ -3,7 +3,8 @@
 
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import React, { useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import type { AnyApi, AnyJson } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
@@ -19,10 +20,15 @@ import type {
   NetworkMetricsContextInterface,
 } from './types';
 
+export const NetworkMetricsContext =
+  createContext<NetworkMetricsContextInterface>(defaults.defaultNetworkContext);
+
+export const useNetworkMetrics = () => useContext(NetworkMetricsContext);
+
 export const NetworkMetricsProvider = ({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) => {
   const { network } = useNetwork();
   const { isReady, api } = useApi();
@@ -167,10 +173,3 @@ export const NetworkMetricsProvider = ({
     </NetworkMetricsContext.Provider>
   );
 };
-
-export const NetworkMetricsContext =
-  React.createContext<NetworkMetricsContextInterface>(
-    defaults.defaultNetworkContext
-  );
-
-export const useNetworkMetrics = () => React.useContext(NetworkMetricsContext);

@@ -2,7 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { MutableRefObject, ReactElement, ReactNode } from 'react';
-import React, { useEffect, useLayoutEffect, useRef } from 'react';
+import {
+  Fragment,
+  cloneElement,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+} from 'react';
 import type { AnyJson } from 'types';
 import { SelectItemsWrapper, TwoThreshold } from './Wrapper';
 import type { SelectItemsProps } from './types';
@@ -90,12 +96,12 @@ export const SelectItems = ({ layout, children }: SelectItemsProps) => {
         ? children.map((child: ReactNode, i: number) => {
             if (child !== undefined) {
               return (
-                <React.Fragment key={`select_${i}`}>
-                  {React.cloneElement(child as ReactElement, {
+                <Fragment key={`select_${i}`}>
+                  {cloneElement(child as ReactElement, {
                     bodyRef: bodyRefs[i],
                     containerRef: containerRefs[i],
                   })}
-                </React.Fragment>
+                </Fragment>
               );
             }
             return null;
