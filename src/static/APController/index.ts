@@ -56,8 +56,8 @@ export class APIController {
     this.initOnlineEvents();
 
     // Set class members and local storage.
-    this.network = network;
     localStorage.setItem('network', network);
+    this.network = network;
     this._connectionType = type;
     this._rpcEndpoint = config.rpcEndpoint;
 
@@ -74,9 +74,9 @@ export class APIController {
     await this.api?.disconnect();
     this.resetEvents();
 
-    // Set the new network to the class member and local storage.
-    this.network = network;
+    // Set class members and local storage.
     localStorage.setItem('network', network);
+    this.network = network;
     this._connectionType = type;
     this._rpcEndpoint = rpcEndpoint;
 
