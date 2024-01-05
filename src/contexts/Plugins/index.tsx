@@ -2,23 +2,20 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
-import React, { useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import { PluginsList } from 'consts';
 import type { Plugin } from 'types';
 import * as defaults from './defaults';
 import type { PluginsContextInterface } from './types';
 
-export const PluginsContext = React.createContext<PluginsContextInterface>(
+export const PluginsContext = createContext<PluginsContextInterface>(
   defaults.defaultPluginsContext
 );
 
-export const usePlugins = () => React.useContext(PluginsContext);
+export const usePlugins = () => useContext(PluginsContext);
 
-export const PluginsProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const PluginsProvider = ({ children }: { children: ReactNode }) => {
   // Get initial plugins from local storage.
   const getAvailablePlugins = () => {
     const localPlugins = localStorageOrDefault(

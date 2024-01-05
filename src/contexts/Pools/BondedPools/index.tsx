@@ -3,7 +3,8 @@
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { rmCommas, shuffle } from '@polkadot-cloud/utils';
-import React, { useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import type {
   BondedPool,
   BondedPoolsContextState,
@@ -21,17 +22,13 @@ import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';
 
-export const BondedPoolsContext = React.createContext<BondedPoolsContextState>(
+export const BondedPoolsContext = createContext<BondedPoolsContextState>(
   defaultBondedPoolsContext
 );
 
-export const useBondedPools = () => React.useContext(BondedPoolsContext);
+export const useBondedPools = () => useContext(BondedPoolsContext);
 
-export const BondedPoolsProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
   const { api, isReady } = useApi();
   const { activeEra } = useNetworkMetrics();

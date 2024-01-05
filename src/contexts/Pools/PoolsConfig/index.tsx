@@ -6,7 +6,7 @@ import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
 import type { ReactNode } from 'react';
-import React, { useEffect, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { EmptyH256, ModPrefix, U32Opts } from 'consts';
 import type { PoolConfigState, PoolsConfigContextState } from './types';
 import type { AnyApi } from 'types';
@@ -15,11 +15,11 @@ import { useNetwork } from 'contexts/Network';
 import { useApi } from '../../Api';
 import { defaultStats, defaultPoolsConfigContext } from './defaults';
 
-export const PoolsConfigContext = React.createContext<PoolsConfigContextState>(
+export const PoolsConfigContext = createContext<PoolsConfigContextState>(
   defaultPoolsConfigContext
 );
 
-export const usePoolsConfig = () => React.useContext(PoolsConfigContext);
+export const usePoolsConfig = () => useContext(PoolsConfigContext);
 
 export const PoolsConfigProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();

@@ -1,7 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import React, { useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useState } from 'react';
 import { NetworkList } from 'config/networks';
 import { AppVersion } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -11,13 +12,9 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { localStorageOrDefault } from '@polkadot-cloud/utils';
 import type { ExternalAccount } from '@polkadot-cloud/react/types';
 
-export const MigrateContext = React.createContext<null>(null);
+export const MigrateContext = createContext<null>(null);
 
-export const MigrateProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const MigrateProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi();
   const { isNetworkSyncing } = useUi();
   const { accounts } = useImportedAccounts();

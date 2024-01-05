@@ -1,8 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type React from 'react';
-import type { FunctionComponent, SVGProps } from 'react';
+import type { FC, FunctionComponent, SVGProps } from 'react';
 import type { Theme } from 'contexts/Themes/types';
 import type { ExtensionInjected } from '@polkadot-cloud/react/types';
 import type BigNumber from 'bignumber.js';
@@ -82,7 +81,7 @@ export interface PageItem {
   key: string;
   uri: string;
   hash: string;
-  Entry: React.FC<PageProps>;
+  Entry: FC<PageProps>;
   lottie: AnyJson;
   action?: {
     type: string;

@@ -3,8 +3,8 @@
 
 import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import type { RefObject } from 'react';
-import React, { useEffect, useRef, useState } from 'react';
+import type { ReactNode, RefObject } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { SideMenuStickyThreshold } from 'consts';
 import { useBalances } from 'contexts/Balances';
 import type { ImportedAccount } from '@polkadot-cloud/react/types';
@@ -18,13 +18,13 @@ import { useStaking } from '../Staking';
 import * as defaults from './defaults';
 import type { UIContextInterface } from './types';
 
-export const UIContext = React.createContext<UIContextInterface>(
+export const UIContext = createContext<UIContextInterface>(
   defaults.defaultUIContext
 );
 
-export const useUi = () => React.useContext(UIContext);
+export const useUi = () => useContext(UIContext);
 
-export const UIProvider = ({ children }: { children: React.ReactNode }) => {
+export const UIProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi();
   const { balances } = useBalances();
   const { staking, eraStakers } = useStaking();

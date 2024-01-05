@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@polkadot-cloud/utils';
-import React, { useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import { usePlugins } from 'contexts/Plugins';
 import type { AnyApi, AnyMetaBatch, Fn, MaybeAddress, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
@@ -13,15 +14,11 @@ import { defaultPoolMembers } from './defaults';
 import type { PoolMember, PoolMemberContext } from './types';
 
 export const PoolMembersContext =
-  React.createContext<PoolMemberContext>(defaultPoolMembers);
+  createContext<PoolMemberContext>(defaultPoolMembers);
 
-export const usePoolMembers = () => React.useContext(PoolMembersContext);
+export const usePoolMembers = () => useContext(PoolMembersContext);
 
-export const PoolMembersProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
   const { api, isReady } = useApi();
   const { pluginEnabled } = usePlugins();

@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { StatBoxRow } from '@polkadot-cloud/react';
-import React from 'react';
+import type { ReactNode } from 'react';
 import { ListWrapper } from './Wrapper';
 
-export const StatBoxList = ({ children }: { children: React.ReactNode }) => (
+export const StatBoxList = ({ children }: { children: ReactNode }) => (
   <StatBoxRow>
     <ListWrapper>{children}</ListWrapper>
   </StatBoxRow>

@@ -3,7 +3,8 @@
 
 import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import React, { useEffect, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type {
   ClaimPermissionConfig,
@@ -19,17 +20,16 @@ import { useApi } from '../../Api';
 import * as defaults from './defaults';
 
 export const PoolMembershipsContext =
-  React.createContext<PoolMembershipsContextState>(
+  createContext<PoolMembershipsContextState>(
     defaults.defaultPoolMembershipsContext
   );
 
-export const usePoolMemberships = () =>
-  React.useContext(PoolMembershipsContext);
+export const usePoolMemberships = () => useContext(PoolMembershipsContext);
 
 export const PoolMembershipsProvider = ({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) => {
   const { t } = useTranslation('base');
   const { network } = useNetwork();

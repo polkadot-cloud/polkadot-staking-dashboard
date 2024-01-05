@@ -10,7 +10,8 @@ import {
   setStateWithRef,
 } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import React, { useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import type { AnyApi, MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
@@ -27,17 +28,13 @@ import type {
   UnlockChunkRaw,
 } from './types';
 
-export const BalancesContext = React.createContext<BalancesContextInterface>(
+export const BalancesContext = createContext<BalancesContextInterface>(
   defaults.defaultBalancesContext
 );
 
-export const useBalances = () => React.useContext(BalancesContext);
+export const useBalances = () => useContext(BalancesContext);
 
-export const BalancesProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { api, isReady } = useApi();
   const { network } = useNetwork();
   const { accounts, getAccount } = useImportedAccounts();

@@ -3,7 +3,15 @@
 
 import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
@@ -20,17 +28,13 @@ import { usePoolMembers } from '../PoolMembers';
 import type { ActivePool, ActivePoolsContextState, PoolTargets } from './types';
 import type { PoolAddresses } from '../BondedPools/types';
 
-export const ActivePoolsContext = React.createContext<ActivePoolsContextState>(
+export const ActivePoolsContext = createContext<ActivePoolsContextState>(
   defaults.defaultActivePoolContext
 );
 
-export const useActivePools = () => React.useContext(ActivePoolsContext);
+export const useActivePools = () => useContext(ActivePoolsContext);
 
-export const ActivePoolsProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
   const { api, isReady } = useApi();
   const { eraStakers } = useStaking();

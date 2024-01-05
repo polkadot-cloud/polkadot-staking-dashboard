@@ -10,7 +10,8 @@ import {
   setStateWithRef,
 } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import React, { useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import { useBalances } from 'contexts/Balances';
 import type { ExternalAccount } from '@polkadot-cloud/react/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
@@ -47,17 +48,13 @@ import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types
 
 const worker = new Worker();
 
-export const StakingContext = React.createContext<StakingContextInterface>(
+export const StakingContext = createContext<StakingContextInterface>(
   defaultStakingContext
 );
 
-export const useStaking = () => React.useContext(StakingContext);
+export const useStaking = () => useContext(StakingContext);
 
-export const StakingProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const { getStashLedger } = useBalances();
   const { activeEra } = useNetworkMetrics();
   const { networkData, network } = useNetwork();

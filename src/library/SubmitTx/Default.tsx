@@ -3,7 +3,7 @@
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { ButtonSubmit } from '@polkadot-cloud/react';
-import React from 'react';
+import type { ReactNode } from 'react';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -17,7 +17,7 @@ export const Default = ({
   buttons,
   submitAddress,
   displayFor,
-}: SubmitProps & { buttons?: React.ReactNode[] }) => {
+}: SubmitProps & { buttons?: ReactNode[] }) => {
   const { txFeesValid } = useTxMeta();
   const { accountHasSigner } = useImportedAccounts();
 

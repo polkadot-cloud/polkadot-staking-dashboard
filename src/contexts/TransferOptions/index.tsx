@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import React, { useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
@@ -25,17 +26,14 @@ import {
 } from './defaults';
 
 export const TransferOptionsContext =
-  React.createContext<TransferOptionsContextInterface>(
-    defaultTransferOptionsContext
-  );
+  createContext<TransferOptionsContextInterface>(defaultTransferOptionsContext);
 
-export const useTransferOptions = () =>
-  React.useContext(TransferOptionsContext);
+export const useTransferOptions = () => useContext(TransferOptionsContext);
 
 export const TransferOptionsProvider = ({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) => {
   const { consts } = useApi();
   const { getAccount } = useBonded();

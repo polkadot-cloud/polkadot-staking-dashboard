@@ -1,7 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import React, { useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useState } from 'react';
 import type { AnyFunction, AnyJson } from 'types';
 import { defaultFiltersInterface } from './defaults';
 import type {
@@ -15,17 +16,13 @@ import type {
   FiltersContextInterface,
 } from './types';
 
-export const FiltersContext = React.createContext<FiltersContextInterface>(
+export const FiltersContext = createContext<FiltersContextInterface>(
   defaultFiltersInterface
 );
 
-export const useFilters = () => React.useContext(FiltersContext);
+export const useFilters = () => useContext(FiltersContext);
 
-export const FiltersProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const FiltersProvider = ({ children }: { children: ReactNode }) => {
   // groups along with their includes
   const [includes, setIncludes] = useState<FilterItems>([]);
 

@@ -1,15 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import React, { useState } from 'react';
-import * as defaults from './defaults';
+import { createContext, useContext, useState } from 'react';
+import { defaultContext } from './defaults';
 import type { AnyJson } from 'types';
 import type { ListContextInterface, ListProviderProps } from './types';
 
-export const ListContext: React.Context<ListContextInterface> =
-  React.createContext(defaults.defaultContext);
+export const ListContext = createContext<ListContextInterface>(defaultContext);
 
-export const useList = () => React.useContext(ListContext);
+export const useList = () => useContext(ListContext);
 
 export const ListProvider = ({
   selectToggleable = true,

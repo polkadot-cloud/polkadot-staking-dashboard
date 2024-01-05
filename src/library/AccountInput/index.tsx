@@ -5,7 +5,8 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonSecondary, Polkicon } from '@polkadot-cloud/react';
 import { isValidAddress } from '@polkadot-cloud/utils';
-import React, { useEffect, useState } from 'react';
+import type { FormEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -49,7 +50,7 @@ export const AccountInput = ({
   // store whether account input is in success lock state.
   const [successLock, setSuccessLocked] = useState<boolean>(locked);
 
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleChange = (e: FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
     // set value on key change
     setValue(newValue);
@@ -184,9 +185,7 @@ export const AccountInput = ({
             <input
               placeholder={t('address')}
               type="text"
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                handleChange(e)
-              }
+              onChange={(e: FormEvent<HTMLInputElement>) => handleChange(e)}
               value={value}
               disabled={successLock}
             />

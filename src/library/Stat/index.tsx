@@ -11,7 +11,7 @@ import {
   Odometer,
 } from '@polkadot-cloud/react';
 import { applyWidthAsPadding, minDecimalPlaces } from '@polkadot-cloud/utils';
-import React, { useEffect, useLayoutEffect, useRef } from 'react';
+import { Fragment, useEffect, useLayoutEffect, useRef } from 'react';
 import { useHelp } from 'contexts/Help';
 import { useNetwork } from 'contexts/Network';
 import { Wrapper } from './Wrapper';
@@ -122,7 +122,7 @@ export const Stat = ({
           {buttons ? (
             <span ref={subjectRef}>
               {buttons.map((btn: AnyJson, index: number) => (
-                <React.Fragment key={`stat_${index}`}>
+                <Fragment key={`stat_${index}`}>
                   <Button
                     key={`btn_${index}_${Math.random()}`}
                     text={btn.title}
@@ -133,7 +133,7 @@ export const Stat = ({
                     onClick={() => btn.onClick()}
                   />
                   &nbsp;&nbsp;
-                </React.Fragment>
+                </Fragment>
               ))}
             </span>
           ) : null}

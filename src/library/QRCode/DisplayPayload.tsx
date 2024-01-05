@@ -1,7 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import React, { useMemo } from 'react';
+import type { ReactElement } from 'react';
+import { memo, useMemo } from 'react';
 import { QrDisplay } from './Display.js';
 import type { DisplayPayloadProps } from './types.js';
 import { createSignPayload } from './util.js';
@@ -15,7 +16,7 @@ const DisplayPayload = ({
   size,
   style,
   timerDelay,
-}: DisplayPayloadProps): React.ReactElement<DisplayPayloadProps> | null => {
+}: DisplayPayloadProps): ReactElement<DisplayPayloadProps> | null => {
   const data = useMemo(
     () => createSignPayload(address, cmd, payload, genesisHash),
     [address, cmd, payload, genesisHash]
@@ -36,4 +37,4 @@ const DisplayPayload = ({
   );
 };
 
-export const QrDisplayPayload = React.memo(DisplayPayload);
+export const QrDisplayPayload = memo(DisplayPayload);

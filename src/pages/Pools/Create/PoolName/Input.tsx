@@ -1,7 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import React, { useEffect, useState } from 'react';
+import type { FormEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { AnyJson } from 'types';
@@ -46,7 +47,7 @@ export const Input = ({
           style={{ width: '100%', fontFamily: 'InterSemiBold, sans-serif' }}
           placeholder={t('pools.poolName')}
           type="text"
-          onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
+          onChange={(e: FormEvent<HTMLInputElement>) => handleChange(e)}
           value={metadata ?? ''}
         />
       </div>

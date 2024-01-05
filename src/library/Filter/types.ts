@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
-import type React from 'react';
+import type { ReactNode } from 'react';
 import type { AnyFunction } from 'types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,7 +39,7 @@ export interface ItemProps {
 export interface CategoryProps {
   title: string;
   buttons?: AnyFilter[];
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export interface ValidatorFilterContextInterface {
