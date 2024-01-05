@@ -41,6 +41,7 @@
     "connectedTo": "连接到",
     "connectedToNetwork": "已连接网络",
     "connecting": "连接中",
+    "connectionLost": "连接已丢失",
     "continue": "继续",
     "copyAddress": "复制地址",
     "copyPoolAddress": "复制池地址",

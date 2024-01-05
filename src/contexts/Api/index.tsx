@@ -28,12 +28,16 @@ import {
 import { APIController } from 'static/APController';
 import { isCustomEvent } from 'static/utils';
 import type { ApiStatus } from 'static/APController/types';
+import { NotificationsController } from 'static/NotificationsController';
+import { useTranslation } from 'react-i18next';
 
 export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 
 export const useApi = () => useContext(APIContext);
 
 export const APIProvider = ({ children, network }: APIProviderProps) => {
+  const { t } = useTranslation('library');
+
   // Store API connection status.
   const [apiStatus, setApiStatus] = useState<ApiStatus>('disconnected');
 
@@ -200,10 +204,22 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     setApiStatus('ready');
   };
 
+  const onApiDisconnected = (err?: string) => {
+    setApiStatus('disconnected');
+
+    // Trigger a notification if this disconnect is a result of an offline error.
+    if (err === 'offline-event') {
+      NotificationsController.emit({
+        title: t('disconnected'),
+        subtitle: t('lostConnectionToNode'),
+      });
+    }
+  };
+
   // Handle `polkadot-api` events.
   const eventCallback = (e: Event) => {
     if (isCustomEvent(e)) {
-      const { event } = e.detail;
+      const { event, err } = e.detail;
 
       switch (event) {
         case 'ready':
@@ -216,10 +232,10 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
           setApiStatus('connected');
           break;
         case 'disconnected':
-          setApiStatus('disconnected');
+          onApiDisconnected(err);
           break;
         case 'error':
-          setApiStatus('disconnected');
+          onApiDisconnected(err);
           break;
       }
     }

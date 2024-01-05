@@ -163,8 +163,11 @@ export class APIController {
     window.addEventListener('offline', async () => {
       // Disconnect from api instance.
       await this.api?.disconnect();
-      // Tell UI api has been disconnected.
-      this.dispatchEvent(this.ensureEventStatus('disconnected'));
+      // Tell UI api has been disconnected from an offline event.
+      this.dispatchEvent(
+        this.ensureEventStatus('disconnected'),
+        'offline-event'
+      );
     });
 
     window.addEventListener('online', () => {
