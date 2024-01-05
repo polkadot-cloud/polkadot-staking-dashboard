@@ -166,13 +166,14 @@ export class APIController {
 
   // Ensures the provided status is a valid `EventStatus` being passed, or falls back to `error`.
   static ensureEventStatus = (status: string | EventStatus): EventStatus => {
-    if (
-      status === 'connecting' ||
-      status === 'connected' ||
-      status === 'disconnected' ||
-      status === 'ready' ||
-      status === 'error'
-    ) {
+    const eventStatus: string[] = [
+      'connecting',
+      'connected',
+      'disconnected',
+      'ready',
+      'error',
+    ];
+    if (eventStatus.includes(status)) {
       return status as EventStatus;
     }
     return 'error' as EventStatus;
