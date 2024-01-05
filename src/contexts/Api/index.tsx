@@ -55,9 +55,15 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     useState<string>(initialRpcEndpoint());
 
   // Store whether in light client mode.
-  const [isLightClient, setIsLightClient] = useState<boolean>(
+  const [isLightClient, setIsLightClientState] = useState<boolean>(
     !!localStorage.getItem('light_client')
   );
+
+  // Setter for light client. Updates state and local storage.
+  const setIsLightClient = (value: boolean) => {
+    setIsLightClientState(value);
+    localStorage.setItem('light_client', value ? 'true' : 'false');
+  };
 
   // Store network constants.
   const [consts, setConsts] = useState<APIConstants>(defaultConsts);
@@ -103,10 +109,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
       setchainState({ chain, version, ss58Prefix });
     }
-
-    // store active network in localStorage.
-    // NOTE: this should ideally refer to above `chain` value.
-    localStorage.setItem('network', String(network));
 
     // Assume chain state is correct and bootstrap network consts.
     connectedCallback();

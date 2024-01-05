@@ -45,7 +45,9 @@ export class APIController {
       new CustomEvent('polkadot-api', { detail: { event: 'connecting' } })
     );
 
+    // Set the new network to the class member and local storage.
     this.network = network;
+    localStorage.setItem('network', network);
 
     if (type === 'ws') {
       this.initWsProvider(network, config.rpcEndpoint);
@@ -70,7 +72,9 @@ export class APIController {
     await this.api.disconnect();
     this.resetEvents();
 
+    // Set the new network to the class member and local storage.
     this.network = network;
+    localStorage.setItem('network', network);
 
     document.dispatchEvent(
       new CustomEvent('polkadot-api', { detail: { event: 'connecting' } })
