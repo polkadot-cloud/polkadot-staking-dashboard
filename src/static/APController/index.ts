@@ -23,6 +23,12 @@ export class APIController {
   // API instance.
   static _api: ApiPromise;
 
+  // The current RPC endpoint.
+  static _rpcEndpoint: string;
+
+  // The current connection type.
+  static _connectionType: ConnectionType;
+
   // Cancel function of dynamic substrate connect import.
   static cancelFn: () => void;
 
@@ -35,7 +41,7 @@ export class APIController {
   }
 
   // ------------------------------------------------------
-  // Initialize API methods.
+  // Initialization and connection  API methods.
   // ------------------------------------------------------
 
   // Class initialization. Sets the `provider` and `api` class members.
@@ -46,33 +52,48 @@ export class APIController {
       rpcEndpoint: string;
     }
   ) {
-    this.dispatchEvent(this.ensureEventStatus('connecting'));
+    // Only needed once: Initialize window online listeners.
+    this.initOnlineEvents();
 
-    // Set the new network to the class member and local storage.
-    this.network = network;
-    localStorage.setItem('network', network);
-
-    await this.handleProvider(type, network, config.rpcEndpoint);
-    await this.handleIsReady();
+    this.handleConfig(type, network, config.rpcEndpoint);
+    this.connect(type, network, config.rpcEndpoint);
   }
 
-  // Reconnect to a different endpoint.
+  // Reconnect to a different endpoint. Assumes initialization has already happened.
   static async reconnect(
     network: NetworkName,
     type: ConnectionType,
     rpcEndpoint: string
   ) {
-    await this.api.disconnect();
+    await this.api?.disconnect();
     this.resetEvents();
+
+    this.handleConfig(type, network, rpcEndpoint);
+    this.connect(type, network, rpcEndpoint);
+  }
+
+  // Instantiates provider and connects to an api instance.
+  static async connect(
+    type: ConnectionType,
+    network: NetworkName,
+    rpcEndpoint: string
+  ) {
     this.dispatchEvent(this.ensureEventStatus('connecting'));
-
-    // Set the new network to the class member and local storage.
-    this.network = network;
-    localStorage.setItem('network', network);
-
     await this.handleProvider(type, network, rpcEndpoint);
     await this.handleIsReady();
   }
+
+  // Handles class and local storage config.
+  static handleConfig = async (
+    type: ConnectionType,
+    network: NetworkName,
+    rpcEndpoint: string
+  ) => {
+    localStorage.setItem('network', network);
+    this.network = network;
+    this._connectionType = type;
+    this._rpcEndpoint = rpcEndpoint;
+  };
 
   // Handles provider initialization.
   static handleProvider = async (
@@ -89,7 +110,7 @@ export class APIController {
 
   // Handles the API being ready.
   static handleIsReady = async () => {
-    this.initEvents();
+    this.initApiEvents();
     this._api = await ApiPromise.create({ provider: this.provider });
     this.dispatchEvent(this.ensureEventStatus('ready'));
   };
@@ -110,7 +131,6 @@ export class APIController {
     // Dynamically load substrate connect.
     const ScPromise = makeCancelable(import('@substrate/connect'));
     this.cancelFn = ScPromise.cancel;
-
     const Sc = (await ScPromise.promise) as SubstrateConnect;
 
     this._provider = new ScProvider(
@@ -126,7 +146,7 @@ export class APIController {
   // ------------------------------------------------------
 
   // Set up API event listeners. Relays information to `document` for the UI to handle.
-  static initEvents() {
+  static initApiEvents() {
     this.provider.on('connected', () => {
       this.dispatchEvent(this.ensureEventStatus('connected'));
     });
@@ -135,6 +155,24 @@ export class APIController {
     });
     this.provider.on('error', (err: string) => {
       this.dispatchEvent(this.ensureEventStatus('error'), err);
+    });
+  }
+
+  // Set up online / offline event listeners. Relays information to `document` for the UI to handle.
+  static initOnlineEvents() {
+    window.addEventListener('offline', async () => {
+      // Disconnect from api instance.
+      await this.api?.disconnect();
+      // Tell UI api has been disconnected from an offline event.
+      this.dispatchEvent(
+        this.ensureEventStatus('disconnected'),
+        'offline-event'
+      );
+    });
+
+    window.addEventListener('online', () => {
+      // Reconnect to the current API configuration.
+      this.reconnect(this.network, this._connectionType, this._rpcEndpoint);
     });
   }
 

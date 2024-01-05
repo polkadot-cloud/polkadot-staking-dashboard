@@ -41,6 +41,7 @@
     "connectedTo": "Connected To",
     "connectedToNetwork": "Connected to Network",
     "connecting": "Connecting",
+    "connectionLost": "Connection has been lost",
     "continue": "Continue",
     "copyAddress": "Copy Address",
     "copyPoolAddress": "Copy Pool Address",

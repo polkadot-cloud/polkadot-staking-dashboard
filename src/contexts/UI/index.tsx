@@ -106,11 +106,6 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
     let networkSyncing = false;
     let poolSyncing = false;
 
-    if (!isReady) {
-      syncing = true;
-      networkSyncing = true;
-      poolSyncing = true;
-    }
     // staking metrics have synced
     if (staking.lastReward === new BigNumber(0)) {
       syncing = true;
