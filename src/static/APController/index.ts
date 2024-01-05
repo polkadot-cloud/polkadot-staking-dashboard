@@ -14,10 +14,6 @@ import type {
 } from './types';
 
 export class APIController {
-  // ---------------------
-  // Class members.
-  // ---------------------
-
   // The active network.
   static network: NetworkName;
 
@@ -38,9 +34,9 @@ export class APIController {
     return this._provider;
   }
 
-  // ---------------------
-  // Class methods.
-  // ---------------------
+  // ------------------------------------------------------
+  // Initialize API methods.
+  // ------------------------------------------------------
 
   // Class initialization. Sets the `provider` and `api` class members.
   static async initialize(
@@ -56,16 +52,8 @@ export class APIController {
     this.network = network;
     localStorage.setItem('network', network);
 
-    if (type === 'ws') {
-      this.initWsProvider(network, config.rpcEndpoint);
-    } else {
-      await this.initScProvider(network);
-    }
-
-    this.initEvents();
-    this._api = await ApiPromise.create({ provider: this.provider });
-
-    this.dispatchEvent(this.ensureEventStatus('ready'));
+    await this.handleProvider(type, network, config.rpcEndpoint);
+    await this.handleIsReady();
   }
 
   // Reconnect to a different endpoint.
@@ -76,27 +64,41 @@ export class APIController {
   ) {
     await this.api.disconnect();
     this.resetEvents();
+    this.dispatchEvent(this.ensureEventStatus('connecting'));
 
     // Set the new network to the class member and local storage.
     this.network = network;
     localStorage.setItem('network', network);
 
-    this.dispatchEvent(this.ensureEventStatus('connecting'));
+    await this.handleProvider(type, network, rpcEndpoint);
+    await this.handleIsReady();
+  }
 
+  // Handles provider initialization.
+  static handleProvider = async (
+    type: ConnectionType,
+    network: NetworkName,
+    rpcEndpoint: string
+  ) => {
     if (type === 'ws') {
       this.initWsProvider(network, rpcEndpoint);
     } else {
       await this.initScProvider(network);
     }
+  };
+
+  // Handles the API being ready.
+  static handleIsReady = async () => {
     this.initEvents();
     this._api = await ApiPromise.create({ provider: this.provider });
+    this.dispatchEvent(this.ensureEventStatus('ready'));
+  };
 
-    document.dispatchEvent(
-      new CustomEvent('polkadot-api', { detail: { event: 'ready' } })
-    );
-  }
+  // ------------------------------------------------------
+  // Provider initialization.
+  // ------------------------------------------------------
 
-  // Initiate Websocket Provider
+  // Initiate Websocket Provider.
   static initWsProvider(network: NetworkName, rpcEndpoint: string) {
     this._provider = new WsProvider(
       NetworkList[network].endpoints.rpcEndpoints[rpcEndpoint]
@@ -119,6 +121,10 @@ export class APIController {
     await this.provider.connect();
   }
 
+  // ------------------------------------------------------
+  // Event handling.
+  // ------------------------------------------------------
+
   // Set up API event listeners. Relays information to `document` for the UI to handle.
   static initEvents() {
     this.provider.on('connected', () => {
@@ -132,6 +138,19 @@ export class APIController {
     });
   }
 
+  // Handler for dispatching events.
+  static dispatchEvent(event: EventStatus, err?: string) {
+    const detail: EventDetail = { event };
+    if (err) {
+      detail['err'] = err;
+    }
+    document.dispatchEvent(new CustomEvent('polkadot-api', { detail }));
+  }
+
+  // ------------------------------------------------------
+  // Class helpers.
+  // ------------------------------------------------------
+
   // Remove API event listeners.
   static resetEvents() {
     this.provider.on('connected', () => {
@@ -143,15 +162,6 @@ export class APIController {
     this.provider.on('error', () => {
       /* No nothing */
     });
-  }
-
-  // Handler for dispatching events.
-  static dispatchEvent(event: EventStatus, err?: string) {
-    const detail: EventDetail = { event };
-    if (err) {
-      detail['err'] = err;
-    }
-    document.dispatchEvent(new CustomEvent('polkadot-api', { detail }));
   }
 
   // Ensures the provided status is a valid `EventStatus` being passed, or falls back to `error`.
