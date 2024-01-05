@@ -34,6 +34,11 @@ import {
 import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
 import type { ValidatorEntry } from '@polkadot-cloud/assets/types';
 
+export const ValidatorsContext =
+  React.createContext<ValidatorsContextInterface>(defaultValidatorsContext);
+
+export const useValidators = () => React.useContext(ValidatorsContext);
+
 export const ValidatorsProvider = ({
   children,
 }: {
@@ -646,8 +651,3 @@ export const ValidatorsProvider = ({
     </ValidatorsContext.Provider>
   );
 };
-
-export const ValidatorsContext =
-  React.createContext<ValidatorsContextInterface>(defaultValidatorsContext);
-
-export const useValidators = () => React.useContext(ValidatorsContext);

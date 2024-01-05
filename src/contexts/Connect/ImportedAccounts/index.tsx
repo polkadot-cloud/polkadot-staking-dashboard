@@ -16,6 +16,8 @@ export const ImportedAccountsContext =
     defaultImportedAccountsContext
   );
 
+export const useImportedAccounts = () => useContext(ImportedAccountsContext);
+
 export const ImportedAccountsProvider = ({
   children,
 }: {
@@ -89,5 +91,3 @@ export const ImportedAccountsProvider = ({
     </ImportedAccountsContext.Provider>
   );
 };
-
-export const useImportedAccounts = () => useContext(ImportedAccountsContext);

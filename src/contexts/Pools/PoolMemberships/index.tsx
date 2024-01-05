@@ -18,6 +18,14 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useApi } from '../../Api';
 import * as defaults from './defaults';
 
+export const PoolMembershipsContext =
+  React.createContext<PoolMembershipsContextState>(
+    defaults.defaultPoolMembershipsContext
+  );
+
+export const usePoolMemberships = () =>
+  React.useContext(PoolMembershipsContext);
+
 export const PoolMembershipsProvider = ({
   children,
 }: {
@@ -187,11 +195,3 @@ export const PoolMembershipsProvider = ({
     </PoolMembershipsContext.Provider>
   );
 };
-
-export const PoolMembershipsContext =
-  React.createContext<PoolMembershipsContextState>(
-    defaults.defaultPoolMembershipsContext
-  );
-
-export const usePoolMemberships = () =>
-  React.useContext(PoolMembershipsContext);

@@ -25,6 +25,8 @@ import type { ExternalAccountImportType } from '../ExternalAccounts/types';
 export const OtherAccountsContext =
   createContext<OtherAccountsContextInterface>(defaultOtherAccountsContext);
 
+export const useOtherAccounts = () => useContext(OtherAccountsContext);
+
 export const OtherAccountsProvider = ({
   children,
 }: {
@@ -209,5 +211,3 @@ export const OtherAccountsProvider = ({
     </OtherAccountsContext.Provider>
   );
 };
-
-export const useOtherAccounts = () => useContext(OtherAccountsContext);

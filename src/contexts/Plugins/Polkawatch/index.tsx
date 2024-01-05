@@ -37,6 +37,12 @@ const PolkawatchInitialState = {
   networkSupported: true,
 };
 
+const PolkawatchContext = createContext<PolkawatchState>(
+  PolkawatchInitialState
+);
+
+export const usePolkawatchApi = () => useContext(PolkawatchContext);
+
 export const PolkawatchProvider = ({
   children,
 }: {
@@ -63,9 +69,3 @@ export const PolkawatchProvider = ({
     </PolkawatchContext.Provider>
   );
 };
-
-const PolkawatchContext = createContext<PolkawatchState>(
-  PolkawatchInitialState
-);
-
-export const usePolkawatchApi = () => useContext(PolkawatchContext);

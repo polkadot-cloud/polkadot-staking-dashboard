@@ -10,6 +10,12 @@ import type { NetworkState } from 'contexts/Api/types';
 import type { NetworkContextInterface } from './types';
 import { defaultNetworkContext } from './defaults';
 
+export const NetworkContext = createContext<NetworkContextInterface>(
+  defaultNetworkContext
+);
+
+export const useNetwork = () => useContext(NetworkContext);
+
 export const NetworkProvider = ({
   children,
 }: {
@@ -71,9 +77,3 @@ export const NetworkProvider = ({
     </NetworkContext.Provider>
   );
 };
-
-export const NetworkContext = createContext<NetworkContextInterface>(
-  defaultNetworkContext
-);
-
-export const useNetwork = () => useContext(NetworkContext);

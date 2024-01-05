@@ -6,6 +6,12 @@ import React, { useState } from 'react';
 import { defaultTooltipContext } from './defaults';
 import type { TooltipContextInterface } from './types';
 
+export const TooltipContext = React.createContext<TooltipContextInterface>(
+  defaultTooltipContext
+);
+
+export const useTooltip = () => React.useContext(TooltipContext);
+
 export const TooltipProvider = ({
   children,
 }: {
@@ -65,9 +71,3 @@ export const TooltipProvider = ({
     </TooltipContext.Provider>
   );
 };
-
-export const TooltipContext = React.createContext<TooltipContextInterface>(
-  defaultTooltipContext
-);
-
-export const useTooltip = () => React.useContext(TooltipContext);

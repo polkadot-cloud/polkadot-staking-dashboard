@@ -5,6 +5,11 @@ import React, { useState } from 'react';
 import { defaultPromptContext } from './defaults';
 import type { PromptState, Prompt, PromptContextInterface } from './types';
 
+export const PromptContext =
+  React.createContext<PromptContextInterface>(defaultPromptContext);
+
+export const usePrompt = () => React.useContext(PromptContext);
+
 export const PromptProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, setState] = useState<PromptState>({
     size: 'large',
@@ -73,8 +78,3 @@ export const PromptProvider = ({ children }: { children: React.ReactNode }) => {
     </PromptContext.Provider>
   );
 };
-
-export const PromptContext =
-  React.createContext<PromptContextInterface>(defaultPromptContext);
-
-export const usePrompt = () => React.useContext(PromptContext);

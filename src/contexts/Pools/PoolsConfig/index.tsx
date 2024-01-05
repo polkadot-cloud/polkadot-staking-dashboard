@@ -15,6 +15,12 @@ import { useNetwork } from 'contexts/Network';
 import { useApi } from '../../Api';
 import { defaultStats, defaultPoolsConfigContext } from './defaults';
 
+export const PoolsConfigContext = React.createContext<PoolsConfigContextState>(
+  defaultPoolsConfigContext
+);
+
+export const usePoolsConfig = () => React.useContext(PoolsConfigContext);
+
 export const PoolsConfigProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
   const { api, isReady, consts } = useApi();
@@ -220,9 +226,3 @@ export const PoolsConfigProvider = ({ children }: { children: ReactNode }) => {
     </PoolsConfigContext.Provider>
   );
 };
-
-export const PoolsConfigContext = React.createContext<PoolsConfigContextState>(
-  defaultPoolsConfigContext
-);
-
-export const usePoolsConfig = () => React.useContext(PoolsConfigContext);

@@ -27,10 +27,12 @@ import type {
   UnlockChunkRaw,
 } from './types';
 
-/**
- * @name useBalances
- * @summary A provider that subscribes to an account's balances and wrap app children.
- */
+export const BalancesContext = React.createContext<BalancesContextInterface>(
+  defaults.defaultBalancesContext
+);
+
+export const useBalances = () => React.useContext(BalancesContext);
+
 export const BalancesProvider = ({
   children,
 }: {
@@ -231,9 +233,3 @@ export const BalancesProvider = ({
     </BalancesContext.Provider>
   );
 };
-
-export const BalancesContext = React.createContext<BalancesContextInterface>(
-  defaults.defaultBalancesContext
-);
-
-export const useBalances = () => React.useContext(BalancesContext);

@@ -18,6 +18,12 @@ import { useStaking } from '../Staking';
 import * as defaults from './defaults';
 import type { UIContextInterface } from './types';
 
+export const UIContext = React.createContext<UIContextInterface>(
+  defaults.defaultUIContext
+);
+
+export const useUi = () => React.useContext(UIContext);
+
 export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { isReady } = useApi();
   const { balances } = useBalances();
@@ -167,9 +173,3 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     </UIContext.Provider>
   );
 };
-
-export const UIContext = React.createContext<UIContextInterface>(
-  defaults.defaultUIContext
-);
-
-export const useUi = () => React.useContext(UIContext);

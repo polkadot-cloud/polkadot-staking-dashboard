@@ -14,6 +14,12 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import * as defaults from './defaults';
 import type { TxMetaContextInterface } from './types';
 
+export const TxMetaContext = React.createContext<TxMetaContextInterface>(
+  defaults.defaultTxMeta
+);
+
+export const useTxMeta = () => React.useContext(TxMetaContext);
+
 export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   const { getBondedAccount } = useBonded();
   const { activeProxy } = useActiveAccounts();
@@ -134,9 +140,3 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
     </TxMetaContext.Provider>
   );
 };
-
-export const TxMetaContext = React.createContext<TxMetaContextInterface>(
-  defaults.defaultTxMeta
-);
-
-export const useTxMeta = () => React.useContext(TxMetaContext);

@@ -20,6 +20,14 @@ import { defaultPoolPerformanceContext } from './defaults';
 
 const worker = new Worker();
 
+export const PoolPerformanceContext =
+  React.createContext<PoolPerformanceContextInterface>(
+    defaultPoolPerformanceContext
+  );
+
+export const usePoolPerformance = () =>
+  React.useContext(PoolPerformanceContext);
+
 export const PoolPerformanceProvider = ({
   children,
 }: {
@@ -151,11 +159,3 @@ export const PoolPerformanceProvider = ({
     </PoolPerformanceContext.Provider>
   );
 };
-
-export const PoolPerformanceContext =
-  React.createContext<PoolPerformanceContextInterface>(
-    defaultPoolPerformanceContext
-  );
-
-export const usePoolPerformance = () =>
-  React.useContext(PoolPerformanceContext);

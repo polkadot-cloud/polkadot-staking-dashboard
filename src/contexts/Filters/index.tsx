@@ -15,6 +15,12 @@ import type {
   FiltersContextInterface,
 } from './types';
 
+export const FiltersContext = React.createContext<FiltersContextInterface>(
+  defaultFiltersInterface
+);
+
+export const useFilters = () => React.useContext(FiltersContext);
+
 export const FiltersProvider = ({
   children,
 }: {
@@ -217,9 +223,3 @@ export const FiltersProvider = ({
     </FiltersContext.Provider>
   );
 };
-
-export const FiltersContext = React.createContext<FiltersContextInterface>(
-  defaultFiltersInterface
-);
-
-export const useFilters = () => React.useContext(FiltersContext);

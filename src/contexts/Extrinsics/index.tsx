@@ -6,6 +6,11 @@ import React, { useRef, useState } from 'react';
 import { defaultExtrinsicsContext } from './defaults';
 import type { ExtrinsicsContextInterface } from './types';
 
+export const ExtrinsicsContext =
+  React.createContext<ExtrinsicsContextInterface>(defaultExtrinsicsContext);
+
+export const useExtrinsics = () => React.useContext(ExtrinsicsContext);
+
 export const ExtrinsicsProvider = ({
   children,
 }: {
@@ -42,8 +47,3 @@ export const ExtrinsicsProvider = ({
     </ExtrinsicsContext.Provider>
   );
 };
-
-export const ExtrinsicsContext =
-  React.createContext<ExtrinsicsContextInterface>(defaultExtrinsicsContext);
-
-export const useExtrinsics = () => React.useContext(ExtrinsicsContext);

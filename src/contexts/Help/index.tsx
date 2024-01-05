@@ -12,6 +12,12 @@ import type {
   HelpStatus,
 } from './types';
 
+export const HelpContext = React.createContext<HelpContextInterface>(
+  defaults.defaultHelpContext
+);
+
+export const useHelp = () => React.useContext(HelpContext);
+
 export const HelpProvider = ({ children }: HelpContextProps) => {
   // help module state
   const [state, setState] = useState<HelpContextState>({
@@ -73,9 +79,3 @@ export const HelpProvider = ({ children }: HelpContextProps) => {
     </HelpContext.Provider>
   );
 };
-
-export const HelpContext = React.createContext<HelpContextInterface>(
-  defaults.defaultHelpContext
-);
-
-export const useHelp = () => React.useContext(HelpContext);

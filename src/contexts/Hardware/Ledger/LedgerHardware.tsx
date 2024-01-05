@@ -23,6 +23,8 @@ export const LedgerHardwareContext =
     defaultLedgerHardwareContext
   );
 
+export const useLedgerHardware = () => React.useContext(LedgerHardwareContext);
+
 export const LedgerHardwareProvider = ({
   children,
 }: {
@@ -289,5 +291,3 @@ export const LedgerHardwareProvider = ({
     </LedgerHardwareContext.Provider>
   );
 };
-
-export const useLedgerHardware = () => React.useContext(LedgerHardwareContext);

@@ -27,6 +27,12 @@ import {
 
 const worker = new Worker();
 
+export const PayoutsContext = React.createContext<PayoutsContextInterface>(
+  defaultPayoutsContext
+);
+
+export const usePayouts = () => React.useContext(PayoutsContext);
+
 export const PayoutsProvider = ({
   children,
 }: {
@@ -408,9 +414,3 @@ export const PayoutsProvider = ({
     </PayoutsContext.Provider>
   );
 };
-
-export const PayoutsContext = React.createContext<PayoutsContextInterface>(
-  defaultPayoutsContext
-);
-
-export const usePayouts = () => React.useContext(PayoutsContext);

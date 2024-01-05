@@ -19,6 +19,13 @@ import type {
   NetworkMetricsContextInterface,
 } from './types';
 
+export const NetworkMetricsContext =
+  React.createContext<NetworkMetricsContextInterface>(
+    defaults.defaultNetworkContext
+  );
+
+export const useNetworkMetrics = () => React.useContext(NetworkMetricsContext);
+
 export const NetworkMetricsProvider = ({
   children,
 }: {
@@ -167,10 +174,3 @@ export const NetworkMetricsProvider = ({
     </NetworkMetricsContext.Provider>
   );
 };
-
-export const NetworkMetricsContext =
-  React.createContext<NetworkMetricsContextInterface>(
-    defaults.defaultNetworkContext
-  );
-
-export const useNetworkMetrics = () => React.useContext(NetworkMetricsContext);

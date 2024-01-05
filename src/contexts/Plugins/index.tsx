@@ -8,6 +8,12 @@ import type { Plugin } from 'types';
 import * as defaults from './defaults';
 import type { PluginsContextInterface } from './types';
 
+export const PluginsContext = React.createContext<PluginsContextInterface>(
+  defaults.defaultPluginsContext
+);
+
+export const usePlugins = () => React.useContext(PluginsContext);
+
 export const PluginsProvider = ({
   children,
 }: {
@@ -66,9 +72,3 @@ export const PluginsProvider = ({
     </PluginsContext.Provider>
   );
 };
-
-export const PluginsContext = React.createContext<PluginsContextInterface>(
-  defaults.defaultPluginsContext
-);
-
-export const usePlugins = () => React.useContext(PluginsContext);

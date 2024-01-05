@@ -10,6 +10,14 @@ import { getLocalFavorites } from '../Utils';
 import { defaultFavoriteValidatorsContext } from './defaults';
 import { useValidators } from '../ValidatorEntries';
 
+export const FavoriteValidatorsContext =
+  React.createContext<FavoriteValidatorsContextInterface>(
+    defaultFavoriteValidatorsContext
+  );
+
+export const useFavoriteValidators = () =>
+  React.useContext(FavoriteValidatorsContext);
+
 export const FavoriteValidatorsProvider = ({
   children,
 }: {
@@ -83,11 +91,3 @@ export const FavoriteValidatorsProvider = ({
     </FavoriteValidatorsContext.Provider>
   );
 };
-
-export const FavoriteValidatorsContext =
-  React.createContext<FavoriteValidatorsContextInterface>(
-    defaultFavoriteValidatorsContext
-  );
-
-export const useFavoriteValidators = () =>
-  React.useContext(FavoriteValidatorsContext);

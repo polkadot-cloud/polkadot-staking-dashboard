@@ -19,6 +19,12 @@ import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
 import * as defaults from './defaults';
 import type { BondedAccount, BondedContextInterface } from './types';
 
+export const BondedContext = React.createContext<BondedContextInterface>(
+  defaults.defaultBondedContext
+);
+
+export const useBonded = () => React.useContext(BondedContext);
+
 export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
   const { network } = useNetwork();
   const { api, isReady } = useApi();
@@ -26,7 +32,7 @@ export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
   const { addExternalAccount } = useExternalAccounts();
   const { addOrReplaceOtherAccount } = useOtherAccounts();
 
-  // Balance accounts state.
+  // Bonded accounts state.
   const [bondedAccounts, setBondedAccounts] = useState<BondedAccount[]>([]);
   const bondedAccountsRef = useRef(bondedAccounts);
 
@@ -172,9 +178,3 @@ export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
     </BondedContext.Provider>
   );
 };
-
-export const BondedContext = React.createContext<BondedContextInterface>(
-  defaults.defaultBondedContext
-);
-
-export const useBonded = () => React.useContext(BondedContext);

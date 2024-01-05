@@ -11,6 +11,8 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { localStorageOrDefault } from '@polkadot-cloud/utils';
 import type { ExternalAccount } from '@polkadot-cloud/react/types';
 
+export const MigrateContext = React.createContext<null>(null);
+
 export const MigrateProvider = ({
   children,
 }: {
@@ -114,5 +116,3 @@ export const MigrateProvider = ({
     <MigrateContext.Provider value={null}>{children}</MigrateContext.Provider>
   );
 };
-
-export const MigrateContext = React.createContext<null>(null);

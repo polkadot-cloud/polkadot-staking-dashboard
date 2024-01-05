@@ -21,6 +21,12 @@ import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';
 
+export const BondedPoolsContext = React.createContext<BondedPoolsContextState>(
+  defaultBondedPoolsContext
+);
+
+export const useBondedPools = () => React.useContext(BondedPoolsContext);
+
 export const BondedPoolsProvider = ({
   children,
 }: {
@@ -411,9 +417,3 @@ export const BondedPoolsProvider = ({
     </BondedPoolsContext.Provider>
   );
 };
-
-export const BondedPoolsContext = React.createContext<BondedPoolsContextState>(
-  defaultBondedPoolsContext
-);
-
-export const useBondedPools = () => React.useContext(BondedPoolsContext);

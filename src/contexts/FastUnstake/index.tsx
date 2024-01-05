@@ -28,6 +28,11 @@ import type {
 
 const worker = new Worker();
 
+export const FastUnstakeContext =
+  React.createContext<FastUnstakeContextInterface>(defaultFastUnstakeContext);
+
+export const useFastUnstake = () => React.useContext(FastUnstakeContext);
+
 export const FastUnstakeProvider = ({
   children,
 }: {
@@ -343,8 +348,3 @@ export const FastUnstakeProvider = ({
     </FastUnstakeContext.Provider>
   );
 };
-
-export const FastUnstakeContext =
-  React.createContext<FastUnstakeContextInterface>(defaultFastUnstakeContext);
-
-export const useFastUnstake = () => React.useContext(FastUnstakeContext);

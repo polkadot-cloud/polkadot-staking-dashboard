@@ -12,6 +12,8 @@ import { defaultActiveAccountsContext } from './defaults';
 export const ActiveAccountsContext =
   createContext<ActiveAccountsContextInterface>(defaultActiveAccountsContext);
 
+export const useActiveAccounts = () => useContext(ActiveAccountsContext);
+
 export const ActiveAccountsProvider = ({
   children,
 }: {
@@ -79,5 +81,3 @@ export const ActiveAccountsProvider = ({
     </ActiveAccountsContext.Provider>
   );
 };
-
-export const useActiveAccounts = () => useContext(ActiveAccountsContext);
