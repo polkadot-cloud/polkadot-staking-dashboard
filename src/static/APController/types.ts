@@ -9,7 +9,7 @@ export type ConnectionType = 'ws' | 'sc';
 
 export type ApiStatus = 'connecting' | 'connected' | 'disconnected' | 'ready';
 
-export type EventStatus = keyof ApiStatus | 'error';
+export type EventStatus = ApiStatus | 'error';
 
 export interface EventDetail {
   event: EventStatus;
