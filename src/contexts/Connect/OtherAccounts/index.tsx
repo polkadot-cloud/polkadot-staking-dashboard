@@ -13,7 +13,6 @@ import {
   getLocalVaultAccounts,
 } from 'contexts/Hardware/Utils';
 import type { AnyFunction, MaybeAddress, NetworkName } from 'types';
-import { setStateWithRef } from '@polkadot-cloud/utils';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { ImportedAccount } from '@polkadot-cloud/react/types';
@@ -45,7 +44,6 @@ export const OtherAccountsProvider = ({
 
   // Store other (non-extension) accounts list.
   const [otherAccounts, setOtherAccounts] = useState<ImportedAccount[]>([]);
-  const otherAccountsRef = useRef(otherAccounts);
 
   // Store unsubscribe handlers for connected extensions.
   const unsubs = useRef<Record<string, AnyFunction>>({});
@@ -59,7 +57,7 @@ export const OtherAccountsProvider = ({
     // Unsubscribe and remove unsub from context ref.
     if (forget.length) {
       for (const { address } of forget) {
-        if (otherAccountsRef.current.find((a) => a.address === address)) {
+        if (otherAccounts.find((a) => a.address === address)) {
           const unsub = unsubs.current[address];
           if (unsub) {
             unsub();
@@ -68,13 +66,11 @@ export const OtherAccountsProvider = ({
         }
       }
       // Remove forgotten accounts from context state.
-      setStateWithRef(
-        [...otherAccountsRef.current].filter(
+      setOtherAccounts(
+        [...otherAccounts].filter(
           (a) =>
             forget.find(({ address }) => address === a.address) === undefined
-        ),
-        setOtherAccounts,
-        otherAccountsRef
+        )
       );
       // If the currently active account is being forgotten, disconnect.
       if (
@@ -104,9 +100,8 @@ export const OtherAccountsProvider = ({
       // remove already-imported accounts.
       localAccounts = localAccounts.filter(
         (l) =>
-          otherAccountsRef.current.find(
-            ({ address }) => address === l.address
-          ) === undefined
+          otherAccounts.find(({ address }) => address === l.address) ===
+          undefined
       );
 
       // set active account for networkData.
@@ -121,17 +116,15 @@ export const OtherAccountsProvider = ({
 
   // Renames an other account.
   const renameOtherAccount = (address: MaybeAddress, newName: string) => {
-    setStateWithRef(
-      [...otherAccountsRef.current].map((a) =>
+    setOtherAccounts(
+      [...otherAccounts].map((a) =>
         a.address !== address
           ? a
           : {
               ...a,
               name: newName,
             }
-      ),
-      setOtherAccounts,
-      otherAccountsRef
+      )
     );
   };
 
@@ -144,21 +137,15 @@ export const OtherAccountsProvider = ({
 
   // Add other accounts to context state.
   const addOtherAccounts = (account: ImportedAccount[]) => {
-    setStateWithRef(
-      [...otherAccountsRef.current].concat(account),
-      setOtherAccounts,
-      otherAccountsRef
-    );
+    setOtherAccounts([...otherAccounts].concat(account));
   };
 
   // Replace other account with new entry.
   const replaceOtherAccount = (account: ImportedAccount) => {
-    setStateWithRef(
-      [...otherAccountsRef.current].map((item) =>
+    setOtherAccounts(
+      [...otherAccounts].map((item) =>
         item.address !== account.address ? item : account
-      ),
-      setOtherAccounts,
-      otherAccountsRef
+      )
     );
   };
 
@@ -179,7 +166,7 @@ export const OtherAccountsProvider = ({
     if (!checkingInjectedWeb3) {
       // unsubscribe from all accounts and reset state.
       unsubscribe();
-      setStateWithRef([], setOtherAccounts, otherAccountsRef);
+      setOtherAccounts([]);
     }
     return () => unsubscribe();
   }, [network, checkingInjectedWeb3]);
@@ -215,7 +202,7 @@ export const OtherAccountsProvider = ({
         importLocalOtherAccounts,
         forgetOtherAccounts,
         accountsInitialised,
-        otherAccounts: otherAccountsRef.current,
+        otherAccounts,
       }}
     >
       {children}
