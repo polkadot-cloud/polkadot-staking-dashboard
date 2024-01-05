@@ -34,9 +34,23 @@ export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 export const useApi = () => useContext(APIContext);
 
 export const APIProvider = ({ children, network }: APIProviderProps) => {
-  // Store chain state.
-  const [chainState, setchainState] =
-    useState<APIChainState>(defaultChainState);
+  // Store API connection status.
+  const [apiStatus, setApiStatus] = useState<ApiStatus>('disconnected');
+
+  // Store whether light client is active.
+  const [isLightClient, setIsLightClientState] = useState<boolean>(
+    !!localStorage.getItem('light_client')
+  );
+
+  // Setter for whether light client is active. Updates state and local storage.
+  const setIsLightClient = (value: boolean) => {
+    setIsLightClientState(value);
+    if (!value) {
+      localStorage.removeItem('light_client');
+      return;
+    }
+    localStorage.setItem('light_client', 'true');
+  };
 
   // Store the active RPC provider.
   const initialRpcEndpoint = () => {
@@ -51,29 +65,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
     return NetworkList[network].endpoints.defaultRpcEndpoint;
   };
+
   const [rpcEndpoint, setRpcEndpointState] =
     useState<string>(initialRpcEndpoint());
-
-  // Store whether in light client mode.
-  const [isLightClient, setIsLightClientState] = useState<boolean>(
-    !!localStorage.getItem('light_client')
-  );
-
-  // Setter for light client. Updates state and local storage.
-  const setIsLightClient = (value: boolean) => {
-    setIsLightClientState(value);
-    if (!value) {
-      localStorage.removeItem('light_client');
-      return;
-    }
-    localStorage.setItem('light_client', 'true');
-  };
-
-  // Store network constants.
-  const [consts, setConsts] = useState<APIConstants>(defaultConsts);
-
-  // Store API connection status.
-  const [apiStatus, setApiStatus] = useState<ApiStatus>('disconnected');
 
   // Set RPC provider with local storage and validity checks.
   const setRpcEndpoint = (key: string) => {
@@ -81,9 +75,15 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       return;
     }
     localStorage.setItem(`${network}_rpc_endpoint`, key);
-
     setRpcEndpointState(key);
   };
+
+  // Store chain state.
+  const [chainState, setchainState] =
+    useState<APIChainState>(defaultChainState);
+
+  // Store network constants.
+  const [consts, setConsts] = useState<APIConstants>(defaultConsts);
 
   // Fetch chain state. Called once `provider` has been initialised.
   const onApiReady = async () => {
