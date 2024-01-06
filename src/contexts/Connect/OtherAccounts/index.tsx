@@ -47,6 +47,8 @@ export const OtherAccountsProvider = ({
 
   // Store other (non-extension) accounts list.
   const [otherAccounts, setOtherAccounts] = useState<ImportedAccount[]>([]);
+  // Ref is needed to refer to updated state in-between renders as local accounts are imported from
+  // different sources.
   const otherAccountsRef = useRef(otherAccounts);
 
   // Store unsubscribe handlers for connected extensions.
