@@ -88,29 +88,19 @@ export class APIController {
       network,
       rpcEndpoint,
     };
-    this.handleConfig(config);
-    this._connectAttempts++;
-    this.onMonitorConnect(config);
-    await withTimeout(this.CONNECT_TIMEOUT, this.connect(config));
-  }
 
-  // Handles class and local storage config.
-  static handleConfig = async ({ type, network, rpcEndpoint }: APIConfig) => {
+    // Handles class and local storage config.
     localStorage.setItem('network', network);
     this.network = network;
     this._connectionType = type;
     this._rpcEndpoint = rpcEndpoint;
-  };
 
-  // Instantiates provider and connects to an api instance.
-  static async connect({ type, network, rpcEndpoint }: APIConfig) {
-    this.dispatchEvent(this.ensureEventStatus('connecting'));
-    if (type === 'ws') {
-      this.initWsProvider(network, rpcEndpoint);
-    } else {
-      await this.initScProvider(network);
-    }
-    await this.handleIsReady();
+    // Register connection attempt.
+    this._connectAttempts++;
+
+    // Start connection attempt.
+    this.onMonitorConnect(config);
+    await withTimeout(this.CONNECT_TIMEOUT, this.connect(config));
   }
 
   // Check if API is connected after a ser period, and try again if it has not.
@@ -124,17 +114,33 @@ export class APIController {
     }, this.CONNECT_TIMEOUT);
   };
 
-  // Handles the API being ready.
-  static handleIsReady = async () => {
-    this.initApiEvents();
+  // Instantiates provider and connects to an api instance.
+  static async connect({ type, network, rpcEndpoint }: APIConfig) {
+    // Tell UI api is connecting.
+    this.dispatchEvent(this.ensureEventStatus('connecting'));
+
+    // Initiate provider.
+    if (type === 'ws') {
+      this.initWsProvider(network, rpcEndpoint);
+    } else {
+      await this.initScProvider(network);
+    }
+
+    // Initialise provider events.
+    this.initProviderEvents();
+
+    // Initialise api.
     this._api = await ApiPromise.create({ provider: this.provider });
+
+    // Reset connection attempts.
     this._connectAttempts = 0;
 
+    // Tell UI api is ready.
     this.dispatchEvent(this.ensureEventStatus('ready'));
 
     // Subscribe to block numbers.
     this.subscribeBlockNumber();
-  };
+  }
 
   // ------------------------------------------------------
   // Provider initialization.
@@ -167,7 +173,7 @@ export class APIController {
   // ------------------------------------------------------
 
   // Set up API event listeners. Relays information to `document` for the UI to handle.
-  static initApiEvents() {
+  static initProviderEvents() {
     this._providerUnsubs.push(
       this.provider.on('connected', () => {
         this.dispatchEvent(this.ensureEventStatus('connected'));
