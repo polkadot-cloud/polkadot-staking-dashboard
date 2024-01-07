@@ -7,6 +7,7 @@ import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import { NetworkList } from 'config/networks';
 import type { NetworkName } from 'types';
 import type {
+  APIConfig,
   ConnectionType,
   EventDetail,
   EventStatus,
@@ -14,6 +15,10 @@ import type {
 } from './types';
 
 export class APIController {
+  // ------------------------------------------------------
+  // Class members.
+  // ------------------------------------------------------
+
   // The active network.
   static network: NetworkName;
 
@@ -48,15 +53,20 @@ export class APIController {
   static async initialize(
     network: NetworkName,
     type: ConnectionType,
-    config: {
+    options: {
       rpcEndpoint: string;
     }
   ) {
     // Only needed once: Initialize window online listeners.
     this.initOnlineEvents();
 
-    this.handleConfig(type, network, config.rpcEndpoint);
-    this.connect(type, network, config.rpcEndpoint);
+    const config: APIConfig = {
+      type,
+      network,
+      rpcEndpoint: options.rpcEndpoint,
+    };
+    this.handleConfig(config);
+    this.connect(config);
   }
 
   // Reconnect to a different endpoint. Assumes initialization has already happened.
@@ -68,27 +78,24 @@ export class APIController {
     await this.api?.disconnect();
     this.resetEvents();
 
-    this.handleConfig(type, network, rpcEndpoint);
-    this.connect(type, network, rpcEndpoint);
+    const config: APIConfig = {
+      type,
+      network,
+      rpcEndpoint,
+    };
+    this.handleConfig(config);
+    this.connect(config);
   }
 
   // Instantiates provider and connects to an api instance.
-  static async connect(
-    type: ConnectionType,
-    network: NetworkName,
-    rpcEndpoint: string
-  ) {
+  static async connect(config: APIConfig) {
     this.dispatchEvent(this.ensureEventStatus('connecting'));
-    await this.handleProvider(type, network, rpcEndpoint);
+    await this.handleProvider(config);
     await this.handleIsReady();
   }
 
   // Handles class and local storage config.
-  static handleConfig = async (
-    type: ConnectionType,
-    network: NetworkName,
-    rpcEndpoint: string
-  ) => {
+  static handleConfig = async ({ type, network, rpcEndpoint }: APIConfig) => {
     localStorage.setItem('network', network);
     this.network = network;
     this._connectionType = type;
@@ -96,11 +103,7 @@ export class APIController {
   };
 
   // Handles provider initialization.
-  static handleProvider = async (
-    type: ConnectionType,
-    network: NetworkName,
-    rpcEndpoint: string
-  ) => {
+  static handleProvider = async ({ type, network, rpcEndpoint }: APIConfig) => {
     if (type === 'ws') {
       this.initWsProvider(network, rpcEndpoint);
     } else {
