@@ -228,6 +228,7 @@ export class APIController {
     Object.values(this._unsubs).forEach((unsub) => {
       unsub();
     });
+    this._unsubs = {};
   };
 
   // ------------------------------------------------------
