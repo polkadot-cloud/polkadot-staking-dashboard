@@ -14,7 +14,7 @@ import { Status } from './Status';
 import { Summary, Wrapper } from './Wrappers';
 import { isCustomEvent } from 'static/utils';
 import { useEventListener } from 'usehooks-ts';
-import { Odometer } from '@polkadot-cloud/react';
+import { Odometer, useEffectIgnoreInitial } from '@polkadot-cloud/react';
 import BigNumber from 'bignumber.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHive } from '@fortawesome/free-brands-svg-icons';
@@ -42,6 +42,11 @@ export const NetworkBar = () => {
 
   const ref = useRef<Document>(document);
   useEventListener('new-block-number', newBlockCallback, ref);
+
+  // Reset block number on network change.
+  useEffectIgnoreInitial(() => {
+    setBlockNumber('0');
+  }, [network]);
 
   return (
     <Wrapper>
