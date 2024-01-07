@@ -213,6 +213,13 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         title: t('disconnected'),
         subtitle: t('connectionLost'),
       });
+
+      // Start attempting reconnects.
+      APIController.reconnect(
+        network,
+        isLightClient ? 'sc' : 'ws',
+        rpcEndpoint
+      );
     }
   };
 
