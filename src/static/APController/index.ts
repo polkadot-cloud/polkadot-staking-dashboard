@@ -42,12 +42,16 @@ export class APIController {
   // Cancel function of dynamic substrate connect import.
   static cancelFn: () => void;
 
-  static get api() {
-    return this._api;
-  }
+  // ------------------------------------------------------
+  // Getters.
+  // ------------------------------------------------------
 
   static get provider() {
     return this._provider;
+  }
+
+  static get api() {
+    return this._api;
   }
 
   // ------------------------------------------------------
