@@ -208,8 +208,12 @@ export class APIController {
   static subscribeBlockNumber = async () => {
     if (this._unsubs['blockNumber'] === undefined) {
       const unsub = await this.api.query.system.number((num: BlockNumber) => {
-        // TODO: dispatch event to document for UI to handle.
-        console.log(num.toNumber());
+        // Send block number to UI as event.
+        document.dispatchEvent(
+          new CustomEvent(`new-block-number`, {
+            detail: { blockNumber: num.toString() },
+          })
+        );
       });
       this._unsubs['blockNumber'] = unsub as unknown as VoidFn;
     }
