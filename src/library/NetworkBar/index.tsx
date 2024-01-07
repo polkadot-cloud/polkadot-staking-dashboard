@@ -106,7 +106,7 @@ export const NetworkBar = () => {
               <Odometer
                 wholeColor="var(--text-color-secondary)"
                 value={new BigNumber(blockNumber || '0').toFormat()}
-                spaceBefore={'0.25rem'}
+                spaceBefore={'0.35rem'}
               />
             </div>
           </div>
