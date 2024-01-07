@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
 
   background: var(--background-app-footer);
   color: var(--text-color-secondary);
+  font-size: var(--network-bar-font-size);
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -19,7 +20,6 @@ export const Wrapper = styled.div`
   backdrop-filter: blur(4px);
   position: relative;
   padding-top: 0.15rem;
-  font-size: var(--network-bar-font-size);
   width: 100%;
 
   @media (min-width: ${SideMenuStickyThreshold + 1}px) {
