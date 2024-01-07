@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { BlockNumber } from '@polkadot/types/interfaces/runtime';
 import { makeCancelable } from '@polkadot-cloud/utils';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
@@ -13,6 +14,7 @@ import type {
   EventStatus,
   SubstrateConnect,
 } from './types';
+import type { VoidFn } from '@polkadot/api/types';
 
 export class APIController {
   // ------------------------------------------------------
@@ -33,6 +35,9 @@ export class APIController {
 
   // The current connection type.
   static _connectionType: ConnectionType;
+
+  // Unsubscribe objects.
+  static _unsubs: Record<string, VoidFn> = {};
 
   // Cancel function of dynamic substrate connect import.
   static cancelFn: () => void;
@@ -75,7 +80,7 @@ export class APIController {
     type: ConnectionType,
     rpcEndpoint: string
   ) {
-    await this.api?.disconnect();
+    await this.disconnect();
     this.resetEvents();
 
     const config: APIConfig = {
@@ -116,6 +121,9 @@ export class APIController {
     this.initApiEvents();
     this._api = await ApiPromise.create({ provider: this.provider });
     this.dispatchEvent(this.ensureEventStatus('ready'));
+
+    // Subscribe to block numbers.
+    this.subscribeBlockNumber();
   };
 
   // ------------------------------------------------------
@@ -164,8 +172,8 @@ export class APIController {
   // Set up online / offline event listeners. Relays information to `document` for the UI to handle.
   static initOnlineEvents() {
     window.addEventListener('offline', async () => {
-      // Disconnect from api instance.
-      await this.api?.disconnect();
+      await this.disconnect();
+
       // Tell UI api has been disconnected from an offline event.
       this.dispatchEvent(
         this.ensureEventStatus('disconnected'),
@@ -187,6 +195,28 @@ export class APIController {
     }
     document.dispatchEvent(new CustomEvent('polkadot-api', { detail }));
   }
+
+  // ------------------------------------------------------
+  // Subscription Handling.
+  // ------------------------------------------------------
+
+  // Subscribe to block number.
+  static subscribeBlockNumber = async () => {
+    if (this._unsubs['blockNumber'] === undefined) {
+      const unsub = await this.api.query.system.number((num: BlockNumber) => {
+        // TODO: dispatch event to document for UI to handle.
+        console.log(num.toNumber());
+      });
+      this._unsubs['blockNumber'] = unsub as unknown as VoidFn;
+    }
+  };
+
+  // Unsubscribe from all active subscriptions.
+  static unsubscribe = () => {
+    Object.values(this._unsubs).forEach((unsub) => {
+      unsub();
+    });
+  };
 
   // ------------------------------------------------------
   // Class helpers.
@@ -219,4 +249,10 @@ export class APIController {
     }
     return 'error' as EventStatus;
   };
+
+  // Disconnect gracefully from API.
+  static async disconnect() {
+    this.unsubscribe();
+    await this.api?.disconnect();
+  }
 }

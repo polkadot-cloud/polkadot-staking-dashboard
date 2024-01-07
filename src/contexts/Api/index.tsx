@@ -275,6 +275,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     return () => {
       document.removeEventListener('polkadot-api', eventCallback);
       APIController.cancelFn?.();
+      APIController.unsubscribe();
     };
   }, []);
 
