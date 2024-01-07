@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { BlockNumber } from '@polkadot/types/interfaces/runtime';
-import { makeCancelable } from '@polkadot-cloud/utils';
+import { makeCancelable, withTimeout } from '@polkadot-cloud/utils';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import { NetworkList } from 'config/networks';
@@ -21,11 +21,16 @@ export class APIController {
   // Class members.
   // ------------------------------------------------------
 
+  static CONNECT_TIMEOUT = 10000;
+
   // The active network.
   static network: NetworkName;
 
   // API provider.
   static _provider: WsProvider | ScProvider;
+
+  // API provider unsubs.
+  static _providerUnsubs: VoidFn[] = [];
 
   // API instance.
   static _api: ApiPromise;
@@ -38,6 +43,9 @@ export class APIController {
 
   // Unsubscribe objects.
   static _unsubs: Record<string, VoidFn> = {};
+
+  // Store the number of connection attempts.
+  static _connectAttempts = 0;
 
   // Cancel function of dynamic substrate connect import.
   static cancelFn: () => void;
@@ -62,30 +70,18 @@ export class APIController {
   static async initialize(
     network: NetworkName,
     type: ConnectionType,
-    options: {
-      rpcEndpoint: string;
+    rpcEndpoint: string,
+    options?: {
+      initial?: boolean;
     }
   ) {
     // Only needed once: Initialize window online listeners.
-    this.initOnlineEvents();
-
-    const config: APIConfig = {
-      type,
-      network,
-      rpcEndpoint: options.rpcEndpoint,
-    };
-    this.handleConfig(config);
-    this.connect(config);
-  }
-
-  // Reconnect to a different endpoint. Assumes initialization has already happened.
-  static async reconnect(
-    network: NetworkName,
-    type: ConnectionType,
-    rpcEndpoint: string
-  ) {
-    await this.disconnect();
-    this.resetEvents();
+    if (options?.initial) {
+      this.initOnlineEvents();
+    } else {
+      // Tidy up any previous connection.
+      await this.disconnect();
+    }
 
     const config: APIConfig = {
       type,
@@ -93,14 +89,9 @@ export class APIController {
       rpcEndpoint,
     };
     this.handleConfig(config);
-    this.connect(config);
-  }
-
-  // Instantiates provider and connects to an api instance.
-  static async connect(config: APIConfig) {
-    this.dispatchEvent(this.ensureEventStatus('connecting'));
-    await this.handleProvider(config);
-    await this.handleIsReady();
+    this._connectAttempts++;
+    this.onMonitorConnect(config);
+    await withTimeout(this.CONNECT_TIMEOUT, this.connect(config));
   }
 
   // Handles class and local storage config.
@@ -111,19 +102,34 @@ export class APIController {
     this._rpcEndpoint = rpcEndpoint;
   };
 
-  // Handles provider initialization.
-  static handleProvider = async ({ type, network, rpcEndpoint }: APIConfig) => {
+  // Instantiates provider and connects to an api instance.
+  static async connect({ type, network, rpcEndpoint }: APIConfig) {
+    this.dispatchEvent(this.ensureEventStatus('connecting'));
     if (type === 'ws') {
       this.initWsProvider(network, rpcEndpoint);
     } else {
       await this.initScProvider(network);
     }
+    await this.handleIsReady();
+  }
+
+  // Check if API is connected after a ser period, and try again if it has not.
+  static onMonitorConnect = async (config: APIConfig) => {
+    setTimeout(() => {
+      // If blocks are not being subscribed to, assume connection failed.
+      if (!Object.keys(this._unsubs).length) {
+        // Atempt api connection again.
+        this.initialize(config.network, config.type, config.rpcEndpoint);
+      }
+    }, this.CONNECT_TIMEOUT);
   };
 
   // Handles the API being ready.
   static handleIsReady = async () => {
     this.initApiEvents();
     this._api = await ApiPromise.create({ provider: this.provider });
+    this._connectAttempts = 0;
+
     this.dispatchEvent(this.ensureEventStatus('ready'));
 
     // Subscribe to block numbers.
@@ -162,31 +168,35 @@ export class APIController {
 
   // Set up API event listeners. Relays information to `document` for the UI to handle.
   static initApiEvents() {
-    this.provider.on('connected', () => {
-      this.dispatchEvent(this.ensureEventStatus('connected'));
-    });
-    this.provider.on('disconnected', () => {
-      this.dispatchEvent(this.ensureEventStatus('disconnected'));
-    });
-    this.provider.on('error', (err: string) => {
-      this.dispatchEvent(this.ensureEventStatus('error'), { err });
-    });
+    this._providerUnsubs.push(
+      this.provider.on('connected', () => {
+        this.dispatchEvent(this.ensureEventStatus('connected'));
+      })
+    );
+    this._providerUnsubs.push(
+      this.provider.on('disconnected', () => {
+        this.dispatchEvent(this.ensureEventStatus('disconnected'));
+      })
+    );
+    this._providerUnsubs.push(
+      this.provider.on('error', (err: string) => {
+        this.dispatchEvent(this.ensureEventStatus('error'), { err });
+      })
+    );
   }
 
   // Set up online / offline event listeners. Relays information to `document` for the UI to handle.
   static initOnlineEvents() {
     window.addEventListener('offline', async () => {
       await this.disconnect();
-
       // Tell UI api has been disconnected from an offline event.
       this.dispatchEvent(this.ensureEventStatus('disconnected'), {
         err: 'offline-event',
       });
     });
-
     window.addEventListener('online', () => {
       // Reconnect to the current API configuration.
-      this.reconnect(this.network, this._connectionType, this._rpcEndpoint);
+      this.initialize(this.network, this._connectionType, this._rpcEndpoint);
     });
   }
 
@@ -231,22 +241,16 @@ export class APIController {
     this._unsubs = {};
   };
 
+  // Remove API event listeners if they exist.
+  static unsubscribeProvider() {
+    this._providerUnsubs.forEach((unsub) => {
+      unsub();
+    });
+  }
+
   // ------------------------------------------------------
   // Class helpers.
   // ------------------------------------------------------
-
-  // Remove API event listeners.
-  static resetEvents() {
-    this.provider.on('connected', () => {
-      /* No nothing */
-    });
-    this.provider.on('disconnected', () => {
-      /* No nothing */
-    });
-    this.provider.on('error', () => {
-      /* No nothing */
-    });
-  }
 
   // Ensures the provided status is a valid `EventStatus` being passed, or falls back to `error`.
   static ensureEventStatus = (status: string | EventStatus): EventStatus => {
@@ -266,6 +270,8 @@ export class APIController {
   // Disconnect gracefully from API.
   static async disconnect() {
     this.unsubscribe();
+    this.unsubscribeProvider();
+    this.provider?.disconnect();
     await this.api?.disconnect();
   }
 }
