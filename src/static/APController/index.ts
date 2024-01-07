@@ -165,7 +165,7 @@ export class APIController {
       this.dispatchEvent(this.ensureEventStatus('disconnected'));
     });
     this.provider.on('error', (err: string) => {
-      this.dispatchEvent(this.ensureEventStatus('error'), err);
+      this.dispatchEvent(this.ensureEventStatus('error'), { err });
     });
   }
 
@@ -175,10 +175,9 @@ export class APIController {
       await this.disconnect();
 
       // Tell UI api has been disconnected from an offline event.
-      this.dispatchEvent(
-        this.ensureEventStatus('disconnected'),
-        'offline-event'
-      );
+      this.dispatchEvent(this.ensureEventStatus('disconnected'), {
+        err: 'offline-event',
+      });
     });
 
     window.addEventListener('online', () => {
@@ -188,10 +187,15 @@ export class APIController {
   }
 
   // Handler for dispatching events.
-  static dispatchEvent(event: EventStatus, err?: string) {
+  static dispatchEvent(
+    event: EventStatus,
+    options?: {
+      err?: string;
+    }
+  ) {
     const detail: EventDetail = { event };
-    if (err) {
-      detail['err'] = err;
+    if (options?.err) {
+      detail['err'] = options.err;
     }
     document.dispatchEvent(new CustomEvent('polkadot-api', { detail }));
   }
