@@ -65,6 +65,10 @@ export const Summary = styled.div`
     margin: 0 0.25rem;
     display: flex;
     align-items: center;
+
+    &.last {
+      margin-left: 1rem;
+    }
   }
 
   /* left and right sections for each row*/
