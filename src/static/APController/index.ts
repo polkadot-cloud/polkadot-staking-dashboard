@@ -44,7 +44,7 @@ export class APIController {
   // Unsubscribe objects.
   static _unsubs: Record<string, VoidFn> = {};
 
-  // Store the number of reconnection attempts.
+  // Store the number of connection attempts.
   static _connectAttempts = 0;
 
   // Cancel function of dynamic substrate connect import.
