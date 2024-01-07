@@ -90,7 +90,6 @@ export class APIController {
     };
     this.handleConfig(config);
     this._connectAttempts++;
-
     this.onMonitorConnect(config);
     await withTimeout(this.CONNECT_TIMEOUT, this.connect(config));
   }
@@ -195,7 +194,6 @@ export class APIController {
         err: 'offline-event',
       });
     });
-
     window.addEventListener('online', () => {
       // Reconnect to the current API configuration.
       this.initialize(this.network, this._connectionType, this._rpcEndpoint);
