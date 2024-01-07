@@ -1,19 +1,26 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { BlockNumber } from '@polkadot/types/interfaces/runtime';
 import { makeCancelable } from '@polkadot-cloud/utils';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import { NetworkList } from 'config/networks';
 import type { NetworkName } from 'types';
 import type {
+  APIConfig,
   ConnectionType,
   EventDetail,
   EventStatus,
   SubstrateConnect,
 } from './types';
+import type { VoidFn } from '@polkadot/api/types';
 
 export class APIController {
+  // ------------------------------------------------------
+  // Class members.
+  // ------------------------------------------------------
+
   // The active network.
   static network: NetworkName;
 
@@ -29,15 +36,22 @@ export class APIController {
   // The current connection type.
   static _connectionType: ConnectionType;
 
+  // Unsubscribe objects.
+  static _unsubs: Record<string, VoidFn> = {};
+
   // Cancel function of dynamic substrate connect import.
   static cancelFn: () => void;
 
-  static get api() {
-    return this._api;
-  }
+  // ------------------------------------------------------
+  // Getters.
+  // ------------------------------------------------------
 
   static get provider() {
     return this._provider;
+  }
+
+  static get api() {
+    return this._api;
   }
 
   // ------------------------------------------------------
@@ -48,15 +62,20 @@ export class APIController {
   static async initialize(
     network: NetworkName,
     type: ConnectionType,
-    config: {
+    options: {
       rpcEndpoint: string;
     }
   ) {
     // Only needed once: Initialize window online listeners.
     this.initOnlineEvents();
 
-    this.handleConfig(type, network, config.rpcEndpoint);
-    this.connect(type, network, config.rpcEndpoint);
+    const config: APIConfig = {
+      type,
+      network,
+      rpcEndpoint: options.rpcEndpoint,
+    };
+    this.handleConfig(config);
+    this.connect(config);
   }
 
   // Reconnect to a different endpoint. Assumes initialization has already happened.
@@ -65,30 +84,27 @@ export class APIController {
     type: ConnectionType,
     rpcEndpoint: string
   ) {
-    await this.api?.disconnect();
+    await this.disconnect();
     this.resetEvents();
 
-    this.handleConfig(type, network, rpcEndpoint);
-    this.connect(type, network, rpcEndpoint);
+    const config: APIConfig = {
+      type,
+      network,
+      rpcEndpoint,
+    };
+    this.handleConfig(config);
+    this.connect(config);
   }
 
   // Instantiates provider and connects to an api instance.
-  static async connect(
-    type: ConnectionType,
-    network: NetworkName,
-    rpcEndpoint: string
-  ) {
+  static async connect(config: APIConfig) {
     this.dispatchEvent(this.ensureEventStatus('connecting'));
-    await this.handleProvider(type, network, rpcEndpoint);
+    await this.handleProvider(config);
     await this.handleIsReady();
   }
 
   // Handles class and local storage config.
-  static handleConfig = async (
-    type: ConnectionType,
-    network: NetworkName,
-    rpcEndpoint: string
-  ) => {
+  static handleConfig = async ({ type, network, rpcEndpoint }: APIConfig) => {
     localStorage.setItem('network', network);
     this.network = network;
     this._connectionType = type;
@@ -96,11 +112,7 @@ export class APIController {
   };
 
   // Handles provider initialization.
-  static handleProvider = async (
-    type: ConnectionType,
-    network: NetworkName,
-    rpcEndpoint: string
-  ) => {
+  static handleProvider = async ({ type, network, rpcEndpoint }: APIConfig) => {
     if (type === 'ws') {
       this.initWsProvider(network, rpcEndpoint);
     } else {
@@ -113,6 +125,9 @@ export class APIController {
     this.initApiEvents();
     this._api = await ApiPromise.create({ provider: this.provider });
     this.dispatchEvent(this.ensureEventStatus('ready'));
+
+    // Subscribe to block numbers.
+    this.subscribeBlockNumber();
   };
 
   // ------------------------------------------------------
@@ -154,20 +169,19 @@ export class APIController {
       this.dispatchEvent(this.ensureEventStatus('disconnected'));
     });
     this.provider.on('error', (err: string) => {
-      this.dispatchEvent(this.ensureEventStatus('error'), err);
+      this.dispatchEvent(this.ensureEventStatus('error'), { err });
     });
   }
 
   // Set up online / offline event listeners. Relays information to `document` for the UI to handle.
   static initOnlineEvents() {
     window.addEventListener('offline', async () => {
-      // Disconnect from api instance.
-      await this.api?.disconnect();
+      await this.disconnect();
+
       // Tell UI api has been disconnected from an offline event.
-      this.dispatchEvent(
-        this.ensureEventStatus('disconnected'),
-        'offline-event'
-      );
+      this.dispatchEvent(this.ensureEventStatus('disconnected'), {
+        err: 'offline-event',
+      });
     });
 
     window.addEventListener('online', () => {
@@ -177,13 +191,44 @@ export class APIController {
   }
 
   // Handler for dispatching events.
-  static dispatchEvent(event: EventStatus, err?: string) {
+  static dispatchEvent(
+    event: EventStatus,
+    options?: {
+      err?: string;
+    }
+  ) {
     const detail: EventDetail = { event };
-    if (err) {
-      detail['err'] = err;
+    if (options?.err) {
+      detail['err'] = options.err;
     }
     document.dispatchEvent(new CustomEvent('polkadot-api', { detail }));
   }
+
+  // ------------------------------------------------------
+  // Subscription Handling.
+  // ------------------------------------------------------
+
+  // Subscribe to block number.
+  static subscribeBlockNumber = async () => {
+    if (this._unsubs['blockNumber'] === undefined) {
+      const unsub = await this.api.query.system.number((num: BlockNumber) => {
+        // Send block number to UI as event.
+        document.dispatchEvent(
+          new CustomEvent(`new-block-number`, {
+            detail: { blockNumber: num.toString() },
+          })
+        );
+      });
+      this._unsubs['blockNumber'] = unsub as unknown as VoidFn;
+    }
+  };
+
+  // Unsubscribe from all active subscriptions.
+  static unsubscribe = () => {
+    Object.values(this._unsubs).forEach((unsub) => {
+      unsub();
+    });
+  };
 
   // ------------------------------------------------------
   // Class helpers.
@@ -216,4 +261,10 @@ export class APIController {
     }
     return 'error' as EventStatus;
   };
+
+  // Disconnect gracefully from API.
+  static async disconnect() {
+    this.unsubscribe();
+    await this.api?.disconnect();
+  }
 }

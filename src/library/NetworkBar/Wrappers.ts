@@ -5,8 +5,11 @@ import styled from 'styled-components';
 import { SideMenuStickyThreshold } from 'consts';
 
 export const Wrapper = styled.div`
+  --network-bar-font-size: 0.9rem;
+
   background: var(--background-app-footer);
   color: var(--text-color-secondary);
+  font-size: var(--network-bar-font-size);
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -17,7 +20,6 @@ export const Wrapper = styled.div`
   backdrop-filter: blur(4px);
   position: relative;
   padding-top: 0.15rem;
-  font-size: 0.85rem;
   width: 100%;
 
   @media (min-width: ${SideMenuStickyThreshold + 1}px) {
@@ -25,7 +27,7 @@ export const Wrapper = styled.div`
   }
 
   .network_icon {
-    margin: 0 0 0 1rem;
+    margin: 0 0 0 1.25rem;
     width: 1.5rem;
     height: 1.5rem;
   }
@@ -51,20 +53,24 @@ export const Summary = styled.div`
   a,
   button {
     color: var(--text-color-secondary);
-    font-size: 0.85rem;
+    font-size: var(--network-bar-font-size);
     opacity: 0.75;
   }
   p {
+    font-size: var(--network-bar-font-size);
     border-left: 1px solid var(--accent-color-transparent);
     margin: 0.25rem 0.5rem 0.25rem 0.15rem;
-    font-size: 0.85rem;
     padding-left: 0.5rem;
-    line-height: 1.2rem;
+    line-height: 1.3rem;
   }
   .stat {
     margin: 0 0.25rem;
     display: flex;
     align-items: center;
+
+    &.last {
+      margin-left: 1rem;
+    }
   }
 
   /* left and right sections for each row*/
@@ -86,13 +92,13 @@ export const Summary = styled.div`
       display: flex;
       align-items: center;
       flex-flow: row-reverse wrap;
-      padding-right: 0.5rem;
+      padding-right: 0.75rem;
 
       button {
+        font-size: var(--network-bar-font-size);
         color: var(--text-color-secondary);
         border-radius: 0.4rem;
         padding: 0.25rem 0.5rem;
-        font-size: 0.85rem;
       }
       span {
         &.pos {

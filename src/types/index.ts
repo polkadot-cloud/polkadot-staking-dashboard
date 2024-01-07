@@ -13,6 +13,7 @@ declare global {
   }
   interface DocumentEventMap {
     notification: CustomEvent<NotificationItem>;
+    'new-block-number': CustomEvent<{ blockNumber: string }>;
   }
 }
 
