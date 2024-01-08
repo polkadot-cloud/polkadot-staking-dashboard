@@ -15,13 +15,21 @@ import type {
   SubstrateConnect,
 } from './types';
 import type { VoidFn } from '@polkadot/api/types';
+import BigNumber from 'bignumber.js';
 
 export class APIController {
   // ------------------------------------------------------
   // Class members.
   // ------------------------------------------------------
 
+  // How long to wait for a connection before trying again.
   static CONNECT_TIMEOUT = 10000;
+
+  // How many blocks to wait before verifying the connection is online.
+  static MIN_EXPECTED_BLOCKS_PER_VERIFY = 3;
+
+  // How many missing blocks to allow for leeway when verifying.
+  static MIN_EXPECTED_BLOCKS_LEEWAY = 2;
 
   // The active network.
   static network: NetworkName;
@@ -44,8 +52,23 @@ export class APIController {
   // Unsubscribe objects.
   static _unsubs: Record<string, VoidFn> = {};
 
-  // Store the number of connection attempts.
+  // The number of connection attempts.
   static _connectAttempts = 0;
+
+  // The expected block time.
+  static _expectedBlockTime: number;
+
+  // The latest received block number.
+  static _blockNumber = '0';
+
+  // Block number verification data.
+  static _blockNumberVerify: {
+    minBlockNumber: string;
+    interval: ReturnType<typeof setInterval> | undefined;
+  } = {
+    minBlockNumber: '0',
+    interval: undefined,
+  };
 
   // Cancel function of dynamic substrate connect import.
   static cancelFn: () => void;
@@ -169,6 +192,82 @@ export class APIController {
   }
 
   // ------------------------------------------------------
+  // Subscription Handling.
+  // ------------------------------------------------------
+
+  // Subscribe to block number.
+  static subscribeBlockNumber = async () => {
+    if (this._unsubs['blockNumber'] === undefined) {
+      // Retrieve and store the estimated block time.
+      const blockTime = this.api.consts.babe.expectedBlockTime;
+      this._expectedBlockTime = Number(blockTime.toString());
+
+      // Get block numbers.
+      const unsub = await this.api.query.system.number((num: BlockNumber) => {
+        this._blockNumber = num.toString();
+
+        // Send block number to UI as event.
+        document.dispatchEvent(
+          new CustomEvent(`new-block-number`, {
+            detail: { blockNumber: num.toString() },
+          })
+        );
+      });
+
+      // Block number subscription now initialised. Store unsub.
+      this._unsubs['blockNumber'] = unsub as unknown as VoidFn;
+
+      // Bootstrap block number verification. Should always pass first verification.
+      this._blockNumberVerify = {
+        minBlockNumber: new BigNumber(this._blockNumber)
+          .plus(this.MIN_EXPECTED_BLOCKS_PER_VERIFY)
+          .toString(),
+        interval: setInterval(
+          () => {
+            this.verifyBlocksOnline();
+          },
+          this._expectedBlockTime *
+            (this.MIN_EXPECTED_BLOCKS_PER_VERIFY +
+              this.MIN_EXPECTED_BLOCKS_LEEWAY)
+        ),
+      };
+    }
+  };
+
+  // Verify block subscription is online.
+  static verifyBlocksOnline = async () => {
+    const blocksSynced = new BigNumber(
+      this._blockNumber
+    ).isGreaterThanOrEqualTo(this._blockNumberVerify.minBlockNumber);
+
+    if (!blocksSynced) {
+      this.handleOfflineEvent();
+    } else {
+      // Update block number verification data.
+      this._blockNumberVerify.minBlockNumber = String(
+        new BigNumber(this._blockNumber).plus(
+          this.MIN_EXPECTED_BLOCKS_PER_VERIFY
+        )
+      ).toString();
+    }
+  };
+
+  // Unsubscribe from all active subscriptions.
+  static unsubscribe = () => {
+    Object.values(this._unsubs).forEach((unsub) => {
+      unsub();
+    });
+    this._unsubs = {};
+  };
+
+  // Remove API event listeners if they exist.
+  static unsubscribeProvider() {
+    this._providerUnsubs.forEach((unsub) => {
+      unsub();
+    });
+  }
+
+  // ------------------------------------------------------
   // Event handling.
   // ------------------------------------------------------
 
@@ -194,17 +293,22 @@ export class APIController {
   // Set up online / offline event listeners. Relays information to `document` for the UI to handle.
   static initOnlineEvents() {
     window.addEventListener('offline', async () => {
-      await this.disconnect();
-      // Tell UI api has been disconnected from an offline event.
-      this.dispatchEvent(this.ensureEventStatus('disconnected'), {
-        err: 'offline-event',
-      });
+      this.handleOfflineEvent();
     });
     window.addEventListener('online', () => {
       // Reconnect to the current API configuration.
       this.initialize(this.network, this._connectionType, this._rpcEndpoint);
     });
   }
+
+  // Handle offline event
+  static handleOfflineEvent = async () => {
+    await this.disconnect();
+    // Tell UI api has been disconnected from an offline event.
+    this.dispatchEvent(this.ensureEventStatus('disconnected'), {
+      err: 'offline-event',
+    });
+  };
 
   // Handler for dispatching events.
   static dispatchEvent(
@@ -218,40 +322,6 @@ export class APIController {
       detail['err'] = options.err;
     }
     document.dispatchEvent(new CustomEvent('polkadot-api', { detail }));
-  }
-
-  // ------------------------------------------------------
-  // Subscription Handling.
-  // ------------------------------------------------------
-
-  // Subscribe to block number.
-  static subscribeBlockNumber = async () => {
-    if (this._unsubs['blockNumber'] === undefined) {
-      const unsub = await this.api.query.system.number((num: BlockNumber) => {
-        // Send block number to UI as event.
-        document.dispatchEvent(
-          new CustomEvent(`new-block-number`, {
-            detail: { blockNumber: num.toString() },
-          })
-        );
-      });
-      this._unsubs['blockNumber'] = unsub as unknown as VoidFn;
-    }
-  };
-
-  // Unsubscribe from all active subscriptions.
-  static unsubscribe = () => {
-    Object.values(this._unsubs).forEach((unsub) => {
-      unsub();
-    });
-    this._unsubs = {};
-  };
-
-  // Remove API event listeners if they exist.
-  static unsubscribeProvider() {
-    this._providerUnsubs.forEach((unsub) => {
-      unsub();
-    });
   }
 
   // ------------------------------------------------------
@@ -275,6 +345,7 @@ export class APIController {
 
   // Disconnect gracefully from API.
   static async disconnect() {
+    clearInterval(this._blockNumberVerify.interval);
     this.unsubscribe();
     this.unsubscribeProvider();
     this.provider?.disconnect();
