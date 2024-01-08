@@ -22,8 +22,8 @@ export class APIController {
   // Class members.
   // ------------------------------------------------------
 
-  // How long in ms to wait for a connection before trying again.
-  static CONNECT_TIMEOUT = 10000;
+  // The bas time in ms to wait for a connection before trying again. Increases up to 6x.
+  static CONNECT_TIMEOUT_BASE = 10000;
 
   // How many blocks to wait before verifying the connection is online.
   static MIN_EXPECTED_BLOCKS_PER_VERIFY = 4;
@@ -123,8 +123,19 @@ export class APIController {
 
     // Start connection attempt.
     this.onMonitorConnect(config);
-    await withTimeout(this.CONNECT_TIMEOUT, this.connect(config));
+    await withTimeout(this.getTimeout(), this.connect(config));
   }
+
+  // Calculate connection timeout. First attempt = base, second = 3x, 6x thereafter.
+  static getTimeout = () => {
+    if (this._connectAttempts === 1) {
+      return this.CONNECT_TIMEOUT_BASE;
+    } else if (this._connectAttempts === 2) {
+      return this.CONNECT_TIMEOUT_BASE * 3;
+    } else {
+      return this.CONNECT_TIMEOUT_BASE * 6;
+    }
+  };
 
   // Check if API is connected after a ser period, and try again if it has not.
   static onMonitorConnect = async (config: APIConfig) => {
@@ -134,7 +145,7 @@ export class APIController {
         // Atempt api connection again.
         this.initialize(config.network, config.type, config.rpcEndpoint);
       }
-    }, this.CONNECT_TIMEOUT);
+    }, this.getTimeout());
   };
 
   // Instantiates provider and connects to an api instance.
