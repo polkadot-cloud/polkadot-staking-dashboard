@@ -22,7 +22,7 @@ export class APIController {
   // Class members.
   // ------------------------------------------------------
 
-  // The bas time in ms to wait for a connection before trying again. Increases up to 6x.
+  // Base time in ms to wait for a connection before trying again.
   static CONNECT_TIMEOUT_BASE = 10000;
 
   // How many blocks to wait before verifying the connection is online.
@@ -128,7 +128,7 @@ export class APIController {
 
   // Calculate connection timeout. First attempt = base, second = 3x, 6x thereafter.
   static getTimeout = () => {
-    if (this._connectAttempts === 1) {
+    if (this._connectAttempts <= 1) {
       return this.CONNECT_TIMEOUT_BASE;
     } else if (this._connectAttempts === 2) {
       return this.CONNECT_TIMEOUT_BASE * 3;
