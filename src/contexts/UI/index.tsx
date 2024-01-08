@@ -161,7 +161,7 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
         isPoolSyncing,
         containerRefs,
         isBraveBrowser,
-        userSideMenuMinimised: userSideMenuMinimisedRef.current,
+        userSideMenuMinimised,
       }}
     >
       {children}
