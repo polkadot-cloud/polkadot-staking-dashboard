@@ -22,11 +22,11 @@ export class APIController {
   // Class members.
   // ------------------------------------------------------
 
-  // How long to wait for a connection before trying again.
+  // How long in ms to wait for a connection before trying again.
   static CONNECT_TIMEOUT = 10000;
 
   // How many blocks to wait before verifying the connection is online.
-  static MIN_EXPECTED_BLOCKS_PER_VERIFY = 3;
+  static MIN_EXPECTED_BLOCKS_PER_VERIFY = 4;
 
   // How many missing blocks to allow for leeway when verifying.
   static MIN_EXPECTED_BLOCKS_LEEWAY = 2;
