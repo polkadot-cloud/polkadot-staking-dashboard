@@ -6867,7 +6867,7 @@ __metadata:
     react-router-dom: "npm:^6.21.1"
     react-scroll: "npm:^1.9.0"
     sass: "npm:^1.69.7"
-    styled-components: "npm:^6.1.6"
+    styled-components: "npm:^6.1.8"
     typescript: "npm:^5.3.3"
     usehooks-ts: "npm:^2.9.2"
     vite: "npm:^5.0.11"
@@ -8089,9 +8089,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"styled-components@npm:^6.1.6":
-  version: 6.1.6
-  resolution: "styled-components@npm:6.1.6"
+"styled-components@npm:^6.1.8":
+  version: 6.1.8
+  resolution: "styled-components@npm:6.1.8"
   dependencies:
     "@emotion/is-prop-valid": "npm:1.2.1"
     "@emotion/unitless": "npm:0.8.0"
@@ -8105,7 +8105,7 @@ __metadata:
   peerDependencies:
     react: ">= 16.8.0"
     react-dom: ">= 16.8.0"
-  checksum: 935f621c99b0b04df918f644219a99575b97a32cc4215e16af5bc6596b0c0270162405eef1aa03f68ac84eea9bba4b0445ae10ed39541f975c74d17264f7c22b
+  checksum: fafe4b9198d5d7980c2358821d1a89f86200d55c8eec03670cf12cf43b8a05a77eafaf0872cd85821f68238308e0f5c9d9aa43a62e6987c65b70baa2c3277ab8
   languageName: node
   linkType: hard
 
