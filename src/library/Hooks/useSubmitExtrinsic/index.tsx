@@ -52,7 +52,7 @@ export const useSubmitExtrinsic = ({
   const fromRef = useRef<string>(from || '');
 
   // Store whether the transaction is in progress.
-  const [submitting, setSubmitting] = useState(false);
+  const [submitting, setSubmitting] = useState<boolean>(false);
 
   // Store the uid of the extrinsic.
   const [uid] = useState<number>(incrementPayloadUid());

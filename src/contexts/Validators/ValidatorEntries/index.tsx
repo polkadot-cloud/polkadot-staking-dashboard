@@ -79,7 +79,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const sessionParaUnsub = useRef<Fn>();
 
   // Stores the average network commission rate.
-  const [avgCommission, setAvgCommission] = useState(0);
+  const [avgCommission, setAvgCommission] = useState<number>(0);
 
   // Stores the user's nominated validators as list
   const [nominated, setNominated] = useState<Validator[] | null>(null);

@@ -29,8 +29,8 @@ export const ValidatorGeo = () => {
   const ref = useRef<HTMLDivElement>(null);
   const size = useSize(ref?.current || undefined);
   const { height, minHeight } = formatSize(size, 300);
-  const [pwData, setPwData] = useState({} as ValidatorDetail);
-  const [analyticsAvailable, setAnalyticsAvailable] = useState(true);
+  const [pwData, setPwData] = useState<ValidatorDetail>({} as ValidatorDetail);
+  const [analyticsAvailable, setAnalyticsAvailable] = useState<boolean>(true);
   const { pluginEnabled } = usePlugins();
 
   const enabled = pluginEnabled('polkawatch');

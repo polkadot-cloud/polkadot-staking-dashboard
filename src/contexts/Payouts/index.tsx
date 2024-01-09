@@ -230,8 +230,8 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
         Object.values(validatorControllers)
       );
 
-      // Fetch ledgers to determine which eras have not yet been claimed per validator. Only includes
-      // eras that are in `erasToCheck`.
+      // Fetch ledgers to determine which eras have not yet been claimed per validator. Only
+      // includes eras that are in `erasToCheck`.
       for (const ledgerResult of ledgerResults) {
         const ledger = ledgerResult.unwrapOr(null)?.toHuman();
         if (ledger) {

@@ -49,10 +49,10 @@ export const Connect = () => {
   const other = web.filter((a) => !installed.find((b) => b.id === a.id));
 
   // toggle read only management
-  const [readOnlyOpen, setReadOnlyOpen] = useState(false);
+  const [readOnlyOpen, setReadOnlyOpen] = useState<boolean>(false);
 
   // toggle proxy delegate management
-  const [newProxyOpen, setNewProxyOpen] = useState(false);
+  const [newProxyOpen, setNewProxyOpen] = useState<boolean>(false);
 
   // active modal section
   const [section, setSection] = useState<number>(0);

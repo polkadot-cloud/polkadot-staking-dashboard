@@ -34,8 +34,8 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
   const fetchedPoolMembersApi = useRef<Sync>('unsynced');
 
   // Stores the meta data batches for pool member lists.
-  const [poolMembersMetaBatches, setPoolMembersMetaBatch]: AnyMetaBatch =
-    useState({});
+  const [poolMembersMetaBatches, setPoolMembersMetaBatch] =
+    useState<AnyMetaBatch>({});
   const poolMembersMetaBatchesRef = useRef(poolMembersMetaBatches);
 
   // Stores the meta batch subscriptions for pool lists.

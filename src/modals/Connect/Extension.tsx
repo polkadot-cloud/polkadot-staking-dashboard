@@ -25,7 +25,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const canConnect = extensionCanConnect(id);
 
   // Force re-render on click.
-  const [increment, setIncrement] = useState(0);
+  const [increment, setIncrement] = useState<number>(0);
 
   // click to connect to extension
   const handleClick = async () => {

@@ -21,6 +21,7 @@ import { StatusLabel } from 'library/StatusLabel';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { PluginLabel } from 'library/PluginLabel';
 import { useNetwork } from 'contexts/Network';
+import type { AnyJson } from 'types';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');
@@ -51,7 +52,7 @@ export const ValidatorMetrics = () => {
       validatorOwnStake = new BigNumber(own);
     }
   }
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<AnyJson[]>([]);
 
   const ref = useRef<HTMLDivElement>(null);
   const size = useSize(ref?.current || undefined);

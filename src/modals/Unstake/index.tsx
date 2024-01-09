@@ -64,7 +64,7 @@ export const Unstake = () => {
   });
 
   // bond valid
-  const [bondValid, setBondValid] = useState(false);
+  const [bondValid, setBondValid] = useState<boolean>(false);
 
   // unbond all validation
   const isValid = (() => greaterThanZero(freeToUnbond))();

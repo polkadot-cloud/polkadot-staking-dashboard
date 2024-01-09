@@ -1,6 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { ListFormat } from 'library/PoolList/types';
+
 export interface PoolAccountProps {
   address: string | null;
   batchKey: string;
@@ -13,6 +15,6 @@ export interface PoolsTabsContextInterface {
 }
 
 export interface PayoutListContextInterface {
-  setListFormat: (v: string) => void;
-  listFormat: string;
+  setListFormat: (v: ListFormat) => void;
+  listFormat: ListFormat;
 }

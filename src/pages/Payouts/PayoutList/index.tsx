@@ -53,7 +53,7 @@ export const PayoutListInner = ({
   const [renderIteration, _setRenderIteration] = useState<number>(1);
 
   // manipulated list (ordering, filtering) of payouts
-  const [payouts, setPayouts] = useState(initialPayouts);
+  const [payouts, setPayouts] = useState<AnySubscan>(initialPayouts);
 
   // is this the initial fetch
   const [fetched, setFetched] = useState<boolean>(false);

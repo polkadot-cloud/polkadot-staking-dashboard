@@ -8,7 +8,7 @@ import type { DefinitionProps } from './types';
 
 export const Definition = ({ title, description }: DefinitionProps) => {
   // Store whether the definition is open or not.
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   // Store the current height of the definition content.
   const [height, setHeight] = useState<number>(0);

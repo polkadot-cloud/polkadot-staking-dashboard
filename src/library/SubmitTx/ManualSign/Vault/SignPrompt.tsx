@@ -25,7 +25,7 @@ export const SignPrompt = ({ submitAddress }: SignerPromptProps) => {
   const { closePrompt } = usePrompt();
 
   // Whether user is on sign or submit stage.
-  const [stage, setStage] = useState(1);
+  const [stage, setStage] = useState<number>(1);
 
   return (
     <QRViewerWrapper>

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ellipsisFn } from '@polkadot-cloud/utils';
+import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { Polkicon } from '@polkadot-cloud/react';
@@ -13,7 +14,7 @@ export const Identity = ({ address }: IdentityProps) => {
   const { validatorIdentities, validatorSupers, validatorsFetched } =
     useValidators();
 
-  const [display, setDisplay] = useState(
+  const [display, setDisplay] = useState<ReactNode>(
     getIdentityDisplay(validatorIdentities[address], validatorSupers[address])
   );
 
