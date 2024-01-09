@@ -252,7 +252,7 @@ export class APIController {
     ).isGreaterThanOrEqualTo(this._blockNumberVerify.minBlockNumber);
 
     if (!blocksSynced) {
-      this.handleOfflineEvent();
+      await this.disconnect();
     } else {
       // Update block number verification data.
       this._blockNumberVerify.minBlockNumber = String(
