@@ -13,6 +13,7 @@ import { useNetwork } from 'contexts/Network';
 import { Item } from './Item';
 import { ItemsWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
+import type { Validator } from 'contexts/Validators/types';
 
 export const Entity = () => {
   const { t } = useTranslation('pages');
@@ -25,7 +26,7 @@ export const Entity = () => {
   const validators = entityAllValidators[network] ?? [];
 
   // include validators that exist in `erasStakers`
-  const [activeValidators, setActiveValidators] = useState(
+  const [activeValidators, setActiveValidators] = useState<Validator[]>(
     allValidators.filter((v) => validators.includes(v.address))
   );
 

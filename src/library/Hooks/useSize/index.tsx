@@ -13,7 +13,9 @@ export const getSize = (element?: HTMLElement | undefined) => {
 
 export const useSize = (element?: HTMLElement | undefined) => {
   const { containerRefs } = useUi();
-  const [size, setSize] = useState(getSize(element));
+  const [size, setSize] = useState<{ width: number; height: number }>(
+    getSize(element)
+  );
 
   const throttleCallback = () => {
     setSize(getSize(element));

@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useNetwork } from 'contexts/Network';
 import { defaultContext, communityItem } from './defaults';
-import type { CommunitySectionsContextInterface } from './types';
+import type { CommunitySectionsContextInterface, Item } from './types';
 
 export const CommunitySectionsContext =
   createContext<CommunitySectionsContextInterface>(defaultContext);
@@ -23,7 +23,7 @@ export const CommunitySectionsProvider = ({
   const [activeSection, setActiveSectionState] = useState<number>(0);
 
   // store the active entity item of the community page
-  const [activeItem, setActiveItem] = useState(communityItem);
+  const [activeItem, setActiveItem] = useState<Item>(communityItem);
 
   // store the Y scroll position when the last entity was visited
   // used to automatically scroll back down upon returning to the entity lsit.

@@ -5,6 +5,7 @@ import { createContext, useContext, useState } from 'react';
 import { defaultContext } from './defaults';
 import type { AnyJson } from 'types';
 import type { ListContextInterface, ListProviderProps } from './types';
+import type { ListFormat } from 'library/PoolList/types';
 
 export const ListContext = createContext<ListContextInterface>(defaultContext);
 
@@ -24,7 +25,7 @@ export const ListProvider = ({
   );
 
   // Store the list format of the list.
-  const [listFormat, _setListFormat] = useState<'col' | 'row'>('col');
+  const [listFormat, _setListFormat] = useState<ListFormat>('col');
 
   const addToSelected = (_item: AnyJson) => {
     setSelected([...selected].concat(_item));
@@ -45,7 +46,7 @@ export const ListProvider = ({
     }
   };
 
-  const setListFormat = (v: 'col' | 'row') => {
+  const setListFormat = (v: ListFormat) => {
     _setListFormat(v);
   };
 

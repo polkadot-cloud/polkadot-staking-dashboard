@@ -7,13 +7,14 @@ import { useHelp } from 'contexts/Help';
 import BigNumber from 'bignumber.js';
 import { StatBox } from './Item';
 import type { PieProps } from './types';
+import type { AnyJson } from '@polkadot-cloud/react/types';
 
 export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
   const help = helpKey !== undefined;
   const showTotal = !!stat?.total;
   const { openHelp } = useHelp();
 
-  const [values, setValues] = useState({
+  const [values, setValues] = useState<AnyJson>({
     value: Number(stat?.value || 0),
     total: Number(stat?.total || 0),
   });

@@ -24,7 +24,7 @@ import { Pagination } from 'library/List/Pagination';
 import { SearchInput } from 'library/List/SearchInput';
 import { Selectable } from 'library/List/Selectable';
 import { ValidatorItem } from 'library/ValidatorList/ValidatorItem';
-import type { Validator } from 'contexts/Validators/types';
+import type { Validator, ValidatorListEntry } from 'contexts/Validators/types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -144,18 +144,20 @@ export const ValidatorListInner = ({
   const [page, setPage] = useState<number>(1);
 
   // Default list of validators.
-  const [validatorsDefault, setValidatorsDefault] = useState(
+  const [validatorsDefault, setValidatorsDefault] = useState<
+    ValidatorListEntry[]
+  >(prepareInitialValidators());
+
+  // Manipulated list (custom ordering, filtering) of validators.
+  const [validators, setValidators] = useState<ValidatorListEntry[]>(
     prepareInitialValidators()
   );
 
-  // Manipulated list (custom ordering, filtering) of validators.
-  const [validators, setValidators] = useState(prepareInitialValidators());
-
   // Store whether the validator list has been fetched initially.
-  const [fetched, setFetched] = useState(false);
+  const [fetched, setFetched] = useState<boolean>(false);
 
   // Store whether the search bar is being used.
-  const [isSearching, setIsSearching] = useState(false);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
 
   // Current render iteration.
   const [renderIteration, setRenderIterationState] = useState<number>(1);

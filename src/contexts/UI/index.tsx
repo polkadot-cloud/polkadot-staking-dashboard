@@ -56,9 +56,10 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // Get side menu minimised state from local storage, default to false.
-  const [userSideMenuMinimised, setUserSideMenuMinimisedState] = useState(
-    localStorageOrDefault('side_menu_minimised', false, true) as boolean
-  );
+  const [userSideMenuMinimised, setUserSideMenuMinimisedState] =
+    useState<boolean>(
+      localStorageOrDefault('side_menu_minimised', false, true) as boolean
+    );
   const userSideMenuMinimisedRef = useRef(userSideMenuMinimised);
   const setUserSideMenuMinimised = (v: boolean) => {
     localStorage.setItem('side_menu_minimised', String(v));
@@ -66,7 +67,7 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // Automatic side menu minimised.
-  const [sideMenuMinimised, setSideMenuMinimised] = useState(
+  const [sideMenuMinimised, setSideMenuMinimised] = useState<boolean>(
     window.innerWidth <= SideMenuStickyThreshold
       ? true
       : userSideMenuMinimisedRef.current

@@ -52,7 +52,7 @@ export const UnlockChunks = () => {
   const unlocking = getUnlocking();
 
   // active modal section
-  const [section, setSectionState] = useState(0);
+  const [section, setSectionState] = useState<number>(0);
   const sectionRef = useRef(section);
 
   const setSection = (s: number) => {

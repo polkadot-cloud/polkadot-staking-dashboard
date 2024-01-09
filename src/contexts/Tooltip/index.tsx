@@ -14,8 +14,8 @@ export const TooltipContext = createContext<TooltipContextInterface>(
 export const useTooltip = () => useContext(TooltipContext);
 
 export const TooltipProvider = ({ children }: { children: ReactNode }) => {
-  const [open, setOpen] = useState(0);
-  const [show, setShow] = useState(0);
+  const [open, setOpen] = useState<number>(0);
+  const [show, setShow] = useState<number>(0);
   const showRef = useRef(show);
 
   const [text, setText] = useState<string>('');

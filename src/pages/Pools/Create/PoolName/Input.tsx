@@ -11,13 +11,13 @@ export const Input = ({
   listenIsValid,
   defaultValue,
   setters = [],
-  value = 0,
+  value = '',
 }: AnyJson) => {
   const { t } = useTranslation('pages');
   const { activeAccount } = useActiveAccounts();
 
   // the current local bond value
-  const [metadata, setMetadata] = useState(value);
+  const [metadata, setMetadata] = useState<string>(value);
 
   // handle change for bonding
   const handleChange = (e: AnyJson) => {
