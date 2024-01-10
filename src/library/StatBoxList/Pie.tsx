@@ -54,13 +54,13 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
         <div className="labels">
           <h3>
             <Odometer value={new BigNumber(values.value).toFormat()} />
-            {stat?.unit && stat?.unit}
+            {stat?.unit && stat.unit}
 
             {showTotal ? (
               <span className="total">
                 /&nbsp;
                 <Odometer value={new BigNumber(values.total).toFormat()} />
-                {stat?.unit ? <>{stat?.unit}unit</> : null}
+                {stat?.unit || null}
               </span>
             ) : null}
           </h3>

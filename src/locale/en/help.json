@@ -44,6 +44,16 @@
           "This metric excludes validators who host a 100% commission, as these nodes usually block nominations and are run for the purposes of staking on central exchange platforms."
         ]
       ],
+      "averageRewardRate": [
+        "Average Reward Rate",
+        [
+          "The Average Reward Rate is an estimated annual return of staking rewards.",
+          "It is calculated by taking the average validator payout for the last 30 days, and calculates an estimated annual increase based on this average and the current total issuance of {NETWORK_UNIT}.",
+          "The Average Reward Rate displayed on the dashboard assumes rewards are being compounded.",
+          "Alongside the Average Reward Rate is the Net Average Reward Rate, which displays the reward rate with the average validator commission deducted from it.",
+          "The average validator commission is the mean of all non-100% validator commissions currently active on the network."
+        ]
+      ],
       "blockedNominations": [
         "Blocked Nominations",
         [
@@ -96,12 +106,6 @@
           "As a staker, you do not need to worry about Era Points. In general, better performing validators produce more Era Points, which in-turn lead to higher staking rewards."
         ]
       ],
-      "historicalRewardsRate": [
-        "Historical Rewards Rate",
-        [
-          "An estimated annual yield based on the {NETWORK_NAME} reward distribution model."
-        ]
-      ],
       "idealStaked": [
         "Ideal Staked",
         ["The percentage of staked total supply in ideal network conditions."]
@@ -116,7 +120,8 @@
         "Inflation",
         [
           "{NETWORK_UNIT} is inflationary; there is no maximum number of {NETWORK_UNIT}.",
-          "Inflation is designed to be approximately 10% annually, with validator rewards being a function of the amount staked and the remainder going to treasury."
+          "Inflation is designed to be approximately 10% annually, with validator rewards being a function of the amount staked and the remainder going to treasury.",
+          "The Latest Inflation Rate figure represents the rate relative to newly minted {NETWORK_UNIT} being paid out to validators for the last completed era."
         ]
       ],
       "lastEraPayout": [
