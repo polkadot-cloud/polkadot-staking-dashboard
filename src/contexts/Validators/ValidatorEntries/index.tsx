@@ -28,6 +28,7 @@ import type {
   ValidatorEraPointHistory,
 } from '../types';
 import {
+  defaultAverageEraValidatorReward,
   defaultValidatorsData,
   defaultValidatorsContext,
   defaultEraPointsBoundaries,
@@ -49,7 +50,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     api,
     consts: { historyDepth },
   } = useApi();
-  const { erasPerDay } = useErasPerDay();
+  const { erasPerDay, maxSupportedDays } = useErasPerDay();
   const { stakers } = useStaking().eraStakers;
   const { poolNominations } = useActivePools();
   const { activeAccount } = useActiveAccounts();
@@ -117,9 +118,10 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     useState<EraPointsBoundaries>(defaultEraPointsBoundaries);
 
   // Average rerward rate.
-  const [avgEraValidatorReward, setAvgEraValidatorReward] = useState<BigNumber>(
-    new BigNumber(0)
-  );
+  const [averageEraValidatorReward, setAverageEraValidatorReward] = useState<{
+    days: number;
+    reward: BigNumber;
+  }>(defaultAverageEraValidatorReward);
 
   // Processes reward points for a given era.
   const processEraRewardPoints = (result: AnyJson, era: BigNumber) => {
@@ -558,9 +560,15 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // Gets average validator reward for provided number of days.
-  const getAvgEraValidatorReward = async (days: number) => {
+  const getAverageEraValidatorReward = async () => {
+    // If max supported days is less than 30, use 15 day average instead.
+    const days = maxSupportedDays > 30 ? 30 : 15;
+
     if (!api || !isReady || activeEra.index.isZero()) {
-      setAvgEraValidatorReward(new BigNumber(0));
+      setAverageEraValidatorReward({
+        days,
+        reward: new BigNumber(0),
+      });
       return;
     }
     const startEra = activeEra.index;
@@ -582,18 +590,18 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     const validatorEraRewards =
       await api.query.staking.erasValidatorReward.multi(eras);
 
-    setAvgEraValidatorReward(
-      validatorEraRewards
-        .map((v) => {
-          const reward = new BigNumber(v.toString() === '' ? 0 : v.toString());
-          if (reward.isNaN()) {
-            return new BigNumber(0);
-          }
-          return reward;
-        })
-        .reduce((prev, current) => prev.plus(current), new BigNumber(0))
-        .div(eras.length)
-    );
+    const reward = validatorEraRewards
+      .map((v) => {
+        const value = new BigNumber(v.toString() === '' ? 0 : v.toString());
+        if (value.isNaN()) {
+          return new BigNumber(0);
+        }
+        return value;
+      })
+      .reduce((prev, current) => prev.plus(current), new BigNumber(0))
+      .div(eras.length);
+
+    setAverageEraValidatorReward({ days, reward });
   };
 
   // Reset validator state data on network change.
@@ -609,6 +617,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     setErasRewardPoints({});
     setEraPointsBoundaries(null);
     setValidatorEraPointsHistory({});
+    setAverageEraValidatorReward(defaultAverageEraValidatorReward);
   }, [network]);
 
   // Fetch validators and era reward points when fetched status changes.
@@ -630,7 +639,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         setValidatorsFetched('unsynced');
       }
       fetchSessionValidators();
-      getAvgEraValidatorReward(30);
+      getAverageEraValidatorReward();
     }
   }, [isReady, activeEra]);
 
@@ -694,7 +703,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         eraPointsBoundaries,
         validatorEraPointsHistory,
         erasRewardPointsFetched,
-        avgEraValidatorReward,
+        averageEraValidatorReward,
       }}
     >
       {children}

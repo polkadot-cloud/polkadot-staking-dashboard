@@ -6,7 +6,8 @@ import { useApi } from 'contexts/Api';
 
 export const useErasPerDay = () => {
   const { consts } = useApi();
-  const { epochDuration, expectedBlockTime, sessionsPerEra } = consts;
+  const { epochDuration, expectedBlockTime, sessionsPerEra, historyDepth } =
+    consts;
 
   const DAY_MS = new BigNumber(86400000);
 
@@ -28,5 +29,11 @@ export const useErasPerDay = () => {
 
   return {
     erasPerDay: getErasPerDay(),
+    maxSupportedDays: historyDepth.isZero()
+      ? 0
+      : historyDepth
+          .dividedBy(getErasPerDay())
+          .integerValue(BigNumber.ROUND_HALF_DOWN)
+          .toNumber(),
   };
 };
