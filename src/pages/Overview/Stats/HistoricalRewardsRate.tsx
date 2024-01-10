@@ -27,9 +27,7 @@ export const HistoricalRewardsRateStat = () => {
 
   // Calculates the average reward rate over the last 30 days.
   // TODO: move to a hook.
-
   const compounded = true;
-
   const averageRewardRate = (): AverageRewardRate => {
     if (
       totalIssuance.isZero() ||
@@ -40,14 +38,13 @@ export const HistoricalRewardsRateStat = () => {
       return defaultAvgRewardRate;
     }
 
-    let avgRewardRate: BigNumber = new BigNumber(0);
-
+    // Calculate average daily reward as a percentage of total issuance.
     const avgRewardPerDay = avgEraValidatorReward.multipliedBy(erasPerDay);
-
-    // The average daily reward as a percentage of total issuance.
     const dayRewardRate = new BigNumber(avgRewardPerDay).dividedBy(
       totalIssuance.dividedBy(100)
     );
+
+    let avgRewardRate: BigNumber = new BigNumber(0);
 
     if (!compounded) {
       // Base rate without compounding.
@@ -65,8 +62,6 @@ export const HistoricalRewardsRateStat = () => {
         .dividedBy(100)
         .plus(1)
         .exponentiatedBy(365);
-
-      // Deduct P from A to get the interest earned.
       avgRewardRate = new BigNumber(100).multipliedBy(multipilier).minus(100);
     }
 
