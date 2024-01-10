@@ -44,6 +44,12 @@
           "This metric excludes validators who host a 100% commission, as these nodes usually block nominations and are run for the purposes of staking on central exchange platforms."
         ]
       ],
+      "averageRewardRate": [
+        "Average Reward Rate",
+        [
+          "An estimated annual yield based on the {NETWORK_NAME} reward distribution model."
+        ]
+      ],
       "blockedNominations": [
         "Blocked Nominations",
         [
@@ -94,12 +100,6 @@
         [
           "Era Points are accumulated by validators during each era, and depend on a validator's performance.",
           "As a staker, you do not need to worry about Era Points. In general, better performing validators produce more Era Points, which in-turn lead to higher staking rewards."
-        ]
-      ],
-      "averageRewardRate": [
-        "Average Reward Rate",
-        [
-          "An estimated annual yield based on the {NETWORK_NAME} reward distribution model."
         ]
       ],
       "idealStaked": [
