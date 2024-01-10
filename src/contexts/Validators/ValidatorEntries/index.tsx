@@ -561,27 +561,26 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Gets average validator reward for provided number of days.
   const getAverageEraValidatorReward = async () => {
-    // If max supported days is less than 30, use 15 day average instead.
-    const days = maxSupportedDays > 30 ? 30 : 15;
-
     if (!api || !isReady || activeEra.index.isZero()) {
       setAverageEraValidatorReward({
-        days,
+        days: 0,
         reward: new BigNumber(0),
       });
       return;
     }
-    const startEra = activeEra.index;
+
+    // If max supported days is less than 30, use 15 day average instead.
+    const days = maxSupportedDays > 30 ? 30 : 15;
 
     // Calculates the number of eras required to calculate required `days`, not surpassing
     // historyDepth.
     const endEra = BigNumber.max(
       activeEra.index.minus(erasPerDay.multipliedBy(days)),
-      BigNumber.max(0, startEra.minus(historyDepth))
+      BigNumber.max(0, activeEra.index.minus(historyDepth))
     );
 
     const eras: string[] = [];
-    let thisEra = startEra.minus(1);
+    let thisEra = activeEra.index.minus(1);
     do {
       eras.push(thisEra.toString());
       thisEra = thisEra.minus(1);
