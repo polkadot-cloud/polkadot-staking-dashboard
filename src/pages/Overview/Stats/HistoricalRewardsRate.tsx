@@ -3,9 +3,10 @@
 
 import { Text } from 'library/StatBoxList/Text';
 import { useAverageRewardRate } from 'library/Hooks/useAverageRewardRate';
+import { useTranslation } from 'react-i18next';
 
 export const HistoricalRewardsRateStat = () => {
-  // const { t } = useTranslation('pages');
+  const { t } = useTranslation('pages');
   const { getAverageRewardRate } = useAverageRewardRate();
 
   // Get the compounded 30 Day Average Reward Rate.
@@ -13,11 +14,11 @@ export const HistoricalRewardsRateStat = () => {
     getAverageRewardRate(true);
 
   const params = {
-    label: '30 Day Average Reward Rate',
+    label: t('overview.averageRewardRate'),
     value: `${avgRateBeforeCommission.decimalPlaces(2).toFormat()}%`,
-    secondaryValue: `${avgRateAfterCommission
-      .decimalPlaces(2)
-      .toFormat()}% after commission`,
+    secondaryValue: `${avgRateAfterCommission.decimalPlaces(2).toFormat()}% ${t(
+      'overview.afterCommission'
+    )}`,
     helpKey: 'Average Reward Rate',
 
     primary: true,
