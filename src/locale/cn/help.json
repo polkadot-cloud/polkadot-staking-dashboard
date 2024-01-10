@@ -30,13 +30,6 @@
           "{NETWORK_NAME}允许提名者最多提名16名验证人,最大限度地提高您在每个Era 提名活跃验证人的机会."
         ]
       ],
-      "adjustedRewardsRate": [
-        "调整后收益率",
-        [
-          "基于{NETWORK_NAME}奖励分配模型的估算年收益.",
-          "该数字实际上是历史报酬率减去通货膨胀率."
-        ]
-      ],
       "averageCommission": [
         "平均佣金",
         [

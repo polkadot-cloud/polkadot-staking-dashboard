@@ -30,13 +30,6 @@
           "{NETWORK_NAME} allows a nominator to nominate up to 16 validators, maximising your chances of nominating an active validator in each era."
         ]
       ],
-      "adjustedRewardsRate": [
-        "Adjusted Rewards Rate",
-        [
-          "An estimated realized annual yield based on the {NETWORK_NAME} reward distribution model.",
-          "This figure is effectively the historical rewards rate minus the inflation rate."
-        ]
-      ],
       "averageCommission": [
         "Average Commission",
         [
