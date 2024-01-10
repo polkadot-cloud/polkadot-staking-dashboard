@@ -584,7 +584,13 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
     setAvgEraValidatorReward(
       validatorEraRewards
-        .map((v) => new BigNumber(v.toString()))
+        .map((v) => {
+          const reward = new BigNumber(v.toString() === '' ? 0 : v.toString());
+          if (reward.isNaN()) {
+            return new BigNumber(0);
+          }
+          return reward;
+        })
         .reduce((prev, current) => prev.plus(current), new BigNumber(0))
         .div(eras.length)
     );
