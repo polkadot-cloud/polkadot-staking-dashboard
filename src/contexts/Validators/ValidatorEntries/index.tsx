@@ -110,11 +110,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const [eraPointsBoundaries, setEraPointsBoundaries] =
     useState<EraPointsBoundaries>(defaultEraPointsBoundaries);
 
-  // Average rerward rate.
-  const [avgEraValidatorReward, setAvgEraValidatorReward] = useState<BigNumber>(
-    new BigNumber(0)
-  );
-
   // Processes reward points for a given era.
   const processEraRewardPoints = (result: AnyJson, era: BigNumber) => {
     if (erasRewardPoints[era.toString()]) {
@@ -551,34 +546,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     return injected;
   };
 
-  // Gets the 30-day average validator reward.
-  const getAvgEraValidatorReward = async () => {
-    if (!api || !isReady || activeEra.index.isZero()) {
-      setAvgEraValidatorReward(new BigNumber(0));
-      return;
-    }
-    const startEra = activeEra.index;
-    // TODO: 30 by the number of eras required for 30 days.
-    const endEra = BigNumber.max(activeEra.index.minus(30), 0);
-
-    const eras: string[] = [];
-    let thisEra = startEra.minus(1);
-    do {
-      eras.push(thisEra.toString());
-      thisEra = thisEra.minus(1);
-    } while (thisEra.gte(endEra));
-
-    const validatorEraRewards =
-      await api.query.staking.erasValidatorReward.multi(eras);
-
-    setAvgEraValidatorReward(
-      validatorEraRewards
-        .map((v) => new BigNumber(v.toString()))
-        .reduce((prev, current) => prev.plus(current), new BigNumber(0))
-        .div(eras.length)
-    );
-  };
-
   // Reset validator state data on network change.
   useEffectIgnoreInitial(() => {
     setValidatorsFetched('unsynced');
@@ -602,7 +569,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [validatorsFetched, erasRewardPointsFetched, isReady, activeEra]);
 
-  // Mark unsynced and fetch session validators and average reward when activeEra changes.
+  // Mark unsynced and fetch session validators when activeEra changes.
   useEffectIgnoreInitial(() => {
     if (isReady && activeEra.index.isGreaterThan(0)) {
       if (erasRewardPointsFetched === 'synced') {
@@ -613,7 +580,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         setValidatorsFetched('unsynced');
       }
       fetchSessionValidators();
-      getAvgEraValidatorReward();
     }
   }, [isReady, activeEra]);
 
@@ -677,7 +643,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         eraPointsBoundaries,
         validatorEraPointsHistory,
         erasRewardPointsFetched,
-        avgEraValidatorReward,
       }}
     >
       {children}
