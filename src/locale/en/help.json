@@ -41,10 +41,10 @@
         "Average Reward Rate",
         [
           "The Average Reward Rate is an estimated annual return of staking rewards.",
-          "It is calculated by taking the average validator payout for the last 30 days, and calculates an estimated annual increase based on this average and the current total issuance of {NETWORK_UNIT}.",
+          "It is calculated by taking the average validator payout for the last {AVERAGE_REWARD_RATE_DAYS} days, and calculates an estimated annual increase based on this average and the current total issuance of {NETWORK_UNIT}.",
           "The Average Reward Rate displayed on the dashboard assumes rewards are being compounded.",
           "Alongside the Average Reward Rate is the Net Average Reward Rate, which displays the reward rate with the average validator commission deducted from it.",
-          "The average validator commission is the mean of all non-100% validator commissions currently active on the network."
+          "The average validator commission is the mean of all non 100% validator commissions currently active on the network."
         ]
       ],
       "blockedNominations": [
