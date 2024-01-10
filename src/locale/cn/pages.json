@@ -75,7 +75,7 @@
       "bondedInPools": "提名池中当前质押的{{networkUnit}}总数",
       "connect": "连接",
       "free": "可用余额",
-      "historicalRewardsRate": "历史奖励率",
+      "averageRewardRate": "30 天平均奖励率",
       "inPool": "提名池中",
       "inPools": "当前质押在提名池中",
       "inflationRate": "通货膨胀率",

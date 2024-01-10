@@ -96,8 +96,8 @@
           "As a staker, you do not need to worry about Era Points. In general, better performing validators produce more Era Points, which in-turn lead to higher staking rewards."
         ]
       ],
-      "historicalRewardsRate": [
-        "Historical Rewards Rate",
+      "averageRewardRate": [
+        "Average Reward Rate",
         [
           "An estimated annual yield based on the {NETWORK_NAME} reward distribution model."
         ]

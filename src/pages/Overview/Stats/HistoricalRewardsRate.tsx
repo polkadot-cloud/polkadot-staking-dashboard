@@ -18,7 +18,7 @@ export const HistoricalRewardsRateStat = () => {
     secondaryValue: `${avgRateAfterCommission
       .decimalPlaces(2)
       .toFormat()}% after commission`,
-    helpKey: 'Historical Rewards Rate', // TODO: replace help item
+    helpKey: 'Average Reward Rate',
 
     primary: true,
   };

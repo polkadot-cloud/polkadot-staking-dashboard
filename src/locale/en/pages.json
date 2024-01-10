@@ -77,7 +77,7 @@
       "bondedInPools": "The total {{networkUnit}}  currently bonded in nomination pools.",
       "connect": "Connect",
       "free": "Free",
-      "historicalRewardsRate": "Historical Rewards Rate",
+      "averageRewardRate": "30 Day Average Reward Rate",
       "inPool": "In a Pool",
       "inPools": "is currently bonded in pools.",
       "inflationRate": "Inflation Rate",
