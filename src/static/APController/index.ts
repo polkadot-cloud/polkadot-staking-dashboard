@@ -131,9 +131,9 @@ export class APIController {
     if (this._connectAttempts <= 1) {
       return this.CONNECT_TIMEOUT_BASE;
     } else if (this._connectAttempts === 2) {
-      return this.CONNECT_TIMEOUT_BASE * 3;
+      return this.CONNECT_TIMEOUT_BASE * 2;
     } else {
-      return this.CONNECT_TIMEOUT_BASE * 6;
+      return this.CONNECT_TIMEOUT_BASE * 3;
     }
   };
 
