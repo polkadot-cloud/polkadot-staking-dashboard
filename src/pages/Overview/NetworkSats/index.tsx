@@ -7,19 +7,20 @@ import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
-import { useInflation } from 'library/Hooks/useInflation';
 import { StatsHead } from 'library/StatsHead';
 import { Announcements } from './Announcements';
 import { Wrapper } from './Wrappers';
+import { useAverageRewardRate } from 'library/Hooks/useAverageRewardRate';
 
 export const NetworkStats = () => {
   const { t } = useTranslation('pages');
   const { bondedPools } = useBondedPools();
-  const { inflation } = useInflation();
   const { metrics } = useNetworkMetrics();
   const { staking } = useStaking();
+  const { getAverageRewardRate } = useAverageRewardRate();
   const { totalNominators, totalValidators } = staking;
   const { totalIssuance } = metrics;
+  const { avgRateBeforeCommission } = getAverageRewardRate(false);
 
   const items = [
     {
@@ -42,7 +43,7 @@ export const NetworkStats = () => {
       value: `${
         totalIssuance.toString() === '0'
           ? '0'
-          : new BigNumber(inflation).decimalPlaces(2).toFormat()
+          : avgRateBeforeCommission.decimalPlaces(2).toFormat()
       }%`,
       helpKey: 'Inflation',
     },
