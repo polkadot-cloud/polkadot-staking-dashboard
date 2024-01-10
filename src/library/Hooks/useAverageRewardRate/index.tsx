@@ -11,7 +11,7 @@ import { defaultAverageRewardRate } from './defaults';
 export const useAverageRewardRate = (): UseAverageRewardRate => {
   const { erasPerDay } = useErasPerDay();
   const { metrics } = useNetworkMetrics();
-  const { avgCommission, avgEraValidatorReward } = useValidators();
+  const { avgCommission, averageEraValidatorReward } = useValidators();
   const { totalIssuance } = metrics;
 
   // Get average reward rates.
@@ -20,13 +20,14 @@ export const useAverageRewardRate = (): UseAverageRewardRate => {
       totalIssuance.isZero() ||
       erasPerDay.isZero() ||
       avgCommission === 0 ||
-      avgEraValidatorReward.isZero()
+      averageEraValidatorReward.reward.isZero()
     ) {
       return defaultAverageRewardRate;
     }
 
     // Calculate average daily reward as a percentage of total issuance.
-    const averageRewardPerDay = avgEraValidatorReward.multipliedBy(erasPerDay);
+    const averageRewardPerDay =
+      averageEraValidatorReward.reward.multipliedBy(erasPerDay);
     const dayRewardRate = new BigNumber(averageRewardPerDay).dividedBy(
       totalIssuance.dividedBy(100)
     );
