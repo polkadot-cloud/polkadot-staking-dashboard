@@ -5,15 +5,14 @@ import BigNumber from 'bignumber.js';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { Text } from 'library/StatBoxList/Text';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { useApi } from 'contexts/Api';
+import { useErasPerDay } from 'library/Hooks/useErasPerDay';
 
 export const HistoricalRewardsRateStat = () => {
   // const { t } = useTranslation('pages');
 
-  const { consts } = useApi();
   const { metrics } = useNetworkMetrics();
+  const { erasPerDay } = useErasPerDay();
   const { avgCommission, avgEraValidatorReward } = useValidators();
-  const { epochDuration, expectedBlockTime, sessionsPerEra } = consts;
   const { totalIssuance } = metrics;
 
   interface AverageRewardRate {
@@ -34,6 +33,7 @@ export const HistoricalRewardsRateStat = () => {
   const averageRewardRate = (): AverageRewardRate => {
     if (
       totalIssuance.isZero() ||
+      erasPerDay.isZero() ||
       avgCommission === 0 ||
       avgEraValidatorReward.isZero()
     ) {
@@ -42,12 +42,6 @@ export const HistoricalRewardsRateStat = () => {
 
     let avgRewardRate: BigNumber = new BigNumber(0);
 
-    const DAY_MS = new BigNumber(86400000);
-
-    const blocksPerEra = epochDuration.multipliedBy(sessionsPerEra);
-    const msPerEra = blocksPerEra.multipliedBy(expectedBlockTime);
-
-    const erasPerDay = DAY_MS.dividedBy(msPerEra);
     const avgRewardPerDay = avgEraValidatorReward.multipliedBy(erasPerDay);
 
     // The average daily reward as a percentage of total issuance.

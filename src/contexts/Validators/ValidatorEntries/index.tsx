@@ -34,6 +34,7 @@ import {
 } from './defaults';
 import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
 import type { ValidatorEntry } from '@polkadot-cloud/assets/types';
+import { useErasPerDay } from 'library/Hooks/useErasPerDay';
 
 export const ValidatorsContext = createContext<ValidatorsContextInterface>(
   defaultValidatorsContext
@@ -43,7 +44,12 @@ export const useValidators = () => useContext(ValidatorsContext);
 
 export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
-  const { isReady, api } = useApi();
+  const {
+    isReady,
+    api,
+    consts: { historyDepth },
+  } = useApi();
+  const { erasPerDay } = useErasPerDay();
   const { stakers } = useStaking().eraStakers;
   const { poolNominations } = useActivePools();
   const { activeAccount } = useActiveAccounts();
@@ -551,15 +557,20 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     return injected;
   };
 
-  // Gets the 30-day average validator reward.
-  const getAvgEraValidatorReward = async () => {
+  // Gets average validator reward for provided number of days.
+  const getAvgEraValidatorReward = async (days: number) => {
     if (!api || !isReady || activeEra.index.isZero()) {
       setAvgEraValidatorReward(new BigNumber(0));
       return;
     }
     const startEra = activeEra.index;
-    // TODO: 30 by the number of eras required for 30 days.
-    const endEra = BigNumber.max(activeEra.index.minus(30), 0);
+
+    // Calculates the number of eras required to calculate required `days`, not surpassing
+    // historyDepth.
+    const endEra = BigNumber.max(
+      activeEra.index.minus(erasPerDay.multipliedBy(days)),
+      BigNumber.max(0, startEra.minus(historyDepth))
+    );
 
     const eras: string[] = [];
     let thisEra = startEra.minus(1);
@@ -613,7 +624,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         setValidatorsFetched('unsynced');
       }
       fetchSessionValidators();
-      getAvgEraValidatorReward();
+      getAvgEraValidatorReward(30);
     }
   }, [isReady, activeEra]);
 
