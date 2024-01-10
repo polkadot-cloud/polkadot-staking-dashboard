@@ -330,7 +330,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
     // The validator entries for the current active era.
     let validatorEntries: Validator[] = [];
-    // Average network commission for all non-100% commissioned validators.
+    // Average network commission for all non 100% commissioned validators.
     let avg = 0;
 
     if (localEraValidators) {
