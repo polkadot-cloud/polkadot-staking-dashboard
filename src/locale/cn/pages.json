@@ -79,7 +79,7 @@
       "free": "可用余额",
       "inPool": "提名池中",
       "inPools": "当前质押在提名池中",
-      "inflationRate": "通货膨胀率",
+      "latestInflationRate": "最新通胀率",
       "locked": "己锁",
       "manage": "管理",
       "memberOf": "提名池",

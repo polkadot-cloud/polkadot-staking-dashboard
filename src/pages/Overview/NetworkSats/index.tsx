@@ -10,17 +10,19 @@ import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { StatsHead } from 'library/StatsHead';
 import { Announcements } from './Announcements';
 import { Wrapper } from './Wrappers';
-import { useAverageRewardRate } from 'library/Hooks/useAverageRewardRate';
 
 export const NetworkStats = () => {
   const { t } = useTranslation('pages');
-  const { bondedPools } = useBondedPools();
-  const { metrics } = useNetworkMetrics();
   const { staking } = useStaking();
-  const { getAverageRewardRate } = useAverageRewardRate();
-  const { totalNominators, totalValidators } = staking;
+  const { metrics } = useNetworkMetrics();
+  const { bondedPools } = useBondedPools();
+
+  const { totalNominators, totalValidators, lastReward } = staking;
   const { totalIssuance } = metrics;
-  const { avgRateBeforeCommission } = getAverageRewardRate(false);
+
+  const lastInflation = new BigNumber(lastReward)
+    .dividedBy(totalIssuance.dividedBy(100))
+    .multipliedBy(365);
 
   const items = [
     {
@@ -39,11 +41,11 @@ export const NetworkStats = () => {
       helpKey: 'Active Pools',
     },
     {
-      label: t('overview.inflationRate'),
+      label: t('overview.latestInflationRate'),
       value: `${
         totalIssuance.toString() === '0'
           ? '0'
-          : avgRateBeforeCommission.decimalPlaces(2).toFormat()
+          : lastInflation.decimalPlaces(2).toFormat()
       }%`,
       helpKey: 'Inflation',
     },
