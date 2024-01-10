@@ -5,12 +5,15 @@ import BigNumber from 'bignumber.js';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { Text } from 'library/StatBoxList/Text';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
+import { useApi } from 'contexts/Api';
 
 export const HistoricalRewardsRateStat = () => {
   // const { t } = useTranslation('pages');
 
+  const { consts } = useApi();
   const { metrics } = useNetworkMetrics();
   const { avgCommission, avgEraValidatorReward } = useValidators();
+  const { epochDuration, expectedBlockTime, sessionsPerEra } = consts;
   const { totalIssuance } = metrics;
 
   interface AverageRewardRate {
@@ -39,14 +42,21 @@ export const HistoricalRewardsRateStat = () => {
 
     let avgRewardRate: BigNumber = new BigNumber(0);
 
+    const DAY_MS = new BigNumber(86400000);
+
+    const blocksPerEra = epochDuration.multipliedBy(sessionsPerEra);
+    const msPerEra = blocksPerEra.multipliedBy(expectedBlockTime);
+
+    const erasPerDay = DAY_MS.dividedBy(msPerEra);
+    const avgRewardPerDay = avgEraValidatorReward.multipliedBy(erasPerDay);
+
     // The average daily reward as a percentage of total issuance.
-    const dayRewardRate = new BigNumber(avgEraValidatorReward).dividedBy(
+    const dayRewardRate = new BigNumber(avgRewardPerDay).dividedBy(
       totalIssuance.dividedBy(100)
     );
 
     if (!compounded) {
       // Base rate without compounding.
-      // TODO: multiply dayRewardRate by how many eras make 1 day.
       avgRewardRate = dayRewardRate.multipliedBy(365);
     } else {
       // Daily Compound Interest: A = P[(1+r)^t]
