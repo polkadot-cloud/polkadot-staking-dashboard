@@ -13,10 +13,6 @@ export const HistoricalRewardsRateStat = () => {
   const { avgCommission, avgEraValidatorReward } = useValidators();
   const { totalIssuance } = metrics;
 
-  console.log('total issuance: ', totalIssuance.toString());
-  console.log('avg commission: ', avgCommission.toString());
-  console.log('30 avg validator reward: ', avgEraValidatorReward.toString());
-
   interface AverageRewardRate {
     avgRateBeforeCommission: string;
     avgRateAfterCommission: string;
@@ -29,6 +25,9 @@ export const HistoricalRewardsRateStat = () => {
 
   // Calculates the average reward rate over the last 30 days.
   // TODO: move to a hook.
+
+  const compounded = true;
+
   const averageRewardRate = (): AverageRewardRate => {
     if (
       totalIssuance.isZero() ||
@@ -38,12 +37,34 @@ export const HistoricalRewardsRateStat = () => {
       return defaultAvgRewardRate;
     }
 
-    const avgRewardAsPercentOfIssuance = new BigNumber(
-      avgEraValidatorReward
-    ).dividedBy(totalIssuance.dividedBy(100));
+    let avgRewardRate: BigNumber = new BigNumber(0);
 
-    // TODO: multiply avgRewardAsPercentOfIssuance by how many eras make 1 day.
-    const avgRewardRate = avgRewardAsPercentOfIssuance.multipliedBy(365);
+    // The average daily reward as a percentage of total issuance.
+    const dayRewardRate = new BigNumber(avgEraValidatorReward).dividedBy(
+      totalIssuance.dividedBy(100)
+    );
+
+    if (!compounded) {
+      // Base rate without compounding.
+      // TODO: multiply dayRewardRate by how many eras make 1 day.
+      avgRewardRate = dayRewardRate.multipliedBy(365);
+    } else {
+      // Daily Compound Interest: A = P[(1+r)^t]
+      // Where:
+      // A = the future value of the investment
+      // P = the principal investment amount
+      // r = the daily interest rate (decimal)
+      // t = the number of days the money is invested for
+      // ^ = ... to the power of ...
+
+      const multipilier = dayRewardRate
+        .dividedBy(100)
+        .plus(1)
+        .exponentiatedBy(365);
+
+      // Deduct P from A to get the interest earned.
+      avgRewardRate = new BigNumber(100).multipliedBy(multipilier).minus(100);
+    }
 
     return {
       avgRateBeforeCommission: `${avgRewardRate.decimalPlaces(2).toFormat()}%`,
@@ -56,8 +77,6 @@ export const HistoricalRewardsRateStat = () => {
 
   const { avgRateBeforeCommission, avgRateAfterCommission } =
     averageRewardRate();
-
-  // .toFormat()}% ${t('overview.afterInflation')}`;
 
   const params = {
     label: '30 Day Average Reward Rate',
