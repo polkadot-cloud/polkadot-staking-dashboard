@@ -24,7 +24,6 @@ export const defaultValidatorsContext: ValidatorsContextInterface = {
   eraPointsBoundaries: null,
   validatorEraPointsHistory: {},
   erasRewardPointsFetched: 'unsynced',
-  avgEraValidatorReward: new BigNumber(0),
 };
 
 export const defaultValidatorsData = {

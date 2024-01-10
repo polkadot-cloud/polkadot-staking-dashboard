@@ -27,7 +27,6 @@ export interface ValidatorsContextInterface {
   eraPointsBoundaries: EraPointsBoundaries;
   validatorEraPointsHistory: Record<string, ValidatorEraPointHistory>;
   erasRewardPointsFetched: Sync;
-  avgEraValidatorReward: BigNumber;
 }
 
 export interface FavoriteValidatorsContextInterface {
