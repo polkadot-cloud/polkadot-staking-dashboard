@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyJson } from '@polkadot-cloud/react/types';
+import type { ListFormat } from 'library/PoolList/types';
 import type { FormEvent, ReactNode } from 'react';
 import type { DisplayFor } from 'types';
 
@@ -38,10 +39,10 @@ export interface ListContextInterface {
   addToSelected: (item: AnyJson) => void;
   removeFromSelected: (items: AnyJson[]) => void;
   resetSelected: () => void;
-  setListFormat: (v: 'col' | 'row') => void;
+  setListFormat: (v: ListFormat) => void;
   selected: AnyJson[];
   selectActive: boolean;
-  listFormat: 'col' | 'row';
+  listFormat: ListFormat;
   selectToggleable: boolean;
 }
 

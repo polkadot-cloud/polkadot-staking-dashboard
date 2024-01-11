@@ -213,6 +213,13 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         title: t('disconnected'),
         subtitle: t('connectionLost'),
       });
+
+      // Start attempting reconnects.
+      APIController.initialize(
+        network,
+        isLightClient ? 'sc' : 'ws',
+        rpcEndpoint
+      );
     }
   };
 
@@ -244,16 +251,21 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Handle an initial api connection.
   useEffect(() => {
     if (!APIController.provider) {
-      APIController.initialize(network, isLightClient ? 'sc' : 'ws', {
+      APIController.initialize(
+        network,
+        isLightClient ? 'sc' : 'ws',
         rpcEndpoint,
-      });
+        {
+          initial: true,
+        }
+      );
     }
   });
 
   // If RPC endpoint changes, and not on light client, re-connect.
   useEffectIgnoreInitial(() => {
     if (!isLightClient) {
-      APIController.reconnect(network, 'ws', rpcEndpoint);
+      APIController.initialize(network, 'ws', rpcEndpoint);
     }
   }, [rpcEndpoint]);
 
@@ -266,7 +278,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       setChainState(defaultChainState);
     }
     // Reconnect API instance.
-    APIController.reconnect(network, isLightClient ? 'sc' : 'ws', rpcEndpoint);
+    APIController.initialize(network, isLightClient ? 'sc' : 'ws', rpcEndpoint);
   }, [isLightClient, network]);
 
   // Add event listener for `polkadot-api` notifications. Also handles unmounting logic.

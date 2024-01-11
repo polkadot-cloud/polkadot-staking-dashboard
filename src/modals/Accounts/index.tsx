@@ -31,6 +31,7 @@ import type {
   AccountNominatingAndInPool,
   AccountNotStaking,
 } from './types';
+import type { ImportedAccount } from '@polkadot-cloud/react/types';
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');
@@ -50,7 +51,8 @@ export const Accounts = () => {
     useActiveAccounts();
 
   // Store local copy of accounts.
-  const [localAccounts, setLocalAccounts] = useState(accounts);
+  const [localAccounts, setLocalAccounts] =
+    useState<ImportedAccount[]>(accounts);
 
   const stashes: string[] = [];
   // accumulate imported stash accounts

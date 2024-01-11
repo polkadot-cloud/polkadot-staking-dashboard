@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { ReactNode } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { useTheme } from 'contexts/Themes';
 import type { Theme } from 'contexts/Themes/types';
@@ -48,7 +49,7 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
 
   const autoPlay = options?.autoLoop ?? undefined;
 
-  const [iconLight] = useState(
+  const [iconLight] = useState<ReactNode>(
     <dotlottie-player
       ref={refLight}
       loop
@@ -58,7 +59,7 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
     />
   );
 
-  const [iconDark] = useState(
+  const [iconDark] = useState<ReactNode>(
     <dotlottie-player
       ref={refDark}
       loop

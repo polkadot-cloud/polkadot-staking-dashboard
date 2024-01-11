@@ -36,13 +36,13 @@ export const AccountInput = ({
   const { setModalResize } = useOverlay().modal;
 
   // store current input value
-  const [value, setValue] = useState(initialValue || '');
+  const [value, setValue] = useState<string>(initialValue || '');
 
   // store whether current input value is valid
   const [valid, setValid] = useState<string | null>(null);
 
   // store whether address was formatted (displays confirm prompt)
-  const [reformatted, setReformatted] = useState(false);
+  const [reformatted, setReformatted] = useState<boolean>(false);
 
   // store whether the form is being submitted.
   const [submitting, setSubmitting] = useState<boolean>(false);

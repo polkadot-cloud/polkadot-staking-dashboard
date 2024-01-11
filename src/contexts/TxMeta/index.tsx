@@ -29,13 +29,13 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
   const { getTransferOptions } = useTransferOptions();
 
   // Store the transaction fees for the transaction.
-  const [txFees, setTxFees] = useState(new BigNumber(0));
+  const [txFees, setTxFees] = useState<BigNumber>(new BigNumber(0));
 
   // Store the sender of the transaction.
   const [sender, setSender] = useState<MaybeAddress>(null);
 
   // Store whether the sender does not have enough funds.
-  const [notEnoughFunds, setNotEnoughFunds] = useState(false);
+  const [notEnoughFunds, setNotEnoughFunds] = useState<boolean>(false);
 
   // Store the payloads of transactions if extrinsics require manual signing (e.g. Ledger). payloads
   // are calculated asynchronously and extrinsic associated with them may be cancelled. For this

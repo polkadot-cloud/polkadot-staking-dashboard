@@ -22,7 +22,7 @@ export const PoolName = ({ section }: SetupStepProps) => {
   const initialValue = progress.metadata;
 
   // store local pool name for form control
-  const [metadata, setMetadata] = useState({
+  const [metadata, setMetadata] = useState<{ metadata: string }>({
     metadata: initialValue,
   });
 

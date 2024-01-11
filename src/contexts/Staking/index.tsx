@@ -79,7 +79,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const eraStakersRef = useRef(eraStakers);
 
   // Flags whether `eraStakers` is resyncing.
-  const [erasStakersSyncing, setErasStakersSyncing] = useState(false);
+  const [erasStakersSyncing, setErasStakersSyncing] = useState<boolean>(false);
   const erasStakersSyncingRef = useRef(erasStakersSyncing);
 
   // Store target validators for the active account.

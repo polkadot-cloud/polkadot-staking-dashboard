@@ -14,7 +14,7 @@ export const Items = ({ items, page }: TipItemsProps) => {
   const controls = useAnimationControls();
 
   // stores whether this is the initial display of tips
-  const [initial, setInitial] = useState(true);
+  const [initial, setInitial] = useState<boolean>(true);
 
   useEffect(() => {
     doControls(true);
@@ -64,7 +64,7 @@ const Item = ({
   page,
 }: TipDisplayWithControls) => {
   const { openPromptWith } = usePrompt();
-  const [isStopped, setIsStopped] = useState(true);
+  const [isStopped, setIsStopped] = useState<boolean>(true);
 
   useEffect(() => {
     const delay = index * 75;

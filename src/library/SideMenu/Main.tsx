@@ -20,6 +20,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Heading } from './Heading/Heading';
 import { Primary } from './Primary';
 import { LogoWrapper } from './Wrapper';
+import type { AnyJson } from '@polkadot-cloud/react/types';
 
 export const Main = () => {
   const { t, i18n } = useTranslation('base');
@@ -40,7 +41,7 @@ export const Main = () => {
   const { isSyncing, sideMenuMinimised }: UIContextInterface = useUi();
   const controllerDifferentToStash = addressDifferentToStash(controller);
 
-  const [pageConfig, setPageConfig] = useState({
+  const [pageConfig, setPageConfig] = useState<AnyJson>({
     categories: Object.assign(PageCategories),
     pages: Object.assign(PagesConfig),
   });
