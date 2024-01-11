@@ -16,6 +16,7 @@ import type {
 } from './types';
 import type { VoidFn } from '@polkadot/api/types';
 import BigNumber from 'bignumber.js';
+import { BalancesController } from 'static/BalancesController';
 
 export class APIController {
   // ------------------------------------------------------
@@ -203,7 +204,7 @@ export class APIController {
   }
 
   // ------------------------------------------------------
-  // Subscription Handling.
+  // Subscription handling.
   // ------------------------------------------------------
 
   // Subscribe to block number.
@@ -356,8 +357,14 @@ export class APIController {
 
   // Disconnect gracefully from API.
   static async disconnect() {
+    // Clear block number verification interval.
     clearInterval(this._blockNumberVerify.interval);
+
+    // Unsubscribe from all subscriptions.
     this.unsubscribe();
+    BalancesController.unsubscribe();
+
+    // Disconnect from provider and api.
     this.unsubscribeProvider();
     this.provider?.disconnect();
     await this.api?.disconnect();

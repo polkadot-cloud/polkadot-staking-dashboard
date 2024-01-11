@@ -6,10 +6,14 @@ import { createContext, useCallback, useContext } from 'react';
 import type { MaybeAddress } from 'types';
 import type { ExternalAccount } from '@polkadot-cloud/react/types';
 import { ManualSigners } from 'consts';
-import { useExtensionAccounts } from '@polkadot-cloud/react/hooks';
+import {
+  useEffectIgnoreInitial,
+  useExtensionAccounts,
+} from '@polkadot-cloud/react/hooks';
 import { defaultImportedAccountsContext } from './defaults';
 import type { ImportedAccountsContextInterface } from './types';
 import { useOtherAccounts } from '../OtherAccounts';
+import { BalancesController } from 'static/BalancesController';
 
 export const ImportedAccountsContext =
   createContext<ImportedAccountsContextInterface>(
@@ -76,6 +80,11 @@ export const ImportedAccountsProvider = ({
       ) !== undefined,
     [allAccounts]
   );
+
+  // Keep accounts in sync with `BalancesController`.
+  useEffectIgnoreInitial(() => {
+    BalancesController.syncAccounts(allAccounts.map((a) => a.address));
+  }, [allAccounts]);
 
   return (
     <ImportedAccountsContext.Provider
