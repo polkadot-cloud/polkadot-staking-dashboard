@@ -35,8 +35,6 @@ export class BalancesController {
   static syncAccounts = async (newAccounts: string[]): Promise<void> => {
     const { api } = APIController;
 
-    console.log('syncing ', newAccounts.length, ' accounts');
-
     // Handle accounts that have been removed.
     this.handleRemovedAccounts(newAccounts);
 
@@ -58,6 +56,8 @@ export class BalancesController {
         async ([ledgerResult, accountResult, locksResult]) => {
           this.handleLedgerCallback(address, ledgerResult);
           this.handleAccountCallback(address, accountResult, locksResult);
+
+          // TODO: send upated account info back to UI.
         }
       );
       this._unsubs[address] = unsub;

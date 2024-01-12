@@ -223,6 +223,9 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const ref = useRef<Document>(document);
   useEventListener('new-external-account', newExternalAccountCallback, ref);
 
+  // TODO: add `useEventListener` to handle `ledger` and `balance` updates.
+  // Only update active account, active proxy, and active controller balance state.
+
   return (
     <BalancesContext.Provider
       value={{
