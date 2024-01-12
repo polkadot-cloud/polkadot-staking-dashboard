@@ -105,6 +105,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
             const { stash, total, active, unlocking } = newLedger;
 
             // add stash as external account if not present
+            // TODO: refactor this to handle as event callback.
             if (!getAccount(stash.toString())) {
               const result = addExternalAccount(stash.toString(), 'system');
               if (result) {

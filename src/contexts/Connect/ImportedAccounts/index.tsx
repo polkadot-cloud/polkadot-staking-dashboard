@@ -14,6 +14,7 @@ import { defaultImportedAccountsContext } from './defaults';
 import type { ImportedAccountsContextInterface } from './types';
 import { useOtherAccounts } from '../OtherAccounts';
 import { BalancesController } from 'static/BalancesController';
+import { useApi } from 'contexts/Api';
 
 export const ImportedAccountsContext =
   createContext<ImportedAccountsContextInterface>(
@@ -27,6 +28,7 @@ export const ImportedAccountsProvider = ({
 }: {
   children: ReactNode;
 }) => {
+  const { isReady } = useApi();
   const { otherAccounts } = useOtherAccounts();
   const { extensionAccounts } = useExtensionAccounts();
   const allAccounts = extensionAccounts.concat(otherAccounts);
@@ -82,9 +84,13 @@ export const ImportedAccountsProvider = ({
   );
 
   // Keep accounts in sync with `BalancesController`.
+  // TODO: update in-scope balances (active account, controller account, active proxy account), when their callbacks fire.
+  // TODO: add optional safe-guards to ensure that tx signers are active accounts, unless explicitly specified (function that just returns in-scope accounts).
   useEffectIgnoreInitial(() => {
-    BalancesController.syncAccounts(allAccounts.map((a) => a.address));
-  }, [allAccounts]);
+    if (isReady) {
+      BalancesController.syncAccounts(allAccounts.map((a) => a.address));
+    }
+  }, [isReady, allAccounts]);
 
   return (
     <ImportedAccountsContext.Provider
