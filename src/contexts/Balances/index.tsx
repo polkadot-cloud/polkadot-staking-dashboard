@@ -43,6 +43,10 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { addExternalAccount } = useExternalAccounts();
   const { addOrReplaceOtherAccount } = useOtherAccounts();
 
+  // TODO: add balances (ledger, account & locks) state for activeAccount and activeProxy. Introduce
+  // activeController after.
+
+  // Deprecated -------------------------------------------------------------------------
   const [balances, setBalances] = useState<Balances[]>([]);
   const balancesRef = useRef(balances);
 
@@ -191,6 +195,9 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     unsubAll();
     return () => unsubAll();
   }, [network]);
+  // ------------------------------------------------------------------------------------
+
+  // Needs Refactor for new state items -------------------------------------------------
 
   // Gets a ledger for a stash address.
   const getStashLedger = (address: MaybeAddress) =>
@@ -208,6 +215,8 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   // Gets an account's nonce.
   const getNonce = (address: MaybeAddress) =>
     balancesRef.current.find((a) => a.address === address)?.nonce ?? 0;
+
+  // ----------------------------------------------------------------------------------
 
   // Handle new external account event being reported from `BalancesController`.
   const newExternalAccountCallback = (e: Event) => {
@@ -228,14 +237,14 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
 
   const ref = useRef<Document>(document);
 
-  // TODO: add `useEffectIgnoreInitial` to update account balances states when active account
-  // changes, & reset when network changes.
-
   // Listen for new external account events.
   useEventListener('new-external-account', newExternalAccountCallback, ref);
 
   // Listen for new account balance events.
   useEventListener('new-account-balance', newAccountBalancesCallback, ref);
+
+  // TODO: add `useEffectIgnoreInitial` to update account balances states when active account /
+  // active proxy changes, & reset state when network changes.
 
   return (
     <BalancesContext.Provider
