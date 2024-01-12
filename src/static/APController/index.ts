@@ -218,7 +218,7 @@ export class APIController {
       const unsub = await this.api.query.system.number((num: BlockNumber) => {
         this._blockNumber = num.toString();
 
-        // Send block number to UI as event.
+        // Send block number to UI.
         document.dispatchEvent(
           new CustomEvent(`new-block-number`, {
             detail: { blockNumber: num.toString() },
