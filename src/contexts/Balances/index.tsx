@@ -226,6 +226,9 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   // TODO: add `useEventListener` to handle `ledger` and `balance` updates.
   // Only update active account, active proxy, and active controller balance state.
 
+  // TODO: add `useEffectIgnoreInitial` to update active account states when active account changes,
+  // & reset when network changes.
+
   return (
     <BalancesContext.Provider
       value={{
