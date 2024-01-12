@@ -47,6 +47,9 @@ export const UnbondInput = ({
 
   // apply bond to parent setters.
   const updateParentState = (val: BigNumber) => {
+    if (new BigNumber(val).isNaN()) {
+      return;
+    }
     for (const setter of setters) {
       setter({
         bond: val,

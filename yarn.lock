@@ -1028,16 +1028,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot-cloud/core@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "@polkadot-cloud/core@npm:1.2.0"
-  checksum: cb10590e9edd606e5a00591e07d507b01c5ac549cd5bf5c3ed3de16441e23c40570d9136b5437d6a80ed1e87abcc0cd79f7bd4fdd4b6e0bc7d0d9ff89162c694
+"@polkadot-cloud/core@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@polkadot-cloud/core@npm:1.2.1"
+  checksum: 1467a6485c1188ad5dc67387ab67eb4881851271cf401ccae4340785deccfcedbe681f795d5709517569e3883395f9c835d2c307d005b465c96ccaf6a3b52ffb
   languageName: node
   linkType: hard
 
-"@polkadot-cloud/react@npm:^0.3.4":
-  version: 0.3.4
-  resolution: "@polkadot-cloud/react@npm:0.3.4"
+"@polkadot-cloud/react@npm:^0.3.5":
+  version: 0.3.5
+  resolution: "@polkadot-cloud/react@npm:0.3.5"
   dependencies:
     "@chainsafe/metamask-polkadot-adapter": "npm:^0.6.0"
     "@chainsafe/metamask-polkadot-types": "npm:^0.6.0"
@@ -1047,7 +1047,7 @@ __metadata:
     "@fortawesome/free-solid-svg-icons": "npm:^6.5.1"
     "@fortawesome/react-fontawesome": "npm:^0.2.0"
     "@polkadot-cloud/assets": "npm:^0.3.0"
-    "@polkadot-cloud/core": "npm:^1.2.0"
+    "@polkadot-cloud/core": "npm:^1.2.1"
     "@polkadot-cloud/utils": "npm:^0.2.0"
     "@polkadot/keyring": "npm:^12.6.2"
     "@polkadot/util": "npm:^12.6.2"
@@ -1057,7 +1057,7 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: b93f67a6e80188e0c6ee8ee358f0110d557b00fd09cf70680e3e7167d248fec05f57c661eab0f50647b87eed62c5165b036b2c809f4f18003e4ab4f55e3a9789
+  checksum: a0007879d9223f87f3e6d24e3d15ceaab00177457b55de748a28c56e43cb40797c607cabf132a9ffdf88800052d459038390a45d70ba392664d1c3062bdd2a46
   languageName: node
   linkType: hard
 
@@ -1863,10 +1863,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remix-run/router@npm:1.14.1":
-  version: 1.14.1
-  resolution: "@remix-run/router@npm:1.14.1"
-  checksum: aa179e96fa7da5bdb86e6887219613cbe47b67d6595564b4f8fe7e80f8980f9c76e120524f0864aa8af46ac0f1a06bcdb4d20058d770c9199e5af599f772c0a9
+"@remix-run/router@npm:1.14.2":
+  version: 1.14.2
+  resolution: "@remix-run/router@npm:1.14.2"
+  checksum: 163d4a8ea3e25a7a7e3015f274e54b8043eddaaa92da220cad2893eb0fcbb649f617152c6d74680a4b55c0f319944ff1b362e87f814bb73be54f8d687ee730d6
   languageName: node
   linkType: hard
 
@@ -6832,8 +6832,8 @@ __metadata:
     "@ledgerhq/hw-transport-webhid": "npm:^6.28.1"
     "@ledgerhq/logs": "npm:^6.12.0"
     "@polkadot-cloud/assets": "npm:^0.3.0"
-    "@polkadot-cloud/core": "npm:^1.2.0"
-    "@polkadot-cloud/react": "npm:^0.3.4"
+    "@polkadot-cloud/core": "npm:^1.2.1"
+    "@polkadot-cloud/react": "npm:^0.3.5"
     "@polkadot-cloud/utils": "npm:^0.2.1"
     "@polkadot/api": "npm:^10.11.2"
     "@polkadot/keyring": "npm:^12.6.2"
@@ -6885,12 +6885,12 @@ __metadata:
     react-error-boundary: "npm:^4.0.12"
     react-helmet: "npm:^6.1.0"
     react-i18next: "npm:^14.0.0"
-    react-router-dom: "npm:^6.21.1"
+    react-router-dom: "npm:^6.21.2"
     react-scroll: "npm:^1.9.0"
     sass: "npm:^1.69.7"
     styled-components: "npm:^6.1.8"
     typescript: "npm:^5.3.3"
-    usehooks-ts: "npm:^2.9.2"
+    usehooks-ts: "npm:2.9.1"
     vite: "npm:^5.0.11"
     vite-bundle-visualizer: "npm:^1.0.0"
     vite-plugin-checker: "npm:^0.6.2"
@@ -7247,27 +7247,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^6.21.1":
-  version: 6.21.1
-  resolution: "react-router-dom@npm:6.21.1"
+"react-router-dom@npm:^6.21.2":
+  version: 6.21.2
+  resolution: "react-router-dom@npm:6.21.2"
   dependencies:
-    "@remix-run/router": "npm:1.14.1"
-    react-router: "npm:6.21.1"
+    "@remix-run/router": "npm:1.14.2"
+    react-router: "npm:6.21.2"
   peerDependencies:
     react: ">=16.8"
     react-dom: ">=16.8"
-  checksum: 2c2b653de8cc90397e5b057c0d32dd780fe894c4bd36397005da169a7422b31988ebc14ef0da3ac3f2b7286b244f97a141974acaa86c731715816e64c8cd2912
+  checksum: 4719098a544da213450b0383cb58de959dc4dd690c90b12efc0771a9915a26b0508c12ee8b52c072fb38b4cb8ea192684f9e5ae49559b2131d085baeab108999
   languageName: node
   linkType: hard
 
-"react-router@npm:6.21.1":
-  version: 6.21.1
-  resolution: "react-router@npm:6.21.1"
+"react-router@npm:6.21.2":
+  version: 6.21.2
+  resolution: "react-router@npm:6.21.2"
   dependencies:
-    "@remix-run/router": "npm:1.14.1"
+    "@remix-run/router": "npm:1.14.2"
   peerDependencies:
     react: ">=16.8"
-  checksum: 81278cf25a999d7c93a31d540102e3b74b696eb4349779e22bba77b633e4e5f8f91b8c6f7946c9572a1e92f64363724150216f5643a6f9817f8bc1643cb8bdbc
+  checksum: 1c923b75e4a6c5e820fd6f79254b77a34a7dd4f708c7c875535a81b331c9c84e8bd1b4f9615d3a84327f689dfd3239ccece1595ba71e09f63e4ae1964acae4fc
   languageName: node
   linkType: hard
 
@@ -8652,13 +8652,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"usehooks-ts@npm:^2.9.2":
-  version: 2.9.2
-  resolution: "usehooks-ts@npm:2.9.2"
+"usehooks-ts@npm:2.9.1":
+  version: 2.9.1
+  resolution: "usehooks-ts@npm:2.9.1"
   peerDependencies:
     react: ^16.8.0  || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0  || ^17.0.0 || ^18.0.0
-  checksum: a562665e95ae01804bc9c18ab39137ec402a4f8fa5e7f94cd1a022b1bade194130fb5c020d597a3dba8755acec51b252870bde12f7cfd36fbd8ded64e8988525
+  checksum: 14f6bc3661cebe19714dc2bc0413b56c53fcb44fada2258756c2fefc10cf6481299bd8d4ba659af3bc5692a57d5da3c3e14b75d69177eccd3ac8326c5336e756
   languageName: node
   linkType: hard
 

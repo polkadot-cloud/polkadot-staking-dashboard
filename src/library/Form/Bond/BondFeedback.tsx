@@ -162,7 +162,7 @@ export const BondFeedback = ({
   useEffect(() => {
     if (!disableTxFeeUpdate) {
       if (bondBn.isGreaterThan(freeToBond)) {
-        setBond({ bond: String(freeToBond) });
+        setBond({ bond: String(planckToUnit(freeToBond, units)) });
       }
     }
   }, [txFees]);
