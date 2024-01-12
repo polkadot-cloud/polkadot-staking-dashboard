@@ -219,15 +219,23 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Listen for new external account events.
+  //Handle new account balance event being reported from `BalancesController`.
+  const newAccountBalancesCallback = (e: Event) => {
+    if (isCustomEvent(e)) {
+      // TODO: Only update active account, active proxy, and active controller balance state.
+    }
+  };
+
   const ref = useRef<Document>(document);
+
+  // TODO: add `useEffectIgnoreInitial` to update account balances states when active account
+  // changes, & reset when network changes.
+
+  // Listen for new external account events.
   useEventListener('new-external-account', newExternalAccountCallback, ref);
 
-  // TODO: add `useEventListener` to handle `ledger` and `balance` updates.
-  // Only update active account, active proxy, and active controller balance state.
-
-  // TODO: add `useEffectIgnoreInitial` to update active account states when active account changes,
-  // & reset when network changes.
+  // Listen for new account balance events.
+  useEventListener('new-account-balance', newAccountBalancesCallback, ref);
 
   return (
     <BalancesContext.Provider
