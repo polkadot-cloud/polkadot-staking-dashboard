@@ -57,7 +57,7 @@ export class BalancesController {
           this.handleLedgerCallback(address, ledgerResult);
           this.handleAccountCallback(address, accountResult, locksResult);
 
-          // Send upated account state back to UI.
+          // Send updated account state back to UI.
           document.dispatchEvent(
             new CustomEvent('new-account-balance', {
               detail: {
