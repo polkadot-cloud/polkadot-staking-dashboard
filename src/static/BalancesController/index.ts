@@ -93,15 +93,13 @@ export class BalancesController {
 
     const { stash, total, active, unlocking } = ledger;
 
-    // Add stash as external account if not presently imported.
+    // Send stash address to UI as event if not presently imported.
     if (!this.accounts.includes(stash.toString())) {
-      // TODO: send event to `Balances` context and add external account.
-      // ----------------------------------------------------------------
-      // const result = addExternalAccount(stash.toString(), 'system');
-      // if (result) {
-      //   addOrReplaceOtherAccount(result.account, result.type);
-      // }
-      // ----------------------------------------------------------------
+      document.dispatchEvent(
+        new CustomEvent('new-external-account', {
+          detail: { stash: stash.toString() },
+        })
+      );
     }
 
     this.ledgers[address] = {

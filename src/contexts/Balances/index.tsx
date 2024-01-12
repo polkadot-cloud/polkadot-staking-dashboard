@@ -27,6 +27,8 @@ import type {
   Ledger,
   UnlockChunkRaw,
 } from './types';
+import { useEventListener } from 'usehooks-ts';
+import { isCustomEvent } from 'static/utils';
 
 export const BalancesContext = createContext<BalancesContextInterface>(
   defaults.defaultBalancesContext
@@ -35,11 +37,11 @@ export const BalancesContext = createContext<BalancesContextInterface>(
 export const useBalances = () => useContext(BalancesContext);
 
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
-  const { api, isReady } = useApi();
   const { network } = useNetwork();
-  const { accounts, getAccount } = useImportedAccounts();
-  const { addOrReplaceOtherAccount } = useOtherAccounts();
+  const { api, isReady } = useApi();
+  const { accounts } = useImportedAccounts();
   const { addExternalAccount } = useExternalAccounts();
+  const { addOrReplaceOtherAccount } = useOtherAccounts();
 
   const [balances, setBalances] = useState<Balances[]>([]);
   const balancesRef = useRef(balances);
@@ -103,15 +105,6 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
 
           if (newLedger !== null) {
             const { stash, total, active, unlocking } = newLedger;
-
-            // add stash as external account if not present
-            // TODO: refactor this to handle as event callback.
-            if (!getAccount(stash.toString())) {
-              const result = addExternalAccount(stash.toString(), 'system');
-              if (result) {
-                addOrReplaceOtherAccount(result.account, result.type);
-              }
-            }
 
             setStateWithRef(
               Object.values([...ledgersRef.current])
@@ -215,6 +208,20 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   // Gets an account's nonce.
   const getNonce = (address: MaybeAddress) =>
     balancesRef.current.find((a) => a.address === address)?.nonce ?? 0;
+
+  // Handle new external account event being reported from `BalancesController`.
+  const newExternalAccountCallback = (e: Event) => {
+    if (isCustomEvent(e)) {
+      const result = addExternalAccount(e.detail.stash, 'system');
+      if (result) {
+        addOrReplaceOtherAccount(result.account, result.type);
+      }
+    }
+  };
+
+  // Listen for new external account events.
+  const ref = useRef<Document>(document);
+  useEventListener('new-external-account', newExternalAccountCallback, ref);
 
   return (
     <BalancesContext.Provider
