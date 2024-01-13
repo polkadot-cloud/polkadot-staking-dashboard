@@ -14,16 +14,12 @@ import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';
-import {
-  getMaxLock,
-  getLocalFeeReserve,
-  getUnlocking,
-  setLocalFeeReserve,
-} from './Utils';
+import { getLocalFeeReserve, setLocalFeeReserve } from './Utils';
 import {
   defaultTransferOptions,
   defaultTransferOptionsContext,
 } from './defaults';
+import { getMaxLock, getUnlocking } from 'contexts/Balances/Utils';
 
 export const TransferOptionsContext =
   createContext<TransferOptionsContextInterface>(defaultTransferOptionsContext);
