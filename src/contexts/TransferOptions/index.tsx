@@ -52,7 +52,7 @@ export const TransferOptionsProvider = ({
     getLocalFeeReserve(activeAccount, defaultFeeReserve, { network, units })
   );
 
-  // Get the bond and unbond amounts available to the user
+  // Calculates various balances for an account pertaining to free balance, nominating and pools.
   const getTransferOptions = (address: MaybeAddress): TransferOptions => {
     if (getAccount(address) === null) {
       return defaultTransferOptions;
