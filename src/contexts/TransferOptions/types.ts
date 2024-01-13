@@ -8,6 +8,7 @@ export interface TransferOptionsContextInterface {
   getTransferOptions: (a: MaybeAddress) => TransferOptions;
   setFeeReserveBalance: (r: BigNumber) => void;
   feeReserve: BigNumber;
+  getFeeReserve: (address: MaybeAddress) => BigNumber;
 }
 
 export interface TransferOptions {

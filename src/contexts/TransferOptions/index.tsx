@@ -144,6 +144,10 @@ export const TransferOptionsProvider = ({
     setFeeReserve(amount);
   };
 
+  // Gets a feeReserve from local storage for an account, or the default value otherwise.
+  const getFeeReserve = (address: MaybeAddress): BigNumber =>
+    getLocalFeeReserve(address, defaultFeeReserve, { network, units });
+
   // Update an account's reserve amount on account or network change.
   useEffectIgnoreInitial(() => {
     setFeeReserve(
@@ -157,6 +161,7 @@ export const TransferOptionsProvider = ({
         getTransferOptions,
         setFeeReserveBalance,
         feeReserve,
+        getFeeReserve,
       }}
     >
       {children}

@@ -9,6 +9,7 @@ export const defaultTransferOptionsContext: TransferOptionsContextInterface = {
   getTransferOptions: (a) => defaultTransferOptions,
   setFeeReserveBalance: (r) => {},
   feeReserve: new BigNumber(0),
+  getFeeReserve: (address) => new BigNumber(0),
 };
 
 export const defaultTransferOptions: TransferOptions = {
