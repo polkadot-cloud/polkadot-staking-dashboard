@@ -35,6 +35,30 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   // Store whether balances for all imported accounts have been synced.
   const [balancesSynced, setBalancesSynced] = useState<boolean>(false);
 
+  // Gets an active balance's locks.
+  const getActiveBalanceLocks = (address: MaybeAddress) => {
+    if (address) {
+      const maybeLocks = activeBalances[address]?.balances.locks;
+      if (maybeLocks) {
+        return maybeLocks;
+      }
+    }
+    return [];
+  };
+
+  // Gets an active balance's balance.
+  const getActiveBalance = (address: MaybeAddress) => {
+    if (address) {
+      const maybeBalance = activeBalances[address]?.balances.balance;
+      if (maybeBalance) {
+        return maybeBalance;
+      }
+    }
+    return defaults.defaultBalance;
+  };
+
+  // Functions that need deprecating or refactoring --------------------------------
+
   // Gets a ledger for a stash address.
   const getStashLedger = (address: MaybeAddress): Ledger =>
     Object.values(BalancesController.ledgers).find(
@@ -73,6 +97,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     }
     return 0;
   };
+  // --------------------------------------------------------------------------------
 
   // Handle new external account event being reported from `BalancesController`.
   const newExternalAccountCallback = (e: Event) => {
@@ -126,6 +151,8 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
         getBalance,
         getLocks,
         getNonce,
+        getActiveBalanceLocks,
+        getActiveBalance,
         balancesSynced,
       }}
     >

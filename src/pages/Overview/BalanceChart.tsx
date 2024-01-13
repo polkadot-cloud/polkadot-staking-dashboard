@@ -34,15 +34,15 @@ export const BalanceChart = () => {
     },
   } = useNetwork();
   const prices = usePrices();
-  // const { consts } = useApi();
   const { plugins } = usePlugins();
   const { isNetworkSyncing } = useUi();
   const { openModal } = useOverlay().modal;
-  const { getBalance, getLocks } = useBalances();
   const { activeAccount } = useActiveAccounts();
   const { accountHasSigner } = useImportedAccounts();
   const { feeReserve, getTransferOptions } = useTransferOptions();
-  const balance = getBalance(activeAccount);
+  const { getActiveBalance, getActiveBalanceLocks } = useBalances();
+
+  const balance = getActiveBalance(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
   const { edReserved } = allTransferOptions;
   const poolBondOpions = allTransferOptions.pool;
@@ -78,7 +78,8 @@ export const BalanceChart = () => {
   );
 
   // check account non-staking locks
-  const locks = getLocks(activeAccount);
+  // TODO: add a new getter for an active balance lock that uses the `Balances` context.
+  const locks = getActiveBalanceLocks(activeAccount);
   const locksStaking = locks.find(({ id }) => id === 'staking');
   const lockStakingAmount = locksStaking
     ? locksStaking.amount

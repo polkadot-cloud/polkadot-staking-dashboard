@@ -11,6 +11,8 @@ export interface BalancesContextInterface {
   getBalance: (address: MaybeAddress) => Balance;
   getLocks: (address: MaybeAddress) => BalanceLock[];
   getNonce: (address: MaybeAddress) => number;
+  getActiveBalanceLocks: (address: MaybeAddress) => BalanceLock[];
+  getActiveBalance: (address: MaybeAddress) => Balance;
   balancesSynced: boolean;
 }
 

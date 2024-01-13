@@ -11,7 +11,6 @@ import {
 } from '@polkadot-cloud/react';
 import { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import {
   useExtensions,
@@ -32,10 +31,11 @@ import type {
   AccountNotStaking,
 } from './types';
 import type { ImportedAccount } from '@polkadot-cloud/react/types';
+import { useActiveBalances } from 'library/Hooks/useActiveBalances';
+import type { MaybeAddress } from 'types';
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');
-  const { getLocks } = useBalances();
   const { getDelegates } = useProxies();
   const { bondedAccounts } = useBonded();
   const { extensionsStatus } = useExtensions();
@@ -52,6 +52,23 @@ export const Accounts = () => {
   // Store local copy of accounts.
   const [localAccounts, setLocalAccounts] =
     useState<ImportedAccount[]>(accounts);
+
+  // Listen to balance updates for entire accounts list.
+  const activeBalances = useActiveBalances({
+    accounts: localAccounts.map(({ address }) => address),
+  });
+
+  // Gets an account's locks from `activeBalances`.
+  // TODO: this function can be moved inside the hook.
+  const getLocks = (address: MaybeAddress) => {
+    if (address) {
+      const maybeLocks = activeBalances[address]?.balances.locks;
+      if (maybeLocks) {
+        return maybeLocks;
+      }
+    }
+    return [];
+  };
 
   const stashes: string[] = [];
   // accumulate imported stash accounts
