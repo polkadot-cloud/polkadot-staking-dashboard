@@ -35,10 +35,9 @@ import type { ImportedAccount } from '@polkadot-cloud/react/types';
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');
-  const { balances } = useBalances();
+  const { getLocks } = useBalances();
   const { getDelegates } = useProxies();
   const { bondedAccounts } = useBonded();
-  const { ledgers, getLocks } = useBalances();
   const { extensionsStatus } = useExtensions();
   const { memberships } = usePoolMemberships();
   const {
@@ -140,14 +139,7 @@ export const Accounts = () => {
     if (modalStatus === 'open') {
       setModalResize();
     }
-  }, [
-    activeAccount,
-    accounts,
-    bondedAccounts,
-    balances,
-    ledgers,
-    extensionsStatus,
-  ]);
+  }, [activeAccount, accounts, bondedAccounts, extensionsStatus]);
 
   return (
     <ModalPadding>

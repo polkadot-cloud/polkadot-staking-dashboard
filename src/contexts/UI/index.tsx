@@ -7,16 +7,15 @@ import type { ReactNode, RefObject } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { SideMenuStickyThreshold } from 'consts';
 import { useBalances } from 'contexts/Balances';
-import type { ImportedAccount } from '@polkadot-cloud/react/types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { AnyJson } from 'types';
 import { useApi } from '../Api';
 import { useNetworkMetrics } from '../NetworkMetrics';
 import { useStaking } from '../Staking';
 import * as defaults from './defaults';
 import type { UIContextInterface } from './types';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const UIContext = createContext<UIContextInterface>(
   defaults.defaultUIContext
@@ -26,11 +25,11 @@ export const useUi = () => useContext(UIContext);
 
 export const UIProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi();
-  const { balances } = useBalances();
+  const { balances, activeBalances } = useBalances();
   const { staking, eraStakers } = useStaking();
   const { activeEra, metrics } = useNetworkMetrics();
   const { synced: activePoolsSynced } = useActivePools();
-  const { accounts: connectAccounts } = useImportedAccounts();
+  const { activeAccount, activeProxy } = useActiveAccounts();
 
   // Set whether the network has been synced.
   const [isNetworkSyncing, setIsNetworkSyncing] = useState<boolean>(false);
@@ -107,6 +106,14 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
     let networkSyncing = false;
     let poolSyncing = false;
 
+    let activeAccounts = 0;
+    if (activeAccount) {
+      activeAccounts++;
+    }
+    if (activeProxy) {
+      activeAccounts++;
+    }
+
     // staking metrics have synced
     if (staking.lastReward === new BigNumber(0)) {
       syncing = true;
@@ -121,11 +128,7 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
       poolSyncing = true;
     }
 
-    // all extension accounts have been synced
-    const extensionAccounts = connectAccounts.filter(
-      (a: ImportedAccount) => a.source !== 'external'
-    );
-    if (balances.length < extensionAccounts.length) {
+    if (Object.keys(activeBalances).length < activeAccounts) {
       syncing = true;
       networkSyncing = true;
       poolSyncing = true;
