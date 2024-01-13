@@ -253,13 +253,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const ref = useRef<Document>(document);
-
-  // Listen for new external account events.
-  useEventListener('new-external-account', newExternalAccountCallback, ref);
-
-  // Listen for new account balance events.
-  useEventListener('new-account-balance', newAccountBalancesCallback, ref);
+  const documentRef = useRef<Document>(document);
 
   // Update account balances states when active account / active proxy updates.
   //
@@ -290,6 +284,20 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   useEffectIgnoreInitial(() => {
     setActiveBalances({});
   }, [network]);
+
+  // Listen for new external account events.
+  useEventListener(
+    'new-external-account',
+    newExternalAccountCallback,
+    documentRef
+  );
+
+  // Listen for new account balance events.
+  useEventListener(
+    'new-account-balance',
+    newAccountBalancesCallback,
+    documentRef
+  );
 
   return (
     <BalancesContext.Provider
