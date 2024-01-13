@@ -19,6 +19,9 @@ export const useActiveBalances = ({
 }) => {
   const { network } = useNetwork();
 
+  // Ensure no account duplicates.
+  const uniqueAccounts = [...new Set(accounts)];
+
   // Store active account balances state. Requires ref for use in event listener callbacks.
   const [activeBalances, setActiveBalances] = useState<ActiveBalancesState>({});
   const activeBalancesRef = useRef(activeBalances);
@@ -32,7 +35,7 @@ export const useActiveBalances = ({
       const { address, ...newBalances } = e.detail;
 
       // Only update state of active accounts.
-      if (accounts.includes(address)) {
+      if (uniqueAccounts.includes(address)) {
         setStateWithRef(
           { ...activeBalancesRef.current, [address]: newBalances },
           setActiveBalances,
@@ -90,12 +93,12 @@ export const useActiveBalances = ({
     };
     // Construct new active balances state.
     const newActiveBalances: ActiveBalancesState = {};
-    for (const account of accounts) {
+    for (const account of uniqueAccounts) {
       getActiveBalances(account);
     }
     // Commit new active balances to state.
     setStateWithRef(newActiveBalances, setActiveBalances, activeBalancesRef);
-  }, [JSON.stringify(accounts)]);
+  }, [JSON.stringify(uniqueAccounts)]);
 
   // Reset state when network changes.
   useEffectIgnoreInitial(() => {
