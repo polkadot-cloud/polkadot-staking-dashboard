@@ -13,6 +13,12 @@ export interface BalancesContextInterface {
   getNonce: (address: MaybeAddress) => number;
 }
 
+// NOTE: new balance type for combined ledger and balances
+export interface ActiveBalance {
+  ledger: Ledger;
+  balances: Balances;
+}
+
 export interface Balances {
   address?: string;
   nonce?: number;

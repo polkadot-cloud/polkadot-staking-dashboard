@@ -6,7 +6,7 @@ import type { Theme } from 'contexts/Themes/types';
 import type { ExtensionInjected } from '@polkadot-cloud/react/types';
 import type BigNumber from 'bignumber.js';
 import type { NotificationItem } from 'static/NotificationsController/types';
-import type { Balances, Ledger } from 'contexts/Balances/types';
+import type { ActiveBalance } from 'contexts/Balances/types';
 
 declare global {
   interface Window {
@@ -16,7 +16,7 @@ declare global {
     notification: CustomEvent<NotificationItem>;
     'new-block-number': CustomEvent<{ blockNumber: string }>;
     'new-external-account': CustomEvent<{ stash: string }>;
-    'new-account-balance': CustomEvent<{ ledger: Ledger; balances: Balances }>;
+    'new-account-balance': CustomEvent<ActiveBalance & { address: string }>;
   }
 }
 
