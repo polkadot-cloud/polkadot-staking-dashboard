@@ -15,7 +15,6 @@ import { BalancesController } from 'static/BalancesController';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useActiveBalances } from 'library/Hooks/useActiveBalances';
 import { useBonded } from 'contexts/Bonded';
-import { useApi } from 'contexts/Api';
 
 export const BalancesContext = createContext<BalancesContextInterface>(
   defaults.defaultBalancesContext
@@ -24,9 +23,6 @@ export const BalancesContext = createContext<BalancesContextInterface>(
 export const useBalances = () => useContext(BalancesContext);
 
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
-  const {
-    consts: { existentialDeposit },
-  } = useApi();
   const { getBondedAccount } = useBonded();
   const { accounts } = useImportedAccounts();
   const { addExternalAccount } = useExternalAccounts();
@@ -41,7 +37,6 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     getActiveBalance,
     getActiveStashLedger,
   } = useActiveBalances({
-    existentialDeposit,
     accounts: [activeAccount, activeProxy, controller],
   });
 

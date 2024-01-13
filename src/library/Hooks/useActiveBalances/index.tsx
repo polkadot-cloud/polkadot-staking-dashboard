@@ -16,11 +16,9 @@ import { getMaxLock } from 'contexts/Balances/Utils';
 import BigNumber from 'bignumber.js';
 
 export const useActiveBalances = ({
-  existentialDeposit,
   accounts,
 }: {
   accounts: MaybeAddress[];
-  existentialDeposit: BigNumber;
 }) => {
   const { network } = useNetwork();
 
@@ -60,7 +58,10 @@ export const useActiveBalances = ({
     )?.ledger || defaultLedger;
 
   // Gets the amount of balance reserved for existential deposit.
-  const getEdReserved = (address: MaybeAddress): BigNumber => {
+  const getEdReserved = (
+    address: MaybeAddress,
+    existentialDeposit: BigNumber
+  ): BigNumber => {
     const locks = getBalanceLocks(address);
     if (address && locks) {
       const maxLock = getMaxLock(locks);

@@ -63,14 +63,13 @@ export const Accounts = () => {
   // Listen to balance updates for entire accounts list.
   const { getBalanceLocks, getActiveBalance, getEdReserved } =
     useActiveBalances({
-      existentialDeposit,
       accounts: localAccounts.map(({ address }) => address),
     });
 
   // getEdreserved;
   const getTransferrableBalance = (address: MaybeAddress) => {
     const feeReserve = getFeeReserve(address);
-    const edReserved = getEdReserved(address);
+    const edReserved = getEdReserved(address, existentialDeposit);
     const balance = getActiveBalance(address);
 
     const freeMinusReserve = BigNumber.max(
