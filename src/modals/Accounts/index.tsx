@@ -66,7 +66,7 @@ export const Accounts = () => {
       accounts: localAccounts.map(({ address }) => address),
     });
 
-  // getEdreserved;
+  // Calculate transferrable balance of an address.
   const getTransferrableBalance = (address: MaybeAddress) => {
     const feeReserve = getFeeReserve(address);
     const edReserved = getEdReserved(address, existentialDeposit);
