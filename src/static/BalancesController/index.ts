@@ -4,7 +4,12 @@
 import type { VoidFn } from '@polkadot-cloud/react/types';
 import { rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import type { Balances, Ledger, UnlockChunkRaw } from 'contexts/Balances/types';
+import type {
+  ActiveBalance,
+  Balances,
+  Ledger,
+  UnlockChunkRaw,
+} from 'contexts/Balances/types';
 import { APIController } from 'static/APController';
 import type { AnyApi } from 'types';
 
@@ -61,6 +66,7 @@ export class BalancesController {
           document.dispatchEvent(
             new CustomEvent('new-account-balance', {
               detail: {
+                address,
                 ledger: this.ledgers[address],
                 balances: this.balances[address],
               },
@@ -164,4 +170,13 @@ export class BalancesController {
   // Converts a balance string into a `BigNumber`.
   static balanceToBigNumber = (value: string): BigNumber =>
     new BigNumber(rmCommas(value));
+
+  // Checks if event detailis a valid `new-account-balance` event.
+  static isValidNewAccountBalanceEvent = (
+    event: CustomEvent
+  ): event is CustomEvent<ActiveBalance & { address: string }> =>
+    event.detail &&
+    event.detail.address &&
+    event.detail.ledger &&
+    event.detail.balances;
 }
