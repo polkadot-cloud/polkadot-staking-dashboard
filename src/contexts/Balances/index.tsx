@@ -36,6 +36,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const activeBalancesRef = useRef(activeBalances);
 
   // Store whether balances for all imported accounts have been synced.
+  // TODO: use in UI context to determine whether still syncing.
   const [balancesSynced, setBalancesSynced] = useState<boolean>(false);
 
   // Gets a ledger for a stash address.
