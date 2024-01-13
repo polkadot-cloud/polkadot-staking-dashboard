@@ -1,17 +1,19 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type BigNumber from 'bignumber.js';
 import type { PoolMembership } from 'contexts/Pools/PoolMemberships/types';
 import type { Proxy } from 'contexts/Proxies/types';
 import type { MaybeAddress } from 'types';
 
 export interface AccountItemProps {
-  address?: MaybeAddress;
+  address: MaybeAddress;
   label?: string[];
   asElement?: boolean;
   delegator?: string;
   noBorder?: boolean;
   proxyType?: string;
+  transferrableBalance?: BigNumber;
 }
 
 export interface DelegatesProps {

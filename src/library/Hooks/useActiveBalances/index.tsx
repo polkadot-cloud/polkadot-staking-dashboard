@@ -12,13 +12,18 @@ import { isCustomEvent } from 'static/utils';
 import { useEventListener } from 'usehooks-ts';
 import { defaultActiveBalance, defaultLedger } from './defaults';
 import type { Ledger } from 'contexts/Balances/types';
+import { useApi } from 'contexts/Api';
+import { getMaxLock } from 'contexts/Balances/Utils';
+import BigNumber from 'bignumber.js';
 
 export const useActiveBalances = ({
   accounts,
 }: {
   accounts: MaybeAddress[];
 }) => {
+  const { consts } = useApi();
   const { network } = useNetwork();
+  const { existentialDeposit } = consts;
 
   // Ensure no account duplicates.
   const uniqueAccounts = [...new Set(accounts)];
@@ -74,6 +79,16 @@ export const useActiveBalances = ({
       (activeBalance) => activeBalance.ledger['stash'] === address
     )?.ledger || defaultLedger;
 
+  // Gets the amount of balance reserved for existential deposit.
+  const getEdReserved = (address: MaybeAddress): BigNumber => {
+    const locks = getBalanceLocks(address);
+    if (address && locks) {
+      const maxLock = getMaxLock(locks);
+      return BigNumber.max(existentialDeposit.minus(maxLock), 0);
+    }
+    return new BigNumber(0);
+  };
+
   const documentRef = useRef<Document>(document);
 
   // Listen for new account balance events.
@@ -117,5 +132,6 @@ export const useActiveBalances = ({
     getBalanceLocks,
     getActiveBalance,
     getActiveStashLedger,
+    getEdReserved,
   };
 };

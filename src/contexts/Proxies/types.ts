@@ -23,6 +23,7 @@ export interface Proxy {
 }
 
 export interface ProxyDelegate {
+  transferrableBalance?: BigNumber;
   delegate: string;
   proxyType: ProxyType;
 }

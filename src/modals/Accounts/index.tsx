@@ -32,6 +32,9 @@ import type {
 } from './types';
 import type { ImportedAccount } from '@polkadot-cloud/react/types';
 import { useActiveBalances } from 'library/Hooks/useActiveBalances';
+import type { MaybeAddress } from 'types';
+import { useTransferOptions } from 'contexts/TransferOptions';
+import BigNumber from 'bignumber.js';
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');
@@ -45,6 +48,7 @@ export const Accounts = () => {
     setModalResize,
   } = useOverlay().modal;
   const { accounts } = useImportedAccounts();
+  const { getFeeReserve } = useTransferOptions();
   const { activeAccount, setActiveAccount, setActiveProxy } =
     useActiveAccounts();
 
@@ -53,9 +57,23 @@ export const Accounts = () => {
     useState<ImportedAccount[]>(accounts);
 
   // Listen to balance updates for entire accounts list.
-  const { getBalanceLocks } = useActiveBalances({
-    accounts: localAccounts.map(({ address }) => address),
-  });
+  const { getBalanceLocks, getActiveBalance, getEdReserved } =
+    useActiveBalances({
+      accounts: localAccounts.map(({ address }) => address),
+    });
+
+  // getEdreserved;
+  const getTransferrableBalance = (address: MaybeAddress) => {
+    const feeReserve = getFeeReserve(address);
+    const edReserved = getEdReserved(address);
+    const balance = getActiveBalance(address);
+
+    const freeMinusReserve = BigNumber.max(
+      balance.free.minus(edReserved).minus(feeReserve),
+      0
+    );
+    return BigNumber.max(freeMinusReserve.minus(balance.frozen), 0);
+  };
 
   const stashes: string[] = [];
   // accumulate imported stash accounts
@@ -79,6 +97,14 @@ export const Accounts = () => {
     let isInPool = false;
     const isStash = stashes[stashes.indexOf(address)] ?? null;
     const delegates = getDelegates(address);
+
+    // Inject transferrable balance into delegates list.
+    if (delegates?.delegates) {
+      delegates.delegates = delegates?.delegates.map((d) => ({
+        ...d,
+        transferrableBalance: getTransferrableBalance(d.delegate),
+      }));
+    }
 
     const poolMember = memberships.find((m) => m.address === address) ?? null;
 
@@ -195,7 +221,10 @@ export const Accounts = () => {
           <ActionItem text={t('nominatingAndInPool')} />
           {nominatingAndPool.map(({ address, delegates }, i) => (
             <Fragment key={`acc_nominating_and_pool_${i}`}>
-              <AccountButton address={address} />
+              <AccountButton
+                transferrableBalance={getTransferrableBalance(address)}
+                address={address}
+              />
               {address && (
                 <Delegates delegator={address} delegates={delegates} />
               )}
@@ -210,7 +239,10 @@ export const Accounts = () => {
           <ActionItem text={t('nominating')} />
           {nominating.map(({ address, delegates }, i) => (
             <Fragment key={`acc_nominating_${i}`}>
-              <AccountButton address={address} />
+              <AccountButton
+                transferrableBalance={getTransferrableBalance(address)}
+                address={address}
+              />
               {address && (
                 <Delegates delegator={address} delegates={delegates} />
               )}
@@ -225,7 +257,10 @@ export const Accounts = () => {
           <ActionItem text={t('inPool')} />
           {inPool.map(({ address, delegates }, i) => (
             <Fragment key={`acc_in_pool_${i}`}>
-              <AccountButton address={address} />
+              <AccountButton
+                transferrableBalance={getTransferrableBalance(address)}
+                address={address}
+              />
               {address && (
                 <Delegates delegator={address} delegates={delegates} />
               )}
@@ -240,7 +275,10 @@ export const Accounts = () => {
           <ActionItem text={t('notStaking')} />
           {notStaking.map(({ address, delegates }, i) => (
             <Fragment key={`acc_not_staking_${i}`}>
-              <AccountButton address={address} />
+              <AccountButton
+                transferrableBalance={getTransferrableBalance(address)}
+                address={address}
+              />
               {address && (
                 <Delegates delegator={address} delegates={delegates} />
               )}
