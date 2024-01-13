@@ -54,9 +54,9 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 
   // Reformats proxies into a list of delegates.
   const formatProxiesToDelegates = () => {
-    // Reformat proxiesRef.current into a list of delegates.
+    // Reformat proxies into a list of delegates.
     const newDelegates: Delegates = {};
-    for (const proxy of proxiesRef.current) {
+    for (const proxy of proxies) {
       const { delegator } = proxy;
       // checking if delegator is not null to keep types happy.
       if (!delegator) {
@@ -88,9 +88,9 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   const handleSyncAccounts = () => {
     // Sync removed accounts.
     const handleRemovedAccounts = () => {
-      const removed = removedFrom(accounts, proxiesRef.current, [
-        'address',
-      ]).map(({ address }) => address);
+      const removed = removedFrom(accounts, proxies, ['address']).map(
+        ({ address }) => address
+      );
 
       removed?.forEach((address) => {
         // if delegates still exist for removed account, re-add the account as a read only system
@@ -114,14 +114,14 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
     };
     // Sync added accounts.
     const handleAddedAccounts = () => {
-      addedTo(accounts, proxiesRef.current, ['address'])?.map(({ address }) =>
+      addedTo(accounts, proxies, ['address'])?.map(({ address }) =>
         subscribeToProxies(address)
       );
     };
     // Sync existing accounts.
     const handleExistingAccounts = () => {
       setStateWithRef(
-        matchedProperties(accounts, proxiesRef.current, ['address']),
+        matchedProperties(accounts, proxies, ['address']),
         setProxies,
         proxiesRef
       );
@@ -178,8 +178,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 
   // Gets the delegates of the given account.
   const getDelegates = (address: MaybeAddress): Proxy | undefined =>
-    proxiesRef.current.find(({ delegator }) => delegator === address) ||
-    undefined;
+    proxies.find(({ delegator }) => delegator === address) || undefined;
 
   // Gets delegators and proxy types for the given delegate address.
   const getProxiedAccounts = (address: MaybeAddress): ProxiedAccounts => {
@@ -231,7 +230,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
     delegator: MaybeAddress,
     delegate: MaybeAddress
   ): ProxyDelegate | null =>
-    proxiesRef.current
+    proxies
       .find((p) => p.delegator === delegator)
       ?.delegates.find((d) => d.delegate === delegate) ?? null;
 
@@ -253,7 +252,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
     if (!localActiveProxy) {
       setActiveProxy(null);
     } else if (
-      proxiesRef.current.length &&
+      proxies.length &&
       localActiveProxy &&
       !activeProxy &&
       activeAccount
@@ -269,9 +268,8 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
         }
 
         const isActive = (
-          proxiesRef.current.find(
-            ({ delegator }) => delegator === activeAccount
-          )?.delegates || []
+          proxies.find(({ delegator }) => delegator === activeAccount)
+            ?.delegates || []
         ).find((d) => d.delegate === address && d.proxyType === proxyType);
         if (isActive) {
           setActiveProxy({ address, proxyType });
@@ -281,7 +279,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
         localStorage.removeItem(`${network}_active_proxy`);
       }
     }
-  }, [accounts, activeAccount, proxiesRef.current, network]);
+  }, [accounts, activeAccount, proxies, network]);
 
   // Reset active proxy state, unsubscribe from subscriptions on network change & unmount.
   useEffectIgnoreInitial(() => {
@@ -300,7 +298,6 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   return (
     <ProxiesContext.Provider
       value={{
-        proxies: proxiesRef.current,
         handleDeclareDelegate,
         getDelegates,
         getProxyDelegate,

@@ -10,5 +10,4 @@ export const defaultProxiesContext: ProxiesContextInterface = {
   getProxiedAccounts: (a) => [],
   handleDeclareDelegate: (a) => new Promise((resolve) => resolve([])),
   formatProxiesToDelegates: () => ({}),
-  proxies: [],
 };
