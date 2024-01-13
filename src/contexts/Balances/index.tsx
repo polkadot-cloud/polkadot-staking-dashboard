@@ -28,34 +28,13 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { activeAccount, activeProxy } = useActiveAccounts();
 
   // Listen to balance updates for the active account and active proxy.
-  const activeBalances = useActiveBalances({
-    accounts: [activeAccount, activeProxy],
-  });
+  const { activeBalances, getBalanceLocks, getActiveBalance } =
+    useActiveBalances({
+      accounts: [activeAccount, activeProxy],
+    });
 
   // Store whether balances for all imported accounts have been synced.
   const [balancesSynced, setBalancesSynced] = useState<boolean>(false);
-
-  // Gets an active balance's locks.
-  const getActiveBalanceLocks = (address: MaybeAddress) => {
-    if (address) {
-      const maybeLocks = activeBalances[address]?.balances.locks;
-      if (maybeLocks) {
-        return maybeLocks;
-      }
-    }
-    return [];
-  };
-
-  // Gets an active balance's balance.
-  const getActiveBalance = (address: MaybeAddress) => {
-    if (address) {
-      const maybeBalance = activeBalances[address]?.balances.balance;
-      if (maybeBalance) {
-        return maybeBalance;
-      }
-    }
-    return defaults.defaultBalance;
-  };
 
   // Functions that need deprecating or refactoring --------------------------------
 
@@ -151,7 +130,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
         getBalance,
         getLocks,
         getNonce,
-        getActiveBalanceLocks,
+        getActiveBalanceLocks: getBalanceLocks,
         getActiveBalance,
         balancesSynced,
       }}

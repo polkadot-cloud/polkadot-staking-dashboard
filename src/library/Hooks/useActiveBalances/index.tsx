@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 import { BalancesController } from 'static/BalancesController';
 import { isCustomEvent } from 'static/utils';
 import { useEventListener } from 'usehooks-ts';
+import { defaultActiveBalance } from './defaults';
 
 export const useActiveBalances = ({
   accounts,
@@ -39,6 +40,28 @@ export const useActiveBalances = ({
         );
       }
     }
+  };
+
+  // Gets an active balance's balance.
+  const getActiveBalance = (address: MaybeAddress) => {
+    if (address) {
+      const maybeBalance = activeBalances[address]?.balances.balance;
+      if (maybeBalance) {
+        return maybeBalance;
+      }
+    }
+    return defaultActiveBalance;
+  };
+
+  // Gets an active balance's locks.
+  const getBalanceLocks = (address: MaybeAddress) => {
+    if (address) {
+      const maybeLocks = activeBalances[address]?.balances.locks;
+      if (maybeLocks) {
+        return maybeLocks;
+      }
+    }
+    return [];
   };
 
   const documentRef = useRef<Document>(document);
@@ -79,5 +102,5 @@ export const useActiveBalances = ({
     setStateWithRef({}, setActiveBalances, activeBalancesRef);
   }, [network]);
 
-  return activeBalances;
+  return { activeBalances, getBalanceLocks, getActiveBalance };
 };
