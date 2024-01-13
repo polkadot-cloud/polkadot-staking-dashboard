@@ -40,7 +40,6 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { accounts, getAccount } = useImportedAccounts();
   const { addOrReplaceOtherAccount } = useOtherAccounts();
   const { addExternalAccount } = useExternalAccounts();
-
   const [balances, setBalances] = useState<Balances[]>([]);
   const balancesRef = useRef(balances);
 

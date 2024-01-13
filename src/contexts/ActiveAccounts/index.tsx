@@ -64,14 +64,18 @@ export const ActiveAccountsProvider = ({
   const getActiveAccount = () => activeAccountRef.current;
 
   // Disconnect from the active account on network change, but don't remove local record.
-  useEffect(() => setActiveAccount(null, false), [network]);
+  useEffect(() => {
+    setActiveAccount(null, false);
+    setActiveProxy(null, false);
+  }, [network]);
 
   return (
     <ActiveAccountsContext.Provider
       value={{
         activeAccount: activeAccountRef.current,
-        activeProxy: activeProxyRef.current?.address ?? null,
-        activeProxyType: activeProxyRef.current?.proxyType ?? null,
+        activeProxy: activeProxy?.address || null,
+        activeProxyType: activeProxy?.proxyType || null,
+        activeProxyRef: activeProxyRef.current || null,
         setActiveAccount,
         getActiveAccount,
         setActiveProxy,
