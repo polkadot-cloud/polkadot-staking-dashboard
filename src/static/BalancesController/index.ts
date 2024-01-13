@@ -156,7 +156,8 @@ export class BalancesController {
     const maybeLedger = this.ledgers[address];
     const maybeBalances = this.balances[address];
 
-    // Account info has not synced yet.
+    // Account info has not synced yet. Note that `ledger` may not exist and therefore cannot be
+    // tested.
     if (maybeBalances === undefined) {
       return undefined;
     }
@@ -188,12 +189,10 @@ export class BalancesController {
   static balanceToBigNumber = (value: string): BigNumber =>
     new BigNumber(rmCommas(value));
 
-  // Checks if event detailis a valid `new-account-balance` event.
+  // Checks if event detailis a valid `new-account-balance` event. Note that `ledger` may not exist
+  // and therefore cannot be tested.
   static isValidNewAccountBalanceEvent = (
     event: CustomEvent
   ): event is CustomEvent<ActiveBalance & { address: string }> =>
-    event.detail &&
-    event.detail.address &&
-    event.detail.ledger &&
-    event.detail.balances;
+    event.detail && event.detail.address && event.detail.balances;
 }

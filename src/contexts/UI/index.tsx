@@ -25,7 +25,7 @@ export const useUi = () => useContext(UIContext);
 
 export const UIProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi();
-  const { activeBalances } = useBalances();
+  const { activeBalances, balancesSynced } = useBalances();
   const { staking, eraStakers } = useStaking();
   const { activeEra, metrics } = useNetworkMetrics();
   const { synced: activePoolsSynced } = useActivePools();
@@ -126,7 +126,10 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
       networkSyncing = true;
     }
 
-    if (Object.keys(activeBalances).length < activeAccounts) {
+    if (
+      Object.keys(activeBalances).length < activeAccounts ||
+      !balancesSynced.synced
+    ) {
       syncing = true;
       networkSyncing = true;
     }

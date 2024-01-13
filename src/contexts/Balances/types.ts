@@ -11,7 +11,10 @@ export interface BalancesContextInterface {
   getBalance: (address: MaybeAddress) => Balance;
   getLocks: (address: MaybeAddress) => BalanceLock[];
   getNonce: (address: MaybeAddress) => number;
-  balancesSynced: boolean;
+  balancesSynced: {
+    synced: boolean;
+    total: number;
+  };
 }
 
 // NOTE: new balance type for combined ledger and balances
