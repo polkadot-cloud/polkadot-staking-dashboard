@@ -13,6 +13,7 @@ export interface BalancesContextInterface {
   getNonce: (address: MaybeAddress) => number;
   getActiveBalanceLocks: (address: MaybeAddress) => BalanceLock[];
   getActiveBalance: (address: MaybeAddress) => Balance;
+  getActiveStashLedger: (address: MaybeAddress) => Ledger;
   balancesSynced: boolean;
 }
 

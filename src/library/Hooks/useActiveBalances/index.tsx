@@ -10,7 +10,8 @@ import { useEffect, useRef, useState } from 'react';
 import { BalancesController } from 'static/BalancesController';
 import { isCustomEvent } from 'static/utils';
 import { useEventListener } from 'usehooks-ts';
-import { defaultActiveBalance } from './defaults';
+import { defaultActiveBalance, defaultLedger } from './defaults';
+import type { Ledger } from 'contexts/Balances/types';
 
 export const useActiveBalances = ({
   accounts,
@@ -67,6 +68,12 @@ export const useActiveBalances = ({
     return [];
   };
 
+  // Gets a ledger for a stash address.
+  const getActiveStashLedger = (address: MaybeAddress): Ledger =>
+    Object.values(activeBalances).find(
+      (activeBalance) => activeBalance.ledger['stash'] === address
+    )?.ledger || defaultLedger;
+
   const documentRef = useRef<Document>(document);
 
   // Listen for new account balance events.
@@ -105,5 +112,10 @@ export const useActiveBalances = ({
     setStateWithRef({}, setActiveBalances, activeBalancesRef);
   }, [network]);
 
-  return { activeBalances, getBalanceLocks, getActiveBalance };
+  return {
+    activeBalances,
+    getBalanceLocks,
+    getActiveBalance,
+    getActiveStashLedger,
+  };
 };

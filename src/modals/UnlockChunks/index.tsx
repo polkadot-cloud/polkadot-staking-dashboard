@@ -28,9 +28,9 @@ export const UnlockChunks = () => {
     modalMaxHeight,
   } = useOverlay().modal;
   const { notEnoughFunds } = useTxMeta();
-  const { getStashLedger } = useBalances();
   const { activeAccount } = useActiveAccounts();
   const { getPoolUnlocking } = useActivePools();
+  const { getActiveStashLedger } = useBalances();
   const { integrityChecked } = useLedgerHardware();
   const { bondFor } = options || {};
 
@@ -43,7 +43,7 @@ export const UnlockChunks = () => {
         unlocking = getPoolUnlocking();
         break;
       default:
-        ledger = getStashLedger(activeAccount);
+        ledger = getActiveStashLedger(activeAccount);
         unlocking = ledger.unlocking;
     }
     return unlocking;

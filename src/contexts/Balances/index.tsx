@@ -14,6 +14,7 @@ import { isCustomEvent } from 'static/utils';
 import { BalancesController } from 'static/BalancesController';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useActiveBalances } from 'library/Hooks/useActiveBalances';
+import { useBonded } from 'contexts/Bonded';
 
 export const BalancesContext = createContext<BalancesContextInterface>(
   defaults.defaultBalancesContext
@@ -22,16 +23,22 @@ export const BalancesContext = createContext<BalancesContextInterface>(
 export const useBalances = () => useContext(BalancesContext);
 
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
+  const { getBondedAccount } = useBonded();
   const { accounts } = useImportedAccounts();
   const { addExternalAccount } = useExternalAccounts();
   const { addOrReplaceOtherAccount } = useOtherAccounts();
   const { activeAccount, activeProxy } = useActiveAccounts();
+  const controller = getBondedAccount(activeAccount);
 
   // Listen to balance updates for the active account and active proxy.
-  const { activeBalances, getBalanceLocks, getActiveBalance } =
-    useActiveBalances({
-      accounts: [activeAccount, activeProxy],
-    });
+  const {
+    activeBalances,
+    getBalanceLocks,
+    getActiveBalance,
+    getActiveStashLedger,
+  } = useActiveBalances({
+    accounts: [activeAccount, activeProxy, controller],
+  });
 
   // Store whether balances for all imported accounts have been synced.
   const [balancesSynced, setBalancesSynced] = useState<boolean>(false);
@@ -132,6 +139,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
         getNonce,
         getActiveBalanceLocks: getBalanceLocks,
         getActiveBalance,
+        getActiveStashLedger,
         balancesSynced,
       }}
     >
