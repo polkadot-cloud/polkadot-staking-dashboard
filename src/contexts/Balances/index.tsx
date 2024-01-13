@@ -22,7 +22,6 @@ import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { getLedger } from './Utils';
 import * as defaults from './defaults';
 import type {
-  ActiveBalance,
   Balances,
   BalancesContextInterface,
   Ledger,
@@ -32,6 +31,7 @@ import { useEventListener } from 'usehooks-ts';
 import { isCustomEvent } from 'static/utils';
 import { BalancesController } from 'static/BalancesController';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import type { ActiveBalancesState } from 'contexts/ActiveAccounts/types';
 
 export const BalancesContext = createContext<BalancesContextInterface>(
   defaults.defaultBalancesContext
@@ -47,8 +47,8 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { addOrReplaceOtherAccount } = useOtherAccounts();
   const { activeAccount, activeProxy } = useActiveAccounts();
 
-  // Store active account balances state. NOTE: Requires Ref for use in event listener callbacks.
-  const [activeBalances, setActiveBalances] = useState<ActiveBalance[]>([]);
+  // Store active account balances state. Requires Ref for use in event listener callbacks.
+  const [activeBalances, setActiveBalances] = useState<ActiveBalancesState>({});
   const activeBalancesRef = useRef(activeBalances);
 
   // Deprecated -------------------------------------------------------------------------
@@ -261,8 +261,35 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   // Listen for new account balance events.
   useEventListener('new-account-balance', newAccountBalancesCallback, ref);
 
-  // TODO: add `useEffectIgnoreInitial` to update account balances states when active account /
-  // active proxy changes (syncs), & reset state when network changes.
+  // Update account balances states when active account / active proxy updates.
+  //
+  // If `BalancesController` does not return an account balances record for an account, the balance
+  // has not yet synced. In this case, and a `new-account-balance` event will be emitted when the
+  // balance is ready to be sycned with the UI.
+  useEffectIgnoreInitial(() => {
+    // Adds an active balance record if it exists in `BalancesController`.
+    const getActiveBalances = (account: MaybeAddress) => {
+      if (account) {
+        const accountBalances = BalancesController.getAccountBalances(account);
+        if (accountBalances) {
+          newActiveBalances[account] = accountBalances;
+        }
+      }
+    };
+
+    // Construct new active balances state.
+    const newActiveBalances: ActiveBalancesState = {};
+    getActiveBalances(activeAccount);
+    getActiveBalances(activeProxy);
+
+    // Commit new active balances to state.
+    setActiveBalances(newActiveBalances);
+  }, [activeAccount, activeProxy]);
+
+  // Reset state when network changes.
+  useEffectIgnoreInitial(() => {
+    setActiveBalances({});
+  }, [network]);
 
   return (
     <BalancesContext.Provider

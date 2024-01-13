@@ -23,6 +23,7 @@ export class BalancesController {
 
   // Account ledgers, populated by api callbacks.
   // TODO: update `Ledger` type to omit `address`.
+  // TODO: can `ledgers` and `balances` be combined into one class member?
   static ledgers: Record<string, Ledger> = {};
 
   // Account balances, populated by api callbacks.
@@ -147,6 +148,22 @@ export class BalancesController {
         id: lock.id.trim(),
         amount: this.balanceToBigNumber(lock.amount),
       })),
+    };
+  };
+
+  // Gets an `ActiveBalance` from class members for the given address if it exists.
+  static getAccountBalances = (address: string): ActiveBalance | undefined => {
+    const maybeLedger = this.ledgers[address];
+    const maybeBalances = this.balances[address];
+
+    // Account info has not synced yet.
+    if (!maybeLedger || !maybeBalances) {
+      return undefined;
+    }
+
+    return {
+      ledger: maybeLedger,
+      balances: maybeBalances,
     };
   };
 
