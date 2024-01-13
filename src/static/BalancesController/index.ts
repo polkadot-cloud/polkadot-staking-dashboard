@@ -23,7 +23,6 @@ export class BalancesController {
 
   // Account ledgers, populated by api callbacks.
   // TODO: update `Ledger` type to omit `address`.
-  // TODO: can `ledgers` and `balances` be combined into one class member?
   static ledgers: Record<string, Ledger> = {};
 
   // Account balances, populated by api callbacks.
