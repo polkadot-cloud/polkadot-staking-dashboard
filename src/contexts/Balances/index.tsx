@@ -1,12 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { setStateWithRef } from '@polkadot-cloud/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import type { MaybeAddress } from 'types';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
-import { useNetwork } from 'contexts/Network';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
@@ -16,7 +13,7 @@ import { useEventListener } from 'usehooks-ts';
 import { isCustomEvent } from 'static/utils';
 import { BalancesController } from 'static/BalancesController';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import type { ActiveBalancesState } from 'contexts/ActiveAccounts/types';
+import { useActiveBalances } from 'library/Hooks/useActiveBalances';
 
 export const BalancesContext = createContext<BalancesContextInterface>(
   defaults.defaultBalancesContext
@@ -25,15 +22,15 @@ export const BalancesContext = createContext<BalancesContextInterface>(
 export const useBalances = () => useContext(BalancesContext);
 
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
-  const { network } = useNetwork();
   const { accounts } = useImportedAccounts();
   const { addExternalAccount } = useExternalAccounts();
   const { addOrReplaceOtherAccount } = useOtherAccounts();
-  const { activeAccount, activeProxy, activeProxyRef } = useActiveAccounts();
+  const { activeAccount, activeProxy } = useActiveAccounts();
 
-  // Store active account balances state. Requires Ref for use in event listener callbacks.
-  const [activeBalances, setActiveBalances] = useState<ActiveBalancesState>({});
-  const activeBalancesRef = useRef(activeBalances);
+  // Listen to balance updates for the active account and active proxy.
+  const activeBalances = useActiveBalances({
+    accounts: [activeAccount, activeProxy],
+  });
 
   // Store whether balances for all imported accounts have been synced.
   const [balancesSynced, setBalancesSynced] = useState<boolean>(false);
@@ -87,69 +84,25 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Handle new account balance event being reported from `BalancesController`.
+  // Check all accounts have been synced. App-wide syncing state for all accounts.
   const newAccountBalancesCallback = (e: Event) => {
     if (
       isCustomEvent(e) &&
       BalancesController.isValidNewAccountBalanceEvent(e)
     ) {
-      const { address, ...newBalances } = e.detail;
-
-      // Only update state of active accounts.
-      // TODO: add check for active controller (also required in UI on a high level).
-      if (address === activeAccount || address === activeProxyRef?.address) {
-        setStateWithRef(
-          { ...activeBalancesRef.current, [address]: newBalances },
-          setActiveBalances,
-          activeBalancesRef
-        );
-      }
-
       // Update whether all account balances have been synced. Uses greater than to account for
       // possible errors on the API side.
       checkBalancesSynced();
     }
   };
 
+  const checkBalancesSynced = () => {
+    setBalancesSynced(
+      Object.keys(BalancesController.balances).length >= accounts.length
+    );
+  };
+
   const documentRef = useRef<Document>(document);
-
-  // Update account balances states when active account / active proxy updates.
-  //
-  // If `BalancesController` does not return an account balances record for an account, the balance
-  // has not yet synced. In this case, and a `new-account-balance` event will be emitted when the
-  // balance is ready to be sycned with the UI.
-  useEffectIgnoreInitial(() => {
-    // Adds an active balance record if it exists in `BalancesController`.
-    const getActiveBalances = (account: MaybeAddress) => {
-      if (account) {
-        const accountBalances = BalancesController.getAccountBalances(account);
-        if (accountBalances) {
-          newActiveBalances[account] = accountBalances;
-        }
-      }
-    };
-
-    // Construct new active balances state.
-    const newActiveBalances: ActiveBalancesState = {};
-    getActiveBalances(activeAccount);
-    getActiveBalances(activeProxy);
-
-    // Commit new active balances to state.
-    setStateWithRef(newActiveBalances, setActiveBalances, activeBalancesRef);
-    checkBalancesSynced();
-  }, [activeAccount, activeProxy]);
-
-  // Reset state when network changes.
-  useEffectIgnoreInitial(() => {
-    setStateWithRef({}, setActiveBalances, activeBalancesRef);
-  }, [network]);
-
-  // Listen for new external account events.
-  useEventListener(
-    'new-external-account',
-    newExternalAccountCallback,
-    documentRef
-  );
 
   // Listen for new account balance events.
   useEventListener(
@@ -158,11 +111,12 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     documentRef
   );
 
-  const checkBalancesSynced = () => {
-    setBalancesSynced(
-      Object.keys(BalancesController.balances).length >= accounts.length
-    );
-  };
+  // Listen for new external account events.
+  useEventListener(
+    'new-external-account',
+    newExternalAccountCallback,
+    documentRef
+  );
 
   return (
     <BalancesContext.Provider

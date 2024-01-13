@@ -1,0 +1,83 @@
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react';
+import type { MaybeAddress } from '@polkadot-cloud/react/types';
+import { setStateWithRef } from '@polkadot-cloud/utils';
+import type { ActiveBalancesState } from 'contexts/ActiveAccounts/types';
+import { useNetwork } from 'contexts/Network';
+import { useEffect, useRef, useState } from 'react';
+import { BalancesController } from 'static/BalancesController';
+import { isCustomEvent } from 'static/utils';
+import { useEventListener } from 'usehooks-ts';
+
+export const useActiveBalances = ({
+  accounts,
+}: {
+  accounts: MaybeAddress[];
+}) => {
+  const { network } = useNetwork();
+
+  // Store active account balances state. Requires ref for use in event listener callbacks.
+  const [activeBalances, setActiveBalances] = useState<ActiveBalancesState>({});
+  const activeBalancesRef = useRef(activeBalances);
+
+  // Handle new account balance event being reported from `BalancesController`.
+  const newAccountBalancesCallback = (e: Event) => {
+    if (
+      isCustomEvent(e) &&
+      BalancesController.isValidNewAccountBalanceEvent(e)
+    ) {
+      const { address, ...newBalances } = e.detail;
+
+      // Only update state of active accounts.
+      if (accounts.includes(address)) {
+        setStateWithRef(
+          { ...activeBalancesRef.current, [address]: newBalances },
+          setActiveBalances,
+          activeBalancesRef
+        );
+      }
+    }
+  };
+
+  const documentRef = useRef<Document>(document);
+
+  // Listen for new account balance events.
+  useEventListener(
+    'new-account-balance',
+    newAccountBalancesCallback,
+    documentRef
+  );
+
+  // Update account balances states on initial render.
+  //
+  // If `BalancesController` does not return an account balances record for an account, the balance
+  // has not yet synced or the provided account is still `null`. In these cases a
+  // `new-account-balance` event will be emitted when the balance is ready to be sycned with the UI.
+  useEffect(() => {
+    // Adds an active balance record if it exists in `BalancesController`.
+    const getActiveBalances = (account: MaybeAddress) => {
+      if (account) {
+        const accountBalances = BalancesController.getAccountBalances(account);
+        if (accountBalances) {
+          newActiveBalances[account] = accountBalances;
+        }
+      }
+    };
+    // Construct new active balances state.
+    const newActiveBalances: ActiveBalancesState = {};
+    for (const account of accounts) {
+      getActiveBalances(account);
+    }
+    // Commit new active balances to state.
+    setStateWithRef(newActiveBalances, setActiveBalances, activeBalancesRef);
+  }, [JSON.stringify(accounts)]);
+
+  // Reset state when network changes.
+  useEffectIgnoreInitial(() => {
+    setStateWithRef({}, setActiveBalances, activeBalancesRef);
+  }, [network]);
+
+  return activeBalances;
+};
