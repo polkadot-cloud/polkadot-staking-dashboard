@@ -7,6 +7,7 @@ import type { ActiveAccountsContextInterface } from './types';
 export const defaultActiveAccountsContext: ActiveAccountsContextInterface = {
   activeAccount: null,
   activeProxy: null,
+  activeProxyRef: null,
   activeProxyType: null,
   getActiveAccount: () => null,
   setActiveAccount: (address, updateLocal) => {},

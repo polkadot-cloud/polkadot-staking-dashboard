@@ -73,8 +73,9 @@ export const ActiveAccountsProvider = ({
     <ActiveAccountsContext.Provider
       value={{
         activeAccount: activeAccountRef.current,
-        activeProxy: activeProxyRef.current?.address ?? null,
-        activeProxyType: activeProxyRef.current?.proxyType ?? null,
+        activeProxy: activeProxy?.address || null,
+        activeProxyType: activeProxy?.proxyType || null,
+        activeProxyRef: activeProxyRef.current || null,
         setActiveAccount,
         getActiveAccount,
         setActiveProxy,

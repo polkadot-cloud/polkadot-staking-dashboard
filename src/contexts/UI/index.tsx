@@ -25,7 +25,7 @@ export const useUi = () => useContext(UIContext);
 
 export const UIProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi();
-  const { balances, activeBalances } = useBalances();
+  const { activeBalances } = useBalances();
   const { staking, eraStakers } = useStaking();
   const { activeEra, metrics } = useNetworkMetrics();
   const { synced: activePoolsSynced } = useActivePools();
@@ -118,20 +118,17 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
     if (staking.lastReward === new BigNumber(0)) {
       syncing = true;
       networkSyncing = true;
-      poolSyncing = true;
     }
 
     // era has synced from Network
     if (activeEra.index.isZero()) {
       syncing = true;
       networkSyncing = true;
-      poolSyncing = true;
     }
 
     if (Object.keys(activeBalances).length < activeAccounts) {
       syncing = true;
       networkSyncing = true;
-      poolSyncing = true;
     }
 
     setIsNetworkSyncing(networkSyncing);
@@ -150,7 +147,14 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
     }
 
     setIsSyncing(syncing);
-  }, [isReady, staking, metrics, balances, eraStakers, activePoolsSynced]);
+  }, [
+    isReady,
+    staking,
+    metrics,
+    activeBalances,
+    eraStakers,
+    activePoolsSynced,
+  ]);
 
   return (
     <UIContext.Provider

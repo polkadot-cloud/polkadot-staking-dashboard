@@ -7,6 +7,7 @@ import type { MaybeAddress } from 'types';
 export interface ActiveAccountsContextInterface {
   activeAccount: MaybeAddress;
   activeProxy: MaybeAddress;
+  activeProxyRef: ActiveProxy | null;
   activeProxyType: string | null;
   getActiveAccount: () => string | null;
   setActiveAccount: (

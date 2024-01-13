@@ -84,6 +84,7 @@ export class BalancesController {
     const accountsRemoved = this.accounts.filter(
       (account) => !newAccounts.includes(account)
     );
+
     // Unsubscribe from removed account subscriptions.
     accountsRemoved.forEach((account) => {
       this._unsubs[account]();
@@ -156,7 +157,7 @@ export class BalancesController {
     const maybeBalances = this.balances[address];
 
     // Account info has not synced yet.
-    if (!maybeLedger || !maybeBalances) {
+    if (maybeBalances === undefined) {
       return undefined;
     }
 

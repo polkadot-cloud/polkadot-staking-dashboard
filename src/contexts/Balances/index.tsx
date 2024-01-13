@@ -45,7 +45,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { accounts } = useImportedAccounts();
   const { addExternalAccount } = useExternalAccounts();
   const { addOrReplaceOtherAccount } = useOtherAccounts();
-  const { activeAccount, activeProxy } = useActiveAccounts();
+  const { activeAccount, activeProxy, activeProxyRef } = useActiveAccounts();
 
   // Store active account balances state. Requires Ref for use in event listener callbacks.
   const [activeBalances, setActiveBalances] = useState<ActiveBalancesState>({});
@@ -243,7 +243,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
 
       // Only update state of active accounts.
       // TODO: add check for active controller (also required in UI to sign transactions).
-      if (address === activeAccount || address === activeProxy) {
+      if (address === activeAccount || address === activeProxyRef?.address) {
         setStateWithRef(
           { ...activeBalancesRef.current, [address]: newBalances },
           setActiveBalances,
@@ -295,8 +295,6 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     <BalancesContext.Provider
       value={{
         activeBalances,
-        ledgers: ledgersRef.current,
-        balances: balancesRef.current,
         getStashLedger,
         getBalance,
         getLocks,
