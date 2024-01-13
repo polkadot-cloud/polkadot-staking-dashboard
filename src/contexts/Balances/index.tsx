@@ -294,6 +294,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   return (
     <BalancesContext.Provider
       value={{
+        activeBalances,
         ledgers: ledgersRef.current,
         balances: balancesRef.current,
         getStashLedger,

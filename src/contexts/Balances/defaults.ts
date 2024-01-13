@@ -6,6 +6,7 @@ import BigNumber from 'bignumber.js';
 import type { Balance, BalancesContextInterface, Ledger } from './types';
 
 export const defaultBalancesContext: BalancesContextInterface = {
+  activeBalances: {},
   ledgers: [],
   balances: [],
   getStashLedger: (address) => defaultLedger,
