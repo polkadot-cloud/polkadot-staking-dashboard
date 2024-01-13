@@ -11,6 +11,7 @@ export const defaultBalancesContext: BalancesContextInterface = {
   getBalance: (address) => defaultBalance,
   getLocks: (address) => [],
   getNonce: (address) => 0,
+  balancesSynced: false,
 };
 
 export const defaultLedger: Ledger = {

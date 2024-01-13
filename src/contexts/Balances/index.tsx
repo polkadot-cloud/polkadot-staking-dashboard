@@ -51,6 +51,10 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const [activeBalances, setActiveBalances] = useState<ActiveBalancesState>({});
   const activeBalancesRef = useRef(activeBalances);
 
+  // Store whether balances for all imported accounts have been synced.
+  // TODO: use in UI context to determine whether still syncing.
+  const [balancesSynced, setBalancesSynced] = useState<boolean>(false);
+
   // Deprecated -------------------------------------------------------------------------
   const [balances, setBalances] = useState<Balances[]>([]);
   const balancesRef = useRef(balances);
@@ -233,7 +237,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  //Handle new account balance event being reported from `BalancesController`.
+  // Handle new account balance event being reported from `BalancesController`.
   const newAccountBalancesCallback = (e: Event) => {
     if (
       isCustomEvent(e) &&
@@ -242,7 +246,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
       const { address, ...newBalances } = e.detail;
 
       // Only update state of active accounts.
-      // TODO: add check for active controller (also required in UI to sign transactions).
+      // TODO: add check for active controller (also required in UI on a high level).
       if (address === activeAccount || address === activeProxyRef?.address) {
         setStateWithRef(
           { ...activeBalancesRef.current, [address]: newBalances },
@@ -250,6 +254,11 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
           activeBalancesRef
         );
       }
+
+      // Update whether all account balances have been synced. Uses greater than to account for
+      // possible errors on the API side.
+      checkBalancesSynced();
+      // Object.keys(BalancesController.balances).length >= accounts.length
     }
   };
 
@@ -278,6 +287,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
 
     // Commit new active balances to state.
     setActiveBalances(newActiveBalances);
+    checkBalancesSynced();
   }, [activeAccount, activeProxy]);
 
   // Reset state when network changes.
@@ -299,6 +309,12 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     documentRef
   );
 
+  const checkBalancesSynced = () => {
+    setBalancesSynced(
+      Object.keys(BalancesController.balances).length >= accounts.length
+    );
+  };
+
   return (
     <BalancesContext.Provider
       value={{
@@ -307,6 +323,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
         getBalance,
         getLocks,
         getNonce,
+        balancesSynced,
       }}
     >
       {children}

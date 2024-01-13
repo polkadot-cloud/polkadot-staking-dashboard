@@ -68,6 +68,7 @@ export const BalanceChart = () => {
       .plus(allTransferOptions.nominate.totalUnlocked),
     units
   );
+
   // total funds in pool
   const inPool = planckToUnit(
     allTransferOptions.pool.active
