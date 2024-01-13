@@ -11,7 +11,7 @@ export const getLocalFeeReserve = (
   address: MaybeAddress,
   defaultReserve: number,
   { network, units }: { network: NetworkName; units: number }
-) => {
+): BigNumber => {
   const reserves = JSON.parse(localStorage.getItem('reserve_balances') ?? '{}');
   return new BigNumber(
     reserves?.[network]?.[address || ''] ??
@@ -24,7 +24,7 @@ export const setLocalFeeReserve = (
   address: MaybeAddress,
   amount: BigNumber,
   network: NetworkName
-) => {
+): void => {
   if (!address) {
     return;
   }
