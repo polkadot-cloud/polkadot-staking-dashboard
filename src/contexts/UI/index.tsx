@@ -128,7 +128,7 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
 
     if (
       Object.keys(activeBalances).length < activeAccounts ||
-      !balancesSynced.synced
+      !balancesSynced
     ) {
       syncing = true;
       networkSyncing = true;

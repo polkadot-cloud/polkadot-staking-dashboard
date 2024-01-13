@@ -36,10 +36,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const activeBalancesRef = useRef(activeBalances);
 
   // Store whether balances for all imported accounts have been synced.
-  const [balancesSynced, setBalancesSynced] = useState<{
-    synced: boolean;
-    total: number;
-  }>({ synced: false, total: 0 });
+  const [balancesSynced, setBalancesSynced] = useState<boolean>(false);
 
   // Gets a ledger for a stash address.
   const getStashLedger = (address: MaybeAddress): Ledger =>
@@ -162,11 +159,9 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const checkBalancesSynced = () => {
-    setBalancesSynced({
-      synced:
-        Object.keys(BalancesController.balances).length >= accounts.length,
-      total: BalancesController.accounts.length,
-    });
+    setBalancesSynced(
+      Object.keys(BalancesController.balances).length >= accounts.length
+    );
   };
 
   return (
