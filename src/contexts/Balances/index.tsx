@@ -138,13 +138,13 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     getActiveBalances(activeProxy);
 
     // Commit new active balances to state.
-    setActiveBalances(newActiveBalances);
+    setStateWithRef(newActiveBalances, setActiveBalances, activeBalancesRef);
     checkBalancesSynced();
   }, [activeAccount, activeProxy]);
 
   // Reset state when network changes.
   useEffectIgnoreInitial(() => {
-    setActiveBalances({});
+    setStateWithRef({}, setActiveBalances, activeBalancesRef);
   }, [network]);
 
   // Listen for new external account events.
