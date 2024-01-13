@@ -22,6 +22,7 @@ import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { getLedger } from './Utils';
 import * as defaults from './defaults';
 import type {
+  ActiveBalance,
   Balances,
   BalancesContextInterface,
   Ledger,
@@ -29,6 +30,8 @@ import type {
 } from './types';
 import { useEventListener } from 'usehooks-ts';
 import { isCustomEvent } from 'static/utils';
+import { BalancesController } from 'static/BalancesController';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const BalancesContext = createContext<BalancesContextInterface>(
   defaults.defaultBalancesContext
@@ -42,9 +45,11 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { accounts } = useImportedAccounts();
   const { addExternalAccount } = useExternalAccounts();
   const { addOrReplaceOtherAccount } = useOtherAccounts();
+  const { activeAccount, activeProxy } = useActiveAccounts();
 
-  // TODO: add balances (ledger, account & locks) state for activeAccount and activeProxy. Introduce
-  // activeController after.
+  // Store active account balances state. NOTE: Requires Ref for use in event listener callbacks.
+  const [activeBalances, setActiveBalances] = useState<ActiveBalance[]>([]);
+  const activeBalancesRef = useRef(activeBalances);
 
   // Deprecated -------------------------------------------------------------------------
   const [balances, setBalances] = useState<Balances[]>([]);
@@ -230,8 +235,21 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
 
   //Handle new account balance event being reported from `BalancesController`.
   const newAccountBalancesCallback = (e: Event) => {
-    if (isCustomEvent(e)) {
-      // TODO: Only update active account, active proxy, and active controller balance state.
+    if (
+      isCustomEvent(e) &&
+      BalancesController.isValidNewAccountBalanceEvent(e)
+    ) {
+      const { address, ...newBalances } = e.detail;
+
+      // Only update state of active accounts.
+      // TODO: add check for active controller (also required in UI to sign transactions).
+      if (address === activeAccount || address === activeProxy) {
+        setStateWithRef(
+          { ...activeBalancesRef.current, [address]: newBalances },
+          setActiveBalances,
+          activeBalancesRef
+        );
+      }
     }
   };
 
@@ -244,7 +262,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   useEventListener('new-account-balance', newAccountBalancesCallback, ref);
 
   // TODO: add `useEffectIgnoreInitial` to update account balances states when active account /
-  // active proxy changes, & reset state when network changes.
+  // active proxy changes (syncs), & reset state when network changes.
 
   return (
     <BalancesContext.Provider
