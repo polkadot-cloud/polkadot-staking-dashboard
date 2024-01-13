@@ -164,7 +164,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const checkBalancesSynced = () => {
     setBalancesSynced({
       synced:
-        Object.keys(BalancesController.accounts).length >= accounts.length,
+        Object.keys(BalancesController.balances).length >= accounts.length,
       total: BalancesController.accounts.length,
     });
   };
