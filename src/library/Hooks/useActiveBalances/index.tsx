@@ -12,18 +12,17 @@ import { isCustomEvent } from 'static/utils';
 import { useEventListener } from 'usehooks-ts';
 import { defaultActiveBalance, defaultLedger } from './defaults';
 import type { Ledger } from 'contexts/Balances/types';
-import { useApi } from 'contexts/Api';
 import { getMaxLock } from 'contexts/Balances/Utils';
 import BigNumber from 'bignumber.js';
 
 export const useActiveBalances = ({
+  existentialDeposit,
   accounts,
 }: {
   accounts: MaybeAddress[];
+  existentialDeposit: BigNumber;
 }) => {
-  const { consts } = useApi();
   const { network } = useNetwork();
-  const { existentialDeposit } = consts;
 
   // Ensure no account duplicates.
   const uniqueAccounts = [...new Set(accounts)];
@@ -31,25 +30,6 @@ export const useActiveBalances = ({
   // Store active account balances state. Requires ref for use in event listener callbacks.
   const [activeBalances, setActiveBalances] = useState<ActiveBalancesState>({});
   const activeBalancesRef = useRef(activeBalances);
-
-  // Handle new account balance event being reported from `BalancesController`.
-  const newAccountBalancesCallback = (e: Event) => {
-    if (
-      isCustomEvent(e) &&
-      BalancesController.isValidNewAccountBalanceEvent(e)
-    ) {
-      const { address, ...newBalances } = e.detail;
-
-      // Only update state of active accounts.
-      if (uniqueAccounts.includes(address)) {
-        setStateWithRef(
-          { ...activeBalancesRef.current, [address]: newBalances },
-          setActiveBalances,
-          activeBalancesRef
-        );
-      }
-    }
-  };
 
   // Gets an active balance's balance.
   const getActiveBalance = (address: MaybeAddress) => {
@@ -87,6 +67,25 @@ export const useActiveBalances = ({
       return BigNumber.max(existentialDeposit.minus(maxLock), 0);
     }
     return new BigNumber(0);
+  };
+
+  // Handle new account balance event being reported from `BalancesController`.
+  const newAccountBalancesCallback = (e: Event) => {
+    if (
+      isCustomEvent(e) &&
+      BalancesController.isValidNewAccountBalanceEvent(e)
+    ) {
+      const { address, ...newBalances } = e.detail;
+
+      // Only update state of active accounts.
+      if (uniqueAccounts.includes(address)) {
+        setStateWithRef(
+          { ...activeBalancesRef.current, [address]: newBalances },
+          setActiveBalances,
+          activeBalancesRef
+        );
+      }
+    }
   };
 
   const documentRef = useRef<Document>(document);

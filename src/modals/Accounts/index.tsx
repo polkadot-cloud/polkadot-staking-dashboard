@@ -35,9 +35,13 @@ import { useActiveBalances } from 'library/Hooks/useActiveBalances';
 import type { MaybeAddress } from 'types';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import BigNumber from 'bignumber.js';
+import { useApi } from 'contexts/Api';
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');
+  const {
+    consts: { existentialDeposit },
+  } = useApi();
   const { getDelegates } = useProxies();
   const { bondedAccounts } = useBonded();
   const { extensionsStatus } = useExtensions();
@@ -59,6 +63,7 @@ export const Accounts = () => {
   // Listen to balance updates for entire accounts list.
   const { getBalanceLocks, getActiveBalance, getEdReserved } =
     useActiveBalances({
+      existentialDeposit,
       accounts: localAccounts.map(({ address }) => address),
     });
 
