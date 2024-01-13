@@ -2,11 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
-import type { ActiveBalancesState } from 'contexts/ActiveAccounts/types';
 import type { MaybeAddress } from 'types';
 
 export interface BalancesContextInterface {
-  activeBalances: ActiveBalancesState;
   getStashLedger: (a: MaybeAddress) => Ledger;
   getBalance: (address: MaybeAddress) => Balance;
   getLocks: (address: MaybeAddress) => BalanceLock[];

@@ -167,7 +167,6 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   return (
     <BalancesContext.Provider
       value={{
-        activeBalances,
         getStashLedger,
         getBalance,
         getLocks,
