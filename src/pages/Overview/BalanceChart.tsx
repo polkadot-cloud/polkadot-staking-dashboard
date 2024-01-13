@@ -117,7 +117,6 @@ export const BalanceChart = () => {
     BigNumber.max(
       allTransferOptions.freeBalance
         .minus(fundsReserved)
-        .minus(feeReserve)
         .minus(fundsLockedPlank),
       0
     ),
