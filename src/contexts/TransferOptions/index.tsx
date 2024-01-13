@@ -79,7 +79,7 @@ export const TransferOptionsProvider = ({
       0
     );
 
-    // Gree balance to pay for tsx fees. Does not factor `feeReserve`.
+    // Free balance to pay for tx fees. Does not factor `feeReserve`.
     const balanceTxFees = BigNumber.max(
       free.minus(edReserved).minus(frozen),
       0
