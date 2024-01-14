@@ -10,10 +10,13 @@ import { useEffect, useRef, useState } from 'react';
 import { BalancesController } from 'static/BalancesController';
 import { isCustomEvent } from 'static/utils';
 import { useEventListener } from 'usehooks-ts';
-import { defaultActiveBalance, defaultLedger } from './defaults';
 import type { Ledger } from 'contexts/Balances/types';
 import { getMaxLock } from 'contexts/Balances/Utils';
 import BigNumber from 'bignumber.js';
+import {
+  defaultActiveBalance,
+  defaultLedger,
+} from 'static/BalancesController/defaults';
 
 export const useActiveBalances = ({
   accounts,

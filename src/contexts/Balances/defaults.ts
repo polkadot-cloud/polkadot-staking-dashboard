@@ -5,7 +5,7 @@
 import {
   defaultActiveBalance,
   defaultLedger,
-} from 'library/Hooks/useActiveBalances/defaults';
+} from 'static/BalancesController/defaults';
 import type { BalancesContextInterface } from './types';
 
 export const defaultBalancesContext: BalancesContextInterface = {
