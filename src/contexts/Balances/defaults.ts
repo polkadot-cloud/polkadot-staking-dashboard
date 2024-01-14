@@ -11,7 +11,7 @@ import type { BalancesContextInterface } from './types';
 export const defaultBalancesContext: BalancesContextInterface = {
   activeBalances: {},
   getNonce: (address) => 0,
-  getActiveBalanceLocks: (address) => [],
+  getBalanceLocks: (address) => [],
   getActiveBalance: (address) => defaultActiveBalance,
   getActiveStashLedger: (address) => defaultLedger,
   balancesSynced: false,

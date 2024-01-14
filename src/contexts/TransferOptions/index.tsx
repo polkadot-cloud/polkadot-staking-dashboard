@@ -40,7 +40,7 @@ export const TransferOptionsProvider = ({
     network,
     networkData: { units, defaultFeeReserve },
   } = useNetwork();
-  const { getActiveStashLedger, getActiveBalance, getActiveBalanceLocks } =
+  const { getActiveStashLedger, getActiveBalance, getBalanceLocks } =
     useBalances();
   const { existentialDeposit } = consts;
 
@@ -57,7 +57,7 @@ export const TransferOptionsProvider = ({
       return defaultTransferOptions;
     }
 
-    const locks = getActiveBalanceLocks(address);
+    const locks = getBalanceLocks(address);
     const maxLock = getMaxLock(locks);
     const { free, frozen } = getActiveBalance(address);
     const { active, total, unlocking } = getActiveStashLedger(address);

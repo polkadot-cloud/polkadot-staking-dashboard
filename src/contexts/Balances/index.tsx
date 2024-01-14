@@ -84,7 +84,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
       value={{
         activeBalances,
         getNonce,
-        getActiveBalanceLocks: getBalanceLocks,
+        getBalanceLocks,
         getActiveBalance,
         getActiveStashLedger,
         balancesSynced,
