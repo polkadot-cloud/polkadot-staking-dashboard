@@ -7,9 +7,6 @@ import type { Balance, BalancesContextInterface, Ledger } from './types';
 
 export const defaultBalancesContext: BalancesContextInterface = {
   activeBalances: {},
-  getStashLedger: (address) => defaultLedger,
-  getBalance: (address) => defaultBalance,
-  getLocks: (address) => [],
   getNonce: (address) => 0,
   getActiveBalanceLocks: (address) => [],
   getActiveBalance: (address) => defaultBalance,
