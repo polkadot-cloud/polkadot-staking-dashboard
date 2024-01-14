@@ -168,13 +168,15 @@ export class BalancesController {
   // Subscription handling.
   // ------------------------------------------------------
 
-  // Unsubscribe from all subscriptions.
+  // Unsubscribe from all subscriptions and reset class members.
   static unsubscribe = (): void => {
     Object.values(this._unsubs).forEach((unsub) => {
       unsub();
     });
-    this._unsubs = {};
     this.accounts = [];
+    this.ledgers = {};
+    this.balances = {};
+    this._unsubs = {};
   };
 
   // ------------------------------------------------------
