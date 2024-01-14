@@ -4,13 +4,12 @@
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react';
 import type { MaybeAddress } from '@polkadot-cloud/react/types';
 import { setStateWithRef } from '@polkadot-cloud/utils';
-import type { ActiveBalancesState } from 'contexts/ActiveAccounts/types';
+import type { ActiveBalancesState, Ledger } from 'contexts/Balances/types';
 import { useNetwork } from 'contexts/Network';
 import { useEffect, useRef, useState } from 'react';
 import { BalancesController } from 'static/BalancesController';
 import { isCustomEvent } from 'static/utils';
 import { useEventListener } from 'usehooks-ts';
-import type { Ledger } from 'contexts/Balances/types';
 import { getMaxLock } from 'contexts/Balances/Utils';
 import BigNumber from 'bignumber.js';
 import {
