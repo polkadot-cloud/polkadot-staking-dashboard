@@ -5,8 +5,6 @@ import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import type { MaybeAddress } from 'types';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import * as defaults from './defaults';
 import type { BalancesContextInterface } from './types';
 import { useEventListener } from 'usehooks-ts';
@@ -25,12 +23,10 @@ export const useBalances = () => useContext(BalancesContext);
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { getBondedAccount } = useBonded();
   const { accounts } = useImportedAccounts();
-  const { addExternalAccount } = useExternalAccounts();
-  const { addOrReplaceOtherAccount } = useOtherAccounts();
   const { activeAccount, activeProxy } = useActiveAccounts();
   const controller = getBondedAccount(activeAccount);
 
-  // Listen to balance updates for the active account and active proxy.
+  // Listen to balance updates for the active account, active proxy and controller..
   const {
     activeBalances,
     getBalanceLocks,
@@ -42,16 +38,6 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
 
   // Store whether balances for all imported accounts have been synced.
   const [balancesSynced, setBalancesSynced] = useState<boolean>(false);
-
-  // Handle new external account event being reported from `BalancesController`.
-  const newExternalAccountCallback = (e: Event) => {
-    if (isCustomEvent(e)) {
-      const result = addExternalAccount(e.detail.stash, 'system');
-      if (result) {
-        addOrReplaceOtherAccount(result.account, result.type);
-      }
-    }
-  };
 
   // Check all accounts have been synced. App-wide syncing state for all accounts.
   const newAccountBalancesCallback = (e: Event) => {
@@ -72,7 +58,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
-  // Gets an account's nonce directory from `BalanceController`. Used at the time of building a
+  // Gets an account's nonce directly from `BalanceController`. Used at the time of building a
   // payload.
   const getNonce = (address: MaybeAddress) => {
     if (address) {
@@ -90,13 +76,6 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   useEventListener(
     'new-account-balance',
     newAccountBalancesCallback,
-    documentRef
-  );
-
-  // Listen for new external account events.
-  useEventListener(
-    'new-external-account',
-    newExternalAccountCallback,
     documentRef
   );
 
