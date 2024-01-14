@@ -12,7 +12,6 @@ export const defaultActiveBalance: Balance = {
 };
 
 export const defaultLedger: Ledger = {
-  address: null,
   stash: null,
   active: new BigNumber(0),
   total: new BigNumber(0),

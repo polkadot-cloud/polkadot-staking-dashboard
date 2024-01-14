@@ -22,11 +22,9 @@ export class BalancesController {
   static accounts: string[] = [];
 
   // Account ledgers, populated by api callbacks.
-  // TODO: update `Ledger` type to omit `address`.
   static ledgers: Record<string, Ledger> = {};
 
   // Account balances, populated by api callbacks.
-  // TODO: update `Balances` type to omit `address`.
   static balances: Record<string, Balances> = {};
 
   // Unsubscribe objects.
@@ -118,7 +116,6 @@ export class BalancesController {
     }
 
     this.ledgers[address] = {
-      address,
       stash: stash.toString(),
       active: this.balanceToBigNumber(active.toString()),
       total: this.balanceToBigNumber(total.toString()),
@@ -136,7 +133,6 @@ export class BalancesController {
     locksResult: AnyApi
   ): void => {
     this.balances[address] = {
-      address,
       nonce: nonce.toNumber(),
       balance: {
         free: this.balanceToBigNumber(accountData.free.toString()),

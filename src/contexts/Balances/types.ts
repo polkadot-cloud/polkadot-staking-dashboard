@@ -21,7 +21,6 @@ export interface ActiveBalance {
 }
 
 export interface Balances {
-  address?: string;
   nonce?: number;
   balance?: Balance;
   locks?: BalanceLock[];
@@ -49,7 +48,6 @@ export interface BalanceLock {
 }
 
 export interface Ledger {
-  address: MaybeAddress;
   stash: string | null;
   active: BigNumber;
   total: BigNumber;

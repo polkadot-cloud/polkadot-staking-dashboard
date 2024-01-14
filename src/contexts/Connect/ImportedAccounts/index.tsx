@@ -84,8 +84,6 @@ export const ImportedAccountsProvider = ({
   );
 
   // Keep accounts in sync with `BalancesController`.
-  // TODO: update in-scope accounts (active account, controller account, active proxy account), when their callbacks fire.
-  // TODO: add optional safe-guards to ensure that tx signers are active accounts, unless explicitly specified (function that just returns in-scope accounts).
   useEffectIgnoreInitial(() => {
     if (isReady) {
       BalancesController.syncAccounts(allAccounts.map((a) => a.address));
