@@ -57,7 +57,7 @@ export const useActiveBalances = ({
   // Gets a ledger for a stash address.
   const getActiveStashLedger = (address: MaybeAddress): Ledger =>
     Object.values(activeBalances).find(
-      (activeBalance) => activeBalance.ledger['stash'] === address
+      (activeBalance) => activeBalance.ledger?.['stash'] === address
     )?.ledger || defaultLedger;
 
   // Gets the amount of balance reserved for existential deposit.

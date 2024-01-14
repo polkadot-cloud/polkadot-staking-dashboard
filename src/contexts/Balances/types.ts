@@ -14,7 +14,6 @@ export interface BalancesContextInterface {
   balancesSynced: boolean;
 }
 
-// NOTE: new balance type for combined ledger and balances
 export interface ActiveBalance {
   ledger: Ledger;
   balances: Balances;
