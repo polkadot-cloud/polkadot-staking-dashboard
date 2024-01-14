@@ -50,15 +50,17 @@ export const TransferOptionsProvider = ({
   );
 
   // Calculates various balances for an account pertaining to free balance, nominating and pools.
+  // Gets balance numbers from `useBalances` state, which only takes the active accounts from
+  // `BalancesController`.
   const getTransferOptions = (address: MaybeAddress): TransferOptions => {
     if (getAccount(address) === null) {
       return defaultTransferOptions;
     }
 
-    const { free, frozen } = getActiveBalance(address);
-    const { active, total, unlocking } = getActiveStashLedger(address);
     const locks = getActiveBalanceLocks(address);
     const maxLock = getMaxLock(locks);
+    const { free, frozen } = getActiveBalance(address);
+    const { active, total, unlocking } = getActiveStashLedger(address);
 
     // Calculate a forced amount of free balance that needs to be reserved to keep the account
     // alive. Deducts `locks` from free balance reserve needed.
@@ -69,31 +71,24 @@ export const TransferOptionsProvider = ({
       free.minus(edReserved).minus(feeReserve),
       0
     );
-
     // Free balance that can be transferred.
     const transferrableBalance = BigNumber.max(
       freeMinusReserve.minus(frozen),
       0
     );
-
     // Free balance to pay for tx fees. Does not factor `feeReserve`.
     const balanceTxFees = BigNumber.max(
       free.minus(edReserved).minus(frozen),
       0
     );
-
-    // Staking specific balances.
-    //
     // Total amount unlocking and unlocked.
     const { totalUnlocking, totalUnlocked } = getUnlocking(
       unlocking,
       activeEra.index
     );
-
     // Free balance to stake after `total` (total staked) ledger amount.
     const freeBalance = BigNumber.max(freeMinusReserve.minus(total), 0);
 
-    // Get nominator-specific balances.
     const nominatorBalances = () => {
       const totalPossibleBond = BigNumber.max(
         freeMinusReserve.minus(totalUnlocking).minus(totalUnlocked),
@@ -109,7 +104,6 @@ export const TransferOptionsProvider = ({
       };
     };
 
-    // Get pool-member-specific balances.
     const poolBalances = () => {
       const unlockingPool = membership?.unlocking || [];
       const {
