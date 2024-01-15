@@ -6943,7 +6943,7 @@ __metadata:
     sass: "npm:^1.69.7"
     styled-components: "npm:^6.1.8"
     typescript: "npm:^5.3.3"
-    usehooks-ts: "npm:2.9.1"
+    usehooks-ts: "npm:2.9.4"
     vite: "npm:^5.0.11"
     vite-bundle-visualizer: "npm:^1.0.0"
     vite-plugin-checker: "npm:^0.6.2"
@@ -8705,13 +8705,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"usehooks-ts@npm:2.9.1":
-  version: 2.9.1
-  resolution: "usehooks-ts@npm:2.9.1"
+"usehooks-ts@npm:2.9.4":
+  version: 2.9.4
+  resolution: "usehooks-ts@npm:2.9.4"
   peerDependencies:
     react: ^16.8.0  || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0  || ^17.0.0 || ^18.0.0
-  checksum: 14f6bc3661cebe19714dc2bc0413b56c53fcb44fada2258756c2fefc10cf6481299bd8d4ba659af3bc5692a57d5da3c3e14b75d69177eccd3ac8326c5336e756
+  checksum: 2a9f0abd8d0711d486567e7f131ea166af28338b2cc99e193acdde476a9dd6aa4abea07c518fcdb4d8f097133fe3c5e7b3791dd7b5b8a60a99e0f2965f9d5772
   languageName: node
   linkType: hard
 
