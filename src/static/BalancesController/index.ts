@@ -77,7 +77,7 @@ export class BalancesController {
   };
 
   // Remove accounts that no longer exist.
-  static handleRemovedAccounts = (newAccounts: string[]) => {
+  static handleRemovedAccounts = (newAccounts: string[]): void => {
     // Determine removed accounts.
     const accountsRemoved = this.accounts.filter(
       (account) => !newAccounts.includes(account)
