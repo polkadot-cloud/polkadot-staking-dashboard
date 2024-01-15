@@ -23,7 +23,6 @@ export interface Proxy {
 }
 
 export interface ProxyDelegate {
-  transferrableBalance?: BigNumber;
   delegate: string;
   proxyType: ProxyType;
 }
@@ -39,6 +38,12 @@ export type ProxiedAccounts = ProxiedAccount[];
 export interface ProxiedAccount {
   address: string;
   name: string;
+  proxyType: ProxyType;
+}
+
+export interface ProxyDelegateWithBalance {
+  transferrableBalance: BigNumber;
+  delegate: string;
   proxyType: ProxyType;
 }
 
