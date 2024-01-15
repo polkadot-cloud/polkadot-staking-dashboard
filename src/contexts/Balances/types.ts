@@ -9,7 +9,7 @@ export interface BalancesContextInterface {
   getNonce: (address: MaybeAddress) => number;
   getBalanceLocks: (address: MaybeAddress) => BalanceLocks;
   getActiveBalance: (address: MaybeAddress) => Balance;
-  getActiveStashLedger: (address: MaybeAddress) => Ledger;
+  getActiveLedger: (source: ActiveLedgerSource) => Ledger;
   balancesSynced: boolean;
 }
 
@@ -58,3 +58,9 @@ export interface Ledger {
   total: BigNumber;
   unlocking: UnlockChunk[];
 }
+
+export type ActiveLedgerKeys = 'stash' | 'key';
+
+export type ActiveLedgerSource = {
+  [key in ActiveLedgerKeys]?: MaybeAddress;
+};

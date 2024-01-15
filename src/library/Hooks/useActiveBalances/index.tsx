@@ -6,6 +6,7 @@ import type { MaybeAddress } from '@polkadot-cloud/react/types';
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import type {
   ActiveBalancesState,
+  ActiveLedgerSource,
   BalanceLock,
   BalanceLocks,
   Ledger,
@@ -71,10 +72,28 @@ export const useActiveBalances = ({
 
   // Gets a ledger for a stash address.
   // TODO: either provide a `key` or `stash` property instead of `address`.
-  const getActiveStashLedger = (address: MaybeAddress): Ledger =>
-    Object.values(activeBalances).find(
-      (activeBalance) => activeBalance.ledger?.['stash'] === address
-    )?.ledger || defaultLedger;
+
+  const getActiveLedger = (source: ActiveLedgerSource): Ledger => {
+    if ('stash' in source) {
+      const stash = source['stash'];
+
+      return (
+        Object.values(activeBalances).find(
+          (activeBalance) => activeBalance.ledger?.['stash'] === stash
+        )?.ledger || defaultLedger
+      );
+    }
+
+    if ('key' in source) {
+      const key = source['key'];
+
+      if (key) {
+        return activeBalances[key]?.ledger || defaultLedger;
+      }
+    }
+
+    return defaultLedger;
+  };
 
   // Gets the amount of balance reserved for existential deposit.
   const getEdReserved = (
@@ -149,7 +168,7 @@ export const useActiveBalances = ({
     activeBalances,
     getBalanceLocks,
     getActiveBalance,
-    getActiveStashLedger,
+    getActiveLedger,
     getEdReserved,
   };
 };

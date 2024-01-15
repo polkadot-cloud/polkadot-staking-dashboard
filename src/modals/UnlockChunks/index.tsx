@@ -30,7 +30,7 @@ export const UnlockChunks = () => {
   const { notEnoughFunds } = useTxMeta();
   const { activeAccount } = useActiveAccounts();
   const { getPoolUnlocking } = useActivePools();
-  const { getActiveStashLedger } = useBalances();
+  const { getActiveLedger } = useBalances();
   const { integrityChecked } = useLedgerHardware();
   const { bondFor } = options || {};
 
@@ -43,7 +43,7 @@ export const UnlockChunks = () => {
         unlocking = getPoolUnlocking();
         break;
       default:
-        ledger = getActiveStashLedger(activeAccount);
+        ledger = getActiveLedger({ stash: activeAccount });
         unlocking = ledger.unlocking;
     }
     return unlocking;

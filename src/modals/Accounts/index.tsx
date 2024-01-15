@@ -82,7 +82,7 @@ export const Accounts = () => {
   const stashes: string[] = [];
   // accumulate imported stash accounts
   for (const { address } of localAccounts) {
-    const locks = getBalanceLocks(address);
+    const { locks } = getBalanceLocks(address);
 
     // account is a stash if they have an active `staking` lock
     if (locks.find(({ id }) => id === 'staking')) {

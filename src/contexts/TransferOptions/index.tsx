@@ -40,8 +40,7 @@ export const TransferOptionsProvider = ({
     network,
     networkData: { units, defaultFeeReserve },
   } = useNetwork();
-  const { getActiveStashLedger, getActiveBalance, getBalanceLocks } =
-    useBalances();
+  const { getActiveLedger, getActiveBalance, getBalanceLocks } = useBalances();
   const { existentialDeposit } = consts;
 
   // A user-configurable reserve amount to be used to pay for transaction fees.
@@ -59,7 +58,7 @@ export const TransferOptionsProvider = ({
 
     const { maxLock } = getBalanceLocks(address);
     const { free, frozen } = getActiveBalance(address);
-    const { active, total, unlocking } = getActiveStashLedger(address);
+    const { active, total, unlocking } = getActiveLedger({ stash: address });
 
     // Calculate a forced amount of free balance that needs to be reserved to keep the account
     // alive. Deducts `locks` from free balance reserve needed.

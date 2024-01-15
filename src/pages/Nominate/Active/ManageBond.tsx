@@ -37,11 +37,11 @@ export const ManageBond = () => {
   const { inSetup } = useStaking();
   const { openModal } = useOverlay().modal;
   const { isFastUnstaking } = useUnstaking();
-  const { getActiveStashLedger } = useBalances();
+  const { getActiveLedger } = useBalances();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getTransferOptions, feeReserve } = useTransferOptions();
   const { activeAccount } = useActiveAccounts();
-  const ledger = getActiveStashLedger(activeAccount);
+  const ledger = getActiveLedger({ stash: activeAccount });
   const { active }: { active: BigNumber } = ledger;
   const allTransferOptions = getTransferOptions(activeAccount);
 
