@@ -71,27 +71,21 @@ export const useActiveBalances = ({
   };
 
   // Gets a ledger for a stash address.
-  // TODO: either provide a `key` or `stash` property instead of `address`.
-
   const getLedger = (source: ActiveLedgerSource): Ledger => {
     if ('stash' in source) {
       const stash = source['stash'];
-
       return (
         Object.values(activeBalances).find(
           (activeBalance) => activeBalance.ledger?.['stash'] === stash
         )?.ledger || defaultLedger
       );
     }
-
     if ('key' in source) {
       const key = source['key'];
-
       if (key) {
         return activeBalances[key]?.ledger || defaultLedger;
       }
     }
-
     return defaultLedger;
   };
 
@@ -126,15 +120,6 @@ export const useActiveBalances = ({
     }
   };
 
-  const documentRef = useRef<Document>(document);
-
-  // Listen for new account balance events.
-  useEventListener(
-    'new-account-balance',
-    newAccountBalancesCallback,
-    documentRef
-  );
-
   // Update account balances states on initial render.
   //
   // If `BalancesController` does not return an account balances record for an account, the balance
@@ -163,6 +148,15 @@ export const useActiveBalances = ({
   useEffectIgnoreInitial(() => {
     setStateWithRef({}, setActiveBalances, activeBalancesRef);
   }, [network]);
+
+  // Listen for new account balance events.
+  const documentRef = useRef<Document>(document);
+
+  useEventListener(
+    'new-account-balance',
+    newAccountBalancesCallback,
+    documentRef
+  );
 
   return {
     activeBalances,

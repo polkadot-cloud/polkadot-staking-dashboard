@@ -27,10 +27,10 @@ export const UnlockChunks = () => {
     setModalHeight,
     modalMaxHeight,
   } = useOverlay().modal;
+  const { getLedger } = useBalances();
   const { notEnoughFunds } = useTxMeta();
   const { activeAccount } = useActiveAccounts();
   const { getPoolUnlocking } = useActivePools();
-  const { getLedger } = useBalances();
   const { integrityChecked } = useLedgerHardware();
   const { bondFor } = options || {};
 
