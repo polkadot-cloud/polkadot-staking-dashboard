@@ -4,14 +4,14 @@
 import type { VoidFn } from '@polkadot-cloud/react/types';
 import { rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import { APIController } from 'static/APController';
+import type { AnyApi } from 'types';
 import type {
   ActiveBalance,
   Balances,
   Ledger,
   UnlockChunkRaw,
 } from 'contexts/Balances/types';
-import { APIController } from 'static/APController';
-import type { AnyApi } from 'types';
 
 export class BalancesController {
   // ------------------------------------------------------
@@ -49,8 +49,7 @@ export class BalancesController {
     // Subscribe to and add new accounts data.
     accountsAdded.forEach(async (address) => {
       this.accounts.push(address);
-
-      const unsub = await api.queryMulti<AnyApi>(
+      const unsub = await api.queryMulti(
         [
           [api.query.staking.ledger, address],
           [api.query.system.account, address],
@@ -82,7 +81,6 @@ export class BalancesController {
     const accountsRemoved = this.accounts.filter(
       (account) => !newAccounts.includes(account)
     );
-
     // Unsubscribe from removed account subscriptions.
     accountsRemoved.forEach((account) => {
       this._unsubs[account]();
@@ -117,11 +115,11 @@ export class BalancesController {
 
     this.ledgers[address] = {
       stash: stash.toString(),
-      active: this.balanceToBigNumber(active.toString()),
-      total: this.balanceToBigNumber(total.toString()),
+      active: this.stringToBigNumber(active.toString()),
+      total: this.stringToBigNumber(total.toString()),
       unlocking: unlocking.toHuman().map(({ era, value }: UnlockChunkRaw) => ({
         era: Number(rmCommas(era)),
-        value: this.balanceToBigNumber(value).toString(),
+        value: this.stringToBigNumber(value).toString(),
       })),
     };
   };
@@ -135,32 +133,34 @@ export class BalancesController {
     this.balances[address] = {
       nonce: nonce.toNumber(),
       balance: {
-        free: this.balanceToBigNumber(accountData.free.toString()),
-        reserved: this.balanceToBigNumber(accountData.reserved.toString()),
-        frozen: this.balanceToBigNumber(accountData.frozen.toString()),
+        free: this.stringToBigNumber(accountData.free.toString()),
+        reserved: this.stringToBigNumber(accountData.reserved.toString()),
+        frozen: this.stringToBigNumber(accountData.frozen.toString()),
       },
-      locks: locksResult.toHuman().map((lock: AnyApi) => ({
-        ...lock,
-        id: lock.id.trim(),
-        amount: this.balanceToBigNumber(lock.amount),
-      })),
+      locks: locksResult
+        .toHuman()
+        .map((lock: { id: string; amount: string }) => ({
+          ...lock,
+          id: lock.id.trim(),
+          amount: this.stringToBigNumber(lock.amount),
+        })),
     };
   };
 
   // Gets an `ActiveBalance` from class members for the given address if it exists.
   static getAccountBalances = (address: string): ActiveBalance | undefined => {
-    const maybeLedger = this.ledgers[address];
-    const maybeBalances = this.balances[address];
+    const ledger = this.ledgers[address];
+    const balances = this.balances[address];
 
     // Account info has not synced yet. Note that `ledger` may not exist and therefore cannot be
     // tested.
-    if (maybeBalances === undefined) {
+    if (balances === undefined) {
       return undefined;
     }
 
     return {
-      ledger: maybeLedger,
-      balances: maybeBalances,
+      ledger,
+      balances,
     };
   };
 
@@ -184,7 +184,7 @@ export class BalancesController {
   // ------------------------------------------------------
 
   // Converts a balance string into a `BigNumber`.
-  static balanceToBigNumber = (value: string): BigNumber =>
+  static stringToBigNumber = (value: string): BigNumber =>
     new BigNumber(rmCommas(value));
 
   // Checks if event detailis a valid `new-account-balance` event. Note that `ledger` may not exist
