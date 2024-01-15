@@ -67,15 +67,17 @@ export const Accounts = () => {
 
   // Calculate transferrable balance of an address.
   const getTransferrableBalance = (address: MaybeAddress) => {
+    // Get fee reserve from local storage.
     const feeReserve = getFeeReserve(address);
+    // Get amount required for existential deposit.
     const edReserved = getEdReserved(address, existentialDeposit);
-    const balance = getBalance(address);
-
-    const freeMinusReserve = BigNumber.max(
-      balance.free.minus(edReserved).minus(feeReserve),
+    // Gets actual balance numbers.
+    const { free, frozen } = getBalance(address);
+    // Minus reserves and frozen balance from free to get transferrable.
+    return BigNumber.max(
+      free.minus(edReserved).minus(feeReserve).minus(frozen),
       0
     );
-    return BigNumber.max(freeMinusReserve.minus(balance.frozen), 0);
   };
 
   const stashes: string[] = [];
