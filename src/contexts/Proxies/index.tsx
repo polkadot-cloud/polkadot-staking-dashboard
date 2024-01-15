@@ -298,7 +298,6 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   return (
     <ProxiesContext.Provider
       value={{
-        proxies: proxiesRef.current,
         handleDeclareDelegate,
         getDelegates,
         getProxyDelegate,

@@ -47,5 +47,4 @@ export interface ProxiesContextInterface {
   getProxiedAccounts: (a: MaybeAddress) => ProxiedAccounts;
   handleDeclareDelegate: (delegator: string) => Promise<AnyJson[]>;
   formatProxiesToDelegates: () => Delegates;
-  proxies: Proxies;
 }
