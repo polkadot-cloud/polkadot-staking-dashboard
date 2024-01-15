@@ -7,7 +7,7 @@ import type { MaybeAddress } from 'types';
 export interface BalancesContextInterface {
   activeBalances: ActiveBalancesState;
   getNonce: (address: MaybeAddress) => number;
-  getBalanceLocks: (address: MaybeAddress) => BalanceLocks;
+  getLocks: (address: MaybeAddress) => BalanceLocks;
   getBalance: (address: MaybeAddress) => Balance;
   getLedger: (source: ActiveLedgerSource) => Ledger;
   balancesSynced: boolean;

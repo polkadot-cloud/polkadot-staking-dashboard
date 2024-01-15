@@ -39,7 +39,7 @@ export const BalanceChart = () => {
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
   const { accountHasSigner } = useImportedAccounts();
-  const { getBalance, getBalanceLocks } = useBalances();
+  const { getBalance, getLocks } = useBalances();
   const { feeReserve, getTransferOptions } = useTransferOptions();
 
   const balance = getBalance(activeAccount);
@@ -78,7 +78,7 @@ export const BalanceChart = () => {
   );
 
   // Check account non-staking locks.
-  const { locks } = getBalanceLocks(activeAccount);
+  const { locks } = getLocks(activeAccount);
   const locksStaking = locks.find(({ id }) => id === 'staking');
   const lockStakingAmount = locksStaking
     ? locksStaking.amount

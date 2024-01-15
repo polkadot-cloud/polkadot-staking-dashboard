@@ -61,7 +61,7 @@ export const Accounts = () => {
     useState<ImportedAccount[]>(accounts);
 
   // Listen to balance updates for entire accounts list.
-  const { getBalanceLocks, getBalance, getEdReserved } = useActiveBalances({
+  const { getLocks, getBalance, getEdReserved } = useActiveBalances({
     accounts: localAccounts.map(({ address }) => address),
   });
 
@@ -83,7 +83,7 @@ export const Accounts = () => {
   const stashes: string[] = [];
   // accumulate imported stash accounts
   for (const { address } of localAccounts) {
-    const { locks } = getBalanceLocks(address);
+    const { locks } = getLocks(address);
 
     // account is a stash if they have an active `staking` lock
     if (locks.find(({ id }) => id === 'staking')) {

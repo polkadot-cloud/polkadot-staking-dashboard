@@ -12,7 +12,7 @@ import BigNumber from 'bignumber.js';
 export const defaultBalancesContext: BalancesContextInterface = {
   activeBalances: {},
   getNonce: (address) => 0,
-  getBalanceLocks: (address) => ({ locks: [], maxLock: new BigNumber(0) }),
+  getLocks: (address) => ({ locks: [], maxLock: new BigNumber(0) }),
   getBalance: (address) => defaultBalance,
   getLedger: (source) => defaultLedger,
   balancesSynced: false,

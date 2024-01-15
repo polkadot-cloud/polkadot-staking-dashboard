@@ -56,7 +56,7 @@ export const useActiveBalances = ({
     )?.amount || new BigNumber(0);
 
   // Gets an active balance's locks.
-  const getBalanceLocks = (address: MaybeAddress): BalanceLocks => {
+  const getLocks = (address: MaybeAddress): BalanceLocks => {
     if (address) {
       const maybeLocks = activeBalances[address]?.balances.locks;
       if (maybeLocks) {
@@ -94,7 +94,7 @@ export const useActiveBalances = ({
     address: MaybeAddress,
     existentialDeposit: BigNumber
   ): BigNumber => {
-    const { locks, maxLock } = getBalanceLocks(address);
+    const { locks, maxLock } = getLocks(address);
     if (address && locks) {
       return BigNumber.max(existentialDeposit.minus(maxLock), 0);
     }
@@ -160,7 +160,7 @@ export const useActiveBalances = ({
 
   return {
     activeBalances,
-    getBalanceLocks,
+    getLocks,
     getBalance,
     getLedger,
     getEdReserved,
