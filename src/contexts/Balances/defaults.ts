@@ -13,7 +13,7 @@ export const defaultBalancesContext: BalancesContextInterface = {
   activeBalances: {},
   getNonce: (address) => 0,
   getBalanceLocks: (address) => ({ locks: [], maxLock: new BigNumber(0) }),
-  getActiveBalance: (address) => defaultActiveBalance,
-  getActiveLedger: (source) => defaultLedger,
+  getBalance: (address) => defaultActiveBalance,
+  getLedger: (source) => defaultLedger,
   balancesSynced: false,
 };

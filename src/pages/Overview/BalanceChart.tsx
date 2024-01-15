@@ -39,10 +39,10 @@ export const BalanceChart = () => {
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
   const { accountHasSigner } = useImportedAccounts();
-  const { getActiveBalance, getBalanceLocks } = useBalances();
+  const { getBalance, getBalanceLocks } = useBalances();
   const { feeReserve, getTransferOptions } = useTransferOptions();
 
-  const balance = getActiveBalance(activeAccount);
+  const balance = getBalance(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
   const { edReserved } = allTransferOptions;
   const poolBondOpions = allTransferOptions.pool;

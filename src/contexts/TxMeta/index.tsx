@@ -55,11 +55,11 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
   const txSignatureRef = useRef(txSignature);
 
   // Listen to balance updates for the active account and active proxy.
-  const { getActiveBalance, getEdReserved } = useActiveBalances({
+  const { getBalance, getEdReserved } = useActiveBalances({
     accounts: [sender],
   });
 
-  const senderBalances = getActiveBalance(sender);
+  const senderBalances = getBalance(sender);
 
   const resetTxFees = () => {
     setTxFees(new BigNumber(0));

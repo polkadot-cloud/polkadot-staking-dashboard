@@ -37,7 +37,7 @@ export const useActiveBalances = ({
   const activeBalancesRef = useRef(activeBalances);
 
   // Gets an active balance's balance.
-  const getActiveBalance = (address: MaybeAddress) => {
+  const getBalance = (address: MaybeAddress) => {
     if (address) {
       const maybeBalance = activeBalances[address]?.balances.balance;
       if (maybeBalance) {
@@ -73,7 +73,7 @@ export const useActiveBalances = ({
   // Gets a ledger for a stash address.
   // TODO: either provide a `key` or `stash` property instead of `address`.
 
-  const getActiveLedger = (source: ActiveLedgerSource): Ledger => {
+  const getLedger = (source: ActiveLedgerSource): Ledger => {
     if ('stash' in source) {
       const stash = source['stash'];
 
@@ -142,7 +142,7 @@ export const useActiveBalances = ({
   // `new-account-balance` event will be emitted when the balance is ready to be sycned with the UI.
   useEffect(() => {
     // Adds an active balance record if it exists in `BalancesController`.
-    const getActiveBalances = (account: MaybeAddress) => {
+    const getBalances = (account: MaybeAddress) => {
       if (account) {
         const accountBalances = BalancesController.getAccountBalances(account);
         if (accountBalances) {
@@ -153,7 +153,7 @@ export const useActiveBalances = ({
     // Construct new active balances state.
     const newActiveBalances: ActiveBalancesState = {};
     for (const account of uniqueAccounts) {
-      getActiveBalances(account);
+      getBalances(account);
     }
     // Commit new active balances to state.
     setStateWithRef(newActiveBalances, setActiveBalances, activeBalancesRef);
@@ -167,8 +167,8 @@ export const useActiveBalances = ({
   return {
     activeBalances,
     getBalanceLocks,
-    getActiveBalance,
-    getActiveLedger,
+    getBalance,
+    getLedger,
     getEdReserved,
   };
 };

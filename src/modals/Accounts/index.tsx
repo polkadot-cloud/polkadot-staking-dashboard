@@ -61,16 +61,15 @@ export const Accounts = () => {
     useState<ImportedAccount[]>(accounts);
 
   // Listen to balance updates for entire accounts list.
-  const { getBalanceLocks, getActiveBalance, getEdReserved } =
-    useActiveBalances({
-      accounts: localAccounts.map(({ address }) => address),
-    });
+  const { getBalanceLocks, getBalance, getEdReserved } = useActiveBalances({
+    accounts: localAccounts.map(({ address }) => address),
+  });
 
   // Calculate transferrable balance of an address.
   const getTransferrableBalance = (address: MaybeAddress) => {
     const feeReserve = getFeeReserve(address);
     const edReserved = getEdReserved(address, existentialDeposit);
-    const balance = getActiveBalance(address);
+    const balance = getBalance(address);
 
     const freeMinusReserve = BigNumber.max(
       balance.free.minus(edReserved).minus(feeReserve),

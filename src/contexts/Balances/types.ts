@@ -8,8 +8,8 @@ export interface BalancesContextInterface {
   activeBalances: ActiveBalancesState;
   getNonce: (address: MaybeAddress) => number;
   getBalanceLocks: (address: MaybeAddress) => BalanceLocks;
-  getActiveBalance: (address: MaybeAddress) => Balance;
-  getActiveLedger: (source: ActiveLedgerSource) => Ledger;
+  getBalance: (address: MaybeAddress) => Balance;
+  getLedger: (source: ActiveLedgerSource) => Ledger;
   balancesSynced: boolean;
 }
 
