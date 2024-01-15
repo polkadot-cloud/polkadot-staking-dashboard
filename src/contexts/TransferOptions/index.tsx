@@ -19,7 +19,7 @@ import {
   defaultTransferOptions,
   defaultTransferOptionsContext,
 } from './defaults';
-import { getMaxLock, getUnlocking } from 'contexts/Balances/Utils';
+import { getUnlocking } from 'contexts/Balances/Utils';
 
 export const TransferOptionsContext =
   createContext<TransferOptionsContextInterface>(defaultTransferOptionsContext);
@@ -57,8 +57,7 @@ export const TransferOptionsProvider = ({
       return defaultTransferOptions;
     }
 
-    const locks = getBalanceLocks(address);
-    const maxLock = getMaxLock(locks);
+    const { maxLock } = getBalanceLocks(address);
     const { free, frozen } = getActiveBalance(address);
     const { active, total, unlocking } = getActiveStashLedger(address);
 

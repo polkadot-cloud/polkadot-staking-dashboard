@@ -4,13 +4,17 @@
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react';
 import type { MaybeAddress } from '@polkadot-cloud/react/types';
 import { setStateWithRef } from '@polkadot-cloud/utils';
-import type { ActiveBalancesState, Ledger } from 'contexts/Balances/types';
+import type {
+  ActiveBalancesState,
+  BalanceLock,
+  BalanceLocks,
+  Ledger,
+} from 'contexts/Balances/types';
 import { useNetwork } from 'contexts/Network';
 import { useEffect, useRef, useState } from 'react';
 import { BalancesController } from 'static/BalancesController';
 import { isCustomEvent } from 'static/utils';
 import { useEventListener } from 'usehooks-ts';
-import { getMaxLock } from 'contexts/Balances/Utils';
 import BigNumber from 'bignumber.js';
 import {
   defaultActiveBalance,
@@ -42,18 +46,31 @@ export const useActiveBalances = ({
     return defaultActiveBalance;
   };
 
+  // Gets the largest lock balance, dictating the total amount of unavailable funds from locks.
+  const getMaxLock = (locks: BalanceLock[]): BigNumber =>
+    locks.reduce(
+      (prev, current) =>
+        prev.amount.isGreaterThan(current.amount) ? prev : current,
+      { amount: new BigNumber(0) }
+    )?.amount || new BigNumber(0);
+
   // Gets an active balance's locks.
-  const getBalanceLocks = (address: MaybeAddress) => {
+  const getBalanceLocks = (address: MaybeAddress): BalanceLocks => {
     if (address) {
       const maybeLocks = activeBalances[address]?.balances.locks;
       if (maybeLocks) {
-        return maybeLocks;
+        return { locks: maybeLocks, maxLock: getMaxLock(maybeLocks) };
       }
     }
-    return [];
+
+    return {
+      locks: [],
+      maxLock: new BigNumber(0),
+    };
   };
 
   // Gets a ledger for a stash address.
+  // TODO: either provide a `key` or `stash` property instead of `address`.
   const getActiveStashLedger = (address: MaybeAddress): Ledger =>
     Object.values(activeBalances).find(
       (activeBalance) => activeBalance.ledger?.['stash'] === address
@@ -64,9 +81,8 @@ export const useActiveBalances = ({
     address: MaybeAddress,
     existentialDeposit: BigNumber
   ): BigNumber => {
-    const locks = getBalanceLocks(address);
+    const { locks, maxLock } = getBalanceLocks(address);
     if (address && locks) {
-      const maxLock = getMaxLock(locks);
       return BigNumber.max(existentialDeposit.minus(maxLock), 0);
     }
     return new BigNumber(0);
