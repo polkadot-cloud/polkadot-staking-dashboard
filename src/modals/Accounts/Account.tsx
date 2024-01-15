@@ -9,13 +9,13 @@ import { ExtensionIcons } from '@polkadot-cloud/assets/extensions';
 import LedgerSVG from '@polkadot-cloud/assets/extensions/svg/ledgersquare.svg?react';
 import PolkadotVaultSVG from '@polkadot-cloud/assets/extensions/svg/polkadotvault.svg?react';
 import { Polkicon } from '@polkadot-cloud/react';
-import { useTransferOptions } from 'contexts/TransferOptions';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
+import BigNumber from 'bignumber.js';
 
 export const AccountButton = ({
   label,
@@ -23,6 +23,7 @@ export const AccountButton = ({
   delegator,
   proxyType,
   noBorder = false,
+  transferrableBalance,
 }: AccountItemProps) => {
   const { t } = useTranslation('modals');
   const { getAccount } = useImportedAccounts();
@@ -35,8 +36,6 @@ export const AccountButton = ({
   } = useActiveAccounts();
   const { setModalStatus } = useOverlay().modal;
   const { units, unit } = useNetwork().networkData;
-  const { getTransferOptions } = useTransferOptions();
-  const { transferrableBalance } = getTransferOptions(address || '');
 
   // Accumulate account data.
   const meta = getAccount(address || '');
@@ -125,7 +124,10 @@ export const AccountButton = ({
         </section>
         <section className="foot">
           <span className="balance">
-            {`${t('free')}: ${planckToUnit(transferrableBalance, units)
+            {`${t('free')}: ${planckToUnit(
+              transferrableBalance || new BigNumber(0),
+              units
+            )
               .decimalPlaces(3)
               .toFormat()} ${unit}`}
           </span>

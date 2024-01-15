@@ -14,16 +14,12 @@ import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';
-import {
-  getMaxLock,
-  getLocalFeeReserve,
-  getUnlocking,
-  setLocalFeeReserve,
-} from './Utils';
+import { getLocalFeeReserve, setLocalFeeReserve } from './Utils';
 import {
   defaultTransferOptions,
   defaultTransferOptionsContext,
 } from './defaults';
+import { getUnlocking } from 'contexts/Balances/Utils';
 
 export const TransferOptionsContext =
   createContext<TransferOptionsContextInterface>(defaultTransferOptionsContext);
@@ -44,7 +40,7 @@ export const TransferOptionsProvider = ({
     network,
     networkData: { units, defaultFeeReserve },
   } = useNetwork();
-  const { getStashLedger, getBalance, getLocks } = useBalances();
+  const { getLedger, getBalance, getLocks } = useBalances();
   const { existentialDeposit } = consts;
 
   // A user-configurable reserve amount to be used to pay for transaction fees.
@@ -52,16 +48,17 @@ export const TransferOptionsProvider = ({
     getLocalFeeReserve(activeAccount, defaultFeeReserve, { network, units })
   );
 
-  // Get the bond and unbond amounts available to the user
+  // Calculates various balances for an account pertaining to free balance, nominating and pools.
+  // Gets balance numbers from `useBalances` state, which only takes the active accounts from
+  // `BalancesController`.
   const getTransferOptions = (address: MaybeAddress): TransferOptions => {
     if (getAccount(address) === null) {
       return defaultTransferOptions;
     }
 
+    const { maxLock } = getLocks(address);
     const { free, frozen } = getBalance(address);
-    const { active, total, unlocking } = getStashLedger(address);
-    const locks = getLocks(address);
-    const maxLock = getMaxLock(locks);
+    const { active, total, unlocking } = getLedger({ stash: address });
 
     // Calculate a forced amount of free balance that needs to be reserved to keep the account
     // alive. Deducts `locks` from free balance reserve needed.
@@ -72,31 +69,24 @@ export const TransferOptionsProvider = ({
       free.minus(edReserved).minus(feeReserve),
       0
     );
-
     // Free balance that can be transferred.
     const transferrableBalance = BigNumber.max(
       freeMinusReserve.minus(frozen),
       0
     );
-
-    // Gree balance to pay for tsx fees. Does not factor `feeReserve`.
+    // Free balance to pay for tx fees. Does not factor `feeReserve`.
     const balanceTxFees = BigNumber.max(
       free.minus(edReserved).minus(frozen),
       0
     );
-
-    // Staking specific balances.
-    //
     // Total amount unlocking and unlocked.
     const { totalUnlocking, totalUnlocked } = getUnlocking(
       unlocking,
       activeEra.index
     );
-
     // Free balance to stake after `total` (total staked) ledger amount.
     const freeBalance = BigNumber.max(freeMinusReserve.minus(total), 0);
 
-    // Get nominator-specific balances.
     const nominatorBalances = () => {
       const totalPossibleBond = BigNumber.max(
         freeMinusReserve.minus(totalUnlocking).minus(totalUnlocked),
@@ -112,7 +102,6 @@ export const TransferOptionsProvider = ({
       };
     };
 
-    // Get pool-member-specific balances.
     const poolBalances = () => {
       const unlockingPool = membership?.unlocking || [];
       const {
@@ -148,6 +137,10 @@ export const TransferOptionsProvider = ({
     setFeeReserve(amount);
   };
 
+  // Gets a feeReserve from local storage for an account, or the default value otherwise.
+  const getFeeReserve = (address: MaybeAddress): BigNumber =>
+    getLocalFeeReserve(address, defaultFeeReserve, { network, units });
+
   // Update an account's reserve amount on account or network change.
   useEffectIgnoreInitial(() => {
     setFeeReserve(
@@ -161,6 +154,7 @@ export const TransferOptionsProvider = ({
         getTransferOptions,
         setFeeReserveBalance,
         feeReserve,
+        getFeeReserve,
       }}
     >
       {children}

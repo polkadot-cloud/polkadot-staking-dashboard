@@ -41,6 +41,12 @@ export interface ProxiedAccount {
   proxyType: ProxyType;
 }
 
+export interface ProxyDelegateWithBalance {
+  transferrableBalance: BigNumber;
+  delegate: string;
+  proxyType: ProxyType;
+}
+
 export interface ProxiesContextInterface {
   getDelegates: (a: MaybeAddress) => Proxy | undefined;
   getProxyDelegate: (x: MaybeAddress, y: MaybeAddress) => ProxyDelegate | null;

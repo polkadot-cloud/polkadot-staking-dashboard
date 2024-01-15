@@ -22,6 +22,9 @@ import type { OtherAccountsContextInterface } from './types';
 import { defaultOtherAccountsContext } from './defaults';
 import { getLocalExternalAccounts } from '../ExternalAccounts/Utils';
 import type { ExternalAccountImportType } from '../ExternalAccounts/types';
+import { isCustomEvent } from 'static/utils';
+import { useExternalAccounts } from '../ExternalAccounts';
+import { useEventListener } from 'usehooks-ts';
 
 export const OtherAccountsContext =
   createContext<OtherAccountsContextInterface>(defaultOtherAccountsContext);
@@ -38,6 +41,7 @@ export const OtherAccountsProvider = ({
     networkData: { ss58 },
   } = useNetwork();
   const { checkingInjectedWeb3 } = useExtensions();
+  const { addExternalAccount } = useExternalAccounts();
   const { extensionAccountsSynced } = useExtensionAccounts();
   const { activeAccount, setActiveAccount } = useActiveAccounts();
 
@@ -177,6 +181,24 @@ export const OtherAccountsProvider = ({
       replaceOtherAccount(account);
     }
   };
+
+  // Handle new external account custom events.
+  const newExternalAccountCallback = (e: Event) => {
+    if (isCustomEvent(e)) {
+      const result = addExternalAccount(e.detail.stash, 'system');
+      if (result) {
+        addOrReplaceOtherAccount(result.account, result.type);
+      }
+    }
+  };
+
+  // Listen for new external account events.
+  const documentRef = useRef<Document>(document);
+  useEventListener(
+    'new-external-account',
+    newExternalAccountCallback,
+    documentRef
+  );
 
   // Re-sync other accounts on network switch. Waits for `injectedWeb3` to be injected.
   useEffect(() => {

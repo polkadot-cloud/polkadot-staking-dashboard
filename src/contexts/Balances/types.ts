@@ -5,19 +5,30 @@ import type BigNumber from 'bignumber.js';
 import type { MaybeAddress } from 'types';
 
 export interface BalancesContextInterface {
-  ledgers: Ledger[];
-  balances: Balances[];
-  getStashLedger: (a: MaybeAddress) => Ledger;
-  getBalance: (address: MaybeAddress) => Balance;
-  getLocks: (address: MaybeAddress) => BalanceLock[];
+  activeBalances: ActiveBalancesState;
   getNonce: (address: MaybeAddress) => number;
+  getLocks: (address: MaybeAddress) => BalanceLocks;
+  getBalance: (address: MaybeAddress) => Balance;
+  getLedger: (source: ActiveLedgerSource) => Ledger;
+  balancesSynced: boolean;
+}
+
+export type ActiveBalancesState = Record<string, ActiveBalance>;
+
+export interface ActiveBalance {
+  ledger: Ledger;
+  balances: Balances;
 }
 
 export interface Balances {
-  address?: string;
   nonce?: number;
   balance?: Balance;
   locks?: BalanceLock[];
+}
+
+export interface BalanceLocks {
+  locks: BalanceLock[];
+  maxLock: BigNumber;
 }
 
 export interface Balance {
@@ -42,9 +53,12 @@ export interface BalanceLock {
 }
 
 export interface Ledger {
-  address: MaybeAddress;
   stash: string | null;
   active: BigNumber;
   total: BigNumber;
   unlocking: UnlockChunk[];
 }
+
+export type ActiveLedgerSource = {
+  [key in 'stash' | 'key']?: MaybeAddress;
+};

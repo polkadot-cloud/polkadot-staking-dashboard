@@ -1,32 +1,18 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { VoidFn } from '@polkadot/api/types';
-import {
-  addedTo,
-  matchedProperties,
-  removedFrom,
-  rmCommas,
-  setStateWithRef,
-} from '@polkadot-cloud/utils';
-import BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
-import { useApi } from 'contexts/Api';
-import type { AnyApi, MaybeAddress } from 'types';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
-import { useNetwork } from 'contexts/Network';
+import type { MaybeAddress } from 'types';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import { getLedger } from './Utils';
 import * as defaults from './defaults';
-import type {
-  Balances,
-  BalancesContextInterface,
-  Ledger,
-  UnlockChunkRaw,
-} from './types';
+import type { BalancesContextInterface } from './types';
+import { useEventListener } from 'usehooks-ts';
+import { isCustomEvent } from 'static/utils';
+import { BalancesController } from 'static/BalancesController';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useActiveBalances } from 'library/Hooks/useActiveBalances';
+import { useBonded } from 'contexts/Bonded';
 
 export const BalancesContext = createContext<BalancesContextInterface>(
   defaults.defaultBalancesContext
@@ -35,194 +21,70 @@ export const BalancesContext = createContext<BalancesContextInterface>(
 export const useBalances = () => useContext(BalancesContext);
 
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
-  const { api, isReady } = useApi();
-  const { network } = useNetwork();
-  const { accounts, getAccount } = useImportedAccounts();
-  const { addOrReplaceOtherAccount } = useOtherAccounts();
-  const { addExternalAccount } = useExternalAccounts();
-  const [balances, setBalances] = useState<Balances[]>([]);
-  const balancesRef = useRef(balances);
+  const { getBondedAccount } = useBonded();
+  const { accounts } = useImportedAccounts();
+  const { activeAccount, activeProxy } = useActiveAccounts();
+  const controller = getBondedAccount(activeAccount);
 
-  const [ledgers, setLedgers] = useState<Ledger[]>([]);
-  const ledgersRef = useRef(ledgers);
+  // Listen to balance updates for the active account, active proxy and controller..
+  const { activeBalances, getLocks, getBalance, getLedger } = useActiveBalances(
+    {
+      accounts: [activeAccount, activeProxy, controller],
+    }
+  );
 
-  const unsubs = useRef<Record<string, VoidFn>>({});
+  // Store whether balances for all imported accounts have been synced.
+  const [balancesSynced, setBalancesSynced] = useState<boolean>(false);
 
-  // Handle the syncing of accounts on accounts change.
-  const handleSyncAccounts = () => {
-    // Sync removed accounts.
-    const handleRemovedAccounts = () => {
-      const removed = removedFrom(accounts, ledgersRef.current, [
-        'address',
-      ]).map(({ address }) => address);
-
-      removed?.forEach((address) => {
-        const unsub = unsubs.current[address];
-        if (unsub) {
-          unsub();
-        }
-      });
-      unsubs.current = Object.fromEntries(
-        Object.entries(unsubs.current).filter(([key]) => !removed.includes(key))
-      );
-    };
-    // Sync added accounts.
-    const handleAddedAccounts = () => {
-      addedTo(accounts, ledgersRef.current, ['address'])?.map(({ address }) =>
-        handleSubscriptions(address)
-      );
-    };
-    // Sync existing accounts.
-    const handleExistingAccounts = () => {
-      setStateWithRef(
-        matchedProperties(accounts, ledgersRef.current, ['address']),
-        setLedgers,
-        ledgersRef
-      );
-    };
-    handleRemovedAccounts();
-    handleAddedAccounts();
-    handleExistingAccounts();
+  // Check all accounts have been synced. App-wide syncing state for all accounts.
+  const newAccountBalancesCallback = (e: Event) => {
+    if (
+      isCustomEvent(e) &&
+      BalancesController.isValidNewAccountBalanceEvent(e)
+    ) {
+      // Update whether all account balances have been synced. Uses greater than to account for
+      // possible errors on the API side.
+      checkBalancesSynced();
+    }
   };
 
-  const handleSubscriptions = async (address: string) => {
-    if (!api) {
-      return undefined;
-    }
-
-    const unsub = await api.queryMulti<AnyApi>(
-      [
-        [api.query.staking.ledger, address],
-        [api.query.system.account, address],
-        [api.query.balances.locks, address],
-      ],
-      async ([ledger, { data: accountData, nonce }, locks]) => {
-        const handleLedger = () => {
-          const newLedger = ledger.unwrapOr(null);
-
-          if (newLedger !== null) {
-            const { stash, total, active, unlocking } = newLedger;
-
-            // add stash as external account if not present
-            if (!getAccount(stash.toString())) {
-              const result = addExternalAccount(stash.toString(), 'system');
-              if (result) {
-                addOrReplaceOtherAccount(result.account, result.type);
-              }
-            }
-
-            setStateWithRef(
-              Object.values([...ledgersRef.current])
-                // remove stale account if it's already in list
-                .filter((l) => l.stash !== stash.toString())
-                // add new ledger record to list.
-                .concat({
-                  address,
-                  stash: stash.toString(),
-                  active: new BigNumber(rmCommas(active.toString())),
-                  total: new BigNumber(rmCommas(total.toString())),
-                  unlocking: unlocking
-                    .toHuman()
-                    .map(({ era, value }: UnlockChunkRaw) => ({
-                      era: Number(rmCommas(era)),
-                      value: new BigNumber(rmCommas(value)),
-                    })),
-                }),
-              setLedgers,
-              ledgersRef
-            );
-          } else {
-            // no ledger: remove account if it's already in list.
-            setStateWithRef(
-              Object.values([...ledgersRef.current]).filter(
-                (l) => l.address !== address
-              ),
-              setLedgers,
-              ledgersRef
-            );
-          }
-        };
-
-        const handleAccount = () => {
-          const free = new BigNumber(accountData.free.toString());
-          const newBalances: Balances = {
-            address,
-            nonce: nonce.toNumber(),
-            balance: {
-              free,
-              reserved: new BigNumber(accountData.reserved.toString()),
-              frozen: new BigNumber(accountData.frozen.toString()),
-            },
-            locks: locks.toHuman().map((l: AnyApi) => ({
-              ...l,
-              id: l.id.trim(),
-              amount: new BigNumber(rmCommas(l.amount)),
-            })),
-          };
-
-          setStateWithRef(
-            Object.values(balancesRef.current)
-              .filter((a) => a.address !== address)
-              .concat(newBalances),
-            setBalances,
-            balancesRef
-          );
-        };
-
-        handleLedger();
-        handleAccount();
-      }
+  // Check whether all accounts have been synced and update state accordingly.
+  const checkBalancesSynced = () => {
+    setBalancesSynced(
+      Object.keys(BalancesController.balances).length === accounts.length
     );
-    unsubs.current[address] = unsub;
-    return unsub;
   };
 
-  const unsubAll = () => {
-    for (const unsub of Object.values(unsubs.current)) {
-      unsub();
+  // Gets an account's nonce directly from `BalanceController`. Used at the time of building a
+  // payload.
+  const getNonce = (address: MaybeAddress) => {
+    if (address) {
+      const maybeNonce = BalancesController.balances[address]?.nonce;
+      if (maybeNonce) {
+        return maybeNonce;
+      }
     }
-    unsubs.current = {};
+    return 0;
   };
 
-  // fetch account balances & ledgers. Remove or add subscriptions
-  useEffectIgnoreInitial(() => {
-    if (isReady) {
-      handleSyncAccounts();
-    }
-  }, [accounts, network, isReady]);
+  const documentRef = useRef<Document>(document);
 
-  // Unsubscribe from subscriptions on network change & unmount.
-  useEffectIgnoreInitial(() => {
-    unsubAll();
-    return () => unsubAll();
-  }, [network]);
-
-  // Gets a ledger for a stash address.
-  const getStashLedger = (address: MaybeAddress) =>
-    getLedger(ledgersRef.current, 'stash', address);
-
-  // Gets an account's balance metadata.
-  const getBalance = (address: MaybeAddress) =>
-    balancesRef.current.find((a) => a.address === address)?.balance ||
-    defaults.defaultBalance;
-
-  // Gets an account's locks.
-  const getLocks = (address: MaybeAddress) =>
-    balancesRef.current.find((a) => a.address === address)?.locks ?? [];
-
-  // Gets an account's nonce.
-  const getNonce = (address: MaybeAddress) =>
-    balancesRef.current.find((a) => a.address === address)?.nonce ?? 0;
+  // Listen for new account balance events.
+  useEventListener(
+    'new-account-balance',
+    newAccountBalancesCallback,
+    documentRef
+  );
 
   return (
     <BalancesContext.Provider
       value={{
-        ledgers: ledgersRef.current,
-        balances: balancesRef.current,
-        getStashLedger,
-        getBalance,
-        getLocks,
+        activeBalances,
         getNonce,
+        getLocks,
+        getBalance,
+        getLedger,
+        balancesSynced,
       }}
     >
       {children}
