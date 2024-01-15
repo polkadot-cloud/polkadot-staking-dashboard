@@ -5,7 +5,7 @@
 import BigNumber from 'bignumber.js';
 import type { Balance, Ledger } from 'contexts/Balances/types';
 
-export const defaultActiveBalance: Balance = {
+export const defaultBalance: Balance = {
   free: new BigNumber(0),
   reserved: new BigNumber(0),
   frozen: new BigNumber(0),

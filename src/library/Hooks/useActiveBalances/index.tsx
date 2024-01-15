@@ -18,7 +18,7 @@ import { isCustomEvent } from 'static/utils';
 import { useEventListener } from 'usehooks-ts';
 import BigNumber from 'bignumber.js';
 import {
-  defaultActiveBalance,
+  defaultBalance,
   defaultLedger,
 } from 'static/BalancesController/defaults';
 
@@ -44,7 +44,7 @@ export const useActiveBalances = ({
         return maybeBalance;
       }
     }
-    return defaultActiveBalance;
+    return defaultBalance;
   };
 
   // Gets the largest lock balance, dictating the total amount of unavailable funds from locks.

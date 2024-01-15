@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import {
-  defaultActiveBalance,
+  defaultBalance,
   defaultLedger,
 } from 'static/BalancesController/defaults';
 import type { BalancesContextInterface } from './types';
@@ -13,7 +13,7 @@ export const defaultBalancesContext: BalancesContextInterface = {
   activeBalances: {},
   getNonce: (address) => 0,
   getBalanceLocks: (address) => ({ locks: [], maxLock: new BigNumber(0) }),
-  getBalance: (address) => defaultActiveBalance,
+  getBalance: (address) => defaultBalance,
   getLedger: (source) => defaultLedger,
   balancesSynced: false,
 };

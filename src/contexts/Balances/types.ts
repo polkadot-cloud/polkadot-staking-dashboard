@@ -59,8 +59,6 @@ export interface Ledger {
   unlocking: UnlockChunk[];
 }
 
-export type ActiveLedgerKeys = 'stash' | 'key';
-
 export type ActiveLedgerSource = {
-  [key in ActiveLedgerKeys]?: MaybeAddress;
+  [key in 'stash' | 'key']?: MaybeAddress;
 };
