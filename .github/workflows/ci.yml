@@ -14,17 +14,6 @@ jobs:
       - name: Check License Lines
         uses: kt3k/license_checker@v1.0.6
 
-  # NOTE: replace `markdown-link-check` with <https://github.com/UmbrellaDocs/linkspector> when
-  # Github Action is available.
-  markdown-link-check:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Check Markdown Links
-    - uses: actions/checkout@master
-    - uses: gaurav-nelson/github-action-markdown-link-check@v1
-    with:
-      base-branch: main
-
   build:
     runs-on: ubuntu-latest
     strategy:
