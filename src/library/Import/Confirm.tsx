@@ -9,6 +9,8 @@ import { ConfirmWrapper } from 'library/Import/Wrappers';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useNetwork } from 'contexts/Network';
 import type { ConfirmProps } from './types';
+import { NotificationsController } from 'static/NotificationsController';
+import { ellipsisFn } from '@polkadot-cloud/utils';
 
 export const Confirm = ({
   address,
@@ -21,6 +23,15 @@ export const Confirm = ({
   const { setStatus } = usePrompt();
   const { addOtherAccounts } = useOtherAccounts();
 
+  const addAccountCallback = () => {
+    NotificationsController.emit({
+      title: t('ledgerAccountImported'),
+      subtitle: t('ledgerImportedAccount', {
+        account: ellipsisFn(address),
+      }),
+    });
+  };
+
   return (
     <ConfirmWrapper>
       <Polkicon address={address} size="3rem" />
@@ -31,7 +42,7 @@ export const Confirm = ({
         <ButtonMono
           text={t('importAccount')}
           onClick={() => {
-            const account = addHandler(address, index);
+            const account = addHandler(address, index, addAccountCallback);
             if (account) {
               addOtherAccounts([account]);
               registerSaEvent(

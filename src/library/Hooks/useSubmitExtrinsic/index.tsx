@@ -10,7 +10,6 @@ import { useApi } from 'contexts/Api';
 import { useExtensions } from '@polkadot-cloud/react/hooks';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
-import { useNotifications } from 'contexts/Notifications';
 import { useTxMeta } from 'contexts/TxMeta';
 import type { AnyApi, AnyJson } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -19,6 +18,7 @@ import { useNetwork } from 'contexts/Network';
 import { useBuildPayload } from '../useBuildPayload';
 import { useProxySupported } from '../useProxySupported';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
+import { NotificationsController } from 'static/NotificationsController';
 
 export const useSubmitExtrinsic = ({
   tx,
@@ -33,7 +33,6 @@ export const useSubmitExtrinsic = ({
   const { buildPayload } = useBuildPayload();
   const { activeProxy } = useActiveAccounts();
   const { extensionsStatus } = useExtensions();
-  const { addNotification } = useNotifications();
   const { isProxySupported } = useProxySupported();
   const { handleResetLedgerTask } = useLedgerHardware();
   const { addPending, removePending } = useExtrinsics();
@@ -56,7 +55,7 @@ export const useSubmitExtrinsic = ({
   const fromRef = useRef<string>(from || '');
 
   // Store whether the transaction is in progress.
-  const [submitting, setSubmitting] = useState(false);
+  const [submitting, setSubmitting] = useState<boolean>(false);
 
   // Store the uid of the extrinsic.
   const [uid] = useState<number>(incrementPayloadUid());
@@ -146,10 +145,13 @@ export const useSubmitExtrinsic = ({
         ([id, status]) => id === source && status === 'connected'
       );
 
-      if (!isInstalled) throw new Error(`${t('walletNotFound')}`);
-
-      if (!window?.injectedWeb3?.[source])
+      if (!isInstalled) {
         throw new Error(`${t('walletNotFound')}`);
+      }
+
+      if (!window?.injectedWeb3?.[source]) {
+        throw new Error(`${t('walletNotFound')}`);
+      }
 
       // summons extension popup if not already connected.
       window.injectedWeb3[source].enable(DappName);
@@ -157,31 +159,35 @@ export const useSubmitExtrinsic = ({
 
     const onReady = () => {
       addPending(nonce);
-      addNotification({
+      NotificationsController.emit({
         title: t('pending'),
         subtitle: t('transactionInitiated'),
       });
-      callbackSubmit();
+      if (callbackSubmit && typeof callbackSubmit === 'function') {
+        callbackSubmit();
+      }
     };
 
     const onInBlock = () => {
       setSubmitting(false);
       removePending(nonce);
-      addNotification({
+      NotificationsController.emit({
         title: t('inBlock'),
         subtitle: t('transactionInBlock'),
       });
-      callbackInBlock();
+      if (callbackInBlock && typeof callbackInBlock === 'function') {
+        callbackInBlock();
+      }
     };
 
     const onFinalizedEvent = (method: string) => {
       if (method === 'ExtrinsicSuccess') {
-        addNotification({
+        NotificationsController.emit({
           title: t('finalized'),
           subtitle: t('transactionSuccessful'),
         });
       } else if (method === 'ExtrinsicFailed') {
-        addNotification({
+        NotificationsController.emit({
           title: t('failed'),
           subtitle: t('errorWithTransaction'),
         });
@@ -203,20 +209,25 @@ export const useSubmitExtrinsic = ({
 
     const onError = (type?: string) => {
       resetTx();
-      if (type === 'ledger') handleResetLedgerTask();
+      if (type === 'ledger') {
+        handleResetLedgerTask();
+      }
       removePending(nonce);
-      addNotification({
+      NotificationsController.emit({
         title: t('cancelled'),
         subtitle: t('transactionCancelled'),
       });
     };
 
     const handleStatus = (status: AnyApi) => {
-      if (status.isReady) onReady();
-      if (status.isInBlock) onInBlock();
+      if (status.isReady) {
+        onReady();
+      }
 
       // extrinsic is in block, assume tx completed
       if (status.isInBlock) {
+        onInBlock();
+
         // register sa events
         const callInfo = tx.method.toHuman();
         const txEventKey = `${network}_tx_${callInfo.section}_${callInfo.method}`;
@@ -251,7 +262,9 @@ export const useSubmitExtrinsic = ({
             if (status.isFinalized) {
               events.forEach(({ event: { method } }: AnyApi) => {
                 onFinalizedEvent(method);
-                if (unsubEvents?.includes(method)) unsub();
+                if (unsubEvents?.includes(method)) {
+                  unsub();
+                }
               });
             }
           }
@@ -276,7 +289,9 @@ export const useSubmitExtrinsic = ({
             if (status.isFinalized) {
               events.forEach(({ event: { method } }: AnyApi) => {
                 onFinalizedEvent(method);
-                if (unsubEvents?.includes(method)) unsub();
+                if (unsubEvents?.includes(method)) {
+                  unsub();
+                }
               });
             }
           }

@@ -98,7 +98,7 @@ export const Nominations = ({
                 disabled={btnsDisabled}
                 onClick={() =>
                   openModal({
-                    key: 'ChangeNominations',
+                    key: 'StopNominations',
                     options: {
                       nominations: [],
                       bondFor,

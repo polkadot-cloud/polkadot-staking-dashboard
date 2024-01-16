@@ -24,7 +24,7 @@ export const ClaimPayouts = () => {
   const { setModalHeight, modalMaxHeight } = useOverlay().modal;
 
   // Active modal section.
-  const [section, setSectionState] = useState(0);
+  const [section, setSectionState] = useState<number>(0);
   const sectionRef = useRef(section);
 
   const setSection = (s: number) => {

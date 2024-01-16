@@ -2,7 +2,31 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
-import type React from 'react';
+import type { ReactNode } from 'react';
+import type { AnyFunction } from 'types';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type AnyFilter = any;
+
+export interface LargerFilterItemProps {
+  disabled?: boolean;
+  active: boolean;
+  icon: IconProp;
+  title: string;
+  subtitle: string;
+  transform: string;
+  onClick: AnyFunction;
+}
+export interface FilterTabsProps {
+  config: FilterConfig[];
+  activeIndex: number;
+}
+
+export interface FilterConfig {
+  includes: string[];
+  excludes: string[];
+  label: string;
+}
 
 export interface ItemProps {
   icon?: IconProp;
@@ -14,18 +38,18 @@ export interface ItemProps {
 
 export interface CategoryProps {
   title: string;
-  buttons?: any[];
-  children: React.ReactNode;
+  buttons?: AnyFilter[];
+  children: ReactNode;
 }
 
 export interface ValidatorFilterContextInterface {
   orderValidators: (v: string) => void;
-  applyValidatorOrder: (l: any, o: string) => any;
-  applyValidatorFilters: (l: any, k: string, f?: string[]) => any;
+  applyValidatorOrder: (l: AnyFilter, o: string) => AnyFilter;
+  applyValidatorFilters: (l: AnyFilter, k: string, f?: string[]) => AnyFilter;
   toggleFilterValidators: (v: string) => void;
   toggleAllValidatorFilters: (t: number) => void;
   resetValidatorFilters: () => void;
-  validatorSearchFilter: (l: any, k: string, v: string) => void;
+  validatorSearchFilter: (l: AnyFilter, k: string, v: string) => void;
   validatorFilters: string[];
   validatorOrder: string;
 }

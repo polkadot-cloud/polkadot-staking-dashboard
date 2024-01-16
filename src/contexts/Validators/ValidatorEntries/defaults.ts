@@ -5,6 +5,11 @@
 import BigNumber from 'bignumber.js';
 import type { EraPointsBoundaries, ValidatorsContextInterface } from '../types';
 
+export const defaultAverageEraValidatorReward = {
+  days: 0,
+  reward: new BigNumber(0),
+};
+
 export const defaultValidatorsContext: ValidatorsContextInterface = {
   fetchValidatorPrefs: async (a) => new Promise((resolve) => resolve(null)),
   getValidatorPointsFromEras: (startEra, address) => ({}),
@@ -24,6 +29,7 @@ export const defaultValidatorsContext: ValidatorsContextInterface = {
   eraPointsBoundaries: null,
   validatorEraPointsHistory: {},
   erasRewardPointsFetched: 'unsynced',
+  averageEraValidatorReward: defaultAverageEraValidatorReward,
 };
 
 export const defaultValidatorsData = {

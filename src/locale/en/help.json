@@ -18,7 +18,7 @@
           "The amount of {NETWORK_UNIT} needed to be actively nominating in an era.",
           "This value applies to nominators and for pools. In the pool's case, it is important to join a pool with a total bond amount of at least this value.",
           "Being above this metric simply guarantees that you will be present in the active nominator set for the era. This amount still does not guarantee rewards, as your active nominations may still be over-subscribed.",
-          "Only the top {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominators are rewarded per validator in {NETWORK_NAME}. Ensuring your active bond is above this threshold will increase your chances of rewards.",
+          "Only the top {MAX_EXPOSURE_PAGE_SIZE} nominators are rewarded per validator in {NETWORK_NAME}. Ensuring your active bond is above this threshold will increase your chances of rewards.",
           "You can keep track of these metrics from the dashboard and amend your staking position if necessary, whether increasing your bonded {NETWORK_UNIT}, changing your nominations, or joining another pool."
         ]
       ],
@@ -30,18 +30,21 @@
           "{NETWORK_NAME} allows a nominator to nominate up to 16 validators, maximising your chances of nominating an active validator in each era."
         ]
       ],
-      "adjustedRewardsRate": [
-        "Adjusted Rewards Rate",
-        [
-          "An estimated realized annual yield based on the {NETWORK_NAME} reward distribution model.",
-          "This figure is effectively the historical rewards rate minus the inflation rate."
-        ]
-      ],
       "averageCommission": [
         "Average Commission",
         [
           "The average validator commission rate on {NETWORK_NAME}.",
           "This metric excludes validators who host a 100% commission, as these nodes usually block nominations and are run for the purposes of staking on central exchange platforms."
+        ]
+      ],
+      "averageRewardRate": [
+        "Average Reward Rate",
+        [
+          "The Average Reward Rate is an estimated annual return of staking rewards.",
+          "It is calculated by taking the average validator payout for the last {AVERAGE_REWARD_RATE_DAYS} days, and calculates an estimated annual increase based on this average and the current total issuance of {NETWORK_UNIT}.",
+          "The Average Reward Rate displayed on the dashboard assumes rewards are being compounded.",
+          "Alongside the Average Reward Rate is the Net Average Reward Rate, which displays the reward rate with the average validator commission deducted from it.",
+          "The average validator commission is the mean of all non 100% validator commissions currently active on the network."
         ]
       ],
       "blockedNominations": [
@@ -96,12 +99,6 @@
           "As a staker, you do not need to worry about Era Points. In general, better performing validators produce more Era Points, which in-turn lead to higher staking rewards."
         ]
       ],
-      "historicalRewardsRate": [
-        "Historical Rewards Rate",
-        [
-          "An estimated annual yield based on the {NETWORK_NAME} reward distribution model."
-        ]
-      ],
       "idealStaked": [
         "Ideal Staked",
         ["The percentage of staked total supply in ideal network conditions."]
@@ -116,7 +113,8 @@
         "Inflation",
         [
           "{NETWORK_UNIT} is inflationary; there is no maximum number of {NETWORK_UNIT}.",
-          "Inflation is designed to be approximately 10% annually, with validator rewards being a function of the amount staked and the remainder going to treasury."
+          "Inflation is designed to be approximately 10% annually, with validator rewards being a function of the amount staked and the remainder going to treasury.",
+          "The Latest Inflation Rate figure represents the rate relative to newly minted {NETWORK_UNIT} being paid out to validators for the last completed era."
         ]
       ],
       "lastEraPayout": [
@@ -201,7 +199,7 @@
           "The status of your nominations at a glance.",
           "A set of nominations will be inactive when none of those nominees are participating in the current validator set (the set of validators currently elected to validate the network).",
           "When at least one of your nominees are active, this nomination status will display as actively nominating - but this still does not guarantee rewards.",
-          "The top {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominators of each active validator receive rewards on {NETWORK_NAME}. So if a nominee is active and over-subscribed, you must be a part of the {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} highest bonded nominators to receive rewards.",
+          "The top {MAX_EXPOSURE_PAGE_SIZE} nominators of each active validator receive rewards on {NETWORK_NAME}. So if a nominee is active and over-subscribed, you must be a part of the {MAX_EXPOSURE_PAGE_SIZE} highest bonded nominators to receive rewards.",
           "If an active nominee is not over-subscribed, you will receive rewards."
         ]
       ],
@@ -231,7 +229,7 @@
       "overSubscribed": [
         "Over Subscribed",
         [
-          "Only the top {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominators for each validator are rewarded in {NETWORK_NAME}. When this number is surpassed, this validator is considered over subscribed."
+          "Only the top {MAX_EXPOSURE_PAGE_SIZE} nominators for each validator are rewarded in {NETWORK_NAME}. When this number is surpassed, this validator is considered over subscribed."
         ]
       ],
       "payout": [

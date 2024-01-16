@@ -13,6 +13,7 @@ import { QrScanSignature } from 'library/QRCode/ScanSignature';
 import { useNetwork } from 'contexts/Network';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { formatAccountSs58 } from 'contexts/Connect/Utils';
+import type { AnyJson } from 'types';
 
 export const Reader = () => {
   const { t } = useTranslation('modals');
@@ -21,12 +22,12 @@ export const Reader = () => {
     networkData: { ss58 },
   } = useNetwork();
   const { addOtherAccounts } = useOtherAccounts();
-  const { setStatus: setPromptStatus } = usePrompt();
+  const { closePrompt } = usePrompt();
   const { addVaultAccount, vaultAccountExists, vaultAccounts } =
     useVaultAccounts();
 
   // Store data from QR Code scanner.
-  const [qrData, setQrData] = useState<any>(undefined);
+  const [qrData, setQrData] = useState<AnyJson>(undefined);
 
   // Store QR data feedback.
   const [feedback, setFeedback] = useState<string>('');
@@ -53,7 +54,7 @@ export const Reader = () => {
         registerSaEvent(`${network.toLowerCase()}_vault_account_import`);
         addOtherAccounts([account]);
       }
-      setPromptStatus(0);
+      closePrompt();
     }
 
     // Display feedback.
@@ -75,7 +76,7 @@ export const Reader = () => {
       <h3 className="title">{t('scanFromPolkadotVault')}</h3>
       <div className="viewer">
         <QrScanSignature
-          size={279}
+          size={250}
           onScan={({ signature }) => {
             handleQrData(signature);
           }}
@@ -87,7 +88,7 @@ export const Reader = () => {
           <ButtonSecondary
             lg
             text={t('cancel')}
-            onClick={() => setPromptStatus(0)}
+            onClick={() => closePrompt()}
           />
         </div>
       </div>

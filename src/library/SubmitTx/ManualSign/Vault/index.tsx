@@ -3,7 +3,7 @@
 
 import { faSquarePen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@polkadot-cloud/react';
-import React from 'react';
+import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePrompt } from 'contexts/Prompt';
 import { useTxMeta } from 'contexts/TxMeta';
@@ -20,7 +20,7 @@ export const Vault = ({
   buttons,
   submitAddress,
   displayFor,
-}: SubmitProps & { buttons?: React.ReactNode[] }) => {
+}: SubmitProps & { buttons?: ReactNode[] }) => {
   const { t } = useTranslation('library');
   const { accountHasSigner } = useImportedAccounts();
   const { txFeesValid, getTxSignature } = useTxMeta();

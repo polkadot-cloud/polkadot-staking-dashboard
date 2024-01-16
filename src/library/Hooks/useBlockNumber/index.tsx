@@ -23,12 +23,16 @@ export const useBlockNumber = () => {
       subscribeBlockNumber();
     }
     return () => {
-      if (unsub.current) unsub.current();
+      if (unsub.current) {
+        unsub.current();
+      }
     };
   }, [network, isReady]);
 
   const subscribeBlockNumber = async () => {
-    if (!api) return;
+    if (!api) {
+      return;
+    }
 
     const subscribeBlock = async () => {
       const u = await api.query.system.number((number: AnyApi) => {

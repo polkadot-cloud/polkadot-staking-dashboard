@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { HexString } from '@polkadot/util/types';
-import type React from 'react';
+import type { CSSProperties } from 'react';
 
 export interface FrameState {
   frames: Uint8Array[];
@@ -24,7 +24,7 @@ export interface DisplayProps {
   className?: string | undefined;
   size?: string | number | undefined;
   skipEncoding?: boolean;
-  style?: React.CSSProperties | undefined;
+  style?: CSSProperties | undefined;
   timerDelay?: number | undefined;
   value: Uint8Array;
 }
@@ -36,23 +36,23 @@ export interface DisplayPayloadProps {
   genesisHash: Uint8Array | string;
   payload: Uint8Array;
   size?: string | number;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   timerDelay?: number;
 }
 
 export interface ScanProps {
   className?: string | undefined;
   delay?: number;
-  onError?: undefined | ((error: Error) => void);
+  onError?: undefined | ((error: string) => void);
   onScan: (data: string) => void;
   size?: string | number | undefined;
-  style?: React.CSSProperties | undefined;
+  style?: CSSProperties | undefined;
 }
 
 export interface ScanSignatureProps {
   className?: string;
-  onError?: (error: Error) => void;
+  onError?: (error: string) => void;
   onScan: (scanned: ScanType) => void;
   size?: string | number;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }

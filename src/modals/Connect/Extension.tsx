@@ -10,14 +10,13 @@ import {
   useExtensions,
   useExtensionAccounts,
 } from '@polkadot-cloud/react/hooks';
-import { useNotifications } from 'contexts/Notifications';
 import { getExtensionIcon } from '@polkadot-cloud/assets/extensions';
 import { ExtensionInner } from './Wrappers';
 import type { ExtensionProps } from './types';
+import { NotificationsController } from 'static/NotificationsController';
 
 export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const { t } = useTranslation('modals');
-  const { addNotification } = useNotifications();
   const { connectExtensionAccounts } = useExtensionAccounts();
   const { extensionsStatus, extensionInstalled, extensionCanConnect } =
     useExtensions();
@@ -26,7 +25,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const canConnect = extensionCanConnect(id);
 
   // Force re-render on click.
-  const [increment, setIncrement] = useState(0);
+  const [increment, setIncrement] = useState<number>(0);
 
   // click to connect to extension
   const handleClick = async () => {
@@ -35,11 +34,12 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
       // force re-render to display error messages
       setIncrement(increment + 1);
 
-      if (connected)
-        addNotification({
+      if (connected) {
+        NotificationsController.emit({
           title: t('extensionConnected'),
           subtitle: `${t('titleExtensionConnected', { title })}`,
         });
+      }
     }
   };
 

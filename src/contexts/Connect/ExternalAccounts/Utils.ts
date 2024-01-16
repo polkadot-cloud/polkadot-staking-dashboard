@@ -21,10 +21,11 @@ export const getLocalExternalAccounts = (network?: NetworkName) => {
     [],
     true
   ) as ExternalAccount[];
-  if (network)
+  if (network) {
     localAccounts = localAccounts.filter(
       (l) => l.network === network && l.addedBy !== 'system'
     );
+  }
   return localAccounts;
 };
 
@@ -53,7 +54,9 @@ export const removeLocalExternalAccounts = (
   network: NetworkName,
   accounts: ExternalAccount[]
 ) => {
-  if (!accounts.length) return;
+  if (!accounts.length) {
+    return;
+  }
 
   const updatedAccounts = getLocalExternalAccounts(network).filter(
     (a) =>

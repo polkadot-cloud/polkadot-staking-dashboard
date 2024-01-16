@@ -6,19 +6,18 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
-import { useNotifications } from 'contexts/Notifications';
-import type { NotificationText } from 'contexts/Notifications/types';
+import type { NotificationText } from 'static/NotificationsController/types';
 import { useProxies } from 'contexts/Proxies';
 import { Polkicon } from '@polkadot-cloud/react';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { ItemWrapper } from './Wrappers';
 import type { ActiveAccountProps } from './types';
+import { NotificationsController } from 'static/NotificationsController';
 
 export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
   const { t } = useTranslation('pages');
   const { getProxyDelegate } = useProxies();
   const { getAccount } = useImportedAccounts();
-  const { addNotification } = useNotifications();
 
   const primaryAddress = delegate || address || '';
   const delegatorAddress = delegate ? address : null;
@@ -54,12 +53,10 @@ export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
                 <Polkicon address={primaryAddress} size={remToUnit('1.7rem')} />
               </div>
               {delegatorAddress && (
-                <>
-                  <span>
-                    {proxyDelegate?.proxyType} {t('overview.proxy')}
-                    <FontAwesomeIcon icon={faArrowLeft} transform="shrink-2" />
-                  </span>
-                </>
+                <span>
+                  {proxyDelegate?.proxyType} {t('overview.proxy')}
+                  <FontAwesomeIcon icon={faArrowLeft} transform="shrink-2" />
+                </span>
               )}
               {ellipsisFn(primaryAddress)}
               <button
@@ -67,7 +64,7 @@ export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
                 onClick={() => {
                   navigator.clipboard.writeText(primaryAddress);
                   if (notification) {
-                    addNotification(notification);
+                    NotificationsController.emit(notification);
                   }
                 }}
               >

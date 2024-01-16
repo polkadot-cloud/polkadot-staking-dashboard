@@ -3,7 +3,8 @@
 
 import { objectSpread } from '@polkadot/util';
 import { xxhashAsHex } from '@polkadot/util-crypto';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import type { ReactElement } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { DisplayWrapper } from './Wrappers.js';
 import { qrcode } from './qrcode.js';
 import type { DisplayProps, FrameState, TimerState } from './types.js';
@@ -30,7 +31,7 @@ const Display = ({
   style = {},
   timerDelay = DEFAULT_FRAME_DELAY,
   value,
-}: DisplayProps): React.ReactElement<DisplayProps> | null => {
+}: DisplayProps): ReactElement<DisplayProps> | null => {
   const [{ image }, setFrameState] = useState<FrameState>({
     frameIdx: 0,
     frames: [],
@@ -81,7 +82,9 @@ const Display = ({
     );
 
     return () => {
-      if (timerRef.current.timerId) clearTimeout(timerRef.current.timerId);
+      if (timerRef.current.timerId) {
+        clearTimeout(timerRef.current.timerId);
+      }
     };
   }, []);
 
@@ -118,4 +121,4 @@ const Display = ({
   );
 };
 
-export const QrDisplay = React.memo(Display);
+export const QrDisplay = memo(Display);

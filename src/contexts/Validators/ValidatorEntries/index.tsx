@@ -3,7 +3,8 @@
 
 import { greaterThanZero, rmCommas, shuffle } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import React, { useEffect, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { ValidatorCommunity } from '@polkadot-cloud/assets/validators';
 import type { AnyApi, AnyJson, BondFor, Fn, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
@@ -27,19 +28,29 @@ import type {
   ValidatorEraPointHistory,
 } from '../types';
 import {
+  defaultAverageEraValidatorReward,
   defaultValidatorsData,
   defaultValidatorsContext,
   defaultEraPointsBoundaries,
 } from './defaults';
 import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
+import type { ValidatorEntry } from '@polkadot-cloud/assets/types';
+import { useErasPerDay } from 'library/Hooks/useErasPerDay';
 
-export const ValidatorsProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const ValidatorsContext = createContext<ValidatorsContextInterface>(
+  defaultValidatorsContext
+);
+
+export const useValidators = () => useContext(ValidatorsContext);
+
+export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
-  const { isReady, api } = useApi();
+  const {
+    isReady,
+    api,
+    consts: { historyDepth },
+  } = useApi();
+  const { erasPerDay, maxSupportedDays } = useErasPerDay();
   const { stakers } = useStaking().eraStakers;
   const { poolNominations } = useActivePools();
   const { activeAccount } = useActiveAccounts();
@@ -75,7 +86,7 @@ export const ValidatorsProvider = ({
   const sessionParaUnsub = useRef<Fn>();
 
   // Stores the average network commission rate.
-  const [avgCommission, setAvgCommission] = useState(0);
+  const [avgCommission, setAvgCommission] = useState<number>(0);
 
   // Stores the user's nominated validators as list
   const [nominated, setNominated] = useState<Validator[] | null>(null);
@@ -84,7 +95,9 @@ export const ValidatorsProvider = ({
   const [poolNominated, setPoolNominated] = useState<Validator[] | null>(null);
 
   // Stores a randomised validator community dataset.
-  const [validatorCommunity] = useState([...shuffle(ValidatorCommunity)]);
+  const [validatorCommunity] = useState<ValidatorEntry[]>([
+    ...shuffle(ValidatorCommunity),
+  ]);
 
   // Track whether the validator list has been fetched.
   const [erasRewardPointsFetched, setErasRewawrdPointsFetched] =
@@ -104,10 +117,17 @@ export const ValidatorsProvider = ({
   const [eraPointsBoundaries, setEraPointsBoundaries] =
     useState<EraPointsBoundaries>(defaultEraPointsBoundaries);
 
+  // Average rerward rate.
+  const [averageEraValidatorReward, setAverageEraValidatorReward] = useState<{
+    days: number;
+    reward: BigNumber;
+  }>(defaultAverageEraValidatorReward);
+
   // Processes reward points for a given era.
   const processEraRewardPoints = (result: AnyJson, era: BigNumber) => {
-    if (erasRewardPoints[era.toString()])
+    if (erasRewardPoints[era.toString()]) {
       return erasRewardPoints[era.toString()];
+    }
 
     return {
       total: rmCommas(result.total),
@@ -126,9 +146,15 @@ export const ValidatorsProvider = ({
     const q2 = Math.ceil(total * 0.5);
     const q3 = Math.ceil(total * 0.75);
 
-    if (qIndex <= q1) return 25;
-    if (qIndex <= q2) return 50;
-    if (qIndex <= q3) return 75;
+    if (qIndex <= q1) {
+      return 25;
+    }
+    if (qIndex <= q2) {
+      return 50;
+    }
+    if (qIndex <= q3) {
+      return 75;
+    }
     return 100;
   };
 
@@ -138,8 +164,9 @@ export const ValidatorsProvider = ({
       activeEra.index.isZero() ||
       !api ||
       erasRewardPointsFetched !== 'unsynced'
-    )
+    ) {
       return;
+    }
 
     setErasRewawrdPointsFetched('syncing');
 
@@ -173,7 +200,9 @@ export const ValidatorsProvider = ({
     let i = 0;
     for (const result of await Promise.all(calls)) {
       const formatted = processEraRewardPoints(result.toHuman(), eras[i]);
-      if (formatted) newErasRewardPoints[eras[i].toString()] = formatted;
+      if (formatted) {
+        newErasRewardPoints[eras[i].toString()] = formatted;
+      }
       i++;
     }
 
@@ -182,12 +211,12 @@ export const ValidatorsProvider = ({
     // Calculate points per era and total points per era of each validator.
     Object.entries(newErasRewardPoints).forEach(([era, { individual }]) => {
       Object.entries(individual).forEach(([address, points]) => {
-        if (!newEraPointsHistory[address])
+        if (!newEraPointsHistory[address]) {
           newEraPointsHistory[address] = {
             eras: {},
             totalPoints: new BigNumber(0),
           };
-        else {
+        } else {
           newEraPointsHistory[address].eras[era] = new BigNumber(points);
           newEraPointsHistory[address].totalPoints =
             newEraPointsHistory[address].totalPoints.plus(points);
@@ -226,7 +255,9 @@ export const ValidatorsProvider = ({
 
   // Fetches the active account's nominees.
   const fetchNominatedList = async () => {
-    if (!activeAccount) return;
+    if (!activeAccount) {
+      return;
+    }
 
     // format to list format
     const targetsFormatted = getAccountNominations(activeAccount).map(
@@ -240,17 +271,20 @@ export const ValidatorsProvider = ({
   // Fetches the active pool's nominees.
   const fetchPoolNominatedList = async () => {
     // get raw nominations list
-    let n = poolNominations.targets;
-    // format to list format
-    n = n.map((item: string) => ({ address: item }));
+    const n = poolNominations.targets;
+
     // fetch preferences
-    const nominationsWithPrefs = await fetchValidatorPrefs(n);
+    const nominationsWithPrefs = await fetchValidatorPrefs(
+      n.map((item: string) => ({ address: item }))
+    );
     setPoolNominated(nominationsWithPrefs || []);
   };
 
   // Fetch validator entries and format the returning data.
   const getValidatorEntries = async () => {
-    if (!isReady || !api) return defaultValidatorsData;
+    if (!isReady || !api) {
+      return defaultValidatorsData;
+    }
 
     const result = await api.query.staking.validators.entries();
 
@@ -262,9 +296,11 @@ export const ValidatorsProvider = ({
       const prefs = p.toHuman();
       const commission = new BigNumber(prefs.commission.replace(/%/g, ''));
 
-      if (!commission.isEqualTo(100))
+      if (!commission.isEqualTo(100)) {
         totalNonAllCommission = totalNonAllCommission.plus(commission);
-      else notFullCommissionCount++;
+      } else {
+        notFullCommissionCount++;
+      }
 
       entries.push({
         address,
@@ -280,7 +316,9 @@ export const ValidatorsProvider = ({
 
   // Fetches and formats the active validator set, and derives metrics from the result.
   const fetchValidators = async () => {
-    if (!isReady || !api || validatorsFetched !== 'unsynced') return;
+    if (!isReady || !api || validatorsFetched !== 'unsynced') {
+      return;
+    }
     setValidatorsFetched('syncing');
 
     // If local validator entries exist for the current era, store these values in state. Otherwise,
@@ -292,7 +330,7 @@ export const ValidatorsProvider = ({
 
     // The validator entries for the current active era.
     let validatorEntries: Validator[] = [];
-    // Average network commission for all non-100% commissioned validators.
+    // Average network commission for all non 100% commissioned validators.
     let avg = 0;
 
     if (localEraValidators) {
@@ -334,14 +372,18 @@ export const ValidatorsProvider = ({
 
   // Subscribe to active session validators.
   const fetchSessionValidators = async () => {
-    if (!api || !isReady) return;
+    if (!api || !isReady) {
+      return;
+    }
     const sessionValidatorsRaw: AnyApi = await api.query.session.validators();
     setSessionValidators(sessionValidatorsRaw.toHuman());
   };
 
   // Subscribe to active parachain validators.
   const subscribeParachainValidators = async () => {
-    if (!api || !isReady) return;
+    if (!api || !isReady) {
+      return;
+    }
     const unsub: AnyApi = await api.query.paraSessionInfo.accountKeys(
       earliestStoredSession.toString(),
       (v: AnyApi) => {
@@ -353,10 +395,14 @@ export const ValidatorsProvider = ({
 
   // Fetches prefs for a list of validators.
   const fetchValidatorPrefs = async (addresses: ValidatorAddresses) => {
-    if (!addresses.length || !api) return null;
+    if (!addresses.length || !api) {
+      return null;
+    }
 
     const v: string[] = [];
-    for (const { address } of addresses) v.push(address);
+    for (const { address } of addresses) {
+      v.push(address);
+    }
     const results = await api.query.staking.validators.multi(v);
 
     const formatted: Validator[] = [];
@@ -375,7 +421,9 @@ export const ValidatorsProvider = ({
 
   // Fetches validator identities.
   const fetchValidatorIdentities = async (addresses: string[]) => {
-    if (!api) return {};
+    if (!api) {
+      return {};
+    }
 
     const identities: AnyApi[] = (
       await api.query.identity.identityOf.multi(addresses)
@@ -390,7 +438,9 @@ export const ValidatorsProvider = ({
 
   // Fetch validator super accounts and their identities.
   const fetchValidatorSupers = async (addresses: string[]) => {
-    if (!api) return {};
+    if (!api) {
+      return {};
+    }
 
     const supersRaw: AnyApi[] = (
       await api.query.identity.superOf.multi(addresses)
@@ -459,9 +509,14 @@ export const ValidatorsProvider = ({
       for (const [, points] of Object.entries(individual)) {
         const p = new BigNumber(points);
 
-        if (p.isGreaterThan(high || 0)) high = p;
-        if (low === null) low = p;
-        else if (p.isLessThan(low) && !p.isZero()) low = p;
+        if (p.isGreaterThan(high || 0)) {
+          high = p;
+        }
+        if (low === null) {
+          low = p;
+        } else if (p.isLessThan(low) && !p.isZero()) {
+          low = p;
+        }
       }
     });
 
@@ -488,7 +543,9 @@ export const ValidatorsProvider = ({
         let totalStake = new BigNumber(0);
         if (inEra) {
           const { others, own } = inEra;
-          if (own) totalStake = totalStake.plus(own);
+          if (own) {
+            totalStake = totalStake.plus(own);
+          }
           others.forEach(({ value }) => {
             totalStake = totalStake.plus(value);
           });
@@ -500,6 +557,50 @@ export const ValidatorsProvider = ({
         };
       }) || [];
     return injected;
+  };
+
+  // Gets average validator reward for provided number of days.
+  const getAverageEraValidatorReward = async () => {
+    if (!api || !isReady || activeEra.index.isZero()) {
+      setAverageEraValidatorReward({
+        days: 0,
+        reward: new BigNumber(0),
+      });
+      return;
+    }
+
+    // If max supported days is less than 30, use 15 day average instead.
+    const days = maxSupportedDays > 30 ? 30 : 15;
+
+    // Calculates the number of eras required to calculate required `days`, not surpassing
+    // historyDepth.
+    const endEra = BigNumber.max(
+      activeEra.index.minus(erasPerDay.multipliedBy(days)),
+      BigNumber.max(0, activeEra.index.minus(historyDepth))
+    );
+
+    const eras: string[] = [];
+    let thisEra = activeEra.index.minus(1);
+    do {
+      eras.push(thisEra.toString());
+      thisEra = thisEra.minus(1);
+    } while (thisEra.gte(endEra));
+
+    const validatorEraRewards =
+      await api.query.staking.erasValidatorReward.multi(eras);
+
+    const reward = validatorEraRewards
+      .map((v) => {
+        const value = new BigNumber(v.toString() === '' ? 0 : v.toString());
+        if (value.isNaN()) {
+          return new BigNumber(0);
+        }
+        return value;
+      })
+      .reduce((prev, current) => prev.plus(current), new BigNumber(0))
+      .div(eras.length);
+
+    setAverageEraValidatorReward({ days, reward });
   };
 
   // Reset validator state data on network change.
@@ -515,6 +616,7 @@ export const ValidatorsProvider = ({
     setErasRewardPoints({});
     setEraPointsBoundaries(null);
     setValidatorEraPointsHistory({});
+    setAverageEraValidatorReward(defaultAverageEraValidatorReward);
   }, [network]);
 
   // Fetch validators and era reward points when fetched status changes.
@@ -525,27 +627,33 @@ export const ValidatorsProvider = ({
     }
   }, [validatorsFetched, erasRewardPointsFetched, isReady, activeEra]);
 
-  // Mark unsynced and fetch session validators when activeEra changes.
+  // Mark unsynced and fetch session validators and average reward when activeEra changes.
   useEffectIgnoreInitial(() => {
     if (isReady && activeEra.index.isGreaterThan(0)) {
-      if (erasRewardPointsFetched === 'synced')
+      if (erasRewardPointsFetched === 'synced') {
         setErasRewawrdPointsFetched('unsynced');
+      }
 
-      if (validatorsFetched === 'synced') setValidatorsFetched('unsynced');
+      if (validatorsFetched === 'synced') {
+        setValidatorsFetched('unsynced');
+      }
       fetchSessionValidators();
+      getAverageEraValidatorReward();
     }
   }, [isReady, activeEra]);
 
   // Fetch era points boundaries when `erasRewardPoints` ready.
   useEffectIgnoreInitial(() => {
-    if (isReady && Object.values(erasRewardPoints).length)
+    if (isReady && Object.values(erasRewardPoints).length) {
       calculateEraPointsBoundaries();
+    }
   }, [isReady, erasRewardPoints]);
 
   // Fetch parachain session validators when `earliestStoredSession` ready.
   useEffectIgnoreInitial(() => {
-    if (isReady && greaterThanZero(earliestStoredSession))
+    if (isReady && greaterThanZero(earliestStoredSession)) {
       subscribeParachainValidators();
+    }
   }, [isReady, earliestStoredSession]);
 
   // Fetch active account's nominations in validator list format.
@@ -557,12 +665,16 @@ export const ValidatorsProvider = ({
 
   // Fetch active account's pool nominations in validator list format.
   useEffectIgnoreInitial(() => {
-    if (isReady && poolNominations) fetchPoolNominatedList();
+    if (isReady && poolNominations) {
+      fetchPoolNominatedList();
+    }
   }, [isReady, poolNominations]);
 
   // Unsubscribe on network change and component unmount.
   useEffect(() => {
-    if (sessionParaValidators.length) sessionParaUnsub.current?.();
+    if (sessionParaValidators.length) {
+      sessionParaUnsub.current?.();
+    }
 
     return () => {
       sessionParaUnsub.current?.();
@@ -590,14 +702,10 @@ export const ValidatorsProvider = ({
         eraPointsBoundaries,
         validatorEraPointsHistory,
         erasRewardPointsFetched,
+        averageEraValidatorReward,
       }}
     >
       {children}
     </ValidatorsContext.Provider>
   );
 };
-
-export const ValidatorsContext =
-  React.createContext<ValidatorsContextInterface>(defaultValidatorsContext);
-
-export const useValidators = () => React.useContext(ValidatorsContext);

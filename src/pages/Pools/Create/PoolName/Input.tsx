@@ -1,24 +1,26 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import React, { useEffect, useState } from 'react';
+import type { FormEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import type { AnyJson } from 'types';
 
 export const Input = ({
   listenIsValid,
   defaultValue,
   setters = [],
-  value = 0,
-}: any) => {
+  value = '',
+}: AnyJson) => {
   const { t } = useTranslation('pages');
   const { activeAccount } = useActiveAccounts();
 
   // the current local bond value
-  const [metadata, setMetadata] = useState(value);
+  const [metadata, setMetadata] = useState<string>(value);
 
   // handle change for bonding
-  const handleChange = (e: any) => {
+  const handleChange = (e: AnyJson) => {
     const val = e.target.value;
     listenIsValid(val !== '');
     setMetadata(val);
@@ -45,7 +47,7 @@ export const Input = ({
           style={{ width: '100%', fontFamily: 'InterSemiBold, sans-serif' }}
           placeholder={t('pools.poolName')}
           type="text"
-          onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
+          onChange={(e: FormEvent<HTMLInputElement>) => handleChange(e)}
           value={metadata ?? ''}
         />
       </div>

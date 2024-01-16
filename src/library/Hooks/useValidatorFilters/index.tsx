@@ -7,6 +7,7 @@ import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { AnyFunction, AnyJson } from 'types';
 import { useStaking } from 'contexts/Staking';
 import { MaxEraRewardPointsEras } from 'consts';
+import type { AnyFilter } from 'library/Filter/types';
 
 export const useValidatorFilters = () => {
   const { t } = useTranslation('library');
@@ -23,7 +24,7 @@ export const useValidatorFilters = () => {
    * filterMissingIdentity: Iterates through the supplied list and filters those with missing
    * identities. Returns the updated filtered list.
    */
-  const filterMissingIdentity = (list: any) => {
+  const filterMissingIdentity = (list: AnyFilter) => {
     // Return lsit early if identity sync has not completed.
     if (
       !Object.values(validatorIdentities).length ||
@@ -31,7 +32,7 @@ export const useValidatorFilters = () => {
     ) {
       return list;
     }
-    const filteredList: any = [];
+    const filteredList: AnyFilter = [];
     for (const validator of list) {
       const identityExists = validatorIdentities[validator.address] ?? false;
       const superExists = validatorSupers[validator.address] ?? false;
@@ -49,13 +50,13 @@ export const useValidatorFilters = () => {
    * filterOverSubscribed: Iterates through the supplied list and filters those who are over
    * subscribed. Returns the updated filtered list.
    */
-  const filterOverSubscribed = (list: any) => {
+  const filterOverSubscribed = (list: AnyFilter) => {
     // Return list early if eraStakers is still syncing.
     if (erasStakersSyncing) {
       return list;
     }
 
-    const filteredList: any = [];
+    const filteredList: AnyFilter = [];
     for (const validator of list) {
       const { oversubscribed } = getLowestRewardFromStaker(validator.address);
 
@@ -71,24 +72,26 @@ export const useValidatorFilters = () => {
    * filterAllCommission: Filters the supplied list and removes items with 100% commission. Returns
    * the updated filtered list.
    */
-  const filterAllCommission = (list: any) =>
-    list.filter((validator: any) => validator?.prefs?.commission !== 100);
+  const filterAllCommission = (list: AnyFilter) =>
+    list.filter((validator: AnyFilter) => validator?.prefs?.commission !== 100);
 
   /*
    * filterBlockedNominations: Filters the supplied list and removes items that have blocked
    * nominations. Returns the updated filtered list.
    */
-  const filterBlockedNominations = (list: any) =>
-    list.filter((validator: any) => validator?.prefs?.blocked !== true);
+  const filterBlockedNominations = (list: AnyFilter) =>
+    list.filter((validator: AnyFilter) => validator?.prefs?.blocked !== true);
 
   /*
    * filterActive: Filters the supplied list and removes items that are inactive. Returns the
    * updated filtered list.
    */
-  const filterActive = (list: any) => {
+  const filterActive = (list: AnyFilter) => {
     // if list has not yet been populated, return original list
-    if (sessionValidators.length === 0) return list;
-    return list.filter((validator: any) =>
+    if (sessionValidators.length === 0) {
+      return list;
+    }
+    return list.filter((validator: AnyFilter) =>
       sessionValidators.includes(validator.address)
     );
   };
@@ -97,10 +100,12 @@ export const useValidatorFilters = () => {
    * filterNonParachainValidator: Filters the supplied list and removes items that are inactive.
    * Returns the updated filtered list.
    */
-  const filterNonParachainValidator = (list: any) => {
+  const filterNonParachainValidator = (list: AnyFilter) => {
     // if list has not yet been populated, return original list
-    if ((sessionParaValidators?.length ?? 0) === 0) return list;
-    return list.filter((validator: any) =>
+    if ((sessionParaValidators?.length ?? 0) === 0) {
+      return list;
+    }
+    return list.filter((validator: AnyFilter) =>
       sessionParaValidators.includes(validator.address)
     );
   };
@@ -109,11 +114,13 @@ export const useValidatorFilters = () => {
    * filterInSession: Filters the supplied list and removes items that are in the current session.
    * Returns the updated filtered list.
    */
-  const filterInSession = (list: any) => {
+  const filterInSession = (list: AnyFilter) => {
     // if list has not yet been populated, return original list
-    if (sessionValidators.length === 0) return list;
+    if (sessionValidators.length === 0) {
+      return list;
+    }
     return list.filter(
-      (validator: any) => !sessionValidators.includes(validator.address)
+      (validator: AnyFilter) => !sessionValidators.includes(validator.address)
     );
   };
 
@@ -173,20 +180,20 @@ export const useValidatorFilters = () => {
    * orderLowestCommission: Orders a list by commission, lowest first. Returns the updated ordered
    * list.
    */
-  const orderLowestCommission = (list: any) =>
+  const orderLowestCommission = (list: AnyFilter) =>
     [...list].sort((a, b) => a.prefs.commission - b.prefs.commission);
 
   /*
    * orderHighestCommission: Orders a list by commission, highest first. Returns the updated ordered
    * list.
    */
-  const orderHighestCommission = (list: any) =>
+  const orderHighestCommission = (list: AnyFilter) =>
     [...list].sort((a, b) => b.prefs.commission - a.prefs.commission);
 
   /*
    * orderByRank: Orders a list by validator rank.
    */
-  const orderByRank = (list: any) =>
+  const orderByRank = (list: AnyFilter) =>
     [...list].sort((a, b) => {
       const aRank = validatorEraPointsHistory[a.address]?.rank || 9999;
       const bRank = validatorEraPointsHistory[b.address]?.rank || 9999;
@@ -218,7 +225,7 @@ export const useValidatorFilters = () => {
    * applySearch Iterates through the supplied list and filters those that match the search term.
    * Returns the updated filtered list.
    */
-  const applySearch = (list: any, searchTerm: string) => {
+  const applySearch = (list: AnyFilter, searchTerm: string) => {
     // If we cannot derive data, fallback to include validator in filtered list.
     if (
       !searchTerm ||
@@ -228,7 +235,7 @@ export const useValidatorFilters = () => {
       return list;
     }
 
-    const filteredList: any = [];
+    const filteredList: AnyFilter = [];
     for (const validator of list) {
       const identity = validatorIdentities[validator.address] ?? '';
       const identityRaw = identity?.info?.display?.Raw ?? '';
@@ -247,13 +254,15 @@ export const useValidatorFilters = () => {
         superIdentityAsBytes === '' ? superIdentityRaw : superIdentityAsBytes
       ).toLowerCase();
 
-      if (validator.address.toLowerCase().includes(searchTerm.toLowerCase()))
+      if (validator.address.toLowerCase().includes(searchTerm.toLowerCase())) {
         filteredList.push(validator);
+      }
       if (
         identitySearch.includes(searchTerm.toLowerCase()) ||
         superIdentitySearch.includes(searchTerm.toLowerCase())
-      )
+      ) {
         filteredList.push(validator);
+      }
     }
     return filteredList;
   };

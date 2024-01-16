@@ -4,20 +4,21 @@
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonHelp } from '@polkadot-cloud/react';
-import type { FunctionComponent } from 'react';
-import React from 'react';
+import type { FunctionComponent, SVGProps } from 'react';
 import { useHelp } from 'contexts/Help';
 import CrossSVG from 'img/cross.svg?react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { TitleWrapper } from './Wrappers';
+import type { AnyJson } from 'types';
+import type { CSSProperties } from 'styled-components';
 
 interface TitleProps {
   title: string;
   icon?: IconProp;
-  Svg?: FunctionComponent<any>;
+  Svg?: FunctionComponent<SVGProps<AnyJson>>;
   fixed?: boolean;
   helpKey?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
 export const Title = ({

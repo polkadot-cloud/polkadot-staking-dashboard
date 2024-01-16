@@ -14,7 +14,7 @@ import { AddressesWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import { useLedgerAccounts } from 'contexts/Hardware/Ledger/LedgerAccounts';
+import { useLedgerAccounts } from '@polkadot-cloud/react/hooks';
 
 export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {
   const { t } = useTranslation('modals');
@@ -62,49 +62,47 @@ export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {
   };
 
   return (
-    <>
-      <AddressesWrapper>
-        <div className="items">
-          {addresses.map(({ address, index }: AnyJson, i: number) => {
-            const initialName = (() => {
-              const localAddress = getLocalLedgerAddresses().find(
-                (a) => a.address === address && a.network === network
-              );
-              return localAddress?.name
-                ? unescape(localAddress.name)
-                : ellipsisFn(address);
-            })();
-
-            return (
-              <HardwareAddress
-                key={i}
-                address={address}
-                index={index}
-                initial={initialName}
-                Identicon={<Polkicon address={address} size={40} />}
-                existsHandler={ledgerAccountExists}
-                renameHandler={renameHandler}
-                openRemoveHandler={openRemoveHandler}
-                openConfirmHandler={openConfirmHandler}
-                t={{
-                  tRemove: t('remove'),
-                  tImport: t('import'),
-                }}
-              />
+    <AddressesWrapper>
+      <div className="items">
+        {addresses.map(({ address, index }: AnyJson, i: number) => {
+          const initialName = (() => {
+            const localAddress = getLocalLedgerAddresses().find(
+              (a) => a.address === address && a.network === network
             );
-          })}
-        </div>
-        <div className="more">
-          <ButtonText
-            iconLeft={faArrowDown}
-            text={isExecuting ? t('gettingAccount') : t('getAnotherAccount')}
-            disabled={isExecuting}
-            onClick={async () => {
-              await onGetAddress();
-            }}
-          />
-        </div>
-      </AddressesWrapper>
-    </>
+            return localAddress?.name
+              ? unescape(localAddress.name)
+              : ellipsisFn(address);
+          })();
+
+          return (
+            <HardwareAddress
+              key={i}
+              address={address}
+              index={index}
+              initial={initialName}
+              Identicon={<Polkicon address={address} size={40} />}
+              existsHandler={ledgerAccountExists}
+              renameHandler={renameHandler}
+              openRemoveHandler={openRemoveHandler}
+              openConfirmHandler={openConfirmHandler}
+              t={{
+                tRemove: t('remove'),
+                tImport: t('import'),
+              }}
+            />
+          );
+        })}
+      </div>
+      <div className="more">
+        <ButtonText
+          iconLeft={faArrowDown}
+          text={isExecuting ? t('gettingAccount') : t('getAnotherAccount')}
+          disabled={isExecuting}
+          onClick={async () => {
+            await onGetAddress();
+          }}
+        />
+      </div>
+    </AddressesWrapper>
   );
 };

@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Configuration, PolkawatchApi } from '@polkawatch/ddp-client';
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { localStorageOrDefault } from '@polkadot-cloud/utils';
 import { useNetwork } from 'contexts/Network';
 import type { NetworkName } from '../../../types';
@@ -37,11 +38,13 @@ const PolkawatchInitialState = {
   networkSupported: true,
 };
 
-export const PolkawatchProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+const PolkawatchContext = createContext<PolkawatchState>(
+  PolkawatchInitialState
+);
+
+export const usePolkawatchApi = () => useContext(PolkawatchContext);
+
+export const PolkawatchProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
 
   const [state, setState] = useState<PolkawatchState>(PolkawatchInitialState);
@@ -63,9 +66,3 @@ export const PolkawatchProvider = ({
     </PolkawatchContext.Provider>
   );
 };
-
-const PolkawatchContext = createContext<PolkawatchState>(
-  PolkawatchInitialState
-);
-
-export const usePolkawatchApi = () => useContext(PolkawatchContext);

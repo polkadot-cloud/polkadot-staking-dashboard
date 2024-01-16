@@ -5,7 +5,8 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonSecondary, Polkicon } from '@polkadot-cloud/react';
 import { isValidAddress } from '@polkadot-cloud/utils';
-import React, { useEffect, useState } from 'react';
+import type { FormEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -35,13 +36,13 @@ export const AccountInput = ({
   const { setModalResize } = useOverlay().modal;
 
   // store current input value
-  const [value, setValue] = useState(initialValue || '');
+  const [value, setValue] = useState<string>(initialValue || '');
 
   // store whether current input value is valid
   const [valid, setValid] = useState<string | null>(null);
 
   // store whether address was formatted (displays confirm prompt)
-  const [reformatted, setReformatted] = useState(false);
+  const [reformatted, setReformatted] = useState<boolean>(false);
 
   // store whether the form is being submitted.
   const [submitting, setSubmitting] = useState<boolean>(false);
@@ -49,7 +50,7 @@ export const AccountInput = ({
   // store whether account input is in success lock state.
   const [successLock, setSuccessLocked] = useState<boolean>(locked);
 
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleChange = (e: FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
     // set value on key change
     setValue(newValue);
@@ -150,8 +151,12 @@ export const AccountInput = ({
   };
 
   const className = [];
-  if (inactive) className.push('inactive');
-  if (border) className.push('border');
+  if (inactive) {
+    className.push('inactive');
+  }
+  if (border) {
+    className.push('border');
+  }
 
   return (
     <AccountInputWrapper
@@ -180,9 +185,7 @@ export const AccountInput = ({
             <input
               placeholder={t('address')}
               type="text"
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                handleChange(e)
-              }
+              onChange={(e: FormEvent<HTMLInputElement>) => handleChange(e)}
               value={value}
               disabled={successLock}
             />
@@ -190,24 +193,18 @@ export const AccountInput = ({
         </section>
         <section>
           {successLock ? (
-            <>
-              <ButtonSecondary onClick={() => resetInput()} text={t('reset')} />
-            </>
+            <ButtonSecondary onClick={() => resetInput()} text={t('reset')} />
+          ) : !reformatted ? (
+            <ButtonSecondary
+              onClick={() => handleImport()}
+              text={submitting ? t('importing') : t('import')}
+              disabled={valid !== 'valid' || submitting}
+            />
           ) : (
-            <>
-              {!reformatted ? (
-                <ButtonSecondary
-                  onClick={() => handleImport()}
-                  text={submitting ? t('importing') : t('import')}
-                  disabled={valid !== 'valid' || submitting}
-                />
-              ) : (
-                <ButtonSecondary
-                  onClick={() => handleConfirm()}
-                  text={t('confirm')}
-                />
-              )}
-            </>
+            <ButtonSecondary
+              onClick={() => handleConfirm()}
+              text={t('confirm')}
+            />
           )}
         </section>
       </div>

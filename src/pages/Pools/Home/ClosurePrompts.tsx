@@ -5,7 +5,6 @@ import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimary, ButtonRow, PageRow } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
@@ -20,7 +19,6 @@ export const ClosurePrompts = () => {
   const { activeAccount } = useActiveAccounts();
   const { mode } = useTheme();
   const { openModal } = useOverlay().modal;
-  const { membership } = usePoolMemberships();
   const { isPoolSyncing } = useUi();
   const { isBonding, selectedActivePool, isDepositor, poolNominations } =
     useActivePools();
@@ -46,66 +44,62 @@ export const ClosurePrompts = () => {
     active.toNumber() === 0 && totalUnlockChunks === 0 && !targets.length;
 
   return (
-    <>
-      {depositorCanClose && (
-        <PageRow>
-          <CardWrapper
-            style={{ border: `1px solid ${annuncementBorderColor}` }}
-          >
-            <div className="content">
-              <h3>{t('pools.destroyPool')}</h3>
-              <h4>
-                {t('pools.leftThePool')}.{' '}
-                {targets.length > 0
-                  ? t('pools.stopNominating')
-                  : depositorCanWithdraw
-                    ? t('pools.closePool')
-                    : depositorCanUnbond
-                      ? t('pools.unbondYourFunds')
-                      : t('pools.withdrawUnlock')}
-              </h4>
-              <ButtonRow yMargin>
-                <ButtonPrimary
-                  marginRight
-                  text={t('pools.unbond')}
-                  disabled={
-                    isPoolSyncing ||
-                    (!depositorCanWithdraw && !depositorCanUnbond)
-                  }
-                  onClick={() =>
-                    openModal({
-                      key: 'UnbondPoolMember',
-                      options: { who: activeAccount, member: membership },
-                      size: 'sm',
-                    })
-                  }
-                />
-                <ButtonPrimary
-                  iconLeft={faLockOpen}
-                  text={
-                    depositorCanWithdraw
-                      ? t('pools.unlocked')
-                      : String(totalUnlockChunks ?? 0)
-                  }
-                  disabled={isPoolSyncing || !isBonding()}
-                  onClick={() =>
-                    openModal({
-                      key: 'UnlockChunks',
-                      options: {
-                        bondFor: 'pool',
-                        poolClosure: true,
-                        disableWindowResize: true,
-                        disableScroll: true,
-                      },
-                      size: 'sm',
-                    })
-                  }
-                />
-              </ButtonRow>
-            </div>
-          </CardWrapper>
-        </PageRow>
-      )}
-    </>
+    depositorCanClose && (
+      <PageRow>
+        <CardWrapper style={{ border: `1px solid ${annuncementBorderColor}` }}>
+          <div className="content">
+            <h3>{t('pools.destroyPool')}</h3>
+            <h4>
+              {t('pools.leftThePool')}.{' '}
+              {targets.length > 0
+                ? t('pools.stopNominating')
+                : depositorCanWithdraw
+                  ? t('pools.closePool')
+                  : depositorCanUnbond
+                    ? t('pools.unbondYourFunds')
+                    : t('pools.withdrawUnlock')}
+            </h4>
+            <ButtonRow yMargin>
+              <ButtonPrimary
+                marginRight
+                text={t('pools.unbond')}
+                disabled={
+                  isPoolSyncing ||
+                  (!depositorCanWithdraw && !depositorCanUnbond)
+                }
+                onClick={() =>
+                  openModal({
+                    key: 'Unbond',
+                    options: { bondFor: 'pool' },
+                    size: 'sm',
+                  })
+                }
+              />
+              <ButtonPrimary
+                iconLeft={faLockOpen}
+                text={
+                  depositorCanWithdraw
+                    ? t('pools.unlocked')
+                    : String(totalUnlockChunks ?? 0)
+                }
+                disabled={isPoolSyncing || !isBonding()}
+                onClick={() =>
+                  openModal({
+                    key: 'UnlockChunks',
+                    options: {
+                      bondFor: 'pool',
+                      poolClosure: true,
+                      disableWindowResize: true,
+                      disableScroll: true,
+                    },
+                    size: 'sm',
+                  })
+                }
+              />
+            </ButtonRow>
+          </div>
+        </CardWrapper>
+      </PageRow>
+    )
   );
 };

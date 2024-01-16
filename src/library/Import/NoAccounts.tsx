@@ -6,8 +6,17 @@ import { ButtonSecondary } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { NoAccountsWrapper } from './Wrappers';
+import type { FunctionComponent, ReactNode, SVGProps } from 'react';
 
-export const NoAccounts = ({ children, text, Icon }: any) => {
+export const NoAccounts = ({
+  children,
+  text,
+  Icon,
+}: {
+  children: ReactNode;
+  text: string;
+  Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
+}) => {
   const { t } = useTranslation('modals');
   const { replaceModal } = useOverlay().modal;
 

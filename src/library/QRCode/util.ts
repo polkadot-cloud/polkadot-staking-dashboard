@@ -68,10 +68,10 @@ export const createImgSize = (
     };
   }
 
-  const height = isString(size) ? size : `${size}px`;
+  const width = isString(size) ? size : `${size}px`;
 
   return {
-    height,
-    width: height,
+    width,
+    height: 'auto',
   };
 };

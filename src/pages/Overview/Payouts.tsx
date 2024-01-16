@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import React from 'react';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
@@ -20,9 +20,9 @@ export const Payouts = () => {
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
 
-  const ref = React.useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
-  const size = useSize(ref.current);
+  const size = useSize(ref?.current || undefined);
   const { width, height, minHeight } = formatSize(size, 260);
 
   return (

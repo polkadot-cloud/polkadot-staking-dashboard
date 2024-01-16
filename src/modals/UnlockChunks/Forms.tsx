@@ -10,6 +10,7 @@ import {
 } from '@polkadot-cloud/react';
 import { planckToUnit, rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
+import type { ForwardedRef } from 'react';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -27,9 +28,13 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ContentWrapper } from './Wrappers';
+import type { FormsProps } from './types';
 
 export const Forms = forwardRef(
-  ({ setSection, unlock, task, incrementCalculateHeight }: any, ref: any) => {
+  (
+    { setSection, unlock, task, incrementCalculateHeight }: FormsProps,
+    ref: ForwardedRef<HTMLDivElement>
+  ) => {
     const { t } = useTranslation('modals');
     const { api, consts } = useApi();
     const {
@@ -57,18 +62,18 @@ export const Forms = forwardRef(
 
     // valid to submit transaction
     const [valid, setValid] = useState<boolean>(
-      unlock?.value?.toNumber() > 0 ?? false
+      (unlock?.value?.toNumber() || 0) > 0 || false
     );
 
     // tx to submit
     const getTx = () => {
       let tx = null;
-      if (!valid || !api) {
+      if (!valid || !api || !unlock) {
         return tx;
       }
       // rebond is only available when staking directly.
       if (task === 'rebond' && isStaking) {
-        tx = api.tx.staking.rebond(unlock.value.toNumber());
+        tx = api.tx.staking.rebond(unlock.value.toNumber() || 0);
       } else if (task === 'withdraw' && isStaking) {
         tx = api.tx.staking.withdrawUnbonded(historyDepth.toString());
       } else if (task === 'withdraw' && isPooling && selectedActivePool) {
@@ -115,7 +120,7 @@ export const Forms = forwardRef(
 
     // Ensure unlock value is valid.
     useEffect(() => {
-      setValid(unlock?.value?.toNumber() > 0 ?? false);
+      setValid((unlock?.value?.toNumber() || 0) > 0 || false);
     }, [unlock]);
 
     // Trigger modal resize when commission options are enabled / disabled.
@@ -178,3 +183,5 @@ export const Forms = forwardRef(
     );
   }
 );
+
+Forms.displayName = 'Forms';

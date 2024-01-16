@@ -1,7 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import React, { useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { MaxEraRewardPointsEras } from 'consts';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import Worker from 'workers/poolPerformance?worker';
@@ -12,22 +13,29 @@ import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useApi } from 'contexts/Api';
 import type { Sync } from '@polkadot-cloud/react/types';
 import BigNumber from 'bignumber.js';
-import { formatRawExposures } from 'contexts/Staking/Utils';
 import { mergeDeep } from '@polkadot-cloud/utils';
+import { useStaking } from 'contexts/Staking';
+import { formatRawExposures } from 'contexts/Staking/Utils';
 import type { PoolPerformanceContextInterface } from './types';
 import { defaultPoolPerformanceContext } from './defaults';
 
 const worker = new Worker();
 
+export const PoolPerformanceContext =
+  createContext<PoolPerformanceContextInterface>(defaultPoolPerformanceContext);
+
+export const usePoolPerformance = () => useContext(PoolPerformanceContext);
+
 export const PoolPerformanceProvider = ({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) => {
   const { api } = useApi();
   const { network } = useNetwork();
   const { bondedPools } = useBondedPools();
-  const { activeEra } = useNetworkMetrics();
+  const { activeEra, isPagedRewardsActive } = useNetworkMetrics();
+  const { getPagedErasStakers } = useStaking();
   const { erasRewardPointsFetched, erasRewardPoints } = useValidators();
 
   // Store whether pool performance data is being fetched.
@@ -50,7 +58,9 @@ export const PoolPerformanceProvider = ({
     if (message) {
       const { data } = message;
       const { task } = data;
-      if (task !== 'processNominationPoolsRewardData') return;
+      if (task !== 'processNominationPoolsRewardData') {
+        return;
+      }
 
       // Update state with new data.
       const { poolRewardData } = data;
@@ -77,12 +87,24 @@ export const PoolPerformanceProvider = ({
 
   // Get era data and send to worker.
   const processEra = async (era: BigNumber) => {
-    if (!api) return;
+    if (!api) {
+      return;
+    }
     setCurrentEra(era);
-    const result = await api.query.staking.erasStakersClipped.entries(
-      era.toString()
-    );
-    const exposures = formatRawExposures(result);
+
+    let exposures;
+    if (isPagedRewardsActive(era)) {
+      exposures = await getPagedErasStakers(era.toString());
+    } else {
+      // DEPRECATION: Paged Rewards
+      //
+      // Use deprecated `erasStakersClipped` if paged rewards not active for this era.
+      const result = await api.query.staking.erasStakersClipped.entries(
+        era.toString()
+      );
+      exposures = formatRawExposures(result);
+    }
+
     worker.postMessage({
       task: 'processNominationPoolsRewardData',
       era: era.toString(),
@@ -135,11 +157,3 @@ export const PoolPerformanceProvider = ({
     </PoolPerformanceContext.Provider>
   );
 };
-
-export const PoolPerformanceContext =
-  React.createContext<PoolPerformanceContextInterface>(
-    defaultPoolPerformanceContext
-  );
-
-export const usePoolPerformance = () =>
-  React.useContext(PoolPerformanceContext);

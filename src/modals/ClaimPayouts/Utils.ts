@@ -8,6 +8,7 @@ export const getTotalPayout = (
   unclaimedPayout: EraUnclaimedPayouts
 ): BigNumber =>
   Object.values(unclaimedPayout).reduce(
-    (acc: BigNumber, cur: string) => acc.plus(cur),
+    (acc: BigNumber, paginatedValidator: [number, string]) =>
+      acc.plus(paginatedValidator[1]),
     new BigNumber(0)
   );

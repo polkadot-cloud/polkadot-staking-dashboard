@@ -5,7 +5,8 @@ import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { isNotZero } from '@polkadot-cloud/utils';
 import { motion } from 'framer-motion';
-import React, { useEffect, useRef, useState } from 'react';
+import type { FormEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -29,6 +30,7 @@ import { Pool } from 'library/Pool';
 import { useNetwork } from 'contexts/Network';
 import { usePoolList } from './context';
 import type { PoolListProps } from './types';
+import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 
 export const PoolList = ({
   allowMoreCols,
@@ -64,10 +66,10 @@ export const PoolList = ({
   const [renderIteration, setRenderIterationState] = useState<number>(1);
 
   // default list of pools
-  const [poolsDefault, setPoolsDefault] = useState(pools);
+  const [poolsDefault, setPoolsDefault] = useState<BondedPool[]>(pools || []);
 
   // manipulated list (ordering, filtering) of pools
-  const [listPools, setListPools] = useState(pools);
+  const [listPools, setListPools] = useState<BondedPool[]>(pools || []);
 
   // is this the initial fetch
   const [fetched, setFetched] = useState<boolean>(false);
@@ -97,14 +99,14 @@ export const PoolList = ({
 
   // handle pool list bootstrapping
   const setupPoolList = () => {
-    setPoolsDefault(pools);
-    setListPools(pools);
+    setPoolsDefault(pools || []);
+    setListPools(pools || []);
     setFetched(true);
   };
 
   // handle filter / order update
   const handlePoolsFilterUpdate = (
-    filteredPools: any = Object.assign(poolsDefault)
+    filteredPools = Object.assign(poolsDefault)
   ) => {
     filteredPools = applyFilter(includes, excludes, filteredPools);
     if (searchTerm) {
@@ -115,7 +117,7 @@ export const PoolList = ({
     setRenderIteration(1);
   };
 
-  const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e: FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
     let filteredPools = Object.assign(poolsDefault);
     filteredPools = applyFilter(includes, excludes, filteredPools);
@@ -123,8 +125,8 @@ export const PoolList = ({
 
     // ensure no duplicates
     filteredPools = filteredPools.filter(
-      (value: any, index: number, self: any) =>
-        index === self.findIndex((i: any) => i.id === value.id)
+      (value: BondedPool, index: number, self: BondedPool[]) =>
+        index === self.findIndex((i) => i.id === value.id)
     );
     setPage(1);
     setRenderIteration(1);
@@ -245,7 +247,7 @@ export const PoolList = ({
         <MotionContainer>
           {poolsToDisplay.length ? (
             <>
-              {poolsToDisplay.map((pool: any, index: number) => (
+              {poolsToDisplay.map((pool, index: number) => (
                 <motion.div
                   className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
                   key={`nomination_${index}`}

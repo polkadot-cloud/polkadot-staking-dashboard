@@ -9,7 +9,7 @@ import { AccountPoolRoles } from '../modals/AccountPoolRoles';
 import { Accounts } from '../modals/Accounts';
 import { Bio } from '../modals/Bio';
 import { Bond } from '../modals/Bond';
-import { ChangeNominations } from '../modals/ChangeNominations';
+import { StopNominations } from '../modals/StopNominations';
 import { ChangePoolRoles } from '../modals/ChangePoolRoles';
 import { ChooseLanguage } from '../modals/ChooseLanguage';
 import { ClaimReward } from '../modals/ClaimReward';
@@ -24,7 +24,6 @@ import { Networks } from '../modals/Networks';
 import { PoolNominations } from '../modals/PoolNominations';
 import { Settings } from '../modals/Settings';
 import { Unbond } from '../modals/Unbond';
-import { UnbondPoolMember } from '../modals/UnbondPoolMember';
 import { UnlockChunks } from '../modals/UnlockChunks';
 import { Unstake } from '../modals/Unstake';
 import { UpdateController } from '../modals/UpdateController';
@@ -32,8 +31,8 @@ import { UpdatePayee } from '../modals/UpdatePayee';
 import { UpdateReserve } from '../modals/UpdateReserve';
 import { ValidatorMetrics } from '../modals/ValidatorMetrics';
 import { ValidatorGeo } from '../modals/ValidatorGeo';
-import { WithdrawPoolMember } from '../modals/WithdrawPoolMember';
 import { ManageNominations } from '../canvas/ManageNominations';
+import { PoolMembers } from 'canvas/PoolMembers';
 
 export const Overlays = () => {
   const { status } = useHelp();
@@ -45,7 +44,7 @@ export const Overlays = () => {
         Bio,
         AccountPoolRoles,
         Bond,
-        ChangeNominations,
+        StopNominations,
         ChangePoolRoles,
         ChooseLanguage,
         ClaimPayouts,
@@ -63,17 +62,16 @@ export const Overlays = () => {
         Settings,
         ValidatorMetrics,
         ValidatorGeo,
-        UnbondPoolMember,
         UnlockChunks,
         Unstake,
         UpdateController,
         Unbond,
         UpdatePayee,
         UpdateReserve,
-        WithdrawPoolMember,
       }}
       canvas={{
         ManageNominations,
+        PoolMembers,
       }}
     />
   );

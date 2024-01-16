@@ -4,13 +4,12 @@
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
-import { useNotifications } from 'contexts/Notifications';
-import type { NotificationText } from 'contexts/Notifications/types';
+import type { NotificationText } from 'static/NotificationsController/types';
 import type { CopyAddressProps } from '../types';
+import { NotificationsController } from 'static/NotificationsController';
 
 export const CopyAddress = ({ address }: CopyAddressProps) => {
   const { t } = useTranslation('library');
-  const { addNotification } = useNotifications();
 
   // copy address notification
   const notificationCopyAddress: NotificationText | null =
@@ -27,7 +26,7 @@ export const CopyAddress = ({ address }: CopyAddressProps) => {
         type="button"
         onClick={() => {
           if (notificationCopyAddress) {
-            addNotification(notificationCopyAddress);
+            NotificationsController.emit(notificationCopyAddress);
           }
           navigator.clipboard.writeText(address || '');
         }}

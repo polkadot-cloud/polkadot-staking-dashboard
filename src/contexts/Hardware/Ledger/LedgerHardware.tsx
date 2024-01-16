@@ -3,7 +3,7 @@
 
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import type { ReactNode } from 'react';
-import React, { useRef, useState } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyJson, MaybeString } from 'types';
 import { useApi } from 'contexts/Api';
@@ -19,9 +19,9 @@ import type {
 import { Ledger } from './static/ledger';
 
 export const LedgerHardwareContext =
-  React.createContext<LedgerHardwareContextInterface>(
-    defaultLedgerHardwareContext
-  );
+  createContext<LedgerHardwareContextInterface>(defaultLedgerHardwareContext);
+
+export const useLedgerHardware = () => useContext(LedgerHardwareContext);
 
 export const LedgerHardwareProvider = ({
   children,
@@ -97,7 +97,9 @@ export const LedgerHardwareProvider = ({
       setIsExecuting(false);
       resetFeedback();
 
-      if (result.minor < specVersion) runtimesInconsistent.current = true;
+      if (result.minor < specVersion) {
+        runtimesInconsistent.current = true;
+      }
       setIntegrityChecked(true);
     } catch (err) {
       handleErrors(appName, err);
@@ -287,5 +289,3 @@ export const LedgerHardwareProvider = ({
     </LedgerHardwareContext.Provider>
   );
 };
-
-export const useLedgerHardware = () => React.useContext(LedgerHardwareContext);

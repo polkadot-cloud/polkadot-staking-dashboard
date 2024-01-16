@@ -1,13 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { Dispatch, SetStateAction } from 'react';
+
 export interface ExtensionProps {
   meta: ExtensionMetaProps;
-  installed?: any;
   size?: string;
-  message?: string;
   flag?: boolean;
-  status?: string;
 }
 
 export interface ExtensionMetaProps {
@@ -23,7 +22,7 @@ export interface ListWithInputProps {
 }
 
 export interface forwardRefProps {
-  setSection?: any;
+  setSection?: Dispatch<SetStateAction<number>>;
   readOnlyOpen: boolean;
   setReadOnlyOpen: (e: boolean) => void;
 }

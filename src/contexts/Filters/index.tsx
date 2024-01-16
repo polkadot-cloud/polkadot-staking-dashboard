@@ -1,7 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import React, { useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useState } from 'react';
 import type { AnyFunction, AnyJson } from 'types';
 import { defaultFiltersInterface } from './defaults';
 import type {
@@ -15,11 +16,13 @@ import type {
   FiltersContextInterface,
 } from './types';
 
-export const FiltersProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const FiltersContext = createContext<FiltersContextInterface>(
+  defaultFiltersInterface
+);
+
+export const useFilters = () => useContext(FiltersContext);
+
+export const FiltersProvider = ({ children }: { children: ReactNode }) => {
   // groups along with their includes
   const [includes, setIncludes] = useState<FilterItems>([]);
 
@@ -33,9 +36,9 @@ export const FiltersProvider = ({
   const [searchTerms, setSearchTerms] = useState<FilterSearches>([]);
 
   // Get stored includes or excludes for a group.
-  const getFilters = (t: FilterType, g: string): string[] | null => {
-    const current = t === 'exclude' ? excludes : includes;
-    return current.find((e) => e.key === g)?.filters || null;
+  const getFilters = (type: FilterType, group: string): string[] | null => {
+    const current = type === 'exclude' ? excludes : includes;
+    return current.find((e) => e.key === group)?.filters || null;
   };
 
   const setFilters = (t: FilterType, n: FilterItems) => {
@@ -59,7 +62,9 @@ export const FiltersProvider = ({
     }
     const newFilters = [...current]
       .map((e) => {
-        if (e.key !== g) return e;
+        if (e.key !== g) {
+          return e;
+        }
         let { filters } = e;
 
         if (filters.includes(f)) {
@@ -98,7 +103,9 @@ export const FiltersProvider = ({
     if (current.length) {
       newFilters = [...current].map((e) => {
         // return groups we are not manipulating.
-        if (e.key !== g) return e;
+        if (e.key !== g) {
+          return e;
+        }
 
         let { filters } = e;
         filters = filters.filter((f: string) => !fs.includes(f)).concat(fs);
@@ -213,9 +220,3 @@ export const FiltersProvider = ({
     </FiltersContext.Provider>
   );
 };
-
-export const FiltersContext = React.createContext<FiltersContextInterface>(
-  defaultFiltersInterface
-);
-
-export const useFilters = () => React.useContext(FiltersContext);

@@ -10,12 +10,14 @@ import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Roles } from '../../Roles';
+import type { PoolProgress } from 'contexts/Setup/types';
+import type { PoolRoles as PoolRolesInterface } from 'contexts/Pools/ActivePools/types';
 
 export const PoolRoles = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const { activeAccount } = useActiveAccounts();
-  const { getSetupProgress, setActiveAccountSetup } = useSetup();
-  const setup = getSetupProgress('pool', activeAccount);
+  const { getPoolSetup, setActiveAccountSetup } = useSetup();
+  const setup = getPoolSetup(activeAccount);
   const { progress } = setup;
 
   // if no roles in setup already, inject `activeAccount` to be
@@ -28,7 +30,7 @@ export const PoolRoles = ({ section }: SetupStepProps) => {
   };
 
   // store local pool name for form control
-  const [roles, setRoles] = useState({
+  const [roles, setRoles] = useState<{ roles: PoolRolesInterface }>({
     roles: initialValue,
   });
 
@@ -36,7 +38,7 @@ export const PoolRoles = ({ section }: SetupStepProps) => {
   const [rolesValid, setRolesValid] = useState<boolean>(true);
 
   // handler for updating pool roles
-  const handleSetupUpdate = (value: any) => {
+  const handleSetupUpdate = (value: PoolProgress) => {
     setActiveAccountSetup('pool', value);
   };
 

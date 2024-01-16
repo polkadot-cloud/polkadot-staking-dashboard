@@ -26,6 +26,8 @@ import type { ExternalAccountImportType } from '../ExternalAccounts/types';
 export const OtherAccountsContext =
   createContext<OtherAccountsContextInterface>(defaultOtherAccountsContext);
 
+export const useOtherAccounts = () => useContext(OtherAccountsContext);
+
 export const OtherAccountsProvider = ({
   children,
 }: {
@@ -45,6 +47,8 @@ export const OtherAccountsProvider = ({
 
   // Store other (non-extension) accounts list.
   const [otherAccounts, setOtherAccounts] = useState<ImportedAccount[]>([]);
+  // Ref is needed to refer to updated state in-between renders as local accounts are imported from
+  // different sources.
   const otherAccountsRef = useRef(otherAccounts);
 
   // Store unsubscribe handlers for connected extensions.
@@ -77,8 +81,11 @@ export const OtherAccountsProvider = ({
         otherAccountsRef
       );
       // If the currently active account is being forgotten, disconnect.
-      if (forget.find(({ address }) => address === activeAccount) !== undefined)
+      if (
+        forget.find(({ address }) => address === activeAccount) !== undefined
+      ) {
         setActiveAccount(null);
+      }
     }
   };
 
@@ -107,7 +114,9 @@ export const OtherAccountsProvider = ({
       );
 
       // set active account for networkData.
-      if (activeAccountInSet) setActiveAccount(activeAccountInSet.address);
+      if (activeAccountInSet) {
+        setActiveAccount(activeAccountInSet.address);
+      }
 
       // add accounts to imported.
       addOtherAccounts(localAccounts);
@@ -217,5 +226,3 @@ export const OtherAccountsProvider = ({
     </OtherAccountsContext.Provider>
   );
 };
-
-export const useOtherAccounts = () => useContext(OtherAccountsContext);

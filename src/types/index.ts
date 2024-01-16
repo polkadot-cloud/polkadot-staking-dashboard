@@ -1,14 +1,19 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type React from 'react';
-import type { FunctionComponent, SVGProps } from 'react';
+import type { FC, FunctionComponent, SVGProps } from 'react';
 import type { Theme } from 'contexts/Themes/types';
 import type { ExtensionInjected } from '@polkadot-cloud/react/types';
+import type BigNumber from 'bignumber.js';
+import type { NotificationItem } from 'static/NotificationsController/types';
 
 declare global {
   interface Window {
     injectedWeb3?: Record<string, ExtensionInjected>;
+  }
+  interface DocumentEventMap {
+    notification: CustomEvent<NotificationItem>;
+    'new-block-number': CustomEvent<{ blockNumber: string }>;
   }
 }
 
@@ -62,6 +67,7 @@ export interface Network {
   };
   params: Record<string, number>;
   defaultFeeReserve: number;
+  maxExposurePageSize: BigNumber;
 }
 
 export interface PageCategory {
@@ -76,7 +82,7 @@ export interface PageItem {
   key: string;
   uri: string;
   hash: string;
-  Entry: React.FC<PageProps>;
+  Entry: FC<PageProps>;
   lottie: AnyJson;
   action?: {
     type: string;

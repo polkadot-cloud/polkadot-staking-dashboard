@@ -49,7 +49,9 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const handleForgetExternalAccount = (account: ExternalAccount) => {
     forgetExternalAccounts([account]);
     // forget the account from state only if it has not replaced by a `system` external account.
-    if (account.addedBy === 'user') forgetOtherAccounts([account]);
+    if (account.addedBy === 'user') {
+      forgetOtherAccounts([account]);
+    }
     setModalResize();
   };
 
@@ -82,8 +84,9 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
               defaultLabel={t('inputAddress')}
               successCallback={async (value: string) => {
                 const result = addExternalAccount(value, 'user');
-                if (result)
+                if (result) {
                   addOrReplaceOtherAccount(result.account, result.type);
+                }
 
                 return true;
               }}

@@ -4,16 +4,17 @@
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAnimationControls } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePrompt } from 'contexts/Prompt';
 import { Tip } from 'library/Tips/Tip';
 import { ItemInnerWrapper, ItemWrapper, ItemsWrapper } from './Wrappers';
+import type { TipDisplayWithControls, TipItemsProps } from './types';
 
-export const ItemsInner = ({ items, page }: any) => {
+export const Items = ({ items, page }: TipItemsProps) => {
   const controls = useAnimationControls();
 
   // stores whether this is the initial display of tips
-  const [initial, setInitial] = useState(true);
+  const [initial, setInitial] = useState<boolean>(true);
 
   useEffect(() => {
     doControls(true);
@@ -40,7 +41,7 @@ export const ItemsInner = ({ items, page }: any) => {
         },
       }}
     >
-      {items.map((item: any, index: number) => (
+      {items.map((item, index: number) => (
         <Item
           key={`tip_${index}_${page}`}
           index={index}
@@ -61,9 +62,9 @@ const Item = ({
   controls,
   initial,
   page,
-}: any) => {
+}: TipDisplayWithControls) => {
   const { openPromptWith } = usePrompt();
-  const [isStopped, setIsStopped] = useState(true);
+  const [isStopped, setIsStopped] = useState<boolean>(true);
 
   useEffect(() => {
     const delay = index * 75;
@@ -123,13 +124,3 @@ const Item = ({
     </ItemWrapper>
   );
 };
-
-export class Items extends React.Component<any, any> {
-  shouldComponentUpdate(nextProps: any) {
-    return JSON.stringify(this.props.items) !== JSON.stringify(nextProps.items);
-  }
-
-  render() {
-    return <ItemsInner {...this.props} />;
-  }
-}

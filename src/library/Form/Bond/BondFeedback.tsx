@@ -22,7 +22,7 @@ export const BondFeedback = ({
   joiningPool = false,
   parentErrors = [],
   setters = [],
-  listenIsValid = () => {},
+  listenIsValid,
   disableTxFeeUpdate = false,
   defaultBond,
   txFees,
@@ -63,11 +63,16 @@ export const BondFeedback = ({
     bond: defaultBondStr,
   });
 
+  // handler to set bond as a string
+  const handleSetBond = (newBond: { bond: BigNumber }) => {
+    setBond({ bond: newBond.bond.toString() });
+  };
+
   // current bond value BigNumber
   const bondBn = unitToPlanck(bond.bond, units);
 
   // whether bond is disabled
-  const [bondDisabled, setBondDisabled] = useState(false);
+  const [bondDisabled, setBondDisabled] = useState<boolean>(false);
 
   // bond minus tx fees if too much
   const enoughToCoverTxFees = freeToBond.minus(bondBn).isGreaterThan(txFees);
@@ -76,32 +81,8 @@ export const BondFeedback = ({
     ? bondBn
     : BigNumber.max(bondBn.minus(txFees), 0);
 
-  // update bond on account change
-  useEffect(() => {
-    setBond({
-      bond: defaultBondStr,
-    });
-  }, [activeAccount]);
-
-  // handle errors on input change
-  useEffect(() => {
-    handleErrors();
-  }, [bond, txFees]);
-
-  // update max bond after txFee sync
-  useEffect(() => {
-    if (!disableTxFeeUpdate) {
-      if (bondBn.isGreaterThan(freeToBond)) {
-        setBond({ bond: String(freeToBond) });
-      }
-    }
-  }, [txFees]);
-
   // add this component's setBond to setters
-  setters.push({
-    set: setBond,
-    current: bond,
-  });
+  setters.push(handleSetBond);
 
   // bond amount to minimum threshold.
   const minBondBn =
@@ -157,9 +138,34 @@ export const BondFeedback = ({
 
     const bondValid = !newErrors.length && bond.bond !== '';
     setBondDisabled(disabled);
-    listenIsValid(bondValid, newErrors);
+
+    if (listenIsValid && typeof listenIsValid === 'function') {
+      listenIsValid(bondValid, newErrors);
+    }
+
     setErrors(newErrors);
   };
+
+  // update bond on account change
+  useEffect(() => {
+    setBond({
+      bond: defaultBondStr,
+    });
+  }, [activeAccount]);
+
+  // handle errors on input change
+  useEffect(() => {
+    handleErrors();
+  }, [bond, txFees]);
+
+  // update max bond after txFee sync
+  useEffect(() => {
+    if (!disableTxFeeUpdate) {
+      if (bondBn.isGreaterThan(freeToBond)) {
+        setBond({ bond: String(planckToUnit(freeToBond, units)) });
+      }
+    }
+  }, [txFees]);
 
   return (
     <>

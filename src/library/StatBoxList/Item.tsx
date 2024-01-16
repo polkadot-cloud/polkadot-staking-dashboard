@@ -1,13 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import React from 'react';
+import type { ReactNode } from 'react';
 import { Number } from './Number';
 import { Pie } from './Pie';
 import { Text } from './Text';
 import { StatBoxWrapper } from './Wrapper';
+import type { AnyJson } from '@polkadot-cloud/react/types';
 
-export const StatBox = ({ children }: { children: React.ReactNode }) => (
+export const StatBox = ({ children }: { children: ReactNode }) => (
   <StatBoxWrapper
     whileHover={{ scale: 1.02 }}
     transition={{
@@ -20,7 +21,13 @@ export const StatBox = ({ children }: { children: React.ReactNode }) => (
   </StatBoxWrapper>
 );
 
-export const StatBoxListItem = ({ format, params }: any) => {
+export const StatBoxListItem = ({
+  format,
+  params,
+}: {
+  format: string;
+  params: AnyJson;
+}) => {
   switch (format) {
     case 'chart-pie':
       return <Pie {...params} />;

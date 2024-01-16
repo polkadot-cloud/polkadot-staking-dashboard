@@ -19,7 +19,6 @@ import { ClosurePrompts } from './ClosurePrompts';
 import { PoolFavorites } from './Favorites';
 import { ManageBond } from './ManageBond';
 import { ManagePool } from './ManagePool';
-import { Members } from './Members';
 import { PoolStats } from './PoolStats';
 import { ActivePoolsStat } from './Stats/ActivePools';
 import { MinCreateBondStat } from './Stats/MinCreateBond';
@@ -37,8 +36,7 @@ export const HomeInner = () => {
   } = usePoolsConfig();
   const { activeTab, setActiveTab } = usePoolsTabs();
   const { bondedPools, getAccountPools } = useBondedPools();
-  const { getPoolRoles, selectedActivePool, selectedPoolMemberCount } =
-    useActivePools();
+  const { getPoolRoles, selectedActivePool } = useActivePools();
   const accountPools = getAccountPools(activeAccount);
   const totalAccountPools = Object.entries(accountPools).length;
 
@@ -50,33 +48,24 @@ export const HomeInner = () => {
     },
   ];
 
-  if (selectedActivePool) {
-    tabs = tabs.concat({
-      title: t('pools.members'),
-      active: activeTab === 1,
-      onClick: () => setActiveTab(1),
-      badge: String(selectedPoolMemberCount),
-    });
-  }
-
   tabs = tabs.concat(
     {
       title: t('pools.allPools'),
-      active: activeTab === 2,
-      onClick: () => setActiveTab(2),
+      active: activeTab === 1,
+      onClick: () => setActiveTab(1),
       badge: String(counterForBondedPools.toString()),
     },
     {
       title: t('pools.favorites'),
-      active: activeTab === 3,
-      onClick: () => setActiveTab(3),
+      active: activeTab === 2,
+      onClick: () => setActiveTab(2),
       badge: String(favorites.length),
     }
   );
 
   // Back to tab 0 if not in a pool & on members tab.
   useEffect(() => {
-    if (!selectedActivePool && [1].includes(activeTab)) {
+    if (!selectedActivePool) {
       setActiveTab(0);
     }
   }, [selectedActivePool]);
@@ -139,32 +128,25 @@ export const HomeInner = () => {
           )}
         </>
       )}
-      {activeTab === 1 && <Members />}
-      {activeTab === 2 && (
-        <>
-          <PageRow>
-            <CardWrapper>
-              <PoolListProvider>
-                <PoolList
-                  pools={bondedPools}
-                  defaultFilters={{
-                    includes: ['active'],
-                    excludes: ['locked', 'destroying'],
-                  }}
-                  allowMoreCols
-                  allowSearch
-                  pagination
-                />
-              </PoolListProvider>
-            </CardWrapper>
-          </PageRow>
-        </>
+      {activeTab === 1 && (
+        <PageRow>
+          <CardWrapper>
+            <PoolListProvider>
+              <PoolList
+                pools={bondedPools}
+                defaultFilters={{
+                  includes: ['active'],
+                  excludes: ['locked', 'destroying'],
+                }}
+                allowMoreCols
+                allowSearch
+                pagination
+              />
+            </PoolListProvider>
+          </CardWrapper>
+        </PageRow>
       )}
-      {activeTab === 3 && (
-        <>
-          <PoolFavorites />
-        </>
-      )}
+      {activeTab === 2 && <PoolFavorites />}
     </>
   );
 };

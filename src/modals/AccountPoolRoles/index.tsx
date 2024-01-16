@@ -41,8 +41,12 @@ export const AccountPoolRoles = () => {
             })}
           </h4>
           <div className="items">
-            {Object.entries(accountPools).map(([key, item]: any, i: number) => (
-              <Button item={item} poolId={key} key={`all_roles_root_${i}`} />
+            {Object.entries(accountPools).map(([key, item], i: number) => (
+              <Button
+                item={item as string[]}
+                poolId={key}
+                key={`all_roles_root_${i}`}
+              />
             ))}
           </div>
         </ContentWrapper>

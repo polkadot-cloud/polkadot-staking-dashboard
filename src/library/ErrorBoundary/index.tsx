@@ -4,7 +4,7 @@
 import { faBug } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
-import React from 'react';
+import type { FC } from 'react';
 import { Wrapper } from './Wrapper';
 
 export const ErrorFallbackApp = ({
@@ -54,7 +54,7 @@ export const ErrorFallbackRoutes = ({
 interface ErrorFallbackProps {
   resetErrorBoundary?: () => void;
 }
-export const ErrorFallbackModal: React.FC = (props: ErrorFallbackProps) => {
+export const ErrorFallbackModal: FC = (props: ErrorFallbackProps) => {
   const { resetErrorBoundary } = props;
   const { t } = useTranslation('library');
 

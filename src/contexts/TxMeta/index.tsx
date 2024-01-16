@@ -3,7 +3,8 @@
 
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import React, { useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import { useBonded } from 'contexts/Bonded';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
@@ -14,7 +15,13 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import * as defaults from './defaults';
 import type { TxMetaContextInterface } from './types';
 
-export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
+export const TxMetaContext = createContext<TxMetaContextInterface>(
+  defaults.defaultTxMeta
+);
+
+export const useTxMeta = () => useContext(TxMetaContext);
+
+export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
   const { getBondedAccount } = useBonded();
   const { activeProxy } = useActiveAccounts();
   const { getControllerNotImported } = useStaking();
@@ -22,13 +29,13 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   const { getTransferOptions } = useTransferOptions();
 
   // Store the transaction fees for the transaction.
-  const [txFees, setTxFees] = useState(new BigNumber(0));
+  const [txFees, setTxFees] = useState<BigNumber>(new BigNumber(0));
 
   // Store the sender of the transaction.
   const [sender, setSender] = useState<MaybeAddress>(null);
 
   // Store whether the sender does not have enough funds.
-  const [notEnoughFunds, setNotEnoughFunds] = useState(false);
+  const [notEnoughFunds, setNotEnoughFunds] = useState<boolean>(false);
 
   // Store the payloads of transactions if extrinsics require manual signing (e.g. Ledger). payloads
   // are calculated asynchronously and extrinsic associated with them may be cancelled. For this
@@ -38,11 +45,11 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
     payload: AnyJson;
     uid: number;
   } | null>(null);
-  const txPayloadRef = React.useRef(txPayload);
+  const txPayloadRef = useRef(txPayload);
 
   // Store an optional signed transaction if extrinsics require manual signing (e.g. Ledger).
   const [txSignature, setTxSignatureState] = useState<AnyJson>(null);
-  const txSignatureRef = React.useRef(txSignature);
+  const txSignatureRef = useRef(txSignature);
 
   useEffectIgnoreInitial(() => {
     const { balanceTxFees } = getTransferOptions(sender);
@@ -53,17 +60,11 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
     setTxFees(new BigNumber(0));
   };
 
-  const getPayloadUid = () => {
-    return txPayloadRef.current?.uid || 1;
-  };
+  const getPayloadUid = () => txPayloadRef.current?.uid || 1;
 
-  const incrementPayloadUid = () => {
-    return (txPayloadRef.current?.uid || 0) + 1;
-  };
+  const incrementPayloadUid = () => (txPayloadRef.current?.uid || 0) + 1;
 
-  const getTxPayload = () => {
-    return txPayloadRef.current?.payload || null;
-  };
+  const getTxPayload = () => txPayloadRef.current?.payload || null;
 
   const setTxPayload = (p: AnyJson, uid: number) => {
     setStateWithRef(
@@ -80,9 +81,7 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
     setStateWithRef(null, setTxPayloadState, txPayloadRef);
   };
 
-  const getTxSignature = () => {
-    return txSignatureRef.current;
-  };
+  const getTxSignature = () => txSignatureRef.current;
 
   const setTxSignature = (s: AnyJson) => {
     setStateWithRef(s, setTxSignatureState, txSignatureRef);
@@ -102,10 +101,13 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
     const controller = getBondedAccount(stash);
 
     if (controller !== stash) {
-      if (getControllerNotImported(controller))
+      if (getControllerNotImported(controller)) {
         return 'controller_not_imported';
+      }
 
-      if (!accountHasSigner(controller)) return 'read_only';
+      if (!accountHasSigner(controller)) {
+        return 'read_only';
+      }
     } else if (
       (!proxySupported || !accountHasSigner(activeProxy)) &&
       !accountHasSigner(stash)
@@ -139,9 +141,3 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
     </TxMetaContext.Provider>
   );
 };
-
-export const TxMetaContext = React.createContext<TxMetaContextInterface>(
-  defaults.defaultTxMeta
-);
-
-export const useTxMeta = () => React.useContext(TxMetaContext);

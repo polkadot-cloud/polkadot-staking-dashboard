@@ -4,10 +4,11 @@
 import type { RefObject } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { DefinitionWrapper } from '../Wrappers';
+import type { DefinitionProps } from './types';
 
-export const Definition = ({ title, description, open: o }: any) => {
+export const Definition = ({ title, description }: DefinitionProps) => {
   // Store whether the definition is open or not.
-  const [open, setOpen] = useState(o || false);
+  const [open, setOpen] = useState<boolean>(false);
 
   // Store the current height of the definition content.
   const [height, setHeight] = useState<number>(0);
@@ -21,25 +22,24 @@ export const Definition = ({ title, description, open: o }: any) => {
 
   return (
     <DefinitionWrapper>
-      {!o ? (
-        <button onClick={() => setOpen(!open)} type="button">
-          <h2>
-            {title}
-            <span>{open ? '-' : '+'}</span>
-          </h2>
-        </button>
-      ) : null}
+      <button onClick={() => setOpen(!open)} type="button">
+        <h2>
+          {title}
+          <span>{open ? '-' : '+'}</span>
+        </h2>
+      </button>
+
       <div style={{ height }}>
         <div className="content" ref={contentRef}>
-          {open ? (
+          {open && (
             <>
-              {description.map((item: any, index: number) => (
+              {description.map((item, index: number) => (
                 <h4 key={`inner_def_${index}`} className="definition">
                   {item}
                 </h4>
               ))}
             </>
-          ) : null}
+          )}
         </div>
       </div>
     </DefinitionWrapper>

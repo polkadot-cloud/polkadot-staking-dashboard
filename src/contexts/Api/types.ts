@@ -6,8 +6,7 @@ import type { U8aLike } from '@polkadot/util/types';
 import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import type { AnyJson, Network, NetworkName } from '../../types';
-
-export type ApiStatus = 'connecting' | 'connected' | 'disconnected';
+import type { ApiStatus } from 'static/APController/types';
 
 export interface APIProviderProps {
   children: ReactNode;
@@ -22,7 +21,7 @@ export interface APIConstants {
   bondDuration: BigNumber;
   maxNominations: BigNumber;
   sessionsPerEra: BigNumber;
-  maxNominatorRewardedPerValidator: BigNumber;
+  maxExposurePageSize: BigNumber;
   historyDepth: BigNumber;
   maxElectingVoters: BigNumber;
   expectedBlockTime: BigNumber;
@@ -32,11 +31,11 @@ export interface APIConstants {
   poolsPalletId: U8aLike;
 }
 
-export type APIChainState = {
+export interface APIChainState {
   chain: string | null;
   version: AnyJson;
   ss58Prefix: number;
-};
+}
 
 export interface APIContextInterface {
   api: ApiPromise | null;

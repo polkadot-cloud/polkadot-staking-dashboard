@@ -7,19 +7,22 @@ import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
-import { useInflation } from 'library/Hooks/useInflation';
 import { StatsHead } from 'library/StatsHead';
 import { Announcements } from './Announcements';
 import { Wrapper } from './Wrappers';
 
 export const NetworkStats = () => {
   const { t } = useTranslation('pages');
-  const { bondedPools } = useBondedPools();
-  const { inflation } = useInflation();
-  const { metrics } = useNetworkMetrics();
   const { staking } = useStaking();
-  const { totalNominators, totalValidators } = staking;
+  const { metrics } = useNetworkMetrics();
+  const { bondedPools } = useBondedPools();
+
+  const { totalNominators, totalValidators, lastReward } = staking;
   const { totalIssuance } = metrics;
+
+  const lastInflation = new BigNumber(lastReward)
+    .dividedBy(totalIssuance.dividedBy(100))
+    .multipliedBy(365);
 
   const items = [
     {
@@ -38,11 +41,11 @@ export const NetworkStats = () => {
       helpKey: 'Active Pools',
     },
     {
-      label: t('overview.inflationRate'),
+      label: t('overview.latestInflationRate'),
       value: `${
         totalIssuance.toString() === '0'
           ? '0'
-          : new BigNumber(inflation).decimalPlaces(2).toFormat()
+          : lastInflation.decimalPlaces(2).toFormat()
       }%`,
       helpKey: 'Inflation',
     },

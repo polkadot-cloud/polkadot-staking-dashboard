@@ -68,15 +68,21 @@ export const timeleftAsString = (
     str += `${days} ${t('time.day', { count: days, ns: 'base' })}`;
   }
   if (hours > 0) {
-    if (str) str += ', ';
+    if (str) {
+      str += ', ';
+    }
     str += ` ${hours} ${t(tHour, { count: hours, ns: 'base' })}`;
   }
   if (minutes > 0) {
-    if (str) str += ', ';
+    if (str) {
+      str += ', ';
+    }
     str += ` ${minutes} ${t(tMinute, { count: minutes, ns: 'base' })}`;
   }
   if (!days && !hours) {
-    if (str) str += ', ';
+    if (str) {
+      str += ', ';
+    }
     str += ` ${seconds}`;
   }
   return str;

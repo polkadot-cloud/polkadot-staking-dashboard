@@ -33,14 +33,16 @@ export interface AccountDropdownProps {
   to: MaybeAddress;
 }
 
+export type BondSetter = ({ bond }: { bond: BigNumber }) => void;
+
 export interface BondFeedbackProps {
   syncing?: boolean;
-  setters: any;
+  setters: BondSetter[];
   bondFor: BondFor;
-  defaultBond: number | null;
+  defaultBond: string | null;
   inSetup?: boolean;
   joiningPool?: boolean;
-  listenIsValid: { (valid: boolean, errors: string[]): void } | { (): void };
+  listenIsValid?: ((valid: boolean, errors: string[]) => void) | (() => void);
   parentErrors?: string[];
   disableTxFeeUpdate?: boolean;
   setLocalResize?: () => void;
@@ -53,17 +55,17 @@ export interface BondInputProps {
   value: string;
   defaultValue: string;
   syncing?: boolean;
-  setters: any;
+  setters: BondSetter[];
   disabled: boolean;
   disableTxFeeUpdate?: boolean;
 }
 
 export interface UnbondFeedbackProps {
-  setters: any;
+  setters: BondSetter[];
   bondFor: BondFor;
   defaultBond?: number;
   inSetup?: boolean;
-  listenIsValid: { (valid: boolean, errors: string[]): void } | { (): void };
+  listenIsValid?: ((valid: boolean, errors: string[]) => void) | (() => void);
   parentErrors?: string[];
   setLocalResize?: () => void;
   txFees: BigNumber;
@@ -72,24 +74,14 @@ export interface UnbondFeedbackProps {
 export interface UnbondInputProps {
   active: BigNumber;
   unbondToMin: BigNumber;
-  defaultValue: number | string;
+  defaultValue: string;
   disabled: boolean;
-  setters: any;
-  value: any;
+  setters: BondSetter[];
+  value: string;
 }
 
 export interface NominateStatusBarProps {
   value: BigNumber;
-}
-
-export interface DropdownProps {
-  items: DropdownInput[];
-  onChange: (o: any) => void;
-  label?: string;
-  placeholder: string;
-  value: DropdownInput;
-  current: DropdownInput;
-  height: string;
 }
 
 export interface WarningProps {

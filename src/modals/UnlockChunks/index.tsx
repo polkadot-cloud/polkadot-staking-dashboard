@@ -18,6 +18,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { Forms } from './Forms';
 import { Overview } from './Overview';
+import type { UnlockChunk } from 'contexts/Balances/types';
 
 export const UnlockChunks = () => {
   const { t } = useTranslation('modals');
@@ -51,7 +52,7 @@ export const UnlockChunks = () => {
   const unlocking = getUnlocking();
 
   // active modal section
-  const [section, setSectionState] = useState(0);
+  const [section, setSectionState] = useState<number>(0);
   const sectionRef = useRef(section);
 
   const setSection = (s: number) => {
@@ -62,7 +63,7 @@ export const UnlockChunks = () => {
   const [task, setTask] = useState<string | null>(null);
 
   // unlock value of interest
-  const [unlock, setUnlock] = useState(null);
+  const [unlock, setUnlock] = useState<UnlockChunk | null>(null);
 
   // counter to trigger modal height calculation
   const [calculateHeight, setCalculateHeight] = useState<number>(0);

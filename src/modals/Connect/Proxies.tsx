@@ -13,7 +13,7 @@ import {
   ButtonSecondary,
   Polkicon,
 } from '@polkadot-cloud/react';
-import React from 'react';
+import { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { useProxies } from 'contexts/Proxies';
@@ -61,22 +61,20 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
       <ManualAccountsWrapper>
         <div className="content">
           {inputOpen && (
-            <>
-              <AccountInput
-                resetOnSuccess
-                defaultLabel={t('inputDelegatorAddress')}
-                successCallback={async (delegator) => {
-                  const result = await handleDeclareDelegate(delegator);
-                  return result;
-                }}
-              />
-            </>
+            <AccountInput
+              resetOnSuccess
+              defaultLabel={t('inputDelegatorAddress')}
+              successCallback={async (delegator) => {
+                const result = await handleDeclareDelegate(delegator);
+                return result;
+              }}
+            />
           )}
           {Object.entries(importedDelegates).length ? (
             <div className="accounts">
               {Object.entries(importedDelegates).map(
                 ([delegate, delegators], i) => (
-                  <React.Fragment key={`user_delegate_account_${i}}`}>
+                  <Fragment key={`user_delegate_account_${i}}`}>
                     {delegators.map(({ delegator, proxyType }, j) => (
                       <ManualAccount key={`user_delegate_${i}_delegator_${j}`}>
                         <div>
@@ -101,7 +99,7 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                         <ButtonSecondary text={t('declared')} disabled />
                       </ManualAccount>
                     ))}
-                  </React.Fragment>
+                  </Fragment>
                 )
               )}
             </div>

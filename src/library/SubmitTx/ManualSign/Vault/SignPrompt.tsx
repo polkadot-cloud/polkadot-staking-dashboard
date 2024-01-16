@@ -22,10 +22,10 @@ export const SignPrompt = ({ submitAddress }: SignerPromptProps) => {
   const { getTxPayload, setTxSignature } = useTxMeta();
   const payload = getTxPayload();
   const payloadU8a = payload?.toU8a();
-  const { setStatus: setPromptStatus } = usePrompt();
+  const { closePrompt } = usePrompt();
 
   // Whether user is on sign or submit stage.
-  const [stage, setStage] = useState(1);
+  const [stage, setStage] = useState<number>(1);
 
   return (
     <QRViewerWrapper>
@@ -57,7 +57,7 @@ export const SignPrompt = ({ submitAddress }: SignerPromptProps) => {
           <QrScanSignature
             size={279}
             onScan={({ signature }: AnyJson) => {
-              setPromptStatus(0);
+              closePrompt();
               setTxSignature(signature);
             }}
           />
@@ -89,7 +89,7 @@ export const SignPrompt = ({ submitAddress }: SignerPromptProps) => {
             text={t('cancel')}
             lg
             marginLeft
-            onClick={() => setPromptStatus(0)}
+            onClick={() => closePrompt()}
           />
         </div>
       </div>

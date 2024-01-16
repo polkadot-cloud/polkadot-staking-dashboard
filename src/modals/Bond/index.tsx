@@ -69,6 +69,11 @@ export const Bond = () => {
   // feedback errors to trigger modal resize
   const [feedbackErrors, setFeedbackErrors] = useState<string[]>([]);
 
+  // handler to set bond as a string
+  const handleSetBond = (newBond: { bond: BigNumber }) => {
+    setBond({ bond: newBond.bond.toString() });
+  };
+
   // bond minus tx fees.
   const enoughToCoverTxFees: boolean = freeToBond
     .minus(bond.bond)
@@ -85,11 +90,6 @@ export const Bond = () => {
       0
     );
   }
-
-  // update bond value on task change.
-  useEffect(() => {
-    setBond({ bond: freeToBond.toString() });
-  }, [freeToBond.toString()]);
 
   // determine whether this is a pool or staking transaction.
   const determineTx = (bondToSubmit: BigNumber) => {
@@ -129,7 +129,6 @@ export const Bond = () => {
     callbackSubmit: () => {
       setModalStatus('closing');
     },
-    callbackInBlock: () => {},
   });
 
   const warnings = getSignerWarnings(
@@ -137,6 +136,11 @@ export const Bond = () => {
     false,
     submitExtrinsic.proxySupported
   );
+
+  // update bond value on task change.
+  useEffect(() => {
+    handleSetBond({ bond: freeToBond });
+  }, [freeToBond.toString()]);
 
   // modal resize on form update
   useEffect(
@@ -149,7 +153,7 @@ export const Bond = () => {
       <Close />
       <ModalPadding>
         <h2 className="title unbounded">{t('addToBond')}</h2>
-        {pendingRewards > 0 && bondFor === 'pool' ? (
+        {pendingRewards.isGreaterThan(0) && bondFor === 'pool' ? (
           <ModalWarnings withMargin>
             <Warning
               text={`${t('bondingWithdraw')} ${pendingRewards} ${unit}.`}
@@ -164,12 +168,7 @@ export const Bond = () => {
             setFeedbackErrors(errors);
           }}
           defaultBond={null}
-          setters={[
-            {
-              set: setBond,
-              current: bond,
-            },
-          ]}
+          setters={[handleSetBond]}
           parentErrors={warnings}
           txFees={largestTxFee}
         />

@@ -2,17 +2,20 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@polkadot-cloud/utils';
-import React, { useEffect, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import type { AnyApi, AnyMetaBatch } from 'types';
 import { useApi } from '../Api';
 import { defaultIdentitiesContext } from './defaults';
 import type { IdentitiesContextInterface } from './types';
 
-export const IdentitiesProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const IdentitiesContext = createContext<IdentitiesContextInterface>(
+  defaultIdentitiesContext
+);
+
+export const useIdentities = () => useContext(IdentitiesContext);
+
+export const IdentitiesProvider = ({ children }: { children: ReactNode }) => {
   const { isReady, api } = useApi();
 
   // stores the meta data batches for validator lists
@@ -99,8 +102,8 @@ export const IdentitiesProvider = ({
         addr,
         (_identities) => {
           const identities = [];
-          for (let i = 0; i < _identities.length; i++) {
-            identities.push(_identities[i].toHuman());
+          for (const _identity of _identities) {
+            identities.push(_identity.toHuman());
           }
           const updated = Object.assign(identitiesMetaBatchesRef.current);
           updated[key].identities = identities;
@@ -191,8 +194,3 @@ export const IdentitiesProvider = ({
     </IdentitiesContext.Provider>
   );
 };
-
-export const IdentitiesContext =
-  React.createContext<IdentitiesContextInterface>(defaultIdentitiesContext);
-
-export const useIdentities = () => React.useContext(IdentitiesContext);

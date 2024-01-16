@@ -57,7 +57,6 @@ export const BalanceTest = () => {
     callbackSubmit: () => {
       setModalStatus('closing');
     },
-    callbackInBlock: () => {},
   });
 
   useEffect(() => setModalResize(), [notEnoughFunds]);

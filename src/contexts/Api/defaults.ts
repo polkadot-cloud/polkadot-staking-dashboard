@@ -1,6 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function */
 
 import { stringToU8a } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
@@ -14,7 +14,7 @@ export const defaultConsts: APIConstants = {
   bondDuration: new BigNumber(0),
   maxNominations: new BigNumber(0),
   sessionsPerEra: new BigNumber(0),
-  maxNominatorRewardedPerValidator: new BigNumber(0),
+  maxExposurePageSize: new BigNumber(0),
   historyDepth: new BigNumber(0),
   maxElectingVoters: new BigNumber(0),
   expectedBlockTime: new BigNumber(0),

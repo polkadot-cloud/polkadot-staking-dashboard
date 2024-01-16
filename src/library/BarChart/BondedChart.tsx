@@ -56,48 +56,46 @@ export const BondedChart = ({
     : new BigNumber(0);
 
   return (
-    <>
-      <BarChartWrapper
-        $lessPadding
-        style={{ marginTop: '2rem', marginBottom: '2rem' }}
-      >
-        <Legend>
-          {totalUnlocking.plus(active).isZero() ? (
-            <LegendItem dataClass="d4" label={t('available')} />
-          ) : greaterThanZero(active) ? (
-            <LegendItem dataClass="d1" label={t('bonded')} />
-          ) : null}
+    <BarChartWrapper
+      $lessPadding
+      style={{ marginTop: '2rem', marginBottom: '2rem' }}
+    >
+      <Legend>
+        {totalUnlocking.plus(active).isZero() ? (
+          <LegendItem dataClass="d4" label={t('available')} />
+        ) : greaterThanZero(active) ? (
+          <LegendItem dataClass="d1" label={t('bonded')} />
+        ) : null}
 
-          {greaterThanZero(totalUnlocking) ? (
-            <LegendItem dataClass="d3" label={t('unlocking')} />
-          ) : null}
+        {greaterThanZero(totalUnlocking) ? (
+          <LegendItem dataClass="d3" label={t('unlocking')} />
+        ) : null}
 
-          {greaterThanZero(totalUnlocking.plus(active)) ? (
-            <LegendItem dataClass="d4" label={t('free')} />
-          ) : null}
-        </Legend>
-        <Bar>
-          <BarSegment
-            dataClass="d1"
-            widthPercent={Number(graphActive.toFixed(2))}
-            flexGrow={0}
-            label={`${active.decimalPlaces(3).toFormat()} ${unit}`}
-          />
-          <BarSegment
-            dataClass="d3"
-            widthPercent={Number(graphUnlocking.toFixed(2))}
-            flexGrow={0}
-            label={`${totalUnlocking.decimalPlaces(3).toFormat()} ${unit}`}
-          />
-          <BarSegment
-            dataClass="d4"
-            widthPercent={Number(graphFree.toFixed(2))}
-            flexGrow={0}
-            label={`${freeToBond.toFormat()} ${unit}`}
-            forceShow={inactive && totalUnlocking.isZero()}
-          />
-        </Bar>
-      </BarChartWrapper>
-    </>
+        {greaterThanZero(totalUnlocking.plus(active)) ? (
+          <LegendItem dataClass="d4" label={t('free')} />
+        ) : null}
+      </Legend>
+      <Bar>
+        <BarSegment
+          dataClass="d1"
+          widthPercent={Number(graphActive.toFixed(2))}
+          flexGrow={0}
+          label={`${active.decimalPlaces(3).toFormat()} ${unit}`}
+        />
+        <BarSegment
+          dataClass="d3"
+          widthPercent={Number(graphUnlocking.toFixed(2))}
+          flexGrow={0}
+          label={`${totalUnlocking.decimalPlaces(3).toFormat()} ${unit}`}
+        />
+        <BarSegment
+          dataClass="d4"
+          widthPercent={Number(graphFree.toFixed(2))}
+          flexGrow={0}
+          label={`${freeToBond.toFormat()} ${unit}`}
+          forceShow={inactive && totalUnlocking.isZero()}
+        />
+      </Bar>
+    </BarChartWrapper>
   );
 };

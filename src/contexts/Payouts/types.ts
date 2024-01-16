@@ -3,19 +3,22 @@
 
 import type { Sync } from 'types';
 
-export type PayoutsContextInterface = {
+export interface PayoutsContextInterface {
   payoutsSynced: Sync;
   unclaimedPayouts: UnclaimedPayouts;
   removeEraPayout: (era: string, validator: string) => void;
-};
+}
 
+// Record<era, EraUnclaimedPayouts>
 export type UnclaimedPayouts = Record<string, EraUnclaimedPayouts> | null;
 
-export type EraUnclaimedPayouts = Record<string, string>;
+// Record<validator, [page, amount]>
+export type EraUnclaimedPayouts = Record<string, [number, string]>;
 
 export interface LocalValidatorExposure {
   staked: string;
   total: string;
   share: string;
   isValidator: boolean;
+  exposedPage: number;
 }

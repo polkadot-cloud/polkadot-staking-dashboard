@@ -99,7 +99,6 @@ export const ManageFastUnstake = () => {
     tx: getTx(),
     from: controller,
     shouldSubmit: valid,
-    callbackSubmit: () => {},
     callbackInBlock: () => {
       setModalStatus('closing');
     },
@@ -171,35 +170,29 @@ export const ManageFastUnstake = () => {
               </p>
             </ModalNotes>
           </>
+        ) : !isFastUnstaking ? (
+          <>
+            <ActionItem text={t('fastUnstake', { context: 'register' })} />
+            <ModalNotes>
+              <p>
+                {t('registerFastUnstake')}{' '}
+                {planckToUnit(fastUnstakeDeposit, units).toString()} {unit}.{' '}
+                {t('fastUnstakeOnceRegistered')}
+              </p>
+              <p>
+                {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
+              </p>
+            </ModalNotes>
+          </>
         ) : (
           <>
-            {!isFastUnstaking ? (
-              <>
-                <ActionItem text={t('fastUnstake', { context: 'register' })} />
-                <ModalNotes>
-                  <p>
-                    <>
-                      {t('registerFastUnstake')}{' '}
-                      {planckToUnit(fastUnstakeDeposit, units).toString()}{' '}
-                      {unit}. {t('fastUnstakeOnceRegistered')}
-                    </>
-                  </p>
-                  <p>
-                    {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
-                  </p>
-                </ModalNotes>
-              </>
-            ) : (
-              <>
-                <ActionItem text={t('fastUnstakeRegistered')} />
-                <ModalNotes>
-                  <p>
-                    {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
-                  </p>
-                  <p>{t('fastUnstakeUnorderedNote')}</p>
-                </ModalNotes>
-              </>
-            )}
+            <ActionItem text={t('fastUnstakeRegistered')} />
+            <ModalNotes>
+              <p>
+                {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
+              </p>
+              <p>{t('fastUnstakeUnorderedNote')}</p>
+            </ModalNotes>
           </>
         )}
       </ModalPadding>

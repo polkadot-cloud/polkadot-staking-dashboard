@@ -1,9 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function */
 
 import BigNumber from 'bignumber.js';
-import type { ActivePool, ActivePoolsContextState } from '../types';
+import type {
+  ActiveBondedPool,
+  ActivePool,
+  ActivePoolsContextState,
+  RewardPool,
+} from './types';
 
 export const nominationStatus = {};
 
@@ -14,16 +19,23 @@ export const poolRoles = {
   bouncer: '',
 };
 
-export const bondedPool = {
+export const bondedPool: ActiveBondedPool = {
   points: '0',
   state: 'Blocked',
   memberCounter: '0',
-  roles: null,
+  roles: {
+    depositor: '',
+    nominator: '',
+    root: '',
+    bouncer: '',
+  },
 };
 
-export const rewardPool = {
+export const rewardPool: RewardPool = {
   lastRecordedRewardCounter: '0',
   lastRecordedTotalPayouts: '0',
+  totalCommissionClaimed: '0',
+  totalCommissionPending: '0',
   totalRewardsClaimed: '0',
 };
 
@@ -35,7 +47,7 @@ export const selectedActivePool: ActivePool = {
   },
   bondedPool,
   rewardPool,
-  rewardAccountBalance: {},
+  rewardAccountBalance: new BigNumber(0),
   pendingRewards: new BigNumber(0),
 };
 

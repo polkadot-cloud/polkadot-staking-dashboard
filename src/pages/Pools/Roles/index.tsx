@@ -27,13 +27,14 @@ import { RolesWrapper } from '../Home/ManagePool/Wrappers';
 import { PoolAccount } from '../PoolAccount';
 import { RoleEditInput } from './RoleEditInput';
 import type { RoleEditEntry, RolesProps } from './types';
+import type { MaybeAddress } from '@polkadot-cloud/react/types';
 
 export const Roles = ({
   batchKey,
   defaultRoles,
   setters = [],
   inline = false,
-  listenIsValid = () => {},
+  listenIsValid,
 }: RolesProps) => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
@@ -62,16 +63,19 @@ export const Roles = ({
   })();
 
   // store any role edits that take place
-  const [roleEdits, setRoleEdits] = useState(initialiseEdits);
+  const [roleEdits, setRoleEdits] =
+    useState<Record<string, RoleEditEntry>>(initialiseEdits);
 
   // store whether roles are being edited
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   // store role accounts
-  const [accounts, setAccounts] = useState(Object.values(roles));
+  const [accounts, setAccounts] = useState<MaybeAddress[]>(
+    Object.values(roles)
+  );
 
   // is this the initial fetch
-  const [fetched, setFetched] = useState(false);
+  const [fetched, setFetched] = useState<boolean>(false);
 
   // update default roles on account switch
   useEffect(() => {
@@ -108,7 +112,7 @@ export const Roles = ({
       if (listenIsValid) {
         listenIsValid(isRoleEditsValid());
       }
-      const rolesUpdated: any = {};
+      const rolesUpdated: Record<string, string> = {};
       for (const [k, v] of Object.entries(roleEdits)) {
         rolesUpdated[k] = v.newAddress;
       }
@@ -161,9 +165,7 @@ export const Roles = ({
           </h3>
         )}
 
-        {!(isOwner() === true || setters.length) ? (
-          <></>
-        ) : (
+        {!(isOwner() === true || setters.length) ? null : (
           <>
             {isEditing && (
               <div>

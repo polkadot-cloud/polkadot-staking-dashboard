@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PoolMembership } from 'contexts/Pools/types';
+import type { PoolMembership } from 'contexts/Pools/PoolMemberships/types';
 import type { Proxy } from 'contexts/Proxies/types';
 import type { MaybeAddress } from 'types';
 

@@ -7,12 +7,12 @@ import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useIdentities } from 'contexts/Identities';
-import { useNotifications } from 'contexts/Notifications';
-import type { NotificationText } from 'contexts/Notifications/types';
+import type { NotificationText } from 'static/NotificationsController/types';
 import { Polkicon } from '@polkadot-cloud/react';
 import { getIdentityDisplay } from 'library/ValidatorList/ValidatorItem/Utils';
 import type { PoolAccountProps } from '../types';
 import { Wrapper } from './Wrapper';
+import { NotificationsController } from 'static/NotificationsController';
 
 export const PoolAccount = ({
   address,
@@ -21,13 +21,12 @@ export const PoolAccount = ({
 }: PoolAccountProps) => {
   const { t } = useTranslation('pages');
   const { meta } = useIdentities();
-  const { addNotification } = useNotifications();
 
-  const identities = meta[batchKey]?.identities ?? [];
-  const supers = meta[batchKey]?.supers ?? [];
+  const identities = meta[batchKey]?.identities || [];
+  const supers = meta[batchKey]?.supers || [];
 
-  const identitiesSynced = identities.length > 0 ?? false;
-  const supersSynced = supers.length > 0 ?? false;
+  const identitiesSynced = identities.length > 0 || false;
+  const supersSynced = supers.length > 0 || false;
   const synced = identitiesSynced && supersSynced;
 
   const display = getIdentityDisplay(
@@ -80,7 +79,7 @@ export const PoolAccount = ({
                 onClick={() => {
                   navigator.clipboard.writeText(address);
                   if (notification) {
-                    addNotification(notification);
+                    NotificationsController.emit(notification);
                   }
                 }}
               >

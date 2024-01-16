@@ -24,7 +24,7 @@ import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { locales } from 'locale';
 import { graphColors } from 'styles/graphs';
-import type { AnySubscan } from 'types';
+import type { AnyJson, AnySubscan } from 'types';
 import { useNetwork } from 'contexts/Network';
 import type { PayoutBarProps } from './types';
 import { formatRewardsForGraphs } from './Utils';
@@ -169,11 +169,11 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
         titleColor: graphColors.label[mode],
         bodyColor: graphColors.label[mode],
         bodyFont: {
-          weight: '600',
+          weight: 600,
         },
         callbacks: {
           title: () => [],
-          label: (context: any) =>
+          label: (context: AnyJson) =>
             `${
               context.dataset.order === 3 ? `${t('pending')}: ` : ''
             }${new BigNumber(context.parsed.y)

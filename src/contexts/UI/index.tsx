@@ -3,7 +3,8 @@
 
 import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import React, { useEffect, useRef, useState } from 'react';
+import type { ReactNode, RefObject } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { SideMenuStickyThreshold } from 'consts';
 import { useBalances } from 'contexts/Balances';
 import type { ImportedAccount } from '@polkadot-cloud/react/types';
@@ -17,7 +18,13 @@ import { useStaking } from '../Staking';
 import * as defaults from './defaults';
 import type { UIContextInterface } from './types';
 
-export const UIProvider = ({ children }: { children: React.ReactNode }) => {
+export const UIContext = createContext<UIContextInterface>(
+  defaults.defaultUIContext
+);
+
+export const useUi = () => useContext(UIContext);
+
+export const UIProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi();
   const { balances } = useBalances();
   const { staking, eraStakers } = useStaking();
@@ -41,15 +48,18 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const [isBraveBrowser, setIsBraveBrowser] = useState<boolean>(false);
 
   // Store referneces for main app conainers.
-  const [containerRefs, setContainerRefsState] = useState({});
-  const setContainerRefs = (v: any) => {
+  const [containerRefs, setContainerRefsState] = useState<
+    Record<string, RefObject<HTMLDivElement>>
+  >({});
+  const setContainerRefs = (v: Record<string, RefObject<HTMLDivElement>>) => {
     setContainerRefsState(v);
   };
 
   // Get side menu minimised state from local storage, default to false.
-  const [userSideMenuMinimised, setUserSideMenuMinimisedState] = useState(
-    localStorageOrDefault('side_menu_minimised', false, true) as boolean
-  );
+  const [userSideMenuMinimised, setUserSideMenuMinimisedState] =
+    useState<boolean>(
+      localStorageOrDefault('side_menu_minimised', false, true) as boolean
+    );
   const userSideMenuMinimisedRef = useRef(userSideMenuMinimised);
   const setUserSideMenuMinimised = (v: boolean) => {
     localStorage.setItem('side_menu_minimised', String(v));
@@ -57,7 +67,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // Automatic side menu minimised.
-  const [sideMenuMinimised, setSideMenuMinimised] = useState(
+  const [sideMenuMinimised, setSideMenuMinimised] = useState<boolean>(
     window.innerWidth <= SideMenuStickyThreshold
       ? true
       : userSideMenuMinimisedRef.current
@@ -97,11 +107,6 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     let networkSyncing = false;
     let poolSyncing = false;
 
-    if (!isReady) {
-      syncing = true;
-      networkSyncing = true;
-      poolSyncing = true;
-    }
     // staking metrics have synced
     if (staking.lastReward === new BigNumber(0)) {
       syncing = true;
@@ -137,7 +142,9 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     setIsPoolSyncing(poolSyncing);
 
     // eraStakers total active nominators has synced
-    if (!eraStakers.totalActiveNominators) syncing = true;
+    if (!eraStakers.totalActiveNominators) {
+      syncing = true;
+    }
 
     setIsSyncing(syncing);
   }, [isReady, staking, metrics, balances, eraStakers, activePoolsSynced]);
@@ -155,16 +162,10 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
         isPoolSyncing,
         containerRefs,
         isBraveBrowser,
-        userSideMenuMinimised: userSideMenuMinimisedRef.current,
+        userSideMenuMinimised,
       }}
     >
       {children}
     </UIContext.Provider>
   );
 };
-
-export const UIContext = React.createContext<UIContextInterface>(
-  defaults.defaultUIContext
-);
-
-export const useUi = () => React.useContext(UIContext);

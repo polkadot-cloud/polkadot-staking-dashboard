@@ -2,24 +2,29 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@polkadot-cloud/utils';
-import React, { useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import { defaultTooltipContext } from './defaults';
 import type { TooltipContextInterface } from './types';
 
-export const TooltipProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
-  const [open, setOpen] = useState(0);
-  const [show, setShow] = useState(0);
-  const showRef = React.useRef(show);
+export const TooltipContext = createContext<TooltipContextInterface>(
+  defaultTooltipContext
+);
+
+export const useTooltip = () => useContext(TooltipContext);
+
+export const TooltipProvider = ({ children }: { children: ReactNode }) => {
+  const [open, setOpen] = useState<number>(0);
+  const [show, setShow] = useState<number>(0);
+  const showRef = useRef(show);
 
   const [text, setText] = useState<string>('');
   const [position, setPosition] = useState<[number, number]>([0, 0]);
 
   const openTooltip = () => {
-    if (open) return;
+    if (open) {
+      return;
+    }
     setOpen(1);
   };
 
@@ -38,7 +43,9 @@ export const TooltipProvider = ({
   };
 
   const setTooltipTextAndOpen = (t: string) => {
-    if (open) return;
+    if (open) {
+      return;
+    }
     setText(t);
     openTooltip();
   };
@@ -61,9 +68,3 @@ export const TooltipProvider = ({
     </TooltipContext.Provider>
   );
 };
-
-export const TooltipContext = React.createContext<TooltipContextInterface>(
-  defaultTooltipContext
-);
-
-export const useTooltip = () => React.useContext(TooltipContext);

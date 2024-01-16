@@ -40,7 +40,11 @@ export const VaultAccountsProvider = ({
     );
 
   // Adds a vault account to state and local storage.
-  const addVaultAccount = (address: string, index: number) => {
+  const addVaultAccount = (
+    address: string,
+    index: number,
+    callback?: () => void
+  ) => {
     let newVaultAccounts = getLocalVaultAccounts();
 
     if (
@@ -66,12 +70,18 @@ export const VaultAccountsProvider = ({
         seVaultAccountsState,
         vaultAccountsRef
       );
+
+      // Handle optional callback function.
+      if (typeof callback === 'function') {
+        callback();
+      }
+
       return account;
     }
     return null;
   };
 
-  const removeVaultAccount = (address: string) => {
+  const removeVaultAccount = (address: string, callback?: () => void) => {
     let newVaultAccounts = getLocalVaultAccounts();
 
     newVaultAccounts = newVaultAccounts.filter((a) => {
@@ -97,6 +107,11 @@ export const VaultAccountsProvider = ({
       seVaultAccountsState,
       vaultAccountsRef
     );
+
+    // Handle optional callback function.
+    if (typeof callback === 'function') {
+      callback();
+    }
   };
 
   const getVaultAccount = (address: string) => {

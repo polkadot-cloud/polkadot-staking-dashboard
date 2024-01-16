@@ -40,7 +40,7 @@ export const Selectable = ({
       ) : null}
       {selected.length > 0 ? (
         <>
-          {actionsSelected.map((a: any, i: number) => (
+          {actionsSelected.map((a, i: number) => (
             <ButtonType
               key={`a_selected_${i}`}
               text={a.title}
@@ -53,7 +53,7 @@ export const Selectable = ({
           ))}
         </>
       ) : null}
-      {actionsAll.map((a: any, i: number) => (
+      {actionsAll.map((a, i: number) => (
         <ButtonType
           text={a.title}
           key={`a_all_${i}`}

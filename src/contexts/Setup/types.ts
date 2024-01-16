@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PoolRoles } from 'contexts/Pools/types';
+import type { PoolRoles } from 'contexts/Pools/ActivePools/types';
 import type { ValidatorPrefs } from 'contexts/Validators/types';
 import type { AnyJson, BondFor, MaybeAddress, MaybeString } from 'types';
 
@@ -15,8 +15,8 @@ export type PayeeOptions =
 export type NominatorSetups = Record<string, NominatorSetup>;
 
 export interface NominatorSetup {
-  progress: NominatorProgress;
   section: number;
+  progress: NominatorProgress;
 }
 
 export interface NominatorProgress {
@@ -33,8 +33,8 @@ export interface PayeeConfig {
 export type PoolSetups = Record<string, PoolSetup>;
 
 export interface PoolSetup {
-  progress: PoolProgress;
   section: number;
+  progress: PoolProgress;
 }
 
 export interface PoolProgress {
@@ -45,7 +45,7 @@ export interface PoolProgress {
 }
 
 export interface SetupContextInterface {
-  getSetupProgress: (t: BondFor, a: MaybeAddress) => any;
+  getSetupProgress: (t: BondFor, a: MaybeAddress) => PoolSetup | NominatorSetup;
   removeSetupProgress: (t: BondFor, a: MaybeAddress) => void;
   getNominatorSetupPercent: (a: MaybeAddress) => number;
   getPoolSetupPercent: (a: MaybeAddress) => number;
@@ -58,4 +58,6 @@ export interface SetupContextInterface {
   setOnPoolSetup: (v: boolean) => void;
   onNominatorSetup: boolean;
   onPoolSetup: boolean;
+  getNominatorSetup: (address: MaybeAddress) => NominatorSetup;
+  getPoolSetup: (address: MaybeAddress) => PoolSetup;
 }

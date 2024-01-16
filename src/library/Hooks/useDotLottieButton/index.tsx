@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { ReactNode } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { useTheme } from 'contexts/Themes';
 import type { Theme } from 'contexts/Themes/types';
@@ -13,12 +14,13 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
   const refDark = useRef<AnyJson>(null);
   const refsInitialised = useRef<boolean>(false);
 
-  const getRef = (m: Theme) => {
-    return m === 'light' ? refLight.current : refDark.current;
-  };
+  const getRef = (m: Theme) =>
+    m === 'light' ? refLight.current : refDark.current;
 
   const handlePlayAnimation = async () => {
-    if (!getRef(mode)) return;
+    if (!getRef(mode)) {
+      return;
+    }
     getRef(mode).play();
   };
 
@@ -28,7 +30,9 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
     }
   };
   useEffect(() => {
-    if (!getRef('light') || !getRef('dark') || refsInitialised.current) return;
+    if (!getRef('light') || !getRef('dark') || refsInitialised.current) {
+      return;
+    }
     refsInitialised.current = true;
 
     getRef('light').addEventListener('loop', () =>
@@ -45,7 +49,7 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
 
   const autoPlay = options?.autoLoop ?? undefined;
 
-  const [iconLight] = useState<any>(
+  const [iconLight] = useState<ReactNode>(
     <dotlottie-player
       ref={refLight}
       loop
@@ -55,7 +59,7 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
     />
   );
 
-  const [iconDark] = useState<any>(
+  const [iconDark] = useState<ReactNode>(
     <dotlottie-player
       ref={refDark}
       loop

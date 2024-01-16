@@ -2,15 +2,18 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@polkadot-cloud/utils';
-import React, { useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import { defaultExtrinsicsContext } from './defaults';
 import type { ExtrinsicsContextInterface } from './types';
 
-export const ExtrinsicsProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const ExtrinsicsContext = createContext<ExtrinsicsContextInterface>(
+  defaultExtrinsicsContext
+);
+
+export const useExtrinsics = () => useContext(ExtrinsicsContext);
+
+export const ExtrinsicsProvider = ({ children }: { children: ReactNode }) => {
   const [pending, setPending] = useState<string[]>([]);
   const pendingRef = useRef(pending);
 
@@ -42,8 +45,3 @@ export const ExtrinsicsProvider = ({
     </ExtrinsicsContext.Provider>
   );
 };
-
-export const ExtrinsicsContext =
-  React.createContext<ExtrinsicsContextInterface>(defaultExtrinsicsContext);
-
-export const useExtrinsics = () => React.useContext(ExtrinsicsContext);

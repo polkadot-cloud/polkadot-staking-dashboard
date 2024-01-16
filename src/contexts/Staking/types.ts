@@ -3,6 +3,7 @@
 
 import type BigNumber from 'bignumber.js';
 import type { PayeeConfig } from 'contexts/Setup/types';
+import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
 import type { MaybeAddress } from 'types';
 
 export interface StakingMetrics {
@@ -28,7 +29,7 @@ export interface EraStakers {
   totalActiveNominators: number;
 }
 
-export type NominationStatuses = Record<string, string>;
+export type NominationStatuses = Record<string, NominationStatus>;
 
 export interface StakingTargets {
   nominations: string[];
@@ -40,10 +41,7 @@ export interface Exposure {
 }
 
 export interface ExposureValue {
-  others: {
-    value: string;
-    who: string;
-  }[];
+  others: ExposureOther[];
   own: string;
   total: string;
 }
@@ -71,19 +69,23 @@ interface LowestReward {
 
 export interface StakingContextInterface {
   fetchEraStakers: (era: string) => Promise<Exposure[]>;
-  getNominationsStatusFromTargets: (w: MaybeAddress, t: any[]) => any;
-  setTargets: (t: any) => any;
+  getNominationsStatusFromTargets: (
+    w: MaybeAddress,
+    t: string[]
+  ) => Record<string, NominationStatus>;
+  setTargets: (t: StakingTargets) => void;
   hasController: () => boolean;
-  getControllerNotImported: (a: MaybeAddress) => any;
+  getControllerNotImported: (a: MaybeAddress) => boolean;
   addressDifferentToStash: (a: MaybeAddress) => boolean;
   isBonding: () => boolean;
   isNominating: () => boolean;
-  inSetup: () => any;
+  inSetup: () => boolean;
   getLowestRewardFromStaker: (a: MaybeAddress) => LowestReward;
   staking: StakingMetrics;
   eraStakers: EraStakers;
-  targets: any;
-  erasStakersSyncing: any;
+  targets: StakingTargets;
+  erasStakersSyncing: boolean;
+  getPagedErasStakers: (e: string) => Promise<Exposure[]>;
 }
 
 export interface LocalExposuresData {

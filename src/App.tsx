@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import React from 'react';
+import type { FC } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { DefaultNetwork } from 'consts';
 import { ThemesProvider } from 'contexts/Themes';
@@ -10,7 +10,7 @@ import { Providers } from 'Providers';
 import { NetworkProvider } from 'contexts/Network';
 import { ActiveAccountsProvider } from 'contexts/ActiveAccounts';
 
-export const App: React.FC = () => {
+export const App: FC = () => {
   let network = localStorage.getItem('network');
 
   if (network === null) {

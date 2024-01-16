@@ -49,7 +49,9 @@ export const Item = ({
                   {
                     era,
                     payout: totalPayout.toString(),
-                    validators: Object.keys(unclaimedPayout),
+                    paginatedValidators: Object.entries(unclaimedPayout).map(
+                      ([v, [page]]) => [page, v]
+                    ),
                   },
                 ]);
                 setSection(1);

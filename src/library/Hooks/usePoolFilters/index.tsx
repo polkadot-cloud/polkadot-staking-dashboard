@@ -2,9 +2,10 @@
 
 import { useTranslation } from 'react-i18next';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import type { BondedPool } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import type { AnyFunction, AnyJson } from 'types';
+import type { AnyFilter } from 'library/Filter/types';
+import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 
 export const usePoolFilters = () => {
   const { t } = useTranslation('library');
@@ -16,8 +17,10 @@ export const usePoolFilters = () => {
    * Include active pools.
    * Returns the updated filtered list.
    */
-  const includeActive = (list: any) => {
-    if (!Object.keys(poolsNominations).length) return list;
+  const includeActive = (list: AnyFilter) => {
+    if (!Object.keys(poolsNominations).length) {
+      return list;
+    }
 
     const filteredList = list.filter((p: BondedPool) => {
       const nominations = poolsNominations[p.id];
@@ -34,8 +37,10 @@ export const usePoolFilters = () => {
    * Dont include active pools.
    * Returns the updated filtered list.
    */
-  const excludeActive = (list: any) => {
-    if (!Object.keys(poolsNominations).length) return list;
+  const excludeActive = (list: AnyFilter) => {
+    if (!Object.keys(poolsNominations).length) {
+      return list;
+    }
 
     const filteredList = list.filter((p: BondedPool) => {
       const nominations = poolsNominations[p.id];
@@ -53,7 +58,7 @@ export const usePoolFilters = () => {
    * Iterates through the supplied list and checks whether state is locked.
    * Returns the updated filtered list.
    */
-  const includeLocked = (list: any) =>
+  const includeLocked = (list: AnyFilter) =>
     list.filter((p: BondedPool) => p.state.toLowerCase() === 'Blocked');
 
   /*
@@ -61,7 +66,7 @@ export const usePoolFilters = () => {
    * Iterates through the supplied list and checks whether state is destroying.
    * Returns the updated filtered list.
    */
-  const includeDestroying = (list: any) =>
+  const includeDestroying = (list: AnyFilter) =>
     list.filter((p: BondedPool) => p.state === 'Destroying');
 
   /*
@@ -69,7 +74,7 @@ export const usePoolFilters = () => {
    * Iterates through the supplied list and checks whether state is locked.
    * Returns the updated filtered list.
    */
-  const excludeLocked = (list: any) =>
+  const excludeLocked = (list: AnyFilter) =>
     list.filter((p: BondedPool) => p.state !== 'Blocked');
 
   /*
@@ -77,7 +82,7 @@ export const usePoolFilters = () => {
    * Iterates through the supplied list and checks whether state is destroying.
    * Returns the updated filtered list.
    */
-  const excludeDestroying = (list: any) =>
+  const excludeDestroying = (list: AnyFilter) =>
     list.filter((p: BondedPool) => p.state !== 'Destroying');
 
   // includes to be listed in filter overlay.

@@ -17,3 +17,4 @@ build
 vite.config.ts
 public/lottie/player.js
 CHANGELOG.md
+.yarn

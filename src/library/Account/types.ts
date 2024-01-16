@@ -1,19 +1,17 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { ActivePool } from 'contexts/Pools/ActivePools/types';
+import type { MaybeAddress } from 'types';
+
 export interface AccountProps {
-  onClick?: () => void;
-  value: string;
-  format: string;
+  value: MaybeAddress;
   label?: string;
-  canClick: boolean;
-  fontSize?: string;
-  title?: string;
   readOnly?: boolean;
-  pool?: any;
 }
 
-export interface WrapperProps {
-  $canClick: boolean;
-  $fontSize: string;
+export interface PoolAccountProps {
+  pool: ActivePool;
+  label: string;
+  syncing: boolean;
 }

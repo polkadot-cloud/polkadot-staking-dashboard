@@ -4,7 +4,8 @@
 import { ButtonSubmitInvert } from '@polkadot-cloud/react';
 import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import React, { useEffect, useState } from 'react';
+import type { ChangeEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -16,7 +17,7 @@ export const UnbondInput = ({
   disabled,
   unbondToMin,
   setters = [],
-  value = 0,
+  value = '0',
   active,
 }: UnbondInputProps) => {
   const { t } = useTranslation('library');
@@ -27,28 +28,30 @@ export const UnbondInput = ({
   const activeUnit = planckToUnit(active, networkData.units);
 
   // the current local bond value.
-  const [localBond, setLocalBond] = useState(value);
+  const [localBond, setLocalBond] = useState<string>(value);
 
   // reset value to default when changing account.
   useEffect(() => {
-    setLocalBond(defaultValue ?? 0);
+    setLocalBond(defaultValue ?? '0');
   }, [activeAccount]);
 
   // handle change for unbonding.
-  const handleChangeUnbond = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeUnbond = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     if (new BigNumber(val).isNaN() && val !== '') {
       return;
     }
     setLocalBond(val);
-    updateParentState(val);
+    updateParentState(new BigNumber(val));
   };
 
   // apply bond to parent setters.
-  const updateParentState = (val: any) => {
-    for (const s of setters) {
-      s.set({
-        ...s.current,
+  const updateParentState = (val: BigNumber) => {
+    if (new BigNumber(val).isNaN()) {
+      return;
+    }
+    for (const setter of setters) {
+      setter({
         bond: val,
       });
     }
@@ -88,7 +91,7 @@ export const UnbondInput = ({
             text={t('max')}
             disabled={disabled}
             onClick={() => {
-              setLocalBond(unbondToMinUnit);
+              setLocalBond(unbondToMinUnit.toString());
               updateParentState(unbondToMinUnit);
             }}
           />

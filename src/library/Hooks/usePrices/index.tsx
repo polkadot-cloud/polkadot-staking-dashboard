@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { usePlugins } from 'contexts/Plugins';
 import { useUnitPrice } from 'library/Hooks/useUnitPrice';
 import { useNetwork } from 'contexts/Network';
+import type { AnyJson } from 'types';
 
 export const usePrices = () => {
   const { network } = useNetwork();
@@ -21,10 +22,10 @@ export const usePrices = () => {
       : JSON.parse(pricesLocal);
   };
 
-  const [prices, _setPrices] = useState(pricesLocalStorage());
+  const [prices, _setPrices] = useState<AnyJson>(pricesLocalStorage());
   const pricesRef = useRef(prices);
 
-  const setPrices = (p: any) => {
+  const setPrices = (p: AnyJson) => {
     localStorage.setItem(`${network}_prices`, JSON.stringify(p));
     pricesRef.current = {
       ...pricesRef.current,
@@ -43,7 +44,7 @@ export const usePrices = () => {
     }
   };
 
-  let priceHandle: any = null;
+  let priceHandle: ReturnType<typeof setInterval>;
   const setPriceInterval = async () => {
     priceHandle = setInterval(async () => {
       setPrices(await fetchUnitPrice());
@@ -54,7 +55,7 @@ export const usePrices = () => {
   useEffect(() => {
     initiatePriceInterval();
     return () => {
-      if (priceHandle !== null) {
+      if (priceHandle) {
         clearInterval(priceHandle);
       }
     };
@@ -62,7 +63,7 @@ export const usePrices = () => {
 
   // resubscribe on network toggle
   useEffect(() => {
-    if (priceHandle !== null) {
+    if (priceHandle) {
       clearInterval(priceHandle);
     }
     initiatePriceInterval();
@@ -71,10 +72,10 @@ export const usePrices = () => {
   // servie toggle
   useEffect(() => {
     if (plugins.includes('binance_spot')) {
-      if (priceHandle === null) {
+      if (priceHandle) {
         initiatePriceInterval();
       }
-    } else if (priceHandle !== null) {
+    } else if (priceHandle) {
       clearInterval(priceHandle);
     }
   }, [plugins]);

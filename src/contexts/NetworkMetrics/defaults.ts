@@ -1,5 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import BigNumber from 'bignumber.js';
 import type {
@@ -23,4 +24,5 @@ export const metrics: NetworkMetrics = {
 export const defaultNetworkContext: NetworkMetricsContextInterface = {
   activeEra,
   metrics,
+  isPagedRewardsActive: (e) => false,
 };

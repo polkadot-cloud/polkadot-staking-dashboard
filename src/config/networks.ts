@@ -16,7 +16,18 @@ import PolkadotTokenSVG from 'config/tokens/svg/DOT.svg?react';
 import KusamaTokenSVG from 'config/tokens/svg/KSM.svg?react';
 import WestendTokenSVG from 'config/tokens/svg/WND.svg?react';
 
-import type { Networks } from 'types';
+import type { NetworkName, Networks } from 'types';
+import BigNumber from 'bignumber.js';
+
+// DEPRECATION: Paged Rewards
+//
+// Temporary until paged rewards migration has completed on all networks.
+export const NetworksWithPagedRewards: NetworkName[] = ['westend'];
+export const PagedRewardsStartEra: Record<NetworkName, BigNumber | null> = {
+  polkadot: null,
+  kusama: null,
+  westend: new BigNumber(7167),
+};
 
 export const NetworkList: Networks = {
   polkadot: {
@@ -31,7 +42,6 @@ export const NetworkList: Networks = {
         'IBP-GeoDNS1': 'wss://rpc.ibp.network/polkadot',
         'IBP-GeoDNS2': 'wss://rpc.dotters.network/polkadot',
         LuckyFriday: 'wss://rpc-polkadot.luckyfriday.io',
-        OnFinality: 'wss://polkadot.api.onfinality.io/public-ws',
         RadiumBlock: 'wss://polkadot.public.curie.radiumblock.co/ws',
         Stakeworld: 'wss://dot-rpc.stakeworld.io',
         Parity: 'wss://apps-rpc.polkadot.io',
@@ -85,6 +95,7 @@ export const NetworkList: Networks = {
       stakeTarget: 0.75,
     },
     defaultFeeReserve: 0.1,
+    maxExposurePageSize: new BigNumber(512),
   },
   kusama: {
     name: 'kusama',
@@ -98,7 +109,6 @@ export const NetworkList: Networks = {
         'IBP-GeoDNS1': 'wss://rpc.ibp.network/kusama',
         'IBP-GeoDNS2': 'wss://rpc.dotters.network/kusama',
         LuckyFriday: 'wss://rpc-kusama.luckyfriday.io',
-        OnFinality: 'wss://kusama.api.onfinality.io/public-ws',
         RadiumBlock: 'wss://kusama.public.curie.radiumblock.co/ws',
         Stakeworld: 'wss://ksm-rpc.stakeworld.io',
         Parity: 'wss://kusama-rpc.polkadot.io',
@@ -154,6 +164,7 @@ export const NetworkList: Networks = {
       stakeTarget: 0.75,
     },
     defaultFeeReserve: 0.05,
+    maxExposurePageSize: new BigNumber(512),
   },
   westend: {
     name: 'westend',
@@ -166,7 +177,6 @@ export const NetworkList: Networks = {
         'IBP-GeoDNS1': 'wss://rpc.ibp.network/westend',
         'IBP-GeoDNS2': 'wss://rpc.dotters.network/westend',
         LuckyFriday: 'wss://rpc-westend.luckyfriday.io',
-        OnFinality: 'wss://westend.api.onfinality.io/public-ws',
         RadiumBlock: 'wss://westend.public.curie.radiumblock.co/ws',
         Stakeworld: 'wss://wnd-rpc.stakeworld.io',
         Parity: 'wss://westend-rpc.polkadot.io',
@@ -220,5 +230,6 @@ export const NetworkList: Networks = {
       stakeTarget: 0.75,
     },
     defaultFeeReserve: 0.1,
+    maxExposurePageSize: new BigNumber(64),
   },
 };

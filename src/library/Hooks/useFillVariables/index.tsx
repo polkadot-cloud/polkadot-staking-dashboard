@@ -7,33 +7,27 @@ import { useNetwork } from 'contexts/Network';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import type { AnyJson } from 'types';
+import { useErasPerDay } from '../useErasPerDay';
 
 export const useFillVariables = () => {
   const { consts } = useApi();
   const { stats } = usePoolsConfig();
   const { networkData } = useNetwork();
-  const {
-    maxNominations,
-    maxNominatorRewardedPerValidator,
-    existentialDeposit,
-  } = consts;
+  const { maxNominations, maxExposurePageSize, existentialDeposit } = consts;
+  const { maxSupportedDays } = useErasPerDay();
   const { minJoinBond, minCreateBond } = stats;
   const { metrics } = useNetworkMetrics();
   const { minimumActiveStake } = metrics;
 
   const fillVariables = (d: AnyJson, keys: string[]) => {
-    const fields: AnyJson = Object.entries(d).filter(([k]: any) =>
-      keys.includes(k)
-    );
+    const fields: AnyJson = Object.entries(d).filter(([k]) => keys.includes(k));
     const transformed = Object.entries(fields).map(
       ([, [key, val]]: AnyJson) => {
         const varsToValues = [
+          ['{AVERAGE_REWARD_RATE_DAYS}', maxSupportedDays > 30 ? '30' : '15'],
           ['{NETWORK_UNIT}', networkData.unit],
           ['{NETWORK_NAME}', capitalizeFirstLetter(networkData.name)],
-          [
-            '{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}',
-            maxNominatorRewardedPerValidator.toString(),
-          ],
+          ['{MAX_EXPOSURE_PAGE_SIZE}', maxExposurePageSize.toString()],
           ['{MAX_NOMINATIONS}', maxNominations.toString()],
           [
             '{MIN_ACTIVE_STAKE}',

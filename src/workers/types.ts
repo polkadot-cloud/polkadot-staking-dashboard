@@ -8,17 +8,17 @@ import type {
 } from 'contexts/Staking/types';
 import type { MaybeAddress, NetworkName } from 'types';
 
-export interface DataInitialiseExposures {
+export interface ProcessExposuresArgs {
   task: string;
   networkName: NetworkName;
   era: string;
   activeAccount: MaybeAddress;
   units: number;
   exposures: Exposure[];
-  maxNominatorRewardedPerValidator: number;
+  maxExposurePageSize: number;
 }
 
-export interface ResponseInitialiseExposures {
+export interface ProcessExposuresResponse {
   task: string;
   networkName: NetworkName;
   era: string;
@@ -26,5 +26,15 @@ export interface ResponseInitialiseExposures {
   totalActiveNominators: number;
   activeAccountOwnStake: ActiveAccountStaker[];
   activeValidators: number;
+  who: MaybeAddress;
+}
+
+export interface ProcessEraForExposureArgs {
+  era: string;
+  maxExposurePageSize: string;
+  exposures: Exposure[];
+  exitOnExposed: boolean;
+  task: string;
+  networkName: NetworkName;
   who: MaybeAddress;
 }

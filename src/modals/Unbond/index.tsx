@@ -88,6 +88,11 @@ export const Unbond = () => {
   // bond valid
   const [bondValid, setBondValid] = useState<boolean>(false);
 
+  // handler to set bond as a string
+  const handleSetBond = (newBond: { bond: BigNumber }) => {
+    setBond({ bond: newBond.bond.toString() });
+  };
+
   // feedback errors to trigger modal resize
   const [feedbackErrors, setFeedbackErrors] = useState<string[]>([]);
 
@@ -97,11 +102,6 @@ export const Unbond = () => {
       ? BigNumber.max(freeToUnbond.minus(minCreateBond), 0)
       : BigNumber.max(freeToUnbond.minus(minJoinBond), 0)
     : BigNumber.max(freeToUnbond.minus(minNominatorBond), 0);
-
-  // update bond value on task change
-  useEffect(() => {
-    setBond({ bond: unbondToMin.toString() });
-  }, [freeToUnbond.toString()]);
 
   // tx to submit
   const getTx = () => {
@@ -131,7 +131,6 @@ export const Unbond = () => {
     callbackSubmit: () => {
       setModalStatus('closing');
     },
-    callbackInBlock: () => {},
   });
 
   const nominatorActiveBelowMin =
@@ -150,7 +149,7 @@ export const Unbond = () => {
     submitExtrinsic.proxySupported
   );
 
-  if (pendingRewards > 0 && bondFor === 'pool') {
+  if (pendingRewards.isGreaterThan(0) && bondFor === 'pool') {
     warnings.push(`${t('unbondingWithdraw')} ${pendingRewards} ${unit}.`);
   }
   if (nominatorActiveBelowMin) {
@@ -173,7 +172,12 @@ export const Unbond = () => {
     warnings.push(t('unbondErrorNoFunds', { unit }));
   }
 
-  // modal resize on form update
+  // Update bond value on task change.
+  useEffect(() => {
+    handleSetBond({ bond: unbondToMin });
+  }, [freeToUnbond.toString()]);
+
+  // Modal resize on form update.
   useEffect(
     () => setModalResize(),
     [bond, notEnoughFunds, feedbackErrors.length, warnings.length]
@@ -197,35 +201,28 @@ export const Unbond = () => {
             setBondValid(valid);
             setFeedbackErrors(errors);
           }}
-          setters={[
-            {
-              set: setBond,
-              current: bond,
-            },
-          ]}
+          setters={[handleSetBond]}
           txFees={txFees}
         />
         <ModalNotes withPadding>
           {bondFor === 'pool' ? (
-            <>
-              {isDepositor() ? (
-                <p>
-                  {t('notePoolDepositorMinBond', {
-                    context: 'depositor',
-                    bond: minCreateBond,
-                    unit,
-                  })}
-                </p>
-              ) : (
-                <p>
-                  {t('notePoolDepositorMinBond', {
-                    context: 'member',
-                    bond: minJoinBond,
-                    unit,
-                  })}
-                </p>
-              )}
-            </>
+            isDepositor() ? (
+              <p>
+                {t('notePoolDepositorMinBond', {
+                  context: 'depositor',
+                  bond: minCreateBond,
+                  unit,
+                })}
+              </p>
+            ) : (
+              <p>
+                {t('notePoolDepositorMinBond', {
+                  context: 'member',
+                  bond: minJoinBond,
+                  unit,
+                })}
+              </p>
+            )
           ) : null}
           <StaticNote
             value={bondDurationFormatted}

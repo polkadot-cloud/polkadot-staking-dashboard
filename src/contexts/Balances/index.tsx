@@ -10,7 +10,8 @@ import {
   setStateWithRef,
 } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import React, { useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import type { AnyApi, MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
@@ -27,15 +28,13 @@ import type {
   UnlockChunkRaw,
 } from './types';
 
-/**
- * @name useBalances
- * @summary A provider that subscribes to an account's balances and wrap app children.
- */
-export const BalancesProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const BalancesContext = createContext<BalancesContextInterface>(
+  defaults.defaultBalancesContext
+);
+
+export const useBalances = () => useContext(BalancesContext);
+
+export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { api, isReady } = useApi();
   const { network } = useNetwork();
   const { accounts, getAccount } = useImportedAccounts();
@@ -60,7 +59,9 @@ export const BalancesProvider = ({
 
       removed?.forEach((address) => {
         const unsub = unsubs.current[address];
-        if (unsub) unsub();
+        if (unsub) {
+          unsub();
+        }
       });
       unsubs.current = Object.fromEntries(
         Object.entries(unsubs.current).filter(([key]) => !removed.includes(key))
@@ -86,7 +87,9 @@ export const BalancesProvider = ({
   };
 
   const handleSubscriptions = async (address: string) => {
-    if (!api) return undefined;
+    if (!api) {
+      return undefined;
+    }
 
     const unsub = await api.queryMulti<AnyApi>(
       [
@@ -104,7 +107,9 @@ export const BalancesProvider = ({
             // add stash as external account if not present
             if (!getAccount(stash.toString())) {
               const result = addExternalAccount(stash.toString(), 'system');
-              if (result) addOrReplaceOtherAccount(result.account, result.type);
+              if (result) {
+                addOrReplaceOtherAccount(result.account, result.type);
+              }
             }
 
             setStateWithRef(
@@ -194,9 +199,8 @@ export const BalancesProvider = ({
   }, [network]);
 
   // Gets a ledger for a stash address.
-  const getStashLedger = (address: MaybeAddress) => {
-    return getLedger(ledgersRef.current, 'stash', address);
-  };
+  const getStashLedger = (address: MaybeAddress) =>
+    getLedger(ledgersRef.current, 'stash', address);
 
   // Gets an account's balance metadata.
   const getBalance = (address: MaybeAddress) =>
@@ -226,9 +230,3 @@ export const BalancesProvider = ({
     </BalancesContext.Provider>
   );
 };
-
-export const BalancesContext = React.createContext<BalancesContextInterface>(
-  defaults.defaultBalancesContext
-);
-
-export const useBalances = () => React.useContext(BalancesContext);

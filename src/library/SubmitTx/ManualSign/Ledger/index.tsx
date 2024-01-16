@@ -52,7 +52,9 @@ export const Ledger = ({
 
   // Handle new Ledger status report.
   const handleLedgerStatusResponse = (response: LedgerResponse) => {
-    if (!response) return;
+    if (!response) {
+      return;
+    }
     const { ack, statusCode, body } = response;
 
     if (statusCode === 'SignedPayload') {
@@ -102,11 +104,12 @@ export const Ledger = ({
   }, [transportResponse]);
 
   // Tidy up context state when this component is no longer mounted.
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       handleUnmount();
-    };
-  }, []);
+    },
+    []
+  );
 
   return (
     <>
@@ -132,33 +135,33 @@ export const Ledger = ({
       <div className="inner msg">
         <div>
           {valid ? (
-            <>
-              <p className="prompt">
-                {!valid ? (
-                  '...'
-                ) : (
-                  <>
-                    <FontAwesomeIcon
-                      icon={faCircleExclamation}
-                      className="icon"
-                    />
-                    {feedback?.message
-                      ? feedback.message
-                      : !integrityChecked
-                        ? t('ledgerConnectAndConfirm')
-                        : `${t('deviceVerified')}. ${t('submitTransaction')}`}
-                  </>
-                )}
-                {feedback?.helpKey && (
-                  <ButtonHelp
-                    marginLeft
-                    onClick={() => {
-                      if (feedback?.helpKey) openHelp(feedback.helpKey);
-                    }}
+            <p className="prompt">
+              {!valid ? (
+                '...'
+              ) : (
+                <>
+                  <FontAwesomeIcon
+                    icon={faCircleExclamation}
+                    className="icon"
                   />
-                )}
-              </p>
-            </>
+                  {feedback?.message
+                    ? feedback.message
+                    : !integrityChecked
+                      ? t('ledgerConnectAndConfirm')
+                      : `${t('deviceVerified')}. ${t('submitTransaction')}`}
+                </>
+              )}
+              {feedback?.helpKey && (
+                <ButtonHelp
+                  marginLeft
+                  onClick={() => {
+                    if (feedback?.helpKey) {
+                      openHelp(feedback.helpKey);
+                    }
+                  }}
+                />
+              )}
+            </p>
           ) : (
             <p className="prompt">...</p>
           )}

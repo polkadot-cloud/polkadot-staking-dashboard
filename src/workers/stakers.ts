@@ -10,9 +10,9 @@ import type {
 } from 'contexts/Staking/types';
 import type { AnyJson } from 'types';
 import type { LocalValidatorExposure } from 'contexts/Payouts/types';
-import type { DataInitialiseExposures } from './types';
+import type { ProcessExposuresArgs, ProcessEraForExposureArgs } from './types';
 
-// eslint-disable-next-line no-restricted-globals
+// eslint-disable-next-line no-restricted-globals, @typescript-eslint/no-explicit-any
 export const ctx: Worker = self as any;
 
 // handle incoming message and route to correct handler.
@@ -22,10 +22,10 @@ ctx.addEventListener('message', (event: AnyJson) => {
   let message: AnyJson = {};
   switch (task) {
     case 'processExposures':
-      message = processExposures(data as DataInitialiseExposures);
+      message = processExposures(data as ProcessExposuresArgs);
       break;
     case 'processEraForExposure':
-      message = processEraForExposure(data);
+      message = processEraForExposure(data as ProcessEraForExposureArgs);
       break;
     default:
   }
@@ -33,19 +33,27 @@ ctx.addEventListener('message', (event: AnyJson) => {
 });
 
 // Process era exposures and return if an account was exposed, along with the validator they backed.
-const processEraForExposure = (data: AnyJson) => {
-  const { era, exposures, exitOnExposed, task, networkName, who } = data;
+const processEraForExposure = (data: ProcessEraForExposureArgs) => {
+  const {
+    era,
+    maxExposurePageSize,
+    exposures,
+    exitOnExposed,
+    task,
+    networkName,
+    who,
+  } = data;
   let exposed = false;
 
   // If exposed, the validator that was backed.
   const exposedValidators: Record<string, LocalValidatorExposure> = {};
 
   // Check exposed as validator or nominator.
-  exposures.every(({ keys, val }: any) => {
+  exposures.every(({ keys, val }) => {
     const validator = keys[1];
     const others = val?.others ?? [];
-    const own = val?.own || 0;
-    const total = val?.total || 0;
+    const own = val?.own || '0';
+    const total = val?.total || '0';
     const isValidator = validator === who;
 
     if (isValidator) {
@@ -58,27 +66,38 @@ const processEraForExposure = (data: AnyJson) => {
         total,
         share,
         isValidator,
+        // Validator is paid regardless of page. Default to page 1.
+        exposedPage: 1,
       };
 
       exposed = true;
-      if (exitOnExposed) return false;
+      if (exitOnExposed) {
+        return false;
+      }
     }
 
-    const inOthers = others.find((o: AnyJson) => o.who === who);
+    const inOthers = others.find((o) => o.who === who);
 
     if (inOthers) {
-      const share = new BigNumber(inOthers.value).isZero()
-        ? '0'
-        : new BigNumber(inOthers.value).dividedBy(total).toString();
+      const index = others.findIndex((o) => o.who === who);
+      const exposedPage = Math.floor(index / Number(maxExposurePageSize));
+
+      const share =
+        new BigNumber(inOthers.value).isZero() || total === '0'
+          ? '0'
+          : new BigNumber(inOthers.value).dividedBy(total).toString();
 
       exposedValidators[validator] = {
         staked: inOthers.value,
         total,
         share,
         isValidator,
+        exposedPage,
       };
       exposed = true;
-      if (exitOnExposed) return false;
+      if (exitOnExposed) {
+        return false;
+      }
     }
 
     return true;
@@ -99,7 +118,7 @@ const processEraForExposure = (data: AnyJson) => {
 // process exposures.
 //
 // abstracts active nominators erasStakers.
-const processExposures = (data: DataInitialiseExposures) => {
+const processExposures = (data: ProcessExposuresArgs) => {
   const {
     task,
     networkName,
@@ -107,7 +126,7 @@ const processExposures = (data: DataInitialiseExposures) => {
     units,
     exposures,
     activeAccount,
-    maxNominatorRewardedPerValidator,
+    maxExposurePageSize,
   } = data;
 
   const stakers: Staker[] = [];
@@ -134,7 +153,7 @@ const processExposures = (data: DataInitialiseExposures) => {
       });
 
       const lowestRewardIndex = Math.min(
-        maxNominatorRewardedPerValidator - 1,
+        maxExposurePageSize - 1,
         others.length
       );
 
@@ -146,7 +165,7 @@ const processExposures = (data: DataInitialiseExposures) => {
             ).toString()
           : '0';
 
-      const oversubscribed = others.length > maxNominatorRewardedPerValidator;
+      const oversubscribed = others.length > maxExposurePageSize;
 
       stakers.push({
         address,

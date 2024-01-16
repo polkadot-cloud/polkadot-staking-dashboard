@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { ValidatorEntry } from '@polkadot-cloud/assets/types';
 import type BigNumber from 'bignumber.js';
 import type { AnyJson, BondFor, Sync } from 'types';
 
@@ -20,12 +21,18 @@ export interface ValidatorsContextInterface {
   sessionParaValidators: string[];
   nominated: Validator[] | null;
   poolNominated: Validator[] | null;
-  validatorCommunity: any[];
+  validatorCommunity: ValidatorEntry[];
   erasRewardPoints: ErasRewardPoints;
   validatorsFetched: Sync;
   eraPointsBoundaries: EraPointsBoundaries;
   validatorEraPointsHistory: Record<string, ValidatorEraPointHistory>;
   erasRewardPointsFetched: Sync;
+  averageEraValidatorReward: AverageEraValidatorReward;
+}
+
+export interface AverageEraValidatorReward {
+  days: number;
+  reward: BigNumber;
 }
 
 export interface FavoriteValidatorsContextInterface {

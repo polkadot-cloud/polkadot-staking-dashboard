@@ -49,10 +49,10 @@ export const Connect = () => {
   const other = web.filter((a) => !installed.find((b) => b.id === a.id));
 
   // toggle read only management
-  const [readOnlyOpen, setReadOnlyOpen] = useState(false);
+  const [readOnlyOpen, setReadOnlyOpen] = useState<boolean>(false);
 
   // toggle proxy delegate management
-  const [newProxyOpen, setNewProxyOpen] = useState(false);
+  const [newProxyOpen, setNewProxyOpen] = useState<boolean>(false);
 
   // active modal section
   const [section, setSection] = useState<number>(0);
@@ -129,105 +129,97 @@ export const Connect = () => {
   );
 
   return (
-    <>
-      <ModalSection type="carousel">
-        <Close />
-        <ModalFixedTitle ref={headerRef} withStyle>
-          <ModalCustomHeader>
-            <div className="first">
-              <h1>{t('connect')}</h1>
-              <ButtonPrimaryInvert
-                text={t('goToAccounts')}
-                iconRight={faChevronRight}
-                iconTransform="shrink-3"
-                onClick={() => replaceModal({ key: 'Accounts' })}
-                marginLeft
-              />
-            </div>
-            <ModalSection type="tab">
-              <ButtonTab
-                title={t('extensions')}
-                onClick={() => setSection(0)}
-                active={section === 0}
-              />
-              <ButtonTab
-                title={t('readOnly')}
-                onClick={() => setSection(1)}
-                active={section === 1}
-              />
-              <ButtonTab
-                title={t('proxies')}
-                onClick={() => setSection(2)}
-                active={section === 2}
-              />
-            </ModalSection>
-          </ModalCustomHeader>
-        </ModalFixedTitle>
+    <ModalSection type="carousel">
+      <Close />
+      <ModalFixedTitle ref={headerRef} withStyle>
+        <ModalCustomHeader>
+          <div className="first">
+            <h1>{t('connect')}</h1>
+            <ButtonPrimaryInvert
+              text={t('goToAccounts')}
+              iconRight={faChevronRight}
+              iconTransform="shrink-3"
+              onClick={() => replaceModal({ key: 'Accounts' })}
+              marginLeft
+            />
+          </div>
+          <ModalSection type="tab">
+            <ButtonTab
+              title={t('extensions')}
+              onClick={() => setSection(0)}
+              active={section === 0}
+            />
+            <ButtonTab
+              title={t('readOnly')}
+              onClick={() => setSection(1)}
+              active={section === 1}
+            />
+            <ButtonTab
+              title={t('proxies')}
+              onClick={() => setSection(2)}
+              active={section === 2}
+            />
+          </ModalSection>
+        </ModalCustomHeader>
+      </ModalFixedTitle>
 
-        <ModalMotionThreeSection
-          style={{
-            maxHeight: modalMaxHeight - (headerRef.current?.clientHeight || 0),
-          }}
-          animate={
-            section === 0 ? 'home' : section === 1 ? 'readOnly' : 'proxies'
-          }
-          transition={{
-            duration: 0.5,
-            type: 'spring',
-            bounce: 0.1,
-          }}
-          variants={{
-            home: {
-              left: 0,
-            },
-            readOnly: {
-              left: '-100%',
-            },
-            proxies: {
-              left: '-200%',
-            },
-          }}
-        >
-          <div className="section">
-            <ModalPadding horizontalOnly ref={homeRef}>
-              {ConnectCombinedJSX}
-              {!inNova && (
-                <>
-                  <ActionItem text={t('developerTools')} />
-                  <ExtensionsWrapper>
-                    <SelectItems layout="two-col">
-                      {ExtensionsArray.filter(
-                        (a) => a.id === 'polkadot-js'
-                      ).map((extension, i) => (
+      <ModalMotionThreeSection
+        style={{
+          maxHeight: modalMaxHeight - (headerRef.current?.clientHeight || 0),
+        }}
+        animate={
+          section === 0 ? 'home' : section === 1 ? 'readOnly' : 'proxies'
+        }
+        transition={{
+          duration: 0.5,
+          type: 'spring',
+          bounce: 0.1,
+        }}
+        variants={{
+          home: {
+            left: 0,
+          },
+          readOnly: {
+            left: '-100%',
+          },
+          proxies: {
+            left: '-200%',
+          },
+        }}
+      >
+        <div className="section">
+          <ModalPadding horizontalOnly ref={homeRef}>
+            {ConnectCombinedJSX}
+            {!inNova && (
+              <>
+                <ActionItem text={t('developerTools')} />
+                <ExtensionsWrapper>
+                  <SelectItems layout="two-col">
+                    {ExtensionsArray.filter((a) => a.id === 'polkadot-js').map(
+                      (extension, i) => (
                         <Extension
                           key={`extension_item_${i}`}
                           meta={extension}
                         />
-                      ))}
-                    </SelectItems>
-                  </ExtensionsWrapper>
-                </>
-              )}
-            </ModalPadding>
-          </div>
-          <div className="section">
-            <ModalPadding horizontalOnly ref={readOnlyRef}>
-              <ReadOnly
-                setInputOpen={setReadOnlyOpen}
-                inputOpen={readOnlyOpen}
-              />
-            </ModalPadding>
-          </div>
-          <div className="section">
-            <ModalPadding horizontalOnly ref={proxiesRef}>
-              <Proxies
-                setInputOpen={setNewProxyOpen}
-                inputOpen={newProxyOpen}
-              />
-            </ModalPadding>
-          </div>
-        </ModalMotionThreeSection>
-      </ModalSection>
-    </>
+                      )
+                    )}
+                  </SelectItems>
+                </ExtensionsWrapper>
+              </>
+            )}
+          </ModalPadding>
+        </div>
+        <div className="section">
+          <ModalPadding horizontalOnly ref={readOnlyRef}>
+            <ReadOnly setInputOpen={setReadOnlyOpen} inputOpen={readOnlyOpen} />
+          </ModalPadding>
+        </div>
+        <div className="section">
+          <ModalPadding horizontalOnly ref={proxiesRef}>
+            <Proxies setInputOpen={setNewProxyOpen} inputOpen={newProxyOpen} />
+          </ModalPadding>
+        </div>
+      </ModalMotionThreeSection>
+    </ModalSection>
   );
 };

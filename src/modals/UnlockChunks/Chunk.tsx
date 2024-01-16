@@ -15,8 +15,9 @@ import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ChunkWrapper } from './Wrappers';
+import type { ChunkProps } from './types';
 
-export const Chunk = ({ chunk, bondFor, onRebond }: any) => {
+export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
   const { t } = useTranslation('modals');
 
   const {
