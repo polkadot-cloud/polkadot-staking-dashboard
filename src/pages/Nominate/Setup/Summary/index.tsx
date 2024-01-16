@@ -1,12 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clipAddress, unitToPlanck } from '@polkadotcloud/utils';
+import { ellipsisFn, unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
+import { useTranslation } from 'react-i18next';
 import { useSetup } from 'contexts/Setup';
 import { Warning } from 'library/Form/Warning';
 import { useBatchCall } from 'library/Hooks/useBatchCall';
@@ -16,21 +15,26 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
 import { SubmitTx } from 'library/SubmitTx';
-import { useTranslation } from 'react-i18next';
+import { useNetwork } from 'contexts/Network';
+import { useApi } from 'contexts/Api';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
+  const { api } = useApi();
   const {
-    api,
-    network: { units, unit, name },
-  } = useApi();
+    network,
+    networkData: { units, unit },
+  } = useNetwork();
   const { newBatchCall } = useBatchCall();
   const { getPayeeItems } = usePayeeConfig();
-  const { getSetupProgress, removeSetupProgress } = useSetup();
-  const { activeAccount, activeProxy, accountHasSigner } = useConnect();
+  const { accountHasSigner } = useImportedAccounts();
+  const { activeAccount, activeProxy } = useActiveAccounts();
+  const { getNominatorSetup, removeSetupProgress } = useSetup();
 
-  const setup = getSetupProgress('nominator', activeAccount);
+  const setup = getNominatorSetup(activeAccount);
   const { progress } = setup;
   const { bond, nominations, payee } = progress;
 
@@ -39,9 +43,11 @@ export const Summary = ({ section }: SetupStepProps) => {
       return null;
     }
 
-    const targetsToSubmit = nominations.map((item: any) => ({
-      Id: item.address,
-    }));
+    const targetsToSubmit = nominations.map(
+      ({ address }: { address: string }) => ({
+        Id: address,
+      })
+    );
 
     const payeeToSubmit =
       payee.destination === 'Account'
@@ -50,7 +56,7 @@ export const Summary = ({ section }: SetupStepProps) => {
           }
         : payee.destination;
 
-    const bondToSubmit = unitToPlanck(bond, units);
+    const bondToSubmit = unitToPlanck(bond || '0', units);
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
 
     const txs = [
@@ -64,7 +70,6 @@ export const Summary = ({ section }: SetupStepProps) => {
     tx: getTxs(),
     from: activeAccount,
     shouldSubmit: true,
-    callbackSubmit: () => {},
     callbackInBlock: () => {
       removeSetupProgress('nominator', activeAccount);
     },
@@ -79,7 +84,7 @@ export const Summary = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={null}
-        title={`${t('nominate.summary')}`}
+        title={t('nominate.summary')}
         bondFor="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
@@ -94,7 +99,7 @@ export const Summary = ({ section }: SetupStepProps) => {
             </div>
             <div>
               {payee.destination === 'Account'
-                ? `${payeeDisplay}: ${clipAddress(payee.account)}`
+                ? `${payeeDisplay}: ${ellipsisFn(payee.account || '')}`
                 : payeeDisplay}
             </div>
           </section>
@@ -111,7 +116,7 @@ export const Summary = ({ section }: SetupStepProps) => {
               {t('nominate.bondAmount')}:
             </div>
             <div>
-              {new BigNumber(bond).toFormat()} {unit}
+              {new BigNumber(bond || 0).toFormat()} {unit}
             </div>
           </section>
         </SummaryWrapper>
@@ -124,11 +129,11 @@ export const Summary = ({ section }: SetupStepProps) => {
           }}
         >
           <SubmitTx
-            submitText={`${t('nominate.startNominating')}`}
+            submitText={t('nominate.startNominating')}
             valid
-            noMargin
-            customEvent={`${name.toLowerCase()}_user_started_nominating`}
+            customEvent={`${network.toLowerCase()}_user_started_nominating`}
             {...submitExtrinsic}
+            displayFor="canvas" /* Edge case: not canvas, but the larger button sizes suit this UI more. */
           />
         </div>
       </MotionContainer>

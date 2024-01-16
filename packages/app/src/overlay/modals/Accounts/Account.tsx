@@ -1,23 +1,21 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faGlasses } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import LedgerSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
-import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
-import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
-import { ExtensionIcons } from '@w3ux/extension-assets/util'
-import { Polkicon } from '@w3ux/react-polkicon'
-import { ellipsisFn } from '@w3ux/utils'
-import BigNumber from 'bignumber.js'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useNetwork } from 'contexts/Network'
-import { useTranslation } from 'react-i18next'
-import { useOverlay } from 'ui-overlay'
-import { planckToUnitBn } from 'utils'
-import { AccountWrapper } from './Wrappers'
-import type { AccountItemProps } from './types'
+import { faGlasses } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ellipsisFn, planckToUnit } from '@polkadot-cloud/utils';
+import { useTranslation } from 'react-i18next';
+import { ExtensionIcons } from '@polkadot-cloud/assets/extensions';
+import LedgerSVG from '@polkadot-cloud/assets/extensions/svg/ledgersquare.svg?react';
+import PolkadotVaultSVG from '@polkadot-cloud/assets/extensions/svg/polkadotvault.svg?react';
+import { Polkicon } from '@polkadot-cloud/react';
+import { useTransferOptions } from 'contexts/TransferOptions';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { AccountWrapper } from './Wrappers';
+import type { AccountItemProps } from './types';
 
 export const AccountButton = ({
   label,
@@ -25,26 +23,27 @@ export const AccountButton = ({
   delegator,
   proxyType,
   noBorder = false,
-  transferrableBalance,
 }: AccountItemProps) => {
-  const { t } = useTranslation('modals')
-  const { getAccount } = useImportedAccounts()
+  const { t } = useTranslation('modals');
+  const { getAccount } = useImportedAccounts();
   const {
     activeProxy,
     activeAccount,
     setActiveAccount,
     setActiveProxy,
     activeProxyType,
-  } = useActiveAccounts()
-  const { setModalStatus } = useOverlay().modal
-  const { units, unit } = useNetwork().networkData
+  } = useActiveAccounts();
+  const { setModalStatus } = useOverlay().modal;
+  const { units, unit } = useNetwork().networkData;
+  const { getTransferOptions } = useTransferOptions();
+  const { transferrableBalance } = getTransferOptions(address || '');
 
   // Accumulate account data.
-  const meta = getAccount(address || '')
+  const meta = getAccount(address || '');
 
-  const imported = !!meta
-  const connectTo = delegator || address || ''
-  const connectProxy = delegator ? address || null : ''
+  const imported = !!meta;
+  const connectTo = delegator || address || '';
+  const connectProxy = delegator ? address || null : '';
 
   // Determine account source icon.
   const Icon =
@@ -52,9 +51,7 @@ export const AccountButton = ({
       ? LedgerSVG
       : meta?.source === 'vault'
         ? PolkadotVaultSVG
-        : meta?.source === 'wallet_connect'
-          ? WalletConnectSVG
-          : ExtensionIcons[meta?.source || ''] || undefined
+        : ExtensionIcons[meta?.source || ''] || undefined;
 
   // Determine if this account is active (active account or proxy).
   const isActive =
@@ -63,17 +60,17 @@ export const AccountButton = ({
       !activeProxy) ||
     (connectProxy === activeProxy &&
       proxyType === activeProxyType &&
-      activeProxy)
+      activeProxy);
 
   // Handle account click. Handles both active account and active proxy.
   const handleClick = () => {
     if (!imported) {
-      return
+      return;
     }
-    setActiveAccount(getAccount(connectTo)?.address || null)
-    setActiveProxy(proxyType ? { address: connectProxy, proxyType } : null)
-    setModalStatus('closing')
-  }
+    setActiveAccount(getAccount(connectTo)?.address || null);
+    setActiveProxy(proxyType ? { address: connectProxy, proxyType } : null);
+    setModalStatus('closing');
+  };
 
   return (
     <AccountWrapper className={isActive ? 'active' : undefined}>
@@ -85,14 +82,12 @@ export const AccountButton = ({
             disabled={!imported}
           >
             {delegator && (
-              <div className="delegator" style={{ maxWidth: '1.9rem' }}>
-                <div>
-                  <Polkicon address={delegator} fontSize="1.9rem" />
-                </div>
+              <div className="delegator">
+                <Polkicon address={delegator} size={23} />
               </div>
             )}
-            <div className="identicon" style={{ maxWidth: '1.9rem' }}>
-              <Polkicon address={address ?? ''} fontSize="1.9rem" />
+            <div className="identicon">
+              <Polkicon address={address ?? ''} size={23} />
             </div>
             <span className="name">
               {delegator && (
@@ -130,15 +125,12 @@ export const AccountButton = ({
         </section>
         <section className="foot">
           <span className="balance">
-            {`${t('free')}: ${planckToUnitBn(
-              transferrableBalance || new BigNumber(0),
-              units
-            )
+            {`${t('free')}: ${planckToUnit(transferrableBalance, units)
               .decimalPlaces(3)
               .toFormat()} ${unit}`}
           </span>
         </section>
       </div>
     </AccountWrapper>
-  )
-}
+  );
+};

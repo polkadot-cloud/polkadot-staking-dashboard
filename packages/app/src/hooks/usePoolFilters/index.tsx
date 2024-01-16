@@ -1,18 +1,17 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: GPL-3.0-only
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 
-import type { AnyFunction, AnyJson } from '@w3ux/types'
-import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { useStaking } from 'contexts/Staking'
-import type { AnyFilter } from 'library/Filter/types'
-import { useTranslation } from 'react-i18next'
-import type { BondedPool } from 'types'
+import { useTranslation } from 'react-i18next';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { useStaking } from 'contexts/Staking';
+import type { AnyFunction, AnyJson } from 'types';
+import type { AnyFilter } from 'library/Filter/types';
+import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 
 export const usePoolFilters = () => {
-  const { t } = useTranslation('app')
-  const { poolsNominations } = useBondedPools()
-  const { getNominationsStatusFromTargets } = useStaking()
-  const { getPoolNominationStatusCode } = useBondedPools()
+  const { t } = useTranslation('library');
+  const { poolsNominations } = useBondedPools();
+  const { getNominationsStatusFromTargets } = useStaking();
+  const { getPoolNominationStatusCode } = useBondedPools();
 
   /*
    * Include active pools.
@@ -20,19 +19,19 @@ export const usePoolFilters = () => {
    */
   const includeActive = (list: AnyFilter) => {
     if (!Object.keys(poolsNominations).length) {
-      return list
+      return list;
     }
 
     const filteredList = list.filter((p: BondedPool) => {
-      const nominations = poolsNominations[p.id]
-      const targets = nominations?.targets || []
+      const nominations = poolsNominations[p.id];
+      const targets = nominations?.targets || [];
       const status = getPoolNominationStatusCode(
         getNominationsStatusFromTargets(p.addresses.stash, targets)
-      )
-      return status === 'active'
-    })
-    return filteredList
-  }
+      );
+      return status === 'active';
+    });
+    return filteredList;
+  };
 
   /*
    * Dont include active pools.
@@ -40,19 +39,19 @@ export const usePoolFilters = () => {
    */
   const excludeActive = (list: AnyFilter) => {
     if (!Object.keys(poolsNominations).length) {
-      return list
+      return list;
     }
 
     const filteredList = list.filter((p: BondedPool) => {
-      const nominations = poolsNominations[p.id]
-      const targets = nominations?.targets || []
+      const nominations = poolsNominations[p.id];
+      const targets = nominations?.targets || [];
       const status = getPoolNominationStatusCode(
         getNominationsStatusFromTargets(p.addresses.stash, targets)
-      )
-      return status !== 'active'
-    })
-    return filteredList
-  }
+      );
+      return status !== 'active';
+    });
+    return filteredList;
+  };
 
   /*
    * include locked pools.
@@ -60,7 +59,7 @@ export const usePoolFilters = () => {
    * Returns the updated filtered list.
    */
   const includeLocked = (list: AnyFilter) =>
-    list.filter((p: BondedPool) => p.state.toLowerCase() === 'Blocked')
+    list.filter((p: BondedPool) => p.state.toLowerCase() === 'Blocked');
 
   /*
    * include destroying pools.
@@ -68,7 +67,7 @@ export const usePoolFilters = () => {
    * Returns the updated filtered list.
    */
   const includeDestroying = (list: AnyFilter) =>
-    list.filter((p: BondedPool) => p.state === 'Destroying')
+    list.filter((p: BondedPool) => p.state === 'Destroying');
 
   /*
    * exclude locked pools.
@@ -76,7 +75,7 @@ export const usePoolFilters = () => {
    * Returns the updated filtered list.
    */
   const excludeLocked = (list: AnyFilter) =>
-    list.filter((p: BondedPool) => p.state !== 'Blocked')
+    list.filter((p: BondedPool) => p.state !== 'Blocked');
 
   /*
    * exclude destroying pools.
@@ -84,44 +83,44 @@ export const usePoolFilters = () => {
    * Returns the updated filtered list.
    */
   const excludeDestroying = (list: AnyFilter) =>
-    list.filter((p: BondedPool) => p.state !== 'Destroying')
+    list.filter((p: BondedPool) => p.state !== 'Destroying');
 
   // includes to be listed in filter overlay.
   const includesToLabels: Record<string, string> = {
     active: t('activePools'),
-  }
+  };
 
   // excludes to be listed in filter overlay.
   const excludesToLabels: Record<string, string> = {
     locked: t('lockedPools'),
     destroying: t('destroyingPools'),
-  }
+  };
 
   // match include keys to their associated filter functions.
   const includeToFunction: Record<string, AnyFunction> = {
     active: includeActive,
     locked: includeLocked,
     destroying: includeDestroying,
-  }
+  };
 
   // match exclude keys to their associated filter functions.
   const excludeToFunction: Record<string, AnyFunction> = {
     active: excludeActive,
     locked: excludeLocked,
     destroying: excludeDestroying,
-  }
+  };
 
   // get filter functions from keys and type of filter.
   const getFiltersFromKey = (key: string[], type: string) => {
-    const filters = type === 'include' ? includeToFunction : excludeToFunction
-    const fns = []
+    const filters = type === 'include' ? includeToFunction : excludeToFunction;
+    const fns = [];
     for (const k of key) {
       if (filters[k]) {
-        fns.push(filters[k])
+        fns.push(filters[k]);
       }
     }
-    return fns
-  }
+    return fns;
+  };
 
   // applies filters based on the provided include and exclude keys.
   const applyFilter = (
@@ -130,24 +129,24 @@ export const usePoolFilters = () => {
     list: AnyJson
   ) => {
     if (!excludes && !includes) {
-      return list
+      return list;
     }
     if (includes) {
       for (const fn of getFiltersFromKey(includes, 'include')) {
-        list = fn(list)
+        list = fn(list);
       }
     }
     if (excludes) {
       for (const fn of getFiltersFromKey(excludes, 'exclude')) {
-        list = fn(list)
+        list = fn(list);
       }
     }
-    return list
-  }
+    return list;
+  };
 
   return {
     includesToLabels,
     excludesToLabels,
     applyFilter,
-  }
-}
+  };
+};

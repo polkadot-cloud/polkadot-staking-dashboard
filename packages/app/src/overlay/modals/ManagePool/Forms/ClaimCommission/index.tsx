@@ -1,97 +1,98 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { rmCommas } from '@w3ux/utils'
-import { PoolClaimCommission } from 'api/tx/poolClaimCommission'
-import BigNumber from 'bignumber.js'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useNetwork } from 'contexts/Network'
-import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useSignerWarnings } from 'hooks/useSignerWarnings'
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
-import { ActionItem } from 'library/ActionItem'
-import { Warning } from 'library/Form/Warning'
-import { SubmitTx } from 'library/SubmitTx'
-import type { Dispatch, SetStateAction } from 'react'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ButtonSubmitInvert } from 'ui-buttons'
-import { Notes, Padding, Warnings } from 'ui-core/modal'
-import { useOverlay } from 'ui-overlay'
-import { planckToUnitBn } from 'utils'
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import {
+  ActionItem,
+  ButtonSubmitInvert,
+  ModalNotes,
+  ModalPadding,
+  ModalWarnings,
+} from '@polkadot-cloud/react';
+import { greaterThanZero, planckToUnit, rmCommas } from '@polkadot-cloud/utils';
+import BigNumber from 'bignumber.js';
+import type { Dispatch, SetStateAction } from 'react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useApi } from 'contexts/Api';
+import { useActivePools } from 'contexts/Pools/ActivePools';
+import { Warning } from 'library/Form/Warning';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { SubmitTx } from 'library/SubmitTx';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const ClaimCommission = ({
   setSection,
-  onResize,
 }: {
-  setSection: Dispatch<SetStateAction<number>>
-  onResize: () => void
+  setSection: Dispatch<SetStateAction<number>>;
 }) => {
-  const { t } = useTranslation('modals')
+  const { t } = useTranslation('modals');
+  const { api } = useApi();
   const {
-    network,
     networkData: { units, unit },
-  } = useNetwork()
-  const { setModalStatus } = useOverlay().modal
-  const { activeAccount } = useActiveAccounts()
-  const { isOwner, activePool } = useActivePool()
-  const { getSignerWarnings } = useSignerWarnings()
-
-  const poolId = activePool?.id
+  } = useNetwork();
+  const { setModalStatus } = useOverlay().modal;
+  const { activeAccount } = useActiveAccounts();
+  const { isOwner, selectedActivePool } = useActivePools();
+  const { getSignerWarnings } = useSignerWarnings();
+  const poolId = selectedActivePool?.id;
   const pendingCommission = new BigNumber(
-    rmCommas(activePool?.rewardPool?.totalCommissionPending || '0')
-  )
+    rmCommas(selectedActivePool?.rewardPool?.totalCommissionPending || '0')
+  );
 
   // valid to submit transaction
-  const [valid, setValid] = useState<boolean>(false)
+  const [valid, setValid] = useState<boolean>(false);
 
   useEffect(() => {
-    setValid(isOwner() && pendingCommission.isGreaterThan(0))
-  }, [activePool, pendingCommission])
+    setValid(isOwner() && greaterThanZero(pendingCommission));
+  }, [selectedActivePool, pendingCommission]);
 
+  // tx to submit
   const getTx = () => {
-    if (!valid || poolId === undefined) {
-      return null
+    if (!valid || !api) {
+      return null;
     }
-    return new PoolClaimCommission(network, poolId).tx()
-  }
+    return api.tx.nominationPools.claimCommission(poolId);
+  };
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {
-      setModalStatus('closing')
+      setModalStatus('closing');
     },
-  })
+  });
 
   const warnings = getSignerWarnings(
     activeAccount,
     false,
     submitExtrinsic.proxySupported
-  )
+  );
 
   return (
     <>
-      <Padding horizontalOnly>
+      <ModalPadding horizontalOnly>
         {warnings.length > 0 ? (
-          <Warnings>
+          <ModalWarnings withMargin>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}
-          </Warnings>
+          </ModalWarnings>
         ) : null}
         <ActionItem
-          text={`${t('claim')} ${planckToUnitBn(
+          text={`${t('claim')} ${planckToUnit(
             pendingCommission,
             units
-          ).toString()} ${unit} `}
+          )} ${unit} `}
         />
-        <Notes>
+        <ModalNotes>
           <p>{t('sentToCommissionPayee')}</p>
-        </Notes>
-      </Padding>
+        </ModalNotes>
+      </ModalPadding>
       <SubmitTx
         valid={valid}
         buttons={[
@@ -103,9 +104,8 @@ export const ClaimCommission = ({
             onClick={() => setSection(0)}
           />,
         ]}
-        onResize={onResize}
         {...submitExtrinsic}
       />
     </>
-  )
-}
+  );
+};

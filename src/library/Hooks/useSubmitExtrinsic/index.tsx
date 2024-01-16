@@ -9,8 +9,7 @@ import { DappName, ManualSigners } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useExtensions } from '@polkadot-cloud/react/hooks';
 import { useExtrinsics } from 'contexts/Extrinsics';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger';
-import { useNotifications } from 'contexts/Notifications';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { useTxMeta } from 'contexts/TxMeta';
 import type { AnyApi, AnyJson } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -19,6 +18,7 @@ import { useNetwork } from 'contexts/Network';
 import { useBuildPayload } from '../useBuildPayload';
 import { useProxySupported } from '../useProxySupported';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
+import { NotificationsController } from 'static/NotificationsController';
 
 export const useSubmitExtrinsic = ({
   tx,
@@ -30,14 +30,12 @@ export const useSubmitExtrinsic = ({
   const { t } = useTranslation('library');
   const { api } = useApi();
   const { network } = useNetwork();
-  const { extensions } = useExtensions();
   const { buildPayload } = useBuildPayload();
   const { activeProxy } = useActiveAccounts();
-  const { addNotification } = useNotifications();
+  const { extensionsStatus } = useExtensions();
   const { isProxySupported } = useProxySupported();
+  const { handleResetLedgerTask } = useLedgerHardware();
   const { addPending, removePending } = useExtrinsics();
-  const { setIsExecuting, resetStatusCodes, resetFeedback } =
-    useLedgerHardware();
   const { getAccount, requiresManualSign } = useImportedAccounts();
   const {
     txFees,
@@ -57,7 +55,7 @@ export const useSubmitExtrinsic = ({
   const fromRef = useRef<string>(from || '');
 
   // Store whether the transaction is in progress.
-  const [submitting, setSubmitting] = useState(false);
+  const [submitting, setSubmitting] = useState<boolean>(false);
 
   // Store the uid of the extrinsic.
   const [uid] = useState<number>(incrementPayloadUid());
@@ -143,42 +141,53 @@ export const useSubmitExtrinsic = ({
 
     // if `activeAccount` is imported from an extension, ensure it is enabled.
     if (!ManualSigners.includes(source)) {
-      const extension = extensions.find((e) => e.id === source);
-      if (extension === undefined) {
+      const isInstalled = Object.entries(extensionsStatus).find(
+        ([id, status]) => id === source && status === 'connected'
+      );
+
+      if (!isInstalled) {
         throw new Error(`${t('walletNotFound')}`);
-      } else {
-        // summons extension popup if not already connected.
-        extension.enable(DappName);
       }
+
+      if (!window?.injectedWeb3?.[source]) {
+        throw new Error(`${t('walletNotFound')}`);
+      }
+
+      // summons extension popup if not already connected.
+      window.injectedWeb3[source].enable(DappName);
     }
 
     const onReady = () => {
       addPending(nonce);
-      addNotification({
+      NotificationsController.emit({
         title: t('pending'),
         subtitle: t('transactionInitiated'),
       });
-      callbackSubmit();
+      if (callbackSubmit && typeof callbackSubmit === 'function') {
+        callbackSubmit();
+      }
     };
 
     const onInBlock = () => {
       setSubmitting(false);
       removePending(nonce);
-      addNotification({
+      NotificationsController.emit({
         title: t('inBlock'),
         subtitle: t('transactionInBlock'),
       });
-      callbackInBlock();
+      if (callbackInBlock && typeof callbackInBlock === 'function') {
+        callbackInBlock();
+      }
     };
 
     const onFinalizedEvent = (method: string) => {
       if (method === 'ExtrinsicSuccess') {
-        addNotification({
+        NotificationsController.emit({
           title: t('finalized'),
           subtitle: t('transactionSuccessful'),
         });
       } else if (method === 'ExtrinsicFailed') {
-        addNotification({
+        NotificationsController.emit({
           title: t('failed'),
           subtitle: t('errorWithTransaction'),
         });
@@ -193,34 +202,32 @@ export const useSubmitExtrinsic = ({
       setSubmitting(false);
     };
 
-    const resetLedgerTx = () => {
-      setIsExecuting(false);
-      resetStatusCodes();
-      resetFeedback();
-    };
     const resetManualTx = () => {
       resetTx();
-      resetLedgerTx();
+      handleResetLedgerTask();
     };
 
     const onError = (type?: string) => {
       resetTx();
       if (type === 'ledger') {
-        resetLedgerTx();
+        handleResetLedgerTask();
       }
       removePending(nonce);
-      addNotification({
+      NotificationsController.emit({
         title: t('cancelled'),
         subtitle: t('transactionCancelled'),
       });
     };
 
     const handleStatus = (status: AnyApi) => {
-      if (status.isReady) onReady();
-      if (status.isInBlock) onInBlock();
+      if (status.isReady) {
+        onReady();
+      }
 
       // extrinsic is in block, assume tx completed
       if (status.isInBlock) {
+        onInBlock();
+
         // register sa events
         const callInfo = tx.method.toHuman();
         const txEventKey = `${network}_tx_${callInfo.section}_${callInfo.method}`;
@@ -255,7 +262,9 @@ export const useSubmitExtrinsic = ({
             if (status.isFinalized) {
               events.forEach(({ event: { method } }: AnyApi) => {
                 onFinalizedEvent(method);
-                if (unsubEvents?.includes(method)) unsub();
+                if (unsubEvents?.includes(method)) {
+                  unsub();
+                }
               });
             }
           }
@@ -280,7 +289,9 @@ export const useSubmitExtrinsic = ({
             if (status.isFinalized) {
               events.forEach(({ event: { method } }: AnyApi) => {
                 onFinalizedEvent(method);
-                if (unsubEvents?.includes(method)) unsub();
+                if (unsubEvents?.includes(method)) {
+                  unsub();
+                }
               });
             }
           }

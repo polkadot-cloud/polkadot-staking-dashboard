@@ -1,10 +1,10 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 interface TipConfig {
-  id: string
-  s: number
-  page?: string
+  id: string;
+  s: number;
+  page?: string;
 }
 
 export const TipsConfig: TipConfig[] = [
@@ -56,4 +56,4 @@ export const TipsConfig: TipConfig[] = [
     s: 8,
     page: 'validators',
   },
-]
+];

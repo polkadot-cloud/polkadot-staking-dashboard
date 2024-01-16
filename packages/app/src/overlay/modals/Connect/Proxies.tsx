@@ -1,40 +1,44 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
   faChevronRight,
   faMinus,
   faPlus,
-} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Polkicon } from '@w3ux/react-polkicon'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useHelp } from 'contexts/Help'
-import { useProxies } from 'contexts/Proxies'
-import { AccountInput } from 'library/AccountInput'
-import { Fragment } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ButtonHelp, ButtonMonoInvert, ButtonSecondary } from 'ui-buttons'
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  ButtonHelp,
+  ButtonMonoInvert,
+  ButtonSecondary,
+  Polkicon,
+} from '@polkadot-cloud/react';
+import { Fragment } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useHelp } from 'contexts/Help';
+import { useProxies } from 'contexts/Proxies';
+import { AccountInput } from 'library/AccountInput';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import {
   ActionWithButton,
   ManualAccount,
   ManualAccountsWrapper,
-} from './Wrappers'
-import type { ListWithInputProps } from './types'
+} from './Wrappers';
+import type { ListWithInputProps } from './types';
 
 export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
-  const { t } = useTranslation('modals')
-  const { openHelp } = useHelp()
-  const { accounts, getAccount } = useImportedAccounts()
-  const { handleDeclareDelegate, formatProxiesToDelegates } = useProxies()
+  const { t } = useTranslation('modals');
+  const { openHelp } = useHelp();
+  const { accounts, getAccount } = useImportedAccounts();
+  const { handleDeclareDelegate, formatProxiesToDelegates } = useProxies();
 
   // Filter delegates to only show those who are imported in the dashboard.
-  const delegates = formatProxiesToDelegates()
+  const delegates = formatProxiesToDelegates();
   const importedDelegates = Object.fromEntries(
     Object.entries(delegates).filter(([delegate]) =>
       accounts.find((a) => a.address === delegate)
     )
-  )
+  );
 
   return (
     <>
@@ -49,7 +53,7 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
             iconLeft={inputOpen ? faMinus : faPlus}
             text={!inputOpen ? t('declare') : t('hide')}
             onClick={() => {
-              setInputOpen(!inputOpen)
+              setInputOpen(!inputOpen);
             }}
           />
         </div>
@@ -61,8 +65,8 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
               resetOnSuccess
               defaultLabel={t('inputDelegatorAddress')}
               successCallback={async (delegator) => {
-                const result = await handleDeclareDelegate(delegator)
-                return result
+                const result = await handleDeclareDelegate(delegator);
+                return result;
               }}
             />
           )}
@@ -74,7 +78,9 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                     {delegators.map(({ delegator, proxyType }, j) => (
                       <ManualAccount key={`user_delegate_${i}_delegator_${j}`}>
                         <div>
-                          <Polkicon address={delegate} fontSize="2.4rem" />
+                          <span>
+                            <Polkicon address={delegate} size={26} />
+                          </span>
                           <div className="text">
                             <h4 className="title">
                               <span>
@@ -105,5 +111,5 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
         </div>
       </ManualAccountsWrapper>
     </>
-  )
-}
+  );
+};

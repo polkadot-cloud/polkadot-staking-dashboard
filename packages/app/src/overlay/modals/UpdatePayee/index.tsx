@@ -1,112 +1,112 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { isValidAddress } from '@w3ux/utils'
-import { StakingSetPayee } from 'api/tx/stakingSetPayee'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBalances } from 'contexts/Balances'
-import { useBonded } from 'contexts/Bonded'
-import { useNetwork } from 'contexts/Network'
-import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types'
-import { usePayeeConfig } from 'hooks/usePayeeConfig'
-import { useSignerWarnings } from 'hooks/useSignerWarnings'
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
-import { Warning } from 'library/Form/Warning'
-import { Title } from 'library/Modal/Title'
-import { PayeeInput } from 'library/PayeeInput'
-import { SelectItems } from 'library/SelectItems'
-import { SelectItem } from 'library/SelectItems/Item'
-import { SubmitTx } from 'library/SubmitTx'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import type { MaybeAddress } from 'types'
-import { Padding, Warnings } from 'ui-core/modal'
-import { useOverlay } from 'ui-overlay'
+import { ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
+import { isValidAddress } from '@polkadot-cloud/utils';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useApi } from 'contexts/Api';
+import { useBonded } from 'contexts/Bonded';
+import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
+import { useStaking } from 'contexts/Staking';
+import { Warning } from 'library/Form/Warning';
+import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { Title } from 'library/Modal/Title';
+import { PayeeInput } from 'library/PayeeInput';
+import { SelectItems } from 'library/SelectItems';
+import { SelectItem } from 'library/SelectItems/Item';
+import { SubmitTx } from 'library/SubmitTx';
+import type { MaybeAddress } from 'types';
+import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const UpdatePayee = () => {
-  const { t } = useTranslation('modals')
-  const { network } = useNetwork()
-  const { getPayee } = useBalances()
-  const { getBondedAccount } = useBonded()
-  const { getPayeeItems } = usePayeeConfig()
-  const { activeAccount } = useActiveAccounts()
-  const { setModalStatus } = useOverlay().modal
-  const { getSignerWarnings } = useSignerWarnings()
+  const { t } = useTranslation('modals');
+  const { api } = useApi();
+  const { staking } = useStaking();
+  const { activeAccount } = useActiveAccounts();
+  const { notEnoughFunds } = useTxMeta();
+  const { getBondedAccount } = useBonded();
+  const { getPayeeItems } = usePayeeConfig();
+  const { getSignerWarnings } = useSignerWarnings();
+  const { setModalStatus, setModalResize } = useOverlay().modal;
 
-  const controller = getBondedAccount(activeAccount)
-  const payee = getPayee(activeAccount)
+  const controller = getBondedAccount(activeAccount);
+  const { payee } = staking;
 
   const DefaultSelected: PayeeConfig = {
     destination: null,
     account: null,
-  }
+  };
 
   // Store the current user-inputted custom payout account.
-  const [account, setAccount] = useState<MaybeAddress>(payee.account)
+  const [account, setAccount] = useState<MaybeAddress>(payee.account);
 
   // Store the currently selected payee option.
-  const [selected, setSelected] = useState<PayeeConfig>(DefaultSelected)
+  const [selected, setSelected] = useState<PayeeConfig>(DefaultSelected);
 
   // update setup progress with payee config.
   const handleChangeDestination = (destination: PayeeOptions) => {
     setSelected({
       destination,
       account: isValidAddress(account || '') ? account : null,
-    })
-  }
+    });
+  };
 
   // update setup progress with payee account.
   const handleChangeAccount = (newAccount: MaybeAddress) => {
     setSelected({
       destination: selected?.destination ?? null,
       account: newAccount,
-    })
-  }
+    });
+  };
 
   // determine whether this section is completed.
   const isComplete = () =>
     selected.destination !== null &&
-    !(selected.destination === 'Account' && selected.account === null)
+    !(selected.destination === 'Account' && selected.account === null);
 
+  // Tx to submit.
   const getTx = () => {
-    if (!selected.destination) {
-      return null
+    let tx = null;
+
+    if (!api) {
+      return tx;
     }
-    if (selected.destination === 'Account' && !selected.account) {
-      return null
-    }
-    return new StakingSetPayee(
-      network,
-      !isComplete()
-        ? { type: 'Staked', value: undefined }
-        : selected.destination === 'Account'
-          ? {
-              type: 'Account',
-              value: selected.account as string,
-            }
-          : { type: selected.destination, value: undefined }
-    ).tx()
-  }
+    const payeeToSubmit = !isComplete()
+      ? 'Staked'
+      : selected.destination === 'Account'
+        ? {
+            Account: selected.account,
+          }
+        : selected.destination;
+
+    tx = api.tx.staking.setPayee(payeeToSubmit);
+    return tx;
+  };
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: controller,
     shouldSubmit: isComplete(),
     callbackSubmit: () => {
-      setModalStatus('closing')
+      setModalStatus('closing');
     },
-  })
+  });
 
   // Reset selected value on account change.
   useEffect(() => {
-    setSelected(DefaultSelected)
-  }, [activeAccount])
+    setSelected(DefaultSelected);
+  }, [activeAccount]);
 
   // Inject default value after component mount.
   useEffect(() => {
     const initialSelected = getPayeeItems(true).find(
       (item) => item.value === payee.destination
-    )
+    );
     setSelected(
       initialSelected
         ? {
@@ -114,14 +114,16 @@ export const UpdatePayee = () => {
             account,
           }
         : DefaultSelected
-    )
-  }, [])
+    );
+  }, []);
+
+  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   const warnings = getSignerWarnings(
     activeAccount,
     true,
     submitExtrinsic.proxySupported
-  )
+  );
 
   return (
     <>
@@ -129,13 +131,13 @@ export const UpdatePayee = () => {
         title={t('updatePayoutDestination')}
         helpKey="Payout Destination"
       />
-      <Padding horizontalOnly>
+      <ModalPadding style={{ paddingBottom: 0 }}>
         {warnings.length > 0 ? (
-          <Warnings>
+          <ModalWarnings withMargin>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}
-          </Warnings>
+          </ModalWarnings>
         ) : null}
         <div style={{ width: '100%', padding: '0 0.5rem' }}>
           <PayeeInput
@@ -157,8 +159,8 @@ export const UpdatePayee = () => {
             />
           ))}
         </SelectItems>
-      </Padding>
+      </ModalPadding>
       <SubmitTx fromController valid={isComplete()} {...submitExtrinsic} />
     </>
-  )
-}
+  );
+};

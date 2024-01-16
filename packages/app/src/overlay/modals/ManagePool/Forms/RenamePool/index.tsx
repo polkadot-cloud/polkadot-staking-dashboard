@@ -1,103 +1,103 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { u8aToString, u8aUnwrapBytes } from '@polkadot/util'
-import { PoolSetMetadata } from 'api/tx/poolSetMetadata'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useNetwork } from 'contexts/Network'
-import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { useSignerWarnings } from 'hooks/useSignerWarnings'
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
-import { Warning } from 'library/Form/Warning'
-import { SubmitTx } from 'library/SubmitTx'
-import { Binary } from 'polkadot-api'
-import type { Dispatch, FormEvent, SetStateAction } from 'react'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ButtonSubmitInvert } from 'ui-buttons'
-import { Padding, Warnings } from 'ui-core/modal'
-import { useOverlay } from 'ui-overlay'
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
+import {
+  ButtonSubmitInvert,
+  ModalPadding,
+  ModalWarnings,
+} from '@polkadot-cloud/react';
+import type { Dispatch, FormEvent, SetStateAction } from 'react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useApi } from 'contexts/Api';
+import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { Warning } from 'library/Form/Warning';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { SubmitTx } from 'library/SubmitTx';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const RenamePool = ({
   setSection,
   section,
-  onResize,
 }: {
-  setSection: Dispatch<SetStateAction<number>>
-  section: number
-  onResize: () => void
+  setSection: Dispatch<SetStateAction<number>>;
+  section: number;
 }) => {
-  const { t } = useTranslation('modals')
-  const { network } = useNetwork()
-  const { setModalStatus } = useOverlay().modal
-  const { activeAccount } = useActiveAccounts()
-  const { isOwner, activePool } = useActivePool()
-  const { getSignerWarnings } = useSignerWarnings()
-  const { bondedPools, poolsMetaData } = useBondedPools()
+  const { t } = useTranslation('modals');
+  const { api } = useApi();
+  const { setModalStatus } = useOverlay().modal;
+  const { activeAccount } = useActiveAccounts();
+  const { isOwner, selectedActivePool } = useActivePools();
+  const { bondedPools, poolsMetaData } = useBondedPools();
+  const { getSignerWarnings } = useSignerWarnings();
 
-  const poolId = activePool?.id
+  const poolId = selectedActivePool?.id;
 
   // Valid to submit transaction
-  const [valid, setValid] = useState<boolean>(false)
+  const [valid, setValid] = useState<boolean>(false);
 
   // Updated metadata value
-  const [metadata, setMetadata] = useState<string>('')
+  const [metadata, setMetadata] = useState<string>('');
 
   // Determine current pool metadata and set in state.
   useEffect(() => {
     const pool = bondedPools.find(
-      ({ addresses }) => addresses.stash === activePool?.addresses.stash
-    )
+      ({ addresses }) => addresses.stash === selectedActivePool?.addresses.stash
+    );
     if (pool) {
-      setMetadata(u8aToString(u8aUnwrapBytes(poolsMetaData[Number(pool.id)])))
+      setMetadata(u8aToString(u8aUnwrapBytes(poolsMetaData[Number(pool.id)])));
     }
-  }, [section])
+  }, [section]);
 
   useEffect(() => {
-    setValid(isOwner())
-  }, [isOwner()])
+    setValid(isOwner());
+  }, [isOwner()]);
 
+  // tx to submit
   const getTx = () => {
-    if (!valid || !poolId) {
-      return null
+    if (!valid || !api) {
+      return null;
     }
-    return new PoolSetMetadata(network, poolId, Binary.fromText(metadata)).tx()
-  }
+    return api.tx.nominationPools.setMetadata(poolId, metadata);
+  };
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {
-      setModalStatus('closing')
+      setModalStatus('closing');
     },
-  })
+  });
 
   const handleMetadataChange = (e: FormEvent<HTMLInputElement>) => {
-    setMetadata(e.currentTarget.value)
-    setValid(true)
-  }
+    setMetadata(e.currentTarget.value);
+    setValid(true);
+  };
 
   const warnings = getSignerWarnings(
     activeAccount,
     false,
     submitExtrinsic.proxySupported
-  )
+  );
 
   return (
     <>
-      <Padding horizontalOnly>
+      <ModalPadding horizontalOnly>
         {warnings.length > 0 ? (
-          <Warnings>
+          <ModalWarnings withMargin>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}
-          </Warnings>
+          </ModalWarnings>
         ) : null}
         <input
-          className="underline"
+          className="textbox"
           style={{ width: '100%' }}
           placeholder={t('poolName')}
           type="text"
@@ -105,7 +105,7 @@ export const RenamePool = ({
           value={metadata ?? ''}
         />
         <p>{t('storedOnChain')}</p>
-      </Padding>
+      </ModalPadding>
       <SubmitTx
         valid={valid}
         buttons={[
@@ -117,9 +117,8 @@ export const RenamePool = ({
             onClick={() => setSection(0)}
           />,
         ]}
-        onResize={onResize}
         {...submitExtrinsic}
       />
     </>
-  )
-}
+  );
+};

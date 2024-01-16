@@ -1,22 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { PAGES_CONFIG } from 'config/pages';
-import { useApi } from 'contexts/Api';
-import { useOverlay } from 'contexts/Overlay';
-import { useUi } from 'contexts/UI';
-import { AnimatePresence } from 'framer-motion';
-import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
-import { Headers } from 'library/Headers';
-import { Help } from 'library/Help';
-import { Menu } from 'library/Menu';
-import { NetworkBar } from 'library/NetworkBar';
+import { registerLastVisited, registerSaEvent } from 'Utils';
+import { usePrompt } from 'contexts/Prompt';
 import { Disclaimer } from 'library/NetworkBar/Disclaimer';
-import { Notifications } from 'library/Notifications';
-import { Overlay } from 'library/Overlay';
-import { SideMenu } from 'library/SideMenu';
-import { Tooltip } from 'library/Tooltip';
-import { Modal } from 'modals';
+import { Body, Main, Page, Side } from '@polkadot-cloud/react';
+import { extractUrlValue } from '@polkadot-cloud/utils';
+import { AnimatePresence } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Helmet } from 'react-helmet';
@@ -28,20 +18,36 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
-import { extractUrlValue, registerLastVisited, registerSaEvent } from 'Utils';
-import {
-  BodyInterfaceWrapper,
-  MainInterfaceWrapper,
-  PageWrapper,
-  SideInterfaceWrapper,
-} from 'Wrappers';
+import { Prompt } from 'library/Prompt';
+import { PagesConfig } from 'config/pages';
+import { useUi } from 'contexts/UI';
+import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
+import { Headers } from 'library/Headers';
+import { Help } from 'library/Help';
+import { Menu } from 'library/Menu';
+import { NetworkBar } from 'library/NetworkBar';
+import { SideMenu } from 'library/SideMenu';
+import { Tooltip } from 'library/Tooltip';
+import { Overlays } from 'overlay';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { SideMenuMaximisedWidth } from 'consts';
+import { useTheme } from 'styled-components';
+import { Notifications } from 'library/Notifications';
+import { NotificationsController } from 'static/NotificationsController';
 
 export const RouterInner = () => {
-  const { t } = useTranslation('base');
+  const { t } = useTranslation();
+  const mode = useTheme();
+  const { network } = useNetwork();
   const { pathname, search } = useLocation();
-  const { network } = useApi();
+  const { accounts } = useImportedAccounts();
+  const { accountsInitialised } = useOtherAccounts();
+  const { activeAccount, setActiveAccount } = useActiveAccounts();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
-  const { openOverlayWith } = useOverlay();
+  const { openPromptWith } = usePrompt();
 
   // register landing source from URL
   useEffect(() => {
@@ -52,35 +58,67 @@ export const RouterInner = () => {
 
     if (!localStorage.getItem('last_visited')) {
       setTimeout(() => {
-        openOverlayWith(<Disclaimer />);
+        openPromptWith(<Disclaimer />);
       }, 5000);
     }
     registerLastVisited(utmSource);
   }, []);
 
-  // scroll to top of the window on every page change or network change
-  // scroll to top of the window on every page change or network change.
+  // Scroll to top of the window on every page change or network change.
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname, network]);
 
-  // set references to UI context and make available throughout app.
+  // Set references to UI context and make available throughout app.
   useEffect(() => {
     setContainerRefs({
       mainInterface: mainInterfaceRef,
     });
   }, []);
 
-  // references to outer containers
+  // Update body background to `--background-default` upon theme change.
+  useEffect(() => {
+    const elem = document.querySelector('.core-entry');
+    if (elem) {
+      document.getElementsByTagName('body')[0].style.backgroundColor =
+        getComputedStyle(elem).getPropertyValue('--background-default');
+    }
+  }, [mode]);
+
+  // Open default account modal if url var present and accounts initialised.
+  useEffect(() => {
+    if (accountsInitialised) {
+      const aUrl = extractUrlValue('a');
+      if (aUrl) {
+        const account = accounts.find((a) => a.address === aUrl);
+        if (account && aUrl !== activeAccount) {
+          setActiveAccount(account.address || null);
+
+          NotificationsController.emit({
+            title: t('accountConnected', { ns: 'library' }),
+            subtitle: `${t('connectedTo', { ns: 'library' })} ${
+              account.name || aUrl
+            }.`,
+          });
+        }
+      }
+    }
+  }, [accountsInitialised]);
+
+  // References to outer containers
   const mainInterfaceRef = useRef<HTMLDivElement>(null);
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
-      <BodyInterfaceWrapper>
-        {/* Modal: closed by default */}
-        <Modal />
+      {/* Notification popups */}
+      <Notifications />
+
+      <Body>
         {/* Help: closed by default */}
         <Help />
+
+        {/* Overlays: modal and canvas. Closed by default */}
+        <Overlays />
 
         {/* Menu: closed by default */}
         <Menu />
@@ -88,23 +126,27 @@ export const RouterInner = () => {
         {/* Tooltip: invisible by default */}
         <Tooltip />
 
-        {/* Overlay: closed by default */}
-        <Overlay />
+        {/* Prompt: closed by default */}
+        <Prompt />
 
         {/* Left side menu */}
-        <SideInterfaceWrapper open={sideMenuOpen} minimised={sideMenuMinimised}>
+        <Side
+          open={sideMenuOpen}
+          minimised={sideMenuMinimised}
+          width={`${SideMenuMaximisedWidth}px`}
+        >
           <SideMenu />
-        </SideInterfaceWrapper>
+        </Side>
 
         {/* Main content window */}
-        <MainInterfaceWrapper ref={mainInterfaceRef}>
+        <Main ref={mainInterfaceRef}>
           {/* Fixed headers */}
           <Headers />
 
           <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
             <AnimatePresence>
               <Routes>
-                {PAGES_CONFIG.map((page, i) => {
+                {PagesConfig.map((page, i) => {
                   const { Entry, hash, key } = page;
 
                   return (
@@ -112,20 +154,15 @@ export const RouterInner = () => {
                       key={`main_interface_page_${i}`}
                       path={hash}
                       element={
-                        <PageWrapper
-                          key={`main_interface_key__${i}`}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 10 }}
-                          transition={{ duration: 0.2 }}
-                        >
+                        <Page>
                           <Helmet>
-                            <title>{`${t(key)} : ${t('title', {
-                              context: `${network.name}`,
+                            <title>{`${t(key, { ns: 'base' })} : ${t('title', {
+                              context: `${network}`,
+                              ns: 'base',
                             })}`}</title>
                           </Helmet>
                           <Entry page={page} />
-                        </PageWrapper>
+                        </Page>
                       }
                     />
                   );
@@ -138,22 +175,17 @@ export const RouterInner = () => {
               </Routes>
             </AnimatePresence>
           </ErrorBoundary>
-        </MainInterfaceWrapper>
-      </BodyInterfaceWrapper>
+        </Main>
+      </Body>
 
       {/* Network status and network details */}
       <NetworkBar />
-
-      {/* Notification popups */}
-      <Notifications />
     </ErrorBoundary>
   );
 };
 
-export const Router = () => {
-  return (
-    <HashRouter basename="/">
-      <RouterInner />
-    </HashRouter>
-  );
-};
+export const Router = () => (
+  <HashRouter basename="/">
+    <RouterInner />
+  </HashRouter>
+);

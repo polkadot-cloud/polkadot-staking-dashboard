@@ -1,36 +1,54 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faPlusCircle, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { registerSaEvent } from 'Utils';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useSetup } from 'contexts/Setup';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useNetwork } from 'contexts/Network';
 import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {
   const { t } = useTranslation('pages');
-  const { isReady, network } = useApi();
-  const { setOnPoolSetup, getPoolSetupPercent } = useSetup();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { isReady } = useApi();
+  const { network } = useNetwork();
   const { stats } = usePoolsConfig();
-  const { membership } = usePoolMemberships();
+  const { isOwner } = useActivePools();
   const { setActiveTab } = usePoolsTabs();
   const { bondedPools } = useBondedPools();
-  const { isOwner } = useActivePools();
+  const { membership } = usePoolMemberships();
+  const { activeAccount } = useActiveAccounts();
   const { getTransferOptions } = useTransferOptions();
+  const { isReadOnlyAccount } = useImportedAccounts();
+  const { setOnPoolSetup, getPoolSetupPercent } = useSetup();
 
+  const { maxPools } = stats;
   const { active } = getTransferOptions(activeAccount).pool;
   const poolSetupPercent = getPoolSetupPercent(activeAccount);
 
-  let _label;
-  let _buttons;
+  const disableCreate = () => {
+    if (!isReady || isReadOnlyAccount(activeAccount) || !activeAccount) {
+      return true;
+    }
+    if (
+      maxPools &&
+      (maxPools.isZero() || bondedPools.length === stats.maxPools?.toNumber())
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  let label;
+  let buttons;
   const createBtn = {
     title: `${t('pools.create')}${
       poolSetupPercent > 0 ? `: ${poolSetupPercent}%` : ``
@@ -38,16 +56,9 @@ export const useStatusButtons = () => {
     icon: faPlusCircle,
     large: false,
     transform: 'grow-1',
-    disabled:
-      !isReady ||
-      isReadOnlyAccount(activeAccount) ||
-      !activeAccount ||
-      stats.maxPools.toNumber() === 0 ||
-      bondedPools.length === stats.maxPools.toNumber(),
+    disabled: disableCreate(),
     onClick: () => {
-      registerSaEvent(
-        `${network.name.toLowerCase()}_pool_create_button_pressed`
-      );
+      registerSaEvent(`${network.toLowerCase()}_pool_create_button_pressed`);
       setOnPoolSetup(true);
     },
   };
@@ -63,20 +74,20 @@ export const useStatusButtons = () => {
       !activeAccount ||
       !bondedPools.length,
     onClick: () => {
-      registerSaEvent(`${network.name.toLowerCase()}_pool_join_button_pressed`);
-      setActiveTab(2);
+      registerSaEvent(`${network.toLowerCase()}_pool_join_button_pressed`);
+      setActiveTab(1);
     },
   };
 
   if (!membership) {
-    _label = t('pools.poolMembership');
-    _buttons = [createBtn, joinPoolBtn];
+    label = t('pools.poolMembership');
+    buttons = [createBtn, joinPoolBtn];
   } else if (isOwner()) {
-    _label = `${t('pools.ownerOfPool')} ${membership.poolId}`;
+    label = `${t('pools.ownerOfPool')} ${membership.poolId}`;
   } else if (active?.isGreaterThan(0)) {
-    _label = `${t('pools.memberOfPool')} ${membership.poolId}`;
+    label = `${t('pools.memberOfPool')} ${membership.poolId}`;
   } else {
-    _label = `${t('pools.leavingPool')} ${membership.poolId}`;
+    label = `${t('pools.leavingPool')} ${membership.poolId}`;
   }
-  return { label: _label, buttons: _buttons };
+  return { label, buttons };
 };

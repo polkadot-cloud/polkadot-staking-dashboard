@@ -1,46 +1,44 @@
-// Copyright 2023 @paritytech/polkadot-live authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
-import { ButtonText, HardwareAddress } from '@polkadotcloud/core-ui';
-import { clipAddress, unescape } from '@polkadotcloud/utils';
-import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { ButtonText, HardwareAddress, Polkicon } from '@polkadot-cloud/react';
+import { ellipsisFn, unescape } from '@polkadot-cloud/utils';
+import { useTranslation } from 'react-i18next';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
-import { useOverlay } from 'contexts/Overlay';
-import { Identicon } from 'library/Identicon';
+import { usePrompt } from 'contexts/Prompt';
 import { Confirm } from 'library/Import/Confirm';
 import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
-import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
+import { useNetwork } from 'contexts/Network';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { useLedgerAccounts } from '@polkadot-cloud/react/hooks';
 
-export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
+export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {
   const { t } = useTranslation('modals');
-  const { network } = useApi();
+  const { network } = useNetwork();
+  const { getIsExecuting } = useLedgerHardware();
+  const isExecuting = getIsExecuting();
+  const { openPromptWith } = usePrompt();
+  const { renameOtherAccount } = useOtherAccounts();
   const {
-    getIsExecuting,
     ledgerAccountExists,
-    renameLedgerAccount,
+    getLedgerAccount,
     addLedgerAccount,
     removeLedgerAccount,
-    setIsExecuting,
-    getLedgerAccount,
-    pairDevice,
-  } = useLedgerHardware();
-  const { openOverlayWith } = useOverlay();
-  const { renameImportedAccount } = useConnect();
-  const isExecuting = getIsExecuting();
+    renameLedgerAccount,
+  } = useLedgerAccounts();
   const source = 'ledger';
 
   const renameHandler = (address: string, newName: string) => {
     renameLedgerAccount(address, newName);
-    renameImportedAccount(address, newName);
+    renameOtherAccount(address, newName);
   };
 
   const openConfirmHandler = (address: string, index: number) => {
-    openOverlayWith(
+    openPromptWith(
       <Confirm
         address={address}
         index={index}
@@ -52,7 +50,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
   };
 
   const openRemoveHandler = (address: string) => {
-    openOverlayWith(
+    openPromptWith(
       <Remove
         address={address}
         removeHandler={removeLedgerAccount}
@@ -64,54 +62,47 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
   };
 
   return (
-    <>
-      <AddressesWrapper>
-        <div className="items">
-          {addresses.map(({ address, index }: AnyJson, i: number) => {
-            const initialName = (() => {
-              const localAddress = getLocalLedgerAddresses().find(
-                (a) => a.address === address && a.network === network.name
-              );
-              return localAddress?.name
-                ? unescape(localAddress.name)
-                : clipAddress(address);
-            })();
-
-            return (
-              <HardwareAddress
-                key={i}
-                address={address}
-                index={index}
-                initial={initialName}
-                Identicon={<Identicon value={address} size={40} />}
-                existsHandler={ledgerAccountExists}
-                renameHandler={renameHandler}
-                openRemoveHandler={openRemoveHandler}
-                openConfirmHandler={openConfirmHandler}
-                t={{
-                  tRemove: t('remove'),
-                  tImport: t('import'),
-                }}
-              />
+    <AddressesWrapper>
+      <div className="items">
+        {addresses.map(({ address, index }: AnyJson, i: number) => {
+          const initialName = (() => {
+            const localAddress = getLocalLedgerAddresses().find(
+              (a) => a.address === address && a.network === network
             );
-          })}
-        </div>
-        <div className="more">
-          <ButtonText
-            iconLeft={faArrowDown}
-            text={isExecuting ? t('gettingAccount') : t('getAnotherAccount')}
-            disabled={isExecuting}
-            onClick={async () => {
-              // re-pair the device if it has been disconnected.
-              const paired = await pairDevice();
-              if (paired) {
-                setIsExecuting(true);
-                handleLedgerLoop();
-              }
-            }}
-          />
-        </div>
-      </AddressesWrapper>
-    </>
+            return localAddress?.name
+              ? unescape(localAddress.name)
+              : ellipsisFn(address);
+          })();
+
+          return (
+            <HardwareAddress
+              key={i}
+              address={address}
+              index={index}
+              initial={initialName}
+              Identicon={<Polkicon address={address} size={40} />}
+              existsHandler={ledgerAccountExists}
+              renameHandler={renameHandler}
+              openRemoveHandler={openRemoveHandler}
+              openConfirmHandler={openConfirmHandler}
+              t={{
+                tRemove: t('remove'),
+                tImport: t('import'),
+              }}
+            />
+          );
+        })}
+      </div>
+      <div className="more">
+        <ButtonText
+          iconLeft={faArrowDown}
+          text={isExecuting ? t('gettingAccount') : t('getAnotherAccount')}
+          disabled={isExecuting}
+          onClick={async () => {
+            await onGetAddress();
+          }}
+        />
+      </div>
+    </AddressesWrapper>
   );
 };

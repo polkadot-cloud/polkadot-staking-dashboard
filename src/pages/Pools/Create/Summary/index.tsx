@@ -1,12 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { unitToPlanck } from '@polkadotcloud/utils';
+import { unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
+import { useTranslation } from 'react-i18next';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
@@ -18,26 +17,30 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
 import { SubmitTx } from 'library/SubmitTx';
-import { useTranslation } from 'react-i18next';
+import { useNetwork } from 'contexts/Network';
+import { useApi } from 'contexts/Api';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
+  const { api } = useApi();
   const {
-    api,
-    network: { units, unit, name },
-  } = useApi();
+    network,
+    networkData: { units, unit },
+  } = useNetwork();
   const { stats } = usePoolsConfig();
   const { newBatchCall } = useBatchCall();
-  const { getSetupProgress, removeSetupProgress } = useSetup();
+  const { accountHasSigner } = useImportedAccounts();
+  const { getPoolSetup, removeSetupProgress } = useSetup();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { queryBondedPool, addToBondedPools } = useBondedPools();
-  const { activeAccount, activeProxy, accountHasSigner } = useConnect();
+  const { activeAccount, activeProxy } = useActiveAccounts();
 
   const { lastPoolId } = stats;
   const poolId = lastPoolId.plus(1);
-
-  const setup = getSetupProgress('pool', activeAccount);
+  const setup = getPoolSetup(activeAccount);
   const { progress } = setup;
 
   const { metadata, bond, roles, nominations } = progress;
@@ -47,7 +50,9 @@ export const Summary = ({ section }: SetupStepProps) => {
       return null;
     }
 
-    const targetsToSubmit = nominations.map((item: any) => item.address);
+    const targetsToSubmit = nominations.map(
+      ({ address }: { address: string }) => address
+    );
 
     const bondToSubmit = unitToPlanck(bond, units);
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
@@ -57,7 +62,7 @@ export const Summary = ({ section }: SetupStepProps) => {
         bondAsString,
         roles?.root || activeAccount,
         roles?.nominator || activeAccount,
-        roles?.stateToggler || activeAccount
+        roles?.bouncer || activeAccount
       ),
       api.tx.nominationPools.nominate(poolId.toString(), targetsToSubmit),
       api.tx.nominationPools.setMetadata(poolId.toString(), metadata),
@@ -69,7 +74,6 @@ export const Summary = ({ section }: SetupStepProps) => {
     tx: getTxs(),
     from: activeAccount,
     shouldSubmit: true,
-    callbackSubmit: () => {},
     callbackInBlock: async () => {
       // query and add created pool to bondedPools list
       const pool = await queryBondedPool(poolId.toNumber());
@@ -77,7 +81,9 @@ export const Summary = ({ section }: SetupStepProps) => {
 
       // query and add account to poolMembers list
       const member = await queryPoolMember(activeAccount);
-      addToPoolMembers(member);
+      if (member) {
+        addToPoolMembers(member);
+      }
 
       // reset localStorage setup progress
       removeSetupProgress('pool', activeAccount);
@@ -89,7 +95,7 @@ export const Summary = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={null}
-        title={`${t('pools.summary')}`}
+        title={t('pools.summary')}
         bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
@@ -116,12 +122,9 @@ export const Summary = ({ section }: SetupStepProps) => {
           <section>
             <div>
               <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;
-              Nominating:
+              {t('pools.nominating')}:
             </div>
-            <div>
-              {nominations.length} Validator
-              {nominations.length === 1 ? '' : 's'}
-            </div>
+            <div>{t('nominate.validator', { count: nominations.length })}</div>
           </section>
           <section>
             <div>
@@ -140,11 +143,11 @@ export const Summary = ({ section }: SetupStepProps) => {
           }}
         >
           <SubmitTx
-            submitText={`${t('pools.createPool')}`}
+            submitText={t('pools.createPool')}
             valid
-            noMargin
-            customEvent={`${name.toLowerCase()}_user_created_pool`}
+            customEvent={`${network.toLowerCase()}_user_created_pool`}
             {...submitExtrinsic}
+            displayFor="canvas" /* Edge case: not canvas, but the larger button sizes suit this UI more. */
           />
         </div>
       </MotionContainer>

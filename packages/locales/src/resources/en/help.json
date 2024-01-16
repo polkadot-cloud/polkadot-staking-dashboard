@@ -3,7 +3,10 @@
     "definitions": {
       "activeNominators": [
         "Active Nominators",
-        ["Nominators who are active in the current session."]
+        [
+          "Nominators who are active in the current session.",
+          "Being an active nominator does not guarantee rewards, as your nominees may be oversubscribed."
+        ]
       ],
       "activePools": [
         "Active Pools",
@@ -14,7 +17,8 @@
         [
           "The amount of {NETWORK_UNIT} needed to be actively nominating in an era.",
           "This value applies to nominators and for pools. In the pool's case, it is important to join a pool with a total bond amount of at least this value.",
-          "Being above this metric simply guarantees that you will be present in the active nominator set for the era.",
+          "Being above this metric simply guarantees that you will be present in the active nominator set for the era. This amount still does not guarantee rewards, as your active nominations may still be over-subscribed.",
+          "Only the top {MAX_EXPOSURE_PAGE_SIZE} nominators are rewarded per validator in {NETWORK_NAME}. Ensuring your active bond is above this threshold will increase your chances of rewards.",
           "You can keep track of these metrics from the dashboard and amend your staking position if necessary, whether increasing your bonded {NETWORK_UNIT}, changing your nominations, or joining another pool."
         ]
       ],
@@ -37,7 +41,10 @@
         "Average Reward Rate",
         [
           "The Average Reward Rate is an estimated annual return of staking rewards.",
-          "It is calculated by taking the average validator payout for the last {AVERAGE_REWARD_RATE_DAYS} days, and calculates an estimated annual increase based on this average and the current total issuance of {NETWORK_UNIT}."
+          "It is calculated by taking the average validator payout for the last {AVERAGE_REWARD_RATE_DAYS} days, and calculates an estimated annual increase based on this average and the current total issuance of {NETWORK_UNIT}.",
+          "The Average Reward Rate displayed on the dashboard assumes rewards are being compounded.",
+          "Alongside the Average Reward Rate is the Net Average Reward Rate, which displays the reward rate with the average validator commission deducted from it.",
+          "The average validator commission is the mean of all non 100% validator commissions currently active on the network."
         ]
       ],
       "blockedNominations": [
@@ -71,13 +78,6 @@
           "A validator can update their commission rates as and when they please, and such changes will have an impact on your profitability. Be sure to monitor your nominations on this dashboard to keep updated on their commission rates."
         ]
       ],
-      "decentralizationAnalyticsPeriod": [
-        "Decentralization Analytics Period",
-        [
-          "The decentralization of your nomination is calculated by analysing the rewards payed out in the last 30 days. Depending on the network, this will translate into a number of Eras.",
-          "30 days provides enough information for the aggregation to be meaningful, and is also short enough for changes in nominations to start impacting this analysis after a few days."
-        ]
-      ],
       "epoch": [
         "Epoch",
         [
@@ -95,16 +95,8 @@
       "eraPoints": [
         "Era Points",
         [
-          "Era Points are a measure of how well a validator has performed in the current era. The more Era Points a validator has, the more rewards they will receive at the end of the era."
-        ]
-      ],
-      "geolocationOfEachNomination": [
-        "Geolocation of Each Nomination",
-        [
-          "Each nominated validator runs at a given data center that can be geolocated by its IP address.",
-          "The table displays the last region, country and network where each nominated validator was geolocated.",
-          "When the validator has been located at more than one location during the analytic period a ++ sign will be displayed.",
-          "The percentage shown is the proportion of rewards payed out to you by this validator in the analytic period."
+          "Era Points are accumulated by validators during each era, and depend on a validator's performance.",
+          "As a staker, you do not need to worry about Era Points. In general, better performing validators produce more Era Points, which in-turn lead to higher staking rewards."
         ]
       ],
       "idealStaked": [
@@ -122,7 +114,7 @@
         [
           "{NETWORK_UNIT} is inflationary; there is no maximum number of {NETWORK_UNIT}.",
           "Inflation is designed to be approximately 10% annually, with validator rewards being a function of the amount staked and the remainder going to treasury.",
-          "The Latest Inflation Rate to Stakers figure represents how much of the inflation is accounted to stakers. The remaining inflation is diverted to the treasury."
+          "The Latest Inflation Rate figure represents the rate relative to newly minted {NETWORK_UNIT} being paid out to validators for the last completed era."
         ]
       ],
       "lastEraPayout": [
@@ -147,6 +139,7 @@
           "Compatible Ledger devices are fully supported on staking dashboard. Use your Ledger to manage your staking activity on {NETWORK_NAME}.",
           "Using a hardware wallet ensures a secure experience, whereby your keys stay on the hardware device at all times. This is also known as cold storage, as there is no active internet connection to your wallet.",
           "In order to import and sign transactions with your Ledger device, your device must have the {NETWORK_NAME} Ledger app installed. The {NETWORK_NAME} app can be installed via Ledger's very own Ledger Live application.",
+          "Both USB and Bluetooth connections are supported in staking dashboard. So if your Ledger is bluetooth enabled, and your device allows bluetooth connections, you will be able to import accounts and sign transactions wirelessly through your Ledger device.",
           "Find more information about Ledger at their official website, ledger.com."
         ]
       ],
@@ -193,13 +186,6 @@
           "Once you have nominated your selected validators, they become your nominations."
         ]
       ],
-      "nominationPayoutDistribution": [
-        "Nomination Payout Distribution",
-        [
-          "The decentralization of your nomination.",
-          "The following charts display the distribution of rewards aggregated by the region, country and IP network of the validator the payed out the reward."
-        ]
-      ],
       "nominationPools": [
         "Nomination Pools",
         [
@@ -212,7 +198,9 @@
         [
           "The status of your nominations at a glance.",
           "A set of nominations will be inactive when none of those nominees are participating in the current validator set (the set of validators currently elected to validate the network).",
-          "When at least one of your nominees are active, this nomination status will display as actively nominating."
+          "When at least one of your nominees are active, this nomination status will display as actively nominating - but this still does not guarantee rewards.",
+          "The top {MAX_EXPOSURE_PAGE_SIZE} nominators of each active validator receive rewards on {NETWORK_NAME}. So if a nominee is active and over-subscribed, you must be a part of the {MAX_EXPOSURE_PAGE_SIZE} highest bonded nominators to receive rewards.",
+          "If an active nominee is not over-subscribed, you will receive rewards."
         ]
       ],
       "nominations": [
@@ -235,7 +223,13 @@
         "Open App On Ledger",
         [
           "This message occurs when the {NETWORK_NAME} Ledger app is not currently open on the connected device.",
-          "Open the Polkadot app on the Ledger device and try again."
+          "Open the {NETWORK_NAME} app on the Ledger device and try again."
+        ]
+      ],
+      "overSubscribed": [
+        "Over Subscribed",
+        [
+          "Only the top {MAX_EXPOSURE_PAGE_SIZE} nominators for each validator are rewarded in {NETWORK_NAME}. When this number is surpassed, this validator is considered over subscribed."
         ]
       ],
       "payout": [
@@ -273,7 +267,7 @@
         "Pool Commission Change Rate",
         [
           "The commission change rate is set by the pool Root, and dictates by how much and how often commission can be increased.",
-          "The maximum increase of the change rate dictates how much the commission rate can be increased in a single update. The minimum delay dictates how many blocks must pass before the commission rate can be increased again.",
+          "The maximum increase of the change rate dictates how much the commission rate can be increaesd in a single update. The minimum delay dictates how many blocks must pass before the commission rate can be increased again.",
           "Once an initial change rate is set, only more restrictive values can be set thereafter. More restrictive values comprise of a smaller max increase and larger minimum delay."
         ]
       ],
@@ -300,12 +294,6 @@
           "Pool memberships can either be that of a pool member or a pool owner.",
           "Currently on {NETWORK_NAME}, accounts can only join one pool at a time. If you wish to join another pool, you must leave your current pool first.",
           "To leave a pool, you simply need to unbond and withdraw all your bonded {NETWORK_UNIT}. Staking dashboard provides a dedicated Leave button to unbond from a pool."
-        ]
-      ],
-      "poolRewardHistory": [
-        "Pool Reward History",
-        [
-          "The total reward generated by the pool per era. These rewards are distributed amongst the pool members according to each member's share of the pool."
         ]
       ],
       "poolRewards": [
@@ -382,24 +370,11 @@
           "In order to stake {NETWORK_UNIT}, you can either become a nominator or join a pool - that act as nominators themselves."
         ]
       ],
-      "totalPayoutsAnalysed": [
-        "Total Payouts Analysed",
-        [
-          "The aggregated {NETWORK_UNIT} rewards payed out by nominated validators in the last 30 days.",
-          "These payouts were used to calculate the decentralization of your nomination."
-        ]
-      ],
       "validator": [
         "Validator",
         [
           "An entity that validates blocks for the {NETWORK_NAME} Relay Chain. Validators play a key role in {NETWORK_NAME} to secure the network and produce blocks.",
           "As a nominator, you choose which validators you wish to back, and receive rewards for doing so."
-        ]
-      ],
-      "validatorRewardHistory": [
-        "Validator Reward History",
-        [
-          "The total reward generated by the validator per era. The total reward is the sum of the validator's reward plus the reward of each nominator backing the validator."
         ]
       ],
       "wrongTransaction": [
@@ -426,8 +401,7 @@
       "claimRewards": "Claiming Nomination Pool Rewards",
       "connectAccounts": "How to Connect Your Accounts",
       "createPools": "Creating Nomination Pools",
-      "howToUse": "How to Use the Polkadot Cloud Staking: Overview",
-      "polkawatchAnalytics": "Decentralization Analytics by Polkawatch: Introduction",
+      "howToUse": "How to Use the Staking Dashboard: Overview",
       "rebonding": "Rebonding",
       "stakeDot": "Staking your DOT",
       "unbondingTokens": "Unbonding Your Tokens"

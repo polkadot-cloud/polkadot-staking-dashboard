@@ -1,8 +1,8 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function */
 
-import type { PoolCommissionContextInterface } from './types'
+import type { PoolCommissionContextInterface } from './types';
 
 export const defaultPoolCommissionContext: PoolCommissionContextInterface = {
   setCommission: (commission) => {},
@@ -16,4 +16,4 @@ export const defaultPoolCommissionContext: PoolCommissionContextInterface = {
   isUpdated: (feature) => false,
   hasValue: (feature) => false,
   resetAll: () => {},
-}
+};

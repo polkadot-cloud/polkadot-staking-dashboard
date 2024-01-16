@@ -9,15 +9,19 @@ import {
   ModalCustomHeader,
   ModalPadding,
 } from '@polkadot-cloud/react';
-import React, { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
-import { useConnect } from 'contexts/Connect';
-import { useExtensions } from 'contexts/Extensions';
+import {
+  useExtensions,
+  useEffectIgnoreInitial,
+  useOverlay,
+} from '@polkadot-cloud/react/hooks';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useProxies } from 'contexts/Proxies';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { AccountButton } from './Account';
 import { Delegates } from './Delegates';
 import { AccountSeparator, AccountWrapper } from './Wrappers';
@@ -27,25 +31,28 @@ import type {
   AccountNominatingAndInPool,
   AccountNotStaking,
 } from './types';
+import type { ImportedAccount } from '@polkadot-cloud/react/types';
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');
   const { balances } = useBalances();
   const { getDelegates } = useProxies();
-  const { extensions } = useExtensions();
   const { bondedAccounts } = useBonded();
   const { ledgers, getLocks } = useBalances();
+  const { extensionsStatus } = useExtensions();
   const { memberships } = usePoolMemberships();
   const {
     replaceModal,
     status: modalStatus,
     setModalResize,
   } = useOverlay().modal;
-  const { activeAccount, disconnectFromAccount, setActiveProxy, accounts } =
-    useConnect();
+  const { accounts } = useImportedAccounts();
+  const { activeAccount, setActiveAccount, setActiveProxy } =
+    useActiveAccounts();
 
   // Store local copy of accounts.
-  const [localAccounts, setLocalAccounts] = useState(accounts);
+  const [localAccounts, setLocalAccounts] =
+    useState<ImportedAccount[]>(accounts);
 
   const stashes: string[] = [];
   // accumulate imported stash accounts
@@ -72,7 +79,7 @@ export const Accounts = () => {
 
     const poolMember = memberships.find((m) => m.address === address) ?? null;
 
-    // If stash exists, add address to nominating list.
+    // Check if nominating.
     if (
       isStash &&
       nominating.find((a) => a.address === address) === undefined
@@ -80,7 +87,7 @@ export const Accounts = () => {
       isNominating = true;
     }
 
-    // if pooling, add address to active pooling.
+    // Check if in pool.
     if (poolMember) {
       if (!inPool.find((n) => n.address === address)) {
         isInPool = true;
@@ -94,30 +101,53 @@ export const Accounts = () => {
       !notStaking.find((n) => n.address === address)
     ) {
       notStaking.push({ address, delegates });
+      continue;
     }
 
-    if (isNominating && isInPool && poolMember) {
+    // If both nominating and in pool, add to this list.
+    if (
+      isNominating &&
+      isInPool &&
+      poolMember &&
+      !nominatingAndPool.find((n) => n.address === address)
+    ) {
       nominatingAndPool.push({
         ...poolMember,
         address,
         stashImported: true,
         delegates,
       });
+      continue;
     }
 
+    // Nominating only.
     if (isNominating && !isInPool) {
       nominating.push({ address, stashImported: true, delegates });
+      continue;
     }
+
+    // In pool only.
     if (!isNominating && isInPool && poolMember) {
       inPool.push({ ...poolMember, delegates });
     }
   }
 
+  // Refresh local accounts state when context accounts change.
   useEffect(() => setLocalAccounts(accounts), [accounts]);
 
-  useEffect(() => {
-    if (modalStatus === 'open') setModalResize();
-  }, [activeAccount, accounts, bondedAccounts, balances, ledgers, extensions]);
+  // Resize if modal open upon state changes.
+  useEffectIgnoreInitial(() => {
+    if (modalStatus === 'open') {
+      setModalResize();
+    }
+  }, [
+    activeAccount,
+    accounts,
+    bondedAccounts,
+    balances,
+    ledgers,
+    extensionsStatus,
+  ]);
 
   return (
     <ModalPadding>
@@ -143,7 +173,7 @@ export const Accounts = () => {
               text={t('disconnect')}
               iconRight={faLinkSlash}
               onClick={() => {
-                disconnectFromAccount();
+                setActiveAccount(null);
                 setActiveProxy(null);
               }}
             />
@@ -154,7 +184,9 @@ export const Accounts = () => {
         <AccountWrapper style={{ marginTop: '1.5rem' }}>
           <div>
             <div>
-              <h4>{t('noActiveAccount')}</h4>
+              <h4 style={{ padding: '0.75rem 1rem' }}>
+                {t('noActiveAccount')}
+              </h4>
             </div>
             <div />
           </div>
@@ -166,12 +198,12 @@ export const Accounts = () => {
           <AccountSeparator />
           <ActionItem text={t('nominatingAndInPool')} />
           {nominatingAndPool.map(({ address, delegates }, i) => (
-            <React.Fragment key={`acc_nominating_and_pool_${i}`}>
+            <Fragment key={`acc_nominating_and_pool_${i}`}>
               <AccountButton address={address} />
               {address && (
                 <Delegates delegator={address} delegates={delegates} />
               )}
-            </React.Fragment>
+            </Fragment>
           ))}
         </>
       ) : null}
@@ -181,12 +213,12 @@ export const Accounts = () => {
           <AccountSeparator />
           <ActionItem text={t('nominating')} />
           {nominating.map(({ address, delegates }, i) => (
-            <React.Fragment key={`acc_nominating_${i}`}>
+            <Fragment key={`acc_nominating_${i}`}>
               <AccountButton address={address} />
               {address && (
                 <Delegates delegator={address} delegates={delegates} />
               )}
-            </React.Fragment>
+            </Fragment>
           ))}
         </>
       ) : null}
@@ -196,12 +228,12 @@ export const Accounts = () => {
           <AccountSeparator />
           <ActionItem text={t('inPool')} />
           {inPool.map(({ address, delegates }, i) => (
-            <React.Fragment key={`acc_in_pool_${i}`}>
+            <Fragment key={`acc_in_pool_${i}`}>
               <AccountButton address={address} />
               {address && (
                 <Delegates delegator={address} delegates={delegates} />
               )}
-            </React.Fragment>
+            </Fragment>
           ))}
         </>
       ) : null}
@@ -211,12 +243,12 @@ export const Accounts = () => {
           <AccountSeparator />
           <ActionItem text={t('notStaking')} />
           {notStaking.map(({ address, delegates }, i) => (
-            <React.Fragment key={`acc_not_staking_${i}`}>
+            <Fragment key={`acc_not_staking_${i}`}>
               <AccountButton address={address} />
               {address && (
                 <Delegates delegator={address} delegates={delegates} />
               )}
-            </React.Fragment>
+            </Fragment>
           ))}
         </>
       ) : null}

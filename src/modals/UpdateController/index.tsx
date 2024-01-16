@@ -45,7 +45,6 @@ export const UpdateController = () => {
     callbackSubmit: () => {
       setModalStatus(2);
     },
-    callbackInBlock: () => {},
   });
 
   const warnings = getSignerWarnings(

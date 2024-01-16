@@ -1,46 +1,43 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { rmCommas } from '@w3ux/utils'
-import BigNumber from 'bignumber.js'
-import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
-import { useActivePool } from 'contexts/Pools/ActivePool'
-import { motion } from 'framer-motion'
-import { Item } from 'library/Announcements/Wrappers'
-import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement'
-import { useTranslation } from 'react-i18next'
-import { planckToUnitBn } from 'utils'
+import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { planckToUnit, rmCommas } from '@polkadot-cloud/utils';
+import BigNumber from 'bignumber.js';
+import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+import { useApi } from 'contexts/Api';
+import { useActivePools } from 'contexts/Pools/ActivePools';
+import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
+import { useNetwork } from 'contexts/Network';
+import { Item } from './Wrappers';
 
 export const Announcements = () => {
-  const { t } = useTranslation('pages')
-  const { consts } = useApi()
+  const { t } = useTranslation('pages');
+  const { consts } = useApi();
   const {
     networkData: { units, unit },
-  } = useNetwork()
-  const { activePool } = useActivePool()
-  const { rewardAccountBalance } = activePool || {}
-  const { totalRewardsClaimed } = activePool?.rewardPool || {}
-  const { existentialDeposit } = consts
+  } = useNetwork();
+  const { selectedActivePool } = useActivePools();
+  const { rewardAccountBalance } = selectedActivePool || {};
+  const { totalRewardsClaimed } = selectedActivePool?.rewardPool || {};
+  const { existentialDeposit } = consts;
 
   // calculate the latest reward account balance
   const rewardPoolBalance = BigNumber.max(
     0,
-    new BigNumber(rewardAccountBalance?.toString() || 0).minus(
-      existentialDeposit
-    )
-  )
-  const rewardBalance = planckToUnitBn(rewardPoolBalance, units)
+    new BigNumber(rewardAccountBalance || 0).minus(existentialDeposit)
+  );
+  const rewardBalance = planckToUnit(rewardPoolBalance, units);
 
   // calculate total rewards claimed
-  const rewardsClaimed = planckToUnitBn(
+  const rewardsClaimed = planckToUnit(
     totalRewardsClaimed
       ? new BigNumber(rmCommas(totalRewardsClaimed))
       : new BigNumber(0),
     units
-  )
+  );
 
   const container = {
     hidden: { opacity: 0 },
@@ -50,7 +47,7 @@ export const Announcements = () => {
         staggerChildren: 0.25,
       },
     },
-  }
+  };
 
   const listItem = {
     hidden: {
@@ -59,25 +56,25 @@ export const Announcements = () => {
     show: {
       opacity: 1,
     },
-  }
+  };
 
-  const announcements = []
+  const announcements = [];
 
   announcements.push({
     class: 'neutral',
     title: `${rewardsClaimed.decimalPlaces(3).toFormat()} ${unit} ${t(
-      'beenClaimed'
+      'pools.beenClaimed'
     )}`,
-    subtitle: `${t('beenClaimedBy', { unit })}`,
-  })
+    subtitle: `${t('pools.beenClaimedBy', { unit })}`,
+  });
 
   announcements.push({
     class: 'neutral',
     title: `${rewardBalance.decimalPlaces(3).toFormat()} ${unit} ${t(
-      'outstandingReward'
+      'pools.outstandingReward'
     )}`,
-    subtitle: `${t('availableToClaim', { unit })}`,
-  })
+    subtitle: `${t('pools.availableToClaim', { unit })}`,
+  });
 
   return (
     <motion.div
@@ -103,5 +100,5 @@ export const Announcements = () => {
         )
       )}
     </motion.div>
-  )
-}
+  );
+};

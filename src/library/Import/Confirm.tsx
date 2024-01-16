@@ -10,6 +10,8 @@ import { Identicon } from 'library/Identicon';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
 import { useTranslation } from 'react-i18next';
 import type { ConfirmProps } from './types';
+import { NotificationsController } from 'static/NotificationsController';
+import { ellipsisFn } from '@polkadot-cloud/utils';
 
 export const Confirm = ({
   address,
@@ -22,6 +24,15 @@ export const Confirm = ({
   const { addToAccounts } = useConnect();
   const { setStatus } = useOverlay();
 
+  const addAccountCallback = () => {
+    NotificationsController.emit({
+      title: t('ledgerAccountImported'),
+      subtitle: t('ledgerImportedAccount', {
+        account: ellipsisFn(address),
+      }),
+    });
+  };
+
   return (
     <ConfirmWrapper>
       <Identicon value={address} size={60} />
@@ -32,7 +43,7 @@ export const Confirm = ({
         <ButtonMono
           text={t('importAccount')}
           onClick={() => {
-            const account = addHandler(address, index);
+            const account = addHandler(address, index, addAccountCallback);
             if (account) {
               addToAccounts([account]);
               registerSaEvent(

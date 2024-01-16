@@ -1,33 +1,31 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
   faChevronLeft,
   faChevronRight,
-} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Bytes } from '@polkadot-api/substrate-bindings'
-import { useApi } from 'contexts/Api'
-import { QRViewerWrapper } from 'library/Import/Wrappers'
-import { QrDisplayPayload } from 'library/QRCode/DisplayPayload'
-import { QrScanSignature } from 'library/QRCode/ScanSignature'
-import type { SignerPromptProps } from 'library/SubmitTx/types'
-import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonPrimary, ButtonSecondary } from '@polkadot-cloud/react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { usePrompt } from 'contexts/Prompt';
+import { useTxMeta } from 'contexts/TxMeta';
+import { QRViewerWrapper } from 'library/Import/Wrappers';
+import { QrDisplayPayload } from 'library/QRCode/DisplayPayload';
+import { QrScanSignature } from 'library/QRCode/ScanSignature';
+import type { SignerPromptProps } from 'library/SubmitTx/types';
+import type { AnyJson } from 'types';
 
-export const SignPrompt = ({
-  submitAddress,
-  toSign,
-  onComplete,
-}: SignerPromptProps) => {
-  const {
-    chainSpecs: { genesisHash },
-  } = useApi()
-  const { t } = useTranslation('app')
+export const SignPrompt = ({ submitAddress }: SignerPromptProps) => {
+  const { t } = useTranslation('library');
+  const { getTxPayload, setTxSignature } = useTxMeta();
+  const payload = getTxPayload();
+  const payloadU8a = payload?.toU8a();
+  const { closePrompt } = usePrompt();
 
   // Whether user is on sign or submit stage.
-  const [stage, setStage] = useState<number>(1)
+  const [stage, setStage] = useState<number>(1);
 
   return (
     <QRViewerWrapper>
@@ -48,8 +46,8 @@ export const SignPrompt = ({
           <QrDisplayPayload
             address={submitAddress || ''}
             cmd={2}
-            genesisHash={Bytes(32).dec(genesisHash)}
-            payload={toSign}
+            genesisHash={payload?.genesisHash}
+            payload={payloadU8a}
             style={{ width: '100%', maxWidth: 250 }}
           />
         </div>
@@ -58,8 +56,9 @@ export const SignPrompt = ({
         <div className="viewer">
           <QrScanSignature
             size={279}
-            onScan={({ signature }) => {
-              onComplete('complete', signature)
+            onScan={({ signature }: AnyJson) => {
+              closePrompt();
+              setTxSignature(signature);
             }}
           />
         </div>
@@ -78,9 +77,9 @@ export const SignPrompt = ({
           {stage === 1 && (
             <ButtonPrimary
               text={t('iHaveScanned')}
-              size="lg"
+              lg
               onClick={() => {
-                setStage(2)
+                setStage(2);
               }}
               iconRight={faChevronRight}
               iconTransform="shrink-3"
@@ -90,12 +89,10 @@ export const SignPrompt = ({
             text={t('cancel')}
             lg
             marginLeft
-            onClick={() => {
-              onComplete('cancelled', null)
-            }}
+            onClick={() => closePrompt()}
           />
         </div>
       </div>
     </QRViewerWrapper>
-  )
-}
+  );
+};

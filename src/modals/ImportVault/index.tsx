@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faQrcode } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -7,28 +7,28 @@ import {
   ButtonText,
   HardwareAddress,
   HardwareStatusBar,
-} from '@polkadotcloud/core-ui';
-import { useConnect } from 'contexts/Connect';
-import { useVaultHardware } from 'contexts/Hardware/Vault';
-import { useModal } from 'contexts/Modal';
-import { useOverlay } from 'contexts/Overlay';
-import { ReactComponent as Icon } from 'img/polkadotVault.svg';
-import { Identicon } from 'library/Identicon';
+  Polkicon,
+} from '@polkadot-cloud/react';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useVaultAccounts } from 'contexts/Hardware/Vault/VaultAccounts';
+import { usePrompt } from 'contexts/Prompt';
+import PolkadotVaultSVG from '@polkadot-cloud/assets/extensions/svg/polkadotvault.svg?react';
 import { Confirm } from 'library/Import/Confirm';
 import { Heading } from 'library/Import/Heading';
 import { NoAccounts } from 'library/Import/NoAccounts';
 import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { Reader } from './Reader';
 
 export const ImportVault = () => {
   const { t } = useTranslation();
-  const { replaceModalWith } = useModal();
-  const { renameImportedAccount } = useConnect();
-  const { openOverlayWith, status: overlayStatus } = useOverlay();
+  const { replaceModal } = useOverlay().modal;
+  const { renameOtherAccount } = useOtherAccounts();
+  const { openPromptWith, status: promptStatus } = usePrompt();
 
   const {
     vaultAccounts,
@@ -37,17 +37,17 @@ export const ImportVault = () => {
     addVaultAccount,
     removeVaultAccount,
     getVaultAccount,
-  } = useVaultHardware();
-  const { setResize } = useModal();
+  } = useVaultAccounts();
+  const { setModalResize } = useOverlay().modal;
   const source = 'vault';
 
   const renameHandler = (address: string, newName: string) => {
     renameVaultAccount(address, newName);
-    renameImportedAccount(address, newName);
+    renameOtherAccount(address, newName);
   };
 
   const openConfirmHandler = (address: string, index: number) => {
-    openOverlayWith(
+    openPromptWith(
       <Confirm
         address={address}
         index={index}
@@ -59,7 +59,7 @@ export const ImportVault = () => {
   };
 
   const openRemoveHandler = (address: string) => {
-    openOverlayWith(
+    openPromptWith(
       <Remove
         address={address}
         removeHandler={removeVaultAccount}
@@ -71,80 +71,76 @@ export const ImportVault = () => {
   };
 
   useEffect(() => {
-    setResize();
+    setModalResize();
   }, [vaultAccounts]);
 
-  return (
+  return vaultAccounts.length === 0 ? (
+    <NoAccounts
+      Icon={PolkadotVaultSVG}
+      text={t('noVaultAccountsImported', { ns: 'modals' })}
+    >
+      <div>
+        <ButtonPrimary
+          lg
+          iconLeft={faQrcode}
+          text={t('importAccount', { ns: 'modals' })}
+          disabled={promptStatus !== 0}
+          onClick={() => {
+            openPromptWith(<Reader />, 'small');
+          }}
+        />
+      </div>
+    </NoAccounts>
+  ) : (
     <>
       <Heading title={vaultAccounts.length ? 'Polkadot Vault' : ''} />
-      {vaultAccounts.length === 0 ? (
-        <NoAccounts
-          Icon={Icon}
-          text={t('noVaultAccountsImported', { ns: 'modals' })}
-        >
-          <div>
-            <ButtonPrimary
-              lg
-              iconLeft={faQrcode}
-              text={t('importAccount', { ns: 'modals' })}
-              disabled={overlayStatus !== 0}
-              onClick={() => {
-                openOverlayWith(<Reader />, 'small');
+      <AddressesWrapper>
+        <div className="items">
+          {vaultAccounts.map(({ address, name, index }: AnyJson, i) => (
+            <HardwareAddress
+              key={i}
+              address={address}
+              index={index}
+              initial={name}
+              Identicon={<Polkicon address={address} size={40} />}
+              existsHandler={vaultAccountExists}
+              renameHandler={renameHandler}
+              openRemoveHandler={openRemoveHandler}
+              openConfirmHandler={openConfirmHandler}
+              t={{
+                tRemove: t('remove', { ns: 'modals' }),
+                tImport: t('import', { ns: 'modals' }),
               }}
             />
-          </div>
-        </NoAccounts>
-      ) : (
-        <>
-          <AddressesWrapper>
-            <div className="items">
-              {vaultAccounts.map(({ address, name, index }: AnyJson, i) => (
-                <HardwareAddress
-                  key={i}
-                  address={address}
-                  index={index}
-                  initial={name}
-                  Identicon={<Identicon value={address} size={40} />}
-                  existsHandler={vaultAccountExists}
-                  renameHandler={renameHandler}
-                  openRemoveHandler={openRemoveHandler}
-                  openConfirmHandler={openConfirmHandler}
-                  t={{
-                    tRemove: t('remove', { ns: 'modals' }),
-                    tImport: t('import', { ns: 'modals' }),
-                  }}
-                />
-              ))}
-            </div>
-            <div className="more">
-              <ButtonText
-                iconLeft={faQrcode}
-                text={t('importAnotherAccount', { ns: 'modals' })}
-                disabled={overlayStatus !== 0}
-                onClick={() => {
-                  openOverlayWith(<Reader />, 'small');
-                }}
-              />
-            </div>
-          </AddressesWrapper>
-          <HardwareStatusBar
-            show
-            Icon={Icon}
-            text={t('vaultAccounts', {
-              ns: 'modals',
-              count: vaultAccounts.length,
-            })}
-            inProgress={false}
-            handleDone={() =>
-              replaceModalWith('Connect', { disableScroll: true }, 'large')
-            }
-            t={{
-              tDone: t('done', { ns: 'library' }),
-              tCancel: t('cancel', { ns: 'library' }),
+          ))}
+        </div>
+        <div className="more">
+          <ButtonText
+            iconLeft={faQrcode}
+            text={t('importAnotherAccount', { ns: 'modals' })}
+            disabled={promptStatus !== 0}
+            onClick={() => {
+              openPromptWith(<Reader />, 'small');
             }}
           />
-        </>
-      )}
+        </div>
+      </AddressesWrapper>
+      <HardwareStatusBar
+        show
+        Icon={PolkadotVaultSVG}
+        text={t('vaultAccounts', {
+          ns: 'modals',
+          count: vaultAccounts.length,
+        })}
+        inProgress={false}
+        handleDone={() =>
+          replaceModal({ key: 'Connect', options: { disableScroll: true } })
+        }
+        t={{
+          tDone: t('done', { ns: 'library' }),
+          tCancel: t('cancel', { ns: 'library' }),
+        }}
+      />
     </>
   );
 };

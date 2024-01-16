@@ -1,9 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
+import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
+import { ButtonSubmit } from '@polkadot-cloud/react';
+import type { ReactNode } from 'react';
+import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import React from 'react';
-import { Submit } from './Submit';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { SubmitProps } from './types';
 
 export const Default = ({
@@ -13,22 +16,32 @@ export const Default = ({
   submitText,
   buttons,
   customEvent,
-}: SubmitProps & { buttons?: Array<React.ReactNode> }) => {
+  submitAddress,
+  displayFor,
+}: SubmitProps & { buttons?: ReactNode[] }) => {
+  const { txFeesValid } = useTxMeta();
+  const { accountHasSigner } = useImportedAccounts();
+
+  const disabled =
+    submitting || !valid || !accountHasSigner(submitAddress) || !txFeesValid;
+
   return (
-    <>
+    <div className="inner">
       <div>
         <EstimatedTxFee />
       </div>
       <div>
         {buttons}
-        <Submit
-          onSubmit={onSubmit}
-          submitting={submitting}
-          valid={valid}
-          submitText={submitText}
-          customEvent={customEvent}
+        <ButtonSubmit
+          lg={displayFor === 'canvas'}
+          text={submitText || ''}
+          iconLeft={faArrowAltCircleUp}
+          iconTransform="grow-2"
+          onClick={() => onSubmit(customEvent)}
+          disabled={disabled}
+          pulse={!disabled}
         />
       </div>
-    </>
+    </div>
   );
 };
