@@ -89,7 +89,7 @@ export const ChangeRate = ({
     });
   };
 
-  // Determine whether the change rate values have been upadted.
+  // Determine whether the change rate values have been updated.
   const maxIncreaseUpdated =
     changeRate.maxIncrease !== getInitial('change_rate').maxIncrease;
 
