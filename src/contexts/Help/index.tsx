@@ -25,7 +25,7 @@ export const HelpProvider = ({ children }: HelpContextProps) => {
     definition: null,
   });
 
-  // when fade out completes, reset active definiton
+  // when fade out completes, reset active definition
   useEffectIgnoreInitial(() => {
     if (state.status === 'closed') {
       setState({
