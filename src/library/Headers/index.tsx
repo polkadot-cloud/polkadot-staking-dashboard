@@ -3,7 +3,6 @@
 
 import { pageFromUri } from '@polkadot-cloud/utils';
 import { useLocation } from 'react-router-dom';
-import { useExtrinsics } from 'contexts/Extrinsics';
 import { usePlugins } from 'contexts/Plugins';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
@@ -15,11 +14,12 @@ import { Connected } from './Connected';
 import { SideMenuToggle } from './SideMenuToggle';
 import { Spinner } from './Spinner';
 import { LargeScreensOnly, Wrapper } from './Wrappers';
+import { useTxMeta } from 'contexts/TxMeta';
 
 export const Headers = () => {
   const { isSyncing } = useUi();
   const { pathname } = useLocation();
-  const { pending } = useExtrinsics();
+  const { pendingNonces } = useTxMeta();
   const { payoutsSynced } = usePayouts();
   const { pluginEnabled } = usePlugins();
   const { validators } = useValidators();
@@ -75,7 +75,7 @@ export const Headers = () => {
       <SideMenuToggle />
 
       {/* spinner to show app syncing */}
-      {syncing || pending.length > 0 ? <Spinner /> : null}
+      {syncing || pendingNonces.length > 0 ? <Spinner /> : null}
 
       {/* connected accounts */}
       <LargeScreensOnly>

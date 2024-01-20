@@ -9,7 +9,6 @@ import {
   OverlayProvider,
   LedgerAccountsProvider,
 } from '@polkadot-cloud/react/providers';
-import { ExtrinsicsProvider } from 'contexts/Extrinsics';
 import { FastUnstakeProvider } from 'contexts/FastUnstake';
 import { FiltersProvider } from 'contexts/Filters';
 import { LedgerHardwareProvider } from 'contexts/Hardware/Ledger/LedgerHardware';
@@ -99,7 +98,6 @@ export const Providers = () => {
     MenuProvider,
     TooltipProvider,
     TxMetaProvider,
-    ExtrinsicsProvider,
     OverlayProvider,
     PromptProvider,
     MigrateProvider,

@@ -21,4 +21,7 @@ export const defaultTxMeta: TxMetaContextInterface = {
   getTxSignature: () => null,
   resetTxPayloads: () => {},
   setTxSignature: (s) => {},
+  addPendingNonce: (nonce) => {},
+  removePendingNonce: (nonce) => {},
+  pendingNonces: [],
 };

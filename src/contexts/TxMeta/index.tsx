@@ -54,6 +54,11 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
   const [txSignature, setTxSignatureState] = useState<AnyJson>(null);
   const txSignatureRef = useRef(txSignature);
 
+  // Store the pending nonces of transactions. NOTE: Ref is required as `pendingNonces` is read in
+  // callbacks.
+  const [pendingNonces, setPendingNonces] = useState<string[]>([]);
+  const pendingNoncesRef = useRef(pendingNonces);
+
   // Listen to balance updates for the tx sender.
   const { getBalance, getEdReserved } = useActiveBalances({
     accounts: [sender],
@@ -122,6 +127,22 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
     return 'ok';
   };
 
+  const addPendingNonce = (nonce: string) => {
+    setStateWithRef(
+      [...pendingNoncesRef.current].concat(nonce),
+      setPendingNonces,
+      pendingNoncesRef
+    );
+  };
+
+  const removePendingNonce = (nonce: string) => {
+    setStateWithRef(
+      pendingNoncesRef.current.filter((n) => n !== nonce),
+      setPendingNonces,
+      pendingNoncesRef
+    );
+  };
+
   // Refresh not enough fee status when txfees or sender changes.
   useEffectIgnoreInitial(() => {
     const edReserved = getEdReserved(sender, existentialDeposit);
@@ -149,6 +170,9 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
         resetTxPayloads,
         getTxSignature,
         setTxSignature,
+        addPendingNonce,
+        removePendingNonce,
+        pendingNonces,
       }}
     >
       {children}

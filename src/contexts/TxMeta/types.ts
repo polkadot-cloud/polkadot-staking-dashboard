@@ -23,4 +23,7 @@ export interface TxMetaContextInterface {
   resetTxPayloads: () => void;
   getTxSignature: () => AnyJson;
   setTxSignature: (s: AnyJson) => void;
+  addPendingNonce: (nonce: string) => void;
+  removePendingNonce: (nonce: string) => void;
+  pendingNonces: string[];
 }
