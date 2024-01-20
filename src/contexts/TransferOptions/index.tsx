@@ -6,7 +6,6 @@ import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
-import { useBonded } from 'contexts/Bonded';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import type { MaybeAddress } from 'types';
@@ -15,10 +14,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';
 import { getLocalFeeReserve, setLocalFeeReserve } from './Utils';
-import {
-  defaultTransferOptions,
-  defaultTransferOptionsContext,
-} from './defaults';
+import { defaultTransferOptionsContext } from './defaults';
 import { getUnlocking } from 'contexts/Balances/Utils';
 
 export const TransferOptionsContext =
@@ -32,7 +28,6 @@ export const TransferOptionsProvider = ({
   children: ReactNode;
 }) => {
   const { consts } = useApi();
-  const { getAccount } = useBonded();
   const { activeEra } = useNetworkMetrics();
   const { membership } = usePoolMemberships();
   const { activeAccount } = useActiveAccounts();
@@ -52,10 +47,6 @@ export const TransferOptionsProvider = ({
   // Gets balance numbers from `useBalances` state, which only takes the active accounts from
   // `BalancesController`.
   const getTransferOptions = (address: MaybeAddress): TransferOptions => {
-    if (getAccount(address) === null) {
-      return defaultTransferOptions;
-    }
-
     const { maxLock } = getLocks(address);
     const { free, frozen } = getBalance(address);
     const { active, total, unlocking } = getLedger({ stash: address });

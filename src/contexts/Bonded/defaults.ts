@@ -13,9 +13,7 @@ export const nominations: Nominations = {
 };
 
 export const defaultBondedContext: BondedContextInterface = {
-  getAccount: (address) => null,
   getBondedAccount: (address) => null,
   getAccountNominations: (address) => [],
-  isController: (address) => false,
   bondedAccounts: [],
 };

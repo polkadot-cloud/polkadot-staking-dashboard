@@ -17,9 +17,7 @@ export interface Nominations {
 export type Targets = string[];
 
 export interface BondedContextInterface {
-  getAccount: (address: MaybeAddress) => BondedAccount | null;
   getBondedAccount: (address: MaybeAddress) => string | null;
   getAccountNominations: (address: MaybeAddress) => Targets;
-  isController: (address: MaybeAddress) => boolean;
   bondedAccounts: BondedAccount[];
 }

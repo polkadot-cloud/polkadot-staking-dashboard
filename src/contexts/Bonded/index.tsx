@@ -142,13 +142,6 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
     bondedAccountsRef.current.find((a) => a.address === address)?.nominations
       ?.targets || [];
 
-  const getAccount = (address: MaybeAddress) =>
-    bondedAccountsRef.current.find((a) => a.address === address) || null;
-
-  const isController = (address: MaybeAddress) =>
-    bondedAccountsRef.current.filter((a) => (a?.bonded || '') === address)
-      ?.length > 0 || false;
-
   // Handle accounts sync on connected accounts change.
   useEffectIgnoreInitial(() => {
     if (isReady) {
@@ -167,11 +160,9 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
   return (
     <BondedContext.Provider
       value={{
-        getAccount,
         getBondedAccount,
         getAccountNominations,
-        isController,
-        bondedAccounts: bondedAccountsRef.current,
+        bondedAccounts,
       }}
     >
       {children}
