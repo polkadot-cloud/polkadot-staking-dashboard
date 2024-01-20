@@ -15,7 +15,7 @@ declare global {
   interface DocumentEventMap {
     notification: CustomEvent<NotificationItem>;
     'new-block-number': CustomEvent<{ blockNumber: string }>;
-    'new-external-account': CustomEvent<{ stash: string }>;
+    'new-external-account': CustomEvent<{ address: string }>;
     'new-account-balance': CustomEvent<ActiveBalance & { address: string }>;
   }
 }

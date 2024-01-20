@@ -108,7 +108,7 @@ export class BalancesController {
     if (!this.accounts.includes(stash.toString())) {
       document.dispatchEvent(
         new CustomEvent('new-external-account', {
-          detail: { stash: stash.toString() },
+          detail: { address: stash.toString() },
         })
       );
     }

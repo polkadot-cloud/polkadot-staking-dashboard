@@ -185,7 +185,7 @@ export const OtherAccountsProvider = ({
   // Handle new external account custom events.
   const newExternalAccountCallback = (e: Event) => {
     if (isCustomEvent(e)) {
-      const result = addExternalAccount(e.detail.stash, 'system');
+      const result = addExternalAccount(e.detail.address, 'system');
       if (result) {
         addOrReplaceOtherAccount(result.account, result.type);
       }
