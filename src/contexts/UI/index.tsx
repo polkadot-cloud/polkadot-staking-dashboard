@@ -44,7 +44,7 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
   // Store whether in Brave browser. Used for light client warning.
   const [isBraveBrowser, setIsBraveBrowser] = useState<boolean>(false);
 
-  // Store referneces for main app conainers.
+  // Store references for main app containers.
   const [containerRefs, setContainerRefsState] = useState<
     Record<string, RefObject<HTMLDivElement>>
   >({});

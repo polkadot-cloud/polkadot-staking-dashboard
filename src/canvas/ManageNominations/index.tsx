@@ -127,7 +127,7 @@ export const ManageNominations = () => {
     },
     callbackInBlock: () => {
       if (isPool) {
-        // Upate bonded pool targets if updating pool nominations.
+        // Update bonded pool targets if updating pool nominations.
         if (selectedActivePool?.id) {
           updatePoolNominations(
             selectedActivePool.id,
