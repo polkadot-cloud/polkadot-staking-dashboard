@@ -47,7 +47,7 @@ export const Item = styled(motion.div)`
 
   p {
     color: var(--text-color-secondary);
-    margin: 0;
     line-height: 1.2rem;
+    margin: 0;
   }
 `;
