@@ -4,7 +4,7 @@
 import type { VoidFn } from '@polkadot-cloud/react/types';
 import { rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import { APIController } from 'static/APController';
+import { APIController } from 'static/APIController';
 import type { AnyApi } from 'types';
 import type {
   ActiveBalance,

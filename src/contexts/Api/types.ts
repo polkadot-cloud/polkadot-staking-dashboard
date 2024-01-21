@@ -6,7 +6,7 @@ import type { U8aLike } from '@polkadot/util/types';
 import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import type { AnyJson, Network, NetworkName } from '../../types';
-import type { ApiStatus } from 'static/APController/types';
+import type { ApiStatus } from 'static/APIController/types';
 
 export interface APIProviderProps {
   children: ReactNode;

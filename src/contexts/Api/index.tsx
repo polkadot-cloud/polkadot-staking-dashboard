@@ -25,9 +25,9 @@ import {
   defaultChainState,
   defaultConsts,
 } from './defaults';
-import { APIController } from 'static/APController';
+import { APIController } from 'static/APIController';
 import { isCustomEvent } from 'static/utils';
-import type { ApiStatus } from 'static/APController/types';
+import type { ApiStatus } from 'static/APIController/types';
 import { NotificationsController } from 'static/NotificationsController';
 import { useTranslation } from 'react-i18next';
 
