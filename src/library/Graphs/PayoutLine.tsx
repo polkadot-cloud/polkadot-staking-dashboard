@@ -156,10 +156,11 @@ export const PayoutLine = ({
         label: t('payout'),
         data: combinedPayouts.map((item: AnySubscan) => item?.amount ?? 0),
         borderColor: color,
-        backgroundColor: color,
         pointStyle: undefined,
         pointRadius: 0,
         borderWidth: 2.3,
+        tension: 0.2,
+        fill: false,
       },
     ],
   };
