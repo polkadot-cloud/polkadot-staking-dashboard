@@ -29,6 +29,7 @@ export const PagedRewardsStartEra: Record<NetworkName, BigNumber | null> = {
   westend: new BigNumber(7167),
 };
 
+// TODO: Remove `subscanEndpoint` from these records.
 export const NetworkList: Networks = {
   polkadot: {
     name: 'polkadot',
