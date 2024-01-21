@@ -63,7 +63,7 @@ export const StatBoxWrapper = styled(motion.div)`
     }
 
     h4 {
-      font-family: InterSemiBold, sans-serif;
+      font-family: Inter, sans-serif;
       flex: 1;
       display: flex;
       flex-flow: row wrap;
