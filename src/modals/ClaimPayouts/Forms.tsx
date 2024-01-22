@@ -120,10 +120,15 @@ export const Forms = forwardRef(
         if (payouts) {
           // Remove Subscan unclaimed payout record(s) if they exist.
           // TODO: test this in-app.
+          console.log('updating payouts', payouts);
+
           const updates: Record<string, string[]> = {};
           payouts.forEach(({ era, paginatedValidators }) => {
             updates[String(era)] = paginatedValidators.map(([, v]) => v);
           });
+
+          console.log('updates: ', updates);
+
           SubscanController.removeUnclaimedPayout(updates);
 
           // Deduct from `unclaimedPayouts` in Payouts context.

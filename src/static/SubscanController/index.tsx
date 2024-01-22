@@ -153,12 +153,17 @@ export class SubscanController {
   static removeUnclaimedPayout = (updates: Record<string, string[]>) => {
     const updatedUnclaimedPayouts = this.data['unclaimedPayouts'];
 
+    console.log('before updates', updatedUnclaimedPayouts);
+
     Object.entries(updates).forEach(([era, validators]) => {
       updatedUnclaimedPayouts.filter(
         (u: AnyJson) =>
           !(validators.includes(u.validator_stash) && String(u.era) === era)
       );
     });
+
+    console.log('after updates', updatedUnclaimedPayouts);
+
     this.data['unclaimedPayouts'] = updatedUnclaimedPayouts;
 
     document.dispatchEvent(

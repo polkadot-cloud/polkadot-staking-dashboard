@@ -63,7 +63,7 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
   useEffectIgnoreInitial(() => {
     if (!pluginEnabled('subscan')) {
       if (isReady) {
-        fetchPoolMembers();
+        fetchPoolMembersNode();
       }
     } else {
       setPoolMembersNode([]);
@@ -88,11 +88,10 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // Fetch all pool members entries from node.
-  const fetchPoolMembers = async () => {
+  const fetchPoolMembersNode = async () => {
     if (!api) {
       return;
     }
-
     const result = await api.query.nominationPools.poolMembers.entries();
     const newMembers = result.map(([keys, val]: AnyApi) => {
       const who = keys.toHuman()[0];
@@ -102,7 +101,6 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
         poolId,
       };
     });
-
     setPoolMembersNode(newMembers);
   };
 
@@ -128,10 +126,6 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
       poolId: poolMember.poolId,
     } as PoolMember;
   };
-
-  // Gets the count of members in a pool from node data.
-  const getPoolMemberCount = (poolId: number) =>
-    getMembersOfPoolFromNode(poolId ?? 0).length;
 
   /*
     Fetches a new batch of pool member metadata.
@@ -335,7 +329,6 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
         getMembersOfPoolFromNode,
         addToPoolMembers,
         removePoolMember,
-        getPoolMemberCount,
         poolMembersNode,
         poolMembersApi,
         setPoolMembersApi,

@@ -9,7 +9,6 @@ export interface PoolMemberContext {
   getMembersOfPoolFromNode: (poolId: number) => PoolMember[] | null;
   addToPoolMembers: (member: PoolMember) => void;
   removePoolMember: (w: MaybeAddress) => void;
-  getPoolMemberCount: (p: number) => number;
   poolMembersNode: PoolMember[];
   meta: AnyMetaBatch;
   poolMembersApi: PoolMember[];

@@ -10,7 +10,6 @@ export const defaultPoolMembers: PoolMemberContext = {
   getMembersOfPoolFromNode: (poolId) => null,
   addToPoolMembers: (m) => {},
   removePoolMember: (w) => {},
-  getPoolMemberCount: (p) => 0,
   poolMembersApi: [],
   setPoolMembersApi: (p) => {},
   poolMembersNode: [],
