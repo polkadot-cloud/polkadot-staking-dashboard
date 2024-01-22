@@ -29,7 +29,6 @@ export const PagedRewardsStartEra: Record<NetworkName, BigNumber | null> = {
   westend: new BigNumber(7167),
 };
 
-// TODO: Remove `subscanEndpoint` from these records.
 export const NetworkList: Networks = {
   polkadot: {
     name: 'polkadot',
@@ -71,7 +70,6 @@ export const NetworkList: Networks = {
         dark: 'rgb(211, 48, 121, 0.33)',
       },
     },
-    subscanEndpoint: 'https://polkadot.api.subscan.io',
     unit: 'DOT',
     units: 10,
     ss58: 0,
@@ -138,7 +136,6 @@ export const NetworkList: Networks = {
         dark: 'rgb(102,102,102, 0.33)',
       },
     },
-    subscanEndpoint: 'https://kusama.api.subscan.io',
     unit: 'KSM',
     units: 12,
     ss58: 2,
@@ -206,7 +203,6 @@ export const NetworkList: Networks = {
         dark: 'rgb(218, 78, 113, 0.33)',
       },
     },
-    subscanEndpoint: 'https://westend.api.subscan.io',
     unit: 'WND',
     units: 12,
     ss58: 42,
