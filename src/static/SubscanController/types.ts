@@ -35,7 +35,7 @@ export interface SubscanRequestPagination {
   page: number;
 }
 
-export interface PoolClaim {
+export interface SubscanPoolClaim {
   account_display: {
     address: string;
     display: string;

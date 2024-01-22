@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type {
-  PoolClaim,
+  SubscanPoolClaim,
   SubscanData,
   SubscanPayout,
   SubscanPoolDetails,
@@ -93,7 +93,9 @@ export class SubscanController {
   };
 
   // Fetch pool claims from Subscan, ensuring no payouts have block_timestamp of 0.
-  static fetchPoolClaims = async (address: string): Promise<PoolClaim[]> => {
+  static fetchPoolClaims = async (
+    address: string
+  ): Promise<SubscanPoolClaim[]> => {
     const result = await this.makeRequest(this.ENDPOINTS.poolRewards, {
       address,
       row: 100,
@@ -104,7 +106,7 @@ export class SubscanController {
     }
     // Remove claims with a `block_timestamp`.
     const poolClaims = result.list.filter(
-      (l: PoolClaim) => l.block_timestamp !== 0
+      (l: SubscanPoolClaim) => l.block_timestamp !== 0
     );
     return poolClaims;
   };
@@ -152,8 +154,6 @@ export class SubscanController {
       row: 100,
       address,
     });
-
-    // TODO: SubscanResult<T>.
     if (!result) {
       return [];
     }
@@ -250,8 +250,9 @@ export class SubscanController {
 
   // Remove unclaimed payouts and dispatch update event.
   static removeUnclaimedPayout = (updates: Record<string, string[]>) => {
-    const updatedUnclaimedPayouts: SubscanPayout[] =
-      this.data['unclaimedPayouts'];
+    const updatedUnclaimedPayouts = this.data[
+      'unclaimedPayouts'
+    ] as SubscanPayout[];
 
     console.log('before updates', updatedUnclaimedPayouts);
 
