@@ -77,7 +77,7 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
     SubscanController.resetData();
   }, [network, activeAccount]);
 
-  // Reset payouts on Subbscan plugin not enabled. Otherwise fetch payouts.
+  // Reset payouts on Subscan plugin not enabled. Otherwise fetch payouts.
   useEffectIgnoreInitial(() => {
     if (!plugins.includes('subscan')) {
       SubscanController.resetData();
