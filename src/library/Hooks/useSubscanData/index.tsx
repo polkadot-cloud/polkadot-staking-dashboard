@@ -6,9 +6,12 @@ import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { usePlugins } from 'contexts/Plugins';
 import { useEffect, useRef, useState } from 'react';
 import { SubscanController } from 'static/SubscanController';
-import type { PayoutType, SubscanData } from 'static/SubscanController/types';
+import type {
+  PayoutType,
+  SubscanData,
+  SubscanPayout,
+} from 'static/SubscanController/types';
 import { isCustomEvent } from 'static/utils';
-import type { AnyJson } from 'types';
 import { useEventListener } from 'usehooks-ts';
 import { useErasToTimeLeft } from '../useErasToTimeLeft';
 
@@ -17,14 +20,14 @@ export const useSubscanData = (
 ): {
   data: SubscanData;
   getData: (keys: PayoutType[]) => SubscanData;
-  injectBlockTimestamp: (entry: AnyJson[]) => AnyJson[];
+  injectBlockTimestamp: (entry: SubscanPayout[]) => SubscanPayout[];
 } => {
   const { pluginEnabled } = usePlugins();
   const { activeEra } = useNetworkMetrics();
   const { erasToSeconds } = useErasToTimeLeft();
 
   // Store the most up to date subscan data state.
-  const [data, setData] = useState<AnyJson>({});
+  const [data, setData] = useState<SubscanData>({});
   const dataRef = useRef(data);
 
   // Listen for updated data callback. When there are new data, fetch the updated values directly
@@ -64,7 +67,7 @@ export const useSubscanData = (
 
   // Inject block_timestamp for unclaimed payouts. We take the timestamp of the start of the
   // following payout era - this is the time payouts become available to claim by validators.
-  const injectBlockTimestamp = (entries: AnyJson[]) => {
+  const injectBlockTimestamp = (entries: SubscanPayout[]) => {
     if (!entries) {
       return entries;
     }
