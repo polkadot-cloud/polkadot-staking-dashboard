@@ -20,14 +20,14 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useBatchCall } from 'library/Hooks/useBatchCall';
-import type { AnyApi, AnySubscan } from 'types';
-import { useSubscan } from 'contexts/Plugins/Subscan';
+import type { AnyApi } from 'types';
 import { usePayouts } from 'contexts/Payouts';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import type { FormProps, ActivePayout } from './types';
 import { ContentWrapper } from './Wrappers';
+import { SubscanController } from 'static/SubscanController';
 
 export const Forms = forwardRef(
   (
@@ -45,8 +45,6 @@ export const Forms = forwardRef(
     const { activeAccount } = useActiveAccounts();
     const { getSignerWarnings } = useSignerWarnings();
     const { isPagedRewardsActive } = useNetworkMetrics();
-    const { unclaimedPayouts: unclaimedPayoutsSubscan, setUnclaimedPayouts } =
-      useSubscan();
 
     // Get the total payout amount.
     const totalPayout =
@@ -119,18 +117,13 @@ export const Forms = forwardRef(
         setModalStatus('closing');
       },
       callbackInBlock: () => {
-        // Remove Subscan unclaimed payout record(s) if they exists.
-        let newUnclaimedPayoutsSubscan = unclaimedPayoutsSubscan;
-
+        // Remove Subscan unclaimed payout record(s) if they exist.
+        // TODO: test this in-app.
+        const updates: Record<string, string[]> = {};
         payouts?.forEach(({ era, paginatedValidators }) => {
-          paginatedValidators?.forEach(([, validator]) => {
-            newUnclaimedPayoutsSubscan = newUnclaimedPayoutsSubscan.filter(
-              (u: AnySubscan) =>
-                !(u.validator_stash === validator && String(u.era) === era)
-            );
-          });
+          updates[String(era)] = paginatedValidators.map(([, v]) => v);
         });
-        setUnclaimedPayouts(newUnclaimedPayoutsSubscan);
+        SubscanController.removeUnclaimedPayout(updates);
 
         // Deduct from `unclaimedPayouts` in Payouts context.
         payouts?.forEach(({ era, paginatedValidators }) => {
@@ -138,7 +131,6 @@ export const Forms = forwardRef(
             removeEraPayout(era, v[1]);
           }
         });
-
         // Reset active form payouts for this modal.
         setPayouts([]);
       },

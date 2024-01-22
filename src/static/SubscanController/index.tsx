@@ -110,7 +110,6 @@ export class SubscanController {
     this.data['unclaimedPayouts'] = unclaimedPayouts;
     this.data['poolClaims'] = poolClaims;
 
-    // Let UI know that payouts have been updated.
     document.dispatchEvent(
       new CustomEvent('subscan-data-updated', {
         detail: {
@@ -148,6 +147,27 @@ export class SubscanController {
   // Resets all received data from class.
   static resetData = () => {
     this.data = {};
+  };
+
+  // Remove unclaimed payouts and dispatch update event.
+  static removeUnclaimedPayout = (updates: Record<string, string[]>) => {
+    const updatedUnclaimedPayouts = this.data['unclaimedPayouts'];
+
+    Object.entries(updates).forEach(([era, validators]) => {
+      updatedUnclaimedPayouts.filter(
+        (u: AnyJson) =>
+          !(validators.includes(u.validator_stash) && String(u.era) === era)
+      );
+    });
+    this.data['unclaimedPayouts'] = updatedUnclaimedPayouts;
+
+    document.dispatchEvent(
+      new CustomEvent('subscan-data-updated', {
+        detail: {
+          keys: ['unclaimedPayouts'],
+        },
+      })
+    );
   };
 
   // Take non-zero rewards in most-recent order.

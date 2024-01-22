@@ -93,7 +93,6 @@ export const Payouts = () => {
               2
             )}
           />
-
           <span className="note">
             {lastReward === null ? (
               ''
