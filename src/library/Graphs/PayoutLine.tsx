@@ -159,7 +159,7 @@ export const PayoutLine = ({
         pointStyle: undefined,
         pointRadius: 0,
         borderWidth: 2.3,
-        tension: 0.2,
+        tension: 0.25,
         fill: false,
       },
     ],
