@@ -12,7 +12,7 @@ import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
-import { formatSize, sortNonZeroPayouts } from 'library/Graphs/Utils';
+import { formatSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
 import { useSize } from 'library/Hooks/useSize';
 import { StatBoxList } from 'library/StatBoxList';
@@ -62,7 +62,11 @@ export const Payouts = ({ page: { key } }: PageProps) => {
 
   useEffect(() => {
     // filter zero rewards and order via block timestamp, most recent first.
-    setPayoutLists(sortNonZeroPayouts(data.payouts, data.poolClaims, true));
+    setPayoutLists(
+      SubscanController.removeNonZeroAmountAndSort(
+        data.payouts.concat(data.poolClaims)
+      )
+    );
   }, [data?.payouts?.length, data?.poolClaims?.length]);
 
   return (
