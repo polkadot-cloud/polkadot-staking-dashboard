@@ -4,7 +4,7 @@
 import { isNotZero } from '@polkadot-cloud/utils';
 import { format, fromUnixTime } from 'date-fns';
 import type { ReactNode } from 'react';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   ApiEndpoints,
@@ -24,6 +24,7 @@ import { useApi } from '../../Api';
 import { usePlugins } from '..';
 import { defaultSubscanContext } from './defaults';
 import type { SubscanContextInterface } from './types';
+import { SubscanController } from 'static/SubscanController';
 
 export const SubscanContext = createContext<SubscanContextInterface>(
   defaultSubscanContext
@@ -77,33 +78,19 @@ export const SubscanProvider = ({ children }: { children: ReactNode }) => {
     setPoolClaims([]);
   };
 
-  // Reset payouts on network switch.
+  // Reset payouts on network of active account switch.
   useEffectIgnoreInitial(() => {
     resetPayouts();
-  }, [network]);
+  }, [network, activeAccount]);
 
-  // Reset payouts on no active account.
-  useEffectIgnoreInitial(() => {
-    if (!activeAccount) {
-      resetPayouts();
-    }
-  }, [activeAccount]);
-
-  // Reset payouts on subscan plugin not enabled.
+  // Reset payouts on subscan plugin not enabled. Otherwise fetch payouts.
   useEffectIgnoreInitial(() => {
     if (!plugins.includes('subscan')) {
       resetPayouts();
     } else if (isReady && isNotZero(activeEra.index)) {
       handleFetchPayouts();
     }
-  }, [plugins.includes('subscan'), isReady, activeEra]);
-
-  // Fetch payouts as soon as network is ready.
-  useEffectIgnoreInitial(() => {
-    if (isReady && isNotZero(activeEra.index)) {
-      handleFetchPayouts();
-    }
-  }, [isReady, network, activeAccount, activeEra]);
+  }, [plugins.includes('subscan'), isReady, network, activeAccount, activeEra]);
 
   // Store start and end date of fetched payouts.
   useEffectIgnoreInitial(() => {
@@ -341,6 +328,7 @@ export const SubscanProvider = ({ children }: { children: ReactNode }) => {
       page,
       ...body,
     };
+
     const res: Response = await fetch(subscanEndpoint + endpoint, {
       headers: {
         'Content-Type': 'application/json',
@@ -352,6 +340,18 @@ export const SubscanProvider = ({ children }: { children: ReactNode }) => {
     const resJson: AnySubscan = await res.json();
     return resJson;
   };
+
+  // Fetch payouts from `SubscanController` when `activeAccount` or `network` changes.
+  useEffect(() => {
+    // Reset all payouts.
+    SubscanController.resetPayouts();
+    // Update active network.
+    SubscanController.network = network;
+    // Fetch payouts for updated `activeAccount` if provided.
+    if (activeAccount) {
+      SubscanController.handleFetchPayouts(activeAccount);
+    }
+  }, [activeAccount, network]);
 
   return (
     <SubscanContext.Provider

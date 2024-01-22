@@ -7,6 +7,7 @@ import type { ExtensionInjected } from '@polkadot-cloud/react/types';
 import type BigNumber from 'bignumber.js';
 import type { NotificationItem } from 'static/NotificationsController/types';
 import type { ActiveBalance } from 'contexts/Balances/types';
+import type { PayoutType } from 'static/SubscanController/types';
 
 declare global {
   interface Window {
@@ -17,6 +18,7 @@ declare global {
     'new-block-number': CustomEvent<{ blockNumber: string }>;
     'new-external-account': CustomEvent<{ address: string }>;
     'new-account-balance': CustomEvent<ActiveBalance & { address: string }>;
+    'subscan-data-updated': CustomEvent<{ keys: PayoutType[] }>;
   }
 }
 
