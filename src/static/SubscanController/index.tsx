@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyJson } from 'types';
-import type { SubscanData } from './types';
+import type { SubscanData, SubscanRequestBody } from './types';
+import type { Locale } from 'date-fns';
 import { format, fromUnixTime, getUnixTime, subDays } from 'date-fns';
 import { ListItemsPerPage } from 'consts';
 
@@ -61,7 +62,7 @@ export class SubscanController {
   // Fetch nominator payouts from Subscan. NOTE: Payouts with a `block_timestamp` of 0 are
   // unclaimed.
   static fetchNominatorPayouts = async (address: string): Promise<AnyJson> => {
-    const result: AnyJson = await this.makeRequest(this.ENDPOINTS.rewardSlash, {
+    const result = await this.makeRequest(this.ENDPOINTS.rewardSlash, {
       address,
       is_stash: true,
       row: 100,
@@ -81,7 +82,7 @@ export class SubscanController {
 
   // Fetch pool claims from Subscan, ensuring no payouts have block_timestamp of 0.
   static fetchPoolClaims = async (address: string): Promise<AnyJson> => {
-    const result: AnyJson = await this.makeRequest(this.ENDPOINTS.poolRewards, {
+    const result = await this.makeRequest(this.ENDPOINTS.poolRewards, {
       address,
       row: 100,
       page: 0,
@@ -100,7 +101,7 @@ export class SubscanController {
 
   // Fetch a page of pool members from Subscan.
   static fetchPoolMembers = async (poolId: number, page: number) => {
-    const result: AnyJson = await this.makeRequest(this.ENDPOINTS.poolMembers, {
+    const result = await this.makeRequest(this.ENDPOINTS.poolMembers, {
       pool_id: poolId,
       row: ListItemsPerPage,
       page: page - 1,
@@ -213,7 +214,7 @@ export class SubscanController {
   static getEndpoint = () => `https://${this.network}.api.subscan.io`;
 
   // Make a request to Subscan and return any data returned from the response.
-  static makeRequest = async (endpoint: string, body: AnyJson) => {
+  static makeRequest = async (endpoint: string, body: SubscanRequestBody) => {
     const res: Response = await fetch(this.getEndpoint() + endpoint, {
       headers: {
         'Content-Type': 'application/json',
@@ -278,7 +279,7 @@ export class SubscanController {
   };
 
   // Calculate the earliest date of a payout list.
-  static payoutsFromDate = (payouts: AnyJson[], locale: AnyJson) => {
+  static payoutsFromDate = (payouts: AnyJson[], locale: Locale) => {
     if (!payouts.length) {
       return undefined;
     }
@@ -293,7 +294,7 @@ export class SubscanController {
   };
 
   // Calculate the latest date of a payout list.
-  static payoutsToDate = (payouts: AnyJson[], locale: AnyJson) => {
+  static payoutsToDate = (payouts: AnyJson[], locale: Locale) => {
     if (!payouts.length) {
       return undefined;
     }
