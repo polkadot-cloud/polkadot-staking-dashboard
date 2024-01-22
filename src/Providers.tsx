@@ -28,7 +28,6 @@ import { PoolsConfigProvider } from 'contexts/Pools/PoolsConfig';
 import { ProxiesProvider } from 'contexts/Proxies';
 import { SetupProvider } from 'contexts/Setup';
 import { StakingProvider } from 'contexts/Staking';
-import { SubscanProvider } from 'contexts/Plugins/Subscan';
 import { TooltipProvider } from 'contexts/Tooltip';
 import { TransferOptionsProvider } from 'contexts/TransferOptions';
 import { TxMetaProvider } from 'contexts/TxMeta';
@@ -76,7 +75,6 @@ export const Providers = () => {
     NetworkMetricsProvider,
     HelpProvider,
     PluginsProvider,
-    SubscanProvider,
     PolkawatchProvider,
     IdentitiesProvider,
     BondedProvider,

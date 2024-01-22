@@ -1,13 +1,23 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
+import {
+  isNotZero,
+  localStorageOrDefault,
+  setStateWithRef,
+} from '@polkadot-cloud/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import { PluginsList } from 'consts';
 import type { Plugin } from 'types';
 import * as defaults from './defaults';
 import type { PluginsContextInterface } from './types';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react';
+import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
+import { useNetworkMetrics } from 'contexts/NetworkMetrics';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { SubscanController } from 'static/SubscanController';
 
 export const PluginsContext = createContext<PluginsContextInterface>(
   defaults.defaultPluginsContext
@@ -16,6 +26,11 @@ export const PluginsContext = createContext<PluginsContextInterface>(
 export const usePlugins = () => useContext(PluginsContext);
 
 export const PluginsProvider = ({ children }: { children: ReactNode }) => {
+  const { isReady } = useApi();
+  const { network } = useNetwork();
+  const { activeEra } = useNetworkMetrics();
+  const { activeAccount } = useActiveAccounts();
+
   // Get initial plugins from local storage.
   const getAvailablePlugins = () => {
     const localPlugins = localStorageOrDefault(
@@ -56,6 +71,23 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
 
   // Check if a plugin is currently enabled.
   const pluginEnabled = (key: Plugin) => pluginsRef.current.includes(key);
+
+  // Reset payouts on Subscan network of active account switch.
+  useEffectIgnoreInitial(() => {
+    SubscanController.resetData();
+  }, [network, activeAccount]);
+
+  // Reset payouts on Subbscan plugin not enabled. Otherwise fetch payouts.
+  useEffectIgnoreInitial(() => {
+    if (!plugins.includes('subscan')) {
+      SubscanController.resetData();
+    } else if (isReady && isNotZero(activeEra.index)) {
+      SubscanController.network = network;
+      if (activeAccount) {
+        SubscanController.handleFetchPayouts(activeAccount);
+      }
+    }
+  }, [plugins.includes('subscan'), isReady, network, activeAccount, activeEra]);
 
   return (
     <PluginsContext.Provider

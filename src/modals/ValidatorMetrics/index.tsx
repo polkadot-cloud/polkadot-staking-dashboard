@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useStaking } from 'contexts/Staking';
-import { useSubscan } from 'contexts/Plugins/Subscan';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { EraPoints as EraPointsGraph } from 'library/Graphs/EraPoints';
 import { formatSize } from 'library/Graphs/Utils';
@@ -22,15 +21,17 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { PluginLabel } from 'library/PluginLabel';
 import { useNetwork } from 'contexts/Network';
 import type { AnyJson } from 'types';
+import { SubscanController } from 'static/SubscanController';
+import { usePlugins } from 'contexts/Plugins';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');
   const {
     networkData: { units, unit },
   } = useNetwork();
+  const { plugins } = usePlugins();
   const { options } = useOverlay().modal.config;
   const { address, identity } = options;
-  const { fetchEraPoints } = useSubscan();
   const { activeEra } = useNetworkMetrics();
   const {
     eraStakers: { stakers },
@@ -59,7 +60,15 @@ export const ValidatorMetrics = () => {
   const { width, height, minHeight } = formatSize(size, 300);
 
   const handleEraPoints = async () => {
-    setList(await fetchEraPoints(address, activeEra.index.toNumber()));
+    if (!plugins.includes('subscan')) {
+      return;
+    }
+    setList(
+      await SubscanController.handleFetchEraPoints(
+        address,
+        activeEra.index.toNumber()
+      )
+    );
   };
 
   useEffect(() => {

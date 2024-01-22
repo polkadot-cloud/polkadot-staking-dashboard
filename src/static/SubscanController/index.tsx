@@ -133,6 +133,33 @@ export class SubscanController {
     return result;
   };
 
+  // Fetch a pool's era points from Subscan.
+  static fetchEraPoints = async (address: string, era: number) => {
+    const result: AnyJson = await this.makeRequest(this.ENDPOINTS.eraStat, {
+      page: 0,
+      row: 100,
+      address,
+    });
+
+    // TODO: SubscanResult<T>.
+    if (!result) {
+      return [];
+    }
+
+    // Format list to just contain reward points.
+    const list = [];
+    for (let i = era; i > era - 100; i--) {
+      list.push({
+        era: i,
+        reward_point:
+          result.list.find((item: AnyJson) => item.era === i)?.reward_point ??
+          0,
+      });
+    }
+    // Removes last zero item and return.
+    return list.reverse().splice(0, list.length - 1);
+  };
+
   // ------------------------------------------------------
   // Handling multiple requests concurrently.
   // ------------------------------------------------------
@@ -170,6 +197,12 @@ export class SubscanController {
   static handleFetchPoolDetails = async (poolId: number) => {
     const poolDetails = await this.fetchPoolDetails(poolId);
     return poolDetails;
+  };
+
+  // Handle fetching era point history.
+  static handleFetchEraPoints = async (address: string, era: number) => {
+    const eraPoints = await this.fetchEraPoints(address, era);
+    return eraPoints;
   };
 
   // ------------------------------------------------------
