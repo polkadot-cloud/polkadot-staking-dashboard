@@ -10,18 +10,13 @@ import type {
   PayoutType,
   SubscanData,
   SubscanPayout,
+  SubscanPayoutData,
 } from 'static/SubscanController/types';
 import { isCustomEvent } from 'static/utils';
 import { useEventListener } from 'usehooks-ts';
 import { useErasToTimeLeft } from '../useErasToTimeLeft';
 
-export const useSubscanData = (
-  keys: PayoutType[]
-): {
-  data: SubscanData;
-  getData: (keys: PayoutType[]) => SubscanData;
-  injectBlockTimestamp: (entry: SubscanPayout[]) => SubscanPayout[];
-} => {
+export const useSubscanData = (keys: PayoutType[]) => {
   const { pluginEnabled } = usePlugins();
   const { activeEra } = useNetworkMetrics();
   const { erasToSeconds } = useErasToTimeLeft();
@@ -57,10 +52,12 @@ export const useSubscanData = (
   );
 
   // Get data or return an empty array if it is undefined.
-  const getData = (withKeys: PayoutType[]): SubscanData => {
-    const result: SubscanData = {};
+  const getData = (withKeys: PayoutType[]): SubscanPayoutData => {
+    const result: SubscanPayoutData = {};
+
     withKeys.forEach((key: PayoutType) => {
-      result[key] = data[key] || [];
+      const keyData = (data[key] || []) as SubscanPayout[];
+      result[key] = keyData;
     });
     return result;
   };

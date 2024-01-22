@@ -1,11 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from 'types';
-
 export type PayoutType = 'payouts' | 'unclaimedPayouts' | 'poolClaims';
 
-export type SubscanData = Partial<Record<PayoutType, AnyJson>>;
+export type SubscanData = Partial<Record<PayoutType, SubscanResult>>;
+
+export type SubscanPayoutData = Partial<Record<PayoutType, SubscanPayout[]>>;
 
 export type SubscanRequestBody =
   | RewardSlashRequestBody
@@ -34,6 +34,12 @@ export interface SubscanRequestPagination {
   row: number;
   page: number;
 }
+
+export type SubscanResult =
+  | SubscanPayout[]
+  | SubscanPoolClaim[]
+  | SubscanPoolMember[]
+  | SubscanPoolDetails;
 
 export interface SubscanPoolClaim {
   account_display: {

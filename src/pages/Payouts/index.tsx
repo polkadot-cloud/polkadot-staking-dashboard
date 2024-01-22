@@ -48,15 +48,15 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   const data = getData(['payouts', 'unclaimedPayouts', 'poolClaims']);
 
   // Inject `block_timestamp` for unclaimed payouts.
-  data['unclaimedPayouts'] = injectBlockTimestamp(data['unclaimedPayouts']);
+  data['unclaimedPayouts'] = injectBlockTimestamp(data?.unclaimedPayouts || []);
 
   const payoutsFromDate = SubscanController.payoutsFromDate(
-    data['payouts'].concat(data['poolClaims']),
+    (data?.payouts || []).concat(data?.poolClaims || []),
     locales[i18n.resolvedLanguage ?? DefaultLocale]
   );
 
   const payoutsToDate = SubscanController.payoutsToDate(
-    data['payouts'].concat(data['poolClaims']),
+    (data?.payouts || []).concat(data?.poolClaims || []),
     locales[i18n.resolvedLanguage ?? DefaultLocale]
   );
 
@@ -64,7 +64,7 @@ export const Payouts = ({ page: { key } }: PageProps) => {
     // filter zero rewards and order via block timestamp, most recent first.
     setPayoutLists(
       SubscanController.removeNonZeroAmountAndSort(
-        data.payouts.concat(data.poolClaims)
+        (data?.payouts || []).concat(data?.poolClaims || [])
       )
     );
   }, [data?.payouts?.length, data?.poolClaims?.length]);

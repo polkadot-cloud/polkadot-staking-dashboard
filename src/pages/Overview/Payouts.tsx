@@ -44,7 +44,7 @@ export const Payouts = () => {
   const data = getData(['payouts', 'unclaimedPayouts', 'poolClaims']);
 
   // Inject `block_timestamp` for unclaimed payouts.
-  data['unclaimedPayouts'] = injectBlockTimestamp(data['unclaimedPayouts']);
+  data['unclaimedPayouts'] = injectBlockTimestamp(data?.unclaimedPayouts || []);
 
   // Ref to the graph container.
   const graphInnerRef = useRef<HTMLDivElement>(null);
