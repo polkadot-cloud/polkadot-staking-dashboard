@@ -117,20 +117,22 @@ export const Forms = forwardRef(
         setModalStatus('closing');
       },
       callbackInBlock: () => {
-        // Remove Subscan unclaimed payout record(s) if they exist.
-        // TODO: test this in-app.
-        const updates: Record<string, string[]> = {};
-        payouts?.forEach(({ era, paginatedValidators }) => {
-          updates[String(era)] = paginatedValidators.map(([, v]) => v);
-        });
-        SubscanController.removeUnclaimedPayout(updates);
+        if (payouts) {
+          // Remove Subscan unclaimed payout record(s) if they exist.
+          // TODO: test this in-app.
+          const updates: Record<string, string[]> = {};
+          payouts.forEach(({ era, paginatedValidators }) => {
+            updates[String(era)] = paginatedValidators.map(([, v]) => v);
+          });
+          SubscanController.removeUnclaimedPayout(updates);
 
-        // Deduct from `unclaimedPayouts` in Payouts context.
-        payouts?.forEach(({ era, paginatedValidators }) => {
-          for (const v of paginatedValidators || []) {
-            removeEraPayout(era, v[1]);
-          }
-        });
+          // Deduct from `unclaimedPayouts` in Payouts context.
+          payouts.forEach(({ era, paginatedValidators }) => {
+            for (const v of paginatedValidators || []) {
+              removeEraPayout(era, v[1]);
+            }
+          });
+        }
         // Reset active form payouts for this modal.
         setPayouts([]);
       },
