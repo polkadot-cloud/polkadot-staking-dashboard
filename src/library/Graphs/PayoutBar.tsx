@@ -53,14 +53,12 @@ export const PayoutBar = ({
   const notStaking = !isSyncing && inSetup() && !membership;
 
   // remove slashes from payouts (graph does not support negative values).
-  const payoutsNoSlash = payouts.filter(
-    (p: AnySubscan) => p.event_id !== 'Slashed'
-  );
+  const payoutsNoSlash =
+    payouts?.filter((p: AnySubscan) => p.event_id !== 'Slashed') || [];
 
   // remove slashes from unclaimed payouts.
-  const unclaimedPayoutsNoSlash = unclaimedPayouts.filter(
-    (p: AnySubscan) => p.event_id !== 'Slashed'
-  );
+  const unclaimedPayoutsNoSlash =
+    unclaimedPayouts?.filter((p: AnySubscan) => p.event_id !== 'Slashed') || [];
 
   // get formatted rewards data for graph.
   const { allPayouts, allPoolClaims, allUnclaimedPayouts } =

@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
-import type { AnyJson, AnyPolkawatch, AnySubscan } from 'types';
+import type { SubscanPayoutData } from 'static/SubscanController/types';
+import type { AnyPolkawatch, AnySubscan } from 'types';
 
 export interface BondedProps {
   active: BigNumber;
@@ -20,7 +21,7 @@ export interface EraPointsProps {
 export interface PayoutBarProps {
   days: number;
   height: string;
-  data: AnyJson;
+  data: SubscanPayoutData;
 }
 
 export interface PayoutLineProps {
@@ -28,7 +29,7 @@ export interface PayoutLineProps {
   average: number;
   height: string;
   background?: string;
-  data: AnyJson;
+  data: SubscanPayoutData;
 }
 
 export interface CardHeaderWrapperProps {
