@@ -1,11 +1,18 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from 'types';
-import type { SubscanData, SubscanRequestBody } from './types';
+import type {
+  PoolClaim,
+  SubscanData,
+  SubscanPayout,
+  SubscanPoolDetails,
+  SubscanPoolMember,
+  SubscanRequestBody,
+} from './types';
 import type { Locale } from 'date-fns';
 import { format, fromUnixTime, getUnixTime, subDays } from 'date-fns';
 import { ListItemsPerPage } from 'consts';
+import type { PoolMember } from 'contexts/Pools/PoolMembers/types';
 
 // A class to manage Subscan API Calls.
 //
@@ -61,59 +68,63 @@ export class SubscanController {
 
   // Fetch nominator payouts from Subscan. NOTE: Payouts with a `block_timestamp` of 0 are
   // unclaimed.
-  static fetchNominatorPayouts = async (address: string): Promise<AnyJson> => {
+  static fetchNominatorPayouts = async (
+    address: string
+  ): Promise<{
+    payouts: SubscanPayout[];
+    unclaimedPayouts: SubscanPayout[];
+  }> => {
     const result = await this.makeRequest(this.ENDPOINTS.rewardSlash, {
       address,
       is_stash: true,
       row: 100,
       page: 0,
     });
-    // TODO: SubscanResult<T>.
     if (!result?.list) {
       return { payouts: [], unclaimedPayouts: [] };
     }
-
-    const payouts = result.list.filter((l: AnyJson) => l.block_timestamp !== 0);
+    const payouts = result.list.filter(
+      (l: SubscanPayout) => l.block_timestamp !== 0
+    );
     const unclaimedPayouts = result.list.filter(
-      (l: AnyJson) => l.block_timestamp === 0
+      (l: SubscanPayout) => l.block_timestamp === 0
     );
     return { payouts, unclaimedPayouts };
   };
 
   // Fetch pool claims from Subscan, ensuring no payouts have block_timestamp of 0.
-  static fetchPoolClaims = async (address: string): Promise<AnyJson> => {
+  static fetchPoolClaims = async (address: string): Promise<PoolClaim[]> => {
     const result = await this.makeRequest(this.ENDPOINTS.poolRewards, {
       address,
       row: 100,
       page: 0,
     });
-    // TODO: SubscanResult<T>.
     if (!result?.list) {
       return [];
     }
-
     // Remove claims with a `block_timestamp`.
     const poolClaims = result.list.filter(
-      (l: AnyJson) => l.block_timestamp !== 0
+      (l: PoolClaim) => l.block_timestamp !== 0
     );
     return poolClaims;
   };
 
   // Fetch a page of pool members from Subscan.
-  static fetchPoolMembers = async (poolId: number, page: number) => {
+  static fetchPoolMembers = async (
+    poolId: number,
+    page: number
+  ): Promise<PoolMember[]> => {
     const result = await this.makeRequest(this.ENDPOINTS.poolMembers, {
       pool_id: poolId,
       row: ListItemsPerPage,
       page: page - 1,
     });
-
-    // TODO: SubscanResult<T>.
     if (!result?.list) {
       return [];
     }
     // Format list and return.
     return result.list
-      .map((entry: AnyJson) => ({
+      .map((entry: SubscanPoolMember) => ({
         who: entry.account_display.address,
         poolId: entry.pool_id,
       }))
@@ -122,21 +133,21 @@ export class SubscanController {
   };
 
   // Fetch a pool's details from Subscan.
-  static fetchPoolDetails = async (poolId: number) => {
-    const result: AnyJson = await this.makeRequest(this.ENDPOINTS.poolDetails, {
+  static fetchPoolDetails = async (
+    poolId: number
+  ): Promise<SubscanPoolDetails> => {
+    const result = await this.makeRequest(this.ENDPOINTS.poolDetails, {
       pool_id: poolId,
     });
-
-    // TODO: SubscanResult<T>.
     if (!result) {
-      return undefined;
+      return { member_count: 0 };
     }
-    return result;
+    return { member_count: result.member_count };
   };
 
   // Fetch a pool's era points from Subscan.
   static fetchEraPoints = async (address: string, era: number) => {
-    const result: AnyJson = await this.makeRequest(this.ENDPOINTS.eraStat, {
+    const result = await this.makeRequest(this.ENDPOINTS.eraStat, {
       page: 0,
       row: 100,
       address,
@@ -153,8 +164,9 @@ export class SubscanController {
       list.push({
         era: i,
         reward_point:
-          result.list.find((item: AnyJson) => item.era === i)?.reward_point ??
-          0,
+          result.list.find(
+            ({ era: resultEra }: { era: number }) => resultEra === i
+          )?.reward_point ?? 0,
       });
     }
     // Removes last zero item and return.
@@ -238,13 +250,14 @@ export class SubscanController {
 
   // Remove unclaimed payouts and dispatch update event.
   static removeUnclaimedPayout = (updates: Record<string, string[]>) => {
-    const updatedUnclaimedPayouts = this.data['unclaimedPayouts'];
+    const updatedUnclaimedPayouts: SubscanPayout[] =
+      this.data['unclaimedPayouts'];
 
     console.log('before updates', updatedUnclaimedPayouts);
 
     Object.entries(updates).forEach(([era, validators]) => {
       updatedUnclaimedPayouts.filter(
-        (u: AnyJson) =>
+        (u) =>
           !(validators.includes(u.validator_stash) && String(u.era) === era)
       );
     });
@@ -263,9 +276,9 @@ export class SubscanController {
   };
 
   // Take non-zero rewards in most-recent order.
-  static removeNonZeroAmountAndSort = (payouts: AnyJson[]) => {
+  static removeNonZeroAmountAndSort = (payouts: SubscanPayout[]) => {
     const list = payouts
-      .filter((p) => p.amount > 0)
+      .filter((p) => Number(p.amount) > 0)
       .sort((a, b) => b.block_timestamp - a.block_timestamp);
 
     // Calculates from the current date.
@@ -279,7 +292,7 @@ export class SubscanController {
   };
 
   // Calculate the earliest date of a payout list.
-  static payoutsFromDate = (payouts: AnyJson[], locale: Locale) => {
+  static payoutsFromDate = (payouts: SubscanPayout[], locale: Locale) => {
     if (!payouts.length) {
       return undefined;
     }
@@ -294,7 +307,7 @@ export class SubscanController {
   };
 
   // Calculate the latest date of a payout list.
-  static payoutsToDate = (payouts: AnyJson[], locale: Locale) => {
+  static payoutsToDate = (payouts: SubscanPayout[], locale: Locale) => {
     if (!payouts.length) {
       return undefined;
     }
