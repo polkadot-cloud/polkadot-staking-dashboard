@@ -53,7 +53,7 @@ export const useSubscanData = (
     documentRef
   );
 
-  // Get data or return a default value if it is undefined.
+  // Get data or return an empty array if it is undefined.
   const getData = (withKeys: PayoutType[]): SubscanData => {
     const result: SubscanData = {};
     withKeys.forEach((key: PayoutType) => {
