@@ -7,7 +7,6 @@ import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { usePlugins } from 'contexts/Plugins';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { useSubscan } from 'contexts/Plugins/Subscan';
 import { List, ListStatusHeader, Wrapper as ListWrapper } from 'library/List';
 import { Pagination } from 'library/List/Pagination';
 import { ListProvider } from 'library/List/context';
@@ -17,6 +16,7 @@ import { Member } from './Member';
 import type { FetchpageMembersListProps } from './types';
 import type { PoolMember } from 'contexts/Pools/PoolMembers/types';
 import { MotionContainer } from 'library/List/MotionContainer';
+import { SubscanController } from 'static/SubscanController';
 
 export const MembersListInner = ({
   pagination,
@@ -27,7 +27,6 @@ export const MembersListInner = ({
   const { t } = useTranslation('pages');
   const { network } = useNetwork();
   const { pluginEnabled } = usePlugins();
-  const { fetchPoolMembers } = useSubscan();
   const { activeAccount } = useActiveAccounts();
   const { selectedActivePool } = useActivePools();
   const {
@@ -70,7 +69,10 @@ export const MembersListInner = ({
 
     if (poolId > 0 && !fetchingMemberList.current) {
       fetchingMemberList.current = true;
-      const newMembers: PoolMember[] = await fetchPoolMembers(poolId, page);
+
+      const newMembers: PoolMember[] =
+        await SubscanController.handleFetchPoolMembers(poolId, page);
+
       fetchingMemberList.current = false;
       setPoolMembersApi([...newMembers]);
       fetchPoolMembersMetaBatch(batchKey, newMembers, true);

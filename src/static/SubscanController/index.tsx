@@ -4,6 +4,7 @@
 import type { AnyJson } from 'types';
 import type { SubscanData } from './types';
 import { format, fromUnixTime, getUnixTime, subDays } from 'date-fns';
+import { ListItemsPerPage } from 'consts';
 
 // A class to manage Subscan API Calls.
 //
@@ -63,6 +64,8 @@ export class SubscanController {
     const result: AnyJson = await this.makeRequest(this.ENDPOINTS.rewardSlash, {
       address,
       is_stash: true,
+      row: 100,
+      page: 0,
     });
     // TODO: SubscanResult<T>.
     if (!result?.list) {
@@ -80,16 +83,41 @@ export class SubscanController {
   static fetchPoolClaims = async (address: string): Promise<AnyJson> => {
     const result: AnyJson = await this.makeRequest(this.ENDPOINTS.poolRewards, {
       address,
+      row: 100,
+      page: 0,
     });
     // TODO: SubscanResult<T>.
     if (!result?.list) {
       return [];
     }
 
+    // Remove claims with a `block_timestamp`.
     const poolClaims = result.list.filter(
       (l: AnyJson) => l.block_timestamp !== 0
     );
     return poolClaims;
+  };
+
+  // Fetch a page of pool members from Subscan.
+  static fetchPoolMembers = async (poolId: number, page: number) => {
+    const result: AnyJson = await this.makeRequest(this.ENDPOINTS.poolMembers, {
+      pool_id: poolId,
+      row: ListItemsPerPage,
+      page: page - 1,
+    });
+
+    // TODO: SubscanResult<T>.
+    if (!result?.list) {
+      return [];
+    }
+    // Format list and return.
+    return result.list
+      .map((entry: AnyJson) => ({
+        who: entry.account_display.address,
+        poolId: entry.pool_id,
+      }))
+      .reverse()
+      .splice(0, result.list.length - 1);
   };
 
   // ------------------------------------------------------
@@ -119,6 +147,12 @@ export class SubscanController {
     );
   };
 
+  // Handle fetching pool members.
+  static handleFetchPoolMembers = async (poolId: number, page: number) => {
+    const poolMembers = await this.fetchPoolMembers(poolId, page);
+    return poolMembers;
+  };
+
   // ------------------------------------------------------
   // Helpers for making requests.
   // ------------------------------------------------------
@@ -133,7 +167,7 @@ export class SubscanController {
         'Content-Type': 'application/json',
         'X-API-Key': this.API_KEY,
       },
-      body: JSON.stringify({ row: 100, page: 0, ...body }),
+      body: JSON.stringify(body),
       method: 'POST',
     });
     const json = await res.json();

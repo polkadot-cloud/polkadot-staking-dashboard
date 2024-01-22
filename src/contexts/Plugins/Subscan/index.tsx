@@ -4,7 +4,7 @@
 import { isNotZero } from '@polkadot-cloud/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext } from 'react';
-import { ApiEndpoints, ApiSubscanKey, ListItemsPerPage } from 'consts';
+import { ApiEndpoints, ApiSubscanKey } from 'consts';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import type { AnyApi, AnySubscan } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
@@ -92,43 +92,6 @@ export const SubscanProvider = ({ children }: { children: ReactNode }) => {
     return json?.data || undefined;
   };
 
-  /* fetchPoolMembers
-   * Also checks if subscan service is active *after* the fetch has resolved
-   * as the user could have turned off the service while payouts were fetching.
-   */
-  const fetchPoolMembers = async (poolId: number, page: number) => {
-    if (!plugins.includes('subscan')) {
-      return [];
-    }
-    const res = await handleFetch(
-      page - 1,
-      ApiEndpoints.subscanPoolMembers,
-      ListItemsPerPage,
-      {
-        pool_id: poolId,
-      }
-    );
-
-    if (res.message === 'Success') {
-      if (pluginEnabled('subscan')) {
-        if (res.data?.list !== null) {
-          const result = res.data?.list || [];
-          const list: AnySubscan = [];
-          for (const item of result) {
-            list.push({
-              who: item.account_display.address,
-              poolId: item.pool_id,
-            });
-          }
-          // removes last zero item and returns
-          return list.reverse().splice(0, list.length - 1);
-        }
-      }
-      return [];
-    }
-    return [];
-  };
-
   /* handleFetch
    * utility to handle a fetch request to Subscan
    * returns resulting JSON.
@@ -183,7 +146,6 @@ export const SubscanProvider = ({ children }: { children: ReactNode }) => {
       value={{
         fetchEraPoints,
         fetchPoolDetails,
-        fetchPoolMembers,
       }}
     >
       {children}
