@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyJson } from 'types';
-import type { PayoutType } from './types';
+import type { SubscanData } from './types';
+import { format, fromUnixTime, getUnixTime, subDays } from 'date-fns';
 
 // A class to manage Subscan API Calls.
 //
@@ -29,11 +30,14 @@ export class SubscanController {
   // Total amount of requests that can be made in 1 second.
   static TOTAL_REQUESTS_PER_SECOND = 5;
 
+  // Maximum amount of payout days supported.
+  static MAX_PAYOUT_DAYS = 60;
+
   // The network to use for Subscan API calls.
   static network: string;
 
   // Subscan data for the current account.
-  static data: Partial<Record<PayoutType, AnyJson>>;
+  static data: SubscanData;
 
   // The timestamp of the last 5 requests made.
   static _lastRequestTimes = [];
@@ -144,5 +148,47 @@ export class SubscanController {
   // Resets all received data from class.
   static resetData = () => {
     this.data = {};
+  };
+
+  // Take non-zero rewards in most-recent order.
+  static removeNonZeroAmountAndSort = (payouts: AnyJson[]) => {
+    const list = payouts
+      .filter((p) => p.amount > 0)
+      .sort((a, b) => b.block_timestamp - a.block_timestamp);
+
+    // Calculates from the current date.
+    const fromTimestamp = getUnixTime(
+      subDays(new Date(), this.MAX_PAYOUT_DAYS)
+    );
+    // Ensure payouts not older than `MAX_PAYOUT_DAYS` are returned.
+    return list.filter(
+      ({ block_timestamp }) => block_timestamp >= fromTimestamp
+    );
+  };
+
+  // Calculate the earliest date of a payout list.
+  static payoutsFromDate = (payouts: AnyJson[], locale: AnyJson) => {
+    if (!payouts.length) {
+      return undefined;
+    }
+    const filtered = this.removeNonZeroAmountAndSort(payouts || []);
+    return format(
+      fromUnixTime(filtered[filtered.length - 1].block_timestamp),
+      'do MMM',
+      {
+        locale,
+      }
+    );
+  };
+
+  // Calculate the latest date of a payout list.
+  static payoutsToDate = (payouts: AnyJson[], locale: AnyJson) => {
+    if (!payouts.length) {
+      return undefined;
+    }
+    const filtered = this.removeNonZeroAmountAndSort(payouts || []);
+    return format(fromUnixTime(filtered[0].block_timestamp), 'do MMM', {
+      locale,
+    });
   };
 }

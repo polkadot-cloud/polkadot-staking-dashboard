@@ -2,20 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { isNotZero } from '@polkadot-cloud/utils';
-import { format, fromUnixTime } from 'date-fns';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import {
-  ApiEndpoints,
-  ApiSubscanKey,
-  DefaultLocale,
-  ListItemsPerPage,
-} from 'consts';
+import { ApiEndpoints, ApiSubscanKey, ListItemsPerPage } from 'consts';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
-import { sortNonZeroPayouts } from 'library/Graphs/Utils';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
-import { locales } from 'locale';
 import type { AnyApi, AnySubscan } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
@@ -33,7 +24,6 @@ export const SubscanContext = createContext<SubscanContextInterface>(
 export const useSubscan = () => useContext(SubscanContext);
 
 export const SubscanProvider = ({ children }: { children: ReactNode }) => {
-  const { i18n } = useTranslation();
   const { isReady } = useApi();
   const {
     network,
@@ -52,12 +42,6 @@ export const SubscanProvider = ({ children }: { children: ReactNode }) => {
 
   // store fetched unclaimed payouts from Subscan
   const [unclaimedPayouts, setUnclaimedPayouts] = useState<AnyApi>([]);
-
-  // store the start date of fetched payouts and pool claims combined.
-  const [payoutsFromDate, setPayoutsFromDate] = useState<string | undefined>();
-
-  // store the end date of fetched payouts and pool claims combined.
-  const [payoutsToDate, setPayoutsToDate] = useState<string | undefined>();
 
   // handle fetching the various types of payout and set state in one render.
   const handleFetchPayouts = async () => {
@@ -91,31 +75,6 @@ export const SubscanProvider = ({ children }: { children: ReactNode }) => {
       handleFetchPayouts();
     }
   }, [plugins.includes('subscan'), isReady, network, activeAccount, activeEra]);
-
-  // Store start and end date of fetched payouts.
-  useEffectIgnoreInitial(() => {
-    const filteredPayouts = sortNonZeroPayouts(payouts, poolClaims, true);
-    if (filteredPayouts.length) {
-      setPayoutsFromDate(
-        format(
-          fromUnixTime(
-            filteredPayouts[filteredPayouts.length - 1].block_timestamp
-          ),
-          'do MMM',
-          {
-            locale: locales[i18n.resolvedLanguage ?? DefaultLocale],
-          }
-        )
-      );
-
-      // latest payout date
-      setPayoutsToDate(
-        format(fromUnixTime(filteredPayouts[0].block_timestamp), 'do MMM', {
-          locale: locales[i18n.resolvedLanguage ?? DefaultLocale],
-        })
-      );
-    }
-  }, [payouts, poolClaims, unclaimedPayouts]);
 
   /* fetchPayouts
    * fetches payout history from Subscan.
@@ -360,8 +319,6 @@ export const SubscanProvider = ({ children }: { children: ReactNode }) => {
         payouts,
         poolClaims,
         unclaimedPayouts,
-        payoutsFromDate,
-        payoutsToDate,
         fetchPoolDetails,
         fetchPoolMembers,
         setUnclaimedPayouts,

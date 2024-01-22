@@ -8,8 +8,6 @@ export interface SubscanContextInterface {
   payouts: AnySubscan;
   poolClaims: AnySubscan;
   unclaimedPayouts: AnySubscan;
-  payoutsFromDate: string | undefined;
-  payoutsToDate: string | undefined;
   fetchEraPoints: (v: string, e: number) => Promise<AnyJson>;
   fetchPoolDetails: (poolId: number) => Promise<AnyJson>;
   fetchPoolMembers: (poolId: number, page: number) => Promise<AnyJson[]>;
