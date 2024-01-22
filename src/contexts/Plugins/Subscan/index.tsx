@@ -344,7 +344,7 @@ export const SubscanProvider = ({ children }: { children: ReactNode }) => {
   // Fetch payouts from `SubscanController` when `activeAccount` or `network` changes.
   useEffect(() => {
     // Reset all payouts.
-    SubscanController.resetPayouts();
+    SubscanController.resetData();
     // Update active network.
     SubscanController.network = network;
     // Fetch payouts for updated `activeAccount` if provided.

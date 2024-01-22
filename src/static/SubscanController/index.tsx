@@ -32,8 +32,8 @@ export class SubscanController {
   // The network to use for Subscan API calls.
   static network: string;
 
-  // Payouts for the current account.
-  static payouts: Partial<Record<PayoutType, AnyJson>>;
+  // Subscan data for the current account.
+  static data: Partial<Record<PayoutType, AnyJson>>;
 
   // The timestamp of the last 5 requests made.
   static _lastRequestTimes = [];
@@ -102,9 +102,9 @@ export class SubscanController {
     const poolClaims = results[1];
 
     // Persist results to class.
-    this.payouts['payouts'] = payouts;
-    this.payouts['unclaimedPayouts'] = unclaimedPayouts;
-    this.payouts['poolClaims'] = poolClaims;
+    this.data['payouts'] = payouts;
+    this.data['unclaimedPayouts'] = unclaimedPayouts;
+    this.data['poolClaims'] = poolClaims;
 
     // Let UI know that payouts have been updated.
     document.dispatchEvent(
@@ -141,8 +141,8 @@ export class SubscanController {
   // Class utilities.
   // ------------------------------------------------------
 
-  // Resets all payout data from class.
-  static resetPayouts = () => {
-    this.payouts = {};
+  // Resets all received data from class.
+  static resetData = () => {
+    this.data = {};
   };
 }
