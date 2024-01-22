@@ -1,14 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  isNotZero,
-  localStorageOrDefault,
-  setStateWithRef,
-} from '@polkadot-cloud/utils';
+import { isNotZero, setStateWithRef } from '@polkadot-cloud/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
-import { PluginsList } from 'consts';
 import type { Plugin } from 'types';
 import * as defaults from './defaults';
 import type { PluginsContextInterface } from './types';
@@ -18,6 +13,7 @@ import { useNetwork } from 'contexts/Network';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { SubscanController } from 'static/SubscanController';
+import { getAvailablePlugins } from './Utils';
 
 export const PluginsContext = createContext<PluginsContextInterface>(
   defaults.defaultPluginsContext
@@ -30,25 +26,6 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
   const { activeEra } = useNetworkMetrics();
   const { activeAccount } = useActiveAccounts();
-
-  // Get initial plugins from local storage.
-  const getAvailablePlugins = () => {
-    const localPlugins = localStorageOrDefault(
-      'plugins',
-      PluginsList,
-      true
-    ) as Plugin[];
-
-    // if fiat is disabled, remove binance_spot service
-    const DISABLE_FIAT = Number(import.meta.env.VITE_DISABLE_FIAT ?? 0);
-    if (DISABLE_FIAT && localPlugins.includes('binance_spot')) {
-      const index = localPlugins.indexOf('binance_spot');
-      if (index !== -1) {
-        localPlugins.splice(index, 1);
-      }
-    }
-    return localPlugins;
-  };
 
   // Store the currently active plugins.
   const [plugins, setPlugins] = useState<Plugin[]>(getAvailablePlugins());
