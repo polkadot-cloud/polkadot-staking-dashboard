@@ -15,7 +15,6 @@ import {
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
-import { useSubscan } from 'contexts/Plugins/Subscan';
 import { usePlugins } from 'contexts/Plugins';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -27,6 +26,7 @@ import * as defaults from './defaults';
 import { usePoolMembers } from '../PoolMembers';
 import type { ActivePool, ActivePoolsContextState, PoolTargets } from './types';
 import type { PoolAddresses } from '../BondedPools/types';
+import { SubscanController } from 'static/SubscanController';
 
 export const ActivePoolsContext = createContext<ActivePoolsContextState>(
   defaults.defaultActivePoolContext
@@ -39,7 +39,6 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   const { api, isReady } = useApi();
   const { eraStakers } = useStaking();
   const { pluginEnabled } = usePlugins();
-  const { fetchPoolDetails } = useSubscan();
   const { membership } = usePoolMemberships();
   const { createAccounts } = usePoolsConfig();
   const { activeAccount } = useActiveAccounts();
@@ -494,7 +493,9 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
     // If `Subscan` plugin is enabled, fetch member count directly from the API.
     if (pluginEnabled('subscan') && !fetchingMemberCount.current) {
       fetchingMemberCount.current = true;
-      const poolDetails = await fetchPoolDetails(selectedActivePool.id);
+      const poolDetails = await SubscanController.handleFetchPoolDetails(
+        selectedActivePool.id
+      );
       fetchingMemberCount.current = false;
       setSelectedPoolMemberCount(poolDetails?.member_count || 0);
       return;

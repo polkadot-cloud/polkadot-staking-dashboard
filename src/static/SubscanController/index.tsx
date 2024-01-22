@@ -120,6 +120,19 @@ export class SubscanController {
       .splice(0, result.list.length - 1);
   };
 
+  // Fetch a pool's details from Subscan.
+  static fetchPoolDetails = async (poolId: number) => {
+    const result: AnyJson = await this.makeRequest(this.ENDPOINTS.poolDetails, {
+      pool_id: poolId,
+    });
+
+    // TODO: SubscanResult<T>.
+    if (!result) {
+      return undefined;
+    }
+    return result;
+  };
+
   // ------------------------------------------------------
   // Handling multiple requests concurrently.
   // ------------------------------------------------------
@@ -151,6 +164,12 @@ export class SubscanController {
   static handleFetchPoolMembers = async (poolId: number, page: number) => {
     const poolMembers = await this.fetchPoolMembers(poolId, page);
     return poolMembers;
+  };
+
+  // Handle fetching pool details.
+  static handleFetchPoolDetails = async (poolId: number) => {
+    const poolDetails = await this.fetchPoolDetails(poolId);
+    return poolDetails;
   };
 
   // ------------------------------------------------------

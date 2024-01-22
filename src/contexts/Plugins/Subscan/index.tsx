@@ -67,31 +67,6 @@ export const SubscanProvider = ({ children }: { children: ReactNode }) => {
     return [];
   };
 
-  /* fetchPoolDetails
-   * Also checks if subscan service is active *after* the fetch has resolved
-   * as the user could have turned off the service while payouts were fetching.
-   */
-  const fetchPoolDetails = async (poolId: number) => {
-    if (!plugins.includes('subscan')) {
-      return [];
-    }
-    const res: Response = await fetch(
-      subscanEndpoint + ApiEndpoints.subscanPoolDetails,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'X-API-Key': ApiSubscanKey,
-        },
-        body: JSON.stringify({
-          pool_id: poolId,
-        }),
-        method: 'POST',
-      }
-    );
-    const json: AnySubscan = await res.json();
-    return json?.data || undefined;
-  };
-
   /* handleFetch
    * utility to handle a fetch request to Subscan
    * returns resulting JSON.
@@ -145,7 +120,6 @@ export const SubscanProvider = ({ children }: { children: ReactNode }) => {
     <SubscanContext.Provider
       value={{
         fetchEraPoints,
-        fetchPoolDetails,
       }}
     >
       {children}
