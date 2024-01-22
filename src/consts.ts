@@ -67,8 +67,6 @@ export const EndpointPrice = 'https://api.binance.com/api/v3';
 export const ApiEndpoints = {
   priceChange: `${EndpointPrice}/ticker/24hr?symbol=`,
   // TODO: remove these subscan endpoints in favour of using `SubscanController`.
-  subscanRewardSlash: '/api/v2/scan/account/reward_slash',
-  subscanPoolRewards: '/api/scan/nomination_pool/rewards',
   subscanEraStat: '/api/scan/staking/era_stat',
   subscanPoolMembers: '/api/scan/nomination_pool/pool/members',
   subscanPoolDetails: '/api/scan/nomination_pool/pool',
