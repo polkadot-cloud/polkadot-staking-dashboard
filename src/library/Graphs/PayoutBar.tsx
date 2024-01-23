@@ -19,7 +19,6 @@ import { useTranslation } from 'react-i18next';
 import { DefaultLocale } from 'consts';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
-import { useSubscan } from 'contexts/Plugins/Subscan';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { locales } from 'locale';
@@ -40,25 +39,25 @@ ChartJS.register(
   Legend
 );
 
-export const PayoutBar = ({ days, height }: PayoutBarProps) => {
+export const PayoutBar = ({
+  days,
+  height,
+  data: { payouts, poolClaims, unclaimedPayouts },
+}: PayoutBarProps) => {
   const { i18n, t } = useTranslation('library');
   const { mode } = useTheme();
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
   const { unit, units, colors } = useNetwork().networkData;
-  const { payouts, poolClaims, unclaimedPayouts } = useSubscan();
   const notStaking = !isSyncing && inSetup() && !membership;
 
   // remove slashes from payouts (graph does not support negative values).
-  const payoutsNoSlash = payouts.filter(
-    (p: AnySubscan) => p.event_id !== 'Slashed'
-  );
+  const payoutsNoSlash = payouts?.filter((p) => p.event_id !== 'Slashed') || [];
 
   // remove slashes from unclaimed payouts.
-  const unclaimedPayoutsNoSlash = unclaimedPayouts.filter(
-    (p: AnySubscan) => p.event_id !== 'Slashed'
-  );
+  const unclaimedPayoutsNoSlash =
+    unclaimedPayouts?.filter((p) => p.event_id !== 'Slashed') || [];
 
   // get formatted rewards data for graph.
   const { allPayouts, allPoolClaims, allUnclaimedPayouts } =

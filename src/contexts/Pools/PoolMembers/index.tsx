@@ -63,7 +63,7 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
   useEffectIgnoreInitial(() => {
     if (!pluginEnabled('subscan')) {
       if (isReady) {
-        fetchPoolMembers();
+        fetchPoolMembersNode();
       }
     } else {
       setPoolMembersNode([]);
@@ -88,11 +88,10 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // Fetch all pool members entries from node.
-  const fetchPoolMembers = async () => {
+  const fetchPoolMembersNode = async () => {
     if (!api) {
       return;
     }
-
     const result = await api.query.nominationPools.poolMembers.entries();
     const newMembers = result.map(([keys, val]: AnyApi) => {
       const who = keys.toHuman()[0];
@@ -102,7 +101,6 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
         poolId,
       };
     });
-
     setPoolMembersNode(newMembers);
   };
 
@@ -128,10 +126,6 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
       poolId: poolMember.poolId,
     } as PoolMember;
   };
-
-  // Gets the count of members in a pool from node data.
-  const getPoolMemberCount = (poolId: number) =>
-    getMembersOfPoolFromNode(poolId ?? 0).length;
 
   /*
     Fetches a new batch of pool member metadata.
@@ -218,79 +212,12 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
       return unsub;
     };
 
-    const subscribeToIdentities = async (addr: string[]) => {
-      const unsub = await api.query.identity.identityOf.multi<AnyApi>(
-        addr,
-        (_identities) => {
-          const identities = [];
-          for (const _identity of _identities) {
-            identities.push(_identity.toHuman());
-          }
-          const updated = Object.assign(poolMembersMetaBatchesRef.current);
-          updated[key].identities = identities;
-          setStateWithRef(
-            { ...updated },
-            setPoolMembersMetaBatch,
-            poolMembersMetaBatchesRef
-          );
-        }
-      );
-      return unsub;
-    };
-
-    const subscribeToSuperIdentities = async (addr: string[]) => {
-      const unsub = await api.query.identity.superOf.multi<AnyApi>(
-        addr,
-        async (result) => {
-          // determine where supers exist
-          const supers: AnyApi = [];
-          const supersWithIdentity: AnyApi = [];
-
-          for (let i = 0; i < result.length; i++) {
-            const item = result[i].toHuman();
-            supers.push(item);
-            if (item !== null) {
-              supersWithIdentity.push(i);
-            }
-          }
-
-          // get supers one-off multi query
-          const query = supers
-            .filter((s: AnyApi) => s !== null)
-            .map((s: AnyApi) => s[0]);
-
-          const temp = await api.query.identity.identityOf.multi<AnyApi>(
-            query,
-            (_identities) => {
-              for (let j = 0; j < _identities.length; j++) {
-                const identity = _identities[j].toHuman();
-                // inject identity into super array
-                supers[supersWithIdentity[j]].identity = identity;
-              }
-            }
-          );
-          temp();
-
-          const updated = Object.assign(poolMembersMetaBatchesRef.current);
-          updated[key].supers = supers;
-          setStateWithRef(
-            { ...updated },
-            setPoolMembersMetaBatch,
-            poolMembersMetaBatchesRef
-          );
-        }
-      );
-      return unsub;
-    };
-
     // initiate subscriptions
-    await Promise.all([
-      subscribeToIdentities(addresses),
-      subscribeToSuperIdentities(addresses),
-      subscribeToPoolMembers(addresses),
-    ]).then((unsubs: Fn[]) => {
-      addMetaBatchUnsubs(key, unsubs);
-    });
+    await Promise.all([subscribeToPoolMembers(addresses)]).then(
+      (unsubs: Fn[]) => {
+        addMetaBatchUnsubs(key, unsubs);
+      }
+    );
   };
 
   // Removes a member from the member list and updates state.
@@ -335,7 +262,6 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
         getMembersOfPoolFromNode,
         addToPoolMembers,
         removePoolMember,
-        getPoolMemberCount,
         poolMembersNode,
         poolMembersApi,
         setPoolMembersApi,

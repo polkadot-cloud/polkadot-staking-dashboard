@@ -233,6 +233,7 @@ export const Unbond = () => {
         </ModalNotes>
       </ModalPadding>
       <SubmitTx
+        noMargin
         fromController={isStaking}
         valid={bondValid}
         {...submitExtrinsic}

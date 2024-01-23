@@ -88,7 +88,7 @@ export const Notifications = () => {
                   }}
                 >
                   {item.title && <h3>{item.title}</h3>}
-                  {item.subtitle && <h4>{item.subtitle}</h4>}
+                  {item.subtitle && <p>{item.subtitle}</p>}
                 </motion.li>
               );
             }

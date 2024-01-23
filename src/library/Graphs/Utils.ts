@@ -16,28 +16,6 @@ import { MaxPayoutDays } from 'consts';
 import type { AnyApi, AnyJson, AnySubscan } from 'types';
 import type { PayoutDayCursor } from './types';
 
-// Take non-zero rewards in most-recent order.
-export const sortNonZeroPayouts = (
-  payouts: AnySubscan,
-  poolClaims: AnySubscan,
-  capMaxDays: boolean
-) => {
-  const list = [
-    ...payouts.concat(poolClaims).filter((p: AnySubscan) => p.amount > 0),
-  ].sort(
-    (a: AnySubscan, b: AnySubscan) => b.block_timestamp - a.block_timestamp
-  );
-
-  // this function always calculates from the current date (not fromDate).
-  const fromTimestamp = getUnixTime(subDays(new Date(), MaxPayoutDays));
-
-  if (capMaxDays) {
-    return list.filter((l: AnySubscan) => l.block_timestamp >= fromTimestamp);
-  }
-
-  return list;
-};
-
 // Given payouts, calculate daily income and fill missing days with zero amounts.
 export const calculateDailyPayouts = (
   payouts: AnySubscan,

@@ -105,7 +105,7 @@ export const UnbondFeedback = ({
     }
 
     if (decimals > units) {
-      newErrors.push(`${t('bondAmountDecimals', { unit })}`);
+      newErrors.push(`${t('bondAmountDecimals', { units })}`);
     }
 
     if (bondBn.isGreaterThan(unbondToMin)) {

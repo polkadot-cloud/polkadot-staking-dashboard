@@ -66,11 +66,6 @@ export const ApiSubscanKey = 'd37149339f64775155a82a53f4253b27';
 export const EndpointPrice = 'https://api.binance.com/api/v3';
 export const ApiEndpoints = {
   priceChange: `${EndpointPrice}/ticker/24hr?symbol=`,
-  subscanRewardSlash: '/api/v2/scan/account/reward_slash',
-  subscanPoolRewards: '/api/scan/nomination_pool/rewards',
-  subscanEraStat: '/api/scan/staking/era_stat',
-  subscanPoolMembers: '/api/scan/nomination_pool/pool/members',
-  subscanPoolDetails: '/api/scan/nomination_pool/pool',
 };
 
 /*
