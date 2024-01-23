@@ -56,8 +56,7 @@ export const PayoutLine = ({
   const poolingOnly = !isSyncing && inSetup() && poolMembership !== null;
 
   // remove slashes from payouts (graph does not support negative values).
-  const payoutsNoSlash =
-    payouts?.filter((p: AnySubscan) => p.event_id !== 'Slashed') || [];
+  const payoutsNoSlash = payouts?.filter((p) => p.event_id !== 'Slashed') || [];
 
   // define the most recent date that we will show on the graph.
   const fromDate = new Date();
