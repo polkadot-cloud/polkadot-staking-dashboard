@@ -25,6 +25,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const { api } = useApi();
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
   const { newBatchCall } = useBatchCall();
@@ -130,6 +131,7 @@ export const Summary = ({ section }: SetupStepProps) => {
           <SubmitTx
             submitText={t('nominate.startNominating')}
             valid
+            customEvent={`${network.toLowerCase()}_user_started_nominating`}
             {...submitExtrinsic}
             displayFor="canvas" /* Edge case: not canvas, but the larger button sizes suit this UI more. */
           />

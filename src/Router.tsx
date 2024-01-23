@@ -1,6 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { registerLastVisited, registerSaEvent } from 'Utils';
+import { usePrompt } from 'contexts/Prompt';
+import { Disclaimer } from 'library/NetworkBar/Disclaimer';
 import { Body, Main, Page, Side } from '@polkadot-cloud/react';
 import { extractUrlValue } from '@polkadot-cloud/utils';
 import { AnimatePresence } from 'framer-motion';
@@ -39,11 +42,27 @@ export const RouterInner = () => {
   const { t } = useTranslation();
   const mode = useTheme();
   const { network } = useNetwork();
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const { accounts } = useImportedAccounts();
   const { accountsInitialised } = useOtherAccounts();
   const { activeAccount, setActiveAccount } = useActiveAccounts();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
+  const { openPromptWith } = usePrompt();
+
+  // register landing source from URL
+  useEffect(() => {
+    const utmSource = extractUrlValue('utm_source', search);
+    if (utmSource) {
+      registerSaEvent(`conversion_${utmSource}`);
+    }
+
+    if (!localStorage.getItem('last_visited')) {
+      setTimeout(() => {
+        openPromptWith(<Disclaimer />);
+      }, 5000);
+    }
+    registerLastVisited(utmSource);
+  }, []);
 
   // Scroll to top of the window on every page change or network change.
   useEffect(() => {

@@ -1,18 +1,25 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { registerSaEvent } from 'Utils';
 import { ButtonMono, ButtonMonoInvert, Polkicon } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { usePrompt } from 'contexts/Prompt';
-
 import { ConfirmWrapper } from 'library/Import/Wrappers';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { useNetwork } from 'contexts/Network';
 import type { ConfirmProps } from './types';
 import { NotificationsController } from 'static/NotificationsController';
 import { ellipsisFn } from '@polkadot-cloud/utils';
 
-export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
+export const Confirm = ({
+  address,
+  index,
+  addHandler,
+  source,
+}: ConfirmProps) => {
   const { t } = useTranslation('modals');
+  const { network } = useNetwork();
   const { setStatus } = usePrompt();
   const { addOtherAccounts } = useOtherAccounts();
 
@@ -38,6 +45,9 @@ export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
             const account = addHandler(address, index, addAccountCallback);
             if (account) {
               addOtherAccounts([account]);
+              registerSaEvent(
+                `${network.toLowerCase()}_${source}_account_import`
+              );
             }
             setStatus(0);
           }}

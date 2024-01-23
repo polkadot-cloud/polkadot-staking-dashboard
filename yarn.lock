@@ -1195,6 +1195,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@polkadot-cloud/assets@npm:^0.3.2":
+  version: 0.3.2
+  resolution: "@polkadot-cloud/assets@npm:0.3.2"
+  checksum: 8447ae961912b36c2b9e69990aea69967ee220eecbd598c8ed60482dc2d501fa81f1c31f550eea23f84d9f179d41baaae25b794018589d682fdcebed5a2e8136
+  languageName: node
+  linkType: hard
+
 "@polkadot-cloud/core@npm:^1.2.2":
   version: 1.2.2
   resolution: "@polkadot-cloud/core@npm:1.2.2"

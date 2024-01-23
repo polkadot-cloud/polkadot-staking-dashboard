@@ -19,7 +19,6 @@ import { useLedgerAccounts } from '@polkadot-cloud/react/hooks';
 export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {
   const { t } = useTranslation('modals');
   const { network } = useNetwork();
-
   const { getIsExecuting } = useLedgerHardware();
   const isExecuting = getIsExecuting();
   const { openPromptWith } = usePrompt();
@@ -31,6 +30,7 @@ export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {
     removeLedgerAccount,
     renameLedgerAccount,
   } = useLedgerAccounts();
+  const source = 'ledger';
 
   const renameHandler = (address: string, newName: string) => {
     renameLedgerAccount(address, newName);
@@ -39,7 +39,12 @@ export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {
 
   const openConfirmHandler = (address: string, index: number) => {
     openPromptWith(
-      <Confirm address={address} index={index} addHandler={addLedgerAccount} />,
+      <Confirm
+        address={address}
+        index={index}
+        addHandler={addLedgerAccount}
+        source={source}
+      />,
       'small'
     );
   };
@@ -50,6 +55,7 @@ export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {
         address={address}
         removeHandler={removeLedgerAccount}
         getHandler={getLedgerAccount}
+        source={source}
       />,
       'small'
     );

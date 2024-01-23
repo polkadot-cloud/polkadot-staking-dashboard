@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { registerSaEvent } from 'Utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +13,7 @@ import { useTxMeta } from 'contexts/TxMeta';
 import type { AnyApi, AnyJson } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useNetwork } from 'contexts/Network';
 import { useBuildPayload } from '../useBuildPayload';
 import { useProxySupported } from '../useProxySupported';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
@@ -26,6 +28,7 @@ export const useSubmitExtrinsic = ({
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('library');
   const { api } = useApi();
+  const { network } = useNetwork();
   const { buildPayload } = useBuildPayload();
   const { activeProxy } = useActiveAccounts();
   const { extensionsStatus } = useExtensions();
@@ -117,7 +120,7 @@ export const useSubmitExtrinsic = ({
   };
 
   // Extrinsic submission handler.
-  const onSubmit = async () => {
+  const onSubmit = async (customEventInBlock?: string) => {
     const account = getAccount(fromRef.current);
     if (
       account === null ||
@@ -219,8 +222,18 @@ export const useSubmitExtrinsic = ({
       if (status.isReady) {
         onReady();
       }
+
+      // extrinsic is in block, assume tx completed
       if (status.isInBlock) {
         onInBlock();
+
+        // register sa events
+        const callInfo = tx.method.toHuman();
+        const txEventKey = `${network}_tx_${callInfo.section}_${callInfo.method}`;
+        registerSaEvent(txEventKey);
+        if (customEventInBlock) {
+          registerSaEvent(customEventInBlock);
+        }
       }
     };
 

@@ -13,7 +13,7 @@ export interface UseSubmitExtrinsicProps {
 
 export interface UseSubmitExtrinsic {
   uid: number;
-  onSubmit: () => void;
+  onSubmit: (customEventInBlock?: string) => void;
   submitting: boolean;
   proxySupported: boolean;
   submitAddress: MaybeAddress;

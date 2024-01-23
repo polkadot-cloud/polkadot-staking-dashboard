@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { registerSaEvent } from 'Utils';
 import { extractUrlValue, varToUrlHash } from '@polkadot-cloud/utils';
 import { DefaultLocale } from 'consts';
 import type { AnyApi, AnyJson } from 'types';
@@ -14,7 +15,9 @@ import { availableLanguages, fallbackResources, lngNamespaces } from '.';
 export const getInitialLanguage = () => {
   // get language from url if present
   const urlLng = extractUrlValue('l');
+
   if (availableLanguages.find((n) => n[0] === urlLng) && urlLng) {
+    registerSaEvent(`locale_from_url_${urlLng}`);
     localStorage.setItem('lng', urlLng);
     return urlLng;
   }
@@ -82,6 +85,8 @@ export const getResources = (lng: string) => {
 //
 // On click handler for changing language in-app.
 export const changeLanguage = async (lng: string, i18next: AnyApi) => {
+  registerSaEvent(`locale_from_modal_${lng}`);
+
   // check whether resources exist and need to by dynamically loaded.
   const { resources, dynamicLoad } = getResources(lng);
 

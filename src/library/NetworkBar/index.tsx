@@ -5,9 +5,11 @@ import { capitalizeFirstLetter } from '@polkadot-cloud/utils';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
+import { usePrompt } from 'contexts/Prompt';
 import { usePlugins } from 'contexts/Plugins';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useNetwork } from 'contexts/Network';
+import { Disclaimer } from './Disclaimer';
 import { Status } from './Status';
 import { Summary, Wrapper } from './Wrappers';
 import { isCustomEvent } from 'static/utils';
@@ -19,11 +21,11 @@ import { faHive } from '@fortawesome/free-brands-svg-icons';
 
 export const NetworkBar = () => {
   const { t } = useTranslation('library');
+  const prices = usePrices();
   const { plugins } = usePlugins();
   const { isLightClient } = useApi();
+  const { openPromptWith } = usePrompt();
   const { networkData, network } = useNetwork();
-  const prices = usePrices();
-
   const PRIVACY_URL = import.meta.env.VITE_PRIVACY_URL;
   const DISCLAIMER_URL = import.meta.env.VITE_DISCLAIMER_URL;
   const ORGANISATION = import.meta.env.VITE_ORGANISATION;
@@ -81,6 +83,16 @@ export const NetworkBar = () => {
               </a>
             </p>
           )}
+          <p>
+            <button
+              type="button"
+              onClick={() => {
+                openPromptWith(<Disclaimer />);
+              }}
+            >
+              {t('dashboardDisclaimer')}
+            </button>
+          </p>
         </section>
         <section>
           <div className="hide-small">

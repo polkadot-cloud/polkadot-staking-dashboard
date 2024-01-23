@@ -46,6 +46,7 @@
     "copyAddress": "Copy Address",
     "copyPoolAddress": "Copy Pool Address",
     "createPool": "Create Pool",
+    "dashboardDisclaimer": "Dashboard Disclaimer",
     "dayAverage": "Day Average",
     "dayPerformance": "Day Performance",
     "dayPerformanceStanding": "{{count}} Day Active Validators Performance Standing",

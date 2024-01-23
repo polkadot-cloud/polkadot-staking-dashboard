@@ -15,6 +15,7 @@ export const Default = ({
   valid,
   submitText,
   buttons,
+  customEvent,
   submitAddress,
   displayFor,
 }: SubmitProps & { buttons?: ReactNode[] }) => {
@@ -36,7 +37,7 @@ export const Default = ({
           text={submitText || ''}
           iconLeft={faArrowAltCircleUp}
           iconTransform="grow-2"
-          onClick={() => onSubmit()}
+          onClick={() => onSubmit(customEvent)}
           disabled={disabled}
           pulse={!disabled}
         />

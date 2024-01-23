@@ -46,6 +46,7 @@
     "copyAddress": "复制地址",
     "copyPoolAddress": "复制池地址",
     "createPool": "创建提名池",
+    "dashboardDisclaimer": "该应用免责声明",
     "dayAverage": "日平均值",
     "dayPerformance": "天内表现",
     "dayPerformanceStanding": "{{count}}天活跃验证人内表现排名",

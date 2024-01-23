@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { registerSaEvent } from 'Utils';
 import { ButtonSecondary } from '@polkadot-cloud/react';
 import { isValidAddress } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
@@ -10,13 +11,14 @@ import { usePrompt } from 'contexts/Prompt';
 import { QRViewerWrapper } from 'library/Import/Wrappers';
 import { QrScanSignature } from 'library/QRCode/ScanSignature';
 import { useNetwork } from 'contexts/Network';
-import { formatAccountSs58 } from 'contexts/Connect/Utils';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { formatAccountSs58 } from 'contexts/Connect/Utils';
 import type { AnyJson } from 'types';
 
 export const Reader = () => {
   const { t } = useTranslation('modals');
   const {
+    network,
     networkData: { ss58 },
   } = useNetwork();
   const { addOtherAccounts } = useOtherAccounts();
@@ -49,6 +51,7 @@ export const Reader = () => {
     if (valid) {
       const account = addVaultAccount(qrData, vaultAccounts.length);
       if (account) {
+        registerSaEvent(`${network.toLowerCase()}_vault_account_import`);
         addOtherAccounts([account]);
       }
       closePrompt();

@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-native authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { registerSaEvent } from 'Utils';
 import { ellipsisFn, setStateWithRef } from '@polkadot-cloud/utils';
 import type { FC } from 'react';
 import { useEffect, useRef, useState } from 'react';
@@ -128,6 +129,7 @@ export const ImportLedger: FC = () => {
         addressesRef
       );
       resetStatusCode();
+      registerSaEvent(`${network.toLowerCase()}_ledger_account_fetched`);
 
       // trigger notification.
       NotificationsController.emit({

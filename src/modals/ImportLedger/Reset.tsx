@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { registerSaEvent } from 'Utils';
 import { ButtonMono, ButtonMonoInvert } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
@@ -11,9 +12,11 @@ import type { AnyJson } from 'types';
 import { useOverlay, useLedgerAccounts } from '@polkadot-cloud/react/hooks';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { LedgerAccount } from '@polkadot-cloud/react/types';
+import { useNetwork } from 'contexts/Network';
 
 export const Reset = ({ removeLedgerAddress }: AnyJson) => {
   const { t } = useTranslation('modals');
+  const { network } = useNetwork();
   const { setStatus } = usePrompt();
   const { replaceModal } = useOverlay().modal;
   const { forgetOtherAccounts } = useOtherAccounts();
@@ -45,6 +48,7 @@ export const Reset = ({ removeLedgerAddress }: AnyJson) => {
           text={t('confirmReset')}
           onClick={() => {
             removeAccounts();
+            registerSaEvent(`${network.toLowerCase()}_ledger_accounts_reset`);
             setStatus(0);
           }}
         />

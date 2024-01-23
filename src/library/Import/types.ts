@@ -28,6 +28,7 @@ export interface AddressProps {
 export interface ConfirmProps {
   address: string;
   index: number;
+  source: string;
   addHandler: (
     address: string,
     index: number,
@@ -37,6 +38,7 @@ export interface ConfirmProps {
 
 export interface RemoveProps {
   address: string;
+  source: string;
   getHandler: (address: string) => ImportedAccount | null;
   removeHandler: (address: string, callback?: () => void) => void;
 }

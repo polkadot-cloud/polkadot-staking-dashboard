@@ -6,7 +6,6 @@ import {
   faChevronCircleRight,
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useFastUnstake } from 'contexts/FastUnstake';
@@ -17,9 +16,12 @@ import { useUi } from 'contexts/UI';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Stat } from 'library/Stat';
+import { useTranslation } from 'react-i18next';
+import { registerSaEvent } from 'Utils';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useNetwork } from 'contexts/Network';
 
 export const NominationStatus = ({
   showButtons = true,
@@ -30,6 +32,7 @@ export const NominationStatus = ({
 }) => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
+  const { network } = useNetwork();
   const { inSetup } = useStaking();
   const { isNetworkSyncing } = useUi();
   const { openModal } = useOverlay().modal;
@@ -99,7 +102,12 @@ export const NominationStatus = ({
                       !isReady ||
                       isReadOnlyAccount(activeAccount) ||
                       !activeAccount,
-                    onClick: () => setOnNominatorSetup(true),
+                    onClick: () => {
+                      registerSaEvent(
+                        `${network.toLowerCase()}_nominate_setup_button_pressed`
+                      );
+                      setOnNominatorSetup(true);
+                    },
                   },
                 ]
       }

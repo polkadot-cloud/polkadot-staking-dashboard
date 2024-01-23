@@ -26,6 +26,7 @@ export const SubmitTx = ({
   proxySupported,
   displayFor = 'default',
   fromController = false,
+  customEvent,
 }: SubmitTxProps) => {
   const { t } = useTranslation();
   const { getBondedAccount } = useBonded();
@@ -93,6 +94,7 @@ export const SubmitTx = ({
             submitText={submitText}
             buttons={buttons}
             submitAddress={submitAddress}
+            customEvent={customEvent}
             displayFor={displayFor}
           />
         ) : (
@@ -103,6 +105,7 @@ export const SubmitTx = ({
             submitText={submitText}
             buttons={buttons}
             submitAddress={submitAddress}
+            customEvent={customEvent}
             displayFor={displayFor}
           />
         )

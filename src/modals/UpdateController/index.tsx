@@ -37,6 +37,7 @@ export const UpdateController = () => {
     if (!api) {
       return tx;
     }
+
     tx = api.tx.staking.setController();
     return tx;
   };

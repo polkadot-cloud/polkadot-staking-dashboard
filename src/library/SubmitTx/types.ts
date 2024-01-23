@@ -14,10 +14,11 @@ export type SubmitTxProps = SubmitProps & {
 
 export interface SubmitProps {
   uid?: number;
-  onSubmit: () => void;
+  onSubmit: (customEvent?: string) => void;
   submitting: boolean;
   valid: boolean;
   submitText?: string;
+  customEvent?: string;
   submitAddress: MaybeAddress;
   displayFor?: DisplayFor;
 }

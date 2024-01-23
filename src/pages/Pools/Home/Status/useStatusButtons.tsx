@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faPlusCircle, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { registerSaEvent } from 'Utils';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
@@ -12,11 +13,13 @@ import { useSetup } from 'contexts/Setup';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useNetwork } from 'contexts/Network';
 import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
+  const { network } = useNetwork();
   const { stats } = usePoolsConfig();
   const { isOwner } = useActivePools();
   const { setActiveTab } = usePoolsTabs();
@@ -54,7 +57,10 @@ export const useStatusButtons = () => {
     large: false,
     transform: 'grow-1',
     disabled: disableCreate(),
-    onClick: () => setOnPoolSetup(true),
+    onClick: () => {
+      registerSaEvent(`${network.toLowerCase()}_pool_create_button_pressed`);
+      setOnPoolSetup(true);
+    },
   };
 
   const joinPoolBtn = {
@@ -67,7 +73,10 @@ export const useStatusButtons = () => {
       isReadOnlyAccount(activeAccount) ||
       !activeAccount ||
       !bondedPools.length,
-    onClick: () => setActiveTab(1),
+    onClick: () => {
+      registerSaEvent(`${network.toLowerCase()}_pool_join_button_pressed`);
+      setActiveTab(1);
+    },
   };
 
   if (!membership) {
