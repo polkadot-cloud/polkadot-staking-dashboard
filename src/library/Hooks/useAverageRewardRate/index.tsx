@@ -7,12 +7,18 @@ import { useErasPerDay } from '../useErasPerDay';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { AverageRewardRate, UseAverageRewardRate } from './types';
 import { defaultAverageRewardRate } from './defaults';
+import { useNetwork } from 'contexts/Network';
+import { useStaking } from 'contexts/Staking';
+import { planckToUnit } from '@polkadot-cloud/utils';
 
 export const useAverageRewardRate = (): UseAverageRewardRate => {
+  const { staking } = useStaking();
   const { erasPerDay } = useErasPerDay();
   const { metrics } = useNetworkMetrics();
+  const { units } = useNetwork().networkData;
   const { avgCommission, averageEraValidatorReward } = useValidators();
   const { totalIssuance } = metrics;
+  const { lastTotalStake } = staking;
 
   // Get average reward rates.
   const getAverageRewardRate = (compounded: boolean): AverageRewardRate => {
@@ -25,6 +31,14 @@ export const useAverageRewardRate = (): UseAverageRewardRate => {
       return defaultAverageRewardRate;
     }
 
+    // total supply as percent.
+    const totalIssuanceUnit = planckToUnit(totalIssuance, units);
+    const lastTotalStakeUnit = planckToUnit(lastTotalStake, units);
+    const supplyStaked =
+      lastTotalStakeUnit.isZero() || totalIssuanceUnit.isZero()
+        ? new BigNumber(0)
+        : lastTotalStakeUnit.dividedBy(totalIssuanceUnit);
+
     // Calculate average daily reward as a percentage of total issuance.
     const averageRewardPerDay =
       averageEraValidatorReward.reward.multipliedBy(erasPerDay);
@@ -32,11 +46,11 @@ export const useAverageRewardRate = (): UseAverageRewardRate => {
       totalIssuance.dividedBy(100)
     );
 
-    let averageRewardRate: BigNumber = new BigNumber(0);
+    let inflationToStakers: BigNumber = new BigNumber(0);
 
     if (!compounded) {
       // Base rate without compounding.
-      averageRewardRate = dayRewardRate.multipliedBy(365);
+      inflationToStakers = dayRewardRate.multipliedBy(365);
     } else {
       // Daily Compound Interest: A = P[(1+r)^t]
       // Where:
@@ -50,12 +64,15 @@ export const useAverageRewardRate = (): UseAverageRewardRate => {
         .dividedBy(100)
         .plus(1)
         .exponentiatedBy(365);
-      averageRewardRate = new BigNumber(100)
+      inflationToStakers = new BigNumber(100)
         .multipliedBy(multipilier)
         .minus(100);
     }
 
+    const averageRewardRate = inflationToStakers.dividedBy(supplyStaked);
+
     return {
+      inflationToStakers,
       avgRateBeforeCommission: averageRewardRate,
       avgRateAfterCommission: averageRewardRate.minus(
         averageRewardRate.multipliedBy(avgCommission * 0.01)

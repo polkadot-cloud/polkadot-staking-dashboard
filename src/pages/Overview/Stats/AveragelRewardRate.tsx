@@ -5,13 +5,12 @@ import { Text } from 'library/StatBoxList/Text';
 import { useAverageRewardRate } from 'library/Hooks/useAverageRewardRate';
 import { useTranslation } from 'react-i18next';
 
-export const HistoricalRewardsRateStat = () => {
+export const AverageRewardRateStat = () => {
   const { t } = useTranslation('pages');
   const { getAverageRewardRate } = useAverageRewardRate();
-
   // Get the compounded Average Reward Rate.
   const { avgRateBeforeCommission, avgRateAfterCommission } =
-    getAverageRewardRate(true);
+    getAverageRewardRate(false);
 
   const params = {
     label: `${t('overview.averageRewardRate')}`,
