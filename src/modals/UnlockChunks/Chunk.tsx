@@ -48,7 +48,7 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
     <ChunkWrapper>
       <div>
         <section>
-          <h2>{`${planckToUnit(value, units)} ${unit}`}</h2>
+          <h2>{`${planckToUnit(new BigNumber(value), units)} ${unit}`}</h2>
           <h4>
             {left.isLessThanOrEqualTo(0) ? (
               t('unlocked')
