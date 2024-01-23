@@ -14,11 +14,6 @@ import { format, fromUnixTime, getUnixTime, subDays } from 'date-fns';
 import { ListItemsPerPage } from 'consts';
 import type { PoolMember } from 'contexts/Pools/PoolMembers/types';
 
-// A class to manage Subscan API Calls.
-//
-// TODO: Implement timeouts to not call more than 5 requests in 1 second.
-//
-// TODO: Handle caching of results in local storage, key by era and refresh if outdated.
 export class SubscanController {
   // ------------------------------------------------------
   // Class members.
