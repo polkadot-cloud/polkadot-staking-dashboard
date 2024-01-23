@@ -26,11 +26,11 @@ import { SubscanController } from 'static/SubscanController';
 import { locales } from 'locale';
 
 export const Payouts = ({ page: { key } }: PageProps) => {
+  const { i18n, t } = useTranslation();
   const { isSyncing } = useUi();
   const { openHelp } = useHelp();
   const { plugins } = usePlugins();
   const { inSetup } = useStaking();
-  const { i18n, t } = useTranslation();
   const { getData, injectBlockTimestamp } = useSubscanData([
     'payouts',
     'unclaimedPayouts',
