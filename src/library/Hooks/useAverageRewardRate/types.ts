@@ -8,6 +8,7 @@ export interface UseAverageRewardRate {
 }
 
 export interface AverageRewardRate {
+  inflationToStakers: BigNumber;
   avgRateBeforeCommission: BigNumber;
   avgRateAfterCommission: BigNumber;
 }
