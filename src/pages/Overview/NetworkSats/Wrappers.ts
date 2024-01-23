@@ -24,6 +24,7 @@ export const Item = styled(motion.div)`
   }
 
   h4 {
+    font-family: Inter, sans-serif;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
