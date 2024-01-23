@@ -219,27 +219,6 @@ export class SubscanController {
   };
 
   // ------------------------------------------------------
-  // Helpers for making requests.
-  // ------------------------------------------------------
-
-  // Get the public Subscan endpoint.
-  static getEndpoint = () => `https://${this.network}.api.subscan.io`;
-
-  // Make a request to Subscan and return any data returned from the response.
-  static makeRequest = async (endpoint: string, body: SubscanRequestBody) => {
-    const res: Response = await fetch(this.getEndpoint() + endpoint, {
-      headers: {
-        'Content-Type': 'application/json',
-        'X-API-Key': this.API_KEY,
-      },
-      body: JSON.stringify(body),
-      method: 'POST',
-    });
-    const json = await res.json();
-    return json?.data || undefined;
-  };
-
-  // ------------------------------------------------------
   // Class utilities.
   // ------------------------------------------------------
 
@@ -316,5 +295,26 @@ export class SubscanController {
     return format(fromUnixTime(filtered[0].block_timestamp), 'do MMM', {
       locale,
     });
+  };
+
+  // ------------------------------------------------------
+  // Helpers for making requests.
+  // ------------------------------------------------------
+
+  // Get the public Subscan endpoint.
+  static getEndpoint = () => `https://${this.network}.api.subscan.io`;
+
+  // Make a request to Subscan and return any data returned from the response.
+  static makeRequest = async (endpoint: string, body: SubscanRequestBody) => {
+    const res: Response = await fetch(this.getEndpoint() + endpoint, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': this.API_KEY,
+      },
+      body: JSON.stringify(body),
+      method: 'POST',
+    });
+    const json = await res.json();
+    return json?.data || undefined;
   };
 }
