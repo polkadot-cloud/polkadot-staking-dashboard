@@ -13,10 +13,9 @@ import { GraphWrapper } from 'library/Graphs/Wrapper';
 import { useSize } from 'library/Hooks/useSize';
 import { Title } from 'library/Modal/Title';
 import { StatusLabel } from 'library/StatusLabel';
-import type { ValidatorDetail } from '@polkawatch/ddp-client';
+import { PolkawatchApi, type ValidatorDetail } from '@polkawatch/ddp-client';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { PluginLabel } from 'library/PluginLabel';
-import { usePolkawatchApi } from 'contexts/Plugins/Polkawatch';
 import { usePlugins } from 'contexts/Plugins';
 import { useNetwork } from 'contexts/Network';
 import { PolkaWatchController } from 'static/PolkaWatchController';
@@ -24,7 +23,6 @@ import { PolkaWatchController } from 'static/PolkaWatchController';
 export const ValidatorGeo = () => {
   const { t } = useTranslation('modals');
   const { network } = useNetwork();
-  const { pwApi } = usePolkawatchApi();
   const { options } = useOverlay().modal.config;
   const { address, identity } = options;
   const { openHelp } = useHelp();
@@ -35,7 +33,6 @@ export const ValidatorGeo = () => {
   const [pwData, setPwData] = useState<ValidatorDetail>({} as ValidatorDetail);
   const [analyticsAvailable, setAnalyticsAvailable] = useState<boolean>(true);
   const { pluginEnabled } = usePlugins();
-
   const enabled = pluginEnabled('polkawatch');
 
   // In Small Screens we will display the most relevant chart.
@@ -48,7 +45,10 @@ export const ValidatorGeo = () => {
 
   useEffect(() => {
     if (networkSupported && enabled) {
-      pwApi
+      const polkaWatchApi = new PolkawatchApi(
+        PolkaWatchController.apiConfig(network)
+      );
+      polkaWatchApi
         .ddpIpfsValidatorDetail({
           lastDays: 60,
           validator: address,
@@ -62,7 +62,7 @@ export const ValidatorGeo = () => {
     } else {
       setAnalyticsAvailable(false);
     }
-  }, [pwApi, address]);
+  }, [address, network]);
 
   return (
     <>
