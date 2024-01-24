@@ -1228,9 +1228,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot-cloud/react@npm:^0.3.6":
-  version: 0.3.6
-  resolution: "@polkadot-cloud/react@npm:0.3.6"
+"@polkadot-cloud/react@npm:^0.3.8":
+  version: 0.3.8
+  resolution: "@polkadot-cloud/react@npm:0.3.8"
   dependencies:
     "@chainsafe/metamask-polkadot-adapter": "npm:^0.6.0"
     "@chainsafe/metamask-polkadot-types": "npm:^0.6.0"
@@ -1250,7 +1250,7 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 8d9f69fddcfdcd99b4515a301dc46bcbcf213296a5b39bc0e50acb88114d6c9d4744ade4f92917fe28e8ed54d06027f83ee2d650f76c4c5bba0d9e55584082db
+  checksum: 599b7ce1ac7c8acee0c619efe283bb63e12f7159a1379eef66b5262fd9e6a20cba43e1be7f89f77e652afb87334b0fa7b6e2b6ff16d4a9b3b569589e96e95199
   languageName: node
   linkType: hard
 
@@ -6396,7 +6396,7 @@ __metadata:
     "@ledgerhq/logs": "npm:^6.12.0"
     "@polkadot-cloud/assets": "npm:^0.3.4"
     "@polkadot-cloud/core": "npm:^1.2.4"
-    "@polkadot-cloud/react": "npm:^0.3.6"
+    "@polkadot-cloud/react": "npm:^0.3.8"
     "@polkadot-cloud/utils": "npm:^0.2.3"
     "@polkadot/api": "npm:^10.11.2"
     "@polkadot/keyring": "npm:^12.6.2"
