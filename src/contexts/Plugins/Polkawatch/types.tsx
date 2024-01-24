@@ -9,5 +9,4 @@ import type { PolkawatchApi } from '@polkawatch/ddp-client';
  */
 export interface PolkawatchState {
   pwApi: PolkawatchApi;
-  networkSupported: boolean;
 }

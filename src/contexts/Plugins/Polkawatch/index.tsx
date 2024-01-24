@@ -9,7 +9,7 @@ import { useNetwork } from 'contexts/Network';
 import type { NetworkName } from '../../../types';
 import type { PolkawatchState } from './types';
 import { DefaultNetwork } from '../../../consts';
-import { PolkaWatchApiVersion, PolkaWatchNetworks } from './defaults';
+import { PolkaWatchApiVersion } from './defaults';
 
 /**
  * This is the Polkawatch API provider, which builds polkawatch API depending on the Chain that is currently
@@ -35,7 +35,6 @@ const apiConfiguration = (
 
 const PolkawatchInitialState = {
   pwApi: new PolkawatchApi(apiConfiguration()),
-  networkSupported: true,
 };
 
 const PolkawatchContext = createContext<PolkawatchState>(
@@ -56,7 +55,6 @@ export const PolkawatchProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     setState({
       pwApi: new PolkawatchApi(apiConfiguration(network)),
-      networkSupported: PolkaWatchNetworks.includes(network),
     });
   }, [network]);
 

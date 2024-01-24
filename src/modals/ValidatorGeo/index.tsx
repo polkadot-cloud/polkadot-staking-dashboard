@@ -18,10 +18,13 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { PluginLabel } from 'library/PluginLabel';
 import { usePolkawatchApi } from 'contexts/Plugins/Polkawatch';
 import { usePlugins } from 'contexts/Plugins';
+import { useNetwork } from 'contexts/Network';
+import { PolkaWatchNetworks } from 'contexts/Plugins/Polkawatch/defaults';
 
 export const ValidatorGeo = () => {
   const { t } = useTranslation('modals');
-  const { pwApi, networkSupported } = usePolkawatchApi();
+  const { network } = useNetwork();
+  const { pwApi } = usePolkawatchApi();
   const { options } = useOverlay().modal.config;
   const { address, identity } = options;
   const { openHelp } = useHelp();
@@ -39,6 +42,8 @@ export const ValidatorGeo = () => {
   // For now, we are not going to complicate the UI.
   const isSmallScreen = window.innerWidth <= 650;
   const chartWidth = '330px';
+
+  const networkSupported = PolkaWatchNetworks.includes(network);
 
   useEffect(() => {
     if (networkSupported && enabled) {
