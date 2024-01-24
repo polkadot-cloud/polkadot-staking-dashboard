@@ -35,7 +35,6 @@ import { UIProvider } from 'contexts/UI';
 import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries';
 import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidators';
 import { PayoutsProvider } from 'contexts/Payouts';
-import { PolkawatchProvider } from 'contexts/Plugins/Polkawatch';
 import { useNetwork } from 'contexts/Network';
 import { APIProvider } from 'contexts/Api';
 import { ThemedRouter } from 'Themes';
@@ -88,7 +87,6 @@ export const Providers = () => {
     NetworkMetricsProvider,
     HelpProvider,
     PluginsProvider,
-    PolkawatchProvider,
     IdentitiesProvider,
     BondedProvider,
     BalancesProvider,
