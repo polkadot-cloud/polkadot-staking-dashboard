@@ -1,12 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Configuration, PolkawatchApi } from '@polkawatch/ddp-client';
+import { PolkawatchApi } from '@polkawatch/ddp-client';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { localStorageOrDefault } from '@polkadot-cloud/utils';
 import { useNetwork } from 'contexts/Network';
-import type { NetworkName } from '../../../types';
 import type { PolkawatchState } from './types';
 import { DefaultNetwork } from '../../../consts';
 import { PolkaWatchController } from 'static/PolkaWatchController';
@@ -16,25 +14,8 @@ import { PolkaWatchController } from 'static/PolkaWatchController';
  * in context. Also returns information about whether there exist decentralization analytics for the Network.
  */
 
-/**
- * Builds the API Configuration based on Chain and API Version
- * @param name the chain to query: polkadot, kusama, etc.
- * @param version the API version
- * @constructor
- */
-const apiConfiguration = (
-  name: NetworkName = localStorageOrDefault(
-    'network',
-    DefaultNetwork
-  ) as NetworkName,
-  version = PolkaWatchController.API_VERSION
-): Configuration =>
-  new Configuration({
-    basePath: `https://${name}-${version}-api.polkawatch.app`,
-  });
-
 const PolkawatchInitialState = {
-  pwApi: new PolkawatchApi(apiConfiguration()),
+  pwApi: new PolkawatchApi(PolkaWatchController.apiConfig(DefaultNetwork)),
 };
 
 const PolkawatchContext = createContext<PolkawatchState>(
@@ -54,7 +35,7 @@ export const PolkawatchProvider = ({ children }: { children: ReactNode }) => {
    */
   useEffect(() => {
     setState({
-      pwApi: new PolkawatchApi(apiConfiguration(network)),
+      pwApi: new PolkawatchApi(PolkaWatchController.apiConfig(network)),
     });
   }, [network]);
 
