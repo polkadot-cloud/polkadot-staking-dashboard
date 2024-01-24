@@ -9,7 +9,7 @@ import { useNetwork } from 'contexts/Network';
 import type { NetworkName } from '../../../types';
 import type { PolkawatchState } from './types';
 import { DefaultNetwork } from '../../../consts';
-import { PolkaWatchApiVersion } from './defaults';
+import { PolkaWatchController } from 'static/PolkaWatchController';
 
 /**
  * This is the Polkawatch API provider, which builds polkawatch API depending on the Chain that is currently
@@ -27,7 +27,7 @@ const apiConfiguration = (
     'network',
     DefaultNetwork
   ) as NetworkName,
-  version = PolkaWatchApiVersion
+  version = PolkaWatchController.API_VERSION
 ): Configuration =>
   new Configuration({
     basePath: `https://${name}-${version}-api.polkawatch.app`,

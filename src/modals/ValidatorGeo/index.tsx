@@ -19,7 +19,7 @@ import { PluginLabel } from 'library/PluginLabel';
 import { usePolkawatchApi } from 'contexts/Plugins/Polkawatch';
 import { usePlugins } from 'contexts/Plugins';
 import { useNetwork } from 'contexts/Network';
-import { PolkaWatchNetworks } from 'contexts/Plugins/Polkawatch/defaults';
+import { PolkaWatchController } from 'static/PolkaWatchController';
 
 export const ValidatorGeo = () => {
   const { t } = useTranslation('modals');
@@ -43,7 +43,8 @@ export const ValidatorGeo = () => {
   const isSmallScreen = window.innerWidth <= 650;
   const chartWidth = '330px';
 
-  const networkSupported = PolkaWatchNetworks.includes(network);
+  const networkSupported =
+    PolkaWatchController.SUPPORTED_NETWORKS.includes(network);
 
   useEffect(() => {
     if (networkSupported && enabled) {
