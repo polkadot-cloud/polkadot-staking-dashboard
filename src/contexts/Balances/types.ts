@@ -10,7 +10,7 @@ export interface BalancesContextInterface {
   getLocks: (address: MaybeAddress) => BalanceLocks;
   getBalance: (address: MaybeAddress) => Balance;
   getLedger: (source: ActiveLedgerSource) => Ledger;
-  balancesSynced: boolean;
+  balancesInitialSynced: boolean;
 }
 
 export type ActiveBalancesState = Record<string, ActiveBalance>;

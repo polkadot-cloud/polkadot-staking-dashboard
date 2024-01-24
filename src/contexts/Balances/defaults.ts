@@ -15,5 +15,5 @@ export const defaultBalancesContext: BalancesContextInterface = {
   getLocks: (address) => ({ locks: [], maxLock: new BigNumber(0) }),
   getBalance: (address) => defaultBalance,
   getLedger: (source) => defaultLedger,
-  balancesSynced: false,
+  balancesInitialSynced: false,
 };

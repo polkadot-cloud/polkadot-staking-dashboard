@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ReactNode } from 'react';
-import { createContext, useContext, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import type { MaybeAddress } from 'types';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import * as defaults from './defaults';
@@ -33,8 +33,9 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     }
   );
 
-  // Store whether balances for all imported accounts have been synced.
-  const [balancesSynced, setBalancesSynced] = useState<boolean>(false);
+  // Store whether balances for all imported accounts have been synced on initial page load.
+  const [balancesInitialSynced, setBalancesInitialSynced] =
+    useState<boolean>(false);
 
   // Check all accounts have been synced. App-wide syncing state for all accounts.
   const newAccountBalancesCallback = (e: Event) => {
@@ -50,7 +51,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
 
   // Check whether all accounts have been synced and update state accordingly.
   const checkBalancesSynced = () => {
-    setBalancesSynced(
+    setBalancesInitialSynced(
       Object.keys(BalancesController.balances).length === accounts.length
     );
   };
@@ -76,6 +77,13 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     documentRef
   );
 
+  // If no accounts are imported, set balances synced to true.
+  useEffect(() => {
+    if (!accounts.length) {
+      setBalancesInitialSynced(true);
+    }
+  }, [accounts.length]);
+
   return (
     <BalancesContext.Provider
       value={{
@@ -84,7 +92,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
         getLocks,
         getBalance,
         getLedger,
-        balancesSynced,
+        balancesInitialSynced,
       }}
     >
       {children}
