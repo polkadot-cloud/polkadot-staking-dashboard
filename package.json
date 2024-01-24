@@ -27,7 +27,7 @@
     "@polkadot-cloud/assets": "^0.3.2",
     "@polkadot-cloud/core": "^1.2.4",
     "@polkadot-cloud/react": "^0.3.6",
-    "@polkadot-cloud/utils": "^0.2.1",
+    "@polkadot-cloud/utils": "^0.2.3",
     "@polkadot/api": "^10.11.2",
     "@polkadot/keyring": "^12.6.2",
     "@polkadot/rpc-provider": "^10.11.2",
