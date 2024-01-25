@@ -11,7 +11,6 @@ import BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, MaybeAddress } from 'types';
 import Worker from 'workers/stakers?worker';
@@ -36,9 +35,9 @@ export const FastUnstakeContext = createContext<FastUnstakeContextInterface>(
 export const useFastUnstake = () => useContext(FastUnstakeContext);
 
 export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
+  const { activeEra } = useApi();
   const { network } = useNetwork();
   const { activeAccount } = useActiveAccounts();
-  const { activeEra } = useNetworkMetrics();
   const { inSetup, fetchEraStakers } = useStaking();
   const { getNominationStatus } = useNominationStatus();
   const {

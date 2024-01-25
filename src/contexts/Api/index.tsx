@@ -3,20 +3,26 @@
 
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { NetworkList } from 'config/networks';
+import {
+  NetworkList,
+  NetworksWithPagedRewards,
+  PagedRewardsStartEra,
+} from 'config/networks';
 
 import type {
   APIChainState,
   APIConstants,
   APIContextInterface,
   APIProviderProps,
+  ActiveEra,
   NetworkMetrics,
-} from 'contexts/Api/types';
+} from './types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import {
+  defaultConsts,
+  defaultActiveEra,
   defaultApiContext,
   defaultChainState,
-  defaultConsts,
   defaultNetworkMetrics,
 } from './defaults';
 import { APIController } from 'static/APIController';
@@ -25,6 +31,7 @@ import type { ApiStatus } from 'static/APIController/types';
 import { NotificationsController } from 'static/NotificationsController';
 import { useTranslation } from 'react-i18next';
 import { useEventListener } from 'usehooks-ts';
+import BigNumber from 'bignumber.js';
 
 export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 
@@ -90,6 +97,10 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   );
   const networkMetricsRef = useRef(networkMetrics);
 
+  // Store active era in state.
+  const [activeEra, setActiveEra] = useState<ActiveEra>(defaultActiveEra);
+  const activeEraRef = useRef(activeEra);
+
   // Fetch chain state. Called once `provider` has been initialised.
   const onApiReady = async () => {
     const { api } = APIController;
@@ -116,17 +127,26 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Connection callback. Called once `apiStatus` is `ready`.
   const bootstrapNetworkConfig = async () => {
-    const { consts: newConsts, networkMetrics: newNetworkMetrics } =
-      await APIController.bootstrapNetworkConfig();
+    const {
+      consts: newConsts,
+      networkMetrics: newNetworkMetrics,
+      activeEra: newActiveEra,
+    } = await APIController.bootstrapNetworkConfig();
 
     setStateWithRef(newNetworkMetrics, setNetworkMetrics, networkMetricsRef);
+    const { index, start } = newActiveEra;
+    setStateWithRef(
+      { index: new BigNumber(index), start: new BigNumber(start) },
+      setActiveEra,
+      activeEraRef
+    );
     setConsts(newConsts);
-
     // API is now ready to be used.
     setApiStatus('ready');
 
-    // Handle network metrics subscription.
+    // Initialise subscriptions.
     APIController.subscribeNetworkMetrics();
+    APIController.subscribeToActiveEra();
   };
 
   const onApiDisconnected = (err?: string) => {
@@ -177,7 +197,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const handleNetworkMetricsUpdate = (e: Event) => {
     if (isCustomEvent(e)) {
       const { networkMetrics: newNetworkMetrics } = e.detail;
-      // Only update network metrics if values have changed.
+      // Only update if values have changed.
       if (
         JSON.stringify(newNetworkMetrics) !==
         JSON.stringify(networkMetricsRef.current)
@@ -192,6 +212,45 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         );
       }
     }
+  };
+
+  // Handle new active era updates.
+  const handleActiveEraUpdate = (e: Event) => {
+    if (isCustomEvent(e)) {
+      let { activeEra: newActiveEra } = e.detail;
+      const { index, start } = newActiveEra;
+
+      newActiveEra = {
+        index: new BigNumber(index),
+        start: new BigNumber(start),
+      };
+
+      // Only update if values have changed.
+      if (
+        JSON.stringify(newActiveEra) !== JSON.stringify(activeEraRef.current)
+      ) {
+        setStateWithRef(
+          {
+            index: new BigNumber(index),
+            start: new BigNumber(start),
+          },
+          setActiveEra,
+          activeEraRef
+        );
+      }
+    }
+  };
+
+  // Given an era, determine whether paged rewards are active.
+  const isPagedRewardsActive = (era: BigNumber): boolean => {
+    const networkStartEra = PagedRewardsStartEra[network];
+    if (!networkStartEra) {
+      return false;
+    }
+    return (
+      NetworksWithPagedRewards.includes(network) &&
+      era.isGreaterThanOrEqualTo(networkStartEra)
+    );
   };
 
   // Handle an initial api connection.
@@ -238,7 +297,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     };
   }, []);
 
-  // Add event listener for network metrics updates.
+  // Add event listener for subscription updates.
   const documentRef = useRef<Document>(document);
 
   useEventListener(
@@ -247,12 +306,12 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     documentRef
   );
 
+  useEventListener('new-active-era', handleActiveEraUpdate, documentRef);
+
   return (
     <APIContext.Provider
       value={{
         api: APIController.api,
-        consts,
-        networkMetrics,
         chainState,
         apiStatus,
         isLightClient,
@@ -260,6 +319,10 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         rpcEndpoint,
         setRpcEndpoint,
         isReady: apiStatus === 'ready',
+        consts,
+        networkMetrics,
+        activeEra,
+        isPagedRewardsActive,
       }}
     >
       {children}

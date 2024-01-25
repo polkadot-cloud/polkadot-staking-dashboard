@@ -11,7 +11,6 @@ import { useTranslation } from 'react-i18next';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useFilters } from 'contexts/Filters';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import {
@@ -75,10 +74,9 @@ export const ValidatorListInner = ({
     clearSearchTerm,
   } = useFilters();
   const { mode } = useTheme();
-  const { isReady } = useApi();
   const { isSyncing } = useUi();
   const listProvider = useList();
-  const { activeEra } = useNetworkMetrics();
+  const { isReady, activeEra } = useApi();
   const { activeAccount } = useActiveAccounts();
   const { setModalResize } = useOverlay().modal;
   const { injectValidatorListData } = useValidators();

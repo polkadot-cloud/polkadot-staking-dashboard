@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { Fragment } from 'react';
 import {
@@ -18,8 +17,7 @@ import type { PulseGraphProps, PulseProps } from './types';
 
 export const Pulse = ({ address, displayFor }: PulseProps) => {
   const { t } = useTranslation('library');
-  const { isReady } = useApi();
-  const { activeEra } = useNetworkMetrics();
+  const { isReady, activeEra } = useApi();
   const { setTooltipTextAndOpen } = useTooltip();
   const { getValidatorPointsFromEras, eraPointsBoundaries, erasRewardPoints } =
     useValidators();

@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { BlockNumber } from '@polkadot/types/interfaces/runtime';
+import type { ActiveEraInfo, BlockNumber } from '@polkadot/types/interfaces';
 import { makeCancelable, rmCommas, withTimeout } from '@polkadot-cloud/utils';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
@@ -14,10 +14,15 @@ import type {
   EventStatus,
   SubstrateConnect,
 } from './types';
+import type { Option } from '@polkadot/types-codec';
 import type { VoidFn } from '@polkadot/api/types';
 import BigNumber from 'bignumber.js';
 import { BalancesController } from 'static/BalancesController';
-import type { APIConstants, NetworkMetrics } from 'contexts/Api/types';
+import type {
+  APIConstants,
+  ActiveEra,
+  NetworkMetrics,
+} from 'contexts/Api/types';
 import {
   FallbackBondingDuration,
   FallbackEpochDuration,
@@ -216,6 +221,7 @@ export class APIController {
   static bootstrapNetworkConfig = async (): Promise<{
     consts: APIConstants;
     networkMetrics: NetworkMetrics;
+    activeEra: ActiveEra;
   }> => {
     // Fetch network constants.
     const allPromises = [
@@ -244,13 +250,14 @@ export class APIController {
 
     const resultConsts = await Promise.all(allPromises);
 
-    // Fetch network metrics.
+    // Fetch network config.
     const resultNetworkMetrics = await this.api.queryMulti([
       this.api.query.balances.totalIssuance,
       this.api.query.auctions.auctionCounter,
       this.api.query.paraSessionInfo.earliestStoredSession,
       this.api.query.fastUnstake.erasToCheckPerBlock,
       this.api.query.staking.minimumActiveStake,
+      this.api.query.staking.activeEra,
     ]);
 
     return {
@@ -300,6 +307,11 @@ export class APIController {
         ),
         minimumActiveStake: new BigNumber(resultNetworkMetrics[4].toString()),
       },
+      activeEra: JSON.parse(
+        (resultNetworkMetrics[5] as Option<ActiveEraInfo>)
+          .unwrapOrDefault()
+          .toString()
+      ),
     };
   };
 
@@ -308,7 +320,7 @@ export class APIController {
   // ------------------------------------------------------
 
   // Subscribe to block number.
-  static subscribeBlockNumber = async () => {
+  static subscribeBlockNumber = async (): Promise<void> => {
     if (this._unsubs['blockNumber'] === undefined) {
       // Retrieve and store the estimated block time.
       const blockTime = this.api.consts.babe.expectedBlockTime;
@@ -318,7 +330,6 @@ export class APIController {
       const unsub = await this.api.query.system.number((num: BlockNumber) => {
         this._blockNumber = num.toString();
 
-        // Send block number to UI.
         document.dispatchEvent(
           new CustomEvent(`new-block-number`, {
             detail: { blockNumber: num.toString() },
@@ -347,7 +358,7 @@ export class APIController {
   };
 
   // Subscribe to network metrics.
-  static subscribeNetworkMetrics = async () => {
+  static subscribeNetworkMetrics = async (): Promise<void> => {
     if (this._unsubs['networkMetrics'] === undefined) {
       const unsub = await this.api.queryMulti(
         [
@@ -368,7 +379,6 @@ export class APIController {
             minimumActiveStake: new BigNumber(result[4].toString()),
           };
 
-          // Send block number to UI.
           document.dispatchEvent(
             new CustomEvent(`new-network-metrics`, {
               detail: { networkMetrics },
@@ -376,10 +386,26 @@ export class APIController {
           );
         }
       );
-
-      // Block number subscription now initialised. Store unsub.
       this._unsubs['networkMetrics'] = unsub as unknown as VoidFn;
     }
+  };
+
+  // Subscribe to active era.
+  static subscribeToActiveEra = async (): Promise<void> => {
+    const unsub = await this.api.query.staking.activeEra(
+      (result: Option<ActiveEraInfo>) => {
+        // determine activeEra: toString used as alternative to `toHuman`, that puts commas in
+        // numbers
+        const activeEra = JSON.parse(result.unwrapOrDefault().toString());
+
+        document.dispatchEvent(
+          new CustomEvent(`new-active-era`, {
+            detail: { activeEra },
+          })
+        );
+      }
+    );
+    this._unsubs['activeEra'] = unsub as unknown as VoidFn;
   };
 
   // Verify block subscription is online.

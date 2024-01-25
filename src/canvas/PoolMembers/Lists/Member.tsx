@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMenu } from 'contexts/Menu';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useList } from 'library/List/context';
@@ -28,6 +27,7 @@ import { usePrompt } from 'contexts/Prompt';
 import { UnbondMember } from '../Prompts/UnbondMember';
 import { WithdrawMember } from '../Prompts/WithdrawMember';
 import { motion } from 'framer-motion';
+import { useApi } from 'contexts/Api';
 
 export const Member = ({
   who,
@@ -39,10 +39,10 @@ export const Member = ({
   batchIndex: number;
 }) => {
   const { t } = useTranslation();
+  const { activeEra } = useApi();
   const { meta } = usePoolMembers();
   const { selectActive } = useList();
   const { openPromptWith } = usePrompt();
-  const { activeEra } = useNetworkMetrics();
   const { setMenuPosition, setMenuItems, open } = useMenu();
   const { selectedActivePool, isOwner, isBouncer } = useActivePools();
 

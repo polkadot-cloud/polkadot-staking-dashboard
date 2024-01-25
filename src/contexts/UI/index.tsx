@@ -11,7 +11,6 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import type { AnyJson } from 'types';
 import { useApi } from '../Api';
-import { useNetworkMetrics } from '../NetworkMetrics';
 import { useStaking } from '../Staking';
 import * as defaults from './defaults';
 import type { UIContextInterface } from './types';
@@ -23,10 +22,9 @@ export const UIContext = createContext<UIContextInterface>(
 export const useUi = () => useContext(UIContext);
 
 export const UIProvider = ({ children }: { children: ReactNode }) => {
-  const { isReady, networkMetrics } = useApi();
   const { staking, eraStakers } = useStaking();
   const { balancesInitialSynced } = useBalances();
-  const { activeEra } = useNetworkMetrics();
+  const { isReady, networkMetrics, activeEra } = useApi();
   const { synced: activePoolsSynced } = useActivePools();
 
   // Set whether the network has been synced.

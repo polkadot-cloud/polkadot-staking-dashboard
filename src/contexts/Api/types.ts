@@ -39,6 +39,11 @@ export interface NetworkMetrics {
   minimumActiveStake: BigNumber;
 }
 
+export interface ActiveEra {
+  index: BigNumber;
+  start: BigNumber;
+}
+
 export interface APIChainState {
   chain: string | null;
   version: AnyJson;
@@ -47,8 +52,6 @@ export interface APIChainState {
 
 export interface APIContextInterface {
   api: ApiPromise | null;
-  consts: APIConstants;
-  networkMetrics: NetworkMetrics;
   chainState: APIChainState;
   isReady: boolean;
   apiStatus: ApiStatus;
@@ -56,4 +59,8 @@ export interface APIContextInterface {
   setIsLightClient: (isLightClient: boolean) => void;
   rpcEndpoint: string;
   setRpcEndpoint: (key: string) => void;
+  consts: APIConstants;
+  networkMetrics: NetworkMetrics;
+  activeEra: ActiveEra;
+  isPagedRewardsActive: (era: BigNumber) => boolean;
 }

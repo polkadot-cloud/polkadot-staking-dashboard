@@ -8,6 +8,7 @@ import type {
   APIChainState,
   APIConstants,
   APIContextInterface,
+  ActiveEra,
   NetworkMetrics,
 } from 'contexts/Api/types';
 
@@ -33,6 +34,11 @@ export const defaultNetworkMetrics: NetworkMetrics = {
   minimumActiveStake: new BigNumber(0),
 };
 
+export const defaultActiveEra: ActiveEra = {
+  index: new BigNumber(0),
+  start: new BigNumber(0),
+};
+
 export const defaultChainState: APIChainState = {
   chain: null,
   version: {
@@ -43,8 +49,6 @@ export const defaultChainState: APIChainState = {
 
 export const defaultApiContext: APIContextInterface = {
   api: null,
-  consts: defaultConsts,
-  networkMetrics: defaultNetworkMetrics,
   chainState: defaultChainState,
   isReady: false,
   apiStatus: 'disconnected',
@@ -52,4 +56,8 @@ export const defaultApiContext: APIContextInterface = {
   setIsLightClient: () => {},
   rpcEndpoint: '',
   setRpcEndpoint: (key) => {},
+  consts: defaultConsts,
+  networkMetrics: defaultNetworkMetrics,
+  activeEra: defaultActiveEra,
+  isPagedRewardsActive: (e) => false,
 };

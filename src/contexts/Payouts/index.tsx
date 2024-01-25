@@ -6,7 +6,6 @@ import { useState, useEffect, useRef, useContext, createContext } from 'react';
 import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import type { AnyApi, AnyJson, Sync } from 'types';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import Worker from 'workers/stakers?worker';
 import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
@@ -36,10 +35,9 @@ export const usePayouts = () => useContext(PayoutsContext);
 
 export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
-  const { api, consts } = useApi();
   const { activeAccount } = useActiveAccounts();
   const { isNominating, fetchEraStakers } = useStaking();
-  const { activeEra, isPagedRewardsActive } = useNetworkMetrics();
+  const { api, consts, activeEra, isPagedRewardsActive } = useApi();
   const { maxExposurePageSize } = consts;
 
   // Store active accont's payout state.

@@ -14,7 +14,6 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useFastUnstake } from 'contexts/FastUnstake';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
@@ -33,6 +32,7 @@ export const ManageFastUnstake = () => {
     api,
     consts: { bondDuration, fastUnstakeDeposit },
     networkMetrics: { fastUnstakeErasToCheckPerBlock },
+    activeEra,
   } = useApi();
   const {
     networkData: { units, unit },
@@ -43,7 +43,6 @@ export const ManageFastUnstake = () => {
   const { isFastUnstaking } = useUnstaking();
   const { setModalResize, setModalStatus } = useOverlay().modal;
   const { getSignerWarnings } = useSignerWarnings();
-  const { activeEra } = useNetworkMetrics();
   const { feeReserve, getTransferOptions } = useTransferOptions();
   const { isExposed, counterForQueue, queueDeposit, meta } = useFastUnstake();
 
