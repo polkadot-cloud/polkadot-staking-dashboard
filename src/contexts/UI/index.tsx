@@ -137,7 +137,14 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
     }
 
     setIsSyncing(syncing);
-  }, [isReady, staking, metrics, eraStakers, activePoolsSynced]);
+  }, [
+    isReady,
+    staking,
+    metrics,
+    eraStakers,
+    activePoolsSynced,
+    balancesInitialSynced,
+  ]);
 
   return (
     <UIContext.Provider
