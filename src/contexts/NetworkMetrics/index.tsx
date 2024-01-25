@@ -14,11 +14,7 @@ import {
 } from 'config/networks';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
-import type {
-  ActiveEra,
-  NetworkMetrics,
-  NetworkMetricsContextInterface,
-} from './types';
+import type { ActiveEra, NetworkMetricsContextInterface } from './types';
 
 export const NetworkMetricsContext =
   createContext<NetworkMetricsContextInterface>(defaults.defaultNetworkContext);
@@ -37,10 +33,6 @@ export const NetworkMetricsProvider = ({
   const [activeEra, setActiveEra] = useState<ActiveEra>(defaults.activeEra);
   const activeEraRef = useRef(activeEra);
 
-  // Store network metrics in state.
-  const [metrics, setMetrics] = useState<NetworkMetrics>(defaults.metrics);
-  const metricsRef = useRef(metrics);
-
   // Store unsubscribe objects.
   const unsubsRef = useRef<AnyApi[]>([]);
 
@@ -51,42 +43,6 @@ export const NetworkMetricsProvider = ({
     }
 
     if (isReady) {
-      const subscribeToMetrics = async () => {
-        const unsub = await api.queryMulti(
-          [
-            api.query.balances.totalIssuance,
-            api.query.auctions.auctionCounter,
-            api.query.paraSessionInfo.earliestStoredSession,
-            api.query.fastUnstake.erasToCheckPerBlock,
-            api.query.staking.minimumActiveStake,
-          ],
-          ([
-            totalIssuance,
-            auctionCounter,
-            earliestStoredSession,
-            erasToCheckPerBlock,
-            minimumActiveStake,
-          ]: AnyApi) => {
-            setStateWithRef(
-              {
-                totalIssuance: new BigNumber(totalIssuance.toString()),
-                auctionCounter: new BigNumber(auctionCounter.toString()),
-                earliestStoredSession: new BigNumber(
-                  earliestStoredSession.toString()
-                ),
-                fastUnstakeErasToCheckPerBlock: erasToCheckPerBlock.toNumber(),
-                minimumActiveStake: new BigNumber(
-                  minimumActiveStake.toString()
-                ),
-              },
-              setMetrics,
-              metricsRef
-            );
-          }
-        );
-        return unsub;
-      };
-
       const subscribeToActiveEra = async () => {
         const unsub = await api.query.staking.activeEra((result: AnyApi) => {
           // determine activeEra: toString used as alternative to `toHuman`, that puts commas in
@@ -112,11 +68,9 @@ export const NetworkMetricsProvider = ({
       };
 
       // initiate subscription, add to unsubs.
-      await Promise.all([subscribeToMetrics(), subscribeToActiveEra()]).then(
-        (u) => {
-          unsubsRef.current = unsubsRef.current.concat(u);
-        }
-      );
+      await Promise.all([subscribeToActiveEra()]).then((u) => {
+        unsubsRef.current = unsubsRef.current.concat(u);
+      });
     }
   };
 
@@ -145,7 +99,6 @@ export const NetworkMetricsProvider = ({
     unsubscribe();
     unsubsRef.current = [];
     setStateWithRef(defaults.activeEra, setActiveEra, activeEraRef);
-    setStateWithRef(defaults.metrics, setMetrics, metricsRef);
   };
 
   // manage unsubscribe
@@ -165,7 +118,6 @@ export const NetworkMetricsProvider = ({
     <NetworkMetricsContext.Provider
       value={{
         activeEra: activeEraRef.current,
-        metrics: metricsRef.current,
         isPagedRewardsActive,
       }}
     >

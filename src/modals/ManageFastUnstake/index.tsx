@@ -29,7 +29,11 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
-  const { api, consts } = useApi();
+  const {
+    api,
+    consts: { bondDuration, fastUnstakeDeposit },
+    networkMetrics: { fastUnstakeErasToCheckPerBlock },
+  } = useApi();
   const {
     networkData: { units, unit },
   } = useNetwork();
@@ -39,12 +43,10 @@ export const ManageFastUnstake = () => {
   const { isFastUnstaking } = useUnstaking();
   const { setModalResize, setModalStatus } = useOverlay().modal;
   const { getSignerWarnings } = useSignerWarnings();
-  const { activeEra, metrics } = useNetworkMetrics();
+  const { activeEra } = useNetworkMetrics();
   const { feeReserve, getTransferOptions } = useTransferOptions();
   const { isExposed, counterForQueue, queueDeposit, meta } = useFastUnstake();
 
-  const { bondDuration, fastUnstakeDeposit } = consts;
-  const { fastUnstakeErasToCheckPerBlock } = metrics;
   const { checked } = meta;
   const controller = getBondedAccount(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);

@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { rmCommas } from '@polkadot-cloud/utils';
+import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { NetworkList, NetworksWithPagedRewards } from 'config/networks';
 import {
   FallbackBondingDuration,
@@ -18,18 +18,21 @@ import type {
   APIConstants,
   APIContextInterface,
   APIProviderProps,
+  NetworkMetrics,
 } from 'contexts/Api/types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import {
   defaultApiContext,
   defaultChainState,
   defaultConsts,
+  defaultNetworkMetrics,
 } from './defaults';
 import { APIController } from 'static/APIController';
 import { isCustomEvent } from 'static/utils';
 import type { ApiStatus } from 'static/APIController/types';
 import { NotificationsController } from 'static/NotificationsController';
 import { useTranslation } from 'react-i18next';
+import { useEventListener } from 'usehooks-ts';
 
 export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 
@@ -88,6 +91,12 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Store network constants.
   const [consts, setConsts] = useState<APIConstants>(defaultConsts);
+
+  // Store network metrics in state.
+  const [networkMetrics, setNetworkMetrics] = useState<NetworkMetrics>(
+    defaultNetworkMetrics
+  );
+  const networkMetricsRef = useRef(networkMetrics);
 
   // Fetch chain state. Called once `provider` has been initialised.
   const onApiReady = async () => {
@@ -186,6 +195,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       ? new BigNumber(rmCommas(result[10].toString()))
       : NetworkList[network].maxExposurePageSize;
 
+    const newNetworkMetrics = await APIController.fetchNetworkMetrics();
+    setStateWithRef(newNetworkMetrics, setNetworkMetrics, networkMetricsRef);
+
     setConsts({
       bondDuration,
       maxNominations,
@@ -202,6 +214,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
     // API is now ready to be used.
     setApiStatus('ready');
+
+    // Handle network metrics subscription.
+    APIController.subscribeNetworkMetrics();
   };
 
   const onApiDisconnected = (err?: string) => {
@@ -248,6 +263,27 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     }
   };
 
+  // Handle new network metrics updates.
+  const handleNetworkMetricsUpdate = (e: Event) => {
+    if (isCustomEvent(e)) {
+      const { networkMetrics: newNetworkMetrics } = e.detail;
+      // Only update network metrics if values have changed.
+      if (
+        JSON.stringify(newNetworkMetrics) !==
+        JSON.stringify(networkMetricsRef.current)
+      ) {
+        setStateWithRef(
+          {
+            ...networkMetricsRef.current,
+            ...newNetworkMetrics,
+          },
+          setNetworkMetrics,
+          networkMetricsRef
+        );
+      }
+    }
+  };
+
   // Handle an initial api connection.
   useEffect(() => {
     if (!APIController.provider) {
@@ -276,6 +312,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     if (network !== APIController.network) {
       setConsts(defaultConsts);
       setChainState(defaultChainState);
+      setNetworkMetrics(defaultNetworkMetrics);
     }
     // Reconnect API instance.
     APIController.initialize(network, isLightClient ? 'sc' : 'ws', rpcEndpoint);
@@ -291,11 +328,21 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     };
   }, []);
 
+  // Add event listener for network metrics updates.
+  const documentRef = useRef<Document>(document);
+
+  useEventListener(
+    'new-network-metrics',
+    handleNetworkMetricsUpdate,
+    documentRef
+  );
+
   return (
     <APIContext.Provider
       value={{
         api: APIController.api,
         consts,
+        networkMetrics,
         chainState,
         apiStatus,
         isLightClient,

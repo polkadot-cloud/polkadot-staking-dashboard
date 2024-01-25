@@ -37,13 +37,16 @@ export const useFastUnstake = () => useContext(FastUnstakeContext);
 
 export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
-  const { api, isReady, consts } = useApi();
   const { activeAccount } = useActiveAccounts();
+  const { activeEra } = useNetworkMetrics();
   const { inSetup, fetchEraStakers } = useStaking();
-  const { metrics, activeEra } = useNetworkMetrics();
   const { getNominationStatus } = useNominationStatus();
-  const { fastUnstakeErasToCheckPerBlock } = metrics;
-  const { bondDuration } = consts;
+  const {
+    api,
+    isReady,
+    consts: { bondDuration },
+    networkMetrics: { fastUnstakeErasToCheckPerBlock },
+  } = useApi();
   const { nominees } = getNominationStatus(activeAccount, 'nominator');
 
   // store whether a fast unstake check is in progress.

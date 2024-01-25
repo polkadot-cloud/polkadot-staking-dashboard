@@ -23,10 +23,10 @@ export const UIContext = createContext<UIContextInterface>(
 export const useUi = () => useContext(UIContext);
 
 export const UIProvider = ({ children }: { children: ReactNode }) => {
-  const { isReady } = useApi();
+  const { isReady, networkMetrics } = useApi();
   const { staking, eraStakers } = useStaking();
   const { balancesInitialSynced } = useBalances();
-  const { activeEra, metrics } = useNetworkMetrics();
+  const { activeEra } = useNetworkMetrics();
   const { synced: activePoolsSynced } = useActivePools();
 
   // Set whether the network has been synced.
@@ -140,7 +140,7 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
   }, [
     isReady,
     staking,
-    metrics,
+    networkMetrics,
     eraStakers,
     activePoolsSynced,
     balancesInitialSynced,

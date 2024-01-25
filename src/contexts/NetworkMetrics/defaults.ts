@@ -3,11 +3,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import BigNumber from 'bignumber.js';
-import type {
-  ActiveEra,
-  NetworkMetrics,
-  NetworkMetricsContextInterface,
-} from './types';
+import type { ActiveEra, NetworkMetricsContextInterface } from './types';
+import type { NetworkMetrics } from 'contexts/Api/types';
 
 export const activeEra: ActiveEra = {
   index: new BigNumber(0),
@@ -23,6 +20,5 @@ export const metrics: NetworkMetrics = {
 
 export const defaultNetworkContext: NetworkMetricsContextInterface = {
   activeEra,
-  metrics,
   isPagedRewardsActive: (e) => false,
 };

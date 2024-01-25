@@ -8,6 +8,7 @@ import type BigNumber from 'bignumber.js';
 import type { NotificationItem } from 'static/NotificationsController/types';
 import type { ActiveBalance } from 'contexts/Balances/types';
 import type { PayoutType } from 'static/SubscanController/types';
+import type { NetworkMetrics } from 'contexts/Api/types';
 
 declare global {
   interface Window {
@@ -16,6 +17,9 @@ declare global {
   interface DocumentEventMap {
     notification: CustomEvent<NotificationItem>;
     'new-block-number': CustomEvent<{ blockNumber: string }>;
+    'new-network-metrics': CustomEvent<{
+      networkMetrics: NetworkMetrics;
+    }>;
     'new-external-account': CustomEvent<{ address: string }>;
     'new-account-balance': CustomEvent<ActiveBalance & { address: string }>;
     'subscan-data-updated': CustomEvent<{ keys: PayoutType[] }>;

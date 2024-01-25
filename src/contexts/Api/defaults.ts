@@ -8,6 +8,7 @@ import type {
   APIChainState,
   APIConstants,
   APIContextInterface,
+  NetworkMetrics,
 } from 'contexts/Api/types';
 
 export const defaultConsts: APIConstants = {
@@ -24,6 +25,14 @@ export const defaultConsts: APIConstants = {
   poolsPalletId: stringToU8a('0'),
 };
 
+export const defaultNetworkMetrics: NetworkMetrics = {
+  totalIssuance: new BigNumber(0),
+  auctionCounter: new BigNumber(0),
+  earliestStoredSession: new BigNumber(0),
+  fastUnstakeErasToCheckPerBlock: 0,
+  minimumActiveStake: new BigNumber(0),
+};
+
 export const defaultChainState: APIChainState = {
   chain: null,
   version: {
@@ -35,6 +44,7 @@ export const defaultChainState: APIChainState = {
 export const defaultApiContext: APIContextInterface = {
   api: null,
   consts: defaultConsts,
+  networkMetrics: defaultNetworkMetrics,
   chainState: defaultChainState,
   isReady: false,
   apiStatus: 'disconnected',

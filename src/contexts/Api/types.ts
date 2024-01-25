@@ -31,6 +31,14 @@ export interface APIConstants {
   poolsPalletId: U8aLike;
 }
 
+export interface NetworkMetrics {
+  totalIssuance: BigNumber;
+  auctionCounter: BigNumber;
+  earliestStoredSession: BigNumber;
+  fastUnstakeErasToCheckPerBlock: number;
+  minimumActiveStake: BigNumber;
+}
+
 export interface APIChainState {
   chain: string | null;
   version: AnyJson;
@@ -40,6 +48,7 @@ export interface APIChainState {
 export interface APIContextInterface {
   api: ApiPromise | null;
   consts: APIConstants;
+  networkMetrics: NetworkMetrics;
   chainState: APIChainState;
   isReady: boolean;
   apiStatus: ApiStatus;

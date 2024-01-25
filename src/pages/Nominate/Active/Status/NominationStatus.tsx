@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useFastUnstake } from 'contexts/FastUnstake';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
@@ -29,12 +28,14 @@ export const NominationStatus = ({
   buttonType?: string;
 }) => {
   const { t } = useTranslation('pages');
-  const { isReady } = useApi();
   const { inSetup } = useStaking();
   const { isNetworkSyncing } = useUi();
   const { openModal } = useOverlay().modal;
-  const { metrics } = useNetworkMetrics();
   const { getBondedAccount } = useBonded();
+  const {
+    isReady,
+    networkMetrics: { fastUnstakeErasToCheckPerBlock },
+  } = useApi();
   const { checking, isExposed } = useFastUnstake();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getNominationStatus } = useNominationStatus();
@@ -44,7 +45,6 @@ export const NominationStatus = ({
 
   const fastUnstakeText = getFastUnstakeText();
   const controller = getBondedAccount(activeAccount);
-  const { fastUnstakeErasToCheckPerBlock } = metrics;
   const nominationStatus = getNominationStatus(activeAccount, 'nominator');
 
   // Determine whether to display fast unstake button or regular unstake button.

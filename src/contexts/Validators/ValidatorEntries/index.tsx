@@ -49,14 +49,14 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     isReady,
     api,
     consts: { historyDepth },
+    networkMetrics: { earliestStoredSession },
   } = useApi();
-  const { erasPerDay, maxSupportedDays } = useErasPerDay();
+  const { activeEra } = useNetworkMetrics();
   const { stakers } = useStaking().eraStakers;
   const { poolNominations } = useActivePools();
   const { activeAccount } = useActiveAccounts();
-  const { activeEra, metrics } = useNetworkMetrics();
+  const { erasPerDay, maxSupportedDays } = useErasPerDay();
   const { bondedAccounts, getAccountNominations } = useBonded();
-  const { earliestStoredSession } = metrics;
 
   // Stores all validator entries.
   const [validators, setValidators] = useState<Validator[]>([]);

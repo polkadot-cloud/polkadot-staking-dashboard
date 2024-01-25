@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { BlockNumber } from '@polkadot/types/interfaces/runtime';
-import { makeCancelable, withTimeout } from '@polkadot-cloud/utils';
+import { makeCancelable, rmCommas, withTimeout } from '@polkadot-cloud/utils';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import { NetworkList } from 'config/networks';
@@ -17,6 +17,7 @@ import type {
 import type { VoidFn } from '@polkadot/api/types';
 import BigNumber from 'bignumber.js';
 import { BalancesController } from 'static/BalancesController';
+import type { NetworkMetrics } from 'contexts/Api/types';
 
 export class APIController {
   // ------------------------------------------------------
@@ -243,6 +244,61 @@ export class APIController {
               this.MIN_EXPECTED_BLOCKS_LEEWAY)
         ),
       };
+    }
+  };
+
+  // Fetch network metrics
+  static fetchNetworkMetrics = async (): Promise<NetworkMetrics> => {
+    const result = await this.api.queryMulti([
+      this.api.query.balances.totalIssuance,
+      this.api.query.auctions.auctionCounter,
+      this.api.query.paraSessionInfo.earliestStoredSession,
+      this.api.query.fastUnstake.erasToCheckPerBlock,
+      this.api.query.staking.minimumActiveStake,
+    ]);
+
+    return {
+      totalIssuance: new BigNumber(result[0].toString()),
+      auctionCounter: new BigNumber(result[1].toString()),
+      earliestStoredSession: new BigNumber(result[2].toString()),
+      fastUnstakeErasToCheckPerBlock: Number(rmCommas(result[3].toString())),
+      minimumActiveStake: new BigNumber(result[4].toString()),
+    };
+  };
+
+  // Subscribe to network metrics.
+  static subscribeNetworkMetrics = async () => {
+    if (this._unsubs['networkMetrics'] === undefined) {
+      const unsub = await this.api.queryMulti(
+        [
+          this.api.query.balances.totalIssuance,
+          this.api.query.auctions.auctionCounter,
+          this.api.query.paraSessionInfo.earliestStoredSession,
+          this.api.query.fastUnstake.erasToCheckPerBlock,
+          this.api.query.staking.minimumActiveStake,
+        ],
+        (result) => {
+          const networkMetrics = {
+            totalIssuance: new BigNumber(result[0].toString()),
+            auctionCounter: new BigNumber(result[1].toString()),
+            earliestStoredSession: new BigNumber(result[2].toString()),
+            fastUnstakeErasToCheckPerBlock: Number(
+              rmCommas(result[3].toString())
+            ),
+            minimumActiveStake: new BigNumber(result[4].toString()),
+          };
+
+          // Send block number to UI.
+          document.dispatchEvent(
+            new CustomEvent(`new-network-metrics`, {
+              detail: { networkMetrics },
+            })
+          );
+        }
+      );
+
+      // Block number subscription now initialised. Store unsub.
+      this._unsubs['networkMetrics'] = unsub as unknown as VoidFn;
     }
   };
 
