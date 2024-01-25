@@ -5,7 +5,7 @@ import type { BlockNumber } from '@polkadot/types/interfaces/runtime';
 import { makeCancelable, rmCommas, withTimeout } from '@polkadot-cloud/utils';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
-import { NetworkList } from 'config/networks';
+import { NetworkList, NetworksWithPagedRewards } from 'config/networks';
 import type { NetworkName } from 'types';
 import type {
   APIConfig,
@@ -17,7 +17,15 @@ import type {
 import type { VoidFn } from '@polkadot/api/types';
 import BigNumber from 'bignumber.js';
 import { BalancesController } from 'static/BalancesController';
-import type { NetworkMetrics } from 'contexts/Api/types';
+import type { APIConstants, NetworkMetrics } from 'contexts/Api/types';
+import {
+  FallbackBondingDuration,
+  FallbackEpochDuration,
+  FallbackExpectedBlockTime,
+  FallbackMaxElectingVoters,
+  FallbackMaxNominations,
+  FallbackSessionsPerEra,
+} from 'consts';
 
 export class APIController {
   // ------------------------------------------------------
@@ -247,9 +255,40 @@ export class APIController {
     }
   };
 
-  // Fetch network metrics
-  static fetchNetworkMetrics = async (): Promise<NetworkMetrics> => {
-    const result = await this.api.queryMulti([
+  // Fetch network config to bootstrap UI state.
+  static bootstrapNetworkConfig = async (): Promise<{
+    consts: APIConstants;
+    networkMetrics: NetworkMetrics;
+  }> => {
+    // Fetch network constants.
+    const allPromises = [
+      this.api.consts.staking.bondingDuration,
+      this.api.consts.staking.maxNominations,
+      this.api.consts.staking.sessionsPerEra,
+      this.api.consts.electionProviderMultiPhase.maxElectingVoters,
+      this.api.consts.babe.expectedBlockTime,
+      this.api.consts.babe.epochDuration,
+      this.api.consts.balances.existentialDeposit,
+      this.api.consts.staking.historyDepth,
+      this.api.consts.fastUnstake.deposit,
+      this.api.consts.nominationPools.palletId,
+    ];
+    // DEPRECATION: Paged Rewards
+    //
+    // Fetch `maxExposurePageSize` instead of `maxNominatorRewardedPerValidator` for networks that
+    // have paged rewards.
+    if (NetworksWithPagedRewards.includes(this.network)) {
+      allPromises.push(this.api.consts.staking.maxExposurePageSize);
+    } else {
+      allPromises.push(
+        this.api.consts.staking.maxNominatorRewardedPerValidator
+      );
+    }
+
+    const resultConsts = await Promise.all(allPromises);
+
+    // Fetch network metrics.
+    const resultNetworkMetrics = await this.api.queryMulti([
       this.api.query.balances.totalIssuance,
       this.api.query.auctions.auctionCounter,
       this.api.query.paraSessionInfo.earliestStoredSession,
@@ -258,11 +297,52 @@ export class APIController {
     ]);
 
     return {
-      totalIssuance: new BigNumber(result[0].toString()),
-      auctionCounter: new BigNumber(result[1].toString()),
-      earliestStoredSession: new BigNumber(result[2].toString()),
-      fastUnstakeErasToCheckPerBlock: Number(rmCommas(result[3].toString())),
-      minimumActiveStake: new BigNumber(result[4].toString()),
+      consts: {
+        bondDuration: resultConsts[0]
+          ? new BigNumber(rmCommas(resultConsts[0].toString()))
+          : FallbackBondingDuration,
+        maxNominations: resultConsts[1]
+          ? new BigNumber(rmCommas(resultConsts[1].toString()))
+          : FallbackMaxNominations,
+        sessionsPerEra: resultConsts[2]
+          ? new BigNumber(rmCommas(resultConsts[2].toString()))
+          : FallbackSessionsPerEra,
+        maxElectingVoters: resultConsts[3]
+          ? new BigNumber(rmCommas(resultConsts[3].toString()))
+          : FallbackMaxElectingVoters,
+        expectedBlockTime: resultConsts[4]
+          ? new BigNumber(rmCommas(resultConsts[4].toString()))
+          : FallbackExpectedBlockTime,
+        epochDuration: resultConsts[5]
+          ? new BigNumber(rmCommas(resultConsts[5].toString()))
+          : FallbackEpochDuration,
+        existentialDeposit: resultConsts[6]
+          ? new BigNumber(rmCommas(resultConsts[6].toString()))
+          : new BigNumber(0),
+        historyDepth: resultConsts[7]
+          ? new BigNumber(rmCommas(resultConsts[7].toString()))
+          : new BigNumber(0),
+        fastUnstakeDeposit: resultConsts[8]
+          ? new BigNumber(rmCommas(resultConsts[8].toString()))
+          : new BigNumber(0),
+        poolsPalletId: resultConsts[9]
+          ? resultConsts[9].toU8a()
+          : new Uint8Array(0),
+        maxExposurePageSize: resultConsts[10]
+          ? new BigNumber(rmCommas(resultConsts[10].toString()))
+          : NetworkList[this.network].maxExposurePageSize,
+      },
+      networkMetrics: {
+        totalIssuance: new BigNumber(resultNetworkMetrics[0].toString()),
+        auctionCounter: new BigNumber(resultNetworkMetrics[1].toString()),
+        earliestStoredSession: new BigNumber(
+          resultNetworkMetrics[2].toString()
+        ),
+        fastUnstakeErasToCheckPerBlock: Number(
+          rmCommas(resultNetworkMetrics[3].toString())
+        ),
+        minimumActiveStake: new BigNumber(resultNetworkMetrics[4].toString()),
+      },
     };
   };
 

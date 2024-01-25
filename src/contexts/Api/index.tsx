@@ -1,18 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
-import BigNumber from 'bignumber.js';
+import { setStateWithRef } from '@polkadot-cloud/utils';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { NetworkList, NetworksWithPagedRewards } from 'config/networks';
-import {
-  FallbackBondingDuration,
-  FallbackEpochDuration,
-  FallbackExpectedBlockTime,
-  FallbackMaxElectingVoters,
-  FallbackMaxNominations,
-  FallbackSessionsPerEra,
-} from 'consts';
+import { NetworkList } from 'config/networks';
+
 import type {
   APIChainState,
   APIConstants,
@@ -119,98 +111,16 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     }
 
     // Assume chain state is correct and bootstrap network consts.
-    getConsts();
+    bootstrapNetworkConfig();
   };
 
   // Connection callback. Called once `apiStatus` is `ready`.
-  const getConsts = async () => {
-    const { api } = APIController;
+  const bootstrapNetworkConfig = async () => {
+    const { consts: newConsts, networkMetrics: newNetworkMetrics } =
+      await APIController.bootstrapNetworkConfig();
 
-    const allPromises = [
-      api.consts.staking.bondingDuration,
-      api.consts.staking.maxNominations,
-      api.consts.staking.sessionsPerEra,
-      api.consts.electionProviderMultiPhase.maxElectingVoters,
-      api.consts.babe.expectedBlockTime,
-      api.consts.babe.epochDuration,
-      api.consts.balances.existentialDeposit,
-      api.consts.staking.historyDepth,
-      api.consts.fastUnstake.deposit,
-      api.consts.nominationPools.palletId,
-    ];
-
-    // DEPRECATION: Paged Rewards
-    //
-    // Fetch `maxExposurePageSize` instead of `maxNominatorRewardedPerValidator` for networks that
-    // have paged rewards.
-    if (NetworksWithPagedRewards.includes(network)) {
-      allPromises.push(api.consts.staking.maxExposurePageSize);
-    } else {
-      allPromises.push(api.consts.staking.maxNominatorRewardedPerValidator);
-    }
-
-    // fetch constants.
-    const result = await Promise.all(allPromises);
-
-    // format constants.
-    const bondDuration = result[0]
-      ? new BigNumber(rmCommas(result[0].toString()))
-      : FallbackBondingDuration;
-
-    const maxNominations = result[1]
-      ? new BigNumber(rmCommas(result[1].toString()))
-      : FallbackMaxNominations;
-
-    const sessionsPerEra = result[2]
-      ? new BigNumber(rmCommas(result[2].toString()))
-      : FallbackSessionsPerEra;
-
-    const maxElectingVoters = result[3]
-      ? new BigNumber(rmCommas(result[3].toString()))
-      : FallbackMaxElectingVoters;
-
-    const expectedBlockTime = result[4]
-      ? new BigNumber(rmCommas(result[4].toString()))
-      : FallbackExpectedBlockTime;
-
-    const epochDuration = result[5]
-      ? new BigNumber(rmCommas(result[5].toString()))
-      : FallbackEpochDuration;
-
-    const existentialDeposit = result[6]
-      ? new BigNumber(rmCommas(result[6].toString()))
-      : new BigNumber(0);
-
-    const historyDepth = result[7]
-      ? new BigNumber(rmCommas(result[7].toString()))
-      : new BigNumber(0);
-
-    const fastUnstakeDeposit = result[8]
-      ? new BigNumber(rmCommas(result[8].toString()))
-      : new BigNumber(0);
-
-    const poolsPalletId = result[9] ? result[9].toU8a() : new Uint8Array(0);
-
-    const maxExposurePageSize = result[10]
-      ? new BigNumber(rmCommas(result[10].toString()))
-      : NetworkList[network].maxExposurePageSize;
-
-    const newNetworkMetrics = await APIController.fetchNetworkMetrics();
     setStateWithRef(newNetworkMetrics, setNetworkMetrics, networkMetricsRef);
-
-    setConsts({
-      bondDuration,
-      maxNominations,
-      sessionsPerEra,
-      maxExposurePageSize,
-      historyDepth,
-      maxElectingVoters,
-      epochDuration,
-      expectedBlockTime,
-      poolsPalletId,
-      existentialDeposit,
-      fastUnstakeDeposit,
-    });
+    setConsts(newConsts);
 
     // API is now ready to be used.
     setApiStatus('ready');
