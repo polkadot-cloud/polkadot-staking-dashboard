@@ -212,49 +212,6 @@ export class APIController {
     await this.provider.connect();
   }
 
-  // ------------------------------------------------------
-  // Subscription handling.
-  // ------------------------------------------------------
-
-  // Subscribe to block number.
-  static subscribeBlockNumber = async () => {
-    if (this._unsubs['blockNumber'] === undefined) {
-      // Retrieve and store the estimated block time.
-      const blockTime = this.api.consts.babe.expectedBlockTime;
-      this._expectedBlockTime = Number(blockTime.toString());
-
-      // Get block numbers.
-      const unsub = await this.api.query.system.number((num: BlockNumber) => {
-        this._blockNumber = num.toString();
-
-        // Send block number to UI.
-        document.dispatchEvent(
-          new CustomEvent(`new-block-number`, {
-            detail: { blockNumber: num.toString() },
-          })
-        );
-      });
-
-      // Block number subscription now initialised. Store unsub.
-      this._unsubs['blockNumber'] = unsub as unknown as VoidFn;
-
-      // Bootstrap block number verification. Should always pass first verification.
-      this._blockNumberVerify = {
-        minBlockNumber: new BigNumber(this._blockNumber)
-          .plus(this.MIN_EXPECTED_BLOCKS_PER_VERIFY)
-          .toString(),
-        interval: setInterval(
-          () => {
-            this.verifyBlocksOnline();
-          },
-          this._expectedBlockTime *
-            (this.MIN_EXPECTED_BLOCKS_PER_VERIFY +
-              this.MIN_EXPECTED_BLOCKS_LEEWAY)
-        ),
-      };
-    }
-  };
-
   // Fetch network config to bootstrap UI state.
   static bootstrapNetworkConfig = async (): Promise<{
     consts: APIConstants;
@@ -344,6 +301,49 @@ export class APIController {
         minimumActiveStake: new BigNumber(resultNetworkMetrics[4].toString()),
       },
     };
+  };
+
+  // ------------------------------------------------------
+  // Subscription handling.
+  // ------------------------------------------------------
+
+  // Subscribe to block number.
+  static subscribeBlockNumber = async () => {
+    if (this._unsubs['blockNumber'] === undefined) {
+      // Retrieve and store the estimated block time.
+      const blockTime = this.api.consts.babe.expectedBlockTime;
+      this._expectedBlockTime = Number(blockTime.toString());
+
+      // Get block numbers.
+      const unsub = await this.api.query.system.number((num: BlockNumber) => {
+        this._blockNumber = num.toString();
+
+        // Send block number to UI.
+        document.dispatchEvent(
+          new CustomEvent(`new-block-number`, {
+            detail: { blockNumber: num.toString() },
+          })
+        );
+      });
+
+      // Block number subscription now initialised. Store unsub.
+      this._unsubs['blockNumber'] = unsub as unknown as VoidFn;
+
+      // Bootstrap block number verification. Should always pass first verification.
+      this._blockNumberVerify = {
+        minBlockNumber: new BigNumber(this._blockNumber)
+          .plus(this.MIN_EXPECTED_BLOCKS_PER_VERIFY)
+          .toString(),
+        interval: setInterval(
+          () => {
+            this.verifyBlocksOnline();
+          },
+          this._expectedBlockTime *
+            (this.MIN_EXPECTED_BLOCKS_PER_VERIFY +
+              this.MIN_EXPECTED_BLOCKS_LEEWAY)
+        ),
+      };
+    }
   };
 
   // Subscribe to network metrics.
