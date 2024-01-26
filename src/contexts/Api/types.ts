@@ -46,6 +46,19 @@ export interface APIActiveEra {
   start: BigNumber;
 }
 
+export interface APIPoolsConfig {
+  counterForPoolMembers: BigNumber;
+  counterForBondedPools: BigNumber;
+  counterForRewardPools: BigNumber;
+  lastPoolId: BigNumber;
+  maxPoolMembers: BigNumber | null;
+  maxPoolMembersPerPool: BigNumber | null;
+  maxPools: BigNumber | null;
+  minCreateBond: BigNumber;
+  minJoinBond: BigNumber;
+  globalMaxCommission: number;
+}
+
 export interface APIContextInterface {
   api: ApiPromise | null;
   chainState: APIChainState;
@@ -58,5 +71,6 @@ export interface APIContextInterface {
   consts: APIConstants;
   networkMetrics: APINetworkMetrics;
   activeEra: APIActiveEra;
+  poolsConfig: APIPoolsConfig;
   isPagedRewardsActive: (era: BigNumber) => boolean;
 }

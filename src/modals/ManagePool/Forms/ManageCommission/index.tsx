@@ -17,7 +17,6 @@ import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { Warning } from 'library/Form/Warning';
 import { useBatchCall } from 'library/Hooks/useBatchCall';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
@@ -40,8 +39,10 @@ export const ManageCommission = ({
 }) => {
   const { t } = useTranslation('modals');
   const { openHelp } = useHelp();
-  const { api } = useApi();
-  const { stats } = usePoolsConfig();
+  const {
+    api,
+    poolsConfig: { globalMaxCommission },
+  } = useApi();
   const { newBatchCall } = useBatchCall();
   const { activeAccount } = useActiveAccounts();
   const { setModalStatus } = useOverlay().modal;
@@ -57,7 +58,7 @@ export const ManageCommission = ({
     resetAll,
     isUpdated,
   } = usePoolCommission();
-  const { globalMaxCommission } = stats;
+
   const poolId = selectedActivePool?.id || 0;
   const bondedPool = getBondedPool(poolId);
 

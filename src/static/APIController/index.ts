@@ -22,6 +22,7 @@ import type {
   APIActiveEra,
   APIConstants,
   APINetworkMetrics,
+  APIPoolsConfig,
 } from 'contexts/Api/types';
 import { WellKnownChain } from '@substrate/connect';
 
@@ -233,6 +234,7 @@ export class APIController {
     consts: APIConstants;
     networkMetrics: APINetworkMetrics;
     activeEra: APIActiveEra;
+    poolsConfig: APIPoolsConfig;
   }> => {
     // Fetch network constants.
     const allPromises = [
@@ -263,13 +265,38 @@ export class APIController {
 
     // Fetch network config.
     const resultNetworkMetrics = await this.api.queryMulti([
+      // Network metrics.
       this.api.query.balances.totalIssuance,
       this.api.query.auctions.auctionCounter,
       this.api.query.paraSessionInfo.earliestStoredSession,
       this.api.query.fastUnstake.erasToCheckPerBlock,
       this.api.query.staking.minimumActiveStake,
       this.api.query.staking.activeEra,
+      // Nomination pool configs.
+      this.api.query.nominationPools.counterForPoolMembers,
+      this.api.query.nominationPools.counterForBondedPools,
+      this.api.query.nominationPools.counterForRewardPools,
+      this.api.query.nominationPools.lastPoolId,
+      this.api.query.nominationPools.maxPoolMembers,
+      this.api.query.nominationPools.maxPoolMembersPerPool,
+      this.api.query.nominationPools.maxPools,
+      this.api.query.nominationPools.minCreateBond,
+      this.api.query.nominationPools.minJoinBond,
+      this.api.query.nominationPools.globalMaxCommission,
     ]);
+
+    // format optional configs to BigNumber or null.
+    const maxPoolMembers = resultNetworkMetrics[10].toHuman()
+      ? new BigNumber(rmCommas(resultNetworkMetrics[10].toString()))
+      : null;
+
+    const maxPoolMembersPerPool = resultNetworkMetrics[11].toHuman()
+      ? new BigNumber(rmCommas(resultNetworkMetrics[11].toString()))
+      : null;
+
+    const maxPools = resultNetworkMetrics[12].toHuman()
+      ? new BigNumber(rmCommas(resultNetworkMetrics[12].toString()))
+      : null;
 
     return {
       consts: {
@@ -323,6 +350,30 @@ export class APIController {
           .unwrapOrDefault()
           .toString()
       ),
+      poolsConfig: {
+        counterForPoolMembers: this.stringToBigNumber(
+          resultNetworkMetrics[6].toString()
+        ),
+        counterForBondedPools: this.stringToBigNumber(
+          resultNetworkMetrics[7].toString()
+        ),
+        counterForRewardPools: this.stringToBigNumber(
+          resultNetworkMetrics[8].toString()
+        ),
+        lastPoolId: this.stringToBigNumber(resultNetworkMetrics[9].toString()),
+        maxPoolMembers,
+        maxPoolMembersPerPool,
+        maxPools,
+        minCreateBond: this.stringToBigNumber(
+          resultNetworkMetrics[13].toString()
+        ),
+        minJoinBond: this.stringToBigNumber(
+          resultNetworkMetrics[14].toString()
+        ),
+        globalMaxCommission: Number(
+          String(resultNetworkMetrics[15]?.toHuman() || '100%').slice(0, -1)
+        ),
+      },
     };
   };
 
@@ -402,7 +453,7 @@ export class APIController {
   };
 
   // Subscribe to active era.
-  static subscribeToActiveEra = async (): Promise<void> => {
+  static subscribeActiveEra = async (): Promise<void> => {
     const unsub = await this.api.query.staking.activeEra(
       (result: Option<ActiveEraInfo>) => {
         // determine activeEra: toString used as alternative to `toHuman`, that puts commas in
@@ -417,6 +468,62 @@ export class APIController {
       }
     );
     this._unsubs['activeEra'] = unsub as unknown as VoidFn;
+  };
+
+  // Subscribe to pools config.
+  static subscribePoolsConfig = async (): Promise<void> => {
+    if (this._unsubs['poolsConfig'] === undefined) {
+      const unsub = await this.api.queryMulti(
+        [
+          this.api.query.nominationPools.counterForPoolMembers,
+          this.api.query.nominationPools.counterForBondedPools,
+          this.api.query.nominationPools.counterForRewardPools,
+          this.api.query.nominationPools.lastPoolId,
+          this.api.query.nominationPools.maxPoolMembers,
+          this.api.query.nominationPools.maxPoolMembersPerPool,
+          this.api.query.nominationPools.maxPools,
+          this.api.query.nominationPools.minCreateBond,
+          this.api.query.nominationPools.minJoinBond,
+          this.api.query.nominationPools.globalMaxCommission,
+        ],
+        (result) => {
+          // format optional configs to BigNumber or null.
+          const maxPoolMembers = result[4].toHuman()
+            ? new BigNumber(rmCommas(result[4].toString()))
+            : null;
+
+          const maxPoolMembersPerPool = result[5].toHuman()
+            ? new BigNumber(rmCommas(result[5].toString()))
+            : null;
+
+          const maxPools = result[6].toHuman()
+            ? new BigNumber(rmCommas(result[6].toString()))
+            : null;
+
+          const poolsConfig = {
+            counterForPoolMembers: this.stringToBigNumber(result[0].toString()),
+            counterForBondedPools: this.stringToBigNumber(result[1].toString()),
+            counterForRewardPools: this.stringToBigNumber(result[2].toString()),
+            lastPoolId: this.stringToBigNumber(result[3].toString()),
+            maxPoolMembers,
+            maxPoolMembersPerPool,
+            maxPools,
+            minCreateBond: this.stringToBigNumber(result[7].toString()),
+            minJoinBond: this.stringToBigNumber(result[8].toString()),
+            globalMaxCommission: Number(
+              String(result[9]?.toHuman() || '100%').slice(0, -1)
+            ),
+          };
+
+          document.dispatchEvent(
+            new CustomEvent(`new-pools-config`, {
+              detail: { poolsConfig },
+            })
+          );
+        }
+      );
+      this._unsubs['poolsConfig'] = unsub as unknown as VoidFn;
+    }
   };
 
   // Verify block subscription is online.
