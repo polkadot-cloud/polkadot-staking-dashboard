@@ -4916,12 +4916,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:^23.7.18":
-  version: 23.7.18
-  resolution: "i18next@npm:23.7.18"
+"i18next@npm:^23.7.19":
+  version: 23.7.19
+  resolution: "i18next@npm:23.7.19"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-  checksum: 7ff20eaaf6b5b6ff31c0bde2907149caecd7d63c6106e06afc9dd23b543b281733c50a45c6f19627338a3212426976fd7dfdfeece305ffbb7d3d4dcefe69c97c
+  checksum: 4fd0c854d628c41b9c75d65a484378c91f1921420703d36de9c080cf624aad9e31c77a7871b1d2828ce67fb57dabbe107dd2c3d8ae3373b5c726c5a04b0c56d8
   languageName: node
   linkType: hard
 
@@ -6435,7 +6435,7 @@ __metadata:
     framer-motion: "npm:^10.18.0"
     gh-pages: "npm:^6.1.1"
     html5-qrcode: "npm:^2.3.8"
-    i18next: "npm:^23.7.18"
+    i18next: "npm:^23.7.19"
     i18next-browser-languagedetector: "npm:^7.2.0"
     lodash.throttle: "npm:^4.1.1"
     prettier: "npm:^3.2.4"
@@ -6453,7 +6453,7 @@ __metadata:
     sass: "npm:^1.70.0"
     styled-components: "npm:^6.1.8"
     typescript: "npm:^5.3.3"
-    usehooks-ts: "npm:2.9.5"
+    usehooks-ts: "npm:2.10.0"
     vite: "npm:^5.0.12"
     vite-bundle-visualizer: "npm:^1.0.0"
     vite-plugin-checker: "npm:^0.6.2"
@@ -8088,13 +8088,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"usehooks-ts@npm:2.9.5":
-  version: 2.9.5
-  resolution: "usehooks-ts@npm:2.9.5"
+"usehooks-ts@npm:2.10.0":
+  version: 2.10.0
+  resolution: "usehooks-ts@npm:2.10.0"
   peerDependencies:
     react: ^16.8.0  || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0  || ^17.0.0 || ^18.0.0
-  checksum: ccdc6a149e472428adc723a0f6ad27d6fb0366545fe9be1538f7ae1964dbcd491a74c08e88cfe744e2f5ca247cbb1232540538bc6172be57ed0832f492792fd1
+  checksum: cb5b3ab4f9269b103bfbd85ef624b0dc10205015134233626a0ea2d4b9e2849e401ca3c167f3876fcd51387751696746bd8e8b7460402923a80354245a3d5202
   languageName: node
   linkType: hard
 
