@@ -173,15 +173,15 @@ export class APIController {
 
   // Instantiates provider and connects to an api instance.
   static async connect({ type, network, rpcEndpoint }: APIConfig) {
-    // Tell UI api is connecting.
-    this.dispatchEvent(this.ensureEventStatus('connecting'));
-
     // Initiate provider.
     if (type === 'ws') {
       this.initWsProvider(network, rpcEndpoint);
     } else {
       await this.initScProvider(network);
     }
+
+    // Tell UI api is connecting.
+    this.dispatchEvent(this.ensureEventStatus('connecting'));
 
     // Initialise provider events.
     this.initProviderEvents();
