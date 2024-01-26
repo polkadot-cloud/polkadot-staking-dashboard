@@ -453,7 +453,7 @@ export class APIController {
   };
 
   // Subscribe to active era.
-  static subscribeToActiveEra = async (): Promise<void> => {
+  static subscribeActiveEra = async (): Promise<void> => {
     const unsub = await this.api.query.staking.activeEra(
       (result: Option<ActiveEraInfo>) => {
         // determine activeEra: toString used as alternative to `toHuman`, that puts commas in

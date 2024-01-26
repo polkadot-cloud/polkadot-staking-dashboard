@@ -157,7 +157,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
     // Initialise subscriptions.
     APIController.subscribeNetworkMetrics();
-    APIController.subscribeToActiveEra();
+    APIController.subscribeActiveEra();
     APIController.subscribePoolsConfig();
   };
 
