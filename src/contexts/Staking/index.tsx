@@ -32,7 +32,6 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useApi } from '../Api';
 import { useBonded } from '../Bonded';
-import { useNetworkMetrics } from '../NetworkMetrics';
 import {
   defaultEraStakers,
   defaultStakingContext,
@@ -55,11 +54,10 @@ export const StakingContext = createContext<StakingContextInterface>(
 export const useStaking = () => useContext(StakingContext);
 
 export const StakingProvider = ({ children }: { children: ReactNode }) => {
-  const { activeEra } = useNetworkMetrics();
-  const { networkData, network } = useNetwork();
   const { getLedger } = useBalances();
-  const { isPagedRewardsActive } = useNetworkMetrics();
-  const { isReady, api, apiStatus, consts } = useApi();
+  const { isReady, api, apiStatus, consts, activeEra, isPagedRewardsActive } =
+    useApi();
+  const { networkData, network } = useNetwork();
   const { accounts: connectAccounts } = useImportedAccounts();
   const { activeAccount, getActiveAccount } = useActiveAccounts();
   const { bondedAccounts, getBondedAccount, getAccountNominations } =

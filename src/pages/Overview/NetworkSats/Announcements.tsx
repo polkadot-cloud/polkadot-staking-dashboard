@@ -13,26 +13,24 @@ import BigNumber from 'bignumber.js';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
 import { useNetwork } from 'contexts/Network';
 import { Item } from './Wrappers';
 import type { BondedPool } from 'contexts/Pools/BondedPools/types';
+import { useApi } from 'contexts/Api';
 
 export const Announcements = () => {
   const { t } = useTranslation('pages');
   const { staking } = useStaking();
-  const { stats } = usePoolsConfig();
   const {
     network,
     networkData: { units, unit },
   } = useNetwork();
   const { bondedPools } = useBondedPools();
+  const { counterForPoolMembers } = useApi().poolsConfig;
 
   const { totalStaked } = staking;
-  const { counterForPoolMembers } = stats;
-
   let totalPoolPoints = new BigNumber(0);
   bondedPools.forEach((b: BondedPool) => {
     totalPoolPoints = totalPoolPoints.plus(rmCommas(b.points));

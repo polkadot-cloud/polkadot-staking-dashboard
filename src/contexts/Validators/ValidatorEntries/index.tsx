@@ -9,7 +9,6 @@ import { ValidatorCommunity } from '@polkadot-cloud/assets/validators';
 import type { AnyApi, AnyJson, BondFor, Fn, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useBonded } from 'contexts/Bonded';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
@@ -49,14 +48,14 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     isReady,
     api,
     consts: { historyDepth },
+    networkMetrics: { earliestStoredSession },
   } = useApi();
-  const { erasPerDay, maxSupportedDays } = useErasPerDay();
+  const { activeEra } = useApi();
   const { stakers } = useStaking().eraStakers;
   const { poolNominations } = useActivePools();
   const { activeAccount } = useActiveAccounts();
-  const { activeEra, metrics } = useNetworkMetrics();
+  const { erasPerDay, maxSupportedDays } = useErasPerDay();
   const { bondedAccounts, getAccountNominations } = useBonded();
-  const { earliestStoredSession } = metrics;
 
   // Stores all validator entries.
   const [validators, setValidators] = useState<Validator[]>([]);

@@ -7,7 +7,6 @@ import BigNumber from 'bignumber.js';
 import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useStaking } from 'contexts/Staking';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { EraPoints as EraPointsGraph } from 'library/Graphs/EraPoints';
@@ -23,16 +22,17 @@ import { useNetwork } from 'contexts/Network';
 import type { AnyJson } from 'types';
 import { SubscanController } from 'static/SubscanController';
 import { usePlugins } from 'contexts/Plugins';
+import { useApi } from 'contexts/Api';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');
   const {
     networkData: { units, unit },
   } = useNetwork();
+  const { activeEra } = useApi();
   const { plugins } = usePlugins();
   const { options } = useOverlay().modal.config;
   const { address, identity } = options;
-  const { activeEra } = useNetworkMetrics();
   const {
     eraStakers: { stakers },
   } = useStaking();

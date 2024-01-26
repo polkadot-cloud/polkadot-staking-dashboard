@@ -1,13 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 
 export const usePoolCommission = () => {
   const { getBondedPool } = useBondedPools();
-  const { stats } = usePoolsConfig();
-  const { globalMaxCommission } = stats;
+  const { globalMaxCommission } = useApi().poolsConfig;
 
   const getCurrentCommission = (id: number): number =>
     Math.min(

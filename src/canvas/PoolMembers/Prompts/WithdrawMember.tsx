@@ -18,7 +18,6 @@ import BigNumber from 'bignumber.js';
 import type { RefObject } from 'react';
 import { useState } from 'react';
 import { useApi } from 'contexts/Api';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
@@ -41,13 +40,12 @@ export const WithdrawMember = ({
   memberRef: RefObject<HTMLDivElement>;
 }) => {
   const { t } = useTranslation('modals');
-  const { api, consts } = useApi();
   const {
     networkData: { units, unit },
   } = useNetwork();
   const { closePrompt } = usePrompt();
+  const { api, consts, activeEra } = useApi();
   const { activeAccount } = useActiveAccounts();
-  const { activeEra } = useNetworkMetrics();
   const { removePoolMember } = usePoolMembers();
   const { getSignerWarnings } = useSignerWarnings();
 

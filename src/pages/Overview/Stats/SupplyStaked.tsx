@@ -4,19 +4,19 @@
 import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
 import { useNetwork } from 'contexts/Network';
+import { useApi } from 'contexts/Api';
 
 export const SupplyStakedStat = () => {
   const { t } = useTranslation('pages');
-  const { units, unit } = useNetwork().networkData;
-  const { metrics } = useNetworkMetrics();
+  const { networkMetrics } = useApi();
   const { staking } = useStaking();
+  const { units, unit } = useNetwork().networkData;
 
   const { lastTotalStake } = staking;
-  const { totalIssuance } = metrics;
+  const { totalIssuance } = networkMetrics;
 
   // total supply as percent.
   const totalIssuanceUnit = planckToUnit(totalIssuance, units);

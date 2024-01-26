@@ -8,7 +8,6 @@ import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useSetup } from 'contexts/Setup';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -18,9 +17,11 @@ import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {
   const { t } = useTranslation('pages');
-  const { isReady } = useApi();
   const { network } = useNetwork();
-  const { stats } = usePoolsConfig();
+  const {
+    isReady,
+    poolsConfig: { maxPools },
+  } = useApi();
   const { isOwner } = useActivePools();
   const { setActiveTab } = usePoolsTabs();
   const { bondedPools } = useBondedPools();
@@ -30,7 +31,6 @@ export const useStatusButtons = () => {
   const { isReadOnlyAccount } = useImportedAccounts();
   const { setOnPoolSetup, getPoolSetupPercent } = useSetup();
 
-  const { maxPools } = stats;
   const { active } = getTransferOptions(activeAccount).pool;
   const poolSetupPercent = getPoolSetupPercent(activeAccount);
 
@@ -40,7 +40,7 @@ export const useStatusButtons = () => {
     }
     if (
       maxPools &&
-      (maxPools.isZero() || bondedPools.length === stats.maxPools?.toNumber())
+      (maxPools.isZero() || bondedPools.length === maxPools?.toNumber())
     ) {
       return true;
     }

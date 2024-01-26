@@ -25,16 +25,15 @@ import { MinCreateBondStat } from './Stats/MinCreateBond';
 import { MinJoinBondStat } from './Stats/MinJoinBond';
 import { Status } from './Status';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
+import { useApi } from 'contexts/Api';
 
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
-  const {
-    favorites,
-    stats: { counterForBondedPools },
-  } = usePoolsConfig();
+  const { favorites } = usePoolsConfig();
   const { activeTab, setActiveTab } = usePoolsTabs();
+  const { counterForBondedPools } = useApi().poolsConfig;
   const { bondedPools, getAccountPools } = useBondedPools();
   const { getPoolRoles, selectedActivePool } = useActivePools();
   const accountPools = getAccountPools(activeAccount);

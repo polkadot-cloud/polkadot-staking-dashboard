@@ -17,7 +17,6 @@ import { HelpProvider } from 'contexts/Help';
 import { IdentitiesProvider } from 'contexts/Identities';
 import { MenuProvider } from 'contexts/Menu';
 import { MigrateProvider } from 'contexts/Migrate';
-import { NetworkMetricsProvider } from 'contexts/NetworkMetrics';
 import { PromptProvider } from 'contexts/Prompt';
 import { PluginsProvider } from 'contexts/Plugins';
 import { ActivePoolsProvider } from 'contexts/Pools/ActivePools';
@@ -84,7 +83,6 @@ export const Providers = () => {
     OtherAccountsProvider,
     ImportedAccountsProvider,
     ProxiesProvider,
-    NetworkMetricsProvider,
     HelpProvider,
     PluginsProvider,
     IdentitiesProvider,

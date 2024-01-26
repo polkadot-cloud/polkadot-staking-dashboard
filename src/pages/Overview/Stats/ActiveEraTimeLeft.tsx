@@ -5,15 +5,15 @@ import BigNumber from 'bignumber.js';
 import { fromUnixTime } from 'date-fns';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useEraTimeLeft } from 'library/Hooks/useEraTimeLeft';
 import { useTimeLeft } from 'library/Hooks/useTimeLeft';
 import { fromNow } from 'library/Hooks/useTimeLeft/utils';
 import { Timeleft } from 'library/StatBoxList/Timeleft';
+import { useApi } from 'contexts/Api';
 
 export const ActiveEraStat = () => {
   const { t } = useTranslation('pages');
-  const { activeEra } = useNetworkMetrics();
+  const { activeEra } = useApi();
   const { get: getEraTimeleft } = useEraTimeLeft();
   const { timeleft, setFromNow } = useTimeLeft();
 

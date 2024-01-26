@@ -4,12 +4,10 @@
 import BigNumber from 'bignumber.js';
 import { getUnixTime } from 'date-fns';
 import { useApi } from 'contexts/Api';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 
 export const useEraTimeLeft = () => {
-  const { consts } = useApi();
+  const { consts, activeEra } = useApi();
   const { epochDuration, expectedBlockTime, sessionsPerEra } = consts;
-  const { activeEra } = useNetworkMetrics();
 
   // important to fetch the actual timeleft from when other components ask for it.
   const get = () => {

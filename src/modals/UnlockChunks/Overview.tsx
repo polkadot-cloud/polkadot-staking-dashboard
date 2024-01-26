@@ -11,7 +11,6 @@ import type { Dispatch, ForwardedRef, SetStateAction } from 'react';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
@@ -37,11 +36,10 @@ export const Overview = forwardRef(
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const { t } = useTranslation('modals');
-    const { consts } = useApi();
+    const { consts, activeEra } = useApi();
     const {
       networkData: { units, unit },
     } = useNetwork();
-    const { activeEra } = useNetworkMetrics();
     const { bondDuration } = consts;
     const { isFastUnstaking } = useUnstaking();
     const { erasToSeconds } = useErasToTimeLeft();

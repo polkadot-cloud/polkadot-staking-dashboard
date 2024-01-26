@@ -9,7 +9,6 @@ import Worker from 'workers/poolPerformance?worker';
 import { useNetwork } from 'contexts/Network';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useApi } from 'contexts/Api';
 import type { Sync } from '@polkadot-cloud/react/types';
 import BigNumber from 'bignumber.js';
@@ -31,11 +30,10 @@ export const PoolPerformanceProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const { api } = useApi();
   const { network } = useNetwork();
   const { bondedPools } = useBondedPools();
-  const { activeEra, isPagedRewardsActive } = useNetworkMetrics();
   const { getPagedErasStakers } = useStaking();
+  const { api, activeEra, isPagedRewardsActive } = useApi();
   const { erasRewardPointsFetched, erasRewardPoints } = useValidators();
 
   // Store whether pool performance data is being fetched.

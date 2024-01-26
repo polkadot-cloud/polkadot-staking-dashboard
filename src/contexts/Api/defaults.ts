@@ -5,10 +5,21 @@
 import { stringToU8a } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
 import type {
+  APIActiveEra,
   APIChainState,
   APIConstants,
   APIContextInterface,
+  APINetworkMetrics,
+  APIPoolsConfig,
 } from 'contexts/Api/types';
+
+export const defaultChainState: APIChainState = {
+  chain: null,
+  version: {
+    specVersion: 0,
+  },
+  ss58Prefix: 0,
+};
 
 export const defaultConsts: APIConstants = {
   bondDuration: new BigNumber(0),
@@ -24,17 +35,34 @@ export const defaultConsts: APIConstants = {
   poolsPalletId: stringToU8a('0'),
 };
 
-export const defaultChainState: APIChainState = {
-  chain: null,
-  version: {
-    specVersion: 0,
-  },
-  ss58Prefix: 0,
+export const defaultNetworkMetrics: APINetworkMetrics = {
+  totalIssuance: new BigNumber(0),
+  auctionCounter: new BigNumber(0),
+  earliestStoredSession: new BigNumber(0),
+  fastUnstakeErasToCheckPerBlock: 0,
+  minimumActiveStake: new BigNumber(0),
+};
+
+export const defaultActiveEra: APIActiveEra = {
+  index: new BigNumber(0),
+  start: new BigNumber(0),
+};
+
+export const defaultPoolsConfig: APIPoolsConfig = {
+  counterForPoolMembers: new BigNumber(0),
+  counterForBondedPools: new BigNumber(0),
+  counterForRewardPools: new BigNumber(0),
+  lastPoolId: new BigNumber(0),
+  maxPoolMembers: null,
+  maxPoolMembersPerPool: null,
+  maxPools: null,
+  minCreateBond: new BigNumber(0),
+  minJoinBond: new BigNumber(0),
+  globalMaxCommission: 0,
 };
 
 export const defaultApiContext: APIContextInterface = {
   api: null,
-  consts: defaultConsts,
   chainState: defaultChainState,
   isReady: false,
   apiStatus: 'disconnected',
@@ -42,4 +70,9 @@ export const defaultApiContext: APIContextInterface = {
   setIsLightClient: () => {},
   rpcEndpoint: '',
   setRpcEndpoint: (key) => {},
+  consts: defaultConsts,
+  networkMetrics: defaultNetworkMetrics,
+  activeEra: defaultActiveEra,
+  poolsConfig: defaultPoolsConfig,
+  isPagedRewardsActive: (e) => false,
 };
