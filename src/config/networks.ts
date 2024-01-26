@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { WellKnownChain } from '@substrate/connect';
 import { DefaultParams } from 'consts';
 import KusamaIconSVG from 'img/kusama_icon.svg?react';
 import KusamaInlineSVG from 'img/kusama_inline.svg?react';
@@ -33,7 +32,7 @@ export const NetworkList: Networks = {
   polkadot: {
     name: 'polkadot',
     endpoints: {
-      lightClient: WellKnownChain.polkadot,
+      lightClient: 'polkadot',
       defaultRpcEndpoint: 'Parity',
       rpcEndpoints: {
         'Automata 1RPC': 'wss://1rpc.io/dot',
@@ -99,7 +98,7 @@ export const NetworkList: Networks = {
   kusama: {
     name: 'kusama',
     endpoints: {
-      lightClient: WellKnownChain.ksmcc3,
+      lightClient: 'ksmcc3',
       defaultRpcEndpoint: 'Parity',
       rpcEndpoints: {
         'Automata 1RPC': 'wss://1rpc.io/ksm',
@@ -167,7 +166,7 @@ export const NetworkList: Networks = {
   westend: {
     name: 'westend',
     endpoints: {
-      lightClient: WellKnownChain.westend2,
+      lightClient: 'westend2',
       defaultRpcEndpoint: 'Parity',
       rpcEndpoints: {
         Dwellir: 'wss://westend-rpc.dwellir.com',

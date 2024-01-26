@@ -23,6 +23,7 @@ import type {
   APIConstants,
   APINetworkMetrics,
 } from 'contexts/Api/types';
+import { WellKnownChain } from '@substrate/connect';
 
 export class APIController {
   // ------------------------------------------------------
@@ -211,10 +212,13 @@ export class APIController {
     this.cancelFn = ScPromise.cancel;
     const Sc = (await ScPromise.promise) as SubstrateConnect;
 
+    const lightClientKey = NetworkList[network].endpoints
+      .lightClient as WellKnownChain;
+
     this._provider = new ScProvider(
       // @ts-expect-error mismatch between `@polkadot/rpc-provider/substrate-connect` and  `@substrate/connect` types: Chain[]' is not assignable to type 'string'.
       Sc,
-      NetworkList[network].endpoints.lightClient
+      WellKnownChain[lightClientKey]
     );
     await this.provider.connect();
   }
