@@ -470,7 +470,7 @@ export class APIController {
     this._unsubs['activeEra'] = unsub as unknown as VoidFn;
   };
 
-  // Subscribe pools config
+  // Subscribe to pools config.
   static subscribePoolsConfig = async (): Promise<void> => {
     if (this._unsubs['poolsConfig'] === undefined) {
       const unsub = await this.api.queryMulti(
