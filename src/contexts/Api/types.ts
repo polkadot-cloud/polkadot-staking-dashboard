@@ -5,7 +5,7 @@ import type { ApiPromise } from '@polkadot/api';
 import type { U8aLike } from '@polkadot/util/types';
 import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
-import type { AnyJson, Network, NetworkName } from '../../types';
+import type { AnyJson, NetworkName } from '../../types';
 import type { ApiStatus } from 'static/APIController/types';
 
 export interface APIProviderProps {
@@ -13,10 +13,12 @@ export interface APIProviderProps {
   network: NetworkName;
 }
 
-export interface NetworkState {
-  name: NetworkName;
-  meta: Network;
+export interface APIChainState {
+  chain: string | null;
+  version: AnyJson;
+  ss58Prefix: number;
 }
+
 export interface APIConstants {
   bondDuration: BigNumber;
   maxNominations: BigNumber;
@@ -31,7 +33,7 @@ export interface APIConstants {
   poolsPalletId: U8aLike;
 }
 
-export interface NetworkMetrics {
+export interface APINetworkMetrics {
   totalIssuance: BigNumber;
   auctionCounter: BigNumber;
   earliestStoredSession: BigNumber;
@@ -39,15 +41,9 @@ export interface NetworkMetrics {
   minimumActiveStake: BigNumber;
 }
 
-export interface ActiveEra {
+export interface APIActiveEra {
   index: BigNumber;
   start: BigNumber;
-}
-
-export interface APIChainState {
-  chain: string | null;
-  version: AnyJson;
-  ss58Prefix: number;
 }
 
 export interface APIContextInterface {
@@ -60,7 +56,7 @@ export interface APIContextInterface {
   rpcEndpoint: string;
   setRpcEndpoint: (key: string) => void;
   consts: APIConstants;
-  networkMetrics: NetworkMetrics;
-  activeEra: ActiveEra;
+  networkMetrics: APINetworkMetrics;
+  activeEra: APIActiveEra;
   isPagedRewardsActive: (era: BigNumber) => boolean;
 }

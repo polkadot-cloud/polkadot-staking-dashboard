@@ -10,12 +10,12 @@ import {
 } from 'config/networks';
 
 import type {
+  APIActiveEra,
   APIChainState,
   APIConstants,
   APIContextInterface,
+  APINetworkMetrics,
   APIProviderProps,
-  ActiveEra,
-  NetworkMetrics,
 } from './types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import {
@@ -92,13 +92,13 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const [consts, setConsts] = useState<APIConstants>(defaultConsts);
 
   // Store network metrics in state.
-  const [networkMetrics, setNetworkMetrics] = useState<NetworkMetrics>(
+  const [networkMetrics, setNetworkMetrics] = useState<APINetworkMetrics>(
     defaultNetworkMetrics
   );
   const networkMetricsRef = useRef(networkMetrics);
 
   // Store active era in state.
-  const [activeEra, setActiveEra] = useState<ActiveEra>(defaultActiveEra);
+  const [activeEra, setActiveEra] = useState<APIActiveEra>(defaultActiveEra);
   const activeEraRef = useRef(activeEra);
 
   // Fetch chain state. Called once `provider` has been initialised.

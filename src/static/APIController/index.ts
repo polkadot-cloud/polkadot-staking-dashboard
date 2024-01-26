@@ -19,9 +19,9 @@ import type { VoidFn } from '@polkadot/api/types';
 import BigNumber from 'bignumber.js';
 import { BalancesController } from 'static/BalancesController';
 import type {
+  APIActiveEra,
   APIConstants,
-  ActiveEra,
-  NetworkMetrics,
+  APINetworkMetrics,
 } from 'contexts/Api/types';
 import {
   FallbackBondingDuration,
@@ -220,8 +220,8 @@ export class APIController {
   // Fetch network config to bootstrap UI state.
   static bootstrapNetworkConfig = async (): Promise<{
     consts: APIConstants;
-    networkMetrics: NetworkMetrics;
-    activeEra: ActiveEra;
+    networkMetrics: APINetworkMetrics;
+    activeEra: APIActiveEra;
   }> => {
     // Fetch network constants.
     const allPromises = [

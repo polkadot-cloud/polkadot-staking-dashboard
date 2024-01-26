@@ -5,12 +5,20 @@
 import { stringToU8a } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
 import type {
+  APIActiveEra,
   APIChainState,
   APIConstants,
   APIContextInterface,
-  ActiveEra,
-  NetworkMetrics,
+  APINetworkMetrics,
 } from 'contexts/Api/types';
+
+export const defaultChainState: APIChainState = {
+  chain: null,
+  version: {
+    specVersion: 0,
+  },
+  ss58Prefix: 0,
+};
 
 export const defaultConsts: APIConstants = {
   bondDuration: new BigNumber(0),
@@ -26,7 +34,7 @@ export const defaultConsts: APIConstants = {
   poolsPalletId: stringToU8a('0'),
 };
 
-export const defaultNetworkMetrics: NetworkMetrics = {
+export const defaultNetworkMetrics: APINetworkMetrics = {
   totalIssuance: new BigNumber(0),
   auctionCounter: new BigNumber(0),
   earliestStoredSession: new BigNumber(0),
@@ -34,17 +42,9 @@ export const defaultNetworkMetrics: NetworkMetrics = {
   minimumActiveStake: new BigNumber(0),
 };
 
-export const defaultActiveEra: ActiveEra = {
+export const defaultActiveEra: APIActiveEra = {
   index: new BigNumber(0),
   start: new BigNumber(0),
-};
-
-export const defaultChainState: APIChainState = {
-  chain: null,
-  version: {
-    specVersion: 0,
-  },
-  ss58Prefix: 0,
 };
 
 export const defaultApiContext: APIContextInterface = {
