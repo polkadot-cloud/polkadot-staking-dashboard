@@ -80,20 +80,17 @@ export const PoolsConfigProvider = ({ children }: { children: ReactNode }) => {
         globalMaxCommission,
       ]) => {
         // format optional configs to BigNumber or null
-        maxPoolMembers = maxPoolMembers.toHuman();
-        if (maxPoolMembers !== null) {
-          maxPoolMembers = new BigNumber(rmCommas(maxPoolMembers));
-        }
-        maxPoolMembersPerPool = maxPoolMembersPerPool.toHuman();
-        if (maxPoolMembersPerPool !== null) {
-          maxPoolMembersPerPool = new BigNumber(
-            rmCommas(maxPoolMembersPerPool)
-          );
-        }
-        maxPools = maxPools.toHuman();
-        if (maxPools !== null) {
-          maxPools = new BigNumber(rmCommas(maxPools));
-        }
+        maxPoolMembers = maxPoolMembers.toHuman()
+          ? new BigNumber(rmCommas(maxPoolMembers.toString()))
+          : null;
+
+        maxPoolMembersPerPool = maxPoolMembersPerPool.toHuman()
+          ? new BigNumber(rmCommas(maxPoolMembersPerPool.toString()))
+          : null;
+
+        maxPools = maxPools.toHuman()
+          ? new BigNumber(rmCommas(maxPools.toString()))
+          : null;
 
         setStateWithRef(
           {

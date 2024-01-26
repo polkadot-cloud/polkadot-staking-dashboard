@@ -10,6 +10,7 @@ import type {
   APIConstants,
   APIContextInterface,
   APINetworkMetrics,
+  APIPoolsConfig,
 } from 'contexts/Api/types';
 
 export const defaultChainState: APIChainState = {
@@ -47,6 +48,19 @@ export const defaultActiveEra: APIActiveEra = {
   start: new BigNumber(0),
 };
 
+export const defaultPoolsConfig: APIPoolsConfig = {
+  counterForPoolMembers: new BigNumber(0),
+  counterForBondedPools: new BigNumber(0),
+  counterForRewardPools: new BigNumber(0),
+  lastPoolId: new BigNumber(0),
+  maxPoolMembers: null,
+  maxPoolMembersPerPool: null,
+  maxPools: null,
+  minCreateBond: new BigNumber(0),
+  minJoinBond: new BigNumber(0),
+  globalMaxCommission: 0,
+};
+
 export const defaultApiContext: APIContextInterface = {
   api: null,
   chainState: defaultChainState,
@@ -59,5 +73,6 @@ export const defaultApiContext: APIContextInterface = {
   consts: defaultConsts,
   networkMetrics: defaultNetworkMetrics,
   activeEra: defaultActiveEra,
+  poolsConfig: defaultPoolsConfig,
   isPagedRewardsActive: (e) => false,
 };

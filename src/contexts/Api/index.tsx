@@ -15,6 +15,7 @@ import type {
   APIConstants,
   APIContextInterface,
   APINetworkMetrics,
+  APIPoolsConfig,
   APIProviderProps,
 } from './types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
@@ -23,6 +24,7 @@ import {
   defaultActiveEra,
   defaultApiContext,
   defaultChainState,
+  defaultPoolsConfig,
   defaultNetworkMetrics,
 } from './defaults';
 import { APIController } from 'static/APIController';
@@ -101,6 +103,11 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const [activeEra, setActiveEra] = useState<APIActiveEra>(defaultActiveEra);
   const activeEraRef = useRef(activeEra);
 
+  // Store pool config in state.
+  const [poolsConfig, setPoolsConfig] =
+    useState<APIPoolsConfig>(defaultPoolsConfig);
+  const poolsConfigRef = useRef(poolsConfig);
+
   // Fetch chain state. Called once `provider` has been initialised.
   const onApiReady = async () => {
     const { api } = APIController;
@@ -131,8 +138,11 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       consts: newConsts,
       networkMetrics: newNetworkMetrics,
       activeEra: newActiveEra,
+      poolsConfig: newPoolsConfig,
     } = await APIController.bootstrapNetworkConfig();
 
+    // Populate all config state.
+    setConsts(newConsts);
     setStateWithRef(newNetworkMetrics, setNetworkMetrics, networkMetricsRef);
     const { index, start } = newActiveEra;
     setStateWithRef(
@@ -140,13 +150,15 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       setActiveEra,
       activeEraRef
     );
-    setConsts(newConsts);
+    setStateWithRef(newPoolsConfig, setPoolsConfig, poolsConfigRef);
+
     // API is now ready to be used.
     setApiStatus('ready');
 
     // Initialise subscriptions.
     APIController.subscribeNetworkMetrics();
     APIController.subscribeToActiveEra();
+    APIController.subscribePoolsConfig();
   };
 
   const onApiDisconnected = (err?: string) => {
@@ -241,6 +253,27 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     }
   };
 
+  // Handle new pools config updates.
+  const handlePoolsConfigUpdate = (e: Event) => {
+    if (isCustomEvent(e)) {
+      const { poolsConfig: newPoolsConfig } = e.detail;
+      // Only update if values have changed.
+      if (
+        JSON.stringify(newPoolsConfig) !==
+        JSON.stringify(poolsConfigRef.current)
+      ) {
+        setStateWithRef(
+          {
+            ...poolsConfigRef.current,
+            ...newPoolsConfig,
+          },
+          setPoolsConfig,
+          poolsConfigRef
+        );
+      }
+    }
+  };
+
   // Given an era, determine whether paged rewards are active.
   const isPagedRewardsActive = (era: BigNumber): boolean => {
     const networkStartEra = PagedRewardsStartEra[network];
@@ -313,6 +346,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   useEventListener('new-active-era', handleActiveEraUpdate, documentRef);
 
+  useEventListener('new-pools-config', handlePoolsConfigUpdate, documentRef);
+
   return (
     <APIContext.Provider
       value={{
@@ -327,6 +362,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         consts,
         networkMetrics,
         activeEra,
+        poolsConfig,
         isPagedRewardsActive,
       }}
     >
