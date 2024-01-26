@@ -320,6 +320,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         networkMetricsRef
       );
       setStateWithRef(defaultActiveEra, setActiveEra, activeEraRef);
+      setStateWithRef(defaultPoolsConfig, setPoolsConfig, poolsConfigRef);
     }
     // Reconnect API instance.
     APIController.initialize(network, isLightClient ? 'sc' : 'ws', rpcEndpoint);
