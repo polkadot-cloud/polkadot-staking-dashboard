@@ -281,12 +281,12 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     if (network !== APIController.network) {
       setConsts(defaultConsts);
       setChainState(defaultChainState);
-      setStateWithRef(defaultActiveEra, setActiveEra, activeEraRef);
       setStateWithRef(
         defaultNetworkMetrics,
         setNetworkMetrics,
         networkMetricsRef
       );
+      setStateWithRef(defaultActiveEra, setActiveEra, activeEraRef);
     }
     // Reconnect API instance.
     APIController.initialize(network, isLightClient ? 'sc' : 'ws', rpcEndpoint);
