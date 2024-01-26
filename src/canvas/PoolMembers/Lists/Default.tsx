@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { List, ListStatusHeader, Wrapper as ListWrapper } from 'library/List';
 import { Pagination } from 'library/List/Pagination';
@@ -24,8 +23,7 @@ export const MembersListInner = ({
   disableThrottle = false,
 }: DefaultMembersListProps) => {
   const { t } = useTranslation('pages');
-  const { isReady } = useApi();
-  const { activeEra } = useNetworkMetrics();
+  const { isReady, activeEra } = useApi();
   const { fetchPoolMembersMetaBatch } = usePoolMembers();
 
   // current page

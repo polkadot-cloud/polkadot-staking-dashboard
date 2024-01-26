@@ -14,7 +14,6 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useFastUnstake } from 'contexts/FastUnstake';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
@@ -29,7 +28,12 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
-  const { api, consts } = useApi();
+  const {
+    api,
+    consts: { bondDuration, fastUnstakeDeposit },
+    networkMetrics: { fastUnstakeErasToCheckPerBlock },
+    activeEra,
+  } = useApi();
   const {
     networkData: { units, unit },
   } = useNetwork();
@@ -39,12 +43,9 @@ export const ManageFastUnstake = () => {
   const { isFastUnstaking } = useUnstaking();
   const { setModalResize, setModalStatus } = useOverlay().modal;
   const { getSignerWarnings } = useSignerWarnings();
-  const { activeEra, metrics } = useNetworkMetrics();
   const { feeReserve, getTransferOptions } = useTransferOptions();
   const { isExposed, counterForQueue, queueDeposit, meta } = useFastUnstake();
 
-  const { bondDuration, fastUnstakeDeposit } = consts;
-  const { fastUnstakeErasToCheckPerBlock } = metrics;
   const { checked } = meta;
   const controller = getBondedAccount(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);

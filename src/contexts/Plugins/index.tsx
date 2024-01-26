@@ -10,7 +10,6 @@ import type { PluginsContextInterface } from './types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { SubscanController } from 'static/SubscanController';
 import { getAvailablePlugins } from './Utils';
@@ -22,9 +21,8 @@ export const PluginsContext = createContext<PluginsContextInterface>(
 export const usePlugins = () => useContext(PluginsContext);
 
 export const PluginsProvider = ({ children }: { children: ReactNode }) => {
-  const { isReady } = useApi();
   const { network } = useNetwork();
-  const { activeEra } = useNetworkMetrics();
+  const { isReady, activeEra } = useApi();
   const { activeAccount } = useActiveAccounts();
 
   // Store the currently active plugins.

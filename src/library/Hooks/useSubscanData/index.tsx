@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@polkadot-cloud/utils';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { usePlugins } from 'contexts/Plugins';
 import { useEffect, useRef, useState } from 'react';
 import { SubscanController } from 'static/SubscanController';
@@ -15,10 +14,11 @@ import type {
 import { isCustomEvent } from 'static/utils';
 import { useEventListener } from 'usehooks-ts';
 import { useErasToTimeLeft } from '../useErasToTimeLeft';
+import { useApi } from 'contexts/Api';
 
 export const useSubscanData = (keys: PayoutType[]) => {
+  const { activeEra } = useApi();
   const { pluginEnabled } = usePlugins();
-  const { activeEra } = useNetworkMetrics();
   const { erasToSeconds } = useErasToTimeLeft();
 
   // Store the most up to date subscan data state.

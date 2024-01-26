@@ -4,7 +4,6 @@
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useFastUnstake } from 'contexts/FastUnstake';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import type { AnyJson } from 'types';
@@ -13,10 +12,9 @@ import { useNominationStatus } from '../useNominationStatus';
 
 export const useUnstaking = () => {
   const { t } = useTranslation('library');
-  const { consts } = useApi();
+  const { consts, activeEra } = useApi();
   const { inSetup } = useStaking();
   const { activeAccount } = useActiveAccounts();
-  const { activeEra } = useNetworkMetrics();
   const { getTransferOptions } = useTransferOptions();
   const { getNominationStatus } = useNominationStatus();
   const { checking, head, isExposed, queueDeposit, meta } = useFastUnstake();

@@ -7,8 +7,7 @@ import { createContext, useContext, useState } from 'react';
 import { NetworkList } from 'config/networks';
 import { DefaultNetwork } from 'consts';
 import type { NetworkName } from 'types';
-import type { NetworkState } from 'contexts/Api/types';
-import type { NetworkContextInterface } from './types';
+import type { NetworkState, NetworkContextInterface } from './types';
 import { defaultNetworkContext } from './defaults';
 
 export const NetworkContext = createContext<NetworkContextInterface>(
@@ -57,6 +56,7 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
 
   // Store the initial active network.
   const initialNetwork = getInitialNetwork();
+
   const [network, setNetwork] = useState<NetworkState>({
     name: initialNetwork,
     meta: NetworkList[initialNetwork],

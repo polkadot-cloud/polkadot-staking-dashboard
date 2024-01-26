@@ -4,20 +4,20 @@
 import { capitalizeFirstLetter, planckToUnit } from '@polkadot-cloud/utils';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import type { AnyJson } from 'types';
 import { useErasPerDay } from '../useErasPerDay';
 
 export const useFillVariables = () => {
-  const { consts } = useApi();
+  const {
+    consts,
+    networkMetrics: { minimumActiveStake },
+  } = useApi();
   const { stats } = usePoolsConfig();
   const { networkData } = useNetwork();
   const { maxNominations, maxExposurePageSize, existentialDeposit } = consts;
   const { maxSupportedDays } = useErasPerDay();
   const { minJoinBond, minCreateBond } = stats;
-  const { metrics } = useNetworkMetrics();
-  const { minimumActiveStake } = metrics;
 
   const fillVariables = (d: AnyJson, keys: string[]) => {
     const fields: AnyJson = Object.entries(d).filter(([k]) => keys.includes(k));

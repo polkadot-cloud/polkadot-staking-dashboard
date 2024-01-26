@@ -16,7 +16,6 @@ import { useStaking } from 'contexts/Staking';
 import type { AnyApi, MaybeAddress, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import type { AnyJson } from '@polkadot-cloud/react/types';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
@@ -30,8 +29,7 @@ export const useBondedPools = () => useContext(BondedPoolsContext);
 
 export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
-  const { api, isReady } = useApi();
-  const { activeEra } = useNetworkMetrics();
+  const { api, isReady, activeEra } = useApi();
   const { createAccounts, stats } = usePoolsConfig();
   const { getNominationsStatusFromTargets } = useStaking();
   const { lastPoolId } = stats;

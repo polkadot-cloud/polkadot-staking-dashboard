@@ -11,7 +11,6 @@ import { Component, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DefaultLocale, ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
@@ -37,11 +36,10 @@ export const PayoutListInner = ({
 }: PayoutListProps) => {
   const { i18n, t } = useTranslation('pages');
   const { mode } = useTheme();
-  const { isReady } = useApi();
+  const { isReady, activeEra } = useApi();
   const {
     networkData: { units, unit, colors },
   } = useNetwork();
-  const { activeEra } = useNetworkMetrics();
   const { listFormat, setListFormat } = usePayoutList();
   const { validators } = useValidators();
   const { bondedPools } = useBondedPools();

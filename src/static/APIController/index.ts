@@ -1,11 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { BlockNumber } from '@polkadot/types/interfaces/runtime';
-import { makeCancelable, withTimeout } from '@polkadot-cloud/utils';
+import type { ActiveEraInfo, BlockNumber } from '@polkadot/types/interfaces';
+import { makeCancelable, rmCommas, withTimeout } from '@polkadot-cloud/utils';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
-import { NetworkList } from 'config/networks';
+import { NetworkList, NetworksWithPagedRewards } from 'config/networks';
 import type { NetworkName } from 'types';
 import type {
   APIConfig,
@@ -14,9 +14,16 @@ import type {
   EventStatus,
   SubstrateConnect,
 } from './types';
+import type { Option } from '@polkadot/types-codec';
 import type { VoidFn } from '@polkadot/api/types';
 import BigNumber from 'bignumber.js';
 import { BalancesController } from 'static/BalancesController';
+import type {
+  APIActiveEra,
+  APIConstants,
+  APINetworkMetrics,
+} from 'contexts/Api/types';
+import { WellKnownChain } from '@substrate/connect';
 
 export class APIController {
   // ------------------------------------------------------
@@ -31,6 +38,16 @@ export class APIController {
 
   // How many missing blocks to allow for leeway when verifying.
   static MIN_EXPECTED_BLOCKS_LEEWAY = 2;
+
+  // Network config fallback values.
+  static FALLBACK = {
+    MAX_NOMINATIONS: new BigNumber(16),
+    BONDING_DURATION: new BigNumber(28),
+    SESSIONS_PER_ERA: new BigNumber(6),
+    MAX_ELECTING_VOTERS: new BigNumber(22500),
+    EXPECTED_BLOCK_TIME: new BigNumber(6000),
+    EPOCH_DURATION: new BigNumber(2400),
+  };
 
   // The active network.
   static network: NetworkName;
@@ -195,20 +212,121 @@ export class APIController {
     this.cancelFn = ScPromise.cancel;
     const Sc = (await ScPromise.promise) as SubstrateConnect;
 
+    const lightClientKey = NetworkList[network].endpoints
+      .lightClient as WellKnownChain;
+
     this._provider = new ScProvider(
       // @ts-expect-error mismatch between `@polkadot/rpc-provider/substrate-connect` and  `@substrate/connect` types: Chain[]' is not assignable to type 'string'.
       Sc,
-      NetworkList[network].endpoints.lightClient
+      WellKnownChain[lightClientKey]
     );
     await this.provider.connect();
   }
+
+  // Fetch network config to bootstrap UI state.
+  static bootstrapNetworkConfig = async (): Promise<{
+    consts: APIConstants;
+    networkMetrics: APINetworkMetrics;
+    activeEra: APIActiveEra;
+  }> => {
+    // Fetch network constants.
+    const allPromises = [
+      this.api.consts.staking.bondingDuration,
+      this.api.consts.staking.maxNominations,
+      this.api.consts.staking.sessionsPerEra,
+      this.api.consts.electionProviderMultiPhase.maxElectingVoters,
+      this.api.consts.babe.expectedBlockTime,
+      this.api.consts.babe.epochDuration,
+      this.api.consts.balances.existentialDeposit,
+      this.api.consts.staking.historyDepth,
+      this.api.consts.fastUnstake.deposit,
+      this.api.consts.nominationPools.palletId,
+    ];
+    // DEPRECATION: Paged Rewards
+    //
+    // Fetch `maxExposurePageSize` instead of `maxNominatorRewardedPerValidator` for networks that
+    // have paged rewards.
+    if (NetworksWithPagedRewards.includes(this.network)) {
+      allPromises.push(this.api.consts.staking.maxExposurePageSize);
+    } else {
+      allPromises.push(
+        this.api.consts.staking.maxNominatorRewardedPerValidator
+      );
+    }
+
+    const resultConsts = await Promise.all(allPromises);
+
+    // Fetch network config.
+    const resultNetworkMetrics = await this.api.queryMulti([
+      this.api.query.balances.totalIssuance,
+      this.api.query.auctions.auctionCounter,
+      this.api.query.paraSessionInfo.earliestStoredSession,
+      this.api.query.fastUnstake.erasToCheckPerBlock,
+      this.api.query.staking.minimumActiveStake,
+      this.api.query.staking.activeEra,
+    ]);
+
+    return {
+      consts: {
+        bondDuration: resultConsts[0]
+          ? this.stringToBigNumber(resultConsts[0].toString())
+          : this.FALLBACK.BONDING_DURATION,
+        maxNominations: resultConsts[1]
+          ? this.stringToBigNumber(resultConsts[1].toString())
+          : this.FALLBACK.MAX_NOMINATIONS,
+        sessionsPerEra: resultConsts[2]
+          ? this.stringToBigNumber(resultConsts[2].toString())
+          : this.FALLBACK.SESSIONS_PER_ERA,
+        maxElectingVoters: resultConsts[3]
+          ? this.stringToBigNumber(resultConsts[3].toString())
+          : this.FALLBACK.MAX_ELECTING_VOTERS,
+        expectedBlockTime: resultConsts[4]
+          ? this.stringToBigNumber(resultConsts[4].toString())
+          : this.FALLBACK.EXPECTED_BLOCK_TIME,
+        epochDuration: resultConsts[5]
+          ? this.stringToBigNumber(resultConsts[5].toString())
+          : this.FALLBACK.EPOCH_DURATION,
+        existentialDeposit: resultConsts[6]
+          ? this.stringToBigNumber(resultConsts[6].toString())
+          : new BigNumber(0),
+        historyDepth: resultConsts[7]
+          ? this.stringToBigNumber(resultConsts[7].toString())
+          : new BigNumber(0),
+        fastUnstakeDeposit: resultConsts[8]
+          ? this.stringToBigNumber(resultConsts[8].toString())
+          : new BigNumber(0),
+        poolsPalletId: resultConsts[9]
+          ? resultConsts[9].toU8a()
+          : new Uint8Array(0),
+        maxExposurePageSize: resultConsts[10]
+          ? this.stringToBigNumber(resultConsts[10].toString())
+          : NetworkList[this.network].maxExposurePageSize,
+      },
+      networkMetrics: {
+        totalIssuance: new BigNumber(resultNetworkMetrics[0].toString()),
+        auctionCounter: new BigNumber(resultNetworkMetrics[1].toString()),
+        earliestStoredSession: new BigNumber(
+          resultNetworkMetrics[2].toString()
+        ),
+        fastUnstakeErasToCheckPerBlock: Number(
+          rmCommas(resultNetworkMetrics[3].toString())
+        ),
+        minimumActiveStake: new BigNumber(resultNetworkMetrics[4].toString()),
+      },
+      activeEra: JSON.parse(
+        (resultNetworkMetrics[5] as Option<ActiveEraInfo>)
+          .unwrapOrDefault()
+          .toString()
+      ),
+    };
+  };
 
   // ------------------------------------------------------
   // Subscription handling.
   // ------------------------------------------------------
 
   // Subscribe to block number.
-  static subscribeBlockNumber = async () => {
+  static subscribeBlockNumber = async (): Promise<void> => {
     if (this._unsubs['blockNumber'] === undefined) {
       // Retrieve and store the estimated block time.
       const blockTime = this.api.consts.babe.expectedBlockTime;
@@ -218,7 +336,6 @@ export class APIController {
       const unsub = await this.api.query.system.number((num: BlockNumber) => {
         this._blockNumber = num.toString();
 
-        // Send block number to UI.
         document.dispatchEvent(
           new CustomEvent(`new-block-number`, {
             detail: { blockNumber: num.toString() },
@@ -244,6 +361,57 @@ export class APIController {
         ),
       };
     }
+  };
+
+  // Subscribe to network metrics.
+  static subscribeNetworkMetrics = async (): Promise<void> => {
+    if (this._unsubs['networkMetrics'] === undefined) {
+      const unsub = await this.api.queryMulti(
+        [
+          this.api.query.balances.totalIssuance,
+          this.api.query.auctions.auctionCounter,
+          this.api.query.paraSessionInfo.earliestStoredSession,
+          this.api.query.fastUnstake.erasToCheckPerBlock,
+          this.api.query.staking.minimumActiveStake,
+        ],
+        (result) => {
+          const networkMetrics = {
+            totalIssuance: new BigNumber(result[0].toString()),
+            auctionCounter: new BigNumber(result[1].toString()),
+            earliestStoredSession: new BigNumber(result[2].toString()),
+            fastUnstakeErasToCheckPerBlock: Number(
+              rmCommas(result[3].toString())
+            ),
+            minimumActiveStake: new BigNumber(result[4].toString()),
+          };
+
+          document.dispatchEvent(
+            new CustomEvent(`new-network-metrics`, {
+              detail: { networkMetrics },
+            })
+          );
+        }
+      );
+      this._unsubs['networkMetrics'] = unsub as unknown as VoidFn;
+    }
+  };
+
+  // Subscribe to active era.
+  static subscribeToActiveEra = async (): Promise<void> => {
+    const unsub = await this.api.query.staking.activeEra(
+      (result: Option<ActiveEraInfo>) => {
+        // determine activeEra: toString used as alternative to `toHuman`, that puts commas in
+        // numbers
+        const activeEra = JSON.parse(result.unwrapOrDefault().toString());
+
+        document.dispatchEvent(
+          new CustomEvent(`new-active-era`, {
+            detail: { activeEra },
+          })
+        );
+      }
+    );
+    this._unsubs['activeEra'] = unsub as unknown as VoidFn;
   };
 
   // Verify block subscription is online.
@@ -339,6 +507,10 @@ export class APIController {
   // ------------------------------------------------------
   // Class helpers.
   // ------------------------------------------------------
+
+  // Converts a balance string into a `BigNumber`.
+  static stringToBigNumber = (value: string): BigNumber =>
+    new BigNumber(rmCommas(value));
 
   // Ensures the provided status is a valid `EventStatus` being passed, or falls back to `error`.
   static ensureEventStatus = (status: string | EventStatus): EventStatus => {

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useErasPerDay } from '../useErasPerDay';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { AverageRewardRate, UseAverageRewardRate } from './types';
@@ -10,14 +9,16 @@ import { defaultAverageRewardRate } from './defaults';
 import { useNetwork } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { planckToUnit } from '@polkadot-cloud/utils';
+import { useApi } from 'contexts/Api';
 
 export const useAverageRewardRate = (): UseAverageRewardRate => {
   const { staking } = useStaking();
   const { erasPerDay } = useErasPerDay();
-  const { metrics } = useNetworkMetrics();
+  const {
+    networkMetrics: { totalIssuance },
+  } = useApi();
   const { units } = useNetwork().networkData;
   const { avgCommission, averageEraValidatorReward } = useValidators();
-  const { totalIssuance } = metrics;
   const { lastTotalStake } = staking;
 
   // Get average reward rates.

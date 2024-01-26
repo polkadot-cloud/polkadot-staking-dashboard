@@ -24,7 +24,6 @@ import type { AnyApi } from 'types';
 import { usePayouts } from 'contexts/Payouts';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import type { FormProps, ActivePayout } from './types';
 import { ContentWrapper } from './Wrappers';
 import { SubscanController } from 'static/SubscanController';
@@ -35,7 +34,7 @@ export const Forms = forwardRef(
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const { t } = useTranslation('modals');
-    const { api } = useApi();
+    const { api, isPagedRewardsActive } = useApi();
     const {
       networkData: { units, unit },
     } = useNetwork();
@@ -44,7 +43,6 @@ export const Forms = forwardRef(
     const { setModalStatus } = useOverlay().modal;
     const { activeAccount } = useActiveAccounts();
     const { getSignerWarnings } = useSignerWarnings();
-    const { isPagedRewardsActive } = useNetworkMetrics();
 
     // Get the total payout amount.
     const totalPayout =

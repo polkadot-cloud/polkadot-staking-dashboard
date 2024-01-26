@@ -6,7 +6,6 @@ import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import type { MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
@@ -27,8 +26,7 @@ export const TransferOptionsProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const { consts } = useApi();
-  const { activeEra } = useNetworkMetrics();
+  const { consts, activeEra } = useApi();
   const { membership } = usePoolMemberships();
   const { activeAccount } = useActiveAccounts();
   const {

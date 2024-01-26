@@ -11,7 +11,6 @@ import BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, MaybeAddress } from 'types';
 import Worker from 'workers/stakers?worker';
@@ -36,14 +35,17 @@ export const FastUnstakeContext = createContext<FastUnstakeContextInterface>(
 export const useFastUnstake = () => useContext(FastUnstakeContext);
 
 export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
+  const { activeEra } = useApi();
   const { network } = useNetwork();
-  const { api, isReady, consts } = useApi();
   const { activeAccount } = useActiveAccounts();
   const { inSetup, fetchEraStakers } = useStaking();
-  const { metrics, activeEra } = useNetworkMetrics();
   const { getNominationStatus } = useNominationStatus();
-  const { fastUnstakeErasToCheckPerBlock } = metrics;
-  const { bondDuration } = consts;
+  const {
+    api,
+    isReady,
+    consts: { bondDuration },
+    networkMetrics: { fastUnstakeErasToCheckPerBlock },
+  } = useApi();
   const { nominees } = getNominationStatus(activeAccount, 'nominator');
 
   // store whether a fast unstake check is in progress.
