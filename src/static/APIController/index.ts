@@ -265,37 +265,37 @@ export class APIController {
     return {
       consts: {
         bondDuration: resultConsts[0]
-          ? new BigNumber(rmCommas(resultConsts[0].toString()))
+          ? this.stringToBigNumber(resultConsts[0].toString())
           : this.FALLBACK.BONDING_DURATION,
         maxNominations: resultConsts[1]
-          ? new BigNumber(rmCommas(resultConsts[1].toString()))
+          ? this.stringToBigNumber(resultConsts[1].toString())
           : this.FALLBACK.MAX_NOMINATIONS,
         sessionsPerEra: resultConsts[2]
-          ? new BigNumber(rmCommas(resultConsts[2].toString()))
+          ? this.stringToBigNumber(resultConsts[2].toString())
           : this.FALLBACK.SESSIONS_PER_ERA,
         maxElectingVoters: resultConsts[3]
-          ? new BigNumber(rmCommas(resultConsts[3].toString()))
+          ? this.stringToBigNumber(resultConsts[3].toString())
           : this.FALLBACK.MAX_ELECTING_VOTERS,
         expectedBlockTime: resultConsts[4]
-          ? new BigNumber(rmCommas(resultConsts[4].toString()))
+          ? this.stringToBigNumber(resultConsts[4].toString())
           : this.FALLBACK.EXPECTED_BLOCK_TIME,
         epochDuration: resultConsts[5]
-          ? new BigNumber(rmCommas(resultConsts[5].toString()))
+          ? this.stringToBigNumber(resultConsts[5].toString())
           : this.FALLBACK.EPOCH_DURATION,
         existentialDeposit: resultConsts[6]
-          ? new BigNumber(rmCommas(resultConsts[6].toString()))
+          ? this.stringToBigNumber(resultConsts[6].toString())
           : new BigNumber(0),
         historyDepth: resultConsts[7]
-          ? new BigNumber(rmCommas(resultConsts[7].toString()))
+          ? this.stringToBigNumber(resultConsts[7].toString())
           : new BigNumber(0),
         fastUnstakeDeposit: resultConsts[8]
-          ? new BigNumber(rmCommas(resultConsts[8].toString()))
+          ? this.stringToBigNumber(resultConsts[8].toString())
           : new BigNumber(0),
         poolsPalletId: resultConsts[9]
           ? resultConsts[9].toU8a()
           : new Uint8Array(0),
         maxExposurePageSize: resultConsts[10]
-          ? new BigNumber(rmCommas(resultConsts[10].toString()))
+          ? this.stringToBigNumber(resultConsts[10].toString())
           : NetworkList[this.network].maxExposurePageSize,
       },
       networkMetrics: {
@@ -503,6 +503,10 @@ export class APIController {
   // ------------------------------------------------------
   // Class helpers.
   // ------------------------------------------------------
+
+  // Converts a balance string into a `BigNumber`.
+  static stringToBigNumber = (value: string): BigNumber =>
+    new BigNumber(rmCommas(value));
 
   // Ensures the provided status is a valid `EventStatus` being passed, or falls back to `error`.
   static ensureEventStatus = (status: string | EventStatus): EventStatus => {
