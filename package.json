@@ -34,7 +34,7 @@
     "@polkadot/util": "^12.6.2",
     "@polkadot/util-crypto": "^12.6.2",
     "@polkawatch/ddp-client": "^2.0.10",
-    "@substrate/connect": "^0.8.5",
+    "@substrate/connect": "0.7.35",
     "@zondax/ledger-substrate": "^0.41.3",
     "bignumber.js": "^9.1.2",
     "bn.js": "^5.2.1",
