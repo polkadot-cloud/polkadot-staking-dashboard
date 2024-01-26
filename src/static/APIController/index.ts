@@ -286,16 +286,16 @@ export class APIController {
     ]);
 
     // format optional configs to BigNumber or null.
-    const maxPoolMembers = resultNetworkMetrics[11].toHuman()
+    const maxPoolMembers = resultNetworkMetrics[10].toHuman()
+      ? new BigNumber(rmCommas(resultNetworkMetrics[10].toString()))
+      : null;
+
+    const maxPoolMembersPerPool = resultNetworkMetrics[11].toHuman()
       ? new BigNumber(rmCommas(resultNetworkMetrics[11].toString()))
       : null;
 
-    const maxPoolMembersPerPool = resultNetworkMetrics[12].toHuman()
+    const maxPools = resultNetworkMetrics[12].toHuman()
       ? new BigNumber(rmCommas(resultNetworkMetrics[12].toString()))
-      : null;
-
-    const maxPools = resultNetworkMetrics[13].toHuman()
-      ? new BigNumber(rmCommas(resultNetworkMetrics[13].toString()))
       : null;
 
     return {
@@ -352,26 +352,26 @@ export class APIController {
       ),
       poolsConfig: {
         counterForPoolMembers: this.stringToBigNumber(
-          resultNetworkMetrics[7].toString()
+          resultNetworkMetrics[6].toString()
         ),
         counterForBondedPools: this.stringToBigNumber(
-          resultNetworkMetrics[8].toString()
+          resultNetworkMetrics[7].toString()
         ),
         counterForRewardPools: this.stringToBigNumber(
-          resultNetworkMetrics[9].toString()
+          resultNetworkMetrics[8].toString()
         ),
-        lastPoolId: this.stringToBigNumber(resultNetworkMetrics[10].toString()),
+        lastPoolId: this.stringToBigNumber(resultNetworkMetrics[9].toString()),
         maxPoolMembers,
         maxPoolMembersPerPool,
         maxPools,
         minCreateBond: this.stringToBigNumber(
-          resultNetworkMetrics[14].toString()
+          resultNetworkMetrics[13].toString()
         ),
         minJoinBond: this.stringToBigNumber(
-          resultNetworkMetrics[15].toString()
+          resultNetworkMetrics[14].toString()
         ),
         globalMaxCommission: Number(
-          String(resultNetworkMetrics[16]?.toHuman() || '100%').slice(0, -1)
+          String(resultNetworkMetrics[15]?.toHuman() || '100%').slice(0, -1)
         ),
       },
     };
@@ -488,30 +488,30 @@ export class APIController {
         ],
         (result) => {
           // format optional configs to BigNumber or null.
-          const maxPoolMembers = result[5].toHuman()
+          const maxPoolMembers = result[4].toHuman()
+            ? new BigNumber(rmCommas(result[4].toString()))
+            : null;
+
+          const maxPoolMembersPerPool = result[5].toHuman()
             ? new BigNumber(rmCommas(result[5].toString()))
             : null;
 
-          const maxPoolMembersPerPool = result[6].toHuman()
+          const maxPools = result[6].toHuman()
             ? new BigNumber(rmCommas(result[6].toString()))
             : null;
 
-          const maxPools = result[7].toHuman()
-            ? new BigNumber(rmCommas(result[7].toString()))
-            : null;
-
           const poolsConfig = {
-            counterForPoolMembers: this.stringToBigNumber(result[1].toString()),
-            counterForBondedPools: this.stringToBigNumber(result[2].toString()),
-            counterForRewardPools: this.stringToBigNumber(result[3].toString()),
-            lastPoolId: this.stringToBigNumber(result[4].toString()),
+            counterForPoolMembers: this.stringToBigNumber(result[0].toString()),
+            counterForBondedPools: this.stringToBigNumber(result[1].toString()),
+            counterForRewardPools: this.stringToBigNumber(result[2].toString()),
+            lastPoolId: this.stringToBigNumber(result[3].toString()),
             maxPoolMembers,
             maxPoolMembersPerPool,
             maxPools,
-            minCreateBond: this.stringToBigNumber(result[8].toString()),
-            minJoinBond: this.stringToBigNumber(result[9].toString()),
+            minCreateBond: this.stringToBigNumber(result[7].toString()),
+            minJoinBond: this.stringToBigNumber(result[8].toString()),
             globalMaxCommission: Number(
-              String(result[10]?.toHuman() || '100%').slice(0, -1)
+              String(result[9]?.toHuman() || '100%').slice(0, -1)
             ),
           };
 

@@ -2,18 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { bnToU8a, u8aConcat } from '@polkadot/util';
-import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
 import type { ReactNode } from 'react';
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { EmptyH256, ModPrefix, U32Opts } from 'consts';
-import type { PoolConfigState, PoolsConfigContextState } from './types';
-import type { AnyApi } from 'types';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import type { PoolsConfigContextState } from './types';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from '../../Api';
-import { defaultStats, defaultPoolsConfigContext } from './defaults';
+import { defaultPoolsConfigContext } from './defaults';
 
 export const PoolsConfigContext = createContext<PoolsConfigContextState>(
   defaultPoolsConfigContext
@@ -23,15 +20,8 @@ export const usePoolsConfig = () => useContext(PoolsConfigContext);
 
 export const PoolsConfigProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
-  const { api, isReady, consts } = useApi();
+  const { api, consts } = useApi();
   const { poolsPalletId } = consts;
-
-  // store pool metadata
-  const [poolsConfig, setPoolsConfig] = useState<PoolConfigState>({
-    stats: defaultStats,
-    unsub: null,
-  });
-  const poolsConfigRef = useRef(poolsConfig);
 
   // get favorite pools from local storage.
   const getLocalFavorites = () => {
@@ -42,99 +32,7 @@ export const PoolsConfigProvider = ({ children }: { children: ReactNode }) => {
   // stores the user's favorite pools
   const [favorites, setFavorites] = useState<string[]>(getLocalFavorites());
 
-  const unsubscribe = () => {
-    if (poolsConfigRef.current.unsub !== null) {
-      poolsConfigRef.current.unsub();
-    }
-  };
-
-  // subscribe to pool chain state
-  const subscribeToPoolConfig = async () => {
-    if (!api) {
-      return;
-    }
-
-    const unsub = await api.queryMulti<AnyApi>(
-      [
-        api.query.nominationPools.counterForPoolMembers,
-        api.query.nominationPools.counterForBondedPools,
-        api.query.nominationPools.counterForRewardPools,
-        api.query.nominationPools.lastPoolId,
-        api.query.nominationPools.maxPoolMembers,
-        api.query.nominationPools.maxPoolMembersPerPool,
-        api.query.nominationPools.maxPools,
-        api.query.nominationPools.minCreateBond,
-        api.query.nominationPools.minJoinBond,
-        api.query.nominationPools.globalMaxCommission,
-      ],
-      ([
-        counterForPoolMembers,
-        counterForBondedPools,
-        counterForRewardPools,
-        lastPoolId,
-        maxPoolMembers,
-        maxPoolMembersPerPool,
-        maxPools,
-        minCreateBond,
-        minJoinBond,
-        globalMaxCommission,
-      ]) => {
-        // format optional configs to BigNumber or null
-        maxPoolMembers = maxPoolMembers.toHuman()
-          ? new BigNumber(rmCommas(maxPoolMembers.toString()))
-          : null;
-
-        maxPoolMembersPerPool = maxPoolMembersPerPool.toHuman()
-          ? new BigNumber(rmCommas(maxPoolMembersPerPool.toString()))
-          : null;
-
-        maxPools = maxPools.toHuman()
-          ? new BigNumber(rmCommas(maxPools.toString()))
-          : null;
-
-        setStateWithRef(
-          {
-            ...poolsConfigRef.current,
-            stats: {
-              counterForPoolMembers: new BigNumber(
-                counterForPoolMembers.toString()
-              ),
-              counterForBondedPools: new BigNumber(
-                counterForBondedPools.toString()
-              ),
-              counterForRewardPools: new BigNumber(
-                counterForRewardPools.toString()
-              ),
-              lastPoolId: new BigNumber(lastPoolId.toString()),
-              maxPoolMembers,
-              maxPoolMembersPerPool,
-              maxPools,
-              minCreateBond: new BigNumber(minCreateBond.toString()),
-              minJoinBond: new BigNumber(minJoinBond.toString()),
-              globalMaxCommission: Number(
-                globalMaxCommission.toHuman().slice(0, -1)
-              ),
-            },
-          },
-          setPoolsConfig,
-          poolsConfigRef
-        );
-      }
-    );
-
-    setStateWithRef(
-      {
-        ...poolsConfigRef.current,
-        unsub,
-      },
-      setPoolsConfig,
-      poolsConfigRef
-    );
-  };
-
-  /*
-   * Adds a favorite validator.
-   */
+  // Adds a favorite validator.
   const addFavorite = (address: string) => {
     const newFavorites = Object.assign(favorites);
     if (!newFavorites.includes(address)) {
@@ -190,25 +88,6 @@ export const PoolsConfigProvider = ({ children }: { children: ReactNode }) => {
       .toString();
   };
 
-  // Handle ready state.
-  useEffectIgnoreInitial(() => {
-    if (isReady) {
-      subscribeToPoolConfig();
-    }
-  }, [network, isReady]);
-
-  // Handle network change.
-  useEffect(() => {
-    unsubscribe();
-    setPoolsConfig({
-      stats: defaultStats,
-      unsub: null,
-    });
-  }, [network]);
-
-  // Unsubscribe on component unmount.
-  useEffect(() => () => unsubscribe());
-
   return (
     <PoolsConfigContext.Provider
       value={{
@@ -216,7 +95,6 @@ export const PoolsConfigProvider = ({ children }: { children: ReactNode }) => {
         removeFavorite,
         createAccounts,
         favorites,
-        stats: poolsConfig.stats,
       }}
     >
       {children}

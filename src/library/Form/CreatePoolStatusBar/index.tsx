@@ -5,17 +5,17 @@ import { faFlag } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
-import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useUi } from 'contexts/UI';
 import { useNetwork } from 'contexts/Network';
 import type { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
+import { useApi } from 'contexts/Api';
 
 export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
   const { t } = useTranslation('library');
   const { isSyncing } = useUi();
   const { unit, units } = useNetwork().networkData;
-  const { minCreateBond } = usePoolsConfig().stats;
+  const { minCreateBond } = useApi().poolsConfig;
 
   const minCreateBondUnit = planckToUnit(minCreateBond, units);
   const sectionClassName =

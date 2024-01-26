@@ -8,7 +8,6 @@ import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useSetup } from 'contexts/Setup';
 import { Warning } from 'library/Form/Warning';
 import { useBatchCall } from 'library/Hooks/useBatchCall';
@@ -25,11 +24,13 @@ import { SummaryWrapper } from './Wrapper';
 
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
-  const { api } = useApi();
+  const {
+    api,
+    poolsConfig: { lastPoolId },
+  } = useApi();
   const {
     networkData: { units, unit },
   } = useNetwork();
-  const { stats } = usePoolsConfig();
   const { newBatchCall } = useBatchCall();
   const { accountHasSigner } = useImportedAccounts();
   const { getPoolSetup, removeSetupProgress } = useSetup();
@@ -37,7 +38,6 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { queryBondedPool, addToBondedPools } = useBondedPools();
   const { activeAccount, activeProxy } = useActiveAccounts();
 
-  const { lastPoolId } = stats;
   const poolId = lastPoolId.plus(1);
   const setup = getPoolSetup(activeAccount);
   const { progress } = setup;

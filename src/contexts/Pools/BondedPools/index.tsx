@@ -29,10 +29,14 @@ export const useBondedPools = () => useContext(BondedPoolsContext);
 
 export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
-  const { api, isReady, activeEra } = useApi();
-  const { createAccounts, stats } = usePoolsConfig();
+  const {
+    api,
+    isReady,
+    activeEra,
+    poolsConfig: { lastPoolId },
+  } = useApi();
+  const { createAccounts } = usePoolsConfig();
   const { getNominationsStatusFromTargets } = useStaking();
-  const { lastPoolId } = stats;
 
   // Store bonded pools.
   const [bondedPools, setBondedPools] = useState<BondedPool[]>([]);

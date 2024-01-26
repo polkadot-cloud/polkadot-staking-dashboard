@@ -6,7 +6,6 @@ import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useNetwork } from 'contexts/Network';
@@ -15,6 +14,7 @@ import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
 import type { BondFeedbackProps } from '../types';
 import { BondInput } from './BondInput';
+import { useApi } from 'contexts/Api';
 
 export const BondFeedback = ({
   bondFor,
@@ -35,10 +35,9 @@ export const BondFeedback = ({
   } = useNetwork();
   const { staking } = useStaking();
   const { activeAccount } = useActiveAccounts();
-  const { stats } = usePoolsConfig();
   const { isDepositor } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
-  const { minJoinBond, minCreateBond } = stats;
+  const { minJoinBond, minCreateBond } = useApi().poolsConfig;
   const { minNominatorBond } = staking;
   const allTransferOptions = getTransferOptions(activeAccount);
 

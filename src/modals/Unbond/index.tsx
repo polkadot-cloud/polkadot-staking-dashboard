@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxMeta } from 'contexts/TxMeta';
@@ -31,11 +30,9 @@ export const Unbond = () => {
   const { t } = useTranslation('modals');
   const { txFees } = useTxMeta();
   const { staking } = useStaking();
-  const { stats } = usePoolsConfig();
   const { activeAccount } = useActiveAccounts();
   const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
-  const { api, consts } = useApi();
   const {
     networkData: { units, unit },
   } = useNetwork();
@@ -48,11 +45,15 @@ export const Unbond = () => {
     setModalResize,
     config: { options },
   } = useOverlay().modal;
+  const {
+    api,
+    consts,
+    poolsConfig: { minJoinBond: minJoinBondBn, minCreateBond: minCreateBondBn },
+  } = useApi();
 
   const { bondFor } = options;
   const controller = getBondedAccount(activeAccount);
   const { minNominatorBond: minNominatorBondBn } = staking;
-  const { minJoinBond: minJoinBondBn, minCreateBond: minCreateBondBn } = stats;
   const { bondDuration } = consts;
 
   const bondDurationFormatted = timeleftAsString(
