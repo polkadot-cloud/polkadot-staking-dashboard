@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { stringToU8a } from '@polkadot/util';
-import BigNumber from 'bignumber.js';
 import type { Plugin } from 'types';
 
 /*
@@ -41,16 +40,6 @@ export const PluginsList: Plugin[] = [
 ];
 
 /*
- * Fallback config values
- */
-export const FallbackMaxNominations = new BigNumber(16);
-export const FallbackBondingDuration = new BigNumber(28);
-export const FallbackSessionsPerEra = new BigNumber(6);
-export const FallbackMaxElectingVoters = new BigNumber(22500);
-export const FallbackExpectedBlockTime = new BigNumber(6000);
-export const FallbackEpochDuration = new BigNumber(2400);
-
-/*
  * Misc values
  */
 export const ListItemsPerPage = 25;
@@ -62,7 +51,6 @@ export const MaxEraRewardPointsEras = 14;
 /*
  * Third party API keys and endpoints
  */
-export const ApiSubscanKey = 'd37149339f64775155a82a53f4253b27';
 export const EndpointPrice = 'https://api.binance.com/api/v3';
 export const ApiEndpoints = {
   priceChange: `${EndpointPrice}/ticker/24hr?symbol=`,

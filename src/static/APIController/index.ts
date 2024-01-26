@@ -23,14 +23,6 @@ import type {
   APIConstants,
   APINetworkMetrics,
 } from 'contexts/Api/types';
-import {
-  FallbackBondingDuration,
-  FallbackEpochDuration,
-  FallbackExpectedBlockTime,
-  FallbackMaxElectingVoters,
-  FallbackMaxNominations,
-  FallbackSessionsPerEra,
-} from 'consts';
 
 export class APIController {
   // ------------------------------------------------------
@@ -45,6 +37,16 @@ export class APIController {
 
   // How many missing blocks to allow for leeway when verifying.
   static MIN_EXPECTED_BLOCKS_LEEWAY = 2;
+
+  // Network config fallback values.
+  static FALLBACK = {
+    MAX_NOMINATIONS: new BigNumber(16),
+    BONDING_DURATION: new BigNumber(28),
+    SESSIONS_PER_ERA: new BigNumber(6),
+    MAX_ELECTING_VOTERS: new BigNumber(22500),
+    EXPECTED_BLOCK_TIME: new BigNumber(6000),
+    EPOCH_DURATION: new BigNumber(2400),
+  };
 
   // The active network.
   static network: NetworkName;
@@ -264,22 +266,22 @@ export class APIController {
       consts: {
         bondDuration: resultConsts[0]
           ? new BigNumber(rmCommas(resultConsts[0].toString()))
-          : FallbackBondingDuration,
+          : this.FALLBACK.BONDING_DURATION,
         maxNominations: resultConsts[1]
           ? new BigNumber(rmCommas(resultConsts[1].toString()))
-          : FallbackMaxNominations,
+          : this.FALLBACK.MAX_NOMINATIONS,
         sessionsPerEra: resultConsts[2]
           ? new BigNumber(rmCommas(resultConsts[2].toString()))
-          : FallbackSessionsPerEra,
+          : this.FALLBACK.SESSIONS_PER_ERA,
         maxElectingVoters: resultConsts[3]
           ? new BigNumber(rmCommas(resultConsts[3].toString()))
-          : FallbackMaxElectingVoters,
+          : this.FALLBACK.MAX_ELECTING_VOTERS,
         expectedBlockTime: resultConsts[4]
           ? new BigNumber(rmCommas(resultConsts[4].toString()))
-          : FallbackExpectedBlockTime,
+          : this.FALLBACK.EXPECTED_BLOCK_TIME,
         epochDuration: resultConsts[5]
           ? new BigNumber(rmCommas(resultConsts[5].toString()))
-          : FallbackEpochDuration,
+          : this.FALLBACK.EPOCH_DURATION,
         existentialDeposit: resultConsts[6]
           ? new BigNumber(rmCommas(resultConsts[6].toString()))
           : new BigNumber(0),
