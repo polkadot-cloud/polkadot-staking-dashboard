@@ -136,12 +136,17 @@ export class APIController {
     this._connectionType = type;
     this._rpcEndpoint = rpcEndpoint;
 
-    // Register connection attempt.
-    this._connectAttempts++;
-
-    // Start connection attempt.
-    this.onMonitorConnect(config);
-    await withTimeout(this.getTimeout(), this.connect(config));
+    // Handle reconnecting if not light client.
+    if (type !== 'sc') {
+      // Register connection attempt.
+      this._connectAttempts++;
+      // Start connection attempt.
+      this.onMonitorConnect(config);
+      await withTimeout(this.getTimeout(), this.connect(config));
+    } else {
+      // Light client: Connect without timeout logic.
+      await this.connect(config);
+    }
   }
 
   // Calculate connection timeout. First attempt = base, second = 3x, 6x thereafter.
@@ -155,7 +160,7 @@ export class APIController {
     }
   };
 
-  // Check if API is connected after a ser period, and try again if it has not.
+  // Check if API is connected after a time period, and try again if it has not.
   static onMonitorConnect = async (config: APIConfig) => {
     setTimeout(() => {
       // If blocks are not being subscribed to, assume connection failed.
@@ -216,7 +221,7 @@ export class APIController {
       .lightClient as WellKnownChain;
 
     this._provider = new ScProvider(
-      // @ts-expect-error mismatch between `@polkadot/rpc-provider/substrate-connect` and  `@substrate/connect` types: Chain[]' is not assignable to type 'string'.
+      // @<disable>-ts-expect-error mismatch between `@polkadot/rpc-provider/substrate-connect` and  `@substrate/connect` types: Chain[]' is not assignable to type 'string'.
       Sc,
       WellKnownChain[lightClientKey]
     );
