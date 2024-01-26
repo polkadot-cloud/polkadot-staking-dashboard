@@ -206,7 +206,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   };
 
   // Handle new network metrics updates.
-  const handleNetworkMetricsUpdate = (e: Event) => {
+  const handleNetworkMetricsUpdate = (e: Event): void => {
     if (isCustomEvent(e)) {
       const { networkMetrics: newNetworkMetrics } = e.detail;
       // Only update if values have changed.
@@ -227,7 +227,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   };
 
   // Handle new active era updates.
-  const handleActiveEraUpdate = (e: Event) => {
+  const handleActiveEraUpdate = (e: Event): void => {
     if (isCustomEvent(e)) {
       let { activeEra: newActiveEra } = e.detail;
       const { index, start } = newActiveEra;
@@ -254,7 +254,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   };
 
   // Handle new pools config updates.
-  const handlePoolsConfigUpdate = (e: Event) => {
+  const handlePoolsConfigUpdate = (e: Event): void => {
     if (isCustomEvent(e)) {
       const { poolsConfig: newPoolsConfig } = e.detail;
       // Only update if values have changed.
