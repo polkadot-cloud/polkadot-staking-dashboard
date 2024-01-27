@@ -34,8 +34,8 @@ export const PoolMembershipsProvider = ({
   const { t } = useTranslation('base');
   const { network } = useNetwork();
   const { api, isReady } = useApi();
+  const { accounts } = useImportedAccounts();
   const { activeAccount } = useActiveAccounts();
-  const { accounts: connectAccounts } = useImportedAccounts();
 
   // Stores pool memberships for the imported accounts.
   const [poolMemberships, setPoolMemberships] = useState<PoolMembership[]>([]);
@@ -44,30 +44,12 @@ export const PoolMembershipsProvider = ({
   // Stores pool membership unsubs.
   const unsubs = useRef<AnyApi[]>([]);
 
-  useEffectIgnoreInitial(() => {
-    if (isReady) {
-      (() => {
-        setStateWithRef([], setPoolMemberships, poolMembershipsRef);
-        unsubAll();
-        getPoolMemberships();
-      })();
-    }
-  }, [network, isReady, connectAccounts]);
-
   // subscribe to account pool memberships
   const getPoolMemberships = async () => {
     Promise.all(
-      connectAccounts.map(({ address }) => subscribeToPoolMembership(address))
+      accounts.map(({ address }) => subscribeToPoolMembership(address))
     );
   };
-
-  // unsubscribe from pool memberships on unmount
-  useEffect(
-    () => () => {
-      unsubAll();
-    },
-    []
-  );
 
   // unsubscribe from all pool memberships
   const unsubAll = () => {
@@ -182,6 +164,37 @@ export const PoolMembershipsProvider = ({
       description: t('allowAnyoneCompoundWithdraw'),
     },
   ];
+
+  // Reset and re-sync pool memberships on network change.
+  // re-sync pool memberships when accounts update.
+  useEffectIgnoreInitial(() => {
+    if (isReady) {
+      (() => {
+        // NOTE: resetting memberships here.
+        setStateWithRef([], setPoolMemberships, poolMembershipsRef);
+        unsubAll();
+        getPoolMemberships();
+      })();
+    }
+  }, [network, isReady]);
+
+  // re-sync pool memberships when accounts update.
+  useEffectIgnoreInitial(() => {
+    if (isReady) {
+      (() => {
+        unsubAll();
+        getPoolMemberships();
+      })();
+    }
+  }, [isReady, accounts]);
+
+  // Unsubscribe from pool memberships on unmount.
+  useEffect(
+    () => () => {
+      unsubAll();
+    },
+    []
+  );
 
   return (
     <PoolMembershipsContext.Provider
