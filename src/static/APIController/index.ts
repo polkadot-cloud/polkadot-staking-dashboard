@@ -503,6 +503,8 @@ export class APIController {
   };
 
   // Subscribe to active era.
+  //
+  // Also handles (re)subscribing to subscriptions that depend on active era.
   static subscribeActiveEra = async (): Promise<void> => {
     const unsub = await this.api.query.staking.activeEra(
       (result: Option<ActiveEraInfo>) => {
@@ -514,6 +516,13 @@ export class APIController {
           index: new BigNumber(activeEra.index),
           start: new BigNumber(activeEra.start),
         };
+
+        // (Re)Subscribe to staking metrics `activeEra` has updated.
+        if (this._unsubs['stakingMetrics']) {
+          this._unsubs['stakingMetrics']();
+          delete this._unsubs['stakingMetrics'];
+        }
+        this.subscribeStakingMetrics();
 
         // NOTE: Sending `activeEra` to document as a strings. UI needs to parse values into
         // BigNumber.
@@ -583,7 +592,50 @@ export class APIController {
     }
   };
 
-  // TODO: Subscribe to staking metrics.
+  // Subscribe to staking metrics.
+  static subscribeStakingMetrics = async (): Promise<void> => {
+    if (this._unsubs['stakingMetrics'] === undefined) {
+      const previousEra = BigNumber.max(
+        0,
+        new BigNumber(this.activeEra.index).minus(1)
+      );
+
+      const unsub = await this.api.queryMulti(
+        [
+          this.api.query.staking.counterForNominators,
+          this.api.query.staking.counterForValidators,
+          this.api.query.staking.maxValidatorsCount,
+          this.api.query.staking.validatorCount,
+          [this.api.query.staking.erasValidatorReward, previousEra.toString()],
+          [this.api.query.staking.erasTotalStake, previousEra.toString()],
+          this.api.query.staking.minNominatorBond,
+          [
+            this.api.query.staking.erasTotalStake,
+            this.activeEra.index.toString(),
+          ],
+        ],
+        (result) => {
+          const stakingMetrics = {
+            totalNominators: this.stringToBigNumber(result[0].toString()),
+            totalValidators: this.stringToBigNumber(result[1].toString()),
+            maxValidatorsCount: this.stringToBigNumber(result[2].toString()),
+            validatorCount: this.stringToBigNumber(result[3].toString()),
+            lastReward: this.stringToBigNumber(result[4].toString()),
+            lastTotalStake: this.stringToBigNumber(result[5].toString()),
+            minNominatorBond: this.stringToBigNumber(result[6].toString()),
+            totalStaked: this.stringToBigNumber(result[7].toString()),
+          };
+
+          document.dispatchEvent(
+            new CustomEvent(`new-staking-metrics`, {
+              detail: { stakingMetrics },
+            })
+          );
+        }
+      );
+      this._unsubs['stakingMetrics'] = unsub as unknown as VoidFn;
+    }
+  };
 
   // Verify block subscription is online.
   static verifyBlocksOnline = async () => {

@@ -13,6 +13,7 @@ import type {
   APINetworkMetrics,
   APIPoolsConfig,
 } from 'contexts/Api/types';
+import type { StakingMetrics } from 'contexts/Staking/types';
 
 declare global {
   interface Window {
@@ -26,6 +27,9 @@ declare global {
     }>;
     'new-active-era': CustomEvent<{ activeEra: APIActiveEra }>;
     'new-pools-config': CustomEvent<{ poolsConfig: APIPoolsConfig }>;
+    'new-staking-metrics': CustomEvent<{
+      stakingMetrics: StakingMetrics;
+    }>;
     'new-external-account': CustomEvent<{ address: string }>;
     'new-account-balance': CustomEvent<ActiveBalance & { address: string }>;
     'subscan-data-updated': CustomEvent<{ keys: PayoutType[] }>;

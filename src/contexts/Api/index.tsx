@@ -105,15 +105,16 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const [activeEra, setActiveEra] = useState<APIActiveEra>(defaultActiveEra);
   const activeEraRef = useRef(activeEra);
 
-  // Store staking metrics in state.
-  const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
-    defaultStakingMetrics
-  );
-
   // Store pool config in state.
   const [poolsConfig, setPoolsConfig] =
     useState<APIPoolsConfig>(defaultPoolsConfig);
   const poolsConfigRef = useRef(poolsConfig);
+
+  // Store staking metrics in state.
+  const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
+    defaultStakingMetrics
+  );
+  const stakingMetricsRef = useRef(stakingMetrics);
 
   // Fetch chain state. Called once `provider` has been initialised.
   const onApiReady = async () => {
@@ -159,7 +160,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       activeEraRef
     );
     setStateWithRef(newPoolsConfig, setPoolsConfig, poolsConfigRef);
-    setStakingMetrics(newStakingMetrics);
+    setStateWithRef(newStakingMetrics, setStakingMetrics, stakingMetricsRef);
 
     // API is now ready to be used.
     setApiStatus('ready');
@@ -167,8 +168,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     // Initialise subscriptions.
     APIController.subscribeNetworkMetrics();
     APIController.subscribePoolsConfig();
-    await APIController.subscribeActiveEra();
-    // TODO: test that activeEra exists now.
+    APIController.subscribeActiveEra();
   };
 
   const onApiDisconnected = (err?: string) => {
@@ -284,6 +284,27 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     }
   };
 
+  // Handle new staking metrics updates.
+  const handleStakingMetricsUpdate = (e: Event): void => {
+    if (isCustomEvent(e)) {
+      const { stakingMetrics: newStakingMetrics } = e.detail;
+      // Only update if values have changed.
+      if (
+        JSON.stringify(newStakingMetrics) !==
+        JSON.stringify(stakingMetricsRef.current)
+      ) {
+        setStateWithRef(
+          {
+            ...stakingMetricsRef.current,
+            ...newStakingMetrics,
+          },
+          setStakingMetrics,
+          stakingMetricsRef
+        );
+      }
+    }
+  };
+
   // Given an era, determine whether paged rewards are active.
   const isPagedRewardsActive = (era: BigNumber): boolean => {
     const networkStartEra = PagedRewardsStartEra[network];
@@ -331,7 +352,11 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       );
       setStateWithRef(defaultActiveEra, setActiveEra, activeEraRef);
       setStateWithRef(defaultPoolsConfig, setPoolsConfig, poolsConfigRef);
-      setStakingMetrics(defaultStakingMetrics);
+      setStateWithRef(
+        defaultStakingMetrics,
+        setStakingMetrics,
+        stakingMetricsRef
+      );
     }
     // Reconnect API instance.
     APIController.initialize(network, isLightClient ? 'sc' : 'ws', rpcEndpoint);
@@ -359,6 +384,12 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   useEventListener('new-active-era', handleActiveEraUpdate, documentRef);
 
   useEventListener('new-pools-config', handlePoolsConfigUpdate, documentRef);
+
+  useEventListener(
+    'new-staking-metrics',
+    handleStakingMetricsUpdate,
+    documentRef
+  );
 
   return (
     <APIContext.Provider
