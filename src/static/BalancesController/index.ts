@@ -159,7 +159,8 @@ export class BalancesController {
     };
   };
 
-  // Handle payee callback.
+  // Handle payee callback. payee with `Account` type is returned as an key value pair, with all
+  // others strings. This function handles both cases and formats into a unified structure.
   static handlePayeeCallback = (address: string, result: AnyApi): void => {
     const payeeHuman = result.toHuman();
 
