@@ -5,6 +5,7 @@
 import {
   defaultBalance,
   defaultLedger,
+  defaultPayee,
 } from 'static/BalancesController/defaults';
 import type { BalancesContextInterface } from './types';
 import BigNumber from 'bignumber.js';
@@ -15,5 +16,6 @@ export const defaultBalancesContext: BalancesContextInterface = {
   getLocks: (address) => ({ locks: [], maxLock: new BigNumber(0) }),
   getBalance: (address) => defaultBalance,
   getLedger: (source) => defaultLedger,
+  getPayee: (address) => defaultPayee,
   balancesInitialSynced: false,
 };

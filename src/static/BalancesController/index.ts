@@ -5,13 +5,14 @@ import type { VoidFn } from '@polkadot-cloud/react/types';
 import { rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { APIController } from 'static/APIController';
-import type { AnyApi } from 'types';
+import type { AnyApi, MaybeAddress } from 'types';
 import type {
   ActiveBalance,
   Balances,
   Ledger,
   UnlockChunkRaw,
 } from 'contexts/Balances/types';
+import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 
 export class BalancesController {
   // ------------------------------------------------------
@@ -26,6 +27,9 @@ export class BalancesController {
 
   // Account balances, populated by api callbacks.
   static balances: Record<string, Balances> = {};
+
+  // Account payees, populated by api callbacks.
+  static payees: Record<string, PayeeConfig> = {};
 
   // Unsubscribe objects.
   static _unsubs: Record<string, VoidFn> = {};
@@ -54,10 +58,17 @@ export class BalancesController {
           [api.query.staking.ledger, address],
           [api.query.system.account, address],
           [api.query.balances.locks, address],
+          [api.query.staking.payee, address],
         ],
-        async ([ledgerResult, accountResult, locksResult]) => {
+        async ([
+          ledgerResult,
+          accountResult,
+          locksResult,
+          payeeResult,
+        ]): Promise<void> => {
           this.handleLedgerCallback(address, ledgerResult);
           this.handleAccountCallback(address, accountResult, locksResult);
+          this.handlePayeeCallback(address, payeeResult);
 
           // Send updated account state back to UI.
           document.dispatchEvent(
@@ -66,6 +77,7 @@ export class BalancesController {
                 address,
                 ledger: this.ledgers[address],
                 balances: this.balances[address],
+                payee: this.payees[address],
               },
             })
           );
@@ -147,20 +159,44 @@ export class BalancesController {
     };
   };
 
+  // Handle payee callback.
+  static handlePayeeCallback = (address: string, result: AnyApi): void => {
+    const payeeHuman = result.toHuman();
+
+    let payeeFinal: PayeeConfig;
+    if (typeof payeeHuman === 'string') {
+      const destination = payeeHuman as PayeeOptions;
+      payeeFinal = {
+        destination,
+        account: null,
+      };
+    } else {
+      const payeeEntry = Object.entries(payeeHuman);
+      const destination = `${payeeEntry[0][0]}` as PayeeOptions;
+      const account = `${payeeEntry[0][1]}` as MaybeAddress;
+      payeeFinal = {
+        destination,
+        account,
+      };
+    }
+    this.payees[address] = payeeFinal;
+  };
+
   // Gets an `ActiveBalance` from class members for the given address if it exists.
   static getAccountBalances = (address: string): ActiveBalance | undefined => {
     const ledger = this.ledgers[address];
     const balances = this.balances[address];
+    const payee = this.payees[address];
 
     // Account info has not synced yet. Note that `ledger` may not exist and therefore cannot be
     // tested.
     if (balances === undefined) {
       return undefined;
     }
-
     return {
       ledger,
       balances,
+      payee,
     };
   };
 
@@ -176,6 +212,7 @@ export class BalancesController {
     this.accounts = [];
     this.ledgers = {};
     this.balances = {};
+    this.payees = {};
     this._unsubs = {};
   };
 
