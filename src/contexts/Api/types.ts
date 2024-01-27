@@ -7,6 +7,7 @@ import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import type { AnyJson, NetworkName } from '../../types';
 import type { ApiStatus } from 'static/APIController/types';
+import type { StakingMetrics } from 'contexts/Staking/types';
 
 export interface APIProviderProps {
   children: ReactNode;
@@ -72,5 +73,6 @@ export interface APIContextInterface {
   networkMetrics: APINetworkMetrics;
   activeEra: APIActiveEra;
   poolsConfig: APIPoolsConfig;
+  stakingMetrics: StakingMetrics;
   isPagedRewardsActive: (era: BigNumber) => boolean;
 }

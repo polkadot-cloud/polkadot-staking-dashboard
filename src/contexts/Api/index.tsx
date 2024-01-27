@@ -34,6 +34,8 @@ import { NotificationsController } from 'static/NotificationsController';
 import { useTranslation } from 'react-i18next';
 import { useEventListener } from 'usehooks-ts';
 import BigNumber from 'bignumber.js';
+import type { StakingMetrics } from 'contexts/Staking/types';
+import { defaultStakingMetrics } from 'contexts/Staking/defaults';
 
 export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 
@@ -103,6 +105,11 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const [activeEra, setActiveEra] = useState<APIActiveEra>(defaultActiveEra);
   const activeEraRef = useRef(activeEra);
 
+  // Store staking metrics in state.
+  const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
+    defaultStakingMetrics
+  );
+
   // Store pool config in state.
   const [poolsConfig, setPoolsConfig] =
     useState<APIPoolsConfig>(defaultPoolsConfig);
@@ -139,6 +146,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       networkMetrics: newNetworkMetrics,
       activeEra: newActiveEra,
       poolsConfig: newPoolsConfig,
+      stakingMetrics: newStakingMetrics,
     } = await APIController.bootstrapNetworkConfig();
 
     // Populate all config state.
@@ -151,14 +159,16 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       activeEraRef
     );
     setStateWithRef(newPoolsConfig, setPoolsConfig, poolsConfigRef);
+    setStakingMetrics(newStakingMetrics);
 
     // API is now ready to be used.
     setApiStatus('ready');
 
     // Initialise subscriptions.
     APIController.subscribeNetworkMetrics();
-    APIController.subscribeActiveEra();
     APIController.subscribePoolsConfig();
+    await APIController.subscribeActiveEra();
+    // TODO: test that activeEra exists now.
   };
 
   const onApiDisconnected = (err?: string) => {
@@ -321,6 +331,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       );
       setStateWithRef(defaultActiveEra, setActiveEra, activeEraRef);
       setStateWithRef(defaultPoolsConfig, setPoolsConfig, poolsConfigRef);
+      setStakingMetrics(defaultStakingMetrics);
     }
     // Reconnect API instance.
     APIController.initialize(network, isLightClient ? 'sc' : 'ws', rpcEndpoint);
@@ -364,6 +375,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         networkMetrics,
         activeEra,
         poolsConfig,
+        stakingMetrics,
         isPagedRewardsActive,
       }}
     >

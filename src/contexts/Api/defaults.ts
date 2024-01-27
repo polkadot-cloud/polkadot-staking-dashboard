@@ -12,6 +12,7 @@ import type {
   APINetworkMetrics,
   APIPoolsConfig,
 } from 'contexts/Api/types';
+import { defaultStakingMetrics } from 'contexts/Staking/defaults';
 
 export const defaultChainState: APIChainState = {
   chain: null,
@@ -74,5 +75,6 @@ export const defaultApiContext: APIContextInterface = {
   networkMetrics: defaultNetworkMetrics,
   activeEra: defaultActiveEra,
   poolsConfig: defaultPoolsConfig,
+  stakingMetrics: defaultStakingMetrics,
   isPagedRewardsActive: (e) => false,
 };
