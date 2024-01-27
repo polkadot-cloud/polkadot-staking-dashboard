@@ -12,8 +12,8 @@ import type {
   APIActiveEra,
   APINetworkMetrics,
   APIPoolsConfig,
+  APIStakingMetrics,
 } from 'contexts/Api/types';
-import type { StakingMetrics } from 'contexts/Staking/types';
 
 declare global {
   interface Window {
@@ -28,7 +28,7 @@ declare global {
     'new-active-era': CustomEvent<{ activeEra: APIActiveEra }>;
     'new-pools-config': CustomEvent<{ poolsConfig: APIPoolsConfig }>;
     'new-staking-metrics': CustomEvent<{
-      stakingMetrics: StakingMetrics;
+      stakingMetrics: APIStakingMetrics;
     }>;
     'new-external-account': CustomEvent<{ address: string }>;
     'new-account-balance': CustomEvent<ActiveBalance & { address: string }>;

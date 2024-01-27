@@ -17,6 +17,7 @@ import type {
   APINetworkMetrics,
   APIPoolsConfig,
   APIProviderProps,
+  APIStakingMetrics,
 } from './types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import {
@@ -26,6 +27,7 @@ import {
   defaultChainState,
   defaultPoolsConfig,
   defaultNetworkMetrics,
+  defaultStakingMetrics,
 } from './defaults';
 import { APIController } from 'static/APIController';
 import { isCustomEvent } from 'static/utils';
@@ -34,8 +36,6 @@ import { NotificationsController } from 'static/NotificationsController';
 import { useTranslation } from 'react-i18next';
 import { useEventListener } from 'usehooks-ts';
 import BigNumber from 'bignumber.js';
-import type { StakingMetrics } from 'contexts/Staking/types';
-import { defaultStakingMetrics } from 'contexts/Staking/defaults';
 
 export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 
@@ -111,7 +111,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const poolsConfigRef = useRef(poolsConfig);
 
   // Store staking metrics in state.
-  const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
+  const [stakingMetrics, setStakingMetrics] = useState<APIStakingMetrics>(
     defaultStakingMetrics
   );
   const stakingMetricsRef = useRef(stakingMetrics);

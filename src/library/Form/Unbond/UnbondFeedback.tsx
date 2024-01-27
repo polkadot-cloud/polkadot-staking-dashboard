@@ -6,7 +6,6 @@ import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -30,13 +29,13 @@ export const UnbondFeedback = ({
   const {
     networkData: { units, unit },
   } = useNetwork();
-  const { staking } = useStaking();
   const { isDepositor } = useActivePools();
   const { activeAccount } = useActiveAccounts();
   const { getTransferOptions } = useTransferOptions();
-  const { minJoinBond, minCreateBond } = useApi().poolsConfig;
-
-  const { minNominatorBond } = staking;
+  const {
+    poolsConfig: { minJoinBond, minCreateBond },
+    stakingMetrics: { minNominatorBond },
+  } = useApi();
   const allTransferOptions = getTransferOptions(activeAccount);
   const defaultValue = defaultBond ? String(defaultBond) : '';
 

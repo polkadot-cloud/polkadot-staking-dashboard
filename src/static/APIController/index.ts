@@ -23,9 +23,9 @@ import type {
   APIConstants,
   APINetworkMetrics,
   APIPoolsConfig,
+  APIStakingMetrics,
 } from 'contexts/Api/types';
 import { WellKnownChain } from '@substrate/connect';
-import type { StakingMetrics } from 'contexts/Staking/types';
 import { defaultActiveEra } from 'contexts/Api/defaults';
 
 export class APIController {
@@ -240,7 +240,7 @@ export class APIController {
     networkMetrics: APINetworkMetrics;
     activeEra: APIActiveEra;
     poolsConfig: APIPoolsConfig;
-    stakingMetrics: StakingMetrics;
+    stakingMetrics: APIStakingMetrics;
   }> => {
     // Fetch network constants.
     const allPromises = [

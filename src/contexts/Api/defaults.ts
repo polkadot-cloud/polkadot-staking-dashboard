@@ -11,8 +11,8 @@ import type {
   APIContextInterface,
   APINetworkMetrics,
   APIPoolsConfig,
+  APIStakingMetrics,
 } from 'contexts/Api/types';
-import { defaultStakingMetrics } from 'contexts/Staking/defaults';
 
 export const defaultChainState: APIChainState = {
   chain: null,
@@ -60,6 +60,17 @@ export const defaultPoolsConfig: APIPoolsConfig = {
   minCreateBond: new BigNumber(0),
   minJoinBond: new BigNumber(0),
   globalMaxCommission: 0,
+};
+
+export const defaultStakingMetrics: APIStakingMetrics = {
+  totalNominators: new BigNumber(0),
+  totalValidators: new BigNumber(0),
+  lastReward: new BigNumber(0),
+  lastTotalStake: new BigNumber(0),
+  validatorCount: new BigNumber(0),
+  maxValidatorsCount: new BigNumber(0),
+  minNominatorBond: new BigNumber(0),
+  totalStaked: new BigNumber(0),
 };
 
 export const defaultApiContext: APIContextInterface = {

@@ -7,7 +7,6 @@ import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import type { AnyJson, NetworkName } from '../../types';
 import type { ApiStatus } from 'static/APIController/types';
-import type { StakingMetrics } from 'contexts/Staking/types';
 
 export interface APIProviderProps {
   children: ReactNode;
@@ -60,6 +59,17 @@ export interface APIPoolsConfig {
   globalMaxCommission: number;
 }
 
+export interface APIStakingMetrics {
+  totalNominators: BigNumber;
+  totalValidators: BigNumber;
+  lastReward: BigNumber;
+  lastTotalStake: BigNumber;
+  validatorCount: BigNumber;
+  maxValidatorsCount: BigNumber;
+  minNominatorBond: BigNumber;
+  totalStaked: BigNumber;
+}
+
 export interface APIContextInterface {
   api: ApiPromise | null;
   chainState: APIChainState;
@@ -73,6 +83,6 @@ export interface APIContextInterface {
   networkMetrics: APINetworkMetrics;
   activeEra: APIActiveEra;
   poolsConfig: APIPoolsConfig;
-  stakingMetrics: StakingMetrics;
+  stakingMetrics: APIStakingMetrics;
   isPagedRewardsActive: (era: BigNumber) => boolean;
 }

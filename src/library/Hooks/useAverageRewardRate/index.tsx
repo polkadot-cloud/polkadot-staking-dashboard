@@ -7,19 +7,17 @@ import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { AverageRewardRate, UseAverageRewardRate } from './types';
 import { defaultAverageRewardRate } from './defaults';
 import { useNetwork } from 'contexts/Network';
-import { useStaking } from 'contexts/Staking';
 import { planckToUnit } from '@polkadot-cloud/utils';
 import { useApi } from 'contexts/Api';
 
 export const useAverageRewardRate = (): UseAverageRewardRate => {
-  const { staking } = useStaking();
   const { erasPerDay } = useErasPerDay();
+  const { lastTotalStake } = useApi().stakingMetrics;
   const {
     networkMetrics: { totalIssuance },
   } = useApi();
   const { units } = useNetwork().networkData;
   const { avgCommission, averageEraValidatorReward } = useValidators();
-  const { lastTotalStake } = staking;
 
   // Get average reward rates.
   const getAverageRewardRate = (compounded: boolean): AverageRewardRate => {
