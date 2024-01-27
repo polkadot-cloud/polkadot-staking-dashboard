@@ -1,10 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { VoidFn } from '@polkadot/api/types';
 import {
   greaterThanZero,
-  isNotZero,
   localStorageOrDefault,
   rmCommas,
   setStateWithRef,
@@ -19,7 +17,6 @@ import type {
   Exposure,
   ExposureOther,
   StakingContextInterface,
-  StakingMetrics,
   StakingTargets,
 } from 'contexts/Staking/types';
 import type { AnyApi, MaybeAddress } from 'types';
@@ -34,7 +31,6 @@ import { useBonded } from '../Bonded';
 import {
   defaultEraStakers,
   defaultStakingContext,
-  defaultStakingMetrics,
   defaultTargets,
 } from './defaults';
 import {
@@ -63,14 +59,6 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     useBonded();
   const { maxExposurePageSize } = consts;
 
-  // Store staking metrics in state.
-  const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
-    defaultStakingMetrics
-  );
-
-  // Store unsub object fro staking metrics.
-  const unsub = useRef<VoidFn | null>(null);
-
   // Store eras stakers in state.
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers);
   const eraStakersRef = useRef(eraStakers);
@@ -87,14 +75,6 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       true
     ) as StakingTargets
   );
-
-  // Handle metrics unsubscribe.
-  const unsubscribeMetrics = () => {
-    if (unsub.current !== null) {
-      unsub.current();
-      unsub.current = null;
-    }
-  };
 
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
@@ -135,40 +115,6 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
           eraStakersRef
         );
       }
-    }
-  };
-
-  // Multi subscription to staking metrics.
-  const subscribeToStakingkMetrics = async () => {
-    if (api !== null && isReady && isNotZero(activeEra.index)) {
-      const previousEra = activeEra.index.minus(1);
-
-      const u = await api.queryMulti<AnyApi>(
-        [
-          api.query.staking.counterForNominators,
-          api.query.staking.counterForValidators,
-          api.query.staking.maxValidatorsCount,
-          api.query.staking.validatorCount,
-          [api.query.staking.erasValidatorReward, previousEra.toString()],
-          [api.query.staking.erasTotalStake, previousEra.toString()],
-          api.query.staking.minNominatorBond,
-          [api.query.staking.erasTotalStake, activeEra.index.toString()],
-        ],
-        (q) => {
-          setStakingMetrics({
-            totalNominators: new BigNumber(q[0].toString()),
-            totalValidators: new BigNumber(q[1].toString()),
-            maxValidatorsCount: new BigNumber(q[2].toString()),
-            validatorCount: new BigNumber(q[3].toString()),
-            lastReward: new BigNumber(q[4].toString()),
-            lastTotalStake: new BigNumber(q[5].toString()),
-            minNominatorBond: new BigNumber(q[6].toString()),
-            totalStaked: new BigNumber(q[7].toString()),
-          });
-        }
-      );
-
-      unsub.current = u;
     }
   };
 
@@ -394,20 +340,8 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   useEffectIgnoreInitial(() => {
     if (apiStatus === 'connecting') {
       setStateWithRef(defaultEraStakers, setEraStakers, eraStakersRef);
-      setStakingMetrics(stakingMetrics);
     }
   }, [apiStatus]);
-
-  // Handle staking metrics subscription
-  useEffectIgnoreInitial(() => {
-    if (isReady) {
-      unsubscribeMetrics();
-      subscribeToStakingkMetrics();
-    }
-    return () => {
-      unsubscribeMetrics();
-    };
-  }, [isReady, activeEra, activeAccount]);
 
   // handle syncing with eraStakers
   useEffectIgnoreInitial(() => {
@@ -442,7 +376,6 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
         isNominating,
         inSetup,
         getLowestRewardFromStaker,
-        staking: stakingMetrics,
         eraStakers: eraStakersRef.current,
         erasStakersSyncing: erasStakersSyncingRef.current,
         targets,

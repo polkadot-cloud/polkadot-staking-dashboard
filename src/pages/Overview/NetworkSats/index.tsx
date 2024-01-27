@@ -4,20 +4,20 @@
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useStaking } from 'contexts/Staking';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { StatsHead } from 'library/StatsHead';
 import { Announcements } from './Announcements';
 import { Wrapper } from './Wrappers';
 import { useAverageRewardRate } from 'library/Hooks/useAverageRewardRate';
+import { useApi } from 'contexts/Api';
 
 export const NetworkStats = () => {
   const { t } = useTranslation('pages');
-  const { staking } = useStaking();
   const { bondedPools } = useBondedPools();
   const { getAverageRewardRate } = useAverageRewardRate();
+  const { totalNominators, totalValidators } = useApi().stakingMetrics;
+
   const { inflationToStakers } = getAverageRewardRate(false);
-  const { totalNominators, totalValidators } = staking;
 
   const items = [
     {

@@ -7,7 +7,6 @@ import { ButtonHelp } from '@polkadot-cloud/react';
 import { planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
-import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useNetwork } from 'contexts/Network';
 import type { NominateStatusBarProps } from '../types';
@@ -16,12 +15,11 @@ import { useApi } from 'contexts/Api';
 
 export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
   const { t } = useTranslation('library');
-  const { staking } = useStaking();
   const { isSyncing } = useUi();
   const { unit, units } = useNetwork().networkData;
-  const { minNominatorBond } = staking;
   const {
     networkMetrics: { minimumActiveStake },
+    stakingMetrics: { minNominatorBond },
   } = useApi();
   const { openHelp } = useHelp();
 

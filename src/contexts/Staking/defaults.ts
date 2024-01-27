@@ -7,20 +7,8 @@ import type {
   EraStakers,
   NominationStatuses,
   StakingContextInterface,
-  StakingMetrics,
   StakingTargets,
 } from 'contexts/Staking/types';
-
-export const defaultStakingMetrics: StakingMetrics = {
-  totalNominators: new BigNumber(0),
-  totalValidators: new BigNumber(0),
-  lastReward: new BigNumber(0),
-  lastTotalStake: new BigNumber(0),
-  validatorCount: new BigNumber(0),
-  maxValidatorsCount: new BigNumber(0),
-  minNominatorBond: new BigNumber(0),
-  totalStaked: new BigNumber(0),
-};
 
 export const defaultEraStakers: EraStakers = {
   activeAccountOwnStake: [],
@@ -51,7 +39,6 @@ export const defaultStakingContext: StakingContextInterface = {
   isNominating: () => false,
   inSetup: () => true,
   getLowestRewardFromStaker: (address) => defaultLowestReward,
-  staking: defaultStakingMetrics,
   eraStakers: defaultEraStakers,
   targets: defaultTargets,
   erasStakersSyncing: true,

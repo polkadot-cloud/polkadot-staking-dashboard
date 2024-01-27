@@ -59,6 +59,17 @@ export interface APIPoolsConfig {
   globalMaxCommission: number;
 }
 
+export interface APIStakingMetrics {
+  totalNominators: BigNumber;
+  totalValidators: BigNumber;
+  lastReward: BigNumber;
+  lastTotalStake: BigNumber;
+  validatorCount: BigNumber;
+  maxValidatorsCount: BigNumber;
+  minNominatorBond: BigNumber;
+  totalStaked: BigNumber;
+}
+
 export interface APIContextInterface {
   api: ApiPromise | null;
   chainState: APIChainState;
@@ -72,5 +83,6 @@ export interface APIContextInterface {
   networkMetrics: APINetworkMetrics;
   activeEra: APIActiveEra;
   poolsConfig: APIPoolsConfig;
+  stakingMetrics: APIStakingMetrics;
   isPagedRewardsActive: (era: BigNumber) => boolean;
 }

@@ -11,6 +11,7 @@ import type {
   APIContextInterface,
   APINetworkMetrics,
   APIPoolsConfig,
+  APIStakingMetrics,
 } from 'contexts/Api/types';
 
 export const defaultChainState: APIChainState = {
@@ -61,6 +62,17 @@ export const defaultPoolsConfig: APIPoolsConfig = {
   globalMaxCommission: 0,
 };
 
+export const defaultStakingMetrics: APIStakingMetrics = {
+  totalNominators: new BigNumber(0),
+  totalValidators: new BigNumber(0),
+  lastReward: new BigNumber(0),
+  lastTotalStake: new BigNumber(0),
+  validatorCount: new BigNumber(0),
+  maxValidatorsCount: new BigNumber(0),
+  minNominatorBond: new BigNumber(0),
+  totalStaked: new BigNumber(0),
+};
+
 export const defaultApiContext: APIContextInterface = {
   api: null,
   chainState: defaultChainState,
@@ -74,5 +86,6 @@ export const defaultApiContext: APIContextInterface = {
   networkMetrics: defaultNetworkMetrics,
   activeEra: defaultActiveEra,
   poolsConfig: defaultPoolsConfig,
+  stakingMetrics: defaultStakingMetrics,
   isPagedRewardsActive: (e) => false,
 };
