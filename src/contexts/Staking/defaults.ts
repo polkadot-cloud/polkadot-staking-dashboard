@@ -19,10 +19,6 @@ export const defaultStakingMetrics: StakingMetrics = {
   validatorCount: new BigNumber(0),
   maxValidatorsCount: new BigNumber(0),
   minNominatorBond: new BigNumber(0),
-  payee: {
-    destination: null,
-    account: null,
-  },
   totalStaked: new BigNumber(0),
 };
 

@@ -27,11 +27,10 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const controller = getBondedAccount(activeAccount);
 
   // Listen to balance updates for the active account, active proxy and controller..
-  const { activeBalances, getLocks, getBalance, getLedger } = useActiveBalances(
-    {
+  const { activeBalances, getLocks, getBalance, getLedger, getPayee } =
+    useActiveBalances({
       accounts: [activeAccount, activeProxy, controller],
-    }
-  );
+    });
 
   // Store whether balances for all imported accounts have been synced on initial page load.
   const [balancesInitialSynced, setBalancesInitialSynced] =
@@ -92,6 +91,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
         getLocks,
         getBalance,
         getLedger,
+        getPayee,
         balancesInitialSynced,
       }}
     >
