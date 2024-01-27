@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
-import type { PayeeConfig } from 'contexts/Setup/types';
 import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
 import type { MaybeAddress } from 'types';
 
@@ -14,7 +13,6 @@ export interface StakingMetrics {
   validatorCount: BigNumber;
   maxValidatorsCount: BigNumber;
   minNominatorBond: BigNumber;
-  payee: PayeeConfig;
   totalStaked: BigNumber;
 }
 
