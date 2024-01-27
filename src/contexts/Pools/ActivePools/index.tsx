@@ -467,7 +467,7 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
       setStateWithRef('syncing', setSynced, syncedRef);
       handlePoolSubscriptions();
     }
-  }, [network, isReady, syncedRef.current]);
+  }, [network, isReady, synced]);
 
   // re-calculate pending rewards when membership changes
   useEffectIgnoreInitial(() => {
