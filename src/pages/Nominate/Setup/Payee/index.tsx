@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSetup } from 'contexts/Setup';
-import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
+import type { PayeeOptions } from 'contexts/Setup/types';
 import { Spacer } from 'library/Form/Wrappers';
 import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { PayeeInput } from 'library/PayeeInput';
@@ -17,6 +17,7 @@ import type { SetupStepProps } from 'library/SetupSteps/types';
 import type { MaybeAddress } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Subheading } from 'pages/Nominate/Wrappers';
+import { defaultPayee } from 'static/BalancesController/defaults';
 
 export const Payee = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
@@ -30,11 +31,6 @@ export const Payee = ({ section }: SetupStepProps) => {
 
   // Store the current user-inputted custom payout account.
   const [account, setAccount] = useState<MaybeAddress>(payee.account);
-
-  const DefaultPayeeConfig: PayeeConfig = {
-    destination: 'Staked',
-    account: null,
-  };
 
   // determine whether this section is completed.
   const isComplete = () =>
@@ -64,7 +60,7 @@ export const Payee = ({ section }: SetupStepProps) => {
     if (!payee || (!payee.destination && !payee.account)) {
       setActiveAccountSetup('nominator', {
         ...progress,
-        payee: DefaultPayeeConfig,
+        payee: defaultPayee,
       });
     }
   }, [activeAccount]);

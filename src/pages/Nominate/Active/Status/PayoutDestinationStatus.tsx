@@ -11,17 +11,20 @@ import { Stat } from 'library/Stat';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useBalances } from 'contexts/Balances';
 
 export const PayoutDestinationStatus = () => {
   const { t } = useTranslation('pages');
   const { isSyncing } = useUi();
+  const { getPayee } = useBalances();
+  const { inSetup } = useStaking();
   const { openModal } = useOverlay().modal;
-  const { staking, inSetup } = useStaking();
   const { isFastUnstaking } = useUnstaking();
   const { getPayeeItems } = usePayeeConfig();
   const { activeAccount } = useActiveAccounts();
   const { isReadOnlyAccount } = useImportedAccounts();
-  const { payee } = staking;
+
+  const payee = getPayee(activeAccount);
 
   // Get payee status text to display.
   const getPayeeStatus = () => {
