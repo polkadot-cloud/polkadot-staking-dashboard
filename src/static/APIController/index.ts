@@ -285,7 +285,7 @@ export class APIController {
       new BigNumber(activeEra.index).minus(1)
     );
 
-    // Fetch network config.
+    // Fetch network configuration.
     const resultNetworkMetrics = await this.api.queryMulti([
       // Network metrics.
       this.api.query.balances.totalIssuance,
