@@ -20,7 +20,9 @@ import BigNumber from 'bignumber.js';
 import {
   defaultBalance,
   defaultLedger,
+  defaultPayee,
 } from 'static/BalancesController/defaults';
+import type { PayeeConfig } from 'contexts/Setup/types';
 
 export const useActiveBalances = ({
   accounts,
@@ -87,6 +89,17 @@ export const useActiveBalances = ({
       }
     }
     return defaultLedger;
+  };
+
+  // Gets an active balance's payee.
+  const getPayee = (address: MaybeAddress): PayeeConfig => {
+    if (address) {
+      const maybePayee = activeBalances[address]?.payee;
+      if (maybePayee) {
+        return maybePayee;
+      }
+    }
+    return defaultPayee;
   };
 
   // Gets the amount of balance reserved for existential deposit.
@@ -163,6 +176,7 @@ export const useActiveBalances = ({
     getLocks,
     getBalance,
     getLedger,
+    getPayee,
     getEdReserved,
   };
 };

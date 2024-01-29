@@ -12,6 +12,7 @@ import type {
   APIActiveEra,
   APINetworkMetrics,
   APIPoolsConfig,
+  APIStakingMetrics,
 } from 'contexts/Api/types';
 
 declare global {
@@ -26,6 +27,9 @@ declare global {
     }>;
     'new-active-era': CustomEvent<{ activeEra: APIActiveEra }>;
     'new-pools-config': CustomEvent<{ poolsConfig: APIPoolsConfig }>;
+    'new-staking-metrics': CustomEvent<{
+      stakingMetrics: APIStakingMetrics;
+    }>;
     'new-external-account': CustomEvent<{ address: string }>;
     'new-account-balance': CustomEvent<ActiveBalance & { address: string }>;
     'subscan-data-updated': CustomEvent<{ keys: PayoutType[] }>;

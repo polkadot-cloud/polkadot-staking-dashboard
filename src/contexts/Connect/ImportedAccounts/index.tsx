@@ -4,7 +4,10 @@
 import type { ReactNode } from 'react';
 import { createContext, useCallback, useContext } from 'react';
 import type { MaybeAddress } from 'types';
-import type { ExternalAccount } from '@polkadot-cloud/react/types';
+import type {
+  ExternalAccount,
+  ImportedAccount,
+} from '@polkadot-cloud/react/types';
 import { ManualSigners } from 'consts';
 import {
   useEffectIgnoreInitial,
@@ -33,13 +36,31 @@ export const ImportedAccountsProvider = ({
   const { extensionAccounts } = useExtensionAccounts();
   const allAccounts = extensionAccounts.concat(otherAccounts);
 
+  // Stringify account addresses and account names to determine if they have changed. Ignore other properties including `signer` and `source`.
+  const shallowAccountStringify = (accounts: ImportedAccount[]) => {
+    const sorted = accounts.sort((a, b) => {
+      if (a.address < b.address) {
+        return -1;
+      }
+      if (a.address > b.address) {
+        return 1;
+      }
+      return 0;
+    });
+    return JSON.stringify(
+      sorted.map((account) => [account.address, account.name])
+    );
+  };
+
+  const allAccountsStringified = shallowAccountStringify(allAccounts);
+
   // Gets an account from `allAccounts`.
   //
   // Caches the function when imported accounts update.
   const getAccount = useCallback(
     (who: MaybeAddress) =>
       allAccounts.find(({ address }) => address === who) || null,
-    [allAccounts]
+    [allAccountsStringified]
   );
 
   // Checks if an address is a read-only account.
@@ -54,7 +75,7 @@ export const ImportedAccountsProvider = ({
       }
       return false;
     },
-    [allAccounts]
+    [allAccountsStringified]
   );
 
   // Checks whether an account can sign transactions.
@@ -66,7 +87,7 @@ export const ImportedAccountsProvider = ({
         (account) =>
           account.address === address && account.source !== 'external'
       ) !== undefined,
-    [allAccounts]
+    [allAccountsStringified]
   );
 
   // Checks whether an account needs manual signing.
@@ -80,7 +101,7 @@ export const ImportedAccountsProvider = ({
       allAccounts.find(
         (a) => a.address === address && ManualSigners.includes(a.source)
       ) !== undefined,
-    [allAccounts]
+    [allAccountsStringified]
   );
 
   // Keep accounts in sync with `BalancesController`.
@@ -88,7 +109,7 @@ export const ImportedAccountsProvider = ({
     if (isReady) {
       BalancesController.syncAccounts(allAccounts.map((a) => a.address));
     }
-  }, [isReady, allAccounts]);
+  }, [isReady, allAccountsStringified]);
 
   return (
     <ImportedAccountsContext.Provider

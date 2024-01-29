@@ -23,8 +23,10 @@ import type {
   APIConstants,
   APINetworkMetrics,
   APIPoolsConfig,
+  APIStakingMetrics,
 } from 'contexts/Api/types';
 import { WellKnownChain } from '@substrate/connect';
+import { defaultActiveEra } from 'contexts/Api/defaults';
 
 export class APIController {
   // ------------------------------------------------------
@@ -88,6 +90,9 @@ export class APIController {
     minBlockNumber: '0',
     interval: undefined,
   };
+
+  // Store the active era.
+  static activeEra: APIActiveEra = defaultActiveEra;
 
   // Cancel function of dynamic substrate connect import.
   static cancelFn: () => void;
@@ -235,6 +240,7 @@ export class APIController {
     networkMetrics: APINetworkMetrics;
     activeEra: APIActiveEra;
     poolsConfig: APIPoolsConfig;
+    stakingMetrics: APIStakingMetrics;
   }> => {
     // Fetch network constants.
     const allPromises = [
@@ -263,7 +269,23 @@ export class APIController {
 
     const resultConsts = await Promise.all(allPromises);
 
-    // Fetch network config.
+    // Fetch the active era. Needed for previous era and for queries below.
+    const resultActiveEra = await this.api.query.staking.activeEra();
+    const activeEra = JSON.parse(
+      (resultActiveEra as Option<ActiveEraInfo>).unwrapOrDefault().toString()
+    );
+    // Store active era.
+    this.activeEra = {
+      index: new BigNumber(activeEra.index),
+      start: new BigNumber(activeEra.start),
+    };
+    // Get previous era.
+    const previousEra = BigNumber.max(
+      0,
+      new BigNumber(activeEra.index).minus(1)
+    );
+
+    // Fetch network configuration.
     const resultNetworkMetrics = await this.api.queryMulti([
       // Network metrics.
       this.api.query.balances.totalIssuance,
@@ -271,7 +293,6 @@ export class APIController {
       this.api.query.paraSessionInfo.earliestStoredSession,
       this.api.query.fastUnstake.erasToCheckPerBlock,
       this.api.query.staking.minimumActiveStake,
-      this.api.query.staking.activeEra,
       // Nomination pool configs.
       this.api.query.nominationPools.counterForPoolMembers,
       this.api.query.nominationPools.counterForBondedPools,
@@ -283,19 +304,28 @@ export class APIController {
       this.api.query.nominationPools.minCreateBond,
       this.api.query.nominationPools.minJoinBond,
       this.api.query.nominationPools.globalMaxCommission,
+      // Staking metrics.
+      this.api.query.staking.counterForNominators,
+      this.api.query.staking.counterForValidators,
+      this.api.query.staking.maxValidatorsCount,
+      this.api.query.staking.validatorCount,
+      [this.api.query.staking.erasValidatorReward, previousEra.toString()],
+      [this.api.query.staking.erasTotalStake, previousEra.toString()],
+      this.api.query.staking.minNominatorBond,
+      [this.api.query.staking.erasTotalStake, activeEra.index.toString()],
     ]);
 
     // format optional configs to BigNumber or null.
-    const maxPoolMembers = resultNetworkMetrics[10].toHuman()
+    const maxPoolMembers = resultNetworkMetrics[9].toHuman()
+      ? new BigNumber(rmCommas(resultNetworkMetrics[9].toString()))
+      : null;
+
+    const maxPoolMembersPerPool = resultNetworkMetrics[10].toHuman()
       ? new BigNumber(rmCommas(resultNetworkMetrics[10].toString()))
       : null;
 
-    const maxPoolMembersPerPool = resultNetworkMetrics[11].toHuman()
+    const maxPools = resultNetworkMetrics[11].toHuman()
       ? new BigNumber(rmCommas(resultNetworkMetrics[11].toString()))
-      : null;
-
-    const maxPools = resultNetworkMetrics[12].toHuman()
-      ? new BigNumber(rmCommas(resultNetworkMetrics[12].toString()))
       : null;
 
     return {
@@ -345,33 +375,53 @@ export class APIController {
         ),
         minimumActiveStake: new BigNumber(resultNetworkMetrics[4].toString()),
       },
-      activeEra: JSON.parse(
-        (resultNetworkMetrics[5] as Option<ActiveEraInfo>)
-          .unwrapOrDefault()
-          .toString()
-      ),
+      activeEra,
       poolsConfig: {
         counterForPoolMembers: this.stringToBigNumber(
-          resultNetworkMetrics[6].toString()
+          resultNetworkMetrics[5].toString()
         ),
         counterForBondedPools: this.stringToBigNumber(
-          resultNetworkMetrics[7].toString()
+          resultNetworkMetrics[6].toString()
         ),
         counterForRewardPools: this.stringToBigNumber(
-          resultNetworkMetrics[8].toString()
+          resultNetworkMetrics[7].toString()
         ),
-        lastPoolId: this.stringToBigNumber(resultNetworkMetrics[9].toString()),
+        lastPoolId: this.stringToBigNumber(resultNetworkMetrics[8].toString()),
         maxPoolMembers,
         maxPoolMembersPerPool,
         maxPools,
         minCreateBond: this.stringToBigNumber(
-          resultNetworkMetrics[13].toString()
+          resultNetworkMetrics[12].toString()
         ),
         minJoinBond: this.stringToBigNumber(
-          resultNetworkMetrics[14].toString()
+          resultNetworkMetrics[13].toString()
         ),
         globalMaxCommission: Number(
-          String(resultNetworkMetrics[15]?.toHuman() || '100%').slice(0, -1)
+          String(resultNetworkMetrics[14]?.toHuman() || '100%').slice(0, -1)
+        ),
+      },
+      stakingMetrics: {
+        totalNominators: this.stringToBigNumber(
+          resultNetworkMetrics[15].toString()
+        ),
+        totalValidators: this.stringToBigNumber(
+          resultNetworkMetrics[16].toString()
+        ),
+        maxValidatorsCount: this.stringToBigNumber(
+          resultNetworkMetrics[17].toString()
+        ),
+        validatorCount: this.stringToBigNumber(
+          resultNetworkMetrics[18].toString()
+        ),
+        lastReward: this.stringToBigNumber(resultNetworkMetrics[19].toString()),
+        lastTotalStake: this.stringToBigNumber(
+          resultNetworkMetrics[20].toString()
+        ),
+        minNominatorBond: this.stringToBigNumber(
+          resultNetworkMetrics[21].toString()
+        ),
+        totalStaked: this.stringToBigNumber(
+          resultNetworkMetrics[22].toString()
         ),
       },
     };
@@ -453,13 +503,29 @@ export class APIController {
   };
 
   // Subscribe to active era.
+  //
+  // Also handles (re)subscribing to subscriptions that depend on active era.
   static subscribeActiveEra = async (): Promise<void> => {
     const unsub = await this.api.query.staking.activeEra(
       (result: Option<ActiveEraInfo>) => {
         // determine activeEra: toString used as alternative to `toHuman`, that puts commas in
         // numbers
         const activeEra = JSON.parse(result.unwrapOrDefault().toString());
+        // Store active era.
+        this.activeEra = {
+          index: new BigNumber(activeEra.index),
+          start: new BigNumber(activeEra.start),
+        };
 
+        // (Re)Subscribe to staking metrics `activeEra` has updated.
+        if (this._unsubs['stakingMetrics']) {
+          this._unsubs['stakingMetrics']();
+          delete this._unsubs['stakingMetrics'];
+        }
+        this.subscribeStakingMetrics();
+
+        // NOTE: Sending `activeEra` to document as a strings. UI needs to parse values into
+        // BigNumber.
         document.dispatchEvent(
           new CustomEvent(`new-active-era`, {
             detail: { activeEra },
@@ -523,6 +589,51 @@ export class APIController {
         }
       );
       this._unsubs['poolsConfig'] = unsub as unknown as VoidFn;
+    }
+  };
+
+  // Subscribe to staking metrics.
+  static subscribeStakingMetrics = async (): Promise<void> => {
+    if (this._unsubs['stakingMetrics'] === undefined) {
+      const previousEra = BigNumber.max(
+        0,
+        new BigNumber(this.activeEra.index).minus(1)
+      );
+
+      const unsub = await this.api.queryMulti(
+        [
+          this.api.query.staking.counterForNominators,
+          this.api.query.staking.counterForValidators,
+          this.api.query.staking.maxValidatorsCount,
+          this.api.query.staking.validatorCount,
+          [this.api.query.staking.erasValidatorReward, previousEra.toString()],
+          [this.api.query.staking.erasTotalStake, previousEra.toString()],
+          this.api.query.staking.minNominatorBond,
+          [
+            this.api.query.staking.erasTotalStake,
+            this.activeEra.index.toString(),
+          ],
+        ],
+        (result) => {
+          const stakingMetrics = {
+            totalNominators: this.stringToBigNumber(result[0].toString()),
+            totalValidators: this.stringToBigNumber(result[1].toString()),
+            maxValidatorsCount: this.stringToBigNumber(result[2].toString()),
+            validatorCount: this.stringToBigNumber(result[3].toString()),
+            lastReward: this.stringToBigNumber(result[4].toString()),
+            lastTotalStake: this.stringToBigNumber(result[5].toString()),
+            minNominatorBond: this.stringToBigNumber(result[6].toString()),
+            totalStaked: this.stringToBigNumber(result[7].toString()),
+          };
+
+          document.dispatchEvent(
+            new CustomEvent(`new-staking-metrics`, {
+              detail: { stakingMetrics },
+            })
+          );
+        }
+      );
+      this._unsubs['stakingMetrics'] = unsub as unknown as VoidFn;
     }
   };
 
@@ -643,6 +754,8 @@ export class APIController {
   static async disconnect() {
     // Clear block number verification interval.
     clearInterval(this._blockNumberVerify.interval);
+    // Clear persisted network data.
+    this.activeEra = defaultActiveEra;
 
     // Unsubscribe from all subscriptions.
     this.unsubscribe();

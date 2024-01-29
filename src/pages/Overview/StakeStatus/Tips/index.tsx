@@ -21,6 +21,7 @@ import { PageToggle } from './PageToggle';
 import { Syncing } from './Syncing';
 import { TipsWrapper } from './Wrappers';
 import type { TipDisplay } from './types';
+import { useApi } from 'contexts/Api';
 
 export const Tips = () => {
   const { i18n, t } = useTranslation();
@@ -29,10 +30,13 @@ export const Tips = () => {
   const { activeAccount } = useActiveAccounts();
   const { fillVariables } = useFillVariables();
   const { membership } = usePoolMemberships();
-  const { isNominating, staking } = useStaking();
+  const {
+    stakingMetrics: { minNominatorBond },
+  } = useApi();
+
+  const { isNominating } = useStaking();
   const { isOwner } = useActivePools();
   const { feeReserve, getTransferOptions } = useTransferOptions();
-  const { minNominatorBond } = staking;
   const transferOptions = getTransferOptions(activeAccount);
 
   // multiple tips per row is currently turned off.

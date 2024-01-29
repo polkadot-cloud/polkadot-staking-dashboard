@@ -4,13 +4,14 @@
 import { greaterThanZero } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
+import { useApi } from 'contexts/Api';
 
 export const TotalValidatorsStat = () => {
   const { t } = useTranslation('pages');
-  const { staking } = useStaking();
-  const { totalValidators, maxValidatorsCount } = staking;
+  const {
+    stakingMetrics: { totalValidators, maxValidatorsCount },
+  } = useApi();
 
   // total validators as percent
   let totalValidatorsAsPercent = 0;

@@ -45,9 +45,9 @@
     "chart.js": "^4.4.1",
     "chroma-js": "^2.4.2",
     "date-fns": "^3.3.1",
-    "framer-motion": "^10.18.0",
+    "framer-motion": "^11.0.3",
     "html5-qrcode": "^2.3.8",
-    "i18next": "^23.7.19",
+    "i18next": "^23.7.20",
     "i18next-browser-languagedetector": "^7.2.0",
     "lodash.throttle": "^4.1.1",
     "qrcode-generator": "1.4.4",
@@ -96,7 +96,7 @@
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^4.2.0",
     "vite-tsconfig-paths": "^4.3.1",
-    "vitest": "^1.2.1"
+    "vitest": "^1.2.2"
   },
   "packageManager": "yarn@4.0.2"
 }

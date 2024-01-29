@@ -17,6 +17,7 @@ import type {
   APINetworkMetrics,
   APIPoolsConfig,
   APIProviderProps,
+  APIStakingMetrics,
 } from './types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import {
@@ -26,6 +27,7 @@ import {
   defaultChainState,
   defaultPoolsConfig,
   defaultNetworkMetrics,
+  defaultStakingMetrics,
 } from './defaults';
 import { APIController } from 'static/APIController';
 import { isCustomEvent } from 'static/utils';
@@ -108,6 +110,12 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     useState<APIPoolsConfig>(defaultPoolsConfig);
   const poolsConfigRef = useRef(poolsConfig);
 
+  // Store staking metrics in state.
+  const [stakingMetrics, setStakingMetrics] = useState<APIStakingMetrics>(
+    defaultStakingMetrics
+  );
+  const stakingMetricsRef = useRef(stakingMetrics);
+
   // Fetch chain state. Called once `provider` has been initialised.
   const onApiReady = async () => {
     const { api } = APIController;
@@ -139,6 +147,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       networkMetrics: newNetworkMetrics,
       activeEra: newActiveEra,
       poolsConfig: newPoolsConfig,
+      stakingMetrics: newStakingMetrics,
     } = await APIController.bootstrapNetworkConfig();
 
     // Populate all config state.
@@ -151,14 +160,15 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       activeEraRef
     );
     setStateWithRef(newPoolsConfig, setPoolsConfig, poolsConfigRef);
+    setStateWithRef(newStakingMetrics, setStakingMetrics, stakingMetricsRef);
 
     // API is now ready to be used.
     setApiStatus('ready');
 
     // Initialise subscriptions.
     APIController.subscribeNetworkMetrics();
-    APIController.subscribeActiveEra();
     APIController.subscribePoolsConfig();
+    APIController.subscribeActiveEra();
   };
 
   const onApiDisconnected = (err?: string) => {
@@ -274,6 +284,27 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     }
   };
 
+  // Handle new staking metrics updates.
+  const handleStakingMetricsUpdate = (e: Event): void => {
+    if (isCustomEvent(e)) {
+      const { stakingMetrics: newStakingMetrics } = e.detail;
+      // Only update if values have changed.
+      if (
+        JSON.stringify(newStakingMetrics) !==
+        JSON.stringify(stakingMetricsRef.current)
+      ) {
+        setStateWithRef(
+          {
+            ...stakingMetricsRef.current,
+            ...newStakingMetrics,
+          },
+          setStakingMetrics,
+          stakingMetricsRef
+        );
+      }
+    }
+  };
+
   // Given an era, determine whether paged rewards are active.
   const isPagedRewardsActive = (era: BigNumber): boolean => {
     const networkStartEra = PagedRewardsStartEra[network];
@@ -321,6 +352,11 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       );
       setStateWithRef(defaultActiveEra, setActiveEra, activeEraRef);
       setStateWithRef(defaultPoolsConfig, setPoolsConfig, poolsConfigRef);
+      setStateWithRef(
+        defaultStakingMetrics,
+        setStakingMetrics,
+        stakingMetricsRef
+      );
     }
     // Reconnect API instance.
     APIController.initialize(network, isLightClient ? 'sc' : 'ws', rpcEndpoint);
@@ -349,6 +385,12 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   useEventListener('new-pools-config', handlePoolsConfigUpdate, documentRef);
 
+  useEventListener(
+    'new-staking-metrics',
+    handleStakingMetricsUpdate,
+    documentRef
+  );
+
   return (
     <APIContext.Provider
       value={{
@@ -364,6 +406,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         networkMetrics,
         activeEra,
         poolsConfig,
+        stakingMetrics,
         isPagedRewardsActive,
       }}
     >
