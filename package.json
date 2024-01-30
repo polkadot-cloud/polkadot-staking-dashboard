@@ -88,7 +88,7 @@
     "sass": "^1.70.0",
     "typescript": "^5.3.3",
     "vite": "^5.0.12",
-    "vite-bundle-visualizer": "^1.0.0",
+    "vite-bundle-visualizer": "^1.0.1",
     "vite-plugin-checker": "^0.6.2",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^4.2.0",
