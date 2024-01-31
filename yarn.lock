@@ -918,15 +918,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/hw-transport-webhid@npm:^6.28.2":
-  version: 6.28.2
-  resolution: "@ledgerhq/hw-transport-webhid@npm:6.28.2"
+"@ledgerhq/hw-transport-webhid@npm:^6.28.3":
+  version: 6.28.3
+  resolution: "@ledgerhq/hw-transport-webhid@npm:6.28.3"
   dependencies:
     "@ledgerhq/devices": "npm:^8.2.0"
     "@ledgerhq/errors": "npm:^6.16.1"
-    "@ledgerhq/hw-transport": "npm:^6.30.2"
+    "@ledgerhq/hw-transport": "npm:^6.30.3"
     "@ledgerhq/logs": "npm:^6.12.0"
-  checksum: 9529ba663470cfe8adb3d6808096982eb34ba341729db4dedc4b91185486fb38d178b418771b7d606be63652966c96e74b7076cdd311ccb34538ad71a88a8365
+  checksum: b2017d283f2030e28ab663fc7f032db66ef3bfefb29ceb4cecf29561f7ed54f9e0c17c1e1e30a09ee9957ed8f1b8bada7391c4030554370a122a6654979600b8
   languageName: node
   linkType: hard
 
@@ -942,15 +942,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/hw-transport@npm:^6.30.2":
-  version: 6.30.2
-  resolution: "@ledgerhq/hw-transport@npm:6.30.2"
+"@ledgerhq/hw-transport@npm:^6.30.3":
+  version: 6.30.3
+  resolution: "@ledgerhq/hw-transport@npm:6.30.3"
   dependencies:
     "@ledgerhq/devices": "npm:^8.2.0"
     "@ledgerhq/errors": "npm:^6.16.1"
     "@ledgerhq/logs": "npm:^6.12.0"
     events: "npm:^3.3.0"
-  checksum: 2c3811e8c2a0d1844cb1ed608f0ded074ee15cd8e69dbdaa380d503c70abd4179b67137ea6dd48c78707818f0bc031f63d27d0d074eb0b885431dab884ecfb64
+  checksum: e50b9f99d6127b641d293d33b5141f55e59a8a14afb231e7d5c696e234a210ca94a6573a442548384ac4afa315b60b9c3ff7cff29f3df5e00f9cb59385801d70
   languageName: node
   linkType: hard
 
@@ -6306,7 +6306,7 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": "npm:^6.5.1"
     "@fortawesome/free-solid-svg-icons": "npm:^6.5.1"
     "@fortawesome/react-fontawesome": "npm:^0.2.0"
-    "@ledgerhq/hw-transport-webhid": "npm:^6.28.2"
+    "@ledgerhq/hw-transport-webhid": "npm:^6.28.3"
     "@ledgerhq/logs": "npm:^6.12.0"
     "@polkadot-cloud/assets": "npm:^0.3.4"
     "@polkadot-cloud/core": "npm:^1.2.4"
