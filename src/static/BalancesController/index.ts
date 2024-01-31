@@ -93,6 +93,7 @@ export class BalancesController {
                 ledger: this.ledgers[address],
                 balances: this.balances[address],
                 payee: this.payees[address],
+                poolMembership: this.poolMemberships[address],
               },
             })
           );

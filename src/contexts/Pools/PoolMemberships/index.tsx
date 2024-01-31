@@ -5,12 +5,7 @@ import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import type {
-  ClaimPermissionConfig,
-  PoolMembership,
-  PoolMembershipsContextState,
-} from './types';
+import type { PoolMembership, PoolMembershipsContextState } from './types';
 import type { AnyApi, Fn } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
@@ -31,7 +26,6 @@ export const PoolMembershipsProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const { t } = useTranslation('base');
   const { network } = useNetwork();
   const { api, isReady } = useApi();
   const { accounts } = useImportedAccounts();
@@ -147,24 +141,6 @@ export const PoolMembershipsProvider = ({
     return poolMembership;
   };
 
-  const claimPermissionConfig: ClaimPermissionConfig[] = [
-    {
-      label: t('allowCompound'),
-      value: 'PermissionlessCompound',
-      description: t('allowAnyoneCompound'),
-    },
-    {
-      label: t('allowWithdraw'),
-      value: 'PermissionlessWithdraw',
-      description: t('allowAnyoneWithdraw'),
-    },
-    {
-      label: t('allowAll'),
-      value: 'PermissionlessAll',
-      description: t('allowAnyoneCompoundWithdraw'),
-    },
-  ];
-
   // Reset and re-sync pool memberships on network change.
   // re-sync pool memberships when accounts update.
   useEffectIgnoreInitial(() => {
@@ -201,7 +177,6 @@ export const PoolMembershipsProvider = ({
       value={{
         membership: getActiveAccountPoolMembership(),
         memberships: poolMembershipsRef.current,
-        claimPermissionConfig,
       }}
     >
       {children}

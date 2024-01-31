@@ -14,7 +14,6 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
@@ -27,6 +26,8 @@ import {
   combineRewards,
   formatRewardsForGraphs,
 } from './Utils';
+import { useBalances } from 'contexts/Balances';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 ChartJS.register(
   CategoryScale,
@@ -49,9 +50,11 @@ export const PayoutLine = ({
   const { mode } = useTheme();
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
-  const { unit, units, colors } = useNetwork().networkData;
-  const { membership: poolMembership } = usePoolMemberships();
+  const { getPoolMembership } = useBalances();
+  const { activeAccount } = useActiveAccounts();
 
+  const { unit, units, colors } = useNetwork().networkData;
+  const poolMembership = getPoolMembership(activeAccount);
   const notStaking = !isSyncing && inSetup() && !poolMembership;
   const poolingOnly = !isSyncing && inSetup() && poolMembership !== null;
 

@@ -17,7 +17,6 @@ import { format, fromUnixTime } from 'date-fns';
 import { Bar } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import { DefaultLocale } from 'consts';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
@@ -27,6 +26,8 @@ import type { AnyJson, AnySubscan } from 'types';
 import { useNetwork } from 'contexts/Network';
 import type { PayoutBarProps } from './types';
 import { formatRewardsForGraphs } from './Utils';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useBalances } from 'contexts/Balances';
 
 ChartJS.register(
   CategoryScale,
@@ -48,7 +49,10 @@ export const PayoutBar = ({
   const { mode } = useTheme();
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
-  const { membership } = usePoolMemberships();
+  const { getPoolMembership } = useBalances();
+  const { activeAccount } = useActiveAccounts();
+
+  const membership = getPoolMembership(activeAccount);
   const { unit, units, colors } = useNetwork().networkData;
   const notStaking = !isSyncing && inSetup() && !membership;
 

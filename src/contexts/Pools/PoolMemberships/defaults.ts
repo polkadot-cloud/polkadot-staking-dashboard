@@ -8,5 +8,4 @@ export const poolMembership: PoolMembership | null = null;
 export const defaultPoolMembershipsContext: PoolMembershipsContextState = {
   memberships: [],
   membership: null,
-  claimPermissionConfig: [],
 };

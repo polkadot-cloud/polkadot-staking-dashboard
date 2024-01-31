@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { TipsConfig } from 'config/tips';
 import { DefaultLocale, TipsThresholdMedium, TipsThresholdSmall } from 'consts';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
@@ -22,6 +21,7 @@ import { Syncing } from './Syncing';
 import { TipsWrapper } from './Wrappers';
 import type { TipDisplay } from './types';
 import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
 
 export const Tips = () => {
   const { i18n, t } = useTranslation();
@@ -29,14 +29,15 @@ export const Tips = () => {
   const { isNetworkSyncing } = useUi();
   const { activeAccount } = useActiveAccounts();
   const { fillVariables } = useFillVariables();
-  const { membership } = usePoolMemberships();
   const {
     stakingMetrics: { minNominatorBond },
   } = useApi();
-
-  const { isNominating } = useStaking();
   const { isOwner } = useActivePools();
+  const { isNominating } = useStaking();
+  const { getPoolMembership } = useBalances();
   const { feeReserve, getTransferOptions } = useTransferOptions();
+
+  const membership = getPoolMembership(activeAccount);
   const transferOptions = getTransferOptions(activeAccount);
 
   // multiple tips per row is currently turned off.

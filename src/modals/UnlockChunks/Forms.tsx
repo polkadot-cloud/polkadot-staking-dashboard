@@ -18,7 +18,6 @@ import { useBonded } from 'contexts/Bonded';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useFavoritePools } from 'contexts/Pools/FavoritePools';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
@@ -29,6 +28,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ContentWrapper } from './Wrappers';
 import type { FormsProps } from './types';
+import { useBalances } from 'contexts/Balances';
 
 export const Forms = forwardRef(
   (
@@ -40,19 +40,20 @@ export const Forms = forwardRef(
     const {
       networkData: { units, unit },
     } = useNetwork();
-    const { membership } = usePoolMemberships();
     const { activeAccount } = useActiveAccounts();
     const { removePoolMember } = usePoolMembers();
     const { selectedActivePool } = useActivePools();
     const { removeFromBondedPools } = useBondedPools();
-    const { removeFavorite: removeFavoritePool } = useFavoritePools();
     const {
       setModalStatus,
       config: { options },
     } = useOverlay().modal;
     const { getBondedAccount } = useBonded();
+    const { getPoolMembership } = useBalances();
     const { getSignerWarnings } = useSignerWarnings();
+    const { removeFavorite: removeFavoritePool } = useFavoritePools();
 
+    const membership = getPoolMembership(activeAccount);
     const { bondFor, poolClosure } = options || {};
     const { historyDepth } = consts;
     const controller = getBondedAccount(activeAccount);

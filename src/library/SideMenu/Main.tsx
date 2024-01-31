@@ -7,7 +7,6 @@ import { useLocation } from 'react-router-dom';
 import { PageCategories, PagesConfig } from 'config/pages';
 import { PolkadotUrl } from 'consts';
 import { useBonded } from 'contexts/Bonded';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useSetup } from 'contexts/Setup';
 import type { SetupContextInterface } from 'contexts/Setup/types';
 import { useStaking } from 'contexts/Staking';
@@ -21,6 +20,7 @@ import { Heading } from './Heading/Heading';
 import { Primary } from './Primary';
 import { LogoWrapper } from './Wrapper';
 import type { AnyJson } from '@polkadot-cloud/react/types';
+import { useBalances } from 'contexts/Balances';
 
 export const Main = () => {
   const { t, i18n } = useTranslation('base');
@@ -28,10 +28,9 @@ export const Main = () => {
   const { pathname } = useLocation();
   const { getBondedAccount } = useBonded();
   const { accounts } = useImportedAccounts();
+  const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
   const { inSetup: inNominatorSetup, addressDifferentToStash } = useStaking();
-  const { membership } = usePoolMemberships();
-  const controller = getBondedAccount(activeAccount);
   const {
     onNominatorSetup,
     onPoolSetup,
@@ -39,6 +38,9 @@ export const Main = () => {
     getNominatorSetupPercent,
   }: SetupContextInterface = useSetup();
   const { isSyncing, sideMenuMinimised }: UIContextInterface = useUi();
+
+  const membership = getPoolMembership(activeAccount);
+  const controller = getBondedAccount(activeAccount);
   const controllerDifferentToStash = addressDifferentToStash(controller);
 
   const [pageConfig, setPageConfig] = useState<AnyJson>({

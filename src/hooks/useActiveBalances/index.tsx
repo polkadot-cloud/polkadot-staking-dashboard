@@ -105,6 +105,7 @@ export const useActiveBalances = ({
 
   // Gets an active balance's pool membership.
   const getPoolMembership = (address: MaybeAddress): PoolMembership | null => {
+    console.log('get pool membership from', activeBalances[address || '']);
     if (address) {
       const maybePoolMembership = activeBalances[address]?.poolMembership;
       if (maybePoolMembership) {

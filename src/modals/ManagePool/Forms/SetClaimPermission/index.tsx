@@ -12,7 +12,6 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
@@ -21,6 +20,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { ClaimPermission } from 'contexts/Pools/PoolMemberships/types';
+import { useBalances } from 'contexts/Balances';
 
 export const SetClaimPermission = ({
   setSection,
@@ -31,11 +31,13 @@ export const SetClaimPermission = ({
 }) => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
+  const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
   const { setModalStatus } = useOverlay().modal;
   const { isOwner, isMember } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
-  const { membership } = usePoolMemberships();
+
+  const membership = getPoolMembership(activeAccount);
 
   // Valid to submit transaction.
   const [valid, setValid] = useState<boolean>(false);

@@ -7,7 +7,6 @@ import type { PoolUnlocking } from '../ActivePools/types';
 export interface PoolMembershipsContextState {
   memberships: PoolMembership[];
   membership: PoolMembership | null;
-  claimPermissionConfig: ClaimPermissionConfig[];
 }
 
 export type ClaimPermission =
@@ -25,11 +24,4 @@ export interface PoolMembership {
   unbondingEras: Record<number, string>;
   claimPermission: ClaimPermission;
   unlocking: PoolUnlocking[];
-}
-
-// PoolMembers types
-export interface ClaimPermissionConfig {
-  label: string;
-  value: ClaimPermission;
-  description: string;
 }
