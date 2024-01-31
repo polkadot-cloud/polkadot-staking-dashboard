@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
+import type { PoolMembership } from 'contexts/Pools/PoolMemberships/types';
 import type { PayeeConfig } from 'contexts/Setup/types';
 import type { MaybeAddress } from 'types';
 
@@ -12,6 +13,7 @@ export interface BalancesContextInterface {
   getBalance: (address: MaybeAddress) => Balance;
   getLedger: (source: ActiveLedgerSource) => Ledger;
   getPayee: (address: MaybeAddress) => PayeeConfig;
+  getPoolMembership: (address: MaybeAddress) => PoolMembership | null;
   balancesInitialSynced: boolean;
 }
 
@@ -21,6 +23,7 @@ export interface ActiveBalance {
   ledger: Ledger;
   balances: Balances;
   payee: PayeeConfig;
+  poolMembership: PoolMembership;
 }
 
 export interface Balances {
