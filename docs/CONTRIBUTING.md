@@ -57,7 +57,7 @@ Going from the top-most component, the component hierarchy is set up as follows:
 
 - `src/index.tsx`: DOM render, of little interest.
 - `src/App.tsx`: wraps `<App />` in the theme provider context and determines the active network from local storage.
-- `src/Providers.tsx`: imports and wraps `<Router />` with all the contexts using a withProviders hook. We also wrap styled component's theme provider context here to make the theme configuration work.
+- `src/Providers.tsx`: imports and wraps `<Router />` with all the contexts using a `withProviders` hook. We also wrap styled component's theme provider context here to make the theme configuration work.
 - `src/Router.tsx`: contains react router `<Route>`'s, in addition to the major app presentational components.
 
 ## Development Patterns

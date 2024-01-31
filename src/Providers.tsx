@@ -39,13 +39,13 @@ import { APIProvider } from 'contexts/Api';
 import { ThemedRouter } from 'Themes';
 import type { AnyJson } from 'types';
 import type { FC } from 'react';
-import { withProviders } from 'library/Hooks';
 import { OtherAccountsProvider } from 'contexts/Connect/OtherAccounts';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { DappName } from 'consts';
 import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts';
 import { PoolPerformanceProvider } from 'contexts/Pools/PoolPerformance';
 import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts';
+import { withProviders } from 'library/Hooks/withProviders';
 
 export const Providers = () => {
   const {
