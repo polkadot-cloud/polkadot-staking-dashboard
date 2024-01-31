@@ -5,7 +5,7 @@ import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
-import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { useFavoritePools } from 'contexts/Pools/FavoritePools';
 import { useTooltip } from 'contexts/Tooltip';
 import { TooltipTrigger } from 'library/ListItem/Wrappers';
 import type { FavoriteProps } from '../types';
@@ -14,7 +14,7 @@ import { NotificationsController } from 'static/NotificationsController';
 export const FavoritePool = ({ address }: FavoriteProps) => {
   const { t } = useTranslation('library');
   const { setTooltipTextAndOpen } = useTooltip();
-  const { favorites, addFavorite, removeFavorite } = usePoolsConfig();
+  const { favorites, addFavorite, removeFavorite } = useFavoritePools();
 
   const isFavorite = favorites.includes(address);
 

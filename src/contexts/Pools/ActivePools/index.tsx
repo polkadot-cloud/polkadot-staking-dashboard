@@ -21,12 +21,12 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from '../../Api';
 import { useBondedPools } from '../BondedPools';
 import { usePoolMemberships } from '../PoolMemberships';
-import { usePoolsConfig } from '../PoolsConfig';
 import * as defaults from './defaults';
 import { usePoolMembers } from '../PoolMembers';
 import type { ActivePool, ActivePoolsContextState, PoolTargets } from './types';
 import type { PoolAddresses } from '../BondedPools/types';
 import { SubscanController } from 'static/SubscanController';
+import { useCreatePoolAccounts } from 'library/Hooks/useCreatePoolAccounts';
 
 export const ActivePoolsContext = createContext<ActivePoolsContextState>(
   defaults.defaultActivePoolContext
@@ -40,8 +40,8 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   const { eraStakers } = useStaking();
   const { pluginEnabled } = usePlugins();
   const { membership } = usePoolMemberships();
-  const { createAccounts } = usePoolsConfig();
   const { activeAccount } = useActiveAccounts();
+  const createPoolAccounts = useCreatePoolAccounts();
   const { getMembersOfPoolFromNode } = usePoolMembers();
   const { getAccountPools, bondedPools } = useBondedPools();
 
@@ -155,7 +155,7 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
 
-    const addresses: PoolAddresses = createAccounts(poolId);
+    const addresses: PoolAddresses = createPoolAccounts(poolId);
 
     // new active pool subscription
     const subscribeActivePool = async (id: number) => {

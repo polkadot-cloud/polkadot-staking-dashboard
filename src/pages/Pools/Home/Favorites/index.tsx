@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { useFavoritePools } from 'contexts/Pools/FavoritePools';
 import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList/Default';
@@ -19,7 +19,7 @@ export const PoolFavorites = () => {
   const { isReady } = useApi();
   const { isPoolSyncing } = useUi();
   const { bondedPools } = useBondedPools();
-  const { favorites, removeFavorite } = usePoolsConfig();
+  const { favorites, removeFavorite } = useFavoritePools();
 
   // Store local favorite list and update when favorites list is mutated.
   const [favoritesList, setFavoritesList] = useState<BondedPool[]>([]);

@@ -19,7 +19,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { useFavoritePools } from 'contexts/Pools/FavoritePools';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -40,12 +40,12 @@ export const Forms = forwardRef(
     const {
       networkData: { units, unit },
     } = useNetwork();
-    const { activeAccount } = useActiveAccounts();
-    const { removeFavorite: removeFavoritePool } = usePoolsConfig();
     const { membership } = usePoolMemberships();
+    const { activeAccount } = useActiveAccounts();
+    const { removePoolMember } = usePoolMembers();
     const { selectedActivePool } = useActivePools();
     const { removeFromBondedPools } = useBondedPools();
-    const { removePoolMember } = usePoolMembers();
+    const { removeFavorite: removeFavoritePool } = useFavoritePools();
     const {
       setModalStatus,
       config: { options },
