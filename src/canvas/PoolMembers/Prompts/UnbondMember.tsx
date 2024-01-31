@@ -30,7 +30,7 @@ import { StaticNote } from 'modals/Utils/StaticNote';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { usePrompt } from 'contexts/Prompt';
-import type { PoolMembership } from 'contexts/Pools/PoolMemberships/types';
+import type { PoolMembership } from 'contexts/Pools/types';
 import { Title } from 'library/Prompt/Title';
 
 export const UnbondMember = ({

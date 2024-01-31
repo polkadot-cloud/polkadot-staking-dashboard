@@ -19,7 +19,7 @@ import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import type { ClaimPermission } from 'contexts/Pools/PoolMemberships/types';
+import type { ClaimPermission } from 'contexts/Pools/types';
 import { useBalances } from 'contexts/Balances';
 
 export const SetClaimPermission = ({

@@ -13,7 +13,7 @@ import type {
   UnlockChunkRaw,
 } from 'contexts/Balances/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
-import type { PoolMembership } from 'contexts/Pools/PoolMemberships/types';
+import type { PoolMembership } from 'contexts/Pools/types';
 
 export class BalancesController {
   // ------------------------------------------------------

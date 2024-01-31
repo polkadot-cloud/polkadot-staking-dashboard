@@ -5,7 +5,7 @@ import { ActionItem } from '@polkadot-cloud/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TabWrapper, TabsWrapper } from 'library/Filter/Wrappers';
-import type { ClaimPermission } from 'contexts/Pools/PoolMemberships/types';
+import type { ClaimPermission } from 'contexts/Pools/types';
 import type { ClaimPermissionConfig } from '../types';
 
 export interface ClaimPermissionInputProps {

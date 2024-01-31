@@ -8,7 +8,7 @@ import type {
   ExternalAccount,
 } from '@polkadot-cloud/react/types';
 import type { BondFor, MaybeAddress } from 'types';
-import type { ClaimPermission } from 'contexts/Pools/PoolMemberships/types';
+import type { ClaimPermission } from 'contexts/Pools/types';
 
 export interface ExtensionAccountItem extends ExtensionAccount {
   active?: boolean;

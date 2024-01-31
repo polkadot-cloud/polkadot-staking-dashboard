@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
-import type { PoolMembership } from 'contexts/Pools/PoolMemberships/types';
+import type { PoolMembership } from 'contexts/Pools/types';
 import type { Proxy } from 'contexts/Proxies/types';
 import type { MaybeAddress } from 'types';
 
