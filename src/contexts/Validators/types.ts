@@ -48,7 +48,7 @@ export interface Identity {
   judgements: AnyJson[];
 }
 
-export interface ValidatorSuper {
+export interface SuperIdentity {
   identity: Identity;
   superOf: [string, { Raw: string }];
 }

@@ -21,7 +21,7 @@ import type {
   Identity,
   Validator,
   ValidatorAddresses,
-  ValidatorSuper,
+  SuperIdentity,
   ValidatorListEntry,
   ValidatorsContextInterface,
   ValidatorEraPointHistory,
@@ -72,7 +72,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Store validator super identity data.
   const [validatorSupers, setValidatorSupers] = useState<
-    Record<string, ValidatorSuper>
+    Record<string, SuperIdentity>
   >({});
 
   // Stores the currently active validator set.

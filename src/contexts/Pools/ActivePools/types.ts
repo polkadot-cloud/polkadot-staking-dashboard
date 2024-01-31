@@ -6,6 +6,7 @@ import type { NominationStatuses, PoolAddresses } from '../BondedPools/types';
 import type { MaybeAddress } from '@polkadot-cloud/react/types';
 import type { AnyJson, Sync } from 'types';
 import type { Nominations } from 'contexts/Bonded/types';
+import type { Identity, SuperIdentity } from 'contexts/Validators/types';
 
 export interface ActivePoolsContextState {
   isBonding: () => boolean;
@@ -40,7 +41,10 @@ export interface ActiveBondedPool {
   points: string;
   memberCounter: string;
   roles: PoolRoles;
-  roleIdentities: AnyJson;
+  roleIdentities: {
+    identities: Record<string, Identity>;
+    supers: Record<string, SuperIdentity>;
+  };
   state: PoolState;
 }
 

@@ -17,8 +17,8 @@ export const PoolAccount = ({ address, pool }: PoolAccountProps) => {
   const { t } = useTranslation('pages');
 
   const roleIdentities = pool?.bondedPool?.roleIdentities;
-  const identities = roleIdentities?.identities || [];
-  const supers = roleIdentities?.supers || [];
+  const identities = roleIdentities?.identities || {};
+  const supers = roleIdentities?.supers || {};
   const synced = roleIdentities !== undefined;
 
   const display = address
