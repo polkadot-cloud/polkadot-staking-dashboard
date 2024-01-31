@@ -36,8 +36,8 @@ export interface AverageEraValidatorReward {
 }
 
 export interface FavoriteValidatorsContextInterface {
-  addFavorite: (a: string) => void;
-  removeFavorite: (a: string) => void;
+  addFavorite: (address: string) => void;
+  removeFavorite: (address: string) => void;
   favorites: string[];
   favoritesList: Validator[] | null;
 }

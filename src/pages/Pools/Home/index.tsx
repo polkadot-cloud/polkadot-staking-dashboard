@@ -10,7 +10,7 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList/Default';
 import { StatBoxList } from 'library/StatBoxList';
-import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { useFavoritePools } from 'contexts/Pools/FavoritePools';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { PoolListProvider } from 'library/PoolList/context';
@@ -29,9 +29,9 @@ import { useApi } from 'contexts/Api';
 
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
+  const { favorites } = useFavoritePools();
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
-  const { favorites } = usePoolsConfig();
   const { activeTab, setActiveTab } = usePoolsTabs();
   const { counterForBondedPools } = useApi().poolsConfig;
   const { bondedPools, getAccountPools } = useBondedPools();

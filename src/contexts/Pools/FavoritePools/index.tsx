@@ -3,17 +3,21 @@
 
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
-import type { PoolsConfigContextState } from './types';
+import type { FavoritePoolsContextState } from './types';
 import { useNetwork } from 'contexts/Network';
-import { defaultPoolsConfigContext } from './defaults';
+import { defaultFavoritePoolsContext } from './defaults';
 
-export const PoolsConfigContext = createContext<PoolsConfigContextState>(
-  defaultPoolsConfigContext
+export const FavoritePoolsContext = createContext<FavoritePoolsContextState>(
+  defaultFavoritePoolsContext
 );
 
-export const usePoolsConfig = () => useContext(PoolsConfigContext);
+export const useFavoritePools = () => useContext(FavoritePoolsContext);
 
-export const PoolsConfigProvider = ({ children }: { children: ReactNode }) => {
+export const FavoritePoolsProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
   const { network } = useNetwork();
 
   // get favorite pools from local storage.
@@ -40,7 +44,7 @@ export const PoolsConfigProvider = ({ children }: { children: ReactNode }) => {
   };
 
   /*
-   * Removes a favorite validator if they exist.
+   * Removes a favorite pool if they exist.
    */
   const removeFavorite = (address: string) => {
     let newFavorites = Object.assign(favorites);
@@ -55,7 +59,7 @@ export const PoolsConfigProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <PoolsConfigContext.Provider
+    <FavoritePoolsContext.Provider
       value={{
         addFavorite,
         removeFavorite,
@@ -63,6 +67,6 @@ export const PoolsConfigProvider = ({ children }: { children: ReactNode }) => {
       }}
     >
       {children}
-    </PoolsConfigContext.Provider>
+    </FavoritePoolsContext.Provider>
   );
 };

@@ -23,7 +23,7 @@ import { ActivePoolsProvider } from 'contexts/Pools/ActivePools';
 import { BondedPoolsProvider } from 'contexts/Pools/BondedPools';
 import { PoolMembersProvider } from 'contexts/Pools/PoolMembers';
 import { PoolMembershipsProvider } from 'contexts/Pools/PoolMemberships';
-import { PoolsConfigProvider } from 'contexts/Pools/PoolsConfig';
+import { FavoritePoolsProvider } from 'contexts/Pools/FavoritePools';
 import { ProxiesProvider } from 'contexts/Proxies';
 import { SetupProvider } from 'contexts/Setup';
 import { StakingProvider } from 'contexts/Staking';
@@ -47,7 +47,6 @@ import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts';
 import { PoolPerformanceProvider } from 'contexts/Pools/PoolPerformance';
 import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts';
 
-// Embed providers from hook.
 export const Providers = () => {
   const {
     network,
@@ -76,7 +75,7 @@ export const Providers = () => {
     BondedProvider,
     BalancesProvider,
     StakingProvider,
-    PoolsConfigProvider,
+    FavoritePoolsProvider,
     BondedPoolsProvider,
     PoolMembershipsProvider,
     PoolMembersProvider,
