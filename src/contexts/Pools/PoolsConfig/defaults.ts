@@ -8,7 +8,6 @@ import type { PoolAddresses } from '../BondedPools/types';
 export const defaultPoolsConfigContext: PoolsConfigContextState = {
   addFavorite: () => {},
   removeFavorite: () => {},
-  createAccounts: () => poolAddresses,
   favorites: [],
 };
 

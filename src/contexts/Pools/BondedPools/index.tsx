@@ -18,8 +18,8 @@ import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import type { AnyJson } from '@polkadot-cloud/react/types';
 import { useApi } from '../../Api';
-import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';
+import { useCreatePoolAccounts } from 'library/Hooks/useCreatePoolAccounts';
 
 export const BondedPoolsContext = createContext<BondedPoolsContextState>(
   defaultBondedPoolsContext
@@ -35,7 +35,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     activeEra,
     poolsConfig: { lastPoolId },
   } = useApi();
-  const { createAccounts } = usePoolsConfig();
+  const createPoolAccounts = useCreatePoolAccounts();
   const { getNominationsStatusFromTargets } = useStaking();
 
   // Store bonded pools.
@@ -135,7 +135,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     }
     return {
       id,
-      addresses: createAccounts(id),
+      addresses: createPoolAccounts(id),
       ...bondedPool,
     };
   };
@@ -192,7 +192,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const getPoolWithAddresses = (id: number, pool: BondedPool) => ({
     ...pool,
     id,
-    addresses: createAccounts(id),
+    addresses: createPoolAccounts(id),
   });
 
   const getBondedPool = (poolId: MaybePool) =>
