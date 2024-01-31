@@ -647,11 +647,9 @@ export class APIController {
       await this.disconnect();
     } else {
       // Update block number verification data.
-      this._blockNumberVerify.minBlockNumber = String(
-        new BigNumber(this._blockNumber).plus(
-          this.MIN_EXPECTED_BLOCKS_PER_VERIFY
-        )
-      ).toString();
+      this._blockNumberVerify.minBlockNumber = new BigNumber(this._blockNumber)
+        .plus(this.MIN_EXPECTED_BLOCKS_PER_VERIFY)
+        .toString();
     }
   };
 
