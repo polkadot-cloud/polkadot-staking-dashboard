@@ -72,7 +72,7 @@ export class BalancesController {
           locksResult,
           payeeResult,
           poolMembersResult,
-          claimPermissionResult,
+          claimPermissionsResult,
         ]): Promise<void> => {
           this.handleLedgerCallback(address, ledgerResult);
           this.handleAccountCallback(address, accountResult, locksResult);
@@ -82,7 +82,7 @@ export class BalancesController {
           await this.handlePoolMembershipCallback(
             address,
             poolMembersResult,
-            claimPermissionResult
+            claimPermissionsResult
           );
 
           // Send updated account state back to UI.
@@ -203,7 +203,7 @@ export class BalancesController {
   static handlePoolMembershipCallback = async (
     address: string,
     poolMembersResult: AnyApi,
-    claimPermissionResult: AnyApi
+    claimPermissionsResult: AnyApi
   ): Promise<void> => {
     // If pool membership is `null`, remove pool membership data from class data and exit early.
     // This skips claim permission data as well as user would not have claim permissions if they are
@@ -230,7 +230,8 @@ export class BalancesController {
         )
       )?.toString() || '0'
     );
-    const claimPermission = claimPermissionResult?.toString() || 'Permissioned';
+    const claimPermission =
+      claimPermissionsResult?.toString() || 'Permissioned';
 
     // Persist formatted pool membership data to class.
     this.poolMemberships[address] = {
