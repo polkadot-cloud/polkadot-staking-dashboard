@@ -27,6 +27,7 @@ import type { PoolAddresses } from '../BondedPools/types';
 import { SubscanController } from 'static/SubscanController';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import { useBalances } from 'contexts/Balances';
+import { useIdentities } from 'hooks/useIdentities';
 
 export const ActivePoolsContext = createContext<ActivePoolsContextState>(
   defaults.defaultActivePoolContext
@@ -39,6 +40,7 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   const { api, isReady } = useApi();
   const { eraStakers } = useStaking();
   const { pluginEnabled } = usePlugins();
+  const { fetchIdentities } = useIdentities();
   const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
   const createPoolAccounts = useCreatePoolAccounts();
@@ -171,7 +173,27 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
           const balance = accountData.data;
           bondedPool = bondedPool?.unwrapOr(undefined)?.toHuman();
           rewardPool = rewardPool?.unwrapOr(undefined)?.toHuman();
+
           if (rewardPool && bondedPool) {
+            // Fetch identities & super identities for roles and expand `bondedPool` state to store
+            // them.
+            const { roles } = bondedPool;
+            const roleAddresses: string[] = [];
+            if (roles.root) {
+              roleAddresses.push(roles.root);
+            }
+            if (roles.depositor) {
+              roleAddresses.push(roles.depositor);
+            }
+            if (roles.nominator) {
+              roleAddresses.push(roles.nominator);
+            }
+            if (roles.bouncer) {
+              roleAddresses.push(roles.bouncer);
+            }
+
+            bondedPool.roleIdentities = await fetchIdentities(roleAddresses);
+
             const rewardAccountBalance = balance?.free;
             const pendingRewards = await fetchPendingRewards();
             const pool = {

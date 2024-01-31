@@ -21,7 +21,7 @@ import type {
   Identity,
   Validator,
   ValidatorAddresses,
-  ValidatorSuper,
+  SuperIdentity,
   ValidatorListEntry,
   ValidatorsContextInterface,
   ValidatorEraPointHistory,
@@ -35,6 +35,7 @@ import {
 import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
 import type { ValidatorEntry } from '@polkadot-cloud/assets/types';
 import { useErasPerDay } from 'hooks/useErasPerDay';
+import { useIdentities } from 'hooks/useIdentities';
 
 export const ValidatorsContext = createContext<ValidatorsContextInterface>(
   defaultValidatorsContext
@@ -52,6 +53,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   } = useApi();
   const { activeEra } = useApi();
   const { stakers } = useStaking().eraStakers;
+  const { fetchIdentities } = useIdentities();
   const { poolNominations } = useActivePools();
   const { activeAccount } = useActiveAccounts();
   const { erasPerDay, maxSupportedDays } = useErasPerDay();
@@ -70,7 +72,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Store validator super identity data.
   const [validatorSupers, setValidatorSupers] = useState<
-    Record<string, ValidatorSuper>
+    Record<string, SuperIdentity>
   >({});
 
   // Stores the currently active validator set.
@@ -360,10 +362,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     setValidators(shuffle(validatorEntries));
 
     const addresses = validatorEntries.map(({ address }) => address);
-    const [identities, supers] = await Promise.all([
-      fetchValidatorIdentities(addresses),
-      fetchValidatorSupers(addresses),
-    ]);
+    const { identities, supers } = await fetchIdentities(addresses);
     setValidatorIdentities(identities);
     setValidatorSupers(supers);
     setValidatorsFetched('synced');
@@ -416,64 +415,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       });
     }
     return formatted;
-  };
-
-  // Fetches validator identities.
-  const fetchValidatorIdentities = async (addresses: string[]) => {
-    if (!api) {
-      return {};
-    }
-
-    const identities: AnyApi[] = (
-      await api.query.identity.identityOf.multi(addresses)
-    ).map((identity) => identity.toHuman());
-
-    return Object.fromEntries(
-      Object.entries(
-        Object.fromEntries(identities.map((k, i) => [addresses[i], k]))
-      ).filter(([, v]) => v !== null)
-    );
-  };
-
-  // Fetch validator super accounts and their identities.
-  const fetchValidatorSupers = async (addresses: string[]) => {
-    if (!api) {
-      return {};
-    }
-
-    const supersRaw: AnyApi[] = (
-      await api.query.identity.superOf.multi(addresses)
-    ).map((superOf) => superOf.toHuman());
-
-    const supers = Object.fromEntries(
-      Object.entries(
-        Object.fromEntries(
-          supersRaw.map((k, i) => [
-            addresses[i],
-            {
-              superOf: k,
-            },
-          ])
-        )
-      ).filter(([, { superOf }]) => superOf !== null)
-    );
-
-    const superIdentities = (
-      await api.query.identity.identityOf.multi(
-        Object.values(supers).map(({ superOf }) => superOf[0])
-      )
-    ).map((superIdentity) => superIdentity.toHuman());
-
-    const supersWithIdentity = Object.fromEntries(
-      Object.entries(supers).map(([k, v]: AnyApi, i) => [
-        k,
-        {
-          ...v,
-          identity: superIdentities[i],
-        },
-      ])
-    );
-    return supersWithIdentity;
   };
 
   // Gets era points for a validator

@@ -29,6 +29,7 @@ export const bondedPool: ActiveBondedPool = {
     root: '',
     bouncer: '',
   },
+  roleIdentities: { identities: {}, supers: {} },
 };
 
 export const rewardPool: RewardPool = {

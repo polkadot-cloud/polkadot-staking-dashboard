@@ -14,7 +14,6 @@ import { FiltersProvider } from 'contexts/Filters';
 import { LedgerHardwareProvider } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { VaultAccountsProvider } from 'contexts/Hardware/Vault/VaultAccounts';
 import { HelpProvider } from 'contexts/Help';
-import { IdentitiesProvider } from 'contexts/Identities';
 import { MenuProvider } from 'contexts/Menu';
 import { MigrateProvider } from 'contexts/Migrate';
 import { PromptProvider } from 'contexts/Prompt';
@@ -70,7 +69,6 @@ export const Providers = () => {
     ProxiesProvider,
     HelpProvider,
     PluginsProvider,
-    IdentitiesProvider,
     BondedProvider,
     BalancesProvider,
     StakingProvider,

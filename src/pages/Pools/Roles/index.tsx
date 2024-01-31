@@ -15,7 +15,6 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
-import { useIdentities } from 'contexts/Identities';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
@@ -27,10 +26,8 @@ import { RolesWrapper } from '../Home/ManagePool/Wrappers';
 import { PoolAccount } from '../PoolAccount';
 import { RoleEditInput } from './RoleEditInput';
 import type { RoleEditEntry, RolesProps } from './types';
-import type { MaybeAddress } from '@polkadot-cloud/react/types';
 
 export const Roles = ({
-  batchKey,
   defaultRoles,
   setters = [],
   inline = false,
@@ -44,7 +41,6 @@ export const Roles = ({
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
   const { isReadOnlyAccount } = useImportedAccounts();
-  const { fetchIdentitiesMetaBatch } = useIdentities();
   const { isOwner, selectedActivePool } = useActivePools();
   const { id } = selectedActivePool || { id: 0 };
   const roles = defaultRoles;
@@ -69,17 +65,11 @@ export const Roles = ({
   // store whether roles are being edited
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
-  // store role accounts
-  const [accounts, setAccounts] = useState<MaybeAddress[]>(
-    Object.values(roles)
-  );
-
   // is this the initial fetch
   const [fetched, setFetched] = useState<boolean>(false);
 
   // update default roles on account switch
   useEffect(() => {
-    setAccounts(Object.values(roles));
     setIsEditing(false);
     setRoleEdits(initialiseEdits);
     setFetched(false);
@@ -89,7 +79,6 @@ export const Roles = ({
   useEffect(() => {
     if (isReady && !fetched) {
       setFetched(true);
-      fetchIdentitiesMetaBatch(batchKey, Object.values(roles), true);
     }
   }, [isReady, fetched]);
 
@@ -201,8 +190,7 @@ export const Roles = ({
             <h4>{t('pools.depositor')}</h4>
             <PoolAccount
               address={roles.depositor ?? null}
-              batchIndex={accounts.indexOf(roles.depositor ?? '-1')}
-              batchKey={batchKey}
+              pool={selectedActivePool}
             />
           </div>
         </section>
@@ -218,8 +206,7 @@ export const Roles = ({
             ) : (
               <PoolAccount
                 address={roles.root ?? null}
-                batchIndex={accounts.indexOf(roles.root ?? '-1')}
-                batchKey={batchKey}
+                pool={selectedActivePool}
               />
             )}
           </div>
@@ -236,8 +223,7 @@ export const Roles = ({
             ) : (
               <PoolAccount
                 address={roles.nominator ?? null}
-                batchIndex={accounts.indexOf(roles.nominator ?? '-1')}
-                batchKey={batchKey}
+                pool={selectedActivePool}
               />
             )}
           </div>
@@ -254,8 +240,7 @@ export const Roles = ({
             ) : (
               <PoolAccount
                 address={roles.bouncer ?? null}
-                batchIndex={accounts.indexOf(roles.bouncer ?? '-1')}
-                batchKey={batchKey}
+                pool={selectedActivePool}
               />
             )}
           </div>
