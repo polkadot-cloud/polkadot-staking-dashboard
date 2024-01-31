@@ -25,7 +25,7 @@ import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import type { PoolMembership } from 'contexts/Pools/PoolMemberships/types';
+import type { PoolMembership } from 'contexts/Pools/types';
 import { usePrompt } from 'contexts/Prompt';
 import { Title } from 'library/Prompt/Title';
 import { useTranslation } from 'react-i18next';

@@ -22,7 +22,6 @@ import { PluginsProvider } from 'contexts/Plugins';
 import { ActivePoolsProvider } from 'contexts/Pools/ActivePools';
 import { BondedPoolsProvider } from 'contexts/Pools/BondedPools';
 import { PoolMembersProvider } from 'contexts/Pools/PoolMembers';
-import { PoolMembershipsProvider } from 'contexts/Pools/PoolMemberships';
 import { FavoritePoolsProvider } from 'contexts/Pools/FavoritePools';
 import { ProxiesProvider } from 'contexts/Proxies';
 import { SetupProvider } from 'contexts/Setup';
@@ -77,7 +76,6 @@ export const Providers = () => {
     StakingProvider,
     FavoritePoolsProvider,
     BondedPoolsProvider,
-    PoolMembershipsProvider,
     PoolMembersProvider,
     ActivePoolsProvider,
     TransferOptionsProvider,

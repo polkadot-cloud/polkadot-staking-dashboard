@@ -6,7 +6,6 @@ import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import type { MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
@@ -26,15 +25,15 @@ export const TransferOptionsProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const { consts, activeEra } = useApi();
-  const { membership } = usePoolMemberships();
-  const { activeAccount } = useActiveAccounts();
   const {
     network,
     networkData: { units, defaultFeeReserve },
   } = useNetwork();
-  const { getLedger, getBalance, getLocks } = useBalances();
+  const { consts, activeEra } = useApi();
+  const { activeAccount } = useActiveAccounts();
+  const { getLedger, getBalance, getLocks, getPoolMembership } = useBalances();
   const { existentialDeposit } = consts;
+  const membership = getPoolMembership(activeAccount);
 
   // A user-configurable reserve amount to be used to pay for transaction fees.
   const [feeReserve, setFeeReserve] = useState<BigNumber>(

@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 import { useMenu } from 'contexts/Menu';
 import type { NotificationText } from 'static/NotificationsController/types';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { usePoolCommission } from 'hooks/usePoolCommission';
@@ -34,6 +33,7 @@ import type { PoolProps } from './types';
 import { Rewards } from './Rewards';
 import { NotificationsController } from 'static/NotificationsController';
 import type { MenuItem } from 'contexts/Menu/types';
+import { useBalances } from 'contexts/Balances';
 
 export const Pool = ({ pool }: PoolProps) => {
   const { t } = useTranslation('library');
@@ -42,13 +42,14 @@ export const Pool = ({ pool }: PoolProps) => {
   const { validators } = useValidators();
   const { setActiveTab } = usePoolsTabs();
   const { openModal } = useOverlay().modal;
-  const { membership } = usePoolMemberships();
+  const { getPoolMembership } = useBalances();
   const { poolsNominations } = useBondedPools();
   const { activeAccount } = useActiveAccounts();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getCurrentCommission } = usePoolCommission();
   const { setMenuPosition, setMenuItems, open } = useMenu();
 
+  const membership = getPoolMembership(activeAccount);
   const currentCommission = getCurrentCommission(id);
 
   // get metadata from pools metabatch

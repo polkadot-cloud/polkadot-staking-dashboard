@@ -20,13 +20,13 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from '../../Api';
 import { useBondedPools } from '../BondedPools';
-import { usePoolMemberships } from '../PoolMemberships';
 import * as defaults from './defaults';
 import { usePoolMembers } from '../PoolMembers';
 import type { ActivePool, ActivePoolsContextState, PoolTargets } from './types';
 import type { PoolAddresses } from '../BondedPools/types';
 import { SubscanController } from 'static/SubscanController';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
+import { useBalances } from 'contexts/Balances';
 
 export const ActivePoolsContext = createContext<ActivePoolsContextState>(
   defaults.defaultActivePoolContext
@@ -39,11 +39,13 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   const { api, isReady } = useApi();
   const { eraStakers } = useStaking();
   const { pluginEnabled } = usePlugins();
-  const { membership } = usePoolMemberships();
+  const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
   const createPoolAccounts = useCreatePoolAccounts();
   const { getMembersOfPoolFromNode } = usePoolMembers();
   const { getAccountPools, bondedPools } = useBondedPools();
+
+  const membership = getPoolMembership(activeAccount);
 
   // Determine active pools to subscribe to.
   const accountPools = useMemo(() => {

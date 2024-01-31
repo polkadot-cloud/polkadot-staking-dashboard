@@ -6,12 +6,12 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useSetup } from 'contexts/Setup';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { usePoolsTabs } from '../context';
+import { useBalances } from 'contexts/Balances';
 
 export const useStatusButtons = () => {
   const { t } = useTranslation('pages');
@@ -22,12 +22,13 @@ export const useStatusButtons = () => {
   const { isOwner } = useActivePools();
   const { setActiveTab } = usePoolsTabs();
   const { bondedPools } = useBondedPools();
-  const { membership } = usePoolMemberships();
+  const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
   const { getTransferOptions } = useTransferOptions();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { setOnPoolSetup, getPoolSetupPercent } = useSetup();
 
+  const membership = getPoolMembership(activeAccount);
   const { active } = getTransferOptions(activeAccount).pool;
   const poolSetupPercent = getPoolSetupPercent(activeAccount);
 

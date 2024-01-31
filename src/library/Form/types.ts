@@ -8,6 +8,7 @@ import type {
   ExternalAccount,
 } from '@polkadot-cloud/react/types';
 import type { BondFor, MaybeAddress } from 'types';
+import type { ClaimPermission } from 'contexts/Pools/types';
 
 export interface ExtensionAccountItem extends ExtensionAccount {
   active?: boolean;
@@ -86,4 +87,11 @@ export interface NominateStatusBarProps {
 
 export interface WarningProps {
   text: string;
+}
+
+// PoolMembers types
+export interface ClaimPermissionConfig {
+  label: string;
+  value: ClaimPermission;
+  description: string;
 }

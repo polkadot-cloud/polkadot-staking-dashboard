@@ -17,5 +17,6 @@ export const defaultBalancesContext: BalancesContextInterface = {
   getBalance: (address) => defaultBalance,
   getLedger: (source) => defaultLedger,
   getPayee: (address) => defaultPayee,
+  getPoolMembership: (address) => null,
   balancesInitialSynced: false,
 };

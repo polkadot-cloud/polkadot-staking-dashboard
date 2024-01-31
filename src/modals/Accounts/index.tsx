@@ -17,7 +17,6 @@ import {
   useEffectIgnoreInitial,
   useOverlay,
 } from '@polkadot-cloud/react/hooks';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useProxies } from 'contexts/Proxies';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -45,7 +44,6 @@ export const Accounts = () => {
   const { getDelegates } = useProxies();
   const { bondedAccounts } = useBonded();
   const { extensionsStatus } = useExtensions();
-  const { memberships } = usePoolMemberships();
   const {
     replaceModal,
     status: modalStatus,
@@ -61,9 +59,10 @@ export const Accounts = () => {
     useState<ImportedAccount[]>(accounts);
 
   // Listen to balance updates for entire accounts list.
-  const { getLocks, getBalance, getEdReserved } = useActiveBalances({
-    accounts: localAccounts.map(({ address }) => address),
-  });
+  const { getLocks, getBalance, getEdReserved, getPoolMembership } =
+    useActiveBalances({
+      accounts: localAccounts.map(({ address }) => address),
+    });
 
   // Calculate transferrable balance of an address.
   const getTransferrableBalance = (address: MaybeAddress) => {
@@ -111,7 +110,7 @@ export const Accounts = () => {
       }));
     }
 
-    const poolMember = memberships.find((m) => m.address === address) ?? null;
+    const poolMember = getPoolMembership(address);
 
     // Check if nominating.
     if (

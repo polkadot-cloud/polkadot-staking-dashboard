@@ -6,19 +6,23 @@ import { ButtonOption, ModalPadding, Polkicon } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Title } from 'library/Modal/Title';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { ContentWrapper } from './Wrappers';
+import { useBalances } from 'contexts/Balances';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const AccountPoolRoles = () => {
   const { t } = useTranslation('modals');
-  const { options } = useOverlay().modal.config;
+  const { getPoolMembership } = useBalances();
   const { getAccountPools } = useBondedPools();
-  const { membership } = usePoolMemberships();
+  const { options } = useOverlay().modal.config;
+  const { activeAccount } = useActiveAccounts();
+
   const { who } = options;
   const accountPools = getAccountPools(who);
+  const membership = getPoolMembership(activeAccount);
   const totalAccountPools = Object.entries(accountPools).length;
   const { label } = useStatusButtons();
 
