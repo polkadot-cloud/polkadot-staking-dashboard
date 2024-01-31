@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { useIdentities } from 'contexts/Identities';
 import type { NotificationText } from 'static/NotificationsController/types';
 import { Polkicon } from '@polkadot-cloud/react';
 import { getIdentityDisplay } from 'library/ValidatorList/ValidatorItem/Utils';
@@ -14,25 +13,17 @@ import type { PoolAccountProps } from '../types';
 import { Wrapper } from './Wrapper';
 import { NotificationsController } from 'static/NotificationsController';
 
-export const PoolAccount = ({
-  address,
-  batchKey,
-  batchIndex,
-}: PoolAccountProps) => {
+export const PoolAccount = ({ address, pool }: PoolAccountProps) => {
   const { t } = useTranslation('pages');
-  const { meta } = useIdentities();
 
-  const identities = meta[batchKey]?.identities || [];
-  const supers = meta[batchKey]?.supers || [];
+  const roleIdentities = pool?.bondedPool?.roleIdentities;
+  const identities = roleIdentities?.identities || [];
+  const supers = roleIdentities?.supers || [];
+  const synced = roleIdentities !== undefined;
 
-  const identitiesSynced = identities.length > 0 || false;
-  const supersSynced = supers.length > 0 || false;
-  const synced = identitiesSynced && supersSynced;
-
-  const display = getIdentityDisplay(
-    identities[batchIndex],
-    supers[batchIndex]
-  );
+  const display = address
+    ? getIdentityDisplay(identities[address], supers[address])
+    : null;
 
   let notification: NotificationText | null = null;
   if (address !== null) {

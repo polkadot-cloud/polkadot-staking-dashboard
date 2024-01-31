@@ -114,10 +114,7 @@ export const HomeInner = () => {
               <ManagePool />
               <PageRow>
                 <CardWrapper>
-                  <Roles
-                    batchKey="pool_roles_manage"
-                    defaultRoles={getPoolRoles()}
-                  />
+                  <Roles defaultRoles={getPoolRoles()} />
                 </CardWrapper>
               </PageRow>
               <PageRow>

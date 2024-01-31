@@ -81,7 +81,6 @@ export const PoolRoles = ({ section }: SetupStepProps) => {
         </h4>
         <Roles
           inline
-          batchKey="pool_roles_create"
           listenIsValid={setRolesValid}
           defaultRoles={initialValue}
           setters={[

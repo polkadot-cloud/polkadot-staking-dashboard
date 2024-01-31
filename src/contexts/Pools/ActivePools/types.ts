@@ -40,6 +40,7 @@ export interface ActiveBondedPool {
   points: string;
   memberCounter: string;
   roles: PoolRoles;
+  roleIdentities: AnyJson;
   state: PoolState;
 }
 

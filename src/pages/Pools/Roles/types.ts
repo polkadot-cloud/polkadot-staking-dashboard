@@ -5,7 +5,6 @@ import type { PoolRoles } from 'contexts/Pools/ActivePools/types';
 import type { AnyFunction } from 'types';
 
 export interface RolesProps {
-  batchKey: string;
   defaultRoles: PoolRoles;
   listenIsValid?: AnyFunction;
   setters?: AnyFunction;

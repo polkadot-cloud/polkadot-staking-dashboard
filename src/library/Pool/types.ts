@@ -3,7 +3,7 @@
 
 import type { PoolRoles, PoolState } from 'contexts/Pools/ActivePools/types';
 import type { PoolAddresses } from 'contexts/Pools/BondedPools/types';
-import type { DisplayFor } from 'types';
+import type { AnyJson, DisplayFor } from 'types';
 
 export interface PoolProps {
   pool: Pool;
@@ -16,6 +16,7 @@ export interface Pool {
   id: number;
   state: PoolState;
   roles: PoolRoles;
+  roleIdentities: AnyJson;
 }
 
 export interface RewardProps {
