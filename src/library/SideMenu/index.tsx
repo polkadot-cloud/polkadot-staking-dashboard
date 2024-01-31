@@ -20,13 +20,13 @@ import LanguageSVG from 'img/language.svg?react';
 import LogoGithubSVG from 'img/logo-github.svg?react';
 import MoonOutlineSVG from 'img/moon-outline.svg?react';
 import SunnyOutlineSVG from 'img/sunny-outline.svg?react';
-import { useOutsideAlerter } from 'library/Hooks';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { Heading } from './Heading/Heading';
 import { Main } from './Main';
 import { Secondary } from './Secondary';
 import { ConnectionSymbol, Separator, Wrapper } from './Wrapper';
+import { useOutsideAlerter } from 'hooks/useOutsideAlerter';
 
 export const SideMenu = () => {
   const { t } = useTranslation('base');

@@ -8,7 +8,7 @@ import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { StatsHead } from 'library/StatsHead';
 import { Announcements } from './Announcements';
 import { Wrapper } from './Wrappers';
-import { useAverageRewardRate } from 'library/Hooks/useAverageRewardRate';
+import { useAverageRewardRate } from 'hooks/useAverageRewardRate';
 import { useApi } from 'contexts/Api';
 
 export const NetworkStats = () => {

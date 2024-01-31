@@ -8,7 +8,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
-import { useNominationStatus } from 'library/Hooks/useNominationStatus';
+import { useNominationStatus } from 'hooks/useNominationStatus';
 import { Stat } from 'library/Stat';
 
 export const PoolStatus = () => {

@@ -26,7 +26,7 @@ import { usePoolMembers } from '../PoolMembers';
 import type { ActivePool, ActivePoolsContextState, PoolTargets } from './types';
 import type { PoolAddresses } from '../BondedPools/types';
 import { SubscanController } from 'static/SubscanController';
-import { useCreatePoolAccounts } from 'library/Hooks/useCreatePoolAccounts';
+import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 
 export const ActivePoolsContext = createContext<ActivePoolsContextState>(
   defaults.defaultActivePoolContext

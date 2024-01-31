@@ -11,7 +11,7 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
-import { useUnstaking } from 'library/Hooks/useUnstaking';
+import { useUnstaking } from 'hooks/useUnstaking';
 import { ValidatorList } from 'library/ValidatorList';
 import type { MaybeAddress } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';

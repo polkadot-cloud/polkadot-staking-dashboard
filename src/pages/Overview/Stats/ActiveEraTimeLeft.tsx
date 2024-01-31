@@ -5,9 +5,9 @@ import BigNumber from 'bignumber.js';
 import { fromUnixTime } from 'date-fns';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useEraTimeLeft } from 'library/Hooks/useEraTimeLeft';
-import { useTimeLeft } from 'library/Hooks/useTimeLeft';
-import { fromNow } from 'library/Hooks/useTimeLeft/utils';
+import { useEraTimeLeft } from 'hooks/useEraTimeLeft';
+import { useTimeLeft } from 'hooks/useTimeLeft';
+import { fromNow } from 'hooks/useTimeLeft/utils';
 import { Timeleft } from 'library/StatBoxList/Timeleft';
 import { useApi } from 'contexts/Api';
 

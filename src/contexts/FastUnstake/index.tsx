@@ -15,7 +15,7 @@ import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, MaybeAddress } from 'types';
 import Worker from 'workers/stakers?worker';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
-import { useNominationStatus } from 'library/Hooks/useNominationStatus';
+import { useNominationStatus } from 'hooks/useNominationStatus';
 import { validateLocalExposure } from 'contexts/Validators/Utils';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';

@@ -20,7 +20,7 @@ import type {
   ExternalItems,
   HelpItem,
 } from 'contexts/Help/types';
-import { useFillVariables } from 'library/Hooks/useFillVariables';
+import { useFillVariables } from 'hooks/useFillVariables';
 import { Definition } from './Items/Definition';
 import { External } from './Items/External';
 import { ActiveDefinition } from './Items/ActiveDefinition';

@@ -14,7 +14,7 @@ import { useHelp } from 'contexts/Help';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
-import { useUnstaking } from 'library/Hooks/useUnstaking';
+import { useUnstaking } from 'hooks/useUnstaking';
 import { StatBoxList } from 'library/StatBoxList';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';

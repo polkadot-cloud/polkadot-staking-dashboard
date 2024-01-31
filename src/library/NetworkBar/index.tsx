@@ -6,7 +6,7 @@ import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { usePlugins } from 'contexts/Plugins';
-import { usePrices } from 'library/Hooks/usePrices';
+import { usePrices } from 'hooks/usePrices';
 import { useNetwork } from 'contexts/Network';
 import { Status } from './Status';
 import { Summary, Wrapper } from './Wrappers';

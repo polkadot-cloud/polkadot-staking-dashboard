@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useFilters } from 'contexts/Filters';
 import { Container } from 'library/Filter/Container';
 import { Item } from 'library/Filter/Item';
-import { useValidatorFilters } from 'library/Hooks/useValidatorFilters';
+import { useValidatorFilters } from 'hooks/useValidatorFilters';
 
 export const FilterBadges = () => {
   const { t } = useTranslation('library');

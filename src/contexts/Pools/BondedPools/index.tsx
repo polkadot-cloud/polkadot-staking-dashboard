@@ -19,7 +19,7 @@ import { useNetwork } from 'contexts/Network';
 import type { AnyJson } from '@polkadot-cloud/react/types';
 import { useApi } from '../../Api';
 import { defaultBondedPoolsContext } from './defaults';
-import { useCreatePoolAccounts } from 'library/Hooks/useCreatePoolAccounts';
+import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 
 export const BondedPoolsContext = createContext<BondedPoolsContextState>(
   defaultBondedPoolsContext

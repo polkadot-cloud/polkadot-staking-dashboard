@@ -10,7 +10,7 @@ import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { GeoDonut } from 'library/Graphs/GeoDonut';
 import { formatSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
-import { useSize } from 'library/Hooks/useSize';
+import { useSize } from 'hooks/useSize';
 import { Title } from 'library/Modal/Title';
 import { StatusLabel } from 'library/StatusLabel';
 import { PolkawatchApi, type ValidatorDetail } from '@polkawatch/ddp-client';

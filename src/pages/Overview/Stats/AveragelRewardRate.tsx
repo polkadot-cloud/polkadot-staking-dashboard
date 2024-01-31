@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Text } from 'library/StatBoxList/Text';
-import { useAverageRewardRate } from 'library/Hooks/useAverageRewardRate';
+import { useAverageRewardRate } from 'hooks/useAverageRewardRate';
 import { useTranslation } from 'react-i18next';
 
 export const AverageRewardRateStat = () => {

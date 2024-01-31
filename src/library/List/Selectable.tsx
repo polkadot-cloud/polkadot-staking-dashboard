@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useTranslation } from 'react-i18next';
-import { useUnstaking } from 'library/Hooks/useUnstaking';
+import { useUnstaking } from 'hooks/useUnstaking';
 import { ButtonMonoInvert } from '@polkadot-cloud/react';
 import { SelectableWrapper } from '.';
 import { useList } from './context';
