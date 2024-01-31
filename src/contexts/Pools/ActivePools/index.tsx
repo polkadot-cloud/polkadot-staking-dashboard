@@ -42,8 +42,8 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   const { membership } = usePoolMemberships();
   const { createAccounts } = usePoolsConfig();
   const { activeAccount } = useActiveAccounts();
+  const { getMembersOfPoolFromNode } = usePoolMembers();
   const { getAccountPools, bondedPools } = useBondedPools();
-  const { getMembersOfPoolFromNode, poolMembersNode } = usePoolMembers();
 
   // Determine active pools to subscribe to.
   const accountPools = useMemo(() => {
@@ -80,7 +80,7 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   const [selectedPoolMemberCount, setSelectedPoolMemberCount] =
     useState<number>(0);
 
-  const fetchingMemberCount = useRef<boolean>(false);
+  const fetchingMemberCount = useRef<Sync>('unsynced');
 
   // Store whether active pool data has been synced. this will be true if no active pool exists for
   // the active account. We just need confirmation this is the case.
@@ -91,8 +91,8 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   // present).
   const [selectedPoolId, setSelectedPoolId] = useState<string | null>(null);
 
+  // Get the `activePool` of the active account.
   const getActivePoolMembership = () =>
-    // get the activePool that the active account
     activePoolsRef.current.find((a) => {
       const p = membership?.poolId ? String(membership.poolId) : '0';
       return String(a.id) === p;
@@ -491,12 +491,15 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
     // If `Subscan` plugin is enabled, fetch member count directly from the API.
-    if (pluginEnabled('subscan') && !fetchingMemberCount.current) {
-      fetchingMemberCount.current = true;
+    if (
+      pluginEnabled('subscan') &&
+      fetchingMemberCount.current === 'unsynced'
+    ) {
+      fetchingMemberCount.current = 'syncing';
       const poolDetails = await SubscanController.handleFetchPoolDetails(
         selectedActivePool.id
       );
-      fetchingMemberCount.current = false;
+      fetchingMemberCount.current = 'synced';
       setSelectedPoolMemberCount(poolDetails?.member_count || 0);
       return;
     }
@@ -507,16 +510,15 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
-  // Re-sync when number of accountRoles change. This can happen when bondedPools sync, when roles
-  // are edited within the dashboard, or when pool membership changes.
+  // Re-sync when number of `accountRoles` change. This can happen when `bondedPools` sync, when
+  // roles are edited within the dashboard, or when pool membership changes.
   useEffectIgnoreInitial(() => {
     unsubscribeActivePools();
     unsubscribePoolNominations();
     setStateWithRef('unsynced', setSynced, syncedRef);
   }, [activeAccount, accountPools.length]);
 
-  // when we are subscribed to all active pools, syncing is considered
-  // completed.
+  // When we are subscribed to all active pools, syncing is considered completed.
   useEffectIgnoreInitial(() => {
     if (unsubNominations.current.length === accountPools.length) {
       setStateWithRef('synced', setSynced, syncedRef);
@@ -524,10 +526,13 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   }, [accountPools, unsubNominations.current]);
 
   // Fetch pool member count. We use `membership` as a dependency as the member count could change
-  // in the UI when active account's membership changes.
+  // in the UI when active account's membership changes. NOTE: Do not have `poolMembersNode` as a
+  // dependency - could trigger many re-renders if value is constantly changing - more suited as a
+  // custom event.
   useEffect(() => {
+    fetchingMemberCount.current = 'unsynced';
     getMemberCount();
-  }, [activeAccount, getSelectedActivePool(), membership, poolMembersNode]);
+  }, [activeAccount, getSelectedActivePool()?.id, membership?.poolId]);
 
   // unsubscribe all on component unmount.
   useEffect(
