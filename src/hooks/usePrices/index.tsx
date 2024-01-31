@@ -3,7 +3,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { usePlugins } from 'contexts/Plugins';
-import { useUnitPrice } from 'library/Hooks/useUnitPrice';
+import { useUnitPrice } from 'hooks/useUnitPrice';
 import { useNetwork } from 'contexts/Network';
 import type { AnyJson } from 'types';
 

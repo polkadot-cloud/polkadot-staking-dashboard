@@ -31,7 +31,7 @@ import type {
   AccountNotStaking,
 } from './types';
 import type { ImportedAccount } from '@polkadot-cloud/react/types';
-import { useActiveBalances } from 'library/Hooks/useActiveBalances';
+import { useActiveBalances } from 'hooks/useActiveBalances';
 import type { MaybeAddress } from 'types';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import BigNumber from 'bignumber.js';

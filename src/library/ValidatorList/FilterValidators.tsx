@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Title } from 'library/Prompt/Title';
 import { FilterListButton, FilterListWrapper } from 'library/Prompt/Wrappers';
 import { useFilters } from 'contexts/Filters';
-import { useValidatorFilters } from '../Hooks/useValidatorFilters';
+import { useValidatorFilters } from '../../hooks/useValidatorFilters';
 
 export const FilterValidators = () => {
   const { t } = useTranslation('library');

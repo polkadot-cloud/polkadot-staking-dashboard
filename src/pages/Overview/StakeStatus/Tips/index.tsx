@@ -12,7 +12,7 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
-import { useFillVariables } from 'library/Hooks/useFillVariables';
+import { useFillVariables } from 'hooks/useFillVariables';
 import type { AnyJson } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';

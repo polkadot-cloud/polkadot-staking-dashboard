@@ -45,7 +45,7 @@ import { DappName } from 'consts';
 import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts';
 import { PoolPerformanceProvider } from 'contexts/Pools/PoolPerformance';
 import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts';
-import { withProviders } from 'library/Hooks/withProviders';
+import { withProviders } from 'hooks/withProviders';
 
 export const Providers = () => {
   const {

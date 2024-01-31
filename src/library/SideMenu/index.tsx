@@ -26,7 +26,7 @@ import { Heading } from './Heading/Heading';
 import { Main } from './Main';
 import { Secondary } from './Secondary';
 import { ConnectionSymbol, Separator, Wrapper } from './Wrapper';
-import { useOutsideAlerter } from 'library/Hooks/useOutsideAlerter';
+import { useOutsideAlerter } from 'hooks/useOutsideAlerter';
 
 export const SideMenu = () => {
   const { t } = useTranslation('base');

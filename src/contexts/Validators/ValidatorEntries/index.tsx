@@ -34,7 +34,7 @@ import {
 } from './defaults';
 import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
 import type { ValidatorEntry } from '@polkadot-cloud/assets/types';
-import { useErasPerDay } from 'library/Hooks/useErasPerDay';
+import { useErasPerDay } from 'hooks/useErasPerDay';
 
 export const ValidatorsContext = createContext<ValidatorsContextInterface>(
   defaultValidatorsContext

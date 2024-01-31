@@ -11,7 +11,7 @@ import { useEventListener } from 'usehooks-ts';
 import { isCustomEvent } from 'static/utils';
 import { BalancesController } from 'static/BalancesController';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useActiveBalances } from 'library/Hooks/useActiveBalances';
+import { useActiveBalances } from 'hooks/useActiveBalances';
 import { useBonded } from 'contexts/Bonded';
 
 export const BalancesContext = createContext<BalancesContextInterface>(

@@ -4,7 +4,7 @@
 import { useApi } from 'contexts/Api';
 import type { AnyApi, MaybeAddress } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useProxySupported } from '../useProxySupported';
+import { useProxySupported } from 'hooks/useProxySupported';
 
 export const useBatchCall = () => {
   const { api } = useApi();

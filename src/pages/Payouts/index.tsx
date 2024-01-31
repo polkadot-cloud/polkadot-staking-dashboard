@@ -14,14 +14,14 @@ import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
 import { formatSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
-import { useSize } from 'library/Hooks/useSize';
+import { useSize } from 'hooks/useSize';
 import { StatBoxList } from 'library/StatBoxList';
 import { StatusLabel } from 'library/StatusLabel';
 import type { AnySubscan, PageProps } from 'types';
 import { PluginLabel } from 'library/PluginLabel';
 import { PayoutList } from './PayoutList';
 import { LastEraPayoutStat } from './Stats/LastEraPayout';
-import { useSubscanData } from 'library/Hooks/useSubscanData';
+import { useSubscanData } from 'hooks/useSubscanData';
 import { SubscanController } from 'static/SubscanController';
 import { locales } from 'locale';
 

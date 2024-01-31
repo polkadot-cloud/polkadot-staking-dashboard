@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useTranslation } from 'react-i18next';
-import { useDotLottieButton } from 'library/Hooks/useDotLottieButton';
+import { useDotLottieButton } from 'hooks/useDotLottieButton';
 import { ItemInnerWrapper, ItemWrapper, ItemsWrapper } from './Wrappers';
 
 export const Syncing = () => {

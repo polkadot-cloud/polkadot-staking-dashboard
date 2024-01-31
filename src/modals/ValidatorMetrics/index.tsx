@@ -12,7 +12,7 @@ import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { EraPoints as EraPointsGraph } from 'library/Graphs/EraPoints';
 import { formatSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
-import { useSize } from 'library/Hooks/useSize';
+import { useSize } from 'hooks/useSize';
 import { Title } from 'library/Modal/Title';
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { StatusLabel } from 'library/StatusLabel';

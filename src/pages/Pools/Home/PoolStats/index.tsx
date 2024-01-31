@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
-import { usePoolCommission } from 'library/Hooks/usePoolCommission';
+import { usePoolCommission } from 'hooks/usePoolCommission';
 import { StatsHead } from 'library/StatsHead';
 import { useNetwork } from 'contexts/Network';
 import { Announcements } from './Announcements';

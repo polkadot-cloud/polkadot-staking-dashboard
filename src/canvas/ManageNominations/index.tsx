@@ -15,7 +15,7 @@ import { useApi } from 'contexts/Api';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { usePrompt } from 'contexts/Prompt';
 import { useHelp } from 'contexts/Help';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBonded } from 'contexts/Bonded';
 import { useActivePools } from 'contexts/Pools/ActivePools';

@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 import { useMenu } from 'contexts/Menu';
 import { ItemWrapper, Wrapper } from './Wrappers';
 import type { AnyJson } from 'types';
-import { useOutsideAlerter } from 'library/Hooks/useOutsideAlerter';
+import { useOutsideAlerter } from 'hooks/useOutsideAlerter';
 
 export const Menu = () => {
   const menu = useMenu();

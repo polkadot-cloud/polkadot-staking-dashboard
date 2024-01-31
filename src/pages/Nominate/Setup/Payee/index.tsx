@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useSetup } from 'contexts/Setup';
 import type { PayeeOptions } from 'contexts/Setup/types';
 import { Spacer } from 'library/Form/Wrappers';
-import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
+import { usePayeeConfig } from 'hooks/usePayeeConfig';
 import { PayeeInput } from 'library/PayeeInput';
 import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';

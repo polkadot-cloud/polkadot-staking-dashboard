@@ -15,7 +15,7 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { Tabs } from 'library/Filter/Tabs';
-import { usePoolFilters } from 'library/Hooks/usePoolFilters';
+import { usePoolFilters } from 'hooks/usePoolFilters';
 import {
   FilterHeaderWrapper,
   List,
