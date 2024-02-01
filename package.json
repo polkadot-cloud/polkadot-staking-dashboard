@@ -59,7 +59,7 @@
     "react-router-dom": "^6.21.3",
     "react-scroll": "^1.9.0",
     "styled-components": "^6.1.8",
-    "usehooks-ts": "2.11.0"
+    "usehooks-ts": "2.12.1"
   },
   "devDependencies": {
     "@ledgerhq/logs": "^6.12.0",
