@@ -61,6 +61,8 @@ export interface PoolUnlocking {
   value: BigNumber;
 }
 
+export type PoolRole = 'depositor' | 'nominator' | 'root' | 'bouncer';
+
 export interface PoolRoles {
   depositor?: MaybeAddress;
   nominator?: MaybeAddress;

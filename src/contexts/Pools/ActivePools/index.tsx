@@ -22,7 +22,7 @@ import { useApi } from '../../Api';
 import { useBondedPools } from '../BondedPools';
 import * as defaults from './defaults';
 import { usePoolMembers } from '../PoolMembers';
-import type { ActivePool, ActivePoolsContextState } from './types';
+import type { ActivePool, ActivePoolsContextState, PoolRole } from './types';
 import type { PoolAddresses } from '../BondedPools/types';
 import { SubscanController } from 'static/SubscanController';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
@@ -170,20 +170,12 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
           if (rewardPool && bondedPool) {
             // Fetch identities & super identities for roles and expand `bondedPool` state to store
             // them.
-            const { roles } = bondedPool;
-            const roleAddresses: string[] = [];
-            if (roles.root) {
-              roleAddresses.push(roles.root);
-            }
-            if (roles.depositor) {
-              roleAddresses.push(roles.depositor);
-            }
-            if (roles.nominator) {
-              roleAddresses.push(roles.nominator);
-            }
-            if (roles.bouncer) {
-              roleAddresses.push(roles.bouncer);
-            }
+            const { roles }: { roles: Record<PoolRole, string> } = bondedPool;
+            const roleAddresses: string[] = [
+              ...new Set(
+                Object.values(roles).filter((role) => role !== undefined)
+              ),
+            ];
 
             bondedPool.roleIdentities =
               await IdentitiesController.fetch(roleAddresses);
