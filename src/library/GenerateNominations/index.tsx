@@ -85,7 +85,7 @@ export const GenerateNominations = ({
         setMethod('manual');
       }
     }
-  }, [activeAccount, defaultNominations]);
+  }, [activeAccount]);
 
   // refetch if fetching is triggered
   useEffect(() => {
@@ -286,6 +286,7 @@ export const GenerateNominations = ({
   const ButtonType =
     displayFor === 'canvas' ? ButtonPrimaryInvert : ButtonMonoInvert;
 
+  console.log(method);
   return (
     <>
       {method && (
