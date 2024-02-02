@@ -27,7 +27,7 @@ import type { PoolAddresses } from '../BondedPools/types';
 import { SubscanController } from 'static/SubscanController';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import { useBalances } from 'contexts/Balances';
-import { useIdentities } from 'hooks/useIdentities';
+import { IdentitiesController } from 'static/IdentitiesController';
 
 export const ActivePoolsContext = createContext<ActivePoolsContextState>(
   defaults.defaultActivePoolContext
@@ -40,7 +40,6 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   const { api, isReady } = useApi();
   const { eraStakers } = useStaking();
   const { pluginEnabled } = usePlugins();
-  const { fetchIdentities } = useIdentities();
   const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
   const createPoolAccounts = useCreatePoolAccounts();
@@ -185,7 +184,8 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
               roleAddresses.push(roles.bouncer);
             }
 
-            bondedPool.roleIdentities = await fetchIdentities(roleAddresses);
+            bondedPool.roleIdentities =
+              await IdentitiesController.fetch(roleAddresses);
 
             const rewardAccountBalance = balance?.free.toString();
             const pendingRewards = await fetchPendingRewards();

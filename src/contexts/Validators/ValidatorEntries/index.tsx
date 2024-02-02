@@ -35,7 +35,7 @@ import {
 import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
 import type { ValidatorEntry } from '@polkadot-cloud/assets/types';
 import { useErasPerDay } from 'hooks/useErasPerDay';
-import { useIdentities } from 'hooks/useIdentities';
+import { IdentitiesController } from 'static/IdentitiesController';
 
 export const ValidatorsContext = createContext<ValidatorsContextInterface>(
   defaultValidatorsContext
@@ -53,7 +53,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   } = useApi();
   const { activeEra } = useApi();
   const { stakers } = useStaking().eraStakers;
-  const { fetchIdentities } = useIdentities();
   const { poolNominations } = useActivePools();
   const { activeAccount } = useActiveAccounts();
   const { erasPerDay, maxSupportedDays } = useErasPerDay();
@@ -358,11 +357,12 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       avg
     );
     setAvgCommission(avg);
-    // Validators are shuffled before committed to state.
+    // NOTE: validators are shuffled before committed to state.
     setValidators(shuffle(validatorEntries));
 
     const addresses = validatorEntries.map(({ address }) => address);
-    const { identities, supers } = await fetchIdentities(addresses);
+    const { identities, supers } = await IdentitiesController.fetch(addresses);
+
     setValidatorIdentities(identities);
     setValidatorSupers(supers);
     setValidatorsFetched('synced');
