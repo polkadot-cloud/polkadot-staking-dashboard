@@ -7,8 +7,8 @@ import { useApi } from 'contexts/Api';
 export const useIdentities = () => {
   const { api } = useApi();
 
-  // Fetches validator identities.
-  const fetchValidatorIdentities = async (addresses: string[]) => {
+  // Fetches identities for addresses.
+  const fetchBaseIdentities = async (addresses: string[]) => {
     if (!api) {
       return {};
     }
@@ -22,7 +22,7 @@ export const useIdentities = () => {
   };
 
   // Fetch an array of super accounts and their identities.
-  const fetchValidatorSupers = async (addresses: string[]) => {
+  const fetchSupers = async (addresses: string[]) => {
     if (!api) {
       return {};
     }
@@ -63,8 +63,8 @@ export const useIdentities = () => {
   // Fetches both identities and super identities from an array of addresses.
   const fetchIdentities = async (addresses: string[]) => {
     const [identities, supers] = await Promise.all([
-      fetchValidatorIdentities(addresses),
-      fetchValidatorSupers(addresses),
+      fetchBaseIdentities(addresses),
+      fetchSupers(addresses),
     ]);
 
     return { identities, supers };
