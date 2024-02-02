@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { VoidFn } from '@polkadot/api/types';
+import BigNumber from 'bignumber.js';
 import { APIController } from 'static/APIController';
 import type { AnyApi } from 'types';
 
@@ -94,5 +95,21 @@ export class ActivePoolsController {
     });
     this.pools = [];
     this._unsubs = {};
+  };
+
+  // ------------------------------------------------------
+  // Class helpers.
+  // ------------------------------------------------------
+
+  // Fetch and update unclaimed pool rewards for an address from runtime call.
+  static fetchPendingRewards = async (address: string | undefined) => {
+    if (address) {
+      const { api } = APIController;
+      const pendingRewards =
+        await api.call.nominationPoolsApi.pendingRewards(address);
+
+      return new BigNumber(pendingRewards?.toString() || 0);
+    }
+    return new BigNumber(0);
   };
 }

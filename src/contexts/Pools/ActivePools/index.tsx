@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@polkadot-cloud/utils';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import {
   createContext,
@@ -28,7 +28,7 @@ import { SubscanController } from 'static/SubscanController';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import { useBalances } from 'contexts/Balances';
 import { IdentitiesController } from 'static/IdentitiesController';
-import type { MaybeAddress } from '@polkadot-cloud/react/types';
+import { ActivePoolsController } from 'static/ActivePoolsController';
 
 export const ActivePoolsContext = createContext<ActivePoolsContextState>(
   defaults.defaultActivePoolContext
@@ -189,9 +189,10 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
               await IdentitiesController.fetch(roleAddresses);
 
             const rewardAccountBalance = balance?.free.toString();
-            const pendingRewards = await fetchPendingRewards(
-              membership?.address || null
-            );
+            const pendingRewards =
+              await ActivePoolsController.fetchPendingRewards(
+                membership?.address
+              );
             const pool = {
               id,
               addresses,
@@ -418,21 +419,10 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
     return membership?.unlocking || [];
   };
 
-  // Fetch and update unclaimed rewards from runtime call.
-  const fetchPendingRewards = async (address: MaybeAddress) => {
-    if (address && api) {
-      const pendingRewards =
-        await api.call.nominationPoolsApi.pendingRewards(address);
-
-      return new BigNumber(pendingRewards?.toString() || 0);
-    }
-    return new BigNumber(0);
-  };
-
   // Fetch and update pending rewards when membership changes.
   const updatePendingRewards = async () => {
-    const pendingRewards = await fetchPendingRewards(
-      membership?.address || null
+    const pendingRewards = await ActivePoolsController.fetchPendingRewards(
+      membership?.address
     );
 
     updateActivePoolPendingRewards(
