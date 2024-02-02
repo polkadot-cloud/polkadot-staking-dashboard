@@ -28,6 +28,7 @@ import { SubscanController } from 'static/SubscanController';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import { useBalances } from 'contexts/Balances';
 import { IdentitiesController } from 'static/IdentitiesController';
+import type { MaybeAddress } from '@polkadot-cloud/react/types';
 
 export const ActivePoolsContext = createContext<ActivePoolsContextState>(
   defaults.defaultActivePoolContext
@@ -188,7 +189,9 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
               await IdentitiesController.fetch(roleAddresses);
 
             const rewardAccountBalance = balance?.free.toString();
-            const pendingRewards = await fetchPendingRewards();
+            const pendingRewards = await fetchPendingRewards(
+              membership?.address || null
+            );
             const pool = {
               id,
               addresses,
@@ -416,11 +419,11 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // Fetch and update unclaimed rewards from runtime call.
-  const fetchPendingRewards = async () => {
-    if (getActivePoolMembership() && membership && api && isReady) {
-      const pendingRewards = await api.call.nominationPoolsApi.pendingRewards(
-        membership?.address || ''
-      );
+  const fetchPendingRewards = async (address: MaybeAddress) => {
+    if (address && api) {
+      const pendingRewards =
+        await api.call.nominationPoolsApi.pendingRewards(address);
+
       return new BigNumber(pendingRewards?.toString() || 0);
     }
     return new BigNumber(0);
@@ -428,7 +431,9 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch and update pending rewards when membership changes.
   const updatePendingRewards = async () => {
-    const pendingRewards = await fetchPendingRewards();
+    const pendingRewards = await fetchPendingRewards(
+      membership?.address || null
+    );
 
     updateActivePoolPendingRewards(
       pendingRewards,
