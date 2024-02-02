@@ -46,6 +46,8 @@ export class ActivePoolsController {
     poolsAdded.forEach(async (pool) => {
       this.pools.push(pool);
 
+      // TODO: break apart each query into separate handlers and only update / dispatch event if the
+      // state has changed.
       const unsub = await api.queryMulti<AnyApi>(
         [
           [api.query.nominationPools.bondedPools, pool.id],

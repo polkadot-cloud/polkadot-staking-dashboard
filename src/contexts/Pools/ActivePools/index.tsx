@@ -73,9 +73,6 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   >({});
   const poolNominationsRef = useRef(poolNominations);
 
-  // Store pool nominations unsubs.
-  const unsubNominations = useRef<AnyApi[]>([]);
-
   // Store the member count of the selected pool.
   const [selectedPoolMemberCount, setSelectedPoolMemberCount] =
     useState<number>(0);
@@ -125,17 +122,6 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Unsubscribe and reset poolNominations.
-  const unsubscribePoolNominations = () => {
-    if (unsubNominations.current.length) {
-      for (const unsub of unsubNominations.current) {
-        unsub();
-      }
-    }
-    setStateWithRef({}, setPoolNominations, poolNominationsRef);
-    unsubNominations.current = [];
-  };
-
   // Unsubscribe and reset activePool and poolNominations.
   const unsubscribeActivePools = () => {
     if (unsubActivePools.current.length) {
@@ -143,6 +129,7 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
         unsub();
       }
       setStateWithRef([], setActivePools, activePoolsRef);
+      setStateWithRef({}, setPoolNominations, poolNominationsRef);
       unsubActivePools.current = [];
     }
   };
@@ -154,18 +141,24 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
 
     const addresses: PoolAddresses = createPoolAccounts(poolId);
 
-    // new active pool subscription
+    // new active pool subscription.
     const subscribeActivePool = async (id: number) => {
       const unsub = await api.queryMulti<AnyApi>(
         [
           [api.query.nominationPools.bondedPools, id],
           [api.query.nominationPools.rewardPools, id],
           [api.query.system.account, addresses.reward],
+          [api.query.staking.nominators, addresses.stash],
         ],
-        async ([bondedPool, rewardPool, accountData]): Promise<void> => {
-          const balance = accountData.data;
+        async ([
+          bondedPool,
+          rewardPool,
+          accountData,
+          nominators,
+        ]): Promise<void> => {
           bondedPool = bondedPool?.unwrapOr(undefined)?.toHuman();
           rewardPool = rewardPool?.unwrapOr(undefined)?.toHuman();
+          const balance = accountData.data;
 
           if (rewardPool && bondedPool) {
             // Fetch identities & super identities for roles and expand `bondedPool` state to store
@@ -194,70 +187,45 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
               pendingRewards,
             };
 
-            // set active pool state, removing the pool if it already exists first.
+            // Get pool nominations.
+            const maybeNewNominations = nominators.unwrapOr(null);
+            // Set pool nominations.
+            const newNominations =
+              maybeNewNominations === null
+                ? defaults.poolNominations
+                : {
+                    targets: maybeNewNominations.targets.toHuman(),
+                    submittedIn: maybeNewNominations.submittedIn.toHuman(),
+                  };
+
+            // Add or replace current pool nominations in poolNominations
+            const newPoolNominations = { ...poolNominationsRef.current };
+            newPoolNominations[poolId] = newNominations;
+
             setStateWithRef(
               [...activePoolsRef.current.filter((a) => a.id !== pool.id), pool],
               setActivePools,
               activePoolsRef
             );
 
-            // subscribe to pool nominations
-            subscribeToPoolNominations(poolId, addresses.stash);
-          }
-        }
-      );
-      return unsub;
-    };
-
-    // initiate subscription, add to unsubs.
-    await Promise.all([subscribeActivePool(poolId)]).then((unsubs) => {
-      unsubActivePools.current = unsubActivePools.current.concat(unsubs);
-    });
-  };
-
-  const subscribeToPoolNominations = async (
-    poolId: number,
-    poolBondAddress: string
-  ) => {
-    if (!api) {
-      return;
-    }
-    const subscribePoolNominations = async (bondedAddress: string) => {
-      const unsub = await api.query.staking.nominators(
-        bondedAddress,
-        (nominations: AnyApi) => {
-          // set pool nominations
-          let newNominations = nominations.unwrapOr(null);
-          if (newNominations === null) {
-            newNominations = defaults.poolNominations;
+            setStateWithRef(
+              newPoolNominations,
+              setPoolNominations,
+              poolNominationsRef
+            );
           } else {
-            newNominations = {
-              targets: newNominations.targets.toHuman(),
-              submittedIn: newNominations.submittedIn.toHuman(),
-            };
+            // TODO: Remove pool from class state if no longer existing once using
+            // `ActivePoolsController`.
           }
-
-          // add or replace current pool nominations in poolNominations
-          const newPoolNominations = { ...poolNominationsRef.current };
-          newPoolNominations[poolId] = newNominations;
-
-          // set pool nominations state
-          setStateWithRef(
-            newPoolNominations,
-            setPoolNominations,
-            poolNominationsRef
-          );
+          // TODO: Find a better place to put this once using `ActivePoolsController`.
+          setStateWithRef('synced', setSynced, syncedRef);
         }
       );
-      return unsub;
+      unsubActivePools.current = [unsub];
     };
 
     // initiate subscription, add to unsubs.
-    await Promise.all([subscribePoolNominations(poolBondAddress)]).then(
-      (unsubs) => {
-        unsubNominations.current = unsubNominations.current.concat(unsubs);
-      }
-    );
+    subscribeActivePool(poolId);
   };
 
   // Utility functions
@@ -476,16 +444,8 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   // roles are edited within the dashboard, or when pool membership changes.
   useEffectIgnoreInitial(() => {
     unsubscribeActivePools();
-    unsubscribePoolNominations();
     setStateWithRef('unsynced', setSynced, syncedRef);
   }, [activeAccount, accountPools.length]);
-
-  // When we are subscribed to all active pools, syncing is considered completed.
-  useEffectIgnoreInitial(() => {
-    if (unsubNominations.current.length === accountPools.length) {
-      setStateWithRef('synced', setSynced, syncedRef);
-    }
-  }, [accountPools, unsubNominations.current]);
 
   // Fetch pool member count. We use `membership` as a dependency as the member count could change
   // in the UI when active account's membership changes. NOTE: Do not have `poolMembersNode` as a
@@ -500,7 +460,6 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   useEffect(
     () => () => {
       unsubscribeActivePools();
-      unsubscribePoolNominations();
     },
     [network]
   );
