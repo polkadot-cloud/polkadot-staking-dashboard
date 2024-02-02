@@ -113,6 +113,10 @@ export class BalancesController {
     accountsRemoved.forEach((account) => {
       this._unsubs[account]();
       delete this._unsubs[account];
+      delete this.ledgers[account];
+      delete this.balances[account];
+      delete this.payees[account];
+      delete this.poolMemberships[account];
     });
     // Remove removed accounts from class.
     this.accounts = this.accounts.filter(
