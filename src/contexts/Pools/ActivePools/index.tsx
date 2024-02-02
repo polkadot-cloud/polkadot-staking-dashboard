@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
+import { setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import {
@@ -22,7 +22,7 @@ import { useApi } from '../../Api';
 import { useBondedPools } from '../BondedPools';
 import * as defaults from './defaults';
 import { usePoolMembers } from '../PoolMembers';
-import type { ActivePool, ActivePoolsContextState, PoolTargets } from './types';
+import type { ActivePool, ActivePoolsContextState } from './types';
 import type { PoolAddresses } from '../BondedPools/types';
 import { SubscanController } from 'static/SubscanController';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
@@ -76,10 +76,6 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   // Store pool nominations unsubs.
   const unsubNominations = useRef<AnyApi[]>([]);
 
-  // Store account target validators.
-  const [targets, setTargetsState] = useState<PoolTargets>({});
-  const targetsRef = useRef(targets);
-
   // Store the member count of the selected pool.
   const [selectedPoolMemberCount, setSelectedPoolMemberCount] =
     useState<number>(0);
@@ -108,9 +104,6 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   const getSelectedPoolNominations = () =>
     poolNominationsRef.current[Number(selectedPoolId) ?? -1] ||
     defaults.poolNominations;
-
-  const getSelectedPoolTargets = () =>
-    targetsRef.current[Number(selectedPoolId) ?? -1] || defaults.targets;
 
   // handle active pool subscriptions
   const handlePoolSubscriptions = async () => {
@@ -194,7 +187,7 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
 
             bondedPool.roleIdentities = await fetchIdentities(roleAddresses);
 
-            const rewardAccountBalance = balance?.free;
+            const rewardAccountBalance = balance?.free.toString();
             const pendingRewards = await fetchPendingRewards();
             const pool = {
               id,
@@ -212,27 +205,8 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
               activePoolsRef
             );
 
-            // get pool target nominations and set in state
-            const newTargets = localStorageOrDefault(
-              `${addresses.stash}_pool_targets`,
-              defaults.targets,
-              true
-            );
-
-            // add or replace current pool targets in targetsRef
-            const newPoolTargets = { ...targetsRef.current };
-            newPoolTargets[poolId] = newTargets;
-
-            // set pool staking targets
-            setStateWithRef(newPoolTargets, setTargetsState, targetsRef);
-
             // subscribe to pool nominations
             subscribeToPoolNominations(poolId, addresses.stash);
-          } else {
-            // set default targets for pool
-            const newPoolTargets = { ...targetsRef.current };
-            newPoolTargets[poolId] = defaults.targets;
-            setStateWithRef(newPoolTargets, setTargetsState, targetsRef);
           }
         }
       );
@@ -316,29 +290,6 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
       setActivePools,
       activePoolsRef
     );
-  };
-
-  /*
-   * setTargets
-   * Sets currently selected pool's target validators in storage.
-   */
-  const setTargets = (newTargets: AnyJson) => {
-    if (!selectedPoolId) {
-      return;
-    }
-
-    const stashAddress = getPoolBondedAccount();
-    if (stashAddress) {
-      localStorage.setItem(
-        `${stashAddress}_pool_targets`,
-        JSON.stringify(newTargets)
-      );
-      // inject targets into targets object
-      const newPoolTargets = { ...targetsRef.current };
-      newPoolTargets[Number(selectedPoolId)] = newTargets;
-
-      setStateWithRef(newPoolTargets, setTargetsState, targetsRef);
-    }
   };
 
   /*
@@ -579,12 +530,10 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
         getPoolBondedAccount,
         getPoolUnlocking,
         getPoolRoles,
-        setTargets,
         getNominationsStatus,
         setSelectedPoolId,
         synced: syncedRef.current,
         selectedActivePool: getSelectedActivePool(),
-        targets: getSelectedPoolTargets(),
         poolNominations: getSelectedPoolNominations(),
         selectedPoolMemberCount,
       }}

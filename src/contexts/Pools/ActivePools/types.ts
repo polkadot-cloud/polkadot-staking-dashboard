@@ -4,7 +4,7 @@
 import type BigNumber from 'bignumber.js';
 import type { NominationStatuses, PoolAddresses } from '../BondedPools/types';
 import type { MaybeAddress } from '@polkadot-cloud/react/types';
-import type { AnyJson, Sync } from 'types';
+import type { Sync } from 'types';
 import type { Nominations } from 'contexts/Bonded/types';
 import type { Identity, SuperIdentity } from 'contexts/Validators/types';
 
@@ -18,11 +18,9 @@ export interface ActivePoolsContextState {
   getPoolBondedAccount: () => MaybeAddress;
   getPoolUnlocking: () => PoolUnlocking[];
   getPoolRoles: () => PoolRoles;
-  setTargets: (t: PoolTargets) => void;
   getNominationsStatus: () => NominationStatuses;
   setSelectedPoolId: (p: string) => void;
   selectedActivePool: ActivePool | null;
-  targets: PoolTargets;
   poolNominations: Nominations;
   synced: Sync;
   selectedPoolMemberCount: number;
@@ -62,8 +60,6 @@ export interface PoolUnlocking {
   era: number;
   value: BigNumber;
 }
-
-export type PoolTargets = Record<number, AnyJson>;
 
 export interface PoolRoles {
   depositor?: MaybeAddress;
