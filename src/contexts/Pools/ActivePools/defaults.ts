@@ -56,7 +56,7 @@ export const targets = {
   nominations: [],
 };
 
-export const poolNominations = {
+export const defaultPoolNominations = {
   targets: [],
   submittedIn: 0,
 };
@@ -74,7 +74,7 @@ export const defaultActivePoolContext: ActivePoolsContextState = {
   getNominationsStatus: () => nominationStatus,
   setSelectedPoolId: (p) => {},
   selectedActivePool,
-  poolNominations,
+  poolNominations: defaultPoolNominations,
   synced: 'unsynced',
   selectedPoolMemberCount: 0,
 };

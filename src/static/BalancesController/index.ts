@@ -78,7 +78,7 @@ export class BalancesController {
           this.handleAccountCallback(address, accountResult, locksResult);
           this.handlePayeeCallback(address, payeeResult);
 
-          // NOTE: async; contains runtime call for pending rewards.
+          // NOTE: async: contains runtime call for pending rewards.
           await this.handlePoolMembershipCallback(
             address,
             poolMembersResult,

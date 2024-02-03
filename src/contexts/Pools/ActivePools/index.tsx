@@ -13,7 +13,7 @@ import {
   useState,
 } from 'react';
 import { useStaking } from 'contexts/Staking';
-import type { AnyApi, AnyJson, Sync } from 'types';
+import type { AnyJson, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { usePlugins } from 'contexts/Plugins';
 import { useNetwork } from 'contexts/Network';
@@ -22,13 +22,13 @@ import { useApi } from '../../Api';
 import { useBondedPools } from '../BondedPools';
 import * as defaults from './defaults';
 import { usePoolMembers } from '../PoolMembers';
-import type { ActivePool, ActivePoolsContextState, PoolRole } from './types';
-import type { PoolAddresses } from '../BondedPools/types';
+import type { ActivePool, ActivePoolsContextState } from './types';
 import { SubscanController } from 'static/SubscanController';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import { useBalances } from 'contexts/Balances';
-import { IdentitiesController } from 'static/IdentitiesController';
 import { ActivePoolsController } from 'static/ActivePoolsController';
+import { useEventListener } from 'usehooks-ts';
+import { isCustomEvent } from 'static/utils';
 
 export const ActivePoolsContext = createContext<ActivePoolsContextState>(
   defaults.defaultActivePoolContext
@@ -38,7 +38,7 @@ export const useActivePools = () => useContext(ActivePoolsContext);
 
 export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
-  const { api, isReady } = useApi();
+  const { isReady } = useApi();
   const { eraStakers } = useStaking();
   const { pluginEnabled } = usePlugins();
   const { getPoolMembership } = useBalances();
@@ -64,9 +64,6 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   const [activePools, setActivePools] = useState<ActivePool[]>([]);
   const activePoolsRef = useRef(activePools);
 
-  // Store active pools unsubs.
-  const unsubActivePools = useRef<AnyApi[]>([]);
-
   // Store active pools nominations.
   const [poolNominations, setPoolNominations] = useState<
     Record<number, AnyJson>
@@ -79,8 +76,8 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchingMemberCount = useRef<Sync>('unsynced');
 
-  // Store whether active pool data has been synced. this will be true if no active pool exists for
-  // the active account. We just need confirmation this is the case.
+  // Store whether active pool data has been synced. This will be true if no active pool exists for
+  // the active account.
   const [synced, setSynced] = useState<Sync>('unsynced');
   const syncedRef = useRef(synced);
 
@@ -96,136 +93,39 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
     }) || null;
 
   const getSelectedActivePool = () =>
-    activePoolsRef.current.find((a) => a.id === Number(selectedPoolId)) || null;
+    activePoolsRef.current.find(
+      (a) => String(a.id) === String(selectedPoolId)
+    ) || null;
 
   const getSelectedPoolNominations = () =>
     poolNominationsRef.current[Number(selectedPoolId) ?? -1] ||
-    defaults.poolNominations;
+    defaults.defaultPoolNominations;
 
-  // handle active pool subscriptions
-  const handlePoolSubscriptions = async () => {
+  // Handle active pool subscriptions.
+  const initialiseActivePoolSubscriptions = async () => {
     if (accountPools.length) {
-      Promise.all(accountPools.map((p) => subscribeToActivePool(Number(p))));
-    } else {
-      setStateWithRef('synced', setSynced, syncedRef);
+      const activePoolItems = accountPools.map((pool) => ({
+        id: pool,
+        addresses: { ...createPoolAccounts(Number(pool)) },
+      }));
+      ActivePoolsController.syncPools(activePoolItems);
     }
+
+    // Pool subscriptions have been initialised, mark as synced.
+    setStateWithRef('synced', setSynced, syncedRef);
 
     // assign default pool immediately if active pool not currently selected
     const defaultSelected = membership?.poolId || accountPools[0] || null;
-    const activePoolSelected =
-      activePoolsRef.current.find(
-        (a) => String(a.id) === String(selectedPoolId)
-      ) || null;
 
-    if (defaultSelected && !activePoolSelected) {
+    if (defaultSelected && !getSelectedActivePool()) {
       setSelectedPoolId(String(defaultSelected));
     }
   };
 
   // Unsubscribe and reset activePool and poolNominations.
-  const unsubscribeActivePools = () => {
-    if (unsubActivePools.current.length) {
-      for (const unsub of unsubActivePools.current) {
-        unsub();
-      }
-      setStateWithRef([], setActivePools, activePoolsRef);
-      setStateWithRef({}, setPoolNominations, poolNominationsRef);
-      unsubActivePools.current = [];
-    }
-  };
-
-  const subscribeToActivePool = async (poolId: number) => {
-    if (!api) {
-      return;
-    }
-
-    const addresses: PoolAddresses = createPoolAccounts(poolId);
-
-    // new active pool subscription.
-    const subscribeActivePool = async (id: number) => {
-      const unsub = await api.queryMulti<AnyApi>(
-        [
-          [api.query.nominationPools.bondedPools, id],
-          [api.query.nominationPools.rewardPools, id],
-          [api.query.system.account, addresses.reward],
-          [api.query.staking.nominators, addresses.stash],
-        ],
-        async ([
-          bondedPool,
-          rewardPool,
-          accountData,
-          nominators,
-        ]): Promise<void> => {
-          bondedPool = bondedPool?.unwrapOr(undefined)?.toHuman();
-          rewardPool = rewardPool?.unwrapOr(undefined)?.toHuman();
-          const balance = accountData.data;
-
-          if (rewardPool && bondedPool) {
-            // Fetch identities & super identities for roles and expand `bondedPool` state to store
-            // them.
-            const { roles }: { roles: Record<PoolRole, string> } = bondedPool;
-            const roleAddresses: string[] = [
-              ...new Set(
-                Object.values(roles).filter((role) => role !== undefined)
-              ),
-            ];
-
-            bondedPool.roleIdentities =
-              await IdentitiesController.fetch(roleAddresses);
-
-            const rewardAccountBalance = balance?.free.toString();
-            const pendingRewards =
-              await ActivePoolsController.fetchPendingRewards(
-                membership?.address
-              );
-            const pool = {
-              id,
-              addresses,
-              bondedPool,
-              rewardPool,
-              rewardAccountBalance,
-              pendingRewards,
-            };
-
-            // Get pool nominations.
-            const maybeNewNominations = nominators.unwrapOr(null);
-            // Set pool nominations.
-            const newNominations =
-              maybeNewNominations === null
-                ? defaults.poolNominations
-                : {
-                    targets: maybeNewNominations.targets.toHuman(),
-                    submittedIn: maybeNewNominations.submittedIn.toHuman(),
-                  };
-
-            // Add or replace current pool nominations in poolNominations
-            const newPoolNominations = { ...poolNominationsRef.current };
-            newPoolNominations[poolId] = newNominations;
-
-            setStateWithRef(
-              [...activePoolsRef.current.filter((a) => a.id !== pool.id), pool],
-              setActivePools,
-              activePoolsRef
-            );
-
-            setStateWithRef(
-              newPoolNominations,
-              setPoolNominations,
-              poolNominationsRef
-            );
-          } else {
-            // TODO: Remove pool from class state if no longer existing once using
-            // `ActivePoolsController`.
-          }
-          // TODO: Find a better place to put this once using `ActivePoolsController`.
-          setStateWithRef('synced', setSynced, syncedRef);
-        }
-      );
-      unsubActivePools.current = [unsub];
-    };
-
-    // initiate subscription, add to unsubs.
-    subscribeActivePool(poolId);
+  const resetActivePools = () => {
+    setStateWithRef([], setActivePools, activePoolsRef);
+    setStateWithRef({}, setPoolNominations, poolNominationsRef);
   };
 
   // Utility functions
@@ -384,33 +284,67 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
     const pendingRewards = await ActivePoolsController.fetchPendingRewards(
       membership?.address
     );
-
     updateActivePoolPendingRewards(
       pendingRewards,
       getActivePoolMembership()?.id || 0
     );
   };
 
-  // subscribe to pool that the active account is a member of.
+  // Persist the received active pool to state if it is the current membership pool.
+  const newActivePoolCallback = async (e: Event) => {
+    if (isCustomEvent(e) && ActivePoolsController.isValidNewActivePool(e)) {
+      const { pool, nominations } = e.detail;
+
+      // Fetch pending rewards and updated received pool record.
+      pool.pendingRewards = await ActivePoolsController.fetchPendingRewards(
+        membership?.address
+      );
+
+      // Persist to active pools state.
+      setStateWithRef(
+        [
+          ...activePoolsRef.current.filter(
+            (activePool) => activePool.id !== pool.id
+          ),
+          pool,
+        ],
+        setActivePools,
+        activePoolsRef
+      );
+      // Add or replace current pool nominations in poolNominations
+      const newPoolNominations = { ...poolNominationsRef.current };
+      newPoolNominations[pool.id] = nominations;
+
+      setStateWithRef(
+        newPoolNominations,
+        setPoolNominations,
+        poolNominationsRef
+      );
+    }
+  };
+
+  // Initialise subscriptions to all active pools of imported accounts.
   useEffectIgnoreInitial(() => {
     if (isReady && syncedRef.current === 'unsynced') {
       setStateWithRef('syncing', setSynced, syncedRef);
-      handlePoolSubscriptions();
+      initialiseActivePoolSubscriptions();
     }
   }, [network, isReady, synced]);
 
-  // re-calculate pending rewards when membership changes
+  // Re-sync when `accountPools` changes.
+  //
+  // TODO: Reset active pool and active nominations state when the active account changes. We only
+  // want to store the currently selected active pool in state.
+  useEffectIgnoreInitial(() => {
+    setStateWithRef('unsynced', setSynced, syncedRef);
+  }, [activeAccount, accountPools.length]);
+
+  // Re-calculate pending rewards when membership changes.
   useEffectIgnoreInitial(() => {
     if (isReady) {
       updatePendingRewards();
     }
-  }, [
-    network,
-    isReady,
-    getActivePoolMembership()?.bondedPool,
-    getActivePoolMembership()?.rewardPool,
-    membership,
-  ]);
+  }, [network, isReady, membership]);
 
   // Gets the member count of the currently selected pool. If Subscan is enabled, it is used instead of the connected node.
   const getMemberCount = async () => {
@@ -440,13 +374,6 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
-  // Re-sync when number of `accountRoles` change. This can happen when `bondedPools` sync, when
-  // roles are edited within the dashboard, or when pool membership changes.
-  useEffectIgnoreInitial(() => {
-    unsubscribeActivePools();
-    setStateWithRef('unsynced', setSynced, syncedRef);
-  }, [activeAccount, accountPools.length]);
-
   // Fetch pool member count. We use `membership` as a dependency as the member count could change
   // in the UI when active account's membership changes. NOTE: Do not have `poolMembersNode` as a
   // dependency - could trigger many re-renders if value is constantly changing - more suited as a
@@ -456,13 +383,18 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
     getMemberCount();
   }, [activeAccount, getSelectedActivePool()?.id, membership?.poolId]);
 
-  // unsubscribe all on component unmount.
+  // Reset on component unmount.
   useEffect(
     () => () => {
-      unsubscribeActivePools();
+      resetActivePools();
     },
     [network]
   );
+
+  const documentRef = useRef<Document>(document);
+
+  // Listen for new active pool events.
+  useEventListener('new-active-pool', newActivePoolCallback, documentRef);
 
   return (
     <ActivePoolsContext.Provider

@@ -14,6 +14,8 @@ import type {
   APIPoolsConfig,
   APIStakingMetrics,
 } from 'contexts/Api/types';
+import type { ActivePool } from 'contexts/Pools/ActivePools/types';
+import type { Nominations } from 'contexts/Bonded/types';
 
 declare global {
   interface Window {
@@ -29,6 +31,10 @@ declare global {
     'new-pools-config': CustomEvent<{ poolsConfig: APIPoolsConfig }>;
     'new-staking-metrics': CustomEvent<{
       stakingMetrics: APIStakingMetrics;
+    }>;
+    'new-active-pool': CustomEvent<{
+      pool: ActivePool;
+      nominations: Nominations;
     }>;
     'new-external-account': CustomEvent<{ address: string }>;
     'new-account-balance': CustomEvent<ActiveBalance & { address: string }>;
