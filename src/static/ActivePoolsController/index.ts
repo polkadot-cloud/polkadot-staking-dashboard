@@ -113,7 +113,6 @@ export class ActivePoolsController {
         rewardPool,
         rewardAccountBalance,
         // NOTE: pending rewards are injected on the react side.
-        // TODO: introduce new type for pre-pendingReward injection.
         pendingRewards: new BigNumber(0),
       };
 
