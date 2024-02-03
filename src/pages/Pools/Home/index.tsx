@@ -34,9 +34,9 @@ export const HomeInner = () => {
   const { activeAccount } = useActiveAccounts();
   const { activeTab, setActiveTab } = usePoolsTabs();
   const { counterForBondedPools } = useApi().poolsConfig;
-  const { bondedPools, getAccountPools } = useBondedPools();
+  const { bondedPools, getAccountPoolRoles } = useBondedPools();
   const { getPoolRoles, selectedActivePool } = useActivePools();
-  const accountPools = getAccountPools(activeAccount);
+  const accountPools = getAccountPoolRoles(activeAccount);
   const totalAccountPools = Object.entries(accountPools).length;
 
   let tabs: PageTitleTabProps[] = [

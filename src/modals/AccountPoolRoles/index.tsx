@@ -16,12 +16,12 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 export const AccountPoolRoles = () => {
   const { t } = useTranslation('modals');
   const { getPoolMembership } = useBalances();
-  const { getAccountPools } = useBondedPools();
+  const { getAccountPoolRoles } = useBondedPools();
   const { options } = useOverlay().modal.config;
   const { activeAccount } = useActiveAccounts();
 
   const { who } = options;
-  const accountPools = getAccountPools(who);
+  const accountPools = getAccountPoolRoles(who);
   const membership = getPoolMembership(activeAccount);
   const totalAccountPools = Object.entries(accountPools).length;
   const { label } = useStatusButtons();

@@ -6,6 +6,7 @@ import { rmCommas, shuffle } from '@polkadot-cloud/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import type {
+  AccountPoolRoles,
   BondedPool,
   BondedPoolsContextState,
   MaybePool,
@@ -277,12 +278,13 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // get all the roles belonging to one pool account
-  const getAccountRoles = (who: MaybeAddress) => {
+  // Gets all pools that the account has a role in. Returns an object with each pool role as keys,
+  // and and array of pool ids as their values.
+  const accumulateAccountPoolRoles = (who: MaybeAddress): AccountPoolRoles => {
     if (!who) {
       return {
-        depositor: [],
         root: [],
+        depositor: [],
         nominator: [],
         bouncer: [],
       };
@@ -304,33 +306,38 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
       .filter((b) => b.roles.bouncer === who)
       .map((b) => b.id);
 
-    return {
-      depositor,
+    const result = {
       root,
+      depositor,
       nominator,
       bouncer,
     };
+
+    return result;
   };
 
-  // accumulate account pool list
-  const getAccountPools = (who: MaybeAddress) => {
-    // first get the roles of the account
-    const roles = getAccountRoles(who);
-    // format new list has pool => roles
+  // Gets a list of roles for all the pools the provided account has one or more roles in.
+  const getAccountPoolRoles = (who: MaybeAddress) => {
+    const allAccountRoles = accumulateAccountPoolRoles(who);
+
+    // Reformat all roles object as has pool => roles, if roles exist.
     const pools: Record<number, AnyJson> = {};
-    Object.entries(roles).forEach(([key, poolIds]) => {
-      // now looping through a role
-      poolIds.forEach((poolId) => {
-        const exists = Object.keys(pools).find(
-          (k) => String(k) === String(poolId)
-        );
-        if (!exists) {
-          pools[poolId] = [key];
-        } else {
-          pools[poolId].push(key);
-        }
+
+    if (allAccountRoles) {
+      Object.entries(allAccountRoles).forEach(([role, poolIds]) => {
+        // now looping through a role
+        poolIds.forEach((poolId) => {
+          const exists = Object.keys(pools).find(
+            (k) => String(k) === String(poolId)
+          );
+          if (!exists) {
+            pools[poolId] = [role];
+          } else {
+            pools[poolId].push(role);
+          }
+        });
       });
-    });
+    }
     return pools;
   };
 
@@ -402,8 +409,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
         removeFromBondedPools,
         getPoolNominationStatus,
         getPoolNominationStatusCode,
-        getAccountRoles,
-        getAccountPools,
+        getAccountPoolRoles,
         replacePoolRoles,
         poolSearchFilter,
         bondedPools,

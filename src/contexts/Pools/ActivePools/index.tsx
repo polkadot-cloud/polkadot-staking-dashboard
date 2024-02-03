@@ -45,21 +45,26 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   const { activeAccount } = useActiveAccounts();
   const createPoolAccounts = useCreatePoolAccounts();
   const { getMembersOfPoolFromNode } = usePoolMembers();
-  const { getAccountPools, bondedPools } = useBondedPools();
+  const { getAccountPoolRoles, bondedPools } = useBondedPools();
 
   const membership = getPoolMembership(activeAccount);
 
   // Determine active pools to subscribe to. Dependencies of `activeAccount`, and `membership` mean
   // that this object is only recalculated when these values change. We therefore do not need to use
-  // `activeAccount` or `membership` as dependencies in other effects.
+  // `activeAccount` or `membership` as dependencies in other effects when syncing from
+  // `ActivePoolsController`.
   const accountPools = useMemo(() => {
-    const newAccountPools = Object.keys(getAccountPools(activeAccount) || {});
-    const p = membership?.poolId ? String(membership.poolId) : '-1';
+    const allRolePoolIds: string[] = Object.keys(
+      getAccountPoolRoles(activeAccount) || {}
+    );
 
-    if (membership?.poolId && !newAccountPools.includes(p || '-1')) {
-      newAccountPools.push(String(membership.poolId));
+    // If a membership subscription has resulted in an update that is inconsistent with
+    // `bondedPools`, add that role to the list of the account's pool roles.
+    const p = membership?.poolId ? String(membership.poolId) : '-1';
+    if (membership?.poolId && !allRolePoolIds.includes(p)) {
+      allRolePoolIds.push(String(membership.poolId));
     }
-    return newAccountPools;
+    return allRolePoolIds;
   }, [activeAccount, bondedPools, membership]);
 
   // Stores member's active pools.

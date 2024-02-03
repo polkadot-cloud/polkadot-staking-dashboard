@@ -13,8 +13,7 @@ export interface BondedPoolsContextState {
   removeFromBondedPools: (p: number) => void;
   getPoolNominationStatus: (n: MaybeAddress, o: MaybeAddress) => AnyApi;
   getPoolNominationStatusCode: (t: NominationStatuses | null) => string;
-  getAccountRoles: (w: MaybeAddress) => AnyApi;
-  getAccountPools: (w: MaybeAddress) => AnyApi;
+  getAccountPoolRoles: (w: MaybeAddress) => AnyApi;
   replacePoolRoles: (poolId: number, roleEdits: AnyJson) => void;
   poolSearchFilter: (l: AnyFilter, v: string) => void;
   bondedPools: BondedPool[];
@@ -51,3 +50,10 @@ export type PoolNominations = {
 } | null;
 
 export type NominationStatuses = Record<string, string>;
+
+export type AccountPoolRoles = {
+  root: number[];
+  depositor: number[];
+  nominator: number[];
+  bouncer: number[];
+} | null;
