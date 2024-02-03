@@ -95,7 +95,7 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchingMemberCount = useRef<Sync>('unsynced');
 
-  const getSelectedPoolNominations = () =>
+  const getActivePoolNominations = () =>
     poolNominationsRef.current || defaultPoolNominations;
 
   // Sync active pool subscriptions.
@@ -173,7 +173,7 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Get the status of nominations. Possible statuses: waiting, inactive, active.
   const getNominationsStatus = () => {
-    const nominations = getSelectedPoolNominations()?.targets || [];
+    const nominations = getActivePoolNominations().targets;
     const statuses: Record<string, string> = {};
 
     for (const nomination of nominations) {
@@ -330,7 +330,7 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
         setSelectedPoolId,
         activePool,
         selectedPoolMemberCount,
-        poolNominations: getSelectedPoolNominations(),
+        poolNominations: getActivePoolNominations(),
       }}
     >
       {children}
