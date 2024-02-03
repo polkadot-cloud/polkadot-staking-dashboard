@@ -54,9 +54,7 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   const membership = getPoolMembership(activeAccount);
 
   // Determine active pools to subscribe to. Dependencies of `activeAccount`, and `membership` mean
-  // that this object is only recalculated when these values change. We therefore do not need to use
-  // `activeAccount` or `membership` as dependencies in other effects when syncing from
-  // `ActivePoolsController`.
+  // that this object is only recalculated when these values change.
   const accountPools = useMemo(() => {
     const allRolePoolIds: string[] = Object.keys(
       getAccountPoolRoles(activeAccount) || {}
@@ -95,18 +93,13 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   const [selectedPoolMemberCount, setSelectedPoolMemberCount] =
     useState<number>(0);
 
-  // Store whether active pool data has been synced. This will be true if no active pool exists for
-  // the active account.
-  const [synced, setSynced] = useState<Sync>('unsynced');
-  const syncedRef = useRef(synced);
-
   const fetchingMemberCount = useRef<Sync>('unsynced');
 
   const getSelectedPoolNominations = () =>
     poolNominationsRef.current || defaultPoolNominations;
 
-  // Handle active pool subscriptions.
-  const initialiseActivePoolSubscriptions = async () => {
+  // Sync active pool subscriptions.
+  const syncActivePoolSubscriptions = async () => {
     if (accountPools.length) {
       const activePoolItems = accountPools.map((pool) => ({
         id: pool,
@@ -115,10 +108,7 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
       ActivePoolsController.syncPools(activePoolItems);
     }
 
-    // Pool subscriptions have been initialised, mark as synced.
-    setStateWithRef('synced', setSynced, syncedRef);
-
-    // assign default pool immediately if active pool not currently selected
+    // Assign default pool immediately if active pool not currently selected.
     const defaultSelected = membership?.poolId || accountPools[0] || null;
 
     if (defaultSelected && !activePool) {
@@ -128,6 +118,7 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Unsubscribe and reset activePool and poolNominations.
   const resetActivePools = () => {
+    setStateWithRef(null, setSelectedPoolIdState, selectedPoolIdRef);
     setStateWithRef(null, setActivePool, activePoolRef);
     setStateWithRef(null, setPoolNominations, poolNominationsRef);
   };
@@ -259,18 +250,16 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Initialise subscriptions to all active pools of imported accounts.
   useEffectIgnoreInitial(() => {
-    if (isReady && syncedRef.current === 'unsynced') {
-      setStateWithRef('syncing', setSynced, syncedRef);
-      initialiseActivePoolSubscriptions();
-    }
-  }, [network, isReady, synced]);
+    syncActivePoolSubscriptions();
+  }, [network, isReady, accountPools]);
 
-  // Re-sync when `accountPools` changes.
-  //
-  // TODO: Only store the currently selected active pool in state.
+  // Reset everything when `activeAccount` changes.
   useEffectIgnoreInitial(() => {
-    setStateWithRef('unsynced', setSynced, syncedRef);
-  }, [accountPools.length]);
+    ActivePoolsController.unsubscribe();
+    resetActivePools();
+  }, [activeAccount]);
+
+  // ---
 
   // Re-calculate pending rewards when membership changes.
   useEffectIgnoreInitial(() => {
@@ -343,7 +332,6 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
         setSelectedPoolId,
         activePool,
         selectedPoolMemberCount,
-        synced: syncedRef.current,
         poolNominations: getSelectedPoolNominations(),
       }}
     >

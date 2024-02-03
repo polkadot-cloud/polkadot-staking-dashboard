@@ -32,6 +32,5 @@ export const defaultActivePoolContext: ActivePoolsContextState = {
   setSelectedPoolId: (p) => {},
   activePool: null,
   poolNominations: null,
-  synced: 'unsynced',
   selectedPoolMemberCount: 0,
 };

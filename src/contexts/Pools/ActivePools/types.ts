@@ -4,7 +4,6 @@
 import type BigNumber from 'bignumber.js';
 import type { NominationStatuses, PoolAddresses } from '../BondedPools/types';
 import type { MaybeAddress } from '@polkadot-cloud/react/types';
-import type { Sync } from 'types';
 import type { Nominations } from 'contexts/Bonded/types';
 import type { Identity, SuperIdentity } from 'contexts/Validators/types';
 
@@ -22,7 +21,6 @@ export interface ActivePoolsContextState {
   setSelectedPoolId: (p: string) => void;
   activePool: ActivePool | null;
   poolNominations: Nominations | null;
-  synced: Sync;
   selectedPoolMemberCount: number;
 }
 

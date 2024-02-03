@@ -7,7 +7,6 @@ import type { ReactNode, RefObject } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { SideMenuStickyThreshold } from 'consts';
 import { useBalances } from 'contexts/Balances';
-import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import type { AnyJson } from 'types';
 import { useApi } from '../Api';
@@ -24,14 +23,13 @@ export const useUi = () => useContext(UIContext);
 export const UIProvider = ({ children }: { children: ReactNode }) => {
   const { eraStakers } = useStaking();
   const { balancesInitialSynced } = useBalances();
-  const { synced: activePoolsSynced } = useActivePools();
   const { isReady, networkMetrics, activeEra, stakingMetrics } = useApi();
 
   // Set whether the network has been synced.
   const [isNetworkSyncing, setIsNetworkSyncing] = useState<boolean>(false);
 
-  // Set whether pools are being synced.
-  const [isPoolSyncing, setIsPoolSyncing] = useState<boolean>(false);
+  // Set whether pools are being synced. NOTE: not currently being updated.
+  const [isPoolSyncing] = useState<boolean>(false);
 
   // Set whether app is syncing. Includes workers (active nominations).
   const [isSyncing, setIsSyncing] = useState<boolean>(false);
@@ -100,7 +98,6 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     let syncing = false;
     let networkSyncing = false;
-    let poolSyncing = false;
 
     // staking metrics have synced
     if (stakingMetrics.lastReward === new BigNumber(0)) {
@@ -121,14 +118,6 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
 
     setIsNetworkSyncing(networkSyncing);
 
-    // active pools have been synced
-    if (activePoolsSynced !== 'synced') {
-      syncing = true;
-      poolSyncing = true;
-    }
-
-    setIsPoolSyncing(poolSyncing);
-
     // eraStakers total active nominators has synced
     if (!eraStakers.totalActiveNominators) {
       syncing = true;
@@ -140,7 +129,6 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
     stakingMetrics,
     networkMetrics,
     eraStakers,
-    activePoolsSynced,
     balancesInitialSynced,
   ]);
 
