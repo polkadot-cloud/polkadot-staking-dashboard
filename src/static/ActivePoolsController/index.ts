@@ -9,16 +9,8 @@ import type { ActivePool, PoolRoles } from 'contexts/Pools/ActivePools/types';
 import { APIController } from 'static/APIController';
 import { IdentitiesController } from 'static/IdentitiesController';
 import type { AnyApi } from 'types';
+import type { ActivePoolItem } from './types';
 
-export interface ActivePoolItem {
-  id: string;
-  addresses: {
-    stash: string;
-    reward: string;
-  };
-}
-
-// TODO: replace `ActivePoolsProvider` subscription with this class.
 export class ActivePoolsController {
   // ------------------------------------------------------
   // Class members.
