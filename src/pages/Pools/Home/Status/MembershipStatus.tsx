@@ -31,22 +31,22 @@ export const MembershipStatus = ({
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getTransferOptions } = useTransferOptions();
   const { bondedPools, poolsMetaData } = useBondedPools();
-  const { selectedActivePool, isOwner, isBouncer, isMember } = useActivePools();
+  const { activePool, isOwner, isBouncer, isMember } = useActivePools();
 
   const { active } = getTransferOptions(activeAccount).pool;
-  const poolState = selectedActivePool?.bondedPool?.state ?? null;
+  const poolState = activePool?.bondedPool?.state ?? null;
 
   const membershipButtons = [];
   let membershipDisplay = t('pools.notInPool');
 
-  if (selectedActivePool) {
+  if (activePool) {
     const pool = bondedPools.find(
-      (p) => p.addresses.stash === selectedActivePool.addresses.stash
+      (p) => p.addresses.stash === activePool.addresses.stash
     );
     if (pool) {
       // Determine pool membership display.
       membershipDisplay = determinePoolDisplay(
-        selectedActivePool.addresses.stash,
+        activePool.addresses.stash,
         poolsMetaData[Number(pool.id)]
       );
     }
@@ -72,13 +72,13 @@ export const MembershipStatus = ({
     }
   }
 
-  return selectedActivePool ? (
+  return activePool ? (
     <Stat
       label={label}
       helpKey="Pool Membership"
       type="address"
       stat={{
-        address: selectedActivePool?.addresses?.stash ?? '',
+        address: activePool?.addresses?.stash ?? '',
         display: membershipDisplay,
       }}
       buttons={showButtons ? membershipButtons : []}

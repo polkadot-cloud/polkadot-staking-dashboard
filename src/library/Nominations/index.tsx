@@ -29,8 +29,8 @@ export const Nominations = ({
 }) => {
   const { t } = useTranslation('pages');
   const {
+    activePool,
     poolNominations,
-    selectedActivePool,
     isOwner: isPoolOwner,
     isNominator: isPoolNominator,
   } = useActivePools();
@@ -52,7 +52,7 @@ export const Nominations = ({
 
   // Derive nominations from `bondFor` type.
   const nominations = isPool
-    ? poolNominations.targets
+    ? poolNominations?.targets || []
     : getAccountNominations(nominator);
   const nominated = getNominated(bondFor);
 
@@ -61,9 +61,7 @@ export const Nominations = ({
 
   // Determine whether this is a pool that is in Destroying state & not nominating.
   const poolDestroying =
-    isPool &&
-    selectedActivePool?.bondedPool?.state === 'Destroying' &&
-    !isNominating;
+    isPool && activePool?.bondedPool?.state === 'Destroying' && !isNominating;
 
   // Determine whether to display buttons.
   //

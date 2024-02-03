@@ -15,16 +15,16 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const ClosurePrompts = () => {
   const { t } = useTranslation('pages');
+  const { mode } = useTheme();
+  const { isPoolSyncing } = useUi();
+  const { openModal } = useOverlay().modal;
   const { colors } = useNetwork().networkData;
   const { activeAccount } = useActiveAccounts();
-  const { mode } = useTheme();
-  const { openModal } = useOverlay().modal;
-  const { isPoolSyncing } = useUi();
-  const { isBonding, selectedActivePool, isDepositor, poolNominations } =
-    useActivePools();
   const { getTransferOptions } = useTransferOptions();
+  const { isBonding, activePool, isDepositor, poolNominations } =
+    useActivePools();
 
-  const { state, memberCounter } = selectedActivePool?.bondedPool || {};
+  const { state, memberCounter } = activePool?.bondedPool || {};
   const { active, totalUnlockChunks } = getTransferOptions(activeAccount).pool;
   const targets = poolNominations?.targets ?? [];
   const annuncementBorderColor = colors.secondary[mode];

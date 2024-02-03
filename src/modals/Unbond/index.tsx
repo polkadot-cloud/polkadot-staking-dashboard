@@ -37,7 +37,7 @@ export const Unbond = () => {
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
-  const { isDepositor, selectedActivePool } = useActivePools();
+  const { isDepositor, activePool } = useActivePools();
   const { minNominatorBond: minNominatorBondBn } = useApi().stakingMetrics;
   const {
     setModalStatus,
@@ -61,7 +61,7 @@ export const Unbond = () => {
     true
   );
 
-  let { pendingRewards } = selectedActivePool || {};
+  let { pendingRewards } = activePool || {};
   pendingRewards = pendingRewards ?? new BigNumber(0);
   pendingRewards = planckToUnit(pendingRewards, units);
 

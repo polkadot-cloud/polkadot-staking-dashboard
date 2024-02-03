@@ -15,11 +15,11 @@ export const PoolStatus = () => {
   const { t } = useTranslation('pages');
   const { isPoolSyncing } = useUi();
   const { getNominationStatus } = useNominationStatus();
-  const { selectedActivePool, poolNominations } = useActivePools();
+  const { activePool, poolNominations } = useActivePools();
 
-  const poolStash = selectedActivePool?.addresses?.stash || '';
+  const poolStash = activePool?.addresses?.stash || '';
   const { earningRewards, nominees } = getNominationStatus(poolStash, 'pool');
-  const poolState = selectedActivePool?.bondedPool?.state ?? null;
+  const poolState = activePool?.bondedPool?.state ?? null;
   const poolNominating = !!poolNominations?.targets?.length;
 
   // Determine pool state icon.

@@ -46,8 +46,8 @@ export const ManageCommission = ({
   const { newBatchCall } = useBatchCall();
   const { activeAccount } = useActiveAccounts();
   const { setModalStatus } = useOverlay().modal;
+  const { isOwner, activePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
-  const { isOwner, selectedActivePool } = useActivePools();
   const { getBondedPool, updateBondedPools } = useBondedPools();
   const {
     getInitial,
@@ -59,7 +59,7 @@ export const ManageCommission = ({
     isUpdated,
   } = usePoolCommission();
 
-  const poolId = selectedActivePool?.id || 0;
+  const poolId = activePool?.id || 0;
   const bondedPool = getBondedPool(poolId);
 
   // Get currently set commission values.

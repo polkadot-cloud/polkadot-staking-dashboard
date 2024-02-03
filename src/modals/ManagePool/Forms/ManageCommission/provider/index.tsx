@@ -23,9 +23,9 @@ export const usePoolCommission = () => useContext(PoolCommissionContext);
 export const PoolCommissionProvider = ({
   children,
 }: PoolCommissionProviderProps) => {
+  const { activePool } = useActivePools();
   const { getBondedPool } = useBondedPools();
-  const { selectedActivePool } = useActivePools();
-  const poolId = selectedActivePool?.id || 0;
+  const poolId = activePool?.id || 0;
   const bondedPool = getBondedPool(poolId);
 
   // Get initial commission value from the bonded pool commission config.

@@ -27,9 +27,9 @@ export const Bond = () => {
   const {
     networkData: { units, unit },
   } = useNetwork();
-  const { activeAccount } = useActiveAccounts();
   const { notEnoughFunds } = useTxMeta();
-  const { selectedActivePool } = useActivePools();
+  const { activePool } = useActivePools();
+  const { activeAccount } = useActiveAccounts();
   const { getSignerWarnings } = useSignerWarnings();
   const { feeReserve, getTransferOptions } = useTransferOptions();
   const {
@@ -54,7 +54,7 @@ export const Bond = () => {
   const largestTxFee = useBondGreatestFee({ bondFor });
 
   // calculate any unclaimed pool rewards.
-  let { pendingRewards } = selectedActivePool || {};
+  let { pendingRewards } = activePool || {};
   pendingRewards = pendingRewards ?? new BigNumber(0);
   pendingRewards = planckToUnit(pendingRewards, units);
 

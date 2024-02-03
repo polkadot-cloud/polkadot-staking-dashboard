@@ -33,9 +33,9 @@ export const HomeInner = () => {
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
   const { activeTab, setActiveTab } = usePoolsTabs();
+  const { getPoolRoles, activePool } = useActivePools();
   const { counterForBondedPools } = useApi().poolsConfig;
   const { bondedPools, getAccountPoolRoles } = useBondedPools();
-  const { getPoolRoles, selectedActivePool } = useActivePools();
   const accountPools = getAccountPoolRoles(activeAccount);
   const totalAccountPools = Object.entries(accountPools).length;
 
@@ -64,10 +64,10 @@ export const HomeInner = () => {
 
   // Back to tab 0 if not in a pool & on members tab.
   useEffect(() => {
-    if (!selectedActivePool) {
+    if (!activePool) {
       setActiveTab(0);
     }
-  }, [selectedActivePool]);
+  }, [activePool]);
 
   const ROW_HEIGHT = 220;
 
@@ -109,7 +109,7 @@ export const HomeInner = () => {
               </CardWrapper>
             </RowSection>
           </PageRow>
-          {selectedActivePool !== null && (
+          {activePool !== null && (
             <>
               <ManagePool />
               <PageRow>

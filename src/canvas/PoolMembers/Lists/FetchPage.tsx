@@ -28,7 +28,7 @@ export const MembersListInner = ({
   const { network } = useNetwork();
   const { pluginEnabled } = usePlugins();
   const { activeAccount } = useActiveAccounts();
-  const { selectedActivePool } = useActivePools();
+  const { activePool } = useActivePools();
   const {
     poolMembersApi,
     setPoolMembersApi,
@@ -65,7 +65,7 @@ export const MembersListInner = ({
   const fetchingMemberList = useRef<boolean>(false);
 
   const setupMembersList = async () => {
-    const poolId = selectedActivePool?.id || 0;
+    const poolId = activePool?.id || 0;
 
     if (poolId > 0 && !fetchingMemberList.current) {
       fetchingMemberList.current = true;
@@ -105,7 +105,7 @@ export const MembersListInner = ({
     if (fetchedPoolMembersApi === 'unsynced') {
       setupMembersList();
     }
-  }, [fetchedPoolMembersApi, selectedActivePool]);
+  }, [fetchedPoolMembersApi, activePool]);
 
   // Render throttle.
   useEffect(() => {

@@ -17,7 +17,7 @@ export const Connected = () => {
   const { isNetworkSyncing } = useUi();
   const { isNominating } = useStaking();
   const { poolsMetaData } = useBondedPools();
-  const { selectedActivePool } = useActivePools();
+  const { activePool } = useActivePools();
   const { accountHasSigner } = useImportedAccounts();
   const { activeAccount, activeProxy } = useActiveAccounts();
 
@@ -40,11 +40,11 @@ export const Connected = () => {
         </HeadingWrapper>
 
         {/* Pool account display / hide if not in pool or if syncing. */}
-        {selectedActivePool !== null && !isNetworkSyncing && (
+        {activePool !== null && !isNetworkSyncing && (
           <HeadingWrapper>
             <PoolAccount
               label={t('pool')}
-              pool={selectedActivePool}
+              pool={activePool}
               syncing={!Object.values(poolsMetaData).length}
             />
           </HeadingWrapper>

@@ -271,7 +271,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   // Fetches the active pool's nominees.
   const fetchPoolNominatedList = async () => {
     // get raw nominations list
-    const n = poolNominations.targets;
+    const n = poolNominations?.targets || [];
 
     // fetch preferences
     const nominationsWithPrefs = await fetchValidatorPrefs(

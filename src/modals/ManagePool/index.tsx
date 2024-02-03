@@ -21,7 +21,7 @@ export const ManagePool = () => {
   const { t } = useTranslation('modals');
   const { notEnoughFunds } = useTxMeta();
   const { integrityChecked } = useLedgerHardware();
-  const { isOwner, selectedActivePool } = useActivePools();
+  const { isOwner, activePool } = useActivePools();
   const { setModalHeight, modalMaxHeight } = useOverlay().modal;
 
   // modal task
@@ -59,7 +59,7 @@ export const ManagePool = () => {
     task,
     notEnoughFunds,
     calculateHeight,
-    selectedActivePool?.bondedPool?.state,
+    activePool?.bondedPool?.state,
   ]);
 
   useEffect(() => {

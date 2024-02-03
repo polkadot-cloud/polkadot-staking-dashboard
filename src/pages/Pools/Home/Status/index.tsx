@@ -9,14 +9,14 @@ import { PoolStatus } from './PoolStatus';
 import { RewardsStatus } from './RewardsStatus';
 
 export const Status = ({ height }: { height: number }) => {
-  const { selectedActivePool } = useActivePools();
+  const { activePool } = useActivePools();
 
   return (
     <CardWrapper height={height}>
       <MembershipStatus />
       <Separator />
       <RewardsStatus />
-      {selectedActivePool && (
+      {activePool && (
         <>
           <Separator />
           <PoolStatus />

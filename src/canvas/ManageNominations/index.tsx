@@ -40,7 +40,7 @@ export const ManageNominations = () => {
   const { consts, api } = useApi();
   const { getBondedAccount } = useBonded();
   const { activeAccount } = useActiveAccounts();
-  const { selectedActivePool } = useActivePools();
+  const { activePool } = useActivePools();
   const { openPromptWith, closePrompt } = usePrompt();
   const { updatePoolNominations } = useBondedPools();
   const controller = getBondedAccount(activeAccount);
@@ -109,7 +109,7 @@ export const ManageNominations = () => {
 
     if (isPool) {
       tx = api.tx.nominationPools.nominate(
-        selectedActivePool?.id || 0,
+        activePool?.id || 0,
         targetsToSubmit
       );
     } else {
@@ -128,9 +128,9 @@ export const ManageNominations = () => {
     callbackInBlock: () => {
       if (isPool) {
         // Update bonded pool targets if updating pool nominations.
-        if (selectedActivePool?.id) {
+        if (activePool?.id) {
           updatePoolNominations(
-            selectedActivePool.id,
+            activePool.id,
             newNominations.nominations.map((n) => n.address)
           );
         }

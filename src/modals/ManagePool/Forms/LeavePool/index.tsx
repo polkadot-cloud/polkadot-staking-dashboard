@@ -42,10 +42,10 @@ export const LeavePool = ({
   const {
     networkData: { units, unit },
   } = useNetwork();
+  const { activePool } = useActivePools();
   const { activeAccount } = useActiveAccounts();
-  const { setModalStatus, setModalResize } = useOverlay().modal;
   const { getTransferOptions } = useTransferOptions();
-  const { selectedActivePool } = useActivePools();
+  const { setModalStatus, setModalResize } = useOverlay().modal;
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
 
@@ -60,7 +60,7 @@ export const LeavePool = ({
     true
   );
 
-  let { pendingRewards } = selectedActivePool || {};
+  let { pendingRewards } = activePool || {};
   pendingRewards = pendingRewards ?? new BigNumber(0);
   pendingRewards = planckToUnit(pendingRewards, units);
 

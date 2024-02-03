@@ -21,12 +21,12 @@ export const RewardsStatus = () => {
   } = useNetwork();
   const { isReady } = useApi();
   const { isPoolSyncing } = useUi();
+  const { activePool } = useActivePools();
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
-  const { selectedActivePool } = useActivePools();
   const { isReadOnlyAccount } = useImportedAccounts();
 
-  let { pendingRewards } = selectedActivePool || {};
+  let { pendingRewards } = activePool || {};
   pendingRewards = pendingRewards ?? new BigNumber(0);
 
   // Set the minimum unclaimed planck value to prevent e numbers.
@@ -57,7 +57,7 @@ export const RewardsStatus = () => {
           disabled:
             !isReady ||
             isReadOnlyAccount(activeAccount) ||
-            selectedActivePool?.bondedPool?.state === 'Destroying',
+            activePool?.bondedPool?.state === 'Destroying',
           small: true,
           onClick: () =>
             openModal({

@@ -20,8 +20,8 @@ export interface ActivePoolsContextState {
   getPoolRoles: () => PoolRoles;
   getNominationsStatus: () => NominationStatuses;
   setSelectedPoolId: (p: string) => void;
-  selectedActivePool: ActivePool | null;
-  poolNominations: Nominations;
+  activePool: ActivePool | null;
+  poolNominations: Nominations | null;
   synced: Sync;
   selectedPoolMemberCount: number;
 }

@@ -18,15 +18,14 @@ export const Members = () => {
   const { mode } = useTheme();
   const { pluginEnabled } = usePlugins();
   const { getMembersOfPoolFromNode } = usePoolMembers();
-  const { selectedActivePool, isOwner, isBouncer, selectedPoolMemberCount } =
+  const { activePool, isOwner, isBouncer, selectedPoolMemberCount } =
     useActivePools();
 
   const { colors } = useNetwork().networkData;
   const annuncementBorderColor = colors.secondary[mode];
 
   const showBlockedPrompt =
-    selectedActivePool?.bondedPool?.state === 'Blocked' &&
-    (isOwner() || isBouncer());
+    activePool?.bondedPool?.state === 'Blocked' && (isOwner() || isBouncer());
 
   const membersListProps = {
     batchKey: 'active_pool_members',
@@ -58,7 +57,7 @@ export const Members = () => {
       )}
 
       {/* Pool in Destroying state: allow anyone to unbond & withdraw members */}
-      {selectedActivePool?.bondedPool?.state === 'Destroying' && (
+      {activePool?.bondedPool?.state === 'Destroying' && (
         <CardWrapper
           className="canvas"
           style={{
@@ -86,7 +85,7 @@ export const Members = () => {
         ) : (
           <DefaultMemberList
             {...membersListProps}
-            members={getMembersOfPoolFromNode(selectedActivePool?.id ?? 0)}
+            members={getMembersOfPoolFromNode(activePool?.id ?? 0)}
           />
         )}
       </CardWrapper>

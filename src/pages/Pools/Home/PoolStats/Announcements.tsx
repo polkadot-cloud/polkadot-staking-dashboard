@@ -19,9 +19,9 @@ export const Announcements = () => {
   const {
     networkData: { units, unit },
   } = useNetwork();
-  const { selectedActivePool } = useActivePools();
-  const { rewardAccountBalance } = selectedActivePool || {};
-  const { totalRewardsClaimed } = selectedActivePool?.rewardPool || {};
+  const { activePool } = useActivePools();
+  const { rewardAccountBalance } = activePool || {};
+  const { totalRewardsClaimed } = activePool?.rewardPool || {};
   const { existentialDeposit } = consts;
 
   // calculate the latest reward account balance

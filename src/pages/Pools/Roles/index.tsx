@@ -40,9 +40,9 @@ export const Roles = ({
   const { isPoolSyncing } = useUi();
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
+  const { isOwner, activePool } = useActivePools();
   const { isReadOnlyAccount } = useImportedAccounts();
-  const { isOwner, selectedActivePool } = useActivePools();
-  const { id } = selectedActivePool || { id: 0 };
+  const { id } = activePool || { id: 0 };
   const roles = defaultRoles;
 
   const initialiseEdits = (() => {
@@ -188,10 +188,7 @@ export const Roles = ({
         <section>
           <div className="inner">
             <h4>{t('pools.depositor')}</h4>
-            <PoolAccount
-              address={roles.depositor ?? null}
-              pool={selectedActivePool}
-            />
+            <PoolAccount address={roles.depositor ?? null} pool={activePool} />
           </div>
         </section>
         <section>
@@ -204,10 +201,7 @@ export const Roles = ({
                 setRoleEdit={setRoleEditHandler}
               />
             ) : (
-              <PoolAccount
-                address={roles.root ?? null}
-                pool={selectedActivePool}
-              />
+              <PoolAccount address={roles.root ?? null} pool={activePool} />
             )}
           </div>
         </section>
@@ -223,7 +217,7 @@ export const Roles = ({
             ) : (
               <PoolAccount
                 address={roles.nominator ?? null}
-                pool={selectedActivePool}
+                pool={activePool}
               />
             )}
           </div>
@@ -238,10 +232,7 @@ export const Roles = ({
                 setRoleEdit={setRoleEditHandler}
               />
             ) : (
-              <PoolAccount
-                address={roles.bouncer ?? null}
-                pool={selectedActivePool}
-              />
+              <PoolAccount address={roles.bouncer ?? null} pool={activePool} />
             )}
           </div>
         </section>

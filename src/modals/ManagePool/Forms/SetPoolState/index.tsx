@@ -32,11 +32,11 @@ export const SetPoolState = ({
   const { api } = useApi();
   const { setModalStatus } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
-  const { isOwner, isBouncer, selectedActivePool } = useActivePools();
-  const { updateBondedPools, getBondedPool } = useBondedPools();
   const { getSignerWarnings } = useSignerWarnings();
+  const { isOwner, isBouncer, activePool } = useActivePools();
+  const { updateBondedPools, getBondedPool } = useBondedPools();
 
-  const poolId = selectedActivePool?.id;
+  const poolId = activePool?.id;
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);

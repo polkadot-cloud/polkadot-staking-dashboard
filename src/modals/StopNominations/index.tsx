@@ -32,10 +32,10 @@ export const StopNominations = () => {
     config: { options },
     setModalResize,
   } = useOverlay().modal;
-  const { poolNominations, isNominator, isOwner, selectedActivePool } =
+  const { poolNominations, isNominator, isOwner, activePool } =
     useActivePools();
-  const { bondFor } = options;
 
+  const { bondFor } = options;
   const isPool = bondFor === 'pool';
   const isStaking = bondFor === 'nominator';
   const controller = getBondedAccount(activeAccount);
@@ -69,7 +69,7 @@ export const StopNominations = () => {
 
     if (isPool) {
       // wishing to stop all nominations, call chill
-      tx = api.tx.nominationPools.chill(selectedActivePool?.id || 0);
+      tx = api.tx.nominationPools.chill(activePool?.id || 0);
     } else if (isStaking) {
       tx = api.tx.staking.chill();
     }

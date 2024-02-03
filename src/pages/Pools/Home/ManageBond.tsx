@@ -36,7 +36,7 @@ export const ManageBond = () => {
   const { activeAccount } = useActiveAccounts();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getTransferOptions } = useTransferOptions();
-  const { isBonding, isMember, selectedActivePool } = useActivePools();
+  const { isBonding, isMember, activePool } = useActivePools();
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const {
@@ -44,7 +44,7 @@ export const ManageBond = () => {
     transferrableBalance,
   } = allTransferOptions;
 
-  const { state } = selectedActivePool?.bondedPool || {};
+  const { state } = activePool?.bondedPool || {};
 
   return (
     <>

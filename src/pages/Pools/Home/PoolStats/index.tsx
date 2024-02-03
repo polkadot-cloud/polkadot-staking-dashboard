@@ -21,11 +21,11 @@ export const PoolStats = () => {
     networkData: { units, unit },
   } = useNetwork();
   const { getCurrentCommission } = usePoolCommission();
-  const { selectedActivePool, selectedPoolMemberCount } = useActivePools();
+  const { activePool, selectedPoolMemberCount } = useActivePools();
 
-  const poolId = selectedActivePool?.id || 0;
+  const poolId = activePool?.id || 0;
 
-  const { state, points } = selectedActivePool?.bondedPool || {};
+  const { state, points } = activePool?.bondedPool || {};
   const currentCommission = getCurrentCommission(poolId);
 
   const bonded = planckToUnit(

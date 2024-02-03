@@ -24,9 +24,9 @@ export const ClaimReward = () => {
   const {
     networkData: { units, unit },
   } = useNetwork();
-  const { activeAccount } = useActiveAccounts();
   const { notEnoughFunds } = useTxMeta();
-  const { selectedActivePool } = useActivePools();
+  const { activePool } = useActivePools();
+  const { activeAccount } = useActiveAccounts();
   const { getSignerWarnings } = useSignerWarnings();
   const {
     setModalStatus,
@@ -34,7 +34,7 @@ export const ClaimReward = () => {
     setModalResize,
   } = useOverlay().modal;
 
-  let { pendingRewards } = selectedActivePool || {};
+  let { pendingRewards } = activePool || {};
   pendingRewards = pendingRewards ?? new BigNumber(0);
   const { claimType } = options;
 
@@ -45,7 +45,7 @@ export const ClaimReward = () => {
     } else {
       setValid(false);
     }
-  }, [selectedActivePool]);
+  }, [activePool]);
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);

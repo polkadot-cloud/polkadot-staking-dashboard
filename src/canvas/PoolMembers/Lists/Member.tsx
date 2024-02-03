@@ -44,12 +44,12 @@ export const Member = ({
   const { selectActive } = useList();
   const { openPromptWith } = usePrompt();
   const { setMenuPosition, setMenuItems, open } = useMenu();
-  const { selectedActivePool, isOwner, isBouncer } = useActivePools();
+  const { activePool, isOwner, isBouncer } = useActivePools();
 
   // Ref for the member container.
   const memberRef = useRef<HTMLDivElement>(null);
 
-  const { state, roles } = selectedActivePool?.bondedPool || {};
+  const { state, roles } = activePool?.bondedPool || {};
   const { bouncer, root, depositor } = roles || {};
 
   const canUnbondBlocked =

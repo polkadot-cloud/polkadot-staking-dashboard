@@ -19,12 +19,12 @@ export const ManagePool = () => {
   const { poolNominated } = useValidators();
   const { openCanvas } = useOverlay().canvas;
   const { activeAccount } = useActiveAccounts();
-  const { isOwner, isNominator, poolNominations, selectedActivePool } =
+  const { isOwner, isNominator, poolNominations, activePool } =
     useActivePools();
 
   const isNominating = !!poolNominations?.targets?.length;
-  const nominator = selectedActivePool?.addresses?.stash ?? null;
-  const { state } = selectedActivePool?.bondedPool || {};
+  const nominator = activePool?.addresses?.stash ?? null;
+  const { state } = activePool?.bondedPool || {};
   const { openHelp } = useHelp();
 
   const canNominate = isOwner() || isNominator();

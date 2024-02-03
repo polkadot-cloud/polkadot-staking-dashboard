@@ -19,14 +19,13 @@ export const Tasks = forwardRef(
     const { activeAccount } = useActiveAccounts();
     const { getTransferOptions } = useTransferOptions();
     const { globalMaxCommission } = useApi().poolsConfig;
-    const { selectedActivePool, isOwner, isBouncer, isMember, isDepositor } =
+    const { activePool, isOwner, isBouncer, isMember, isDepositor } =
       useActivePools();
 
     const { active } = getTransferOptions(activeAccount).pool;
 
-    const poolLocked = selectedActivePool?.bondedPool?.state === 'Blocked';
-    const poolDestroying =
-      selectedActivePool?.bondedPool?.state === 'Destroying';
+    const poolLocked = activePool?.bondedPool?.state === 'Blocked';
+    const poolDestroying = activePool?.bondedPool?.state === 'Destroying';
 
     return (
       <ContentWrapper>

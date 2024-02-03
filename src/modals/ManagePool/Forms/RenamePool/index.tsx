@@ -32,11 +32,11 @@ export const RenamePool = ({
   const { api } = useApi();
   const { setModalStatus } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
-  const { isOwner, selectedActivePool } = useActivePools();
-  const { bondedPools, poolsMetaData } = useBondedPools();
+  const { isOwner, activePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
+  const { bondedPools, poolsMetaData } = useBondedPools();
 
-  const poolId = selectedActivePool?.id;
+  const poolId = activePool?.id;
 
   // Valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
@@ -47,7 +47,7 @@ export const RenamePool = ({
   // Determine current pool metadata and set in state.
   useEffect(() => {
     const pool = bondedPools.find(
-      ({ addresses }) => addresses.stash === selectedActivePool?.addresses.stash
+      ({ addresses }) => addresses.stash === activePool?.addresses.stash
     );
     if (pool) {
       setMetadata(u8aToString(u8aUnwrapBytes(poolsMetaData[Number(pool.id)])));
