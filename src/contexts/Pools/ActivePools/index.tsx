@@ -248,26 +248,6 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Initialise subscriptions to all active pools of imported accounts.
-  useEffectIgnoreInitial(() => {
-    syncActivePoolSubscriptions();
-  }, [network, isReady, accountPools]);
-
-  // Reset everything when `activeAccount` changes.
-  useEffectIgnoreInitial(() => {
-    ActivePoolsController.unsubscribe();
-    resetActivePools();
-  }, [activeAccount]);
-
-  // ---
-
-  // Re-calculate pending rewards when membership changes.
-  useEffectIgnoreInitial(() => {
-    if (isReady) {
-      updatePendingRewards();
-    }
-  }, [network, isReady, membership]);
-
   // Gets the member count of the currently selected pool. If Subscan is enabled, it is used instead of the connected node.
   const getMemberCount = async () => {
     if (!activePool?.id) {
@@ -302,6 +282,24 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
     fetchingMemberCount.current = 'unsynced';
     getMemberCount();
   }, [activeAccount, activePool, membership?.poolId]);
+
+  // Initialise subscriptions to all active pools of imported accounts.
+  useEffectIgnoreInitial(() => {
+    syncActivePoolSubscriptions();
+  }, [network, isReady, accountPools]);
+
+  // Reset everything when `activeAccount` changes.
+  useEffectIgnoreInitial(() => {
+    ActivePoolsController.unsubscribe();
+    resetActivePools();
+  }, [activeAccount]);
+
+  // Re-calculate pending rewards when membership changes.
+  useEffectIgnoreInitial(() => {
+    if (isReady) {
+      updatePendingRewards();
+    }
+  }, [network, isReady, membership]);
 
   // Reset on network change and component unmount.
   useEffect(() => {
