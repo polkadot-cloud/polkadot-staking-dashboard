@@ -303,13 +303,13 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
     getMemberCount();
   }, [activeAccount, activePool, membership?.poolId]);
 
-  // Reset on component unmount.
-  useEffect(
-    () => () => {
+  // Reset on network change and component unmount.
+  useEffect(() => {
+    resetActivePools();
+    return () => {
       resetActivePools();
-    },
-    [network]
-  );
+    };
+  }, [network]);
 
   const documentRef = useRef<Document>(document);
 
