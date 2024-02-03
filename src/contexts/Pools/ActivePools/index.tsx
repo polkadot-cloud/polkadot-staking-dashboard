@@ -49,7 +49,9 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
 
   const membership = getPoolMembership(activeAccount);
 
-  // Determine active pools to subscribe to.
+  // Determine active pools to subscribe to. Dependencies of `activeAccount`, and `membership` mean
+  // that this object is only recalculated when these values change. We therefore do not need to use
+  // `activeAccount` or `membership` as dependencies in other effects.
   const accountPools = useMemo(() => {
     const newAccountPools = Object.keys(getAccountPools(activeAccount) || {});
     const p = membership?.poolId ? String(membership.poolId) : '-1';
@@ -333,11 +335,10 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Re-sync when `accountPools` changes.
   //
-  // TODO: Reset active pool and active nominations state when the active account changes. We only
-  // want to store the currently selected active pool in state.
+  // TODO: Only store the currently selected active pool in state.
   useEffectIgnoreInitial(() => {
     setStateWithRef('unsynced', setSynced, syncedRef);
-  }, [activeAccount, accountPools.length]);
+  }, [accountPools.length]);
 
   // Re-calculate pending rewards when membership changes.
   useEffectIgnoreInitial(() => {
