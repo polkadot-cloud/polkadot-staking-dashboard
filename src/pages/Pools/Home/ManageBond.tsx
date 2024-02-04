@@ -31,13 +31,14 @@ export const ManageBond = () => {
     },
   } = useNetwork();
   const { openHelp } = useHelp();
-  const { isPoolSyncing } = useUi();
+  const { isSyncingById } = useUi();
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getTransferOptions } = useTransferOptions();
   const { isBonding, isMember, activePool } = useActivePools();
 
+  const activePoolsSyncing = isSyncingById('active-pools');
   const allTransferOptions = getTransferOptions(activeAccount);
   const {
     pool: { active, totalUnlocking, totalUnlocked, totalUnlockChunks },
@@ -63,7 +64,7 @@ export const ManageBond = () => {
         <ButtonRow>
           <ButtonPrimary
             disabled={
-              isPoolSyncing ||
+              activePoolsSyncing ||
               !isBonding() ||
               !isMember() ||
               isReadOnlyAccount(activeAccount) ||
@@ -81,7 +82,7 @@ export const ManageBond = () => {
           />
           <ButtonPrimary
             disabled={
-              isPoolSyncing ||
+              activePoolsSyncing ||
               !isBonding() ||
               !isMember() ||
               isReadOnlyAccount(activeAccount) ||
@@ -99,7 +100,9 @@ export const ManageBond = () => {
           />
           <ButtonPrimary
             disabled={
-              isPoolSyncing || !isMember() || isReadOnlyAccount(activeAccount)
+              activePoolsSyncing ||
+              !isMember() ||
+              isReadOnlyAccount(activeAccount)
             }
             iconLeft={faLockOpen}
             onClick={() =>

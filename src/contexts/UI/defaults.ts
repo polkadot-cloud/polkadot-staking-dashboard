@@ -14,6 +14,7 @@ export const defaultUIContext: UIContextInterface = {
   containerRefs: {},
   isSyncing: false,
   isNetworkSyncing: false,
-  isPoolSyncing: false,
   isBraveBrowser: false,
+  syncStatuses: [],
+  isSyncingById: (id) => false,
 };

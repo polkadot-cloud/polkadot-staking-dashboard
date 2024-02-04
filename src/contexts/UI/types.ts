@@ -13,6 +13,7 @@ export interface UIContextInterface {
   containerRefs: Record<string, RefObject<HTMLDivElement>>;
   isSyncing: boolean;
   isNetworkSyncing: boolean;
-  isPoolSyncing: boolean;
   isBraveBrowser: boolean;
+  syncStatuses: string[];
+  isSyncingById: (id: string) => boolean;
 }

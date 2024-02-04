@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { SyncEvent, SyncStatus } from './types';
+import type { SyncEvent, SyncID, SyncStatus } from './types';
 
 export class SyncController {
   // ------------------------------------------------------
@@ -9,7 +9,7 @@ export class SyncController {
   // ------------------------------------------------------
 
   // Dispatches a new sync event to the document.
-  static dispatch = (id: string, status: SyncStatus) => {
+  static dispatch = (id: SyncID, status: SyncStatus) => {
     const detail: SyncEvent = {
       id,
       status,

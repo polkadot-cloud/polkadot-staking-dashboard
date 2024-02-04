@@ -13,6 +13,9 @@ import { useApi } from '../Api';
 import { useStaking } from '../Staking';
 import * as defaults from './defaults';
 import type { UIContextInterface } from './types';
+import { isCustomEvent } from 'static/utils';
+import { SyncController } from 'static/SyncController';
+import { useEventListener } from 'usehooks-ts';
 
 export const UIContext = createContext<UIContextInterface>(
   defaults.defaultUIContext
@@ -25,11 +28,12 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
   const { balancesInitialSynced } = useBalances();
   const { isReady, networkMetrics, activeEra, stakingMetrics } = useApi();
 
+  // Keep a record of active sync statuses.
+  const [syncStatuses, setSyncStatuses] = useState<string[]>([]);
+  const syncStatusesRef = useRef(syncStatuses);
+
   // Set whether the network has been synced.
   const [isNetworkSyncing, setIsNetworkSyncing] = useState<boolean>(false);
-
-  // Set whether pools are being synced. NOTE: not currently being updated.
-  const [isPoolSyncing] = useState<boolean>(false);
 
   // Set whether app is syncing. Includes workers (active nominations).
   const [isSyncing, setIsSyncing] = useState<boolean>(false);
@@ -66,12 +70,42 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
       : userSideMenuMinimisedRef.current
   );
 
+  // Get a syncing status of a syncing `id`.
+  const isSyncingById = (id: string): boolean =>
+    syncStatusesRef.current.includes(id);
+
   // Resize side menu callback.
   const resizeCallback = () => {
     if (window.innerWidth <= SideMenuStickyThreshold) {
       setSideMenuMinimised(false);
     } else {
       setSideMenuMinimised(userSideMenuMinimisedRef.current);
+    }
+  };
+
+  // Handle new syncing status events.
+  const newSyncStatusCallback = async (e: Event) => {
+    if (isCustomEvent(e) && SyncController.isValidSyncStatus(e)) {
+      const { id, status } = e.detail;
+
+      if (status === 'syncing') {
+        // An item is reported as syncing. Add its `id` to state if not already.
+        if (!syncStatusesRef.current.includes(id)) {
+          setStateWithRef(
+            [...syncStatusesRef.current, id],
+            setSyncStatuses,
+            syncStatusesRef
+          );
+        }
+      } else if (status === 'complete') {
+        // An item is reported to have completed syncing. Remove its `id` from state if present.
+        if (syncStatusesRef.current.includes(id)) {
+          const newSyncStatuses = syncStatusesRef.current.filter(
+            (syncStatus) => syncStatus !== id
+          );
+          setStateWithRef(newSyncStatuses, setSyncStatuses, syncStatusesRef);
+        }
+      }
     }
   };
 
@@ -132,6 +166,11 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
     balancesInitialSynced,
   ]);
 
+  const documentRef = useRef<Document>(document);
+
+  // Listen for new active pool events.
+  useEventListener('new-sync-status', newSyncStatusCallback, documentRef);
+
   return (
     <UIContext.Provider
       value={{
@@ -142,10 +181,11 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
         sideMenuMinimised,
         isSyncing,
         isNetworkSyncing,
-        isPoolSyncing,
         containerRefs,
         isBraveBrowser,
         userSideMenuMinimised,
+        syncStatuses,
+        isSyncingById,
       }}
     >
       {children}

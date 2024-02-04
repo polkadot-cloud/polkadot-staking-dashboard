@@ -38,7 +38,7 @@ import { useBalances } from 'contexts/Balances';
 export const Pool = ({ pool }: PoolProps) => {
   const { t } = useTranslation('library');
   const { memberCounter, addresses, id, state } = pool;
-  const { isPoolSyncing } = useUi();
+  const { isSyncingById } = useUi();
   const { validators } = useValidators();
   const { setActiveTab } = usePoolsTabs();
   const { openModal } = useOverlay().modal;
@@ -114,7 +114,7 @@ export const Pool = ({ pool }: PoolProps) => {
   };
 
   const displayJoin =
-    !isPoolSyncing &&
+    !isSyncingById('active-pools') &&
     state === 'Open' &&
     !membership &&
     !isReadOnlyAccount(activeAccount) &&

@@ -20,7 +20,7 @@ export const RewardsStatus = () => {
     networkData: { units },
   } = useNetwork();
   const { isReady } = useApi();
-  const { isPoolSyncing } = useUi();
+  const { isSyncingById } = useUi();
   const { activePool } = useActivePools();
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
@@ -75,7 +75,7 @@ export const RewardsStatus = () => {
       helpKey="Pool Rewards"
       type="odometer"
       stat={{ value: labelRewards }}
-      buttons={isPoolSyncing ? [] : buttonsRewards}
+      buttons={isSyncingById('active-pools') ? [] : buttonsRewards}
     />
   );
 };

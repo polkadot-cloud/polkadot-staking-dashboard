@@ -13,7 +13,7 @@ import { Stat } from 'library/Stat';
 
 export const PoolStatus = () => {
   const { t } = useTranslation('pages');
-  const { isPoolSyncing } = useUi();
+  const { isSyncingById } = useUi();
   const { getNominationStatus } = useNominationStatus();
   const { activePool, poolNominations } = useActivePools();
 
@@ -21,6 +21,7 @@ export const PoolStatus = () => {
   const { earningRewards, nominees } = getNominationStatus(poolStash, 'pool');
   const poolState = activePool?.bondedPool?.state ?? null;
   const poolNominating = !!poolNominations?.targets?.length;
+  const activePoolsSyncing = isSyncingById('active-pools');
 
   // Determine pool state icon.
   let poolStateIcon;
@@ -44,7 +45,7 @@ export const PoolStatus = () => {
         : '';
 
   // Determine pool status - right side.
-  const poolStatusRight = isPoolSyncing
+  const poolStatusRight = activePoolsSyncing
     ? t('pools.inactivePoolNotNominating')
     : !poolNominating
       ? t('pools.inactivePoolNotNominating')
@@ -58,7 +59,7 @@ export const PoolStatus = () => {
 
   return (
     <Stat
-      icon={isPoolSyncing ? undefined : poolStateIcon}
+      icon={activePoolsSyncing ? undefined : poolStateIcon}
       label={t('pools.poolStatus')}
       helpKey="Nomination Status"
       stat={`${poolStatusLeft}${poolStatusRight}`}

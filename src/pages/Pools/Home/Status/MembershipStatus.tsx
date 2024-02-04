@@ -24,7 +24,7 @@ export const MembershipStatus = ({
 }) => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
-  const { isPoolSyncing } = useUi();
+  const { isSyncingById } = useUi();
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
   const { label, buttons } = useStatusButtons();
@@ -88,7 +88,7 @@ export const MembershipStatus = ({
       label={t('pools.poolMembership')}
       helpKey="Pool Membership"
       stat={t('pools.notInPool')}
-      buttons={!showButtons || isPoolSyncing ? [] : buttons}
+      buttons={!showButtons || isSyncingById('active-pools') ? [] : buttons}
       buttonType={buttonType}
     />
   );

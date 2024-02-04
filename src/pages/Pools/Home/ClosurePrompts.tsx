@@ -16,7 +16,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 export const ClosurePrompts = () => {
   const { t } = useTranslation('pages');
   const { mode } = useTheme();
-  const { isPoolSyncing } = useUi();
+  const { isSyncingById } = useUi();
   const { openModal } = useOverlay().modal;
   const { colors } = useNetwork().networkData;
   const { activeAccount } = useActiveAccounts();
@@ -28,10 +28,11 @@ export const ClosurePrompts = () => {
   const { active, totalUnlockChunks } = getTransferOptions(activeAccount).pool;
   const targets = poolNominations?.targets ?? [];
   const annuncementBorderColor = colors.secondary[mode];
+  const activePoolsSyncing = isSyncingById('active-pools');
 
   // is the pool in a state for the depositor to close
   const depositorCanClose =
-    !isPoolSyncing &&
+    !activePoolsSyncing &&
     isDepositor() &&
     state === 'Destroying' &&
     memberCounter === '1';
@@ -64,7 +65,7 @@ export const ClosurePrompts = () => {
                 marginRight
                 text={t('pools.unbond')}
                 disabled={
-                  isPoolSyncing ||
+                  activePoolsSyncing ||
                   (!depositorCanWithdraw && !depositorCanUnbond)
                 }
                 onClick={() =>
@@ -82,7 +83,7 @@ export const ClosurePrompts = () => {
                     ? t('pools.unlocked')
                     : String(totalUnlockChunks ?? 0)
                 }
-                disabled={isPoolSyncing || !isBonding()}
+                disabled={activePoolsSyncing || !isBonding()}
                 onClick={() =>
                   openModal({
                     key: 'UnlockChunks',

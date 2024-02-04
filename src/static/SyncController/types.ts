@@ -2,8 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export interface SyncEvent {
-  id: string;
-  status: string;
+  id: SyncID;
+  status: SyncStatus;
 }
+
+export type SyncID = 'active-pools';
 
 export type SyncStatus = 'syncing' | 'complete';

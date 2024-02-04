@@ -17,7 +17,7 @@ import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 export const PoolFavorites = () => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
-  const { isPoolSyncing } = useUi();
+  const { isSyncingById } = useUi();
   const { bondedPools } = useBondedPools();
   const { favorites, removeFavorite } = useFavoritePools();
 
@@ -43,7 +43,7 @@ export const PoolFavorites = () => {
   return (
     <PageRow>
       <CardWrapper>
-        {favoritesList === null || isPoolSyncing ? (
+        {favoritesList === null || isSyncingById('active-pools') ? (
           <ListStatusHeader>
             {t('pools.fetchingFavoritePools')}...
           </ListStatusHeader>
