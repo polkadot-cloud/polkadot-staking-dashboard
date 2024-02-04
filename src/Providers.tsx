@@ -54,6 +54,7 @@ export const Providers = () => {
 
   // !! Provider order matters
   const providers: (FC<AnyJson> | [FC<AnyJson>, AnyJson])[] = [
+    UIProvider,
     [APIProvider, { network }],
     VaultAccountsProvider,
     LedgerHardwareProvider,
@@ -82,7 +83,6 @@ export const Providers = () => {
     FastUnstakeProvider,
     PayoutsProvider,
     PoolPerformanceProvider,
-    UIProvider,
     SetupProvider,
     MenuProvider,
     TooltipProvider,

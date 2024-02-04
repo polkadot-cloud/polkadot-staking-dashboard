@@ -363,11 +363,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       );
     }
 
-    // Add initial syncing items.
-    SyncController.dispatch('initialization', 'syncing');
-    SyncController.dispatch('balances', 'syncing');
-    SyncController.dispatch('era-stakers', 'syncing');
-
     // Reconnect API instance.
     APIController.initialize(network, isLightClient ? 'sc' : 'ws', rpcEndpoint);
   }, [isLightClient, network]);

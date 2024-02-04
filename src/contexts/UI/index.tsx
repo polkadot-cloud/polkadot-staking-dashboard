@@ -118,9 +118,13 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
     resizeCallback();
   }, [userSideMenuMinimised]);
 
+  // Bootstrap existing sync statuses of interest when hook is mounted.
+  useEffect(() => {
+    setStateWithRef(SyncController.syncIds, setSyncStatuses, syncStatusesRef);
+  }, []);
   const documentRef = useRef<Document>(document);
 
-  // Listen for new active pool events.
+  // Listen for new sync events.
   useEventListener('new-sync-status', newSyncStatusCallback, documentRef);
 
   return (
