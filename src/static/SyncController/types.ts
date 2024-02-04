@@ -6,6 +6,6 @@ export interface SyncEvent {
   status: SyncStatus;
 }
 
-export type SyncID = 'initialization' | 'active-pools';
+export type SyncID = 'initialization' | 'balances' | 'active-pools';
 
 export type SyncStatus = 'syncing' | 'complete';

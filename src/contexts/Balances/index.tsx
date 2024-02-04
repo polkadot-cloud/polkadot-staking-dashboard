@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ReactNode } from 'react';
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useRef } from 'react';
 import type { MaybeAddress } from 'types';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import * as defaults from './defaults';
@@ -13,6 +13,7 @@ import { BalancesController } from 'static/BalancesController';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useActiveBalances } from 'hooks/useActiveBalances';
 import { useBonded } from 'contexts/Bonded';
+import { SyncController } from 'static/SyncController';
 
 export const BalancesContext = createContext<BalancesContextInterface>(
   defaults.defaultBalancesContext
@@ -38,10 +39,6 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     accounts: [activeAccount, activeProxy, controller],
   });
 
-  // Store whether balances for all imported accounts have been synced on initial page load.
-  const [balancesInitialSynced, setBalancesInitialSynced] =
-    useState<boolean>(false);
-
   // Check all accounts have been synced. App-wide syncing state for all accounts.
   const newAccountBalancesCallback = (e: Event) => {
     if (
@@ -56,9 +53,9 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
 
   // Check whether all accounts have been synced and update state accordingly.
   const checkBalancesSynced = () => {
-    setBalancesInitialSynced(
-      Object.keys(BalancesController.balances).length === accounts.length
-    );
+    if (Object.keys(BalancesController.balances).length === accounts.length) {
+      SyncController.dispatch('balances', 'complete');
+    }
   };
 
   // Gets an account's nonce directly from `BalanceController`. Used at the time of building a
@@ -85,7 +82,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   // If no accounts are imported, set balances synced to true.
   useEffect(() => {
     if (!accounts.length) {
-      setBalancesInitialSynced(true);
+      SyncController.dispatch('balances', 'complete');
     }
   }, [accounts.length]);
 
@@ -99,7 +96,6 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
         getLedger,
         getPayee,
         getPoolMembership,
-        balancesInitialSynced,
       }}
     >
       {children}

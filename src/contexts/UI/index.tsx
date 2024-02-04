@@ -2,11 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
-import BigNumber from 'bignumber.js';
 import type { ReactNode, RefObject } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { SideMenuStickyThreshold } from 'consts';
-import { useBalances } from 'contexts/Balances';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import type { AnyJson } from 'types';
 import { useApi } from '../Api';
@@ -25,8 +23,7 @@ export const useUi = () => useContext(UIContext);
 
 export const UIProvider = ({ children }: { children: ReactNode }) => {
   const { eraStakers } = useStaking();
-  const { balancesInitialSynced } = useBalances();
-  const { isReady, networkMetrics, activeEra, stakingMetrics } = useApi();
+  const { isReady, networkMetrics, stakingMetrics } = useApi();
 
   // Keep a record of active sync statuses.
   const [syncStatuses, setSyncStatuses] = useState<string[]>([]);
@@ -133,34 +130,13 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     let syncing = false;
 
-    // staking metrics have synced
-    if (stakingMetrics.lastReward === new BigNumber(0)) {
-      syncing = true;
-    }
-
-    // era has synced from Network
-    if (activeEra.index.isZero()) {
-      syncing = true;
-    }
-    // ----------------------------------------------------------------------------------
-
-    if (!balancesInitialSynced) {
-      syncing = true;
-    }
-
     // eraStakers total active nominators has synced
     if (!eraStakers.totalActiveNominators) {
       syncing = true;
     }
 
     setIsSyncing(syncing);
-  }, [
-    isReady,
-    stakingMetrics,
-    networkMetrics,
-    eraStakers,
-    balancesInitialSynced,
-  ]);
+  }, [isReady, stakingMetrics, networkMetrics, eraStakers]);
 
   const documentRef = useRef<Document>(document);
 
