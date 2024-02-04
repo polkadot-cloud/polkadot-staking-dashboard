@@ -26,7 +26,7 @@ import { useBalances } from 'contexts/Balances';
 export const Tips = () => {
   const { i18n, t } = useTranslation();
   const { network } = useNetwork();
-  const { isNetworkSyncing } = useUi();
+  const { isSyncingById } = useUi();
   const { activeAccount } = useActiveAccounts();
   const { fillVariables } = useFillVariables();
   const {
@@ -37,6 +37,7 @@ export const Tips = () => {
   const { getPoolMembership } = useBalances();
   const { feeReserve, getTransferOptions } = useTransferOptions();
 
+  const initializationSyncing = isSyncingById('initialization');
   const membership = getPoolMembership(activeAccount);
   const transferOptions = getTransferOptions(activeAccount);
 
@@ -65,7 +66,7 @@ export const Tips = () => {
   // This function ensures totalPages is never surpassed, but does not guarantee
   // that the start item will maintain across resizes.
   const getPage = () => {
-    const totalItmes = isNetworkSyncing ? 1 : items.length;
+    const totalItmes = initializationSyncing ? 1 : items.length;
     const itemsPerPage = getItemsPerPage();
     const totalPages = Math.ceil(totalItmes / itemsPerPage);
     if (pageRef.current > totalPages) {
@@ -161,10 +162,10 @@ export const Tips = () => {
   });
 
   // determine items to be displayed
-  const end = isNetworkSyncing
+  const end = initializationSyncing
     ? 1
     : Math.min(pageRef.current * itemsPerPageRef.current, items.length);
-  const start = isNetworkSyncing
+  const start = initializationSyncing
     ? 1
     : pageRef.current * itemsPerPageRef.current - (itemsPerPageRef.current - 1);
 
@@ -176,7 +177,7 @@ export const Tips = () => {
   return (
     <TipsWrapper>
       <div style={{ flexGrow: 1 }}>
-        {isNetworkSyncing ? (
+        {initializationSyncing ? (
           <Syncing />
         ) : (
           <Items

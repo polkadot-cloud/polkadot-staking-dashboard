@@ -16,12 +16,13 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const UnstakePrompts = () => {
   const { t } = useTranslation('pages');
-  const { unit, colors } = useNetwork().networkData;
-  const { activeAccount } = useActiveAccounts();
   const { mode } = useTheme();
+  const { isSyncingById } = useUi();
   const { openModal } = useOverlay().modal;
-  const { isNetworkSyncing } = useUi();
+  const { activeAccount } = useActiveAccounts();
+  const { unit, colors } = useNetwork().networkData;
   const { isFastUnstaking, isUnstaking, getFastUnstakeText } = useUnstaking();
+
   const { getTransferOptions } = useTransferOptions();
   const { active, totalUnlockChunks, totalUnlocked, totalUnlocking } =
     getTransferOptions(activeAccount).nominate;
@@ -36,7 +37,7 @@ export const UnstakePrompts = () => {
 
   return (
     (isUnstaking || isFastUnstaking) &&
-    !isNetworkSyncing && (
+    !isSyncingById('initialization') && (
       <PageRow>
         <CardWrapper style={{ border: `1px solid ${annuncementBorderColor}` }}>
           <div className="content">

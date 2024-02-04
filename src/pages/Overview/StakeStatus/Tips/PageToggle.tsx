@@ -20,9 +20,9 @@ export const PageToggle = ({
   setPageHandler,
 }: PageToggleProps) => {
   const { t } = useTranslation();
-  const { isNetworkSyncing } = useUi();
+  const { isSyncingById } = useUi();
 
-  totalItems = isNetworkSyncing ? 1 : totalItems;
+  totalItems = isSyncingById('initialization') ? 1 : totalItems;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (

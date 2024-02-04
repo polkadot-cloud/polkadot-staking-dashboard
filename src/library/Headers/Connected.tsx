@@ -14,12 +14,13 @@ import { HeadingWrapper } from './Wrappers';
 
 export const Connected = () => {
   const { t } = useTranslation('library');
-  const { isNetworkSyncing } = useUi();
+  const { isSyncingById } = useUi();
   const { isNominating } = useStaking();
   const { poolsMetaData } = useBondedPools();
   const { activePool } = useActivePools();
   const { accountHasSigner } = useImportedAccounts();
   const { activeAccount, activeProxy } = useActiveAccounts();
+  const initializationSyncing = isSyncingById('initialization');
 
   return (
     activeAccount && (
@@ -29,7 +30,7 @@ export const Connected = () => {
           <DefaultAccount
             value={activeAccount}
             label={
-              isNetworkSyncing
+              initializationSyncing
                 ? undefined
                 : isNominating()
                   ? 'Nominator'
@@ -40,7 +41,7 @@ export const Connected = () => {
         </HeadingWrapper>
 
         {/* Pool account display / hide if not in pool or if syncing. */}
-        {activePool !== null && !isNetworkSyncing && (
+        {activePool !== null && !initializationSyncing && (
           <HeadingWrapper>
             <PoolAccount
               label={t('pool')}

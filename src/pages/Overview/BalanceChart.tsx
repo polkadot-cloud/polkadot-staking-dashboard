@@ -35,13 +35,14 @@ export const BalanceChart = () => {
   } = useNetwork();
   const prices = usePrices();
   const { plugins } = usePlugins();
-  const { isNetworkSyncing } = useUi();
+  const { isSyncingById } = useUi();
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
   const { accountHasSigner } = useImportedAccounts();
   const { getBalance, getLocks } = useBalances();
   const { feeReserve, getTransferOptions } = useTransferOptions();
 
+  const initializationSyncing = isSyncingById('initialization');
   const balance = getBalance(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
   const { edReserved } = allTransferOptions;
@@ -266,7 +267,7 @@ export const BalanceChart = () => {
                         openModal({ key: 'UpdateReserve', size: 'sm' })
                       }
                       iconRight={
-                        isNetworkSyncing
+                        initializationSyncing
                           ? undefined
                           : !feeReserve.isZero() && !edReserved.isZero()
                             ? faCheckDouble
@@ -277,7 +278,7 @@ export const BalanceChart = () => {
                       iconTransform="shrink-1"
                       disabled={
                         !activeAccount ||
-                        isNetworkSyncing ||
+                        initializationSyncing ||
                         !accountHasSigner(activeAccount)
                       }
                     />

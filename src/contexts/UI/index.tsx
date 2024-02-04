@@ -32,9 +32,6 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
   const [syncStatuses, setSyncStatuses] = useState<string[]>([]);
   const syncStatusesRef = useRef(syncStatuses);
 
-  // Set whether the network has been synced.
-  const [isNetworkSyncing, setIsNetworkSyncing] = useState<boolean>(false);
-
   // Set whether app is syncing. Includes workers (active nominations).
   const [isSyncing, setIsSyncing] = useState<boolean>(false);
 
@@ -84,6 +81,10 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // Handle new syncing status events.
+  //
+  // TODO: move this to a hook that components can listen to for sync statuses (for ids they are
+  // interested in). This will prevent router re-renders and oly re-render active components that
+  // are listening to updates.
   const newSyncStatusCallback = async (e: Event) => {
     if (isCustomEvent(e) && SyncController.isValidSyncStatus(e)) {
       const { id, status } = e.detail;
@@ -131,26 +132,21 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
   // App syncing updates.
   useEffect(() => {
     let syncing = false;
-    let networkSyncing = false;
 
     // staking metrics have synced
     if (stakingMetrics.lastReward === new BigNumber(0)) {
       syncing = true;
-      networkSyncing = true;
     }
 
     // era has synced from Network
     if (activeEra.index.isZero()) {
       syncing = true;
-      networkSyncing = true;
     }
+    // ----------------------------------------------------------------------------------
 
     if (!balancesInitialSynced) {
       syncing = true;
-      networkSyncing = true;
     }
-
-    setIsNetworkSyncing(networkSyncing);
 
     // eraStakers total active nominators has synced
     if (!eraStakers.totalActiveNominators) {
@@ -180,7 +176,6 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
         sideMenuOpen,
         sideMenuMinimised,
         isSyncing,
-        isNetworkSyncing,
         containerRefs,
         isBraveBrowser,
         userSideMenuMinimised,

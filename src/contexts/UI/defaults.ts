@@ -13,7 +13,6 @@ export const defaultUIContext: UIContextInterface = {
   sideMenuMinimised: false,
   containerRefs: {},
   isSyncing: false,
-  isNetworkSyncing: false,
   isBraveBrowser: false,
   syncStatuses: [],
   isSyncingById: (id) => false,

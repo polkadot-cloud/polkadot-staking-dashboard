@@ -29,7 +29,7 @@ export const NominationStatus = ({
 }) => {
   const { t } = useTranslation('pages');
   const { inSetup } = useStaking();
-  const { isNetworkSyncing } = useUi();
+  const { isSyncingById } = useUi();
   const { openModal } = useOverlay().modal;
   const { getBondedAccount } = useBonded();
   const {
@@ -88,7 +88,7 @@ export const NominationStatus = ({
             ? !isUnstaking
               ? [unstakeButton]
               : []
-            : isNetworkSyncing
+            : isSyncingById('initialization')
               ? []
               : [
                   {

@@ -16,7 +16,7 @@ export const MigrateContext = createContext<null>(null);
 
 export const MigrateProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi();
-  const { isNetworkSyncing } = useUi();
+  const { isSyncingById } = useUi();
   const { accounts } = useImportedAccounts();
 
   // The local app version of the current user.
@@ -71,7 +71,7 @@ export const MigrateProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffectIgnoreInitial(() => {
-    if (isReady && !isNetworkSyncing && !done) {
+    if (isReady && !isSyncingById('initialization') && !done) {
       // Carry out migrations if local version is different to current version.
       if (localAppVersion !== AppVersion) {
         // Added in 1.0.2.
@@ -107,7 +107,7 @@ export const MigrateProvider = ({ children }: { children: ReactNode }) => {
         setDone(true);
       }
     }
-  }, [isReady, isNetworkSyncing]);
+  }, [isReady, isSyncingById('initialization')]);
 
   return (
     <MigrateContext.Provider value={null}>{children}</MigrateContext.Provider>
