@@ -5,6 +5,11 @@ import type { SyncEvent, SyncID, SyncStatus } from './types';
 
 export class SyncController {
   // ------------------------------------------------------
+  // Class members
+  // ------------------------------------------------------
+  static syncIds: SyncID[] = [];
+
+  // ------------------------------------------------------
   // Dispatch sync events
   // ------------------------------------------------------
 
@@ -14,6 +19,16 @@ export class SyncController {
       id,
       status,
     };
+
+    // Keep class syncIds up to date.
+    if (status === 'syncing' && !this.syncIds.includes(id)) {
+      this.syncIds.push(id);
+    }
+    if (status === 'complete' && this.syncIds.includes(id)) {
+      this.syncIds = this.syncIds.filter((syncId) => syncId !== id);
+    }
+
+    // Dispatch event to UI.
     document.dispatchEvent(
       new CustomEvent('new-sync-status', {
         detail,
