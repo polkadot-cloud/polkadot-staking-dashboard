@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { pageFromUri } from '@polkadot-cloud/utils';
+import { pageFromUri, setStateWithRef } from '@polkadot-cloud/utils';
 import { useLocation } from 'react-router-dom';
 import { usePlugins } from 'contexts/Plugins';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -11,6 +11,10 @@ import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { usePayouts } from 'contexts/Payouts';
 import { Spinner } from './Spinner';
 import { useTxMeta } from 'contexts/TxMeta';
+import { useEventListener } from 'usehooks-ts';
+import { useRef, useState } from 'react';
+import { isCustomEvent } from 'static/utils';
+import { SyncController } from 'static/SyncController';
 
 export const Sync = () => {
   const { isSyncing } = useUi();
@@ -21,6 +25,10 @@ export const Sync = () => {
   const { validators } = useValidators();
   const { bondedPools } = useBondedPools();
   const { poolMembersNode } = usePoolMembers();
+
+  // Keep a record of active sync statuses.
+  const [syncStatuses, setSyncStatuses] = useState<string[]>([]);
+  const syncStatusesRef = useRef(syncStatuses);
 
   // Keep syncing if on nominate page and still fetching payouts.
   const onNominateSyncing = () => {
@@ -60,9 +68,42 @@ export const Sync = () => {
 
   const syncing =
     isSyncing ||
+    onPoolsSyncing() ||
     onNominateSyncing() ||
     onValidatorsSyncing() ||
-    onPoolsSyncing();
+    pendingNonces.length > 0 ||
+    syncStatuses.length > 0;
 
-  return syncing || pendingNonces.length > 0 ? <Spinner /> : null;
+  // Handle new syncing status events.
+  const newSyncStatusCallback = async (e: Event) => {
+    if (isCustomEvent(e) && SyncController.isValidSyncStatus(e)) {
+      const { id, status } = e.detail;
+
+      if (status === 'syncing') {
+        // An item is reported as syncing. Add its `id` to state if not already.
+        if (!syncStatusesRef.current.includes(id)) {
+          setStateWithRef(
+            [...syncStatusesRef.current, id],
+            setSyncStatuses,
+            syncStatusesRef
+          );
+        }
+      } else if (status === 'complete') {
+        // An item is reported to have completed syncing. Remove its `id` from state if present.
+        if (syncStatusesRef.current.includes(id)) {
+          const newSyncStatuses = syncStatusesRef.current.filter(
+            (syncStatus) => syncStatus !== id
+          );
+          setStateWithRef(newSyncStatuses, setSyncStatuses, syncStatusesRef);
+        }
+      }
+    }
+  };
+
+  const documentRef = useRef<Document>(document);
+
+  // Listen for new active pool events.
+  useEventListener('new-sync-status', newSyncStatusCallback, documentRef);
+
+  return syncing ? <Spinner /> : null;
 };

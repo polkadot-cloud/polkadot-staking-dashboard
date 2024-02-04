@@ -16,6 +16,7 @@ import type {
 } from 'contexts/Api/types';
 import type { ActivePool } from 'contexts/Pools/ActivePools/types';
 import type { Nominations } from 'contexts/Bonded/types';
+import type { SyncEvent } from 'static/SyncController/types';
 
 declare global {
   interface Window {
@@ -36,6 +37,7 @@ declare global {
       pool: ActivePool;
       nominations: Nominations;
     }>;
+    'new-sync-status': CustomEvent<SyncEvent>;
     'new-external-account': CustomEvent<{ address: string }>;
     'new-account-balance': CustomEvent<ActiveBalance & { address: string }>;
     'subscan-data-updated': CustomEvent<{ keys: PayoutType[] }>;

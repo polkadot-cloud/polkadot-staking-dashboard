@@ -10,6 +10,7 @@ import { APIController } from 'static/APIController';
 import { IdentitiesController } from 'static/IdentitiesController';
 import type { AnyApi } from 'types';
 import type { ActivePoolItem } from './types';
+import { SyncController } from 'static/SyncController';
 
 export class ActivePoolsController {
   // ------------------------------------------------------
@@ -20,7 +21,7 @@ export class ActivePoolsController {
   static pools: ActivePoolItem[] = [];
 
   // Active pools that are being returned from subscriptions, keyed by pool id.
-  static activePools: Record<string, ActivePool> = {};
+  static activePools: Record<string, ActivePool | null> = {};
 
   // Active pool nominations, keyed by pool id.
   static poolNominations: Record<string, Nominations> = {};
@@ -36,6 +37,9 @@ export class ActivePoolsController {
   static syncPools = async (newPools: ActivePoolItem[]): Promise<void> => {
     const { api } = APIController;
 
+    // Sync: Checking active pools.
+    SyncController.dispatch('active-pools', 'syncing');
+
     // Handle pools that have been removed.
     this.handleRemovedPools(newPools);
 
@@ -44,46 +48,51 @@ export class ActivePoolsController {
       (newPool) => !this.pools.find((pool) => pool.id === newPool.id)
     );
 
-    // Subscribe to and add new pool data.
-    poolsAdded.forEach(async (pool) => {
-      this.pools.push(pool);
+    if (poolsAdded.length) {
+      // Subscribe to and add new pool data.
+      poolsAdded.forEach(async (pool) => {
+        this.pools.push(pool);
 
-      const unsub = await api.queryMulti<AnyApi>(
-        [
-          [api.query.nominationPools.bondedPools, pool.id],
-          [api.query.nominationPools.rewardPools, pool.id],
-          [api.query.system.account, pool.addresses.reward],
-          [api.query.staking.nominators, pool.addresses.stash],
-        ],
-        async ([
-          bondedPool,
-          rewardPool,
-          accountData,
-          nominators,
-        ]): Promise<void> => {
-          // NOTE: async: fetches identity data for roles.
-          await this.handleActivePoolCallback(
-            pool,
+        const unsub = await api.queryMulti<AnyApi>(
+          [
+            [api.query.nominationPools.bondedPools, pool.id],
+            [api.query.nominationPools.rewardPools, pool.id],
+            [api.query.system.account, pool.addresses.reward],
+            [api.query.staking.nominators, pool.addresses.stash],
+          ],
+          async ([
             bondedPool,
             rewardPool,
-            accountData
-          );
-          this.handleNominatorsCallback(pool, nominators);
-
-          if (this.activePools[pool.id]) {
-            document.dispatchEvent(
-              new CustomEvent('new-active-pool', {
-                detail: {
-                  pool: this.activePools[pool.id],
-                  nominations: this.poolNominations[pool.id],
-                },
-              })
+            accountData,
+            nominators,
+          ]): Promise<void> => {
+            // NOTE: async: fetches identity data for roles.
+            await this.handleActivePoolCallback(
+              pool,
+              bondedPool,
+              rewardPool,
+              accountData
             );
+            this.handleNominatorsCallback(pool, nominators);
+
+            if (this.activePools[pool.id]) {
+              document.dispatchEvent(
+                new CustomEvent('new-active-pool', {
+                  detail: {
+                    pool: this.activePools[pool.id],
+                    nominations: this.poolNominations[pool.id],
+                  },
+                })
+              );
+            }
           }
-        }
-      );
-      this._unsubs[pool.id] = unsub;
-    });
+        );
+        this._unsubs[pool.id] = unsub;
+      });
+    } else {
+      // Status: Pools Synced Completed.
+      SyncController.dispatch('active-pools', 'complete');
+    }
   };
 
   // Handle active pool callback.
@@ -117,6 +126,9 @@ export class ActivePoolsController {
       };
 
       this.activePools[pool.id] = newPool;
+    } else {
+      // Invalid pools were returned. To signal pool was synced, set active pool to `null`.
+      this.activePools[pool.id] = null;
     }
   };
 

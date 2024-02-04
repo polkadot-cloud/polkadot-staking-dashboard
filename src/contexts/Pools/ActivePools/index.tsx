@@ -33,6 +33,7 @@ import {
   defaultPoolNominations,
   defaultPoolRoles,
 } from './defaults';
+import { SyncController } from 'static/SyncController';
 
 export const ActivePoolsContext = createContext<ActivePoolsContextState>(
   defaultActivePoolContext
@@ -233,6 +234,11 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
     if (isCustomEvent(e) && ActivePoolsController.isValidNewActivePool(e)) {
       const { pool, nominations } = e.detail;
       const { id } = pool;
+
+      // Sync: Pools Synced once all account pools have been reported.
+      if (accountPools.length <= ActivePoolsController.pools.length) {
+        SyncController.dispatch('active-pools', 'complete');
+      }
 
       // Fetch pending rewards and updated received pool record.
       pool.pendingRewards = await ActivePoolsController.fetchPendingRewards(
