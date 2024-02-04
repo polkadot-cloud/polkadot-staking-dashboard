@@ -39,6 +39,7 @@ import {
   formatRawExposures,
 } from './Utils';
 import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
+import { SyncController } from 'static/SyncController';
 
 const worker = new Worker();
 
@@ -103,6 +104,9 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
       // check if account hasn't changed since worker started
       if (getActiveAccount() === who) {
+        // Syncing current eraStakers is now complete.
+        SyncController.dispatch('era-stakers', 'complete');
+
         setStateWithRef(
           {
             ...eraStakersRef.current,

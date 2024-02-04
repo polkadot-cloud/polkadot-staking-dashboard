@@ -7,8 +7,6 @@ import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { SideMenuStickyThreshold } from 'consts';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import type { AnyJson } from 'types';
-import { useApi } from '../Api';
-import { useStaking } from '../Staking';
 import * as defaults from './defaults';
 import type { UIContextInterface } from './types';
 import { isCustomEvent } from 'static/utils';
@@ -22,15 +20,9 @@ export const UIContext = createContext<UIContextInterface>(
 export const useUi = () => useContext(UIContext);
 
 export const UIProvider = ({ children }: { children: ReactNode }) => {
-  const { eraStakers } = useStaking();
-  const { isReady, networkMetrics, stakingMetrics } = useApi();
-
   // Keep a record of active sync statuses.
   const [syncStatuses, setSyncStatuses] = useState<string[]>([]);
   const syncStatusesRef = useRef(syncStatuses);
-
-  // Set whether app is syncing. Includes workers (active nominations).
-  const [isSyncing, setIsSyncing] = useState<boolean>(false);
 
   // Side whether the side menu is open.
   const [sideMenuOpen, setSideMenu] = useState<boolean>(false);
@@ -126,18 +118,6 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
     resizeCallback();
   }, [userSideMenuMinimised]);
 
-  // App syncing updates.
-  useEffect(() => {
-    let syncing = false;
-
-    // eraStakers total active nominators has synced
-    if (!eraStakers.totalActiveNominators) {
-      syncing = true;
-    }
-
-    setIsSyncing(syncing);
-  }, [isReady, stakingMetrics, networkMetrics, eraStakers]);
-
   const documentRef = useRef<Document>(document);
 
   // Listen for new active pool events.
@@ -151,7 +131,7 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
         setContainerRefs,
         sideMenuOpen,
         sideMenuMinimised,
-        isSyncing,
+        isSyncing: syncStatuses.length > 0,
         containerRefs,
         isBraveBrowser,
         userSideMenuMinimised,
