@@ -7,14 +7,14 @@ import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { AnyJson, BondFor, MaybeAddress } from 'types';
 import { useNetwork } from 'contexts/Network';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const useNominationStatus = () => {
   const { t } = useTranslation();
-  const { isSyncing } = useUi();
+  const { syncing } = useSyncing(['era-stakers']);
   const {
     networkData: { units },
   } = useNetwork();
@@ -90,7 +90,7 @@ export const useNominationStatus = () => {
 
     // Determine the localised message to display based on the nomination status.
     let str;
-    if (inSetup() || isSyncing) {
+    if (inSetup() || syncing) {
       str = t('nominate.notNominating', { ns: 'pages' });
     } else if (!nominees.length) {
       str = t('nominate.noNominationsSet', { ns: 'pages' });
