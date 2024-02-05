@@ -6,20 +6,20 @@ import { useLocation } from 'react-router-dom';
 import { usePlugins } from 'contexts/Plugins';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { usePayouts } from 'contexts/Payouts';
 import { Spinner } from './Spinner';
 import { useTxMeta } from 'contexts/TxMeta';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const Sync = () => {
   const { pathname } = useLocation();
+  const { syncing } = useSyncing('*');
   const { pendingNonces } = useTxMeta();
   const { payoutsSynced } = usePayouts();
   const { pluginEnabled } = usePlugins();
   const { validators } = useValidators();
   const { bondedPools } = useBondedPools();
-  const { isSyncing, syncStatuses } = useUi();
   const { poolMembersNode } = usePoolMembers();
 
   // Keep syncing if on nominate page and still fetching payouts.
@@ -58,13 +58,12 @@ export const Sync = () => {
     return false;
   };
 
-  const syncing =
-    isSyncing ||
+  const isSyncing =
+    syncing ||
     onPoolsSyncing() ||
     onNominateSyncing() ||
     onValidatorsSyncing() ||
-    pendingNonces.length > 0 ||
-    syncStatuses.length > 0;
+    pendingNonces.length > 0;
 
-  return syncing ? <Spinner /> : null;
+  return isSyncing ? <Spinner /> : null;
 };

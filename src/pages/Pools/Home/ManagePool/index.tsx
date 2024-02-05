@@ -6,16 +6,16 @@ import { ButtonHelp, ButtonPrimary, PageRow } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { Nominations } from 'library/Nominations';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const ManagePool = () => {
   const { t } = useTranslation();
-  const { isSyncing } = useUi();
+  const { syncing } = useSyncing(['active-pools']);
   const { poolNominated } = useValidators();
   const { openCanvas } = useOverlay().canvas;
   const { activeAccount } = useActiveAccounts();
@@ -32,7 +32,7 @@ export const ManagePool = () => {
   return (
     <PageRow>
       <CardWrapper>
-        {isSyncing ? (
+        {syncing ? (
           <Nominations bondFor="pool" nominator={activeAccount} />
         ) : canNominate && !isNominating && state !== 'Destroying' ? (
           <>

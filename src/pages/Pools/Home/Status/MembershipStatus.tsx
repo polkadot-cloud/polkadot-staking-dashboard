@@ -8,12 +8,12 @@ import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useUi } from 'contexts/UI';
 import { Stat } from 'library/Stat';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useStatusButtons } from './useStatusButtons';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const MembershipStatus = ({
   showButtons = true,
@@ -24,10 +24,10 @@ export const MembershipStatus = ({
 }) => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
-  const { isSyncingById } = useUi();
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
   const { label, buttons } = useStatusButtons();
+  const { syncing } = useSyncing(['active-pools']);
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getTransferOptions } = useTransferOptions();
   const { bondedPools, poolsMetaData } = useBondedPools();
@@ -88,7 +88,7 @@ export const MembershipStatus = ({
       label={t('pools.poolMembership')}
       helpKey="Pool Membership"
       stat={t('pools.notInPool')}
-      buttons={!showButtons || isSyncingById('active-pools') ? [] : buttons}
+      buttons={!showButtons || syncing ? [] : buttons}
       buttonType={buttonType}
     />
   );

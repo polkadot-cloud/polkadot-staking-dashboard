@@ -16,7 +16,6 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
@@ -26,6 +25,7 @@ import { RolesWrapper } from '../Home/ManagePool/Wrappers';
 import { PoolAccount } from '../PoolAccount';
 import { RoleEditInput } from './RoleEditInput';
 import type { RoleEditEntry, RolesProps } from './types';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const Roles = ({
   defaultRoles,
@@ -36,14 +36,13 @@ export const Roles = ({
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
   const { openHelp } = useHelp();
-  const { isSyncingById } = useUi();
   const { network } = useNetwork();
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
   const { isOwner, activePool } = useActivePools();
+  const { syncing } = useSyncing(['active-pools']);
   const { isReadOnlyAccount } = useImportedAccounts();
 
-  const activePoolsSyncing = isSyncingById('active-pools');
   const { id } = activePool || { id: 0 };
   const roles = defaultRoles;
 
@@ -164,9 +163,7 @@ export const Roles = ({
                   iconLeft={faTimesCircle}
                   iconTransform="grow-1"
                   text={t('pools.cancel')}
-                  disabled={
-                    activePoolsSyncing || isReadOnlyAccount(activeAccount)
-                  }
+                  disabled={syncing || isReadOnlyAccount(activeAccount)}
                   onClick={() => cancelHandler()}
                 />
               </div>
@@ -178,7 +175,7 @@ export const Roles = ({
                 iconTransform="grow-1"
                 text={isEditing ? t('pools.save') : t('pools.edit')}
                 disabled={
-                  activePoolsSyncing ||
+                  syncing ||
                   isReadOnlyAccount(activeAccount) ||
                   !isRoleEditsValid()
                 }

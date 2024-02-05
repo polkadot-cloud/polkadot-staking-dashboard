@@ -12,7 +12,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'hooks/useUnstaking';
 import { StatBoxList } from 'library/StatBoxList';
@@ -28,12 +27,13 @@ import { MinimumActiveStakeStat } from './Stats/MinimumActiveStake';
 import { MinimumNominatorBondStat } from './Stats/MinimumNominatorBond';
 import { Status } from './Status';
 import { UnstakePrompts } from './UnstakePrompts';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const Active = () => {
   const { t } = useTranslation();
-  const { isSyncing } = useUi();
   const { openHelp } = useHelp();
   const { inSetup } = useStaking();
+  const { syncing } = useSyncing('*');
   const { nominated } = useValidators();
   const { isFastUnstaking } = useUnstaking();
   const { openCanvas } = useOverlay().canvas;
@@ -63,7 +63,7 @@ export const Active = () => {
       </PageRow>
       <PageRow>
         <CardWrapper>
-          {nominated?.length || inSetup() || isSyncing ? (
+          {nominated?.length || inSetup() || syncing ? (
             <Nominations bondFor="nominator" nominator={activeAccount} />
           ) : (
             <>
@@ -80,7 +80,7 @@ export const Active = () => {
                     iconLeft={faChevronCircleRight}
                     iconTransform="grow-1"
                     text={t('nominate.nominate', { ns: 'pages' })}
-                    disabled={inSetup() || isSyncing || isFastUnstaking}
+                    disabled={inSetup() || syncing || isFastUnstaking}
                     onClick={() =>
                       openCanvas({
                         key: 'ManageNominations',

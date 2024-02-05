@@ -7,9 +7,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
-import { useUi } from 'contexts/UI';
 import { PageToggleWrapper } from './Wrappers';
 import type { PageToggleProps } from './types';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const PageToggle = ({
   start,
@@ -20,9 +20,9 @@ export const PageToggle = ({
   setPageHandler,
 }: PageToggleProps) => {
   const { t } = useTranslation();
-  const { isSyncingById } = useUi();
+  const { syncing } = useSyncing(['initialization']);
 
-  totalItems = isSyncingById('initialization') ? 1 : totalItems;
+  totalItems = syncing ? 1 : totalItems;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (

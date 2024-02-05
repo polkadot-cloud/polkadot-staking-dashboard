@@ -4,13 +4,19 @@
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import { useEffect, useRef, useState } from 'react';
 import { SyncController } from 'static/SyncController';
-import type { SyncID } from 'static/SyncController/types';
+import type { SyncID, SyncIDConfig } from 'static/SyncController/types';
 import { isCustomEvent } from 'static/utils';
 import { useEventListener } from 'usehooks-ts';
 
-export const useSyncing = (ids: SyncID[] | '*') => {
+export const useSyncing = (config: SyncIDConfig) => {
+  // Retrieve the ids from the config provided.
+  const ids = SyncController.getIdsFromSyncConfig(config);
+
+  // Retrieve any provided default syncing ids from config.
+  const defaults = SyncController.getDefaultsFromConfig(config);
+
   // Keep a record of active sync statuses.
-  const [syncIds, setSyncIds] = useState<SyncID[]>([]);
+  const [syncIds, setSyncIds] = useState<SyncID[]>(defaults);
   const syncIdsRef = useRef(syncIds);
 
   // Handle new syncing status events.
@@ -42,7 +48,9 @@ export const useSyncing = (ids: SyncID[] | '*') => {
   // Bootstrap existing sync statuses of interest when hook is mounted.
   useEffect(() => {
     setStateWithRef(
-      SyncController.syncIds.filter((syncId) => ids.includes(syncId)),
+      SyncController.syncIds.filter(
+        (syncId) => ids === '*' || ids.includes(syncId)
+      ),
       setSyncIds,
       syncIdsRef
     );

@@ -13,13 +13,13 @@ import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useUi } from 'contexts/UI';
 import { BondedChart } from 'library/BarChart/BondedChart';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');
@@ -31,14 +31,13 @@ export const ManageBond = () => {
     },
   } = useNetwork();
   const { openHelp } = useHelp();
-  const { isSyncingById } = useUi();
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
+  const { syncing } = useSyncing(['active-pools']);
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getTransferOptions } = useTransferOptions();
   const { isBonding, isMember, activePool } = useActivePools();
 
-  const activePoolsSyncing = isSyncingById('active-pools');
   const allTransferOptions = getTransferOptions(activeAccount);
   const {
     pool: { active, totalUnlocking, totalUnlocked, totalUnlockChunks },
@@ -64,7 +63,7 @@ export const ManageBond = () => {
         <ButtonRow>
           <ButtonPrimary
             disabled={
-              activePoolsSyncing ||
+              syncing ||
               !isBonding() ||
               !isMember() ||
               isReadOnlyAccount(activeAccount) ||
@@ -82,7 +81,7 @@ export const ManageBond = () => {
           />
           <ButtonPrimary
             disabled={
-              activePoolsSyncing ||
+              syncing ||
               !isBonding() ||
               !isMember() ||
               isReadOnlyAccount(activeAccount) ||
@@ -100,9 +99,7 @@ export const ManageBond = () => {
           />
           <ButtonPrimary
             disabled={
-              activePoolsSyncing ||
-              !isMember() ||
-              isReadOnlyAccount(activeAccount)
+              syncing || !isMember() || isReadOnlyAccount(activeAccount)
             }
             iconLeft={faLockOpen}
             onClick={() =>

@@ -7,13 +7,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useUi } from 'contexts/UI';
 import { useNominationStatus } from 'hooks/useNominationStatus';
 import { Stat } from 'library/Stat';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const PoolStatus = () => {
   const { t } = useTranslation('pages');
-  const { isSyncingById } = useUi();
+  const { syncing } = useSyncing(['active-pools']);
   const { getNominationStatus } = useNominationStatus();
   const { activePool, poolNominations } = useActivePools();
 
@@ -21,7 +21,6 @@ export const PoolStatus = () => {
   const { earningRewards, nominees } = getNominationStatus(poolStash, 'pool');
   const poolState = activePool?.bondedPool?.state ?? null;
   const poolNominating = !!poolNominations?.targets?.length;
-  const activePoolsSyncing = isSyncingById('active-pools');
 
   // Determine pool state icon.
   let poolStateIcon;
@@ -45,7 +44,7 @@ export const PoolStatus = () => {
         : '';
 
   // Determine pool status - right side.
-  const poolStatusRight = activePoolsSyncing
+  const poolStatusRight = syncing
     ? t('pools.inactivePoolNotNominating')
     : !poolNominating
       ? t('pools.inactivePoolNotNominating')
@@ -59,7 +58,7 @@ export const PoolStatus = () => {
 
   return (
     <Stat
-      icon={activePoolsSyncing ? undefined : poolStateIcon}
+      icon={syncing ? undefined : poolStateIcon}
       label={t('pools.poolStatus')}
       helpKey="Nomination Status"
       stat={`${poolStatusLeft}${poolStatusRight}`}

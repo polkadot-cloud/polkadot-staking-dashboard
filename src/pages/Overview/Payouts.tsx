@@ -5,7 +5,6 @@ import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
 import { formatRewardsForGraphs, formatSize } from 'library/Graphs/Utils';
@@ -21,10 +20,11 @@ import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
 import { useNetwork } from 'contexts/Network';
 import { DefaultLocale } from 'consts';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const Payouts = () => {
   const { i18n, t } = useTranslation('pages');
-  const { isSyncing } = useUi();
+  const { syncing } = useSyncing('*');
   const { inSetup } = useStaking();
   const {
     networkData: {
@@ -38,7 +38,7 @@ export const Payouts = () => {
     'unclaimedPayouts',
     'poolClaims',
   ]);
-  const notStaking = !isSyncing && inSetup();
+  const notStaking = !syncing && inSetup();
 
   // Get data safely from subscan hook.
   const data = getData(['payouts', 'unclaimedPayouts', 'poolClaims']);

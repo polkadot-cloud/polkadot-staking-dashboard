@@ -10,7 +10,6 @@ import { DefaultLocale, TipsThresholdMedium, TipsThresholdSmall } from 'consts';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useUi } from 'contexts/UI';
 import { useFillVariables } from 'hooks/useFillVariables';
 import type { AnyJson } from 'types';
 import { useNetwork } from 'contexts/Network';
@@ -22,22 +21,22 @@ import { TipsWrapper } from './Wrappers';
 import type { TipDisplay } from './types';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const Tips = () => {
   const { i18n, t } = useTranslation();
   const { network } = useNetwork();
-  const { isSyncingById } = useUi();
-  const { activeAccount } = useActiveAccounts();
-  const { fillVariables } = useFillVariables();
   const {
     stakingMetrics: { minNominatorBond },
   } = useApi();
   const { isOwner } = useActivePools();
   const { isNominating } = useStaking();
   const { getPoolMembership } = useBalances();
+  const { activeAccount } = useActiveAccounts();
+  const { fillVariables } = useFillVariables();
+  const { syncing } = useSyncing(['initialization']);
   const { feeReserve, getTransferOptions } = useTransferOptions();
 
-  const initializationSyncing = isSyncingById('initialization');
   const membership = getPoolMembership(activeAccount);
   const transferOptions = getTransferOptions(activeAccount);
 
@@ -66,7 +65,7 @@ export const Tips = () => {
   // This function ensures totalPages is never surpassed, but does not guarantee
   // that the start item will maintain across resizes.
   const getPage = () => {
-    const totalItmes = initializationSyncing ? 1 : items.length;
+    const totalItmes = syncing ? 1 : items.length;
     const itemsPerPage = getItemsPerPage();
     const totalPages = Math.ceil(totalItmes / itemsPerPage);
     if (pageRef.current > totalPages) {
@@ -162,10 +161,10 @@ export const Tips = () => {
   });
 
   // determine items to be displayed
-  const end = initializationSyncing
+  const end = syncing
     ? 1
     : Math.min(pageRef.current * itemsPerPageRef.current, items.length);
-  const start = initializationSyncing
+  const start = syncing
     ? 1
     : pageRef.current * itemsPerPageRef.current - (itemsPerPageRef.current - 1);
 
@@ -177,7 +176,7 @@ export const Tips = () => {
   return (
     <TipsWrapper>
       <div style={{ flexGrow: 1 }}>
-        {initializationSyncing ? (
+        {syncing ? (
           <Syncing />
         ) : (
           <Items

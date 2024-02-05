@@ -7,19 +7,19 @@ import { useTranslation } from 'react-i18next';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const ClosurePrompts = () => {
   const { t } = useTranslation('pages');
   const { mode } = useTheme();
-  const { isSyncingById } = useUi();
   const { openModal } = useOverlay().modal;
   const { colors } = useNetwork().networkData;
   const { activeAccount } = useActiveAccounts();
+  const { syncing } = useSyncing(['active-pools']);
   const { getTransferOptions } = useTransferOptions();
   const { isBonding, activePool, isDepositor, poolNominations } =
     useActivePools();
@@ -28,11 +28,10 @@ export const ClosurePrompts = () => {
   const { active, totalUnlockChunks } = getTransferOptions(activeAccount).pool;
   const targets = poolNominations?.targets ?? [];
   const annuncementBorderColor = colors.secondary[mode];
-  const activePoolsSyncing = isSyncingById('active-pools');
 
   // is the pool in a state for the depositor to close
   const depositorCanClose =
-    !activePoolsSyncing &&
+    !syncing &&
     isDepositor() &&
     state === 'Destroying' &&
     memberCounter === '1';
@@ -65,8 +64,7 @@ export const ClosurePrompts = () => {
                 marginRight
                 text={t('pools.unbond')}
                 disabled={
-                  activePoolsSyncing ||
-                  (!depositorCanWithdraw && !depositorCanUnbond)
+                  syncing || (!depositorCanWithdraw && !depositorCanUnbond)
                 }
                 onClick={() =>
                   openModal({
@@ -83,7 +81,7 @@ export const ClosurePrompts = () => {
                     ? t('pools.unlocked')
                     : String(totalUnlockChunks ?? 0)
                 }
-                disabled={activePoolsSyncing || !isBonding()}
+                disabled={syncing || !isBonding()}
                 onClick={() =>
                   openModal({
                     key: 'UnlockChunks',

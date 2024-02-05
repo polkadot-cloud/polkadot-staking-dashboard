@@ -19,7 +19,6 @@ import { useTranslation } from 'react-i18next';
 import { DefaultLocale } from 'consts';
 import { useStaking } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
-import { useUi } from 'contexts/UI';
 import { locales } from 'locale';
 import { graphColors } from 'styles/graphs';
 import type { AnyJson, AnySubscan } from 'types';
@@ -28,6 +27,7 @@ import type { PayoutBarProps } from './types';
 import { formatRewardsForGraphs } from './Utils';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
+import { useSyncing } from 'hooks/useSyncing';
 
 ChartJS.register(
   CategoryScale,
@@ -47,14 +47,14 @@ export const PayoutBar = ({
 }: PayoutBarProps) => {
   const { i18n, t } = useTranslation('library');
   const { mode } = useTheme();
-  const { isSyncing } = useUi();
+  const { syncing } = useSyncing('*');
   const { inSetup } = useStaking();
   const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
 
   const membership = getPoolMembership(activeAccount);
   const { unit, units, colors } = useNetwork().networkData;
-  const notStaking = !isSyncing && inSetup() && !membership;
+  const notStaking = !syncing && inSetup() && !membership;
 
   // remove slashes from payouts (graph does not support negative values).
   const payoutsNoSlash = payouts?.filter((p) => p.event_id !== 'Slashed') || [];

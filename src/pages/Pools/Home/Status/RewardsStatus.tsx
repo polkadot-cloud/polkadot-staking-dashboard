@@ -7,12 +7,12 @@ import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useUi } from 'contexts/UI';
 import { Stat } from 'library/Stat';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const RewardsStatus = () => {
   const { t } = useTranslation('pages');
@@ -20,10 +20,10 @@ export const RewardsStatus = () => {
     networkData: { units },
   } = useNetwork();
   const { isReady } = useApi();
-  const { isSyncingById } = useUi();
   const { activePool } = useActivePools();
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
+  const { syncing } = useSyncing(['active-pools']);
   const { isReadOnlyAccount } = useImportedAccounts();
 
   let { pendingRewards } = activePool || {};
@@ -75,7 +75,7 @@ export const RewardsStatus = () => {
       helpKey="Pool Rewards"
       type="odometer"
       stat={{ value: labelRewards }}
-      buttons={isSyncingById('active-pools') ? [] : buttonsRewards}
+      buttons={syncing ? [] : buttonsRewards}
     />
   );
 };
