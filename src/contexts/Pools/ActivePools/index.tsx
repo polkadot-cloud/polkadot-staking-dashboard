@@ -78,6 +78,11 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   const selectedPoolIdRef = useRef(selectedPoolId);
   const setSelectedPoolId = (id: string | null) => {
     setStateWithRef(id, setSelectedPoolIdState, selectedPoolIdRef);
+
+    const newActivePool = id
+      ? ActivePoolsController.activePools[id] || null
+      : null;
+    setStateWithRef(newActivePool, setActivePool, activePoolRef);
   };
 
   // Stores member's active pools.
@@ -289,9 +294,18 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
     getMemberCount();
   }, [activeAccount, activePool, membership?.poolId]);
 
+  // Re-calculate pending rewards when membership changes.
+  useEffectIgnoreInitial(() => {
+    if (isReady) {
+      updatePendingRewards();
+    }
+  }, [network, isReady, membership, activePool]);
+
   // Initialise subscriptions to all active pools of imported accounts.
   useEffectIgnoreInitial(() => {
-    syncActivePoolSubscriptions();
+    if (isReady) {
+      syncActivePoolSubscriptions();
+    }
   }, [network, isReady, accountPools]);
 
   // Reset everything when `activeAccount` changes.
@@ -299,13 +313,6 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
     ActivePoolsController.unsubscribe();
     resetActivePools();
   }, [activeAccount]);
-
-  // Re-calculate pending rewards when membership changes.
-  useEffectIgnoreInitial(() => {
-    if (isReady) {
-      updatePendingRewards();
-    }
-  }, [network, isReady, membership]);
 
   // Reset on network change and component unmount.
   useEffect(() => {
