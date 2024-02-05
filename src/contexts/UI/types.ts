@@ -11,8 +11,5 @@ export interface UIContextInterface {
   userSideMenuMinimised: boolean;
   sideMenuMinimised: boolean;
   containerRefs: Record<string, RefObject<HTMLDivElement>>;
-  isSyncing: boolean;
   isBraveBrowser: boolean;
-  syncStatuses: string[];
-  isSyncingById: (id: string) => boolean;
 }

@@ -9,9 +9,6 @@ import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import type { AnyJson } from 'types';
 import * as defaults from './defaults';
 import type { UIContextInterface } from './types';
-import { isCustomEvent } from 'static/utils';
-import { SyncController } from 'static/SyncController';
-import { useEventListener } from 'usehooks-ts';
 
 export const UIContext = createContext<UIContextInterface>(
   defaults.defaultUIContext
@@ -20,10 +17,6 @@ export const UIContext = createContext<UIContextInterface>(
 export const useUi = () => useContext(UIContext);
 
 export const UIProvider = ({ children }: { children: ReactNode }) => {
-  // Keep a record of active sync statuses.
-  const [syncStatuses, setSyncStatuses] = useState<string[]>([]);
-  const syncStatusesRef = useRef(syncStatuses);
-
   // Side whether the side menu is open.
   const [sideMenuOpen, setSideMenu] = useState<boolean>(false);
 
@@ -56,46 +49,12 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
       : userSideMenuMinimisedRef.current
   );
 
-  // Get a syncing status of a syncing `id`.
-  const isSyncingById = (id: string): boolean =>
-    syncStatusesRef.current.includes(id);
-
   // Resize side menu callback.
   const resizeCallback = () => {
     if (window.innerWidth <= SideMenuStickyThreshold) {
       setSideMenuMinimised(false);
     } else {
       setSideMenuMinimised(userSideMenuMinimisedRef.current);
-    }
-  };
-
-  // Handle new syncing status events.
-  //
-  // TODO: move this to a hook that components can listen to for sync statuses (for ids they are
-  // interested in). This will prevent router re-renders and oly re-render active components that
-  // are listening to updates.
-  const newSyncStatusCallback = async (e: Event) => {
-    if (isCustomEvent(e) && SyncController.isValidSyncStatus(e)) {
-      const { id, status } = e.detail;
-
-      if (status === 'syncing') {
-        // An item is reported as syncing. Add its `id` to state if not already.
-        if (!syncStatusesRef.current.includes(id)) {
-          setStateWithRef(
-            [...syncStatusesRef.current, id],
-            setSyncStatuses,
-            syncStatusesRef
-          );
-        }
-      } else if (status === 'complete') {
-        // An item is reported to have completed syncing. Remove its `id` from state if present.
-        if (syncStatusesRef.current.includes(id)) {
-          const newSyncStatuses = syncStatusesRef.current.filter(
-            (syncStatus) => syncStatus !== id
-          );
-          setStateWithRef(newSyncStatuses, setSyncStatuses, syncStatusesRef);
-        }
-      }
     }
   };
 
@@ -118,15 +77,6 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
     resizeCallback();
   }, [userSideMenuMinimised]);
 
-  // Bootstrap existing sync statuses of interest when hook is mounted.
-  useEffect(() => {
-    setStateWithRef(SyncController.syncIds, setSyncStatuses, syncStatusesRef);
-  }, []);
-  const documentRef = useRef<Document>(document);
-
-  // Listen for new sync events.
-  useEventListener('new-sync-status', newSyncStatusCallback, documentRef);
-
   return (
     <UIContext.Provider
       value={{
@@ -135,12 +85,9 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
         setContainerRefs,
         sideMenuOpen,
         sideMenuMinimised,
-        isSyncing: syncStatuses.length > 0,
         containerRefs,
         isBraveBrowser,
         userSideMenuMinimised,
-        syncStatuses,
-        isSyncingById,
       }}
     >
       {children}
