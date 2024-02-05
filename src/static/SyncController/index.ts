@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { SyncEvent, SyncID, SyncStatus } from './types';
+import type { SyncEvent, SyncID, SyncIDConfig, SyncStatus } from './types';
 
 export class SyncController {
   // ------------------------------------------------------
@@ -41,4 +41,28 @@ export class SyncController {
     event: CustomEvent
   ): event is CustomEvent<SyncEvent> =>
     event.detail && event.detail.id && event.detail.status;
+
+  // Gets SyncIDs from a given config.
+  static getIdsFromSyncConfig = (config: SyncIDConfig): SyncID[] | '*' => {
+    if (config === '*') {
+      return '*';
+    } else if (this.isSyncIdArray(config)) {
+      return config;
+    }
+    return config.map(([id]) => id);
+  };
+
+  // Gets defaults form from a given config if provided. Ignores already completed sync statuses.
+  static getDefaultsFromConfig = (config: SyncIDConfig): SyncID[] => {
+    if (config === '*' || this.isSyncIdArray(config)) {
+      return [];
+    }
+    return config
+      .filter(([, status]) => status !== 'complete')
+      .map(([id]) => id);
+  };
+
+  // Checks if a sync config is just an array of syncIds.
+  static isSyncIdArray = (config: SyncIDConfig): config is SyncID[] =>
+    Array.isArray(config) && config.every((item) => typeof item === 'string');
 }

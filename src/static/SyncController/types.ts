@@ -13,3 +13,9 @@ export type SyncID =
   | 'active-pools';
 
 export type SyncStatus = 'syncing' | 'complete';
+
+export type SyncIDConfig = SyncIDWildcard | SyncID[] | SyncIDWithDefault[];
+
+export type SyncIDWithDefault = [SyncID, SyncStatus];
+
+export type SyncIDWildcard = '*';
