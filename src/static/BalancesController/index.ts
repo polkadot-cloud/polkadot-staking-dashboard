@@ -14,6 +14,7 @@ import type {
 } from 'contexts/Balances/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type { PoolMembership } from 'contexts/Pools/types';
+import { SyncController } from 'static/SyncController';
 
 export class BalancesController {
   // ------------------------------------------------------
@@ -53,6 +54,14 @@ export class BalancesController {
     const accountsAdded = newAccounts.filter(
       (account) => !this.accounts.includes(account)
     );
+
+    // Exit early if there are no new accounts to subscribe to.
+    if (!accountsAdded.length) {
+      return;
+    }
+
+    // Strart syncing if new accounts added.
+    SyncController.dispatch('balances', 'syncing');
 
     // Subscribe to and add new accounts data.
     accountsAdded.forEach(async (address) => {

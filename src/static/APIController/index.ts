@@ -134,7 +134,6 @@ export class APIController {
 
     // Add initial syncing items.
     SyncController.dispatch('initialization', 'syncing');
-    SyncController.dispatch('balances', 'syncing');
     SyncController.dispatch('era-stakers', 'syncing');
 
     const config: APIConfig = {
