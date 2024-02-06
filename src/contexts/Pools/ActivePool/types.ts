@@ -14,7 +14,6 @@ export interface ActivePoolContextState {
   isMember: () => boolean;
   isDepositor: () => boolean;
   isBouncer: () => boolean;
-  getPoolBondedAccount: () => MaybeAddress;
   getPoolUnlocking: () => PoolUnlocking[];
   getPoolRoles: () => PoolRoles;
   getNominationsStatus: () => NominationStatuses;

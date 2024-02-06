@@ -184,9 +184,6 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     return activeAccount === roles?.bouncer;
   };
 
-  // get the stash address of the bonded pool that the member is participating in.
-  const getPoolBondedAccount = () => activePool?.addresses?.stash || null;
-
   // Get the status of nominations. Possible statuses: waiting, inactive, active.
   const getNominationsStatus = () => {
     const nominations = getActivePoolNominations().targets;
@@ -314,7 +311,6 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
         isDepositor,
         isBouncer,
         isBonding,
-        getPoolBondedAccount,
         getPoolUnlocking,
         getPoolRoles,
         getNominationsStatus,

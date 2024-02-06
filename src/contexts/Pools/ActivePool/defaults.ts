@@ -26,7 +26,6 @@ export const defaultActivePoolContext: ActivePoolContextState = {
   isMember: () => false,
   isDepositor: () => false,
   isBouncer: () => false,
-  getPoolBondedAccount: () => null,
   getPoolUnlocking: () => [],
   getPoolRoles: () => defaultPoolRoles,
   getNominationsStatus: () => nominationStatus,
