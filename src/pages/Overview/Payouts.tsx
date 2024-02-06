@@ -24,14 +24,14 @@ import { useSyncing } from 'hooks/useSyncing';
 
 export const Payouts = () => {
   const { i18n, t } = useTranslation('pages');
-  const { syncing } = useSyncing('*');
-  const { inSetup } = useStaking();
   const {
     networkData: {
       units,
       brand: { token: Token },
     },
   } = useNetwork();
+  const { inSetup } = useStaking();
+  const { syncing } = useSyncing('*');
   const { plugins } = usePlugins();
   const { getData, injectBlockTimestamp } = useSubscanData([
     'payouts',

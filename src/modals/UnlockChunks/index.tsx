@@ -29,8 +29,8 @@ export const UnlockChunks = () => {
   } = useOverlay().modal;
   const { getLedger } = useBalances();
   const { notEnoughFunds } = useTxMeta();
-  const { activeAccount } = useActiveAccounts();
   const { getPoolUnlocking } = useActivePool();
+  const { activeAccount } = useActiveAccounts();
   const { integrityChecked } = useLedgerHardware();
   const { bondFor } = options || {};
 

@@ -15,8 +15,8 @@ import { useSyncing } from 'hooks/useSyncing';
 export const Connected = () => {
   const { t } = useTranslation('library');
   const { isNominating } = useStaking();
-  const { poolsMetaData } = useBondedPools();
   const { activePool } = useActivePool();
+  const { poolsMetaData } = useBondedPools();
   const { syncing } = useSyncing(['initialization']);
   const { accountHasSigner } = useImportedAccounts();
   const { activeAccount, activeProxy } = useActiveAccounts();
