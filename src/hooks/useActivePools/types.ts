@@ -6,10 +6,10 @@ import type { ActivePool } from 'contexts/Pools/ActivePool/types';
 import type { DetailActivePool } from 'static/ActivePoolsController/types';
 
 export interface ActivePoolsProps {
-  poolIds: string[];
+  poolIds: string[] | '*';
   onCallback?: (detail: DetailActivePool) => Promise<void>;
 }
 
-export type ActivePoolsState = Record<string, ActivePool>;
+export type ActivePoolsState = Record<string, ActivePool | null>;
 
 export type ActiveNominationsState = Record<string, Nominations>;

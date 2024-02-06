@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@polkadot-cloud/utils';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ActivePoolsController } from 'static/ActivePoolsController';
 import { isCustomEvent } from 'static/utils';
 import { useEventListener } from 'usehooks-ts';
@@ -11,8 +11,13 @@ import type {
   ActivePoolsProps,
   ActivePoolsState,
 } from './types';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useNetwork } from 'contexts/Network';
 
 export const useActivePools = ({ onCallback, poolIds }: ActivePoolsProps) => {
+  const { network } = useNetwork();
+  const { activeAccount } = useActiveAccounts();
+
   // Stores active pools.
   const [activePools, setActivePools] = useState<ActivePoolsState>({});
   const activePoolsRef = useRef(activePools);
@@ -34,19 +39,59 @@ export const useActivePools = ({ onCallback, poolIds }: ActivePoolsProps) => {
       }
 
       // Persist to active pools state if this pool is specififed in `poolIds`.
-      if (poolIds.includes(String(id))) {
+      if (
+        poolIds === '*' ||
+        (Array.isArray(poolIds) && poolIds.includes(String(id)))
+      ) {
         const newActivePools = { ...activePoolsRef.current };
         newActivePools[id] = pool;
         setStateWithRef(newActivePools, setActivePools, activePoolsRef);
 
-        const newNominations = { ...poolNominationsRef.current };
-        newNominations[id] = nominations;
-        setStateWithRef(newNominations, setPoolNominations, poolNominationsRef);
+        const newPoolNominations = { ...poolNominationsRef.current };
+        newPoolNominations[id] = nominations;
+        setStateWithRef(
+          newPoolNominations,
+          setPoolNominations,
+          poolNominationsRef
+        );
       }
     }
   };
 
   const documentRef = useRef<Document>(document);
+
+  // Bootstrap state on initial render.
+  useEffect(() => {
+    const initialActivePools =
+      poolIds === '*'
+        ? ActivePoolsController.activePools
+        : Object.fromEntries(
+            Object.entries(ActivePoolsController.activePools).filter(([key]) =>
+              poolIds.includes(key)
+            )
+          );
+    setStateWithRef(initialActivePools || {}, setActivePools, activePoolsRef);
+
+    const initialPoolNominations =
+      poolIds === '*'
+        ? ActivePoolsController.poolNominations
+        : Object.fromEntries(
+            Object.entries(ActivePoolsController.poolNominations).filter(
+              ([key]) => poolIds.includes(key)
+            )
+          );
+    setStateWithRef(
+      initialPoolNominations,
+      setPoolNominations,
+      poolNominationsRef
+    );
+  }, [JSON.stringify(poolIds)]);
+
+  // Reset state on active account or network change.
+  useEffect(() => {
+    setStateWithRef({}, setActivePools, activePoolsRef);
+    setStateWithRef({}, setPoolNominations, poolNominationsRef);
+  }, [network, activeAccount]);
 
   // Listen for new active pool events.
   useEventListener('new-active-pool', newActivePoolCallback, documentRef);

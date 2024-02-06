@@ -5,50 +5,50 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { ButtonOption, ModalPadding, Polkicon } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Title } from 'library/Modal/Title';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { ContentWrapper } from './Wrappers';
 import { useBalances } from 'contexts/Balances';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import type { ActivePool } from 'contexts/Pools/ActivePool/types';
 
 export const AccountPoolRoles = () => {
   const { t } = useTranslation('modals');
   const { getPoolMembership } = useBalances();
-  const { getAccountPoolRoles } = useBondedPools();
   const { options } = useOverlay().modal.config;
   const { activeAccount } = useActiveAccounts();
 
-  const { who } = options;
-  const accountPools = getAccountPoolRoles(who);
+  const { who, activePools } = options;
   const membership = getPoolMembership(activeAccount);
-  const totalAccountPools = Object.entries(accountPools).length;
   const { label } = useStatusButtons();
+
+  // Delete membership from activePools if it exists
+  delete activePools[membership?.poolId || -1];
 
   return (
     <>
       <Title title={t('allPoolRoles')} icon={faBars} />
       <ModalPadding>
         <ContentWrapper>
-          {/* TODO: Replace with total active pools (requires hook) */}
           {membership && (
             <>
               <h4>{label}</h4>
               <div className="items">
-                <Button item={['member']} poolId={String(membership.poolId)} />
+                <Button who={who} poolId={String(membership.poolId)} />
               </div>
             </>
           )}
           <h4>
             {t('activeRoles', {
-              count: totalAccountPools,
+              count: activePools?.length || 0,
             })}
           </h4>
           <div className="items">
-            {Object.entries(accountPools).map(([key, item], i: number) => (
+            {Object.entries(activePools).map(([key, item], i: number) => (
               <Button
-                item={item as string[]}
+                who={who}
+                activePool={item as ActivePool}
                 poolId={key}
                 key={`all_roles_root_${i}`}
               />
@@ -60,13 +60,21 @@ export const AccountPoolRoles = () => {
   );
 };
 
-const Button = ({ item, poolId }: { item: string[]; poolId: string }) => {
+const Button = ({
+  who,
+  activePool,
+  poolId,
+}: {
+  who: string;
+  activePool?: ActivePool;
+  poolId: string;
+}) => {
   const { t } = useTranslation('modals');
-  const { setModalStatus } = useOverlay().modal;
-  const { bondedPools } = useBondedPools();
   const { setSelectedPoolId } = useActivePool();
-  const pool = bondedPools.find((b) => String(b.id) === poolId);
-  const stash = pool?.addresses?.stash || '';
+  const { setModalStatus } = useOverlay().modal;
+
+  const { roles } = activePool?.bondedPool || {};
+  const stash = activePool?.addresses?.stash || '';
 
   return (
     <ButtonOption
@@ -86,9 +94,9 @@ const Button = ({ item, poolId }: { item: string[]; poolId: string }) => {
           {t('pool')} {poolId}
         </h3>
         <h4>
-          {item.includes('root') ? <span>{t('root')}</span> : null}
-          {item.includes('nominator') ? <span>{t('nominator')}</span> : null}
-          {item.includes('bouncer') ? <span>{t('bouncer')}</span> : null}
+          {roles?.root === who ? <span>{t('root')}</span> : null}
+          {roles?.nominator === who ? <span>{t('nominator')}</span> : null}
+          {roles?.bouncer === who ? <span>{t('bouncer')}</span> : null}
         </h4>
       </div>
     </ButtonOption>

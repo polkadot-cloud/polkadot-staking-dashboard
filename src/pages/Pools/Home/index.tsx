@@ -26,6 +26,7 @@ import { MinJoinBondStat } from './Stats/MinJoinBond';
 import { Status } from './Status';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
 import { useApi } from 'contexts/Api';
+import { useActivePools } from 'hooks/useActivePools';
 
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
@@ -36,6 +37,9 @@ export const HomeInner = () => {
   const { activeTab, setActiveTab } = usePoolsTabs();
   const { getPoolRoles, activePool } = useActivePool();
   const { counterForBondedPools } = useApi().poolsConfig;
+  const { activePools } = useActivePools({
+    poolIds: '*',
+  });
 
   let tabs: PageTitleTabProps[] = [
     {
@@ -81,7 +85,7 @@ export const HomeInner = () => {
                 onClick: () =>
                   openModal({
                     key: 'AccountPoolRoles',
-                    options: { who: activeAccount },
+                    options: { who: activeAccount, activePools },
                   }),
               }
             : undefined
