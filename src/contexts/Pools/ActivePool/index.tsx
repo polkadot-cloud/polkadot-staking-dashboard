@@ -126,8 +126,12 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
       }));
       ActivePoolsController.syncPools(newActivePools);
     }
+  };
 
-    // Assign default pool immediately if active pool not currently selected.
+  // Attempt to assign the default `activePoolId` if one is not currently active.
+  const assignActivePoolId = () => {
+    // Membership takes priority, followed by the first pool the account has a role in. Falls back
+    // to `null` if no active roles are found.
     const initialActivePoolId = membership?.poolId || accountPoolIds[0] || null;
     if (initialActivePoolId && !activePool) {
       setActivePoolId(String(initialActivePoolId));
@@ -284,6 +288,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   useEffectIgnoreInitial(() => {
     if (isReady) {
       syncActivePoolSubscriptions();
+      assignActivePoolId();
     }
   }, [network, isReady, accountPoolIds]);
 
