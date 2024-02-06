@@ -74,7 +74,7 @@ export class ActivePoolsController {
             );
             this.handleNominatorsCallback(pool, nominators);
 
-            if (this.activePools[pool.id]) {
+            if (this.activePools[pool.id] && this.poolNominations[pool.id]) {
               document.dispatchEvent(
                 new CustomEvent('new-active-pool', {
                   detail: {
