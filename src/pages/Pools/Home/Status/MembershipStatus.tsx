@@ -25,12 +25,12 @@ export const MembershipStatus = ({
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
   const { openModal } = useOverlay().modal;
+  const { poolsMetaData } = useBondedPools();
   const { activeAccount } = useActiveAccounts();
   const { label, buttons } = useStatusButtons();
   const { syncing } = useSyncing(['active-pools']);
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getTransferOptions } = useTransferOptions();
-  const { bondedPools, poolsMetaData } = useBondedPools();
   const { activePool, isOwner, isBouncer, isMember } = useActivePool();
 
   const { active } = getTransferOptions(activeAccount).pool;
@@ -40,16 +40,11 @@ export const MembershipStatus = ({
   let membershipDisplay = t('pools.notInPool');
 
   if (activePool) {
-    const pool = bondedPools.find(
-      (p) => p.addresses.stash === activePool.addresses.stash
+    // Determine pool membership display.
+    membershipDisplay = determinePoolDisplay(
+      activePool.addresses.stash,
+      poolsMetaData[Number(activePool.id)]
     );
-    if (pool) {
-      // Determine pool membership display.
-      membershipDisplay = determinePoolDisplay(
-        activePool.addresses.stash,
-        poolsMetaData[Number(pool.id)]
-      );
-    }
 
     // Display manage button if active account is pool owner or bouncer.
     // Or display manage button if active account is a pool member.
