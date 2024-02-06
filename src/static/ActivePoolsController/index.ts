@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { VoidFn } from '@polkadot/api/types';
-import BigNumber from 'bignumber.js';
 import type { Nominations } from 'contexts/Bonded/types';
 import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
 import type { ActivePool, PoolRoles } from 'contexts/Pools/ActivePool/types';
@@ -185,18 +184,6 @@ export class ActivePoolsController {
   // ------------------------------------------------------
   // Class helpers.
   // ------------------------------------------------------
-
-  // Fetch and update unclaimed pool rewards for an address from runtime call.
-  static fetchPendingRewards = async (address: string | undefined) => {
-    if (address) {
-      const { api } = APIController;
-      const pendingRewards =
-        await api.call.nominationPoolsApi.pendingRewards(address);
-
-      return new BigNumber(pendingRewards?.toString() || 0);
-    }
-    return new BigNumber(0);
-  };
 
   // Gets unique role addresses from a bonded pool's `roles` record.
   static getUniqueRoleAddresses = (roles: PoolRoles): string[] => {

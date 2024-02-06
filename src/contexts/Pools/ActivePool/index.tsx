@@ -33,6 +33,7 @@ import {
 import { SyncController } from 'static/SyncController';
 import { useActivePools } from 'hooks/useActivePools';
 import BigNumber from 'bignumber.js';
+import { APIController } from 'static/APIController';
 
 export const ActivePoolContext = createContext<ActivePoolContextState>(
   defaultActivePoolContext
@@ -232,12 +233,20 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
       membership?.poolId &&
       String(activePool.id) === String(membership.poolId)
     ) {
-      setPendingPoolRewards(
-        await ActivePoolsController.fetchPendingRewards(membership?.address)
-      );
+      setPendingPoolRewards(await fetchPendingRewards(membership?.address));
     } else {
       setPendingPoolRewards(new BigNumber(0));
     }
+  };
+
+  // Fetch and update unclaimed pool rewards for an address from runtime call.
+  const fetchPendingRewards = async (address: string | undefined) => {
+    if (address) {
+      const pendingRewards =
+        await APIController.api.call.nominationPoolsApi.pendingRewards(address);
+      return new BigNumber(pendingRewards?.toString() || 0);
+    }
+    return new BigNumber(0);
   };
 
   // Gets the member count of the currently selected pool. If Subscan is enabled, it is used instead of the connected node.
