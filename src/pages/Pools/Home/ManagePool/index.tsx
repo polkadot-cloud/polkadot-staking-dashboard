@@ -5,7 +5,7 @@ import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonPrimary, PageRow } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { Nominations } from 'library/Nominations';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
@@ -19,8 +19,7 @@ export const ManagePool = () => {
   const { poolNominated } = useValidators();
   const { openCanvas } = useOverlay().canvas;
   const { activeAccount } = useActiveAccounts();
-  const { isOwner, isNominator, poolNominations, activePool } =
-    useActivePools();
+  const { isOwner, isNominator, poolNominations, activePool } = useActivePool();
 
   const isNominating = !!poolNominations?.targets?.length;
   const nominator = activePool?.addresses?.stash ?? null;

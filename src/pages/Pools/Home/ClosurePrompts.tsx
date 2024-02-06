@@ -4,7 +4,7 @@
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimary, ButtonRow, PageRow } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { CardWrapper } from 'library/Card/Wrappers';
@@ -22,7 +22,7 @@ export const ClosurePrompts = () => {
   const { syncing } = useSyncing(['active-pools']);
   const { getTransferOptions } = useTransferOptions();
   const { isBonding, activePool, isDepositor, poolNominations } =
-    useActivePools();
+    useActivePool();
 
   const { state, memberCounter } = activePool?.bondedPool || {};
   const { active, totalUnlockChunks } = getTransferOptions(activeAccount).pool;

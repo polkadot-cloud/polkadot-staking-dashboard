@@ -19,7 +19,7 @@ import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
@@ -42,7 +42,7 @@ export const LeavePool = ({
   const {
     networkData: { units, unit },
   } = useNetwork();
-  const { activePool } = useActivePools();
+  const { activePool } = useActivePool();
   const { activeAccount } = useActiveAccounts();
   const { getTransferOptions } = useTransferOptions();
   const { setModalStatus, setModalResize } = useOverlay().modal;

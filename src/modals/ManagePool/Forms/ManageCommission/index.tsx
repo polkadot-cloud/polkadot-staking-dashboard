@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Warning } from 'library/Form/Warning';
 import { useBatchCall } from 'hooks/useBatchCall';
@@ -46,7 +46,7 @@ export const ManageCommission = ({
   const { newBatchCall } = useBatchCall();
   const { activeAccount } = useActiveAccounts();
   const { setModalStatus } = useOverlay().modal;
-  const { isOwner, activePool } = useActivePools();
+  const { isOwner, activePool } = useActivePool();
   const { getSignerWarnings } = useSignerWarnings();
   const { getBondedPool, updateBondedPools } = useBondedPools();
   const {

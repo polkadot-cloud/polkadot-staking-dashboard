@@ -4,7 +4,7 @@
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { ButtonOption, ModalPadding, Polkicon } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Title } from 'library/Modal/Title';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
@@ -31,6 +31,7 @@ export const AccountPoolRoles = () => {
       <Title title={t('allPoolRoles')} icon={faBars} />
       <ModalPadding>
         <ContentWrapper>
+          {/* TODO: Replace with total active pools (requires hook) */}
           {membership && (
             <>
               <h4>{label}</h4>
@@ -63,7 +64,7 @@ const Button = ({ item, poolId }: { item: string[]; poolId: string }) => {
   const { t } = useTranslation('modals');
   const { setModalStatus } = useOverlay().modal;
   const { bondedPools } = useBondedPools();
-  const { setSelectedPoolId } = useActivePools();
+  const { setSelectedPoolId } = useActivePool();
   const pool = bondedPools.find((b) => String(b.id) === poolId);
   const stash = pool?.addresses?.stash || '';
 

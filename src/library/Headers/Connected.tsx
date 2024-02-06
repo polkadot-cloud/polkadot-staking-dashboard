@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useTranslation } from 'react-i18next';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -16,7 +16,7 @@ export const Connected = () => {
   const { t } = useTranslation('library');
   const { isNominating } = useStaking();
   const { poolsMetaData } = useBondedPools();
-  const { activePool } = useActivePools();
+  const { activePool } = useActivePool();
   const { syncing } = useSyncing(['initialization']);
   const { accountHasSigner } = useImportedAccounts();
   const { activeAccount, activeProxy } = useActiveAccounts();

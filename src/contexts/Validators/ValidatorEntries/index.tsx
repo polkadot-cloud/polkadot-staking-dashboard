@@ -9,7 +9,7 @@ import { ValidatorCommunity } from '@polkadot-cloud/assets/validators';
 import type { AnyApi, AnyJson, BondFor, Fn, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useBonded } from 'contexts/Bonded';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -53,7 +53,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   } = useApi();
   const { activeEra } = useApi();
   const { stakers } = useStaking().eraStakers;
-  const { poolNominations } = useActivePools();
+  const { poolNominations } = useActivePool();
   const { activeAccount } = useActiveAccounts();
   const { erasPerDay, maxSupportedDays } = useErasPerDay();
   const { bondedAccounts, getAccountNominations } = useBonded();

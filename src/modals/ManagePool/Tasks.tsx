@@ -5,7 +5,7 @@ import { ButtonOption } from '@polkadot-cloud/react';
 import type { ForwardedRef } from 'react';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -20,7 +20,7 @@ export const Tasks = forwardRef(
     const { getTransferOptions } = useTransferOptions();
     const { globalMaxCommission } = useApi().poolsConfig;
     const { activePool, isOwner, isBouncer, isMember, isDepositor } =
-      useActivePools();
+      useActivePool();
 
     const { active } = getTransferOptions(activeAccount).pool;
 

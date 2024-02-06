@@ -5,7 +5,7 @@ import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { determinePoolDisplay } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Stat } from 'library/Stat';
@@ -31,7 +31,7 @@ export const MembershipStatus = ({
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getTransferOptions } = useTransferOptions();
   const { bondedPools, poolsMetaData } = useBondedPools();
-  const { activePool, isOwner, isBouncer, isMember } = useActivePools();
+  const { activePool, isOwner, isBouncer, isMember } = useActivePool();
 
   const { active } = getTransferOptions(activeAccount).pool;
   const poolState = activePool?.bondedPool?.state ?? null;

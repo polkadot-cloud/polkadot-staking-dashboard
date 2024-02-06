@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TipsConfig } from 'config/tips';
 import { DefaultLocale, TipsThresholdMedium, TipsThresholdSmall } from 'consts';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useFillVariables } from 'hooks/useFillVariables';
@@ -29,7 +29,7 @@ export const Tips = () => {
   const {
     stakingMetrics: { minNominatorBond },
   } = useApi();
-  const { isOwner } = useActivePools();
+  const { isOwner } = useActivePool();
   const { isNominating } = useStaking();
   const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();

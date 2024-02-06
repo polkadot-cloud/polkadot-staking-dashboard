@@ -12,7 +12,7 @@ import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
@@ -33,7 +33,7 @@ export const SetPoolState = ({
   const { setModalStatus } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
   const { getSignerWarnings } = useSignerWarnings();
-  const { isOwner, isBouncer, activePool } = useActivePools();
+  const { isOwner, isBouncer, activePool } = useActivePool();
   const { updateBondedPools, getBondedPool } = useBondedPools();
 
   const poolId = activePool?.id;

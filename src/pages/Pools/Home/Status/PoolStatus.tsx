@@ -6,7 +6,7 @@ import {
   faLock,
 } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { useNominationStatus } from 'hooks/useNominationStatus';
 import { Stat } from 'library/Stat';
 import { useSyncing } from 'hooks/useSyncing';
@@ -15,7 +15,7 @@ export const PoolStatus = () => {
   const { t } = useTranslation('pages');
   const { syncing } = useSyncing(['active-pools']);
   const { getNominationStatus } = useNominationStatus();
-  const { activePool, poolNominations } = useActivePools();
+  const { activePool, poolNominations } = useActivePool();
 
   const poolStash = activePool?.addresses?.stash || '';
   const { earningRewards, nominees } = getNominationStatus(poolStash, 'pool');

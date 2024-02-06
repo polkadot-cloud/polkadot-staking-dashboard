@@ -18,7 +18,7 @@ import { useHelp } from 'contexts/Help';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBonded } from 'contexts/Bonded';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { SubmitTx } from 'library/SubmitTx';
 import type {
   NominationSelection,
@@ -40,7 +40,7 @@ export const ManageNominations = () => {
   const { consts, api } = useApi();
   const { getBondedAccount } = useBonded();
   const { activeAccount } = useActiveAccounts();
-  const { activePool } = useActivePools();
+  const { activePool } = useActivePool();
   const { openPromptWith, closePrompt } = usePrompt();
   const { updatePoolNominations } = useBondedPools();
   const controller = getBondedAccount(activeAccount);

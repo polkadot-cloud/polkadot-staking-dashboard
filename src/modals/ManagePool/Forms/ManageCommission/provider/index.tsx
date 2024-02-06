@@ -3,7 +3,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import type { MaybeAddress } from 'types';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { rmCommas } from '@polkadot-cloud/utils';
 import type {
@@ -23,7 +23,7 @@ export const usePoolCommission = () => useContext(PoolCommissionContext);
 export const PoolCommissionProvider = ({
   children,
 }: PoolCommissionProviderProps) => {
-  const { activePool } = useActivePools();
+  const { activePool } = useActivePool();
   const { getBondedPool } = useBondedPools();
   const poolId = activePool?.id || 0;
   const bondedPool = getBondedPool(poolId);

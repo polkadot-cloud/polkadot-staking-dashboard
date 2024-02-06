@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function */
 
-import type { ActivePoolsContextState } from './types';
+import type { ActivePoolContextState } from './types';
 
 export const nominationStatus = {};
 
@@ -18,7 +18,7 @@ export const defaultPoolNominations = {
   submittedIn: 0,
 };
 
-export const defaultActivePoolContext: ActivePoolsContextState = {
+export const defaultActivePoolContext: ActivePoolContextState = {
   isBonding: () => false,
   isNominator: () => false,
   isOwner: () => false,

@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
@@ -39,7 +39,7 @@ export const Roles = ({
   const { network } = useNetwork();
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
-  const { isOwner, activePool } = useActivePools();
+  const { isOwner, activePool } = useActivePool();
   const { syncing } = useSyncing(['active-pools']);
   const { isReadOnlyAccount } = useImportedAccounts();
 

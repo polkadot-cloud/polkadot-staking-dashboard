@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxMeta } from 'contexts/TxMeta';
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
@@ -37,7 +37,7 @@ export const Unbond = () => {
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
-  const { isDepositor, activePool } = useActivePools();
+  const { isDepositor, activePool } = useActivePool();
   const { minNominatorBond: minNominatorBondBn } = useApi().stakingMetrics;
   const {
     setModalStatus,

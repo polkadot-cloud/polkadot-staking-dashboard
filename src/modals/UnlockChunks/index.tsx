@@ -10,7 +10,7 @@ import { setStateWithRef } from '@polkadot-cloud/utils';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { Title } from 'library/Modal/Title';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
@@ -30,7 +30,7 @@ export const UnlockChunks = () => {
   const { getLedger } = useBalances();
   const { notEnoughFunds } = useTxMeta();
   const { activeAccount } = useActiveAccounts();
-  const { getPoolUnlocking } = useActivePools();
+  const { getPoolUnlocking } = useActivePool();
   const { integrityChecked } = useLedgerHardware();
   const { bondFor } = options || {};
 

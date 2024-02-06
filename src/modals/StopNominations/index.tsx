@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
@@ -32,8 +32,7 @@ export const StopNominations = () => {
     config: { options },
     setModalResize,
   } = useOverlay().modal;
-  const { poolNominations, isNominator, isOwner, activePool } =
-    useActivePools();
+  const { poolNominations, isNominator, isOwner, activePool } = useActivePool();
 
   const { bondFor } = options;
   const isPool = bondFor === 'pool';

@@ -5,7 +5,7 @@ import { PageRow, PageTitle, RowSection } from '@polkadot-cloud/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { PageTitleTabProps } from '@polkadot-cloud/react/types';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList/Default';
@@ -31,13 +31,11 @@ export const HomeInner = () => {
   const { t } = useTranslation('pages');
   const { favorites } = useFavoritePools();
   const { openModal } = useOverlay().modal;
+  const { bondedPools } = useBondedPools();
   const { activeAccount } = useActiveAccounts();
   const { activeTab, setActiveTab } = usePoolsTabs();
-  const { getPoolRoles, activePool } = useActivePools();
+  const { getPoolRoles, activePool } = useActivePool();
   const { counterForBondedPools } = useApi().poolsConfig;
-  const { bondedPools, getAccountPoolRoles } = useBondedPools();
-  const accountPools = getAccountPoolRoles(activeAccount);
-  const totalAccountPools = Object.entries(accountPools).length;
 
   let tabs: PageTitleTabProps[] = [
     {
@@ -77,7 +75,7 @@ export const HomeInner = () => {
         title={t('pools.pools')}
         tabs={tabs}
         button={
-          totalAccountPools
+          activePool
             ? {
                 title: t('pools.allRoles'),
                 onClick: () =>

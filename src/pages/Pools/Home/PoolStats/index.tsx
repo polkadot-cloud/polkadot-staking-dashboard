@@ -4,7 +4,7 @@
 import { planckToUnit, rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { usePoolCommission } from 'hooks/usePoolCommission';
 import { StatsHead } from 'library/StatsHead';
@@ -21,7 +21,7 @@ export const PoolStats = () => {
     networkData: { units, unit },
   } = useNetwork();
   const { getCurrentCommission } = usePoolCommission();
-  const { activePool, selectedPoolMemberCount } = useActivePools();
+  const { activePool, selectedPoolMemberCount } = useActivePool();
 
   const poolId = activePool?.id || 0;
 

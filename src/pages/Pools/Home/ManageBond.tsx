@@ -11,7 +11,7 @@ import {
 import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { BondedChart } from 'library/BarChart/BondedChart';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
@@ -36,7 +36,7 @@ export const ManageBond = () => {
   const { syncing } = useSyncing(['active-pools']);
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getTransferOptions } = useTransferOptions();
-  const { isBonding, isMember, activePool } = useActivePools();
+  const { isBonding, isMember, activePool } = useActivePool();
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const {

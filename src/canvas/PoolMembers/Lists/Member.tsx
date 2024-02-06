@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMenu } from 'contexts/Menu';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useList } from 'library/List/context';
 import { Identity } from 'library/ListItem/Labels/Identity';
@@ -44,7 +44,7 @@ export const Member = ({
   const { selectActive } = useList();
   const { openPromptWith } = usePrompt();
   const { setMenuPosition, setMenuItems, open } = useMenu();
-  const { activePool, isOwner, isBouncer } = useActivePools();
+  const { activePool, isOwner, isBouncer } = useActivePool();
 
   // Ref for the member container.
   const memberRef = useRef<HTMLDivElement>(null);

@@ -15,7 +15,7 @@ import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useFavoritePools } from 'contexts/Pools/FavoritePools';
@@ -40,7 +40,7 @@ export const Forms = forwardRef(
     const {
       networkData: { units, unit },
     } = useNetwork();
-    const { activePool } = useActivePools();
+    const { activePool } = useActivePool();
     const { activeAccount } = useActiveAccounts();
     const { removePoolMember } = usePoolMembers();
     const { removeFromBondedPools } = useBondedPools();

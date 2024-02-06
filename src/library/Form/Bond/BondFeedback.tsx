@@ -5,7 +5,7 @@ import { planckToUnit, unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -33,7 +33,7 @@ export const BondFeedback = ({
     networkData: { units, unit },
   } = useNetwork();
   const { activeAccount } = useActiveAccounts();
-  const { isDepositor } = useActivePools();
+  const { isDepositor } = useActivePool();
   const { getTransferOptions } = useTransferOptions();
   const {
     poolsConfig: { minJoinBond, minCreateBond },

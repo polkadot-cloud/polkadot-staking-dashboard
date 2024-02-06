@@ -18,7 +18,7 @@ import { MenuProvider } from 'contexts/Menu';
 import { MigrateProvider } from 'contexts/Migrate';
 import { PromptProvider } from 'contexts/Prompt';
 import { PluginsProvider } from 'contexts/Plugins';
-import { ActivePoolsProvider } from 'contexts/Pools/ActivePools';
+import { ActivePoolProvider } from 'contexts/Pools/ActivePools';
 import { BondedPoolsProvider } from 'contexts/Pools/BondedPools';
 import { PoolMembersProvider } from 'contexts/Pools/PoolMembers';
 import { FavoritePoolsProvider } from 'contexts/Pools/FavoritePools';
@@ -76,7 +76,7 @@ export const Providers = () => {
     FavoritePoolsProvider,
     BondedPoolsProvider,
     PoolMembersProvider,
-    ActivePoolsProvider,
+    ActivePoolProvider,
     TransferOptionsProvider,
     ValidatorsProvider,
     FavoriteValidatorsProvider,

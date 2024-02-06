@@ -20,7 +20,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from '../../Api';
 import { useBondedPools } from '../BondedPools';
 import { usePoolMembers } from '../PoolMembers';
-import type { ActivePool, ActivePoolsContextState } from './types';
+import type { ActivePool, ActivePoolContextState } from './types';
 import { SubscanController } from 'static/SubscanController';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import { useBalances } from 'contexts/Balances';
@@ -35,13 +35,13 @@ import {
 } from './defaults';
 import { SyncController } from 'static/SyncController';
 
-export const ActivePoolsContext = createContext<ActivePoolsContextState>(
+export const ActivePoolContext = createContext<ActivePoolContextState>(
   defaultActivePoolContext
 );
 
-export const useActivePools = () => useContext(ActivePoolsContext);
+export const useActivePool = () => useContext(ActivePoolContext);
 
-export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
+export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
   const { isReady } = useApi();
   const { eraStakers } = useStaking();
@@ -328,7 +328,7 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
   useEventListener('new-active-pool', newActivePoolCallback, documentRef);
 
   return (
-    <ActivePoolsContext.Provider
+    <ActivePoolContext.Provider
       value={{
         isNominator,
         isOwner,
@@ -347,6 +347,6 @@ export const ActivePoolsProvider = ({ children }: { children: ReactNode }) => {
       }}
     >
       {children}
-    </ActivePoolsContext.Provider>
+    </ActivePoolContext.Provider>
   );
 };

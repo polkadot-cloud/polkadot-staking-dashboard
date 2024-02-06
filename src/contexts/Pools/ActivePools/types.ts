@@ -7,7 +7,7 @@ import type { MaybeAddress } from '@polkadot-cloud/react/types';
 import type { Nominations } from 'contexts/Bonded/types';
 import type { Identity, SuperIdentity } from 'contexts/Validators/types';
 
-export interface ActivePoolsContextState {
+export interface ActivePoolContextState {
   isBonding: () => boolean;
   isNominator: () => boolean;
   isOwner: () => boolean;
