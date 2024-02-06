@@ -6336,7 +6336,7 @@ __metadata:
     react-dom: "npm:^18.2.0"
     react-error-boundary: "npm:^4.0.12"
     react-helmet: "npm:^6.1.0"
-    react-i18next: "npm:^14.0.3"
+    react-i18next: "npm:^14.0.5"
     react-router-dom: "npm:^6.22.0"
     react-scroll: "npm:^1.9.0"
     sass: "npm:^1.70.0"
@@ -6614,9 +6614,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:^14.0.3":
-  version: 14.0.3
-  resolution: "react-i18next@npm:14.0.3"
+"react-i18next@npm:^14.0.5":
+  version: 14.0.5
+  resolution: "react-i18next@npm:14.0.5"
   dependencies:
     "@babel/runtime": "npm:^7.23.9"
     html-parse-stringify: "npm:^3.0.1"
@@ -6628,7 +6628,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: e5d5f2a14324a295094944b71139e60d473a48843e8ce6e68d0edd8b34826900c6dd2ac7bac9a8b23c70a54fa89cdc9da9556b2e96fca0027d3555d3075813ed
+  checksum: 60e3bedc6889689cfb96005b134da79d50097d3ff088284b35f213820aacedbdad1ff32e97b8447db70834c16d472ded829675e05c2a099baea9fd96b3a5b72f
   languageName: node
   linkType: hard
 
