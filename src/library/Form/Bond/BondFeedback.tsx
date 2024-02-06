@@ -32,13 +32,13 @@ export const BondFeedback = ({
   const {
     networkData: { units, unit },
   } = useNetwork();
-  const { activeAccount } = useActiveAccounts();
   const { isDepositor } = useActivePool();
-  const { getTransferOptions } = useTransferOptions();
+  const { activeAccount } = useActiveAccounts();
   const {
     poolsConfig: { minJoinBond, minCreateBond },
     stakingMetrics: { minNominatorBond },
   } = useApi();
+  const { getTransferOptions } = useTransferOptions();
   const allTransferOptions = getTransferOptions(activeAccount);
 
   const defaultBondStr = defaultBond ? String(defaultBond) : '';

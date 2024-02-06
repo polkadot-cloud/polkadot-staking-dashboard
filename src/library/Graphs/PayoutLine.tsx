@@ -56,7 +56,7 @@ export const PayoutLine = ({
   const { unit, units, colors } = useNetwork().networkData;
   const poolMembership = getPoolMembership(activeAccount);
   const notStaking = !syncing && inSetup() && !poolMembership;
-  const poolingOnly = !syncing && inSetup() && poolMembership !== null;
+  const inPoolOnly = !syncing && inSetup() && !!poolMembership;
 
   // remove slashes from payouts (graph does not support negative values).
   const payoutsNoSlash = payouts?.filter((p) => p.event_id !== 'Slashed') || [];
@@ -90,7 +90,7 @@ export const PayoutLine = ({
   // determine color for payouts
   const color = notStaking
     ? colors.primary[mode]
-    : !poolingOnly
+    : !inPoolOnly
       ? colors.primary[mode]
       : colors.secondary[mode];
 

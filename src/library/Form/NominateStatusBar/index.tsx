@@ -15,13 +15,13 @@ import { useSyncing } from 'hooks/useSyncing';
 
 export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
   const { t } = useTranslation('library');
+  const { openHelp } = useHelp();
   const { syncing } = useSyncing('*');
-  const { unit, units } = useNetwork().networkData;
   const {
     networkMetrics: { minimumActiveStake },
     stakingMetrics: { minNominatorBond },
   } = useApi();
-  const { openHelp } = useHelp();
+  const { unit, units } = useNetwork().networkData;
 
   const minNominatorBondUnit = planckToUnit(minNominatorBond, units);
   const minimumActiveStakeUnit = planckToUnit(minimumActiveStake, units);
