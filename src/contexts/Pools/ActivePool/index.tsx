@@ -54,7 +54,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
 
   // Determine active pools to subscribe to. Dependencies of `activeAccount`, and `membership` mean
   // that this object is only recalculated when these values change.
-  const accountPools = useMemo(() => {
+  const accountPoolIds = useMemo(() => {
     const rollPoolIds: string[] = Object.keys(
       getAccountPoolRoles(activeAccount) || {}
     );
@@ -87,7 +87,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     poolIds,
     onCallback: async () => {
       // Sync: active pools synced once all account pools have been reported.
-      if (accountPools.length <= ActivePoolsController.pools.length) {
+      if (accountPoolIds.length <= ActivePoolsController.pools.length) {
         SyncController.dispatch('active-pools', 'complete');
       }
     },
@@ -111,6 +111,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   // Store the member count of the selected pool.
   const [activePoolMemberCount, setactivePoolMemberCount] = useState<number>(0);
 
+  // Keep track of whether the pool member count is being fetched.
   const fetchingMemberCount = useRef<Sync>('unsynced');
 
   const getActivePoolNominations = () =>
@@ -118,28 +119,27 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
 
   // Sync active pool subscriptions.
   const syncActivePoolSubscriptions = async () => {
-    if (accountPools.length) {
-      const activePoolItems = accountPools.map((pool) => ({
+    if (accountPoolIds.length) {
+      const newActivePools = accountPoolIds.map((pool) => ({
         id: pool,
         addresses: { ...createPoolAccounts(Number(pool)) },
       }));
-      ActivePoolsController.syncPools(activePoolItems);
+      ActivePoolsController.syncPools(newActivePools);
     }
 
     // Assign default pool immediately if active pool not currently selected.
-    const defaultSelected = membership?.poolId || accountPools[0] || null;
-
-    if (defaultSelected && !activePool) {
-      setActivePoolId(String(defaultSelected));
+    const initialActivePoolId = membership?.poolId || accountPoolIds[0] || null;
+    if (initialActivePoolId && !activePool) {
+      setActivePoolId(String(initialActivePoolId));
     }
   };
 
-  // Unsubscribe and reset activePool and poolNominations.
-  const resetActivePools = () => {
+  // Reset `activePoolId`.
+  const resetActivePoolId = () => {
     setStateWithRef(null, setActivePoolIdState, activePoolIdRef);
   };
 
-  // Returns whether active pool exists.
+  // Returns whether an active pool is being bonded to.
   const isBonding = () => !!activePool;
 
   // Returns whether the active account is the nominator in the active pool.
@@ -288,19 +288,20 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     if (isReady) {
       syncActivePoolSubscriptions();
     }
-  }, [network, isReady, accountPools]);
+  }, [network, isReady, accountPoolIds]);
 
   // Reset everything when `activeAccount` changes.
   useEffectIgnoreInitial(() => {
     ActivePoolsController.unsubscribe();
-    resetActivePools();
+    resetActivePoolId();
   }, [activeAccount]);
 
-  // Reset on network change and component unmount.
+  // Reset on network change and component unmount. NOTE: ActivePoolsController also unsubscribes on
+  // network change; this is handled by the APIController.
   useEffect(() => {
-    resetActivePools();
+    resetActivePoolId();
     return () => {
-      resetActivePools();
+      resetActivePoolId();
     };
   }, [network]);
 
