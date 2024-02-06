@@ -70,7 +70,7 @@ const Button = ({
   poolId: string;
 }) => {
   const { t } = useTranslation('modals');
-  const { setSelectedPoolId } = useActivePool();
+  const { setActivePoolId } = useActivePool();
   const { setModalStatus } = useOverlay().modal;
 
   const { roles } = activePool?.bondedPool || {};
@@ -81,7 +81,7 @@ const Button = ({
       content
       disabled
       onClick={() => {
-        setSelectedPoolId(poolId);
+        setActivePoolId(poolId);
         setModalStatus('closing');
       }}
       className="item"

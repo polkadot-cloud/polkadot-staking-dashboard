@@ -18,10 +18,10 @@ export interface ActivePoolContextState {
   getPoolUnlocking: () => PoolUnlocking[];
   getPoolRoles: () => PoolRoles;
   getNominationsStatus: () => NominationStatuses;
-  setSelectedPoolId: (p: string) => void;
+  setActivePoolId: (p: string) => void;
   activePool: ActivePool | null;
   poolNominations: Nominations | null;
-  selectedPoolMemberCount: number;
+  activePoolMemberCount: number;
   pendingPoolRewards: BigNumber;
 }
 

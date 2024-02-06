@@ -55,7 +55,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   // Determine active pools to subscribe to. Dependencies of `activeAccount`, and `membership` mean
   // that this object is only recalculated when these values change.
   const accountPools = useMemo(() => {
-    const allRolePoolIds: string[] = Object.keys(
+    const rollPoolIds: string[] = Object.keys(
       getAccountPoolRoles(activeAccount) || {}
     );
 
@@ -63,25 +63,24 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     // `bondedPools`, add that role to the list of the account's pool roles.
     if (
       membership?.poolId &&
-      !allRolePoolIds.includes(String(membership.poolId))
+      !rollPoolIds.includes(String(membership.poolId))
     ) {
-      allRolePoolIds.push(String(membership.poolId));
+      rollPoolIds.push(String(membership.poolId));
     }
-    return allRolePoolIds;
+    return rollPoolIds;
   }, [activeAccount, bondedPools, membership]);
 
   // Store the currently selected active pool for the UI. Should default to the membership pool if
   // present. Used in event callback, therefore needs an accompanying ref.
-  const [selectedPoolId, setSelectedPoolIdState] = useState<string | null>(
-    null
-  );
-  const selectedPoolIdRef = useRef(selectedPoolId);
-  const setSelectedPoolId = (id: string | null) => {
-    setStateWithRef(id, setSelectedPoolIdState, selectedPoolIdRef);
+  const [activePoolId, setActivePoolIdState] = useState<string | null>(null);
+  const activePoolIdRef = useRef(activePoolId);
+
+  const setActivePoolId = (id: string | null) => {
+    setStateWithRef(id, setActivePoolIdState, activePoolIdRef);
   };
 
   // Only listen to the currently selected active pool, otherwise return an empty array.
-  const poolIds = selectedPoolIdRef.current ? [selectedPoolIdRef.current] : [];
+  const poolIds = activePoolIdRef.current ? [activePoolIdRef.current] : [];
 
   // Listen for active pools.
   const { activePools, poolNominations: poolNominationsFromHookRaw } =
@@ -101,18 +100,17 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const activePool =
-    selectedPoolId && activePools[selectedPoolId]
-      ? activePools[selectedPoolId]
+    activePoolId && activePools[activePoolId]
+      ? activePools[activePoolId]
       : null;
 
   const poolNominations =
-    selectedPoolId && poolNominationsFromHookRaw[selectedPoolId]
-      ? poolNominationsFromHookRaw[selectedPoolId]
+    activePoolId && poolNominationsFromHookRaw[activePoolId]
+      ? poolNominationsFromHookRaw[activePoolId]
       : null;
 
   // Store the member count of the selected pool.
-  const [selectedPoolMemberCount, setSelectedPoolMemberCount] =
-    useState<number>(0);
+  const [activePoolMemberCount, setactivePoolMemberCount] = useState<number>(0);
 
   const fetchingMemberCount = useRef<Sync>('unsynced');
 
@@ -133,13 +131,13 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     const defaultSelected = membership?.poolId || accountPools[0] || null;
 
     if (defaultSelected && !activePool) {
-      setSelectedPoolId(String(defaultSelected));
+      setActivePoolId(String(defaultSelected));
     }
   };
 
   // Unsubscribe and reset activePool and poolNominations.
   const resetActivePools = () => {
-    setStateWithRef(null, setSelectedPoolIdState, selectedPoolIdRef);
+    setStateWithRef(null, setActivePoolIdState, activePoolIdRef);
   };
 
   // Returns whether active pool exists.
@@ -223,7 +221,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
       : '-1';
 
     // exit early if the currently selected pool is not membership pool
-    if (selectedPoolId !== membershipPoolId) {
+    if (activePoolId !== membershipPoolId) {
       return [];
     }
     return membership?.unlocking || [];
@@ -247,7 +245,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   // Gets the member count of the currently selected pool. If Subscan is enabled, it is used instead of the connected node.
   const getMemberCount = async () => {
     if (!activePool?.id) {
-      setSelectedPoolMemberCount(0);
+      setactivePoolMemberCount(0);
       return;
     }
     // If `Subscan` plugin is enabled, fetch member count directly from the API.
@@ -260,12 +258,12 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
         activePool.id
       );
       fetchingMemberCount.current = 'synced';
-      setSelectedPoolMemberCount(poolDetails?.member_count || 0);
+      setactivePoolMemberCount(poolDetails?.member_count || 0);
       return;
     }
     // If no plugin available, fetch all pool members from RPC and filter them to determine current
     // pool member count. NOTE: Expensive operation.
-    setSelectedPoolMemberCount(
+    setactivePoolMemberCount(
       getMembersOfPoolFromNode(activePool?.id || 0)?.length || 0
     );
   };
@@ -320,9 +318,9 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
         getPoolUnlocking,
         getPoolRoles,
         getNominationsStatus,
-        setSelectedPoolId,
+        setActivePoolId,
         activePool,
-        selectedPoolMemberCount,
+        activePoolMemberCount,
         poolNominations,
         pendingPoolRewards,
       }}

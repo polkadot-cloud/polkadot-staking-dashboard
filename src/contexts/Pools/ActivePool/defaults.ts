@@ -30,9 +30,9 @@ export const defaultActivePoolContext: ActivePoolContextState = {
   getPoolUnlocking: () => [],
   getPoolRoles: () => defaultPoolRoles,
   getNominationsStatus: () => nominationStatus,
-  setSelectedPoolId: (p) => {},
+  setActivePoolId: (p) => {},
   activePool: null,
   poolNominations: null,
-  selectedPoolMemberCount: 0,
+  activePoolMemberCount: 0,
   pendingPoolRewards: new BigNumber(0),
 };

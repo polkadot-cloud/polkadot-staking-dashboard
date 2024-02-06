@@ -18,7 +18,7 @@ export const Members = () => {
   const { mode } = useTheme();
   const { pluginEnabled } = usePlugins();
   const { getMembersOfPoolFromNode } = usePoolMembers();
-  const { activePool, isOwner, isBouncer, selectedPoolMemberCount } =
+  const { activePool, isOwner, isBouncer, activePoolMemberCount } =
     useActivePool();
 
   const { colors } = useNetwork().networkData;
@@ -80,7 +80,7 @@ export const Members = () => {
         {pluginEnabled('subscan') ? (
           <FetchPageMemberList
             {...membersListProps}
-            memberCount={selectedPoolMemberCount}
+            memberCount={activePoolMemberCount}
           />
         ) : (
           <DefaultMemberList

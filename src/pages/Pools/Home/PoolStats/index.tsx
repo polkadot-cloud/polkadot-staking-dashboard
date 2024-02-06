@@ -21,7 +21,7 @@ export const PoolStats = () => {
     networkData: { units, unit },
   } = useNetwork();
   const { getCurrentCommission } = usePoolCommission();
-  const { activePool, selectedPoolMemberCount } = useActivePool();
+  const { activePool, activePoolMemberCount } = useActivePool();
 
   const poolId = activePool?.id || 0;
 
@@ -65,13 +65,13 @@ export const PoolStats = () => {
   items.push(
     {
       label: t('pools.poolMembers'),
-      value: `${selectedPoolMemberCount}`,
+      value: `${activePoolMemberCount}`,
       button: {
         text: t('pools.browseMembers'),
         onClick: () => {
           openCanvas({ key: 'PoolMembers', size: 'xl' });
         },
-        disabled: selectedPoolMemberCount === 0,
+        disabled: activePoolMemberCount === 0,
       },
     },
     {
