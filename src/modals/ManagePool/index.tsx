@@ -9,7 +9,7 @@ import {
 } from '@polkadot-cloud/react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Title } from 'library/Modal/Title';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
@@ -21,7 +21,7 @@ export const ManagePool = () => {
   const { t } = useTranslation('modals');
   const { notEnoughFunds } = useTxMeta();
   const { integrityChecked } = useLedgerHardware();
-  const { isOwner, selectedActivePool } = useActivePools();
+  const { isOwner, activePool } = useActivePool();
   const { setModalHeight, modalMaxHeight } = useOverlay().modal;
 
   // modal task
@@ -59,7 +59,7 @@ export const ManagePool = () => {
     task,
     notEnoughFunds,
     calculateHeight,
-    selectedActivePool?.bondedPool?.state,
+    activePool?.bondedPool?.state,
   ]);
 
   useEffect(() => {

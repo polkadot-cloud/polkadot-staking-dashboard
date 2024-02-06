@@ -12,13 +12,13 @@ import { useBonded } from 'contexts/Bonded';
 import { useFastUnstake } from 'contexts/FastUnstake';
 import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
 import { useNominationStatus } from 'hooks/useNominationStatus';
 import { useUnstaking } from 'hooks/useUnstaking';
 import { Stat } from 'library/Stat';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const NominationStatus = ({
   showButtons = true,
@@ -29,9 +29,9 @@ export const NominationStatus = ({
 }) => {
   const { t } = useTranslation('pages');
   const { inSetup } = useStaking();
-  const { isNetworkSyncing } = useUi();
   const { openModal } = useOverlay().modal;
   const { getBondedAccount } = useBonded();
+  const { syncing } = useSyncing(['initialization']);
   const {
     isReady,
     networkMetrics: { fastUnstakeErasToCheckPerBlock },
@@ -88,7 +88,7 @@ export const NominationStatus = ({
             ? !isUnstaking
               ? [unstakeButton]
               : []
-            : isNetworkSyncing
+            : syncing
               ? []
               : [
                   {

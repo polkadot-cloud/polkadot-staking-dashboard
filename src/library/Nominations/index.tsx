@@ -6,9 +6,8 @@ import { ButtonHelp, ButtonPrimary } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
 import { useHelp } from 'contexts/Help';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'hooks/useUnstaking';
@@ -19,6 +18,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { ListStatusHeader } from 'library/List';
 import { Wrapper } from './Wrapper';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const Nominations = ({
   bondFor,
@@ -29,18 +29,18 @@ export const Nominations = ({
 }) => {
   const { t } = useTranslation('pages');
   const {
-    poolNominations,
-    selectedActivePool,
+    activePool,
+    activePoolNominations,
     isOwner: isPoolOwner,
     isNominator: isPoolNominator,
-  } = useActivePools();
-  const { isSyncing } = useUi();
+  } = useActivePool();
   const { openHelp } = useHelp();
   const { inSetup } = useStaking();
   const {
     modal: { openModal },
     canvas: { openCanvas },
   } = useOverlay();
+  const { syncing } = useSyncing('*');
   const { getNominated } = useValidators();
   const { isFastUnstaking } = useUnstaking();
   const { activeAccount } = useActiveAccounts();
@@ -52,7 +52,7 @@ export const Nominations = ({
 
   // Derive nominations from `bondFor` type.
   const nominations = isPool
-    ? poolNominations.targets
+    ? activePoolNominations?.targets || []
     : getAccountNominations(nominator);
   const nominated = getNominated(bondFor);
 
@@ -61,9 +61,7 @@ export const Nominations = ({
 
   // Determine whether this is a pool that is in Destroying state & not nominating.
   const poolDestroying =
-    isPool &&
-    selectedActivePool?.bondedPool?.state === 'Destroying' &&
-    !isNominating;
+    isPool && activePool?.bondedPool?.state === 'Destroying' && !isNominating;
 
   // Determine whether to display buttons.
   //
@@ -76,7 +74,7 @@ export const Nominations = ({
   // Determine whether buttons are disabled.
   const btnsDisabled =
     (!isPool && inSetup()) ||
-    isSyncing ||
+    syncing ||
     isReadOnlyAccount(activeAccount) ||
     poolDestroying ||
     isFastUnstaking;
@@ -130,7 +128,7 @@ export const Nominations = ({
           )}
         </div>
       </CardHeaderWrapper>
-      {isSyncing ? (
+      {syncing ? (
         <ListStatusHeader>{`${t('nominate.syncing')}...`}</ListStatusHeader>
       ) : !nominator ? (
         <ListStatusHeader>{t('nominate.notNominating')}.</ListStatusHeader>

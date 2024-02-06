@@ -15,8 +15,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
-import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useUi } from 'contexts/UI';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
@@ -26,6 +25,7 @@ import { RolesWrapper } from '../Home/ManagePool/Wrappers';
 import { PoolAccount } from '../PoolAccount';
 import { RoleEditInput } from './RoleEditInput';
 import type { RoleEditEntry, RolesProps } from './types';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const Roles = ({
   defaultRoles,
@@ -37,12 +37,13 @@ export const Roles = ({
   const { isReady } = useApi();
   const { openHelp } = useHelp();
   const { network } = useNetwork();
-  const { isPoolSyncing } = useUi();
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
+  const { isOwner, activePool } = useActivePool();
+  const { syncing } = useSyncing(['active-pools']);
   const { isReadOnlyAccount } = useImportedAccounts();
-  const { isOwner, selectedActivePool } = useActivePools();
-  const { id } = selectedActivePool || { id: 0 };
+
+  const { id } = activePool || { id: 0 };
   const roles = defaultRoles;
 
   const initialiseEdits = (() => {
@@ -162,7 +163,7 @@ export const Roles = ({
                   iconLeft={faTimesCircle}
                   iconTransform="grow-1"
                   text={t('pools.cancel')}
-                  disabled={isPoolSyncing || isReadOnlyAccount(activeAccount)}
+                  disabled={syncing || isReadOnlyAccount(activeAccount)}
                   onClick={() => cancelHandler()}
                 />
               </div>
@@ -174,7 +175,7 @@ export const Roles = ({
                 iconTransform="grow-1"
                 text={isEditing ? t('pools.save') : t('pools.edit')}
                 disabled={
-                  isPoolSyncing ||
+                  syncing ||
                   isReadOnlyAccount(activeAccount) ||
                   !isRoleEditsValid()
                 }
@@ -188,10 +189,7 @@ export const Roles = ({
         <section>
           <div className="inner">
             <h4>{t('pools.depositor')}</h4>
-            <PoolAccount
-              address={roles.depositor ?? null}
-              pool={selectedActivePool}
-            />
+            <PoolAccount address={roles.depositor ?? null} pool={activePool} />
           </div>
         </section>
         <section>
@@ -204,10 +202,7 @@ export const Roles = ({
                 setRoleEdit={setRoleEditHandler}
               />
             ) : (
-              <PoolAccount
-                address={roles.root ?? null}
-                pool={selectedActivePool}
-              />
+              <PoolAccount address={roles.root ?? null} pool={activePool} />
             )}
           </div>
         </section>
@@ -223,7 +218,7 @@ export const Roles = ({
             ) : (
               <PoolAccount
                 address={roles.nominator ?? null}
-                pool={selectedActivePool}
+                pool={activePool}
               />
             )}
           </div>
@@ -238,10 +233,7 @@ export const Roles = ({
                 setRoleEdit={setRoleEditHandler}
               />
             ) : (
-              <PoolAccount
-                address={roles.bouncer ?? null}
-                pool={selectedActivePool}
-              />
+              <PoolAccount address={roles.bouncer ?? null} pool={activePool} />
             )}
           </div>
         </section>

@@ -18,7 +18,7 @@ import { MenuProvider } from 'contexts/Menu';
 import { MigrateProvider } from 'contexts/Migrate';
 import { PromptProvider } from 'contexts/Prompt';
 import { PluginsProvider } from 'contexts/Plugins';
-import { ActivePoolsProvider } from 'contexts/Pools/ActivePools';
+import { ActivePoolProvider } from 'contexts/Pools/ActivePool';
 import { BondedPoolsProvider } from 'contexts/Pools/BondedPools';
 import { PoolMembersProvider } from 'contexts/Pools/PoolMembers';
 import { FavoritePoolsProvider } from 'contexts/Pools/FavoritePools';
@@ -54,6 +54,7 @@ export const Providers = () => {
 
   // !! Provider order matters
   const providers: (FC<AnyJson> | [FC<AnyJson>, AnyJson])[] = [
+    UIProvider,
     [APIProvider, { network }],
     VaultAccountsProvider,
     LedgerHardwareProvider,
@@ -75,14 +76,13 @@ export const Providers = () => {
     FavoritePoolsProvider,
     BondedPoolsProvider,
     PoolMembersProvider,
-    ActivePoolsProvider,
+    ActivePoolProvider,
     TransferOptionsProvider,
     ValidatorsProvider,
     FavoriteValidatorsProvider,
     FastUnstakeProvider,
     PayoutsProvider,
     PoolPerformanceProvider,
-    UIProvider,
     SetupProvider,
     MenuProvider,
     TooltipProvider,

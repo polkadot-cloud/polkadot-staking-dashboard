@@ -13,7 +13,6 @@ import { useApi } from 'contexts/Api';
 import { useFilters } from 'contexts/Filters';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTheme } from 'contexts/Themes';
-import { useUi } from 'contexts/UI';
 import { Tabs } from 'library/Filter/Tabs';
 import { usePoolFilters } from 'hooks/usePoolFilters';
 import {
@@ -30,6 +29,7 @@ import { useNetwork } from 'contexts/Network';
 import { usePoolList } from './context';
 import type { PoolListProps } from './types';
 import type { BondedPool } from 'contexts/Pools/BondedPools/types';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const PoolList = ({
   allowMoreCols,
@@ -46,7 +46,7 @@ export const PoolList = ({
   const {
     networkData: { colors },
   } = useNetwork();
-  const { isSyncing } = useUi();
+  const { syncing } = useSyncing('*');
   const { applyFilter } = usePoolFilters();
   const { listFormat, setListFormat } = usePoolList();
   const { getFilters, setMultiFilters, getSearchTerm, setSearchTerm } =
@@ -158,10 +158,10 @@ export const PoolList = ({
   // List ui changes / validator changes trigger re-render of list.
   useEffect(() => {
     // only filter when pool nominations have been synced.
-    if (!isSyncing && Object.keys(poolsNominations).length) {
+    if (!syncing && Object.keys(poolsNominations).length) {
       handlePoolsFilterUpdate();
     }
-  }, [isSyncing, includes, excludes, Object.keys(poolsNominations).length]);
+  }, [syncing, includes, excludes, Object.keys(poolsNominations).length]);
 
   // Scroll to top of the window on every filter.
   useEffect(() => {
@@ -266,7 +266,7 @@ export const PoolList = ({
             </>
           ) : (
             <ListStatusHeader>
-              {isSyncing ? `${t('syncingPoolList')}...` : t('noMatch')}
+              {syncing ? `${t('syncingPoolList')}...` : t('noMatch')}
             </ListStatusHeader>
           )}
         </MotionContainer>

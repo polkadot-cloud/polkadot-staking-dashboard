@@ -27,6 +27,8 @@ import type {
 } from 'contexts/Api/types';
 import { WellKnownChain } from '@substrate/connect';
 import { defaultActiveEra } from 'contexts/Api/defaults';
+import { ActivePoolsController } from 'static/ActivePoolsController';
+import { SyncController } from 'static/SyncController';
 
 export class APIController {
   // ------------------------------------------------------
@@ -129,6 +131,10 @@ export class APIController {
       // Tidy up any previous connection.
       await this.disconnect();
     }
+
+    // Add initial syncing items.
+    SyncController.dispatch('initialization', 'syncing');
+    SyncController.dispatch('era-stakers', 'syncing');
 
     const config: APIConfig = {
       type,
@@ -758,6 +764,7 @@ export class APIController {
     // Unsubscribe from all subscriptions.
     this.unsubscribe();
     BalancesController.unsubscribe();
+    ActivePoolsController.unsubscribe();
 
     // Disconnect from provider and api.
     this.unsubscribeProvider();

@@ -4,7 +4,7 @@
 import { planckToUnit, rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { usePoolCommission } from 'hooks/usePoolCommission';
 import { StatsHead } from 'library/StatsHead';
@@ -21,11 +21,11 @@ export const PoolStats = () => {
     networkData: { units, unit },
   } = useNetwork();
   const { getCurrentCommission } = usePoolCommission();
-  const { selectedActivePool, selectedPoolMemberCount } = useActivePools();
+  const { activePool, activePoolMemberCount } = useActivePool();
 
-  const poolId = selectedActivePool?.id || 0;
+  const poolId = activePool?.id || 0;
 
-  const { state, points } = selectedActivePool?.bondedPool || {};
+  const { state, points } = activePool?.bondedPool || {};
   const currentCommission = getCurrentCommission(poolId);
 
   const bonded = planckToUnit(
@@ -65,13 +65,13 @@ export const PoolStats = () => {
   items.push(
     {
       label: t('pools.poolMembers'),
-      value: `${selectedPoolMemberCount}`,
+      value: `${activePoolMemberCount}`,
       button: {
         text: t('pools.browseMembers'),
         onClick: () => {
           openCanvas({ key: 'PoolMembers', size: 'xl' });
         },
-        disabled: selectedPoolMemberCount === 0,
+        disabled: activePoolMemberCount === 0,
       },
     },
     {

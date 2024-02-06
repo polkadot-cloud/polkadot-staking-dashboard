@@ -2,22 +2,22 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useTranslation } from 'react-i18next';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import DefaultAccount from '../Account/DefaultAccount';
 import PoolAccount from '../Account/PoolAccount';
 import { HeadingWrapper } from './Wrappers';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const Connected = () => {
   const { t } = useTranslation('library');
-  const { isNetworkSyncing } = useUi();
   const { isNominating } = useStaking();
+  const { activePool } = useActivePool();
   const { poolsMetaData } = useBondedPools();
-  const { selectedActivePool } = useActivePools();
+  const { syncing } = useSyncing(['initialization']);
   const { accountHasSigner } = useImportedAccounts();
   const { activeAccount, activeProxy } = useActiveAccounts();
 
@@ -29,22 +29,18 @@ export const Connected = () => {
           <DefaultAccount
             value={activeAccount}
             label={
-              isNetworkSyncing
-                ? undefined
-                : isNominating()
-                  ? 'Nominator'
-                  : undefined
+              syncing ? undefined : isNominating() ? 'Nominator' : undefined
             }
             readOnly={!accountHasSigner(activeAccount)}
           />
         </HeadingWrapper>
 
         {/* Pool account display / hide if not in pool or if syncing. */}
-        {selectedActivePool !== null && !isNetworkSyncing && (
+        {activePool !== null && !syncing && (
           <HeadingWrapper>
             <PoolAccount
               label={t('pool')}
-              pool={selectedActivePool}
+              pool={activePool}
               syncing={!Object.values(poolsMetaData).length}
             />
           </HeadingWrapper>

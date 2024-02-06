@@ -8,7 +8,6 @@ import { DefaultLocale, MaxPayoutDays } from 'consts';
 import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
@@ -24,19 +23,20 @@ import { LastEraPayoutStat } from './Stats/LastEraPayout';
 import { useSubscanData } from 'hooks/useSubscanData';
 import { SubscanController } from 'static/SubscanController';
 import { locales } from 'locale';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const Payouts = ({ page: { key } }: PageProps) => {
   const { i18n, t } = useTranslation();
-  const { isSyncing } = useUi();
   const { openHelp } = useHelp();
   const { plugins } = usePlugins();
   const { inSetup } = useStaking();
+  const { syncing } = useSyncing('*');
   const { getData, injectBlockTimestamp } = useSubscanData([
     'payouts',
     'unclaimedPayouts',
     'poolClaims',
   ]);
-  const notStaking = !isSyncing && inSetup();
+  const notStaking = !syncing && inSetup();
 
   const [payoutsList, setPayoutLists] = useState<AnySubscan>([]);
 

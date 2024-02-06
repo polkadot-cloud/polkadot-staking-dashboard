@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
@@ -32,10 +32,10 @@ export const StopNominations = () => {
     config: { options },
     setModalResize,
   } = useOverlay().modal;
-  const { poolNominations, isNominator, isOwner, selectedActivePool } =
-    useActivePools();
-  const { bondFor } = options;
+  const { activePoolNominations, isNominator, isOwner, activePool } =
+    useActivePool();
 
+  const { bondFor } = options;
   const isPool = bondFor === 'pool';
   const isStaking = bondFor === 'nominator';
   const controller = getBondedAccount(activeAccount);
@@ -43,7 +43,7 @@ export const StopNominations = () => {
 
   const nominations =
     isPool === true
-      ? poolNominations?.targets || []
+      ? activePoolNominations?.targets || []
       : getAccountNominations(activeAccount);
 
   // valid to submit transaction
@@ -69,7 +69,7 @@ export const StopNominations = () => {
 
     if (isPool) {
       // wishing to stop all nominations, call chill
-      tx = api.tx.nominationPools.chill(selectedActivePool?.id || 0);
+      tx = api.tx.nominationPools.chill(activePool?.id || 0);
     } else if (isStaking) {
       tx = api.tx.staking.chill();
     }

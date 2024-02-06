@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 import { useMenu } from 'contexts/Menu';
 import type { NotificationText } from 'static/NotificationsController/types';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { usePoolCommission } from 'hooks/usePoolCommission';
 import { FavoritePool } from 'library/ListItem/Labels/FavoritePool';
@@ -34,17 +33,18 @@ import { Rewards } from './Rewards';
 import { NotificationsController } from 'static/NotificationsController';
 import type { MenuItem } from 'contexts/Menu/types';
 import { useBalances } from 'contexts/Balances';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const Pool = ({ pool }: PoolProps) => {
   const { t } = useTranslation('library');
   const { memberCounter, addresses, id, state } = pool;
-  const { isPoolSyncing } = useUi();
   const { validators } = useValidators();
   const { setActiveTab } = usePoolsTabs();
   const { openModal } = useOverlay().modal;
   const { getPoolMembership } = useBalances();
   const { poolsNominations } = useBondedPools();
   const { activeAccount } = useActiveAccounts();
+  const { syncing } = useSyncing(['active-pools']);
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getCurrentCommission } = usePoolCommission();
   const { setMenuPosition, setMenuItems, open } = useMenu();
@@ -114,7 +114,7 @@ export const Pool = ({ pool }: PoolProps) => {
   };
 
   const displayJoin =
-    !isPoolSyncing &&
+    !syncing &&
     state === 'Open' &&
     !membership &&
     !isReadOnlyAccount(activeAccount) &&

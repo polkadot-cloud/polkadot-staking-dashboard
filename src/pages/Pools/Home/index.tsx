@@ -5,7 +5,7 @@ import { PageRow, PageTitle, RowSection } from '@polkadot-cloud/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { PageTitleTabProps } from '@polkadot-cloud/react/types';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList/Default';
@@ -26,18 +26,27 @@ import { MinJoinBondStat } from './Stats/MinJoinBond';
 import { Status } from './Status';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
 import { useApi } from 'contexts/Api';
+import { useActivePools } from 'hooks/useActivePools';
+import { useBalances } from 'contexts/Balances';
 
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
   const { favorites } = useFavoritePools();
   const { openModal } = useOverlay().modal;
+  const { bondedPools } = useBondedPools();
+  const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
   const { activeTab, setActiveTab } = usePoolsTabs();
+  const { getPoolRoles, activePool } = useActivePool();
   const { counterForBondedPools } = useApi().poolsConfig;
-  const { bondedPools, getAccountPools } = useBondedPools();
-  const { getPoolRoles, selectedActivePool } = useActivePools();
-  const accountPools = getAccountPools(activeAccount);
-  const totalAccountPools = Object.entries(accountPools).length;
+  const membership = getPoolMembership(activeAccount);
+
+  const { activePools } = useActivePools({
+    poolIds: '*',
+  });
+
+  const activePoolsNoMembership = { ...activePools };
+  delete activePoolsNoMembership[membership?.poolId || -1];
 
   let tabs: PageTitleTabProps[] = [
     {
@@ -64,10 +73,10 @@ export const HomeInner = () => {
 
   // Back to tab 0 if not in a pool & on members tab.
   useEffect(() => {
-    if (!selectedActivePool) {
+    if (!activePool) {
       setActiveTab(0);
     }
-  }, [selectedActivePool]);
+  }, [activePool]);
 
   const ROW_HEIGHT = 220;
 
@@ -77,13 +86,13 @@ export const HomeInner = () => {
         title={t('pools.pools')}
         tabs={tabs}
         button={
-          totalAccountPools
+          Object.keys(activePoolsNoMembership).length > 0
             ? {
                 title: t('pools.allRoles'),
                 onClick: () =>
                   openModal({
                     key: 'AccountPoolRoles',
-                    options: { who: activeAccount },
+                    options: { who: activeAccount, activePools },
                   }),
               }
             : undefined
@@ -109,7 +118,7 @@ export const HomeInner = () => {
               </CardWrapper>
             </RowSection>
           </PageRow>
-          {selectedActivePool !== null && (
+          {activePool !== null && (
             <>
               <ManagePool />
               <PageRow>

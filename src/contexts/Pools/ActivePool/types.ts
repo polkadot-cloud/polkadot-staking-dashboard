@@ -4,28 +4,24 @@
 import type BigNumber from 'bignumber.js';
 import type { NominationStatuses, PoolAddresses } from '../BondedPools/types';
 import type { MaybeAddress } from '@polkadot-cloud/react/types';
-import type { AnyJson, Sync } from 'types';
 import type { Nominations } from 'contexts/Bonded/types';
 import type { Identity, SuperIdentity } from 'contexts/Validators/types';
 
-export interface ActivePoolsContextState {
+export interface ActivePoolContextState {
   isBonding: () => boolean;
   isNominator: () => boolean;
   isOwner: () => boolean;
   isMember: () => boolean;
   isDepositor: () => boolean;
   isBouncer: () => boolean;
-  getPoolBondedAccount: () => MaybeAddress;
   getPoolUnlocking: () => PoolUnlocking[];
   getPoolRoles: () => PoolRoles;
-  setTargets: (t: PoolTargets) => void;
   getNominationsStatus: () => NominationStatuses;
-  setSelectedPoolId: (p: string) => void;
-  selectedActivePool: ActivePool | null;
-  targets: PoolTargets;
-  poolNominations: Nominations;
-  synced: Sync;
-  selectedPoolMemberCount: number;
+  setActivePoolId: (p: string) => void;
+  activePool: ActivePool | null;
+  activePoolNominations: Nominations | null;
+  activePoolMemberCount: number;
+  pendingPoolRewards: BigNumber;
 }
 
 export interface ActivePool {
@@ -34,7 +30,6 @@ export interface ActivePool {
   bondedPool: ActiveBondedPool;
   rewardPool: RewardPool;
   rewardAccountBalance: BigNumber;
-  pendingRewards: BigNumber;
 }
 
 export interface ActiveBondedPool {
@@ -63,7 +58,7 @@ export interface PoolUnlocking {
   value: BigNumber;
 }
 
-export type PoolTargets = Record<number, AnyJson>;
+export type PoolRole = 'depositor' | 'nominator' | 'root' | 'bouncer';
 
 export interface PoolRoles {
   depositor?: MaybeAddress;

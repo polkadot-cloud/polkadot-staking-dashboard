@@ -14,7 +14,6 @@ export interface BalancesContextInterface {
   getLedger: (source: ActiveLedgerSource) => Ledger;
   getPayee: (address: MaybeAddress) => PayeeConfig;
   getPoolMembership: (address: MaybeAddress) => PoolMembership | null;
-  balancesInitialSynced: boolean;
 }
 
 export type ActiveBalancesState = Record<string, ActiveBalance>;

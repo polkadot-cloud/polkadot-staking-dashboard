@@ -5,16 +5,16 @@ import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { AnyJson, BondFor, MaybeAddress } from 'types';
 import { useNetwork } from 'contexts/Network';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const useNominationStatus = () => {
   const { t } = useTranslation();
-  const { isSyncing } = useUi();
+  const { syncing } = useSyncing(['era-stakers']);
   const {
     networkData: { units },
   } = useNetwork();
@@ -26,7 +26,7 @@ export const useNominationStatus = () => {
     getLowestRewardFromStaker,
   } = useStaking();
   const { validators } = useValidators();
-  const { poolNominations } = useActivePools();
+  const { activePoolNominations } = useActivePool();
   const { getAccountNominations } = useBonded();
 
   // Utility to get an account's nominees alongside their status.
@@ -34,7 +34,7 @@ export const useNominationStatus = () => {
     const nominations =
       type === 'nominator'
         ? getAccountNominations(who)
-        : poolNominations?.targets ?? [];
+        : activePoolNominations?.targets ?? [];
 
     return getNominationsStatusFromTargets(who, nominations);
   };
@@ -90,7 +90,7 @@ export const useNominationStatus = () => {
 
     // Determine the localised message to display based on the nomination status.
     let str;
-    if (inSetup() || isSyncing) {
+    if (inSetup() || syncing) {
       str = t('nominate.notNominating', { ns: 'pages' });
     } else if (!nominees.length) {
       str = t('nominate.noNominationsSet', { ns: 'pages' });

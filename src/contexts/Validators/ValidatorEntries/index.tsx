@@ -9,7 +9,7 @@ import { ValidatorCommunity } from '@polkadot-cloud/assets/validators';
 import type { AnyApi, AnyJson, BondFor, Fn, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useBonded } from 'contexts/Bonded';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -35,7 +35,7 @@ import {
 import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
 import type { ValidatorEntry } from '@polkadot-cloud/assets/types';
 import { useErasPerDay } from 'hooks/useErasPerDay';
-import { useIdentities } from 'hooks/useIdentities';
+import { IdentitiesController } from 'static/IdentitiesController';
 
 export const ValidatorsContext = createContext<ValidatorsContextInterface>(
   defaultValidatorsContext
@@ -53,9 +53,8 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   } = useApi();
   const { activeEra } = useApi();
   const { stakers } = useStaking().eraStakers;
-  const { fetchIdentities } = useIdentities();
-  const { poolNominations } = useActivePools();
   const { activeAccount } = useActiveAccounts();
+  const { activePoolNominations } = useActivePool();
   const { erasPerDay, maxSupportedDays } = useErasPerDay();
   const { bondedAccounts, getAccountNominations } = useBonded();
 
@@ -272,7 +271,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   // Fetches the active pool's nominees.
   const fetchPoolNominatedList = async () => {
     // get raw nominations list
-    const n = poolNominations.targets;
+    const n = activePoolNominations?.targets || [];
 
     // fetch preferences
     const nominationsWithPrefs = await fetchValidatorPrefs(
@@ -358,11 +357,12 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       avg
     );
     setAvgCommission(avg);
-    // Validators are shuffled before committed to state.
+    // NOTE: validators are shuffled before committed to state.
     setValidators(shuffle(validatorEntries));
 
     const addresses = validatorEntries.map(({ address }) => address);
-    const { identities, supers } = await fetchIdentities(addresses);
+    const { identities, supers } = await IdentitiesController.fetch(addresses);
+
     setValidatorIdentities(identities);
     setValidatorSupers(supers);
     setValidatorsFetched('synced');
@@ -605,10 +605,10 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch active account's pool nominations in validator list format.
   useEffectIgnoreInitial(() => {
-    if (isReady && poolNominations) {
+    if (isReady && activePoolNominations) {
       fetchPoolNominatedList();
     }
-  }, [isReady, poolNominations]);
+  }, [isReady, activePoolNominations]);
 
   // Unsubscribe on network change and component unmount.
   useEffect(() => {

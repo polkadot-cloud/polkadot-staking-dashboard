@@ -5,7 +5,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
 import { usePlugins } from 'contexts/Plugins';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useTheme } from 'contexts/Themes';
 import { CardWrapper } from 'library/Card/Wrappers';
@@ -18,15 +18,14 @@ export const Members = () => {
   const { mode } = useTheme();
   const { pluginEnabled } = usePlugins();
   const { getMembersOfPoolFromNode } = usePoolMembers();
-  const { selectedActivePool, isOwner, isBouncer, selectedPoolMemberCount } =
-    useActivePools();
+  const { activePool, isOwner, isBouncer, activePoolMemberCount } =
+    useActivePool();
 
   const { colors } = useNetwork().networkData;
   const annuncementBorderColor = colors.secondary[mode];
 
   const showBlockedPrompt =
-    selectedActivePool?.bondedPool?.state === 'Blocked' &&
-    (isOwner() || isBouncer());
+    activePool?.bondedPool?.state === 'Blocked' && (isOwner() || isBouncer());
 
   const membersListProps = {
     batchKey: 'active_pool_members',
@@ -58,7 +57,7 @@ export const Members = () => {
       )}
 
       {/* Pool in Destroying state: allow anyone to unbond & withdraw members */}
-      {selectedActivePool?.bondedPool?.state === 'Destroying' && (
+      {activePool?.bondedPool?.state === 'Destroying' && (
         <CardWrapper
           className="canvas"
           style={{
@@ -81,12 +80,12 @@ export const Members = () => {
         {pluginEnabled('subscan') ? (
           <FetchPageMemberList
             {...membersListProps}
-            memberCount={selectedPoolMemberCount}
+            memberCount={activePoolMemberCount}
           />
         ) : (
           <DefaultMemberList
             {...membersListProps}
-            members={getMembersOfPoolFromNode(selectedActivePool?.id ?? 0)}
+            members={getMembersOfPoolFromNode(activePool?.id ?? 0)}
           />
         )}
       </CardWrapper>

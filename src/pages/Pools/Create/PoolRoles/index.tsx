@@ -11,7 +11,7 @@ import type { SetupStepProps } from 'library/SetupSteps/types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Roles } from '../../Roles';
 import type { PoolProgress } from 'contexts/Setup/types';
-import type { PoolRoles as PoolRolesInterface } from 'contexts/Pools/ActivePools/types';
+import type { PoolRoles as PoolRolesInterface } from 'contexts/Pools/ActivePool/types';
 
 export const PoolRoles = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');

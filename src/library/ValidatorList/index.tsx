@@ -12,7 +12,6 @@ import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useFilters } from 'contexts/Filters';
 import { useTheme } from 'contexts/Themes';
-import { useUi } from 'contexts/UI';
 import {
   FilterHeaderWrapper,
   List,
@@ -36,6 +35,7 @@ import type { ValidatorListProps } from './types';
 import { FilterHeaders } from './Filters/FilterHeaders';
 import { FilterBadges } from './Filters/FilterBadges';
 import type { NominationStatus } from './ValidatorItem/types';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const ValidatorListInner = ({
   nominator: initialNominator,
@@ -74,8 +74,8 @@ export const ValidatorListInner = ({
     clearSearchTerm,
   } = useFilters();
   const { mode } = useTheme();
-  const { isSyncing } = useUi();
   const listProvider = useList();
+  const { syncing } = useSyncing('*');
   const { isReady, activeEra } = useApi();
   const { activeAccount } = useActiveAccounts();
   const { setModalResize } = useOverlay().modal;
@@ -314,7 +314,7 @@ export const ValidatorListInner = ({
     if (allowFilters && fetched) {
       handleValidatorsFilterUpdate();
     }
-  }, [order, isSyncing, includes, excludes]);
+  }, [order, syncing, includes, excludes]);
 
   // Handle modal resize on list format change.
   useEffect(() => {

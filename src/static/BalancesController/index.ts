@@ -14,6 +14,7 @@ import type {
 } from 'contexts/Balances/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type { PoolMembership } from 'contexts/Pools/types';
+import { SyncController } from 'static/SyncController';
 
 export class BalancesController {
   // ------------------------------------------------------
@@ -54,6 +55,14 @@ export class BalancesController {
       (account) => !this.accounts.includes(account)
     );
 
+    // Exit early if there are no new accounts to subscribe to.
+    if (!accountsAdded.length) {
+      return;
+    }
+
+    // Strart syncing if new accounts added.
+    SyncController.dispatch('balances', 'syncing');
+
     // Subscribe to and add new accounts data.
     accountsAdded.forEach(async (address) => {
       this.accounts.push(address);
@@ -78,7 +87,7 @@ export class BalancesController {
           this.handleAccountCallback(address, accountResult, locksResult);
           this.handlePayeeCallback(address, payeeResult);
 
-          // NOTE: async; contains runtime call for pending rewards.
+          // NOTE: async: contains runtime call for pending rewards.
           await this.handlePoolMembershipCallback(
             address,
             poolMembersResult,
@@ -113,6 +122,10 @@ export class BalancesController {
     accountsRemoved.forEach((account) => {
       this._unsubs[account]();
       delete this._unsubs[account];
+      delete this.ledgers[account];
+      delete this.balances[account];
+      delete this.payees[account];
+      delete this.poolMemberships[account];
     });
     // Remove removed accounts from class.
     this.accounts = this.accounts.filter(

@@ -6,18 +6,18 @@ import { createContext, useState } from 'react';
 import { NetworkList } from 'config/networks';
 import { AppVersion } from 'consts';
 import { useApi } from 'contexts/Api';
-import { useUi } from 'contexts/UI';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { localStorageOrDefault } from '@polkadot-cloud/utils';
 import type { ExternalAccount } from '@polkadot-cloud/react/types';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const MigrateContext = createContext<null>(null);
 
 export const MigrateProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi();
-  const { isNetworkSyncing } = useUi();
   const { accounts } = useImportedAccounts();
+  const { syncing } = useSyncing(['initialization']);
 
   // The local app version of the current user.
   const localAppVersion = localStorage.getItem('app_version');
@@ -71,7 +71,7 @@ export const MigrateProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffectIgnoreInitial(() => {
-    if (isReady && !isNetworkSyncing && !done) {
+    if (isReady && !syncing && !done) {
       // Carry out migrations if local version is different to current version.
       if (localAppVersion !== AppVersion) {
         // Added in 1.0.2.
@@ -107,7 +107,7 @@ export const MigrateProvider = ({ children }: { children: ReactNode }) => {
         setDone(true);
       }
     }
-  }, [isReady, isNetworkSyncing]);
+  }, [isReady, syncing]);
 
   return (
     <MigrateContext.Provider value={null}>{children}</MigrateContext.Provider>

@@ -2,10 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { rmCommas, shuffle } from '@polkadot-cloud/utils';
+import { rmCommas, setStateWithRef, shuffle } from '@polkadot-cloud/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import type {
+  AccountPoolRoles,
   BondedPool,
   BondedPoolsContextState,
   MaybePool,
@@ -38,8 +39,9 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const createPoolAccounts = useCreatePoolAccounts();
   const { getNominationsStatusFromTargets } = useStaking();
 
-  // Store bonded pools.
+  // Store bonded pools. Used implicitly in callbacks, ref is also defined.
   const [bondedPools, setBondedPools] = useState<BondedPool[]>([]);
+  const bondedPoolsRef = useRef(bondedPools);
 
   // Track the sync status of `bondedPools`.
   const bondedPoolsSynced = useRef<Sync>('unsynced');
@@ -73,7 +75,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     });
 
     exposures = shuffle(exposures);
-    setBondedPools(exposures);
+    setStateWithRef(exposures, setBondedPools, bondedPoolsRef);
 
     // Fetch pools metadata.
     const metadataMulti = await api.query.nominationPools.metadata.multi(ids);
@@ -236,11 +238,14 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     if (!updatedPools) {
       return;
     }
-    setBondedPools(
+
+    setStateWithRef(
       bondedPools.map(
         (original) =>
           updatedPools.find((updated) => updated.id === original.id) || original
-      )
+      ),
+      setBondedPools,
+      bondedPoolsRef
     );
   };
 
@@ -261,7 +266,11 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const removeFromBondedPools = (id: number) => {
-    setBondedPools(bondedPools.filter((b: BondedPool) => b.id !== id));
+    setStateWithRef(
+      bondedPools.filter((b) => b.id !== id),
+      setBondedPools,
+      bondedPoolsRef
+    );
   };
 
   // adds a record to bondedPools.
@@ -273,68 +282,73 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
     const exists = bondedPools.find((b) => b.id === pool.id);
     if (!exists) {
-      setBondedPools(bondedPools.concat(pool));
+      setStateWithRef(bondedPools.concat(pool), setBondedPools, bondedPoolsRef);
     }
   };
 
-  // get all the roles belonging to one pool account
-  const getAccountRoles = (who: MaybeAddress) => {
+  // Gets all pools that the account has a role in. Returns an object with each pool role as keys,
+  // and and array of pool ids as their values.
+  const accumulateAccountPoolRoles = (who: MaybeAddress): AccountPoolRoles => {
     if (!who) {
       return {
-        depositor: [],
         root: [],
+        depositor: [],
         nominator: [],
         bouncer: [],
       };
     }
 
-    const depositor = bondedPools
+    const depositor = bondedPoolsRef.current
       .filter((b) => b.roles.depositor === who)
       .map((b) => b.id);
 
-    const root = bondedPools
+    const root = bondedPoolsRef.current
       .filter((b: BondedPool) => b.roles.root === who)
       .map((b) => b.id);
 
-    const nominator = bondedPools
+    const nominator = bondedPoolsRef.current
       .filter((b) => b.roles.nominator === who)
       .map((b) => b.id);
 
-    const bouncer = bondedPools
+    const bouncer = bondedPoolsRef.current
       .filter((b) => b.roles.bouncer === who)
       .map((b) => b.id);
 
-    return {
-      depositor,
+    const result = {
       root,
+      depositor,
       nominator,
       bouncer,
     };
+
+    return result;
   };
 
-  // accumulate account pool list
-  const getAccountPools = (who: MaybeAddress) => {
-    // first get the roles of the account
-    const roles = getAccountRoles(who);
-    // format new list has pool => roles
+  // Gets a list of roles for all the pools the provided account has one or more roles in.
+  const getAccountPoolRoles = (who: MaybeAddress) => {
+    const allAccountRoles = accumulateAccountPoolRoles(who);
+
+    // Reformat all roles object, keyed by pool id.
     const pools: Record<number, AnyJson> = {};
-    Object.entries(roles).forEach(([key, poolIds]) => {
-      // now looping through a role
-      poolIds.forEach((poolId) => {
-        const exists = Object.keys(pools).find(
-          (k) => String(k) === String(poolId)
-        );
-        if (!exists) {
-          pools[poolId] = [key];
-        } else {
-          pools[poolId].push(key);
-        }
+
+    if (allAccountRoles) {
+      Object.entries(allAccountRoles).forEach(([role, poolIds]) => {
+        poolIds.forEach((poolId) => {
+          const exists = Object.keys(pools).find(
+            (k) => String(k) === String(poolId)
+          );
+          if (!exists) {
+            pools[poolId] = [role];
+          } else {
+            pools[poolId].push(role);
+          }
+        });
       });
-    });
+    }
     return pools;
   };
 
-  // determine roles to replace from roleEdits
+  // Determine roles to replace from roleEdits
   const toReplace = (roleEdits: AnyJson) => {
     const root = roleEdits?.root?.newAddress ?? '';
     const nominator = roleEdits?.nominator?.newAddress ?? '';
@@ -347,7 +361,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     };
   };
 
-  // replaces the pool roles from roleEdits
+  // Replaces the pool roles from roleEdits
   const replacePoolRoles = (poolId: number, roleEdits: AnyJson) => {
     let pool = bondedPools.find((b) => b.id === poolId) || null;
 
@@ -367,13 +381,13 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
       ...bondedPools.map((b) => (b.id === poolId && pool !== null ? pool : b)),
     ];
 
-    setBondedPools(newBondedPools);
+    setStateWithRef(newBondedPools, setBondedPools, bondedPoolsRef);
   };
 
   // Clear existing state for network refresh.
   useEffectIgnoreInitial(() => {
     bondedPoolsSynced.current = 'unsynced';
-    setBondedPools([]);
+    setStateWithRef([], setBondedPools, bondedPoolsRef);
     setPoolsMetadata({});
     setPoolsNominations({});
   }, [network]);
@@ -402,8 +416,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
         removeFromBondedPools,
         getPoolNominationStatus,
         getPoolNominationStatusCode,
-        getAccountRoles,
-        getAccountPools,
+        getAccountPoolRoles,
         replacePoolRoles,
         poolSearchFilter,
         bondedPools,

@@ -21,11 +21,13 @@ import { Primary } from './Primary';
 import { LogoWrapper } from './Wrapper';
 import type { AnyJson } from '@polkadot-cloud/react/types';
 import { useBalances } from 'contexts/Balances';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const Main = () => {
   const { t, i18n } = useTranslation('base');
-  const { networkData } = useNetwork();
   const { pathname } = useLocation();
+  const { syncing } = useSyncing('*');
+  const { networkData } = useNetwork();
   const { getBondedAccount } = useBonded();
   const { accounts } = useImportedAccounts();
   const { getPoolMembership } = useBalances();
@@ -37,7 +39,7 @@ export const Main = () => {
     getPoolSetupPercent,
     getNominatorSetupPercent,
   }: SetupContextInterface = useSetup();
-  const { isSyncing, sideMenuMinimised }: UIContextInterface = useUi();
+  const { sideMenuMinimised }: UIContextInterface = useUi();
 
   const membership = getPoolMembership(activeAccount);
   const controller = getBondedAccount(activeAccount);
@@ -61,7 +63,7 @@ export const Main = () => {
       // set undefined action as default
       pages[i].action = undefined;
       if (uri === `${import.meta.env.BASE_URL}`) {
-        const warning = !isSyncing && controllerDifferentToStash;
+        const warning = !syncing && controllerDifferentToStash;
         if (warning) {
           pages[i].action = {
             type: 'bullet',
@@ -73,7 +75,7 @@ export const Main = () => {
       if (uri === `${import.meta.env.BASE_URL}nominate`) {
         // configure Stake action
         const staking = !inNominatorSetup();
-        const warning = !isSyncing && controllerDifferentToStash;
+        const warning = !syncing && controllerDifferentToStash;
         const setupPercent = getNominatorSetupPercent(activeAccount);
 
         if (staking) {
@@ -130,7 +132,7 @@ export const Main = () => {
     activeAccount,
     accounts,
     controllerDifferentToStash,
-    isSyncing,
+    syncing,
     membership,
     inNominatorSetup(),
     getNominatorSetupPercent(activeAccount),

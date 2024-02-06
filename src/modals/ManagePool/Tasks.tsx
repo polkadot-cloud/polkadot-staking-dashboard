@@ -5,7 +5,7 @@ import { ButtonOption } from '@polkadot-cloud/react';
 import type { ForwardedRef } from 'react';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -19,14 +19,13 @@ export const Tasks = forwardRef(
     const { activeAccount } = useActiveAccounts();
     const { getTransferOptions } = useTransferOptions();
     const { globalMaxCommission } = useApi().poolsConfig;
-    const { selectedActivePool, isOwner, isBouncer, isMember, isDepositor } =
-      useActivePools();
+    const { activePool, isOwner, isBouncer, isMember, isDepositor } =
+      useActivePool();
 
     const { active } = getTransferOptions(activeAccount).pool;
 
-    const poolLocked = selectedActivePool?.bondedPool?.state === 'Blocked';
-    const poolDestroying =
-      selectedActivePool?.bondedPool?.state === 'Destroying';
+    const poolLocked = activePool?.bondedPool?.state === 'Blocked';
+    const poolDestroying = activePool?.bondedPool?.state === 'Destroying';
 
     return (
       <ContentWrapper>

@@ -12,23 +12,23 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
 import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const ControllerNotStash = () => {
   const { t } = useTranslation('pages');
   const { network } = useNetwork();
-  const { activeAccount } = useActiveAccounts();
-  const { addressDifferentToStash } = useStaking();
   const { getBondedAccount } = useBonded();
   const { openModal } = useOverlay().modal;
-  const { isSyncing } = useUi();
+  const { activeAccount } = useActiveAccounts();
+  const { addressDifferentToStash } = useStaking();
   const { isReadOnlyAccount } = useImportedAccounts();
   const controller = getBondedAccount(activeAccount);
+  const { syncing } = useSyncing(['initialization', 'balances']);
 
   const [showPrompt, setShowPrompt] = useState<boolean>(
     addressDifferentToStash(controller)
@@ -39,7 +39,7 @@ export const ControllerNotStash = () => {
   }, [controller]);
 
   return showPrompt
-    ? !isSyncing && !isReadOnlyAccount(activeAccount) && (
+    ? !syncing && !isReadOnlyAccount(activeAccount) && (
         <PageRow>
           <CardWrapper className="warning">
             <CardHeaderWrapper>
