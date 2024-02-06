@@ -4,7 +4,7 @@
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { ButtonOption, ModalPadding, Polkicon } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useActivePool } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Title } from 'library/Modal/Title';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';

@@ -5,7 +5,7 @@ import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { determinePoolDisplay } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useActivePool } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Stat } from 'library/Stat';

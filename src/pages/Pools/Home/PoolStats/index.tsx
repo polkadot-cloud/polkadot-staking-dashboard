@@ -4,7 +4,7 @@
 import { planckToUnit, rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useActivePool } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { usePoolCommission } from 'hooks/usePoolCommission';
 import { StatsHead } from 'library/StatsHead';

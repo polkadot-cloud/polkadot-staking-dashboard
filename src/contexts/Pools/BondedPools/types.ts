@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyApi, AnyJson, MaybeAddress } from 'types';
-import type { ActiveBondedPool } from '../ActivePools/types';
+import type { ActiveBondedPool } from '../ActivePool/types';
 import type { AnyFilter } from 'library/Filter/types';
 
 export interface BondedPoolsContextState {

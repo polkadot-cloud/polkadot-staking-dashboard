@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Separator } from '@polkadot-cloud/react';
-import { useActivePool } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { MembershipStatus } from './MembershipStatus';
 import { PoolStatus } from './PoolStatus';

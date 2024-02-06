@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
-import type { PoolUnlocking } from './ActivePools/types';
+import type { PoolUnlocking } from './ActivePool/types';
 
 export type ClaimPermission =
   | 'Permissioned'

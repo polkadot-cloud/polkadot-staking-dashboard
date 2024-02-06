@@ -5,7 +5,7 @@ import { ButtonOption } from '@polkadot-cloud/react';
 import type { ForwardedRef } from 'react';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useActivePool } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';

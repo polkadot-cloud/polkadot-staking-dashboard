@@ -18,7 +18,7 @@ import { MenuProvider } from 'contexts/Menu';
 import { MigrateProvider } from 'contexts/Migrate';
 import { PromptProvider } from 'contexts/Prompt';
 import { PluginsProvider } from 'contexts/Plugins';
-import { ActivePoolProvider } from 'contexts/Pools/ActivePools';
+import { ActivePoolProvider } from 'contexts/Pools/ActivePool';
 import { BondedPoolsProvider } from 'contexts/Pools/BondedPools';
 import { PoolMembersProvider } from 'contexts/Pools/PoolMembers';
 import { FavoritePoolsProvider } from 'contexts/Pools/FavoritePools';

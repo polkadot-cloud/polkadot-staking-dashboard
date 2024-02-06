@@ -14,7 +14,7 @@ import type {
   APIPoolsConfig,
   APIStakingMetrics,
 } from 'contexts/Api/types';
-import type { ActivePool } from 'contexts/Pools/ActivePools/types';
+import type { ActivePool } from 'contexts/Pools/ActivePool/types';
 import type { Nominations } from 'contexts/Bonded/types';
 import type { SyncEvent } from 'static/SyncController/types';
 

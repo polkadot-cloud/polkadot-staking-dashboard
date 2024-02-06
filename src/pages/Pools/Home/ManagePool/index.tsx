@@ -5,7 +5,7 @@ import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonPrimary, PageRow } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
-import { useActivePool } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { Nominations } from 'library/Nominations';
 import { useOverlay } from '@polkadot-cloud/react/hooks';

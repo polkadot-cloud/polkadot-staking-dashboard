@@ -18,7 +18,7 @@ import { useHelp } from 'contexts/Help';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBonded } from 'contexts/Bonded';
-import { useActivePool } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { SubmitTx } from 'library/SubmitTx';
 import type {
   NominationSelection,

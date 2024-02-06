@@ -5,7 +5,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
 import { usePlugins } from 'contexts/Plugins';
-import { useActivePool } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useTheme } from 'contexts/Themes';
 import { CardWrapper } from 'library/Card/Wrappers';

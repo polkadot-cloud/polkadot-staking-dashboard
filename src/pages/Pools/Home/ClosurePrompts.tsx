@@ -4,7 +4,7 @@
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimary, ButtonRow, PageRow } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useActivePool } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { CardWrapper } from 'library/Card/Wrappers';

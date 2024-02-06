@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TipsConfig } from 'config/tips';
 import { DefaultLocale, TipsThresholdMedium, TipsThresholdSmall } from 'consts';
-import { useActivePool } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useFillVariables } from 'hooks/useFillVariables';

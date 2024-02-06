@@ -6,7 +6,7 @@ import {
   faLock,
 } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
-import { useActivePool } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useNominationStatus } from 'hooks/useNominationStatus';
 import { Stat } from 'library/Stat';
 import { useSyncing } from 'hooks/useSyncing';

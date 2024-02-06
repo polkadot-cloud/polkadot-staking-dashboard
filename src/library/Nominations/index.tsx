@@ -6,7 +6,7 @@ import { ButtonHelp, ButtonPrimary } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
 import { useHelp } from 'contexts/Help';
-import { useActivePool } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useStaking } from 'contexts/Staking';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';

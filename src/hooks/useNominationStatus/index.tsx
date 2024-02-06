@@ -5,7 +5,7 @@ import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
-import { useActivePool } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useStaking } from 'contexts/Staking';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { AnyJson, BondFor, MaybeAddress } from 'types';

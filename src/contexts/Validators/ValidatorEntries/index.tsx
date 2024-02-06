@@ -9,7 +9,7 @@ import { ValidatorCommunity } from '@polkadot-cloud/assets/validators';
 import type { AnyApi, AnyJson, BondFor, Fn, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useBonded } from 'contexts/Bonded';
-import { useActivePool } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';

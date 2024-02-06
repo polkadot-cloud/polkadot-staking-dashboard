@@ -4,8 +4,8 @@
 import type { VoidFn } from '@polkadot/api/types';
 import BigNumber from 'bignumber.js';
 import type { Nominations } from 'contexts/Bonded/types';
-import { defaultPoolNominations } from 'contexts/Pools/ActivePools/defaults';
-import type { ActivePool, PoolRoles } from 'contexts/Pools/ActivePools/types';
+import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
+import type { ActivePool, PoolRoles } from 'contexts/Pools/ActivePool/types';
 import { APIController } from 'static/APIController';
 import { IdentitiesController } from 'static/IdentitiesController';
 import type { AnyApi } from 'types';
