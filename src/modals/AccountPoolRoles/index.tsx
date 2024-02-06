@@ -79,11 +79,12 @@ const Button = ({
   return (
     <ButtonOption
       content
-      disabled={false}
+      disabled
       onClick={() => {
         setSelectedPoolId(poolId);
         setModalStatus('closing');
       }}
+      className="item"
     >
       <div className="icon">
         <Polkicon address={stash} size={30} />

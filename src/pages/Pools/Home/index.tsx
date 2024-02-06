@@ -27,19 +27,26 @@ import { Status } from './Status';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'hooks/useActivePools';
+import { useBalances } from 'contexts/Balances';
 
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
   const { favorites } = useFavoritePools();
   const { openModal } = useOverlay().modal;
   const { bondedPools } = useBondedPools();
+  const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
   const { activeTab, setActiveTab } = usePoolsTabs();
   const { getPoolRoles, activePool } = useActivePool();
   const { counterForBondedPools } = useApi().poolsConfig;
+  const membership = getPoolMembership(activeAccount);
+
   const { activePools } = useActivePools({
     poolIds: '*',
   });
+
+  const activePoolsNoMembership = { ...activePools };
+  delete activePoolsNoMembership[membership?.poolId || -1];
 
   let tabs: PageTitleTabProps[] = [
     {
@@ -79,7 +86,7 @@ export const HomeInner = () => {
         title={t('pools.pools')}
         tabs={tabs}
         button={
-          activePool
+          Object.keys(activePoolsNoMembership).length > 0
             ? {
                 title: t('pools.allRoles'),
                 onClick: () =>
