@@ -53,7 +53,7 @@ export const useSyncing = (config: SyncIDConfig) => {
     );
   }, []);
 
-  // Listen for new active pool events.
+  // Listen for new sync events.
   useEventListener('new-sync-status', newSyncStatusCallback, documentRef);
 
   return { syncing: syncIds.length > 0 };
