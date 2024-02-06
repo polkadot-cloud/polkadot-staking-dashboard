@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { rmCommas, shuffle } from '@polkadot-cloud/utils';
+import { rmCommas, setStateWithRef, shuffle } from '@polkadot-cloud/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import type {
@@ -39,8 +39,9 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const createPoolAccounts = useCreatePoolAccounts();
   const { getNominationsStatusFromTargets } = useStaking();
 
-  // Store bonded pools.
+  // Store bonded pools. Used implicitly in callbacks, ref is also defined.
   const [bondedPools, setBondedPools] = useState<BondedPool[]>([]);
+  const bondedPoolsRef = useRef(bondedPools);
 
   // Track the sync status of `bondedPools`.
   const bondedPoolsSynced = useRef<Sync>('unsynced');
@@ -74,7 +75,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     });
 
     exposures = shuffle(exposures);
-    setBondedPools(exposures);
+    setStateWithRef(exposures, setBondedPools, bondedPoolsRef);
 
     // Fetch pools metadata.
     const metadataMulti = await api.query.nominationPools.metadata.multi(ids);
@@ -237,11 +238,14 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     if (!updatedPools) {
       return;
     }
-    setBondedPools(
+
+    setStateWithRef(
       bondedPools.map(
         (original) =>
           updatedPools.find((updated) => updated.id === original.id) || original
-      )
+      ),
+      setBondedPools,
+      bondedPoolsRef
     );
   };
 
@@ -262,7 +266,11 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const removeFromBondedPools = (id: number) => {
-    setBondedPools(bondedPools.filter((b: BondedPool) => b.id !== id));
+    setStateWithRef(
+      bondedPools.filter((b) => b.id !== id),
+      setBondedPools,
+      bondedPoolsRef
+    );
   };
 
   // adds a record to bondedPools.
@@ -274,7 +282,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
     const exists = bondedPools.find((b) => b.id === pool.id);
     if (!exists) {
-      setBondedPools(bondedPools.concat(pool));
+      setStateWithRef(bondedPools.concat(pool), setBondedPools, bondedPoolsRef);
     }
   };
 
@@ -290,19 +298,19 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
       };
     }
 
-    const depositor = bondedPools
+    const depositor = bondedPoolsRef.current
       .filter((b) => b.roles.depositor === who)
       .map((b) => b.id);
 
-    const root = bondedPools
+    const root = bondedPoolsRef.current
       .filter((b: BondedPool) => b.roles.root === who)
       .map((b) => b.id);
 
-    const nominator = bondedPools
+    const nominator = bondedPoolsRef.current
       .filter((b) => b.roles.nominator === who)
       .map((b) => b.id);
 
-    const bouncer = bondedPools
+    const bouncer = bondedPoolsRef.current
       .filter((b) => b.roles.bouncer === who)
       .map((b) => b.id);
 
@@ -374,13 +382,13 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
       ...bondedPools.map((b) => (b.id === poolId && pool !== null ? pool : b)),
     ];
 
-    setBondedPools(newBondedPools);
+    setStateWithRef(newBondedPools, setBondedPools, bondedPoolsRef);
   };
 
   // Clear existing state for network refresh.
   useEffectIgnoreInitial(() => {
     bondedPoolsSynced.current = 'unsynced';
-    setBondedPools([]);
+    setStateWithRef([], setBondedPools, bondedPoolsRef);
     setPoolsMetadata({});
     setPoolsNominations({});
   }, [network]);
