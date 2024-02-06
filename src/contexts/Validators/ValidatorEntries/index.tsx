@@ -53,8 +53,8 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   } = useApi();
   const { activeEra } = useApi();
   const { stakers } = useStaking().eraStakers;
-  const { poolNominations } = useActivePool();
   const { activeAccount } = useActiveAccounts();
+  const { activePoolNominations } = useActivePool();
   const { erasPerDay, maxSupportedDays } = useErasPerDay();
   const { bondedAccounts, getAccountNominations } = useBonded();
 
@@ -271,7 +271,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   // Fetches the active pool's nominees.
   const fetchPoolNominatedList = async () => {
     // get raw nominations list
-    const n = poolNominations?.targets || [];
+    const n = activePoolNominations?.targets || [];
 
     // fetch preferences
     const nominationsWithPrefs = await fetchValidatorPrefs(
@@ -605,10 +605,10 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch active account's pool nominations in validator list format.
   useEffectIgnoreInitial(() => {
-    if (isReady && poolNominations) {
+    if (isReady && activePoolNominations) {
       fetchPoolNominatedList();
     }
-  }, [isReady, poolNominations]);
+  }, [isReady, activePoolNominations]);
 
   // Unsubscribe on network change and component unmount.
   useEffect(() => {

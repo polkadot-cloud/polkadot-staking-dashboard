@@ -83,16 +83,15 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const poolIds = activePoolIdRef.current ? [activePoolIdRef.current] : [];
 
   // Listen for active pools.
-  const { activePools, poolNominations: poolNominationsFromHookRaw } =
-    useActivePools({
-      poolIds,
-      onCallback: async () => {
-        // Sync: active pools synced once all account pools have been reported.
-        if (accountPools.length <= ActivePoolsController.pools.length) {
-          SyncController.dispatch('active-pools', 'complete');
-        }
-      },
-    });
+  const { activePools, poolNominations } = useActivePools({
+    poolIds,
+    onCallback: async () => {
+      // Sync: active pools synced once all account pools have been reported.
+      if (accountPools.length <= ActivePoolsController.pools.length) {
+        SyncController.dispatch('active-pools', 'complete');
+      }
+    },
+  });
 
   // Store the currently active pool's pending rewards for the active account.
   const [pendingPoolRewards, setPendingPoolRewards] = useState<BigNumber>(
@@ -104,9 +103,9 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
       ? activePools[activePoolId]
       : null;
 
-  const poolNominations =
-    activePoolId && poolNominationsFromHookRaw[activePoolId]
-      ? poolNominationsFromHookRaw[activePoolId]
+  const activePoolNominations =
+    activePoolId && poolNominations[activePoolId]
+      ? poolNominations[activePoolId]
       : null;
 
   // Store the member count of the selected pool.
@@ -115,7 +114,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const fetchingMemberCount = useRef<Sync>('unsynced');
 
   const getActivePoolNominations = () =>
-    poolNominations || defaultPoolNominations;
+    activePoolNominations || defaultPoolNominations;
 
   // Sync active pool subscriptions.
   const syncActivePoolSubscriptions = async () => {
@@ -321,7 +320,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
         setActivePoolId,
         activePool,
         activePoolMemberCount,
-        poolNominations,
+        activePoolNominations,
         pendingPoolRewards,
       }}
     >

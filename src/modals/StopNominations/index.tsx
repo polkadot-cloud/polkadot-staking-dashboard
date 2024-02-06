@@ -32,7 +32,8 @@ export const StopNominations = () => {
     config: { options },
     setModalResize,
   } = useOverlay().modal;
-  const { poolNominations, isNominator, isOwner, activePool } = useActivePool();
+  const { activePoolNominations, isNominator, isOwner, activePool } =
+    useActivePool();
 
   const { bondFor } = options;
   const isPool = bondFor === 'pool';
@@ -42,7 +43,7 @@ export const StopNominations = () => {
 
   const nominations =
     isPool === true
-      ? poolNominations?.targets || []
+      ? activePoolNominations?.targets || []
       : getAccountNominations(activeAccount);
 
   // valid to submit transaction

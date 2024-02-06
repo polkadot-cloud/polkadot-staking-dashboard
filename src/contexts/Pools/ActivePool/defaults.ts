@@ -32,7 +32,7 @@ export const defaultActivePoolContext: ActivePoolContextState = {
   getNominationsStatus: () => nominationStatus,
   setActivePoolId: (p) => {},
   activePool: null,
-  poolNominations: null,
+  activePoolNominations: null,
   activePoolMemberCount: 0,
   pendingPoolRewards: new BigNumber(0),
 };

@@ -21,12 +21,12 @@ export const ClosurePrompts = () => {
   const { activeAccount } = useActiveAccounts();
   const { syncing } = useSyncing(['active-pools']);
   const { getTransferOptions } = useTransferOptions();
-  const { isBonding, activePool, isDepositor, poolNominations } =
+  const { isBonding, activePool, isDepositor, activePoolNominations } =
     useActivePool();
 
   const { state, memberCounter } = activePool?.bondedPool || {};
   const { active, totalUnlockChunks } = getTransferOptions(activeAccount).pool;
-  const targets = poolNominations?.targets ?? [];
+  const targets = activePoolNominations?.targets ?? [];
   const annuncementBorderColor = colors.secondary[mode];
 
   // is the pool in a state for the depositor to close

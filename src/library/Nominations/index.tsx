@@ -30,7 +30,7 @@ export const Nominations = ({
   const { t } = useTranslation('pages');
   const {
     activePool,
-    poolNominations,
+    activePoolNominations,
     isOwner: isPoolOwner,
     isNominator: isPoolNominator,
   } = useActivePool();
@@ -52,7 +52,7 @@ export const Nominations = ({
 
   // Derive nominations from `bondFor` type.
   const nominations = isPool
-    ? poolNominations?.targets || []
+    ? activePoolNominations?.targets || []
     : getAccountNominations(nominator);
   const nominated = getNominated(bondFor);
 
