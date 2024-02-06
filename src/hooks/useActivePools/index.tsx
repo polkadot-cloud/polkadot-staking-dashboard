@@ -38,7 +38,7 @@ export const useActivePools = ({ onCallback, poolIds }: ActivePoolsProps) => {
         await onCallback(e.detail);
       }
 
-      // Persist to active pools state if this pool is specififed in `poolIds`.
+      // Persist to active pools state if this pool is specified in `poolIds`.
       if (
         poolIds === '*' ||
         (Array.isArray(poolIds) && poolIds.includes(String(id)))
