@@ -44,22 +44,10 @@ export class SyncController {
 
   // Gets SyncIDs from a given config.
   static getIdsFromSyncConfig = (config: SyncIDConfig): SyncID[] | '*' => {
-    if (config === '*') {
+    if (config === '*' || !this.isSyncIdArray(config)) {
       return '*';
-    } else if (this.isSyncIdArray(config)) {
-      return config;
     }
-    return config.map(([id]) => id);
-  };
-
-  // Gets defaults form from a given config if provided. Ignores already completed sync statuses.
-  static getDefaultsFromConfig = (config: SyncIDConfig): SyncID[] => {
-    if (config === '*' || this.isSyncIdArray(config)) {
-      return [];
-    }
-    return config
-      .filter(([, status]) => status !== 'complete')
-      .map(([id]) => id);
+    return config;
   };
 
   // Checks if a sync config is just an array of syncIds.

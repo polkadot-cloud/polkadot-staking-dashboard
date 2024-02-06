@@ -12,11 +12,8 @@ export const useSyncing = (config: SyncIDConfig) => {
   // Retrieve the ids from the config provided.
   const ids = SyncController.getIdsFromSyncConfig(config);
 
-  // Retrieve any provided default syncing ids from config.
-  const defaults = SyncController.getDefaultsFromConfig(config);
-
   // Keep a record of active sync statuses.
-  const [syncIds, setSyncIds] = useState<SyncID[]>(defaults);
+  const [syncIds, setSyncIds] = useState<SyncID[]>([]);
   const syncIdsRef = useRef(syncIds);
 
   // Handle new syncing status events.

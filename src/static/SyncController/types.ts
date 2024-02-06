@@ -14,8 +14,6 @@ export type SyncID =
 
 export type SyncStatus = 'syncing' | 'complete';
 
-export type SyncIDConfig = SyncIDWildcard | SyncID[] | SyncIDWithDefault[];
-
-export type SyncIDWithDefault = [SyncID, SyncStatus];
+export type SyncIDConfig = SyncIDWildcard | SyncID[];
 
 export type SyncIDWildcard = '*';
