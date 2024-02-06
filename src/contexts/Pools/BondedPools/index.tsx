@@ -328,12 +328,11 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const getAccountPoolRoles = (who: MaybeAddress) => {
     const allAccountRoles = accumulateAccountPoolRoles(who);
 
-    // Reformat all roles object as has pool => roles, if roles exist.
+    // Reformat all roles object, keyed by pool id.
     const pools: Record<number, AnyJson> = {};
 
     if (allAccountRoles) {
       Object.entries(allAccountRoles).forEach(([role, poolIds]) => {
-        // now looping through a role
         poolIds.forEach((poolId) => {
           const exists = Object.keys(pools).find(
             (k) => String(k) === String(poolId)
@@ -349,7 +348,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     return pools;
   };
 
-  // determine roles to replace from roleEdits
+  // Determine roles to replace from roleEdits
   const toReplace = (roleEdits: AnyJson) => {
     const root = roleEdits?.root?.newAddress ?? '';
     const nominator = roleEdits?.nominator?.newAddress ?? '';
@@ -362,7 +361,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     };
   };
 
-  // replaces the pool roles from roleEdits
+  // Replaces the pool roles from roleEdits
   const replacePoolRoles = (poolId: number, roleEdits: AnyJson) => {
     let pool = bondedPools.find((b) => b.id === poolId) || null;
 
