@@ -3,7 +3,6 @@
 
 import { ActionItem, ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
 import { greaterThanZero, planckToUnit } from '@polkadot-cloud/utils';
-import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -25,22 +24,20 @@ export const ClaimReward = () => {
     networkData: { units, unit },
   } = useNetwork();
   const { notEnoughFunds } = useTxMeta();
-  const { activePool } = useActivePool();
   const { activeAccount } = useActiveAccounts();
   const { getSignerWarnings } = useSignerWarnings();
+  const { activePool, pendingPoolRewards } = useActivePool();
   const {
     setModalStatus,
     config: { options },
     setModalResize,
   } = useOverlay().modal;
 
-  let { pendingRewards } = activePool || {};
-  pendingRewards = pendingRewards ?? new BigNumber(0);
   const { claimType } = options;
 
   // ensure selected payout is valid
   useEffect(() => {
-    if (pendingRewards?.isGreaterThan(0)) {
+    if (pendingPoolRewards?.isGreaterThan(0)) {
       setValid(true);
     } else {
       setValid(false);
@@ -80,7 +77,7 @@ export const ClaimReward = () => {
     submitExtrinsic.proxySupported
   );
 
-  if (!greaterThanZero(pendingRewards)) {
+  if (!greaterThanZero(pendingPoolRewards)) {
     warnings.push(`${t('noRewards')}`);
   }
 
@@ -102,7 +99,7 @@ export const ClaimReward = () => {
         ) : null}
         <ActionItem
           text={`${t('claim')} ${`${planckToUnit(
-            pendingRewards,
+            pendingPoolRewards,
             units
           )} ${unit}`}`}
         />

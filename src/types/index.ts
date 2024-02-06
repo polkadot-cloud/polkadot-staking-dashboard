@@ -14,9 +14,8 @@ import type {
   APIPoolsConfig,
   APIStakingMetrics,
 } from 'contexts/Api/types';
-import type { ActivePool } from 'contexts/Pools/ActivePool/types';
-import type { Nominations } from 'contexts/Bonded/types';
 import type { SyncEvent } from 'static/SyncController/types';
+import type { DetailActivePool } from 'static/ActivePoolsController/types';
 
 declare global {
   interface Window {
@@ -33,10 +32,7 @@ declare global {
     'new-staking-metrics': CustomEvent<{
       stakingMetrics: APIStakingMetrics;
     }>;
-    'new-active-pool': CustomEvent<{
-      pool: ActivePool;
-      nominations: Nominations;
-    }>;
+    'new-active-pool': CustomEvent<DetailActivePool>;
     'new-sync-status': CustomEvent<SyncEvent>;
     'new-external-account': CustomEvent<{ address: string }>;
     'new-account-balance': CustomEvent<ActiveBalance & { address: string }>;

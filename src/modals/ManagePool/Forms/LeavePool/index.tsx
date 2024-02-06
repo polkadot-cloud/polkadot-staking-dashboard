@@ -13,7 +13,6 @@ import {
   planckToUnit,
   unitToPlanck,
 } from '@polkadot-cloud/utils';
-import BigNumber from 'bignumber.js';
 import { getUnixTime } from 'date-fns';
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
@@ -42,12 +41,12 @@ export const LeavePool = ({
   const {
     networkData: { units, unit },
   } = useNetwork();
-  const { activePool } = useActivePool();
+  const { erasToSeconds } = useErasToTimeLeft();
   const { activeAccount } = useActiveAccounts();
+  const { pendingPoolRewards } = useActivePool();
+  const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
   const { setModalStatus, setModalResize } = useOverlay().modal;
-  const { erasToSeconds } = useErasToTimeLeft();
-  const { getSignerWarnings } = useSignerWarnings();
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const { active: activeBn } = allTransferOptions.pool;
@@ -60,9 +59,7 @@ export const LeavePool = ({
     true
   );
 
-  let { pendingRewards } = activePool || {};
-  pendingRewards = pendingRewards ?? new BigNumber(0);
-  pendingRewards = planckToUnit(pendingRewards, units);
+  const pendingRewardsUnit = planckToUnit(pendingPoolRewards, units);
 
   // convert BigNumber values to number
   const freeToUnbond = planckToUnit(activeBn, units);
@@ -115,9 +112,9 @@ export const LeavePool = ({
     submitExtrinsic.proxySupported
   );
 
-  if (greaterThanZero(pendingRewards)) {
+  if (greaterThanZero(pendingRewardsUnit)) {
     warnings.push(
-      `${t('unbondingWithdraw')} ${pendingRewards.toString()} ${unit}.`
+      `${t('unbondingWithdraw')} ${pendingRewardsUnit.toString()} ${unit}.`
     );
   }
 

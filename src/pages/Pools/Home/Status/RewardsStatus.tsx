@@ -20,24 +20,21 @@ export const RewardsStatus = () => {
     networkData: { units },
   } = useNetwork();
   const { isReady } = useApi();
-  const { activePool } = useActivePool();
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
   const { syncing } = useSyncing(['active-pools']);
   const { isReadOnlyAccount } = useImportedAccounts();
-
-  let { pendingRewards } = activePool || {};
-  pendingRewards = pendingRewards ?? new BigNumber(0);
+  const { activePool, pendingPoolRewards } = useActivePool();
 
   // Set the minimum unclaimed planck value to prevent e numbers.
   const minUnclaimedDisplay = new BigNumber(1_000_000);
 
-  const labelRewards = pendingRewards.isGreaterThan(minUnclaimedDisplay)
-    ? planckToUnit(pendingRewards, units).toString()
+  const labelRewards = pendingPoolRewards.isGreaterThan(minUnclaimedDisplay)
+    ? planckToUnit(pendingPoolRewards, units).toString()
     : '0';
 
   // Display Reward buttons if unclaimed rewards is a non-zero value.
-  const buttonsRewards = pendingRewards.isGreaterThan(minUnclaimedDisplay)
+  const buttonsRewards = pendingPoolRewards.isGreaterThan(minUnclaimedDisplay)
     ? [
         {
           title: t('pools.withdraw'),

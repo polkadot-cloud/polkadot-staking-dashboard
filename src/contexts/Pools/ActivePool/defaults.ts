@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function */
 
+import BigNumber from 'bignumber.js';
 import type { ActivePoolContextState } from './types';
 
 export const nominationStatus = {};
@@ -33,4 +34,5 @@ export const defaultActivePoolContext: ActivePoolContextState = {
   activePool: null,
   poolNominations: null,
   selectedPoolMemberCount: 0,
+  pendingPoolRewards: new BigNumber(0),
 };

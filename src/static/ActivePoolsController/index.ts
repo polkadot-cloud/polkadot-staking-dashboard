@@ -9,7 +9,7 @@ import type { ActivePool, PoolRoles } from 'contexts/Pools/ActivePool/types';
 import { APIController } from 'static/APIController';
 import { IdentitiesController } from 'static/IdentitiesController';
 import type { AnyApi } from 'types';
-import type { ActivePoolItem } from './types';
+import type { ActivePoolItem, DetailActivePool } from './types';
 import { SyncController } from 'static/SyncController';
 
 export class ActivePoolsController {
@@ -121,8 +121,6 @@ export class ActivePoolsController {
         bondedPool,
         rewardPool,
         rewardAccountBalance,
-        // NOTE: pending rewards are injected on the react side.
-        pendingRewards: new BigNumber(0),
       };
 
       this.activePools[pool.id] = newPool;
@@ -211,6 +209,6 @@ export class ActivePoolsController {
   // Checks if event detailis a valid `new-active-pool` event.
   static isValidNewActivePool = (
     event: CustomEvent
-  ): event is CustomEvent<{ pool: ActivePool; nominations: Nominations }> =>
+  ): event is CustomEvent<DetailActivePool> =>
     event.detail && event.detail.pool && event.detail.nominations;
 }

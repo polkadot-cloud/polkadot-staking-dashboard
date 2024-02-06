@@ -37,7 +37,7 @@ export const Unbond = () => {
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
-  const { isDepositor, activePool } = useActivePool();
+  const { isDepositor, pendingPoolRewards } = useActivePool();
   const { minNominatorBond: minNominatorBondBn } = useApi().stakingMetrics;
   const {
     setModalStatus,
@@ -61,9 +61,7 @@ export const Unbond = () => {
     true
   );
 
-  let { pendingRewards } = activePool || {};
-  pendingRewards = pendingRewards ?? new BigNumber(0);
-  pendingRewards = planckToUnit(pendingRewards, units);
+  const pendingRewardsUnit = planckToUnit(pendingPoolRewards, units);
 
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
@@ -148,8 +146,8 @@ export const Unbond = () => {
     submitExtrinsic.proxySupported
   );
 
-  if (pendingRewards.isGreaterThan(0) && bondFor === 'pool') {
-    warnings.push(`${t('unbondingWithdraw')} ${pendingRewards} ${unit}.`);
+  if (pendingRewardsUnit.isGreaterThan(0) && bondFor === 'pool') {
+    warnings.push(`${t('unbondingWithdraw')} ${pendingRewardsUnit} ${unit}.`);
   }
   if (nominatorActiveBelowMin) {
     warnings.push(
