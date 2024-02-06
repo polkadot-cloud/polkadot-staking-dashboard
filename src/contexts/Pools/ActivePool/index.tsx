@@ -143,7 +143,8 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     setStateWithRef(null, setActivePoolIdState, activePoolIdRef);
   };
 
-  // Returns whether an active pool is being bonded to.
+  // Returns whether the active pool is being bonded to (essentially if there is indeed an
+  // activePool).
   const isBonding = () => !!activePool;
 
   // Returns whether the active account is the nominator in the active pool.
@@ -190,19 +191,19 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
 
   // Get the status of nominations. Possible statuses: waiting, inactive, active.
   const getNominationsStatus = () => {
-    const nominations = getActivePoolNominations().targets;
     const statuses: Record<string, string> = {};
 
-    for (const nomination of nominations) {
-      const s = eraStakers.stakers.find(
+    for (const nomination of getActivePoolNominations().targets) {
+      const staker = eraStakers.stakers.find(
         ({ address }) => address === nomination
       );
-
-      if (s === undefined) {
+      if (staker === undefined) {
         statuses[nomination] = 'waiting';
         continue;
       }
-      const exists = (s.others ?? []).find(({ who }) => who === activeAccount);
+      const exists = (staker.others || []).find(
+        ({ who }) => who === activeAccount
+      );
       if (exists === undefined) {
         statuses[nomination] = 'inactive';
         continue;
@@ -212,16 +213,13 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     return statuses;
   };
 
-  // Returns the active pool's roles or a default roles object.
+  // Returns the active pool's roles or the default roles object.
   const getPoolRoles = () => activePool?.bondedPool?.roles || defaultPoolRoles;
 
+  // Returns the unlock chunks of the active pool if `activeAccount` is a member of the pool.
   const getPoolUnlocking = () => {
-    const membershipPoolId = membership?.poolId
-      ? String(membership.poolId)
-      : '-1';
-
-    // exit early if the currently selected pool is not membership pool
-    if (activePoolId !== membershipPoolId) {
+    // exit early if the active pool is not membership pool
+    if (activePoolId !== String(membership?.poolId || -1)) {
       return [];
     }
     return membership?.unlocking || [];
