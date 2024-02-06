@@ -41,8 +41,8 @@ export const ActivePoolContext = createContext<ActivePoolContextState>(
 export const useActivePool = () => useContext(ActivePoolContext);
 
 export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
-  const { network } = useNetwork();
   const { isReady } = useApi();
+  const { network } = useNetwork();
   const { eraStakers } = useStaking();
   const { pluginEnabled } = usePlugins();
   const { getPoolMembership } = useBalances();
@@ -61,8 +61,10 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
 
     // If a membership subscription has resulted in an update that is inconsistent with
     // `bondedPools`, add that role to the list of the account's pool roles.
-    const p = membership?.poolId ? String(membership.poolId) : '-1';
-    if (membership?.poolId && !allRolePoolIds.includes(p)) {
+    if (
+      membership?.poolId &&
+      !allRolePoolIds.includes(String(membership.poolId))
+    ) {
       allRolePoolIds.push(String(membership.poolId));
     }
     return allRolePoolIds;
