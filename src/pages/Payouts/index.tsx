@@ -4,7 +4,7 @@
 import { ButtonHelp, PageRow, PageTitle } from '@polkadot-cloud/react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DefaultLocale, MaxPayoutDays } from 'consts';
+import { MaxPayoutDays } from 'consts';
 import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
@@ -22,7 +22,7 @@ import { PayoutList } from './PayoutList';
 import { LastEraPayoutStat } from './Stats/LastEraPayout';
 import { useSubscanData } from 'hooks/useSubscanData';
 import { SubscanController } from 'static/SubscanController';
-import { locales } from 'locale';
+import { DefaultLocale, locales } from 'locale';
 import { useSyncing } from 'hooks/useSyncing';
 
 export const Payouts = ({ page: { key } }: PageProps) => {

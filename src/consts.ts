@@ -12,6 +12,7 @@ export const DappName = 'Polkadot Staking Dashboard';
 export const PolkadotUrl = 'https://polkadot.network/features/staking/';
 export const DefaultNetwork = 'polkadot';
 export const ManualSigners = ['ledger', 'vault'];
+
 /*
  * Data Structure Helpers
  */
@@ -67,8 +68,3 @@ export const DefaultParams = {
   minInflation: 0.025,
   stakeTarget: 0.5,
 };
-
-/*
- * locale
- */
-export const DefaultLocale = 'en';
