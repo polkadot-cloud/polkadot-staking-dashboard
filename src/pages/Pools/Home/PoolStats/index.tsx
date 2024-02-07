@@ -7,12 +7,12 @@ import { useTranslation } from 'react-i18next';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { usePoolCommission } from 'hooks/usePoolCommission';
-import { StatsHead } from 'library/StatsHead';
+import { Header } from 'library/Announcements/Header';
 import { useNetwork } from 'contexts/Network';
 import { Announcements } from './Announcements';
-import { Wrapper } from './Wrappers';
-import type { PoolStatLabel } from 'library/StatsHead/types';
+import type { PoolStatLabel } from 'library/Announcements/types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { Wrapper } from 'library/Announcements/Wrappers';
 
 export const PoolStats = () => {
   const { t } = useTranslation('pages');
@@ -86,7 +86,7 @@ export const PoolStats = () => {
         <h3>{t('pools.poolStats')}</h3>
       </CardHeaderWrapper>
       <Wrapper>
-        <StatsHead items={items} />
+        <Header items={items} />
         <Announcements />
       </Wrapper>
     </CardWrapper>

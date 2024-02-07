@@ -15,9 +15,9 @@ import { useTranslation } from 'react-i18next';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
 import { useNetwork } from 'contexts/Network';
-import { Item } from './Wrappers';
 import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import { useApi } from 'contexts/Api';
+import { Item } from 'library/Announcements/Wrappers';
 
 export const Announcements = () => {
   const { t } = useTranslation('pages');
