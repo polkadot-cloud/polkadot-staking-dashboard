@@ -7,11 +7,12 @@ import type { Plugin } from 'types';
 /*
  * Global Constants
  */
-export const AppVersion = '1.1.3';
+export const AppVersion = '1.1.5';
 export const DappName = 'Polkadot Staking Dashboard';
 export const PolkadotUrl = 'https://polkadot.network/features/staking/';
 export const DefaultNetwork = 'polkadot';
 export const ManualSigners = ['ledger', 'vault'];
+
 /*
  * Data Structure Helpers
  */
@@ -67,8 +68,3 @@ export const DefaultParams = {
   minInflation: 0.025,
   stakeTarget: 0.5,
 };
-
-/*
- * locale
- */
-export const DefaultLocale = 'en';

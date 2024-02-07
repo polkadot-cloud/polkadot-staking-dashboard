@@ -6,7 +6,7 @@ import throttle from 'lodash.throttle';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TipsConfig } from 'config/tips';
-import { DefaultLocale, TipsThresholdMedium, TipsThresholdSmall } from 'consts';
+import { TipsThresholdMedium, TipsThresholdSmall } from 'consts';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
@@ -22,6 +22,7 @@ import type { TipDisplay } from './types';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useSyncing } from 'hooks/useSyncing';
+import { DefaultLocale } from 'locale';
 
 export const Tips = () => {
   const { i18n, t } = useTranslation();

@@ -2,9 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { extractUrlValue, varToUrlHash } from '@polkadot-cloud/utils';
-import { DefaultLocale } from 'consts';
+import {
+  DefaultLocale,
+  availableLanguages,
+  fallbackResources,
+  lngNamespaces,
+} from 'locale';
 import type { AnyApi, AnyJson } from 'types';
-import { availableLanguages, fallbackResources, lngNamespaces } from '.';
 
 // Gets the active language
 //

@@ -16,10 +16,9 @@ import {
 import { format, fromUnixTime } from 'date-fns';
 import { Bar } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
-import { DefaultLocale } from 'consts';
 import { useStaking } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
-import { locales } from 'locale';
+import { DefaultLocale, locales } from 'locale';
 import { graphColors } from 'styles/graphs';
 import type { AnyJson, AnySubscan } from 'types';
 import { useNetwork } from 'contexts/Network';

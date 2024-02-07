@@ -1,12 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Body, Main, Page, Side } from '@polkadot-cloud/react';
+import { Body, Main } from '@polkadot-cloud/react';
 import { extractUrlValue } from '@polkadot-cloud/utils';
-import { AnimatePresence } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import {
   HashRouter,
@@ -30,41 +28,33 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { SideMenuMaximisedWidth } from 'consts';
-import { useTheme } from 'styled-components';
 import { Notifications } from 'library/Notifications';
 import { NotificationsController } from 'static/NotificationsController';
+import { Page } from 'Page';
 
 export const RouterInner = () => {
   const { t } = useTranslation();
-  const mode = useTheme();
   const { network } = useNetwork();
   const { pathname } = useLocation();
+  const { setContainerRefs } = useUi();
   const { accounts } = useImportedAccounts();
   const { accountsInitialised } = useOtherAccounts();
   const { activeAccount, setActiveAccount } = useActiveAccounts();
-  const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
+
+  // References to outer container.
+  const mainInterfaceRef = useRef<HTMLDivElement>(null);
 
   // Scroll to top of the window on every page change or network change.
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname, network]);
 
-  // Set references to UI context and make available throughout app.
+  // Set container references to UI context and make available throughout app.
   useEffect(() => {
     setContainerRefs({
       mainInterface: mainInterfaceRef,
     });
   }, []);
-
-  // Update body background to `--background-default` upon theme change.
-  useEffect(() => {
-    const elem = document.querySelector('.core-entry');
-    if (elem) {
-      document.getElementsByTagName('body')[0].style.backgroundColor =
-        getComputedStyle(elem).getPropertyValue('--background-default');
-    }
-  }, [mode]);
 
   // Open default account modal if url var present and accounts initialised.
   useEffect(() => {
@@ -85,9 +75,6 @@ export const RouterInner = () => {
       }
     }
   }, [accountsInitialised]);
-
-  // References to outer containers
-  const mainInterfaceRef = useRef<HTMLDivElement>(null);
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
@@ -111,50 +98,32 @@ export const RouterInner = () => {
         <Prompt />
 
         {/* Left side menu */}
-        <Side
-          open={sideMenuOpen}
-          minimised={sideMenuMinimised}
-          width={`${SideMenuMaximisedWidth}px`}
-        >
-          <SideMenu />
-        </Side>
+        <SideMenu />
 
         {/* Main content window */}
         <Main ref={mainInterfaceRef}>
           {/* Fixed headers */}
           <Headers />
 
+          {/* Isolate route errors to `Main` container */}
           <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
-            <AnimatePresence>
-              <Routes>
-                {PagesConfig.map((page, i) => {
-                  const { Entry, hash, key } = page;
-
-                  return (
-                    <Route
-                      key={`main_interface_page_${i}`}
-                      path={hash}
-                      element={
-                        <Page>
-                          <Helmet>
-                            <title>{`${t(key, { ns: 'base' })} : ${t('title', {
-                              context: `${network}`,
-                              ns: 'base',
-                            })}`}</title>
-                          </Helmet>
-                          <Entry page={page} />
-                        </Page>
-                      }
-                    />
-                  );
-                })}
+            <Routes>
+              {/* App page routes */}
+              {PagesConfig.map((page, i) => (
                 <Route
-                  key="main_interface_navigate"
-                  path="*"
-                  element={<Navigate to="/overview" />}
+                  key={`main_interface_page_${i}`}
+                  path={page.hash}
+                  element={<Page page={page} />}
                 />
-              </Routes>
-            </AnimatePresence>
+              ))}
+
+              {/* Default route to overview */}
+              <Route
+                key="main_interface_navigate"
+                path="*"
+                element={<Navigate to="/overview" />}
+              />
+            </Routes>
           </ErrorBoundary>
         </Main>
       </Body>
