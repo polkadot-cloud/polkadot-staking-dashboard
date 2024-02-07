@@ -1,12 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Body, Main, Page } from '@polkadot-cloud/react';
+import { Body, Main } from '@polkadot-cloud/react';
 import { extractUrlValue } from '@polkadot-cloud/utils';
-import { AnimatePresence } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import {
   HashRouter,
@@ -33,6 +31,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useTheme } from 'styled-components';
 import { Notifications } from 'library/Notifications';
 import { NotificationsController } from 'static/NotificationsController';
+import { Page } from 'Page';
 
 export const RouterInner = () => {
   const { t } = useTranslation();
@@ -117,37 +116,25 @@ export const RouterInner = () => {
           {/* Fixed headers */}
           <Headers />
 
+          {/* Isolate route errors to `Main` container */}
           <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
-            <AnimatePresence>
-              <Routes>
-                {PagesConfig.map((page, i) => {
-                  const { Entry, hash, key } = page;
-
-                  return (
-                    <Route
-                      key={`main_interface_page_${i}`}
-                      path={hash}
-                      element={
-                        <Page>
-                          <Helmet>
-                            <title>{`${t(key, { ns: 'base' })} : ${t('title', {
-                              context: `${network}`,
-                              ns: 'base',
-                            })}`}</title>
-                          </Helmet>
-                          <Entry page={page} />
-                        </Page>
-                      }
-                    />
-                  );
-                })}
+            <Routes>
+              {/* App page routes */}
+              {PagesConfig.map((page, i) => (
                 <Route
-                  key="main_interface_navigate"
-                  path="*"
-                  element={<Navigate to="/overview" />}
+                  key={`main_interface_page_${i}`}
+                  path={page.hash}
+                  element={<Page page={page} />}
                 />
-              </Routes>
-            </AnimatePresence>
+              ))}
+
+              {/* Default route to overview */}
+              <Route
+                key="main_interface_navigate"
+                path="*"
+                element={<Navigate to="/overview" />}
+              />
+            </Routes>
           </ErrorBoundary>
         </Main>
       </Body>
