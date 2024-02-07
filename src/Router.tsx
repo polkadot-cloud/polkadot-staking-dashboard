@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Body, Main, Page, Side } from '@polkadot-cloud/react';
+import { Body, Main, Page } from '@polkadot-cloud/react';
 import { extractUrlValue } from '@polkadot-cloud/utils';
 import { AnimatePresence } from 'framer-motion';
 import { useEffect, useRef } from 'react';
@@ -30,7 +30,6 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { SideMenuMaximisedWidth } from 'consts';
 import { useTheme } from 'styled-components';
 import { Notifications } from 'library/Notifications';
 import { NotificationsController } from 'static/NotificationsController';
@@ -40,10 +39,10 @@ export const RouterInner = () => {
   const mode = useTheme();
   const { network } = useNetwork();
   const { pathname } = useLocation();
+  const { setContainerRefs } = useUi();
   const { accounts } = useImportedAccounts();
   const { accountsInitialised } = useOtherAccounts();
   const { activeAccount, setActiveAccount } = useActiveAccounts();
-  const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
 
   // Scroll to top of the window on every page change or network change.
   useEffect(() => {
@@ -111,13 +110,7 @@ export const RouterInner = () => {
         <Prompt />
 
         {/* Left side menu */}
-        <Side
-          open={sideMenuOpen}
-          minimised={sideMenuMinimised}
-          width={`${SideMenuMaximisedWidth}px`}
-        >
-          <SideMenu />
-        </Side>
+        <SideMenu />
 
         {/* Main content window */}
         <Main ref={mainInterfaceRef}>
