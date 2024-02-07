@@ -28,14 +28,12 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useTheme } from 'styled-components';
 import { Notifications } from 'library/Notifications';
 import { NotificationsController } from 'static/NotificationsController';
 import { Page } from 'Page';
 
 export const RouterInner = () => {
   const { t } = useTranslation();
-  const mode = useTheme();
   const { network } = useNetwork();
   const { pathname } = useLocation();
   const { setContainerRefs } = useUi();
@@ -43,26 +41,20 @@ export const RouterInner = () => {
   const { accountsInitialised } = useOtherAccounts();
   const { activeAccount, setActiveAccount } = useActiveAccounts();
 
+  // References to outer container.
+  const mainInterfaceRef = useRef<HTMLDivElement>(null);
+
   // Scroll to top of the window on every page change or network change.
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname, network]);
 
-  // Set references to UI context and make available throughout app.
+  // Set container references to UI context and make available throughout app.
   useEffect(() => {
     setContainerRefs({
       mainInterface: mainInterfaceRef,
     });
   }, []);
-
-  // Update body background to `--background-default` upon theme change.
-  useEffect(() => {
-    const elem = document.querySelector('.core-entry');
-    if (elem) {
-      document.getElementsByTagName('body')[0].style.backgroundColor =
-        getComputedStyle(elem).getPropertyValue('--background-default');
-    }
-  }, [mode]);
 
   // Open default account modal if url var present and accounts initialised.
   useEffect(() => {
@@ -83,9 +75,6 @@ export const RouterInner = () => {
       }
     }
   }, [accountsInitialised]);
-
-  // References to outer containers
-  const mainInterfaceRef = useRef<HTMLDivElement>(null);
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
