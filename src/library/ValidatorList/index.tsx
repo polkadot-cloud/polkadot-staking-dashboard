@@ -292,10 +292,10 @@ export const ValidatorListInner = ({
 
   // Configure validator list when network is ready to fetch.
   useEffect(() => {
-    if (isReady && isNotZero(activeEra.index) && !fetched) {
+    if (isReady && isNotZero(activeEra.index)) {
       setupValidatorList();
     }
-  }, [isReady, activeEra.index, fetched, syncing]);
+  }, [isReady, activeEra.index, syncing]);
 
   // Control render throttle.
   useEffect(() => {
