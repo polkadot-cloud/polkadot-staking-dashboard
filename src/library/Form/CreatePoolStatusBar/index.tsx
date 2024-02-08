@@ -13,9 +13,9 @@ import { useSyncing } from 'hooks/useSyncing';
 
 export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
   const { t } = useTranslation('library');
-  const { syncing } = useSyncing('*');
   const { minCreateBond } = useApi().poolsConfig;
   const { unit, units } = useNetwork().networkData;
+  const { syncing } = useSyncing(['initialization']);
 
   const minCreateBondUnit = planckToUnit(minCreateBond, units);
   const sectionClassName =
