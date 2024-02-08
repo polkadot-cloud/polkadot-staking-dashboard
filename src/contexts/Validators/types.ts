@@ -30,6 +30,8 @@ export interface ValidatorsContextInterface {
   averageEraValidatorReward: AverageEraValidatorReward;
 }
 
+export type ValidatorStatus = 'waiting' | 'active';
+
 export interface AverageEraValidatorReward {
   days: number;
   reward: BigNumber;
@@ -86,7 +88,7 @@ export type EraPointsBoundaries = {
 } | null;
 
 export type ValidatorListEntry = Validator & {
-  validatorStatus: 'waiting' | 'active';
+  validatorStatus: ValidatorStatus;
   totalStake: BigNumber;
 };
 

@@ -25,6 +25,7 @@ import type {
   ValidatorListEntry,
   ValidatorsContextInterface,
   ValidatorEraPointHistory,
+  ValidatorStatus,
 } from '../types';
 import {
   defaultAverageEraValidatorReward,
@@ -480,8 +481,11 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       entries.map((entry) => {
         const inEra =
           stakers.find(({ address }) => address === entry.address) || false;
+
         let totalStake = new BigNumber(0);
+        let validatorStatus: ValidatorStatus = 'waiting';
         if (inEra) {
+          validatorStatus = 'active';
           const { others, own } = inEra;
           if (own) {
             totalStake = totalStake.plus(own);
@@ -493,9 +497,10 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         return {
           ...entry,
           totalStake,
-          validatorStatus: inEra ? 'active' : 'waiting',
+          validatorStatus,
         };
       }) || [];
+
     return injected;
   };
 

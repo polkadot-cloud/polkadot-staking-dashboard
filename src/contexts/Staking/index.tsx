@@ -51,13 +51,13 @@ export const useStaking = () => useContext(StakingContext);
 
 export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const { getLedger } = useBalances();
-  const { isReady, api, apiStatus, consts, activeEra, isPagedRewardsActive } =
-    useApi();
   const { networkData, network } = useNetwork();
   const { accounts: connectAccounts } = useImportedAccounts();
   const { activeAccount, getActiveAccount } = useActiveAccounts();
   const { bondedAccounts, getBondedAccount, getAccountNominations } =
     useBonded();
+  const { isReady, api, apiStatus, consts, activeEra, isPagedRewardsActive } =
+    useApi();
   const { maxExposurePageSize } = consts;
 
   // Store eras stakers in state.
