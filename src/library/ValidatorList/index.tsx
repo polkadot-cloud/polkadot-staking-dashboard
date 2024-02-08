@@ -36,7 +36,6 @@ import { FilterHeaders } from './Filters/FilterHeaders';
 import { FilterBadges } from './Filters/FilterBadges';
 import type { NominationStatus } from './ValidatorItem/types';
 import { useSyncing } from 'hooks/useSyncing';
-import { useStaking } from 'contexts/Staking';
 
 export const ValidatorListInner = ({
   nominator: initialNominator,
@@ -80,7 +79,6 @@ export const ValidatorListInner = ({
   const { isReady, activeEra } = useApi();
   const { activeAccount } = useActiveAccounts();
   const { setModalResize } = useOverlay().modal;
-  const { erasStakersSyncing } = useStaking();
   const { injectValidatorListData } = useValidators();
   const { getNomineesStatus } = useNominationStatus();
   const { getPoolNominationStatus } = useBondedPools();
@@ -280,7 +278,7 @@ export const ValidatorListInner = ({
         clearSearchTerm('validators');
       }
     };
-  }, [erasStakersSyncing]);
+  }, [syncing]);
 
   // Handle validator list bootstrapping.
   const setupValidatorList = () => {
@@ -291,15 +289,10 @@ export const ValidatorListInner = ({
 
   // Configure validator list when network is ready to fetch.
   useEffect(() => {
-    if (
-      isReady &&
-      isNotZero(activeEra.index) &&
-      !fetched &&
-      !erasStakersSyncing
-    ) {
+    if (isReady && isNotZero(activeEra.index) && !fetched) {
       setupValidatorList();
     }
-  }, [isReady, activeEra.index, fetched, erasStakersSyncing]);
+  }, [isReady, activeEra.index, fetched, syncing]);
 
   // Control render throttle.
   useEffect(() => {

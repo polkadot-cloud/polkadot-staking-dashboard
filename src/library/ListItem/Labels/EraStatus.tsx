@@ -3,7 +3,6 @@
 
 import { capitalizeFirstLetter, planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
-import { useStaking } from 'contexts/Staking';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useNetwork } from 'contexts/Network';
 import type { EraStatusProps } from '../types';
@@ -12,7 +11,6 @@ import { useSyncing } from 'hooks/useSyncing';
 export const EraStatus = ({ noMargin, status, totalStake }: EraStatusProps) => {
   const { t } = useTranslation('library');
   const { syncing } = useSyncing('*');
-  const { erasStakersSyncing } = useStaking();
   const { unit, units } = useNetwork().networkData;
 
   // Fallback to `waiting` status if still syncing.
@@ -21,7 +19,7 @@ export const EraStatus = ({ noMargin, status, totalStake }: EraStatusProps) => {
   return (
     <ValidatorStatusWrapper $status={validatorStatus} $noMargin={noMargin}>
       <h5>
-        {syncing || erasStakersSyncing
+        {syncing
           ? t('syncing')
           : validatorStatus !== 'waiting'
             ? `${t('listItemActive')} / ${planckToUnit(totalStake, units)

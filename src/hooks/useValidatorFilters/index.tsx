@@ -8,6 +8,7 @@ import type { AnyFunction, AnyJson } from 'types';
 import { useStaking } from 'contexts/Staking';
 import { MaxEraRewardPointsEras } from 'consts';
 import type { AnyFilter } from 'library/Filter/types';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const useValidatorFilters = () => {
   const { t } = useTranslation('library');
@@ -18,7 +19,8 @@ export const useValidatorFilters = () => {
     validatorSupers,
     validatorEraPointsHistory,
   } = useValidators();
-  const { erasStakersSyncing, getLowestRewardFromStaker } = useStaking();
+  const { syncing } = useSyncing(['era-stakers']);
+  const { getLowestRewardFromStaker } = useStaking();
 
   /*
    * filterMissingIdentity: Iterates through the supplied list and filters those with missing
@@ -52,7 +54,7 @@ export const useValidatorFilters = () => {
    */
   const filterOverSubscribed = (list: AnyFilter) => {
     // Return list early if eraStakers is still syncing.
-    if (erasStakersSyncing) {
+    if (syncing) {
       return list;
     }
 

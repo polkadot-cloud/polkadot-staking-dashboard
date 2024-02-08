@@ -64,9 +64,6 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers);
   const eraStakersRef = useRef(eraStakers);
 
-  // Flags whether `eraStakers` is resyncing.
-  const [erasStakersSyncing, setErasStakersSyncing] = useState<boolean>(false);
-
   // Store target validators for the active account.
   const [targets, setTargetsState] = useState<StakingTargets>(
     localStorageOrDefault<StakingTargets>(
@@ -97,9 +94,6 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
         activeAccountOwnStake,
         who,
       } = data;
-
-      // finish sync
-      setErasStakersSyncing(false);
 
       // check if account hasn't changed since worker started
       if (getActiveAccount() === who) {
@@ -154,8 +148,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
 
-    // flag eraStakers is recyncing
-    setErasStakersSyncing(true);
+    SyncController.dispatch('era-stakers', 'syncing');
 
     const exposures = await fetchEraStakers(activeEra.index.toString());
 
@@ -380,7 +373,6 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
         inSetup,
         getLowestRewardFromStaker,
         eraStakers,
-        erasStakersSyncing,
         targets,
         getPagedErasStakers,
       }}

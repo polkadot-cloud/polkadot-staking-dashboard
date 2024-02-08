@@ -8,6 +8,7 @@ import { useStaking } from 'contexts/Staking';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useNetwork } from 'contexts/Network';
 import type { NominationStatusProps } from '../types';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const NominationStatus = ({
   address,
@@ -22,8 +23,8 @@ export const NominationStatus = ({
   } = useNetwork();
   const {
     eraStakers: { activeAccountOwnStake, stakers },
-    erasStakersSyncing,
   } = useStaking();
+  const { syncing } = useSyncing(['era-stakers']);
 
   // determine staked amount
   let stakedAmount = new BigNumber(0);
@@ -48,9 +49,7 @@ export const NominationStatus = ({
       <h5>
         {t(`${status || 'waiting'}`)}
         {greaterThanZero(stakedAmount)
-          ? ` / ${
-              erasStakersSyncing ? '...' : `${stakedAmount.toFormat()} ${unit}`
-            }`
+          ? ` / ${syncing ? '...' : `${stakedAmount.toFormat()} ${unit}`}`
           : null}
       </h5>
     </ValidatorStatusWrapper>

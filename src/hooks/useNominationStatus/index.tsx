@@ -14,20 +14,19 @@ import { useSyncing } from 'hooks/useSyncing';
 
 export const useNominationStatus = () => {
   const { t } = useTranslation();
-  const { syncing } = useSyncing(['era-stakers']);
   const {
     networkData: { units },
   } = useNetwork();
   const {
     inSetup,
     eraStakers,
-    erasStakersSyncing,
     getNominationsStatusFromTargets,
     getLowestRewardFromStaker,
   } = useStaking();
   const { validators } = useValidators();
   const { getAccountNominations } = useBonded();
   const { activePoolNominations } = useActivePool();
+  const { syncing } = useSyncing(['era-stakers']);
 
   // Utility to get an account's nominees alongside their status.
   const getNomineesStatus = (who: MaybeAddress, type: BondFor) => {
@@ -55,7 +54,7 @@ export const useNominationStatus = () => {
     // Determine whether active nominees are earning rewards. This function exists once the
     // eras stakers has synced.
     let earningRewards = false;
-    if (!erasStakersSyncing) {
+    if (!syncing) {
       getNomineesByStatus(nominees, 'active').every((nominee) => {
         const validator = validators.find(({ address }) => address === nominee);
 
