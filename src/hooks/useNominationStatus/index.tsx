@@ -29,7 +29,7 @@ export const useNominationStatus = () => {
   const { syncing } = useSyncing(['era-stakers']);
 
   // Utility to get an account's nominees alongside their status.
-  const getNomineesStatus = (who: MaybeAddress, type: BondFor) => {
+  const getNominationSetStatus = (who: MaybeAddress, type: BondFor) => {
     const nominations =
       type === 'nominator'
         ? getAccountNominations(who)
@@ -48,7 +48,7 @@ export const useNominationStatus = () => {
   // reards.
   const getNominationStatus = (who: MaybeAddress, type: BondFor) => {
     // Get the sets nominees from the provided account's targets.
-    const nominees = Object.entries(getNomineesStatus(who, type));
+    const nominees = Object.entries(getNominationSetStatus(who, type));
     const activeNominees = getNomineesByStatus(nominees, 'active');
 
     // Determine whether active nominees are earning rewards. This function exists once the
@@ -115,5 +115,5 @@ export const useNominationStatus = () => {
     };
   };
 
-  return { getNominationStatus, getNomineesStatus };
+  return { getNominationStatus, getNominationSetStatus };
 };

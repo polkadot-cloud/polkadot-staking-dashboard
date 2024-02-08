@@ -80,8 +80,8 @@ export const ValidatorListInner = ({
   const { activeAccount } = useActiveAccounts();
   const { setModalResize } = useOverlay().modal;
   const { injectValidatorListData } = useValidators();
-  const { getNomineesStatus } = useNominationStatus();
   const { getPoolNominationStatus } = useBondedPools();
+  const { getNominationSetStatus } = useNominationStatus();
   const { applyFilter, applyOrder, applySearch } = useValidatorFilters();
 
   const { selected, listFormat, setListFormat } = listProvider;
@@ -110,7 +110,10 @@ export const ValidatorListInner = ({
         );
       } else {
         // get all active account's nominations.
-        const nominationStatuses = getNomineesStatus(nominator, 'nominator');
+        const nominationStatuses = getNominationSetStatus(
+          nominator,
+          'nominator'
+        );
 
         // find the nominator status within the returned nominations.
         nominationStatus.current = Object.fromEntries(
