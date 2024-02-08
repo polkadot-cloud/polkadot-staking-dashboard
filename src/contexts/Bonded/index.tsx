@@ -19,6 +19,8 @@ import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
 import * as defaults from './defaults';
 import type { BondedAccount, BondedContextInterface } from './types';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { SyncController } from 'static/SyncController';
 
 export const BondedContext = createContext<BondedContextInterface>(
   defaults.defaultBondedContext
@@ -30,6 +32,7 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
   const { api, isReady } = useApi();
   const { accounts } = useImportedAccounts();
+  const { activeAccount } = useActiveAccounts();
   const { addExternalAccount } = useExternalAccounts();
   const { addOrReplaceOtherAccount } = useOtherAccounts();
 
@@ -60,10 +63,23 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
     };
     // Sync added accounts.
     const handleAddedAccounts = () => {
-      addedTo(accounts, bondedAccountsRef.current, ['address'])?.map(
-        ({ address }) => subscribeToBondedAccount(address)
-      );
+      const added = addedTo(accounts, bondedAccountsRef.current, ['address']);
+
+      if (added.length) {
+        // If the current active account is being subscribed to, dispatch the `nominator` syncing
+        // event.
+        const activeAccountInAdded = added.find(
+          ({ address }) => address === activeAccount
+        );
+        if (activeAccountInAdded) {
+          SyncController.dispatch('nominator', 'syncing');
+        }
+
+        // Subscribe to all newly added accounts bonded and nominator status.
+        added.map(({ address }) => subscribeToBondedAccount(address));
+      }
     };
+
     // Sync existing accounts.
     const handleExistingAccounts = () => {
       setStateWithRef(
@@ -127,6 +143,11 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
           .concat(newAccount);
 
         setStateWithRef(newBonded, setBondedAccounts, bondedAccountsRef);
+
+        // If this callback was syncing the active account, mark `nominator` syncing as complete.
+        if (address === activeAccount) {
+          SyncController.dispatch('nominator', 'complete');
+        }
       }
     );
 

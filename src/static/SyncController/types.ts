@@ -4,6 +4,7 @@
 export type SyncID =
   | 'initialization'
   | 'balances'
+  | 'nominator'
   | 'era-stakers'
   | 'active-pools';
 
