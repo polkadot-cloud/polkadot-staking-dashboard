@@ -247,7 +247,8 @@ export const ValidatorListInner = ({
     setSearchTerm('validators', newValue);
   };
 
-  // Set default filters.
+  // Set default filters. Should re-render if era stakers re-syncs as era points effect the
+  // performance order.
   useEffect(() => {
     if (allowFilters) {
       if (defaultFilters?.includes?.length) {
@@ -279,7 +280,7 @@ export const ValidatorListInner = ({
         clearSearchTerm('validators');
       }
     };
-  }, []);
+  }, [erasStakersSyncing]);
 
   // Handle validator list bootstrapping.
   const setupValidatorList = () => {
