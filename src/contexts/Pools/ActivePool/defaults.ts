@@ -28,7 +28,6 @@ export const defaultActivePoolContext: ActivePoolContextState = {
   isBouncer: () => false,
   getPoolUnlocking: () => [],
   getPoolRoles: () => defaultPoolRoles,
-  getNominationsStatus: () => nominationStatus,
   setActivePoolId: (p) => {},
   activePool: null,
   activePoolNominations: null,

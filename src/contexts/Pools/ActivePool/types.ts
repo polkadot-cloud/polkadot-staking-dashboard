@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
-import type { NominationStatuses, PoolAddresses } from '../BondedPools/types';
+import type { PoolAddresses } from '../BondedPools/types';
 import type { MaybeAddress } from '@polkadot-cloud/react/types';
 import type { Nominations } from 'contexts/Bonded/types';
 import type { Identity, SuperIdentity } from 'contexts/Validators/types';
@@ -16,7 +16,6 @@ export interface ActivePoolContextState {
   isBouncer: () => boolean;
   getPoolUnlocking: () => PoolUnlocking[];
   getPoolRoles: () => PoolRoles;
-  getNominationsStatus: () => NominationStatuses;
   setActivePoolId: (p: string) => void;
   activePool: ActivePool | null;
   activePoolNominations: Nominations | null;

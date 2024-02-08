@@ -14,6 +14,7 @@ import {
 import { useStaking } from 'contexts/Staking';
 import { useNetwork } from 'contexts/Network';
 import type { OversubscribedProps } from '../types';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const Oversubscribed = ({ address }: OversubscribedProps) => {
   const { t } = useTranslation('library');
@@ -21,11 +22,12 @@ export const Oversubscribed = ({ address }: OversubscribedProps) => {
     networkData: { unit },
   } = useNetwork();
   const { setTooltipTextAndOpen } = useTooltip();
-  const { erasStakersSyncing, getLowestRewardFromStaker } = useStaking();
+  const { syncing } = useSyncing(['era-stakers']);
+  const { getLowestRewardFromStaker } = useStaking();
 
   const { lowest, oversubscribed } = getLowestRewardFromStaker(address);
 
-  const displayOversubscribed = !erasStakersSyncing && oversubscribed;
+  const displayOversubscribed = !syncing && oversubscribed;
 
   const lowestRewardFormatted = lowest
     .decimalPlaces(MinBondPrecision)

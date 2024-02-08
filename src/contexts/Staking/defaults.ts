@@ -41,6 +41,5 @@ export const defaultStakingContext: StakingContextInterface = {
   getLowestRewardFromStaker: (address) => defaultLowestReward,
   eraStakers: defaultEraStakers,
   targets: defaultTargets,
-  erasStakersSyncing: true,
   getPagedErasStakers: (e) => new Promise((resolve) => resolve([])),
 };

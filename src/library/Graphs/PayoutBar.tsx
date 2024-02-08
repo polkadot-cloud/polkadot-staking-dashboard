@@ -47,8 +47,8 @@ export const PayoutBar = ({
   const { i18n, t } = useTranslation('library');
   const { mode } = useTheme();
   const { inSetup } = useStaking();
-  const { syncing } = useSyncing('*');
   const { getPoolMembership } = useBalances();
+  const { syncing } = useSyncing(['nominator']);
   const { activeAccount } = useActiveAccounts();
 
   const membership = getPoolMembership(activeAccount);

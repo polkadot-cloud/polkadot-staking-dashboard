@@ -51,22 +51,18 @@ export const useStaking = () => useContext(StakingContext);
 
 export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const { getLedger } = useBalances();
-  const { isReady, api, apiStatus, consts, activeEra, isPagedRewardsActive } =
-    useApi();
   const { networkData, network } = useNetwork();
   const { accounts: connectAccounts } = useImportedAccounts();
   const { activeAccount, getActiveAccount } = useActiveAccounts();
   const { bondedAccounts, getBondedAccount, getAccountNominations } =
     useBonded();
+  const { isReady, api, apiStatus, consts, activeEra, isPagedRewardsActive } =
+    useApi();
   const { maxExposurePageSize } = consts;
 
   // Store eras stakers in state.
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers);
   const eraStakersRef = useRef(eraStakers);
-
-  // Flags whether `eraStakers` is resyncing.
-  const [erasStakersSyncing, setErasStakersSyncing] = useState<boolean>(false);
-  const erasStakersSyncingRef = useRef(erasStakersSyncing);
 
   // Store target validators for the active account.
   const [targets, setTargetsState] = useState<StakingTargets>(
@@ -98,9 +94,6 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
         activeAccountOwnStake,
         who,
       } = data;
-
-      // finish sync
-      setStateWithRef(false, setErasStakersSyncing, erasStakersSyncingRef);
 
       // check if account hasn't changed since worker started
       if (getActiveAccount() === who) {
@@ -155,8 +148,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
 
-    // flag eraStakers is recyncing
-    setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
+    SyncController.dispatch('era-stakers', 'syncing');
 
     const exposures = await fetchEraStakers(activeEra.index.toString());
 
@@ -380,8 +372,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
         isNominating,
         inSetup,
         getLowestRewardFromStaker,
-        eraStakers: eraStakersRef.current,
-        erasStakersSyncing: erasStakersSyncingRef.current,
+        eraStakers,
         targets,
         getPagedErasStakers,
       }}

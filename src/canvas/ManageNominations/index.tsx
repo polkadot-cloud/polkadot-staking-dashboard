@@ -38,9 +38,9 @@ export const ManageNominations = () => {
   } = useOverlay().canvas;
   const { openHelp } = useHelp();
   const { consts, api } = useApi();
+  const { activePool } = useActivePool();
   const { getBondedAccount } = useBonded();
   const { activeAccount } = useActiveAccounts();
-  const { activePool } = useActivePool();
   const { updatePoolNominations } = useBondedPools();
   const { openPromptWith, closePrompt } = usePrompt();
 

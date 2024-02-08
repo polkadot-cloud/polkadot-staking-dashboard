@@ -70,7 +70,6 @@ export interface StakingContextInterface {
   getLowestRewardFromStaker: (a: MaybeAddress) => LowestReward;
   eraStakers: EraStakers;
   targets: StakingTargets;
-  erasStakersSyncing: boolean;
   getPagedErasStakers: (e: string) => Promise<Exposure[]>;
 }
 
