@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ValidatorEntry } from '@polkadot-cloud/assets/types';
 import type BigNumber from 'bignumber.js';
 import type { AnyJson, Sync } from 'types';
 
@@ -18,7 +17,6 @@ export interface ValidatorsContextInterface {
   avgCommission: number;
   sessionValidators: string[];
   sessionParaValidators: string[];
-  validatorCommunity: ValidatorEntry[];
   erasRewardPoints: ErasRewardPoints;
   validatorsFetched: Sync;
   eraPointsBoundaries: EraPointsBoundaries;

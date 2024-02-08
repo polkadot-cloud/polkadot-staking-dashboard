@@ -44,6 +44,7 @@ import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts';
 import { PoolPerformanceProvider } from 'contexts/Pools/PoolPerformance';
 import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts';
 import { withProviders } from 'hooks/withProviders';
+import { CommunityProvider } from 'contexts/Community';
 
 export const Providers = () => {
   const {
@@ -91,6 +92,7 @@ export const Providers = () => {
     PromptProvider,
     MigrateProvider,
     FiltersProvider,
+    CommunityProvider,
   ];
 
   return withProviders(providers, ThemedRouter);

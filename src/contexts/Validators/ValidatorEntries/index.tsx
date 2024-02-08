@@ -5,7 +5,6 @@ import { greaterThanZero, rmCommas, shuffle } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { ValidatorCommunity } from '@polkadot-cloud/assets/validators';
 import type { AnyApi, AnyJson, Fn, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
@@ -31,7 +30,6 @@ import {
   defaultEraPointsBoundaries,
 } from './defaults';
 import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
-import type { ValidatorEntry } from '@polkadot-cloud/assets/types';
 import { useErasPerDay } from 'hooks/useErasPerDay';
 import { IdentitiesController } from 'static/IdentitiesController';
 
@@ -82,11 +80,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Stores the average network commission rate.
   const [avgCommission, setAvgCommission] = useState<number>(0);
-
-  // Stores a randomised validator community dataset.
-  const [validatorCommunity] = useState<ValidatorEntry[]>([
-    ...shuffle(ValidatorCommunity),
-  ]);
 
   // Track whether the validator list has been fetched.
   const [erasRewardPointsFetched, setErasRewawrdPointsFetched] =
@@ -590,7 +583,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         avgCommission,
         sessionValidators,
         sessionParaValidators,
-        validatorCommunity,
         erasRewardPoints,
         validatorsFetched,
         eraPointsBoundaries,

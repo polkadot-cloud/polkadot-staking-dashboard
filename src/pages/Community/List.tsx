@@ -3,17 +3,17 @@
 
 import { PageRow } from '@polkadot-cloud/react';
 import { useEffect, useState } from 'react';
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { useNetwork } from 'contexts/Network';
 import { Item } from './Item';
 import { ItemsWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
 import type { ValidatorEntry } from '@polkadot-cloud/assets/types';
+import { useCommunity } from 'contexts/Community';
 
 export const List = () => {
   const { network } = useNetwork();
-  const { validatorCommunity } = useValidators();
   const { scrollPos } = useCommunitySections();
+  const { validatorCommunity } = useCommunity();
 
   const [entityItems, setEntityItems] = useState<ValidatorEntry[]>(
     validatorCommunity.filter((v) => v.validators[network] !== undefined)

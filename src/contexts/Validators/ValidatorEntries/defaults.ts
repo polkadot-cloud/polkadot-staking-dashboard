@@ -20,7 +20,6 @@ export const defaultValidatorsContext: ValidatorsContextInterface = {
   avgCommission: 0,
   sessionValidators: [],
   sessionParaValidators: [],
-  validatorCommunity: [],
   erasRewardPoints: {},
   validatorsFetched: 'unsynced',
   eraPointsBoundaries: null,
