@@ -10,17 +10,21 @@ import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { Nominations } from 'library/Nominations';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { useSyncing } from 'hooks/useSyncing';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 
 export const ManagePool = () => {
   const { t } = useTranslation();
   const { syncing } = useSyncing(['active-pools']);
-  const { poolNominated } = useValidators();
   const { openCanvas } = useOverlay().canvas;
+  const { formatWithPrefs } = useValidators();
   const { activeAccount } = useActiveAccounts();
   const { isOwner, isNominator, activePoolNominations, activePool } =
     useActivePool();
+
+  const poolNominated = activePoolNominations
+    ? formatWithPrefs(activePoolNominations.targets)
+    : [];
 
   const isNominating = !!activePoolNominations?.targets?.length;
   const nominator = activePool?.addresses?.stash ?? null;

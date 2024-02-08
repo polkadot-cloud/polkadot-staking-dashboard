@@ -41,8 +41,8 @@ export const Nominations = ({
     canvas: { openCanvas },
   } = useOverlay();
   const { syncing } = useSyncing('*');
-  const { getNominated } = useValidators();
   const { isFastUnstaking } = useUnstaking();
+  const { formatWithPrefs } = useValidators();
   const { activeAccount } = useActiveAccounts();
   const { getAccountNominations } = useBonded();
   const { isReadOnlyAccount } = useImportedAccounts();
@@ -51,10 +51,12 @@ export const Nominations = ({
   const isPool = bondFor === 'pool';
 
   // Derive nominations from `bondFor` type.
-  const nominations = isPool
-    ? activePoolNominations?.targets || []
-    : getAccountNominations(nominator);
-  const nominated = getNominated(bondFor);
+  const nominated =
+    bondFor === 'nominator'
+      ? formatWithPrefs(getAccountNominations(activeAccount))
+      : activePoolNominations
+        ? formatWithPrefs(activePoolNominations.targets)
+        : [];
 
   // Determine if this nominator is actually nominating.
   const isNominating = nominated?.length ?? false;
@@ -68,7 +70,7 @@ export const Nominations = ({
   // If regular staking and nominating, or if pool and account is nominator or root, display stop
   // button.
   const displayBtns =
-    (!isPool && nominations.length) ||
+    (!isPool && nominated.length) ||
     (isPool && (isPoolNominator() || isPoolOwner()));
 
   // Determine whether buttons are disabled.

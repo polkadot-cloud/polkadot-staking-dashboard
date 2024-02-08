@@ -3,7 +3,7 @@
 
 import type { ValidatorEntry } from '@polkadot-cloud/assets/types';
 import type BigNumber from 'bignumber.js';
-import type { AnyJson, BondFor, Sync } from 'types';
+import type { AnyJson, Sync } from 'types';
 
 export interface ValidatorsContextInterface {
   fetchValidatorPrefs: (a: ValidatorAddresses) => Promise<Validator[] | null>;
@@ -11,7 +11,6 @@ export interface ValidatorsContextInterface {
     startEra: BigNumber,
     address: string
   ) => Record<string, BigNumber>;
-  getNominated: (bondFor: BondFor) => Validator[] | null;
   injectValidatorListData: (entries: Validator[]) => ValidatorListEntry[];
   validators: Validator[];
   validatorIdentities: Record<string, Identity>;
@@ -19,8 +18,6 @@ export interface ValidatorsContextInterface {
   avgCommission: number;
   sessionValidators: string[];
   sessionParaValidators: string[];
-  nominated: Validator[] | null;
-  poolNominated: Validator[] | null;
   validatorCommunity: ValidatorEntry[];
   erasRewardPoints: ErasRewardPoints;
   validatorsFetched: Sync;
@@ -28,6 +25,7 @@ export interface ValidatorsContextInterface {
   validatorEraPointsHistory: Record<string, ValidatorEraPointHistory>;
   erasRewardPointsFetched: Sync;
   averageEraValidatorReward: AverageEraValidatorReward;
+  formatWithPrefs: (addresses: string[]) => Validator[];
 }
 
 export type ValidatorStatus = 'waiting' | 'active';
