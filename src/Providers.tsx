@@ -52,7 +52,7 @@ export const Providers = () => {
   } = useNetwork();
   const { activeAccount, setActiveAccount } = useActiveAccounts();
 
-  // !! Provider order matters
+  // !! Provider order matters.
   const providers: Provider[] = [
     UIProvider,
     [APIProvider, { network }],
