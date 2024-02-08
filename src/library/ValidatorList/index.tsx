@@ -38,24 +38,27 @@ import type { NominationStatus } from './ValidatorItem/types';
 import { useSyncing } from 'hooks/useSyncing';
 
 export const ValidatorListInner = ({
+  // Default list values.
   nominator: initialNominator,
   validators: initialValidators,
+  // Validator list config options.
+  bondFor,
   allowMoreCols,
   allowFilters,
   toggleFavorites,
   pagination,
   format,
   selectable,
-  bondFor,
   onSelected,
   actions = [],
   showMenu = true,
   displayFor = 'default',
   allowSearch = false,
   allowListFormat = true,
-  alwaysRefetchValidators = false,
   defaultOrder = undefined,
   defaultFilters = undefined,
+  // Throttling and re-fetching.
+  alwaysRefetchValidators = false,
   disableThrottle = false,
 }: ValidatorListProps) => {
   const { t } = useTranslation('library');
