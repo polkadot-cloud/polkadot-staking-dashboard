@@ -35,14 +35,13 @@ import { PayoutsProvider } from 'contexts/Payouts';
 import { useNetwork } from 'contexts/Network';
 import { APIProvider } from 'contexts/Api';
 import { ThemedRouter } from 'Themes';
-import type { AnyJson } from 'types';
-import type { FC } from 'react';
 import { OtherAccountsProvider } from 'contexts/Connect/OtherAccounts';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { DappName } from 'consts';
 import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts';
 import { PoolPerformanceProvider } from 'contexts/Pools/PoolPerformance';
 import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts';
+import type { Provider } from 'hooks/withProviders';
 import { withProviders } from 'hooks/withProviders';
 import { CommunityProvider } from 'contexts/Community';
 
@@ -54,7 +53,7 @@ export const Providers = () => {
   const { activeAccount, setActiveAccount } = useActiveAccounts();
 
   // !! Provider order matters
-  const providers: (FC<AnyJson> | [FC<AnyJson>, AnyJson])[] = [
+  const providers: Provider[] = [
     UIProvider,
     [APIProvider, { network }],
     VaultAccountsProvider,
