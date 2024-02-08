@@ -11,7 +11,6 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useStaking } from 'contexts/Staking';
 import type { Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { usePlugins } from 'contexts/Plugins';
@@ -25,11 +24,7 @@ import { SubscanController } from 'static/SubscanController';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import { useBalances } from 'contexts/Balances';
 import { ActivePoolsController } from 'static/ActivePoolsController';
-import {
-  defaultActivePoolContext,
-  defaultPoolNominations,
-  defaultPoolRoles,
-} from './defaults';
+import { defaultActivePoolContext, defaultPoolRoles } from './defaults';
 import { SyncController } from 'static/SyncController';
 import { useActivePools } from 'hooks/useActivePools';
 import BigNumber from 'bignumber.js';
@@ -44,7 +39,6 @@ export const useActivePool = () => useContext(ActivePoolContext);
 export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const { isReady } = useApi();
   const { network } = useNetwork();
-  const { eraStakers } = useStaking();
   const { pluginEnabled } = usePlugins();
   const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
@@ -114,9 +108,6 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
 
   // Keep track of whether the pool member count is being fetched.
   const fetchingMemberCount = useRef<Sync>('unsynced');
-
-  const getActivePoolNominations = () =>
-    activePoolNominations || defaultPoolNominations;
 
   // Sync active pool subscriptions.
   const syncActivePoolSubscriptions = async () => {
@@ -188,30 +179,6 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
       return false;
     }
     return activeAccount === roles?.bouncer;
-  };
-
-  // Get the status of nominations. Possible statuses: waiting, inactive, active.
-  const getNominationsStatus = () => {
-    const statuses: Record<string, string> = {};
-
-    for (const nomination of getActivePoolNominations().targets) {
-      const staker = eraStakers.stakers.find(
-        ({ address }) => address === nomination
-      );
-      if (staker === undefined) {
-        statuses[nomination] = 'waiting';
-        continue;
-      }
-      const exists = (staker.others || []).find(
-        ({ who }) => who === activeAccount
-      );
-      if (exists === undefined) {
-        statuses[nomination] = 'inactive';
-        continue;
-      }
-      statuses[nomination] = 'active';
-    }
-    return statuses;
   };
 
   // Returns the active pool's roles or the default roles object.
@@ -325,7 +292,6 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
         isBonding,
         getPoolUnlocking,
         getPoolRoles,
-        getNominationsStatus,
         setActivePoolId,
         activePool,
         activePoolMemberCount,
