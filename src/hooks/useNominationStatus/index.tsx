@@ -26,8 +26,8 @@ export const useNominationStatus = () => {
     getLowestRewardFromStaker,
   } = useStaking();
   const { validators } = useValidators();
-  const { activePoolNominations } = useActivePool();
   const { getAccountNominations } = useBonded();
+  const { activePoolNominations } = useActivePool();
 
   // Utility to get an account's nominees alongside their status.
   const getNomineesStatus = (who: MaybeAddress, type: BondFor) => {

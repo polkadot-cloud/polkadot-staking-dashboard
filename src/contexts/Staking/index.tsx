@@ -380,7 +380,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
         isNominating,
         inSetup,
         getLowestRewardFromStaker,
-        eraStakers: eraStakersRef.current,
+        eraStakers,
         erasStakersSyncing: erasStakersSyncingRef.current,
         targets,
         getPagedErasStakers,
