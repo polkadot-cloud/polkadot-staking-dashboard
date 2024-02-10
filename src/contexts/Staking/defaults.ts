@@ -7,7 +7,6 @@ import type {
   EraStakers,
   NominationStatuses,
   StakingContextInterface,
-  StakingTargets,
 } from 'contexts/Staking/types';
 
 export const defaultEraStakers: EraStakers = {
@@ -15,10 +14,6 @@ export const defaultEraStakers: EraStakers = {
   activeValidators: 0,
   stakers: [],
   totalActiveNominators: 0,
-};
-
-export const defaultTargets: StakingTargets = {
-  nominations: [],
 };
 
 const defaultLowestReward = {
@@ -31,8 +26,6 @@ export const defaultNominationStatus: NominationStatuses = {};
 export const defaultStakingContext: StakingContextInterface = {
   fetchEraStakers: async (e) => new Promise((resolve) => resolve([])),
   getNominationsStatusFromTargets: (w, t) => defaultNominationStatus,
-  setTargets: (t) => {},
-  hasController: () => false,
   getControllerNotImported: (a) => false,
   addressDifferentToStash: (a) => false,
   isBonding: () => false,
@@ -40,6 +33,5 @@ export const defaultStakingContext: StakingContextInterface = {
   inSetup: () => true,
   getLowestRewardFromStaker: (address) => defaultLowestReward,
   eraStakers: defaultEraStakers,
-  targets: defaultTargets,
   getPagedErasStakers: (e) => new Promise((resolve) => resolve([])),
 };

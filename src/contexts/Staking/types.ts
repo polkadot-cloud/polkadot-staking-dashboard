@@ -18,10 +18,6 @@ export interface EraStakers {
 
 export type NominationStatuses = Record<string, NominationStatus>;
 
-export interface StakingTargets {
-  nominations: string[];
-}
-
 export interface Exposure {
   keys: string[];
   val: ExposureValue;
@@ -60,8 +56,6 @@ export interface StakingContextInterface {
     w: MaybeAddress,
     t: string[]
   ) => Record<string, NominationStatus>;
-  setTargets: (t: StakingTargets) => void;
-  hasController: () => boolean;
   getControllerNotImported: (a: MaybeAddress) => boolean;
   addressDifferentToStash: (a: MaybeAddress) => boolean;
   isBonding: () => boolean;
@@ -69,7 +63,6 @@ export interface StakingContextInterface {
   inSetup: () => boolean;
   getLowestRewardFromStaker: (a: MaybeAddress) => LowestReward;
   eraStakers: EraStakers;
-  targets: StakingTargets;
   getPagedErasStakers: (e: string) => Promise<Exposure[]>;
 }
 
