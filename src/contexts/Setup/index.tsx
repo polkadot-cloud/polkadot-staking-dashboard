@@ -291,7 +291,6 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
   return (
     <SetupContext.Provider
       value={{
-        getSetupProgress,
         removeSetupProgress,
         getNominatorSetupPercent,
         getPoolSetupPercent,

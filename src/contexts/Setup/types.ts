@@ -45,7 +45,6 @@ export interface PoolProgress {
 }
 
 export interface SetupContextInterface {
-  getSetupProgress: (t: BondFor, a: MaybeAddress) => PoolSetup | NominatorSetup;
   removeSetupProgress: (t: BondFor, a: MaybeAddress) => void;
   getNominatorSetupPercent: (a: MaybeAddress) => number;
   getPoolSetupPercent: (a: MaybeAddress) => number;
