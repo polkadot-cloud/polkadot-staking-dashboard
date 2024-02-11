@@ -20,8 +20,8 @@ import { Tasks } from './Tasks';
 export const ManagePool = () => {
   const { t } = useTranslation('modals');
   const { notEnoughFunds } = useTxMeta();
+  const { activePool } = useActivePool();
   const { integrityChecked } = useLedgerHardware();
-  const { isOwner, activePool } = useActivePool();
   const { setModalHeight, modalMaxHeight } = useOverlay().modal;
 
   // modal task
@@ -72,10 +72,7 @@ export const ManagePool = () => {
   return (
     <ModalSection type="carousel">
       <ModalFixedTitle ref={headerRef}>
-        <Title
-          title={`${t('managePool')}${!isOwner() ? ` Membership` : ``}`}
-          fixed
-        />
+        <Title title={`${t('managePool')}`} fixed />
       </ModalFixedTitle>
       <ModalMotionTwoSection
         style={{
