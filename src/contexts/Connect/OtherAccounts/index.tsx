@@ -12,7 +12,7 @@ import {
   getLocalLedgerAccounts,
   getLocalVaultAccounts,
 } from 'contexts/Hardware/Utils';
-import type { AnyFunction, MaybeAddress, NetworkName } from 'types';
+import type { MaybeAddress, NetworkName } from 'types';
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -55,26 +55,13 @@ export const OtherAccountsProvider = ({
   // different sources.
   const otherAccountsRef = useRef(otherAccounts);
 
-  // Store unsubscribe handlers for connected extensions.
-  const unsubs = useRef<Record<string, AnyFunction>>({});
-
   // Store whether all accounts have been synced.
   const [accountsInitialised, setAccountsInitialised] =
     useState<boolean>(false);
 
   // Handle forgetting of an imported other account.
   const forgetOtherAccounts = (forget: ImportedAccount[]) => {
-    // Unsubscribe and remove unsub from context ref.
     if (forget.length) {
-      for (const { address } of forget) {
-        if (otherAccountsRef.current.find((a) => a.address === address)) {
-          const unsub = unsubs.current[address];
-          if (unsub) {
-            unsub();
-            delete unsubs.current[address];
-          }
-        }
-      }
       // Remove forgotten accounts from context state.
       setStateWithRef(
         [...otherAccountsRef.current].filter(
@@ -143,13 +130,6 @@ export const OtherAccountsProvider = ({
     );
   };
 
-  // Unsubscribe all account subscriptions.
-  const unsubscribe = () => {
-    Object.values(unsubs.current).forEach((unsub) => {
-      unsub();
-    });
-  };
-
   // Add other accounts to context state.
   const addOtherAccounts = (account: ImportedAccount[]) => {
     setStateWithRef(
@@ -203,11 +183,8 @@ export const OtherAccountsProvider = ({
   // Re-sync other accounts on network switch. Waits for `injectedWeb3` to be injected.
   useEffect(() => {
     if (!checkingInjectedWeb3) {
-      // unsubscribe from all accounts and reset state.
-      unsubscribe();
       setStateWithRef([], setOtherAccounts, otherAccountsRef);
     }
-    return () => unsubscribe();
   }, [network, checkingInjectedWeb3]);
 
   // Once extensions are fully initialised, fetch accounts from other sources.
