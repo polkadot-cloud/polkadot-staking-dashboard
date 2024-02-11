@@ -115,13 +115,13 @@ export const Forms = forwardRef(
         setModalStatus('closing');
       },
       callbackInBlock: () => {
-        if (payouts) {
+        if (payouts && activeAccount) {
           // Remove Subscan unclaimed payout record(s) if they exist.
           const eraPayouts: string[] = [];
           payouts.forEach(({ era }) => {
             eraPayouts.push(String(era));
           });
-          SubscanController.removeUnclaimedPayouts(eraPayouts);
+          SubscanController.removeUnclaimedPayouts(activeAccount, eraPayouts);
 
           // Deduct from `unclaimedPayouts` in Payouts context.
           payouts.forEach(({ era, paginatedValidators }) => {

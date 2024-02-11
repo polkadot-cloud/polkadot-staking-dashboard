@@ -15,11 +15,13 @@ import { isCustomEvent } from 'static/utils';
 import { useEventListener } from 'usehooks-ts';
 import { useErasToTimeLeft } from '../useErasToTimeLeft';
 import { useApi } from 'contexts/Api';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const useSubscanData = (keys: PayoutType[]) => {
   const { activeEra } = useApi();
   const { pluginEnabled } = usePlugins();
   const { erasToSeconds } = useErasToTimeLeft();
+  const { activeAccount } = useActiveAccounts();
 
   // Store the most up to date subscan data state.
   const [data, setData] = useState<SubscanData>({});
@@ -32,14 +34,18 @@ export const useSubscanData = (keys: PayoutType[]) => {
     if (isCustomEvent(e) && pluginEnabled('subscan')) {
       const { keys: receivedKeys }: { keys: PayoutType[] } = e.detail;
 
-      // Filter out any keys that are not provided to the hook.
-      const newData: SubscanData = {};
-      receivedKeys
-        .filter((key) => keys.includes(key))
-        .forEach((key) => {
-          newData[key] = SubscanController.data?.[key] || [];
-        });
-      setStateWithRef({ ...dataRef.current, ...newData }, setData, dataRef);
+      // Filter out any keys that are not provided to the hook active account is still present.
+      if (activeAccount) {
+        const newData: SubscanData = {};
+        receivedKeys
+          .filter((key) => keys.includes(key))
+          .forEach((key) => {
+            newData[key] =
+              SubscanController.payoutData[activeAccount]?.[key] || [];
+          });
+
+        setStateWithRef({ ...dataRef.current, ...newData }, setData, dataRef);
+      }
     }
   };
 
@@ -79,12 +85,14 @@ export const useSubscanData = (keys: PayoutType[]) => {
 
   // Populate state on initial render if data is already available.
   useEffect(() => {
-    const newData: SubscanData = {};
-    keys.forEach((key: PayoutType) => {
-      newData[key] = SubscanController.data?.[key] || [];
-    });
-    setStateWithRef({ ...dataRef.current, ...newData }, setData, dataRef);
-  }, []);
+    if (activeAccount) {
+      const newData: SubscanData = {};
+      keys.forEach((key: PayoutType) => {
+        newData[key] = SubscanController.payoutData[activeAccount]?.[key] || [];
+      });
+      setStateWithRef({ ...dataRef.current, ...newData }, setData, dataRef);
+    }
+  }, [activeAccount]);
 
   return { data, getData, injectBlockTimestamp };
 };
