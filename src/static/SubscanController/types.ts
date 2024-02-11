@@ -91,3 +91,8 @@ export interface SubscanPoolMember {
 export interface SubscanPoolDetails {
   member_count: number;
 }
+
+export interface SubscanEraPoints {
+  era: number;
+  reward_point: number;
+}

@@ -8,6 +8,7 @@ import type {
   SubscanPoolDetails,
   SubscanPoolMember,
   SubscanRequestBody,
+  SubscanEraPoints,
 } from './types';
 import type { Locale } from 'date-fns';
 import { format, fromUnixTime, getUnixTime, subDays } from 'date-fns';
@@ -40,8 +41,14 @@ export class SubscanController {
   // The network to use for Subscan API calls.
   static network: string;
 
-  // Subscan data for the current account.
-  static data: SubscanData;
+  // Subscan payout data, keyed by address.
+  static payoutData: Record<string, SubscanData> = {};
+
+  // Subscan pool data, keyed by `<network>-<poolId>-<key1>-<key2>...`.
+  static poolData: Record<string, SubscanPoolDetails | PoolMember[]> = {};
+
+  // Subscan era points data, keyed by `<network>-<address>-<era>`.
+  static eraPointsData: Record<string, SubscanEraPoints[]> = {};
 
   // The timestamp of the last 5 requests made.
   static _lastRequestTimes = [];
@@ -56,6 +63,37 @@ export class SubscanController {
   set network(network: string) {
     SubscanController.network = network;
   }
+
+  // ------------------------------------------------------
+  // Handling multiple requests.
+  // ------------------------------------------------------
+
+  // Handle fetching the various types of payout and set state in one render.
+  static handleFetchPayouts = async (address: string) => {
+    if (!this.payoutData[address]) {
+      const results = await Promise.all([
+        this.fetchNominatorPayouts(address),
+        this.fetchPoolClaims(address),
+      ]);
+      const { payouts, unclaimedPayouts } = results[0];
+      const poolClaims = results[1];
+
+      // Persist results to class.
+      this.payoutData[address] = {
+        payouts,
+        unclaimedPayouts,
+        poolClaims,
+      };
+
+      document.dispatchEvent(
+        new CustomEvent('subscan-data-updated', {
+          detail: {
+            keys: ['payouts', 'unclaimedPayouts', 'poolClaims'],
+          },
+        })
+      );
+    }
+  };
 
   // ------------------------------------------------------
   // Handling requests.
@@ -143,7 +181,10 @@ export class SubscanController {
   };
 
   // Fetch a pool's era points from Subscan.
-  static fetchEraPoints = async (address: string, era: number) => {
+  static fetchEraPoints = async (
+    address: string,
+    era: number
+  ): Promise<SubscanEraPoints[]> => {
     const result = await this.makeRequest(this.ENDPOINTS.eraStat, {
       page: 0,
       row: 100,
@@ -168,49 +209,47 @@ export class SubscanController {
     return list.reverse().splice(0, list.length - 1);
   };
 
-  // ------------------------------------------------------
-  // Handling multiple requests concurrently.
-  // ------------------------------------------------------
-
-  // Handle fetching the various types of payout and set state in one render.
-  static handleFetchPayouts = async (address: string) => {
-    const results = await Promise.all([
-      this.fetchNominatorPayouts(address),
-      this.fetchPoolClaims(address),
-    ]);
-    const { payouts, unclaimedPayouts } = results[0];
-    const poolClaims = results[1];
-
-    // Persist results to class.
-    this.data['payouts'] = payouts;
-    this.data['unclaimedPayouts'] = unclaimedPayouts;
-    this.data['poolClaims'] = poolClaims;
-
-    document.dispatchEvent(
-      new CustomEvent('subscan-data-updated', {
-        detail: {
-          keys: ['payouts', 'unclaimedPayouts', 'poolClaims'],
-        },
-      })
-    );
-  };
-
   // Handle fetching pool members.
   static handleFetchPoolMembers = async (poolId: number, page: number) => {
-    const poolMembers = await this.fetchPoolMembers(poolId, page);
-    return poolMembers;
+    const dataKey = `${this.network}-${poolId}-${page}-members}`;
+    const currentValue = this.poolData[dataKey];
+
+    if (currentValue) {
+      return currentValue;
+    } else {
+      const result = await this.fetchPoolMembers(poolId, page);
+      this.poolData[dataKey] = result;
+
+      return result;
+    }
   };
 
   // Handle fetching pool details.
   static handleFetchPoolDetails = async (poolId: number) => {
-    const poolDetails = await this.fetchPoolDetails(poolId);
-    return poolDetails;
+    const dataKey = `${this.network}-${poolId}-details}`;
+    const currentValue = this.poolData[dataKey];
+
+    if (currentValue) {
+      return currentValue as SubscanPoolDetails;
+    } else {
+      const result = await this.fetchPoolDetails(poolId);
+      this.poolData[dataKey] = result;
+      return result;
+    }
   };
 
   // Handle fetching era point history.
   static handleFetchEraPoints = async (address: string, era: number) => {
-    const eraPoints = await this.fetchEraPoints(address, era);
-    return eraPoints;
+    const dataKey = `${this.network}-${address}-${era}}`;
+    const currentValue = this.eraPointsData[dataKey];
+
+    if (currentValue) {
+      return currentValue;
+    } else {
+      const result = await this.fetchEraPoints(address, era);
+      this.eraPointsData[dataKey] = result;
+      return result;
+    }
   };
 
   // ------------------------------------------------------
@@ -219,19 +258,18 @@ export class SubscanController {
 
   // Resets all received data from class.
   static resetData = () => {
-    this.data = {};
+    this.payoutData = {};
   };
 
   // Remove unclaimed payouts and dispatch update event.
-  static removeUnclaimedPayouts = (eraPayouts: string[]) => {
-    const updatedUnclaimedPayouts = this.data[
-      'unclaimedPayouts'
-    ] as SubscanPayout[];
+  static removeUnclaimedPayouts = (address: string, eraPayouts: string[]) => {
+    const newUnclaimedPayouts = (this.payoutData[address]?.unclaimedPayouts ||
+      []) as SubscanPayout[];
 
     eraPayouts.forEach(([era]) => {
-      updatedUnclaimedPayouts.filter((u) => String(u.era) !== era);
+      newUnclaimedPayouts.filter((u) => String(u.era) !== era);
     });
-    this.data['unclaimedPayouts'] = updatedUnclaimedPayouts;
+    this.payoutData[address].unclaimedPayouts = newUnclaimedPayouts;
 
     document.dispatchEvent(
       new CustomEvent('subscan-data-updated', {

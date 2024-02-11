@@ -70,8 +70,10 @@ export const MembersListInner = ({
     if (poolId > 0 && !fetchingMemberList.current) {
       fetchingMemberList.current = true;
 
-      const newMembers: PoolMember[] =
-        await SubscanController.handleFetchPoolMembers(poolId, page);
+      const newMembers = (await SubscanController.handleFetchPoolMembers(
+        poolId,
+        page
+      )) as PoolMember[];
 
       fetchingMemberList.current = false;
       setPoolMembersApi([...newMembers]);
