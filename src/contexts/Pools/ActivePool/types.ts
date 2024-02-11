@@ -4,8 +4,8 @@
 import type BigNumber from 'bignumber.js';
 import type { PoolAddresses } from '../BondedPools/types';
 import type { MaybeAddress } from '@polkadot-cloud/react/types';
-import type { Nominations } from 'contexts/Bonded/types';
 import type { Identity, SuperIdentity } from 'contexts/Validators/types';
+import type { Nominations } from 'contexts/Balances/types';
 
 export interface ActivePoolContextState {
   isBonding: () => boolean;

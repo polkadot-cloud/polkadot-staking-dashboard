@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import BigNumber from 'bignumber.js';
-import type { Balance, Ledger } from 'contexts/Balances/types';
+import type { Balance, Ledger, Nominations } from 'contexts/Balances/types';
 import type { PayeeConfig } from 'contexts/Setup/types';
 
 export const defaultBalance: Balance = {
@@ -22,4 +22,9 @@ export const defaultLedger: Ledger = {
 export const defaultPayee: PayeeConfig = {
   destination: 'Staked',
   account: null,
+};
+
+export const defaultNominations: Nominations = {
+  targets: [],
+  submittedIn: 0,
 };

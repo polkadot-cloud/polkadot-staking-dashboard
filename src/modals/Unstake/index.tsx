@@ -26,24 +26,26 @@ import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useBalances } from 'contexts/Balances';
 
 export const Unstake = () => {
   const { t } = useTranslation('modals');
-  const { newBatchCall } = useBatchCall();
-  const { notEnoughFunds } = useTxMeta();
-  const { activeAccount } = useActiveAccounts();
-  const { api, consts } = useApi();
   const {
     networkData: { units, unit },
   } = useNetwork();
+  const { api, consts } = useApi();
+  const { notEnoughFunds } = useTxMeta();
+  const { newBatchCall } = useBatchCall();
+  const { getBondedAccount } = useBonded();
+  const { getNominations } = useBalances();
+  const { activeAccount } = useActiveAccounts();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
   const { setModalStatus, setModalResize } = useOverlay().modal;
-  const { getBondedAccount, getAccountNominations } = useBonded();
 
   const controller = getBondedAccount(activeAccount);
-  const nominations = getAccountNominations(activeAccount);
+  const nominations = getNominations(activeAccount);
   const { bondDuration } = consts;
   const allTransferOptions = getTransferOptions(activeAccount);
   const { active } = allTransferOptions.nominate;

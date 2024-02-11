@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { VoidFn } from '@polkadot/api/types';
-import type { Nominations } from 'contexts/Bonded/types';
 import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
 import type { ActivePool, PoolRoles } from 'contexts/Pools/ActivePool/types';
 import { APIController } from 'static/APIController';
@@ -10,6 +9,7 @@ import { IdentitiesController } from 'static/IdentitiesController';
 import type { AnyApi } from 'types';
 import type { ActivePoolItem, DetailActivePool } from './types';
 import { SyncController } from 'static/SyncController';
+import type { Nominations } from 'contexts/Balances/types';
 
 export class ActivePoolsController {
   // ------------------------------------------------------

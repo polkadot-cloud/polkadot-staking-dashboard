@@ -4,7 +4,6 @@
 import { faCog, faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonPrimary } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useBonded } from 'contexts/Bonded';
 import { useHelp } from 'contexts/Help';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useStaking } from 'contexts/Staking';
@@ -19,6 +18,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { ListStatusHeader } from 'library/List';
 import { Wrapper } from './Wrapper';
 import { useSyncing } from 'hooks/useSyncing';
+import { useBalances } from 'contexts/Balances';
 
 export const Nominations = ({
   bondFor,
@@ -41,10 +41,10 @@ export const Nominations = ({
     canvas: { openCanvas },
   } = useOverlay();
   const { syncing } = useSyncing('*');
+  const { getNominations } = useBalances();
   const { isFastUnstaking } = useUnstaking();
   const { formatWithPrefs } = useValidators();
   const { activeAccount } = useActiveAccounts();
-  const { getAccountNominations } = useBonded();
   const { isReadOnlyAccount } = useImportedAccounts();
 
   // Determine if pool or nominator.
@@ -53,7 +53,7 @@ export const Nominations = ({
   // Derive nominations from `bondFor` type.
   const nominated =
     bondFor === 'nominator'
-      ? formatWithPrefs(getAccountNominations(activeAccount))
+      ? formatWithPrefs(getNominations(activeAccount))
       : activePoolNominations
         ? formatWithPrefs(activePoolNominations.targets)
         : [];

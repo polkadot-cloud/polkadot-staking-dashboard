@@ -35,6 +35,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     getLedger,
     getPayee,
     getPoolMembership,
+    getNominations,
   } = useActiveBalances({
     accounts: [activeAccount, activeProxy, controller],
   });
@@ -96,6 +97,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
         getLedger,
         getPayee,
         getPoolMembership,
+        getNominations,
       }}
     >
       {children}

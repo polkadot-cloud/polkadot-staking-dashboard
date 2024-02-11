@@ -4,13 +4,13 @@
 import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useBonded } from 'contexts/Bonded';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useStaking } from 'contexts/Staking';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { AnyJson, BondFor, MaybeAddress } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { useSyncing } from 'hooks/useSyncing';
+import { useBalances } from 'contexts/Balances';
 
 export const useNominationStatus = () => {
   const { t } = useTranslation();
@@ -20,19 +20,19 @@ export const useNominationStatus = () => {
   const {
     inSetup,
     eraStakers,
-    getNominationsStatusFromTargets,
     getLowestRewardFromStaker,
+    getNominationsStatusFromTargets,
   } = useStaking();
   const { validators } = useValidators();
-  const { getAccountNominations } = useBonded();
-  const { activePoolNominations } = useActivePool();
+  const { getNominations } = useBalances();
   const { syncing } = useSyncing(['era-stakers']);
+  const { activePoolNominations } = useActivePool();
 
   // Utility to get an account's nominees alongside their status.
   const getNominationSetStatus = (who: MaybeAddress, type: BondFor) => {
     const nominations =
       type === 'nominator'
-        ? getAccountNominations(who)
+        ? getNominations(who)
         : activePoolNominations?.targets ?? [];
 
     return getNominationsStatusFromTargets(who, nominations);

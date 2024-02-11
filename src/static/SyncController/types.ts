@@ -5,7 +5,6 @@ export type SyncID =
   | 'initialization'
   | 'balances'
   | 'era-stakers'
-  | 'nominator'
   | 'active-pools';
 
 export interface SyncEvent {

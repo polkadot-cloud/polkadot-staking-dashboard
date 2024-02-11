@@ -10,6 +10,7 @@ import type {
   BalanceLock,
   BalanceLocks,
   Ledger,
+  Targets,
 } from 'contexts/Balances/types';
 import { useNetwork } from 'contexts/Network';
 import { useEffect, useRef, useState } from 'react';
@@ -126,6 +127,18 @@ export const useActiveBalances = ({
     return new BigNumber(0);
   };
 
+  // Gets an active balance's nominations.
+  const getNominations = (address: MaybeAddress): Targets => {
+    if (address) {
+      const maybeNominations =
+        activeBalances[address]?.nominations?.targets || [];
+      if (maybeNominations) {
+        return maybeNominations;
+      }
+    }
+    return [];
+  };
+
   // Handle new account balance event being reported from `BalancesController`.
   const newAccountBalancesCallback = (e: Event) => {
     if (
@@ -191,5 +204,6 @@ export const useActiveBalances = ({
     getPayee,
     getPoolMembership,
     getEdReserved,
+    getNominations,
   };
 };

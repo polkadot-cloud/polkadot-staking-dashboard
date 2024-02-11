@@ -10,11 +10,13 @@ import type {
   ActiveBalance,
   Balances,
   Ledger,
+  Nominations,
   UnlockChunkRaw,
 } from 'contexts/Balances/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type { PoolMembership } from 'contexts/Pools/types';
 import { SyncController } from 'static/SyncController';
+import { defaultNominations } from './defaults';
 
 export class BalancesController {
   // ------------------------------------------------------
@@ -35,6 +37,9 @@ export class BalancesController {
 
   // Account pool membership and claim commissions, populated by api callbacks.
   static poolMemberships: Record<string, PoolMembership> = {};
+
+  // Account nominations, populated by api callbacks.
+  static nominations: Record<string, Nominations> = {};
 
   // Unsubscribe objects.
   static _unsubs: Record<string, VoidFn> = {};
@@ -74,6 +79,7 @@ export class BalancesController {
           [api.query.staking.payee, address],
           [api.query.nominationPools.poolMembers, address],
           [api.query.nominationPools.claimPermissions, address],
+          [api.query.staking.nominators, address],
         ],
         async ([
           ledgerResult,
@@ -82,6 +88,7 @@ export class BalancesController {
           payeeResult,
           poolMembersResult,
           claimPermissionsResult,
+          nominatorsResult,
         ]): Promise<void> => {
           this.handleLedgerCallback(address, ledgerResult);
           this.handleAccountCallback(address, accountResult, locksResult);
@@ -94,6 +101,8 @@ export class BalancesController {
             claimPermissionsResult
           );
 
+          this.handleNominations(address, nominatorsResult);
+
           // Send updated account state back to UI.
           document.dispatchEvent(
             new CustomEvent('new-account-balance', {
@@ -103,6 +112,7 @@ export class BalancesController {
                 balances: this.balances[address],
                 payee: this.payees[address],
                 poolMembership: this.poolMemberships[address],
+                nominations: this.nominations[address],
               },
             })
           );
@@ -126,6 +136,7 @@ export class BalancesController {
       delete this.balances[account];
       delete this.payees[account];
       delete this.poolMemberships[account];
+      delete this.nominations[account];
     });
     // Remove removed accounts from class.
     this.accounts = this.accounts.filter(
@@ -256,12 +267,29 @@ export class BalancesController {
     };
   };
 
+  // Handle nominations callback.
+  static handleNominations = (
+    address: string,
+    nominatorsResult: AnyApi
+  ): void => {
+    const nominators = nominatorsResult.unwrapOr(null);
+
+    this.nominations[address] =
+      nominators === null
+        ? defaultNominations
+        : {
+            targets: nominators.targets.toHuman(),
+            submittedIn: nominators.submittedIn.toHuman(),
+          };
+  };
+
   // Gets an `ActiveBalance` from class members for the given address if it exists.
   static getAccountBalances = (address: string): ActiveBalance | undefined => {
     const ledger = this.ledgers[address];
     const balances = this.balances[address];
     const payee = this.payees[address];
     const poolMembership = this.poolMemberships[address];
+    const nominations = this.nominations[address];
 
     // Account info has not synced yet. Note that `ledger` may not exist and therefore cannot be
     // tested.
@@ -273,6 +301,7 @@ export class BalancesController {
       balances,
       payee,
       poolMembership,
+      nominations,
     };
   };
 
@@ -290,6 +319,7 @@ export class BalancesController {
     this.balances = {};
     this.payees = {};
     this.poolMemberships = {};
+    this.nominations = {};
     this._unsubs = {};
   };
 

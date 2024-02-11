@@ -19,8 +19,6 @@ import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
 import * as defaults from './defaults';
 import type { BondedAccount, BondedContextInterface } from './types';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { SyncController } from 'static/SyncController';
 
 export const BondedContext = createContext<BondedContextInterface>(
   defaults.defaultBondedContext
@@ -32,7 +30,6 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
   const { api, isReady } = useApi();
   const { accounts } = useImportedAccounts();
-  const { activeAccount } = useActiveAccounts();
   const { addExternalAccount } = useExternalAccounts();
   const { addOrReplaceOtherAccount } = useOtherAccounts();
 
@@ -66,15 +63,6 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
       const added = addedTo(accounts, bondedAccountsRef.current, ['address']);
 
       if (added.length) {
-        // If the current active account is being subscribed to, dispatch the `nominator` syncing
-        // event.
-        const activeAccountInAdded = added.find(
-          ({ address }) => address === activeAccount
-        );
-        if (activeAccountInAdded) {
-          SyncController.dispatch('nominator', 'syncing');
-        }
-
         // Subscribe to all newly added accounts bonded and nominator status.
         added.map(({ address }) => subscribeToBondedAccount(address));
       }
@@ -100,11 +88,8 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const unsub = await api.queryMulti<AnyApi>(
-      [
-        [api.query.staking.bonded, address],
-        [api.query.staking.nominators, address],
-      ],
-      async ([controller, nominations]) => {
+      [[api.query.staking.bonded, address]],
+      async ([controller]) => {
         const newAccount: BondedAccount = {
           address,
         };
@@ -127,27 +112,12 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
           }
         }
 
-        // set account nominations.
-        const newNominations = nominations.unwrapOr(null);
-        newAccount.nominations =
-          newNominations === null
-            ? defaults.nominations
-            : {
-                targets: newNominations.targets.toHuman(),
-                submittedIn: newNominations.submittedIn.toHuman(),
-              };
-
         // remove stale account if it's already in list.
         const newBonded = Object.values(bondedAccountsRef.current)
           .filter((a) => a.address !== address)
           .concat(newAccount);
 
         setStateWithRef(newBonded, setBondedAccounts, bondedAccountsRef);
-
-        // If this callback was syncing the active account, mark `nominator` syncing as complete.
-        if (address === activeAccount) {
-          SyncController.dispatch('nominator', 'complete');
-        }
       }
     );
 
@@ -158,10 +128,6 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
   const getBondedAccount = (address: MaybeAddress) =>
     bondedAccountsRef.current.find((a) => a.address === address)?.bonded ||
     null;
-
-  const getAccountNominations = (address: MaybeAddress) =>
-    bondedAccountsRef.current.find((a) => a.address === address)?.nominations
-      ?.targets || [];
 
   // Handle accounts sync on connected accounts change.
   useEffectIgnoreInitial(() => {
@@ -182,7 +148,6 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
     <BondedContext.Provider
       value={{
         getBondedAccount,
-        getAccountNominations,
         bondedAccounts,
       }}
     >

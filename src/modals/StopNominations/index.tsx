@@ -19,14 +19,16 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useBalances } from 'contexts/Balances';
 
 export const StopNominations = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
-  const { activeAccount } = useActiveAccounts();
   const { notEnoughFunds } = useTxMeta();
+  const { getBondedAccount } = useBonded();
+  const { getNominations } = useBalances();
+  const { activeAccount } = useActiveAccounts();
   const { getSignerWarnings } = useSignerWarnings();
-  const { getBondedAccount, getAccountNominations } = useBonded();
   const {
     setModalStatus,
     config: { options },
@@ -44,7 +46,7 @@ export const StopNominations = () => {
   const nominations =
     isPool === true
       ? activePoolNominations?.targets || []
-      : getAccountNominations(activeAccount);
+      : getNominations(activeAccount);
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);

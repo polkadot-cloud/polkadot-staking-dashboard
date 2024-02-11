@@ -44,11 +44,11 @@ export const StakingContext = createContext<StakingContextInterface>(
 export const useStaking = () => useContext(StakingContext);
 
 export const StakingProvider = ({ children }: { children: ReactNode }) => {
-  const { getLedger } = useBalances();
+  const { getBondedAccount } = useBonded();
   const { networkData, network } = useNetwork();
+  const { getLedger, getNominations } = useBalances();
   const { accounts: connectAccounts } = useImportedAccounts();
   const { activeAccount, getActiveAccount } = useActiveAccounts();
-  const { getBondedAccount, getAccountNominations } = useBonded();
   const { isReady, api, apiStatus, consts, activeEra, isPagedRewardsActive } =
     useApi();
   const { maxExposurePageSize } = consts;
@@ -224,7 +224,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     hasController() && getLedger({ stash: activeAccount }).unlocking.length;
 
   // Helper function to determine whether the active account is nominating, or is yet to start.
-  const isNominating = () => getAccountNominations(activeAccount).length > 0;
+  const isNominating = () => getNominations(activeAccount).length > 0;
 
   // Helper function to determine whether the active account is nominating, or is yet to start.
   const inSetup = () =>

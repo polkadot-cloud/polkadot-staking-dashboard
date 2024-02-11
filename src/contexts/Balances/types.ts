@@ -14,6 +14,7 @@ export interface BalancesContextInterface {
   getLedger: (source: ActiveLedgerSource) => Ledger;
   getPayee: (address: MaybeAddress) => PayeeConfig;
   getPoolMembership: (address: MaybeAddress) => PoolMembership | null;
+  getNominations: (address: MaybeAddress) => Targets;
 }
 
 export type ActiveBalancesState = Record<string, ActiveBalance>;
@@ -23,6 +24,7 @@ export interface ActiveBalance {
   balances: Balances;
   payee: PayeeConfig;
   poolMembership: PoolMembership;
+  nominations: Nominations;
 }
 
 export interface Balances {
@@ -67,3 +69,10 @@ export interface Ledger {
 export type ActiveLedgerSource = {
   [key in 'stash' | 'key']?: MaybeAddress;
 };
+
+export interface Nominations {
+  targets: Targets;
+  submittedIn: string | number;
+}
+
+export type Targets = string[];

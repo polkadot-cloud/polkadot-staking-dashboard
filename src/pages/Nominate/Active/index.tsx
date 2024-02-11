@@ -28,20 +28,20 @@ import { MinimumNominatorBondStat } from './Stats/MinimumNominatorBond';
 import { Status } from './Status';
 import { UnstakePrompts } from './UnstakePrompts';
 import { useSyncing } from 'hooks/useSyncing';
-import { useBonded } from 'contexts/Bonded';
+import { useBalances } from 'contexts/Balances';
 
 export const Active = () => {
   const { t } = useTranslation();
   const { openHelp } = useHelp();
   const { inSetup } = useStaking();
   const { syncing } = useSyncing('*');
+  const { getNominations } = useBalances();
   const { openCanvas } = useOverlay().canvas;
   const { isFastUnstaking } = useUnstaking();
   const { formatWithPrefs } = useValidators();
-  const { getAccountNominations } = useBonded();
   const { activeAccount } = useActiveAccounts();
 
-  const nominated = formatWithPrefs(getAccountNominations(activeAccount));
+  const nominated = formatWithPrefs(getNominations(activeAccount));
   const ROW_HEIGHT = 220;
 
   return (

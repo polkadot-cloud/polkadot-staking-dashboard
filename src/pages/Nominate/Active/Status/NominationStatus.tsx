@@ -31,12 +31,7 @@ export const NominationStatus = ({
   const { inSetup } = useStaking();
   const { openModal } = useOverlay().modal;
   const { getBondedAccount } = useBonded();
-  const { syncing } = useSyncing([
-    'initialization',
-    'era-stakers',
-    'balances',
-    'nominator',
-  ]);
+  const { syncing } = useSyncing(['initialization', 'era-stakers', 'balances']);
   const {
     isReady,
     networkMetrics: { fastUnstakeErasToCheckPerBlock },

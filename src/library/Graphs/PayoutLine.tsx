@@ -49,7 +49,7 @@ export const PayoutLine = ({
   const { t } = useTranslation('library');
   const { mode } = useTheme();
   const { inSetup } = useStaking();
-  const { syncing } = useSyncing(['nominator']);
+  const { syncing } = useSyncing(['balances']);
   const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
 
