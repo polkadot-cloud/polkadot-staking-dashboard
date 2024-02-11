@@ -16,7 +16,7 @@ import { timeleftAsString } from 'hooks/useTimeLeft/utils';
 import { useUnstaking } from 'hooks/useUnstaking';
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { StaticNote } from 'modals/Utils/StaticNote';
-import type { AnyJson, BondFor } from 'types';
+import type { BondFor } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { Chunk } from './Chunk';
 import { ContentWrapper } from './Wrappers';
@@ -65,7 +65,7 @@ export const Overview = forwardRef(
       }
     }
 
-    const onRebondHandler = (chunk: AnyJson) => {
+    const onRebondHandler = (chunk: UnlockChunk) => {
       setTask('rebond');
       setUnlock(chunk);
       setSection(1);

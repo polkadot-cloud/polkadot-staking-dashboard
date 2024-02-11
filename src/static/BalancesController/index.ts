@@ -171,7 +171,7 @@ export class BalancesController {
       total: this.stringToBigNumber(total.toString()),
       unlocking: unlocking.toHuman().map(({ era, value }: UnlockChunkRaw) => ({
         era: Number(rmCommas(era)),
-        value: this.stringToBigNumber(value).toString(),
+        value: this.stringToBigNumber(value),
       })),
     };
   };
