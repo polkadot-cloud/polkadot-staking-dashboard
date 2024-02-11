@@ -50,7 +50,7 @@
     "connectionLost": "连接已丢失",
     "continue": "继续",
     "copyAddress": "复制地址",
-    "copyPoolAddress": "复制池地址",
+    "copyPoolAddress": "复制池{{type}}地址",
     "createPool": "创建提名池",
     "dayAverage": "日平均值",
     "dayPerformance": "天内表现",
