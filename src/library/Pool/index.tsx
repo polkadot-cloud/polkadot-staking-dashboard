@@ -67,18 +67,20 @@ export const Pool = ({ pool }: PoolProps) => {
   const posRef = useRef(null);
 
   // copy address notification
-  const notificationCopyAddress: NotificationText | null =
-    addresses.stash == null
+  const notificationCopyAddress = (
+    key: 'stash' | 'reward'
+  ): NotificationText | null =>
+    addresses[key] == null
       ? null
       : {
           title: t('addressCopiedToClipboard'),
-          subtitle: addresses.stash,
+          subtitle: addresses[key],
         };
 
   // Consruct pool menu items.
   const menuItems: MenuItem[] = [];
 
-  // add view pool nominations button to menu
+  // Add view pool nominations button to menu
   menuItems.push({
     icon: <FontAwesomeIcon icon={faProjectDiagram} transform="shrink-3" />,
     title: `${t('viewPoolNominations')}`,
@@ -93,14 +95,28 @@ export const Pool = ({ pool }: PoolProps) => {
     },
   });
 
-  // add copy pool address button to menu
+  // add copy pool stash address button to menu
   menuItems.push({
     icon: <FontAwesomeIcon icon={faCopy} transform="shrink-3" />,
-    title: t('copyPoolAddress'),
+    title: t('copyPoolAddress', { type: 'Stash' }),
     cb: () => {
-      navigator.clipboard.writeText(addresses.stash);
-      if (notificationCopyAddress) {
-        NotificationsController.emit(notificationCopyAddress);
+      const notification = notificationCopyAddress('stash');
+      if (notification) {
+        navigator.clipboard.writeText(addresses.stash);
+        NotificationsController.emit(notification);
+      }
+    },
+  });
+
+  // add copy pool reward address button to menu
+  menuItems.push({
+    icon: <FontAwesomeIcon icon={faCopy} transform="shrink-3" />,
+    title: t('copyPoolAddress', { type: 'Reward' }),
+    cb: () => {
+      const notification = notificationCopyAddress('reward');
+      if (notification) {
+        navigator.clipboard.writeText(addresses.reward);
+        NotificationsController.emit(notification);
       }
     },
   });
