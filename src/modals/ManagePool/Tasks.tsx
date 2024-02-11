@@ -50,7 +50,8 @@ export const Tasks = forwardRef(
                   </span>
                   <div>
                     <h3>
-                      Pool Stash Address <CopyAddress address={stash} />
+                      {t('poolAddress', { type: 'Stash' })}{' '}
+                      <CopyAddress address={stash} />
                     </h3>
                     <h4>{ellipsisFn(stash, 5)}</h4>
                   </div>
@@ -63,7 +64,8 @@ export const Tasks = forwardRef(
                   </span>
                   <div>
                     <h3>
-                      Pool Reward Address <CopyAddress address={reward} />
+                      {t('poolAddress', { type: 'Reward' })}{' '}
+                      <CopyAddress address={reward} />
                     </h3>
                     <h4>{ellipsisFn(reward, 5)}</h4>
                   </div>
