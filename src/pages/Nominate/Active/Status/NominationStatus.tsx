@@ -31,15 +31,20 @@ export const NominationStatus = ({
   const { inSetup } = useStaking();
   const { openModal } = useOverlay().modal;
   const { getBondedAccount } = useBonded();
-  const { syncing } = useSyncing(['initialization']);
+  const { syncing } = useSyncing([
+    'initialization',
+    'era-stakers',
+    'balances',
+    'nominator',
+  ]);
   const {
     isReady,
     networkMetrics: { fastUnstakeErasToCheckPerBlock },
   } = useApi();
+  const { activeAccount } = useActiveAccounts();
   const { checking, isExposed } = useFastUnstake();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getNominationStatus } = useNominationStatus();
-  const { activeAccount } = useActiveAccounts();
   const { getFastUnstakeText, isUnstaking } = useUnstaking();
   const { setOnNominatorSetup, getNominatorSetupPercent } = useSetup();
 
@@ -82,26 +87,24 @@ export const NominationStatus = ({
       helpKey="Nomination Status"
       stat={nominationStatus.message}
       buttons={
-        !showButtons
+        !showButtons || syncing
           ? []
           : !inSetup()
             ? !isUnstaking
               ? [unstakeButton]
               : []
-            : syncing
-              ? []
-              : [
-                  {
-                    title: startTitle,
-                    icon: faChevronCircleRight,
-                    transform: 'grow-1',
-                    disabled:
-                      !isReady ||
-                      isReadOnlyAccount(activeAccount) ||
-                      !activeAccount,
-                    onClick: () => setOnNominatorSetup(true),
-                  },
-                ]
+            : [
+                {
+                  title: startTitle,
+                  icon: faChevronCircleRight,
+                  transform: 'grow-1',
+                  disabled:
+                    !isReady ||
+                    isReadOnlyAccount(activeAccount) ||
+                    !activeAccount,
+                  onClick: () => setOnNominatorSetup(true),
+                },
+              ]
       }
       buttonType={buttonType}
     />
