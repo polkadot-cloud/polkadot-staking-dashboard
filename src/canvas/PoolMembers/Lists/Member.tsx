@@ -7,6 +7,7 @@ import {
   faUnlockAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import type { MouseEvent as ReactMouseEvent } from 'react';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMenu } from 'contexts/Menu';
@@ -16,12 +17,7 @@ import { useList } from 'library/List/context';
 import { Identity } from 'library/ListItem/Labels/Identity';
 import { PoolMemberBonded } from 'library/ListItem/Labels/PoolMemberBonded';
 import { Select } from 'library/ListItem/Labels/Select';
-import {
-  Labels,
-  MenuPosition,
-  Separator,
-  Wrapper,
-} from 'library/ListItem/Wrappers';
+import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
 import type { AnyJson } from 'types';
 import { usePrompt } from 'contexts/Prompt';
 import { UnbondMember } from '../Prompts/UnbondMember';
@@ -44,7 +40,7 @@ export const Member = ({
   const { meta } = usePoolMembers();
   const { selectActive } = useList();
   const { openPromptWith } = usePrompt();
-  const { setMenuPosition, setMenuInner, open } = useMenu();
+  const { openMenu, setMenuInner, open } = useMenu();
   const { activePool, isOwner, isBouncer } = useActivePool();
 
   // Ref for the member container.
@@ -110,12 +106,11 @@ export const Member = ({
     }
   }
 
-  // configure floating menu
-  const posRef = useRef(null);
-  const toggleMenu = () => {
+  // Handler for opening menu.
+  const toggleMenu = (ev: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (!open) {
       setMenuInner(<MenuList items={menuItems} />);
-      setMenuPosition(posRef);
+      openMenu(ev);
     }
   };
 
@@ -136,7 +131,6 @@ export const Member = ({
     >
       <Wrapper className="member">
         <div className="inner canvas">
-          <MenuPosition ref={posRef} />
           <div className="row top">
             {selectActive && <Select item={{ address: who }} />}
             <Identity address={who} />
@@ -147,7 +141,7 @@ export const Member = ({
                     type="button"
                     className="label"
                     disabled={!member}
-                    onClick={() => toggleMenu()}
+                    onClick={(ev) => toggleMenu(ev)}
                   >
                     <FontAwesomeIcon icon={faBars} />
                   </button>
