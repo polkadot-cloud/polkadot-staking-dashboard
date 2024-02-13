@@ -12,7 +12,7 @@ export interface MenuContextInterface {
   show: boolean;
   inner: ReactNode | null;
   position: [number, number];
-  openMenu: (ev: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  openMenu: (ev: MenuMouseEvent, newInner?: ReactNode) => void;
   closeMenu: () => void;
   setMenuInner: (items: ReactNode) => void;
   checkMenuPosition: (ref: RefObject<HTMLDivElement>) => void;
@@ -23,3 +23,7 @@ export interface MenuItem {
   title: string;
   cb: () => void;
 }
+
+export type MenuMouseEvent =
+  | MouseEvent
+  | ReactMouseEvent<HTMLButtonElement, MouseEvent>;

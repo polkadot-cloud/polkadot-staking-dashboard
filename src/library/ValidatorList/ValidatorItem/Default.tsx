@@ -38,9 +38,9 @@ export const Default = ({
 }: ValidatorItemProps) => {
   const { t } = useTranslation('library');
   const { selectActive } = useList();
+  const { openMenu, open } = useMenu();
   const { pluginEnabled } = usePlugins();
   const { openModal } = useOverlay().modal;
-  const { openMenu, setMenuInner, open } = useMenu();
   const { validatorIdentities, validatorSupers } = useValidators();
 
   const { address, prefs, validatorStatus, totalStake } = validator;
@@ -88,8 +88,7 @@ export const Default = ({
   // Handler for opening menu.
   const toggleMenu = (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (!open) {
-      setMenuInner(<MenuList items={menuItems} />);
-      openMenu(ev);
+      openMenu(ev, <MenuList items={menuItems} />);
     }
   };
 

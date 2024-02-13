@@ -9,8 +9,8 @@ export const defaultMenuContext: MenuContextInterface = {
   show: false,
   inner: null,
   position: [0, 0],
-  openMenu: (ev) => {},
+  openMenu: (ev, newInner) => {},
   closeMenu: () => {},
-  setMenuInner: (inner) => {},
+  setMenuInner: (newInner) => {},
   checkMenuPosition: (menuRef) => {},
 };

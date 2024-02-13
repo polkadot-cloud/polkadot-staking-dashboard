@@ -34,6 +34,7 @@ import { MenuList } from 'library/Menu/List';
 export const Pool = ({ pool }: PoolProps) => {
   const { t } = useTranslation('library');
   const { memberCounter, addresses, id, state } = pool;
+  const { openMenu, open } = useMenu();
   const { validators } = useValidators();
   const { setActiveTab } = usePoolsTabs();
   const { openModal } = useOverlay().modal;
@@ -41,7 +42,6 @@ export const Pool = ({ pool }: PoolProps) => {
   const { poolsNominations } = useBondedPools();
   const { activeAccount } = useActiveAccounts();
   const { syncing } = useSyncing(['active-pools']);
-  const { openMenu, setMenuInner, open } = useMenu();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getCurrentCommission } = usePoolCommission();
 
@@ -117,8 +117,7 @@ export const Pool = ({ pool }: PoolProps) => {
   // Handler for opening menu.
   const toggleMenu = (ev: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (!open) {
-      setMenuInner(<MenuList items={menuItems} />);
-      openMenu(ev);
+      openMenu(ev, <MenuList items={menuItems} />);
     }
   };
 

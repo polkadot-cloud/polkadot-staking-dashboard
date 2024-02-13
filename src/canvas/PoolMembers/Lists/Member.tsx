@@ -39,8 +39,8 @@ export const Member = ({
   const { activeEra } = useApi();
   const { meta } = usePoolMembers();
   const { selectActive } = useList();
+  const { openMenu, open } = useMenu();
   const { openPromptWith } = usePrompt();
-  const { openMenu, setMenuInner, open } = useMenu();
   const { activePool, isOwner, isBouncer } = useActivePool();
 
   // Ref for the member container.
@@ -109,8 +109,7 @@ export const Member = ({
   // Handler for opening menu.
   const toggleMenu = (ev: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (!open) {
-      setMenuInner(<MenuList items={menuItems} />);
-      openMenu(ev);
+      openMenu(ev, <MenuList items={menuItems} />);
     }
   };
 
