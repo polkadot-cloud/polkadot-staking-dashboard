@@ -3814,18 +3814,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-unused-imports@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "eslint-plugin-unused-imports@npm:3.0.0"
+"eslint-plugin-unused-imports@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "eslint-plugin-unused-imports@npm:3.1.0"
   dependencies:
     eslint-rule-composer: "npm:^0.3.0"
   peerDependencies:
-    "@typescript-eslint/eslint-plugin": ^6.0.0
-    eslint: ^8.0.0
+    "@typescript-eslint/eslint-plugin": 6 - 7
+    eslint: 8
   peerDependenciesMeta:
     "@typescript-eslint/eslint-plugin":
       optional: true
-  checksum: b1a5f3359e6191e6edbb71480242b1f830f4ffe20778fb9df8e6045ac2bf98211206b104cbfecb3a204b1963cf11decbd28c925ce908068d81959bc037a521ea
+  checksum: 712268fc10e7a5b169070c5ec2655733f4cdcf079848b2812ebe716b429a16cb87f315d3c0004cf128ba3874f68dd938eec8394a03587484e97e146494b48cda
   languageName: node
   linkType: hard
 
@@ -6167,7 +6167,7 @@ __metadata:
     eslint-plugin-prettier: "npm:^5.1.3"
     eslint-plugin-react: "npm:^7.33.2"
     eslint-plugin-react-hooks: "npm:^4.6.0"
-    eslint-plugin-unused-imports: "npm:^3.0.0"
+    eslint-plugin-unused-imports: "npm:^3.1.0"
     framer-motion: "npm:^11.0.5"
     gh-pages: "npm:^6.1.1"
     html5-qrcode: "npm:^2.3.8"
