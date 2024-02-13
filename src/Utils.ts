@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { getUnixTime } from 'date-fns';
-import type { AnyApi } from 'types/index';
+import type { AnyApi } from 'types';
 
 export const registerLastVisited = (utmSource: string | null) => {
   const attributes = utmSource ? { utmSource } : {};
