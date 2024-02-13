@@ -47,7 +47,9 @@ podman run --d -p 8080:80 localhost/polkadot-staking-dashboard
 ```
 
 <!-- markdown-link-check-disable -->
+
 And access the **Staking Dashboard** at http://localhost:8080/.
+
 <!-- markdown-link-check-enable-->
 
 ## Presentations

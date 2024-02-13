@@ -4,34 +4,34 @@
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimary, ButtonRow, PageRow } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const ClosurePrompts = () => {
   const { t } = useTranslation('pages');
-  const { colors } = useNetwork().networkData;
-  const { activeAccount } = useActiveAccounts();
   const { mode } = useTheme();
   const { openModal } = useOverlay().modal;
-  const { isPoolSyncing } = useUi();
-  const { isBonding, selectedActivePool, isDepositor, poolNominations } =
-    useActivePools();
+  const { colors } = useNetwork().networkData;
+  const { activeAccount } = useActiveAccounts();
+  const { syncing } = useSyncing(['active-pools']);
   const { getTransferOptions } = useTransferOptions();
+  const { isBonding, activePool, isDepositor, activePoolNominations } =
+    useActivePool();
 
-  const { state, memberCounter } = selectedActivePool?.bondedPool || {};
+  const { state, memberCounter } = activePool?.bondedPool || {};
   const { active, totalUnlockChunks } = getTransferOptions(activeAccount).pool;
-  const targets = poolNominations?.targets ?? [];
+  const targets = activePoolNominations?.targets ?? [];
   const annuncementBorderColor = colors.secondary[mode];
 
   // is the pool in a state for the depositor to close
   const depositorCanClose =
-    !isPoolSyncing &&
+    !syncing &&
     isDepositor() &&
     state === 'Destroying' &&
     memberCounter === '1';
@@ -64,8 +64,7 @@ export const ClosurePrompts = () => {
                 marginRight
                 text={t('pools.unbond')}
                 disabled={
-                  isPoolSyncing ||
-                  (!depositorCanWithdraw && !depositorCanUnbond)
+                  syncing || (!depositorCanWithdraw && !depositorCanUnbond)
                 }
                 onClick={() =>
                   openModal({
@@ -82,7 +81,7 @@ export const ClosurePrompts = () => {
                     ? t('pools.unlocked')
                     : String(totalUnlockChunks ?? 0)
                 }
-                disabled={isPoolSyncing || !isBonding()}
+                disabled={syncing || !isBonding()}
                 onClick={() =>
                   openModal({
                     key: 'UnlockChunks',

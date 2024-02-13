@@ -6,11 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonHelp } from '@polkadot-cloud/react';
 import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
 import { Wrapper } from './Wrapper';
 import type { StatusLabelProps } from './types';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useBalances } from 'contexts/Balances';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const StatusLabel = ({
   title,
@@ -20,15 +21,18 @@ export const StatusLabel = ({
   topOffset = '40%',
   status = 'sync_or_setup',
 }: StatusLabelProps) => {
-  const { isSyncing } = useUi();
+  const { openHelp } = useHelp();
   const { plugins } = usePlugins();
   const { inSetup } = useStaking();
-  const { membership } = usePoolMemberships();
-  const { openHelp } = useHelp();
+  const { syncing } = useSyncing('*');
+  const { getPoolMembership } = useBalances();
+  const { activeAccount } = useActiveAccounts();
+
+  const membership = getPoolMembership(activeAccount);
 
   // syncing or not staking
   if (status === 'sync_or_setup') {
-    if (isSyncing || !inSetup() || membership !== null) {
+    if (syncing || !inSetup() || membership !== null) {
       return null;
     }
   }

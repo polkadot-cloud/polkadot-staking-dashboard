@@ -7,21 +7,22 @@ import { isNotZero } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Card/Wrappers';
-import { useUnstaking } from 'library/Hooks/useUnstaking';
+import { useUnstaking } from 'hooks/useUnstaking';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const UnstakePrompts = () => {
   const { t } = useTranslation('pages');
-  const { unit, colors } = useNetwork().networkData;
-  const { activeAccount } = useActiveAccounts();
   const { mode } = useTheme();
+  const { syncing } = useSyncing('*');
   const { openModal } = useOverlay().modal;
-  const { isNetworkSyncing } = useUi();
+  const { activeAccount } = useActiveAccounts();
+  const { unit, colors } = useNetwork().networkData;
   const { isFastUnstaking, isUnstaking, getFastUnstakeText } = useUnstaking();
+
   const { getTransferOptions } = useTransferOptions();
   const { active, totalUnlockChunks, totalUnlocked, totalUnlocking } =
     getTransferOptions(activeAccount).nominate;
@@ -36,7 +37,7 @@ export const UnstakePrompts = () => {
 
   return (
     (isUnstaking || isFastUnstaking) &&
-    !isNetworkSyncing && (
+    !syncing && (
       <PageRow>
         <CardWrapper style={{ border: `1px solid ${annuncementBorderColor}` }}>
           <div className="content">

@@ -13,16 +13,16 @@ import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';
 import { usePlugins } from 'contexts/Plugins';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useUi } from 'contexts/UI';
 import { BarSegment } from 'library/BarChart/BarSegment';
 import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
-import { usePrices } from 'library/Hooks/usePrices';
+import { usePrices } from 'hooks/usePrices';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
@@ -35,11 +35,11 @@ export const BalanceChart = () => {
   } = useNetwork();
   const prices = usePrices();
   const { plugins } = usePlugins();
-  const { isNetworkSyncing } = useUi();
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
-  const { accountHasSigner } = useImportedAccounts();
   const { getBalance, getLocks } = useBalances();
+  const { syncing } = useSyncing(['initialization']);
+  const { accountHasSigner } = useImportedAccounts();
   const { feeReserve, getTransferOptions } = useTransferOptions();
 
   const balance = getBalance(activeAccount);
@@ -266,7 +266,7 @@ export const BalanceChart = () => {
                         openModal({ key: 'UpdateReserve', size: 'sm' })
                       }
                       iconRight={
-                        isNetworkSyncing
+                        syncing
                           ? undefined
                           : !feeReserve.isZero() && !edReserved.isZero()
                             ? faCheckDouble
@@ -277,7 +277,7 @@ export const BalanceChart = () => {
                       iconTransform="shrink-1"
                       disabled={
                         !activeAccount ||
-                        isNetworkSyncing ||
+                        syncing ||
                         !accountHasSigner(activeAccount)
                       }
                     />

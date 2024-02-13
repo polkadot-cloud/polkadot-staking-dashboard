@@ -11,12 +11,12 @@ import type { Dispatch, ForwardedRef, SetStateAction } from 'react';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
-import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
-import { useUnstaking } from 'library/Hooks/useUnstaking';
+import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
+import { timeleftAsString } from 'hooks/useTimeLeft/utils';
+import { useUnstaking } from 'hooks/useUnstaking';
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { StaticNote } from 'modals/Utils/StaticNote';
-import type { AnyJson, BondFor } from 'types';
+import type { BondFor } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { Chunk } from './Chunk';
 import { ContentWrapper } from './Wrappers';
@@ -65,7 +65,7 @@ export const Overview = forwardRef(
       }
     }
 
-    const onRebondHandler = (chunk: AnyJson) => {
+    const onRebondHandler = (chunk: UnlockChunk) => {
       setTask('rebond');
       setUnlock(chunk);
       setSection(1);

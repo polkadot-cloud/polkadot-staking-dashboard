@@ -13,7 +13,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import * as defaults from './defaults';
 import type { TxMetaContextInterface } from './types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react';
-import { useActiveBalances } from 'library/Hooks/useActiveBalances';
+import { useActiveBalances } from 'hooks/useActiveBalances';
 import { useApi } from 'contexts/Api';
 
 export const TxMetaContext = createContext<TxMetaContextInterface>(

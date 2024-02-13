@@ -3,7 +3,6 @@
 
 import {
   greaterThanZero,
-  localStorageOrDefault,
   rmCommas,
   setStateWithRef,
 } from '@polkadot-cloud/utils';
@@ -17,7 +16,6 @@ import type {
   Exposure,
   ExposureOther,
   StakingContextInterface,
-  StakingTargets,
 } from 'contexts/Staking/types';
 import type { AnyApi, MaybeAddress } from 'types';
 import Worker from 'workers/stakers?worker';
@@ -28,17 +26,14 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useApi } from '../Api';
 import { useBonded } from '../Bonded';
-import {
-  defaultEraStakers,
-  defaultStakingContext,
-  defaultTargets,
-} from './defaults';
+import { defaultEraStakers, defaultStakingContext } from './defaults';
 import {
   setLocalEraExposures,
   getLocalEraExposures,
   formatRawExposures,
 } from './Utils';
 import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
+import { SyncController } from 'static/SyncController';
 
 const worker = new Worker();
 
@@ -49,32 +44,18 @@ export const StakingContext = createContext<StakingContextInterface>(
 export const useStaking = () => useContext(StakingContext);
 
 export const StakingProvider = ({ children }: { children: ReactNode }) => {
-  const { getLedger } = useBalances();
-  const { isReady, api, apiStatus, consts, activeEra, isPagedRewardsActive } =
-    useApi();
+  const { getBondedAccount } = useBonded();
   const { networkData, network } = useNetwork();
+  const { getLedger, getNominations } = useBalances();
   const { accounts: connectAccounts } = useImportedAccounts();
   const { activeAccount, getActiveAccount } = useActiveAccounts();
-  const { bondedAccounts, getBondedAccount, getAccountNominations } =
-    useBonded();
+  const { isReady, api, apiStatus, consts, activeEra, isPagedRewardsActive } =
+    useApi();
   const { maxExposurePageSize } = consts;
 
   // Store eras stakers in state.
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers);
   const eraStakersRef = useRef(eraStakers);
-
-  // Flags whether `eraStakers` is resyncing.
-  const [erasStakersSyncing, setErasStakersSyncing] = useState<boolean>(false);
-  const erasStakersSyncingRef = useRef(erasStakersSyncing);
-
-  // Store target validators for the active account.
-  const [targets, setTargetsState] = useState<StakingTargets>(
-    localStorageOrDefault<StakingTargets>(
-      `${activeAccount ?? ''}_targets`,
-      defaultTargets,
-      true
-    ) as StakingTargets
-  );
 
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
@@ -98,11 +79,11 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
         who,
       } = data;
 
-      // finish sync
-      setStateWithRef(false, setErasStakersSyncing, erasStakersSyncingRef);
-
       // check if account hasn't changed since worker started
       if (getActiveAccount() === who) {
+        // Syncing current eraStakers is now complete.
+        SyncController.dispatch('era-stakers', 'complete');
+
         setStateWithRef(
           {
             ...eraStakersRef.current,
@@ -151,8 +132,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
 
-    // flag eraStakers is recyncing
-    setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
+    SyncController.dispatch('era-stakers', 'syncing');
 
     const exposures = await fetchEraStakers(activeEra.index.toString());
 
@@ -166,12 +146,6 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       exposures,
       maxExposurePageSize: maxExposurePageSize.toNumber(),
     });
-  };
-
-  // Sets an account's stored target validators.
-  const setTargets = (value: StakingTargets): void => {
-    localStorage.setItem(`${activeAccount}_targets`, JSON.stringify(value));
-    setTargetsState(value);
   };
 
   // Gets the nomination statuses of passed in nominations.
@@ -250,7 +224,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     hasController() && getLedger({ stash: activeAccount }).unlocking.length;
 
   // Helper function to determine whether the active account is nominating, or is yet to start.
-  const isNominating = () => getAccountNominations(activeAccount).length > 0;
+  const isNominating = () => getNominations(activeAccount).length > 0;
 
   // Helper function to determine whether the active account is nominating, or is yet to start.
   const inSetup = () =>
@@ -350,35 +324,18 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [isReady, activeEra.index, activeAccount]);
 
-  useEffectIgnoreInitial(() => {
-    if (activeAccount) {
-      // set account's targets
-      setTargetsState(
-        localStorageOrDefault(
-          `${activeAccount}_targets`,
-          defaultTargets,
-          true
-        ) as StakingTargets
-      );
-    }
-  }, [isReady, bondedAccounts, activeAccount, eraStakersRef.current?.stakers]);
-
   return (
     <StakingContext.Provider
       value={{
         fetchEraStakers,
         getNominationsStatusFromTargets,
-        setTargets,
-        hasController,
         getControllerNotImported,
         addressDifferentToStash,
         isBonding,
         isNominating,
         inSetup,
         getLowestRewardFromStaker,
-        eraStakers: eraStakersRef.current,
-        erasStakersSyncing: erasStakersSyncingRef.current,
-        targets,
+        eraStakers,
         getPagedErasStakers,
       }}
     >

@@ -8,7 +8,6 @@ import {
 } from '@polkadot-cloud/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import type { BondFor, MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
@@ -29,6 +28,7 @@ import type {
   PoolSetups,
   SetupContextInterface,
 } from './types';
+import { useBalances } from 'contexts/Balances';
 
 export const SetupContext =
   createContext<SetupContextInterface>(defaultSetupContext);
@@ -42,8 +42,10 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
     networkData: { units },
   } = useNetwork();
   const { accounts } = useImportedAccounts();
+  const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
-  const { membership: poolMembership } = usePoolMemberships();
+
+  const poolMembership = getPoolMembership(activeAccount);
 
   // is the user actively on the setup page
   const [onNominatorSetup, setOnNominatorSetup] = useState<boolean>(false);
@@ -289,7 +291,6 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
   return (
     <SetupContext.Provider
       value={{
-        getSetupProgress,
         removeSetupProgress,
         getNominatorSetupPercent,
         getPoolSetupPercent,

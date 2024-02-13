@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { usePlugins } from 'contexts/Plugins';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { List, ListStatusHeader, Wrapper as ListWrapper } from 'library/List';
 import { Pagination } from 'library/List/Pagination';
@@ -28,7 +28,7 @@ export const MembersListInner = ({
   const { network } = useNetwork();
   const { pluginEnabled } = usePlugins();
   const { activeAccount } = useActiveAccounts();
-  const { selectedActivePool } = useActivePools();
+  const { activePool } = useActivePool();
   const {
     poolMembersApi,
     setPoolMembersApi,
@@ -65,13 +65,15 @@ export const MembersListInner = ({
   const fetchingMemberList = useRef<boolean>(false);
 
   const setupMembersList = async () => {
-    const poolId = selectedActivePool?.id || 0;
+    const poolId = activePool?.id || 0;
 
     if (poolId > 0 && !fetchingMemberList.current) {
       fetchingMemberList.current = true;
 
-      const newMembers: PoolMember[] =
-        await SubscanController.handleFetchPoolMembers(poolId, page);
+      const newMembers = (await SubscanController.handleFetchPoolMembers(
+        poolId,
+        page
+      )) as PoolMember[];
 
       fetchingMemberList.current = false;
       setPoolMembersApi([...newMembers]);
@@ -105,7 +107,7 @@ export const MembersListInner = ({
     if (fetchedPoolMembersApi === 'unsynced') {
       setupMembersList();
     }
-  }, [fetchedPoolMembersApi, selectedActivePool]);
+  }, [fetchedPoolMembersApi, activePool]);
 
   // Render throttle.
   useEffect(() => {

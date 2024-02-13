@@ -47,11 +47,6 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
   // Check if a plugin is currently enabled.
   const pluginEnabled = (key: Plugin) => pluginsRef.current.includes(key);
 
-  // Reset payouts on Subscan network on `activeAccount` switch.
-  useEffectIgnoreInitial(() => {
-    SubscanController.resetData();
-  }, [network, activeAccount]);
-
   // Reset payouts on Subscan plugin not enabled. Otherwise fetch payouts.
   useEffectIgnoreInitial(() => {
     if (!plugins.includes('subscan')) {

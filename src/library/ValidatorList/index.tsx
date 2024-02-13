@@ -12,7 +12,6 @@ import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useFilters } from 'contexts/Filters';
 import { useTheme } from 'contexts/Themes';
-import { useUi } from 'contexts/UI';
 import {
   FilterHeaderWrapper,
   List,
@@ -28,34 +27,38 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { useNominationStatus } from 'library/Hooks/useNominationStatus';
+import { useNominationStatus } from 'hooks/useNominationStatus';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useValidatorFilters } from '../Hooks/useValidatorFilters';
+import { useValidatorFilters } from '../../hooks/useValidatorFilters';
 import { ListProvider, useList } from '../List/context';
 import type { ValidatorListProps } from './types';
 import { FilterHeaders } from './Filters/FilterHeaders';
 import { FilterBadges } from './Filters/FilterBadges';
 import type { NominationStatus } from './ValidatorItem/types';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const ValidatorListInner = ({
+  // Default list values.
   nominator: initialNominator,
   validators: initialValidators,
+  // Validator list config options.
+  bondFor,
   allowMoreCols,
   allowFilters,
   toggleFavorites,
   pagination,
   format,
   selectable,
-  bondFor,
   onSelected,
   actions = [],
   showMenu = true,
   displayFor = 'default',
   allowSearch = false,
   allowListFormat = true,
-  alwaysRefetchValidators = false,
   defaultOrder = undefined,
   defaultFilters = undefined,
+  // Throttling and re-fetching.
+  alwaysRefetchValidators = false,
   disableThrottle = false,
 }: ValidatorListProps) => {
   const { t } = useTranslation('library');
@@ -74,14 +77,14 @@ export const ValidatorListInner = ({
     clearSearchTerm,
   } = useFilters();
   const { mode } = useTheme();
-  const { isSyncing } = useUi();
   const listProvider = useList();
+  const { syncing } = useSyncing('*');
   const { isReady, activeEra } = useApi();
   const { activeAccount } = useActiveAccounts();
   const { setModalResize } = useOverlay().modal;
   const { injectValidatorListData } = useValidators();
-  const { getNomineesStatus } = useNominationStatus();
   const { getPoolNominationStatus } = useBondedPools();
+  const { getNominationSetStatus } = useNominationStatus();
   const { applyFilter, applyOrder, applySearch } = useValidatorFilters();
 
   const { selected, listFormat, setListFormat } = listProvider;
@@ -110,7 +113,10 @@ export const ValidatorListInner = ({
         );
       } else {
         // get all active account's nominations.
-        const nominationStatuses = getNomineesStatus(nominator, 'nominator');
+        const nominationStatuses = getNominationSetStatus(
+          nominator,
+          'nominator'
+        );
 
         // find the nominator status within the returned nominations.
         nominationStatus.current = Object.fromEntries(
@@ -245,7 +251,8 @@ export const ValidatorListInner = ({
     setSearchTerm('validators', newValue);
   };
 
-  // Set default filters.
+  // Set default filters. Should re-render if era stakers re-syncs as era points effect the
+  // performance order.
   useEffect(() => {
     if (allowFilters) {
       if (defaultFilters?.includes?.length) {
@@ -277,7 +284,7 @@ export const ValidatorListInner = ({
         clearSearchTerm('validators');
       }
     };
-  }, []);
+  }, [syncing]);
 
   // Handle validator list bootstrapping.
   const setupValidatorList = () => {
@@ -288,10 +295,10 @@ export const ValidatorListInner = ({
 
   // Configure validator list when network is ready to fetch.
   useEffect(() => {
-    if (isReady && isNotZero(activeEra.index) && !fetched) {
+    if (isReady && isNotZero(activeEra.index)) {
       setupValidatorList();
     }
-  }, [isReady, activeEra.index, fetched]);
+  }, [isReady, activeEra.index, syncing]);
 
   // Control render throttle.
   useEffect(() => {
@@ -314,7 +321,7 @@ export const ValidatorListInner = ({
     if (allowFilters && fetched) {
       handleValidatorsFilterUpdate();
     }
-  }, [order, isSyncing, includes, excludes]);
+  }, [order, syncing, includes, excludes]);
 
   // Handle modal resize on list format change.
   useEffect(() => {

@@ -5,7 +5,7 @@ import { ModalPadding } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';

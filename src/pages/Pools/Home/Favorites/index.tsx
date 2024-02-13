@@ -6,20 +6,20 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { useUi } from 'contexts/UI';
+import { useFavoritePools } from 'contexts/Pools/FavoritePools';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList/Default';
 import { ListStatusHeader } from 'library/List';
 import { PoolListProvider } from 'library/PoolList/context';
 import type { BondedPool } from 'contexts/Pools/BondedPools/types';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const PoolFavorites = () => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
-  const { isPoolSyncing } = useUi();
   const { bondedPools } = useBondedPools();
-  const { favorites, removeFavorite } = usePoolsConfig();
+  const { syncing } = useSyncing(['active-pools']);
+  const { favorites, removeFavorite } = useFavoritePools();
 
   // Store local favorite list and update when favorites list is mutated.
   const [favoritesList, setFavoritesList] = useState<BondedPool[]>([]);
@@ -43,7 +43,7 @@ export const PoolFavorites = () => {
   return (
     <PageRow>
       <CardWrapper>
-        {favoritesList === null || isPoolSyncing ? (
+        {favoritesList === null || syncing ? (
           <ListStatusHeader>
             {t('pools.fetchingFavoritePools')}...
           </ListStatusHeader>

@@ -11,9 +11,8 @@ import { useBonded } from 'contexts/Bonded';
 import { useFastUnstake } from 'contexts/FastUnstake';
 import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
-import { useNominationStatus } from 'library/Hooks/useNominationStatus';
-import { useUnstaking } from 'library/Hooks/useUnstaking';
+import { useNominationStatus } from 'hooks/useNominationStatus';
+import { useUnstaking } from 'hooks/useUnstaking';
 import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';
 import { registerSaEvent } from 'Utils';
@@ -21,6 +20,7 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useNetwork } from 'contexts/Network';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const NominationStatus = ({
   showButtons = true,
@@ -32,17 +32,17 @@ export const NominationStatus = ({
   const { t } = useTranslation('pages');
   const { network } = useNetwork();
   const { inSetup } = useStaking();
-  const { isNetworkSyncing } = useUi();
   const { openModal } = useOverlay().modal;
   const { getBondedAccount } = useBonded();
+  const { syncing } = useSyncing(['initialization', 'era-stakers', 'balances']);
   const {
     isReady,
     networkMetrics: { fastUnstakeErasToCheckPerBlock },
   } = useApi();
+  const { activeAccount } = useActiveAccounts();
   const { checking, isExposed } = useFastUnstake();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getNominationStatus } = useNominationStatus();
-  const { activeAccount } = useActiveAccounts();
   const { getFastUnstakeText, isUnstaking } = useUnstaking();
   const { setOnNominatorSetup, getNominatorSetupPercent } = useSetup();
 
@@ -85,31 +85,29 @@ export const NominationStatus = ({
       helpKey="Nomination Status"
       stat={nominationStatus.message}
       buttons={
-        !showButtons
+        !showButtons || syncing
           ? []
           : !inSetup()
             ? !isUnstaking
               ? [unstakeButton]
               : []
-            : isNetworkSyncing
-              ? []
-              : [
-                  {
-                    title: startTitle,
-                    icon: faChevronCircleRight,
-                    transform: 'grow-1',
-                    disabled:
-                      !isReady ||
-                      isReadOnlyAccount(activeAccount) ||
-                      !activeAccount,
-                    onClick: () => {
-                      registerSaEvent(
-                        `${network.toLowerCase()}_nominate_setup_button_pressed`
-                      );
-                      setOnNominatorSetup(true);
-                    },
+            : [
+                {
+                  title: startTitle,
+                  icon: faChevronCircleRight,
+                  transform: 'grow-1',
+                  disabled:
+                    !isReady ||
+                    isReadOnlyAccount(activeAccount) ||
+                    !activeAccount,
+                  onClick: () => {
+                    registerSaEvent(
+                      `${network.toLowerCase()}_nominate_setup_button_pressed`
+                    );
+                    setOnNominatorSetup(true);
                   },
-                ]
+                },
+              ]
       }
       buttonType={buttonType}
     />

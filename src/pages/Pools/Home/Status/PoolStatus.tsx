@@ -6,21 +6,21 @@ import {
   faLock,
 } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
-import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useUi } from 'contexts/UI';
-import { useNominationStatus } from 'library/Hooks/useNominationStatus';
+import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useNominationStatus } from 'hooks/useNominationStatus';
 import { Stat } from 'library/Stat';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const PoolStatus = () => {
   const { t } = useTranslation('pages');
-  const { isPoolSyncing } = useUi();
+  const { syncing } = useSyncing(['active-pools']);
   const { getNominationStatus } = useNominationStatus();
-  const { selectedActivePool, poolNominations } = useActivePools();
+  const { activePool, activePoolNominations } = useActivePool();
 
-  const poolStash = selectedActivePool?.addresses?.stash || '';
+  const poolStash = activePool?.addresses?.stash || '';
   const { earningRewards, nominees } = getNominationStatus(poolStash, 'pool');
-  const poolState = selectedActivePool?.bondedPool?.state ?? null;
-  const poolNominating = !!poolNominations?.targets?.length;
+  const poolState = activePool?.bondedPool?.state ?? null;
+  const poolNominating = !!activePoolNominations?.targets?.length;
 
   // Determine pool state icon.
   let poolStateIcon;
@@ -44,7 +44,7 @@ export const PoolStatus = () => {
         : '';
 
   // Determine pool status - right side.
-  const poolStatusRight = isPoolSyncing
+  const poolStatusRight = syncing
     ? t('pools.inactivePoolNotNominating')
     : !poolNominating
       ? t('pools.inactivePoolNotNominating')
@@ -58,7 +58,7 @@ export const PoolStatus = () => {
 
   return (
     <Stat
-      icon={isPoolSyncing ? undefined : poolStateIcon}
+      icon={syncing ? undefined : poolStateIcon}
       label={t('pools.poolStatus')}
       helpKey="Nomination Status"
       stat={`${poolStatusLeft}${poolStatusRight}`}

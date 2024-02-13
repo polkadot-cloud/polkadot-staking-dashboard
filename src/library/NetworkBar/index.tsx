@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { usePrompt } from 'contexts/Prompt';
 import { usePlugins } from 'contexts/Plugins';
-import { usePrices } from 'library/Hooks/usePrices';
+import { usePrices } from 'hooks/usePrices';
 import { useNetwork } from 'contexts/Network';
 import { Disclaimer } from './Disclaimer';
 import { Status } from './Status';

@@ -13,12 +13,12 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { useUnstaking } from 'library/Hooks/useUnstaking';
+import { useUnstaking } from 'hooks/useUnstaking';
 import { SelectableWrapper } from 'library/List';
 import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
 import { ValidatorList } from 'library/ValidatorList';
-import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
+import { Wrapper } from './Wrapper';
 import { useStaking } from 'contexts/Staking';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -85,7 +85,7 @@ export const GenerateNominations = ({
         setMethod('manual');
       }
     }
-  }, [activeAccount, defaultNominations]);
+  }, [activeAccount]);
 
   // refetch if fetching is triggered
   useEffect(() => {

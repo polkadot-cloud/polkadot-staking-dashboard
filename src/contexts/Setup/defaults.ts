@@ -25,10 +25,6 @@ export const defaultPoolProgress: PoolProgress = {
 };
 
 export const defaultSetupContext: SetupContextInterface = {
-  getSetupProgress: (a, b) => ({
-    section: 1,
-    progress: defaultNominatorProgress,
-  }),
   removeSetupProgress: (a, b) => {},
   getNominatorSetupPercent: (a) => 0,
   getPoolSetupPercent: (a) => 0,

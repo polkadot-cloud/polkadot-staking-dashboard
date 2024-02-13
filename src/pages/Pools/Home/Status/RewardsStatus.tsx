@@ -6,13 +6,13 @@ import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useUi } from 'contexts/UI';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Stat } from 'library/Stat';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const RewardsStatus = () => {
   const { t } = useTranslation('pages');
@@ -20,24 +20,21 @@ export const RewardsStatus = () => {
     networkData: { units },
   } = useNetwork();
   const { isReady } = useApi();
-  const { isPoolSyncing } = useUi();
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
-  const { selectedActivePool } = useActivePools();
+  const { syncing } = useSyncing(['active-pools']);
   const { isReadOnlyAccount } = useImportedAccounts();
-
-  let { pendingRewards } = selectedActivePool || {};
-  pendingRewards = pendingRewards ?? new BigNumber(0);
+  const { activePool, pendingPoolRewards } = useActivePool();
 
   // Set the minimum unclaimed planck value to prevent e numbers.
   const minUnclaimedDisplay = new BigNumber(1_000_000);
 
-  const labelRewards = pendingRewards.isGreaterThan(minUnclaimedDisplay)
-    ? planckToUnit(pendingRewards, units).toString()
+  const labelRewards = pendingPoolRewards.isGreaterThan(minUnclaimedDisplay)
+    ? planckToUnit(pendingPoolRewards, units).toString()
     : '0';
 
   // Display Reward buttons if unclaimed rewards is a non-zero value.
-  const buttonsRewards = pendingRewards.isGreaterThan(minUnclaimedDisplay)
+  const buttonsRewards = pendingPoolRewards.isGreaterThan(minUnclaimedDisplay)
     ? [
         {
           title: t('pools.withdraw'),
@@ -57,7 +54,7 @@ export const RewardsStatus = () => {
           disabled:
             !isReady ||
             isReadOnlyAccount(activeAccount) ||
-            selectedActivePool?.bondedPool?.state === 'Destroying',
+            activePool?.bondedPool?.state === 'Destroying',
           small: true,
           onClick: () =>
             openModal({
@@ -75,7 +72,7 @@ export const RewardsStatus = () => {
       helpKey="Pool Rewards"
       type="odometer"
       stat={{ value: labelRewards }}
-      buttons={isPoolSyncing ? [] : buttonsRewards}
+      buttons={syncing ? [] : buttonsRewards}
     />
   );
 };

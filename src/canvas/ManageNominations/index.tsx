@@ -15,10 +15,10 @@ import { useApi } from 'contexts/Api';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { usePrompt } from 'contexts/Prompt';
 import { useHelp } from 'contexts/Help';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBonded } from 'contexts/Bonded';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { SubmitTx } from 'library/SubmitTx';
 import type {
   NominationSelection,
@@ -38,13 +38,14 @@ export const ManageNominations = () => {
   } = useOverlay().canvas;
   const { openHelp } = useHelp();
   const { consts, api } = useApi();
+  const { activePool } = useActivePool();
   const { getBondedAccount } = useBonded();
   const { activeAccount } = useActiveAccounts();
-  const { selectedActivePool } = useActivePools();
-  const { openPromptWith, closePrompt } = usePrompt();
   const { updatePoolNominations } = useBondedPools();
-  const controller = getBondedAccount(activeAccount);
+  const { openPromptWith, closePrompt } = usePrompt();
+
   const { maxNominations } = consts;
+  const controller = getBondedAccount(activeAccount);
   const bondFor = options?.bondFor || 'nominator';
   const isPool = bondFor === 'pool';
   const signingAccount = isPool ? activeAccount : controller;
@@ -108,10 +109,9 @@ export const ManageNominations = () => {
     );
 
     if (isPool) {
-      tx = api.tx.nominationPools.nominate(
-        selectedActivePool?.id || 0,
-        targetsToSubmit
-      );
+      if (activePool) {
+        tx = api.tx.nominationPools.nominate(activePool.id, targetsToSubmit);
+      }
     } else {
       tx = api.tx.staking.nominate(targetsToSubmit);
     }
@@ -126,14 +126,12 @@ export const ManageNominations = () => {
       setCanvasStatus('closing');
     },
     callbackInBlock: () => {
-      if (isPool) {
+      if (isPool && activePool) {
         // Update bonded pool targets if updating pool nominations.
-        if (selectedActivePool?.id) {
-          updatePoolNominations(
-            selectedActivePool.id,
-            newNominations.nominations.map((n) => n.address)
-          );
-        }
+        updatePoolNominations(
+          activePool.id,
+          newNominations.nominations.map((n) => n.address)
+        );
       }
     },
   });

@@ -15,14 +15,14 @@ import { useBalances } from 'contexts/Balances';
 import { useHelp } from 'contexts/Help';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
-import { useUnstaking } from 'library/Hooks/useUnstaking';
+import { useUnstaking } from 'hooks/useUnstaking';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { BondedChart } from 'library/BarChart/BondedChart';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');
@@ -32,12 +32,12 @@ export const ManageBond = () => {
       brand: { token: Token },
     },
   } = useNetwork();
-  const { isSyncing } = useUi();
   const { openHelp } = useHelp();
   const { inSetup } = useStaking();
+  const { syncing } = useSyncing('*');
+  const { getLedger } = useBalances();
   const { openModal } = useOverlay().modal;
   const { isFastUnstaking } = useUnstaking();
-  const { getLedger } = useBalances();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getTransferOptions, feeReserve } = useTransferOptions();
   const { activeAccount } = useActiveAccounts();
@@ -71,7 +71,7 @@ export const ManageBond = () => {
           <ButtonPrimary
             disabled={
               inSetup() ||
-              isSyncing ||
+              syncing ||
               isReadOnlyAccount(activeAccount) ||
               isFastUnstaking
             }
@@ -88,7 +88,7 @@ export const ManageBond = () => {
           <ButtonPrimary
             disabled={
               inSetup() ||
-              isSyncing ||
+              syncing ||
               isReadOnlyAccount(activeAccount) ||
               isFastUnstaking
             }
@@ -103,9 +103,7 @@ export const ManageBond = () => {
             text="-"
           />
           <ButtonPrimary
-            disabled={
-              isSyncing || inSetup() || isReadOnlyAccount(activeAccount)
-            }
+            disabled={syncing || inSetup() || isReadOnlyAccount(activeAccount)}
             iconLeft={faLockOpen}
             marginRight
             onClick={() =>

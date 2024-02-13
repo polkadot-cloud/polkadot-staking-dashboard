@@ -7,21 +7,21 @@ import { ButtonHelp } from '@polkadot-cloud/react';
 import { planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
-import { useUi } from 'contexts/UI';
 import { useNetwork } from 'contexts/Network';
 import type { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 import { useApi } from 'contexts/Api';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
   const { t } = useTranslation('library');
-  const { isSyncing } = useUi();
-  const { unit, units } = useNetwork().networkData;
+  const { openHelp } = useHelp();
   const {
     networkMetrics: { minimumActiveStake },
     stakingMetrics: { minNominatorBond },
   } = useApi();
-  const { openHelp } = useHelp();
+  const { unit, units } = useNetwork().networkData;
+  const { syncing } = useSyncing(['initialization']);
 
   const minNominatorBondUnit = planckToUnit(minNominatorBond, units);
   const minimumActiveStakeUnit = planckToUnit(minimumActiveStake, units);
@@ -31,13 +31,13 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
   return (
     <Wrapper>
       <div className="bars">
-        <section className={gtMinNominatorBond && !isSyncing ? 'invert' : ''}>
+        <section className={gtMinNominatorBond && !syncing ? 'invert' : ''}>
           <h4>&nbsp;</h4>
           <div className="bar">
             <h5>{t('nominateInactive')}</h5>
           </div>
         </section>
-        <section className={gtMinNominatorBond && !isSyncing ? 'invert' : ''}>
+        <section className={gtMinNominatorBond && !syncing ? 'invert' : ''}>
           <h4>
             <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
             &nbsp; {t('nominate')}
@@ -49,7 +49,7 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
             </h5>
           </div>
         </section>
-        <section className={gtMinActiveStake && !isSyncing ? 'invert' : ''}>
+        <section className={gtMinActiveStake && !syncing ? 'invert' : ''}>
           <h4>
             <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
             &nbsp;{t('nominateActive')}
@@ -60,7 +60,7 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
           </h4>
           <div className="bar">
             <h5>
-              {isSyncing
+              {syncing
                 ? '...'
                 : `${(minimumActiveStakeUnit.isLessThan(minNominatorBondUnit)
                     ? minNominatorBondUnit

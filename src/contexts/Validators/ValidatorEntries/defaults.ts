@@ -13,7 +13,6 @@ export const defaultAverageEraValidatorReward = {
 export const defaultValidatorsContext: ValidatorsContextInterface = {
   fetchValidatorPrefs: async (a) => new Promise((resolve) => resolve(null)),
   getValidatorPointsFromEras: (startEra, address) => ({}),
-  getNominated: (bondFor) => [],
   injectValidatorListData: (entries) => [],
   validators: [],
   validatorIdentities: {},
@@ -21,15 +20,13 @@ export const defaultValidatorsContext: ValidatorsContextInterface = {
   avgCommission: 0,
   sessionValidators: [],
   sessionParaValidators: [],
-  nominated: null,
-  poolNominated: null,
-  validatorCommunity: [],
   erasRewardPoints: {},
   validatorsFetched: 'unsynced',
   eraPointsBoundaries: null,
   validatorEraPointsHistory: {},
   erasRewardPointsFetched: 'unsynced',
   averageEraValidatorReward: defaultAverageEraValidatorReward,
+  formatWithPrefs: (addresses) => [],
 };
 
 export const defaultValidatorsData = {

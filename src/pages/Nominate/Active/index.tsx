@@ -12,9 +12,8 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
-import { useUnstaking } from 'library/Hooks/useUnstaking';
+import { useUnstaking } from 'hooks/useUnstaking';
 import { StatBoxList } from 'library/StatBoxList';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -28,17 +27,21 @@ import { MinimumActiveStakeStat } from './Stats/MinimumActiveStake';
 import { MinimumNominatorBondStat } from './Stats/MinimumNominatorBond';
 import { Status } from './Status';
 import { UnstakePrompts } from './UnstakePrompts';
+import { useSyncing } from 'hooks/useSyncing';
+import { useBalances } from 'contexts/Balances';
 
 export const Active = () => {
   const { t } = useTranslation();
-  const { isSyncing } = useUi();
   const { openHelp } = useHelp();
   const { inSetup } = useStaking();
-  const { nominated } = useValidators();
-  const { isFastUnstaking } = useUnstaking();
+  const { syncing } = useSyncing('*');
+  const { getNominations } = useBalances();
   const { openCanvas } = useOverlay().canvas;
+  const { isFastUnstaking } = useUnstaking();
+  const { formatWithPrefs } = useValidators();
   const { activeAccount } = useActiveAccounts();
 
+  const nominated = formatWithPrefs(getNominations(activeAccount));
   const ROW_HEIGHT = 220;
 
   return (
@@ -63,7 +66,7 @@ export const Active = () => {
       </PageRow>
       <PageRow>
         <CardWrapper>
-          {nominated?.length || inSetup() || isSyncing ? (
+          {nominated?.length || inSetup() || syncing ? (
             <Nominations bondFor="nominator" nominator={activeAccount} />
           ) : (
             <>
@@ -80,7 +83,7 @@ export const Active = () => {
                     iconLeft={faChevronCircleRight}
                     iconTransform="grow-1"
                     text={t('nominate.nominate', { ns: 'pages' })}
-                    disabled={inSetup() || isSyncing || isFastUnstaking}
+                    disabled={inSetup() || syncing || isFastUnstaking}
                     onClick={() =>
                       openCanvas({
                         key: 'ManageNominations',

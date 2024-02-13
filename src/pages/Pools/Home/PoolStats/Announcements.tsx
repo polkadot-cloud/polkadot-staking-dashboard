@@ -8,10 +8,10 @@ import BigNumber from 'bignumber.js';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
 import { useNetwork } from 'contexts/Network';
-import { Item } from './Wrappers';
+import { Item } from 'library/Announcements/Wrappers';
 
 export const Announcements = () => {
   const { t } = useTranslation('pages');
@@ -19,9 +19,9 @@ export const Announcements = () => {
   const {
     networkData: { units, unit },
   } = useNetwork();
-  const { selectedActivePool } = useActivePools();
-  const { rewardAccountBalance } = selectedActivePool || {};
-  const { totalRewardsClaimed } = selectedActivePool?.rewardPool || {};
+  const { activePool } = useActivePool();
+  const { rewardAccountBalance } = activePool || {};
+  const { totalRewardsClaimed } = activePool?.rewardPool || {};
   const { existentialDeposit } = consts;
 
   // calculate the latest reward account balance

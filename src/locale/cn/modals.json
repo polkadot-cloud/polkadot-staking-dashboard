@@ -181,6 +181,7 @@
     "pendingPayout": "{{count}} 个待申领收益",
     "polkawatchDisabled": "Polkawatch己断开",
     "pool": "池",
+    "poolAddress": "池{{type}}地址",
     "poolIsNotNominating": "该提名池未提名任何验证人",
     "poolMembers": "提名池成员",
     "poolName": "提名池名称",

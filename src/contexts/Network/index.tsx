@@ -37,10 +37,17 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
     const localNetwork: NetworkName = localStorage.getItem(
       'network'
     ) as NetworkName;
+
     const localNetworkValid = !!Object.values(NetworkList).find(
       (n) => n.name === localNetwork
     );
-    return localNetworkValid ? localNetwork : DefaultNetwork;
+
+    const initialNetwork = localNetworkValid ? localNetwork : DefaultNetwork;
+
+    // Commit initial to local storage.
+    localStorage.setItem('network', initialNetwork);
+
+    return initialNetwork;
   };
 
   // handle network switching

@@ -5,23 +5,21 @@ import { faFlag } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
-import { useUi } from 'contexts/UI';
 import { useNetwork } from 'contexts/Network';
 import type { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 import { useApi } from 'contexts/Api';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
   const { t } = useTranslation('library');
-  const { isSyncing } = useUi();
-  const { unit, units } = useNetwork().networkData;
   const { minCreateBond } = useApi().poolsConfig;
+  const { unit, units } = useNetwork().networkData;
+  const { syncing } = useSyncing(['initialization']);
 
   const minCreateBondUnit = planckToUnit(minCreateBond, units);
   const sectionClassName =
-    value.isGreaterThanOrEqualTo(minCreateBondUnit) && !isSyncing
-      ? 'invert'
-      : '';
+    value.isGreaterThanOrEqualTo(minCreateBondUnit) && !syncing ? 'invert' : '';
 
   return (
     <Wrapper>
@@ -39,7 +37,7 @@ export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
           </h4>
           <div className="bar">
             <h5>
-              {isSyncing
+              {syncing
                 ? '...'
                 : `${minCreateBondUnit.decimalPlaces(3).toFormat()} ${unit}`}
             </h5>

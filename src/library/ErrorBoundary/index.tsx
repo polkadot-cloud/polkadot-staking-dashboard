@@ -21,7 +21,10 @@ export const ErrorFallbackApp = ({
       </h3>
       <h1>{t('errorUnknown')}</h1>
       <h2>
-        <button type="button" onClick={resetErrorBoundary}>
+        <button
+          type="button"
+          onClick={() => resetErrorBoundary && resetErrorBoundary()}
+        >
           {t('clickToReload')}
         </button>
       </h2>
@@ -43,7 +46,10 @@ export const ErrorFallbackRoutes = ({
       </h3>
       <h1>{t('errorUnknown')}</h1>
       <h2>
-        <button type="button" onClick={resetErrorBoundary}>
+        <button
+          type="button"
+          onClick={() => resetErrorBoundary && resetErrorBoundary()}
+        >
           {t('clickToReload')}
         </button>
       </h2>

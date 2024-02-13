@@ -4,9 +4,9 @@
 import { ActionItem } from '@polkadot-cloud/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { TabWrapper, TabsWrapper } from 'library/Filter/Wrappers';
-import type { ClaimPermission } from 'contexts/Pools/PoolMemberships/types';
+import type { ClaimPermission } from 'contexts/Pools/types';
+import type { ClaimPermissionConfig } from '../types';
 
 export interface ClaimPermissionInputProps {
   current: ClaimPermission | undefined;
@@ -22,7 +22,24 @@ export const ClaimPermissionInput = ({
   disabled = false,
 }: ClaimPermissionInputProps) => {
   const { t } = useTranslation('library');
-  const { claimPermissionConfig } = usePoolMemberships();
+
+  const claimPermissionConfig: ClaimPermissionConfig[] = [
+    {
+      label: t('allowCompound'),
+      value: 'PermissionlessCompound',
+      description: t('allowAnyoneCompound'),
+    },
+    {
+      label: t('allowWithdraw'),
+      value: 'PermissionlessWithdraw',
+      description: t('allowAnyoneWithdraw'),
+    },
+    {
+      label: t('allowAll'),
+      value: 'PermissionlessAll',
+      description: t('allowAnyoneCompoundWithdraw'),
+    },
+  ];
 
   // Updated claim permission value
   const [selected, setSelected] = useState<ClaimPermission | undefined>(

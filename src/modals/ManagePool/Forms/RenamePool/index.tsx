@@ -12,11 +12,11 @@ import type { Dispatch, FormEvent, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Warning } from 'library/Form/Warning';
-import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useSignerWarnings } from 'hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -32,11 +32,11 @@ export const RenamePool = ({
   const { api } = useApi();
   const { setModalStatus } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
-  const { isOwner, selectedActivePool } = useActivePools();
-  const { bondedPools, poolsMetaData } = useBondedPools();
+  const { isOwner, activePool } = useActivePool();
   const { getSignerWarnings } = useSignerWarnings();
+  const { bondedPools, poolsMetaData } = useBondedPools();
 
-  const poolId = selectedActivePool?.id;
+  const poolId = activePool?.id;
 
   // Valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
@@ -47,7 +47,7 @@ export const RenamePool = ({
   // Determine current pool metadata and set in state.
   useEffect(() => {
     const pool = bondedPools.find(
-      ({ addresses }) => addresses.stash === selectedActivePool?.addresses.stash
+      ({ addresses }) => addresses.stash === activePool?.addresses.stash
     );
     if (pool) {
       setMetadata(u8aToString(u8aUnwrapBytes(poolsMetaData[Number(pool.id)])));

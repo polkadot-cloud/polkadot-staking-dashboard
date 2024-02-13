@@ -1,9 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ValidatorEntry } from '@polkadot-cloud/assets/types';
 import type BigNumber from 'bignumber.js';
-import type { AnyJson, BondFor, Sync } from 'types';
+import type { AnyJson, Sync } from 'types';
 
 export interface ValidatorsContextInterface {
   fetchValidatorPrefs: (a: ValidatorAddresses) => Promise<Validator[] | null>;
@@ -11,7 +10,6 @@ export interface ValidatorsContextInterface {
     startEra: BigNumber,
     address: string
   ) => Record<string, BigNumber>;
-  getNominated: (bondFor: BondFor) => Validator[] | null;
   injectValidatorListData: (entries: Validator[]) => ValidatorListEntry[];
   validators: Validator[];
   validatorIdentities: Record<string, Identity>;
@@ -19,16 +17,16 @@ export interface ValidatorsContextInterface {
   avgCommission: number;
   sessionValidators: string[];
   sessionParaValidators: string[];
-  nominated: Validator[] | null;
-  poolNominated: Validator[] | null;
-  validatorCommunity: ValidatorEntry[];
   erasRewardPoints: ErasRewardPoints;
   validatorsFetched: Sync;
   eraPointsBoundaries: EraPointsBoundaries;
   validatorEraPointsHistory: Record<string, ValidatorEraPointHistory>;
   erasRewardPointsFetched: Sync;
   averageEraValidatorReward: AverageEraValidatorReward;
+  formatWithPrefs: (addresses: string[]) => Validator[];
 }
+
+export type ValidatorStatus = 'waiting' | 'active';
 
 export interface AverageEraValidatorReward {
   days: number;
@@ -36,8 +34,8 @@ export interface AverageEraValidatorReward {
 }
 
 export interface FavoriteValidatorsContextInterface {
-  addFavorite: (a: string) => void;
-  removeFavorite: (a: string) => void;
+  addFavorite: (address: string) => void;
+  removeFavorite: (address: string) => void;
   favorites: string[];
   favoritesList: Validator[] | null;
 }
@@ -48,7 +46,7 @@ export interface Identity {
   judgements: AnyJson[];
 }
 
-export interface ValidatorSuper {
+export interface SuperIdentity {
   identity: Identity;
   superOf: [string, { Raw: string }];
 }
@@ -86,7 +84,7 @@ export type EraPointsBoundaries = {
 } | null;
 
 export type ValidatorListEntry = Validator & {
-  validatorStatus: 'waiting' | 'active';
+  validatorStatus: ValidatorStatus;
   totalStake: BigNumber;
 };
 

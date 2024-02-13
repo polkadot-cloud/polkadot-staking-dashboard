@@ -14,16 +14,16 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxMeta } from 'contexts/TxMeta';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput';
-import { useBatchCall } from 'library/Hooks/useBatchCall';
-import { useBondGreatestFee } from 'library/Hooks/useBondGreatestFee';
-import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useBatchCall } from 'hooks/useBatchCall';
+import { useBondGreatestFee } from 'hooks/useBondGreatestFee';
+import { useSignerWarnings } from 'hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import type { ClaimPermission } from 'contexts/Pools/PoolMemberships/types';
+import type { ClaimPermission } from 'contexts/Pools/types';
 
 export const JoinPool = () => {
   const { t } = useTranslation('modals');

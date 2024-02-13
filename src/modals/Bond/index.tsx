@@ -7,13 +7,13 @@ import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { Warning } from 'library/Form/Warning';
-import { useBondGreatestFee } from 'library/Hooks/useBondGreatestFee';
-import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useBondGreatestFee } from 'hooks/useBondGreatestFee';
+import { useSignerWarnings } from 'hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
@@ -27,9 +27,9 @@ export const Bond = () => {
   const {
     networkData: { units, unit },
   } = useNetwork();
-  const { activeAccount } = useActiveAccounts();
   const { notEnoughFunds } = useTxMeta();
-  const { selectedActivePool } = useActivePools();
+  const { activeAccount } = useActiveAccounts();
+  const { pendingPoolRewards } = useActivePool();
   const { getSignerWarnings } = useSignerWarnings();
   const { feeReserve, getTransferOptions } = useTransferOptions();
   const {
@@ -53,10 +53,8 @@ export const Bond = () => {
 
   const largestTxFee = useBondGreatestFee({ bondFor });
 
-  // calculate any unclaimed pool rewards.
-  let { pendingRewards } = selectedActivePool || {};
-  pendingRewards = pendingRewards ?? new BigNumber(0);
-  pendingRewards = planckToUnit(pendingRewards, units);
+  // Format unclaimed pool rewards.
+  const pendingRewardsUnit = planckToUnit(pendingPoolRewards, units);
 
   // local bond value.
   const [bond, setBond] = useState<{ bond: string }>({
@@ -153,10 +151,10 @@ export const Bond = () => {
       <Close />
       <ModalPadding>
         <h2 className="title unbounded">{t('addToBond')}</h2>
-        {pendingRewards.isGreaterThan(0) && bondFor === 'pool' ? (
+        {pendingRewardsUnit.isGreaterThan(0) && bondFor === 'pool' ? (
           <ModalWarnings withMargin>
             <Warning
-              text={`${t('bondingWithdraw')} ${pendingRewards} ${unit}.`}
+              text={`${t('bondingWithdraw')} ${pendingRewardsUnit} ${unit}.`}
             />
           </ModalWarnings>
         ) : null}

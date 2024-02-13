@@ -2,16 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
-import BigNumber from 'bignumber.js';
 import type { ReactNode, RefObject } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { SideMenuStickyThreshold } from 'consts';
-import { useBalances } from 'contexts/Balances';
-import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import type { AnyJson } from 'types';
-import { useApi } from '../Api';
-import { useStaking } from '../Staking';
 import * as defaults from './defaults';
 import type { UIContextInterface } from './types';
 
@@ -22,20 +17,6 @@ export const UIContext = createContext<UIContextInterface>(
 export const useUi = () => useContext(UIContext);
 
 export const UIProvider = ({ children }: { children: ReactNode }) => {
-  const { eraStakers } = useStaking();
-  const { balancesInitialSynced } = useBalances();
-  const { synced: activePoolsSynced } = useActivePools();
-  const { isReady, networkMetrics, activeEra, stakingMetrics } = useApi();
-
-  // Set whether the network has been synced.
-  const [isNetworkSyncing, setIsNetworkSyncing] = useState<boolean>(false);
-
-  // Set whether pools are being synced.
-  const [isPoolSyncing, setIsPoolSyncing] = useState<boolean>(false);
-
-  // Set whether app is syncing. Includes workers (active nominations).
-  const [isSyncing, setIsSyncing] = useState<boolean>(false);
-
   // Side whether the side menu is open.
   const [sideMenuOpen, setSideMenu] = useState<boolean>(false);
 
@@ -96,54 +77,6 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
     resizeCallback();
   }, [userSideMenuMinimised]);
 
-  // App syncing updates.
-  useEffect(() => {
-    let syncing = false;
-    let networkSyncing = false;
-    let poolSyncing = false;
-
-    // staking metrics have synced
-    if (stakingMetrics.lastReward === new BigNumber(0)) {
-      syncing = true;
-      networkSyncing = true;
-    }
-
-    // era has synced from Network
-    if (activeEra.index.isZero()) {
-      syncing = true;
-      networkSyncing = true;
-    }
-
-    if (!balancesInitialSynced) {
-      syncing = true;
-      networkSyncing = true;
-    }
-
-    setIsNetworkSyncing(networkSyncing);
-
-    // active pools have been synced
-    if (activePoolsSynced !== 'synced') {
-      syncing = true;
-      poolSyncing = true;
-    }
-
-    setIsPoolSyncing(poolSyncing);
-
-    // eraStakers total active nominators has synced
-    if (!eraStakers.totalActiveNominators) {
-      syncing = true;
-    }
-
-    setIsSyncing(syncing);
-  }, [
-    isReady,
-    stakingMetrics,
-    networkMetrics,
-    eraStakers,
-    activePoolsSynced,
-    balancesInitialSynced,
-  ]);
-
   return (
     <UIContext.Provider
       value={{
@@ -152,9 +85,6 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
         setContainerRefs,
         sideMenuOpen,
         sideMenuMinimised,
-        isSyncing,
-        isNetworkSyncing,
-        isPoolSyncing,
         containerRefs,
         isBraveBrowser,
         userSideMenuMinimised,

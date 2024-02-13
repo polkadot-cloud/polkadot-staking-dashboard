@@ -7,27 +7,24 @@ import {
   faUnlockAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import type { MouseEvent as ReactMouseEvent } from 'react';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMenu } from 'contexts/Menu';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useList } from 'library/List/context';
 import { Identity } from 'library/ListItem/Labels/Identity';
 import { PoolMemberBonded } from 'library/ListItem/Labels/PoolMemberBonded';
 import { Select } from 'library/ListItem/Labels/Select';
-import {
-  Labels,
-  MenuPosition,
-  Separator,
-  Wrapper,
-} from 'library/ListItem/Wrappers';
+import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
 import type { AnyJson } from 'types';
 import { usePrompt } from 'contexts/Prompt';
 import { UnbondMember } from '../Prompts/UnbondMember';
 import { WithdrawMember } from '../Prompts/WithdrawMember';
 import { motion } from 'framer-motion';
 import { useApi } from 'contexts/Api';
+import { MenuList } from 'library/Menu/List';
 
 export const Member = ({
   who,
@@ -42,14 +39,14 @@ export const Member = ({
   const { activeEra } = useApi();
   const { meta } = usePoolMembers();
   const { selectActive } = useList();
+  const { openMenu, open } = useMenu();
   const { openPromptWith } = usePrompt();
-  const { setMenuPosition, setMenuItems, open } = useMenu();
-  const { selectedActivePool, isOwner, isBouncer } = useActivePools();
+  const { activePool, isOwner, isBouncer } = useActivePool();
 
   // Ref for the member container.
   const memberRef = useRef<HTMLDivElement>(null);
 
-  const { state, roles } = selectedActivePool?.bondedPool || {};
+  const { state, roles } = activePool?.bondedPool || {};
   const { bouncer, root, depositor } = roles || {};
 
   const canUnbondBlocked =
@@ -109,12 +106,10 @@ export const Member = ({
     }
   }
 
-  // configure floating menu
-  const posRef = useRef(null);
-  const toggleMenu = () => {
+  // Handler for opening menu.
+  const toggleMenu = (ev: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (!open) {
-      setMenuItems(menuItems);
-      setMenuPosition(posRef);
+      openMenu(ev, <MenuList items={menuItems} />);
     }
   };
 
@@ -135,7 +130,6 @@ export const Member = ({
     >
       <Wrapper className="member">
         <div className="inner canvas">
-          <MenuPosition ref={posRef} />
           <div className="row top">
             {selectActive && <Select item={{ address: who }} />}
             <Identity address={who} />
@@ -146,7 +140,7 @@ export const Member = ({
                     type="button"
                     className="label"
                     disabled={!member}
-                    onClick={() => toggleMenu()}
+                    onClick={(ev) => toggleMenu(ev)}
                   >
                     <FontAwesomeIcon icon={faBars} />
                   </button>

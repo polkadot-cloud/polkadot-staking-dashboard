@@ -60,10 +60,14 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
     };
     // Sync added accounts.
     const handleAddedAccounts = () => {
-      addedTo(accounts, bondedAccountsRef.current, ['address'])?.map(
-        ({ address }) => subscribeToBondedAccount(address)
-      );
+      const added = addedTo(accounts, bondedAccountsRef.current, ['address']);
+
+      if (added.length) {
+        // Subscribe to all newly added accounts bonded and nominator status.
+        added.map(({ address }) => subscribeToBondedAccount(address));
+      }
     };
+
     // Sync existing accounts.
     const handleExistingAccounts = () => {
       setStateWithRef(
@@ -84,11 +88,8 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const unsub = await api.queryMulti<AnyApi>(
-      [
-        [api.query.staking.bonded, address],
-        [api.query.staking.nominators, address],
-      ],
-      async ([controller, nominations]) => {
+      [[api.query.staking.bonded, address]],
+      async ([controller]) => {
         const newAccount: BondedAccount = {
           address,
         };
@@ -111,16 +112,6 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
           }
         }
 
-        // set account nominations.
-        const newNominations = nominations.unwrapOr(null);
-        newAccount.nominations =
-          newNominations === null
-            ? defaults.nominations
-            : {
-                targets: newNominations.targets.toHuman(),
-                submittedIn: newNominations.submittedIn.toHuman(),
-              };
-
         // remove stale account if it's already in list.
         const newBonded = Object.values(bondedAccountsRef.current)
           .filter((a) => a.address !== address)
@@ -137,10 +128,6 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
   const getBondedAccount = (address: MaybeAddress) =>
     bondedAccountsRef.current.find((a) => a.address === address)?.bonded ||
     null;
-
-  const getAccountNominations = (address: MaybeAddress) =>
-    bondedAccountsRef.current.find((a) => a.address === address)?.nominations
-      ?.targets || [];
 
   // Handle accounts sync on connected accounts change.
   useEffectIgnoreInitial(() => {
@@ -161,7 +148,6 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
     <BondedContext.Provider
       value={{
         getBondedAccount,
-        getAccountNominations,
         bondedAccounts,
       }}
     >

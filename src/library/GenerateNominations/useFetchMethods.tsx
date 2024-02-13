@@ -5,7 +5,7 @@ import { shuffle } from '@polkadot-cloud/utils';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { Validator } from 'contexts/Validators/types';
-import { useValidatorFilters } from 'library/Hooks/useValidatorFilters';
+import { useValidatorFilters } from 'hooks/useValidatorFilters';
 import type { AddNominationsType } from './types';
 
 export const useFetchMehods = () => {

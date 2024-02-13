@@ -5,10 +5,10 @@ import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
-import { StatsHead } from 'library/StatsHead';
+import { Header } from 'library/Announcements/Header';
+import { Wrapper } from 'library/Announcements/Wrappers';
 import { Announcements } from './Announcements';
-import { Wrapper } from './Wrappers';
-import { useAverageRewardRate } from 'library/Hooks/useAverageRewardRate';
+import { useAverageRewardRate } from 'hooks/useAverageRewardRate';
 import { useApi } from 'contexts/Api';
 
 export const NetworkStats = () => {
@@ -52,7 +52,7 @@ export const NetworkStats = () => {
         <h3>{t('overview.networkStats')}</h3>
       </CardHeaderWrapper>
       <Wrapper>
-        <StatsHead items={items} />
+        <Header items={items} />
         <Announcements />
       </Wrapper>
     </CardWrapper>

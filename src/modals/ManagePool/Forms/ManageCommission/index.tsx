@@ -15,12 +15,12 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Warning } from 'library/Form/Warning';
-import { useBatchCall } from 'library/Hooks/useBatchCall';
-import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useBatchCall } from 'hooks/useBatchCall';
+import { useSignerWarnings } from 'hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import 'rc-slider/assets/index.css';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
@@ -46,8 +46,8 @@ export const ManageCommission = ({
   const { newBatchCall } = useBatchCall();
   const { activeAccount } = useActiveAccounts();
   const { setModalStatus } = useOverlay().modal;
+  const { isOwner, activePool } = useActivePool();
   const { getSignerWarnings } = useSignerWarnings();
-  const { isOwner, selectedActivePool } = useActivePools();
   const { getBondedPool, updateBondedPools } = useBondedPools();
   const {
     getInitial,
@@ -59,7 +59,7 @@ export const ManageCommission = ({
     isUpdated,
   } = usePoolCommission();
 
-  const poolId = selectedActivePool?.id || 0;
+  const poolId = activePool?.id || 0;
   const bondedPool = getBondedPool(poolId);
 
   // Get currently set commission values.

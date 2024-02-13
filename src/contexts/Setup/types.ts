@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PoolRoles } from 'contexts/Pools/ActivePools/types';
+import type { PoolRoles } from 'contexts/Pools/ActivePool/types';
 import type { ValidatorPrefs } from 'contexts/Validators/types';
 import type { AnyJson, BondFor, MaybeAddress, MaybeString } from 'types';
 
@@ -45,7 +45,6 @@ export interface PoolProgress {
 }
 
 export interface SetupContextInterface {
-  getSetupProgress: (t: BondFor, a: MaybeAddress) => PoolSetup | NominatorSetup;
   removeSetupProgress: (t: BondFor, a: MaybeAddress) => void;
   getNominatorSetupPercent: (a: MaybeAddress) => number;
   getPoolSetupPercent: (a: MaybeAddress) => number;

@@ -10,32 +10,34 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Warning } from 'library/Form/Warning';
-import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useSignerWarnings } from 'hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useBalances } from 'contexts/Balances';
 
 export const StopNominations = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
-  const { activeAccount } = useActiveAccounts();
   const { notEnoughFunds } = useTxMeta();
+  const { getBondedAccount } = useBonded();
+  const { getNominations } = useBalances();
+  const { activeAccount } = useActiveAccounts();
   const { getSignerWarnings } = useSignerWarnings();
-  const { getBondedAccount, getAccountNominations } = useBonded();
   const {
     setModalStatus,
     config: { options },
     setModalResize,
   } = useOverlay().modal;
-  const { poolNominations, isNominator, isOwner, selectedActivePool } =
-    useActivePools();
-  const { bondFor } = options;
+  const { activePoolNominations, isNominator, isOwner, activePool } =
+    useActivePool();
 
+  const { bondFor } = options;
   const isPool = bondFor === 'pool';
   const isStaking = bondFor === 'nominator';
   const controller = getBondedAccount(activeAccount);
@@ -43,8 +45,8 @@ export const StopNominations = () => {
 
   const nominations =
     isPool === true
-      ? poolNominations?.targets || []
-      : getAccountNominations(activeAccount);
+      ? activePoolNominations?.targets || []
+      : getNominations(activeAccount);
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
@@ -69,7 +71,7 @@ export const StopNominations = () => {
 
     if (isPool) {
       // wishing to stop all nominations, call chill
-      tx = api.tx.nominationPools.chill(selectedActivePool?.id || 0);
+      tx = api.tx.nominationPools.chill(activePool?.id || 0);
     } else if (isStaking) {
       tx = api.tx.staking.chill();
     }

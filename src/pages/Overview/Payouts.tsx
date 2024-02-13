@@ -5,40 +5,39 @@ import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
 import { formatRewardsForGraphs, formatSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
-import { useSize } from 'library/Hooks/useSize';
+import { useSize } from 'hooks/useSize';
 import { StatusLabel } from 'library/StatusLabel';
-import { useSubscanData } from 'library/Hooks/useSubscanData';
+import { useSubscanData } from 'hooks/useSubscanData';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { Odometer } from '@polkadot-cloud/react';
-import { locales } from 'locale';
+import { locales, DefaultLocale } from 'locale';
 import BigNumber from 'bignumber.js';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
 import { useNetwork } from 'contexts/Network';
-import { DefaultLocale } from 'consts';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const Payouts = () => {
   const { i18n, t } = useTranslation('pages');
-  const { isSyncing } = useUi();
-  const { inSetup } = useStaking();
   const {
     networkData: {
       units,
       brand: { token: Token },
     },
   } = useNetwork();
+  const { inSetup } = useStaking();
+  const { syncing } = useSyncing('*');
   const { plugins } = usePlugins();
   const { getData, injectBlockTimestamp } = useSubscanData([
     'payouts',
     'unclaimedPayouts',
     'poolClaims',
   ]);
-  const notStaking = !isSyncing && inSetup();
+  const notStaking = !syncing && inSetup();
 
   // Get data safely from subscan hook.
   const data = getData(['payouts', 'unclaimedPayouts', 'poolClaims']);

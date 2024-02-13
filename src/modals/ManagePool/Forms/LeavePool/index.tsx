@@ -13,19 +13,18 @@ import {
   planckToUnit,
   unitToPlanck,
 } from '@polkadot-cloud/utils';
-import BigNumber from 'bignumber.js';
 import { getUnixTime } from 'date-fns';
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
-import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
-import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
+import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
+import { useSignerWarnings } from 'hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
+import { timeleftAsString } from 'hooks/useTimeLeft/utils';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
@@ -42,12 +41,12 @@ export const LeavePool = ({
   const {
     networkData: { units, unit },
   } = useNetwork();
-  const { activeAccount } = useActiveAccounts();
-  const { setModalStatus, setModalResize } = useOverlay().modal;
-  const { getTransferOptions } = useTransferOptions();
-  const { selectedActivePool } = useActivePools();
   const { erasToSeconds } = useErasToTimeLeft();
+  const { activeAccount } = useActiveAccounts();
+  const { pendingPoolRewards } = useActivePool();
   const { getSignerWarnings } = useSignerWarnings();
+  const { getTransferOptions } = useTransferOptions();
+  const { setModalStatus, setModalResize } = useOverlay().modal;
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const { active: activeBn } = allTransferOptions.pool;
@@ -60,9 +59,7 @@ export const LeavePool = ({
     true
   );
 
-  let { pendingRewards } = selectedActivePool || {};
-  pendingRewards = pendingRewards ?? new BigNumber(0);
-  pendingRewards = planckToUnit(pendingRewards, units);
+  const pendingRewardsUnit = planckToUnit(pendingPoolRewards, units);
 
   // convert BigNumber values to number
   const freeToUnbond = planckToUnit(activeBn, units);
@@ -115,9 +112,9 @@ export const LeavePool = ({
     submitExtrinsic.proxySupported
   );
 
-  if (greaterThanZero(pendingRewards)) {
+  if (greaterThanZero(pendingRewardsUnit)) {
     warnings.push(
-      `${t('unbondingWithdraw')} ${pendingRewards.toString()} ${unit}.`
+      `${t('unbondingWithdraw')} ${pendingRewardsUnit.toString()} ${unit}.`
     );
   }
 

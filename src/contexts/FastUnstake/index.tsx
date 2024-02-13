@@ -15,7 +15,7 @@ import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, MaybeAddress } from 'types';
 import Worker from 'workers/stakers?worker';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
-import { useNominationStatus } from 'library/Hooks/useNominationStatus';
+import { useNominationStatus } from 'hooks/useNominationStatus';
 import { validateLocalExposure } from 'contexts/Validators/Utils';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -38,8 +38,8 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   const { activeEra } = useApi();
   const { network } = useNetwork();
   const { activeAccount } = useActiveAccounts();
-  const { inSetup, fetchEraStakers } = useStaking();
   const { getNominationStatus } = useNominationStatus();
+  const { inSetup, fetchEraStakers, isNominating } = useStaking();
   const {
     api,
     isReady,
@@ -87,7 +87,8 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
       isReady &&
       activeAccount &&
       isNotZero(activeEra.index) &&
-      fastUnstakeErasToCheckPerBlock > 0
+      fastUnstakeErasToCheckPerBlock > 0 &&
+      isNominating()
     ) {
       // cancel fast unstake check on network change or account change.
       for (const unsub of unsubs.current) {
@@ -119,7 +120,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
         }
       }
 
-      // checkpoint: initial local meta: localMeta
+      // Initial local meta: localMeta
 
       setStateWithRef(initialMeta, setMeta, metaRef);
       setStateWithRef(initialIsExposed, setIsExposed, isExposedRef);
@@ -138,7 +139,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
           ? new BigNumber(nextEra - 1)
           : activeEra.index;
 
-        // checkpoint: check from the possible next era `maybeNextEra`.
+        // Check from the possible next era `maybeNextEra`.
 
         processEligibility(activeAccount, maybeNextEra);
       }
@@ -161,6 +162,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
     activeAccount,
     activeEra.index,
     fastUnstakeErasToCheckPerBlock,
+    isNominating(),
   ]);
 
   // handle worker message on completed exposure check.
@@ -207,7 +209,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
       }
 
       if (exposed) {
-        // checkpoint: 'exposed! Stop checking.
+        // Account is exposed - stop checking.
 
         // cancel checking and update exposed state.
         setStateWithRef(false, setChecking, checkingRef);
@@ -217,7 +219,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
         setStateWithRef(false, setChecking, checkingRef);
         setStateWithRef(false, setIsExposed, isExposedRef);
 
-        // checkpoint: check finished, not exposed.
+        // Finished, not exposed.
 
         // subscribe to fast unstake queue for user and queue counter.
         subscribeToFastUnstakeQueue();
@@ -237,7 +239,8 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
       !api ||
       !a ||
       checkingRef.current ||
-      !activeAccount
+      !activeAccount ||
+      !isNominating()
     ) {
       return;
     }
@@ -296,7 +299,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
       return u;
     };
 
-    // checkpoint: subscribing to queue + head.
+    // Subscribe to queue + head.
 
     // initiate subscription, add to unsubs.
     await Promise.all([

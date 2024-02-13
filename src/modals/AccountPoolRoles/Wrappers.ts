@@ -31,5 +31,10 @@ export const ContentWrapper = styled.div`
     h2 {
       margin: 0.75rem 0;
     }
+    .item {
+      &:disabled {
+        opacity: 1;
+      }
+    }
   }
 `;

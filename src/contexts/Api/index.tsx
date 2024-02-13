@@ -36,6 +36,7 @@ import { NotificationsController } from 'static/NotificationsController';
 import { useTranslation } from 'react-i18next';
 import { useEventListener } from 'usehooks-ts';
 import BigNumber from 'bignumber.js';
+import { SyncController } from 'static/SyncController';
 
 export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 
@@ -164,6 +165,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
     // API is now ready to be used.
     setApiStatus('ready');
+
+    // Set `initialization` syncing to complete.
+    SyncController.dispatch('initialization', 'complete');
 
     // Initialise subscriptions.
     APIController.subscribeNetworkMetrics();
@@ -358,6 +362,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         stakingMetricsRef
       );
     }
+
     // Reconnect API instance.
     APIController.initialize(network, isLightClient ? 'sc' : 'ws', rpcEndpoint);
   }, [isLightClient, network]);

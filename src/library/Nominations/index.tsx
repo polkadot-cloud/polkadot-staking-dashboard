@@ -4,14 +4,12 @@
 import { faCog, faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonPrimary } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useBonded } from 'contexts/Bonded';
 import { useHelp } from 'contexts/Help';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
-import { useUnstaking } from 'library/Hooks/useUnstaking';
+import { useUnstaking } from 'hooks/useUnstaking';
 import { ValidatorList } from 'library/ValidatorList';
 import type { MaybeAddress } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
@@ -19,6 +17,8 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { ListStatusHeader } from 'library/List';
 import { Wrapper } from './Wrapper';
+import { useSyncing } from 'hooks/useSyncing';
+import { useBalances } from 'contexts/Balances';
 
 export const Nominations = ({
   bondFor,
@@ -29,54 +29,54 @@ export const Nominations = ({
 }) => {
   const { t } = useTranslation('pages');
   const {
-    poolNominations,
-    selectedActivePool,
+    activePool,
+    activePoolNominations,
     isOwner: isPoolOwner,
     isNominator: isPoolNominator,
-  } = useActivePools();
-  const { isSyncing } = useUi();
+  } = useActivePool();
   const { openHelp } = useHelp();
   const { inSetup } = useStaking();
   const {
     modal: { openModal },
     canvas: { openCanvas },
   } = useOverlay();
-  const { getNominated } = useValidators();
+  const { syncing } = useSyncing('*');
+  const { getNominations } = useBalances();
   const { isFastUnstaking } = useUnstaking();
+  const { formatWithPrefs } = useValidators();
   const { activeAccount } = useActiveAccounts();
-  const { getAccountNominations } = useBonded();
   const { isReadOnlyAccount } = useImportedAccounts();
 
   // Determine if pool or nominator.
   const isPool = bondFor === 'pool';
 
   // Derive nominations from `bondFor` type.
-  const nominations = isPool
-    ? poolNominations.targets
-    : getAccountNominations(nominator);
-  const nominated = getNominated(bondFor);
+  const nominated =
+    bondFor === 'nominator'
+      ? formatWithPrefs(getNominations(activeAccount))
+      : activePoolNominations
+        ? formatWithPrefs(activePoolNominations.targets)
+        : [];
 
   // Determine if this nominator is actually nominating.
   const isNominating = nominated?.length ?? false;
 
   // Determine whether this is a pool that is in Destroying state & not nominating.
   const poolDestroying =
-    isPool &&
-    selectedActivePool?.bondedPool?.state === 'Destroying' &&
-    !isNominating;
+    isPool && activePool?.bondedPool?.state === 'Destroying' && !isNominating;
 
   // Determine whether to display buttons.
   //
   // If regular staking and nominating, or if pool and account is nominator or root, display stop
   // button.
   const displayBtns =
-    (!isPool && nominations.length) ||
+    (!isPool && nominated.length) ||
     (isPool && (isPoolNominator() || isPoolOwner()));
 
   // Determine whether buttons are disabled.
   const btnsDisabled =
     (!isPool && inSetup()) ||
-    isSyncing ||
+    syncing ||
     isReadOnlyAccount(activeAccount) ||
     poolDestroying ||
     isFastUnstaking;
@@ -130,7 +130,7 @@ export const Nominations = ({
           )}
         </div>
       </CardHeaderWrapper>
-      {isSyncing ? (
+      {syncing ? (
         <ListStatusHeader>{`${t('nominate.syncing')}...`}</ListStatusHeader>
       ) : !nominator ? (
         <ListStatusHeader>{t('nominate.notNominating')}.</ListStatusHeader>

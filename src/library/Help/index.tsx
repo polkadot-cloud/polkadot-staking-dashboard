@@ -13,14 +13,14 @@ import { useAnimation } from 'framer-motion';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { HelpConfig } from 'config/help';
-import { DefaultLocale } from 'consts';
+import { DefaultLocale } from 'locale';
 import { useHelp } from 'contexts/Help';
 import type {
   DefinitionWithKeys,
   ExternalItems,
   HelpItem,
 } from 'contexts/Help/types';
-import { useFillVariables } from 'library/Hooks/useFillVariables';
+import { useFillVariables } from 'hooks/useFillVariables';
 import { Definition } from './Items/Definition';
 import { External } from './Items/External';
 import { ActiveDefinition } from './Items/ActiveDefinition';
