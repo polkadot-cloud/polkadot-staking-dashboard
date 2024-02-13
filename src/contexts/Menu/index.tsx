@@ -4,7 +4,7 @@
 import type { ReactNode, RefObject } from 'react';
 import { createContext, useContext, useState } from 'react';
 import { defaultMenuContext } from './defaults';
-import type { MenuContextInterface, MenuItem } from './types';
+import type { MenuContextInterface } from './types';
 
 export const MenuContext =
   createContext<MenuContextInterface>(defaultMenuContext);
@@ -14,7 +14,7 @@ export const useMenu = () => useContext(MenuContext);
 export const MenuProvider = ({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState<number>(0);
   const [show, setShow] = useState<number>(0);
-  const [items, setItems] = useState<MenuItem[]>([]);
+  const [inner, setInner] = useState<ReactNode>([]);
 
   const [position, setPosition] = useState<[number, number]>([0, 0]);
 
@@ -74,8 +74,8 @@ export const MenuProvider = ({ children }: { children: ReactNode }) => {
     setShow(1);
   };
 
-  const setMenuItems = (_items: MenuItem[]) => {
-    setItems(_items);
+  const setMenuInner = (newInner: ReactNode) => {
+    setInner(newInner);
   };
 
   return (
@@ -85,11 +85,11 @@ export const MenuProvider = ({ children }: { children: ReactNode }) => {
         closeMenu,
         setMenuPosition,
         checkMenuPosition,
-        setMenuItems,
+        setMenuInner,
         open,
         show,
         position,
-        items,
+        inner,
       }}
     >
       {children}

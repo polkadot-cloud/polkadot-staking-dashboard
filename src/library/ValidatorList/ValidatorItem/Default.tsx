@@ -34,6 +34,7 @@ import { Select } from '../../ListItem/Labels/Select';
 import { getIdentityDisplay } from './Utils';
 import type { ValidatorItemProps } from './types';
 import { Pulse } from './Pulse';
+import { MenuList } from 'library/Menu/List';
 
 export const Default = ({
   validator,
@@ -45,7 +46,7 @@ export const Default = ({
   const { selectActive } = useList();
   const { pluginEnabled } = usePlugins();
   const { openModal } = useOverlay().modal;
-  const { setMenuPosition, setMenuItems, open } = useMenu();
+  const { setMenuPosition, setMenuInner, open } = useMenu();
   const { validatorIdentities, validatorSupers } = useValidators();
 
   const { address, prefs, validatorStatus, totalStake } = validator;
@@ -93,7 +94,7 @@ export const Default = ({
 
   const toggleMenu = () => {
     if (!open) {
-      setMenuItems(menuItems);
+      setMenuInner(<MenuList items={menuItems} />);
       setMenuPosition(posRef);
     }
   };

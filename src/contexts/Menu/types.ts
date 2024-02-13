@@ -8,11 +8,11 @@ export interface MenuContextInterface {
   closeMenu: () => void;
   setMenuPosition: (ref: RefObject<HTMLDivElement>) => void;
   checkMenuPosition: (ref: RefObject<HTMLDivElement>) => void;
-  setMenuItems: (items: MenuItem[]) => void;
+  setMenuInner: (items: ReactNode) => void;
   open: number;
   show: number;
   position: [number, number];
-  items: MenuItem[];
+  inner: ReactNode;
 }
 
 export interface MenuItem {

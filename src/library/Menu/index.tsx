@@ -3,8 +3,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useMenu } from 'contexts/Menu';
-import { ItemWrapper, Wrapper } from './Wrappers';
-import type { AnyJson } from 'types';
+import { Wrapper } from './Wrappers';
 import { useOutsideAlerter } from 'hooks/useOutsideAlerter';
 
 export const Menu = () => {
@@ -51,22 +50,7 @@ export const Menu = () => {
           opacity: menu.show === 1 ? 1 : 0,
         }}
       >
-        {menu.items.map((item: AnyJson, i: number) => {
-          const { icon, title, cb } = item;
-
-          return (
-            <ItemWrapper
-              key={`menu_item_${i}`}
-              onClick={() => {
-                cb();
-                menu.closeMenu();
-              }}
-            >
-              {icon}
-              <div className="title">{title}</div>
-            </ItemWrapper>
-          );
-        })}
+        {menu.inner}
       </Wrapper>
     )
   );

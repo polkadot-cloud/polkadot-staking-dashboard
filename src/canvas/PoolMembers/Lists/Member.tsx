@@ -28,6 +28,7 @@ import { UnbondMember } from '../Prompts/UnbondMember';
 import { WithdrawMember } from '../Prompts/WithdrawMember';
 import { motion } from 'framer-motion';
 import { useApi } from 'contexts/Api';
+import { MenuList } from 'library/Menu/List';
 
 export const Member = ({
   who,
@@ -43,7 +44,7 @@ export const Member = ({
   const { meta } = usePoolMembers();
   const { selectActive } = useList();
   const { openPromptWith } = usePrompt();
-  const { setMenuPosition, setMenuItems, open } = useMenu();
+  const { setMenuPosition, setMenuInner, open } = useMenu();
   const { activePool, isOwner, isBouncer } = useActivePool();
 
   // Ref for the member container.
@@ -113,7 +114,7 @@ export const Member = ({
   const posRef = useRef(null);
   const toggleMenu = () => {
     if (!open) {
-      setMenuItems(menuItems);
+      setMenuInner(<MenuList items={menuItems} />);
       setMenuPosition(posRef);
     }
   };

@@ -9,9 +9,9 @@ export const defaultMenuContext: MenuContextInterface = {
   closeMenu: () => {},
   setMenuPosition: (r) => {},
   checkMenuPosition: (r) => {},
-  setMenuItems: (items) => {},
+  setMenuInner: (items) => {},
   open: 0,
   show: 0,
   position: [0, 0],
-  items: [],
+  inner: null,
 };

@@ -34,6 +34,7 @@ import { NotificationsController } from 'static/NotificationsController';
 import type { MenuItem } from 'contexts/Menu/types';
 import { useBalances } from 'contexts/Balances';
 import { useSyncing } from 'hooks/useSyncing';
+import { MenuList } from 'library/Menu/List';
 
 export const Pool = ({ pool }: PoolProps) => {
   const { t } = useTranslation('library');
@@ -47,7 +48,7 @@ export const Pool = ({ pool }: PoolProps) => {
   const { syncing } = useSyncing(['active-pools']);
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getCurrentCommission } = usePoolCommission();
-  const { setMenuPosition, setMenuItems, open } = useMenu();
+  const { setMenuPosition, setMenuInner, open } = useMenu();
 
   const membership = getPoolMembership(activeAccount);
   const currentCommission = getCurrentCommission(id);
@@ -124,7 +125,7 @@ export const Pool = ({ pool }: PoolProps) => {
   // toggle menu handler
   const toggleMenu = () => {
     if (!open) {
-      setMenuItems(menuItems);
+      setMenuInner(<MenuList items={menuItems} />);
       setMenuPosition(posRef);
     }
   };
