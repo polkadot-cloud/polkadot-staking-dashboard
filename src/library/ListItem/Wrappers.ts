@@ -289,15 +289,6 @@ export const Separator = styled.div`
   opacity: 0.7;
 `;
 
-export const MenuPosition = styled.div`
-  position: absolute;
-  top: -10px;
-  right: 10px;
-  width: 0;
-  height: 0;
-  opacity: 0;
-`;
-
 export const TooltipTrigger = styled.div`
   z-index: 1;
   width: 130%;

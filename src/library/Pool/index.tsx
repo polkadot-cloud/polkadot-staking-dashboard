@@ -4,7 +4,7 @@
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faBars, faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useRef } from 'react';
+import type { MouseEvent as ReactMouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMenu } from 'contexts/Menu';
 import type { NotificationText } from 'static/NotificationsController/types';
@@ -15,12 +15,7 @@ import { FavoritePool } from 'library/ListItem/Labels/FavoritePool';
 import { PoolBonded } from 'library/ListItem/Labels/PoolBonded';
 import { PoolCommission } from 'library/ListItem/Labels/PoolCommission';
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
-import {
-  Labels,
-  MenuPosition,
-  Separator,
-  Wrapper,
-} from 'library/ListItem/Wrappers';
+import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
 import { usePoolsTabs } from 'pages/Pools/Home/context';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -34,10 +29,12 @@ import { NotificationsController } from 'static/NotificationsController';
 import type { MenuItem } from 'contexts/Menu/types';
 import { useBalances } from 'contexts/Balances';
 import { useSyncing } from 'hooks/useSyncing';
+import { MenuList } from 'library/Menu/List';
 
 export const Pool = ({ pool }: PoolProps) => {
   const { t } = useTranslation('library');
   const { memberCounter, addresses, id, state } = pool;
+  const { openMenu, open } = useMenu();
   const { validators } = useValidators();
   const { setActiveTab } = usePoolsTabs();
   const { openModal } = useOverlay().modal;
@@ -47,7 +44,6 @@ export const Pool = ({ pool }: PoolProps) => {
   const { syncing } = useSyncing(['active-pools']);
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getCurrentCommission } = usePoolCommission();
-  const { setMenuPosition, setMenuItems, open } = useMenu();
 
   const membership = getPoolMembership(activeAccount);
   const currentCommission = getCurrentCommission(id);
@@ -62,9 +58,6 @@ export const Pool = ({ pool }: PoolProps) => {
   const targetValidators = validators.filter(({ address }) =>
     targets.includes(address)
   );
-
-  // configure floating menu position
-  const posRef = useRef(null);
 
   // copy address notification
   const notificationCopyAddress = (
@@ -121,11 +114,10 @@ export const Pool = ({ pool }: PoolProps) => {
     },
   });
 
-  // toggle menu handler
-  const toggleMenu = () => {
+  // Handler for opening menu.
+  const toggleMenu = (ev: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (!open) {
-      setMenuItems(menuItems);
-      setMenuPosition(posRef);
+      openMenu(ev, <MenuList items={menuItems} />);
     }
   };
 
@@ -139,14 +131,13 @@ export const Pool = ({ pool }: PoolProps) => {
   return (
     <Wrapper className={displayJoin ? 'pool-join' : 'pool'}>
       <div className="inner">
-        <MenuPosition ref={posRef} />
         <div className="row top">
           <PoolIdentity pool={pool} />
           <div>
             <Labels>
               <FavoritePool address={addresses.stash} />
               <div className="label">
-                <button type="button" onClick={() => toggleMenu()}>
+                <button type="button" onClick={(ev) => toggleMenu(ev)}>
                   <FontAwesomeIcon icon={faBars} transform="shrink-2" />
                 </button>
               </div>

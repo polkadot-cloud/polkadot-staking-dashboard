@@ -5,13 +5,12 @@
 import type { MenuContextInterface } from './types';
 
 export const defaultMenuContext: MenuContextInterface = {
-  openMenu: () => {},
-  closeMenu: () => {},
-  setMenuPosition: (r) => {},
-  checkMenuPosition: (r) => {},
-  setMenuItems: (items) => {},
-  open: 0,
-  show: 0,
+  open: false,
+  show: false,
+  inner: null,
   position: [0, 0],
-  items: [],
+  openMenu: (ev, newInner) => {},
+  closeMenu: () => {},
+  setMenuInner: (newInner) => {},
+  checkMenuPosition: (menuRef) => {},
 };

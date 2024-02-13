@@ -3,23 +3,39 @@
 
 import { useEffect, useRef } from 'react';
 import { useMenu } from 'contexts/Menu';
-import { ItemWrapper, Wrapper } from './Wrappers';
-import type { AnyJson } from 'types';
+import { Wrapper } from './Wrappers';
 import { useOutsideAlerter } from 'hooks/useOutsideAlerter';
 
 export const Menu = () => {
-  const menu = useMenu();
-  const { position } = menu;
+  const {
+    open,
+    show,
+    inner,
+    closeMenu,
+    position: [x, y],
+    checkMenuPosition,
+  } = useMenu();
 
-  const ref = useRef(null);
+  const menuRef = useRef(null);
 
+  // Handler for closing the menu on window resize.
+  const resizeCallback = () => {
+    closeMenu();
+  };
+
+  // Close the menu if clicked outside of its container.
+  useOutsideAlerter(menuRef, () => {
+    closeMenu();
+  });
+
+  // Check position and show the menu if menu has been opened.
   useEffect(() => {
-    if (menu.open === 1) {
-      menu.checkMenuPosition(ref);
-      // check position
+    if (open) {
+      checkMenuPosition(menuRef);
     }
-  }, [menu.open]);
+  }, [open]);
 
+  // Close the menu on window resize.
   useEffect(() => {
     window.addEventListener('resize', resizeCallback);
     return () => {
@@ -27,46 +43,19 @@ export const Menu = () => {
     };
   }, []);
 
-  const resizeCallback = () => {
-    menu.closeMenu();
-  };
-
-  useOutsideAlerter(
-    ref,
-    () => {
-      menu.closeMenu();
-    },
-    ['ignore-open-menu-button']
-  );
-
   return (
-    menu.open === 1 && (
+    open && (
       <Wrapper
-        ref={ref}
+        ref={menuRef}
         style={{
           position: 'absolute',
-          left: `${position[0]}px`,
-          top: `${position[1]}px`,
-          zIndex: 99,
-          opacity: menu.show === 1 ? 1 : 0,
+          left: `${x}px`,
+          top: `${y}px`,
+          zIndex: 999,
+          opacity: show ? 1 : 0,
         }}
       >
-        {menu.items.map((item: AnyJson, i: number) => {
-          const { icon, title, cb } = item;
-
-          return (
-            <ItemWrapper
-              key={`menu_item_${i}`}
-              onClick={() => {
-                cb();
-                menu.closeMenu();
-              }}
-            >
-              {icon}
-              <div className="title">{title}</div>
-            </ItemWrapper>
-          );
-        })}
+        {inner}
       </Wrapper>
     )
   );
