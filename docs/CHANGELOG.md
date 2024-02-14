@@ -116,6 +116,14 @@
 * use ledger square logo ([#1593](https://github.com/paritytech/polkadot-staking-dashboard/issues/1593)) ([badcac5](https://github.com/paritytech/polkadot-staking-dashboard/commit/badcac5c639855519d99f72f63d2efa1465e05eb))
 * **ux:** NaN on whole value with format ([021f90b](https://github.com/paritytech/polkadot-staking-dashboard/commit/021f90b138cf109bfa69a8bcef9ac8bcf173f496))
 
+## [1.1.1](https://github.com/paritytech/polkadot-staking-dashboard/compare/v1.1.0...v1.1.1) (2023-10-31)
+
+### Bug Fixes
+
+* Fixes an issue where extensions would not be discovered due to a hanging asynchronous function when Enkrypt, which injects its own window.ethereum object, was enabled.
+* Misc theming fix.
+
+
 ## [1.1.0](https://github.com/paritytech/polkadot-staking-dashboard/compare/v1.0.9...v1.1.0) (2023-10-30)
 
 
