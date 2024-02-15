@@ -85,7 +85,7 @@ export const GenerateNominations = ({
         setMethod('manual');
       }
     }
-  }, [activeAccount]);
+  }, [activeAccount, defaultNominations]);
 
   // refetch if fetching is triggered
   useEffect(() => {
