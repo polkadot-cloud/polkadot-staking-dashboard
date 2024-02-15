@@ -77,7 +77,8 @@ export const GenerateNominations = ({
   // Update nominations on account switch, or if `defaultNominations` change.
   useEffect(() => {
     if (
-      nominations !== defaultNominations.nominations &&
+      JSON.stringify(nominations) !==
+        JSON.stringify(defaultNominations.nominations) &&
       defaultNominationsCount > 0
     ) {
       setNominations([...(defaultNominations.nominations || [])]);
