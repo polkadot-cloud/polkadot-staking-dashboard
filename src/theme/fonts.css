@@ -1,0 +1,30 @@
+/* @license Copyright 2024 @polkadot-cloud/library authors & contributors
+SPDX-License-Identifier: GPL-3.0-only */
+
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  src: url("./fonts/Inter600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: InterSemiBold;
+  font-style: normal;
+  font-weight: 700;
+  src: url("./fonts/Inter700.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: InterBold;
+  font-style: normal;
+  font-weight: 800;
+  src: url("./fonts/Inter800.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: Unbounded;
+  font-style: normal;
+  font-weight: 800;
+  src: url("./fonts/Unbounded.woff2") format("woff2");
+}

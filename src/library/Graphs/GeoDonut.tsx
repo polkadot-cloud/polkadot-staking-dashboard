@@ -4,7 +4,7 @@
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { useTheme } from 'contexts/Themes';
-import { graphColors } from 'styles/graphs';
+import { graphColors } from 'theme/graphs';
 import chroma from 'chroma-js';
 import { ellipsisFn } from '@polkadot-cloud/utils';
 import { useNetwork } from 'contexts/Network';
