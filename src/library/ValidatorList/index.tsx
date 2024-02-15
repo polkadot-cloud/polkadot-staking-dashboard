@@ -184,20 +184,6 @@ export const ValidatorListInner = ({
     ListItemsPerPage
   );
 
-  // Reset list when validator list changes.
-  useEffect(() => {
-    if (alwaysRefetchValidators) {
-      if (
-        JSON.stringify(initialValidators.map((v) => v.address)) !==
-        JSON.stringify(validatorsDefault.map((v) => v.address))
-      ) {
-        setFetched(false);
-      }
-    } else {
-      setFetched(false);
-    }
-  }, [initialValidators, nominator]);
-
   // handle filter / order update
   const handleValidatorsFilterUpdate = (
     filteredValidators = Object.assign(validatorsDefault)
@@ -251,6 +237,13 @@ export const ValidatorListInner = ({
     setSearchTerm('validators', newValue);
   };
 
+  // Handle validator list bootstrapping.
+  const setupValidatorList = () => {
+    setValidatorsDefault(prepareInitialValidators());
+    setValidators(prepareInitialValidators());
+    setFetched(true);
+  };
+
   // Set default filters. Should re-render if era stakers re-syncs as era points effect the
   // performance order.
   useEffect(() => {
@@ -286,19 +279,26 @@ export const ValidatorListInner = ({
     };
   }, [syncing]);
 
-  // Handle validator list bootstrapping.
-  const setupValidatorList = () => {
-    setValidatorsDefault(prepareInitialValidators());
-    setValidators(prepareInitialValidators());
-    setFetched(true);
-  };
+  // Reset list when validator list changes.
+  useEffect(() => {
+    if (alwaysRefetchValidators) {
+      if (
+        JSON.stringify(initialValidators.map((v) => v.address)) !==
+        JSON.stringify(validatorsDefault.map((v) => v.address))
+      ) {
+        setFetched(false);
+      }
+    } else {
+      setFetched(false);
+    }
+  }, [initialValidators, nominator]);
 
   // Configure validator list when network is ready to fetch.
   useEffect(() => {
     if (isReady && isNotZero(activeEra.index)) {
       setupValidatorList();
     }
-  }, [isReady, activeEra.index, syncing]);
+  }, [isReady, activeEra.index, syncing, fetched]);
 
   // Control render throttle.
   useEffect(() => {
