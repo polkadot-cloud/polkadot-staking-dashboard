@@ -14,7 +14,7 @@ import {
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from 'contexts/Themes';
-import { graphColors } from 'styles/graphs';
+import { graphColors } from 'theme/graphs';
 import { useNetwork } from 'contexts/Network';
 import type { EraPointsProps } from './types';
 import type { AnyJson } from 'types';
