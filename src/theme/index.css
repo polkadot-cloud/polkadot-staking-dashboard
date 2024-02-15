@@ -16,7 +16,7 @@ html {
   box-sizing: border-box;
 }
 
-/* Define default body style and cancel out spacing. */
+/* Body style. */
 
 body {
   font-family: Inter, sans-serif;
@@ -27,7 +27,7 @@ body {
   margin: 0;
 }
 
-/* Define default header tag styling. */
+/* Header styling. */
 
 h1 {
   font-family: InterSemiBold, sans-serif;
@@ -68,7 +68,7 @@ h5 {
   margin: 0;
 }
 
-/* Define default paragraph style. */
+/* Pragraph style. */
 
 p {
   font-size: 1.04rem;
@@ -76,14 +76,14 @@ p {
   margin: 0.75rem 0;
 }
 
-/* Define default anchor style. */
+/* Anchor style. */
 
 a {
   text-decoration: none;
   cursor: pointer;
 }
 
-/* Define bare-bones button style. */
+/* Base button style. */
 
 button {
   -webkit-tap-highlight-color: transparent;
@@ -95,7 +95,7 @@ button {
   padding: 0;
 }
 
-/* Define default input style. */
+/* Base input style. */
 
 input {
   font-family: Inter, sans-serif;
