@@ -5,7 +5,7 @@ import { useHelp } from 'contexts/Help';
 import { StatBox } from './Item';
 import { TextTitleWrapper } from './Wrapper';
 import type { TextProps } from './types';
-import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 
 export const Text = ({
   label,

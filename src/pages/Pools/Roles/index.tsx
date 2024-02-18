@@ -22,7 +22,7 @@ import { PoolAccount } from '../PoolAccount';
 import { RoleEditInput } from './RoleEditInput';
 import type { RoleEditEntry, RolesProps } from './types';
 import { useSyncing } from 'hooks/useSyncing';
-import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 
 export const Roles = ({
   defaultRoles,

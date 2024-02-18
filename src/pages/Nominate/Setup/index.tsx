@@ -14,7 +14,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Bond } from './Bond';
 import { Payee } from './Payee';
 import { Summary } from './Summary';
-import { ButtonSecondary } from 'library/kits/Buttons/ButtonSecondary';
+import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
 
 export const Setup = () => {
   const { t } = useTranslation('pages');

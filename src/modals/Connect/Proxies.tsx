@@ -20,9 +20,9 @@ import {
   ManualAccountsWrapper,
 } from './Wrappers';
 import type { ListWithInputProps } from './types';
-import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
-import { ButtonMonoInvert } from 'library/kits/Buttons/ButtonMonoInvert';
-import { ButtonSecondary } from 'library/kits/Buttons/ButtonSecondary';
+import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
+import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
 
 export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');

@@ -14,7 +14,7 @@ import type { TasksProps } from './types';
 import { useApi } from 'contexts/Api';
 import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';
-import { ButtonOption } from 'library/kits/Buttons/ButtonOption';
+import { ButtonOption } from 'kits/Buttons/ButtonOption';
 
 export const Tasks = forwardRef(
   ({ setSection, setTask }: TasksProps, ref: ForwardedRef<HTMLDivElement>) => {

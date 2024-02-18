@@ -16,7 +16,7 @@ import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { ButtonSubmitInvert } from 'library/kits/Buttons/ButtonSubmitInvert';
+import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
 
 export const RenamePool = ({
   setSection,
