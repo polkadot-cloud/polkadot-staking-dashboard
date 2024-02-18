@@ -2,17 +2,16 @@
 SPDX-License-Identifier: GPL-3.0-only */
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import '@polkadot-cloud/core/css/buttons/ButtonPrimaryInvert/index.css';
+import { motion } from 'framer-motion';
+import '@polkadot-cloud/core/css/buttons/ButtonMono/index.css';
 import type { ComponentBaseWithClassName } from 'types';
-import type { ButtonCommonProps, ButtonIconProps } from './types';
-import { onMouseHandlers } from './Utils';
+import type { ButtonCommonProps, ButtonIconProps } from '../types';
 import { appendOr, appendOrEmpty } from '@polkadot-cloud/utils';
+import { onMouseHandlers } from '../Utils';
 
-export type ButtonPrimaryInvertProps = ComponentBaseWithClassName &
+export type ButtonMonoProps = ComponentBaseWithClassName &
   ButtonIconProps &
   ButtonCommonProps & {
-    // use secondary network color.
-    colorSecondary?: boolean;
     // large button, small otherwise.
     lg?: boolean;
     // button text.
@@ -20,11 +19,10 @@ export type ButtonPrimaryInvertProps = ComponentBaseWithClassName &
   };
 
 /**
- * @name ButtonPrimaryInvert
- * @description Invert primary button style.
+ * @name ButtonMono
+ * @description Monotone button style used within the main interface of dashboards.
  */
-export const ButtonPrimaryInvert = ({
-  colorSecondary,
+export const ButtonMono = ({
   disabled,
   grow,
   iconLeft,
@@ -41,17 +39,17 @@ export const ButtonPrimaryInvert = ({
   onMouseOver,
   onMouseMove,
   onMouseOut,
-}: ButtonPrimaryInvertProps) => (
-  <button
-    className={`btn-primary-invert${appendOrEmpty(
-      colorSecondary,
-      'secondary-color'
-    )}${appendOrEmpty(grow, 'grow')}${appendOr(lg, 'lg', 'sm')}${appendOrEmpty(
-      marginRight,
-      'm-right'
-    )}${appendOrEmpty(marginLeft, 'm-left')}${appendOrEmpty(marginX, 'm-x')}${
-      className ? ` ${className}` : ''
-    }`}
+}: ButtonMonoProps) => (
+  <motion.button
+    whileHover={{ scale: !disabled ? 1.02 : 1 }}
+    whileTap={{ scale: !disabled ? 0.98 : 1 }}
+    className={`btn-mono${appendOr(lg, 'lg', 'sm')}${appendOrEmpty(
+      grow,
+      'grow'
+    )}${appendOrEmpty(marginRight, 'm-right')}${appendOrEmpty(
+      marginLeft,
+      'm-left'
+    )}${appendOrEmpty(marginX, 'm-x')}${className ? ` ${className}` : ''}`}
     style={style}
     type="button"
     disabled={disabled}
@@ -72,5 +70,5 @@ export const ButtonPrimaryInvert = ({
         transform={iconTransform ? iconTransform : undefined}
       />
     ) : null}
-  </button>
+  </motion.button>
 );

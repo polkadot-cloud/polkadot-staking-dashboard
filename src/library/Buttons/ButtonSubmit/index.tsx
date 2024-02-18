@@ -2,51 +2,62 @@
 SPDX-License-Identifier: GPL-3.0-only */
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import '@polkadot-cloud/core/css/buttons/ButtonSecondary/index.css';
+import { motion } from 'framer-motion';
+import '@polkadot-cloud/core/css/buttons/ButtonSubmit/index.css';
 import type { ComponentBaseWithClassName } from 'types';
-import type { ButtonCommonProps, ButtonIconProps } from './types';
-import { onMouseHandlers } from './Utils';
+import type { ButtonCommonProps, ButtonIconProps } from '../types';
+import { onMouseHandlers } from '../Utils';
 import { appendOr, appendOrEmpty } from '@polkadot-cloud/utils';
 
-export type ButtonSecondaryProps = ComponentBaseWithClassName &
+export type ButtonSubmitProps = ComponentBaseWithClassName &
   ButtonIconProps &
   ButtonCommonProps & {
-    // large button, small otherwise.
-    lg?: boolean;
+    // use secondary network color.
+    colorSecondary?: boolean;
     // button text.
     text: string;
+    // large button, small otherwise.
+    lg?: boolean;
+    // pulsing effect.
+    pulse?: boolean;
   };
 
 /**
- * @name ButtonSecondary
- * @description Secondary button style used within the main interface of dashboards.
+ * @name ButtonSubmit
+ * @description Submit button style used within modals to submit transactions.
  */
-export const ButtonSecondary = ({
+export const ButtonSubmit = ({
+  colorSecondary,
   disabled,
   grow,
   iconLeft,
   iconRight,
   iconTransform,
-  lg,
   marginLeft,
   marginRight,
   marginX,
   className,
   style,
   text,
+  lg,
+  pulse,
   onClick,
   onMouseOver,
   onMouseMove,
   onMouseOut,
-}: ButtonSecondaryProps) => (
-  <button
-    className={`btn-secondary${appendOr(lg, 'lg', 'sm')}${appendOrEmpty(
-      grow,
-      'grow'
-    )}${appendOrEmpty(marginRight, 'm-right')}${appendOrEmpty(
+}: ButtonSubmitProps) => (
+  <motion.button
+    whileHover={{ scale: !disabled ? 1.02 : 1 }}
+    whileTap={{ scale: !disabled ? 0.98 : 1 }}
+    className={`btn-submit${appendOr(lg, 'lg', 'sm')}${appendOrEmpty(
+      colorSecondary,
+      'secondary-color'
+    )}${appendOrEmpty(grow, 'grow')}${appendOrEmpty(marginRight, 'm-right')}${appendOrEmpty(
       marginLeft,
       'm-left'
-    )}${appendOrEmpty(marginX, 'm-x')}${className ? ` ${className}` : ''}`}
+    )}${appendOrEmpty(marginX, 'm-x')}${appendOrEmpty(pulse, 'pulse')}${
+      className ? ` ${className}` : ''
+    }`}
     style={style}
     type="button"
     disabled={disabled}
@@ -67,5 +78,5 @@ export const ButtonSecondary = ({
         transform={iconTransform ? iconTransform : undefined}
       />
     ) : null}
-  </button>
+  </motion.button>
 );

@@ -3,31 +3,24 @@ SPDX-License-Identifier: GPL-3.0-only */
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
-import '@polkadot-cloud/core/css/buttons/ButtonSubmit/index.css';
+import '@polkadot-cloud/core/css/buttons/ButtonTertiary/index.css';
 import type { ComponentBaseWithClassName } from 'types';
-import type { ButtonCommonProps, ButtonIconProps } from './types';
-import { onMouseHandlers } from './Utils';
-import { appendOr, appendOrEmpty } from '@polkadot-cloud/utils';
+import type { ButtonCommonProps, ButtonIconProps } from '../types';
+import { onMouseHandlers } from '../Utils';
+import { appendOrEmpty } from '@polkadot-cloud/utils';
 
-export type ButtonSubmitProps = ComponentBaseWithClassName &
+export type ButtonTertiaryProps = ComponentBaseWithClassName &
   ButtonIconProps &
   ButtonCommonProps & {
-    // use secondary network color.
-    colorSecondary?: boolean;
     // button text.
     text: string;
-    // large button, small otherwise.
-    lg?: boolean;
-    // pulsing effect.
-    pulse?: boolean;
   };
 
 /**
- * @name ButtonSubmit
- * @description Submit button style used within modals to submit transactions.
+ * @name ButtonTertiary
+ * @description Tertiary button style used within the main interface of dashboards.
  */
-export const ButtonSubmit = ({
-  colorSecondary,
+export const ButtonTertiary = ({
   disabled,
   grow,
   iconLeft,
@@ -39,23 +32,18 @@ export const ButtonSubmit = ({
   className,
   style,
   text,
-  lg,
-  pulse,
   onClick,
   onMouseOver,
   onMouseMove,
   onMouseOut,
-}: ButtonSubmitProps) => (
+}: ButtonTertiaryProps) => (
   <motion.button
     whileHover={{ scale: !disabled ? 1.02 : 1 }}
     whileTap={{ scale: !disabled ? 0.98 : 1 }}
-    className={`btn-submit${appendOr(lg, 'lg', 'sm')}${appendOrEmpty(
-      colorSecondary,
-      'secondary-color'
-    )}${appendOrEmpty(grow, 'grow')}${appendOrEmpty(marginRight, 'm-right')}${appendOrEmpty(
-      marginLeft,
-      'm-left'
-    )}${appendOrEmpty(marginX, 'm-x')}${appendOrEmpty(pulse, 'pulse')}${
+    className={`btn-tertiary${appendOrEmpty(grow, 'grow')}${appendOrEmpty(
+      marginRight,
+      'm-right'
+    )}${appendOrEmpty(marginLeft, 'm-left')}${appendOrEmpty(marginX, 'm-x')}${
       className ? ` ${className}` : ''
     }`}
     style={style}

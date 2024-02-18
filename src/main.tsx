@@ -10,9 +10,10 @@ import '@polkadot-cloud/core/accent/kusama-relay.css';
 import '@polkadot-cloud/core/accent/westend-relay.css';
 
 // App styles.
-import 'theme/fonts.css';
-import 'theme/theme.css';
-import 'theme/index.css';
+import 'theme/fonts.scss';
+import 'theme/theme.scss';
+import 'theme/index.scss';
+import 'theme/buttons.scss';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {

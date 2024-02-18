@@ -3,35 +3,29 @@ SPDX-License-Identifier: GPL-3.0-only */
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
-import '@polkadot-cloud/core/css/buttons/ButtonPrimary/index.css';
+import '@polkadot-cloud/core/css/buttons/ButtonText/index.css';
 import type { ComponentBaseWithClassName } from 'types';
-import { appendOr, appendOrEmpty } from '@polkadot-cloud/utils';
-import type { ButtonCommonProps, ButtonIconProps } from './types';
-import { onMouseHandlers } from './Utils';
+import type { ButtonCommonProps, ButtonIconProps } from '../types';
+import { onMouseHandlers } from '../Utils';
+import { appendOrEmpty } from '@polkadot-cloud/utils';
 
-export type ButtonPrimaryProps = ComponentBaseWithClassName &
+export type ButtonMonoProps = ComponentBaseWithClassName &
   ButtonIconProps &
   ButtonCommonProps & {
-    // use secondary network color.
-    colorSecondary?: boolean;
-    // large button, small otherwise.
-    lg?: boolean;
     // button text.
     text: string;
   };
 
 /**
- * @name ButtonPrimary
- * @description Primary button style used within the main interface of dashboards.
+ * @name ButtonText
+ * @description Plain button style used within the main interface of dashboards.
  */
-export const ButtonPrimary = ({
-  colorSecondary,
+export const ButtonText = ({
   disabled,
   grow,
   iconLeft,
   iconRight,
   iconTransform,
-  lg,
   marginLeft,
   marginRight,
   marginX,
@@ -42,17 +36,16 @@ export const ButtonPrimary = ({
   onMouseOver,
   onMouseMove,
   onMouseOut,
-}: ButtonPrimaryProps) => (
+}: ButtonMonoProps) => (
   <motion.button
     whileHover={{ scale: !disabled ? 1.02 : 1 }}
     whileTap={{ scale: !disabled ? 0.98 : 1 }}
-    className={`btn-primary${appendOr(lg, 'lg', 'sm')}${appendOrEmpty(
-      colorSecondary,
-      'secondary-color'
-    )}${appendOrEmpty(grow, 'grow')}${appendOrEmpty(marginRight, 'm-right')}${appendOrEmpty(
-      marginLeft,
-      'm-left'
-    )}${appendOrEmpty(marginX, 'm-x')}${className ? ` ${className}` : ''}`}
+    className={`btn-text${appendOrEmpty(grow, 'grow')}${appendOrEmpty(
+      marginRight,
+      'm-right'
+    )}${appendOrEmpty(marginLeft, 'm-left')}${appendOrEmpty(marginX, 'm-x')}${
+      className ? ` ${className}` : ''
+    }`}
     style={style}
     type="button"
     disabled={disabled}

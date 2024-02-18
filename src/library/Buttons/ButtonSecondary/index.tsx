@@ -2,30 +2,32 @@
 SPDX-License-Identifier: GPL-3.0-only */
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { motion } from 'framer-motion';
-import '@polkadot-cloud/core/css/buttons/ButtonText/index.css';
+import '@polkadot-cloud/core/css/buttons/ButtonSecondary/index.css';
 import type { ComponentBaseWithClassName } from 'types';
-import type { ButtonCommonProps, ButtonIconProps } from './types';
-import { onMouseHandlers } from './Utils';
-import { appendOrEmpty } from '@polkadot-cloud/utils';
+import type { ButtonCommonProps, ButtonIconProps } from '../types';
+import { onMouseHandlers } from '../Utils';
+import { appendOr, appendOrEmpty } from '@polkadot-cloud/utils';
 
-export type ButtonMonoProps = ComponentBaseWithClassName &
+export type ButtonSecondaryProps = ComponentBaseWithClassName &
   ButtonIconProps &
   ButtonCommonProps & {
+    // large button, small otherwise.
+    lg?: boolean;
     // button text.
     text: string;
   };
 
 /**
- * @name ButtonText
- * @description Plain button style used within the main interface of dashboards.
+ * @name ButtonSecondary
+ * @description Secondary button style used within the main interface of dashboards.
  */
-export const ButtonText = ({
+export const ButtonSecondary = ({
   disabled,
   grow,
   iconLeft,
   iconRight,
   iconTransform,
+  lg,
   marginLeft,
   marginRight,
   marginX,
@@ -36,16 +38,15 @@ export const ButtonText = ({
   onMouseOver,
   onMouseMove,
   onMouseOut,
-}: ButtonMonoProps) => (
-  <motion.button
-    whileHover={{ scale: !disabled ? 1.02 : 1 }}
-    whileTap={{ scale: !disabled ? 0.98 : 1 }}
-    className={`btn-text${appendOrEmpty(grow, 'grow')}${appendOrEmpty(
-      marginRight,
-      'm-right'
-    )}${appendOrEmpty(marginLeft, 'm-left')}${appendOrEmpty(marginX, 'm-x')}${
-      className ? ` ${className}` : ''
-    }`}
+}: ButtonSecondaryProps) => (
+  <button
+    className={`btn-secondary${appendOr(lg, 'lg', 'sm')}${appendOrEmpty(
+      grow,
+      'grow'
+    )}${appendOrEmpty(marginRight, 'm-right')}${appendOrEmpty(
+      marginLeft,
+      'm-left'
+    )}${appendOrEmpty(marginX, 'm-x')}${className ? ` ${className}` : ''}`}
     style={style}
     type="button"
     disabled={disabled}
@@ -66,5 +67,5 @@ export const ButtonText = ({
         transform={iconTransform ? iconTransform : undefined}
       />
     ) : null}
-  </motion.button>
+  </button>
 );

@@ -1,12 +1,12 @@
 /* @license Copyright 2024 @polkadot-cloud/library authors & contributors
 SPDX-License-Identifier: GPL-3.0-only */
 
-import InfoSVG from './svg/help.svg?react';
+import InfoSVG from '../svg/help.svg?react';
 import '@polkadot-cloud/core/css/buttons/ButtonHelp/index.css';
 import type { ComponentBaseWithClassName } from 'types';
-import type { ButtonCommonProps } from './types';
+import type { ButtonCommonProps } from '../types';
 import { appendOrEmpty } from '@polkadot-cloud/utils';
-import { onMouseHandlers } from './Utils';
+import { onMouseHandlers } from '../Utils';
 
 export type ButtonHelpProps = ComponentBaseWithClassName &
   ButtonCommonProps & {
