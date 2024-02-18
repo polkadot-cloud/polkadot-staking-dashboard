@@ -13,7 +13,9 @@ import '@polkadot-cloud/core/accent/westend-relay.css';
 import 'theme/fonts.scss';
 import 'theme/theme.scss';
 import 'theme/index.scss';
-import 'theme/buttons.scss';
+
+// Library styles.
+import 'library/Buttons/buttons.scss';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
