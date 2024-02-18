@@ -4,7 +4,6 @@
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import {
   ActionItem,
-  ButtonSubmitInvert,
   ModalNotes,
   ModalPadding,
   ModalWarnings,
@@ -23,6 +22,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { ButtonSubmitInvert } from 'library/Buttons/ButtonSubmitInvert';
 
 export const ClaimCommission = ({
   setSection,

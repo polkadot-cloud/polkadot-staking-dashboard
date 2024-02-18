@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonSecondary } from '@polkadot-cloud/react';
 import { isValidAddress } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +12,7 @@ import { useNetwork } from 'contexts/Network';
 import { formatAccountSs58 } from 'contexts/Connect/Utils';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { AnyJson } from 'types';
+import { ButtonSecondary } from 'library/Buttons/ButtonSecondary';
 
 export const Reader = () => {
   const { t } = useTranslation('modals');

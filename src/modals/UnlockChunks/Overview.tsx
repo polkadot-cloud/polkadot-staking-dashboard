@@ -3,7 +3,7 @@
 
 import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonSubmit, ModalNotes, ModalPadding } from '@polkadot-cloud/react';
+import { ModalNotes, ModalPadding } from '@polkadot-cloud/react';
 import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { getUnixTime } from 'date-fns';
@@ -21,6 +21,7 @@ import { useNetwork } from 'contexts/Network';
 import { Chunk } from './Chunk';
 import { ContentWrapper } from './Wrappers';
 import type { UnlockChunk } from 'contexts/Balances/types';
+import { ButtonSubmit } from 'library/Buttons/ButtonSubmit';
 
 interface OverviewProps {
   unlocking: UnlockChunk[];

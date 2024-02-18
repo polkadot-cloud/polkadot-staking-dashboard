@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faSquarePen } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSubmit } from '@polkadot-cloud/react';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePrompt } from 'contexts/Prompt';
@@ -11,6 +10,7 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { SubmitProps } from '../../types';
 import { SignPrompt } from './SignPrompt';
+import { ButtonSubmit } from 'library/Buttons/ButtonSubmit';
 
 export const Vault = ({
   onSubmit,

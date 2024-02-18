@@ -6,11 +6,7 @@ import {
   faEdit,
   faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import {
-  ButtonHelp,
-  ButtonPrimary,
-  ButtonPrimaryInvert,
-} from '@polkadot-cloud/react';
+import { ButtonPrimary, ButtonPrimaryInvert } from '@polkadot-cloud/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -26,6 +22,7 @@ import { PoolAccount } from '../PoolAccount';
 import { RoleEditInput } from './RoleEditInput';
 import type { RoleEditEntry, RolesProps } from './types';
 import { useSyncing } from 'hooks/useSyncing';
+import { ButtonHelp } from 'library/Buttons/ButtonHelp';
 
 export const Roles = ({
   defaultRoles,

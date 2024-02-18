@@ -4,8 +4,6 @@
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import {
   ActionItem,
-  ButtonPrimaryInvert,
-  ButtonTab,
   ModalCustomHeader,
   ModalFixedTitle,
   ModalMotionThreeSection,
@@ -29,6 +27,8 @@ import { Proxies } from './Proxies';
 import { ReadOnly } from './ReadOnly';
 import { Vault } from './Vault';
 import { ExtensionsWrapper } from './Wrappers';
+import { ButtonPrimaryInvert } from 'library/Buttons/ButtonPrimaryInvert';
+import { ButtonTab } from 'library/Buttons/ButtonTab';
 
 export const Connect = () => {
   const { t } = useTranslation('modals');

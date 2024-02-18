@@ -3,11 +3,7 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import {
-  ButtonSubmitInvert,
-  ModalPadding,
-  ModalWarnings,
-} from '@polkadot-cloud/react';
+import { ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
 import type { Dispatch, FormEvent, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -20,6 +16,7 @@ import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { ButtonSubmitInvert } from 'library/Buttons/ButtonSubmitInvert';
 
 export const RenamePool = ({
   setSection,

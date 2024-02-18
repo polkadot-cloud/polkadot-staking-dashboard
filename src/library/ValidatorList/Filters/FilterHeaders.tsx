@@ -5,12 +5,13 @@ import {
   faArrowDownWideShort,
   faFilterCircleXmark,
 } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimaryInvert, ButtonSecondary } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useFilters } from 'contexts/Filters';
 import { usePrompt } from 'contexts/Prompt';
 import { OrderValidators } from '../OrderValidators';
 import { FilterValidators } from '../FilterValidators';
+import { ButtonPrimaryInvert } from 'library/Buttons/ButtonPrimaryInvert';
+import { ButtonSecondary } from 'library/Buttons/ButtonSecondary';
 
 export const FilterHeaders = () => {
   const { t } = useTranslation('library');

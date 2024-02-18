@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonSubmitInvert } from '@polkadot-cloud/react';
 import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import type { ChangeEvent } from 'react';
@@ -11,6 +10,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { InputWrapper } from '../Wrappers';
 import type { UnbondInputProps } from '../types';
+import { ButtonSubmitInvert } from 'library/Buttons/ButtonSubmitInvert';
 
 export const UnbondInput = ({
   defaultValue,

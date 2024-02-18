@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
-import { ButtonText, HardwareAddress, Polkicon } from '@polkadot-cloud/react';
+import { HardwareAddress, Polkicon } from '@polkadot-cloud/react';
 import { ellipsisFn, unescape } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
@@ -15,6 +15,7 @@ import type { AnyJson } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useLedgerAccounts } from '@polkadot-cloud/react/hooks';
+import { ButtonText } from 'library/Buttons/ButtonText';
 
 export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {
   const { t } = useTranslation('modals');

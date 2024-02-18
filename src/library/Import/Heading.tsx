@@ -6,10 +6,10 @@ import {
   faCircleMinus,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonText } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { HeadingWrapper } from './Wrappers';
 import type { HeadingProps } from './types';
+import { ButtonText } from 'library/Buttons/ButtonText';
 
 export const Heading = ({
   connectTo,

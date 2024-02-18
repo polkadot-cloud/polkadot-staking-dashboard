@@ -1,11 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonHelp } from '@polkadot-cloud/react';
 import { useHelp } from 'contexts/Help';
 import { StatBox } from './Item';
 import { TextTitleWrapper } from './Wrapper';
 import type { TextProps } from './types';
+import { ButtonHelp } from 'library/Buttons/ButtonHelp';
 
 export const Text = ({
   label,

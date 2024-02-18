@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonHelp, useEffectIgnoreInitial } from '@polkadot-cloud/react';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react';
 import type { ReactNode } from 'react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +18,7 @@ import { useNetwork } from 'contexts/Network';
 import { getLedgerApp } from 'contexts/Hardware/Utils';
 import type { SubmitProps } from '../../types';
 import { Submit } from './Submit';
+import { ButtonHelp } from 'library/Buttons/ButtonHelp';
 
 export const Ledger = ({
   uid,

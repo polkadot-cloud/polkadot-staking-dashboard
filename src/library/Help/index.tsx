@@ -3,7 +3,6 @@
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import {
-  ButtonPrimaryInvert,
   CanvasContainer,
   ModalContent,
   CanvasScroll,
@@ -24,6 +23,7 @@ import { useFillVariables } from 'hooks/useFillVariables';
 import { Definition } from './Items/Definition';
 import { External } from './Items/External';
 import { ActiveDefinition } from './Items/ActiveDefinition';
+import { ButtonPrimaryInvert } from 'library/Buttons/ButtonPrimaryInvert';
 
 export const Help = () => {
   const { t, i18n } = useTranslation('help');

@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonSubmit } from '@polkadot-cloud/react';
 import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { fromUnixTime } from 'date-fns';
@@ -16,6 +15,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ChunkWrapper } from './Wrappers';
 import type { ChunkProps } from './types';
 import { useApi } from 'contexts/Api';
+import { ButtonSubmit } from 'library/Buttons/ButtonSubmit';
 
 export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
   const { t } = useTranslation('modals');

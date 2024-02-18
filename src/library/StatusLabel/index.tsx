@@ -3,7 +3,6 @@
 
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonHelp } from '@polkadot-cloud/react';
 import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
@@ -12,6 +11,7 @@ import type { StatusLabelProps } from './types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
 import { useSyncing } from 'hooks/useSyncing';
+import { ButtonHelp } from 'library/Buttons/ButtonHelp';
 
 export const StatusLabel = ({
   title,

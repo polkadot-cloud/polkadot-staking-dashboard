@@ -2,12 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimaryInvert, Separator } from '@polkadot-cloud/react';
+import { Separator } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useStaking } from 'contexts/Staking';
 import { MoreWrapper } from './Wrappers';
+import { ButtonPrimaryInvert } from 'library/Buttons/ButtonPrimaryInvert';
 
 export const BalanceLinks = () => {
   const { t } = useTranslation('pages');
