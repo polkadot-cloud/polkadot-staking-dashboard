@@ -23,7 +23,7 @@ import { useFillVariables } from 'hooks/useFillVariables';
 import { Definition } from './Items/Definition';
 import { External } from './Items/External';
 import { ActiveDefinition } from './Items/ActiveDefinition';
-import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { ButtonPrimaryInvert } from 'library/kits/Buttons/ButtonPrimaryInvert';
 
 export const Help = () => {
   const { t, i18n } = useTranslation('help');

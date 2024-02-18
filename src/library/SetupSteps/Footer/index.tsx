@@ -6,7 +6,7 @@ import { useSetup } from 'contexts/Setup';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { FooterProps } from '../types';
 import { Wrapper } from './Wrapper';
-import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonPrimary } from 'library/kits/Buttons/ButtonPrimary';
 
 export const Footer = ({ complete, bondFor }: FooterProps) => {
   const { t } = useTranslation('library');

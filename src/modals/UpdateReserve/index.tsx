@@ -20,8 +20,8 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { StyledSlider } from 'library/StyledSlider';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
-import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
+import { ButtonPrimaryInvert } from 'library/kits/Buttons/ButtonPrimaryInvert';
 
 export const UpdateReserve = () => {
   const { t } = useTranslation('modals');

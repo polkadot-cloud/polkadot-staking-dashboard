@@ -10,7 +10,7 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { TitleWrapper } from './Wrappers';
 import type { AnyJson } from 'types';
 import type { CSSProperties } from 'styled-components';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
 
 interface TitleProps {
   title: string;

@@ -18,7 +18,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useSyncing } from 'hooks/useSyncing';
-import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonPrimary } from 'library/kits/Buttons/ButtonPrimary';
 
 export const ControllerNotStash = () => {
   const { t } = useTranslation('pages');

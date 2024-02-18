@@ -7,7 +7,7 @@ import { useNetwork } from 'contexts/Network';
 import { ItemWrapper } from './Wrappers';
 import type { ItemProps } from './types';
 import { getTotalPayout } from './Utils';
-import { ButtonSubmit } from 'kits/Buttons/ButtonSubmit';
+import { ButtonSubmit } from 'library/kits/Buttons/ButtonSubmit';
 
 export const Item = ({
   era,

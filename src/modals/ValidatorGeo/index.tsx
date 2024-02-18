@@ -19,7 +19,7 @@ import { PluginLabel } from 'library/PluginLabel';
 import { usePlugins } from 'contexts/Plugins';
 import { useNetwork } from 'contexts/Network';
 import { PolkaWatchController } from 'static/PolkaWatchController';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
 
 export const ValidatorGeo = () => {
   const { t } = useTranslation('modals');

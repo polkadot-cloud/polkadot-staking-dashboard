@@ -12,8 +12,8 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useSyncing } from 'hooks/useSyncing';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
-import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
+import { ButtonPrimary } from 'library/kits/Buttons/ButtonPrimary';
 
 export const ManagePool = () => {
   const { t } = useTranslation();

@@ -128,10 +128,9 @@ textarea:focus {
   outline: none;
 }
 
-
 /* Base SVG style. */
 
 path.primary,
-  ellipse.primary {
-    fill: var(--text-color-primary);
-  }
+ellipse.primary {
+  fill: var(--text-color-primary);
+}

@@ -10,7 +10,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { InputWrapper } from '../Wrappers';
 import type { UnbondInputProps } from '../types';
-import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
+import { ButtonSubmitInvert } from 'library/kits/Buttons/ButtonSubmitInvert';
 
 export const UnbondInput = ({
   defaultValue,

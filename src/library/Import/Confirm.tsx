@@ -10,8 +10,8 @@ import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { ConfirmProps } from './types';
 import { NotificationsController } from 'static/NotificationsController';
 import { ellipsisFn } from '@polkadot-cloud/utils';
-import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
-import { ButtonMono } from 'kits/Buttons/ButtonMono';
+import { ButtonMonoInvert } from 'library/kits/Buttons/ButtonMonoInvert';
+import { ButtonMono } from 'library/kits/Buttons/ButtonMono';
 
 export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
   const { t } = useTranslation('modals');

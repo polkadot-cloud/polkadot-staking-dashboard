@@ -11,7 +11,7 @@ import type { StatusLabelProps } from './types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
 import { useSyncing } from 'hooks/useSyncing';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
 
 export const StatusLabel = ({
   title,

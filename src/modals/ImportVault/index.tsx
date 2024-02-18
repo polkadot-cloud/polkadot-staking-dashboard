@@ -17,8 +17,8 @@ import type { AnyJson } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { Reader } from './Reader';
-import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
-import { ButtonText } from 'kits/Buttons/ButtonText';
+import { ButtonPrimary } from 'library/kits/Buttons/ButtonPrimary';
+import { ButtonText } from 'library/kits/Buttons/ButtonText';
 import { HardwareAddress } from 'library/Hardware/HardwareAddress';
 import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar';
 

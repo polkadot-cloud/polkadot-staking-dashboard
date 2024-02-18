@@ -18,8 +18,8 @@ import { ListStatusHeader } from 'library/List';
 import { Wrapper } from './Wrapper';
 import { useSyncing } from 'hooks/useSyncing';
 import { useBalances } from 'contexts/Balances';
-import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonPrimary } from 'library/kits/Buttons/ButtonPrimary';
+import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
 
 export const Nominations = ({
   bondFor,

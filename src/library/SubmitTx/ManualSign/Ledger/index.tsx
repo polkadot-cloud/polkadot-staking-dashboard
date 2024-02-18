@@ -18,7 +18,7 @@ import { useNetwork } from 'contexts/Network';
 import { getLedgerApp } from 'contexts/Hardware/Utils';
 import type { SubmitProps } from '../../types';
 import { Submit } from './Submit';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
 
 export const Ledger = ({
   uid,

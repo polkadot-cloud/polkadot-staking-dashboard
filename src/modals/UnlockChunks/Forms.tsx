@@ -24,7 +24,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ContentWrapper } from './Wrappers';
 import type { FormsProps } from './types';
 import { useBalances } from 'contexts/Balances';
-import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
+import { ButtonSubmitInvert } from 'library/kits/Buttons/ButtonSubmitInvert';
 
 export const Forms = forwardRef(
   (

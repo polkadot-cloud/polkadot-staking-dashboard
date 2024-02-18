@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PageRow, PageTitle } from '@polkadot-cloud/react';
+import { PageRow } from '@polkadot-cloud/react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MaxPayoutDays } from 'consts';
@@ -24,7 +24,8 @@ import { useSubscanData } from 'hooks/useSubscanData';
 import { SubscanController } from 'static/SubscanController';
 import { DefaultLocale, locales } from 'locale';
 import { useSyncing } from 'hooks/useSyncing';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
+import { PageTitle } from 'library/kits/Structure/PageTitle';
 
 export const Payouts = ({ page: { key } }: PageProps) => {
   const { i18n, t } = useTranslation();

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { PageHeading, PageRow, PageTitle } from '@polkadot-cloud/react';
+import { PageHeading, PageRow } from '@polkadot-cloud/react';
 import { extractUrlValue, removeVarFromUrlHash } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +14,8 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Bond } from './Bond';
 import { Payee } from './Payee';
 import { Summary } from './Summary';
-import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
+import { ButtonSecondary } from 'library/kits/Buttons/ButtonSecondary';
+import { PageTitle } from 'library/kits/Structure/PageTitle';
 
 export const Setup = () => {
   const { t } = useTranslation('pages');

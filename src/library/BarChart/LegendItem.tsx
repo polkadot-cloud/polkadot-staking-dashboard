@@ -3,7 +3,7 @@
 
 import { useHelp } from 'contexts/Help';
 import type { LegendItemProps } from './types';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
 
 export const LegendItem = ({
   dataClass,

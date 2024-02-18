@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { ConnectedAccount, HeadingWrapper } from './Wrappers';
-import { ButtonText } from 'kits/Buttons/ButtonText';
+import { ButtonText } from 'library/kits/Buttons/ButtonText';
 
 export const Connect = () => {
   const { t } = useTranslation('library');

@@ -22,7 +22,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
+import { ButtonSubmitInvert } from 'library/kits/Buttons/ButtonSubmitInvert';
 
 export const ClaimCommission = ({
   setSection,

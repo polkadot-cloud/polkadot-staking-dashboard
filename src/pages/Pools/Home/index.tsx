@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PageRow, PageTitle, RowSection } from '@polkadot-cloud/react';
+import { PageRow, RowSection } from '@polkadot-cloud/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { PageTitleTabProps } from '@polkadot-cloud/react/types';
@@ -28,6 +28,7 @@ import { PoolsTabsProvider, usePoolsTabs } from './context';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'hooks/useActivePools';
 import { useBalances } from 'contexts/Balances';
+import { PageTitle } from 'library/kits/Structure/PageTitle';
 
 export const HomeInner = () => {
   const { t } = useTranslation('pages');

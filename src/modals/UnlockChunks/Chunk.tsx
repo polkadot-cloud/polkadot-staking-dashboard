@@ -15,7 +15,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ChunkWrapper } from './Wrappers';
 import type { ChunkProps } from './types';
 import { useApi } from 'contexts/Api';
-import { ButtonSubmit } from 'kits/Buttons/ButtonSubmit';
+import { ButtonSubmit } from 'library/kits/Buttons/ButtonSubmit';
 
 export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
   const { t } = useTranslation('modals');

@@ -11,8 +11,8 @@ import LedgerLogoSvg from '@polkadot-cloud/assets/extensions/svg/ledger.svg?reac
 import type { AnyFunction } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { SplashWrapper } from './Wrappers';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
-import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
+import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
+import { ButtonSecondary } from 'library/kits/Buttons/ButtonSecondary';
 
 export const Splash = ({ onGetAddress }: AnyFunction) => {
   const { t } = useTranslation('modals');
