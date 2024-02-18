@@ -8,7 +8,7 @@ import BigNumber from 'bignumber.js';
 import { StatBox } from './Item';
 import type { PieProps } from './types';
 import type { AnyJson } from '@polkadot-cloud/react/types';
-import { ButtonHelp } from 'library/Buttons/ButtonHelp';
+import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
 
 export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
   const help = helpKey !== undefined;

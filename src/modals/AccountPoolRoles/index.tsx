@@ -12,7 +12,7 @@ import { ContentWrapper } from './Wrappers';
 import { useBalances } from 'contexts/Balances';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { ActivePool } from 'contexts/Pools/ActivePool/types';
-import { ButtonOption } from 'library/Buttons/ButtonOption';
+import { ButtonOption } from 'library/kits/Buttons/ButtonOption';
 
 export const AccountPoolRoles = () => {
   const { t } = useTranslation('modals');

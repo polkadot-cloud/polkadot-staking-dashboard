@@ -21,8 +21,8 @@ import type { AnyJson } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { Reader } from './Reader';
-import { ButtonPrimary } from 'library/Buttons/ButtonPrimary';
-import { ButtonText } from 'library/Buttons/ButtonText';
+import { ButtonPrimary } from 'library/kits/Buttons/ButtonPrimary';
+import { ButtonText } from 'library/kits/Buttons/ButtonText';
 
 export const ImportVault = () => {
   const { t } = useTranslation();

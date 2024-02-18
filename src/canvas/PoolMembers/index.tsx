@@ -6,7 +6,7 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { CanvasFullScreenWrapper } from 'canvas/Wrappers';
 import { Members } from 'canvas/PoolMembers/Members';
 import { useTranslation } from 'react-i18next';
-import { ButtonPrimary } from 'library/Buttons/ButtonPrimary';
+import { ButtonPrimary } from 'library/kits/Buttons/ButtonPrimary';
 
 export const PoolMembers = () => {
   const { t } = useTranslation();

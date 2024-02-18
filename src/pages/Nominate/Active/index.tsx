@@ -23,8 +23,8 @@ import { Status } from './Status';
 import { UnstakePrompts } from './UnstakePrompts';
 import { useSyncing } from 'hooks/useSyncing';
 import { useBalances } from 'contexts/Balances';
-import { ButtonHelp } from 'library/Buttons/ButtonHelp';
-import { ButtonPrimary } from 'library/Buttons/ButtonPrimary';
+import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
+import { ButtonPrimary } from 'library/kits/Buttons/ButtonPrimary';
 
 export const Active = () => {
   const { t } = useTranslation();

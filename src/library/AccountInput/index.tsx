@@ -14,7 +14,7 @@ import { useNetwork } from 'contexts/Network';
 import { formatAccountSs58 } from 'contexts/Connect/Utils';
 import { AccountInputWrapper } from './Wrapper';
 import type { AccountInputProps } from './types';
-import { ButtonSecondary } from 'library/Buttons/ButtonSecondary';
+import { ButtonSecondary } from 'library/kits/Buttons/ButtonSecondary';
 
 export const AccountInput = ({
   successCallback,

@@ -22,9 +22,9 @@ import {
   ManualAccountsWrapper,
 } from './Wrappers';
 import type { ListWithInputProps } from './types';
-import { ButtonHelp } from 'library/Buttons/ButtonHelp';
-import { ButtonMonoInvert } from 'library/Buttons/ButtonMonoInvert';
-import { ButtonSecondary } from 'library/Buttons/ButtonSecondary';
+import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
+import { ButtonMonoInvert } from 'library/kits/Buttons/ButtonMonoInvert';
+import { ButtonSecondary } from 'library/kits/Buttons/ButtonSecondary';
 
 export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');

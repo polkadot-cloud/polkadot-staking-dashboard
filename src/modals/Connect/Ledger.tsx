@@ -13,9 +13,9 @@ import { useHelp } from 'contexts/Help';
 import LedgerLogoSVG from '@polkadot-cloud/assets/extensions/svg/ledger.svg?react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import { ButtonHelp } from 'library/Buttons/ButtonHelp';
-import { ButtonPrimaryInvert } from 'library/Buttons/ButtonPrimaryInvert';
-import { ButtonText } from 'library/Buttons/ButtonText';
+import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
+import { ButtonPrimaryInvert } from 'library/kits/Buttons/ButtonPrimaryInvert';
+import { ButtonText } from 'library/kits/Buttons/ButtonText';
 
 export const Ledger = () => {
   const { openHelp } = useHelp();

@@ -16,7 +16,7 @@ import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { ButtonSubmitInvert } from 'library/Buttons/ButtonSubmitInvert';
+import { ButtonSubmitInvert } from 'library/kits/Buttons/ButtonSubmitInvert';
 
 export const RenamePool = ({
   setSection,
@@ -94,7 +94,7 @@ export const RenamePool = ({
           </ModalWarnings>
         ) : null}
         <input
-          className="textbox"
+          className="underline"
           style={{ width: '100%' }}
           placeholder={t('poolName')}
           type="text"

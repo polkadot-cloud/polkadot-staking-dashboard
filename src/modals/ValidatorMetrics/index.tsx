@@ -23,7 +23,7 @@ import type { AnyJson } from 'types';
 import { SubscanController } from 'static/SubscanController';
 import { usePlugins } from 'contexts/Plugins';
 import { useApi } from 'contexts/Api';
-import { ButtonHelp } from 'library/Buttons/ButtonHelp';
+import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');

@@ -23,8 +23,8 @@ import { usePoolCommission } from './provider';
 import { CommissionCurrent } from './CommissionCurrent';
 import { MaxCommission } from './MaxCommission';
 import { ChangeRate } from './ChangeRate';
-import { ButtonHelp } from 'library/Buttons/ButtonHelp';
-import { ButtonSubmitInvert } from 'library/Buttons/ButtonSubmitInvert';
+import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
+import { ButtonSubmitInvert } from 'library/kits/Buttons/ButtonSubmitInvert';
 
 export const ManageCommission = ({
   setSection,

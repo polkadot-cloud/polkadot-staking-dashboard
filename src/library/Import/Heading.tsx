@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
 import { HeadingWrapper } from './Wrappers';
 import type { HeadingProps } from './types';
-import { ButtonText } from 'library/Buttons/ButtonText';
+import { ButtonText } from 'library/kits/Buttons/ButtonText';
 
 export const Heading = ({
   connectTo,

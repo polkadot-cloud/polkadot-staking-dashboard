@@ -15,7 +15,7 @@ import type { AnyJson } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useLedgerAccounts } from '@polkadot-cloud/react/hooks';
-import { ButtonText } from 'library/Buttons/ButtonText';
+import { ButtonText } from 'library/kits/Buttons/ButtonText';
 
 export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {
   const { t } = useTranslation('modals');

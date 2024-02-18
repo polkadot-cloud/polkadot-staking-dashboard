@@ -12,7 +12,7 @@ import { useNetwork } from 'contexts/Network';
 import { formatAccountSs58 } from 'contexts/Connect/Utils';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { AnyJson } from 'types';
-import { ButtonSecondary } from 'library/Buttons/ButtonSecondary';
+import { ButtonSecondary } from 'library/kits/Buttons/ButtonSecondary';
 
 export const Reader = () => {
   const { t } = useTranslation('modals');
