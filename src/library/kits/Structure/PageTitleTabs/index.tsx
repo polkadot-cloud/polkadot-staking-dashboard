@@ -1,7 +1,6 @@
 /* // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 SPDX-License-Identifier: GPL-3.0-only */
 
-import '@polkadot-cloud/core/css/base/structure/PageTitleTabs/index.css';
 import { ButtonTab } from 'library/kits/Buttons/ButtonTab';
 import type { PageTitleProps } from '../PageTitle/types';
 import type { PageTitleTabProps } from './types';

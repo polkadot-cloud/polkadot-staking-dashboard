@@ -3,7 +3,6 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
-import '@polkadot-cloud/core/css/buttons/ButtonMono/index.css';
 import type { ComponentBaseWithClassName } from 'types';
 import type { ButtonCommonProps, ButtonIconProps } from '../types';
 import { appendOr, appendOrEmpty } from '@polkadot-cloud/utils';

@@ -3,7 +3,6 @@
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import '@polkadot-cloud/core/css/buttons/ButtonOption/index.css';
 import type { ComponentBaseWithClassName } from 'types';
 import type { ButtonCommonProps } from '../types';
 import { appendOrEmpty } from '@polkadot-cloud/utils';

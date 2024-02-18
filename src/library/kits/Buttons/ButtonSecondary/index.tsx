@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import '@polkadot-cloud/core/css/buttons/ButtonSecondary/index.css';
 import type { ComponentBaseWithClassName } from 'types';
 import type { ButtonCommonProps, ButtonIconProps } from '../types';
 import { onMouseHandlers } from '../Utils';

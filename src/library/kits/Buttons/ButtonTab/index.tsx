@@ -1,7 +1,6 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import '@polkadot-cloud/core/css/buttons/ButtonTab/index.css';
 import type { ComponentBaseWithClassName } from 'types';
 import type { ButtonCommonProps } from '../types';
 import { appendOrEmpty } from '@polkadot-cloud/utils';
