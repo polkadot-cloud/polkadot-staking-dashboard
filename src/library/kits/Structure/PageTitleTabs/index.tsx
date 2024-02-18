@@ -1,5 +1,5 @@
-/* // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
-SPDX-License-Identifier: GPL-3.0-only */
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { ButtonTab } from 'library/kits/Buttons/ButtonTab';
 import type { PageTitleProps } from '../PageTitle/types';
