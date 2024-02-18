@@ -2,12 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import {
-  ButtonHelp,
-  ButtonPrimary,
-  ButtonRow,
-  Odometer,
-} from '@polkadot-cloud/react';
+import { ButtonRow, Odometer } from '@polkadot-cloud/react';
 import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
@@ -20,6 +15,8 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useSyncing } from 'hooks/useSyncing';
+import { ButtonHelp } from 'library/Buttons/ButtonHelp';
+import { ButtonPrimary } from 'library/Buttons/ButtonPrimary';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheck, faCheckDouble } from '@fortawesome/free-solid-svg-icons';
-import { ButtonTertiary, Odometer } from '@polkadot-cloud/react';
+import { Odometer } from '@polkadot-cloud/react';
 import {
   greaterThanZero,
   minDecimalPlaces,
@@ -23,6 +23,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useSyncing } from 'hooks/useSyncing';
+import { ButtonTertiary } from 'library/Buttons/ButtonTertiary';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');

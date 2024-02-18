@@ -3,8 +3,6 @@
 
 import { faQrcode } from '@fortawesome/free-solid-svg-icons';
 import {
-  ButtonPrimary,
-  ButtonText,
   HardwareAddress,
   HardwareStatusBar,
   Polkicon,
@@ -23,6 +21,8 @@ import type { AnyJson } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { Reader } from './Reader';
+import { ButtonPrimary } from 'library/Buttons/ButtonPrimary';
+import { ButtonText } from 'library/Buttons/ButtonText';
 
 export const ImportVault = () => {
   const { t } = useTranslation();

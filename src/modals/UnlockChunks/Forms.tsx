@@ -2,12 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import {
-  ActionItem,
-  ButtonSubmitInvert,
-  ModalPadding,
-  ModalWarnings,
-} from '@polkadot-cloud/react';
+import { ActionItem, ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
 import { planckToUnit, rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import type { ForwardedRef } from 'react';
@@ -29,6 +24,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ContentWrapper } from './Wrappers';
 import type { FormsProps } from './types';
 import { useBalances } from 'contexts/Balances';
+import { ButtonSubmitInvert } from 'library/Buttons/ButtonSubmitInvert';
 
 export const Forms = forwardRef(
   (

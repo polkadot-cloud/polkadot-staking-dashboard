@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonHelp, Polkicon } from '@polkadot-cloud/react';
+import { Polkicon } from '@polkadot-cloud/react';
 import { ellipsisFn } from '@polkadot-cloud/utils';
 import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -19,6 +19,7 @@ import { PluginLabel } from 'library/PluginLabel';
 import { usePlugins } from 'contexts/Plugins';
 import { useNetwork } from 'contexts/Network';
 import { PolkaWatchController } from 'static/PolkaWatchController';
+import { ButtonHelp } from 'library/Buttons/ButtonHelp';
 
 export const ValidatorGeo = () => {
   const { t } = useTranslation('modals');

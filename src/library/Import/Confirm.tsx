@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonMono, ButtonMonoInvert, Polkicon } from '@polkadot-cloud/react';
+import { Polkicon } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { usePrompt } from 'contexts/Prompt';
 
@@ -10,6 +10,8 @@ import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { ConfirmProps } from './types';
 import { NotificationsController } from 'static/NotificationsController';
 import { ellipsisFn } from '@polkadot-cloud/utils';
+import { ButtonMonoInvert } from 'library/Buttons/ButtonMonoInvert';
+import { ButtonMono } from 'library/Buttons/ButtonMono';
 
 export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
   const { t } = useTranslation('modals');

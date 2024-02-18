@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonSecondary } from '@polkadot-cloud/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
@@ -12,6 +11,8 @@ import LedgerLogoSvg from '@polkadot-cloud/assets/extensions/svg/ledger.svg?reac
 import type { AnyFunction } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { SplashWrapper } from './Wrappers';
+import { ButtonHelp } from 'library/Buttons/ButtonHelp';
+import { ButtonSecondary } from 'library/Buttons/ButtonSecondary';
 
 export const Splash = ({ onGetAddress }: AnyFunction) => {
   const { t } = useTranslation('modals');

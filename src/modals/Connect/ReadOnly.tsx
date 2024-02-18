@@ -7,12 +7,7 @@ import {
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  ButtonHelp,
-  ButtonMonoInvert,
-  ButtonSecondary,
-  Polkicon,
-} from '@polkadot-cloud/react';
+import { Polkicon } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { AccountInput } from 'library/AccountInput';
@@ -27,6 +22,9 @@ import {
   ManualAccountsWrapper,
 } from './Wrappers';
 import type { ListWithInputProps } from './types';
+import { ButtonHelp } from 'library/Buttons/ButtonHelp';
+import { ButtonMonoInvert } from 'library/Buttons/ButtonMonoInvert';
+import { ButtonSecondary } from 'library/Buttons/ButtonSecondary';
 
 export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');

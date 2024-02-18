@@ -1,11 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  ButtonHelp,
-  ButtonPrimary,
-  ButtonPrimaryInvert,
-} from '@polkadot-cloud/react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { useEffect, useState } from 'react';
@@ -28,6 +23,9 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { RevertPrompt } from './Prompts/RevertPrompt';
 import { CanvasSubmitTxFooter, CanvasFullScreenWrapper } from '../Wrappers';
 import { NotificationsController } from 'static/NotificationsController';
+import { ButtonHelp } from 'library/Buttons/ButtonHelp';
+import { ButtonPrimaryInvert } from 'library/Buttons/ButtonPrimaryInvert';
+import { ButtonPrimary } from 'library/Buttons/ButtonPrimary';
 
 export const ManageNominations = () => {
   const { t } = useTranslation('library');

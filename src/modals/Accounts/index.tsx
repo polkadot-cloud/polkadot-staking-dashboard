@@ -4,8 +4,6 @@
 import { faChevronLeft, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 import {
   ActionItem,
-  ButtonPrimaryInvert,
-  ButtonText,
   ModalCustomHeader,
   ModalPadding,
 } from '@polkadot-cloud/react';
@@ -35,6 +33,8 @@ import type { MaybeAddress } from 'types';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
+import { ButtonPrimaryInvert } from 'library/Buttons/ButtonPrimaryInvert';
+import { ButtonText } from 'library/Buttons/ButtonText';
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');

@@ -2,13 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import {
-  ActionItem,
-  ButtonHelp,
-  ButtonSubmitInvert,
-  ModalPadding,
-  ModalWarnings,
-} from '@polkadot-cloud/react';
+import { ActionItem, ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
 import BigNumber from 'bignumber.js';
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
@@ -29,6 +23,8 @@ import { usePoolCommission } from './provider';
 import { CommissionCurrent } from './CommissionCurrent';
 import { MaxCommission } from './MaxCommission';
 import { ChangeRate } from './ChangeRate';
+import { ButtonHelp } from 'library/Buttons/ButtonHelp';
+import { ButtonSubmitInvert } from 'library/Buttons/ButtonSubmitInvert';
 
 export const ManageCommission = ({
   setSection,

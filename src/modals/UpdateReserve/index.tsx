@@ -3,11 +3,7 @@
 
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  ButtonHelp,
-  ButtonPrimaryInvert,
-  ModalPadding,
-} from '@polkadot-cloud/react';
+import { ModalPadding } from '@polkadot-cloud/react';
 import { planckToUnit, unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useState } from 'react';
@@ -24,6 +20,8 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { StyledSlider } from 'library/StyledSlider';
+import { ButtonHelp } from 'library/Buttons/ButtonHelp';
+import { ButtonPrimaryInvert } from 'library/Buttons/ButtonPrimaryInvert';
 
 export const UpdateReserve = () => {
   const { t } = useTranslation('modals');

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCog, faStopCircle } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonPrimary } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { useActivePool } from 'contexts/Pools/ActivePool';
@@ -19,6 +18,8 @@ import { ListStatusHeader } from 'library/List';
 import { Wrapper } from './Wrapper';
 import { useSyncing } from 'hooks/useSyncing';
 import { useBalances } from 'contexts/Balances';
+import { ButtonPrimary } from 'library/Buttons/ButtonPrimary';
+import { ButtonHelp } from 'library/Buttons/ButtonHelp';
 
 export const Nominations = ({
   bondFor,

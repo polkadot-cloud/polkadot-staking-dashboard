@@ -3,7 +3,7 @@
 
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonSecondary, Polkicon } from '@polkadot-cloud/react';
+import { Polkicon } from '@polkadot-cloud/react';
 import { isValidAddress } from '@polkadot-cloud/utils';
 import type { FormEvent } from 'react';
 import { useEffect, useState } from 'react';
@@ -14,6 +14,7 @@ import { useNetwork } from 'contexts/Network';
 import { formatAccountSs58 } from 'contexts/Connect/Utils';
 import { AccountInputWrapper } from './Wrapper';
 import type { AccountInputProps } from './types';
+import { ButtonSecondary } from 'library/Buttons/ButtonSecondary';
 
 export const AccountInput = ({
   successCallback,
