@@ -52,7 +52,7 @@ export const PageTitleWrapper = styled.header`
   }
 
   h1 {
-    font-size: var(--title-font-size);
+    font-size: 1.75rem;
     font-family: Unbounded, sans-serif;
     font-weight: 700;
     position: relative;

@@ -6,6 +6,7 @@ SPDX-License-Identifier: GPL-3.0-only */
 /* Define theme variables. */
 
 :root {
+  /* Button variables. */
   --button-border-radius-small: 0.75rem;
   --button-border-radius-large: 1.5rem;
   --button-padding-small: 0.41rem 1rem;
@@ -14,6 +15,12 @@ SPDX-License-Identifier: GPL-3.0-only */
   --button-spacing-large: 0.625rem;
   --button-font-size-small: 1rem;
   --button-font-size-large: 1.15rem;  
+
+  /* Transition variables. */
+  --transition-duration: 0.15s;
+
+  /* Miscellaneous variables. */
+  --opacity-disabled: 0.3;
 }
 
 /* Define global font sizes. */
