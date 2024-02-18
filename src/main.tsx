@@ -15,7 +15,7 @@ import 'theme/theme.scss';
 import 'theme/index.scss';
 
 // Library styles.
-import 'library/kits/Buttons/buttons.scss';
+import 'kits/Buttons/buttons.scss';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
