@@ -1,5 +1,5 @@
-/* @license Copyright 2024 @polkadot-cloud/library authors & contributors
-SPDX-License-Identifier: GPL-3.0-only */
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
 
 import InfoSVG from '../svg/help.svg?react';
 import '@polkadot-cloud/core/css/buttons/ButtonHelp/index.css';

@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  check-license-lines:
+  check-license:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -57,7 +57,7 @@ jobs:
 
   all:
     # This job ensures that all jobs above (now we have just build) are successful.
-    needs: [check-license-lines, build, validate-locales]
+    needs: [check-license, build, validate-locales]
     runs-on: ubuntu-latest
     steps:
       - run: echo Success
