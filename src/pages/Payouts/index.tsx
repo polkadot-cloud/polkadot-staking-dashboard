@@ -24,7 +24,7 @@ import { useSubscanData } from 'hooks/useSubscanData';
 import { SubscanController } from 'static/SubscanController';
 import { DefaultLocale, locales } from 'locale';
 import { useSyncing } from 'hooks/useSyncing';
-import { ButtonHelp } from 'library/Buttons/ButtonHelp';
+import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
 
 export const Payouts = ({ page: { key } }: PageProps) => {
   const { i18n, t } = useTranslation();

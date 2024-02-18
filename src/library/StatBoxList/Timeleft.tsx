@@ -7,7 +7,7 @@ import { Countdown } from 'library/Countdown';
 import { StatBox } from './Item';
 import { TimeLeftWrapper } from './Wrapper';
 import type { TimeleftProps } from './types';
-import { ButtonHelp } from 'library/Buttons/ButtonHelp';
+import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
 
 export const Timeleft = ({
   label,

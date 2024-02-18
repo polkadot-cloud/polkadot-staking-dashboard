@@ -23,9 +23,9 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { RevertPrompt } from './Prompts/RevertPrompt';
 import { CanvasSubmitTxFooter, CanvasFullScreenWrapper } from '../Wrappers';
 import { NotificationsController } from 'static/NotificationsController';
-import { ButtonHelp } from 'library/Buttons/ButtonHelp';
-import { ButtonPrimaryInvert } from 'library/Buttons/ButtonPrimaryInvert';
-import { ButtonPrimary } from 'library/Buttons/ButtonPrimary';
+import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
+import { ButtonPrimaryInvert } from 'library/kits/Buttons/ButtonPrimaryInvert';
+import { ButtonPrimary } from 'library/kits/Buttons/ButtonPrimary';
 
 export const ManageNominations = () => {
   const { t } = useTranslation('library');

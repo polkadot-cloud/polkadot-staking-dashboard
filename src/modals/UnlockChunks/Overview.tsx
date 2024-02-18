@@ -21,7 +21,7 @@ import { useNetwork } from 'contexts/Network';
 import { Chunk } from './Chunk';
 import { ContentWrapper } from './Wrappers';
 import type { UnlockChunk } from 'contexts/Balances/types';
-import { ButtonSubmit } from 'library/Buttons/ButtonSubmit';
+import { ButtonSubmit } from 'library/kits/Buttons/ButtonSubmit';
 
 interface OverviewProps {
   unlocking: UnlockChunk[];

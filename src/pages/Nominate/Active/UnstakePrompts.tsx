@@ -13,7 +13,7 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useSyncing } from 'hooks/useSyncing';
-import { ButtonPrimary } from 'library/Buttons/ButtonPrimary';
+import { ButtonPrimary } from 'library/kits/Buttons/ButtonPrimary';
 
 export const UnstakePrompts = () => {
   const { t } = useTranslation('pages');

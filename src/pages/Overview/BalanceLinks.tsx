@@ -8,7 +8,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useStaking } from 'contexts/Staking';
 import { MoreWrapper } from './Wrappers';
-import { ButtonPrimaryInvert } from 'library/Buttons/ButtonPrimaryInvert';
+import { ButtonPrimaryInvert } from 'library/kits/Buttons/ButtonPrimaryInvert';
 
 export const BalanceLinks = () => {
   const { t } = useTranslation('pages');

@@ -9,8 +9,8 @@ import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { RemoveProps } from './types';
 import { ellipsisFn } from '@polkadot-cloud/utils';
 import { NotificationsController } from 'static/NotificationsController';
-import { ButtonMonoInvert } from 'library/Buttons/ButtonMonoInvert';
-import { ButtonMono } from 'library/Buttons/ButtonMono';
+import { ButtonMonoInvert } from 'library/kits/Buttons/ButtonMonoInvert';
+import { ButtonMono } from 'library/kits/Buttons/ButtonMono';
 
 export const Remove = ({ address, getHandler, removeHandler }: RemoveProps) => {
   const { t } = useTranslation('modals');

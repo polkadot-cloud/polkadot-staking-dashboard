@@ -9,7 +9,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { InputWrapper } from '../Wrappers';
 import type { BondInputProps } from '../types';
-import { ButtonSubmitInvert } from 'library/Buttons/ButtonSubmitInvert';
+import { ButtonSubmitInvert } from 'library/kits/Buttons/ButtonSubmitInvert';
 
 export const BondInput = ({
   setters = [],

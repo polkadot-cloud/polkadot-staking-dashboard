@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { FooterWrapper, PromptListItem } from 'library/Prompt/Wrappers';
 import type { FavoritesPromptProps } from '../types';
 import { NotificationsController } from 'static/NotificationsController';
-import { ButtonPrimary } from 'library/Buttons/ButtonPrimary';
+import { ButtonPrimary } from 'library/kits/Buttons/ButtonPrimary';
 
 export const FavoritesPrompt = ({
   callback,

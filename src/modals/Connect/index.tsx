@@ -27,8 +27,8 @@ import { Proxies } from './Proxies';
 import { ReadOnly } from './ReadOnly';
 import { Vault } from './Vault';
 import { ExtensionsWrapper } from './Wrappers';
-import { ButtonPrimaryInvert } from 'library/Buttons/ButtonPrimaryInvert';
-import { ButtonTab } from 'library/Buttons/ButtonTab';
+import { ButtonPrimaryInvert } from 'library/kits/Buttons/ButtonPrimaryInvert';
+import { ButtonTab } from 'library/kits/Buttons/ButtonTab';
 
 export const Connect = () => {
   const { t } = useTranslation('modals');

@@ -25,7 +25,7 @@ import { StaticNote } from 'modals/Utils/StaticNote';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { ButtonSubmitInvert } from 'library/Buttons/ButtonSubmitInvert';
+import { ButtonSubmitInvert } from 'library/kits/Buttons/ButtonSubmitInvert';
 
 export const LeavePool = ({
   setSection,

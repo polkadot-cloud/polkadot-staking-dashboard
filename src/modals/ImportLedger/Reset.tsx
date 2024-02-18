@@ -10,8 +10,8 @@ import type { AnyJson } from 'types';
 import { useOverlay, useLedgerAccounts } from '@polkadot-cloud/react/hooks';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { LedgerAccount } from '@polkadot-cloud/react/types';
-import { ButtonMono } from 'library/Buttons/ButtonMono';
-import { ButtonMonoInvert } from 'library/Buttons/ButtonMonoInvert';
+import { ButtonMono } from 'library/kits/Buttons/ButtonMono';
+import { ButtonMonoInvert } from 'library/kits/Buttons/ButtonMonoInvert';
 
 export const Reset = ({ removeLedgerAddress }: AnyJson) => {
   const { t } = useTranslation('modals');

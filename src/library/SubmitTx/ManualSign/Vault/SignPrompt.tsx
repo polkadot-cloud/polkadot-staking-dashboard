@@ -15,8 +15,8 @@ import { QrDisplayPayload } from 'library/QRCode/DisplayPayload';
 import { QrScanSignature } from 'library/QRCode/ScanSignature';
 import type { SignerPromptProps } from 'library/SubmitTx/types';
 import type { AnyJson } from 'types';
-import { ButtonPrimary } from 'library/Buttons/ButtonPrimary';
-import { ButtonSecondary } from 'library/Buttons/ButtonSecondary';
+import { ButtonPrimary } from 'library/kits/Buttons/ButtonPrimary';
+import { ButtonSecondary } from 'library/kits/Buttons/ButtonSecondary';
 
 export const SignPrompt = ({ submitAddress }: SignerPromptProps) => {
   const { t } = useTranslation('library');
