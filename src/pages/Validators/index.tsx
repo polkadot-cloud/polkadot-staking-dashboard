@@ -4,11 +4,11 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
-import type { PageTitleTabProps } from '@polkadot-cloud/react/types';
 import { AllValidators } from './AllValidators';
 import { ValidatorFavorites } from './Favorites';
 import { ValidatorsTabsProvider, useValidatorsTabs } from './context';
 import { PageTitle } from 'library/kits/Structure/PageTitle';
+import type { PageTitleTabProps } from 'library/kits/Structure/PageTitleTabs/types';
 
 export const ValidatorsInner = () => {
   const { t } = useTranslation('pages');

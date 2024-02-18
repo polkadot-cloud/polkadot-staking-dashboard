@@ -6,7 +6,6 @@ import {
   faEdit,
   faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary, ButtonPrimaryInvert } from '@polkadot-cloud/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -23,6 +22,8 @@ import { RoleEditInput } from './RoleEditInput';
 import type { RoleEditEntry, RolesProps } from './types';
 import { useSyncing } from 'hooks/useSyncing';
 import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
+import { ButtonPrimaryInvert } from 'library/kits/Buttons/ButtonPrimaryInvert';
+import { ButtonPrimary } from 'library/kits/Buttons/ButtonPrimary';
 
 export const Roles = ({
   defaultRoles,

@@ -3,10 +3,10 @@
 
 import { useTranslation } from 'react-i18next';
 import { useUnstaking } from 'hooks/useUnstaking';
-import { ButtonMonoInvert } from '@polkadot-cloud/react';
 import { SelectableWrapper } from '.';
 import { useList } from './context';
 import type { SelectableProps } from './types';
+import { ButtonMonoInvert } from 'library/kits/Buttons/ButtonMonoInvert';
 
 export const Selectable = ({
   actionsAll,

@@ -3,13 +3,7 @@
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  ButtonHelp,
-  ButtonPrimary,
-  ButtonSecondary,
-  Polkicon,
-  Odometer,
-} from '@polkadot-cloud/react';
+import { Polkicon, Odometer } from '@polkadot-cloud/react';
 import { applyWidthAsPadding, minDecimalPlaces } from '@polkadot-cloud/utils';
 import { Fragment, useEffect, useLayoutEffect, useRef } from 'react';
 import { useHelp } from 'contexts/Help';
@@ -18,6 +12,9 @@ import { Wrapper } from './Wrapper';
 import type { StatAddress, StatProps } from './types';
 import { NotificationsController } from 'static/NotificationsController';
 import type { AnyJson } from 'types';
+import { ButtonPrimary } from 'library/kits/Buttons/ButtonPrimary';
+import { ButtonSecondary } from 'library/kits/Buttons/ButtonSecondary';
+import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
 
 export const Stat = ({
   label,
