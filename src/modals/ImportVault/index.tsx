@@ -2,11 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faQrcode } from '@fortawesome/free-solid-svg-icons';
-import {
-  HardwareAddress,
-  HardwareStatusBar,
-  Polkicon,
-} from '@polkadot-cloud/react';
+import { Polkicon } from '@polkadot-cloud/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useVaultAccounts } from 'contexts/Hardware/Vault/VaultAccounts';
@@ -23,6 +19,8 @@ import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { Reader } from './Reader';
 import { ButtonPrimary } from 'library/kits/Buttons/ButtonPrimary';
 import { ButtonText } from 'library/kits/Buttons/ButtonText';
+import { HardwareAddress } from 'library/Hardware/HardwareAddress';
+import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar';
 
 export const ImportVault = () => {
   const { t } = useTranslation();
