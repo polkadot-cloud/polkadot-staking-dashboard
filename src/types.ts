@@ -88,7 +88,6 @@ export interface Network {
     unit: string;
     priceTicker: string;
   };
-  params: Record<string, number>;
   defaultFeeReserve: number;
   maxExposurePageSize: BigNumber;
 }
@@ -127,9 +126,6 @@ interface PageProp {
 export type MaybeAddress = string | null;
 
 export type MaybeString = string | null;
-
-// list of available plugins.
-export type Plugin = 'subscan' | 'binance_spot' | 'tips' | 'polkawatch';
 
 // track the status of a syncing / fetching process.
 export type Sync = 'unsynced' | 'syncing' | 'synced';

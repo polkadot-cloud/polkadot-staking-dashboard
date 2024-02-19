@@ -2,16 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { NetworkList } from 'config/networks';
-import { ApiEndpoints } from 'consts';
 import { useNetwork } from 'contexts/Network';
 
 export const useUnitPrice = () => {
   const { network } = useNetwork();
 
   const fetchUnitPrice = async () => {
-    const urls = [
-      `${ApiEndpoints.priceChange}${NetworkList[network].api.priceTicker}`,
-    ];
+    const endpoint = `https://api.binance.com/api/v3/ticker/24hr?symbol=`;
+
+    const urls = [`${endpoint}${NetworkList[network].api.priceTicker}`];
 
     const responses = await Promise.all(
       urls.map((u) => fetch(u, { method: 'GET' }))

@@ -9,3 +9,5 @@ export const defaultNetworkContext = {
   networkData: NetworkList.polkadot,
   switchNetwork: () => {},
 };
+
+export const defaultNetwork = 'polkadot';

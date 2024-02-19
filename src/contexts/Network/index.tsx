@@ -5,10 +5,9 @@ import { extractUrlValue, varToUrlHash } from '@polkadot-cloud/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
 import { NetworkList } from 'config/networks';
-import { DefaultNetwork } from 'consts';
 import type { NetworkName } from 'types';
 import type { NetworkState, NetworkContextInterface } from './types';
-import { defaultNetworkContext } from './defaults';
+import { defaultNetwork, defaultNetworkContext } from './defaults';
 
 export const NetworkContext = createContext<NetworkContextInterface>(
   defaultNetworkContext
@@ -42,7 +41,7 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
       (n) => n.name === localNetwork
     );
 
-    const initialNetwork = localNetworkValid ? localNetwork : DefaultNetwork;
+    const initialNetwork = localNetworkValid ? localNetwork : defaultNetwork;
 
     // Commit initial to local storage.
     localStorage.setItem('network', initialNetwork);

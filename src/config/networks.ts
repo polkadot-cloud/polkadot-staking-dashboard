@@ -1,7 +1,6 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { DefaultParams } from 'consts';
 import KusamaIconSVG from 'img/kusama_icon.svg?react';
 import KusamaInlineSVG from 'img/kusama_inline.svg?react';
 import KusamaLogoSVG from 'img/kusama_logo.svg?react';
@@ -88,10 +87,6 @@ export const NetworkList: Networks = {
       unit: 'DOT',
       priceTicker: 'DOTUSDT',
     },
-    params: {
-      ...DefaultParams,
-      stakeTarget: 0.75,
-    },
     defaultFeeReserve: 0.1,
     maxExposurePageSize: new BigNumber(512),
   },
@@ -154,12 +149,6 @@ export const NetworkList: Networks = {
       unit: 'KSM',
       priceTicker: 'KSMUSDT',
     },
-    params: {
-      ...DefaultParams,
-      auctionAdjust: 0.3 / 60,
-      auctionMax: 60,
-      stakeTarget: 0.75,
-    },
     defaultFeeReserve: 0.05,
     maxExposurePageSize: new BigNumber(512),
   },
@@ -220,10 +209,6 @@ export const NetworkList: Networks = {
     api: {
       unit: 'DOT',
       priceTicker: 'DOTUSDT',
-    },
-    params: {
-      ...DefaultParams,
-      stakeTarget: 0.75,
     },
     defaultFeeReserve: 0.1,
     maxExposurePageSize: new BigNumber(64),

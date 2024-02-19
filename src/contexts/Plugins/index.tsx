@@ -4,7 +4,7 @@
 import { isNotZero, setStateWithRef } from '@polkadot-cloud/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
-import type { Plugin } from 'types';
+import type { Plugin } from 'config/plugins';
 import * as defaults from './defaults';
 import type { PluginsContextInterface } from './types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react';

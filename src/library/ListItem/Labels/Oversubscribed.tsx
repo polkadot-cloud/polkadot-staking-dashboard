@@ -5,7 +5,6 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { MinBondPrecision } from 'consts';
 import { useTooltip } from 'contexts/Tooltip';
 import {
   OverSubscribedWrapper,
@@ -29,9 +28,7 @@ export const Oversubscribed = ({ address }: OversubscribedProps) => {
 
   const displayOversubscribed = !syncing && oversubscribed;
 
-  const lowestRewardFormatted = lowest
-    .decimalPlaces(MinBondPrecision)
-    .toFormat();
+  const lowestRewardFormatted = lowest.decimalPlaces(3).toFormat();
 
   const tooltipText = `${t(
     'overSubscribedMinReward'
