@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { PageHeading, PageRow } from '@polkadot-cloud/react';
+import { PageRow } from '@polkadot-cloud/react';
 import { extractUrlValue, removeVarFromUrlHash } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +16,7 @@ import { Payee } from './Payee';
 import { Summary } from './Summary';
 import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
 import { PageTitle } from 'kits/Structure/PageTitle';
+import { PageHeadingWrapper } from 'kits/Structure/PageHeading/Wrapper';
 
 export const Setup = () => {
   const { t } = useTranslation('pages');
@@ -27,7 +28,7 @@ export const Setup = () => {
     <>
       <PageTitle title={t('nominate.startNominating')} />
       <PageRow>
-        <PageHeading>
+        <PageHeadingWrapper>
           <span>
             <ButtonSecondary
               text={t('nominate.back')}
@@ -55,7 +56,7 @@ export const Setup = () => {
             />
           </span>
           <div className="right" />
-        </PageHeading>
+        </PageHeadingWrapper>
       </PageRow>
       <PageRow>
         <CardWrapper>
