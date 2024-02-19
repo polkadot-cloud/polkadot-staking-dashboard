@@ -7,7 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { stringUpperFirst } from '@polkadot/util';
-import { PageRow } from '@polkadot-cloud/react';
+import { PageRow } from 'kits/Structure/PageRow';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';

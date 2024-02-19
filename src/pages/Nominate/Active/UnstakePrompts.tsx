@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faBolt, faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { PageRow } from '@polkadot-cloud/react';
+import { PageRow } from 'kits/Structure/PageRow';
 import { isNotZero } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from 'contexts/Themes';

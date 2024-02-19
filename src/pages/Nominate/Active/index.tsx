@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
-import { PageRow, RowSection } from '@polkadot-cloud/react';
+import { RowSection } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { useStaking } from 'contexts/Staking';
@@ -26,6 +26,7 @@ import { useBalances } from 'contexts/Balances';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 import { PageTitle } from 'kits/Structure/PageTitle';
+import { PageRow } from 'kits/Structure/PageRow';
 
 export const Active = () => {
   const { t } = useTranslation();
