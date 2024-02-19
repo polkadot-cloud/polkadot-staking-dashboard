@@ -2,6 +2,7 @@
 SPDX-License-Identifier: GPL-3.0-only */
 
 import type { ComponentBase } from 'types';
+import { Wrapper } from './Wrapper';
 
 export type EntryProps = ComponentBase & {
   // the theme mode.
@@ -15,7 +16,7 @@ export type EntryProps = ComponentBase & {
  * @summary The outer-most wrapper that hosts core tag styling.
  */
 export const Entry = ({ children, style, mode, theme }: EntryProps) => (
-  <div className={`core-entry theme-${mode} theme-${theme}`} style={style}>
+  <Wrapper className={`theme-${mode} theme-${theme}`} style={style}>
     {children}
-  </div>
+  </Wrapper>
 );
