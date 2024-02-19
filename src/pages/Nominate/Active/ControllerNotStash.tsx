@@ -7,7 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { stringUpperFirst } from '@polkadot/util';
-import { PageRow } from '@polkadot-cloud/react';
+import { PageRow } from 'kits/Structure/PageRow';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
@@ -18,7 +18,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useSyncing } from 'hooks/useSyncing';
-import { ButtonPrimary } from 'library/kits/Buttons/ButtonPrimary';
+import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 
 export const ControllerNotStash = () => {
   const { t } = useTranslation('pages');

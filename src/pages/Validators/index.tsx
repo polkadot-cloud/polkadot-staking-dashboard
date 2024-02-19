@@ -7,8 +7,8 @@ import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { AllValidators } from './AllValidators';
 import { ValidatorFavorites } from './Favorites';
 import { ValidatorsTabsProvider, useValidatorsTabs } from './context';
-import { PageTitle } from 'library/kits/Structure/PageTitle';
-import type { PageTitleTabProps } from 'library/kits/Structure/PageTitleTabs/types';
+import { PageTitle } from 'kits/Structure/PageTitle';
+import type { PageTitleTabProps } from 'kits/Structure/PageTitleTabs/types';
 
 export const ValidatorsInner = () => {
   const { t } = useTranslation('pages');

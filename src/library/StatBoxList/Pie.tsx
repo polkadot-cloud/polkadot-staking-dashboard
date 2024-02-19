@@ -1,14 +1,15 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Chart, Odometer } from '@polkadot-cloud/react';
+import { Odometer } from '@polkadot-cloud/react';
 import { useEffect, useState } from 'react';
 import { useHelp } from 'contexts/Help';
 import BigNumber from 'bignumber.js';
 import { StatBox } from './Item';
 import type { PieProps } from './types';
 import type { AnyJson } from '@polkadot-cloud/react/types';
-import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { SimplePie } from 'library/SimplePie';
 
 export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
   const help = helpKey !== undefined;
@@ -31,7 +32,7 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
     <StatBox>
       <div className="content chart">
         <div className="chart">
-          <Chart
+          <SimplePie
             items={[
               {
                 value: graph?.value1,

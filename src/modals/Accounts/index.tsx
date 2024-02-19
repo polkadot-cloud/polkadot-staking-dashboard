@@ -33,8 +33,8 @@ import type { MaybeAddress } from 'types';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
-import { ButtonPrimaryInvert } from 'library/kits/Buttons/ButtonPrimaryInvert';
-import { ButtonText } from 'library/kits/Buttons/ButtonText';
+import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { ButtonText } from 'kits/Buttons/ButtonText';
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');

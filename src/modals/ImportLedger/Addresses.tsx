@@ -15,7 +15,7 @@ import type { AnyJson } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useLedgerAccounts } from '@polkadot-cloud/react/hooks';
-import { ButtonText } from 'library/kits/Buttons/ButtonText';
+import { ButtonText } from 'kits/Buttons/ButtonText';
 import { HardwareAddress } from 'library/Hardware/HardwareAddress';
 
 export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {

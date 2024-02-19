@@ -24,7 +24,7 @@ import {
   NetworkButton,
 } from './Wrapper';
 import { ProvidersPrompt } from './ProvidersPrompt';
-import { ButtonTertiary } from 'library/kits/Buttons/ButtonTertiary';
+import { ButtonTertiary } from 'kits/Buttons/ButtonTertiary';
 
 export const Networks = () => {
   const { t } = useTranslation('modals');

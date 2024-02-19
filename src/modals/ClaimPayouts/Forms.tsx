@@ -22,7 +22,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { FormProps, ActivePayout } from './types';
 import { ContentWrapper } from './Wrappers';
 import { SubscanController } from 'static/SubscanController';
-import { ButtonSubmitInvert } from 'library/kits/Buttons/ButtonSubmitInvert';
+import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
 
 export const Forms = forwardRef(
   (

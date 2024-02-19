@@ -21,9 +21,9 @@ import { PoolAccount } from '../PoolAccount';
 import { RoleEditInput } from './RoleEditInput';
 import type { RoleEditEntry, RolesProps } from './types';
 import { useSyncing } from 'hooks/useSyncing';
-import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
-import { ButtonPrimaryInvert } from 'library/kits/Buttons/ButtonPrimaryInvert';
-import { ButtonPrimary } from 'library/kits/Buttons/ButtonPrimary';
+import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 
 export const Roles = ({
   defaultRoles,

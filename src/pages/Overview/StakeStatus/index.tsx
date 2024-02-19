@@ -1,13 +1,13 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { RowSection } from '@polkadot-cloud/react';
 import { usePlugins } from 'contexts/Plugins';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { NominationStatus } from 'pages/Nominate/Active/Status/NominationStatus';
 import { MembershipStatus } from 'pages/Pools/Home/Status/MembershipStatus';
 import { Tips } from './Tips';
 import { StatusWrapper } from './Wrappers';
+import { RowSection } from 'kits/Structure/RowSection';
 
 export const StakeStatus = () => {
   const { plugins } = usePlugins();

@@ -10,7 +10,7 @@ import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useNetwork } from 'contexts/Network';
 import { useTxMeta } from 'contexts/TxMeta';
-import { ButtonSubmit } from 'library/kits/Buttons/ButtonSubmit';
+import { ButtonSubmit } from 'kits/Buttons/ButtonSubmit';
 import type { LedgerSubmitProps } from 'library/SubmitTx/types';
 import { useTranslation } from 'react-i18next';
 

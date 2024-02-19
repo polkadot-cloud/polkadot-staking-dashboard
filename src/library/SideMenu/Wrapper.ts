@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import {
   SideMenuMaximisedWidth,
   SideMenuMinimisedWidth,
-  SideMenuStickyThreshold,
+  PageWidthMediumThreshold,
 } from 'consts';
 import type { MinimisedProps } from './types';
 
@@ -30,7 +30,7 @@ export const Wrapper = styled.div<MinimisedProps>`
   -ms-overflow-style: none;
   scrollbar-width: none;
 
-  @media (max-width: ${SideMenuStickyThreshold}px) {
+  @media (max-width: ${PageWidthMediumThreshold}px) {
     background: var(--gradient-side-menu);
     transition: all var(--transition-duration);
     border-radius: 0.75rem;
