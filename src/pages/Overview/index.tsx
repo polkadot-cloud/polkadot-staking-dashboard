@@ -1,7 +1,6 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { RowSection } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { StatBoxList } from 'library/StatBoxList';
@@ -19,6 +18,7 @@ import { SupplyStakedStat } from './Stats/SupplyStaked';
 import { PageTitle } from 'kits/Structure/PageTitle';
 import { PageHeadingWrapper } from 'kits/Structure/PageHeading/Wrapper';
 import { PageRow } from 'kits/Structure/PageRow';
+import { RowSection } from 'kits/Structure/RowSection';
 
 export const Overview = () => {
   const { t } = useTranslation('pages');
