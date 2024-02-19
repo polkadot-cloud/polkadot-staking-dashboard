@@ -4,7 +4,7 @@
 import { useNetwork } from 'contexts/Network';
 import { Helmet } from 'react-helmet';
 import type { PageItem } from 'types';
-import { Page as PageWrapper } from '@polkadot-cloud/react';
+import { PageWrapper } from 'kits/Structure/Page/Wrapper';
 import { useTranslation } from 'react-i18next';
 
 export const Page = ({ page }: { page: PageItem }) => {

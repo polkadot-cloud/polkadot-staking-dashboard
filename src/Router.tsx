@@ -1,7 +1,6 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Main } from '@polkadot-cloud/react';
 import { extractUrlValue } from '@polkadot-cloud/utils';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -32,6 +31,7 @@ import { Notifications } from 'library/Notifications';
 import { NotificationsController } from 'static/NotificationsController';
 import { Page } from 'Page';
 import { Body } from 'kits/Structure/Body';
+import { Main } from 'kits/Structure/Main';
 
 export const RouterInner = () => {
   const { t } = useTranslation();

@@ -21,6 +21,8 @@ export const U32Opts = { bitLength: 32, isLe: true };
 /*
  * Element Thresholds
  */
+
+export const MaxPageWidth = 1450;
 export const SideMenuMaximisedWidth = 185;
 export const SideMenuMinimisedWidth = 75;
 export const SideMenuStickyThreshold = 1150;
