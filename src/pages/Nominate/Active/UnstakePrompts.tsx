@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faBolt, faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { ButtonRow, PageRow } from '@polkadot-cloud/react';
+import { PageRow } from '@polkadot-cloud/react';
 import { isNotZero } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from 'contexts/Themes';
@@ -14,6 +14,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useSyncing } from 'hooks/useSyncing';
 import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonRow } from 'kits/Structure/ButtonRow';
 
 export const UnstakePrompts = () => {
   const { t } = useTranslation('pages');
