@@ -9,7 +9,6 @@ import { formatDistance, fromUnixTime } from 'date-fns';
 import { motion } from 'framer-motion';
 import { Component, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { StakingContext } from 'contexts/Staking';
@@ -26,6 +25,7 @@ import { useNetwork } from 'contexts/Network';
 import { ItemWrapper } from '../Wrappers';
 import type { PayoutListProps } from '../types';
 import { PayoutListProvider, usePayoutList } from './context';
+import { listItemsPerPage, listItemsPerBatch } from 'library/List/defaults';
 
 export const PayoutListInner = ({
   allowMoreCols,
@@ -64,14 +64,14 @@ export const PayoutListInner = ({
   };
 
   // pagination
-  const totalPages = Math.ceil(payouts.length / ListItemsPerPage);
-  const pageEnd = page * ListItemsPerPage - 1;
-  const pageStart = pageEnd - (ListItemsPerPage - 1);
+  const totalPages = Math.ceil(payouts.length / listItemsPerPage);
+  const pageEnd = page * listItemsPerPage - 1;
+  const pageStart = pageEnd - (listItemsPerPage - 1);
 
   // render batch
   const batchEnd = Math.min(
-    renderIteration * ListItemsPerBatch - 1,
-    ListItemsPerPage
+    renderIteration * listItemsPerBatch - 1,
+    listItemsPerPage
   );
 
   // refetch list when list changes
@@ -101,7 +101,7 @@ export const PayoutListInner = ({
 
   // get throttled subset or entire list
   if (!disableThrottle) {
-    listPayouts = payouts.slice(pageStart).slice(0, ListItemsPerPage);
+    listPayouts = payouts.slice(pageStart).slice(0, listItemsPerPage);
   } else {
     listPayouts = payouts;
   }

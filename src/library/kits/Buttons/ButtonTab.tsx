@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ComponentBaseWithClassName } from 'types';
-import type { ButtonCommonProps } from '../types';
+import type { ButtonCommonProps } from './types';
 import { appendOrEmpty } from '@polkadot-cloud/utils';
-import { onMouseHandlers } from '../Utils';
+import { onMouseHandlers } from './Utils';
 
 export type ButtonTabProps = ComponentBaseWithClassName &
   ButtonCommonProps & {

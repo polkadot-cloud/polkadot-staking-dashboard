@@ -8,7 +8,6 @@ import { motion } from 'framer-motion';
 import type { FormEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useFilters } from 'contexts/Filters';
 import { useTheme } from 'contexts/Themes';
@@ -36,6 +35,7 @@ import { FilterHeaders } from './Filters/FilterHeaders';
 import { FilterBadges } from './Filters/FilterBadges';
 import type { NominationStatus } from './ValidatorItem/types';
 import { useSyncing } from 'hooks/useSyncing';
+import { listItemsPerBatch, listItemsPerPage } from 'library/List/defaults';
 
 export const ValidatorListInner = ({
   // Default list values.
@@ -174,14 +174,14 @@ export const ValidatorListInner = ({
   };
 
   // Pagination.
-  const totalPages = Math.ceil(validators.length / ListItemsPerPage);
-  const pageEnd = page * ListItemsPerPage - 1;
-  const pageStart = pageEnd - (ListItemsPerPage - 1);
+  const totalPages = Math.ceil(validators.length / listItemsPerPage);
+  const pageEnd = page * listItemsPerPage - 1;
+  const pageStart = pageEnd - (listItemsPerPage - 1);
 
   // Render batch.
   const batchEnd = Math.min(
-    renderIteration * ListItemsPerBatch - 1,
-    ListItemsPerPage
+    renderIteration * listItemsPerBatch - 1,
+    listItemsPerPage
   );
 
   // handle filter / order update
@@ -205,7 +205,7 @@ export const ValidatorListInner = ({
   // get throttled subset or entire list
   const listValidators = disableThrottle
     ? validators
-    : validators.slice(pageStart).slice(0, ListItemsPerPage);
+    : validators.slice(pageStart).slice(0, listItemsPerPage);
 
   // if in modal, handle resize
   const maybeHandleModalResize = () => {

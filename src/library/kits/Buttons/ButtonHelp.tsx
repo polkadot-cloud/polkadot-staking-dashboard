@@ -1,11 +1,11 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import InfoSVG from '../svg/help.svg?react';
+import InfoSVG from './svg/help.svg?react';
 import type { ComponentBaseWithClassName } from 'types';
-import type { ButtonCommonProps } from '../types';
+import type { ButtonCommonProps } from './types';
 import { appendOrEmpty } from '@polkadot-cloud/utils';
-import { onMouseHandlers } from '../Utils';
+import { onMouseHandlers } from './Utils';
 
 export type ButtonHelpProps = ComponentBaseWithClassName &
   ButtonCommonProps & {

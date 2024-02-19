@@ -2,31 +2,29 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { motion } from 'framer-motion';
 import type { ComponentBaseWithClassName } from 'types';
-import type { ButtonCommonProps, ButtonIconProps } from '../types';
-import { onMouseHandlers } from '../Utils';
-import { appendOr, appendOrEmpty } from '@polkadot-cloud/utils';
+import type { ButtonCommonProps, ButtonIconProps } from './types';
+import { onMouseHandlers } from './Utils';
+import { appendOrEmpty } from '@polkadot-cloud/utils';
 
-export type ButtonSecondaryProps = ComponentBaseWithClassName &
+export type ButtonMonoProps = ComponentBaseWithClassName &
   ButtonIconProps &
   ButtonCommonProps & {
-    // large button, small otherwise.
-    lg?: boolean;
     // button text.
     text: string;
   };
 
 /**
- * @name ButtonSecondary
- * @description Secondary button style used within the main interface of dashboards.
+ * @name ButtonText
+ * @description Plain button style used within the main interface of dashboards.
  */
-export const ButtonSecondary = ({
+export const ButtonText = ({
   disabled,
   grow,
   iconLeft,
   iconRight,
   iconTransform,
-  lg,
   marginLeft,
   marginRight,
   marginX,
@@ -37,15 +35,16 @@ export const ButtonSecondary = ({
   onMouseOver,
   onMouseMove,
   onMouseOut,
-}: ButtonSecondaryProps) => (
-  <button
-    className={`btn-secondary${appendOr(lg, 'lg', 'sm')}${appendOrEmpty(
-      grow,
-      'grow'
-    )}${appendOrEmpty(marginRight, 'm-right')}${appendOrEmpty(
-      marginLeft,
-      'm-left'
-    )}${appendOrEmpty(marginX, 'm-x')}${className ? ` ${className}` : ''}`}
+}: ButtonMonoProps) => (
+  <motion.button
+    whileHover={{ scale: !disabled ? 1.02 : 1 }}
+    whileTap={{ scale: !disabled ? 0.98 : 1 }}
+    className={`btn-text${appendOrEmpty(grow, 'grow')}${appendOrEmpty(
+      marginRight,
+      'm-right'
+    )}${appendOrEmpty(marginLeft, 'm-left')}${appendOrEmpty(marginX, 'm-x')}${
+      className ? ` ${className}` : ''
+    }`}
     style={style}
     type="button"
     disabled={disabled}
@@ -66,5 +65,5 @@ export const ButtonSecondary = ({
         transform={iconTransform ? iconTransform : undefined}
       />
     ) : null}
-  </button>
+  </motion.button>
 );

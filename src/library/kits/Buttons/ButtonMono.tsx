@@ -4,49 +4,48 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import type { ComponentBaseWithClassName } from 'types';
-import type { ButtonCommonProps, ButtonIconProps } from '../types';
-import { onMouseHandlers } from '../Utils';
+import type { ButtonCommonProps, ButtonIconProps } from './types';
 import { appendOr, appendOrEmpty } from '@polkadot-cloud/utils';
+import { onMouseHandlers } from './Utils';
 
-export type ButtonSubmitInvertProps = ComponentBaseWithClassName &
+export type ButtonMonoProps = ComponentBaseWithClassName &
   ButtonIconProps &
   ButtonCommonProps & {
-    // button text.
-    text: string;
     // large button, small otherwise.
     lg?: boolean;
+    // button text.
+    text: string;
   };
 
 /**
- * @name ButtonSubmitInvert
- * @description Invert submit button style used in modals.
+ * @name ButtonMono
+ * @description Monotone button style used within the main interface of dashboards.
  */
-export const ButtonSubmitInvert = ({
+export const ButtonMono = ({
   disabled,
   grow,
   iconLeft,
   iconRight,
   iconTransform,
+  lg,
   marginLeft,
   marginRight,
   marginX,
   className,
   style,
   text,
-  lg,
   onClick,
   onMouseOver,
   onMouseMove,
   onMouseOut,
-}: ButtonSubmitInvertProps) => (
+}: ButtonMonoProps) => (
   <motion.button
     whileHover={{ scale: !disabled ? 1.02 : 1 }}
     whileTap={{ scale: !disabled ? 0.98 : 1 }}
-    className={`btn-submit-invert${appendOr(lg, 'lg', 'sm')}${appendOrEmpty(
+    className={`btn-mono${appendOr(lg, 'lg', 'sm')}${appendOrEmpty(
       grow,
       'grow'
-    )}
-    ${appendOrEmpty(marginRight, 'm-right')}${appendOrEmpty(
+    )}${appendOrEmpty(marginRight, 'm-right')}${appendOrEmpty(
       marginLeft,
       'm-left'
     )}${appendOrEmpty(marginX, 'm-x')}${className ? ` ${className}` : ''}`}

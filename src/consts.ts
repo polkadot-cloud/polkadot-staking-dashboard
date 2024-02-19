@@ -20,18 +20,21 @@ export const EmptyH256 = new Uint8Array(32);
 export const ModPrefix = stringToU8a('modl');
 export const U32Opts = { bitLength: 32, isLe: true };
 
+/*
+ * Element Structure Variables
+ */
 export const SideMenuMaximisedWidth = 185;
 export const SideMenuMinimisedWidth = 75;
 export const SideMenuStickyThreshold = 1150;
 export const SectionFullWidthThreshold = 1000;
 export const PageWidthSmallThreshold = 825;
-export const FloatingMenuWidth = 250;
 export const SmallFontSizeMaxWidth = 600;
+
 export const TipsThresholdSmall = 750;
 export const TipsThresholdMedium = 1200;
 
 /*
- * Available plugins
+ * Available Plugins
  */
 export const PluginsList: Plugin[] = [
   'subscan',
@@ -41,16 +44,14 @@ export const PluginsList: Plugin[] = [
 ];
 
 /*
- * Misc values
+ * Misc Values
  */
-export const ListItemsPerPage = 25;
-export const ListItemsPerBatch = 25;
 export const MinBondPrecision = 3;
 export const MaxPayoutDays = 60;
 export const MaxEraRewardPointsEras = 14;
 
 /*
- * Third party API keys and endpoints
+ * Third Party API Keys and Endpoints
  */
 export const EndpointPrice = 'https://api.binance.com/api/v3';
 export const ApiEndpoints = {
@@ -58,7 +59,7 @@ export const ApiEndpoints = {
 };
 
 /*
- * default network parameters
+ * Default Network Parameters
  */
 export const DefaultParams = {
   auctionAdjust: 0,

@@ -2,17 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { motion } from 'framer-motion';
 import type { ComponentBaseWithClassName } from 'types';
+import type { ButtonCommonProps, ButtonIconProps } from './types';
+import { onMouseHandlers } from './Utils';
 import { appendOr, appendOrEmpty } from '@polkadot-cloud/utils';
-import type { ButtonCommonProps, ButtonIconProps } from '../types';
-import { onMouseHandlers } from '../Utils';
 
-export type ButtonPrimaryProps = ComponentBaseWithClassName &
+export type ButtonSecondaryProps = ComponentBaseWithClassName &
   ButtonIconProps &
   ButtonCommonProps & {
-    // use secondary network color.
-    colorSecondary?: boolean;
     // large button, small otherwise.
     lg?: boolean;
     // button text.
@@ -20,11 +17,10 @@ export type ButtonPrimaryProps = ComponentBaseWithClassName &
   };
 
 /**
- * @name ButtonPrimary
- * @description Primary button style used within the main interface of dashboards.
+ * @name ButtonSecondary
+ * @description Secondary button style used within the main interface of dashboards.
  */
-export const ButtonPrimary = ({
-  colorSecondary,
+export const ButtonSecondary = ({
   disabled,
   grow,
   iconLeft,
@@ -41,14 +37,12 @@ export const ButtonPrimary = ({
   onMouseOver,
   onMouseMove,
   onMouseOut,
-}: ButtonPrimaryProps) => (
-  <motion.button
-    whileHover={{ scale: !disabled ? 1.02 : 1 }}
-    whileTap={{ scale: !disabled ? 0.98 : 1 }}
-    className={`btn-primary${appendOr(lg, 'lg', 'sm')}${appendOrEmpty(
-      colorSecondary,
-      'secondary-color'
-    )}${appendOrEmpty(grow, 'grow')}${appendOrEmpty(marginRight, 'm-right')}${appendOrEmpty(
+}: ButtonSecondaryProps) => (
+  <button
+    className={`btn-secondary${appendOr(lg, 'lg', 'sm')}${appendOrEmpty(
+      grow,
+      'grow'
+    )}${appendOrEmpty(marginRight, 'm-right')}${appendOrEmpty(
       marginLeft,
       'm-left'
     )}${appendOrEmpty(marginX, 'm-x')}${className ? ` ${className}` : ''}`}
@@ -72,5 +66,5 @@ export const ButtonPrimary = ({
         transform={iconTransform ? iconTransform : undefined}
       />
     ) : null}
-  </motion.button>
+  </button>
 );

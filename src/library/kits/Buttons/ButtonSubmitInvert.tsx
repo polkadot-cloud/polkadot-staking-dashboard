@@ -4,22 +4,24 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import type { ComponentBaseWithClassName } from 'types';
-import type { ButtonCommonProps, ButtonIconProps } from '../types';
-import { onMouseHandlers } from '../Utils';
-import { appendOrEmpty } from '@polkadot-cloud/utils';
+import type { ButtonCommonProps, ButtonIconProps } from './types';
+import { onMouseHandlers } from './Utils';
+import { appendOr, appendOrEmpty } from '@polkadot-cloud/utils';
 
-export type ButtonTertiaryProps = ComponentBaseWithClassName &
+export type ButtonSubmitInvertProps = ComponentBaseWithClassName &
   ButtonIconProps &
   ButtonCommonProps & {
     // button text.
     text: string;
+    // large button, small otherwise.
+    lg?: boolean;
   };
 
 /**
- * @name ButtonTertiary
- * @description Tertiary button style used within the main interface of dashboards.
+ * @name ButtonSubmitInvert
+ * @description Invert submit button style used in modals.
  */
-export const ButtonTertiary = ({
+export const ButtonSubmitInvert = ({
   disabled,
   grow,
   iconLeft,
@@ -31,20 +33,23 @@ export const ButtonTertiary = ({
   className,
   style,
   text,
+  lg,
   onClick,
   onMouseOver,
   onMouseMove,
   onMouseOut,
-}: ButtonTertiaryProps) => (
+}: ButtonSubmitInvertProps) => (
   <motion.button
     whileHover={{ scale: !disabled ? 1.02 : 1 }}
     whileTap={{ scale: !disabled ? 0.98 : 1 }}
-    className={`btn-tertiary${appendOrEmpty(grow, 'grow')}${appendOrEmpty(
-      marginRight,
-      'm-right'
-    )}${appendOrEmpty(marginLeft, 'm-left')}${appendOrEmpty(marginX, 'm-x')}${
-      className ? ` ${className}` : ''
-    }`}
+    className={`btn-submit-invert${appendOr(lg, 'lg', 'sm')}${appendOrEmpty(
+      grow,
+      'grow'
+    )}
+    ${appendOrEmpty(marginRight, 'm-right')}${appendOrEmpty(
+      marginLeft,
+      'm-left'
+    )}${appendOrEmpty(marginX, 'm-x')}${className ? ` ${className}` : ''}`}
     style={style}
     type="button"
     disabled={disabled}

@@ -2,11 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components';
-import { FloatingMenuWidth } from 'consts';
 
 export const Wrapper = styled.div`
   background: var(--background-default);
-  width: ${FloatingMenuWidth}px;
+  width: 250px;
   padding: 0.25rem 0.75rem;
   display: flex;
   flex-flow: column wrap;

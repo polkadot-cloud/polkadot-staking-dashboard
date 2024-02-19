@@ -4,11 +4,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import type { ComponentBaseWithClassName } from 'types';
-import type { ButtonCommonProps, ButtonIconProps } from '../types';
-import { onMouseHandlers } from '../Utils';
+import type { ButtonCommonProps, ButtonIconProps } from './types';
+import { onMouseHandlers } from './Utils';
 import { appendOrEmpty } from '@polkadot-cloud/utils';
 
-export type ButtonMonoProps = ComponentBaseWithClassName &
+export type ButtonTertiaryProps = ComponentBaseWithClassName &
   ButtonIconProps &
   ButtonCommonProps & {
     // button text.
@@ -16,10 +16,10 @@ export type ButtonMonoProps = ComponentBaseWithClassName &
   };
 
 /**
- * @name ButtonText
- * @description Plain button style used within the main interface of dashboards.
+ * @name ButtonTertiary
+ * @description Tertiary button style used within the main interface of dashboards.
  */
-export const ButtonText = ({
+export const ButtonTertiary = ({
   disabled,
   grow,
   iconLeft,
@@ -35,11 +35,11 @@ export const ButtonText = ({
   onMouseOver,
   onMouseMove,
   onMouseOut,
-}: ButtonMonoProps) => (
+}: ButtonTertiaryProps) => (
   <motion.button
     whileHover={{ scale: !disabled ? 1.02 : 1 }}
     whileTap={{ scale: !disabled ? 0.98 : 1 }}
-    className={`btn-text${appendOrEmpty(grow, 'grow')}${appendOrEmpty(
+    className={`btn-tertiary${appendOrEmpty(grow, 'grow')}${appendOrEmpty(
       marginRight,
       'm-right'
     )}${appendOrEmpty(marginLeft, 'm-left')}${appendOrEmpty(marginX, 'm-x')}${
