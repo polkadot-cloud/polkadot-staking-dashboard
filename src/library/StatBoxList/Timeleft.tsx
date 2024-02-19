@@ -1,13 +1,13 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Chart } from '@polkadot-cloud/react';
 import { useHelp } from 'contexts/Help';
 import { Countdown } from 'library/Countdown';
 import { StatBox } from './Item';
 import { TimeLeftWrapper } from './Wrapper';
 import type { TimeleftProps } from './types';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { SimplePie } from 'library/SimplePie';
 
 export const Timeleft = ({
   label,
@@ -23,7 +23,7 @@ export const Timeleft = ({
     <StatBox>
       <div className="content chart">
         <div className="chart">
-          <Chart
+          <SimplePie
             items={[
               {
                 value: graph?.value1,
