@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { NoAccountsWrapper } from './Wrappers';
 import type { FunctionComponent, ReactNode, SVGProps } from 'react';
-import { ButtonSecondary } from 'library/kits/Buttons/ButtonSecondary';
+import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
 
 export const NoAccounts = ({
   children,

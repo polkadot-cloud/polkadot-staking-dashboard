@@ -23,9 +23,9 @@ import { Status } from './Status';
 import { UnstakePrompts } from './UnstakePrompts';
 import { useSyncing } from 'hooks/useSyncing';
 import { useBalances } from 'contexts/Balances';
-import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
-import { ButtonPrimary } from 'library/kits/Buttons/ButtonPrimary';
-import { PageTitle } from 'library/kits/Structure/PageTitle';
+import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { PageTitle } from 'kits/Structure/PageTitle';
 
 export const Active = () => {
   const { t } = useTranslation();

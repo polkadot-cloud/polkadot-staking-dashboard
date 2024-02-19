@@ -23,7 +23,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useSyncing } from 'hooks/useSyncing';
-import { ButtonTertiary } from 'library/kits/Buttons/ButtonTertiary';
+import { ButtonTertiary } from 'kits/Buttons/ButtonTertiary';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');

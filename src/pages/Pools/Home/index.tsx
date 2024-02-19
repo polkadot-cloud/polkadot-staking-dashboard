@@ -27,8 +27,8 @@ import { PoolsTabsProvider, usePoolsTabs } from './context';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'hooks/useActivePools';
 import { useBalances } from 'contexts/Balances';
-import { PageTitle } from 'library/kits/Structure/PageTitle';
-import type { PageTitleTabProps } from 'library/kits/Structure/PageTitleTabs/types';
+import { PageTitle } from 'kits/Structure/PageTitle';
+import type { PageTitleTabProps } from 'kits/Structure/PageTitleTabs/types';
 
 export const HomeInner = () => {
   const { t } = useTranslation('pages');

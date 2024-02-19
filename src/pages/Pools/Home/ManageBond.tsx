@@ -15,8 +15,8 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useSyncing } from 'hooks/useSyncing';
-import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
-import { ButtonPrimary } from 'library/kits/Buttons/ButtonPrimary';
+import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');

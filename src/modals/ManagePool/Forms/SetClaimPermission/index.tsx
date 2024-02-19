@@ -17,7 +17,7 @@ import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { ClaimPermission } from 'contexts/Pools/types';
 import { useBalances } from 'contexts/Balances';
-import { ButtonSubmitInvert } from 'library/kits/Buttons/ButtonSubmitInvert';
+import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
 
 export const SetClaimPermission = ({
   setSection,

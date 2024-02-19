@@ -11,7 +11,7 @@ import type { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 import { useApi } from 'contexts/Api';
 import { useSyncing } from 'hooks/useSyncing';
-import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 
 export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
   const { t } = useTranslation('library');

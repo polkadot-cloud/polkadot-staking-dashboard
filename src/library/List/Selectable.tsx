@@ -6,7 +6,7 @@ import { useUnstaking } from 'hooks/useUnstaking';
 import { SelectableWrapper } from '.';
 import { useList } from './context';
 import type { SelectableProps } from './types';
-import { ButtonMonoInvert } from 'library/kits/Buttons/ButtonMonoInvert';
+import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
 
 export const Selectable = ({
   actionsAll,

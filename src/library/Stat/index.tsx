@@ -12,9 +12,9 @@ import { Wrapper } from './Wrapper';
 import type { StatAddress, StatProps } from './types';
 import { NotificationsController } from 'static/NotificationsController';
 import type { AnyJson } from 'types';
-import { ButtonPrimary } from 'library/kits/Buttons/ButtonPrimary';
-import { ButtonSecondary } from 'library/kits/Buttons/ButtonSecondary';
-import { ButtonHelp } from 'library/kits/Buttons/ButtonHelp';
+import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
+import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 
 export const Stat = ({
   label,

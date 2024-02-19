@@ -13,8 +13,8 @@ import { Bond } from './Bond';
 import { PoolName } from './PoolName';
 import { PoolRoles } from './PoolRoles';
 import { Summary } from './Summary';
-import { ButtonSecondary } from 'library/kits/Buttons/ButtonSecondary';
-import { PageTitle } from 'library/kits/Structure/PageTitle';
+import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
+import { PageTitle } from 'kits/Structure/PageTitle';
 
 export const Create = () => {
   const { t } = useTranslation('pages');

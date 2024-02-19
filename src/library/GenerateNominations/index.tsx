@@ -31,8 +31,8 @@ import { useFetchMehods } from './useFetchMethods';
 import type { AddNominationsType, GenerateNominationsProps } from './types';
 import type { AnyFunction } from '@polkadot-cloud/react/types';
 import type { AnyJson } from 'types';
-import { ButtonPrimaryInvert } from 'library/kits/Buttons/ButtonPrimaryInvert';
-import { ButtonMonoInvert } from 'library/kits/Buttons/ButtonMonoInvert';
+import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
 
 export const GenerateNominations = ({
   setters = [],

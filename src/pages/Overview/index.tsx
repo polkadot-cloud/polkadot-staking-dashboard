@@ -16,7 +16,7 @@ import { StakeStatus } from './StakeStatus';
 import { ActiveEraStat } from './Stats/ActiveEraTimeLeft';
 import { AverageRewardRateStat } from './Stats/AveragelRewardRate';
 import { SupplyStakedStat } from './Stats/SupplyStaked';
-import { PageTitle } from 'library/kits/Structure/PageTitle';
+import { PageTitle } from 'kits/Structure/PageTitle';
 
 export const Overview = () => {
   const { t } = useTranslation('pages');

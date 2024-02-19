@@ -7,7 +7,7 @@ import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { SubmitProps } from './types';
-import { ButtonSubmit } from 'library/kits/Buttons/ButtonSubmit';
+import { ButtonSubmit } from 'kits/Buttons/ButtonSubmit';
 
 export const Default = ({
   onSubmit,
