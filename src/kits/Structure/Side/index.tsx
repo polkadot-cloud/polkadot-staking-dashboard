@@ -1,5 +1,5 @@
-/* @license Copyright 2024 @polkadot-cloud/library authors & contributors
-SPDX-License-Identifier: GPL-3.0-only */
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { appendOrEmpty } from '@polkadot-cloud/utils';
 import type { CSSProperties } from 'react';
