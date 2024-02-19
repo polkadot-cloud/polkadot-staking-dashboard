@@ -23,7 +23,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@ledgerhq/hw-transport-webhid": "^6.28.3",
+    "@ledgerhq/hw-transport-webhid": "^6.28.4",
     "@polkadot-cloud/assets": "^0.4.0",
     "@polkadot-cloud/core": "^1.3.3",
     "@polkadot-cloud/react": "^0.5.3",
