@@ -4,7 +4,7 @@
 import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
 import type { ReactNode, RefObject } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { SideMenuStickyThreshold } from 'consts';
+import { PageWidthMediumThreshold } from 'consts';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import type { AnyJson } from 'types';
 import * as defaults from './defaults';
@@ -44,14 +44,14 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
 
   // Automatic side menu minimised.
   const [sideMenuMinimised, setSideMenuMinimised] = useState<boolean>(
-    window.innerWidth <= SideMenuStickyThreshold
+    window.innerWidth <= PageWidthMediumThreshold
       ? true
       : userSideMenuMinimisedRef.current
   );
 
   // Resize side menu callback.
   const resizeCallback = () => {
-    if (window.innerWidth <= SideMenuStickyThreshold) {
+    if (window.innerWidth <= PageWidthMediumThreshold) {
       setSideMenuMinimised(false);
     } else {
       setSideMenuMinimised(userSideMenuMinimisedRef.current);

@@ -1,19 +1,19 @@
 /* @license Copyright 2024 @polkadot-cloud/library authors & contributors
 SPDX-License-Identifier: GPL-3.0-only */
 
-import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
+import { SectionFullWidthThreshold, PageWidthMediumThreshold } from 'consts';
 import styled from 'styled-components';
 
 export const RowPrimaryWrapper = styled.div`
   &.first {
-    @media (min-width: ${SideMenuStickyThreshold}px) {
+    @media (min-width: ${PageWidthMediumThreshold}px) {
       padding-left: 0.75rem;
       order: 1;
     }
   }
 
   &.last {
-    @media (min-width: ${SideMenuStickyThreshold}px) {
+    @media (min-width: ${PageWidthMediumThreshold}px) {
       padding-right: 0.75rem;
     }
   }
@@ -23,7 +23,7 @@ export const RowPrimaryWrapper = styled.div`
   flex-basis: 100%;
   max-width: 100%;
 
-  @media (min-width: ${SideMenuStickyThreshold}px) {
+  @media (min-width: ${PageWidthMediumThreshold}px) {
     order: 0;
     flex: 1;
     flex-basis: 56%;
@@ -42,13 +42,13 @@ export const RowPrimaryWrapper = styled.div`
 
 export const RowSecondaryWrapper = styled.div`
   &.first {
-    @media (min-width: ${SideMenuStickyThreshold}px) {
+    @media (min-width: ${PageWidthMediumThreshold}px) {
       padding-left: 0.75rem;
       order: 1;
     }
   }
   &.last {
-    @media (min-width: ${SideMenuStickyThreshold}px) {
+    @media (min-width: ${PageWidthMediumThreshold}px) {
       padding-right: 0.75rem;
     }
   }
@@ -62,7 +62,7 @@ export const RowSecondaryWrapper = styled.div`
     order: 1;
   }
 
-  @media (min-width: ${SideMenuStickyThreshold}px) {
+  @media (min-width: ${PageWidthMediumThreshold}px) {
     order: 0;
     flex: 1;
     flex-basis: 44%;

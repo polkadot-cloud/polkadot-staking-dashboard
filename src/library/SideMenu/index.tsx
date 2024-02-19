@@ -7,7 +7,7 @@ import { capitalizeFirstLetter } from '@polkadot-cloud/utils';
 import throttle from 'lodash.throttle';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SideMenuMaximisedWidth, SideMenuStickyThreshold } from 'consts';
+import { SideMenuMaximisedWidth, PageWidthMediumThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
 import { useTheme } from 'contexts/Themes';
@@ -27,7 +27,7 @@ import { Main } from './Main';
 import { Secondary } from './Secondary';
 import { ConnectionSymbol, Separator, Wrapper } from './Wrapper';
 import { useOutsideAlerter } from 'hooks/useOutsideAlerter';
-import { Side } from '@polkadot-cloud/react';
+import { Side } from 'kits/Structure/Side';
 
 export const SideMenu = () => {
   const { t } = useTranslation('base');
@@ -53,7 +53,7 @@ export const SideMenu = () => {
   }, []);
 
   const throttleCallback = () => {
-    if (window.innerWidth >= SideMenuStickyThreshold) {
+    if (window.innerWidth >= PageWidthMediumThreshold) {
       setSideMenu(false);
     }
   };

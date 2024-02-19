@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { SideMenuStickyThreshold } from 'consts';
+import { PageWidthMediumThreshold } from 'consts';
 import styled from 'styled-components';
 
 export const Wrapper = styled.section`
@@ -11,7 +11,7 @@ export const Wrapper = styled.section`
   margin-top: 0.9rem;
   max-width: 100%;
 
-  @media (max-width: ${SideMenuStickyThreshold}px) {
+  @media (max-width: ${PageWidthMediumThreshold}px) {
     margin-top: 0.5rem;
   }
 

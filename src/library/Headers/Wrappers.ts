@@ -3,7 +3,7 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { PageWidthSmallThreshold, SideMenuStickyThreshold } from 'consts';
+import { PageWidthSmallThreshold, PageWidthMediumThreshold } from 'consts';
 
 export const Wrapper = styled.div`
   position: fixed;
@@ -20,13 +20,13 @@ export const Wrapper = styled.div`
   height: 4rem;
   z-index: 6;
 
-  @media (max-width: ${SideMenuStickyThreshold}px) {
+  @media (max-width: ${PageWidthMediumThreshold}px) {
     width: 100%;
   }
 
   .menu {
     display: none;
-    @media (max-width: ${SideMenuStickyThreshold}px) {
+    @media (max-width: ${PageWidthMediumThreshold}px) {
       color: var(--text-color-secondary);
       display: flex;
       flex-flow: row wrap;
