@@ -66,7 +66,7 @@
     "@types/chroma-js": "^2.4.4",
     "@types/lodash.debounce": "^4",
     "@types/lodash.throttle": "^4.1.9",
-    "@types/react": "^18.2.56",
+    "@types/react": "^18.2.57",
     "@types/react-dom": "^18.2.19",
     "@types/react-helmet": "^6.1.11",
     "@types/react-scroll": "^1.8.10",
