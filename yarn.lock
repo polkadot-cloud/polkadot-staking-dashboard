@@ -1066,13 +1066,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot-cloud/assets@npm:^0.3.4":
-  version: 0.3.4
-  resolution: "@polkadot-cloud/assets@npm:0.3.4"
-  checksum: 3ea2ee71930fa39541831aab17b634159bc23fab1e53916d97d57ebd8591c4fdfcc282f4e67078b9907f181dba91e126693b8e424e0b461cff7d03a80db5ab79
-  languageName: node
-  linkType: hard
-
 "@polkadot-cloud/assets@npm:^0.4.0":
   version: 0.4.0
   resolution: "@polkadot-cloud/assets@npm:0.4.0"
@@ -1087,9 +1080,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot-cloud/react@npm:^0.5.3":
-  version: 0.5.3
-  resolution: "@polkadot-cloud/react@npm:0.5.3"
+"@polkadot-cloud/react@npm:^0.5.4":
+  version: 0.5.4
+  resolution: "@polkadot-cloud/react@npm:0.5.4"
   dependencies:
     "@chainsafe/metamask-polkadot-adapter": "npm:^0.6.0"
     "@chainsafe/metamask-polkadot-types": "npm:^0.6.0"
@@ -1098,9 +1091,9 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": "npm:^6.5.1"
     "@fortawesome/free-solid-svg-icons": "npm:^6.5.1"
     "@fortawesome/react-fontawesome": "npm:^0.2.0"
-    "@polkadot-cloud/assets": "npm:^0.3.4"
+    "@polkadot-cloud/assets": "npm:^0.4.0"
     "@polkadot-cloud/core": "npm:^1.3.3"
-    "@polkadot-cloud/utils": "npm:^0.2.4"
+    "@polkadot-cloud/utils": "npm:^0.3.0"
     "@polkadot/keyring": "npm:^12.6.2"
     "@polkadot/util": "npm:^12.6.2"
     "@polkadot/util-crypto": "npm:^12.6.2"
@@ -1109,21 +1102,7 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 5495d883a52da18303d2db8a8852a7e8911d66abb1c9fe567a34789cbddf96fcc24bebb8765b2dc434f03fe3e775a8a13cb7fcf2d8f2cc8ec2c546fd611ca254
-  languageName: node
-  linkType: hard
-
-"@polkadot-cloud/utils@npm:^0.2.4":
-  version: 0.2.4
-  resolution: "@polkadot-cloud/utils@npm:0.2.4"
-  dependencies:
-    "@polkadot/keyring": "npm:^12.6.2"
-    "@polkadot/util": "npm:^12.6.2"
-    bignumber.js: "npm:^9.1.1"
-  peerDependencies:
-    "@polkadot/keyring": ^12.6.2
-    "@polkadot/util": ^12.6.2
-  checksum: f839accea3417f48d1f3cc253cae670a84d735a66dd92c9a994cb06c935ad383c65ce7f67f3c7b0f6127e3c57955b79f0710ac2e02a99ffef18ff05519f38c53
+  checksum: b51703e950b4587392193e1bd63af359af99c5395f5cf381e29f9950465bc1359dda1638be5a6b482242c602c5fc9e20c00f44a4229df862e602faa8fb3be384
   languageName: node
   linkType: hard
 
@@ -6169,7 +6148,7 @@ __metadata:
     "@ledgerhq/logs": "npm:^6.12.0"
     "@polkadot-cloud/assets": "npm:^0.4.0"
     "@polkadot-cloud/core": "npm:^1.3.3"
-    "@polkadot-cloud/react": "npm:^0.5.3"
+    "@polkadot-cloud/react": "npm:^0.5.4"
     "@polkadot-cloud/utils": "npm:^0.3.0"
     "@polkadot/api": "npm:^10.11.2"
     "@polkadot/keyring": "npm:^12.6.2"
