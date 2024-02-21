@@ -6208,7 +6208,7 @@ __metadata:
     styled-components: "npm:^6.1.8"
     typescript: "npm:^5.3.3"
     usehooks-ts: "npm:2.14.0"
-    vite: "npm:^5.1.3"
+    vite: "npm:^5.1.4"
     vite-bundle-visualizer: "npm:^1.0.1"
     vite-plugin-checker: "npm:^0.6.3"
     vite-plugin-eslint: "npm:^1.8.1"
@@ -7896,9 +7896,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.1.3":
-  version: 5.1.3
-  resolution: "vite@npm:5.1.3"
+"vite@npm:^5.1.4":
+  version: 5.1.4
+  resolution: "vite@npm:5.1.4"
   dependencies:
     esbuild: "npm:^0.19.3"
     fsevents: "npm:~2.3.3"
@@ -7932,7 +7932,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: d3b19607d736de60b660f7daf4c0f86589edcbbc1fcb09f8aa36630f99518cc8a063062bb952899b8ccaed62f1314fac22c1df492dd035de3c65998ab27e2d2a
+  checksum: 8f04c8bed33f266bde27f432412456a3b893b51fe1857f0b8cd259100b376c1393a7927db1dd6344a4376baed72ed179ec5b0428aef2ae8508f1f28f95acb908
   languageName: node
   linkType: hard
 
