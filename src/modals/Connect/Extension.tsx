@@ -10,7 +10,7 @@ import {
   useExtensions,
   useExtensionAccounts,
 } from '@polkadot-cloud/react/hooks';
-import { getExtensionIcon } from '@polkadot-cloud/assets/extensions';
+import { ExtensionIcons } from '@polkadot-cloud/assets/extensions';
 import { ExtensionInner } from './Wrappers';
 import type { ExtensionProps } from './types';
 import { NotificationsController } from 'static/NotificationsController';
@@ -43,7 +43,13 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
     }
   };
 
-  const Icon = getExtensionIcon(id);
+  // Get the correct icon id for the extension.
+  const iconId =
+    id === 'polkadot-js' && window?.walletExtension?.isNovaWallet
+      ? 'novawallet'
+      : id;
+
+  const Icon = ExtensionIcons[iconId];
 
   // determine message to be displayed based on extension status.
   let statusJsx;
