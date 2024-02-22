@@ -1,8 +1,8 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components';
-import { SideMenuStickyThreshold } from 'consts';
+import { PageWidthMediumThreshold } from 'consts';
 
 export const Wrapper = styled.div`
   --network-bar-font-size: 0.9rem;
@@ -22,7 +22,7 @@ export const Wrapper = styled.div`
   padding-top: 0.15rem;
   width: 100%;
 
-  @media (min-width: ${SideMenuStickyThreshold + 1}px) {
+  @media (min-width: ${PageWidthMediumThreshold + 1}px) {
     position: fixed;
   }
 

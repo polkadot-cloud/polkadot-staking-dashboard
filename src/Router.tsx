@@ -1,10 +1,9 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { registerLastVisited, registerSaEvent } from 'Utils';
 import { usePrompt } from 'contexts/Prompt';
 import { Disclaimer } from 'library/NetworkBar/Disclaimer';
-import { Body, Main } from '@polkadot-cloud/react';
 import { extractUrlValue } from '@polkadot-cloud/utils';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -34,6 +33,8 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Notifications } from 'library/Notifications';
 import { NotificationsController } from 'static/NotificationsController';
 import { Page } from 'Page';
+import { Body } from 'kits/Structure/Body';
+import { Main } from 'kits/Structure/Main';
 
 export const RouterInner = () => {
   const { t } = useTranslation();

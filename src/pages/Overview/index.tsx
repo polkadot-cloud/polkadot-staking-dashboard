@@ -1,12 +1,6 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  PageHeading,
-  PageRow,
-  PageTitle,
-  RowSection,
-} from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { StatBoxList } from 'library/StatBoxList';
@@ -21,6 +15,10 @@ import { StakeStatus } from './StakeStatus';
 import { ActiveEraStat } from './Stats/ActiveEraTimeLeft';
 import { AverageRewardRateStat } from './Stats/AveragelRewardRate';
 import { SupplyStakedStat } from './Stats/SupplyStaked';
+import { PageTitle } from 'kits/Structure/PageTitle';
+import { PageHeadingWrapper } from 'kits/Structure/PageHeading/Wrapper';
+import { PageRow } from 'kits/Structure/PageRow';
+import { RowSection } from 'kits/Structure/RowSection';
 
 export const Overview = () => {
   const { t } = useTranslation('pages');
@@ -31,9 +29,9 @@ export const Overview = () => {
     <>
       <PageTitle title={t('overview.overview')} />
       <PageRow>
-        <PageHeading>
+        <PageHeadingWrapper>
           <ActiveAccounts />
-        </PageHeading>
+        </PageHeadingWrapper>
       </PageRow>
       <StatBoxList>
         <AverageRewardRateStat />

@@ -1,10 +1,10 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useNetwork } from 'contexts/Network';
 import { Helmet } from 'react-helmet';
 import type { PageItem } from 'types';
-import { Page as PageWrapper } from '@polkadot-cloud/react';
+import { PageWrapper } from 'kits/Structure/Page/Wrapper';
 import { useTranslation } from 'react-i18next';
 
 export const Page = ({ page }: { page: PageItem }) => {

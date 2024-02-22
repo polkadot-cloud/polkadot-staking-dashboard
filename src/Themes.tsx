@@ -1,12 +1,12 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ThemeProvider } from 'styled-components';
-import { Entry } from '@polkadot-cloud/react';
 import { Router } from 'Router';
 import { useTheme } from 'contexts/Themes';
 import { useNetwork } from 'contexts/Network';
 import { useEffect } from 'react';
+import { Entry } from 'kits/Structure/Entry';
 
 // light / dark `mode` added to styled-components provider
 // `@polkadot-cloud/react` themes are added to `Entry`.

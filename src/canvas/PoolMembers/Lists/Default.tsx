@@ -1,10 +1,10 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { isNotZero } from '@polkadot-cloud/utils';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
+import { listItemsPerBatch, listItemsPerPage } from 'library/List/defaults';
 import { useApi } from 'contexts/Api';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { List, ListStatusHeader, Wrapper as ListWrapper } from 'library/List';
@@ -50,18 +50,18 @@ export const MembersListInner = ({
   };
 
   // pagination
-  const totalPages = Math.ceil(members.length / ListItemsPerPage);
-  const pageEnd = page * ListItemsPerPage - 1;
-  const pageStart = pageEnd - (ListItemsPerPage - 1);
+  const totalPages = Math.ceil(members.length / listItemsPerPage);
+  const pageEnd = page * listItemsPerPage - 1;
+  const pageStart = pageEnd - (listItemsPerPage - 1);
 
   // render batch
   const batchEnd = Math.min(
-    renderIteration * ListItemsPerBatch - 1,
-    ListItemsPerPage
+    renderIteration * listItemsPerBatch - 1,
+    listItemsPerPage
   );
 
   // get throttled subset or entire list
-  const listMembers = members.slice(pageStart).slice(0, ListItemsPerPage);
+  const listMembers = members.slice(pageStart).slice(0, listItemsPerPage);
 
   // handle validator list bootstrapping
   const setupMembersList = () => {

@@ -1,9 +1,8 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import {
-  ButtonPrimaryInvert,
   CanvasContainer,
   ModalContent,
   CanvasScroll,
@@ -24,6 +23,7 @@ import { useFillVariables } from 'hooks/useFillVariables';
 import { Definition } from './Items/Definition';
 import { External } from './Items/External';
 import { ActiveDefinition } from './Items/ActiveDefinition';
+import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
 
 export const Help = () => {
   const { t, i18n } = useTranslation('help');

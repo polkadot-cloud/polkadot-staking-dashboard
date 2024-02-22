@@ -1,10 +1,9 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import {
   ActionItem,
-  ButtonSubmitInvert,
   ModalNotes,
   ModalPadding,
   ModalWarnings,
@@ -23,6 +22,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
 
 export const ClaimCommission = ({
   setSection,

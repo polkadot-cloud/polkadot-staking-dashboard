@@ -1,7 +1,7 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonOption, Polkicon } from '@polkadot-cloud/react';
+import { Polkicon } from '@polkadot-cloud/react';
 import type { ForwardedRef } from 'react';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +14,7 @@ import type { TasksProps } from './types';
 import { useApi } from 'contexts/Api';
 import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';
+import { ButtonOption } from 'kits/Buttons/ButtonOption';
 
 export const Tasks = forwardRef(
   ({ setSection, setTask }: TasksProps, ref: ForwardedRef<HTMLDivElement>) => {

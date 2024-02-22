@@ -1,12 +1,12 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary } from '@polkadot-cloud/react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { CanvasFullScreenWrapper } from 'canvas/Wrappers';
 import { Members } from 'canvas/PoolMembers/Members';
 import { useTranslation } from 'react-i18next';
+import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 
 export const PoolMembers = () => {
   const { t } = useTranslation();

@@ -1,10 +1,11 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonHelp, ButtonTertiary } from '@polkadot-cloud/react';
 import { useHelp } from 'contexts/Help';
 import { HeaderWrapper } from './Wrappers';
 import type { HeaderProps } from './types';
+import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonTertiary } from 'kits/Buttons/ButtonTertiary';
 
 export const Header = ({ items }: HeaderProps) => {
   const { openHelp } = useHelp();

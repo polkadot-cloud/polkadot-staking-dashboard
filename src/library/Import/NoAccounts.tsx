@@ -1,12 +1,12 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSecondary } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { NoAccountsWrapper } from './Wrappers';
 import type { FunctionComponent, ReactNode, SVGProps } from 'react';
+import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
 
 export const NoAccounts = ({
   children,

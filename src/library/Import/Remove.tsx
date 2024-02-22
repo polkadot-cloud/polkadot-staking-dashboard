@@ -1,8 +1,8 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { registerSaEvent } from 'Utils';
-import { ButtonMono, ButtonMonoInvert, Polkicon } from '@polkadot-cloud/react';
+import { Polkicon } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { usePrompt } from 'contexts/Prompt';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
@@ -11,6 +11,8 @@ import { useNetwork } from 'contexts/Network';
 import type { RemoveProps } from './types';
 import { ellipsisFn } from '@polkadot-cloud/utils';
 import { NotificationsController } from 'static/NotificationsController';
+import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
+import { ButtonMono } from 'kits/Buttons/ButtonMono';
 
 export const Remove = ({
   address,

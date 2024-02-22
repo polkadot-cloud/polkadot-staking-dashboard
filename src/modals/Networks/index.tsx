@@ -1,9 +1,9 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronRight, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonTertiary, ModalPadding } from '@polkadot-cloud/react';
+import { ModalPadding } from '@polkadot-cloud/react';
 import { capitalizeFirstLetter } from '@polkadot-cloud/utils';
 import { useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -24,6 +24,7 @@ import {
   NetworkButton,
 } from './Wrapper';
 import { ProvidersPrompt } from './ProvidersPrompt';
+import { ButtonTertiary } from 'kits/Buttons/ButtonTertiary';
 
 export const Networks = () => {
   const { t } = useTranslation('modals');

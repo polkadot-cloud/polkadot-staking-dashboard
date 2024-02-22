@@ -1,4 +1,4 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { VoidFn } from '@polkadot-cloud/react/types';
@@ -203,24 +203,26 @@ export class BalancesController {
   // others strings. This function handles both cases and formats into a unified structure.
   static handlePayeeCallback = (address: string, result: AnyApi): void => {
     const payeeHuman = result.toHuman();
-
     let payeeFinal: PayeeConfig;
-    if (typeof payeeHuman === 'string') {
-      const destination = payeeHuman as PayeeOptions;
-      payeeFinal = {
-        destination,
-        account: null,
-      };
-    } else {
-      const payeeEntry = Object.entries(payeeHuman);
-      const destination = `${payeeEntry[0][0]}` as PayeeOptions;
-      const account = `${payeeEntry[0][1]}` as MaybeAddress;
-      payeeFinal = {
-        destination,
-        account,
-      };
+
+    if (payeeHuman !== null) {
+      if (typeof payeeHuman === 'string') {
+        const destination = payeeHuman as PayeeOptions;
+        payeeFinal = {
+          destination,
+          account: null,
+        };
+      } else {
+        const payeeEntry = Object.entries(payeeHuman);
+        const destination = `${payeeEntry[0][0]}` as PayeeOptions;
+        const account = `${payeeEntry[0][1]}` as MaybeAddress;
+        payeeFinal = {
+          destination,
+          account,
+        };
+      }
+      this.payees[address] = payeeFinal;
     }
-    this.payees[address] = payeeFinal;
   };
 
   // Handle pool membership and claim commission callback.

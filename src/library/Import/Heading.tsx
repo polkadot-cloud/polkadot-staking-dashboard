@@ -1,4 +1,4 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
@@ -6,10 +6,10 @@ import {
   faCircleMinus,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonText } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { HeadingWrapper } from './Wrappers';
 import type { HeadingProps } from './types';
+import { ButtonText } from 'kits/Buttons/ButtonText';
 
 export const Heading = ({
   connectTo,

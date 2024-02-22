@@ -1,8 +1,7 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { registerSaEvent } from 'Utils';
-import { ButtonMono, ButtonMonoInvert } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import type { LedgerAddress } from 'contexts/Hardware/Ledger/types';
@@ -13,6 +12,8 @@ import { useOverlay, useLedgerAccounts } from '@polkadot-cloud/react/hooks';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { LedgerAccount } from '@polkadot-cloud/react/types';
 import { useNetwork } from 'contexts/Network';
+import { ButtonMono } from 'kits/Buttons/ButtonMono';
+import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
 
 export const Reset = ({ removeLedgerAddress }: AnyJson) => {
   const { t } = useTranslation('modals');

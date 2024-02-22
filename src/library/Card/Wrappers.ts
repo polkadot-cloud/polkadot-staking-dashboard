@@ -1,8 +1,8 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components';
-import { SideMenuStickyThreshold } from 'consts';
+import { PageWidthMediumThreshold } from 'consts';
 import type { CardHeaderWrapperProps, CardWrapperProps } from '../Graphs/types';
 
 /* CardHeaderWrapper
@@ -32,7 +32,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     align-items: center;
     flex-grow: ${(props) => (props.$withAction ? 1 : 0)};
 
-    @media (max-width: ${SideMenuStickyThreshold}px) {
+    @media (max-width: ${PageWidthMediumThreshold}px) {
       margin-top: 0.5rem;
     }
   }
@@ -101,11 +101,11 @@ export const CardWrapper = styled.div<CardWrapperProps>`
     border: 1px solid var(--status-warning-color);
   }
 
-  @media (max-width: ${SideMenuStickyThreshold}px) {
+  @media (max-width: ${PageWidthMediumThreshold}px) {
     padding: 1rem 0.75rem;
   }
 
-  @media (min-width: ${SideMenuStickyThreshold + 1}px) {
+  @media (min-width: ${PageWidthMediumThreshold + 1}px) {
     height: ${(props) => (props.height ? `${props.height}px` : 'inherit')};
   }
 

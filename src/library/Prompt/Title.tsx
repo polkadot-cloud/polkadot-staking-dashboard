@@ -1,14 +1,15 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonHelp, ButtonSecondary } from '@polkadot-cloud/react';
 import type { FunctionComponent, SVGProps } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { usePrompt } from 'contexts/Prompt';
 import { TitleWrapper } from './Wrappers';
+import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
 
 interface TitleProps {
   title: string;

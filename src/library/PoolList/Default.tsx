@@ -1,4 +1,4 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import type { FormEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
+import { listItemsPerBatch, listItemsPerPage } from 'library/List/defaults';
 import { useApi } from 'contexts/Api';
 import { useFilters } from 'contexts/Filters';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -80,20 +80,20 @@ export const PoolList = ({
   };
 
   // pagination
-  const totalPages = Math.ceil(listPools.length / ListItemsPerPage);
-  const pageEnd = page * ListItemsPerPage - 1;
-  const pageStart = pageEnd - (ListItemsPerPage - 1);
+  const totalPages = Math.ceil(listPools.length / listItemsPerPage);
+  const pageEnd = page * listItemsPerPage - 1;
+  const pageStart = pageEnd - (listItemsPerPage - 1);
 
   // render batch
   const batchEnd = Math.min(
-    renderIteration * ListItemsPerBatch - 1,
-    ListItemsPerPage
+    renderIteration * listItemsPerBatch - 1,
+    listItemsPerPage
   );
 
   // get throttled subset or entire list
   const poolsToDisplay = disableThrottle
     ? listPools
-    : listPools.slice(pageStart).slice(0, ListItemsPerPage);
+    : listPools.slice(pageStart).slice(0, listItemsPerPage);
 
   // handle pool list bootstrapping
   const setupPoolList = () => {

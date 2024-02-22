@@ -1,6 +1,8 @@
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonPrimary } from '@polkadot-cloud/react';
 import { useApi } from 'contexts/Api';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import type { Validator } from 'contexts/Validators/types';
@@ -12,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { FooterWrapper, PromptListItem } from 'library/Prompt/Wrappers';
 import type { FavoritesPromptProps } from '../types';
 import { NotificationsController } from 'static/NotificationsController';
+import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 
 export const FavoritesPrompt = ({
   callback,

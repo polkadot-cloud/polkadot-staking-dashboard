@@ -1,7 +1,7 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { FC, FunctionComponent, SVGProps } from 'react';
+import type { FC, FunctionComponent, ReactNode, SVGProps } from 'react';
 import type { Theme } from 'contexts/Themes/types';
 import type { ExtensionInjected } from '@polkadot-cloud/react/types';
 import type BigNumber from 'bignumber.js';
@@ -16,6 +16,7 @@ import type {
 } from 'contexts/Api/types';
 import type { SyncEvent } from 'static/SyncController/types';
 import type { DetailActivePool } from 'static/ActivePoolsController/types';
+import type { CSSProperties } from 'styled-components';
 
 declare global {
   interface Window {
@@ -87,7 +88,6 @@ export interface Network {
     unit: string;
     priceTicker: string;
   };
-  params: Record<string, number>;
   defaultFeeReserve: number;
   maxExposurePageSize: BigNumber;
 }
@@ -127,9 +127,6 @@ export type MaybeAddress = string | null;
 
 export type MaybeString = string | null;
 
-// list of available plugins.
-export type Plugin = 'subscan' | 'binance_spot' | 'tips' | 'polkawatch';
-
 // track the status of a syncing / fetching process.
 export type Sync = 'unsynced' | 'syncing' | 'synced';
 
@@ -155,3 +152,19 @@ export type AnyMetaBatch = any;
 export type AnySubscan = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyPolkawatch = any;
+
+// A generic type to handle React components. We assume the component may have
+// children and styling applied to it.
+export interface ComponentBase {
+  // passing react children.
+  children?: ReactNode;
+  // passing custom styling.
+  style?: CSSProperties;
+}
+
+export type VoidFn = () => void;
+
+export type ComponentBaseWithClassName = ComponentBase & {
+  // passing a className string.
+  className?: string;
+};

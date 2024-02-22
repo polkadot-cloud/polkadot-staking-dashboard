@@ -1,12 +1,7 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
-import {
-  ButtonPrimary,
-  ButtonPrimaryInvert,
-  ButtonSecondary,
-} from '@polkadot-cloud/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +9,9 @@ import { Title } from 'library/Prompt/Title';
 import { usePrompt } from 'contexts/Prompt';
 import { usePlugins } from 'contexts/Plugins';
 import type { TipProps } from './types';
+import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
 
 export const Tip = ({ title, description, page }: TipProps) => {
   const { t } = useTranslation();

@@ -1,11 +1,11 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components';
 import {
   SideMenuMaximisedWidth,
   SideMenuMinimisedWidth,
-  SideMenuStickyThreshold,
+  PageWidthMediumThreshold,
 } from 'consts';
 import type { MinimisedProps } from './types';
 
@@ -30,7 +30,7 @@ export const Wrapper = styled.div<MinimisedProps>`
   -ms-overflow-style: none;
   scrollbar-width: none;
 
-  @media (max-width: ${SideMenuStickyThreshold}px) {
+  @media (max-width: ${PageWidthMediumThreshold}px) {
     background: var(--gradient-side-menu);
     transition: all var(--transition-duration);
     border-radius: 0.75rem;

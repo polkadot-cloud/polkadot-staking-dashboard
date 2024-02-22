@@ -1,4 +1,4 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
@@ -24,7 +24,6 @@ import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { Validator } from 'contexts/Validators/types';
-import { ButtonMonoInvert, ButtonPrimaryInvert } from '@polkadot-cloud/react';
 import { Subheading } from 'pages/Nominate/Wrappers';
 import { FavoritesPrompt } from 'canvas/ManageNominations/Prompts/FavoritesPrompt';
 import { usePrompt } from 'contexts/Prompt';
@@ -32,6 +31,8 @@ import { useFetchMehods } from './useFetchMethods';
 import type { AddNominationsType, GenerateNominationsProps } from './types';
 import type { AnyFunction } from '@polkadot-cloud/react/types';
 import type { AnyJson } from 'types';
+import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
 
 export const GenerateNominations = ({
   setters = [],

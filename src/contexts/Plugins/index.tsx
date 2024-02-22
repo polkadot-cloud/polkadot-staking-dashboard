@@ -1,10 +1,10 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { isNotZero, setStateWithRef } from '@polkadot-cloud/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
-import type { Plugin } from 'types';
+import type { Plugin } from 'config/plugins';
 import * as defaults from './defaults';
 import type { PluginsContextInterface } from './types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react';

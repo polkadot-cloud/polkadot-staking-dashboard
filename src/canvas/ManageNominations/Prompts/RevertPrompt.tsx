@@ -1,8 +1,11 @@
-import { ButtonPrimary } from '@polkadot-cloud/react';
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
 import { Title } from 'library/Prompt/Title';
 import { useTranslation } from 'react-i18next';
 import { FooterWrapper } from 'library/Prompt/Wrappers';
 import type { RevertPromptProps } from '../types';
+import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 
 export const RevertPrompt = ({ onRevert }: RevertPromptProps) => {
   const { t } = useTranslation('modals');

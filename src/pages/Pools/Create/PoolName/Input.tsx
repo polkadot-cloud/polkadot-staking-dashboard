@@ -1,4 +1,4 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { FormEvent } from 'react';
@@ -43,7 +43,7 @@ export const Input = ({
     <>
       <div style={{ margin: '1rem 0' }}>
         <input
-          className="textbox"
+          className="underline"
           style={{ width: '100%', fontFamily: 'InterSemiBold, sans-serif' }}
           placeholder={t('pools.poolName')}
           type="text"

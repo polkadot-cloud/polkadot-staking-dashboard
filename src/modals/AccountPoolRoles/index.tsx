@@ -1,8 +1,8 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { ButtonOption, ModalPadding, Polkicon } from '@polkadot-cloud/react';
+import { ModalPadding, Polkicon } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Title } from 'library/Modal/Title';
@@ -12,6 +12,7 @@ import { ContentWrapper } from './Wrappers';
 import { useBalances } from 'contexts/Balances';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { ActivePool } from 'contexts/Pools/ActivePool/types';
+import { ButtonOption } from 'kits/Buttons/ButtonOption';
 
 export const AccountPoolRoles = () => {
   const { t } = useTranslation('modals');

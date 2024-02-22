@@ -1,7 +1,6 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Tx } from '@polkadot-cloud/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
@@ -13,6 +12,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Default } from './Default';
 import { ManualSign } from './ManualSign';
 import type { SubmitTxProps } from './types';
+import { Tx } from 'kits/Structure/Tx';
 
 export const SubmitTx = ({
   uid,

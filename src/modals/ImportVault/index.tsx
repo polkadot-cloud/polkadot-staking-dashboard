@@ -1,14 +1,8 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faQrcode } from '@fortawesome/free-solid-svg-icons';
-import {
-  ButtonPrimary,
-  ButtonText,
-  HardwareAddress,
-  HardwareStatusBar,
-  Polkicon,
-} from '@polkadot-cloud/react';
+import { Polkicon } from '@polkadot-cloud/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useVaultAccounts } from 'contexts/Hardware/Vault/VaultAccounts';
@@ -23,6 +17,10 @@ import type { AnyJson } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { Reader } from './Reader';
+import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonText } from 'kits/Buttons/ButtonText';
+import { HardwareAddress } from 'library/Hardware/HardwareAddress';
+import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar';
 
 export const ImportVault = () => {
   const { t } = useTranslation();

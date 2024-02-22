@@ -10,3 +10,4 @@ src/img/**/*
 public/lottie/player.js
 CHANGELOG.md
 .yarn
+.licenserc.json

@@ -1,9 +1,9 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonSecondary, Polkicon } from '@polkadot-cloud/react';
+import { Polkicon } from '@polkadot-cloud/react';
 import { isValidAddress } from '@polkadot-cloud/utils';
 import type { FormEvent } from 'react';
 import { useEffect, useState } from 'react';
@@ -14,6 +14,7 @@ import { useNetwork } from 'contexts/Network';
 import { formatAccountSs58 } from 'contexts/Connect/Utils';
 import { AccountInputWrapper } from './Wrapper';
 import type { AccountInputProps } from './types';
+import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
 
 export const AccountInput = ({
   successCallback,
