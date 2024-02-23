@@ -33,7 +33,7 @@ import { Page } from 'Page';
 import { Body } from 'kits/Structure/Body';
 import { Main } from 'kits/Structure/Main';
 
-export const RouterInner = () => {
+const RouterInner = () => {
   const { t } = useTranslation();
   const { network } = useNetwork();
   const { pathname } = useLocation();
