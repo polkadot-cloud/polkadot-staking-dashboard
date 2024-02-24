@@ -42,12 +42,14 @@ export const Connect = () => {
   // Whether the app is running in a SubWallet Mobile.
   const inSubWallet = !!window.injectedWeb3?.['subwallet-js'] && mobileCheck();
 
-  // If in Nova Wallet, keep `polkadot-js` for overwriting its metadata with Nova's.
+  // If in Nova Wallet, keep `polkadot-js` only for overwriting its metadata with Nova's.
   const web = inNova
     ? ExtensionsArray.filter((a) => a.id === 'polkadot-js')
-    : inSubWallet
+    : // If in SubWallet Mobile, keep `subwallet-js` only.
+      inSubWallet
       ? ExtensionsArray.filter((a) => a.id === 'subwallet-js')
-      : ExtensionsArray.filter((a) => a.id !== 'polkadot-js');
+      : // Otherwise, keep all extensions except `polkadot-js`.
+        ExtensionsArray.filter((a) => a.id !== 'polkadot-js');
 
   const installed = web.filter((a) =>
     Object.keys(extensionsStatus).find((key) => key === a.id)
