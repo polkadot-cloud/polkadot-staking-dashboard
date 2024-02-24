@@ -36,18 +36,24 @@ export const Connect = () => {
   const { extensionsStatus } = useExtensions();
   const { replaceModal, setModalHeight, modalMaxHeight } = useOverlay().modal;
 
+  // Whether the app is running on mobile.
+  const isMobile = mobileCheck();
+
   // Whether the app is running in Nova Wallet.
   const inNova = !!window?.walletExtension?.isNovaWallet || false;
 
   // Whether the app is running in a SubWallet Mobile.
-  const inSubWallet = !!window.injectedWeb3?.['subwallet-js'] && mobileCheck();
+  const inSubWallet = !!window.injectedWeb3?.['subwallet-js'] && isMobile;
+
+  // Whether the app is running on of mobile wallets.
+  const inMobileWallet = inNova || inSubWallet;
 
   // If in Nova Wallet, keep `polkadot-js` only for overwriting its metadata with Nova's.
-  const web = inNova
-    ? ExtensionsArray.filter((a) => a.id === 'polkadot-js')
+  const web = inSubWallet
+    ? ExtensionsArray.filter((a) => a.id === 'subwallet-js')
     : // If in SubWallet Mobile, keep `subwallet-js` only.
-      inSubWallet
-      ? ExtensionsArray.filter((a) => a.id === 'subwallet-js')
+      inNova
+      ? ExtensionsArray.filter((a) => a.id === 'polkadot-js')
       : // Otherwise, keep all extensions except `polkadot-js`.
         ExtensionsArray.filter((a) => a.id !== 'polkadot-js');
 
@@ -124,7 +130,7 @@ export const Connect = () => {
 
   // Display hardware before extensions. If in Nova Wallet or SubWallet Mobile, display extension
   // before hardware.
-  const ConnectCombinedJSX = !(inNova || inSubWallet) ? (
+  const ConnectCombinedJSX = !inMobileWallet ? (
     <>
       {ConnectHardwareJSX}
       {ConnectExtensionsJSX}
@@ -198,7 +204,7 @@ export const Connect = () => {
         <div className="section">
           <ModalPadding horizontalOnly ref={homeRef}>
             {ConnectCombinedJSX}
-            {!inNova && (
+            {!inMobileWallet && (
               <>
                 <ActionItem text={t('developerTools')} />
                 <ExtensionsWrapper>
