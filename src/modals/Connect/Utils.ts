@@ -3,6 +3,7 @@
 /* eslint-disable no-useless-escape */
 
 // Checks if in mobile browser.
+//
 // NOTE: taken from `http://detectmobilebrowsers.com/`.
 export const mobileCheck = () => {
   let check = false;
