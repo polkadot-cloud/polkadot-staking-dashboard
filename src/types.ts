@@ -21,6 +21,7 @@ import type { CSSProperties } from 'styled-components';
 declare global {
   interface Window {
     injectedWeb3?: Record<string, ExtensionInjected>;
+    opera?: boolean;
   }
   interface DocumentEventMap {
     notification: CustomEvent<NotificationItem>;
