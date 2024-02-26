@@ -2400,6 +2400,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@w3ux/validator-assets@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "@w3ux/validator-assets@npm:0.0.1"
+  checksum: 239db00aa38b4c19c3475d42468546a1a7691cf662c312827e1bf03d7344de53e43fc26e68b94f85a8ab33b38c6b66592ac18b3a087f182043c85014b6fb06ac
+  languageName: node
+  linkType: hard
+
 "@zondax/ledger-substrate@npm:^0.41.3":
   version: 0.41.3
   resolution: "@zondax/ledger-substrate@npm:0.41.3"
@@ -6189,6 +6196,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^7.0.2"
     "@typescript-eslint/parser": "npm:^7.0.2"
     "@vitejs/plugin-react-swc": "npm:^3.6.0"
+    "@w3ux/validator-assets": "npm:^0.0.1"
     "@zondax/ledger-substrate": "npm:^0.41.3"
     bignumber.js: "npm:^9.1.2"
     bn.js: "npm:^5.2.1"

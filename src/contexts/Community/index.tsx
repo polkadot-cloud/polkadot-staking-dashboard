@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ValidatorEntry } from '@polkadot-cloud/assets/types';
-import { ValidatorCommunity } from 'config/validators';
+import { ValidatorCommunity } from '@w3ux/validator-assets';
 import { shuffle } from '@polkadot-cloud/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
