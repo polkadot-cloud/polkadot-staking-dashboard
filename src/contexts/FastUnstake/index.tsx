@@ -6,7 +6,7 @@ import {
   isNotZero,
   rmCommas,
   setStateWithRef,
-} from '@polkadot-cloud/utils';
+} from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';

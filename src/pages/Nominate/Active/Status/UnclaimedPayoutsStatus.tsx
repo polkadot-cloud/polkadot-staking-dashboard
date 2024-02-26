@@ -6,7 +6,7 @@ import { Stat } from 'library/Stat';
 import { usePayouts } from 'contexts/Payouts';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
-import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
+import { minDecimalPlaces, planckToUnit } from '@w3ux/utils';
 import { faCircleDown } from '@fortawesome/free-solid-svg-icons';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';

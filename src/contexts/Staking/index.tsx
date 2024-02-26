@@ -1,11 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  greaterThanZero,
-  rmCommas,
-  setStateWithRef,
-} from '@polkadot-cloud/utils';
+import { greaterThanZero, rmCommas, setStateWithRef } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';

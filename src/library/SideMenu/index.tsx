@@ -3,7 +3,7 @@
 
 import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { capitalizeFirstLetter } from '@polkadot-cloud/utils';
+import { capitalizeFirstLetter } from '@w3ux/utils';
 import throttle from 'lodash.throttle';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';

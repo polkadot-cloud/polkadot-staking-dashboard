@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ModalNotes, ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
-import { isNotZero, planckToUnit, unitToPlanck } from '@polkadot-cloud/utils';
+import { isNotZero, planckToUnit, unitToPlanck } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { getUnixTime } from 'date-fns';
 import { useEffect, useState } from 'react';

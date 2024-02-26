@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { MaybeAddress } from '@polkadot-cloud/react/types';
-import { unitToPlanck } from '@polkadot-cloud/utils';
+import { unitToPlanck } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { NetworkName } from 'types';
 

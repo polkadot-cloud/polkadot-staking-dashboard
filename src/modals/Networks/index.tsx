@@ -4,7 +4,7 @@
 import { faChevronRight, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ModalPadding } from '@polkadot-cloud/react';
-import { capitalizeFirstLetter } from '@polkadot-cloud/utils';
+import { capitalizeFirstLetter } from '@w3ux/utils';
 import { useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { NetworkList } from 'config/networks';

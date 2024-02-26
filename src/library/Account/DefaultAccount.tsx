@@ -3,7 +3,7 @@
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
+import { ellipsisFn, remToUnit } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import { Polkicon } from '@polkadot-cloud/react';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';

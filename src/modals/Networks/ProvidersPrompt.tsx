@@ -8,7 +8,7 @@ import { PromptSelectItem } from 'library/Prompt/Wrappers';
 import { useNetwork } from 'contexts/Network';
 import { NetworkList } from 'config/networks';
 import { usePrompt } from 'contexts/Prompt';
-import { capitalizeFirstLetter } from '@polkadot-cloud/utils';
+import { capitalizeFirstLetter } from '@w3ux/utils';
 
 export const ProvidersPrompt = () => {
   const { t } = useTranslation();

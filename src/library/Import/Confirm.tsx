@@ -9,7 +9,7 @@ import { ConfirmWrapper } from 'library/Import/Wrappers';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { ConfirmProps } from './types';
 import { NotificationsController } from 'static/NotificationsController';
-import { ellipsisFn } from '@polkadot-cloud/utils';
+import { ellipsisFn } from '@w3ux/utils';
 import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
 import { ButtonMono } from 'kits/Buttons/ButtonMono';
 

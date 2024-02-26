@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { extractUrlValue, varToUrlHash } from '@polkadot-cloud/utils';
+import { extractUrlValue, varToUrlHash } from '@w3ux/utils';
 import {
   DefaultLocale,
   availableLanguages,

@@ -12,7 +12,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ButtonRowWrapper, ContentWrapper } from './Wrappers';
 import type { TasksProps } from './types';
 import { useApi } from 'contexts/Api';
-import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
+import { ellipsisFn, remToUnit } from '@w3ux/utils';
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';
 import { ButtonOption } from 'kits/Buttons/ButtonOption';
 

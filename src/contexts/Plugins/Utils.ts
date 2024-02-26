@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { localStorageOrDefault } from '@polkadot-cloud/utils';
+import { localStorageOrDefault } from '@w3ux/utils';
 import type { Plugin } from 'config/plugins';
 import { PluginsList } from 'config/plugins';
 

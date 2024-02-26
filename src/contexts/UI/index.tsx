@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
+import { localStorageOrDefault, setStateWithRef } from '@w3ux/utils';
 import type { ReactNode, RefObject } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { PageWidthMediumThreshold } from 'consts';

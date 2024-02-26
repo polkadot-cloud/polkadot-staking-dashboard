@@ -17,7 +17,7 @@ import { Odometer } from '@polkadot-cloud/react';
 import { locales, DefaultLocale } from 'locale';
 import BigNumber from 'bignumber.js';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
-import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
+import { minDecimalPlaces, planckToUnit } from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
 import { useSyncing } from 'hooks/useSyncing';
 

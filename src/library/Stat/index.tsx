@@ -4,7 +4,7 @@
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Polkicon, Odometer } from '@polkadot-cloud/react';
-import { applyWidthAsPadding, minDecimalPlaces } from '@polkadot-cloud/utils';
+import { applyWidthAsPadding, minDecimalPlaces } from '@w3ux/utils';
 import { Fragment, useEffect, useLayoutEffect, useRef } from 'react';
 import { useHelp } from 'contexts/Help';
 import { useNetwork } from 'contexts/Network';

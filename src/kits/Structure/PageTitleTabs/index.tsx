@@ -4,7 +4,7 @@
 import { ButtonTab } from 'kits/Buttons/ButtonTab';
 import type { PageTitleProps } from '../PageTitle/types';
 import type { PageTitleTabProps } from './types';
-import { appendOrEmpty } from '@polkadot-cloud/utils';
+import { appendOrEmpty } from '@w3ux/utils';
 import { Wrapper } from './Wrapper';
 
 /**

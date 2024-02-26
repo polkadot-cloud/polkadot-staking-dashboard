@@ -13,7 +13,7 @@ import {
   getLocalVaultAccounts,
 } from 'contexts/Hardware/Utils';
 import type { MaybeAddress, NetworkName } from 'types';
-import { setStateWithRef } from '@polkadot-cloud/utils';
+import { setStateWithRef } from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { ImportedAccount } from '@polkadot-cloud/react/types';

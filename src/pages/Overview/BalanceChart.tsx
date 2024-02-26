@@ -3,11 +3,7 @@
 
 import { faCheck, faCheckDouble } from '@fortawesome/free-solid-svg-icons';
 import { Odometer } from '@polkadot-cloud/react';
-import {
-  greaterThanZero,
-  minDecimalPlaces,
-  planckToUnit,
-} from '@polkadot-cloud/utils';
+import { greaterThanZero, minDecimalPlaces, planckToUnit } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';

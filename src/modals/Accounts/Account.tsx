@@ -3,7 +3,7 @@
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ellipsisFn, planckToUnit } from '@polkadot-cloud/utils';
+import { ellipsisFn, planckToUnit } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import { ExtensionIcons } from '@w3ux/extension-assets/util';
 import LedgerSVG from '@w3ux/extension-assets/LedgerSquare.svg?react';

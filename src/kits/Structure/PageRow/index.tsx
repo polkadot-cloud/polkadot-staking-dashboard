@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { RowProps } from '../ButtonRow';
-import { appendOrEmpty } from '@polkadot-cloud/utils';
+import { appendOrEmpty } from '@w3ux/utils';
 import { Wrapper } from './Wrapper';
 
 /**

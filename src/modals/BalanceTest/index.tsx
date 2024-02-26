@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ModalPadding } from '@polkadot-cloud/react';
-import { unitToPlanck } from '@polkadot-cloud/utils';
+import { unitToPlanck } from '@w3ux/utils';
 import { useApi } from 'contexts/Api';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useTxMeta } from 'contexts/TxMeta';

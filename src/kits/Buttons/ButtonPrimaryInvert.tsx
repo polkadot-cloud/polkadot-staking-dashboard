@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { ComponentBaseWithClassName } from 'types';
 import type { ButtonCommonProps, ButtonIconProps } from './types';
 import { onMouseHandlers } from './Utils';
-import { appendOr, appendOrEmpty } from '@polkadot-cloud/utils';
+import { appendOr, appendOrEmpty } from '@w3ux/utils';
 
 export type ButtonPrimaryInvertProps = ComponentBaseWithClassName &
   ButtonIconProps &
