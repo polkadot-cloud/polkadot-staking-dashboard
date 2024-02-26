@@ -1,11 +1,5 @@
 const P2POrg = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="744"
-    height="744"
-    fill="none"
-    viewBox="0 0 744 744"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 744 744">
     <path fill="#136BFF" d="M0 0H744V744H0z"></path>
     <path
       fill="#fff"
