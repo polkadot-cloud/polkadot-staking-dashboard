@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ModalConnectItem, ModalHardwareItem } from '@polkadot-cloud/react';
 import { inChrome } from '@polkadot-cloud/utils';
 import { useHelp } from 'contexts/Help';
-import LedgerLogoSVG from '@polkadot-cloud/assets/extensions/svg/ledger.svg?react';
+import LedgerLogoSVG from '@w3ux/extension-assets/Ledger.svg?react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';

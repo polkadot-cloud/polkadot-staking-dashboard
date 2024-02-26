@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { useHelp } from 'contexts/Help';
 import { useTheme } from 'contexts/Themes';
-import LedgerLogoSvg from '@polkadot-cloud/assets/extensions/svg/ledger.svg?react';
+import LedgerLogoSvg from '@w3ux/extension-assets/Ledger.svg?react';
 import type { AnyFunction } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { SplashWrapper } from './Wrappers';

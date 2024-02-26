@@ -10,7 +10,7 @@ import {
   useExtensions,
   useExtensionAccounts,
 } from '@polkadot-cloud/react/hooks';
-import { ExtensionIcons } from '@polkadot-cloud/assets/extensions';
+import { ExtensionIcons } from '@w3ux/extension-assets/util';
 import { ExtensionInner } from './Wrappers';
 import type { ExtensionProps } from './types';
 import { NotificationsController } from 'static/NotificationsController';
@@ -45,10 +45,9 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
 
   // Get the correct icon id for the extension.
   const iconId =
-    id === 'polkadot-js' && window?.walletExtension?.isNovaWallet
-      ? 'novawallet'
+    window?.walletExtension?.isNovaWallet && id === 'polkadot-js'
+      ? 'nova-wallet'
       : id;
-
   const Icon = ExtensionIcons[iconId];
 
   // determine message to be displayed based on extension status.
@@ -69,8 +68,9 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
       );
   }
 
-  const shortUrl = Array.isArray(website) ? website[0] : website;
-  const longUrl = Array.isArray(website) ? website[1] : website;
+  const websiteText = typeof website === 'string' ? website : website.text;
+  const websiteUrl = typeof website === 'string' ? website : website.url;
+
   const disabled = extensionsStatus[id] === 'connected' || !isInstalled;
 
   return (
@@ -102,11 +102,11 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
           <div className="foot">
             <a
               className="link"
-              href={`https://${longUrl}`}
+              href={`https://${websiteUrl}`}
               target="_blank"
               rel="noreferrer"
             >
-              {shortUrl}
+              {websiteText}
               <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
             </a>
           </div>

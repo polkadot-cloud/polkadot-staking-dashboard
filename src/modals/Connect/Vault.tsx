@@ -7,7 +7,7 @@ import { ModalConnectItem, ModalHardwareItem } from '@polkadot-cloud/react';
 import type { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
-import PolkadotVaultSVG from '@polkadot-cloud/assets/extensions/svg/polkadotvault.svg?react';
+import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';

@@ -7,7 +7,7 @@ import { useNetwork } from 'contexts/Network';
 import { Item } from './Item';
 import { ItemsWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
-import type { ValidatorEntry } from '@polkadot-cloud/assets/types';
+import type { ValidatorEntry } from '@w3ux/validator-assets';
 import { useCommunity } from 'contexts/Community';
 
 export const List = () => {
