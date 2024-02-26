@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ActionItem, ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
-import { greaterThanZero, planckToUnit } from '@polkadot-cloud/utils';
+import { greaterThanZero, planckToUnit } from '@w3ux/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';

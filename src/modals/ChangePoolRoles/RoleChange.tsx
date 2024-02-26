@@ -3,7 +3,7 @@
 
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
+import { ellipsisFn, remToUnit } from '@w3ux/utils';
 import { Polkicon } from '@polkadot-cloud/react';
 import { RoleChangeWrapper } from './Wrapper';
 import type { RoleChangeProps } from './types';

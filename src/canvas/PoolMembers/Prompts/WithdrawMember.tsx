@@ -13,7 +13,7 @@ import {
   planckToUnit,
   remToUnit,
   rmCommas,
-} from '@polkadot-cloud/utils';
+} from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { RefObject } from 'react';
 import { useState } from 'react';

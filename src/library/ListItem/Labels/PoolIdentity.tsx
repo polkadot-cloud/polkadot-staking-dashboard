@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ellipsisFn, determinePoolDisplay } from '@polkadot-cloud/utils';
+import { ellipsisFn, determinePoolDisplay } from '@w3ux/utils';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Polkicon } from '@polkadot-cloud/react';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';

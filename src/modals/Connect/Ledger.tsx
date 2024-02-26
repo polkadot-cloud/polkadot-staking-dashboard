@@ -8,7 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ModalConnectItem, ModalHardwareItem } from '@polkadot-cloud/react';
-import { inChrome } from '@polkadot-cloud/utils';
+import { inChrome } from '@w3ux/utils';
 import { useHelp } from 'contexts/Help';
 import LedgerLogoSVG from '@w3ux/extension-assets/Ledger.svg?react';
 import { useOverlay } from '@polkadot-cloud/react/hooks';

@@ -3,7 +3,7 @@
 
 import { faFlag } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { planckToUnit } from '@polkadot-cloud/utils';
+import { planckToUnit } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import { useNetwork } from 'contexts/Network';
 import type { NominateStatusBarProps } from '../types';

@@ -4,7 +4,7 @@
 import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ModalNotes, ModalPadding } from '@polkadot-cloud/react';
-import { planckToUnit } from '@polkadot-cloud/utils';
+import { planckToUnit } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { getUnixTime } from 'date-fns';
 import type { Dispatch, ForwardedRef, SetStateAction } from 'react';

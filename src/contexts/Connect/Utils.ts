@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import Keyring from '@polkadot/keyring';
-import { localStorageOrDefault } from '@polkadot-cloud/utils';
+import { localStorageOrDefault } from '@w3ux/utils';
 import type { NetworkName } from 'types';
 
 // Gets local `activeAccount` for a network.

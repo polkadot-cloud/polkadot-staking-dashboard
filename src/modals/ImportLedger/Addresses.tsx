@@ -3,7 +3,7 @@
 
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { Polkicon } from '@polkadot-cloud/react';
-import { ellipsisFn, unescape } from '@polkadot-cloud/utils';
+import { ellipsisFn, unescape } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { ellipsisFn, remToUnit } from '@polkadot-cloud/utils';
+import { ellipsisFn, remToUnit } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Polkicon } from '@polkadot-cloud/react';

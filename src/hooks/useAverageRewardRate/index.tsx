@@ -7,7 +7,7 @@ import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { AverageRewardRate, UseAverageRewardRate } from './types';
 import { defaultAverageRewardRate } from './defaults';
 import { useNetwork } from 'contexts/Network';
-import { planckToUnit } from '@polkadot-cloud/utils';
+import { planckToUnit } from '@w3ux/utils';
 import { useApi } from 'contexts/Api';
 
 export const useAverageRewardRate = (): UseAverageRewardRate => {

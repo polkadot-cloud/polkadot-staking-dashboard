@@ -3,7 +3,7 @@
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { Odometer } from '@polkadot-cloud/react';
-import { minDecimalPlaces, planckToUnit } from '@polkadot-cloud/utils';
+import { minDecimalPlaces, planckToUnit } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { useActivePool } from 'contexts/Pools/ActivePool';

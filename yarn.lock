@@ -2407,6 +2407,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@w3ux/utils@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "@w3ux/utils@npm:0.0.1"
+  checksum: a14823f3f0e3776a472ccaf6838745af077191fe3a004ceea3936c4d5767189de96eba9752b9cf8eb56a1aa24e38c6a05f673748a955671be761cb713108b8c4
+  languageName: node
+  linkType: hard
+
 "@w3ux/validator-assets@npm:0.0.3":
   version: 0.0.3
   resolution: "@w3ux/validator-assets@npm:0.0.3"
@@ -6183,7 +6190,6 @@ __metadata:
     "@ledgerhq/logs": "npm:^6.12.0"
     "@polkadot-cloud/core": "npm:^1.3.3"
     "@polkadot-cloud/react": "npm:^0.5.4"
-    "@polkadot-cloud/utils": "npm:^0.3.0"
     "@polkadot/api": "npm:^10.11.2"
     "@polkadot/keyring": "npm:^12.6.2"
     "@polkadot/rpc-provider": "npm:^10.11.2"
@@ -6203,6 +6209,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^7.0.2"
     "@vitejs/plugin-react-swc": "npm:^3.6.0"
     "@w3ux/extension-assets": "npm:0.0.14"
+    "@w3ux/utils": "npm:^0.0.1"
     "@w3ux/validator-assets": "npm:0.0.3"
     "@zondax/ledger-substrate": "npm:^0.41.3"
     bignumber.js: "npm:^9.1.2"

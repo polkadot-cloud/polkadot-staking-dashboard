@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ModalPadding } from '@polkadot-cloud/react';
-import { planckToUnit, unitToPlanck } from '@polkadot-cloud/utils';
+import { planckToUnit, unitToPlanck } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';

@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import type { ComponentBaseWithClassName } from 'types';
 import type { ButtonCommonProps, ButtonIconProps } from './types';
 import { onMouseHandlers } from './Utils';
-import { appendOrEmpty } from '@polkadot-cloud/utils';
+import { appendOrEmpty } from '@w3ux/utils';
 
 export type ButtonTertiaryProps = ComponentBaseWithClassName &
   ButtonIconProps &

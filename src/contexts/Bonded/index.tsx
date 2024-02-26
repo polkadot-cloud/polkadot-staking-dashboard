@@ -7,7 +7,7 @@ import {
   matchedProperties,
   removedFrom,
   setStateWithRef,
-} from '@polkadot-cloud/utils';
+} from '@w3ux/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ExternalAccount } from '@polkadot-cloud/react/types';
-import { localStorageOrDefault } from '@polkadot-cloud/utils';
+import { localStorageOrDefault } from '@w3ux/utils';
 import type { NetworkName } from 'types';
 
 // Check whether an external account exists in local storage.

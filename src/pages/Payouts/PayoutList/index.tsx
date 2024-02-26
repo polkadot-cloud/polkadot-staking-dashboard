@@ -3,7 +3,7 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ellipsisFn, isNotZero, planckToUnit } from '@polkadot-cloud/utils';
+import { ellipsisFn, isNotZero, planckToUnit } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { formatDistance, fromUnixTime } from 'date-fns';
 import { motion } from 'framer-motion';

@@ -6,7 +6,7 @@ import {
   ModalMotionTwoSection,
   ModalSection,
 } from '@polkadot-cloud/react';
-import { setStateWithRef } from '@polkadot-cloud/utils';
+import { setStateWithRef } from '@w3ux/utils';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';

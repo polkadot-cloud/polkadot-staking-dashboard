@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { rmCommas, setStateWithRef, shuffle } from '@polkadot-cloud/utils';
+import { rmCommas, setStateWithRef, shuffle } from '@w3ux/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import type {

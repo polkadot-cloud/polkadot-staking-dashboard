@@ -3,7 +3,7 @@
 
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react';
 import type { MaybeAddress } from '@polkadot-cloud/react/types';
-import { setStateWithRef } from '@polkadot-cloud/utils';
+import { setStateWithRef } from '@w3ux/utils';
 import type {
   ActiveBalancesState,
   ActiveLedgerSource,

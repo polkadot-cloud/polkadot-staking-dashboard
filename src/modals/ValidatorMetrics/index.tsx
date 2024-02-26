@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ModalPadding, Polkicon } from '@polkadot-cloud/react';
-import { ellipsisFn, planckToUnit } from '@polkadot-cloud/utils';
+import { ellipsisFn, planckToUnit } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';

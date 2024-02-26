@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ActiveEraInfo, BlockNumber } from '@polkadot/types/interfaces';
-import { makeCancelable, rmCommas, withTimeout } from '@polkadot-cloud/utils';
+import { makeCancelable, rmCommas, withTimeout } from '@w3ux/utils';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import { NetworkList, NetworksWithPagedRewards } from 'config/networks';
