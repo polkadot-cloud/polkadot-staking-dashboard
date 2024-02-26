@@ -13,7 +13,7 @@ export interface Item {
   bio?: string;
   name: string;
   email?: string;
-  twitter?: string;
+  x?: string;
   website?: string;
   icon: string;
   validators: Partial<{

@@ -25,7 +25,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
     bio,
     name,
     email,
-    twitter,
+    x,
     website,
     icon,
     validators: entityAllValidators,
@@ -128,16 +128,16 @@ export const Item = ({ item, actionable }: ItemProps) => {
                 />
               </button>
             )}
-            {twitter !== undefined && (
+            {x !== undefined && (
               <button
                 type="button"
                 className="active"
                 onClick={() => {
-                  window.open(`https://twitter.com/${twitter}`, '_blank');
+                  window.open(`https://twitter.com/${x}`, '_blank');
                 }}
               >
                 <FontAwesomeIcon icon={faTwitter} className="icon-left" />
-                <h4>{twitter}</h4>
+                <h4>{x}</h4>
                 <FontAwesomeIcon
                   icon={faExternalLink}
                   className="icon-right"

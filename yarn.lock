@@ -2407,10 +2407,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/validator-assets@npm:0.0.2":
-  version: 0.0.2
-  resolution: "@w3ux/validator-assets@npm:0.0.2"
-  checksum: e5a5568bfb96b49c7a67b180248c1028d615ad618432fae5c5bf00b19b4b2188d426fc7073f64f2880b795a661dd3759334753bb255ec82f1ae3362701827c3e
+"@w3ux/validator-assets@npm:0.0.3":
+  version: 0.0.3
+  resolution: "@w3ux/validator-assets@npm:0.0.3"
+  checksum: d69c2094a45c071461f32098a2e081c18c032b181bdeb66b54f3285a417a43dbeefaf0eb356faea086fa09aadae8a8442683cf2aed6978a0dd7644a2062357a3
   languageName: node
   linkType: hard
 
@@ -6203,7 +6203,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^7.0.2"
     "@vitejs/plugin-react-swc": "npm:^3.6.0"
     "@w3ux/extension-assets": "npm:0.0.14"
-    "@w3ux/validator-assets": "npm:0.0.2"
+    "@w3ux/validator-assets": "npm:0.0.3"
     "@zondax/ledger-substrate": "npm:^0.41.3"
     bignumber.js: "npm:^9.1.2"
     bn.js: "npm:^5.2.1"
