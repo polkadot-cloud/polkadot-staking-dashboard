@@ -6,7 +6,9 @@
 
 ## Contributing Community Assets
 
-- **Validator Operators**: Submit PR to the [Polkadot Cloud repository](https://github.com/polkadot-cloud/library/tree/main/packages/assets#adding-validator-operators) to add a validator operator. The operator will then be available in the `@polkadot-cloud/assets` NPM package. Full instructions can be found [here](https://github.com/polkadot-cloud/library/tree/main/packages/assets#adding-validator-operators).
+### Validator Operators
+
+To showcase a validator operator on staking dashboard, submit a PR to the [__`@w3ux`__](https://github.com/w3ux/w3ux-library/tree/main) library. The operator will then be available in the __`@w3ux/validator-assets`__ NPM package. [Full instructions](https://github.com/w3ux/w3ux-library/tree/main/library/validator-assets).
 
 ## URL Variable Support
 
