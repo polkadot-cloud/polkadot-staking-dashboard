@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ValidatorSupportedChains } from '@polkadot-cloud/assets/types';
+import type { ValidatorSupportedChains } from '@w3ux/validator-assets';
 import type { Dispatch, SetStateAction } from 'react';
 
 export interface ItemProps {

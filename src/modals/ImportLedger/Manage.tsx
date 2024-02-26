@@ -6,7 +6,7 @@ import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useHelp } from 'contexts/Help';
 import { usePrompt } from 'contexts/Prompt';
-import LedgerSVG from '@polkadot-cloud/assets/extensions/svg/ledgersquare.svg?react';
+import LedgerSVG from '@w3ux/extension-assets/LedgerSquare.svg?react';
 import { Heading } from 'library/Import/Heading';
 import type { AnyJson } from 'types';
 import { useOverlay } from '@polkadot-cloud/react/hooks';

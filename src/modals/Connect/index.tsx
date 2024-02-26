@@ -10,7 +10,7 @@ import {
   ModalPadding,
   ModalSection,
 } from '@polkadot-cloud/react';
-import { ExtensionsArray } from '@polkadot-cloud/assets/extensions';
+import extensions from '@w3ux/extension-assets';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -49,13 +49,22 @@ export const Connect = () => {
   const inMobileWallet = inNova || inSubWallet;
 
   // If in SubWallet Mobile, keep `subwallet-js` only.
+  const extensionsAsArray = Object.entries(extensions).map(([key, value]) => ({
+    id: key,
+    ...value,
+  }));
+
   const web = inSubWallet
-    ? ExtensionsArray.filter((a) => a.id === 'subwallet-js')
-    : // If in Nova Wallet, keep `polkadot-js` only for overwriting its metadata with Nova's.
+    ? extensionsAsArray.filter((a) => a.id === 'subwallet-js')
+    : // If in Nova Wallet, fetch nova wallet metadata and replace its id with `polkadot-js`.
       inNova
-      ? ExtensionsArray.filter((a) => a.id === 'polkadot-js')
+      ? extensionsAsArray
+          .filter((a) => a.id === 'nova-wallet')
+          .map((a) => ({ ...a, id: 'polkadot-js' }))
       : // Otherwise, keep all extensions except `polkadot-js`.
-        ExtensionsArray.filter((a) => a.id !== 'polkadot-js');
+        extensionsAsArray.filter(
+          (a) => a.id !== 'polkadot-js' && a.category === 'web-extension'
+        );
 
   const installed = web.filter((a) =>
     Object.keys(extensionsStatus).find((key) => key === a.id)
@@ -209,14 +218,14 @@ export const Connect = () => {
                 <ActionItem text={t('developerTools')} />
                 <ExtensionsWrapper>
                   <SelectItems layout="two-col">
-                    {ExtensionsArray.filter((a) => a.id === 'polkadot-js').map(
-                      (extension, i) => (
+                    {extensionsAsArray
+                      .filter((a) => a.id === 'polkadot-js')
+                      .map((extension, i) => (
                         <Extension
                           key={`extension_item_${i}`}
                           meta={extension}
                         />
-                      )
-                    )}
+                      ))}
                   </SelectItems>
                 </ExtensionsWrapper>
               </>
