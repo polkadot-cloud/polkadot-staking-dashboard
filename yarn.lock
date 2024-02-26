@@ -3839,12 +3839,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-prefer-arrow-functions@npm:^3.2.4":
-  version: 3.2.4
-  resolution: "eslint-plugin-prefer-arrow-functions@npm:3.2.4"
+"eslint-plugin-prefer-arrow-functions@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "eslint-plugin-prefer-arrow-functions@npm:3.3.1"
   peerDependencies:
     eslint: ">=5.0.0"
-  checksum: 424e5fd61542af87355e16b71aa09a28d480c6a7754eadaaaf8370590c3d92c13f7787e12771a9c8ff90a778c2f7582383aaed52dfe6cb27a005708e02114dae
+  checksum: ce071cff8142429bfc7c1f5d4c8bfbed780c16b3b057ae5342800fe2f050ad94a7a2b897c65657be5a913436328ecfc7c55a7cc5090c1524868088dae5f7d08a
   languageName: node
   linkType: hard
 
@@ -6269,7 +6269,7 @@ __metadata:
     eslint-import-resolver-typescript: "npm:^3.6.1"
     eslint-plugin-import: "npm:^2.29.1"
     eslint-plugin-prefer-arrow: "npm:^1.2.3"
-    eslint-plugin-prefer-arrow-functions: "npm:^3.2.4"
+    eslint-plugin-prefer-arrow-functions: "npm:^3.3.1"
     eslint-plugin-prettier: "npm:^5.1.3"
     eslint-plugin-react: "npm:^7.33.2"
     eslint-plugin-react-hooks: "npm:^4.6.0"
