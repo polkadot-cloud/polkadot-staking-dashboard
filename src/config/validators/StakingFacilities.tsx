@@ -2,22 +2,20 @@ const StakingFacilities = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
     <defs>
       <linearGradient
-        id="linear-gradient"
-        y1={300}
-        x2={600}
-        y2={300}
+        id="stakingfacilities-gradient"
+        y1="300"
+        x2="600"
+        y2="300"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset={0} stopColor="#141b30" />
-        <stop offset={1} stopColor="#1c3d6f" />
+        <stop offset="0" stopColor="#141b30" />
+        <stop offset="1" stopColor="#1c3d6f" />
       </linearGradient>
     </defs>
     <path
-      style={{
-        stroke: '#010101',
-        strokeMiterlimit: 10,
-        fill: 'url(#linear-gradient)',
-      }}
+      stroke="#010101"
+      strokeMiterlimit="10"
+      fill="url(#stakingfacilities-gradient)"
       d="M0 0h600v600H0z"
     />
     <path
@@ -30,7 +28,7 @@ const StakingFacilities = () => (
     />
     <path
       fill="#fff"
-      d="M498.16 252.38v23.08L319.1 263.92l-217.26 11.54v-27.85l219.65-19.9 176.67 24.67zM498.16 287.4v23.87l-198.47 6.37-197.85-6.37V287.4l202.14-5.57 194.18 5.57zM498.16 324v24.15l-217.45 25.42-178.87-27.96V324l180.78 13.34L498.16 324z"
+      d="M498.16 252.38v23.08L319.1 263.92l-217.26 11.54v-27.85l219.65-19.9 176.67 24.67zm0 35.02v23.87l-198.47 6.37-197.85-6.37V287.4l202.14-5.57 194.18 5.57zm0 36.6v24.15l-217.45 25.42-178.87-27.96V324l180.78 13.34L498.16 324z"
     />
     <path
       fill="#fff"
