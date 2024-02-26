@@ -6,7 +6,7 @@ import type { CommunitySectionsContextInterface, Item } from './types';
 
 export const communityItem: Item = {
   name: '',
-  thumbnail: '',
+  icon: '',
   validators: {},
 };
 

@@ -27,7 +27,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
     email,
     twitter,
     website,
-    thumbnail,
+    icon,
     validators: entityAllValidators,
   } = item;
   const validatorCount = entityAllValidators[network]?.length ?? 0;
@@ -55,7 +55,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
   };
 
   const Thumbnail = useMemo(
-    () => lazy(() => import(`../../config/validators/${thumbnail}.tsx`)),
+    () => lazy(() => import(`../../config/validators/${icon}.tsx`)),
     []
   );
 

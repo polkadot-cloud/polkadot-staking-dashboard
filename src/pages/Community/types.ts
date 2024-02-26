@@ -15,7 +15,7 @@ export interface Item {
   email?: string;
   twitter?: string;
   website?: string;
-  thumbnail: string;
+  icon: string;
   validators: Partial<{
     [K in ValidatorSupportedChains]: string[];
   }>;
