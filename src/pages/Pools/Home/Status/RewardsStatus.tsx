@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Stat } from 'library/Stat';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';

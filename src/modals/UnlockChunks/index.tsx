@@ -13,7 +13,7 @@ import { useBalances } from 'contexts/Balances';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Title } from 'library/Modal/Title';
 import { useTxMeta } from 'contexts/TxMeta';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { Forms } from './Forms';

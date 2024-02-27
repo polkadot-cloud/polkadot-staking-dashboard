@@ -19,7 +19,7 @@ import { SelectItem } from 'library/SelectItems/Item';
 import { SubmitTx } from 'library/SubmitTx';
 import type { MaybeAddress } from 'types';
 import { useTxMeta } from 'contexts/TxMeta';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
 

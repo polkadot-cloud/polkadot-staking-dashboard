@@ -12,7 +12,7 @@ import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';

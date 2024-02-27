@@ -13,7 +13,6 @@ import { useBonded } from 'contexts/Bonded';
 import {
   useExtensions,
   useEffectIgnoreInitial,
-  useOverlay,
 } from '@polkadot-cloud/react/hooks';
 import { useProxies } from 'contexts/Proxies';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -35,6 +34,7 @@ import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
 import { ButtonText } from 'kits/Buttons/ButtonText';
+import { useOverlay } from 'kits/Overlay/Provider';
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');

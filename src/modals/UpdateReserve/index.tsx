@@ -15,7 +15,7 @@ import { Close } from 'library/Modal/Close';
 import { Title } from 'library/Modal/Title';
 import { SliderWrapper } from 'modals/ManagePool/Wrappers';
 import 'rc-slider/assets/index.css';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';

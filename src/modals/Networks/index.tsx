@@ -11,7 +11,7 @@ import { NetworkList } from 'config/networks';
 import { useApi } from 'contexts/Api';
 import { Title } from 'library/Modal/Title';
 import type { NetworkName } from 'types';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useUi } from 'contexts/UI';
 import { usePrompt } from 'contexts/Prompt';

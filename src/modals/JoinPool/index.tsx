@@ -20,7 +20,7 @@ import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { ClaimPermission } from 'contexts/Pools/types';

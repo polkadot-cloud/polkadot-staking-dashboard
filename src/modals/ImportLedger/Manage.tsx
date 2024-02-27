@@ -9,7 +9,7 @@ import { usePrompt } from 'contexts/Prompt';
 import LedgerSVG from '@w3ux/extension-assets/LedgerSquare.svg?react';
 import { Heading } from 'library/Import/Heading';
 import type { AnyJson } from 'types';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { Addresess } from './Addresses';
 import { Reset } from './Reset';

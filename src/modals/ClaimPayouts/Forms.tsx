@@ -13,7 +13,7 @@ import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useBatchCall } from 'hooks/useBatchCall';
 import type { AnyApi } from 'types';
 import { usePayouts } from 'contexts/Payouts';

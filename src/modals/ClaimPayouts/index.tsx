@@ -10,7 +10,7 @@ import { setStateWithRef } from '@w3ux/utils';
 import { useEffect, useRef, useState } from 'react';
 import { Title } from 'library/Modal/Title';
 import { useTxMeta } from 'contexts/TxMeta';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { usePayouts } from 'contexts/Payouts';
 import { useTranslation } from 'react-i18next';
 import { Forms } from './Forms';

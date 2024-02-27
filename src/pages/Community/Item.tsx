@@ -10,7 +10,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Suspense, lazy, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { ItemWrapper } from './Wrappers';
 import { useCommunitySections } from './context';

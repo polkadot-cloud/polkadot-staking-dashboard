@@ -17,7 +17,7 @@ import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import 'rc-slider/assets/index.css';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { usePoolCommission } from './provider';
 import { CommissionCurrent } from './CommissionCurrent';

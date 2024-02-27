@@ -19,7 +19,7 @@ import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';

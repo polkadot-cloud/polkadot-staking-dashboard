@@ -11,15 +11,13 @@ import type {
   LedgerResponse,
 } from 'contexts/Hardware/Ledger/types';
 import type { AnyJson } from 'types';
-import {
-  useEffectIgnoreInitial,
-  useOverlay,
-} from '@polkadot-cloud/react/hooks';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useTranslation } from 'react-i18next';
 import { Manage } from './Manage';
 import { Splash } from './Splash';
 import { NotificationsController } from 'static/NotificationsController';
+import { useOverlay } from 'kits/Overlay/Provider';
 
 export const ImportLedger: FC = () => {
   const { t } = useTranslation('modals');

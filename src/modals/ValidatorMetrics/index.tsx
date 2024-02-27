@@ -16,7 +16,7 @@ import { useSize } from 'hooks/useSize';
 import { Title } from 'library/Modal/Title';
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { StatusLabel } from 'library/StatusLabel';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { PluginLabel } from 'library/PluginLabel';
 import { useNetwork } from 'contexts/Network';
 import type { AnyJson } from 'types';

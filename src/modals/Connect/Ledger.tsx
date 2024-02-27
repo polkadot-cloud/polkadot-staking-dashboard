@@ -11,7 +11,7 @@ import { ModalConnectItem, ModalHardwareItem } from '@polkadot-cloud/react';
 import { inChrome } from '@w3ux/utils';
 import { useHelp } from 'contexts/Help';
 import LedgerLogoSVG from '@w3ux/extension-assets/Ledger.svg?react';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';

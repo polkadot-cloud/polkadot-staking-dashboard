@@ -16,7 +16,6 @@ import { useTranslation } from 'react-i18next';
 import {
   useExtensions,
   useEffectIgnoreInitial,
-  useOverlay,
 } from '@polkadot-cloud/react/hooks';
 import { Close } from 'library/Modal/Close';
 import { SelectItems } from 'library/SelectItems';
@@ -30,6 +29,7 @@ import { ExtensionsWrapper } from './Wrappers';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
 import { ButtonTab } from 'kits/Buttons/ButtonTab';
 import { mobileCheck } from './Utils';
+import { useOverlay } from 'kits/Overlay/Provider';
 
 export const Connect = () => {
   const { t } = useTranslation('modals');

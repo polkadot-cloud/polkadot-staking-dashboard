@@ -8,7 +8,7 @@ import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { minDecimalPlaces, planckToUnit } from '@w3ux/utils';
 import { faCircleDown } from '@fortawesome/free-solid-svg-icons';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';

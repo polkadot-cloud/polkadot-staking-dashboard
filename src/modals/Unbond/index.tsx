@@ -21,7 +21,7 @@ import { timeleftAsString } from 'hooks/useTimeLeft/utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 

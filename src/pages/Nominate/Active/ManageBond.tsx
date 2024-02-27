@@ -12,7 +12,7 @@ import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'hooks/useUnstaking';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { BondedChart } from 'library/BarChart/BondedChart';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';

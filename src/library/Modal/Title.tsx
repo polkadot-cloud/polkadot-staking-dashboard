@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { FunctionComponent, SVGProps } from 'react';
 import { useHelp } from 'contexts/Help';
 import CrossSVG from 'img/cross.svg?react';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { TitleWrapper } from './Wrappers';
 import type { AnyJson } from 'types';
 import type { CSSProperties } from 'styled-components';

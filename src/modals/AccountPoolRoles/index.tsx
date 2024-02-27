@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Title } from 'library/Modal/Title';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { ContentWrapper } from './Wrappers';
 import { useBalances } from 'contexts/Balances';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
