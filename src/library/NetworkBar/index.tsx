@@ -12,7 +12,7 @@ import { Status } from './Status';
 import { Summary, Wrapper } from './Wrappers';
 import { isCustomEvent } from 'static/utils';
 import { useEventListener } from 'usehooks-ts';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import BigNumber from 'bignumber.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHive } from '@fortawesome/free-brands-svg-icons';

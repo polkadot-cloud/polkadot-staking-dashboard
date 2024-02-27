@@ -3,7 +3,7 @@
 
 import type { RefObject, ReactNode } from 'react';
 import { useRef, useState, createContext, useContext } from 'react';
-import { setStateWithRef } from '@polkadot-cloud/utils';
+import { setStateWithRef } from '@w3ux/utils';
 import type {
   ModalConfig,
   CanvasConfig,
@@ -18,7 +18,7 @@ import {
   defaultModalConfig,
   defaultOverlayContext,
 } from './defaults';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 
 export const OverlayContext = createContext<OverlayContextInterface>(
   defaultOverlayContext

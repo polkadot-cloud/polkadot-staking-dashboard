@@ -4,11 +4,6 @@
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import {
-  useEffectIgnoreInitial,
-  useExtensions,
-  useExtensionAccounts,
-} from '@polkadot-cloud/react/hooks';
-import {
   getLocalLedgerAccounts,
   getLocalVaultAccounts,
 } from 'contexts/Hardware/Utils';
@@ -16,7 +11,6 @@ import type { MaybeAddress, NetworkName } from 'types';
 import { setStateWithRef } from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import type { ImportedAccount } from '@polkadot-cloud/react/types';
 import { getActiveAccountLocal } from '../Utils';
 import type { OtherAccountsContextInterface } from './types';
 import { defaultOtherAccountsContext } from './defaults';
@@ -25,6 +19,9 @@ import type { ExternalAccountImportType } from '../ExternalAccounts/types';
 import { isCustomEvent } from 'static/utils';
 import { useExternalAccounts } from '../ExternalAccounts';
 import { useEventListener } from 'usehooks-ts';
+import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit';
+import type { ImportedAccount } from '@w3ux/react-connect-kit/types';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 
 export const OtherAccountsContext =
   createContext<OtherAccountsContextInterface>(defaultOtherAccountsContext);

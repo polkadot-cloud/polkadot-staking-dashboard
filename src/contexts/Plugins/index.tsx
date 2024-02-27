@@ -7,7 +7,7 @@ import { createContext, useContext, useRef, useState } from 'react';
 import type { Plugin } from 'config/plugins';
 import * as defaults from './defaults';
 import type { PluginsContextInterface } from './types';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';

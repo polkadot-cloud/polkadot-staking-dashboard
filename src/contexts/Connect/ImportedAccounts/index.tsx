@@ -7,12 +7,10 @@ import type { MaybeAddress } from 'types';
 import type {
   ExternalAccount,
   ImportedAccount,
-} from '@polkadot-cloud/react/types';
+} from '@w3ux/react-connect-kit/types';
 import { ManualSigners } from 'consts';
-import {
-  useEffectIgnoreInitial,
-  useExtensionAccounts,
-} from '@polkadot-cloud/react/hooks';
+import { useExtensionAccounts } from '@w3ux/react-connect-kit';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { defaultImportedAccountsContext } from './defaults';
 import type { ImportedAccountsContextInterface } from './types';
 import { useOtherAccounts } from '../OtherAccounts';

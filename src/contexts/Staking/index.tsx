@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import { useBalances } from 'contexts/Balances';
-import type { ExternalAccount } from '@polkadot-cloud/react/types';
+import type { ExternalAccount } from '@w3ux/react-connect-kit/types';
 import type {
   EraStakers,
   Exposure,
@@ -16,7 +16,7 @@ import type {
 import type { AnyApi, MaybeAddress } from 'types';
 import Worker from 'workers/stakers?worker';
 import type { ProcessExposuresResponse } from 'workers/types';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';

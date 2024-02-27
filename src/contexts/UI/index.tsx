@@ -5,7 +5,7 @@ import { localStorageOrDefault, setStateWithRef } from '@w3ux/utils';
 import type { ReactNode, RefObject } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { PageWidthMediumThreshold } from 'consts';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import type { AnyJson } from 'types';
 import * as defaults from './defaults';
 import type { UIContextInterface } from './types';

@@ -7,7 +7,7 @@
 import type {
   ExternalAccount,
   ExternalAccountAddedBy,
-} from '@polkadot-cloud/react/types';
+} from '@w3ux/react-connect-kit/types';
 
 export interface ExternalAccountsContextInterface {
   addExternalAccount: (
