@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ModalPadding, Polkicon } from '@polkadot-cloud/react';
+import { Polkicon } from '@polkadot-cloud/react';
 import { ellipsisFn, planckToUnit } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState, useRef } from 'react';
@@ -24,6 +24,7 @@ import { SubscanController } from 'static/SubscanController';
 import { usePlugins } from 'contexts/Plugins';
 import { useApi } from 'contexts/Api';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');

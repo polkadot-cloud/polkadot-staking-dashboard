@@ -2,14 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import {
-  ActionItem,
-  ModalCustomHeader,
-  ModalFixedTitle,
-  ModalMotionThreeSection,
-  ModalPadding,
-  ModalSection,
-} from '@polkadot-cloud/react';
 import extensions from '@w3ux/extension-assets';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -30,6 +22,12 @@ import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
 import { ButtonTab } from 'kits/Buttons/ButtonTab';
 import { mobileCheck } from './Utils';
 import { useOverlay } from 'kits/Overlay/Provider';
+import { ActionItem } from 'library/ActionItem';
+import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle';
+import { ModalCustomHeader } from 'kits/Overlay/structure/ModalCustomHeader';
+import { ModalSection } from 'kits/Overlay/structure/ModalSection';
+import { ModalMotionThreeSection } from 'kits/Overlay/structure/ModalMotionThreeSection';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 
 export const Connect = () => {
   const { t } = useTranslation('modals');

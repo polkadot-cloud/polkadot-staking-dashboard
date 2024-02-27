@@ -1,12 +1,12 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ActionItem } from '@polkadot-cloud/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TabWrapper, TabsWrapper } from 'library/Filter/Wrappers';
 import type { ClaimPermission } from 'contexts/Pools/types';
 import type { ClaimPermissionConfig } from '../types';
+import { ActionItem } from 'library/ActionItem';
 
 export interface ClaimPermissionInputProps {
   current: ClaimPermission | undefined;

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +17,8 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { ClaimPermission } from 'contexts/Pools/types';
 import { useBalances } from 'contexts/Balances';
 import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 
 export const SetClaimPermission = ({
   setSection,

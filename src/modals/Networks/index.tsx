@@ -3,7 +3,6 @@
 
 import { faChevronRight, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ModalPadding } from '@polkadot-cloud/react';
 import { capitalizeFirstLetter } from '@w3ux/utils';
 import { useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -25,6 +24,7 @@ import {
 } from './Wrapper';
 import { ProvidersPrompt } from './ProvidersPrompt';
 import { ButtonTertiary } from 'kits/Buttons/ButtonTertiary';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 
 export const Networks = () => {
   const { t } = useTranslation('modals');

@@ -1,12 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  ModalNotes,
-  ModalPadding,
-  ModalWarnings,
-  Polkicon,
-} from '@polkadot-cloud/react';
+import { Polkicon } from '@polkadot-cloud/react';
 import {
   ellipsisFn,
   isNotZero,
@@ -29,6 +24,9 @@ import type { PoolMembership } from 'contexts/Pools/types';
 import { usePrompt } from 'contexts/Prompt';
 import { Title } from 'library/Prompt/Title';
 import { useTranslation } from 'react-i18next';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
+import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
 
 export const WithdrawMember = ({
   who,

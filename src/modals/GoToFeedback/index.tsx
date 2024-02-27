@@ -3,10 +3,10 @@
 
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ModalPadding } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import ForumSVG from 'img/forum.svg?react';
 import { Title } from 'library/Modal/Title';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 
 export const GoToFeedback = () => {
   const { t } = useTranslation('modals');

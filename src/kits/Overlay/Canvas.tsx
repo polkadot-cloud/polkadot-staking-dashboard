@@ -4,13 +4,13 @@
 import { useAnimation } from 'framer-motion';
 import type { FC } from 'react';
 import { useEffect } from 'react';
-import { useOverlay } from './Provider/useOverlay';
 import type { CanvasProps } from './Provider/types';
 import { ErrorBoundary } from 'react-error-boundary';
 import { CanvasContainer } from './structure/CanvasContainer';
 import { CanvasScroll } from './structure/CanvasScroll';
 import { ModalContent } from './structure/ModalContent';
 import { CanvasContent } from './structure/CanvasContent';
+import { useOverlay } from './Provider';
 
 export const Canvas = ({
   canvas,

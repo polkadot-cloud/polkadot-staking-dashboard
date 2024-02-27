@@ -1,7 +1,6 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ModalPadding } from '@polkadot-cloud/react';
 import { planckToUnit, unitToPlanck } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
@@ -24,6 +23,7 @@ import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { ClaimPermission } from 'contexts/Pools/types';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 
 export const JoinPool = () => {
   const { t } = useTranslation('modals');

@@ -1,12 +1,6 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  ModalFixedTitle,
-  ModalMotionTwoSection,
-  ModalPadding,
-  ModalSection,
-} from '@polkadot-cloud/react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useActivePool } from 'contexts/Pools/ActivePool';
@@ -16,6 +10,10 @@ import { useOverlay } from 'kits/Overlay/Provider';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { Forms } from './Forms';
 import { Tasks } from './Tasks';
+import { ModalSection } from 'kits/Overlay/structure/ModalSection';
+import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle';
+import { ModalMotionTwoSection } from 'kits/Overlay/structure/ModalMotionTwoSection';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 
 export const ManagePool = () => {
   const { t } = useTranslation('modals');

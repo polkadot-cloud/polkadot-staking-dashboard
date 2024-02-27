@@ -15,13 +15,13 @@ import { Wrapper } from './Wrapper';
 export const ActionItem = ({
   style,
   text,
-  toggled = false,
+  toggled,
   disabled,
   onToggle,
   inactive = false,
   inlineButton,
 }: ActionItemProps) => {
-  const [toggle, setToggle] = useState<boolean>(toggled);
+  const [toggle, setToggle] = useState<boolean | undefined>(toggled);
 
   useEffect(() => setToggle(toggled), [toggled]);
   return (

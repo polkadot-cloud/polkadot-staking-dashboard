@@ -2,12 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import {
-  ActionItem,
-  ModalNotes,
-  ModalPadding,
-  ModalWarnings,
-} from '@polkadot-cloud/react';
 import { greaterThanZero, planckToUnit, rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { Dispatch, SetStateAction } from 'react';
@@ -23,6 +17,10 @@ import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
+import { ActionItem } from 'library/ActionItem';
+import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
 
 export const ClaimCommission = ({
   setSection,

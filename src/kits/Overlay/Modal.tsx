@@ -4,12 +4,12 @@
 import { useAnimation } from 'framer-motion';
 import type { FC } from 'react';
 import { useEffect, useRef } from 'react';
-import { useOverlay } from './Provider/useOverlay';
 import type { ModalProps } from './Provider/types';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ModalContainer } from './structure/ModalContainer';
 import { ModalScroll } from './structure/ModalScroll';
 import { ModalCard } from './structure/ModalCard';
+import { useOverlay } from './Provider';
 
 export const Modal = ({
   modals,
