@@ -12,7 +12,7 @@ import {
   useState,
 } from 'react';
 import type { Sync } from 'types';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { usePlugins } from 'contexts/Plugins';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';

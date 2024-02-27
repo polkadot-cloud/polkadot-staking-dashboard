@@ -7,7 +7,7 @@ import {
   ExtensionsProvider,
   ExtensionAccountsProvider,
   LedgerAccountsProvider,
-} from '@polkadot-cloud/react/providers';
+} from '@w3ux/react-connect-kit';
 import { FastUnstakeProvider } from 'contexts/FastUnstake';
 import { FiltersProvider } from 'contexts/Filters';
 import { LedgerHardwareProvider } from 'contexts/Hardware/Ledger/LedgerHardware';

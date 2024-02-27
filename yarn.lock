@@ -267,15 +267,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chainsafe/metamask-polkadot-types@npm:^0.6.0":
-  version: 0.6.0
-  resolution: "@chainsafe/metamask-polkadot-types@npm:0.6.0"
-  dependencies:
-    "@polkadot/api": "npm:^10.9.1"
-  checksum: fa1ffef61ec33bfd3020e7629efac0bfe62d164f4dcc6fa1efd9424a266f6ca94447688a1afd0d403c69b1e127082d4fd68dfedf35ef6c70fa2594dc96b6a359
-  languageName: node
-  linkType: hard
-
 "@dotlottie/common@npm:0.7.10":
   version: 0.7.10
   resolution: "@dotlottie/common@npm:0.7.10"
@@ -1066,57 +1057,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot-cloud/assets@npm:^0.4.0":
-  version: 0.4.0
-  resolution: "@polkadot-cloud/assets@npm:0.4.0"
-  checksum: 1dba0bae79339f74ae8244184affd1d6c2a5098de6af54c27e410b9b75c35c3c91ea6d4a302819dffbefe9061f7946f900718b508f03511744026a3056652a41
-  languageName: node
-  linkType: hard
-
 "@polkadot-cloud/core@npm:^1.3.4":
   version: 1.3.4
   resolution: "@polkadot-cloud/core@npm:1.3.4"
   checksum: f7e59c013544f8959ca20f620b8a109bc27b2e27f6829a019ce96b949de5c45748166965256e6222f9d9e37c516c638a5e9c5f8ae9a86d1e2f4ca01144f28385
-  languageName: node
-  linkType: hard
-
-"@polkadot-cloud/react@npm:^0.5.6":
-  version: 0.5.6
-  resolution: "@polkadot-cloud/react@npm:0.5.6"
-  dependencies:
-    "@chainsafe/metamask-polkadot-adapter": "npm:^0.6.0"
-    "@chainsafe/metamask-polkadot-types": "npm:^0.6.0"
-    "@fortawesome/fontawesome-svg-core": "npm:^6.5.1"
-    "@fortawesome/free-brands-svg-icons": "npm:^6.5.1"
-    "@fortawesome/free-regular-svg-icons": "npm:^6.5.1"
-    "@fortawesome/free-solid-svg-icons": "npm:^6.5.1"
-    "@fortawesome/react-fontawesome": "npm:^0.2.0"
-    "@polkadot-cloud/assets": "npm:^0.4.0"
-    "@polkadot-cloud/core": "npm:^1.3.4"
-    "@polkadot-cloud/utils": "npm:^0.3.0"
-    "@polkadot/keyring": "npm:^12.6.2"
-    "@polkadot/util": "npm:^12.6.2"
-    "@polkadot/util-crypto": "npm:^12.6.2"
-    framer-motion: "npm:^11.0.5"
-    react-error-boundary: "npm:^4.0.12"
-  peerDependencies:
-    react: ^18.2.0
-    react-dom: ^18.2.0
-  checksum: a19f62cca8f1fbb54bde08dfcc9639411ad6af124382ea1d2117b2a648acf698d07bf1a736c001f07b1828ef27334bee7d1b0f91e1bfbd183ffa0872548cd388
-  languageName: node
-  linkType: hard
-
-"@polkadot-cloud/utils@npm:^0.3.0":
-  version: 0.3.0
-  resolution: "@polkadot-cloud/utils@npm:0.3.0"
-  dependencies:
-    "@polkadot/keyring": "npm:^12.6.2"
-    "@polkadot/util": "npm:^12.6.2"
-    bignumber.js: "npm:^9.1.1"
-  peerDependencies:
-    "@polkadot/keyring": ^12.6.2
-    "@polkadot/util": ^12.6.2
-  checksum: 82a1056dbefa5dd5f53f36efdb45fb9e269664ec9e7d31076f46ad5e5077f9ee00812d8033636dbde8a0d936f51a66798c854d338967e255e6847cb1fbf6c0cd
   languageName: node
   linkType: hard
 
@@ -2400,10 +2344,48 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/extension-assets@npm:0.0.14":
+"@w3ux/extension-assets@npm:^0.0.14":
   version: 0.0.14
   resolution: "@w3ux/extension-assets@npm:0.0.14"
   checksum: 2080f571696ff4c4d5636b31d52a3556cc5253ca46ff3184004a4fcf2d0acf1f880b7db9675ca40bc884d4ab8c9247727c5a6209a54adec529fcd87c0d60db6e
+  languageName: node
+  linkType: hard
+
+"@w3ux/extension-assets@npm:^0.0.15":
+  version: 0.0.15
+  resolution: "@w3ux/extension-assets@npm:0.0.15"
+  peerDependencies:
+    react: ^18
+  checksum: 9ecb5b93a4b6e8ff44f413cd309eb3d411c7cf01537bf323ad2928d77b5ff06ab6aeb30bb8fc02626c57390a3a19c3b03037a8cef3c40f2131cd701d2fdc3948
+  languageName: node
+  linkType: hard
+
+"@w3ux/hooks@npm:^0.0.2":
+  version: 0.0.2
+  resolution: "@w3ux/hooks@npm:0.0.2"
+  checksum: 7089247b5487d23dd5df194e1aaa2ea730c82eadf774dc55175fc1e52583ec1c94af43d0c275b1cb31c1bbe7bfd4c7844ba78258dece143c7db8e594796a1a0b
+  languageName: node
+  linkType: hard
+
+"@w3ux/hooks@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "@w3ux/hooks@npm:0.0.3"
+  peerDependencies:
+    react: ^18
+  checksum: 11c697be0485111b91bc26cf7629c1ddc8e4f86a8c0f84f2e5d9ecff9cb3d2ddb86ddff5645f1f32b22077473981313fa1c63c0625783793f4e7e66ae20d4b2b
+  languageName: node
+  linkType: hard
+
+"@w3ux/react-connect-kit@npm:^0.0.4":
+  version: 0.0.4
+  resolution: "@w3ux/react-connect-kit@npm:0.0.4"
+  dependencies:
+    "@chainsafe/metamask-polkadot-adapter": "npm:^0.6.0"
+    "@polkadot/util": "npm:^12.6.2"
+    "@w3ux/extension-assets": "npm:^0.0.14"
+    "@w3ux/hooks": "npm:^0.0.2"
+    "@w3ux/utils": "npm:^0.0.1"
+  checksum: 52cf5b13c198f55832b90aff32923d2de0c01582098a2cfbae4280b0b72978f1c0a564d5d179cdd55993eef2cabce4548265247ac8326cce705b73d544f89c24
   languageName: node
   linkType: hard
 
@@ -2414,24 +2396,41 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/react-polkicon@npm:^0.0.1":
-  version: 0.0.1
-  resolution: "@w3ux/react-polkicon@npm:0.0.1"
-  checksum: 378552710289df15b04aed447c59f721e62d6619ca4fc62d2f83c85bcc75232a965853c389f4ad541863859f83786da557640e1b55ab939e80099c870fd2023c
+"@w3ux/react-polkicon@npm:^0.0.2":
+  version: 0.0.2
+  resolution: "@w3ux/react-polkicon@npm:0.0.2"
+  dependencies:
+    "@polkadot/util": "npm:^12.6.2"
+    "@w3ux/utils": "npm:0.0.1"
+    framer-motion: "npm:^11.0.6"
+  checksum: f1566d84f9991a64bd97aabec1475a876c86017070590bf111779c6f2baa1194818d6162416758368a8902cbeb4c8da7ca8998a0a8251d161a79f75a77b952cc
   languageName: node
   linkType: hard
 
-"@w3ux/utils@npm:^0.0.1":
+"@w3ux/utils@npm:0.0.1, @w3ux/utils@npm:^0.0.1":
   version: 0.0.1
   resolution: "@w3ux/utils@npm:0.0.1"
   checksum: a14823f3f0e3776a472ccaf6838745af077191fe3a004ceea3936c4d5767189de96eba9752b9cf8eb56a1aa24e38c6a05f673748a955671be761cb713108b8c4
   languageName: node
   linkType: hard
 
-"@w3ux/validator-assets@npm:0.0.3":
-  version: 0.0.3
-  resolution: "@w3ux/validator-assets@npm:0.0.3"
-  checksum: d69c2094a45c071461f32098a2e081c18c032b181bdeb66b54f3285a417a43dbeefaf0eb356faea086fa09aadae8a8442683cf2aed6978a0dd7644a2062357a3
+"@w3ux/utils@npm:^0.0.2":
+  version: 0.0.2
+  resolution: "@w3ux/utils@npm:0.0.2"
+  dependencies:
+    "@polkadot/keyring": "npm:^12.6.2"
+    "@polkadot/util": "npm:^12.6.2"
+    bignumber.js: "npm:^9.1.1"
+  checksum: 33ce48775fd806313363d029c11c34dbe269d2f93aa64e2bc0229ce26383277d6bc0d8e2452b4df2e31d87a41020289a8cf4bd6f3efc4b089387247455b3426d
+  languageName: node
+  linkType: hard
+
+"@w3ux/validator-assets@npm:^0.0.4":
+  version: 0.0.4
+  resolution: "@w3ux/validator-assets@npm:0.0.4"
+  peerDependencies:
+    react: ^18
+  checksum: 407bdafee9db47b3e1b09e09c7e0808795442f82782c5cf297c4b848a48df5b4c91c29302906169a14d74ffffd63706fcc66731dbe22d2f25bfb0133152849bb
   languageName: node
   linkType: hard
 
@@ -4251,27 +4250,6 @@ __metadata:
   dependencies:
     fetch-blob: "npm:^3.1.2"
   checksum: 5392ec484f9ce0d5e0d52fb5a78e7486637d516179b0eb84d81389d7eccf9ca2f663079da56f761355c0a65792810e3b345dc24db9a8bbbcf24ef3c8c88570c6
-  languageName: node
-  linkType: hard
-
-"framer-motion@npm:^11.0.5":
-  version: 11.0.5
-  resolution: "framer-motion@npm:11.0.5"
-  dependencies:
-    "@emotion/is-prop-valid": "npm:^0.8.2"
-    tslib: "npm:^2.4.0"
-  peerDependencies:
-    react: ^18.0.0
-    react-dom: ^18.0.0
-  dependenciesMeta:
-    "@emotion/is-prop-valid":
-      optional: true
-  peerDependenciesMeta:
-    react:
-      optional: true
-    react-dom:
-      optional: true
-  checksum: a7ed2c56f2d25b610a11a7056304c2ed92cb37ca448c820432db162ae05c920fb3853b703130fbaded534099d4bced8af34168bd2b464d93f5bb8897951ce057
   languageName: node
   linkType: hard
 
@@ -6203,7 +6181,6 @@ __metadata:
     "@ledgerhq/hw-transport-webhid": "npm:^6.28.4"
     "@ledgerhq/logs": "npm:^6.12.0"
     "@polkadot-cloud/core": "npm:^1.3.4"
-    "@polkadot-cloud/react": "npm:^0.5.6"
     "@polkadot/api": "npm:^10.11.2"
     "@polkadot/keyring": "npm:^12.6.2"
     "@polkadot/rpc-provider": "npm:^10.11.2"
@@ -6222,11 +6199,13 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^7.1.0"
     "@typescript-eslint/parser": "npm:^7.1.0"
     "@vitejs/plugin-react-swc": "npm:^3.6.0"
-    "@w3ux/extension-assets": "npm:0.0.14"
+    "@w3ux/extension-assets": "npm:^0.0.15"
+    "@w3ux/hooks": "npm:^0.0.3"
+    "@w3ux/react-connect-kit": "npm:^0.0.4"
     "@w3ux/react-odometer": "npm:^0.0.3"
-    "@w3ux/react-polkicon": "npm:^0.0.1"
-    "@w3ux/utils": "npm:^0.0.1"
-    "@w3ux/validator-assets": "npm:0.0.3"
+    "@w3ux/react-polkicon": "npm:^0.0.2"
+    "@w3ux/utils": "npm:^0.0.2"
+    "@w3ux/validator-assets": "npm:^0.0.4"
     "@zondax/ledger-substrate": "npm:^0.41.3"
     bignumber.js: "npm:^9.1.2"
     bn.js: "npm:^5.2.1"

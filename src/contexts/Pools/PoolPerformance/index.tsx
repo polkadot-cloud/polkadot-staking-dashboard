@@ -4,7 +4,7 @@
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
 import { MaxEraRewardPointsEras } from 'consts';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import Worker from 'workers/poolPerformance?worker';
 import { useNetwork } from 'contexts/Network';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';

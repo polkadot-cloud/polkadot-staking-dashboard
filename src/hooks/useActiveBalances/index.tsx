@@ -1,8 +1,8 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react';
-import type { MaybeAddress } from '@polkadot-cloud/react/types';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import type { MaybeAddress } from '@w3ux/react-connect-kit/types';
 import { setStateWithRef } from '@w3ux/utils';
 import type {
   ActiveBalancesState,

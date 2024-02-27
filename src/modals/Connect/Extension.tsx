@@ -5,15 +5,12 @@ import { faExternalLinkAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  useExtensions,
-  useExtensionAccounts,
-} from '@polkadot-cloud/react/hooks';
 import { ExtensionIcons } from '@w3ux/extension-assets/util';
 import { ExtensionInner } from './Wrappers';
 import type { ExtensionProps } from './types';
 import { NotificationsController } from 'static/NotificationsController';
 import { ModalConnectItem } from 'kits/Overlay/structure/ModalConnectItem';
+import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit';
 
 export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const { t } = useTranslation('modals');

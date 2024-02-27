@@ -14,7 +14,7 @@ import { AccountInput } from 'library/AccountInput';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import type { ExternalAccount } from '@polkadot-cloud/react/types';
+import type { ExternalAccount } from '@w3ux/react-connect-kit/types';
 import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
 import {
   ActionWithButton,

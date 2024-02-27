@@ -17,7 +17,7 @@ import { createContext, useContext, useRef, useState } from 'react';
 import { isSupportedProxy } from 'config/proxies';
 import { useApi } from 'contexts/Api';
 import type { AnyApi, MaybeAddress } from 'types';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';

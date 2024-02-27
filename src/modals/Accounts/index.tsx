@@ -5,10 +5,6 @@ import { faChevronLeft, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 import { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
-import {
-  useExtensions,
-  useEffectIgnoreInitial,
-} from '@polkadot-cloud/react/hooks';
 import { useProxies } from 'contexts/Proxies';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -21,7 +17,7 @@ import type {
   AccountNominatingAndInPool,
   AccountNotStaking,
 } from './types';
-import type { ImportedAccount } from '@polkadot-cloud/react/types';
+import type { ImportedAccount } from '@w3ux/react-connect-kit/types';
 import { useActiveBalances } from 'hooks/useActiveBalances';
 import type { MaybeAddress } from 'types';
 import { useTransferOptions } from 'contexts/TransferOptions';
@@ -33,6 +29,8 @@ import { useOverlay } from 'kits/Overlay/Provider';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalCustomHeader } from 'kits/Overlay/structure/ModalCustomHeader';
 import { ActionItem } from 'library/ActionItem';
+import { useExtensions } from '@w3ux/react-connect-kit';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');

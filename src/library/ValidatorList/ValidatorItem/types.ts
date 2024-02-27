@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { MaybeAddress } from '@polkadot-cloud/react/types';
+import type { MaybeAddress } from '@w3ux/react-connect-kit/types';
 import type { ValidatorListEntry } from 'contexts/Validators/types';
 import type { BondFor, DisplayFor } from 'types';
 

@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ExternalAccount } from '@polkadot-cloud/react/types';
+import type { ExternalAccount } from '@w3ux/react-connect-kit/types';
 import { localStorageOrDefault } from '@w3ux/utils';
 import type { NetworkName } from 'types';
 

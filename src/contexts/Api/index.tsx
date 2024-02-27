@@ -19,7 +19,7 @@ import type {
   APIProviderProps,
   APIStakingMetrics,
 } from './types';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import {
   defaultConsts,
   defaultActiveEra,

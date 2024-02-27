@@ -5,10 +5,6 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import extensions from '@w3ux/extension-assets';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  useExtensions,
-  useEffectIgnoreInitial,
-} from '@polkadot-cloud/react/hooks';
 import { Close } from 'library/Modal/Close';
 import { SelectItems } from 'library/SelectItems';
 import type { AnyFunction } from 'types';
@@ -28,6 +24,8 @@ import { ModalCustomHeader } from 'kits/Overlay/structure/ModalCustomHeader';
 import { ModalSection } from 'kits/Overlay/structure/ModalSection';
 import { ModalMotionThreeSection } from 'kits/Overlay/structure/ModalMotionThreeSection';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { useExtensions } from '@w3ux/react-connect-kit';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 
 export const Connect = () => {
   const { t } = useTranslation('modals');
