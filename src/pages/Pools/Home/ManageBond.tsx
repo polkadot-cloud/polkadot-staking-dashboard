@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { Odometer } from '@polkadot-cloud/react';
+import { Odometer } from '@w3ux/react-odometer';
 import { minDecimalPlaces, planckToUnit } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';

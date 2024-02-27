@@ -12,10 +12,11 @@ import { Status } from './Status';
 import { Summary, Wrapper } from './Wrappers';
 import { isCustomEvent } from 'static/utils';
 import { useEventListener } from 'usehooks-ts';
-import { Odometer, useEffectIgnoreInitial } from '@polkadot-cloud/react';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react';
 import BigNumber from 'bignumber.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHive } from '@fortawesome/free-brands-svg-icons';
+import { Odometer } from '@w3ux/react-odometer';
 
 export const NetworkBar = () => {
   const { t } = useTranslation('library');

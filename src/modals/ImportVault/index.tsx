@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faQrcode } from '@fortawesome/free-solid-svg-icons';
-import { Polkicon } from '@polkadot-cloud/react';
+import { Polkicon } from '@w3ux/react-polkicon';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useVaultAccounts } from 'contexts/Hardware/Vault/VaultAccounts';

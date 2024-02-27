@@ -3,7 +3,7 @@
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Polkicon, Odometer } from '@polkadot-cloud/react';
+import { Polkicon } from '@w3ux/react-polkicon';
 import { applyWidthAsPadding, minDecimalPlaces } from '@w3ux/utils';
 import { Fragment, useEffect, useLayoutEffect, useRef } from 'react';
 import { useHelp } from 'contexts/Help';
@@ -15,6 +15,7 @@ import type { AnyJson } from 'types';
 import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { Odometer } from '@w3ux/react-odometer';
 
 export const Stat = ({
   label,

@@ -8,7 +8,7 @@ import { ellipsisFn, remToUnit } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import type { NotificationText } from 'static/NotificationsController/types';
 import { useProxies } from 'contexts/Proxies';
-import { Polkicon } from '@polkadot-cloud/react';
+import { Polkicon } from '@w3ux/react-polkicon';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { ItemWrapper } from './Wrappers';
 import type { ActiveAccountProps } from './types';

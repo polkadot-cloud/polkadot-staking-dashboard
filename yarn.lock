@@ -2407,6 +2407,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@w3ux/react-odometer@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "@w3ux/react-odometer@npm:0.0.3"
+  checksum: 87ca9ea19ad49eaca5c22016804bbf1d1b6864c93828499a948bfeac6607bc682dfb722d476dd16e7f3d4d821807ff54420a2194643fcc8ff1bc094dd0d9506e
+  languageName: node
+  linkType: hard
+
+"@w3ux/react-polkicon@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "@w3ux/react-polkicon@npm:0.0.1"
+  checksum: 378552710289df15b04aed447c59f721e62d6619ca4fc62d2f83c85bcc75232a965853c389f4ad541863859f83786da557640e1b55ab939e80099c870fd2023c
+  languageName: node
+  linkType: hard
+
 "@w3ux/utils@npm:^0.0.1":
   version: 0.0.1
   resolution: "@w3ux/utils@npm:0.0.1"
@@ -6209,6 +6223,8 @@ __metadata:
     "@typescript-eslint/parser": "npm:^7.1.0"
     "@vitejs/plugin-react-swc": "npm:^3.6.0"
     "@w3ux/extension-assets": "npm:0.0.14"
+    "@w3ux/react-odometer": "npm:^0.0.3"
+    "@w3ux/react-polkicon": "npm:^0.0.1"
     "@w3ux/utils": "npm:^0.0.1"
     "@w3ux/validator-assets": "npm:0.0.3"
     "@zondax/ledger-substrate": "npm:^0.41.3"

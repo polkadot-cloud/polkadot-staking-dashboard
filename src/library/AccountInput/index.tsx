@@ -3,7 +3,7 @@
 
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Polkicon } from '@polkadot-cloud/react';
+import { Polkicon } from '@w3ux/react-polkicon';
 import { isValidAddress } from '@w3ux/utils';
 import type { FormEvent } from 'react';
 import { useEffect, useState } from 'react';
