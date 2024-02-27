@@ -17,6 +17,7 @@ const LedgerErrorsByType = {
   deviceBusy: ['Error: Ledger Device is busy', 'InvalidStateError'],
   deviceLocked: ['Error: LockedDeviceError'],
   transactionRejected: ['Error: Transaction rejected'],
+  txVersionNotSupported: ['Error: Txn version not supported'],
   appNotOpen: ['Error: Unknown Status Code: 28161'],
 };
 
