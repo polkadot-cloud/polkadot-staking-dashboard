@@ -255,6 +255,7 @@
     "toggleFeatures": "Toggle Features",
     "togglePlugins": "Toggle Plugins",
     "total": "Total",
+    "transactionNotSupported": "Sorry, this transaction is not currently supported.",
     "transactionRejectedPending": "Transaction was rejected and is still pending.",
     "tryAgain": "Try Again",
     "unbond": "Unbond",

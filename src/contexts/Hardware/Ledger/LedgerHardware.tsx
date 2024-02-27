@@ -29,7 +29,7 @@ export const LedgerHardwareProvider = ({
   children: ReactNode;
 }) => {
   const { t } = useTranslation('modals');
-  const { specVersion } = useApi().chainState.version;
+  const { transactionVersion } = useApi().chainState.version;
 
   // Store whether a Ledger device task is in progress.
   const [isExecuting, setIsExecutingState] = useState<boolean>(false);
@@ -97,7 +97,7 @@ export const LedgerHardwareProvider = ({
       setIsExecuting(false);
       resetFeedback();
 
-      if (result.minor < specVersion) {
+      if (result.major < transactionVersion) {
         runtimesInconsistent.current = true;
       }
       setIntegrityChecked(true);
@@ -160,6 +160,7 @@ export const LedgerHardwareProvider = ({
         },
       });
     } catch (err) {
+      console.log(err);
       handleErrors(appName, err);
     }
   };
@@ -225,6 +226,13 @@ export const LedgerHardwareProvider = ({
           message: t('openAppOnLedger', { appName }),
           helpKey: 'Open App On Ledger',
           code: 'TransactionRejected',
+        });
+        break;
+      // Occurs when submitted extrinsic(s) are not supported.
+      case 'transactionNotSupported':
+        setStatusFeedback({
+          message: t('transactionNotSupported'),
+          code: 'TransactionNotSupported',
         });
         break;
       // Occurs when a user rejects a transaction.
