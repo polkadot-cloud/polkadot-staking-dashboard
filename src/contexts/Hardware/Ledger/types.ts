@@ -47,7 +47,7 @@ export type LedgerStatusCode =
   | 'WrongTransaction'
   | 'DeviceNotConnected'
   | 'DeviceLocked'
-  | 'TransactionNotSupported'
+  | 'TransactionVersionNotSupported'
   | 'TransactionRejected'
   | 'AppNotOpenContinue'
   | 'AppNotOpen';

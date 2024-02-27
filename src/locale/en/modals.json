@@ -255,7 +255,7 @@
     "toggleFeatures": "Toggle Features",
     "togglePlugins": "Toggle Plugins",
     "total": "Total",
-    "transactionNotSupported": "Sorry, this transaction is not currently supported.",
+    "txVersionNotSupported": "Transaction version not supported. Please update Ledger app.",
     "transactionRejectedPending": "Transaction was rejected and is still pending.",
     "tryAgain": "Try Again",
     "unbond": "Unbond",

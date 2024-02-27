@@ -242,7 +242,7 @@
     "toggleFeatures": "功能切换",
     "togglePlugins": "切换插件",
     "total": "总共",
-    "transactionNotSupported": "抱歉，目前不支持此交易。",
+    "txVersionNotSupported": "不支持交易版本。 请更新 Ledger 应用程序.",
     "transactionRejectedPending": "交易被拒后等待处理中",
     "tryAgain": "请重试一次",
     "unbond": "解除质押",

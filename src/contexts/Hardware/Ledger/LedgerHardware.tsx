@@ -160,7 +160,6 @@ export const LedgerHardwareProvider = ({
         },
       });
     } catch (err) {
-      console.log(err);
       handleErrors(appName, err);
     }
   };
@@ -229,10 +228,10 @@ export const LedgerHardwareProvider = ({
         });
         break;
       // Occurs when submitted extrinsic(s) are not supported.
-      case 'transactionNotSupported':
+      case 'txVersionNotSupported':
         setStatusFeedback({
-          message: t('transactionNotSupported'),
-          code: 'TransactionNotSupported',
+          message: t('txVersionNotSupported'),
+          code: 'TransactionVersionNotSupported',
         });
         break;
       // Occurs when a user rejects a transaction.
