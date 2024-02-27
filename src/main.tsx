@@ -5,9 +5,9 @@ import { createRoot } from 'react-dom/client';
 import { App } from 'App';
 
 // Network styles.
-import '@polkadot-cloud/core/accent/polkadot-relay.css';
-import '@polkadot-cloud/core/accent/kusama-relay.css';
-import '@polkadot-cloud/core/accent/westend-relay.css';
+import 'theme/accents/polkadot-relay.css';
+import 'theme/accents/kusama-relay.css';
+import 'theme/accents/westend-relay.css';
 
 // App styles.
 import 'theme/fonts.scss';

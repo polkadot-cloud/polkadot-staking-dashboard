@@ -1,0 +1,22 @@
+/* @license Copyright 2024 @polkadot-cloud/library authors & contributors
+SPDX-License-Identifier: GPL-3.0-only */
+
+.theme-westend-relay {
+  --accent-color-primary-light: #da4e71;
+  --accent-color-primary-dark: #da4e71;
+
+  --accent-color-secondary-light: #de6a50;
+  --accent-color-secondary-dark: #d7674e;
+
+  --accent-color-tertiary-light: #e8d5d0;
+  --accent-color-tertiary-dark: #46302f;
+
+  --accent-color-stroke-light: #da4e71;
+  --accent-color-stroke-dark: #da4e71;
+
+  --accent-color-transparent-light: rgb(218 78 113 / 5%);
+  --accent-color-transparent-dark: rgb(218 78 113 / 5%);
+
+  --accent-color-pending-light: rgb(218 78 113 / 50%);
+  --accent-color-pending-dark: rgb(218 78 113 / 50%);
+}

@@ -1057,13 +1057,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot-cloud/core@npm:^1.3.4":
-  version: 1.3.4
-  resolution: "@polkadot-cloud/core@npm:1.3.4"
-  checksum: f7e59c013544f8959ca20f620b8a109bc27b2e27f6829a019ce96b949de5c45748166965256e6222f9d9e37c516c638a5e9c5f8ae9a86d1e2f4ca01144f28385
-  languageName: node
-  linkType: hard
-
 "@polkadot/api-augment@npm:10.11.2":
   version: 10.11.2
   resolution: "@polkadot/api-augment@npm:10.11.2"
@@ -6180,7 +6173,6 @@ __metadata:
     "@fortawesome/react-fontawesome": "npm:^0.2.0"
     "@ledgerhq/hw-transport-webhid": "npm:^6.28.4"
     "@ledgerhq/logs": "npm:^6.12.0"
-    "@polkadot-cloud/core": "npm:^1.3.4"
     "@polkadot/api": "npm:^10.11.2"
     "@polkadot/keyring": "npm:^12.6.2"
     "@polkadot/rpc-provider": "npm:^10.11.2"
