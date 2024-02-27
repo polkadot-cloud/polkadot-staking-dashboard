@@ -14,10 +14,9 @@ import type {
   PoolNominations,
 } from './types';
 import { useStaking } from 'contexts/Staking';
-import type { AnyApi, MaybeAddress, Sync } from 'types';
+import type { AnyApi, AnyJson, MaybeAddress, Sync } from 'types';
 import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetwork } from 'contexts/Network';
-import type { AnyJson } from '@polkadot-cloud/react/types';
 import { useApi } from '../../Api';
 import { defaultBondedPoolsContext } from './defaults';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';

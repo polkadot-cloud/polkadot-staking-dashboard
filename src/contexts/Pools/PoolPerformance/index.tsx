@@ -10,13 +10,13 @@ import { useNetwork } from 'contexts/Network';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useApi } from 'contexts/Api';
-import type { Sync } from '@polkadot-cloud/react/types';
 import BigNumber from 'bignumber.js';
 import { mergeDeep } from '@w3ux/utils';
 import { useStaking } from 'contexts/Staking';
 import { formatRawExposures } from 'contexts/Staking/Utils';
 import type { PoolPerformanceContextInterface } from './types';
 import { defaultPoolPerformanceContext } from './defaults';
+import type { Sync } from 'types';
 
 const worker = new Worker();
 

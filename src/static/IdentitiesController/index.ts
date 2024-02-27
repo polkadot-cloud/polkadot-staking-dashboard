@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyApi } from '@polkadot-cloud/react/types';
+import type { AnyApi } from 'types';
 import { APIController } from '../APIController';
 
 export class IdentitiesController {

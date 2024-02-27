@@ -29,8 +29,7 @@ import { FavoritesPrompt } from 'canvas/ManageNominations/Prompts/FavoritesPromp
 import { usePrompt } from 'contexts/Prompt';
 import { useFetchMehods } from './useFetchMethods';
 import type { AddNominationsType, GenerateNominationsProps } from './types';
-import type { AnyFunction } from '@polkadot-cloud/react/types';
-import type { AnyJson } from 'types';
+import type { AnyJson, AnyFunction } from 'types';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
 import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
 

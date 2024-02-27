@@ -1,9 +1,14 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@polkadot-cloud/react/types';
 import type { Validator } from 'contexts/Validators/types';
-import type { AnyFunction, BondFor, DisplayFor, MaybeAddress } from 'types';
+import type {
+  AnyFunction,
+  AnyJson,
+  BondFor,
+  DisplayFor,
+  MaybeAddress,
+} from 'types';
 
 export interface ValidatorListProps {
   validators: Validator[];

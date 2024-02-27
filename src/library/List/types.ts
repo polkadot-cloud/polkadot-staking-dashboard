@@ -1,10 +1,9 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@polkadot-cloud/react/types';
 import type { ListFormat } from 'library/PoolList/types';
 import type { FormEvent, ReactNode } from 'react';
-import type { DisplayFor } from 'types';
+import type { AnyJson, DisplayFor } from 'types';
 
 export interface PaginationWrapperProps {
   $next: boolean;

@@ -6,7 +6,7 @@ import { Number } from './Number';
 import { Pie } from './Pie';
 import { Text } from './Text';
 import { StatBoxWrapper } from './Wrapper';
-import type { AnyJson } from '@polkadot-cloud/react/types';
+import type { AnyJson } from 'types';
 
 export const StatBox = ({ children }: { children: ReactNode }) => (
   <StatBoxWrapper

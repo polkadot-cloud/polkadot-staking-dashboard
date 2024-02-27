@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import TransportWebHID from '@ledgerhq/hw-transport-webhid';
-import type { AnyJson } from '@polkadot-cloud/react/types';
 import { newSubstrateApp, type SubstrateApp } from '@zondax/ledger-substrate';
 import { withTimeout } from '@w3ux/utils';
 import { u8aToBuffer } from '@polkadot/util';
+import type { AnyJson } from 'types';
 
 const LEDGER_DEFAULT_ACCOUNT = 0x80000000;
 const LEDGER_DEFAULT_CHANGE = 0x80000000;

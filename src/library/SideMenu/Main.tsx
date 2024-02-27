@@ -12,14 +12,13 @@ import type { SetupContextInterface } from 'contexts/Setup/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import type { UIContextInterface } from 'contexts/UI/types';
-import type { PageCategory, PageItem, PagesConfigItems } from 'types';
+import type { AnyJson, PageCategory, PageItem, PagesConfigItems } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Heading } from './Heading/Heading';
 import { Primary } from './Primary';
 import { LogoWrapper } from './Wrapper';
-import type { AnyJson } from '@polkadot-cloud/react/types';
 import { useBalances } from 'contexts/Balances';
 import { useSyncing } from 'hooks/useSyncing';
 
