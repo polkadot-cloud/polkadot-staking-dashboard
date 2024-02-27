@@ -34,6 +34,8 @@
     "@polkawatch/ddp-client": "^2.0.11",
     "@substrate/connect": "0.7.35",
     "@w3ux/extension-assets": "0.0.14",
+    "@w3ux/react-odometer": "^0.0.3",
+    "@w3ux/react-polkicon": "^0.0.1",
     "@w3ux/utils": "^0.0.1",
     "@w3ux/validator-assets": "0.0.3",
     "@zondax/ledger-substrate": "^0.41.3",

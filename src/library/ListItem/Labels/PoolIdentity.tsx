@@ -3,7 +3,7 @@
 
 import { ellipsisFn, determinePoolDisplay } from '@w3ux/utils';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { Polkicon } from '@polkadot-cloud/react';
+import { Polkicon } from '@w3ux/react-polkicon';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';
 import type { PoolIdentityProps } from '../types';
 

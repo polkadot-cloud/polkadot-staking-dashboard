@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Polkicon } from '@polkadot-cloud/react';
+import { Polkicon } from '@w3ux/react-polkicon';
 import { ellipsisFn } from '@w3ux/utils';
 import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';

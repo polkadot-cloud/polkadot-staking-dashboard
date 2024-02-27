@@ -13,7 +13,7 @@ import { useSize } from 'hooks/useSize';
 import { StatusLabel } from 'library/StatusLabel';
 import { useSubscanData } from 'hooks/useSubscanData';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
-import { Odometer } from '@polkadot-cloud/react';
+import { Odometer } from '@w3ux/react-odometer';
 import { locales, DefaultLocale } from 'locale';
 import BigNumber from 'bignumber.js';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';

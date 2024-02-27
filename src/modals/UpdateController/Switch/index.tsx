@@ -4,7 +4,7 @@
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { remToUnit } from '@w3ux/utils';
-import { Polkicon } from '@polkadot-cloud/react';
+import { Polkicon } from '@w3ux/react-polkicon';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { AccountDropdownProps } from '../../../library/Form/types';
 import { StyledSelect } from './Wrappers';
