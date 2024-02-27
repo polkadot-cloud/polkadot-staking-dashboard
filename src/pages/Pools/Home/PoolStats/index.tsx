@@ -11,7 +11,7 @@ import { Header } from 'library/Announcements/Header';
 import { useNetwork } from 'contexts/Network';
 import { Announcements } from './Announcements';
 import type { PoolStatLabel } from 'library/Announcements/types';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { Wrapper } from 'library/Announcements/Wrappers';
 
 export const PoolStats = () => {

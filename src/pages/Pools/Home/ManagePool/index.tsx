@@ -8,7 +8,7 @@ import { useHelp } from 'contexts/Help';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { Nominations } from 'library/Nominations';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useSyncing } from 'hooks/useSyncing';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';

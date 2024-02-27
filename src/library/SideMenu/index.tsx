@@ -20,7 +20,7 @@ import LanguageSVG from 'img/language.svg?react';
 import LogoGithubSVG from 'img/logo-github.svg?react';
 import MoonOutlineSVG from 'img/moon-outline.svg?react';
 import SunnyOutlineSVG from 'img/sunny-outline.svg?react';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { Heading } from './Heading/Heading';
 import { Main } from './Main';

@@ -11,7 +11,7 @@ import { Polkicon } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { AccountInput } from 'library/AccountInput';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { ExternalAccount } from '@polkadot-cloud/react/types';

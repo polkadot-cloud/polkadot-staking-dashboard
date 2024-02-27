@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ActionItem, ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
 import { greaterThanZero, planckToUnit, unitToPlanck } from '@w3ux/utils';
 import { getUnixTime } from 'date-fns';
 import type { Dispatch, SetStateAction } from 'react';
@@ -18,10 +17,13 @@ import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { timeleftAsString } from 'hooks/useTimeLeft/utils';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
+import { ActionItem } from 'library/ActionItem';
 
 export const LeavePool = ({
   setSection,

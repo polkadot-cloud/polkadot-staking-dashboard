@@ -9,7 +9,7 @@ import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList/Default';
 import { StatBoxList } from 'library/StatBoxList';
 import { useFavoritePools } from 'contexts/Pools/FavoritePools';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { PoolListProvider } from 'library/PoolList/context';
 import { Roles } from '../Roles';

@@ -9,7 +9,7 @@ import { ExtensionIcons } from '@w3ux/extension-assets/util';
 import LedgerSVG from '@w3ux/extension-assets/LedgerSquare.svg?react';
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react';
 import { Polkicon } from '@polkadot-cloud/react';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';

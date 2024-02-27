@@ -3,7 +3,7 @@
 
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import type { MetricsProps } from '../types';
 
 export const Metrics = ({ display, address }: MetricsProps) => {

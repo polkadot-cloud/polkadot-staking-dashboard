@@ -2,18 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
-import {
-  ActionItem,
-  ModalCustomHeader,
-  ModalPadding,
-} from '@polkadot-cloud/react';
 import { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
 import {
   useExtensions,
   useEffectIgnoreInitial,
-  useOverlay,
 } from '@polkadot-cloud/react/hooks';
 import { useProxies } from 'contexts/Proxies';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -35,6 +29,10 @@ import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
 import { ButtonText } from 'kits/Buttons/ButtonText';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalCustomHeader } from 'kits/Overlay/structure/ModalCustomHeader';
+import { ActionItem } from 'library/ActionItem';
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');

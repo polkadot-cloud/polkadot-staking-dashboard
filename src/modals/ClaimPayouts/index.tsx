@@ -1,21 +1,19 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  ModalFixedTitle,
-  ModalMotionTwoSection,
-  ModalSection,
-} from '@polkadot-cloud/react';
 import { setStateWithRef } from '@w3ux/utils';
 import { useEffect, useRef, useState } from 'react';
 import { Title } from 'library/Modal/Title';
 import { useTxMeta } from 'contexts/TxMeta';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { usePayouts } from 'contexts/Payouts';
 import { useTranslation } from 'react-i18next';
 import { Forms } from './Forms';
 import { Overview } from './Overview';
 import type { ActivePayout } from './types';
+import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle';
+import { ModalMotionTwoSection } from 'kits/Overlay/structure/ModalMotionTwoSection';
+import { ModalSection } from 'kits/Overlay/structure/ModalSection';
 
 export const ClaimPayouts = () => {
   const { t } = useTranslation('modals');

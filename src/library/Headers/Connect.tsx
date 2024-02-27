@@ -3,7 +3,7 @@
 
 import { faPlug, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { ConnectedAccount, HeadingWrapper } from './Wrappers';
 import { ButtonText } from 'kits/Buttons/ButtonText';
