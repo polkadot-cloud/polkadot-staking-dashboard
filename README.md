@@ -8,7 +8,7 @@
 
 ### Validator Operators
 
-To showcase a validator operator on staking dashboard, submit a PR to the [__`@w3ux`__](https://github.com/w3ux/w3ux-library/tree/main) library. The operator will then be available in the __`@w3ux/validator-assets`__ NPM package. [Full instructions](https://github.com/w3ux/w3ux-library/tree/main/library/validator-assets).
+To showcase a validator operator on staking dashboard, submit a PR to the [**`@w3ux`**](https://github.com/w3ux/w3ux-library/tree/main) library. The operator will then be available in the **`@w3ux/validator-assets`** NPM package. [Full instructions](https://github.com/w3ux/w3ux-library/tree/main/library/validator-assets).
 
 ## URL Variable Support
 
