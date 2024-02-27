@@ -24,7 +24,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@ledgerhq/hw-transport-webhid": "^6.28.4",
-    "@polkadot/api": "^10.11.2",
+    "@polkadot/api": "^10.11.3",
     "@polkadot/keyring": "^12.6.2",
     "@polkadot/rpc-provider": "^10.11.2",
     "@polkadot/util": "^12.6.2",
