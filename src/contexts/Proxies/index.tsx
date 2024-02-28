@@ -16,7 +16,7 @@ import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import { isSupportedProxy } from 'config/proxies';
 import { useApi } from 'contexts/Api';
-import type { AnyApi, MaybeAddress } from 'types';
+import type { AnyApi, MaybeAddress, NetworkName } from 'types';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -32,6 +32,7 @@ import type {
   Proxy,
   ProxyDelegate,
 } from './types';
+import { defaultNetwork } from 'contexts/Network/defaults';
 
 export const ProxiesContext = createContext<ProxiesContextInterface>(
   defaults.defaultProxiesContext
@@ -51,6 +52,10 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   const [proxies, setProxies] = useState<Proxies>([]);
   const proxiesRef = useRef(proxies);
   const unsubs = useRef<Record<string, VoidFn>>({});
+
+  // Store the last network proxies were synced on.
+  const [lastSyncedNetwork, setLastSyncedNetwork] =
+    useState<NetworkName>(defaultNetwork);
 
   // Reformats proxies into a list of delegates.
   const formatProxiesToDelegates = () => {
@@ -126,9 +131,16 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
         proxiesRef
       );
     };
-    handleRemovedAccounts();
-    handleAddedAccounts();
-    handleExistingAccounts();
+
+    // Ensure that accounts from a previous network are not being synced.
+    if (lastSyncedNetwork === network) {
+      handleRemovedAccounts();
+      handleAddedAccounts();
+      handleExistingAccounts();
+    }
+
+    // Update the last network proxies were synced on.
+    setLastSyncedNetwork(network);
   };
 
   const subscribeToProxies = async (address: string) => {
@@ -234,13 +246,6 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
       .find((p) => p.delegator === delegator)
       ?.delegates.find((d) => d.delegate === delegate) ?? null;
 
-  // Subscribe new accounts to proxies, and remove accounts that are no longer imported.
-  useEffectIgnoreInitial(() => {
-    if (isReady) {
-      handleSyncAccounts();
-    }
-  }, [accounts, isReady, network]);
-
   // If active proxy has not yet been set, check local storage `activeProxy` & set it as active
   // proxy if it is the delegate of `activeAccount`.
   useEffectIgnoreInitial(() => {
@@ -281,8 +286,16 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [accounts, activeAccount, proxies, network]);
 
+  // Subscribe new accounts to proxies, and remove accounts that are no longer imported.
+  useEffectIgnoreInitial(() => {
+    if (isReady) {
+      handleSyncAccounts();
+    }
+  }, [accounts, isReady]);
+
   // Reset active proxy state, unsubscribe from subscriptions on network change & unmount.
   useEffectIgnoreInitial(() => {
+    setStateWithRef([], setProxies, proxiesRef);
     setActiveProxy(null, false);
     unsubAll();
     return () => unsubAll();

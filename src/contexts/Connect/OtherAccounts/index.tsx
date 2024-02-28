@@ -215,7 +215,7 @@ export const OtherAccountsProvider = ({
         importLocalOtherAccounts,
         forgetOtherAccounts,
         accountsInitialised,
-        otherAccounts: otherAccountsRef.current,
+        otherAccounts,
       }}
     >
       {children}

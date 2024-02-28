@@ -9,7 +9,7 @@ import {
 } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
-import { createContext, useContext, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, MaybeAddress } from 'types';
@@ -81,6 +81,21 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   // check until bond duration eras surpasssed.
   const checkToEra = activeEra.index.minus(bondDuration);
 
+  // Reset state on network or active account change.
+  useEffect(() => {
+    setStateWithRef(false, setChecking, checkingRef);
+    setStateWithRef(null, setqueueDeposit, queueDepositRef);
+    setStateWithRef(null, setCounterForQueue, counterForQueueRef);
+    setStateWithRef(null, setIsExposed, isExposedRef);
+    setStateWithRef(defaultMeta, setMeta, metaRef);
+    unsubs.current = [];
+
+    // cancel fast unstake check on network change or account change.
+    for (const unsub of unsubs.current) {
+      unsub();
+    }
+  }, [activeAccount, network]);
+
   // initiate fast unstake check for accounts that are nominating but not active.
   useEffectIgnoreInitial(() => {
     if (
@@ -90,16 +105,6 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
       fastUnstakeErasToCheckPerBlock > 0 &&
       isNominating()
     ) {
-      // cancel fast unstake check on network change or account change.
-      for (const unsub of unsubs.current) {
-        unsub();
-      }
-
-      setStateWithRef(false, setChecking, checkingRef);
-      setStateWithRef(null, setqueueDeposit, queueDepositRef);
-      setStateWithRef(null, setCounterForQueue, counterForQueueRef);
-      unsubs.current = [];
-
       // get any existing localStorage records for account.
       const localMeta: LocalMeta | null = getLocalMeta();
 
@@ -158,8 +163,6 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   }, [
     inSetup(),
     isReady,
-    network,
-    activeAccount,
     activeEra.index,
     fastUnstakeErasToCheckPerBlock,
     isNominating(),
@@ -339,12 +342,12 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
     <FastUnstakeContext.Provider
       value={{
         getLocalkey,
-        checking: checkingRef.current,
-        meta: metaRef.current,
-        isExposed: isExposedRef.current,
-        queueDeposit: queueDepositRef.current,
-        head: headRef.current,
-        counterForQueue: counterForQueueRef.current,
+        checking,
+        meta,
+        isExposed,
+        queueDeposit,
+        head,
+        counterForQueue,
       }}
     >
       {children}
