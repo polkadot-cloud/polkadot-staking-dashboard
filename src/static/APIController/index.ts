@@ -1,12 +1,12 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ActiveEraInfo, BlockNumber } from '@polkadot/types/interfaces';
+import type { BlockNumber } from '@polkadot/types/interfaces';
 import { makeCancelable, rmCommas, withTimeout } from '@w3ux/utils';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import { NetworkList, NetworksWithPagedRewards } from 'config/networks';
-import type { NetworkName } from 'types';
+import type { AnyApi, NetworkName } from 'types';
 import type {
   APIConfig,
   ConnectionType,
@@ -14,7 +14,6 @@ import type {
   EventStatus,
   SubstrateConnect,
 } from './types';
-import type { Option } from '@polkadot/types-codec';
 import type { VoidFn } from '@polkadot/api/types';
 import BigNumber from 'bignumber.js';
 import { BalancesController } from 'static/BalancesController';
@@ -277,7 +276,7 @@ export class APIController {
     // Fetch the active era. Needed for previous era and for queries below.
     const resultActiveEra = await this.api.query.staking.activeEra();
     const activeEra = JSON.parse(
-      (resultActiveEra as Option<ActiveEraInfo>).unwrapOrDefault().toString()
+      (resultActiveEra as AnyApi).unwrapOrDefault().toString()
     );
     // Store active era.
     this.activeEra = {
@@ -511,33 +510,31 @@ export class APIController {
   //
   // Also handles (re)subscribing to subscriptions that depend on active era.
   static subscribeActiveEra = async (): Promise<void> => {
-    const unsub = await this.api.query.staking.activeEra(
-      (result: Option<ActiveEraInfo>) => {
-        // determine activeEra: toString used as alternative to `toHuman`, that puts commas in
-        // numbers
-        const activeEra = JSON.parse(result.unwrapOrDefault().toString());
-        // Store active era.
-        this.activeEra = {
-          index: new BigNumber(activeEra.index),
-          start: new BigNumber(activeEra.start),
-        };
+    const unsub = await this.api.query.staking.activeEra((result: AnyApi) => {
+      // determine activeEra: toString used as alternative to `toHuman`, that puts commas in
+      // numbers
+      const activeEra = JSON.parse(result.unwrapOrDefault().toString());
+      // Store active era.
+      this.activeEra = {
+        index: new BigNumber(activeEra.index),
+        start: new BigNumber(activeEra.start),
+      };
 
-        // (Re)Subscribe to staking metrics `activeEra` has updated.
-        if (this._unsubs['stakingMetrics']) {
-          this._unsubs['stakingMetrics']();
-          delete this._unsubs['stakingMetrics'];
-        }
-        this.subscribeStakingMetrics();
-
-        // NOTE: Sending `activeEra` to document as a strings. UI needs to parse values into
-        // BigNumber.
-        document.dispatchEvent(
-          new CustomEvent(`new-active-era`, {
-            detail: { activeEra },
-          })
-        );
+      // (Re)Subscribe to staking metrics `activeEra` has updated.
+      if (this._unsubs['stakingMetrics']) {
+        this._unsubs['stakingMetrics']();
+        delete this._unsubs['stakingMetrics'];
       }
-    );
+      this.subscribeStakingMetrics();
+
+      // NOTE: Sending `activeEra` to document as a strings. UI needs to parse values into
+      // BigNumber.
+      document.dispatchEvent(
+        new CustomEvent(`new-active-era`, {
+          detail: { activeEra },
+        })
+      );
+    });
     this._unsubs['activeEra'] = unsub as unknown as VoidFn;
   };
 
