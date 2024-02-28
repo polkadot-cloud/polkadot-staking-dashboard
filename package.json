@@ -42,7 +42,7 @@
     "bignumber.js": "^9.1.2",
     "bn.js": "^5.2.1",
     "buffer": "^6.0.3",
-    "chart.js": "^4.4.1",
+    "chart.js": "^4.4.2",
     "chroma-js": "^2.4.2",
     "date-fns": "^3.3.1",
     "framer-motion": "^11.0.6",
