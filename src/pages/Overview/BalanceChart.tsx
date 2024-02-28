@@ -244,53 +244,51 @@ export const BalanceChart = () => {
               </Bar>
             </div>
           ) : null}
-          {greaterThanZero(fundsReserved) ? (
-            <div
-              style={{
-                flex: 0,
-                minWidth: '12.5rem',
-                maxWidth: '12.5rem',
-                flexBasis: '50%',
-              }}
-            >
-              <Legend className="end">
-                <LegendItem
-                  label=""
-                  button={
-                    <ButtonTertiary
-                      text={t('overview.reserveBalance')}
-                      onClick={() =>
-                        openModal({ key: 'UpdateReserve', size: 'sm' })
-                      }
-                      iconRight={
-                        syncing
-                          ? undefined
-                          : !feeReserve.isZero() && !edReserved.isZero()
-                            ? faCheckDouble
-                            : feeReserve.isZero() && edReserved.isZero()
-                              ? undefined
-                              : faCheck
-                      }
-                      iconTransform="shrink-1"
-                      disabled={
-                        !activeAccount ||
-                        syncing ||
-                        !accountHasSigner(activeAccount)
-                      }
-                    />
-                  }
-                />
-              </Legend>
-              <Bar>
-                <BarSegment
-                  dataClass="d4"
-                  widthPercent={100}
-                  flexGrow={1}
-                  label={`${fundsReserved.decimalPlaces(3).toFormat()} ${unit}`}
-                />
-              </Bar>
-            </div>
-          ) : null}
+          <div
+            style={{
+              flex: 0,
+              minWidth: '12.5rem',
+              maxWidth: '12.5rem',
+              flexBasis: '50%',
+            }}
+          >
+            <Legend className="end">
+              <LegendItem
+                label=""
+                button={
+                  <ButtonTertiary
+                    text={t('overview.reserveBalance')}
+                    onClick={() =>
+                      openModal({ key: 'UpdateReserve', size: 'sm' })
+                    }
+                    iconRight={
+                      syncing
+                        ? undefined
+                        : !feeReserve.isZero() && !edReserved.isZero()
+                          ? faCheckDouble
+                          : feeReserve.isZero() && edReserved.isZero()
+                            ? undefined
+                            : faCheck
+                    }
+                    iconTransform="shrink-1"
+                    disabled={
+                      !activeAccount ||
+                      syncing ||
+                      !accountHasSigner(activeAccount)
+                    }
+                  />
+                }
+              />
+            </Legend>
+            <Bar>
+              <BarSegment
+                dataClass="d4"
+                widthPercent={100}
+                flexGrow={1}
+                label={`${fundsReserved.decimalPlaces(3).toFormat()} ${unit}`}
+              />
+            </Bar>
+          </div>
         </section>
       </BarChartWrapper>
     </>
