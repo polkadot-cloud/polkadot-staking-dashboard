@@ -94,7 +94,16 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
     for (const unsub of unsubs.current) {
       unsub();
     }
+
+    // Resubscribe to fast unstake queue.
   }, [activeAccount, network]);
+
+  // Subscribe to fast unstake queue as soon as api is ready.
+  useEffect(() => {
+    if (isReady) {
+      subscribeToFastUnstakeQueue();
+    }
+  }, [isReady]);
 
   // initiate fast unstake check for accounts that are nominating but not active.
   useEffectIgnoreInitial(() => {
@@ -126,7 +135,6 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
       }
 
       // Initial local meta: localMeta
-
       setStateWithRef(initialMeta, setMeta, metaRef);
       setStateWithRef(initialIsExposed, setIsExposed, isExposedRef);
 
@@ -145,13 +153,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
           : activeEra.index;
 
         // Check from the possible next era `maybeNextEra`.
-
         processEligibility(activeAccount, maybeNextEra);
-      }
-
-      // subscribe to fast unstake queue immediately if synced in localStorage and still up to date.
-      if (initialIsExposed === false) {
-        subscribeToFastUnstakeQueue();
       }
     }
 
@@ -223,9 +225,6 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
         setStateWithRef(false, setIsExposed, isExposedRef);
 
         // Finished, not exposed.
-
-        // subscribe to fast unstake queue for user and queue counter.
-        subscribeToFastUnstakeQueue();
       } else {
         // continue checking the next era.
         checkEra(new BigNumber(era).minus(1));
@@ -272,7 +271,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
 
   // subscribe to fastUnstake queue
   const subscribeToFastUnstakeQueue = async () => {
-    if (!api || !activeAccount) {
+    if (!api) {
       return;
     }
     const subscribeQueue = async (a: MaybeAddress) => {
