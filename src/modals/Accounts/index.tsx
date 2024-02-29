@@ -29,8 +29,6 @@ import { useOverlay } from 'kits/Overlay/Provider';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalCustomHeader } from 'kits/Overlay/structure/ModalCustomHeader';
 import { ActionItem } from 'library/ActionItem';
-import { useExtensions } from '@w3ux/react-connect-kit';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');
@@ -39,7 +37,6 @@ export const Accounts = () => {
   } = useApi();
   const { getDelegates } = useProxies();
   const { bondedAccounts } = useBonded();
-  const { extensionsStatus } = useExtensions();
   const {
     replaceModal,
     status: modalStatus,
@@ -165,11 +162,19 @@ export const Accounts = () => {
   useEffect(() => setLocalAccounts(accounts), [accounts]);
 
   // Resize if modal open upon state changes.
-  useEffectIgnoreInitial(() => {
+  useEffect(() => {
     if (modalStatus === 'open') {
       setModalResize();
     }
-  }, [activeAccount, accounts, bondedAccounts, extensionsStatus]);
+  }, [
+    activeAccount,
+    accounts,
+    bondedAccounts,
+    nominating,
+    inPool,
+    nominatingAndPool,
+    notStaking,
+  ]);
 
   return (
     <ModalPadding>
