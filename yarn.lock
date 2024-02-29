@@ -4570,6 +4570,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"framer-motion@npm:^11.0.7":
+  version: 11.0.7
+  resolution: "framer-motion@npm:11.0.7"
+  dependencies:
+    "@emotion/is-prop-valid": "npm:^0.8.2"
+    tslib: "npm:^2.4.0"
+  peerDependencies:
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  dependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+  peerDependenciesMeta:
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 29a483eadfe9e3631478c63c8a8e69d0fa30ff7135a0b27c584a694792d0729476a0168c9d7bd86169032aad364b352e4c4b581299652e542f11881e11f8f0ca
+  languageName: node
+  linkType: hard
+
 "fs-extra@npm:^11.1.0, fs-extra@npm:^11.1.1":
   version: 11.2.0
   resolution: "fs-extra@npm:11.2.0"
@@ -6529,7 +6550,7 @@ __metadata:
     eslint-plugin-react: "npm:^7.33.2"
     eslint-plugin-react-hooks: "npm:^4.6.0"
     eslint-plugin-unused-imports: "npm:^3.1.0"
-    framer-motion: "npm:^11.0.6"
+    framer-motion: "npm:^11.0.7"
     gh-pages: "npm:^6.1.1"
     html5-qrcode: "npm:^2.3.8"
     i18next: "npm:^23.10.0"
