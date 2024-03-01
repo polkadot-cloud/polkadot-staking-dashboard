@@ -3,7 +3,6 @@
 
 import { useHelp } from 'contexts/Help';
 import { ErrorFallbackModal } from 'library/ErrorBoundary';
-import { Overlay } from '@polkadot-cloud/react';
 import { ClaimPayouts } from 'modals/ClaimPayouts';
 import { AccountPoolRoles } from '../modals/AccountPoolRoles';
 import { Accounts } from '../modals/Accounts';
@@ -33,6 +32,7 @@ import { ValidatorMetrics } from '../modals/ValidatorMetrics';
 import { ValidatorGeo } from '../modals/ValidatorGeo';
 import { ManageNominations } from '../canvas/ManageNominations';
 import { PoolMembers } from 'canvas/PoolMembers';
+import { Overlay } from 'kits/Overlay';
 
 export const Overlays = () => {
   const { status } = useHelp();

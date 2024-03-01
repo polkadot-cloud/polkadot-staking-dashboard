@@ -1,4 +1,4 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { registerSaEvent } from 'Utils';
@@ -7,8 +7,6 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DappName, ManualSigners } from 'consts';
 import { useApi } from 'contexts/Api';
-import { useExtensions } from '@polkadot-cloud/react/hooks';
-import { useExtrinsics } from 'contexts/Extrinsics';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { useTxMeta } from 'contexts/TxMeta';
 import type { AnyApi, AnyJson } from 'types';
@@ -19,6 +17,7 @@ import { useBuildPayload } from '../useBuildPayload';
 import { useProxySupported } from '../useProxySupported';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 import { NotificationsController } from 'static/NotificationsController';
+import { useExtensions } from '@w3ux/react-connect-kit';
 
 export const useSubmitExtrinsic = ({
   tx,
@@ -35,7 +34,7 @@ export const useSubmitExtrinsic = ({
   const { extensionsStatus } = useExtensions();
   const { isProxySupported } = useProxySupported();
   const { handleResetLedgerTask } = useLedgerHardware();
-  const { addPending, removePending } = useExtrinsics();
+  const { addPendingNonce, removePendingNonce } = useTxMeta();
   const { getAccount, requiresManualSign } = useImportedAccounts();
   const {
     txFees,
@@ -158,7 +157,7 @@ export const useSubmitExtrinsic = ({
     }
 
     const onReady = () => {
-      addPending(nonce);
+      addPendingNonce(nonce);
       NotificationsController.emit({
         title: t('pending'),
         subtitle: t('transactionInitiated'),
@@ -170,7 +169,7 @@ export const useSubmitExtrinsic = ({
 
     const onInBlock = () => {
       setSubmitting(false);
-      removePending(nonce);
+      removePendingNonce(nonce);
       NotificationsController.emit({
         title: t('inBlock'),
         subtitle: t('transactionInBlock'),
@@ -192,7 +191,7 @@ export const useSubmitExtrinsic = ({
           subtitle: t('errorWithTransaction'),
         });
         setSubmitting(false);
-        removePending(nonce);
+        removePendingNonce(nonce);
       }
     };
 
@@ -212,7 +211,7 @@ export const useSubmitExtrinsic = ({
       if (type === 'ledger') {
         handleResetLedgerTask();
       }
-      removePending(nonce);
+      removePendingNonce(nonce);
       NotificationsController.emit({
         title: t('cancelled'),
         subtitle: t('transactionCancelled'),

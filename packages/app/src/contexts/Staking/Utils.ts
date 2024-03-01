@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyApi, NetworkName } from 'types';
-import { rmCommas } from '@polkadot-cloud/utils';
+import { rmCommas } from '@w3ux/utils';
 import type { Exposure, LocalExposure, LocalExposuresData } from './types';
 
 // Get local `erasStakers` entries for an era.

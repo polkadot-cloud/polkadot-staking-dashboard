@@ -1,28 +1,26 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faQrcode } from '@fortawesome/free-solid-svg-icons';
-import {
-  ButtonPrimary,
-  ButtonText,
-  HardwareAddress,
-  HardwareStatusBar,
-  Polkicon,
-} from '@polkadot-cloud/react';
+import { Polkicon } from '@w3ux/react-polkicon';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useVaultAccounts } from 'contexts/Hardware/Vault/VaultAccounts';
 import { usePrompt } from 'contexts/Prompt';
-import PolkadotVaultSVG from '@polkadot-cloud/assets/extensions/svg/polkadotvault.svg?react';
+import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react';
 import { Confirm } from 'library/Import/Confirm';
 import { Heading } from 'library/Import/Heading';
 import { NoAccounts } from 'library/Import/NoAccounts';
 import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { Reader } from './Reader';
+import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonText } from 'kits/Buttons/ButtonText';
+import { HardwareAddress } from 'library/Hardware/HardwareAddress';
+import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar';
 
 export const ImportVault = () => {
   const { t } = useTranslation();

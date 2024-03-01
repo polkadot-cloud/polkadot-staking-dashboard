@@ -1,12 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  ModalNotes,
-  ModalPadding,
-  ModalWarnings,
-  Polkicon,
-} from '@polkadot-cloud/react';
+import { Polkicon } from '@w3ux/react-polkicon';
 import {
   ellipsisFn,
   greaterThanZero,
@@ -14,7 +9,7 @@ import {
   remToUnit,
   rmCommas,
   unitToPlanck,
-} from '@polkadot-cloud/utils';
+} from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { getUnixTime } from 'date-fns';
 import { useEffect, useState } from 'react';
@@ -32,6 +27,9 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { usePrompt } from 'contexts/Prompt';
 import type { PoolMembership } from 'contexts/Pools/PoolMemberships/types';
 import { Title } from 'library/Prompt/Title';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
+import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
 
 export const UnbondMember = ({
   who,

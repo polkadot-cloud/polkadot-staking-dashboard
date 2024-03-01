@@ -1,33 +1,30 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import {
-  ActionItem,
-  ButtonSubmitInvert,
-  ModalPadding,
-  ModalWarnings,
-} from '@polkadot-cloud/react';
-import { planckToUnit } from '@polkadot-cloud/utils';
+import { planckToUnit } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { ForwardedRef } from 'react';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { Warning } from 'library/Form/Warning';
-import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useSignerWarnings } from 'hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useBatchCall } from 'library/Hooks/useBatchCall';
-import type { AnyApi, AnySubscan } from 'types';
-import { useSubscan } from 'contexts/Plugins/Subscan';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { useBatchCall } from 'hooks/useBatchCall';
+import type { AnyApi } from 'types';
 import { usePayouts } from 'contexts/Payouts';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import type { FormProps, ActivePayout } from './types';
 import { ContentWrapper } from './Wrappers';
+import { SubscanController } from 'static/SubscanController';
+import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
+import { ActionItem } from 'library/ActionItem';
 
 export const Forms = forwardRef(
   (
@@ -35,7 +32,7 @@ export const Forms = forwardRef(
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const { t } = useTranslation('modals');
-    const { api } = useApi();
+    const { api, isPagedRewardsActive } = useApi();
     const {
       networkData: { units, unit },
     } = useNetwork();
@@ -44,9 +41,6 @@ export const Forms = forwardRef(
     const { setModalStatus } = useOverlay().modal;
     const { activeAccount } = useActiveAccounts();
     const { getSignerWarnings } = useSignerWarnings();
-    const { isPagedRewardsActive } = useNetworkMetrics();
-    const { unclaimedPayouts: unclaimedPayoutsSubscan, setUnclaimedPayouts } =
-      useSubscan();
 
     // Get the total payout amount.
     const totalPayout =
@@ -119,26 +113,21 @@ export const Forms = forwardRef(
         setModalStatus('closing');
       },
       callbackInBlock: () => {
-        // Remove Subscan unclaimed payout record(s) if they exists.
-        let newUnclaimedPayoutsSubscan = unclaimedPayoutsSubscan;
-
-        payouts?.forEach(({ era, paginatedValidators }) => {
-          paginatedValidators?.forEach(([, validator]) => {
-            newUnclaimedPayoutsSubscan = newUnclaimedPayoutsSubscan.filter(
-              (u: AnySubscan) =>
-                !(u.validator_stash === validator && String(u.era) === era)
-            );
+        if (payouts && activeAccount) {
+          // Remove Subscan unclaimed payout record(s) if they exist.
+          const eraPayouts: string[] = [];
+          payouts.forEach(({ era }) => {
+            eraPayouts.push(String(era));
           });
-        });
-        setUnclaimedPayouts(newUnclaimedPayoutsSubscan);
+          SubscanController.removeUnclaimedPayouts(activeAccount, eraPayouts);
 
-        // Deduct from `unclaimedPayouts` in Payouts context.
-        payouts?.forEach(({ era, paginatedValidators }) => {
-          for (const v of paginatedValidators || []) {
-            removeEraPayout(era, v[1]);
-          }
-        });
-
+          // Deduct from `unclaimedPayouts` in Payouts context.
+          payouts.forEach(({ era, paginatedValidators }) => {
+            for (const v of paginatedValidators || []) {
+              removeEraPayout(era, v[1]);
+            }
+          });
+        }
         // Reset active form payouts for this modal.
         setPayouts([]);
       },

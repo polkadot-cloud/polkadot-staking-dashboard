@@ -1,16 +1,10 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ellipsisFn, setStateWithRef } from '@polkadot-cloud/utils';
+import { ellipsisFn, setStateWithRef } from '@w3ux/utils';
 import type { ReactNode } from 'react';
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import type { VaultAccount } from '@polkadot-cloud/react/types';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import type { VaultAccount } from '@w3ux/react-connect-kit/types';
 import { useNetwork } from 'contexts/Network';
 import { getLocalVaultAccounts, isLocalNetworkAddress } from '../Utils';
 import type { VaultAccountsContextInterface } from './types';

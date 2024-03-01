@@ -1,13 +1,13 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { capitalizeFirstLetter } from '@polkadot-cloud/utils';
+import { capitalizeFirstLetter } from '@w3ux/utils';
 import throttle from 'lodash.throttle';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SideMenuStickyThreshold } from 'consts';
+import { SideMenuMaximisedWidth, PageWidthMediumThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
 import { useTheme } from 'contexts/Themes';
@@ -20,13 +20,14 @@ import LanguageSVG from 'img/language.svg?react';
 import LogoGithubSVG from 'img/logo-github.svg?react';
 import MoonOutlineSVG from 'img/moon-outline.svg?react';
 import SunnyOutlineSVG from 'img/sunny-outline.svg?react';
-import { useOutsideAlerter } from 'library/Hooks';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { Heading } from './Heading/Heading';
 import { Main } from './Main';
 import { Secondary } from './Secondary';
 import { ConnectionSymbol, Separator, Wrapper } from './Wrapper';
+import { useOutsideAlerter } from 'hooks/useOutsideAlerter';
+import { Side } from 'kits/Structure/Side';
 
 export const SideMenu = () => {
   const { t } = useTranslation('base');
@@ -36,6 +37,7 @@ export const SideMenu = () => {
   const { openModal } = useOverlay().modal;
   const {
     setSideMenu,
+    sideMenuOpen,
     sideMenuMinimised,
     userSideMenuMinimised,
     setUserSideMenuMinimised,
@@ -51,7 +53,7 @@ export const SideMenu = () => {
   }, []);
 
   const throttleCallback = () => {
-    if (window.innerWidth >= SideMenuStickyThreshold) {
+    if (window.innerWidth >= PageWidthMediumThreshold) {
       setSideMenu(false);
     }
   };
@@ -73,103 +75,109 @@ export const SideMenu = () => {
         : 'danger';
 
   return (
-    <Wrapper ref={ref} $minimised={sideMenuMinimised}>
-      <section>
-        <Main />
-        <Heading title={t('support')} minimised={sideMenuMinimised} />
-        <Secondary
-          onClick={() => {
-            openHelp(null);
-          }}
-          name={t('resources')}
-          minimised={sideMenuMinimised}
-          icon={{
-            Svg: InfoSVG,
-            size: sideMenuMinimised ? '1.4em' : '1.2em',
-          }}
-        />
-        <Secondary
-          onClick={() => openModal({ key: 'GoToFeedback' })}
-          name={t('feedback')}
-          minimised={sideMenuMinimised}
-          icon={{
-            Svg: ForumSVG,
-            size: sideMenuMinimised ? '1.4em' : '1.2em',
-          }}
-        />
-        <Separator />
-        <Heading title={t('network')} minimised={sideMenuMinimised} />
-        <Secondary
-          classes={[apiStatusClass]}
-          name={capitalizeFirstLetter(network)}
-          onClick={() => openModal({ key: 'Networks' })}
-          icon={{
-            Svg: networkData.brand.inline.svg,
-            size: networkData.brand.inline.size,
-          }}
-          minimised={sideMenuMinimised}
-          action={
-            <ConnectionSymbol
-              className={apiStatusClass}
-              style={{ opacity: 0.7 }}
-            />
-          }
-        />
-      </section>
-
-      <section>
-        <button
-          type="button"
-          onClick={() => setUserSideMenuMinimised(!userSideMenuMinimised)}
-          aria-label="Menu"
-        >
-          <FontAwesomeIcon
-            icon={userSideMenuMinimised ? faExpandAlt : faCompressAlt}
+    <Side
+      open={sideMenuOpen}
+      minimised={sideMenuMinimised}
+      width={`${SideMenuMaximisedWidth}px`}
+    >
+      <Wrapper ref={ref} $minimised={sideMenuMinimised}>
+        <section>
+          <Main />
+          <Heading title={t('support')} minimised={sideMenuMinimised} />
+          <Secondary
+            onClick={() => {
+              openHelp(null);
+            }}
+            name={t('resources')}
+            minimised={sideMenuMinimised}
+            icon={{
+              Svg: InfoSVG,
+              size: sideMenuMinimised ? '1.4em' : '1.2em',
+            }}
           />
-        </button>
-        <button
-          type="button"
-          onClick={() =>
-            window.open(
-              'https://github.com/paritytech/polkadot-staking-dashboard',
-              '_blank'
-            )
-          }
-          aria-label="Github"
-        >
-          <LogoGithubSVG width="1.2em" height="1.2em" />
-        </button>
-        <button
-          type="button"
-          onClick={() => openModal({ key: 'Settings' })}
-          aria-label="Settings"
-        >
-          <CogOutlineSVG width="1.3em" height="1.3em" />
-        </button>
-        <button
-          type="button"
-          onClick={() => openModal({ key: 'ChooseLanguage' })}
-        >
-          <LanguageSVG width="1.25em" height="1.25em" />
-        </button>
-        {mode === 'dark' ? (
+          <Secondary
+            onClick={() => openModal({ key: 'GoToFeedback' })}
+            name={t('feedback')}
+            minimised={sideMenuMinimised}
+            icon={{
+              Svg: ForumSVG,
+              size: sideMenuMinimised ? '1.4em' : '1.2em',
+            }}
+          />
+          <Separator />
+          <Heading title={t('network')} minimised={sideMenuMinimised} />
+          <Secondary
+            classes={[apiStatusClass]}
+            name={capitalizeFirstLetter(network)}
+            onClick={() => openModal({ key: 'Networks' })}
+            icon={{
+              Svg: networkData.brand.inline.svg,
+              size: networkData.brand.inline.size,
+            }}
+            minimised={sideMenuMinimised}
+            action={
+              <ConnectionSymbol
+                className={apiStatusClass}
+                style={{ opacity: 0.7 }}
+              />
+            }
+          />
+        </section>
+
+        <section>
           <button
             type="button"
-            onClick={() => toggleTheme()}
-            aria-label="aria-label"
+            onClick={() => setUserSideMenuMinimised(!userSideMenuMinimised)}
+            aria-label="Menu"
           >
-            <SunnyOutlineSVG width="1.25em" height="1.25em" />
+            <FontAwesomeIcon
+              icon={userSideMenuMinimised ? faExpandAlt : faCompressAlt}
+            />
           </button>
-        ) : (
           <button
             type="button"
-            onClick={() => toggleTheme()}
-            aria-label="Toggle"
+            onClick={() =>
+              window.open(
+                'https://github.com/paritytech/polkadot-staking-dashboard',
+                '_blank'
+              )
+            }
+            aria-label="Github"
           >
-            <MoonOutlineSVG width="1.1em" height="1.1em" />
+            <LogoGithubSVG width="1.2em" height="1.2em" />
           </button>
-        )}
-      </section>
-    </Wrapper>
+          <button
+            type="button"
+            onClick={() => openModal({ key: 'Settings' })}
+            aria-label="Settings"
+          >
+            <CogOutlineSVG width="1.3em" height="1.3em" />
+          </button>
+          <button
+            type="button"
+            onClick={() => openModal({ key: 'ChooseLanguage' })}
+          >
+            <LanguageSVG width="1.25em" height="1.25em" />
+          </button>
+          {mode === 'dark' ? (
+            <button
+              type="button"
+              onClick={() => toggleTheme()}
+              aria-label="aria-label"
+            >
+              <SunnyOutlineSVG width="1.25em" height="1.25em" />
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => toggleTheme()}
+              aria-label="Toggle"
+            >
+              <MoonOutlineSVG width="1.1em" height="1.1em" />
+            </button>
+          )}
+        </section>
+      </Wrapper>
+    </Side>
   );
 };

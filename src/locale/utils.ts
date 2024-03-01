@@ -1,11 +1,15 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { extractUrlValue, varToUrlHash } from '@polkadotcloud/utils';
 import { registerSaEvent } from 'Utils';
-import { DefaultLocale } from 'consts';
+import { extractUrlValue, varToUrlHash } from '@w3ux/utils';
+import {
+  DefaultLocale,
+  availableLanguages,
+  fallbackResources,
+  lngNamespaces,
+} from 'locale';
 import type { AnyApi, AnyJson } from 'types';
-import { availableLanguages, fallbackResources, lngNamespaces } from '.';
 
 // Gets the active language
 //
@@ -130,7 +134,7 @@ export const loadLngAsync = async (l: string) => {
 // Handles a dynamic import
 //
 // Once imports have been loaded, they are added to i18next as resources.
-// Finally, the active langauge is changed to the imported language.
+// Finally, the active language is changed to the imported language.
 export const doDynamicImport = async (lng: string, i18next: AnyApi) => {
   const { l, r } = await loadLngAsync(lng);
   localStorage.setItem('lng_resources', JSON.stringify({ l: lng, r }));

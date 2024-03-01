@@ -4,20 +4,20 @@
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
 import { MaxEraRewardPointsEras } from 'consts';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import Worker from 'workers/poolPerformance?worker';
 import { useNetwork } from 'contexts/Network';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { useApi } from 'contexts/Api';
-import type { Sync } from '@polkadot-cloud/react/types';
 import BigNumber from 'bignumber.js';
-import { mergeDeep } from '@polkadot-cloud/utils';
+import { mergeDeep } from '@w3ux/utils';
 import { useStaking } from 'contexts/Staking';
 import { formatRawExposures } from 'contexts/Staking/Utils';
 import type { PoolPerformanceContextInterface } from './types';
 import { defaultPoolPerformanceContext } from './defaults';
+import type { Sync } from 'types';
 
 const worker = new Worker();
 

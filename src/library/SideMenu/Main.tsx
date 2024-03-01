@@ -1,4 +1,4 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Fragment, useEffect, useState } from 'react';
@@ -7,38 +7,41 @@ import { useLocation } from 'react-router-dom';
 import { PageCategories, PagesConfig } from 'config/pages';
 import { PolkadotUrl } from 'consts';
 import { useBonded } from 'contexts/Bonded';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useSetup } from 'contexts/Setup';
 import type { SetupContextInterface } from 'contexts/Setup/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import type { UIContextInterface } from 'contexts/UI/types';
-import type { PageCategory, PageItem, PagesConfigItems } from 'types';
+import type { AnyJson, PageCategory, PageItem, PagesConfigItems } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Heading } from './Heading/Heading';
 import { Primary } from './Primary';
 import { LogoWrapper } from './Wrapper';
-import type { AnyJson } from '@polkadot-cloud/react/types';
+import { useBalances } from 'contexts/Balances';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const Main = () => {
   const { t, i18n } = useTranslation('base');
-  const { networkData } = useNetwork();
   const { pathname } = useLocation();
+  const { syncing } = useSyncing('*');
+  const { networkData } = useNetwork();
   const { getBondedAccount } = useBonded();
   const { accounts } = useImportedAccounts();
+  const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
   const { inSetup: inNominatorSetup, addressDifferentToStash } = useStaking();
-  const { membership } = usePoolMemberships();
-  const controller = getBondedAccount(activeAccount);
   const {
     onNominatorSetup,
     onPoolSetup,
     getPoolSetupPercent,
     getNominatorSetupPercent,
   }: SetupContextInterface = useSetup();
-  const { isSyncing, sideMenuMinimised }: UIContextInterface = useUi();
+  const { sideMenuMinimised }: UIContextInterface = useUi();
+
+  const membership = getPoolMembership(activeAccount);
+  const controller = getBondedAccount(activeAccount);
   const controllerDifferentToStash = addressDifferentToStash(controller);
 
   const [pageConfig, setPageConfig] = useState<AnyJson>({
@@ -59,7 +62,7 @@ export const Main = () => {
       // set undefined action as default
       pages[i].action = undefined;
       if (uri === `${import.meta.env.BASE_URL}`) {
-        const warning = !isSyncing && controllerDifferentToStash;
+        const warning = !syncing && controllerDifferentToStash;
         if (warning) {
           pages[i].action = {
             type: 'bullet',
@@ -71,7 +74,7 @@ export const Main = () => {
       if (uri === `${import.meta.env.BASE_URL}nominate`) {
         // configure Stake action
         const staking = !inNominatorSetup();
-        const warning = !isSyncing && controllerDifferentToStash;
+        const warning = !syncing && controllerDifferentToStash;
         const setupPercent = getNominatorSetupPercent(activeAccount);
 
         if (staking) {
@@ -128,7 +131,7 @@ export const Main = () => {
     activeAccount,
     accounts,
     controllerDifferentToStash,
-    isSyncing,
+    syncing,
     membership,
     inNominatorSetup(),
     getNominatorSetupPercent(activeAccount),

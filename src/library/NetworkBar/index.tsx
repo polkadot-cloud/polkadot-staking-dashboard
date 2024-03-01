@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { capitalizeFirstLetter } from '@polkadot-cloud/utils';
+import { capitalizeFirstLetter } from '@w3ux/utils';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -14,10 +14,11 @@ import { Status } from './Status';
 import { Summary, Wrapper } from './Wrappers';
 import { isCustomEvent } from 'static/utils';
 import { useEventListener } from 'usehooks-ts';
-import { Odometer, useEffectIgnoreInitial } from '@polkadot-cloud/react';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import BigNumber from 'bignumber.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHive } from '@fortawesome/free-brands-svg-icons';
+import { Odometer } from '@w3ux/react-odometer';
 
 export const NetworkBar = () => {
   const { t } = useTranslation('library');

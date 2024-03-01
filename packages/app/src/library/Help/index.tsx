@@ -1,29 +1,27 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import {
-  ButtonPrimaryInvert,
-  CanvasContainer,
-  ModalContent,
-  CanvasScroll,
-} from '@polkadot-cloud/react';
-import { camelize } from '@polkadot-cloud/utils';
+import { camelize } from '@w3ux/utils';
 import { useAnimation } from 'framer-motion';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { HelpConfig } from 'config/help';
-import { DefaultLocale } from 'consts';
+import { DefaultLocale } from 'locale';
 import { useHelp } from 'contexts/Help';
 import type {
   DefinitionWithKeys,
   ExternalItems,
   HelpItem,
 } from 'contexts/Help/types';
-import { useFillVariables } from 'library/Hooks/useFillVariables';
+import { useFillVariables } from 'hooks/useFillVariables';
 import { Definition } from './Items/Definition';
 import { External } from './Items/External';
 import { ActiveDefinition } from './Items/ActiveDefinition';
+import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { CanvasContainer } from 'kits/Overlay/structure/CanvasContainer';
+import { CanvasScroll } from 'kits/Overlay/structure/CanvasScroll';
+import { ModalContent } from 'kits/Overlay/structure/ModalContent';
 
 export const Help = () => {
   const { t, i18n } = useTranslation('help');
@@ -59,8 +57,8 @@ export const Help = () => {
 
   if (definition) {
     // get items for active category
-    meta = Object.values(HelpConfig).find(
-      (c) => c?.definitions?.find((d) => d === definition)
+    meta = Object.values(HelpConfig).find((c) =>
+      c?.definitions?.find((d) => d === definition)
     );
   } else {
     // get all items

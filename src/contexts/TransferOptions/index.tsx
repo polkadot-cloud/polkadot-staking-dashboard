@@ -10,7 +10,7 @@ import { useBonded } from 'contexts/Bonded';
 import { useNetworkMetrics } from 'contexts/NetworkMetrics';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import type { MaybeAddress } from 'types';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';

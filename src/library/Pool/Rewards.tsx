@@ -14,10 +14,10 @@ import {
   normaliseEraPoints,
   prefillEraPoints,
 } from 'library/ValidatorList/ValidatorItem/Utils';
-import type { AnyJson } from '@polkadot-cloud/react/types';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 import { useTranslation } from 'react-i18next';
 import type { RewardProps, RewardsGraphProps } from './types';
+import type { AnyJson } from 'types';
 
 export const Rewards = ({ address, displayFor = 'default' }: RewardProps) => {
   const { t } = useTranslation('library');

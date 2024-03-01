@@ -1,19 +1,14 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { greaterThanZero, rmCommas, shuffle } from '@polkadot-cloud/utils';
+import { greaterThanZero, rmCommas, shuffle } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { ValidatorCommunity } from '@polkadot-cloud/assets/validators';
-import type { AnyApi, AnyJson, BondFor, Fn, Sync } from 'types';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
-import { useBonded } from 'contexts/Bonded';
-import { useNetworkMetrics } from 'contexts/NetworkMetrics';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import type { AnyApi, AnyJson, Fn, Sync } from 'types';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { MaxEraRewardPointsEras } from 'consts';
 import { useStaking } from 'contexts/Staking';
 import type {
@@ -22,10 +17,11 @@ import type {
   Identity,
   Validator,
   ValidatorAddresses,
-  ValidatorSuper,
+  SuperIdentity,
   ValidatorListEntry,
   ValidatorsContextInterface,
   ValidatorEraPointHistory,
+  ValidatorStatus,
 } from '../types';
 import {
   defaultAverageEraValidatorReward,
@@ -34,8 +30,8 @@ import {
   defaultEraPointsBoundaries,
 } from './defaults';
 import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
-import type { ValidatorEntry } from '@polkadot-cloud/assets/types';
-import { useErasPerDay } from 'library/Hooks/useErasPerDay';
+import { useErasPerDay } from 'hooks/useErasPerDay';
+import { IdentitiesController } from 'static/IdentitiesController';
 
 export const ValidatorsContext = createContext<ValidatorsContextInterface>(
   defaultValidatorsContext
@@ -49,14 +45,11 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     isReady,
     api,
     consts: { historyDepth },
+    networkMetrics: { earliestStoredSession },
   } = useApi();
-  const { erasPerDay, maxSupportedDays } = useErasPerDay();
+  const { activeEra } = useApi();
   const { stakers } = useStaking().eraStakers;
-  const { poolNominations } = useActivePools();
-  const { activeAccount } = useActiveAccounts();
-  const { activeEra, metrics } = useNetworkMetrics();
-  const { bondedAccounts, getAccountNominations } = useBonded();
-  const { earliestStoredSession } = metrics;
+  const { erasPerDay, maxSupportedDays } = useErasPerDay();
 
   // Stores all validator entries.
   const [validators, setValidators] = useState<Validator[]>([]);
@@ -71,7 +64,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Store validator super identity data.
   const [validatorSupers, setValidatorSupers] = useState<
-    Record<string, ValidatorSuper>
+    Record<string, SuperIdentity>
   >({});
 
   // Stores the currently active validator set.
@@ -87,17 +80,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Stores the average network commission rate.
   const [avgCommission, setAvgCommission] = useState<number>(0);
-
-  // Stores the user's nominated validators as list
-  const [nominated, setNominated] = useState<Validator[] | null>(null);
-
-  // Stores the nominated validators by the members pool's as list
-  const [poolNominated, setPoolNominated] = useState<Validator[] | null>(null);
-
-  // Stores a randomised validator community dataset.
-  const [validatorCommunity] = useState<ValidatorEntry[]>([
-    ...shuffle(ValidatorCommunity),
-  ]);
 
   // Track whether the validator list has been fetched.
   const [erasRewardPointsFetched, setErasRewawrdPointsFetched] =
@@ -253,33 +235,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     setValidatorEraPointsHistory(newEraPointsHistory);
   };
 
-  // Fetches the active account's nominees.
-  const fetchNominatedList = async () => {
-    if (!activeAccount) {
-      return;
-    }
-
-    // format to list format
-    const targetsFormatted = getAccountNominations(activeAccount).map(
-      (item) => ({ address: item })
-    );
-    // fetch preferences
-    const nominationsWithPrefs = await fetchValidatorPrefs(targetsFormatted);
-    setNominated(nominationsWithPrefs || []);
-  };
-
-  // Fetches the active pool's nominees.
-  const fetchPoolNominatedList = async () => {
-    // get raw nominations list
-    const n = poolNominations.targets;
-
-    // fetch preferences
-    const nominationsWithPrefs = await fetchValidatorPrefs(
-      n.map((item: string) => ({ address: item }))
-    );
-    setPoolNominated(nominationsWithPrefs || []);
-  };
-
   // Fetch validator entries and format the returning data.
   const getValidatorEntries = async () => {
     if (!isReady || !api) {
@@ -357,14 +312,12 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       avg
     );
     setAvgCommission(avg);
-    // Validators are shuffled before committed to state.
+    // NOTE: validators are shuffled before committed to state.
     setValidators(shuffle(validatorEntries));
 
     const addresses = validatorEntries.map(({ address }) => address);
-    const [identities, supers] = await Promise.all([
-      fetchValidatorIdentities(addresses),
-      fetchValidatorSupers(addresses),
-    ]);
+    const { identities, supers } = await IdentitiesController.fetch(addresses);
+
     setValidatorIdentities(identities);
     setValidatorSupers(supers);
     setValidatorsFetched('synced');
@@ -419,63 +372,15 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     return formatted;
   };
 
-  // Fetches validator identities.
-  const fetchValidatorIdentities = async (addresses: string[]) => {
-    if (!api) {
-      return {};
-    }
-
-    const identities: AnyApi[] = (
-      await api.query.identity.identityOf.multi(addresses)
-    ).map((identity) => identity.toHuman());
-
-    return Object.fromEntries(
-      Object.entries(
-        Object.fromEntries(identities.map((k, i) => [addresses[i], k]))
-      ).filter(([, v]) => v !== null)
-    );
-  };
-
-  // Fetch validator super accounts and their identities.
-  const fetchValidatorSupers = async (addresses: string[]) => {
-    if (!api) {
-      return {};
-    }
-
-    const supersRaw: AnyApi[] = (
-      await api.query.identity.superOf.multi(addresses)
-    ).map((superOf) => superOf.toHuman());
-
-    const supers = Object.fromEntries(
-      Object.entries(
-        Object.fromEntries(
-          supersRaw.map((k, i) => [
-            addresses[i],
-            {
-              superOf: k,
-            },
-          ])
-        )
-      ).filter(([, { superOf }]) => superOf !== null)
-    );
-
-    const superIdentities = (
-      await api.query.identity.identityOf.multi(
-        Object.values(supers).map(({ superOf }) => superOf[0])
-      )
-    ).map((superIdentity) => superIdentity.toHuman());
-
-    const supersWithIdentity = Object.fromEntries(
-      Object.entries(supers).map(([k, v]: AnyApi, i) => [
-        k,
-        {
-          ...v,
-          identity: superIdentities[i],
-        },
-      ])
-    );
-    return supersWithIdentity;
-  };
+  // Formats a list of addresses with validator preferences.
+  const formatWithPrefs = (addresses: string[]) =>
+    addresses.map((address) => ({
+      address,
+      prefs: validators.find((v) => v.address === address)?.prefs || {
+        blocked: false,
+        commission: 0,
+      },
+    }));
 
   // Gets era points for a validator
   const getValidatorPointsFromEras = (startEra: BigNumber, address: string) => {
@@ -527,11 +432,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     setErasRewawrdPointsFetched('synced');
   };
 
-  // Gets either `nominated` or `poolNominated` depending on bondFor, and injects the validator
-  // status into the entries.
-  const getNominated = (bondFor: BondFor) =>
-    bondFor === 'nominator' ? nominated : poolNominated;
-
   // Inject status into validator entries.
   const injectValidatorListData = (
     entries: Validator[]
@@ -540,8 +440,11 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       entries.map((entry) => {
         const inEra =
           stakers.find(({ address }) => address === entry.address) || false;
+
         let totalStake = new BigNumber(0);
+        let validatorStatus: ValidatorStatus = 'waiting';
         if (inEra) {
+          validatorStatus = 'active';
           const { others, own } = inEra;
           if (own) {
             totalStake = totalStake.plus(own);
@@ -553,9 +456,10 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         return {
           ...entry,
           totalStake,
-          validatorStatus: inEra ? 'active' : 'waiting',
+          validatorStatus,
         };
       }) || [];
+
     return injected;
   };
 
@@ -656,20 +560,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [isReady, earliestStoredSession]);
 
-  // Fetch active account's nominations in validator list format.
-  useEffectIgnoreInitial(() => {
-    if (isReady && activeAccount) {
-      fetchNominatedList();
-    }
-  }, [isReady, activeAccount, bondedAccounts]);
-
-  // Fetch active account's pool nominations in validator list format.
-  useEffectIgnoreInitial(() => {
-    if (isReady && poolNominations) {
-      fetchPoolNominatedList();
-    }
-  }, [isReady, poolNominations]);
-
   // Unsubscribe on network change and component unmount.
   useEffect(() => {
     if (sessionParaValidators.length) {
@@ -686,7 +576,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       value={{
         fetchValidatorPrefs,
         getValidatorPointsFromEras,
-        getNominated,
         injectValidatorListData,
         validators,
         validatorIdentities,
@@ -694,15 +583,13 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
         avgCommission,
         sessionValidators,
         sessionParaValidators,
-        nominated,
-        poolNominated,
-        validatorCommunity,
         erasRewardPoints,
         validatorsFetched,
         eraPointsBoundaries,
         validatorEraPointsHistory,
         erasRewardPointsFetched,
         averageEraValidatorReward,
+        formatWithPrefs,
       }}
     >
       {children}

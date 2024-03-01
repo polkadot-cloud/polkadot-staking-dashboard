@@ -1,7 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { LedgerAccount, VaultAccount } from '@polkadot-cloud/react/types';
+import type {
+  LedgerAccount,
+  VaultAccount,
+} from '@w3ux/react-connect-kit/types';
 
 export interface VaultAccountsContextInterface {
   vaultAccountExists: (address: string) => boolean;

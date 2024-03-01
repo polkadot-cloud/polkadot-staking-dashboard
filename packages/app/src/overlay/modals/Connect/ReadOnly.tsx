@@ -1,4 +1,4 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
@@ -7,19 +7,14 @@ import {
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  ButtonHelp,
-  ButtonMonoInvert,
-  ButtonSecondary,
-  Polkicon,
-} from '@polkadot-cloud/react';
+import { Polkicon } from '@w3ux/react-polkicon';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { AccountInput } from 'library/AccountInput';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import type { ExternalAccount } from '@polkadot-cloud/react/types';
+import type { ExternalAccount } from '@w3ux/react-connect-kit/types';
 import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
 import {
   ActionWithButton,
@@ -27,6 +22,9 @@ import {
   ManualAccountsWrapper,
 } from './Wrappers';
 import type { ListWithInputProps } from './types';
+import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
+import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
 
 export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');

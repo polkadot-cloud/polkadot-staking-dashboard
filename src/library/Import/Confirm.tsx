@@ -1,17 +1,18 @@
-// Copyright 2023 @paritytech/polkadot-live authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonMono, ButtonMonoInvert } from '@polkadotcloud/core-ui';
 import { registerSaEvent } from 'Utils';
-import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
-import { useOverlay } from 'contexts/Overlay';
-import { Identicon } from 'library/Identicon';
-import { ConfirmWrapper } from 'library/Import/Wrappers';
+import { Polkicon } from '@w3ux/react-polkicon';
 import { useTranslation } from 'react-i18next';
+import { usePrompt } from 'contexts/Prompt';
+import { ConfirmWrapper } from 'library/Import/Wrappers';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { useNetwork } from 'contexts/Network';
 import type { ConfirmProps } from './types';
 import { NotificationsController } from 'static/NotificationsController';
-import { ellipsisFn } from '@polkadot-cloud/utils';
+import { ellipsisFn } from '@w3ux/utils';
+import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
+import { ButtonMono } from 'kits/Buttons/ButtonMono';
 
 export const Confirm = ({
   address,
@@ -20,9 +21,9 @@ export const Confirm = ({
   source,
 }: ConfirmProps) => {
   const { t } = useTranslation('modals');
-  const { network } = useApi();
-  const { addToAccounts } = useConnect();
-  const { setStatus } = useOverlay();
+  const { network } = useNetwork();
+  const { setStatus } = usePrompt();
+  const { addOtherAccounts } = useOtherAccounts();
 
   const addAccountCallback = () => {
     NotificationsController.emit({
@@ -35,7 +36,7 @@ export const Confirm = ({
 
   return (
     <ConfirmWrapper>
-      <Identicon value={address} size={60} />
+      <Polkicon address={address} size="3rem" />
       <h3>{t('importAccount')}</h3>
       <h5>{address}</h5>
       <div className="footer">
@@ -45,9 +46,9 @@ export const Confirm = ({
           onClick={() => {
             const account = addHandler(address, index, addAccountCallback);
             if (account) {
-              addToAccounts([account]);
+              addOtherAccounts([account]);
               registerSaEvent(
-                `${network.name.toLowerCase()}_${source}_account_import`
+                `${network.toLowerCase()}_${source}_account_import`
               );
             }
             setStatus(0);

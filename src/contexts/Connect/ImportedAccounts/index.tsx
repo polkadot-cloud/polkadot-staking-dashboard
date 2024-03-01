@@ -1,15 +1,21 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ReactNode } from 'react';
 import { createContext, useCallback, useContext } from 'react';
 import type { MaybeAddress } from 'types';
-import type { ExternalAccount } from '@polkadot-cloud/react/types';
+import type {
+  ExternalAccount,
+  ImportedAccount,
+} from '@w3ux/react-connect-kit/types';
 import { ManualSigners } from 'consts';
-import { useExtensionAccounts } from '@polkadot-cloud/react/hooks';
+import { useExtensionAccounts } from '@w3ux/react-connect-kit';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { defaultImportedAccountsContext } from './defaults';
 import type { ImportedAccountsContextInterface } from './types';
 import { useOtherAccounts } from '../OtherAccounts';
+import { BalancesController } from 'static/BalancesController';
+import { useApi } from 'contexts/Api';
 
 export const ImportedAccountsContext =
   createContext<ImportedAccountsContextInterface>(
@@ -23,9 +29,28 @@ export const ImportedAccountsProvider = ({
 }: {
   children: ReactNode;
 }) => {
+  const { isReady } = useApi();
   const { otherAccounts } = useOtherAccounts();
   const { extensionAccounts } = useExtensionAccounts();
   const allAccounts = extensionAccounts.concat(otherAccounts);
+
+  // Stringify account addresses and account names to determine if they have changed. Ignore other properties including `signer` and `source`.
+  const shallowAccountStringify = (accounts: ImportedAccount[]) => {
+    const sorted = accounts.sort((a, b) => {
+      if (a.address < b.address) {
+        return -1;
+      }
+      if (a.address > b.address) {
+        return 1;
+      }
+      return 0;
+    });
+    return JSON.stringify(
+      sorted.map((account) => [account.address, account.name])
+    );
+  };
+
+  const allAccountsStringified = shallowAccountStringify(allAccounts);
 
   // Gets an account from `allAccounts`.
   //
@@ -33,7 +58,7 @@ export const ImportedAccountsProvider = ({
   const getAccount = useCallback(
     (who: MaybeAddress) =>
       allAccounts.find(({ address }) => address === who) || null,
-    [allAccounts]
+    [allAccountsStringified]
   );
 
   // Checks if an address is a read-only account.
@@ -48,7 +73,7 @@ export const ImportedAccountsProvider = ({
       }
       return false;
     },
-    [allAccounts]
+    [allAccountsStringified]
   );
 
   // Checks whether an account can sign transactions.
@@ -60,7 +85,7 @@ export const ImportedAccountsProvider = ({
         (account) =>
           account.address === address && account.source !== 'external'
       ) !== undefined,
-    [allAccounts]
+    [allAccountsStringified]
   );
 
   // Checks whether an account needs manual signing.
@@ -74,8 +99,15 @@ export const ImportedAccountsProvider = ({
       allAccounts.find(
         (a) => a.address === address && ManualSigners.includes(a.source)
       ) !== undefined,
-    [allAccounts]
+    [allAccountsStringified]
   );
+
+  // Keep accounts in sync with `BalancesController`.
+  useEffectIgnoreInitial(() => {
+    if (isReady) {
+      BalancesController.syncAccounts(allAccounts.map((a) => a.address));
+    }
+  }, [isReady, allAccountsStringified]);
 
   return (
     <ImportedAccountsContext.Provider

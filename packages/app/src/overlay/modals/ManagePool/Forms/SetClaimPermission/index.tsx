@@ -1,26 +1,24 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import {
-  ButtonSubmitInvert,
-  ModalPadding,
-  ModalWarnings,
-} from '@polkadot-cloud/react';
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useActivePools } from 'contexts/Pools/ActivePools';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput';
 import { Warning } from 'library/Form/Warning';
-import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useSignerWarnings } from 'hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import type { ClaimPermission } from 'contexts/Pools/PoolMemberships/types';
+import type { ClaimPermission } from 'contexts/Pools/types';
+import { useBalances } from 'contexts/Balances';
+import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 
 export const SetClaimPermission = ({
   setSection,
@@ -31,11 +29,13 @@ export const SetClaimPermission = ({
 }) => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
+  const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
   const { setModalStatus } = useOverlay().modal;
-  const { isOwner, isMember } = useActivePools();
+  const { isOwner, isMember } = useActivePool();
   const { getSignerWarnings } = useSignerWarnings();
-  const { membership } = usePoolMemberships();
+
+  const membership = getPoolMembership(activeAccount);
 
   // Valid to submit transaction.
   const [valid, setValid] = useState<boolean>(false);

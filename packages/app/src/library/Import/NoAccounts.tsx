@@ -4,7 +4,7 @@
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSecondary } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { NoAccountsWrapper } from './Wrappers';
 import type { FunctionComponent, ReactNode, SVGProps } from 'react';
 

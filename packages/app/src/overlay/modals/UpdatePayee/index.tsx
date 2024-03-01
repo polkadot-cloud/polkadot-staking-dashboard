@@ -1,18 +1,16 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
-import { isValidAddress } from '@polkadot-cloud/utils';
+import { isValidAddress } from '@w3ux/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
-import { useStaking } from 'contexts/Staking';
 import { Warning } from 'library/Form/Warning';
-import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
-import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { usePayeeConfig } from 'hooks/usePayeeConfig';
+import { useSignerWarnings } from 'hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { PayeeInput } from 'library/PayeeInput';
 import { SelectItems } from 'library/SelectItems';
@@ -20,22 +18,25 @@ import { SelectItem } from 'library/SelectItems/Item';
 import { SubmitTx } from 'library/SubmitTx';
 import type { MaybeAddress } from 'types';
 import { useTxMeta } from 'contexts/TxMeta';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useBalances } from 'contexts/Balances';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 
 export const UpdatePayee = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
-  const { staking } = useStaking();
-  const { activeAccount } = useActiveAccounts();
+  const { getPayee } = useBalances();
   const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
   const { getPayeeItems } = usePayeeConfig();
+  const { activeAccount } = useActiveAccounts();
   const { getSignerWarnings } = useSignerWarnings();
   const { setModalStatus, setModalResize } = useOverlay().modal;
 
   const controller = getBondedAccount(activeAccount);
-  const { payee } = staking;
+  const payee = getPayee(activeAccount);
 
   const DefaultSelected: PayeeConfig = {
     destination: null,

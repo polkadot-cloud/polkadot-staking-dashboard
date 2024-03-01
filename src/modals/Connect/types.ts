@@ -7,13 +7,19 @@ export interface ExtensionProps {
   meta: ExtensionMetaProps;
   size?: string;
   flag?: boolean;
+  inNova?: boolean;
 }
 
 export interface ExtensionMetaProps {
   id: string;
   title: string;
   status?: string;
-  website: string | [string, string];
+  website:
+    | string
+    | {
+        url: string;
+        text: string;
+      };
 }
 
 export interface ListWithInputProps {

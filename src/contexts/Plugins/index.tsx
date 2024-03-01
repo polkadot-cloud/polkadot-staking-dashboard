@@ -1,13 +1,18 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
+import { isNotZero, setStateWithRef } from '@w3ux/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
-import { PluginsList } from 'consts';
-import type { Plugin } from 'types';
+import type { Plugin } from 'config/plugins';
 import * as defaults from './defaults';
 import type { PluginsContextInterface } from './types';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { SubscanController } from 'static/SubscanController';
+import { getAvailablePlugins } from './Utils';
 
 export const PluginsContext = createContext<PluginsContextInterface>(
   defaults.defaultPluginsContext
@@ -16,24 +21,9 @@ export const PluginsContext = createContext<PluginsContextInterface>(
 export const usePlugins = () => useContext(PluginsContext);
 
 export const PluginsProvider = ({ children }: { children: ReactNode }) => {
-  // Get initial plugins from local storage.
-  const getAvailablePlugins = () => {
-    const localPlugins = localStorageOrDefault(
-      'plugins',
-      PluginsList,
-      true
-    ) as Plugin[];
-
-    // if fiat is disabled, remove binance_spot service
-    const DISABLE_FIAT = Number(import.meta.env.VITE_DISABLE_FIAT ?? 0);
-    if (DISABLE_FIAT && localPlugins.includes('binance_spot')) {
-      const index = localPlugins.indexOf('binance_spot');
-      if (index !== -1) {
-        localPlugins.splice(index, 1);
-      }
-    }
-    return localPlugins;
-  };
+  const { network } = useNetwork();
+  const { isReady, activeEra } = useApi();
+  const { activeAccount } = useActiveAccounts();
 
   // Store the currently active plugins.
   const [plugins, setPlugins] = useState<Plugin[]>(getAvailablePlugins());
@@ -56,6 +46,18 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
 
   // Check if a plugin is currently enabled.
   const pluginEnabled = (key: Plugin) => pluginsRef.current.includes(key);
+
+  // Reset payouts on Subscan plugin not enabled. Otherwise fetch payouts.
+  useEffectIgnoreInitial(() => {
+    if (!plugins.includes('subscan')) {
+      SubscanController.resetData();
+    } else if (isReady && isNotZero(activeEra.index)) {
+      SubscanController.network = network;
+      if (activeAccount) {
+        SubscanController.handleFetchPayouts(activeAccount);
+      }
+    }
+  }, [plugins.includes('subscan'), isReady, network, activeAccount, activeEra]);
 
   return (
     <PluginsContext.Provider

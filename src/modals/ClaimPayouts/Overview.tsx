@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ModalNotes, ModalPadding } from '@polkadot-cloud/react';
 import type { Ref } from 'react';
 import { Fragment, forwardRef } from 'react';
 import { usePayouts } from 'contexts/Payouts';
@@ -10,6 +9,8 @@ import { Item } from './Item';
 import { ContentWrapper } from './Wrappers';
 import type { OverviewProps } from './types';
 import { getTotalPayout } from './Utils';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
 
 export const Overview = forwardRef(
   ({ setSection, setPayouts }: OverviewProps, ref: Ref<HTMLDivElement>) => {

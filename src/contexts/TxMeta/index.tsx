@@ -1,19 +1,20 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { setStateWithRef } from '@polkadot-cloud/utils';
+import { setStateWithRef } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import { useBonded } from 'contexts/Bonded';
 import { useStaking } from 'contexts/Staking';
-import { useTransferOptions } from 'contexts/TransferOptions';
 import type { AnyJson, MaybeAddress } from 'types';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import * as defaults from './defaults';
 import type { TxMetaContextInterface } from './types';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import { useActiveBalances } from 'hooks/useActiveBalances';
+import { useApi } from 'contexts/Api';
 
 export const TxMetaContext = createContext<TxMetaContextInterface>(
   defaults.defaultTxMeta
@@ -22,11 +23,13 @@ export const TxMetaContext = createContext<TxMetaContextInterface>(
 export const useTxMeta = () => useContext(TxMetaContext);
 
 export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
+  const {
+    consts: { existentialDeposit },
+  } = useApi();
   const { getBondedAccount } = useBonded();
   const { activeProxy } = useActiveAccounts();
   const { getControllerNotImported } = useStaking();
   const { accountHasSigner } = useImportedAccounts();
-  const { getTransferOptions } = useTransferOptions();
 
   // Store the transaction fees for the transaction.
   const [txFees, setTxFees] = useState<BigNumber>(new BigNumber(0));
@@ -51,10 +54,17 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
   const [txSignature, setTxSignatureState] = useState<AnyJson>(null);
   const txSignatureRef = useRef(txSignature);
 
-  useEffectIgnoreInitial(() => {
-    const { balanceTxFees } = getTransferOptions(sender);
-    setNotEnoughFunds(balanceTxFees.minus(txFees).isLessThan(0));
-  }, [txFees, sender]);
+  // Store the pending nonces of transactions. NOTE: Ref is required as `pendingNonces` is read in
+  // callbacks.
+  const [pendingNonces, setPendingNonces] = useState<string[]>([]);
+  const pendingNoncesRef = useRef(pendingNonces);
+
+  // Listen to balance updates for the tx sender.
+  const { getBalance, getEdReserved } = useActiveBalances({
+    accounts: [sender],
+  });
+
+  const senderBalances = getBalance(sender);
 
   const resetTxFees = () => {
     setTxFees(new BigNumber(0));
@@ -117,6 +127,31 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
     return 'ok';
   };
 
+  const addPendingNonce = (nonce: string) => {
+    setStateWithRef(
+      [...pendingNoncesRef.current].concat(nonce),
+      setPendingNonces,
+      pendingNoncesRef
+    );
+  };
+
+  const removePendingNonce = (nonce: string) => {
+    setStateWithRef(
+      pendingNoncesRef.current.filter((n) => n !== nonce),
+      setPendingNonces,
+      pendingNoncesRef
+    );
+  };
+
+  // Refresh not enough fee status when txfees or sender changes.
+  useEffectIgnoreInitial(() => {
+    const edReserved = getEdReserved(sender, existentialDeposit);
+    const { free, frozen } = senderBalances;
+    const balanceforTxFees = free.minus(edReserved).minus(frozen);
+
+    setNotEnoughFunds(balanceforTxFees.minus(txFees).isLessThan(0));
+  }, [txFees, sender, senderBalances]);
+
   return (
     <TxMetaContext.Provider
       value={{
@@ -135,6 +170,9 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
         resetTxPayloads,
         getTxSignature,
         setTxSignature,
+        addPendingNonce,
+        removePendingNonce,
+        pendingNonces,
       }}
     >
       {children}

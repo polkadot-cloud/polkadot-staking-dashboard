@@ -1,5 +1,47 @@
 # Changelog
 
+
+## [1.1.7](https://github.com/paritytech/polkadot-staking-dashboard/compare/v1.1.6...v1.1.7) (2024-02-24)
+
+### Features
+
+* **refactor:** Add Structure kit ([#1963](https://github.com/paritytech/polkadot-staking-dashboard/issues/1963)) ([e6b181b](https://github.com/paritytech/polkadot-staking-dashboard/commit/e6b181be92c4abf706fd3b7bbe43bbf86abb6318))
+* **refactor:** buttons to project ([#1960](https://github.com/paritytech/polkadot-staking-dashboard/issues/1960)) ([24d365c](https://github.com/paritytech/polkadot-staking-dashboard/commit/24d365cc7bc4ec42ff7240a5fd7d0b24285b94d4))
+* **refactor:** use local themes ([#1953](https://github.com/paritytech/polkadot-staking-dashboard/issues/1953)) ([03e9f71](https://github.com/paritytech/polkadot-staking-dashboard/commit/03e9f7172a73d74b20fee0831bfd8fdc154f43c2))
+* **ux:** Check SubWallet Mobile and filter Subwallet extension ([#1983](https://github.com/paritytech/polkadot-staking-dashboard/issues/1983)) ([3700fad](https://github.com/paritytech/polkadot-staking-dashboard/commit/3700fad464318bb7befd75ff254921c085cb194d))
+
+
+## [1.1.6](https://github.com/paritytech/polkadot-staking-dashboard/compare/v1.1.5...v1.1.6) (2024-02-15)
+
+
+### Bug Fixes
+
+* fix manage nominations refresh ([#1950](https://github.com/paritytech/polkadot-staking-dashboard/issues/1950)) ([e09176b](https://github.com/paritytech/polkadot-staking-dashboard/commit/e09176bd74f4f78b1d8c2fb2779c77967a9f1c5d))
+* stringify nomination comparison ([#1952](https://github.com/paritytech/polkadot-staking-dashboard/issues/1952)) ([f454dbf](https://github.com/paritytech/polkadot-staking-dashboard/commit/f454dbf4ee14745c6791b2d5ec763ad0a77d6fc2))
+
+
+## [1.1.5](https://github.com/paritytech/polkadot-staking-dashboard/compare/v1.1.4...v1.1.5) (2024-02-14)
+
+### Features
+
+* **refactor:** Active pools and syncing state redesign ([#1929](https://github.com/paritytech/polkadot-staking-dashboard/issues/1929)) ([d2446e1](https://github.com/paritytech/polkadot-staking-dashboard/commit/d2446e1140fff47424984ec37e6233388b9f542b))
+* **refactor:** create pool accounts to hooks ([#1913](https://github.com/paritytech/polkadot-staking-dashboard/issues/1913)) ([42c0638](https://github.com/paritytech/polkadot-staking-dashboard/commit/42c0638f464662e741085966a886bb2fdf00c4b2))
+* **refactor:** Hooks to own folder ([#1914](https://github.com/paritytech/polkadot-staking-dashboard/issues/1914)) ([4e46904](https://github.com/paritytech/polkadot-staking-dashboard/commit/4e469041aeafcddd51e2abbc36d2a453529a4bff))
+* **refactor:** Menu refresh with mouse-based position ([#1945](https://github.com/paritytech/polkadot-staking-dashboard/issues/1945)) ([bf856d0](https://github.com/paritytech/polkadot-staking-dashboard/commit/bf856d0610a7dc2df844440ea895496e39666148))
+* **refactor:** Misc project tidy ups ([#1933](https://github.com/paritytech/polkadot-staking-dashboard/issues/1933)) ([c905258](https://github.com/paritytech/polkadot-staking-dashboard/commit/c905258ddc5587b41febfa4266fd388bf00ee75e))
+* **refactor:** nominatons to BalancesController ([78c8300](https://github.com/paritytech/polkadot-staking-dashboard/commit/78c8300dd1046a261dfda888f9d5ac4d0c916e20))
+* **refactor:** persist Subscan results to class ([#1942](https://github.com/paritytech/polkadot-staking-dashboard/issues/1942)) ([b6312e6](https://github.com/paritytech/polkadot-staking-dashboard/commit/b6312e60c62daef57f4fe14aaa0cc04db03eeaba))
+* **refactor:** Pool memberships to active balances ([#1915](https://github.com/paritytech/polkadot-staking-dashboard/issues/1915)) ([764a880](https://github.com/paritytech/polkadot-staking-dashboard/commit/764a880e0640416a5ad88b69d2e84887624b8f11))
+* **refactor:** Syncing improvements ([#1935](https://github.com/paritytech/polkadot-staking-dashboard/issues/1935)) ([61645b1](https://github.com/paritytech/polkadot-staking-dashboard/commit/61645b17cb8efb0a1a72532930583ab2c671c1af))
+* **refactor:** Use identities hook ([#1916](https://github.com/paritytech/polkadot-staking-dashboard/issues/1916)) ([f55f70f](https://github.com/paritytech/polkadot-staking-dashboard/commit/f55f70f165a26615ad3046f30ad4ca50ca62ba96))
+* **ux:** View & copy pool addresses ([#1941](https://github.com/paritytech/polkadot-staking-dashboard/issues/1941)) ([850c0d9](https://github.com/paritytech/polkadot-staking-dashboard/commit/850c0d9d6c8d8f481a4a5ca59616b7b0ce34b14f))
+
+
+### Bug Fixes
+
+* stricter member count fetching ([#1911](https://github.com/paritytech/polkadot-staking-dashboard/issues/1911)) ([c453dd1](https://github.com/paritytech/polkadot-staking-dashboard/commit/c453dd1e07016b46425938a26615138d361819de))
+
+
 ## [1.1.4](https://github.com/paritytech/polkadot-staking-dashboard/compare/v1.1.3...v1.1.4) (2024-01-28)
 
 
@@ -91,6 +133,14 @@
 * system read only accounts fix ([29b8052](https://github.com/paritytech/polkadot-staking-dashboard/commit/29b8052ee2e7605b967e2f684fbb316f824eabd5))
 * use ledger square logo ([#1593](https://github.com/paritytech/polkadot-staking-dashboard/issues/1593)) ([badcac5](https://github.com/paritytech/polkadot-staking-dashboard/commit/badcac5c639855519d99f72f63d2efa1465e05eb))
 * **ux:** NaN on whole value with format ([021f90b](https://github.com/paritytech/polkadot-staking-dashboard/commit/021f90b138cf109bfa69a8bcef9ac8bcf173f496))
+
+## [1.1.1](https://github.com/paritytech/polkadot-staking-dashboard/compare/v1.1.0...v1.1.1) (2023-10-31)
+
+### Bug Fixes
+
+* Fixes an issue where extensions would not be discovered due to a hanging asynchronous function when Enkrypt, which injects its own window.ethereum object, was enabled.
+* Misc theming fix.
+
 
 ## [1.1.0](https://github.com/paritytech/polkadot-staking-dashboard/compare/v1.0.9...v1.1.0) (2023-10-30)
 

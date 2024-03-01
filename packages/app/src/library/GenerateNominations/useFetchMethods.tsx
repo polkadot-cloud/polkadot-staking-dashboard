@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { shuffle } from '@polkadot-cloud/utils';
+import { shuffle } from '@w3ux/utils';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { Validator } from 'contexts/Validators/types';

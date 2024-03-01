@@ -1,25 +1,23 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import {
-  ButtonSubmitInvert,
-  ModalPadding,
-  ModalWarnings,
-} from '@polkadot-cloud/react';
 import type { Dispatch, FormEvent, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Warning } from 'library/Form/Warning';
-import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useSignerWarnings } from 'hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 
 export const RenamePool = ({
   setSection,
@@ -32,11 +30,11 @@ export const RenamePool = ({
   const { api } = useApi();
   const { setModalStatus } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
-  const { isOwner, selectedActivePool } = useActivePools();
-  const { bondedPools, poolsMetaData } = useBondedPools();
+  const { isOwner, activePool } = useActivePool();
   const { getSignerWarnings } = useSignerWarnings();
+  const { bondedPools, poolsMetaData } = useBondedPools();
 
-  const poolId = selectedActivePool?.id;
+  const poolId = activePool?.id;
 
   // Valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
@@ -47,7 +45,7 @@ export const RenamePool = ({
   // Determine current pool metadata and set in state.
   useEffect(() => {
     const pool = bondedPools.find(
-      ({ addresses }) => addresses.stash === selectedActivePool?.addresses.stash
+      ({ addresses }) => addresses.stash === activePool?.addresses.stash
     );
     if (pool) {
       setMetadata(u8aToString(u8aUnwrapBytes(poolsMetaData[Number(pool.id)])));
@@ -97,7 +95,7 @@ export const RenamePool = ({
           </ModalWarnings>
         ) : null}
         <input
-          className="textbox"
+          className="underline"
           style={{ width: '100%' }}
           placeholder={t('poolName')}
           type="text"

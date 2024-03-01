@@ -1,34 +1,32 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import {
-  ActionItem,
-  ButtonSubmitInvert,
-  ModalPadding,
-  ModalWarnings,
-} from '@polkadot-cloud/react';
-import { planckToUnit, rmCommas } from '@polkadot-cloud/utils';
+import { planckToUnit, rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { ForwardedRef } from 'react';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { useFavoritePools } from 'contexts/Pools/FavoritePools';
 import { Warning } from 'library/Form/Warning';
-import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useSignerWarnings } from 'hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ContentWrapper } from './Wrappers';
 import type { FormsProps } from './types';
+import { useBalances } from 'contexts/Balances';
+import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
+import { ActionItem } from 'library/ActionItem';
 
 export const Forms = forwardRef(
   (
@@ -40,19 +38,20 @@ export const Forms = forwardRef(
     const {
       networkData: { units, unit },
     } = useNetwork();
+    const { activePool } = useActivePool();
     const { activeAccount } = useActiveAccounts();
-    const { removeFavorite: removeFavoritePool } = usePoolsConfig();
-    const { membership } = usePoolMemberships();
-    const { selectedActivePool } = useActivePools();
-    const { removeFromBondedPools } = useBondedPools();
     const { removePoolMember } = usePoolMembers();
+    const { removeFromBondedPools } = useBondedPools();
     const {
       setModalStatus,
       config: { options },
     } = useOverlay().modal;
     const { getBondedAccount } = useBonded();
+    const { getPoolMembership } = useBalances();
     const { getSignerWarnings } = useSignerWarnings();
+    const { removeFavorite: removeFavoritePool } = useFavoritePools();
 
+    const membership = getPoolMembership(activeAccount);
     const { bondFor, poolClosure } = options || {};
     const { historyDepth } = consts;
     const controller = getBondedAccount(activeAccount);
@@ -76,7 +75,7 @@ export const Forms = forwardRef(
         tx = api.tx.staking.rebond(unlock.value.toNumber() || 0);
       } else if (task === 'withdraw' && isStaking) {
         tx = api.tx.staking.withdrawUnbonded(historyDepth.toString());
-      } else if (task === 'withdraw' && isPooling && selectedActivePool) {
+      } else if (task === 'withdraw' && isPooling && activePool) {
         tx = api.tx.nominationPools.withdrawUnbonded(
           activeAccount,
           historyDepth.toString()
@@ -95,8 +94,8 @@ export const Forms = forwardRef(
       callbackInBlock: () => {
         // if pool is being closed, remove from static lists
         if (poolClosure) {
-          removeFavoritePool(selectedActivePool?.addresses?.stash ?? '');
-          removeFromBondedPools(selectedActivePool?.id ?? 0);
+          removeFavoritePool(activePool?.addresses?.stash ?? '');
+          removeFromBondedPools(activePool?.id ?? 0);
         }
 
         // if no more bonded funds from pool, remove from poolMembers list

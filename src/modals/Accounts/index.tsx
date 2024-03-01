@@ -1,24 +1,10 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
-import {
-  ActionItem,
-  ButtonPrimaryInvert,
-  ButtonText,
-  ModalCustomHeader,
-  ModalPadding,
-} from '@polkadot-cloud/react';
 import { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
-import {
-  useExtensions,
-  useEffectIgnoreInitial,
-  useOverlay,
-} from '@polkadot-cloud/react/hooks';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useProxies } from 'contexts/Proxies';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -31,22 +17,33 @@ import type {
   AccountNominatingAndInPool,
   AccountNotStaking,
 } from './types';
-import type { ImportedAccount } from '@polkadot-cloud/react/types';
+import type { ImportedAccount } from '@w3ux/react-connect-kit/types';
+import { useActiveBalances } from 'hooks/useActiveBalances';
+import type { MaybeAddress } from 'types';
+import { useTransferOptions } from 'contexts/TransferOptions';
+import BigNumber from 'bignumber.js';
+import { useApi } from 'contexts/Api';
+import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { ButtonText } from 'kits/Buttons/ButtonText';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalCustomHeader } from 'kits/Overlay/structure/ModalCustomHeader';
+import { ActionItem } from 'library/ActionItem';
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');
-  const { balances } = useBalances();
+  const {
+    consts: { existentialDeposit },
+  } = useApi();
   const { getDelegates } = useProxies();
   const { bondedAccounts } = useBonded();
-  const { ledgers, getLocks } = useBalances();
-  const { extensionsStatus } = useExtensions();
-  const { memberships } = usePoolMemberships();
   const {
     replaceModal,
     status: modalStatus,
     setModalResize,
   } = useOverlay().modal;
   const { accounts } = useImportedAccounts();
+  const { getFeeReserve } = useTransferOptions();
   const { activeAccount, setActiveAccount, setActiveProxy } =
     useActiveAccounts();
 
@@ -54,10 +51,31 @@ export const Accounts = () => {
   const [localAccounts, setLocalAccounts] =
     useState<ImportedAccount[]>(accounts);
 
+  // Listen to balance updates for entire accounts list.
+  const { getLocks, getBalance, getEdReserved, getPoolMembership } =
+    useActiveBalances({
+      accounts: localAccounts.map(({ address }) => address),
+    });
+
+  // Calculate transferrable balance of an address.
+  const getTransferrableBalance = (address: MaybeAddress) => {
+    // Get fee reserve from local storage.
+    const feeReserve = getFeeReserve(address);
+    // Get amount required for existential deposit.
+    const edReserved = getEdReserved(address, existentialDeposit);
+    // Gets actual balance numbers.
+    const { free, frozen } = getBalance(address);
+    // Minus reserves and frozen balance from free to get transferrable.
+    return BigNumber.max(
+      free.minus(edReserved).minus(feeReserve).minus(frozen),
+      0
+    );
+  };
+
   const stashes: string[] = [];
   // accumulate imported stash accounts
   for (const { address } of localAccounts) {
-    const locks = getLocks(address);
+    const { locks } = getLocks(address);
 
     // account is a stash if they have an active `staking` lock
     if (locks.find(({ id }) => id === 'staking')) {
@@ -77,7 +95,15 @@ export const Accounts = () => {
     const isStash = stashes[stashes.indexOf(address)] ?? null;
     const delegates = getDelegates(address);
 
-    const poolMember = memberships.find((m) => m.address === address) ?? null;
+    // Inject transferrable balance into delegates list.
+    if (delegates?.delegates) {
+      delegates.delegates = delegates?.delegates.map((d) => ({
+        ...d,
+        transferrableBalance: getTransferrableBalance(d.delegate),
+      }));
+    }
+
+    const poolMember = getPoolMembership(address);
 
     // Check if nominating.
     if (
@@ -136,7 +162,7 @@ export const Accounts = () => {
   useEffect(() => setLocalAccounts(accounts), [accounts]);
 
   // Resize if modal open upon state changes.
-  useEffectIgnoreInitial(() => {
+  useEffect(() => {
     if (modalStatus === 'open') {
       setModalResize();
     }
@@ -144,9 +170,10 @@ export const Accounts = () => {
     activeAccount,
     accounts,
     bondedAccounts,
-    balances,
-    ledgers,
-    extensionsStatus,
+    nominating,
+    inPool,
+    nominatingAndPool,
+    notStaking,
   ]);
 
   return (
@@ -199,7 +226,10 @@ export const Accounts = () => {
           <ActionItem text={t('nominatingAndInPool')} />
           {nominatingAndPool.map(({ address, delegates }, i) => (
             <Fragment key={`acc_nominating_and_pool_${i}`}>
-              <AccountButton address={address} />
+              <AccountButton
+                transferrableBalance={getTransferrableBalance(address)}
+                address={address}
+              />
               {address && (
                 <Delegates delegator={address} delegates={delegates} />
               )}
@@ -214,7 +244,10 @@ export const Accounts = () => {
           <ActionItem text={t('nominating')} />
           {nominating.map(({ address, delegates }, i) => (
             <Fragment key={`acc_nominating_${i}`}>
-              <AccountButton address={address} />
+              <AccountButton
+                transferrableBalance={getTransferrableBalance(address)}
+                address={address}
+              />
               {address && (
                 <Delegates delegator={address} delegates={delegates} />
               )}
@@ -229,7 +262,10 @@ export const Accounts = () => {
           <ActionItem text={t('inPool')} />
           {inPool.map(({ address, delegates }, i) => (
             <Fragment key={`acc_in_pool_${i}`}>
-              <AccountButton address={address} />
+              <AccountButton
+                transferrableBalance={getTransferrableBalance(address)}
+                address={address}
+              />
               {address && (
                 <Delegates delegator={address} delegates={delegates} />
               )}
@@ -244,7 +280,10 @@ export const Accounts = () => {
           <ActionItem text={t('notStaking')} />
           {notStaking.map(({ address, delegates }, i) => (
             <Fragment key={`acc_not_staking_${i}`}>
-              <AccountButton address={address} />
+              <AccountButton
+                transferrableBalance={getTransferrableBalance(address)}
+                address={address}
+              />
               {address && (
                 <Delegates delegator={address} delegates={delegates} />
               )}

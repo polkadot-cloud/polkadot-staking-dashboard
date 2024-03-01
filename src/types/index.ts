@@ -3,13 +3,15 @@
 
 import type { FC, FunctionComponent, SVGProps } from 'react';
 import type { Theme } from 'contexts/Themes/types';
-import type { ExtensionInjected } from '@polkadot-cloud/react/types';
+import type { ExtensionInjected } from '@w3ux/react-connect-kit/types';
 import type BigNumber from 'bignumber.js';
 import type { NotificationItem } from 'static/NotificationsController/types';
 
 declare global {
   interface Window {
+    walletExtension?: AnyJson;
     injectedWeb3?: Record<string, ExtensionInjected>;
+    opera?: boolean;
   }
   interface DocumentEventMap {
     notification: CustomEvent<NotificationItem>;

@@ -1,27 +1,27 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import {
-  useEffectIgnoreInitial,
-  useExtensions,
-  useExtensionAccounts,
-} from '@polkadot-cloud/react/hooks';
-import {
   getLocalLedgerAccounts,
   getLocalVaultAccounts,
 } from 'contexts/Hardware/Utils';
-import type { AnyFunction, MaybeAddress, NetworkName } from 'types';
-import { setStateWithRef } from '@polkadot-cloud/utils';
+import type { MaybeAddress, NetworkName } from 'types';
+import { setStateWithRef } from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import type { ImportedAccount } from '@polkadot-cloud/react/types';
 import { getActiveAccountLocal } from '../Utils';
 import type { OtherAccountsContextInterface } from './types';
 import { defaultOtherAccountsContext } from './defaults';
 import { getLocalExternalAccounts } from '../ExternalAccounts/Utils';
 import type { ExternalAccountImportType } from '../ExternalAccounts/types';
+import { isCustomEvent } from 'static/utils';
+import { useExternalAccounts } from '../ExternalAccounts';
+import { useEventListener } from 'usehooks-ts';
+import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit';
+import type { ImportedAccount } from '@w3ux/react-connect-kit/types';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 
 export const OtherAccountsContext =
   createContext<OtherAccountsContextInterface>(defaultOtherAccountsContext);
@@ -38,6 +38,7 @@ export const OtherAccountsProvider = ({
     networkData: { ss58 },
   } = useNetwork();
   const { checkingInjectedWeb3 } = useExtensions();
+  const { addExternalAccount } = useExternalAccounts();
   const { extensionAccountsSynced } = useExtensionAccounts();
   const { activeAccount, setActiveAccount } = useActiveAccounts();
 
@@ -51,26 +52,13 @@ export const OtherAccountsProvider = ({
   // different sources.
   const otherAccountsRef = useRef(otherAccounts);
 
-  // Store unsubscribe handlers for connected extensions.
-  const unsubs = useRef<Record<string, AnyFunction>>({});
-
   // Store whether all accounts have been synced.
   const [accountsInitialised, setAccountsInitialised] =
     useState<boolean>(false);
 
   // Handle forgetting of an imported other account.
   const forgetOtherAccounts = (forget: ImportedAccount[]) => {
-    // Unsubscribe and remove unsub from context ref.
     if (forget.length) {
-      for (const { address } of forget) {
-        if (otherAccountsRef.current.find((a) => a.address === address)) {
-          const unsub = unsubs.current[address];
-          if (unsub) {
-            unsub();
-            delete unsubs.current[address];
-          }
-        }
-      }
       // Remove forgotten accounts from context state.
       setStateWithRef(
         [...otherAccountsRef.current].filter(
@@ -139,13 +127,6 @@ export const OtherAccountsProvider = ({
     );
   };
 
-  // Unsubscribe all account subscriptions.
-  const unsubscribe = () => {
-    Object.values(unsubs.current).forEach((unsub) => {
-      unsub();
-    });
-  };
-
   // Add other accounts to context state.
   const addOtherAccounts = (account: ImportedAccount[]) => {
     setStateWithRef(
@@ -178,14 +159,29 @@ export const OtherAccountsProvider = ({
     }
   };
 
+  // Handle new external account custom events.
+  const newExternalAccountCallback = (e: Event) => {
+    if (isCustomEvent(e)) {
+      const result = addExternalAccount(e.detail.address, 'system');
+      if (result) {
+        addOrReplaceOtherAccount(result.account, result.type);
+      }
+    }
+  };
+
+  // Listen for new external account events.
+  const documentRef = useRef<Document>(document);
+  useEventListener(
+    'new-external-account',
+    newExternalAccountCallback,
+    documentRef
+  );
+
   // Re-sync other accounts on network switch. Waits for `injectedWeb3` to be injected.
   useEffect(() => {
     if (!checkingInjectedWeb3) {
-      // unsubscribe from all accounts and reset state.
-      unsubscribe();
       setStateWithRef([], setOtherAccounts, otherAccountsRef);
     }
-    return () => unsubscribe();
   }, [network, checkingInjectedWeb3]);
 
   // Once extensions are fully initialised, fetch accounts from other sources.
@@ -219,7 +215,7 @@ export const OtherAccountsProvider = ({
         importLocalOtherAccounts,
         forgetOtherAccounts,
         accountsInitialised,
-        otherAccounts: otherAccountsRef.current,
+        otherAccounts,
       }}
     >
       {children}

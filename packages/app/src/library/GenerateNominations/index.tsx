@@ -1,4 +1,4 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
@@ -13,25 +13,25 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { useUnstaking } from 'library/Hooks/useUnstaking';
+import { useUnstaking } from 'hooks/useUnstaking';
 import { SelectableWrapper } from 'library/List';
 import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
 import { ValidatorList } from 'library/ValidatorList';
-import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
+import { Wrapper } from './Wrapper';
 import { useStaking } from 'contexts/Staking';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { Validator } from 'contexts/Validators/types';
-import { ButtonMonoInvert, ButtonPrimaryInvert } from '@polkadot-cloud/react';
 import { Subheading } from 'pages/Nominate/Wrappers';
 import { FavoritesPrompt } from 'canvas/ManageNominations/Prompts/FavoritesPrompt';
 import { usePrompt } from 'contexts/Prompt';
 import { useFetchMehods } from './useFetchMethods';
 import type { AddNominationsType, GenerateNominationsProps } from './types';
-import type { AnyFunction } from '@polkadot-cloud/react/types';
-import type { AnyJson } from 'types';
+import type { AnyJson, AnyFunction } from 'types';
+import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
 
 export const GenerateNominations = ({
   setters = [],
@@ -77,7 +77,8 @@ export const GenerateNominations = ({
   // Update nominations on account switch, or if `defaultNominations` change.
   useEffect(() => {
     if (
-      nominations !== defaultNominations.nominations &&
+      JSON.stringify(nominations) !==
+        JSON.stringify(defaultNominations.nominations) &&
       defaultNominationsCount > 0
     ) {
       setNominations([...(defaultNominations.nominations || [])]);

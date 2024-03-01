@@ -243,6 +243,7 @@
     "total": "总共",
     "transactionRejectedPending": "交易被拒后等待处理中",
     "tryAgain": "请重试一次",
+    "txVersionNotSupported": "不支持交易版本。 请更新 Ledger 应用程序.",
     "unbond": "解除质押",
     "unbondAll": "解除所有质押",
     "unbondErrorBelowMinimum": "无法取消质押.您的债券资金低于{{bond}} {{unit}}",

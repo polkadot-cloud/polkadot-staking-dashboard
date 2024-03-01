@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { setStateWithRef } from '@polkadot-cloud/utils';
+import { setStateWithRef } from '@w3ux/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -29,7 +29,7 @@ export const LedgerHardwareProvider = ({
   children: ReactNode;
 }) => {
   const { t } = useTranslation('modals');
-  const { specVersion } = useApi().chainState.version;
+  const { transactionVersion } = useApi().chainState.version;
 
   // Store whether a Ledger device task is in progress.
   const [isExecuting, setIsExecutingState] = useState<boolean>(false);
@@ -97,7 +97,7 @@ export const LedgerHardwareProvider = ({
       setIsExecuting(false);
       resetFeedback();
 
-      if (result.minor < specVersion) {
+      if (result.major < transactionVersion) {
         runtimesInconsistent.current = true;
       }
       setIntegrityChecked(true);
@@ -225,6 +225,13 @@ export const LedgerHardwareProvider = ({
           message: t('openAppOnLedger', { appName }),
           helpKey: 'Open App On Ledger',
           code: 'TransactionRejected',
+        });
+        break;
+      // Occurs when submitted extrinsic(s) are not supported.
+      case 'txVersionNotSupported':
+        setStatusFeedback({
+          message: t('txVersionNotSupported'),
+          code: 'TransactionVersionNotSupported',
         });
         break;
       // Occurs when a user rejects a transaction.

@@ -1,18 +1,18 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit, rmCommas } from '@polkadot-cloud/utils';
+import { planckToUnit, rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
-import { usePoolCommission } from 'library/Hooks/usePoolCommission';
-import { StatsHead } from 'library/StatsHead';
+import { usePoolCommission } from 'hooks/usePoolCommission';
+import { Header } from 'library/Announcements/Header';
 import { useNetwork } from 'contexts/Network';
 import { Announcements } from './Announcements';
-import { Wrapper } from './Wrappers';
-import type { PoolStatLabel } from 'library/StatsHead/types';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import type { PoolStatLabel } from 'library/Announcements/types';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { Wrapper } from 'library/Announcements/Wrappers';
 
 export const PoolStats = () => {
   const { t } = useTranslation('pages');
@@ -21,11 +21,11 @@ export const PoolStats = () => {
     networkData: { units, unit },
   } = useNetwork();
   const { getCurrentCommission } = usePoolCommission();
-  const { selectedActivePool, selectedPoolMemberCount } = useActivePools();
+  const { activePool, activePoolMemberCount } = useActivePool();
 
-  const poolId = selectedActivePool?.id || 0;
+  const poolId = activePool?.id || 0;
 
-  const { state, points } = selectedActivePool?.bondedPool || {};
+  const { state, points } = activePool?.bondedPool || {};
   const currentCommission = getCurrentCommission(poolId);
 
   const bonded = planckToUnit(
@@ -65,13 +65,13 @@ export const PoolStats = () => {
   items.push(
     {
       label: t('pools.poolMembers'),
-      value: `${selectedPoolMemberCount}`,
+      value: `${activePoolMemberCount}`,
       button: {
         text: t('pools.browseMembers'),
         onClick: () => {
           openCanvas({ key: 'PoolMembers', size: 'xl' });
         },
-        disabled: selectedPoolMemberCount === 0,
+        disabled: activePoolMemberCount === 0,
       },
     },
     {
@@ -86,7 +86,7 @@ export const PoolStats = () => {
         <h3>{t('pools.poolStats')}</h3>
       </CardHeaderWrapper>
       <Wrapper>
-        <StatsHead items={items} />
+        <Header items={items} />
         <Announcements />
       </Wrapper>
     </CardWrapper>

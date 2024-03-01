@@ -1,35 +1,42 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { rmCommas } from '@polkadot-cloud/utils';
-import BigNumber from 'bignumber.js';
-import { createContext, useContext, useEffect, useState } from 'react';
-import { NetworkList, NetworksWithPagedRewards } from 'config/networks';
+import { setStateWithRef } from '@w3ux/utils';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import {
-  FallbackBondingDuration,
-  FallbackEpochDuration,
-  FallbackExpectedBlockTime,
-  FallbackMaxElectingVoters,
-  FallbackMaxNominations,
-  FallbackSessionsPerEra,
-} from 'consts';
+  NetworkList,
+  NetworksWithPagedRewards,
+  PagedRewardsStartEra,
+} from 'config/networks';
+
 import type {
+  APIActiveEra,
   APIChainState,
   APIConstants,
   APIContextInterface,
+  APINetworkMetrics,
+  APIPoolsConfig,
   APIProviderProps,
-} from 'contexts/Api/types';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+  APIStakingMetrics,
+} from './types';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import {
+  defaultConsts,
+  defaultActiveEra,
   defaultApiContext,
   defaultChainState,
-  defaultConsts,
+  defaultPoolsConfig,
+  defaultNetworkMetrics,
+  defaultStakingMetrics,
 } from './defaults';
-import { APIController } from 'static/APController';
+import { APIController } from 'static/APIController';
 import { isCustomEvent } from 'static/utils';
-import type { ApiStatus } from 'static/APController/types';
+import type { ApiStatus } from 'static/APIController/types';
 import { NotificationsController } from 'static/NotificationsController';
 import { useTranslation } from 'react-i18next';
+import { useEventListener } from 'usehooks-ts';
+import BigNumber from 'bignumber.js';
+import { SyncController } from 'static/SyncController';
 
 export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 
@@ -89,6 +96,27 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Store network constants.
   const [consts, setConsts] = useState<APIConstants>(defaultConsts);
 
+  // Store network metrics in state.
+  const [networkMetrics, setNetworkMetrics] = useState<APINetworkMetrics>(
+    defaultNetworkMetrics
+  );
+  const networkMetricsRef = useRef(networkMetrics);
+
+  // Store active era in state.
+  const [activeEra, setActiveEra] = useState<APIActiveEra>(defaultActiveEra);
+  const activeEraRef = useRef(activeEra);
+
+  // Store pool config in state.
+  const [poolsConfig, setPoolsConfig] =
+    useState<APIPoolsConfig>(defaultPoolsConfig);
+  const poolsConfigRef = useRef(poolsConfig);
+
+  // Store staking metrics in state.
+  const [stakingMetrics, setStakingMetrics] = useState<APIStakingMetrics>(
+    defaultStakingMetrics
+  );
+  const stakingMetricsRef = useRef(stakingMetrics);
+
   // Fetch chain state. Called once `provider` has been initialised.
   const onApiReady = async () => {
     const { api } = APIController;
@@ -110,98 +138,41 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     }
 
     // Assume chain state is correct and bootstrap network consts.
-    getConsts();
+    bootstrapNetworkConfig();
   };
 
   // Connection callback. Called once `apiStatus` is `ready`.
-  const getConsts = async () => {
-    const { api } = APIController;
+  const bootstrapNetworkConfig = async () => {
+    const {
+      consts: newConsts,
+      networkMetrics: newNetworkMetrics,
+      activeEra: newActiveEra,
+      poolsConfig: newPoolsConfig,
+      stakingMetrics: newStakingMetrics,
+    } = await APIController.bootstrapNetworkConfig();
 
-    const allPromises = [
-      api.consts.staking.bondingDuration,
-      api.consts.staking.maxNominations,
-      api.consts.staking.sessionsPerEra,
-      api.consts.electionProviderMultiPhase.maxElectingVoters,
-      api.consts.babe.expectedBlockTime,
-      api.consts.babe.epochDuration,
-      api.consts.balances.existentialDeposit,
-      api.consts.staking.historyDepth,
-      api.consts.fastUnstake.deposit,
-      api.consts.nominationPools.palletId,
-    ];
-
-    // DEPRECATION: Paged Rewards
-    //
-    // Fetch `maxExposurePageSize` instead of `maxNominatorRewardedPerValidator` for networks that
-    // have paged rewards.
-    if (NetworksWithPagedRewards.includes(network)) {
-      allPromises.push(api.consts.staking.maxExposurePageSize);
-    } else {
-      allPromises.push(api.consts.staking.maxNominatorRewardedPerValidator);
-    }
-
-    // fetch constants.
-    const result = await Promise.all(allPromises);
-
-    // format constants.
-    const bondDuration = result[0]
-      ? new BigNumber(rmCommas(result[0].toString()))
-      : FallbackBondingDuration;
-
-    const maxNominations = result[1]
-      ? new BigNumber(rmCommas(result[1].toString()))
-      : FallbackMaxNominations;
-
-    const sessionsPerEra = result[2]
-      ? new BigNumber(rmCommas(result[2].toString()))
-      : FallbackSessionsPerEra;
-
-    const maxElectingVoters = result[3]
-      ? new BigNumber(rmCommas(result[3].toString()))
-      : FallbackMaxElectingVoters;
-
-    const expectedBlockTime = result[4]
-      ? new BigNumber(rmCommas(result[4].toString()))
-      : FallbackExpectedBlockTime;
-
-    const epochDuration = result[5]
-      ? new BigNumber(rmCommas(result[5].toString()))
-      : FallbackEpochDuration;
-
-    const existentialDeposit = result[6]
-      ? new BigNumber(rmCommas(result[6].toString()))
-      : new BigNumber(0);
-
-    const historyDepth = result[7]
-      ? new BigNumber(rmCommas(result[7].toString()))
-      : new BigNumber(0);
-
-    const fastUnstakeDeposit = result[8]
-      ? new BigNumber(rmCommas(result[8].toString()))
-      : new BigNumber(0);
-
-    const poolsPalletId = result[9] ? result[9].toU8a() : new Uint8Array(0);
-
-    const maxExposurePageSize = result[10]
-      ? new BigNumber(rmCommas(result[10].toString()))
-      : NetworkList[network].maxExposurePageSize;
-
-    setConsts({
-      bondDuration,
-      maxNominations,
-      sessionsPerEra,
-      maxExposurePageSize,
-      historyDepth,
-      maxElectingVoters,
-      epochDuration,
-      expectedBlockTime,
-      poolsPalletId,
-      existentialDeposit,
-      fastUnstakeDeposit,
-    });
+    // Populate all config state.
+    setConsts(newConsts);
+    setStateWithRef(newNetworkMetrics, setNetworkMetrics, networkMetricsRef);
+    const { index, start } = newActiveEra;
+    setStateWithRef(
+      { index: new BigNumber(index), start: new BigNumber(start) },
+      setActiveEra,
+      activeEraRef
+    );
+    setStateWithRef(newPoolsConfig, setPoolsConfig, poolsConfigRef);
+    setStateWithRef(newStakingMetrics, setStakingMetrics, stakingMetricsRef);
 
     // API is now ready to be used.
     setApiStatus('ready');
+
+    // Set `initialization` syncing to complete.
+    SyncController.dispatch('initialization', 'complete');
+
+    // Initialise subscriptions.
+    APIController.subscribeNetworkMetrics();
+    APIController.subscribePoolsConfig();
+    APIController.subscribeActiveEra();
   };
 
   const onApiDisconnected = (err?: string) => {
@@ -248,6 +219,108 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     }
   };
 
+  // Handle new network metrics updates.
+  const handleNetworkMetricsUpdate = (e: Event): void => {
+    if (isCustomEvent(e)) {
+      const { networkMetrics: newNetworkMetrics } = e.detail;
+      // Only update if values have changed.
+      if (
+        JSON.stringify(newNetworkMetrics) !==
+        JSON.stringify(networkMetricsRef.current)
+      ) {
+        setStateWithRef(
+          {
+            ...networkMetricsRef.current,
+            ...newNetworkMetrics,
+          },
+          setNetworkMetrics,
+          networkMetricsRef
+        );
+      }
+    }
+  };
+
+  // Handle new active era updates.
+  const handleActiveEraUpdate = (e: Event): void => {
+    if (isCustomEvent(e)) {
+      let { activeEra: newActiveEra } = e.detail;
+      const { index, start } = newActiveEra;
+
+      newActiveEra = {
+        index: new BigNumber(index),
+        start: new BigNumber(start),
+      };
+
+      // Only update if values have changed.
+      if (
+        JSON.stringify(newActiveEra) !== JSON.stringify(activeEraRef.current)
+      ) {
+        setStateWithRef(
+          {
+            index: new BigNumber(index),
+            start: new BigNumber(start),
+          },
+          setActiveEra,
+          activeEraRef
+        );
+      }
+    }
+  };
+
+  // Handle new pools config updates.
+  const handlePoolsConfigUpdate = (e: Event): void => {
+    if (isCustomEvent(e)) {
+      const { poolsConfig: newPoolsConfig } = e.detail;
+      // Only update if values have changed.
+      if (
+        JSON.stringify(newPoolsConfig) !==
+        JSON.stringify(poolsConfigRef.current)
+      ) {
+        setStateWithRef(
+          {
+            ...poolsConfigRef.current,
+            ...newPoolsConfig,
+          },
+          setPoolsConfig,
+          poolsConfigRef
+        );
+      }
+    }
+  };
+
+  // Handle new staking metrics updates.
+  const handleStakingMetricsUpdate = (e: Event): void => {
+    if (isCustomEvent(e)) {
+      const { stakingMetrics: newStakingMetrics } = e.detail;
+      // Only update if values have changed.
+      if (
+        JSON.stringify(newStakingMetrics) !==
+        JSON.stringify(stakingMetricsRef.current)
+      ) {
+        setStateWithRef(
+          {
+            ...stakingMetricsRef.current,
+            ...newStakingMetrics,
+          },
+          setStakingMetrics,
+          stakingMetricsRef
+        );
+      }
+    }
+  };
+
+  // Given an era, determine whether paged rewards are active.
+  const isPagedRewardsActive = (era: BigNumber): boolean => {
+    const networkStartEra = PagedRewardsStartEra[network];
+    if (!networkStartEra) {
+      return false;
+    }
+    return (
+      NetworksWithPagedRewards.includes(network) &&
+      era.isGreaterThanOrEqualTo(networkStartEra)
+    );
+  };
+
   // Handle an initial api connection.
   useEffect(() => {
     if (!APIController.provider) {
@@ -276,7 +349,20 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     if (network !== APIController.network) {
       setConsts(defaultConsts);
       setChainState(defaultChainState);
+      setStateWithRef(
+        defaultNetworkMetrics,
+        setNetworkMetrics,
+        networkMetricsRef
+      );
+      setStateWithRef(defaultActiveEra, setActiveEra, activeEraRef);
+      setStateWithRef(defaultPoolsConfig, setPoolsConfig, poolsConfigRef);
+      setStateWithRef(
+        defaultStakingMetrics,
+        setStakingMetrics,
+        stakingMetricsRef
+      );
     }
+
     // Reconnect API instance.
     APIController.initialize(network, isLightClient ? 'sc' : 'ws', rpcEndpoint);
   }, [isLightClient, network]);
@@ -291,11 +377,29 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     };
   }, []);
 
+  // Add event listener for subscription updates.
+  const documentRef = useRef<Document>(document);
+
+  useEventListener(
+    'new-network-metrics',
+    handleNetworkMetricsUpdate,
+    documentRef
+  );
+
+  useEventListener('new-active-era', handleActiveEraUpdate, documentRef);
+
+  useEventListener('new-pools-config', handlePoolsConfigUpdate, documentRef);
+
+  useEventListener(
+    'new-staking-metrics',
+    handleStakingMetricsUpdate,
+    documentRef
+  );
+
   return (
     <APIContext.Provider
       value={{
         api: APIController.api,
-        consts,
         chainState,
         apiStatus,
         isLightClient,
@@ -303,6 +407,12 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         rpcEndpoint,
         setRpcEndpoint,
         isReady: apiStatus === 'ready',
+        consts,
+        networkMetrics,
+        activeEra,
+        poolsConfig,
+        stakingMetrics,
+        isPagedRewardsActive,
       }}
     >
       {children}

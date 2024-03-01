@@ -1,28 +1,26 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import {
-  ActionItem,
-  ButtonSubmitInvert,
-  ModalNotes,
-  ModalPadding,
-  ModalWarnings,
-} from '@polkadot-cloud/react';
-import { greaterThanZero, planckToUnit, rmCommas } from '@polkadot-cloud/utils';
+import { greaterThanZero, planckToUnit, rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Warning } from 'library/Form/Warning';
-import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useSignerWarnings } from 'hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
+import { ActionItem } from 'library/ActionItem';
+import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
 
 export const ClaimCommission = ({
   setSection,
@@ -36,11 +34,12 @@ export const ClaimCommission = ({
   } = useNetwork();
   const { setModalStatus } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
-  const { isOwner, selectedActivePool } = useActivePools();
+  const { isOwner, activePool } = useActivePool();
   const { getSignerWarnings } = useSignerWarnings();
-  const poolId = selectedActivePool?.id;
+
+  const poolId = activePool?.id;
   const pendingCommission = new BigNumber(
-    rmCommas(selectedActivePool?.rewardPool?.totalCommissionPending || '0')
+    rmCommas(activePool?.rewardPool?.totalCommissionPending || '0')
   );
 
   // valid to submit transaction
@@ -48,7 +47,7 @@ export const ClaimCommission = ({
 
   useEffect(() => {
     setValid(isOwner() && greaterThanZero(pendingCommission));
-  }, [selectedActivePool, pendingCommission]);
+  }, [activePool, pendingCommission]);
 
   // tx to submit
   const getTx = () => {

@@ -1,22 +1,23 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ActionItem, ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
-import { greaterThanZero, planckToUnit } from '@polkadot-cloud/utils';
-import BigNumber from 'bignumber.js';
+import { greaterThanZero, planckToUnit } from '@w3ux/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Warning } from 'library/Form/Warning';
-import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useSignerWarnings } from 'hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
+import { ActionItem } from 'library/ActionItem';
 
 export const ClaimReward = () => {
   const { t } = useTranslation('modals');
@@ -24,28 +25,26 @@ export const ClaimReward = () => {
   const {
     networkData: { units, unit },
   } = useNetwork();
-  const { activeAccount } = useActiveAccounts();
   const { notEnoughFunds } = useTxMeta();
-  const { selectedActivePool } = useActivePools();
+  const { activeAccount } = useActiveAccounts();
   const { getSignerWarnings } = useSignerWarnings();
+  const { activePool, pendingPoolRewards } = useActivePool();
   const {
     setModalStatus,
     config: { options },
     setModalResize,
   } = useOverlay().modal;
 
-  let { pendingRewards } = selectedActivePool || {};
-  pendingRewards = pendingRewards ?? new BigNumber(0);
   const { claimType } = options;
 
   // ensure selected payout is valid
   useEffect(() => {
-    if (pendingRewards?.isGreaterThan(0)) {
+    if (pendingPoolRewards?.isGreaterThan(0)) {
       setValid(true);
     } else {
       setValid(false);
     }
-  }, [selectedActivePool]);
+  }, [activePool]);
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
@@ -80,7 +79,7 @@ export const ClaimReward = () => {
     submitExtrinsic.proxySupported
   );
 
-  if (!greaterThanZero(pendingRewards)) {
+  if (!greaterThanZero(pendingPoolRewards)) {
     warnings.push(`${t('noRewards')}`);
   }
 
@@ -102,7 +101,7 @@ export const ClaimReward = () => {
         ) : null}
         <ActionItem
           text={`${t('claim')} ${`${planckToUnit(
-            pendingRewards,
+            pendingPoolRewards,
             units
           )} ${unit}`}`}
         />

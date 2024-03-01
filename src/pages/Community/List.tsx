@@ -1,19 +1,19 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PageRow } from '@polkadot-cloud/react';
+import { PageRow } from 'kits/Structure/PageRow';
 import { useEffect, useState } from 'react';
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { useNetwork } from 'contexts/Network';
 import { Item } from './Item';
 import { ItemsWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
-import type { ValidatorEntry } from '@polkadot-cloud/assets/types';
+import type { ValidatorEntry } from '@w3ux/validator-assets';
+import { useCommunity } from 'contexts/Community';
 
 export const List = () => {
   const { network } = useNetwork();
-  const { validatorCommunity } = useValidators();
   const { scrollPos } = useCommunitySections();
+  const { validatorCommunity } = useCommunity();
 
   const [entityItems, setEntityItems] = useState<ValidatorEntry[]>(
     validatorCommunity.filter((v) => v.validators[network] !== undefined)

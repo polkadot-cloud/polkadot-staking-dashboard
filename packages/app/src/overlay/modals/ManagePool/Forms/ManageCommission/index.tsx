@@ -1,35 +1,32 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import {
-  ActionItem,
-  ButtonHelp,
-  ButtonSubmitInvert,
-  ModalPadding,
-  ModalWarnings,
-} from '@polkadot-cloud/react';
 import BigNumber from 'bignumber.js';
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { Warning } from 'library/Form/Warning';
-import { useBatchCall } from 'library/Hooks/useBatchCall';
-import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useBatchCall } from 'hooks/useBatchCall';
+import { useSignerWarnings } from 'hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import 'rc-slider/assets/index.css';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { usePoolCommission } from './provider';
 import { CommissionCurrent } from './CommissionCurrent';
 import { MaxCommission } from './MaxCommission';
 import { ChangeRate } from './ChangeRate';
+import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
+import { ActionItem } from 'library/ActionItem';
 
 export const ManageCommission = ({
   setSection,
@@ -40,13 +37,15 @@ export const ManageCommission = ({
 }) => {
   const { t } = useTranslation('modals');
   const { openHelp } = useHelp();
-  const { api } = useApi();
-  const { stats } = usePoolsConfig();
+  const {
+    api,
+    poolsConfig: { globalMaxCommission },
+  } = useApi();
   const { newBatchCall } = useBatchCall();
   const { activeAccount } = useActiveAccounts();
   const { setModalStatus } = useOverlay().modal;
+  const { isOwner, activePool } = useActivePool();
   const { getSignerWarnings } = useSignerWarnings();
-  const { isOwner, selectedActivePool } = useActivePools();
   const { getBondedPool, updateBondedPools } = useBondedPools();
   const {
     getInitial,
@@ -57,8 +56,8 @@ export const ManageCommission = ({
     resetAll,
     isUpdated,
   } = usePoolCommission();
-  const { globalMaxCommission } = stats;
-  const poolId = selectedActivePool?.id || 0;
+
+  const poolId = activePool?.id || 0;
   const bondedPool = getBondedPool(poolId);
 
   // Get currently set commission values.

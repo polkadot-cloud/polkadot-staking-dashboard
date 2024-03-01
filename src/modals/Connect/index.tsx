@@ -1,25 +1,10 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import {
-  ActionItem,
-  ButtonPrimaryInvert,
-  ButtonTab,
-  ModalCustomHeader,
-  ModalFixedTitle,
-  ModalMotionThreeSection,
-  ModalPadding,
-  ModalSection,
-} from '@polkadot-cloud/react';
-import { ExtensionsArray } from '@polkadot-cloud/assets/extensions';
+import extensions from '@w3ux/extension-assets';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  useExtensions,
-  useEffectIgnoreInitial,
-  useOverlay,
-} from '@polkadot-cloud/react/hooks';
 import { Close } from 'library/Modal/Close';
 import { SelectItems } from 'library/SelectItems';
 import type { AnyFunction } from 'types';
@@ -29,19 +14,53 @@ import { Proxies } from './Proxies';
 import { ReadOnly } from './ReadOnly';
 import { Vault } from './Vault';
 import { ExtensionsWrapper } from './Wrappers';
+import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { ButtonTab } from 'kits/Buttons/ButtonTab';
+import { mobileCheck } from './Utils';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { ActionItem } from 'library/ActionItem';
+import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle';
+import { ModalCustomHeader } from 'kits/Overlay/structure/ModalCustomHeader';
+import { ModalSection } from 'kits/Overlay/structure/ModalSection';
+import { ModalMotionThreeSection } from 'kits/Overlay/structure/ModalMotionThreeSection';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { useExtensions } from '@w3ux/react-connect-kit';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 
 export const Connect = () => {
   const { t } = useTranslation('modals');
   const { extensionsStatus } = useExtensions();
   const { replaceModal, setModalHeight, modalMaxHeight } = useOverlay().modal;
 
+  // Whether the app is running on mobile.
+  const isMobile = mobileCheck();
+
+  // Whether the app is running in Nova Wallet.
   const inNova = !!window?.walletExtension?.isNovaWallet || false;
 
-  // If in Nova Wallet, only display it in extension options, otherwise, remove developer tool extensions from web options.
-  const developerTools = ['polkadot-js'];
-  const web = !inNova
-    ? ExtensionsArray.filter((a) => !developerTools.includes(a.id))
-    : ExtensionsArray.filter((a) => a.id === 'polkadot-js');
+  // Whether the app is running in a SubWallet Mobile.
+  const inSubWallet = !!window.injectedWeb3?.['subwallet-js'] && isMobile;
+
+  // Whether the app is running on of mobile wallets.
+  const inMobileWallet = inNova || inSubWallet;
+
+  // If in SubWallet Mobile, keep `subwallet-js` only.
+  const extensionsAsArray = Object.entries(extensions).map(([key, value]) => ({
+    id: key,
+    ...value,
+  }));
+
+  const web = inSubWallet
+    ? extensionsAsArray.filter((a) => a.id === 'subwallet-js')
+    : // If in Nova Wallet, fetch nova wallet metadata and replace its id with `polkadot-js`.
+      inNova
+      ? extensionsAsArray
+          .filter((a) => a.id === 'nova-wallet')
+          .map((a) => ({ ...a, id: 'polkadot-js' }))
+      : // Otherwise, keep all extensions except `polkadot-js`.
+        extensionsAsArray.filter(
+          (a) => a.id !== 'polkadot-js' && a.category === 'web-extension'
+        );
 
   const installed = web.filter((a) =>
     Object.keys(extensionsStatus).find((key) => key === a.id)
@@ -114,9 +133,9 @@ export const Connect = () => {
     </>
   );
 
-  // Display hardware before extensions.
-  // If in Nova Wallet, display extensions before hardware.
-  const ConnectCombinedJSX = !inNova ? (
+  // Display hardware before extensions. If in Nova Wallet or SubWallet Mobile, display extension
+  // before hardware.
+  const ConnectCombinedJSX = !inMobileWallet ? (
     <>
       {ConnectHardwareJSX}
       {ConnectExtensionsJSX}
@@ -190,19 +209,19 @@ export const Connect = () => {
         <div className="section">
           <ModalPadding horizontalOnly ref={homeRef}>
             {ConnectCombinedJSX}
-            {!inNova && (
+            {!inMobileWallet && (
               <>
                 <ActionItem text={t('developerTools')} />
                 <ExtensionsWrapper>
                   <SelectItems layout="two-col">
-                    {ExtensionsArray.filter((a) => a.id === 'polkadot-js').map(
-                      (extension, i) => (
+                    {extensionsAsArray
+                      .filter((a) => a.id === 'polkadot-js')
+                      .map((extension, i) => (
                         <Extension
                           key={`extension_item_${i}`}
                           meta={extension}
                         />
-                      )
-                    )}
+                      ))}
                   </SelectItems>
                 </ExtensionsWrapper>
               </>

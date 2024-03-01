@@ -6,7 +6,7 @@ import type { Balance } from 'contexts/Balances/types';
 import type {
   ExtensionAccount,
   ExternalAccount,
-} from '@polkadot-cloud/react/types';
+} from '@w3ux/react-connect-kit/types';
 import type { BondFor, MaybeAddress } from 'types';
 
 export interface ExtensionAccountItem extends ExtensionAccount {
