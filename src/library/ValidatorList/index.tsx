@@ -3,7 +3,7 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { isNotZero } from '@polkadot-cloud/utils';
+import { isNotZero } from '@w3ux/utils';
 import { motion } from 'framer-motion';
 import type { FormEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
@@ -22,7 +22,7 @@ import { SearchInput } from 'library/List/SearchInput';
 import { Selectable } from 'library/List/Selectable';
 import { ValidatorItem } from 'library/ValidatorList/ValidatorItem';
 import type { Validator, ValidatorListEntry } from 'contexts/Validators/types';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';

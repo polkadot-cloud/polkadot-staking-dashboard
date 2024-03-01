@@ -7,7 +7,7 @@ import { createContext, useContext, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import type { MaybeAddress } from 'types';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';

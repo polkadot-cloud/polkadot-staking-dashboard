@@ -7,14 +7,14 @@ import {
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Polkicon } from '@polkadot-cloud/react';
+import { Polkicon } from '@w3ux/react-polkicon';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { AccountInput } from 'library/AccountInput';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import type { ExternalAccount } from '@polkadot-cloud/react/types';
+import type { ExternalAccount } from '@w3ux/react-connect-kit/types';
 import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
 import {
   ActionWithButton,

@@ -1,10 +1,9 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ModalPadding } from '@polkadot-cloud/react';
-import { unitToPlanck } from '@polkadot-cloud/utils';
+import { unitToPlanck } from '@w3ux/utils';
 import { useApi } from 'contexts/Api';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
@@ -13,6 +12,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useEffect } from 'react';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 
 export const BalanceTest = () => {
   const { api } = useApi();

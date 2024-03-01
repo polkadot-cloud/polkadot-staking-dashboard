@@ -2,12 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheck, faCheckDouble } from '@fortawesome/free-solid-svg-icons';
-import { Odometer } from '@polkadot-cloud/react';
-import {
-  greaterThanZero,
-  minDecimalPlaces,
-  planckToUnit,
-} from '@polkadot-cloud/utils';
+import { Odometer } from '@w3ux/react-odometer';
+import { greaterThanZero, minDecimalPlaces, planckToUnit } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';
@@ -18,7 +14,7 @@ import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { usePrices } from 'hooks/usePrices';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -248,53 +244,51 @@ export const BalanceChart = () => {
               </Bar>
             </div>
           ) : null}
-          {greaterThanZero(fundsReserved) ? (
-            <div
-              style={{
-                flex: 0,
-                minWidth: '12.5rem',
-                maxWidth: '12.5rem',
-                flexBasis: '50%',
-              }}
-            >
-              <Legend className="end">
-                <LegendItem
-                  label=""
-                  button={
-                    <ButtonTertiary
-                      text={t('overview.reserveBalance')}
-                      onClick={() =>
-                        openModal({ key: 'UpdateReserve', size: 'sm' })
-                      }
-                      iconRight={
-                        syncing
-                          ? undefined
-                          : !feeReserve.isZero() && !edReserved.isZero()
-                            ? faCheckDouble
-                            : feeReserve.isZero() && edReserved.isZero()
-                              ? undefined
-                              : faCheck
-                      }
-                      iconTransform="shrink-1"
-                      disabled={
-                        !activeAccount ||
-                        syncing ||
-                        !accountHasSigner(activeAccount)
-                      }
-                    />
-                  }
-                />
-              </Legend>
-              <Bar>
-                <BarSegment
-                  dataClass="d4"
-                  widthPercent={100}
-                  flexGrow={1}
-                  label={`${fundsReserved.decimalPlaces(3).toFormat()} ${unit}`}
-                />
-              </Bar>
-            </div>
-          ) : null}
+          <div
+            style={{
+              flex: 0,
+              minWidth: '12.5rem',
+              maxWidth: '12.5rem',
+              flexBasis: '50%',
+            }}
+          >
+            <Legend className="end">
+              <LegendItem
+                label=""
+                button={
+                  <ButtonTertiary
+                    text={t('overview.reserveBalance')}
+                    onClick={() =>
+                      openModal({ key: 'UpdateReserve', size: 'sm' })
+                    }
+                    iconRight={
+                      syncing
+                        ? undefined
+                        : !feeReserve.isZero() && !edReserved.isZero()
+                          ? faCheckDouble
+                          : feeReserve.isZero() && edReserved.isZero()
+                            ? undefined
+                            : faCheck
+                    }
+                    iconTransform="shrink-1"
+                    disabled={
+                      !activeAccount ||
+                      syncing ||
+                      !accountHasSigner(activeAccount)
+                    }
+                  />
+                }
+              />
+            </Legend>
+            <Bar>
+              <BarSegment
+                dataClass="d4"
+                widthPercent={100}
+                flexGrow={1}
+                label={`${fundsReserved.decimalPlaces(3).toFormat()} ${unit}`}
+              />
+            </Bar>
+          </div>
         </section>
       </BarChartWrapper>
     </>

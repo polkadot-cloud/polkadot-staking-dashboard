@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { registerSaEvent } from 'Utils';
-import { ellipsisFn, setStateWithRef } from '@polkadot-cloud/utils';
+import { ellipsisFn, setStateWithRef } from '@w3ux/utils';
 import type { FC } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
@@ -12,15 +12,13 @@ import type {
   LedgerResponse,
 } from 'contexts/Hardware/Ledger/types';
 import type { AnyJson } from 'types';
-import {
-  useEffectIgnoreInitial,
-  useOverlay,
-} from '@polkadot-cloud/react/hooks';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useTranslation } from 'react-i18next';
 import { Manage } from './Manage';
 import { Splash } from './Splash';
 import { NotificationsController } from 'static/NotificationsController';
+import { useOverlay } from 'kits/Overlay/Provider';
 
 export const ImportLedger: FC = () => {
   const { t } = useTranslation('modals');

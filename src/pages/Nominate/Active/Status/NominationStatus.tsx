@@ -16,7 +16,7 @@ import { useUnstaking } from 'hooks/useUnstaking';
 import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';
 import { registerSaEvent } from 'Utils';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useNetwork } from 'contexts/Network';

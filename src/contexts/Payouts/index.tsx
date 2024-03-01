@@ -7,7 +7,7 @@ import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import type { AnyApi, AnyJson, Sync } from 'types';
 import Worker from 'workers/stakers?worker';
-import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
+import { rmCommas, setStateWithRef } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';

@@ -8,7 +8,7 @@ import { useStaking } from 'contexts/Staking';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'hooks/useUnstaking';
 import { StatBoxList } from 'library/StatBoxList';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Nominations } from 'library/Nominations';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';

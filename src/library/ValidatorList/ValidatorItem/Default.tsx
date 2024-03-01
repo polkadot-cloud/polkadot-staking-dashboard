@@ -12,7 +12,7 @@ import { useMenu } from 'contexts/Menu';
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator';
 import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { usePlugins } from 'contexts/Plugins';
 import type { AnyJson } from 'types';
 import { Quartile } from 'library/ListItem/Labels/Quartile';

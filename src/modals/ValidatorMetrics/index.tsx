@@ -1,8 +1,8 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ModalPadding, Polkicon } from '@polkadot-cloud/react';
-import { ellipsisFn, planckToUnit } from '@polkadot-cloud/utils';
+import { Polkicon } from '@w3ux/react-polkicon';
+import { ellipsisFn, planckToUnit } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +16,7 @@ import { useSize } from 'hooks/useSize';
 import { Title } from 'library/Modal/Title';
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { StatusLabel } from 'library/StatusLabel';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { PluginLabel } from 'library/PluginLabel';
 import { useNetwork } from 'contexts/Network';
 import type { AnyJson } from 'types';
@@ -24,6 +24,7 @@ import { SubscanController } from 'static/SubscanController';
 import { usePlugins } from 'contexts/Plugins';
 import { useApi } from 'contexts/Api';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');

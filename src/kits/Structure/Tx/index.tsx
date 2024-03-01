@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { ReactElement } from 'react';
 import type { DisplayFor } from 'types';
 import { Wrapper } from './Wrapper';
-import { appendOrEmpty } from '@polkadot-cloud/utils';
+import { appendOrEmpty } from '@w3ux/utils';
 
 export interface TxProps {
   // whether there is margin on top.

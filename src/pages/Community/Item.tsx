@@ -10,7 +10,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Suspense, lazy, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { ItemWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
@@ -25,9 +25,9 @@ export const Item = ({ item, actionable }: ItemProps) => {
     bio,
     name,
     email,
-    twitter,
+    x,
     website,
-    thumbnail,
+    icon,
     validators: entityAllValidators,
   } = item;
   const validatorCount = entityAllValidators[network]?.length ?? 0;
@@ -55,7 +55,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
   };
 
   const Thumbnail = useMemo(
-    () => lazy(() => import(`../../config/validators/${thumbnail}.tsx`)),
+    () => lazy(() => import(`../../config/validators/${icon}.tsx`)),
     []
   );
 
@@ -128,16 +128,16 @@ export const Item = ({ item, actionable }: ItemProps) => {
                 />
               </button>
             )}
-            {twitter !== undefined && (
+            {x !== undefined && (
               <button
                 type="button"
                 className="active"
                 onClick={() => {
-                  window.open(`https://twitter.com/${twitter}`, '_blank');
+                  window.open(`https://twitter.com/${x}`, '_blank');
                 }}
               >
                 <FontAwesomeIcon icon={faTwitter} className="icon-left" />
-                <h4>{twitter}</h4>
+                <h4>{x}</h4>
                 <FontAwesomeIcon
                   icon={faExternalLink}
                   className="icon-right"

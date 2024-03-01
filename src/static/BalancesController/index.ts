@@ -1,11 +1,10 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { VoidFn } from '@polkadot-cloud/react/types';
-import { rmCommas } from '@polkadot-cloud/utils';
+import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { APIController } from 'static/APIController';
-import type { AnyApi, MaybeAddress } from 'types';
+import type { AnyApi, MaybeAddress, VoidFn } from 'types';
 import type {
   ActiveBalance,
   Balances,

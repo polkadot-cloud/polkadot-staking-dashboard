@@ -4,7 +4,7 @@
 import { registerLastVisited, registerSaEvent } from 'Utils';
 import { usePrompt } from 'contexts/Prompt';
 import { Disclaimer } from 'library/NetworkBar/Disclaimer';
-import { extractUrlValue } from '@polkadot-cloud/utils';
+import { extractUrlValue } from '@w3ux/utils';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useTranslation } from 'react-i18next';
@@ -36,7 +36,7 @@ import { Page } from 'Page';
 import { Body } from 'kits/Structure/Body';
 import { Main } from 'kits/Structure/Main';
 
-export const RouterInner = () => {
+const RouterInner = () => {
   const { t } = useTranslation();
   const { network } = useNetwork();
   const { pathname, search } = useLocation();

@@ -1,14 +1,14 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ModalPadding } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import LanguageSVG from 'img/language.svg?react';
 import { Title } from 'library/Modal/Title';
 import { availableLanguages } from 'locale';
 import { changeLanguage } from 'locale/utils';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { ContentWrapper, LocaleButton } from './Wrapper';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 
 export const ChooseLanguage = () => {
   const { i18n, t } = useTranslation('modals');

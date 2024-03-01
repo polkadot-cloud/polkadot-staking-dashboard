@@ -3,13 +3,13 @@
 
 import { faBolt, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { PageRow } from 'kits/Structure/PageRow';
-import { isNotZero } from '@polkadot-cloud/utils';
+import { isNotZero } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'hooks/useUnstaking';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useSyncing } from 'hooks/useSyncing';

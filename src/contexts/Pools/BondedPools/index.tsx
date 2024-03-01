@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { rmCommas, setStateWithRef, shuffle } from '@polkadot-cloud/utils';
+import { rmCommas, setStateWithRef, shuffle } from '@w3ux/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import type {
@@ -14,10 +14,9 @@ import type {
   PoolNominations,
 } from './types';
 import { useStaking } from 'contexts/Staking';
-import type { AnyApi, MaybeAddress, Sync } from 'types';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import type { AnyApi, AnyJson, MaybeAddress, Sync } from 'types';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';
-import type { AnyJson } from '@polkadot-cloud/react/types';
 import { useApi } from '../../Api';
 import { defaultBondedPoolsContext } from './defaults';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';

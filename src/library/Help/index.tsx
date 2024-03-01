@@ -2,12 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import {
-  CanvasContainer,
-  ModalContent,
-  CanvasScroll,
-} from '@polkadot-cloud/react';
-import { camelize } from '@polkadot-cloud/utils';
+import { camelize } from '@w3ux/utils';
 import { useAnimation } from 'framer-motion';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -24,6 +19,9 @@ import { Definition } from './Items/Definition';
 import { External } from './Items/External';
 import { ActiveDefinition } from './Items/ActiveDefinition';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { CanvasContainer } from 'kits/Overlay/structure/CanvasContainer';
+import { CanvasScroll } from 'kits/Overlay/structure/CanvasScroll';
+import { ModalContent } from 'kits/Overlay/structure/ModalContent';
 
 export const Help = () => {
   const { t, i18n } = useTranslation('help');

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { registerSaEvent } from 'Utils';
-import { isValidAddress } from '@polkadot-cloud/utils';
+import { isValidAddress } from '@w3ux/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useVaultAccounts } from 'contexts/Hardware/Vault/VaultAccounts';

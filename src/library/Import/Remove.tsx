@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { registerSaEvent } from 'Utils';
-import { Polkicon } from '@polkadot-cloud/react';
+import { Polkicon } from '@w3ux/react-polkicon';
 import { useTranslation } from 'react-i18next';
 import { usePrompt } from 'contexts/Prompt';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useNetwork } from 'contexts/Network';
 import type { RemoveProps } from './types';
-import { ellipsisFn } from '@polkadot-cloud/utils';
+import { ellipsisFn } from '@w3ux/utils';
 import { NotificationsController } from 'static/NotificationsController';
 import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
 import { ButtonMono } from 'kits/Buttons/ButtonMono';

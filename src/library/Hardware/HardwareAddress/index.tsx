@@ -10,7 +10,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { FormEvent } from 'react';
 import { useState } from 'react';
-import { ellipsisFn, unescape } from '@polkadot-cloud/utils';
+import { ellipsisFn, unescape } from '@w3ux/utils';
 import { Wrapper } from './Wrapper';
 import { ButtonText } from '../../../kits/Buttons/ButtonText';
 import type { HardwareAddressProps } from './types';

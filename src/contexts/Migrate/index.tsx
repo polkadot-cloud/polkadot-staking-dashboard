@@ -5,9 +5,9 @@ import type { ReactNode } from 'react';
 import { createContext, useState } from 'react';
 import { AppVersion } from 'consts';
 import { useApi } from 'contexts/Api';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
-import { localStorageOrDefault } from '@polkadot-cloud/utils';
-import type { ExternalAccount } from '@polkadot-cloud/react/types';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import { localStorageOrDefault } from '@w3ux/utils';
+import type { ExternalAccount } from '@w3ux/react-connect-kit/types';
 import { useSyncing } from 'hooks/useSyncing';
 
 export const MigrateContext = createContext<null>(null);

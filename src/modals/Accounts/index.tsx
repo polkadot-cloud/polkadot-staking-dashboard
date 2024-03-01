@@ -2,19 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
-import {
-  ActionItem,
-  ModalCustomHeader,
-  ModalPadding,
-} from '@polkadot-cloud/react';
 import { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
-import {
-  useExtensions,
-  useEffectIgnoreInitial,
-  useOverlay,
-} from '@polkadot-cloud/react/hooks';
 import { useProxies } from 'contexts/Proxies';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -27,7 +17,7 @@ import type {
   AccountNominatingAndInPool,
   AccountNotStaking,
 } from './types';
-import type { ImportedAccount } from '@polkadot-cloud/react/types';
+import type { ImportedAccount } from '@w3ux/react-connect-kit/types';
 import { useActiveBalances } from 'hooks/useActiveBalances';
 import type { MaybeAddress } from 'types';
 import { useTransferOptions } from 'contexts/TransferOptions';
@@ -35,6 +25,10 @@ import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
 import { ButtonText } from 'kits/Buttons/ButtonText';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalCustomHeader } from 'kits/Overlay/structure/ModalCustomHeader';
+import { ActionItem } from 'library/ActionItem';
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');
@@ -43,7 +37,6 @@ export const Accounts = () => {
   } = useApi();
   const { getDelegates } = useProxies();
   const { bondedAccounts } = useBonded();
-  const { extensionsStatus } = useExtensions();
   const {
     replaceModal,
     status: modalStatus,
@@ -169,11 +162,19 @@ export const Accounts = () => {
   useEffect(() => setLocalAccounts(accounts), [accounts]);
 
   // Resize if modal open upon state changes.
-  useEffectIgnoreInitial(() => {
+  useEffect(() => {
     if (modalStatus === 'open') {
       setModalResize();
     }
-  }, [activeAccount, accounts, bondedAccounts, extensionsStatus]);
+  }, [
+    activeAccount,
+    accounts,
+    bondedAccounts,
+    nominating,
+    inPool,
+    nominatingAndPool,
+    notStaking,
+  ]);
 
   return (
     <ModalPadding>

@@ -9,7 +9,7 @@ import type {
 } from 'static/NotificationsController/types';
 import { Wrapper } from './Wrapper';
 import { useRef, useState } from 'react';
-import { setStateWithRef } from '@polkadot-cloud/utils';
+import { setStateWithRef } from '@w3ux/utils';
 import { isCustomEvent } from 'static/utils';
 import { useEventListener } from 'usehooks-ts';
 

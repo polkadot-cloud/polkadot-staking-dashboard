@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { registerSaEvent } from 'Utils';
-import { extractUrlValue, varToUrlHash } from '@polkadot-cloud/utils';
+import { extractUrlValue, varToUrlHash } from '@w3ux/utils';
 import {
   DefaultLocale,
   availableLanguages,

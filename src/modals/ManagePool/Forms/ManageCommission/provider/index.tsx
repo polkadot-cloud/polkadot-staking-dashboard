@@ -5,7 +5,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import type { MaybeAddress } from 'types';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { rmCommas } from '@polkadot-cloud/utils';
+import { rmCommas } from '@w3ux/utils';
 import type {
   ChangeRateInput,
   CommissionFeature,

@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit, rmCommas } from '@polkadot-cloud/utils';
+import { planckToUnit, rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useActivePool } from 'contexts/Pools/ActivePool';
@@ -11,7 +11,7 @@ import { Header } from 'library/Announcements/Header';
 import { useNetwork } from 'contexts/Network';
 import { Announcements } from './Announcements';
 import type { PoolStatLabel } from 'library/Announcements/types';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { Wrapper } from 'library/Announcements/Wrappers';
 
 export const PoolStats = () => {

@@ -6,11 +6,9 @@
 
 ## Contributing Community Assets
 
-The Polkadot Staking Dashboard is a community-driven project, and we welcome contributions to bolster the dashboard's functionality and features.
+### Validator Operators
 
-- **Web Extensions**: Submit PR to the [Polkadot Cloud repository](https://github.com/polkadot-cloud/library/tree/main/packages/assets#adding-web-extension-wallets) to add a web extension. The extension will then be available in the `@polkadot-cloud/assets` NPM package. Full instructions can be found [here](https://github.com/polkadot-cloud/library/tree/main/packages/assets#adding-web-extension-wallets).
-
-- **Validator Operators**: Submit PR to the [Polkadot Cloud repository](https://github.com/polkadot-cloud/library/tree/main/packages/assets#adding-validator-operators) to add a validator operator. The operator will then be available in the `@polkadot-cloud/assets` NPM package. Full instructions can be found [here](https://github.com/polkadot-cloud/library/tree/main/packages/assets#adding-validator-operators).
+To showcase a validator operator on staking dashboard, submit a PR to the [**`@w3ux`**](https://github.com/w3ux/w3ux-library/tree/main) library. The operator will then be available in the **`@w3ux/validator-assets`** NPM package. [Full instructions](https://github.com/w3ux/w3ux-library/tree/main/library/validator-assets).
 
 ## URL Variable Support
 

@@ -6,9 +6,8 @@ import { BondedProvider } from 'contexts/Bonded';
 import {
   ExtensionsProvider,
   ExtensionAccountsProvider,
-  OverlayProvider,
   LedgerAccountsProvider,
-} from '@polkadot-cloud/react/providers';
+} from '@w3ux/react-connect-kit';
 import { FastUnstakeProvider } from 'contexts/FastUnstake';
 import { FiltersProvider } from 'contexts/Filters';
 import { LedgerHardwareProvider } from 'contexts/Hardware/Ledger/LedgerHardware';
@@ -45,6 +44,7 @@ import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts';
 import type { Provider } from 'hooks/withProviders';
 import { withProviders } from 'hooks/withProviders';
 import { CommunityProvider } from 'contexts/Community';
+import { OverlayProvider } from 'kits/Overlay/Provider';
 
 export const Providers = () => {
   const {

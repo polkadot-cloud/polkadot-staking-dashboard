@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { useEffect, useState } from 'react';
 import { Subheading } from 'pages/Nominate/Wrappers';

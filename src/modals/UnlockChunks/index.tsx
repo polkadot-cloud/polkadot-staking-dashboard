@@ -1,24 +1,22 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  ModalFixedTitle,
-  ModalMotionTwoSection,
-  ModalSection,
-} from '@polkadot-cloud/react';
-import { setStateWithRef } from '@polkadot-cloud/utils';
+import { setStateWithRef } from '@w3ux/utils';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Title } from 'library/Modal/Title';
 import { useTxMeta } from 'contexts/TxMeta';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
 import { Forms } from './Forms';
 import { Overview } from './Overview';
 import type { UnlockChunk } from 'contexts/Balances/types';
+import { ModalSection } from 'kits/Overlay/structure/ModalSection';
+import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle';
+import { ModalMotionTwoSection } from 'kits/Overlay/structure/ModalMotionTwoSection';
 
 export const UnlockChunks = () => {
   const { t } = useTranslation('modals');

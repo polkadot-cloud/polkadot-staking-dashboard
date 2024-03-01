@@ -46,7 +46,7 @@ export const ItemWrapper = styled(motion.div)`
       border-radius: 0.74rem;
     }
 
-    /* vertical validator thumbnail / content tiling */
+    /* vertical validator icon / content tiling */
     section {
       display: flex;
       flex-flow: column wrap;
@@ -148,7 +148,7 @@ export const ItemWrapper = styled(motion.div)`
       }
     }
 
-    /* horizontal validator thumbnail / content tiling */
+    /* horizontal validator icon / content tiling */
     @media (min-width: ${VERTICAL_THRESHOLD + 1}px) {
       flex-flow: row wrap;
       section {

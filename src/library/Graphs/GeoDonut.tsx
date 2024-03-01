@@ -6,7 +6,7 @@ import { Doughnut } from 'react-chartjs-2';
 import { useTheme } from 'contexts/Themes';
 import { graphColors } from 'theme/graphs';
 import chroma from 'chroma-js';
-import { ellipsisFn } from '@polkadot-cloud/utils';
+import { ellipsisFn } from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
 import type { GeoDonutProps } from './types';
 import type { AnyJson } from 'types';

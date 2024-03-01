@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { setStateWithRef } from '@polkadot-cloud/utils';
+import { setStateWithRef } from '@w3ux/utils';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import {
   NetworkList,
@@ -19,7 +19,7 @@ import type {
   APIProviderProps,
   APIStakingMetrics,
 } from './types';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import {
   defaultConsts,
   defaultActiveEra,

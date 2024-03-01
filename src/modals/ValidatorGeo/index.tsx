@@ -1,8 +1,8 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Polkicon } from '@polkadot-cloud/react';
-import { ellipsisFn } from '@polkadot-cloud/utils';
+import { Polkicon } from '@w3ux/react-polkicon';
+import { ellipsisFn } from '@w3ux/utils';
 import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
@@ -14,7 +14,7 @@ import { useSize } from 'hooks/useSize';
 import { Title } from 'library/Modal/Title';
 import { StatusLabel } from 'library/StatusLabel';
 import { PolkawatchApi, type ValidatorDetail } from '@polkawatch/ddp-client';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { PluginLabel } from 'library/PluginLabel';
 import { usePlugins } from 'contexts/Plugins';
 import { useNetwork } from 'contexts/Network';

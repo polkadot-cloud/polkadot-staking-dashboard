@@ -4,11 +4,11 @@
 import { useContext, type ReactNode, createContext } from 'react';
 import Keyring from '@polkadot/keyring';
 import { useNetwork } from 'contexts/Network';
-import { ellipsisFn } from '@polkadot-cloud/utils';
+import { ellipsisFn } from '@w3ux/utils';
 import type {
   ExternalAccount,
   ExternalAccountAddedBy,
-} from '@polkadot-cloud/react/types';
+} from '@w3ux/react-connect-kit/types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type {
   AddExternalAccountResult,

@@ -7,6 +7,7 @@ export const CanvasFullScreenWrapper = styled.div`
   padding-top: 3rem;
   min-height: calc(100vh - 12rem);
   padding-bottom: 2rem;
+  width: 100%;
 
   > .head {
     display: flex;
@@ -24,4 +25,5 @@ export const CanvasSubmitTxFooter = styled.div`
   border-radius: 1rem;
   overflow: hidden;
   margin-bottom: 2rem;
+  width: 100%;
 `;

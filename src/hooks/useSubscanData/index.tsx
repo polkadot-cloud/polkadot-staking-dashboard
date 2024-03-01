@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { setStateWithRef } from '@polkadot-cloud/utils';
+import { setStateWithRef } from '@w3ux/utils';
 import { usePlugins } from 'contexts/Plugins';
 import { useEffect, useRef, useState } from 'react';
 import { SubscanController } from 'static/SubscanController';
