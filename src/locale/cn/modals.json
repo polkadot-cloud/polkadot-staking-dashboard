@@ -268,7 +268,7 @@
     "unlocks": "解锁",
     "unlocksAfter": "解锁于",
     "unlocksInEra": "解锁于Era",
-    "unlocksInProgress": "解锁正在进行中",
+    "unlocksInProgress": "解锁中",
     "unstake": "解除抵押",
     "unstakeStopNominating": "停止提名 {{count}} 个验证人",
     "unstakeUnbond": "解除质押 {{bond}} {{unit}}",
