@@ -4,7 +4,6 @@
 import { faChevronLeft, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 import { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useBonded } from 'contexts/Bonded';
 import { useProxies } from 'contexts/Proxies';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -36,7 +35,6 @@ export const Accounts = () => {
     consts: { existentialDeposit },
   } = useApi();
   const { getDelegates } = useProxies();
-  const { bondedAccounts } = useBonded();
   const {
     replaceModal,
     status: modalStatus,
@@ -168,12 +166,10 @@ export const Accounts = () => {
     }
   }, [
     activeAccount,
-    accounts,
-    bondedAccounts,
-    nominating,
-    inPool,
-    nominatingAndPool,
-    notStaking,
+    JSON.stringify(nominating),
+    JSON.stringify(inPool),
+    JSON.stringify(nominatingAndPool),
+    JSON.stringify(notStaking),
   ]);
 
   return (
