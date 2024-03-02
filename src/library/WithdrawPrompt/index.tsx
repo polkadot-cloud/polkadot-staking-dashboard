@@ -25,8 +25,8 @@ export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
   const { consts } = useApi();
   const { openModal } = useOverlay().modal;
   const { colors } = useNetwork().networkData;
-  const { activeAccount } = useActiveAccounts();
   const { syncing } = useSyncing(['balances']);
+  const { activeAccount } = useActiveAccounts();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getTransferOptions } = useTransferOptions();
 
@@ -45,7 +45,7 @@ export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
     true
   );
 
-  // Check whether there are ongonig unlock chunks.
+  // Check whether there are active unlock chunks.
   const displayPrompt = totalUnlockChunks > 0;
 
   return (
