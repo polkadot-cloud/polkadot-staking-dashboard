@@ -2,9 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useBonded } from 'contexts/Bonded';
 import { useProxies } from 'contexts/Proxies';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -17,7 +16,6 @@ import type {
   AccountNominatingAndInPool,
   AccountNotStaking,
 } from './types';
-import type { ImportedAccount } from '@w3ux/react-connect-kit/types';
 import { useActiveBalances } from 'hooks/useActiveBalances';
 import type { MaybeAddress } from 'types';
 import { useTransferOptions } from 'contexts/TransferOptions';
@@ -36,7 +34,6 @@ export const Accounts = () => {
     consts: { existentialDeposit },
   } = useApi();
   const { getDelegates } = useProxies();
-  const { bondedAccounts } = useBonded();
   const {
     replaceModal,
     status: modalStatus,
@@ -47,14 +44,10 @@ export const Accounts = () => {
   const { activeAccount, setActiveAccount, setActiveProxy } =
     useActiveAccounts();
 
-  // Store local copy of accounts.
-  const [localAccounts, setLocalAccounts] =
-    useState<ImportedAccount[]>(accounts);
-
   // Listen to balance updates for entire accounts list.
   const { getLocks, getBalance, getEdReserved, getPoolMembership } =
     useActiveBalances({
-      accounts: localAccounts.map(({ address }) => address),
+      accounts: accounts.map(({ address }) => address),
     });
 
   // Calculate transferrable balance of an address.
@@ -74,7 +67,7 @@ export const Accounts = () => {
 
   const stashes: string[] = [];
   // accumulate imported stash accounts
-  for (const { address } of localAccounts) {
+  for (const { address } of accounts) {
     const { locks } = getLocks(address);
 
     // account is a stash if they have an active `staking` lock
@@ -89,7 +82,7 @@ export const Accounts = () => {
   const nominatingAndPool: AccountNominatingAndInPool[] = [];
   const notStaking: AccountNotStaking[] = [];
 
-  for (const { address } of localAccounts) {
+  for (const { address } of accounts) {
     let isNominating = false;
     let isInPool = false;
     const isStash = stashes[stashes.indexOf(address)] ?? null;
@@ -158,9 +151,6 @@ export const Accounts = () => {
     }
   }
 
-  // Refresh local accounts state when context accounts change.
-  useEffect(() => setLocalAccounts(accounts), [accounts]);
-
   // Resize if modal open upon state changes.
   useEffect(() => {
     if (modalStatus === 'open') {
@@ -168,12 +158,10 @@ export const Accounts = () => {
     }
   }, [
     activeAccount,
-    accounts,
-    bondedAccounts,
-    nominating,
-    inPool,
-    nominatingAndPool,
-    notStaking,
+    JSON.stringify(nominating),
+    JSON.stringify(inPool),
+    JSON.stringify(nominatingAndPool),
+    JSON.stringify(notStaking),
   ]);
 
   return (

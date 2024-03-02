@@ -146,6 +146,7 @@
     "manageCommission": "Manage Commission",
     "manageNominations": "Manage Nominations",
     "managePool": "Manage Pool",
+    "manageUnlocks": "Manage Unlocks",
     "maxCommission": "Max Commission",
     "maximumCommissionUpdated": "Maximum Commission Updated",
     "methodNotSupported": "Call method not supported, cannot sign.",
@@ -280,6 +281,7 @@
     "unlocks": "Unlocks",
     "unlocksAfter": "Unlocks after",
     "unlocksInEra": "Unlocks in Era",
+    "unlocksInProgress": "Unlocks in Progress",
     "unstake": "Unstake",
     "unstakeStopNominating_one": "Stop Nominating {{count}} Validator",
     "unstakeStopNominating_other": "Stop Nominating {{count}} Validators",
@@ -304,6 +306,7 @@
     "withdrawRemoveNote": "Withdrawing will remove this member from the pool.",
     "withdrawSubtitle": "Funds will be immediately available as free balance after withdrawing.",
     "withdrawUnlocked": "Withdraw Unlocked",
-    "years": "Years"
+    "years": "Years",
+    "youHaveActiveUnlocks": "You have active unlocks. Unlocks can be withdrawn once the unlock period of {{bondDurationFormatted}} has passed."
   }
 }

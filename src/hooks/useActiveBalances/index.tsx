@@ -164,19 +164,17 @@ export const useActiveBalances = ({
   // has not yet synced or the provided account is still `null`. In these cases a
   // `new-account-balance` event will be emitted when the balance is ready to be sycned with the UI.
   useEffect(() => {
-    // Adds an active balance record if it exists in `BalancesController`.
-    const getBalances = (account: MaybeAddress) => {
+    // Construct new active balances state.
+    const newActiveBalances: ActiveBalancesState = {};
+
+    for (const account of uniqueAccounts) {
+      // Adds an active balance record if it exists in `BalancesController`.
       if (account) {
         const accountBalances = BalancesController.getAccountBalances(account);
         if (accountBalances) {
           newActiveBalances[account] = accountBalances;
         }
       }
-    };
-    // Construct new active balances state.
-    const newActiveBalances: ActiveBalancesState = {};
-    for (const account of uniqueAccounts) {
-      getBalances(account);
     }
     // Commit new active balances to state.
     setStateWithRef(newActiveBalances, setActiveBalances, activeBalancesRef);
