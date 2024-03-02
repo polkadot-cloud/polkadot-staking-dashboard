@@ -30,6 +30,7 @@ import { PageTitle } from 'kits/Structure/PageTitle';
 import type { PageTitleTabProps } from 'kits/Structure/PageTitleTabs/types';
 import { PageRow } from 'kits/Structure/PageRow';
 import { RowSection } from 'kits/Structure/RowSection';
+import { WithdrawPrompt } from 'library/WithdrawPrompt';
 
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
@@ -41,7 +42,9 @@ export const HomeInner = () => {
   const { activeTab, setActiveTab } = usePoolsTabs();
   const { getPoolRoles, activePool } = useActivePool();
   const { counterForBondedPools } = useApi().poolsConfig;
+
   const membership = getPoolMembership(activeAccount);
+  const { state } = activePool?.bondedPool || {};
 
   const { activePools } = useActivePools({
     poolIds: '*',
@@ -108,7 +111,11 @@ export const HomeInner = () => {
             <MinCreateBondStat />
           </StatBoxList>
 
-          <ClosurePrompts />
+          {state === 'Destroying' ? (
+            <ClosurePrompts />
+          ) : (
+            <WithdrawPrompt bondFor="pool" />
+          )}
 
           <PageRow>
             <RowSection hLast>

@@ -289,6 +289,9 @@
     "withdrawRemoveNote": "取款后将从提名池中删除此成员",
     "withdrawSubtitle": "资金将在取款后立即转作可用余额",
     "withdrawUnlocked": "取出己解锁",
-    "years": "年"
+    "years": "年",
+    "unlocksInProgress": "解锁正在进行中",
+    "youHaveActiveUnlocks": "您有主动解锁。 一旦 {{bondDurationFormatted}} 的解锁期过后，就可以撤回解锁。",
+    "manageUnlocks": "管理解锁"
   }
 }

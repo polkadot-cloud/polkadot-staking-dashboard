@@ -27,6 +27,7 @@ import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 import { PageTitle } from 'kits/Structure/PageTitle';
 import { PageRow } from 'kits/Structure/PageRow';
 import { RowSection } from 'kits/Structure/RowSection';
+import { WithdrawPrompt } from 'library/WithdrawPrompt';
 
 export const Active = () => {
   const { t } = useTranslation();
@@ -50,6 +51,9 @@ export const Active = () => {
         <MinimumNominatorBondStat />
         <MinimumActiveStakeStat />
       </StatBoxList>
+
+      <WithdrawPrompt bondFor="nominator" />
+
       <ControllerNotStash />
       <UnstakePrompts />
       <PageRow>

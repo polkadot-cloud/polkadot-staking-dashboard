@@ -304,6 +304,9 @@
     "withdrawRemoveNote": "Withdrawing will remove this member from the pool.",
     "withdrawSubtitle": "Funds will be immediately available as free balance after withdrawing.",
     "withdrawUnlocked": "Withdraw Unlocked",
-    "years": "Years"
+    "years": "Years",
+    "unlocksInProgress": "Unlocks in Progress",
+    "youHaveActiveUnlocks": "You have active unlocks. Unlocks can be withdrawn once the unlock period of {{bondDurationFormatted}} has passed.",
+    "manageUnlocks": "Manage Unlocks"
   }
 }
