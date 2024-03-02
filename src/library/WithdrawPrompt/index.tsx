@@ -64,10 +64,12 @@ export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
                   openModal({
                     key: 'UnlockChunks',
                     options: {
-                      bondFor: 'pool',
-                      poolClosure: true,
+                      bondFor,
                       disableWindowResize: true,
                       disableScroll: true,
+                      // NOTE: This will always be false as a different prompt is displayed when a
+                      // pool is being destroyed.
+                      poolClosure: false,
                     },
                     size: 'sm',
                   })
