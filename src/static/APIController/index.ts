@@ -154,8 +154,12 @@ export class APIController {
     if (type !== 'sc') {
       // Register connection attempt.
       this._connectAttempts++;
-      // Start connection attempt.
+
+      // Start connection attempt monitoring. Attempts to re-initialize API if subscriptions are not
+      // instantiated.
       this.onMonitorConnect(config);
+
+      // Start connection attempt with timeout.
       await withTimeout(this.getTimeout(), this.connect(config));
     } else {
       // Light client: Connect without timeout logic.
