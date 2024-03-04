@@ -9,7 +9,6 @@ import { useEffect } from 'react';
 import { Entry } from 'kits/Structure/Entry';
 
 // light / dark `mode` added to styled-components provider
-// `@polkadot-cloud/react` themes are added to `Entry`.
 export const ThemedRouter = () => {
   const { mode } = useTheme();
   const { network } = useNetwork();
