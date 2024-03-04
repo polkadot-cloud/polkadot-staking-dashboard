@@ -184,7 +184,9 @@ export class APIController {
       // If blocks are not being subscribed to, assume connection failed.
       if (!Object.keys(this._unsubs).length) {
         // Atempt api connection again.
-        this.initialize(config.network, config.type, config.rpcEndpoint);
+        this.initialize(config.network, config.type, config.rpcEndpoint, {
+          clearState: false,
+        });
       }
     }, this.getTimeout());
   };
@@ -708,7 +710,9 @@ export class APIController {
     });
     window.addEventListener('online', () => {
       // Reconnect to the current API configuration.
-      this.initialize(this.network, this._connectionType, this._rpcEndpoint);
+      this.initialize(this.network, this._connectionType, this._rpcEndpoint, {
+        clearState: false,
+      });
     });
   }
 

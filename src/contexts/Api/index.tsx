@@ -323,6 +323,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         isLightClient ? 'sc' : 'ws',
         rpcEndpoint,
         {
+          clearState: true,
           initial: true,
         }
       );
@@ -332,15 +333,19 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // If RPC endpoint changes, and not on light client, re-connect.
   useEffectIgnoreInitial(() => {
     if (!isLightClient) {
-      APIController.initialize(network, 'ws', rpcEndpoint);
+      APIController.initialize(network, 'ws', rpcEndpoint, {
+        clearState: false,
+      });
     }
   }, [rpcEndpoint]);
 
   // Trigger API reconnect on network or light client change.
   useEffectIgnoreInitial(() => {
     setRpcEndpoint(initialRpcEndpoint());
+    const networkSwitch = network !== APIController.network;
+
     // If network changes, reset consts and chain state.
-    if (network !== APIController.network) {
+    if (networkSwitch) {
       setConsts(defaultConsts);
       setChainState(defaultChainState);
       setStateWithRef(
@@ -357,8 +362,13 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       );
     }
 
-    // Reconnect API instance.
-    APIController.initialize(network, isLightClient ? 'sc' : 'ws', rpcEndpoint);
+    // Reconnect API instance, clearing state only if network has changed.
+    APIController.initialize(
+      network,
+      isLightClient ? 'sc' : 'ws',
+      rpcEndpoint,
+      { clearState: !networkSwitch }
+    );
   }, [isLightClient, network]);
 
   // Add event listener for `polkadot-api` notifications. Also handles unmounting logic.
