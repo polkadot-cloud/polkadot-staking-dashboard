@@ -292,9 +292,9 @@ export class BalancesController {
     const poolMembership = this.poolMemberships[address];
     const nominations = this.nominations[address];
 
-    // Account info has not synced yet. Note that `ledger` may not exist and therefore cannot be
-    // tested.
     if (balances === undefined) {
+      // Account info has not synced yet. Note that `ledger` may not exist and therefore cannot be
+      // tested.
       return undefined;
     }
     return {

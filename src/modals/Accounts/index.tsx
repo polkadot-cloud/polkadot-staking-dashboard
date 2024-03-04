@@ -157,6 +157,7 @@ export const Accounts = () => {
       setModalResize();
     }
   }, [
+    accounts,
     activeAccount,
     JSON.stringify(nominating),
     JSON.stringify(inPool),
