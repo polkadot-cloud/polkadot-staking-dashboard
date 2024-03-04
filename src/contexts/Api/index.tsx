@@ -317,6 +317,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Handle an initial api connection.
   useEffect(() => {
+    // NOTE: `provider` should always be present after the first call to initialize. We therefore
+    // can check whether on initial api connection based  `provider`.
     if (!APIController.provider) {
       APIController.initialize(
         network,
