@@ -136,6 +136,7 @@
     "manageCommission": "管理佣金值",
     "manageNominations": "提名管理",
     "managePool": "管理池",
+    "manageUnlocks": "管理解锁",
     "maxCommission": "最高佣金值",
     "maximumCommissionUpdated": "最高佣金值最新值",
     "methodNotSupported": "调用方法不受支持,无法签署交易",
@@ -267,6 +268,7 @@
     "unlocks": "解锁",
     "unlocksAfter": "解锁于",
     "unlocksInEra": "解锁于Era",
+    "unlocksInProgress": "解锁中",
     "unstake": "解除抵押",
     "unstakeStopNominating": "停止提名 {{count}} 个验证人",
     "unstakeUnbond": "解除质押 {{bond}} {{unit}}",
@@ -289,6 +291,7 @@
     "withdrawRemoveNote": "取款后将从提名池中删除此成员",
     "withdrawSubtitle": "资金将在取款后立即转作可用余额",
     "withdrawUnlocked": "取出己解锁",
-    "years": "年"
+    "years": "年",
+    "youHaveActiveUnlocks": "您有资金在解锁中,   {{bondDurationFormatted}} 的解锁期过后，可取出资金"
   }
 }

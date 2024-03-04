@@ -137,21 +137,12 @@ export const Ledger = ({
         <div>
           {valid ? (
             <p className="prompt">
-              {!valid ? (
-                '...'
-              ) : (
-                <>
-                  <FontAwesomeIcon
-                    icon={faCircleExclamation}
-                    className="icon"
-                  />
-                  {feedback?.message
-                    ? feedback.message
-                    : !integrityChecked
-                      ? t('ledgerConnectAndConfirm')
-                      : `${t('deviceVerified')}. ${t('submitTransaction')}`}
-                </>
-              )}
+              <FontAwesomeIcon icon={faCircleExclamation} className="icon" />
+              {feedback?.message
+                ? feedback.message
+                : !integrityChecked
+                  ? t('ledgerConnectAndConfirm')
+                  : `${t('deviceVerified')}. ${t('submitTransaction')}`}
               {feedback?.helpKey && (
                 <ButtonHelp
                   marginLeft
