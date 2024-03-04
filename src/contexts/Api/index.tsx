@@ -32,7 +32,6 @@ import {
 import { APIController } from 'static/APIController';
 import { isCustomEvent } from 'static/utils';
 import type { ApiStatus } from 'static/APIController/types';
-import { useTranslation } from 'react-i18next';
 import { useEventListener } from 'usehooks-ts';
 import BigNumber from 'bignumber.js';
 import { SyncController } from 'static/SyncController';
@@ -42,8 +41,6 @@ export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 export const useApi = () => useContext(APIContext);
 
 export const APIProvider = ({ children, network }: APIProviderProps) => {
-  const { t } = useTranslation('library');
-
   // Store API connection status.
   const [apiStatus, setApiStatus] = useState<ApiStatus>('disconnected');
 
