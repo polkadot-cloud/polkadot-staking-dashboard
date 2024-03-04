@@ -121,14 +121,18 @@ export class APIController {
     rpcEndpoint: string,
     options?: {
       initial?: boolean;
+      clearState?: boolean;
     }
   ) {
     // Only needed once: Initialize window online listeners.
-    if (options?.initial) {
+    if (options?.initial === true) {
       this.initOnlineEvents();
     } else {
-      // Tidy up any previous connection.
-      await this.disconnect();
+      // Tidy up any previous connection. If this initialization originated from an offline event,
+      // do not clear controller state - keep it persisted and attempt to reconnect.
+      await this.disconnect(
+        options?.clearState === undefined ? true : options.clearState
+      );
     }
 
     // Add initial syncing items.
@@ -150,8 +154,12 @@ export class APIController {
     if (type !== 'sc') {
       // Register connection attempt.
       this._connectAttempts++;
-      // Start connection attempt.
+
+      // Start connection attempt monitoring. Attempts to re-initialize API if subscriptions are not
+      // instantiated.
       this.onMonitorConnect(config);
+
+      // Start connection attempt with timeout.
       await withTimeout(this.getTimeout(), this.connect(config));
     } else {
       // Light client: Connect without timeout logic.
@@ -176,7 +184,9 @@ export class APIController {
       // If blocks are not being subscribed to, assume connection failed.
       if (!Object.keys(this._unsubs).length) {
         // Atempt api connection again.
-        this.initialize(config.network, config.type, config.rpcEndpoint);
+        this.initialize(config.network, config.type, config.rpcEndpoint, {
+          clearState: false,
+        });
       }
     }, this.getTimeout());
   };
@@ -646,7 +656,7 @@ export class APIController {
     ).isGreaterThanOrEqualTo(this._blockNumberVerify.minBlockNumber);
 
     if (!blocksSynced) {
-      await this.disconnect();
+      await this.handleOfflineEvent();
     } else {
       // Update block number verification data.
       this._blockNumberVerify.minBlockNumber = new BigNumber(this._blockNumber)
@@ -700,13 +710,14 @@ export class APIController {
     });
     window.addEventListener('online', () => {
       // Reconnect to the current API configuration.
-      this.initialize(this.network, this._connectionType, this._rpcEndpoint);
+      this.initialize(this.network, this._connectionType, this._rpcEndpoint, {
+        clearState: false,
+      });
     });
   }
 
   // Handle offline event
   static handleOfflineEvent = async () => {
-    await this.disconnect();
     // Tell UI api has been disconnected from an offline event.
     this.dispatchEvent(this.ensureEventStatus('disconnected'), {
       err: 'offline-event',
@@ -750,17 +761,23 @@ export class APIController {
     return 'error' as EventStatus;
   };
 
-  // Disconnect gracefully from API.
-  static async disconnect() {
+  // Disconnect gracefully from API. Provide a `clearState` value to determine whether to clear all
+  // controller state - only should be done on network change.
+  static async disconnect(clearState = true) {
     // Clear block number verification interval.
     clearInterval(this._blockNumberVerify.interval);
-    // Clear persisted network data.
-    this.activeEra = defaultActiveEra;
 
     // Unsubscribe from all subscriptions.
     this.unsubscribe();
     BalancesController.unsubscribe();
     ActivePoolsController.unsubscribe();
+
+    // Clear persisted data.
+    if (clearState) {
+      this.activeEra = defaultActiveEra;
+      BalancesController.resetState();
+      ActivePoolsController.resetState();
+    }
 
     // Disconnect from provider and api.
     this.unsubscribeProvider();
