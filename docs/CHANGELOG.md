@@ -30,6 +30,7 @@
 
 ## [1.1.7](https://github.com/paritytech/polkadot-staking-dashboard/compare/v1.1.6...v1.1.7) (2024-02-24)
 
+
 ### Features
 
 * **refactor:** Add Structure kit ([#1963](https://github.com/paritytech/polkadot-staking-dashboard/issues/1963)) ([e6b181b](https://github.com/paritytech/polkadot-staking-dashboard/commit/e6b181be92c4abf706fd3b7bbe43bbf86abb6318))
