@@ -32,8 +32,6 @@ import {
 import { APIController } from 'static/APIController';
 import { isCustomEvent } from 'static/utils';
 import type { ApiStatus } from 'static/APIController/types';
-import { NotificationsController } from 'static/NotificationsController';
-import { useTranslation } from 'react-i18next';
 import { useEventListener } from 'usehooks-ts';
 import BigNumber from 'bignumber.js';
 import { SyncController } from 'static/SyncController';
@@ -43,8 +41,6 @@ export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 export const useApi = () => useContext(APIContext);
 
 export const APIProvider = ({ children, network }: APIProviderProps) => {
-  const { t } = useTranslation('library');
-
   // Store API connection status.
   const [apiStatus, setApiStatus] = useState<ApiStatus>('disconnected');
 
@@ -180,16 +176,14 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
     // Trigger a notification if this disconnect is a result of an offline error.
     if (err === 'offline-event') {
-      NotificationsController.emit({
-        title: t('disconnected'),
-        subtitle: t('connectionLost'),
-      });
-
       // Start attempting reconnects.
       APIController.initialize(
         network,
         isLightClient ? 'sc' : 'ws',
-        rpcEndpoint
+        rpcEndpoint,
+        {
+          clearState: false,
+        }
       );
     }
   };
@@ -323,12 +317,15 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Handle an initial api connection.
   useEffect(() => {
+    // NOTE: `provider` should always be present after the first call to initialize. We therefore
+    // can check whether on initial api connection based  `provider`.
     if (!APIController.provider) {
       APIController.initialize(
         network,
         isLightClient ? 'sc' : 'ws',
         rpcEndpoint,
         {
+          clearState: true,
           initial: true,
         }
       );
@@ -338,15 +335,19 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // If RPC endpoint changes, and not on light client, re-connect.
   useEffectIgnoreInitial(() => {
     if (!isLightClient) {
-      APIController.initialize(network, 'ws', rpcEndpoint);
+      APIController.initialize(network, 'ws', rpcEndpoint, {
+        clearState: false,
+      });
     }
   }, [rpcEndpoint]);
 
   // Trigger API reconnect on network or light client change.
   useEffectIgnoreInitial(() => {
     setRpcEndpoint(initialRpcEndpoint());
+    const networkSwitch = network !== APIController.network;
+
     // If network changes, reset consts and chain state.
-    if (network !== APIController.network) {
+    if (networkSwitch) {
       setConsts(defaultConsts);
       setChainState(defaultChainState);
       setStateWithRef(
@@ -363,8 +364,13 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       );
     }
 
-    // Reconnect API instance.
-    APIController.initialize(network, isLightClient ? 'sc' : 'ws', rpcEndpoint);
+    // Reconnect API instance, clearing state only if network has changed.
+    APIController.initialize(
+      network,
+      isLightClient ? 'sc' : 'ws',
+      rpcEndpoint,
+      { clearState: !networkSwitch }
+    );
   }, [isLightClient, network]);
 
   // Add event listener for `polkadot-api` notifications. Also handles unmounting logic.
