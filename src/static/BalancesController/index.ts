@@ -315,13 +315,17 @@ export class BalancesController {
     Object.values(this._unsubs).forEach((unsub) => {
       unsub();
     });
+    this._unsubs = {};
+  };
+
+  // Reset all saved state.
+  static resetState = (): void => {
     this.accounts = [];
     this.ledgers = {};
     this.balances = {};
     this.payees = {};
     this.poolMemberships = {};
     this.nominations = {};
-    this._unsubs = {};
   };
 
   // ------------------------------------------------------

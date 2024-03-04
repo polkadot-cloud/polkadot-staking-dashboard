@@ -175,10 +175,13 @@ export class ActivePoolsController {
     Object.values(this._unsubs).forEach((unsub) => {
       unsub();
     });
+    this._unsubs = {};
+  };
+
+  static resetState = (): void => {
     this.pools = [];
     this.activePools = {};
     this.poolNominations = {};
-    this._unsubs = {};
   };
 
   // ------------------------------------------------------

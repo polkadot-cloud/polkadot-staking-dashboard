@@ -121,14 +121,18 @@ export class APIController {
     rpcEndpoint: string,
     options?: {
       initial?: boolean;
+      clearState?: boolean;
     }
   ) {
     // Only needed once: Initialize window online listeners.
-    if (options?.initial) {
+    if (options?.initial === true) {
       this.initOnlineEvents();
     } else {
-      // Tidy up any previous connection.
-      await this.disconnect();
+      // Tidy up any previous connection. If this initialization originated from an offline event,
+      // do not clear controller state - keep it persisted and attempt to reconnect.
+      await this.disconnect(
+        options?.clearState === undefined ? true : options.clearState
+      );
     }
 
     // Add initial syncing items.
@@ -646,7 +650,7 @@ export class APIController {
     ).isGreaterThanOrEqualTo(this._blockNumberVerify.minBlockNumber);
 
     if (!blocksSynced) {
-      await this.disconnect();
+      await this.handleOfflineEvent();
     } else {
       // Update block number verification data.
       this._blockNumberVerify.minBlockNumber = new BigNumber(this._blockNumber)
@@ -706,7 +710,6 @@ export class APIController {
 
   // Handle offline event
   static handleOfflineEvent = async () => {
-    await this.disconnect();
     // Tell UI api has been disconnected from an offline event.
     this.dispatchEvent(this.ensureEventStatus('disconnected'), {
       err: 'offline-event',
@@ -750,17 +753,23 @@ export class APIController {
     return 'error' as EventStatus;
   };
 
-  // Disconnect gracefully from API.
-  static async disconnect() {
+  // Disconnect gracefully from API. Provide a `clearState` value to determine whether to clear all
+  // controller state - only should be done on network change.
+  static async disconnect(clearState = true) {
     // Clear block number verification interval.
     clearInterval(this._blockNumberVerify.interval);
-    // Clear persisted network data.
-    this.activeEra = defaultActiveEra;
 
     // Unsubscribe from all subscriptions.
     this.unsubscribe();
     BalancesController.unsubscribe();
     ActivePoolsController.unsubscribe();
+
+    // Clear persisted data.
+    if (clearState) {
+      this.activeEra = defaultActiveEra;
+      BalancesController.resetState();
+      ActivePoolsController.resetState();
+    }
 
     // Disconnect from provider and api.
     this.unsubscribeProvider();

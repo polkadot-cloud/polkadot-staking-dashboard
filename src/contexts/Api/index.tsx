@@ -32,7 +32,6 @@ import {
 import { APIController } from 'static/APIController';
 import { isCustomEvent } from 'static/utils';
 import type { ApiStatus } from 'static/APIController/types';
-import { NotificationsController } from 'static/NotificationsController';
 import { useTranslation } from 'react-i18next';
 import { useEventListener } from 'usehooks-ts';
 import BigNumber from 'bignumber.js';
@@ -180,16 +179,14 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
     // Trigger a notification if this disconnect is a result of an offline error.
     if (err === 'offline-event') {
-      NotificationsController.emit({
-        title: t('disconnected'),
-        subtitle: t('connectionLost'),
-      });
-
       // Start attempting reconnects.
       APIController.initialize(
         network,
         isLightClient ? 'sc' : 'ws',
-        rpcEndpoint
+        rpcEndpoint,
+        {
+          clearState: false,
+        }
       );
     }
   };
