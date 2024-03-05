@@ -32,7 +32,7 @@ export const NetworkList: Networks = {
     name: 'polkadot',
     endpoints: {
       lightClient: 'polkadot',
-      defaultRpcEndpoint: 'Parity',
+      defaultRpcEndpoint: 'IBP-GeoDNS1',
       rpcEndpoints: {
         'Automata 1RPC': 'wss://1rpc.io/dot',
         Dwellir: 'wss://polkadot-rpc.dwellir.com',
@@ -42,7 +42,6 @@ export const NetworkList: Networks = {
         LuckyFriday: 'wss://rpc-polkadot.luckyfriday.io',
         RadiumBlock: 'wss://polkadot.public.curie.radiumblock.co/ws',
         Stakeworld: 'wss://dot-rpc.stakeworld.io',
-        Parity: 'wss://apps-rpc.polkadot.io',
       },
     },
     namespace: '91b171bb158e2d3848fa23a9f1c25182',
@@ -94,7 +93,7 @@ export const NetworkList: Networks = {
     name: 'kusama',
     endpoints: {
       lightClient: 'ksmcc3',
-      defaultRpcEndpoint: 'Parity',
+      defaultRpcEndpoint: 'IBP-GeoDNS1',
       rpcEndpoints: {
         'Automata 1RPC': 'wss://1rpc.io/ksm',
         Dwellir: 'wss://kusama-rpc.dwellir.com',
@@ -104,7 +103,6 @@ export const NetworkList: Networks = {
         LuckyFriday: 'wss://rpc-kusama.luckyfriday.io',
         RadiumBlock: 'wss://kusama.public.curie.radiumblock.co/ws',
         Stakeworld: 'wss://ksm-rpc.stakeworld.io',
-        Parity: 'wss://kusama-rpc.polkadot.io',
       },
     },
     namespace: 'b0a8d493285c2df73290dfb7e61f870f',
@@ -156,7 +154,7 @@ export const NetworkList: Networks = {
     name: 'westend',
     endpoints: {
       lightClient: 'westend2',
-      defaultRpcEndpoint: 'Parity',
+      defaultRpcEndpoint: 'IBP-GeoDNS1',
       rpcEndpoints: {
         Dwellir: 'wss://westend-rpc.dwellir.com',
         'Dwellir Tunisia': 'wss://westend-rpc-tn.dwellir.com',
