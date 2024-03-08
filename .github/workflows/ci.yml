@@ -56,7 +56,6 @@ jobs:
       - run: yarn run locale:validate
 
   all:
-    # This job ensures that all jobs above (now we have just build) are successful.
     needs: [check-license, markdown-link-check, build, validate-locales]
     runs-on: ubuntu-latest
     steps:
