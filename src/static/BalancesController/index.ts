@@ -129,7 +129,9 @@ export class BalancesController {
     );
     // Unsubscribe from removed account subscriptions.
     accountsRemoved.forEach((account) => {
-      this._unsubs[account]();
+      if (this._unsubs?.[account]) {
+        this._unsubs[account]();
+      }
       delete this._unsubs[account];
       delete this.ledgers[account];
       delete this.balances[account];
