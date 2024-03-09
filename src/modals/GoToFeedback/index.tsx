@@ -12,7 +12,7 @@ export const GoToFeedback = () => {
   const { t } = useTranslation('modals');
   return (
     <>
-      <Title title={t('feedback')} Svg={ForumSVG} />
+      <Title title={t('helpAndSupport')} Svg={ForumSVG} />
       <ModalPadding verticalOnly>
         <div
           style={{
@@ -20,21 +20,15 @@ export const GoToFeedback = () => {
             width: '100%',
           }}
         >
-          <h4 style={{ paddingBottom: '0.75rem' }}>
-            {t('feedbackPage')}{' '}
-            <a href="https://canny.io/" target="_blank" rel="noreferrer">
-              Canny.io
-            </a>
-            . {t('welcomeToReport')}
-          </h4>
+          <h4 style={{ paddingBottom: '0.75rem' }}>{t('feedbackPage')}</h4>
           <h2 style={{ marginTop: '0.75rem' }}>
             <a
-              href="https://polkadot-staking-dashboard.canny.io/feedback"
+              href="https://support.polkadot.network/support/home"
               target="_blank"
               rel="noreferrer"
               style={{ color: 'var(--accent-color-primary' }}
             >
-              {t('openFeedback')} &nbsp;
+              {t('openSupport')} &nbsp;
               <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-3" />
             </a>
           </h2>
