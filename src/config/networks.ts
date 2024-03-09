@@ -163,7 +163,6 @@ export const NetworkList: Networks = {
         LuckyFriday: 'wss://rpc-westend.luckyfriday.io',
         RadiumBlock: 'wss://westend.public.curie.radiumblock.co/ws',
         Stakeworld: 'wss://wnd-rpc.stakeworld.io',
-        Parity: 'wss://westend-rpc.polkadot.io',
       },
     },
     namespace: 'e143f23803ac50e8f6f8e62695d1ce9e',
