@@ -156,7 +156,9 @@ export class ActivePoolsController {
 
     // Unsubscribe from removed pool subscriptions.
     poolsRemoved.forEach((pool) => {
-      this._unsubs[pool.id]();
+      if (this._unsubs[pool.id]) {
+        this._unsubs[pool.id]();
+      }
       delete this._unsubs[pool.id];
       delete this.activePools[pool.id];
       delete this.poolNominations[pool.id];
