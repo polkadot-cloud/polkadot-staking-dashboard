@@ -59,9 +59,6 @@ export class APIController {
   // API provider.
   static _provider: WsProvider | ScProvider;
 
-  // API provider unsubs.
-  static _providerUnsubs: VoidFn[] = [];
-
   // API instance.
   static _api: ApiPromise;
 
@@ -203,11 +200,13 @@ export class APIController {
     // Tell UI api is connecting.
     this.dispatchEvent(this.ensureEventStatus('connecting'));
 
-    // Initialise provider events.
-    this.initProviderEvents();
-
     // Initialise api.
-    this._api = await ApiPromise.create({ provider: this.provider });
+    this._api = new ApiPromise({ provider: this.provider });
+
+    // Initialise api events.
+    this.initApiEvents();
+
+    await this._api.isReady;
 
     // Reset connection attempts.
     this._connectAttempts = 0;
@@ -673,34 +672,23 @@ export class APIController {
     this._unsubs = {};
   };
 
-  // Remove API event listeners if they exist.
-  static unsubscribeProvider() {
-    this._providerUnsubs.forEach((unsub) => {
-      unsub();
-    });
-  }
-
   // ------------------------------------------------------
   // Event handling.
   // ------------------------------------------------------
 
   // Set up API event listeners. Relays information to `document` for the UI to handle.
-  static initProviderEvents() {
-    this._providerUnsubs.push(
-      this.provider.on('connected', () => {
-        this.dispatchEvent(this.ensureEventStatus('connected'));
-      })
-    );
-    this._providerUnsubs.push(
-      this.provider.on('disconnected', () => {
-        this.dispatchEvent(this.ensureEventStatus('disconnected'));
-      })
-    );
-    this._providerUnsubs.push(
-      this.provider.on('error', (err: string) => {
-        this.dispatchEvent(this.ensureEventStatus('error'), { err });
-      })
-    );
+  static initApiEvents() {
+    this.api.on('connected', () => {
+      this.dispatchEvent(this.ensureEventStatus('connected'));
+    });
+
+    this.api.on('disconnected', () => {
+      this.dispatchEvent(this.ensureEventStatus('disconnected'));
+    });
+
+    this.api.on('error', (err: string) => {
+      this.dispatchEvent(this.ensureEventStatus('error'), { err });
+    });
   }
 
   // Set up online / offline event listeners. Relays information to `document` for the UI to handle.
@@ -780,7 +768,6 @@ export class APIController {
     }
 
     // Disconnect from provider and api.
-    this.unsubscribeProvider();
     this.provider?.disconnect();
     await this.api?.disconnect();
   }
