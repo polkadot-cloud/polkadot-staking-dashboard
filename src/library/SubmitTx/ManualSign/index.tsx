@@ -24,10 +24,12 @@ export const ManualSign = (props: SubmitProps & { buttons?: ReactNode[] }) => {
     }
   }, [getTxSignature()]);
 
-  return (
-    <>
-      {source === 'ledger' && <Ledger {...props} />}
-      {source === 'vault' && <Vault {...props} />}
-    </>
-  );
+  // Determine which signing method to use. NOTE: Falls back to `ledger` on all other sources to
+  // ensure submit button is displayed.
+  switch (source) {
+    case 'vault':
+      return <Vault {...props} />;
+    default:
+      return <Ledger {...props} />;
+  }
 };
