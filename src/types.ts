@@ -17,6 +17,7 @@ import type {
 import type { SyncEvent } from 'static/SyncController/types';
 import type { DetailActivePool } from 'static/ActivePoolsController/types';
 import type { CSSProperties } from 'styled-components';
+import type { APIEventDetail } from 'model/Api/types';
 
 declare global {
   interface Window {
@@ -26,6 +27,7 @@ declare global {
   }
   interface DocumentEventMap {
     notification: CustomEvent<NotificationItem>;
+    'polkadot-api': CustomEvent<APIEventDetail>;
     'new-block-number': CustomEvent<{ blockNumber: string }>;
     'new-network-metrics': CustomEvent<{
       networkMetrics: APINetworkMetrics;

@@ -316,7 +316,10 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     setValidators(shuffle(validatorEntries));
 
     const addresses = validatorEntries.map(({ address }) => address);
-    const { identities, supers } = await IdentitiesController.fetch(addresses);
+    const { identities, supers } = await IdentitiesController.fetch(
+      api,
+      addresses
+    );
 
     setValidatorIdentities(identities);
     setValidatorSupers(supers);
@@ -562,10 +565,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Unsubscribe on network change and component unmount.
   useEffect(() => {
-    if (sessionParaValidators.length) {
-      sessionParaUnsub.current?.();
-    }
-
+    sessionParaUnsub.current?.();
     return () => {
       sessionParaUnsub.current?.();
     };

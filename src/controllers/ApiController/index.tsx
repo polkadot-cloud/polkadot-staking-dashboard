@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Api } from 'model/Api';
-import type { ConnectionType } from 'static/APIController/types';
+import type { ConnectionType } from 'model/Api/types';
 import type { NetworkName } from 'types';
 
 export class ApiController {

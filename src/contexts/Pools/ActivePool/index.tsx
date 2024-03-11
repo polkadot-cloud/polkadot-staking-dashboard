@@ -28,7 +28,6 @@ import { defaultActivePoolContext, defaultPoolRoles } from './defaults';
 import { SyncController } from 'static/SyncController';
 import { useActivePools } from 'hooks/useActivePools';
 import BigNumber from 'bignumber.js';
-import { APIController } from 'static/APIController';
 
 export const ActivePoolContext = createContext<ActivePoolContextState>(
   defaultActivePoolContext
@@ -37,8 +36,8 @@ export const ActivePoolContext = createContext<ActivePoolContextState>(
 export const useActivePool = () => useContext(ActivePoolContext);
 
 export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
-  const { isReady } = useApi();
   const { network } = useNetwork();
+  const { isReady, api } = useApi();
   const { pluginEnabled } = usePlugins();
   const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
@@ -111,12 +110,12 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
 
   // Sync active pool subscriptions.
   const syncActivePoolSubscriptions = async () => {
-    if (accountPoolIds.length) {
+    if (api && accountPoolIds.length) {
       const newActivePools = accountPoolIds.map((pool) => ({
         id: pool,
         addresses: { ...createPoolAccounts(Number(pool)) },
       }));
-      ActivePoolsController.syncPools(newActivePools);
+      ActivePoolsController.syncPools(api, newActivePools);
     }
   };
 
@@ -208,9 +207,9 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch and update unclaimed pool rewards for an address from runtime call.
   const fetchPendingRewards = async (address: string | undefined) => {
-    if (address) {
+    if (api && address) {
       const pendingRewards =
-        await APIController.api.call.nominationPoolsApi.pendingRewards(address);
+        await api.call.nominationPoolsApi.pendingRewards(address);
       return new BigNumber(pendingRewards?.toString() || 0);
     }
     return new BigNumber(0);
@@ -273,7 +272,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   }, [activeAccount]);
 
   // Reset on network change and component unmount. NOTE: ActivePoolsController also unsubscribes on
-  // network change; this is handled by the APIController.
+  // network change; this is handled by the Api instance.
   useEffect(() => {
     resetActivePoolId();
     return () => {
