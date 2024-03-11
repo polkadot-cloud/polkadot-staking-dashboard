@@ -183,14 +183,23 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Handle `polkadot-api` events.
   const handleNewApiStatus = (e: Event) => {
     if (isCustomEvent(e)) {
-      const { event, network: eventNetwork } = e.detail;
+      const {
+        status,
+        network: eventNetwork,
+        type,
+        rpcEndpoint: eventRpcEndpoints,
+      } = e.detail;
 
       // UI is only interested in events for the current network.
-      if (eventNetwork !== network) {
+      if (
+        eventNetwork !== network ||
+        (isLightClient && type === 'ws') ||
+        eventRpcEndpoints !== rpcEndpoint
+      ) {
         return;
       }
 
-      switch (event) {
+      switch (status) {
         case 'ready':
           onApiReady();
           break;
@@ -376,7 +385,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Add event listener for api events and subscription updates.
   const documentRef = useRef<Document>(document);
-  useEventListener('polkadot-api', handleNewApiStatus, documentRef);
+  useEventListener('api-status', handleNewApiStatus, documentRef);
   useEventListener(
     'new-network-metrics',
     handleNetworkMetricsUpdate,

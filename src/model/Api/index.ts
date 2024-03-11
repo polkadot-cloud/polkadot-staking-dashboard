@@ -21,7 +21,7 @@ import { WellKnownChain } from '@substrate/connect';
 import type {
   APIEventDetail,
   ConnectionType,
-  EventStatus,
+  EventApiStatus,
   SubstrateConnect,
 } from './types';
 
@@ -529,16 +529,21 @@ export class Api {
 
   // Handler for dispatching events.
   dispatchEvent(
-    event: EventStatus,
+    status: EventApiStatus,
     options?: {
       err?: string;
     }
   ) {
-    const detail: APIEventDetail = { network: this.network, event };
+    const detail: APIEventDetail = {
+      network: this.network,
+      status,
+      type: this.#connectionType,
+      rpcEndpoint: this.#rpcEndpoint,
+    };
     if (options?.err) {
       detail['err'] = options.err;
     }
-    document.dispatchEvent(new CustomEvent('polkadot-api', { detail }));
+    document.dispatchEvent(new CustomEvent('api-status', { detail }));
   }
 
   // ------------------------------------------------------
@@ -546,7 +551,7 @@ export class Api {
   // ------------------------------------------------------
 
   // Ensures the provided status is a valid `EventStatus` being passed, or falls back to `error`.
-  ensureEventStatus = (status: string | EventStatus): EventStatus => {
+  ensureEventStatus = (status: string | EventApiStatus): EventApiStatus => {
     const eventStatus: string[] = [
       'connecting',
       'connected',
@@ -556,9 +561,9 @@ export class Api {
       'destroyed',
     ];
     if (eventStatus.includes(status)) {
-      return status as EventStatus;
+      return status as EventApiStatus;
     }
-    return 'error' as EventStatus;
+    return 'error' as EventApiStatus;
   };
 
   // Unsubscribe from all active subscriptions.

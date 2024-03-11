@@ -27,7 +27,7 @@ declare global {
   }
   interface DocumentEventMap {
     notification: CustomEvent<NotificationItem>;
-    'polkadot-api': CustomEvent<APIEventDetail>;
+    'api-status': CustomEvent<APIEventDetail>;
     'new-block-number': CustomEvent<{ blockNumber: string }>;
     'new-network-metrics': CustomEvent<{
       networkMetrics: APINetworkMetrics;

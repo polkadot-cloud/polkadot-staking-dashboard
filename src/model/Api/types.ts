@@ -10,9 +10,10 @@ export interface APIConfig {
 }
 
 export interface APIEventDetail {
-  // TODO: rename this to apiStatus.
-  event: EventStatus;
+  status: EventApiStatus;
   network: NetworkName;
+  type: ConnectionType;
+  rpcEndpoint: string;
   err?: string;
 }
 
@@ -25,4 +26,4 @@ export type ConnectionType = 'ws' | 'sc';
 
 export type ApiStatus = 'connecting' | 'connected' | 'disconnected' | 'ready';
 
-export type EventStatus = ApiStatus | 'error';
+export type EventApiStatus = ApiStatus | 'error';
