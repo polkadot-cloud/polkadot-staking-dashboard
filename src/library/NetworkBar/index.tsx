@@ -10,7 +10,7 @@ import { usePrices } from 'hooks/usePrices';
 import { useNetwork } from 'contexts/Network';
 import { Status } from './Status';
 import { Summary, Wrapper } from './Wrappers';
-import { isCustomEvent } from 'static/utils';
+import { isCustomEvent } from 'controllers/utils';
 import { useEventListener } from 'usehooks-ts';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import BigNumber from 'bignumber.js';
@@ -21,7 +21,7 @@ import { Odometer } from '@w3ux/react-odometer';
 export const NetworkBar = () => {
   const { t } = useTranslation('library');
   const { plugins } = usePlugins();
-  const { isLightClient } = useApi();
+  const { connectionType } = useApi();
   const { networkData, network } = useNetwork();
   const prices = usePrices();
 
@@ -55,7 +55,7 @@ export const NetworkBar = () => {
           <p>
             {ORGANISATION === undefined
               ? `${capitalizeFirstLetter(network)}${
-                  isLightClient ? ` Light` : ``
+                  connectionType === 'sc' ? ` Light` : ``
                 }`
               : ORGANISATION}
           </p>

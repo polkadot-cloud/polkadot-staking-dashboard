@@ -3,8 +3,7 @@
 
 import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
-import { APIController } from 'static/APIController';
-import type { AnyApi, MaybeAddress, VoidFn } from 'types';
+import type { AnyApi, MaybeAddress } from 'types';
 import type {
   ActiveBalance,
   Balances,
@@ -14,8 +13,10 @@ import type {
 } from 'contexts/Balances/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type { PoolMembership } from 'contexts/Pools/types';
-import { SyncController } from 'static/SyncController';
+import { SyncController } from 'controllers/SyncController';
 import { defaultNominations } from './defaults';
+import type { VoidFn } from '@polkadot/api/types';
+import type { ApiPromise } from '@polkadot/api';
 
 export class BalancesController {
   // ------------------------------------------------------
@@ -48,9 +49,10 @@ export class BalancesController {
   // ------------------------------------------------------
 
   // Subscribes new accounts and unsubscribes & removes removed accounts.
-  static syncAccounts = async (newAccounts: string[]): Promise<void> => {
-    const { api } = APIController;
-
+  static syncAccounts = async (
+    api: ApiPromise,
+    newAccounts: string[]
+  ): Promise<void> => {
     // Handle accounts that have been removed.
     this.handleRemovedAccounts(newAccounts);
 
@@ -95,6 +97,7 @@ export class BalancesController {
 
           // NOTE: async: contains runtime call for pending rewards.
           await this.handlePoolMembershipCallback(
+            api,
             address,
             poolMembersResult,
             claimPermissionsResult
@@ -228,6 +231,7 @@ export class BalancesController {
 
   // Handle pool membership and claim commission callback.
   static handlePoolMembershipCallback = async (
+    api: ApiPromise,
     address: string,
     poolMembersResult: AnyApi,
     claimPermissionsResult: AnyApi
@@ -251,7 +255,7 @@ export class BalancesController {
     membership.points = rmCommas(membership?.points || '0');
     const balance = new BigNumber(
       (
-        await APIController.api.call.nominationPoolsApi.pointsToBalance(
+        await api.call.nominationPoolsApi.pointsToBalance(
           membership.poolId,
           membership.points
         )

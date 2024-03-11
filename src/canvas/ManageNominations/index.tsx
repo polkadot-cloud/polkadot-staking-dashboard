@@ -22,7 +22,7 @@ import type {
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { RevertPrompt } from './Prompts/RevertPrompt';
 import { CanvasSubmitTxFooter, CanvasFullScreenWrapper } from '../Wrappers';
-import { NotificationsController } from 'static/NotificationsController';
+import { NotificationsController } from 'controllers/NotificationsController';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
 import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';

@@ -8,12 +8,12 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import * as defaults from './defaults';
 import type { BalancesContextInterface } from './types';
 import { useEventListener } from 'usehooks-ts';
-import { isCustomEvent } from 'static/utils';
-import { BalancesController } from 'static/BalancesController';
+import { isCustomEvent } from 'controllers/utils';
+import { BalancesController } from 'controllers/BalancesController';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useActiveBalances } from 'hooks/useActiveBalances';
 import { useBonded } from 'contexts/Bonded';
-import { SyncController } from 'static/SyncController';
+import { SyncController } from 'controllers/SyncController';
 
 export const BalancesContext = createContext<BalancesContextInterface>(
   defaults.defaultBalancesContext

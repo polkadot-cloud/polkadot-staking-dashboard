@@ -6,11 +6,11 @@ import { AnimatePresence, motion } from 'framer-motion';
 import type {
   NotificationInterface,
   NotificationItem,
-} from 'static/NotificationsController/types';
+} from 'controllers/NotificationsController/types';
 import { Wrapper } from './Wrapper';
 import { useRef, useState } from 'react';
 import { setStateWithRef } from '@w3ux/utils';
-import { isCustomEvent } from 'static/utils';
+import { isCustomEvent } from 'controllers/utils';
 import { useEventListener } from 'usehooks-ts';
 
 export const Notifications = () => {
