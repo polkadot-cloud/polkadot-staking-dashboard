@@ -6,12 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn, remToUnit } from '@w3ux/utils';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import type { NotificationText } from 'static/NotificationsController/types';
+import type { NotificationText } from 'controllers/NotificationsController/types';
 import { Polkicon } from '@w3ux/react-polkicon';
 import { getIdentityDisplay } from 'library/ValidatorList/ValidatorItem/Utils';
 import type { PoolAccountProps } from '../types';
 import { Wrapper } from './Wrapper';
-import { NotificationsController } from 'static/NotificationsController';
+import { NotificationsController } from 'controllers/NotificationsController';
 
 export const PoolAccount = ({ address, pool }: PoolAccountProps) => {
   const { t } = useTranslation('pages');

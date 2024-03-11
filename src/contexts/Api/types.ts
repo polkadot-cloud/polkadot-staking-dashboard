@@ -6,7 +6,7 @@ import type { U8aLike } from '@polkadot/util/types';
 import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import type { AnyJson, NetworkName } from '../../types';
-import type { ApiStatus } from 'static/APIController/types';
+import type { ApiStatus, ConnectionType } from 'model/Api/types';
 
 export interface APIProviderProps {
   children: ReactNode;
@@ -75,8 +75,8 @@ export interface APIContextInterface {
   chainState: APIChainState;
   isReady: boolean;
   apiStatus: ApiStatus;
-  isLightClient: boolean;
-  setIsLightClient: (isLightClient: boolean) => void;
+  connectionType: ConnectionType;
+  setConnectionType: (connectionType: ConnectionType) => void;
   rpcEndpoint: string;
   setRpcEndpoint: (key: string) => void;
   consts: APIConstants;

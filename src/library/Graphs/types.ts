@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
-import type { SubscanPayoutData } from 'static/SubscanController/types';
+import type { SubscanPayoutData } from 'controllers/SubscanController/types';
 import type { AnyPolkawatch, AnySubscan } from 'types';
 
 export interface BondedProps {

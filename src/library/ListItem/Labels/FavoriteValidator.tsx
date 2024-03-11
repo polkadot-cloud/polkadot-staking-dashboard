@@ -9,7 +9,7 @@ import { useTooltip } from 'contexts/Tooltip';
 import { TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import type { FavoriteProps } from '../types';
-import { NotificationsController } from 'static/NotificationsController';
+import { NotificationsController } from 'controllers/NotificationsController';
 
 export const FavoriteValidator = ({ address }: FavoriteProps) => {
   const { t } = useTranslation('library');

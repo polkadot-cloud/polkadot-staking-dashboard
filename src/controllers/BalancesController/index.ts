@@ -3,8 +3,7 @@
 
 import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
-import { APIController } from 'static/APIController';
-import type { AnyApi, MaybeAddress, VoidFn } from 'types';
+import type { AnyApi, MaybeAddress } from 'types';
 import type {
   ActiveBalance,
   Balances,
@@ -14,8 +13,10 @@ import type {
 } from 'contexts/Balances/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type { PoolMembership } from 'contexts/Pools/types';
-import { SyncController } from 'static/SyncController';
+import { SyncController } from 'controllers/SyncController';
 import { defaultNominations } from './defaults';
+import type { VoidFn } from '@polkadot/api/types';
+import type { ApiPromise } from '@polkadot/api';
 
 export class BalancesController {
   // ------------------------------------------------------
@@ -41,16 +42,17 @@ export class BalancesController {
   static nominations: Record<string, Nominations> = {};
 
   // Unsubscribe objects.
-  static _unsubs: Record<string, VoidFn> = {};
+  static #unsubs: Record<string, VoidFn> = {};
 
   // ------------------------------------------------------
   // Account syncing.
   // ------------------------------------------------------
 
   // Subscribes new accounts and unsubscribes & removes removed accounts.
-  static syncAccounts = async (newAccounts: string[]): Promise<void> => {
-    const { api } = APIController;
-
+  static syncAccounts = async (
+    api: ApiPromise,
+    newAccounts: string[]
+  ): Promise<void> => {
     // Handle accounts that have been removed.
     this.handleRemovedAccounts(newAccounts);
 
@@ -95,6 +97,7 @@ export class BalancesController {
 
           // NOTE: async: contains runtime call for pending rewards.
           await this.handlePoolMembershipCallback(
+            api,
             address,
             poolMembersResult,
             claimPermissionsResult
@@ -117,7 +120,7 @@ export class BalancesController {
           );
         }
       );
-      this._unsubs[address] = unsub;
+      this.#unsubs[address] = unsub;
     });
   };
 
@@ -129,10 +132,10 @@ export class BalancesController {
     );
     // Unsubscribe from removed account subscriptions.
     accountsRemoved.forEach((account) => {
-      if (this._unsubs[account]) {
-        this._unsubs[account]();
+      if (this.#unsubs[account]) {
+        this.#unsubs[account]();
       }
-      delete this._unsubs[account];
+      delete this.#unsubs[account];
       delete this.ledgers[account];
       delete this.balances[account];
       delete this.payees[account];
@@ -228,6 +231,7 @@ export class BalancesController {
 
   // Handle pool membership and claim commission callback.
   static handlePoolMembershipCallback = async (
+    api: ApiPromise,
     address: string,
     poolMembersResult: AnyApi,
     claimPermissionsResult: AnyApi
@@ -251,7 +255,7 @@ export class BalancesController {
     membership.points = rmCommas(membership?.points || '0');
     const balance = new BigNumber(
       (
-        await APIController.api.call.nominationPoolsApi.pointsToBalance(
+        await api.call.nominationPoolsApi.pointsToBalance(
           membership.poolId,
           membership.points
         )
@@ -314,10 +318,10 @@ export class BalancesController {
 
   // Unsubscribe from all subscriptions and reset class members.
   static unsubscribe = (): void => {
-    Object.values(this._unsubs).forEach((unsub) => {
+    Object.values(this.#unsubs).forEach((unsub) => {
       unsub();
     });
-    this._unsubs = {};
+    this.#unsubs = {};
   };
 
   // Reset all saved state.

@@ -14,7 +14,7 @@ import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { defaultImportedAccountsContext } from './defaults';
 import type { ImportedAccountsContextInterface } from './types';
 import { useOtherAccounts } from '../OtherAccounts';
-import { BalancesController } from 'static/BalancesController';
+import { BalancesController } from 'controllers/BalancesController';
 import { useApi } from 'contexts/Api';
 
 export const ImportedAccountsContext =
@@ -29,7 +29,7 @@ export const ImportedAccountsProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const { isReady } = useApi();
+  const { isReady, api } = useApi();
   const { otherAccounts } = useOtherAccounts();
   const { extensionAccounts } = useExtensionAccounts();
   const allAccounts = extensionAccounts.concat(otherAccounts);
@@ -104,8 +104,11 @@ export const ImportedAccountsProvider = ({
 
   // Keep accounts in sync with `BalancesController`.
   useEffectIgnoreInitial(() => {
-    if (isReady) {
-      BalancesController.syncAccounts(allAccounts.map((a) => a.address));
+    if (api && isReady) {
+      BalancesController.syncAccounts(
+        api,
+        allAccounts.map((a) => a.address)
+      );
     }
   }, [isReady, allAccountsStringified]);
 

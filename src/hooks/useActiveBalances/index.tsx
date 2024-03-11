@@ -14,15 +14,15 @@ import type {
 } from 'contexts/Balances/types';
 import { useNetwork } from 'contexts/Network';
 import { useEffect, useRef, useState } from 'react';
-import { BalancesController } from 'static/BalancesController';
-import { isCustomEvent } from 'static/utils';
+import { BalancesController } from 'controllers/BalancesController';
+import { isCustomEvent } from 'controllers/utils';
 import { useEventListener } from 'usehooks-ts';
 import BigNumber from 'bignumber.js';
 import {
   defaultBalance,
   defaultLedger,
   defaultPayee,
-} from 'static/BalancesController/defaults';
+} from 'controllers/BalancesController/defaults';
 import type { PayeeConfig } from 'contexts/Setup/types';
 import type { PoolMembership } from 'contexts/Pools/types';
 

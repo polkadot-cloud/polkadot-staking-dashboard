@@ -4,9 +4,9 @@
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
-import type { NotificationText } from 'static/NotificationsController/types';
+import type { NotificationText } from 'controllers/NotificationsController/types';
 import type { CopyAddressProps } from '../types';
-import { NotificationsController } from 'static/NotificationsController';
+import { NotificationsController } from 'controllers/NotificationsController';
 
 export const CopyAddress = ({ address }: CopyAddressProps) => {
   const { t } = useTranslation('library');
