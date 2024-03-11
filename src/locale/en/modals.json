@@ -86,7 +86,7 @@
     "fastUnstakeNote1": "To register for fast unstake, you must not be actively staking for more than {{bondDuration}} eras.",
     "fastUnstakeNote2_one": "If you are inactive for at least {{count}} more Era, you will be able to register for fast unstake.",
     "fastUnstakeNote2_other": "If you are inactive for at least {{count}} more Eras, you will be able to register for fast unstake.",
-    "fastUnstakeOnceRegistered": "Once registerd you will be waiting in the fast unstake queue.",
+    "fastUnstakeOnceRegistered": "Once registered you will be waiting in the fast unstake queue.",
     "fastUnstakeRegistered": "Registered and Waiting to Unstake",
     "fastUnstakeSubmit_cancel": "Cancel Fast Unstake",
     "fastUnstakeSubmit_register": "Register",
