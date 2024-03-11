@@ -18,6 +18,7 @@ import type { SyncEvent } from 'controllers/SyncController/types';
 import type { DetailActivePool } from 'controllers/ActivePoolsController/types';
 import type { CSSProperties } from 'styled-components';
 import type { APIEventDetail } from 'model/Api/types';
+import type { OnlineStatusEvent } from 'controllers/OnlineStatusController/types';
 
 declare global {
   interface Window {
@@ -28,6 +29,7 @@ declare global {
   interface DocumentEventMap {
     notification: CustomEvent<NotificationItem>;
     'api-status': CustomEvent<APIEventDetail>;
+    'online-status': CustomEvent<OnlineStatusEvent>;
     'new-block-number': CustomEvent<{ blockNumber: string }>;
     'new-network-metrics': CustomEvent<{
       networkMetrics: APINetworkMetrics;
