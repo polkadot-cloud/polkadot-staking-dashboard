@@ -11,7 +11,7 @@ export class ApiController {
   // ------------------------------------------------------
 
   // The currently instantiated API instances, keyed by tab id.
-  static instances: Record<string, Api> = {};
+  static #instances: Record<string, Api> = {};
 
   // ------------------------------------------------------
   // Getters.
@@ -19,7 +19,11 @@ export class ApiController {
 
   // Get an Api instance.
   static get(network: NetworkName) {
-    return this.instances[network];
+    return this.#instances[network];
+  }
+
+  static get instances() {
+    return this.#instances;
   }
 
   // ------------------------------------------------------
@@ -34,9 +38,13 @@ export class ApiController {
   ) {
     // NOTE: This method should only be called to connect to a new instance. We therefore assume we
     // want to disconnect from all other existing instances.
-    Object.entries(this.instances).map(async ([key]) => {
-      await this.destroy(key as NetworkName);
-    });
+    await Promise.all(
+      Object.entries(this.#instances).map(async ([key, instance]) => {
+        // Cancel pending Sc loading before destroying instance.
+        instance?.cancelFn?.();
+        await this.destroy(key as NetworkName);
+      })
+    );
 
     this.instances[network] = new Api(network);
     await this.instances[network].initialize(type, rpcEndpoint);

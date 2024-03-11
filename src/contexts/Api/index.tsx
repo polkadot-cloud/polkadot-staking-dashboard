@@ -325,6 +325,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   };
 
   const reInitialiseApi = async (type: ConnectionType) => {
+    setApiStatus('disconnected');
     await ApiController.instantiate(network, type, rpcEndpoint);
   };
 
@@ -346,10 +347,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // If connection type changes, re-initialise API.
   useEffectIgnoreInitial(async () => {
-    const apiInstance = ApiController.get(network);
-    if (apiInstance.connectionType === 'sc') {
-      reInitialiseApi(isLightClient ? 'sc' : 'ws');
-    }
+    reInitialiseApi(isLightClient ? 'sc' : 'ws');
   }, [isLightClient]);
 
   // Re-initialise API and set defaults on network change.
@@ -371,7 +369,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       setStakingMetrics,
       stakingMetricsRef
     );
-    setApiStatus('disconnected');
 
     reInitialiseApi(isLightClient ? 'sc' : 'ws');
   }, [network]);

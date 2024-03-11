@@ -161,6 +161,52 @@ export class Api {
     await this.#provider.connect();
   }
 
+  // ------------------------------------------------------
+  // Event handling.
+  // ------------------------------------------------------
+
+  // Set up API event listeners. Sends information to the UI.
+  async initApiEvents() {
+    this.#api.on('ready', async () => {
+      this.dispatchEvent(this.ensureEventStatus('ready'));
+    });
+
+    this.#api.on('connected', () => {
+      this.dispatchEvent(this.ensureEventStatus('connected'));
+    });
+
+    this.#api.on('disconnected', () => {
+      this.dispatchEvent(this.ensureEventStatus('disconnected'));
+    });
+
+    this.#api.on('error', () => {
+      this.dispatchEvent(this.ensureEventStatus('error'));
+    });
+  }
+
+  // Handler for dispatching events.
+  dispatchEvent(
+    status: EventApiStatus,
+    options?: {
+      err?: string;
+    }
+  ) {
+    const detail: APIEventDetail = {
+      network: this.network,
+      status,
+      type: this.#connectionType,
+      rpcEndpoint: this.#rpcEndpoint,
+    };
+    if (options?.err) {
+      detail['err'] = options.err;
+    }
+    document.dispatchEvent(new CustomEvent('api-status', { detail }));
+  }
+
+  // ------------------------------------------------------
+  // Bootstrap from network.
+  // ------------------------------------------------------
+
   // Subscribe to block number.
   subscribeBlockNumber = async (): Promise<void> => {
     if (this.#unsubs['blockNumber'] === undefined) {
@@ -524,48 +570,6 @@ export class Api {
   };
 
   // ------------------------------------------------------
-  // Event handling.
-  // ------------------------------------------------------
-
-  // Set up API event listeners. Sends information to the UI.
-  async initApiEvents() {
-    this.#api.on('ready', async () => {
-      this.dispatchEvent(this.ensureEventStatus('ready'));
-    });
-
-    this.#api.on('connected', () => {
-      this.dispatchEvent(this.ensureEventStatus('connected'));
-    });
-
-    this.#api.on('disconnected', () => {
-      this.dispatchEvent(this.ensureEventStatus('disconnected'));
-    });
-
-    this.#api.on('error', () => {
-      this.dispatchEvent(this.ensureEventStatus('error'));
-    });
-  }
-
-  // Handler for dispatching events.
-  dispatchEvent(
-    status: EventApiStatus,
-    options?: {
-      err?: string;
-    }
-  ) {
-    const detail: APIEventDetail = {
-      network: this.network,
-      status,
-      type: this.#connectionType,
-      rpcEndpoint: this.#rpcEndpoint,
-    };
-    if (options?.err) {
-      detail['err'] = options.err;
-    }
-    document.dispatchEvent(new CustomEvent('api-status', { detail }));
-  }
-
-  // ------------------------------------------------------
   // Class helpers.
   // ------------------------------------------------------
 
@@ -587,8 +591,6 @@ export class Api {
 
   // Unsubscribe from all active subscriptions.
   unsubscribe = () => {
-    console.log(this.#unsubs);
-
     Object.values(this.#unsubs).forEach((unsub) => {
       unsub();
     });
@@ -608,7 +610,7 @@ export class Api {
     this.unsubscribe();
 
     // Disconnect provider and api.
-    this.#provider?.disconnect();
+    await this.#provider?.disconnect();
     await this.#api?.disconnect();
 
     // Tell UI Api is destroyed.
