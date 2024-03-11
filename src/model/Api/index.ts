@@ -127,8 +127,7 @@ export class Api {
       // Wait for api to be ready.
       await this.#api.isReady;
     } catch (e) {
-      // TODO: dipatch connection error event. Test throwing an error to see if api connect attempts
-      // continue to run.
+      this.dispatchEvent(this.ensureEventStatus('error'));
     }
   }
 
