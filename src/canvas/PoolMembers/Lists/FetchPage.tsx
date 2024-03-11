@@ -16,7 +16,7 @@ import { Member } from './Member';
 import type { FetchpageMembersListProps } from './types';
 import type { PoolMember } from 'contexts/Pools/PoolMembers/types';
 import { MotionContainer } from 'library/List/MotionContainer';
-import { SubscanController } from 'static/SubscanController';
+import { SubscanController } from 'controllers/SubscanController';
 
 export const MembersListInner = ({
   pagination,

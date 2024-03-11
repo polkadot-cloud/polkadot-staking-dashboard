@@ -13,7 +13,7 @@ import type {
 } from 'contexts/Balances/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type { PoolMembership } from 'contexts/Pools/types';
-import { SyncController } from 'static/SyncController';
+import { SyncController } from 'controllers/SyncController';
 import { defaultNominations } from './defaults';
 import type { VoidFn } from '@polkadot/api/types';
 import type { ApiPromise } from '@polkadot/api';

@@ -31,7 +31,7 @@ import {
 } from './defaults';
 import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
 import { useErasPerDay } from 'hooks/useErasPerDay';
-import { IdentitiesController } from 'static/IdentitiesController';
+import { IdentitiesController } from 'controllers/IdentitiesController';
 
 export const ValidatorsContext = createContext<ValidatorsContextInterface>(
   defaultValidatorsContext

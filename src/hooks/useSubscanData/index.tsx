@@ -4,14 +4,14 @@
 import { setStateWithRef } from '@w3ux/utils';
 import { usePlugins } from 'contexts/Plugins';
 import { useEffect, useRef, useState } from 'react';
-import { SubscanController } from 'static/SubscanController';
+import { SubscanController } from 'controllers/SubscanController';
 import type {
   PayoutType,
   SubscanData,
   SubscanPayout,
   SubscanPayoutData,
-} from 'static/SubscanController/types';
-import { isCustomEvent } from 'static/utils';
+} from 'controllers/SubscanController/types';
+import { isCustomEvent } from 'controllers/utils';
 import { useEventListener } from 'usehooks-ts';
 import { useErasToTimeLeft } from '../useErasToTimeLeft';
 import { useApi } from 'contexts/Api';

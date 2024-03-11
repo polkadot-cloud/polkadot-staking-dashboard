@@ -41,6 +41,9 @@ export class ApiController {
     }
 
     this.instances[network] = new Api(network);
+
+    console.log('attempt to ocnnect');
+
     await this.instances[network].initialize(type, rpcEndpoint);
   }
 

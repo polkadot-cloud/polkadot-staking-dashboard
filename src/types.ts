@@ -5,17 +5,17 @@ import type { FC, FunctionComponent, ReactNode, SVGProps } from 'react';
 import type { Theme } from 'contexts/Themes/types';
 import type { ExtensionInjected } from '@w3ux/react-connect-kit/types';
 import type BigNumber from 'bignumber.js';
-import type { NotificationItem } from 'static/NotificationsController/types';
+import type { NotificationItem } from 'controllers/NotificationsController/types';
 import type { ActiveBalance } from 'contexts/Balances/types';
-import type { PayoutType } from 'static/SubscanController/types';
+import type { PayoutType } from 'controllers/SubscanController/types';
 import type {
   APIActiveEra,
   APINetworkMetrics,
   APIPoolsConfig,
   APIStakingMetrics,
 } from 'contexts/Api/types';
-import type { SyncEvent } from 'static/SyncController/types';
-import type { DetailActivePool } from 'static/ActivePoolsController/types';
+import type { SyncEvent } from 'controllers/SyncController/types';
+import type { DetailActivePool } from 'controllers/ActivePoolsController/types';
 import type { CSSProperties } from 'styled-components';
 import type { APIEventDetail } from 'model/Api/types';
 

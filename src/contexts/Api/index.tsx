@@ -29,10 +29,10 @@ import {
   defaultNetworkMetrics,
   defaultStakingMetrics,
 } from './defaults';
-import { isCustomEvent } from 'static/utils';
+import { isCustomEvent } from 'controllers/utils';
 import { useEventListener } from 'usehooks-ts';
 import BigNumber from 'bignumber.js';
-import { SyncController } from 'static/SyncController';
+import { SyncController } from 'controllers/SyncController';
 import { ApiController } from 'controllers/ApiController';
 import type { ApiStatus, ConnectionType } from 'model/Api/types';
 

@@ -4,10 +4,10 @@
 import type { VoidFn } from '@polkadot/api/types';
 import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
 import type { ActivePool, PoolRoles } from 'contexts/Pools/ActivePool/types';
-import { IdentitiesController } from 'static/IdentitiesController';
+import { IdentitiesController } from 'controllers/IdentitiesController';
 import type { AnyApi } from 'types';
 import type { ActivePoolItem, DetailActivePool } from './types';
-import { SyncController } from 'static/SyncController';
+import { SyncController } from 'controllers/SyncController';
 import type { Nominations } from 'contexts/Balances/types';
 import type { ApiPromise } from '@polkadot/api';
 

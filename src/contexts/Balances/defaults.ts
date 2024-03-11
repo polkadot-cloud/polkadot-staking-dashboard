@@ -6,7 +6,7 @@ import {
   defaultBalance,
   defaultLedger,
   defaultPayee,
-} from 'static/BalancesController/defaults';
+} from 'controllers/BalancesController/defaults';
 import type { BalancesContextInterface } from './types';
 import BigNumber from 'bignumber.js';
 

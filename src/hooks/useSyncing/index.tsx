@@ -3,9 +3,9 @@
 
 import { setStateWithRef } from '@w3ux/utils';
 import { useEffect, useRef, useState } from 'react';
-import { SyncController } from 'static/SyncController';
-import type { SyncID, SyncIDConfig } from 'static/SyncController/types';
-import { isCustomEvent } from 'static/utils';
+import { SyncController } from 'controllers/SyncController';
+import type { SyncID, SyncIDConfig } from 'controllers/SyncController/types';
+import { isCustomEvent } from 'controllers/utils';
 import { useEventListener } from 'usehooks-ts';
 
 export const useSyncing = (config: SyncIDConfig) => {

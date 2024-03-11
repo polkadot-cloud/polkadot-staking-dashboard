@@ -16,7 +16,7 @@ import type { OtherAccountsContextInterface } from './types';
 import { defaultOtherAccountsContext } from './defaults';
 import { getLocalExternalAccounts } from '../ExternalAccounts/Utils';
 import type { ExternalAccountImportType } from '../ExternalAccounts/types';
-import { isCustomEvent } from 'static/utils';
+import { isCustomEvent } from 'controllers/utils';
 import { useExternalAccounts } from '../ExternalAccounts';
 import { useEventListener } from 'usehooks-ts';
 import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit';

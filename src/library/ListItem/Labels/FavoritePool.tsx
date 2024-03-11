@@ -9,7 +9,7 @@ import { useFavoritePools } from 'contexts/Pools/FavoritePools';
 import { useTooltip } from 'contexts/Tooltip';
 import { TooltipTrigger } from 'library/ListItem/Wrappers';
 import type { FavoriteProps } from '../types';
-import { NotificationsController } from 'static/NotificationsController';
+import { NotificationsController } from 'controllers/NotificationsController';
 
 export const FavoritePool = ({ address }: FavoriteProps) => {
   const { t } = useTranslation('library');

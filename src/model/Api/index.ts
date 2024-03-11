@@ -13,7 +13,7 @@ import type {
   APIPoolsConfig,
   APIStakingMetrics,
 } from 'contexts/Api/types';
-import { SyncController } from 'static/SyncController';
+import { SyncController } from 'controllers/SyncController';
 import type { AnyApi, NetworkName } from 'types';
 import { NetworkList, NetworksWithPagedRewards } from 'config/networks';
 import { makeCancelable, rmCommas } from '@w3ux/utils';
@@ -127,6 +127,8 @@ export class Api {
       // Wait for api to be ready.
       await this.#api.isReady;
     } catch (e) {
+      // TODO: report a custom api status error that can flag to the UI the rpxEndpoint failed -
+      // retry or select another one.
       this.dispatchEvent(this.ensureEventStatus('error'));
     }
   }

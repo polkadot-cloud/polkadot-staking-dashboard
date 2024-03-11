@@ -10,7 +10,7 @@ import { usePrices } from 'hooks/usePrices';
 import { useNetwork } from 'contexts/Network';
 import { Status } from './Status';
 import { Summary, Wrapper } from './Wrappers';
-import { isCustomEvent } from 'static/utils';
+import { isCustomEvent } from 'controllers/utils';
 import { useEventListener } from 'usehooks-ts';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import BigNumber from 'bignumber.js';

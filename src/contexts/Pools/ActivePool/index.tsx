@@ -20,12 +20,12 @@ import { useApi } from '../../Api';
 import { useBondedPools } from '../BondedPools';
 import { usePoolMembers } from '../PoolMembers';
 import type { ActivePoolContextState } from './types';
-import { SubscanController } from 'static/SubscanController';
+import { SubscanController } from 'controllers/SubscanController';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import { useBalances } from 'contexts/Balances';
-import { ActivePoolsController } from 'static/ActivePoolsController';
+import { ActivePoolsController } from 'controllers/ActivePoolsController';
 import { defaultActivePoolContext, defaultPoolRoles } from './defaults';
-import { SyncController } from 'static/SyncController';
+import { SyncController } from 'controllers/SyncController';
 import { useActivePools } from 'hooks/useActivePools';
 import BigNumber from 'bignumber.js';
 

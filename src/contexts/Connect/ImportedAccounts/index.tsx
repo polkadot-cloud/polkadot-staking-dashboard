@@ -14,7 +14,7 @@ import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { defaultImportedAccountsContext } from './defaults';
 import type { ImportedAccountsContextInterface } from './types';
 import { useOtherAccounts } from '../OtherAccounts';
-import { BalancesController } from 'static/BalancesController';
+import { BalancesController } from 'controllers/BalancesController';
 import { useApi } from 'contexts/Api';
 
 export const ImportedAccountsContext =
