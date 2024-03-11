@@ -45,17 +45,17 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const [apiStatus, setApiStatus] = useState<ApiStatus>('disconnected');
 
   // Store whether light client is active.
-  const [isLightClient, setIsLightClientState] = useState<boolean>(
-    !!localStorage.getItem('light_client')
+  const [connectionType, setConnectionTypeState] = useState<ConnectionType>(
+    localStorage.getItem('light_client') ? 'sc' : 'ws'
   );
 
   // Whether this context has initialised.
   const initialisedRef = useRef<boolean>(false);
 
   // Setter for whether light client is active. Updates state and local storage.
-  const setIsLightClient = (value: boolean) => {
-    setIsLightClientState(value);
-    if (!value) {
+  const setConnectionType = (value: ConnectionType) => {
+    setConnectionTypeState(value);
+    if (value === 'ws') {
       localStorage.removeItem('light_client');
       return;
     }
@@ -194,7 +194,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       // UI is only interested in events for the current network.
       if (
         eventNetwork !== network ||
-        (isLightClient && type === 'ws') ||
+        (connectionType === 'sc' && type === 'ws') ||
         eventRpcEndpoints !== rpcEndpoint
       ) {
         return;
@@ -216,7 +216,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         case 'error':
           // Reinitialise api on error. We can confidently do this with well-known RPC providers,
           // but not with custom endpoints.
-          reInitialiseApi(isLightClient ? 'sc' : 'ws');
+          reInitialiseApi(connectionType);
           break;
       }
     }
@@ -334,21 +334,21 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     // Uses initialisation ref to check whether this is the first context render, and initializes an Api instance for the current network if that is the case.
     if (!initialisedRef.current) {
       initialisedRef.current = true;
-      reInitialiseApi(isLightClient ? 'sc' : 'ws');
+      reInitialiseApi(connectionType);
     }
   });
 
   // If RPC endpoint changes, and not on light client, re-initialise API.
   useEffectIgnoreInitial(async () => {
-    if (!isLightClient) {
+    if (connectionType !== 'sc') {
       reInitialiseApi('ws');
     }
   }, [rpcEndpoint]);
 
   // If connection type changes, re-initialise API.
   useEffectIgnoreInitial(async () => {
-    reInitialiseApi(isLightClient ? 'sc' : 'ws');
-  }, [isLightClient]);
+    reInitialiseApi(connectionType);
+  }, [connectionType]);
 
   // Re-initialise API and set defaults on network change.
   useEffectIgnoreInitial(() => {
@@ -370,7 +370,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       stakingMetricsRef
     );
 
-    reInitialiseApi(isLightClient ? 'sc' : 'ws');
+    reInitialiseApi(connectionType);
   }, [network]);
 
   // Call `cancelFn` and `unsubscribe` on active instnace on unmount.
@@ -405,8 +405,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         api: ApiController.get(network)?.api || null,
         chainState,
         apiStatus,
-        isLightClient,
-        setIsLightClient,
+        connectionType,
+        setConnectionType,
         rpcEndpoint,
         setRpcEndpoint,
         isReady: apiStatus === 'ready',

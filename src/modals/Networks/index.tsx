@@ -32,8 +32,10 @@ export const Networks = () => {
   const { openPromptWith } = usePrompt();
   const { network, switchNetwork } = useNetwork();
   const { setModalStatus, setModalResize } = useOverlay().modal;
-  const { isLightClient, setIsLightClient, rpcEndpoint } = useApi();
+  const { connectionType, setConnectionType, rpcEndpoint } = useApi();
   const networkKey = network;
+
+  const isLightClient = connectionType === 'sc';
 
   // Likely never going to happen; here just to be safe.
   useEffect(() => setModalResize(), [isBraveBrowser]);
@@ -90,7 +92,7 @@ export const Networks = () => {
                 disabled={!isLightClient}
                 type="button"
                 onClick={() => {
-                  setIsLightClient(false);
+                  setConnectionType('ws');
                   switchNetwork(networkKey as NetworkName);
                   setModalStatus('closing');
                 }}
@@ -115,7 +117,7 @@ export const Networks = () => {
                 className="off"
                 type="button"
                 onClick={() => {
-                  setIsLightClient(true);
+                  setConnectionType('sc');
                   switchNetwork(networkKey as NetworkName);
                   setModalStatus('closing');
                 }}

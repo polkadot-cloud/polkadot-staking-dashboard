@@ -21,7 +21,7 @@ import { Odometer } from '@w3ux/react-odometer';
 export const NetworkBar = () => {
   const { t } = useTranslation('library');
   const { plugins } = usePlugins();
-  const { isLightClient } = useApi();
+  const { connectionType } = useApi();
   const { networkData, network } = useNetwork();
   const prices = usePrices();
 
@@ -55,7 +55,7 @@ export const NetworkBar = () => {
           <p>
             {ORGANISATION === undefined
               ? `${capitalizeFirstLetter(network)}${
-                  isLightClient ? ` Light` : ``
+                  connectionType === 'sc' ? ` Light` : ``
                 }`
               : ORGANISATION}
           </p>
