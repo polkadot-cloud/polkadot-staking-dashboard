@@ -153,7 +153,7 @@ export class Api {
   // Event handling.
   // ------------------------------------------------------
 
-  // Set up API event listeners. Relays information to `document` for the UI to handle.
+  // Set up API event listeners. Sends information to the UI.
   async initApiEvents() {
     this.#api.on('ready', async () => {
       this.dispatchEvent(this.ensureEventStatus('ready'));
@@ -167,8 +167,8 @@ export class Api {
       this.dispatchEvent(this.ensureEventStatus('disconnected'));
     });
 
-    this.#api.on('error', (err: string) => {
-      this.dispatchEvent(this.ensureEventStatus('error'), { err });
+    this.#api.on('error', () => {
+      this.dispatchEvent(this.ensureEventStatus('error'));
     });
   }
 
@@ -205,4 +205,21 @@ export class Api {
     }
     return 'error' as EventStatus;
   };
+
+  // ------------------------------------------------------
+  // Disconnect.
+  // ------------------------------------------------------
+
+  // Disconnect gracefully from API and provider.
+  async disconnect(destroy = false) {
+    // Disconnect provider and api.
+    this.#provider?.disconnect();
+    await this.#api?.disconnect();
+
+    // Tell UI Api is destroyed.
+    if (destroy) {
+      // TODO: destroyed event is not currently in use.
+      this.dispatchEvent(this.ensureEventStatus('destroyed'));
+    }
+  }
 }
