@@ -115,6 +115,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Fetch chain state. Called once `provider` has been initialised.
   const onApiReady = async () => {
+    // TODO: get the correct `api` instance from `ApiController`.
     const { api } = APIController;
 
     const newChainState = await Promise.all([
@@ -139,6 +140,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Bootstrap app-wide chain state.
   const bootstrapNetworkConfig = async () => {
+    // TODO: Bootstrap Api instance from ApiController.
     const {
       consts: newConsts,
       networkMetrics: newNetworkMetrics,
@@ -166,6 +168,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     SyncController.dispatch('initialization', 'complete');
 
     // Initialise subscriptions.
+    // TODO: initialise all this from ApiController.
     APIController.subscribeNetworkMetrics();
     APIController.subscribePoolsConfig();
     APIController.subscribeActiveEra();
@@ -312,6 +315,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   useEffect(() => {
     // NOTE: `provider` should always be present after the first call to initialize. We therefore
     // can check whether on initial api connection based  `provider`.
+
+    // TODO: Use an initialisation ref to check whether this is the first call to initialize, and initialize an Api instance for the network.
     if (!APIController.provider) {
       APIController.initialize(
         network,
@@ -328,6 +333,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // If RPC endpoint changes, and not on light client, re-connect.
   useEffectIgnoreInitial(() => {
     if (!isLightClient) {
+      // TODO: use instance via ApiController to destroy the current instance and create a new one.
       APIController.initialize(network, 'ws', rpcEndpoint, {
         clearState: false,
       });
@@ -337,6 +343,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Trigger API reconnect on network or light client change.
   useEffectIgnoreInitial(() => {
     setRpcEndpoint(initialRpcEndpoint());
+
+    // TODO: instead of checking network change, check if the current Api instance is of the `sc`
+    // type. If so, do not clear state.
     const networkSwitch = network !== APIController.network;
 
     // If network changes, reset consts and chain state.
@@ -358,6 +367,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     }
 
     // Reconnect API instance, clearing state only if network has changed.
+    // TODO: use instance via ApiController to destroy the current instance and create a new one.
     APIController.initialize(
       network,
       isLightClient ? 'sc' : 'ws',
@@ -366,7 +376,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     );
   }, [isLightClient, network]);
 
-  // Add event listener for `polkadot-api` notifications. Also handles unmounting logic.
+  // Add event listener for `polkadot-api` notifications. Also handles unmounting logic. TODO: Move
+  // this to `useEventListener` hook, and use a separate `useEffect` to call `cancelFn` and
+  // `unsubscribe` on all instnaces.
   useEffect(() => {
     document.addEventListener('polkadot-api', handleNewApiStatus);
     return () => {
@@ -398,6 +410,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   return (
     <APIContext.Provider
       value={{
+        // TODO: use correct instance from ApiController.
         api: APIController.api,
         chainState,
         apiStatus,
