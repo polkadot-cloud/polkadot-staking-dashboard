@@ -164,8 +164,6 @@ export interface ComponentBase {
   style?: CSSProperties;
 }
 
-export type VoidFn = () => void;
-
 export type ComponentBaseWithClassName = ComponentBase & {
   // passing a className string.
   className?: string;

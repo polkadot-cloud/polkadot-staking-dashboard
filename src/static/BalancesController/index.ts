@@ -4,7 +4,7 @@
 import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { APIController } from 'static/APIController';
-import type { AnyApi, MaybeAddress, VoidFn } from 'types';
+import type { AnyApi, MaybeAddress } from 'types';
 import type {
   ActiveBalance,
   Balances,
@@ -16,6 +16,7 @@ import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type { PoolMembership } from 'contexts/Pools/types';
 import { SyncController } from 'static/SyncController';
 import { defaultNominations } from './defaults';
+import type { VoidFn } from '@polkadot/api/types';
 
 export class BalancesController {
   // ------------------------------------------------------
