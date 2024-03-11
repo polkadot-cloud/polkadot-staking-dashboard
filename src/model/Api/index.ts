@@ -127,9 +127,9 @@ export class Api {
       // Wait for api to be ready.
       await this.#api.isReady;
     } catch (e) {
-      // TODO: report a custom api status error that can flag to the UI the rpxEndpoint failed -
-      // retry or select another one.
-      this.dispatchEvent(this.ensureEventStatus('error'));
+      // TODO: report a custom api status error that can flag to the UI the rpcEndpoint failed -
+      // retry or select another one. Useful for custom endpoint configs.
+      // this.dispatchEvent(this.ensureEventStatus('error'));
     }
   }
 
