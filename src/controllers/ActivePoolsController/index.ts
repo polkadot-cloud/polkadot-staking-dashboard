@@ -26,7 +26,7 @@ export class ActivePoolsController {
   static poolNominations: Record<string, Nominations> = {};
 
   // Unsubscribe objects.
-  static _unsubs: Record<string, VoidFn> = {};
+  static #unsubs: Record<string, VoidFn> = {};
 
   // ------------------------------------------------------
   // Pool membership syncing.
@@ -88,7 +88,7 @@ export class ActivePoolsController {
             }
           }
         );
-        this._unsubs[pool.id] = unsub;
+        this.#unsubs[pool.id] = unsub;
       });
     } else {
       // Status: Pools Synced Completed.
@@ -160,10 +160,10 @@ export class ActivePoolsController {
 
     // Unsubscribe from removed pool subscriptions.
     poolsRemoved.forEach((pool) => {
-      if (this._unsubs[pool.id]) {
-        this._unsubs[pool.id]();
+      if (this.#unsubs[pool.id]) {
+        this.#unsubs[pool.id]();
       }
-      delete this._unsubs[pool.id];
+      delete this.#unsubs[pool.id];
       delete this.activePools[pool.id];
       delete this.poolNominations[pool.id];
     });
@@ -178,10 +178,10 @@ export class ActivePoolsController {
 
   // Unsubscribe from all subscriptions and reset class members.
   static unsubscribe = (): void => {
-    Object.values(this._unsubs).forEach((unsub) => {
+    Object.values(this.#unsubs).forEach((unsub) => {
       unsub();
     });
-    this._unsubs = {};
+    this.#unsubs = {};
   };
 
   static resetState = (): void => {

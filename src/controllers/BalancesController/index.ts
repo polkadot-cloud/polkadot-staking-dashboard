@@ -42,7 +42,7 @@ export class BalancesController {
   static nominations: Record<string, Nominations> = {};
 
   // Unsubscribe objects.
-  static _unsubs: Record<string, VoidFn> = {};
+  static #unsubs: Record<string, VoidFn> = {};
 
   // ------------------------------------------------------
   // Account syncing.
@@ -120,7 +120,7 @@ export class BalancesController {
           );
         }
       );
-      this._unsubs[address] = unsub;
+      this.#unsubs[address] = unsub;
     });
   };
 
@@ -132,10 +132,10 @@ export class BalancesController {
     );
     // Unsubscribe from removed account subscriptions.
     accountsRemoved.forEach((account) => {
-      if (this._unsubs[account]) {
-        this._unsubs[account]();
+      if (this.#unsubs[account]) {
+        this.#unsubs[account]();
       }
-      delete this._unsubs[account];
+      delete this.#unsubs[account];
       delete this.ledgers[account];
       delete this.balances[account];
       delete this.payees[account];
@@ -318,10 +318,10 @@ export class BalancesController {
 
   // Unsubscribe from all subscriptions and reset class members.
   static unsubscribe = (): void => {
-    Object.values(this._unsubs).forEach((unsub) => {
+    Object.values(this.#unsubs).forEach((unsub) => {
       unsub();
     });
-    this._unsubs = {};
+    this.#unsubs = {};
   };
 
   // Reset all saved state.
