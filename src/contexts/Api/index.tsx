@@ -41,7 +41,7 @@ export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 export const useApi = () => useContext(APIContext);
 
 export const APIProvider = ({ children, network }: APIProviderProps) => {
-  // Store API connection status.
+  // Store Api connection status for the current network.
   const [apiStatus, setApiStatus] = useState<ApiStatus>('disconnected');
 
   // Store whether light client is active.
@@ -69,10 +69,10 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         localStorage.removeItem(`${network}_rpc_endpoint`);
       }
     }
-
     return NetworkList[network].endpoints.defaultRpcEndpoint;
   };
 
+  // The current RPC endpoint for the network.
   const [rpcEndpoint, setRpcEndpointState] =
     useState<string>(initialRpcEndpoint());
 
@@ -123,8 +123,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       api.consts.system.ss58Prefix,
     ]);
 
-    // check that chain values have been fetched before committing to state.
-    // could be expanded to check supported chains.
+    // Check that chain values have been fetched before committing to state. Could be expanded to
+    // check supported chains.
     if (newChainState.every((c) => !!c?.toHuman())) {
       const chain = newChainState[0]?.toString();
       const version = newChainState[1]?.toJSON();
@@ -137,7 +137,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     bootstrapNetworkConfig();
   };
 
-  // Connection callback. Called once `apiStatus` is `ready`.
+  // Bootstrap app-wide chain state.
   const bootstrapNetworkConfig = async () => {
     const {
       consts: newConsts,
@@ -171,27 +171,20 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     APIController.subscribeActiveEra();
   };
 
-  const onApiDisconnected = (err?: string) => {
+  // Handle Api disconnection.
+  const onApiDisconnected = () => {
     setApiStatus('disconnected');
-
-    // Trigger a notification if this disconnect is a result of an offline error.
-    if (err === 'offline-event') {
-      // Start attempting reconnects.
-      APIController.initialize(
-        network,
-        isLightClient ? 'sc' : 'ws',
-        rpcEndpoint,
-        {
-          clearState: false,
-        }
-      );
-    }
   };
 
   // Handle `polkadot-api` events.
-  const eventCallback = (e: Event) => {
+  const handleNewApiStatus = (e: Event) => {
     if (isCustomEvent(e)) {
-      const { event, err } = e.detail;
+      const { event, network: eventNetwork } = e.detail;
+
+      // UI is only interested in events for the current network.
+      if (eventNetwork !== network) {
+        return;
+      }
 
       switch (event) {
         case 'ready':
@@ -204,10 +197,10 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
           setApiStatus('connected');
           break;
         case 'disconnected':
-          onApiDisconnected(err);
+          onApiDisconnected();
           break;
         case 'error':
-          onApiDisconnected(err);
+          // TODO: Handle api error, test if re-initialisation is needed.
           break;
       }
     }
@@ -375,9 +368,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Add event listener for `polkadot-api` notifications. Also handles unmounting logic.
   useEffect(() => {
-    document.addEventListener('polkadot-api', eventCallback);
+    document.addEventListener('polkadot-api', handleNewApiStatus);
     return () => {
-      document.removeEventListener('polkadot-api', eventCallback);
+      document.removeEventListener('polkadot-api', handleNewApiStatus);
       APIController.cancelFn?.();
       APIController.unsubscribe();
     };

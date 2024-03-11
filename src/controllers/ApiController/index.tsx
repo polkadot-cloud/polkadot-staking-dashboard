@@ -14,6 +14,15 @@ export class ApiController {
   static instances: Record<string, Api> = {};
 
   // ------------------------------------------------------
+  // Getters.
+  // ------------------------------------------------------
+
+  // Get an Api instance.
+  static get(network: NetworkName) {
+    return this.instances[network];
+  }
+
+  // ------------------------------------------------------
   // Api instance methods.
   // ------------------------------------------------------
 
