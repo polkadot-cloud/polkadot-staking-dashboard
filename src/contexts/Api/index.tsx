@@ -48,13 +48,16 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const [connectionType, setConnectionTypeState] = useState<ConnectionType>(
     localStorage.getItem('light_client') ? 'sc' : 'ws'
   );
+  const connectionTypeRef = useRef(connectionType);
 
   // Whether this context has initialised.
   const initialisedRef = useRef<boolean>(false);
 
   // Setter for whether light client is active. Updates state and local storage.
   const setConnectionType = (value: ConnectionType) => {
+    connectionTypeRef.current = value;
     setConnectionTypeState(value);
+
     if (value === 'ws') {
       localStorage.removeItem('light_client');
       return;
@@ -78,6 +81,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // The current RPC endpoint for the network.
   const [rpcEndpoint, setRpcEndpointState] =
     useState<string>(initialRpcEndpoint());
+  const rpcEndpointRef = useRef(rpcEndpoint);
 
   // Set RPC provider with local storage and validity checks.
   const setRpcEndpoint = (key: string) => {
@@ -85,6 +89,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       return;
     }
     localStorage.setItem(`${network}_rpc_endpoint`, key);
+    rpcEndpointRef.current = key;
     setRpcEndpointState(key);
   };
 
@@ -194,8 +199,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       // UI is only interested in events for the current network.
       if (
         eventNetwork !== network ||
-        (connectionType === 'sc' && type === 'ws') ||
-        eventRpcEndpoints !== rpcEndpoint
+        connectionTypeRef.current !== type ||
+        rpcEndpointRef.current !== eventRpcEndpoints
       ) {
         return;
       }
