@@ -18,6 +18,7 @@ import type { AnyApi, NetworkName } from 'types';
 import { NetworkList, NetworksWithPagedRewards } from 'config/networks';
 import { makeCancelable, rmCommas } from '@w3ux/utils';
 import { WellKnownChain } from '@substrate/connect';
+import type { BlockNumber } from '@polkadot/types/interfaces';
 import type {
   APIEventDetail,
   ConnectionType,
@@ -159,6 +160,23 @@ export class Api {
     this.#provider = new ScProvider(Sc, WellKnownChain[lightClientKey]);
     await this.#provider.connect();
   }
+
+  // Subscribe to block number.
+  subscribeBlockNumber = async (): Promise<void> => {
+    if (this.#unsubs['blockNumber'] === undefined) {
+      // Get block numbers.
+      const unsub = await this.api.query.system.number((num: BlockNumber) => {
+        document.dispatchEvent(
+          new CustomEvent(`new-block-number`, {
+            detail: { blockNumber: num.toString() },
+          })
+        );
+      });
+
+      // Block number subscription now initialised. Store unsub.
+      this.#unsubs['blockNumber'] = unsub as unknown as VoidFn;
+    }
+  };
 
   // Fetch network config to bootstrap UI state.
   bootstrapNetworkConfig = async (): Promise<{
@@ -569,6 +587,8 @@ export class Api {
 
   // Unsubscribe from all active subscriptions.
   unsubscribe = () => {
+    console.log(this.#unsubs);
+
     Object.values(this.#unsubs).forEach((unsub) => {
       unsub();
     });
@@ -585,6 +605,8 @@ export class Api {
 
   // Disconnect gracefully from API and provider.
   async disconnect(destroy = false) {
+    this.unsubscribe();
+
     // Disconnect provider and api.
     this.#provider?.disconnect();
     await this.#api?.disconnect();

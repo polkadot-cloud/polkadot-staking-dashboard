@@ -33,15 +33,12 @@ export class ApiController {
     rpcEndpoint: string
   ) {
     // NOTE: This method should only be called to connect to a new instance. We therefore assume we
-    // want to disconnect from existing instances for this network. The following condition will
-    // only be met if there is an existing stale instance in class state, or if this method is used
-    // incorrectly.
-    if (this.instances[network]) {
-      await this.destroy(network);
-    }
+    // want to disconnect from all other existing instances.
+    Object.entries(this.instances).map(async ([key]) => {
+      await this.destroy(key as NetworkName);
+    });
 
     this.instances[network] = new Api(network);
-
     await this.instances[network].initialize(type, rpcEndpoint);
   }
 

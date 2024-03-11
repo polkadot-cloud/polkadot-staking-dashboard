@@ -170,6 +170,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     SyncController.dispatch('initialization', 'complete');
 
     // Initialise subscriptions.
+    apiInstance.subscribeBlockNumber();
     apiInstance.subscribeNetworkMetrics();
     apiInstance.subscribePoolsConfig();
     apiInstance.subscribeActiveEra();
