@@ -213,7 +213,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
           onApiDisconnected();
           break;
         case 'error':
-          // TODO: Handle api error, test if re-initialisation is needed.
+          // Reinitialise api on error. We can confidently do this with well-known RPC providers,
+          // but not with custom endpoints.
+          reInitialiseApi(isLightClient ? 'sc' : 'ws');
           break;
       }
     }
