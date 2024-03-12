@@ -2640,19 +2640,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/extension-assets@npm:0.1.0":
-  version: 0.1.0
-  resolution: "@w3ux/extension-assets@npm:0.1.0"
-  peerDependencies:
-    react: ^18
-  checksum: c6b2d1de15322182985d1b654497ed89caccf0f440fdc7fe5ca87a64e4b4d28752ec691c2983eb0e496e81412cbb1f7114097482ccd58f89f34f29300243da96
-  languageName: node
-  linkType: hard
-
 "@w3ux/extension-assets@npm:^0.0.14":
   version: 0.0.14
   resolution: "@w3ux/extension-assets@npm:0.0.14"
   checksum: 2080f571696ff4c4d5636b31d52a3556cc5253ca46ff3184004a4fcf2d0acf1f880b7db9675ca40bc884d4ab8c9247727c5a6209a54adec529fcd87c0d60db6e
+  languageName: node
+  linkType: hard
+
+"@w3ux/extension-assets@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@w3ux/extension-assets@npm:0.1.1"
+  peerDependencies:
+    react: ^18
+  checksum: 20039d03725fa0f8831fc5e010cc6dfb830eb6571c4400ea9318aa26c3afd0f40c8b7400742c3950e539f6bbb9840b0d13ae087d7e32893bc6d2f21c35a935c7
   languageName: node
   linkType: hard
 
@@ -6526,7 +6526,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^7.1.0"
     "@typescript-eslint/parser": "npm:^7.1.0"
     "@vitejs/plugin-react-swc": "npm:^3.6.0"
-    "@w3ux/extension-assets": "npm:0.1.0"
+    "@w3ux/extension-assets": "npm:^0.1.1"
     "@w3ux/hooks": "npm:^0.0.3"
     "@w3ux/react-connect-kit": "npm:^0.0.4"
     "@w3ux/react-odometer": "npm:^0.0.3"
