@@ -2,12 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyApi } from 'types';
-import { APIController } from '../APIController';
+import type { ApiPromise } from '@polkadot/api';
 
 export class IdentitiesController {
-  static fetch = async (addresses: string[]) => {
-    const { api } = APIController;
-
+  static fetch = async (api: ApiPromise, addresses: string[]) => {
     // Fetches identities for addresses.
     const fetchBase = async () => {
       const result = (await api.query.identity.identityOf.multi(addresses)).map(

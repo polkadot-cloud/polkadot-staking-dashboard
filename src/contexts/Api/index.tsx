@@ -29,30 +29,36 @@ import {
   defaultNetworkMetrics,
   defaultStakingMetrics,
 } from './defaults';
-import { APIController } from 'static/APIController';
-import { isCustomEvent } from 'static/utils';
-import type { ApiStatus } from 'static/APIController/types';
+import { isCustomEvent } from 'controllers/utils';
 import { useEventListener } from 'usehooks-ts';
 import BigNumber from 'bignumber.js';
-import { SyncController } from 'static/SyncController';
+import { SyncController } from 'controllers/SyncController';
+import { ApiController } from 'controllers/ApiController';
+import type { ApiStatus, ConnectionType } from 'model/Api/types';
 
 export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 
 export const useApi = () => useContext(APIContext);
 
 export const APIProvider = ({ children, network }: APIProviderProps) => {
-  // Store API connection status.
+  // Store Api connection status for the current network.
   const [apiStatus, setApiStatus] = useState<ApiStatus>('disconnected');
 
   // Store whether light client is active.
-  const [isLightClient, setIsLightClientState] = useState<boolean>(
-    !!localStorage.getItem('light_client')
+  const [connectionType, setConnectionTypeState] = useState<ConnectionType>(
+    localStorage.getItem('light_client') ? 'sc' : 'ws'
   );
+  const connectionTypeRef = useRef(connectionType);
+
+  // Whether this context has initialised.
+  const initialisedRef = useRef<boolean>(false);
 
   // Setter for whether light client is active. Updates state and local storage.
-  const setIsLightClient = (value: boolean) => {
-    setIsLightClientState(value);
-    if (!value) {
+  const setConnectionType = (value: ConnectionType) => {
+    connectionTypeRef.current = value;
+    setConnectionTypeState(value);
+
+    if (value === 'ws') {
       localStorage.removeItem('light_client');
       return;
     }
@@ -69,12 +75,13 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         localStorage.removeItem(`${network}_rpc_endpoint`);
       }
     }
-
     return NetworkList[network].endpoints.defaultRpcEndpoint;
   };
 
+  // The current RPC endpoint for the network.
   const [rpcEndpoint, setRpcEndpointState] =
     useState<string>(initialRpcEndpoint());
+  const rpcEndpointRef = useRef(rpcEndpoint);
 
   // Set RPC provider with local storage and validity checks.
   const setRpcEndpoint = (key: string) => {
@@ -82,6 +89,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       return;
     }
     localStorage.setItem(`${network}_rpc_endpoint`, key);
+    rpcEndpointRef.current = key;
     setRpcEndpointState(key);
   };
 
@@ -115,7 +123,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Fetch chain state. Called once `provider` has been initialised.
   const onApiReady = async () => {
-    const { api } = APIController;
+    const { api } = ApiController.get(network);
 
     const newChainState = await Promise.all([
       api.rpc.system.chain(),
@@ -123,13 +131,12 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       api.consts.system.ss58Prefix,
     ]);
 
-    // check that chain values have been fetched before committing to state.
-    // could be expanded to check supported chains.
+    // Check that chain values have been fetched before committing to state. Could be expanded to
+    // check supported chains.
     if (newChainState.every((c) => !!c?.toHuman())) {
       const chain = newChainState[0]?.toString();
       const version = newChainState[1]?.toJSON();
       const ss58Prefix = Number(newChainState[2]?.toString());
-
       setChainState({ chain, version, ss58Prefix });
     }
 
@@ -137,15 +144,17 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     bootstrapNetworkConfig();
   };
 
-  // Connection callback. Called once `apiStatus` is `ready`.
+  // Bootstrap app-wide chain state.
   const bootstrapNetworkConfig = async () => {
+    const apiInstance = ApiController.get(network);
+
     const {
       consts: newConsts,
       networkMetrics: newNetworkMetrics,
       activeEra: newActiveEra,
       poolsConfig: newPoolsConfig,
       stakingMetrics: newStakingMetrics,
-    } = await APIController.bootstrapNetworkConfig();
+    } = await apiInstance.bootstrapNetworkConfig();
 
     // Populate all config state.
     setConsts(newConsts);
@@ -166,34 +175,37 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     SyncController.dispatch('initialization', 'complete');
 
     // Initialise subscriptions.
-    APIController.subscribeNetworkMetrics();
-    APIController.subscribePoolsConfig();
-    APIController.subscribeActiveEra();
+    apiInstance.subscribeBlockNumber();
+    apiInstance.subscribeNetworkMetrics();
+    apiInstance.subscribePoolsConfig();
+    apiInstance.subscribeActiveEra();
   };
 
-  const onApiDisconnected = (err?: string) => {
+  // Handle Api disconnection.
+  const onApiDisconnected = () => {
     setApiStatus('disconnected');
-
-    // Trigger a notification if this disconnect is a result of an offline error.
-    if (err === 'offline-event') {
-      // Start attempting reconnects.
-      APIController.initialize(
-        network,
-        isLightClient ? 'sc' : 'ws',
-        rpcEndpoint,
-        {
-          clearState: false,
-        }
-      );
-    }
   };
 
   // Handle `polkadot-api` events.
-  const eventCallback = (e: Event) => {
+  const handleNewApiStatus = (e: Event) => {
     if (isCustomEvent(e)) {
-      const { event, err } = e.detail;
+      const {
+        status,
+        network: eventNetwork,
+        type,
+        rpcEndpoint: eventRpcEndpoints,
+      } = e.detail;
 
-      switch (event) {
+      // UI is only interested in events for the current network.
+      if (
+        eventNetwork !== network ||
+        connectionTypeRef.current !== type ||
+        rpcEndpointRef.current !== eventRpcEndpoints
+      ) {
+        return;
+      }
+
+      switch (status) {
         case 'ready':
           onApiReady();
           break;
@@ -204,10 +216,12 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
           setApiStatus('connected');
           break;
         case 'disconnected':
-          onApiDisconnected(err);
+          onApiDisconnected();
           break;
         case 'error':
-          onApiDisconnected(err);
+          // Reinitialise api on error. We can confidently do this with well-known RPC providers,
+          // but not with custom endpoints.
+          reInitialiseApi(connectionType);
           break;
       }
     }
@@ -315,87 +329,75 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     );
   };
 
-  // Handle an initial api connection.
+  const reInitialiseApi = async (type: ConnectionType) => {
+    setApiStatus('disconnected');
+    await ApiController.instantiate(network, type, rpcEndpoint);
+  };
+
+  // Handle initial api connection.
   useEffect(() => {
-    // NOTE: `provider` should always be present after the first call to initialize. We therefore
-    // can check whether on initial api connection based  `provider`.
-    if (!APIController.provider) {
-      APIController.initialize(
-        network,
-        isLightClient ? 'sc' : 'ws',
-        rpcEndpoint,
-        {
-          clearState: true,
-          initial: true,
-        }
-      );
+    // Uses initialisation ref to check whether this is the first context render, and initializes an Api instance for the current network if that is the case.
+    if (!initialisedRef.current) {
+      initialisedRef.current = true;
+      reInitialiseApi(connectionType);
     }
   });
 
-  // If RPC endpoint changes, and not on light client, re-connect.
-  useEffectIgnoreInitial(() => {
-    if (!isLightClient) {
-      APIController.initialize(network, 'ws', rpcEndpoint, {
-        clearState: false,
-      });
+  // If RPC endpoint changes, and not on light client, re-initialise API.
+  useEffectIgnoreInitial(async () => {
+    if (connectionType !== 'sc') {
+      reInitialiseApi('ws');
     }
   }, [rpcEndpoint]);
 
-  // Trigger API reconnect on network or light client change.
+  // If connection type changes, re-initialise API.
+  useEffectIgnoreInitial(async () => {
+    reInitialiseApi(connectionType);
+  }, [connectionType]);
+
+  // Re-initialise API and set defaults on network change.
   useEffectIgnoreInitial(() => {
     setRpcEndpoint(initialRpcEndpoint());
-    const networkSwitch = network !== APIController.network;
 
-    // If network changes, reset consts and chain state.
-    if (networkSwitch) {
-      setConsts(defaultConsts);
-      setChainState(defaultChainState);
-      setStateWithRef(
-        defaultNetworkMetrics,
-        setNetworkMetrics,
-        networkMetricsRef
-      );
-      setStateWithRef(defaultActiveEra, setActiveEra, activeEraRef);
-      setStateWithRef(defaultPoolsConfig, setPoolsConfig, poolsConfigRef);
-      setStateWithRef(
-        defaultStakingMetrics,
-        setStakingMetrics,
-        stakingMetricsRef
-      );
-    }
-
-    // Reconnect API instance, clearing state only if network has changed.
-    APIController.initialize(
-      network,
-      isLightClient ? 'sc' : 'ws',
-      rpcEndpoint,
-      { clearState: !networkSwitch }
+    // Reset consts and chain state.
+    setConsts(defaultConsts);
+    setChainState(defaultChainState);
+    setStateWithRef(
+      defaultNetworkMetrics,
+      setNetworkMetrics,
+      networkMetricsRef
     );
-  }, [isLightClient, network]);
+    setStateWithRef(defaultActiveEra, setActiveEra, activeEraRef);
+    setStateWithRef(defaultPoolsConfig, setPoolsConfig, poolsConfigRef);
+    setStateWithRef(
+      defaultStakingMetrics,
+      setStakingMetrics,
+      stakingMetricsRef
+    );
 
-  // Add event listener for `polkadot-api` notifications. Also handles unmounting logic.
-  useEffect(() => {
-    document.addEventListener('polkadot-api', eventCallback);
-    return () => {
-      document.removeEventListener('polkadot-api', eventCallback);
-      APIController.cancelFn?.();
-      APIController.unsubscribe();
-    };
-  }, []);
+    reInitialiseApi(connectionType);
+  }, [network]);
 
-  // Add event listener for subscription updates.
+  // Call `cancelFn` and `unsubscribe` on active instnace on unmount.
+  useEffect(
+    () => () => {
+      const instance = ApiController.get(network);
+      instance?.cancelFn?.();
+      instance?.unsubscribe();
+    },
+    []
+  );
+
+  // Add event listener for api events and subscription updates.
   const documentRef = useRef<Document>(document);
-
+  useEventListener('api-status', handleNewApiStatus, documentRef);
   useEventListener(
     'new-network-metrics',
     handleNetworkMetricsUpdate,
     documentRef
   );
-
   useEventListener('new-active-era', handleActiveEraUpdate, documentRef);
-
   useEventListener('new-pools-config', handlePoolsConfigUpdate, documentRef);
-
   useEventListener(
     'new-staking-metrics',
     handleStakingMetricsUpdate,
@@ -405,11 +407,11 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   return (
     <APIContext.Provider
       value={{
-        api: APIController.api,
+        api: ApiController.get(network)?.api || null,
         chainState,
         apiStatus,
-        isLightClient,
-        setIsLightClient,
+        connectionType,
+        setConnectionType,
         rpcEndpoint,
         setRpcEndpoint,
         isReady: apiStatus === 'ready',

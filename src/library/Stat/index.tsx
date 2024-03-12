@@ -10,7 +10,7 @@ import { useHelp } from 'contexts/Help';
 import { useNetwork } from 'contexts/Network';
 import { Wrapper } from './Wrapper';
 import type { StatAddress, StatProps } from './types';
-import { NotificationsController } from 'static/NotificationsController';
+import { NotificationsController } from 'controllers/NotificationsController';
 import type { AnyJson } from 'types';
 import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';

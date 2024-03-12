@@ -20,7 +20,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { FormProps, ActivePayout } from './types';
 import { ContentWrapper } from './Wrappers';
-import { SubscanController } from 'static/SubscanController';
+import { SubscanController } from 'controllers/SubscanController';
 import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';

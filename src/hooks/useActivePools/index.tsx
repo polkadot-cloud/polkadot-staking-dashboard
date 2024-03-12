@@ -3,8 +3,8 @@
 
 import { setStateWithRef } from '@w3ux/utils';
 import { useEffect, useRef, useState } from 'react';
-import { ActivePoolsController } from 'static/ActivePoolsController';
-import { isCustomEvent } from 'static/utils';
+import { ActivePoolsController } from 'controllers/ActivePoolsController';
+import { isCustomEvent } from 'controllers/utils';
 import { useEventListener } from 'usehooks-ts';
 import type {
   ActiveNominationsState,

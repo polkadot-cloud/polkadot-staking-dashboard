@@ -4,12 +4,12 @@
 import type { VoidFn } from '@polkadot/api/types';
 import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
 import type { ActivePool, PoolRoles } from 'contexts/Pools/ActivePool/types';
-import { APIController } from 'static/APIController';
-import { IdentitiesController } from 'static/IdentitiesController';
+import { IdentitiesController } from 'controllers/IdentitiesController';
 import type { AnyApi } from 'types';
 import type { ActivePoolItem, DetailActivePool } from './types';
-import { SyncController } from 'static/SyncController';
+import { SyncController } from 'controllers/SyncController';
 import type { Nominations } from 'contexts/Balances/types';
+import type { ApiPromise } from '@polkadot/api';
 
 export class ActivePoolsController {
   // ------------------------------------------------------
@@ -26,16 +26,17 @@ export class ActivePoolsController {
   static poolNominations: Record<string, Nominations> = {};
 
   // Unsubscribe objects.
-  static _unsubs: Record<string, VoidFn> = {};
+  static #unsubs: Record<string, VoidFn> = {};
 
   // ------------------------------------------------------
   // Pool membership syncing.
   // ------------------------------------------------------
 
   // Subscribes to pools and unsubscribes from removed pools.
-  static syncPools = async (newPools: ActivePoolItem[]): Promise<void> => {
-    const { api } = APIController;
-
+  static syncPools = async (
+    api: ApiPromise,
+    newPools: ActivePoolItem[]
+  ): Promise<void> => {
     // Sync: Checking active pools.
     SyncController.dispatch('active-pools', 'syncing');
 
@@ -67,6 +68,7 @@ export class ActivePoolsController {
           ]): Promise<void> => {
             // NOTE: async: fetches identity data for roles.
             await this.handleActivePoolCallback(
+              api,
               pool,
               bondedPool,
               rewardPool,
@@ -86,7 +88,7 @@ export class ActivePoolsController {
             }
           }
         );
-        this._unsubs[pool.id] = unsub;
+        this.#unsubs[pool.id] = unsub;
       });
     } else {
       // Status: Pools Synced Completed.
@@ -96,6 +98,7 @@ export class ActivePoolsController {
 
   // Handle active pool callback.
   static handleActivePoolCallback = async (
+    api: ApiPromise,
     pool: ActivePoolItem,
     bondedPoolResult: AnyApi,
     rewardPoolResult: AnyApi,
@@ -108,6 +111,7 @@ export class ActivePoolsController {
 
     // Fetch identities for roles and expand `bondedPool` state to store them.
     bondedPool.roleIdentities = await IdentitiesController.fetch(
+      api,
       this.getUniqueRoleAddresses(bondedPool.roles)
     );
 
@@ -156,8 +160,10 @@ export class ActivePoolsController {
 
     // Unsubscribe from removed pool subscriptions.
     poolsRemoved.forEach((pool) => {
-      this._unsubs[pool.id]();
-      delete this._unsubs[pool.id];
+      if (this.#unsubs[pool.id]) {
+        this.#unsubs[pool.id]();
+      }
+      delete this.#unsubs[pool.id];
       delete this.activePools[pool.id];
       delete this.poolNominations[pool.id];
     });
@@ -172,10 +178,10 @@ export class ActivePoolsController {
 
   // Unsubscribe from all subscriptions and reset class members.
   static unsubscribe = (): void => {
-    Object.values(this._unsubs).forEach((unsub) => {
+    Object.values(this.#unsubs).forEach((unsub) => {
       unsub();
     });
-    this._unsubs = {};
+    this.#unsubs = {};
   };
 
   static resetState = (): void => {

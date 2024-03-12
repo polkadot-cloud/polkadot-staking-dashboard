@@ -50,9 +50,6 @@ export class SubscanController {
   // Subscan era points data, keyed by `<network>-<address>-<era>`.
   static eraPointsData: Record<string, SubscanEraPoints[]> = {};
 
-  // The timestamp of the last 5 requests made.
-  static _lastRequestTimes = [];
-
   // ------------------------------------------------------
   // Setters.
   // ------------------------------------------------------

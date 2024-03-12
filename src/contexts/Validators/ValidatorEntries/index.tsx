@@ -31,7 +31,7 @@ import {
 } from './defaults';
 import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
 import { useErasPerDay } from 'hooks/useErasPerDay';
-import { IdentitiesController } from 'static/IdentitiesController';
+import { IdentitiesController } from 'controllers/IdentitiesController';
 
 export const ValidatorsContext = createContext<ValidatorsContextInterface>(
   defaultValidatorsContext
@@ -316,7 +316,10 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     setValidators(shuffle(validatorEntries));
 
     const addresses = validatorEntries.map(({ address }) => address);
-    const { identities, supers } = await IdentitiesController.fetch(addresses);
+    const { identities, supers } = await IdentitiesController.fetch(
+      api,
+      addresses
+    );
 
     setValidatorIdentities(identities);
     setValidatorSupers(supers);
@@ -562,10 +565,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Unsubscribe on network change and component unmount.
   useEffect(() => {
-    if (sessionParaValidators.length) {
-      sessionParaUnsub.current?.();
-    }
-
+    sessionParaUnsub.current?.();
     return () => {
       sessionParaUnsub.current?.();
     };

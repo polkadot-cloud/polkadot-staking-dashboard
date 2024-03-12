@@ -12,7 +12,7 @@ import { useNetwork } from 'contexts/Network';
 import { Disclaimer } from './Disclaimer';
 import { Status } from './Status';
 import { Summary, Wrapper } from './Wrappers';
-import { isCustomEvent } from 'static/utils';
+import { isCustomEvent } from 'controllers/utils';
 import { useEventListener } from 'usehooks-ts';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import BigNumber from 'bignumber.js';
@@ -24,8 +24,8 @@ export const NetworkBar = () => {
   const { t } = useTranslation('library');
   const prices = usePrices();
   const { plugins } = usePlugins();
-  const { isLightClient } = useApi();
   const { openPromptWith } = usePrompt();
+  const { connectionType } = useApi();
   const { networkData, network } = useNetwork();
   const PRIVACY_URL = import.meta.env.VITE_PRIVACY_URL;
   const DISCLAIMER_URL = import.meta.env.VITE_DISCLAIMER_URL;
@@ -57,7 +57,7 @@ export const NetworkBar = () => {
           <p>
             {ORGANISATION === undefined
               ? `${capitalizeFirstLetter(network)}${
-                  isLightClient ? ` Light` : ``
+                  connectionType === 'sc' ? ` Light` : ``
                 }`
               : ORGANISATION}
           </p>

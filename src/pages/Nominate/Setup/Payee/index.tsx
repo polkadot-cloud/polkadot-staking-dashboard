@@ -17,7 +17,7 @@ import type { SetupStepProps } from 'library/SetupSteps/types';
 import type { MaybeAddress } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Subheading } from 'pages/Nominate/Wrappers';
-import { defaultPayee } from 'static/BalancesController/defaults';
+import { defaultPayee } from 'controllers/BalancesController/defaults';
 
 export const Payee = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
