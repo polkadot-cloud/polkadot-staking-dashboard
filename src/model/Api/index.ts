@@ -56,9 +56,6 @@ export class Api {
   // Unsubscribe objects.
   #unsubs: Record<string, VoidFn> = {};
 
-  // Cancel function of dynamic substrate connect import.
-  cancelFn: () => void;
-
   // Store the active era.
   activeEra: APIActiveEra = defaultActiveEra;
 
@@ -143,11 +140,6 @@ export class Api {
 
   // Dynamically load and connect to Substrate Connect.
   async initScProvider() {
-    // Dynamically load Substrate Connect.
-    // const ScPromise = makeCancelable(import('@substrate/connect'));
-    // this.cancelFn = ScPromise.cancel;
-    // const Sc = (await ScPromise.promise) as SubstrateConnect;
-
     // Get light client key from network list.
     const lightClientKey = NetworkList[this.network].endpoints
       .lightClient as WellKnownChain;
