@@ -119,7 +119,10 @@ export class SubscanController {
     let unclaimedPayouts =
       result?.list?.filter((l: SubscanPayout) => l.block_timestamp === 0) || [];
 
-    // Further filter unclaimed payouts to ensure that payout records of `stash` and `validator_stash` are not repeated.
+    // Further filter unclaimed payouts to ensure that payout records of `stash` and
+    // `validator_stash` are not repeated for an era. NOTE: This was introduced to remove errornous
+    // data where there were duplicated payout records (with different amounts) for a stash -
+    // validator - era record. from Subscan.
     unclaimedPayouts = unclaimedPayouts.filter(
       (u: SubscanPayout) =>
         !payouts.find(
