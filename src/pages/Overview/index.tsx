@@ -4,7 +4,6 @@
 import { useTranslation } from 'react-i18next';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { StatBoxList } from 'library/StatBoxList';
-import { ControllerNotStash } from 'pages/Nominate/Active/ControllerNotStash';
 import { PluginLabel } from 'library/PluginLabel';
 import { ActiveAccounts } from './ActiveAccounts';
 import { BalanceChart } from './BalanceChart';
@@ -38,7 +37,6 @@ export const Overview = () => {
         <SupplyStakedStat />
         <ActiveEraStat />
       </StatBoxList>
-      <ControllerNotStash />
       <PageRow>
         <StakeStatus />
       </PageRow>
