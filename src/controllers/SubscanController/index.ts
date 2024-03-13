@@ -110,15 +110,27 @@ export class SubscanController {
       row: 100,
       page: 0,
     });
-    if (!result?.list) {
-      return { payouts: [], unclaimedPayouts: [] };
-    }
 
-    const payouts = result.list.filter(
-      (l: SubscanPayout) => l.block_timestamp !== 0 && l.account !== ''
-    );
-    const unclaimedPayouts = result.list.filter(
-      (l: SubscanPayout) => l.block_timestamp === 0 && l.account !== ''
+    const payouts =
+      result?.list?.filter(
+        ({ block_timestamp }: SubscanPayout) => block_timestamp !== 0
+      ) || [];
+
+    let unclaimedPayouts =
+      result?.list?.filter((l: SubscanPayout) => l.block_timestamp === 0) || [];
+
+    // Further filter unclaimed payouts to ensure that payout records of `stash` and
+    // `validator_stash` are not repeated for an era. NOTE: This was introduced to remove errornous
+    // data where there were duplicated payout records (with different amounts) for a stash -
+    // validator - era record. from Subscan.
+    unclaimedPayouts = unclaimedPayouts.filter(
+      (u: SubscanPayout) =>
+        !payouts.find(
+          (p: SubscanPayout) =>
+            p.stash === u.stash &&
+            p.validator_stash === u.validator_stash &&
+            p.era === u.era
+        )
     );
 
     return { payouts, unclaimedPayouts };
