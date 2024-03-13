@@ -113,12 +113,14 @@ export class SubscanController {
     if (!result?.list) {
       return { payouts: [], unclaimedPayouts: [] };
     }
+
     const payouts = result.list.filter(
-      (l: SubscanPayout) => l.block_timestamp !== 0
+      (l: SubscanPayout) => l.block_timestamp !== 0 && l.account !== ''
     );
     const unclaimedPayouts = result.list.filter(
-      (l: SubscanPayout) => l.block_timestamp === 0
+      (l: SubscanPayout) => l.block_timestamp === 0 && l.account !== ''
     );
+
     return { payouts, unclaimedPayouts };
   };
 
@@ -299,6 +301,9 @@ export class SubscanController {
       return undefined;
     }
     const filtered = this.removeNonZeroAmountAndSort(payouts || []);
+    if (!filtered.length) {
+      return undefined;
+    }
     return format(
       fromUnixTime(filtered[filtered.length - 1].block_timestamp),
       'do MMM',
@@ -314,6 +319,10 @@ export class SubscanController {
       return undefined;
     }
     const filtered = this.removeNonZeroAmountAndSort(payouts || []);
+    if (!filtered.length) {
+      return undefined;
+    }
+
     return format(fromUnixTime(filtered[0].block_timestamp), 'do MMM', {
       locale,
     });
