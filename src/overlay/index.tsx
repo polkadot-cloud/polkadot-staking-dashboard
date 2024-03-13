@@ -25,7 +25,6 @@ import { Settings } from '../modals/Settings';
 import { Unbond } from '../modals/Unbond';
 import { UnlockChunks } from '../modals/UnlockChunks';
 import { Unstake } from '../modals/Unstake';
-import { UpdateController } from '../modals/UpdateController';
 import { UpdatePayee } from '../modals/UpdatePayee';
 import { UpdateReserve } from '../modals/UpdateReserve';
 import { ValidatorMetrics } from '../modals/ValidatorMetrics';
@@ -64,7 +63,6 @@ export const Overlays = () => {
         ValidatorGeo,
         UnlockChunks,
         Unstake,
-        UpdateController,
         Unbond,
         UpdatePayee,
         UpdateReserve,

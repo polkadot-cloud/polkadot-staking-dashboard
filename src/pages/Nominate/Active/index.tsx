@@ -13,7 +13,6 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Nominations } from 'library/Nominations';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { ListStatusHeader } from 'library/List';
-import { ControllerNotStash } from './ControllerNotStash';
 import { ManageBond } from './ManageBond';
 import { ActiveNominatorsStat } from './Stats/ActiveNominators';
 import { MinimumActiveStakeStat } from './Stats/MinimumActiveStake';
@@ -54,7 +53,6 @@ export const Active = () => {
 
       <WithdrawPrompt bondFor="nominator" />
 
-      <ControllerNotStash />
       <UnstakePrompts />
       <PageRow>
         <RowSection hLast>
