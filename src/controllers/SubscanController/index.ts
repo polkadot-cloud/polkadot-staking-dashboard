@@ -133,8 +133,6 @@ export class SubscanController {
         )
     );
 
-    console.log(unclaimedPayouts);
-
     return { payouts, unclaimedPayouts };
   };
 
