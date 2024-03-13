@@ -104,22 +104,45 @@ export class SubscanController {
     payouts: SubscanPayout[];
     unclaimedPayouts: SubscanPayout[];
   }> => {
-    const result = await this.makeRequest(this.ENDPOINTS.rewardSlash, {
-      address,
-      is_stash: true,
-      row: 100,
-      page: 0,
-    });
-    if (!result?.list) {
-      return { payouts: [], unclaimedPayouts: [] };
-    }
+    const [resultClaimed, resultUnclaimed] = await Promise.all([
+      this.makeRequest(this.ENDPOINTS.rewardSlash, {
+        address,
+        is_stash: true,
+        claimed_filter: 'claimed',
+        row: 50,
+        page: 0,
+      }),
+      this.makeRequest(this.ENDPOINTS.rewardSlash, {
+        address,
+        is_stash: true,
+        claimed_filter: 'unclaimed',
+        row: 50,
+        page: 0,
+      }),
+    ]);
 
-    const payouts = result.list.filter(
-      (l: SubscanPayout) => l.block_timestamp !== 0 && l.account !== ''
+    const payouts =
+      resultClaimed?.list?.filter(
+        ({ block_timestamp }: SubscanPayout) => block_timestamp !== 0
+      ) || [];
+
+    let unclaimedPayouts =
+      resultUnclaimed?.list?.filter(
+        (l: SubscanPayout) => l.block_timestamp === 0
+      ) || [];
+
+    // Further filter unclaimed payouts to ensure that payout records of `stash` and `validator_stash` are not repeated.
+    unclaimedPayouts = unclaimedPayouts.filter(
+      (u: SubscanPayout) =>
+        !payouts.find(
+          (p: SubscanPayout) =>
+            p.stash === u.stash &&
+            p.validator_stash === u.validator_stash &&
+            p.era === u.era
+        )
     );
-    const unclaimedPayouts = result.list.filter(
-      (l: SubscanPayout) => l.block_timestamp === 0 && l.account !== ''
-    );
+
+    console.log(unclaimedPayouts);
 
     return { payouts, unclaimedPayouts };
   };

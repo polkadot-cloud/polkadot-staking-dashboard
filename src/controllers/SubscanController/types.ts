@@ -20,6 +20,7 @@ export type RewardSlashRequestBody = SubscanRequestPagination & {
 
 export type RewardRewardsRequestBody = SubscanRequestPagination & {
   address: string;
+  claimed_filter?: 'claimed' | 'unclaimed';
 };
 
 export type RewardMembersRequestBody = SubscanRequestPagination & {
