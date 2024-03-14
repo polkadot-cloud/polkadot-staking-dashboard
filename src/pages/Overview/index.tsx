@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { StatBoxList } from 'library/StatBoxList';
 import { PluginLabel } from 'library/PluginLabel';
-import { ActiveAccounts } from './ActiveAccounts';
+import { AccountControls } from './AccountControls';
 import { BalanceChart } from './BalanceChart';
 import { BalanceLinks } from './BalanceLinks';
 import { NetworkStats } from './NetworkSats';
@@ -29,7 +29,7 @@ export const Overview = () => {
       <PageTitle title={t('overview.overview')} />
       <PageRow>
         <PageHeadingWrapper>
-          <ActiveAccounts />
+          <AccountControls />
         </PageHeadingWrapper>
       </PageRow>
       <StatBoxList>

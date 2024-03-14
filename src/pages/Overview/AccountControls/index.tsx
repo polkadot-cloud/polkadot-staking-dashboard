@@ -5,7 +5,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Item } from './Item';
 import { ActiveAccounsWrapper } from './Wrappers';
 
-export const ActiveAccounts = () => {
+export const AccountControls = () => {
   const { activeProxy, activeAccount } = useActiveAccounts();
 
   return (
