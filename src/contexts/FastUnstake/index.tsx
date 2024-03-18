@@ -15,7 +15,6 @@ import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, MaybeAddress } from 'types';
 import Worker from 'workers/stakers?worker';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { useNominationStatus } from 'hooks/useNominationStatus';
 import { validateLocalExposure } from 'contexts/Validators/Utils';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -38,15 +37,13 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   const { activeEra } = useApi();
   const { network } = useNetwork();
   const { activeAccount } = useActiveAccounts();
-  const { getNominationStatus } = useNominationStatus();
-  const { inSetup, fetchEraStakers, isNominating } = useStaking();
+  const { inSetup, fetchEraStakers, isBonding } = useStaking();
   const {
     api,
     isReady,
     consts: { bondDuration },
     networkMetrics: { fastUnstakeErasToCheckPerBlock },
   } = useApi();
-  const { nominees } = getNominationStatus(activeAccount, 'nominator');
 
   // store whether a fast unstake check is in progress.
   const [checking, setChecking] = useState<boolean>(false);
@@ -112,7 +109,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
       activeAccount &&
       isNotZero(activeEra.index) &&
       fastUnstakeErasToCheckPerBlock > 0 &&
-      isNominating()
+      isBonding()
     ) {
       // get any existing localStorage records for account.
       const localMeta: LocalMeta | null = getLocalMeta();
@@ -143,8 +140,8 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
       if (
         activeAccount &&
         !inSetup() &&
-        !nominees.active.length &&
-        initialIsExposed === null
+        initialIsExposed === null &&
+        isBonding()
       ) {
         // if localMeta existed, start checking from the next era.
         const nextEra = localMeta?.checked.at(-1) || 0;
@@ -167,7 +164,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
     isReady,
     activeEra.index,
     fastUnstakeErasToCheckPerBlock,
-    isNominating(),
+    isBonding(),
   ]);
 
   // handle worker message on completed exposure check.
@@ -242,7 +239,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
       !a ||
       checkingRef.current ||
       !activeAccount ||
-      !isNominating()
+      !isBonding()
     ) {
       return;
     }
