@@ -1146,7 +1146,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot/extension-inject@npm:^0.46.5":
+"@polkadot/extension-inject@npm:^0.46.5, @polkadot/extension-inject@npm:latest":
   version: 0.46.8
   resolution: "@polkadot/extension-inject@npm:0.46.8"
   dependencies:
@@ -1382,7 +1382,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot/types@npm:10.12.4, @polkadot/types@npm:^10.12.2":
+"@polkadot/types@npm:10.12.4, @polkadot/types@npm:^10.11.2, @polkadot/types@npm:^10.12.2":
   version: 10.12.4
   resolution: "@polkadot/types@npm:10.12.4"
   dependencies:
@@ -1584,6 +1584,23 @@ __metadata:
     tslib: "npm:^2.6.2"
     ws: "npm:^8.15.1"
   checksum: 10c0/15565803a34aa7d6654c4c05725f5f44e504caa69f590523c5569fcbd66cf1e467de03e3e13a4d71bb60efceb28c60fd5719bee5efd721c020cf470025bbeb29
+  languageName: node
+  linkType: hard
+
+"@polkagate/extension-dapp@npm:^0.46.7-22":
+  version: 0.46.7-22
+  resolution: "@polkagate/extension-dapp@npm:0.46.7-22"
+  dependencies:
+    "@polkadot/extension-inject": "npm:latest"
+    "@polkadot/types": "npm:^10.11.2"
+    "@polkadot/util": "npm:^12.6.2"
+    "@polkadot/util-crypto": "npm:^12.6.2"
+    tslib: "npm:^2.6.2"
+  peerDependencies:
+    "@polkadot/api": "*"
+    "@polkadot/util": "*"
+    "@polkadot/util-crypto": "*"
+  checksum: 10c0/7d91fb0a3c7ab71dbf69a3b80dd68ed28fe4f3611c55038e5492e4f7ebf7a7d929b3a4e6e7e996a73ef728c21dd09ff8ef7d5696ff356b3a6c63e93a9d718a43
   languageName: node
   linkType: hard
 
@@ -2473,10 +2490,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/extension-assets@npm:^0.0.14":
-  version: 0.0.14
-  resolution: "@w3ux/extension-assets@npm:0.0.14"
-  checksum: 10c0/2080f571696ff4c4d5636b31d52a3556cc5253ca46ff3184004a4fcf2d0acf1f880b7db9675ca40bc884d4ab8c9247727c5a6209a54adec529fcd87c0d60db6e
+"@w3ux/extension-assets@npm:0.1.0":
+  version: 0.1.0
+  resolution: "@w3ux/extension-assets@npm:0.1.0"
+  peerDependencies:
+    react: ^18
+  checksum: 10c0/c6b2d1de15322182985d1b654497ed89caccf0f440fdc7fe5ca87a64e4b4d28752ec691c2983eb0e496e81412cbb1f7114097482ccd58f89f34f29300243da96
   languageName: node
   linkType: hard
 
@@ -2489,13 +2508,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/hooks@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "@w3ux/hooks@npm:0.0.2"
-  checksum: 10c0/7089247b5487d23dd5df194e1aaa2ea730c82eadf774dc55175fc1e52583ec1c94af43d0c275b1cb31c1bbe7bfd4c7844ba78258dece143c7db8e594796a1a0b
-  languageName: node
-  linkType: hard
-
 "@w3ux/hooks@npm:^0.0.3":
   version: 0.0.3
   resolution: "@w3ux/hooks@npm:0.0.3"
@@ -2505,16 +2517,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/react-connect-kit@npm:^0.0.4":
-  version: 0.0.4
-  resolution: "@w3ux/react-connect-kit@npm:0.0.4"
+"@w3ux/react-connect-kit@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@w3ux/react-connect-kit@npm:0.1.0"
   dependencies:
     "@chainsafe/metamask-polkadot-adapter": "npm:^0.6.0"
     "@polkadot/util": "npm:^12.6.2"
-    "@w3ux/extension-assets": "npm:^0.0.14"
-    "@w3ux/hooks": "npm:^0.0.2"
-    "@w3ux/utils": "npm:^0.0.1"
-  checksum: 10c0/52cf5b13c198f55832b90aff32923d2de0c01582098a2cfbae4280b0b72978f1c0a564d5d179cdd55993eef2cabce4548265247ac8326cce705b73d544f89c24
+    "@polkagate/extension-dapp": "npm:^0.46.7-22"
+    "@w3ux/extension-assets": "npm:0.1.0"
+    "@w3ux/hooks": "npm:^0.0.3"
+    "@w3ux/utils": "npm:^0.0.2"
+  checksum: 10c0/6db85d96cfe0aa091ffce930b52b8991e59bb96e5b05b941625a310df5a40025ce9594317169a322b1ce9393b840c78047a88458b32bfecd117a5e3ba5c23ad4
   languageName: node
   linkType: hard
 
@@ -2536,7 +2549,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/utils@npm:0.0.1, @w3ux/utils@npm:^0.0.1":
+"@w3ux/utils@npm:0.0.1":
   version: 0.0.1
   resolution: "@w3ux/utils@npm:0.0.1"
   checksum: 10c0/a14823f3f0e3776a472ccaf6838745af077191fe3a004ceea3936c4d5767189de96eba9752b9cf8eb56a1aa24e38c6a05f673748a955671be761cb713108b8c4
@@ -6438,7 +6451,7 @@ __metadata:
     "@vitejs/plugin-react-swc": "npm:^3.6.0"
     "@w3ux/extension-assets": "npm:^0.2.3"
     "@w3ux/hooks": "npm:^0.0.3"
-    "@w3ux/react-connect-kit": "npm:^0.0.4"
+    "@w3ux/react-connect-kit": "npm:^0.1.0"
     "@w3ux/react-odometer": "npm:^0.0.3"
     "@w3ux/react-polkicon": "npm:^0.0.2"
     "@w3ux/utils": "npm:^0.0.2"
