@@ -2490,15 +2490,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/extension-assets@npm:0.1.0":
-  version: 0.1.0
-  resolution: "@w3ux/extension-assets@npm:0.1.0"
-  peerDependencies:
-    react: ^18
-  checksum: 10c0/c6b2d1de15322182985d1b654497ed89caccf0f440fdc7fe5ca87a64e4b4d28752ec691c2983eb0e496e81412cbb1f7114097482ccd58f89f34f29300243da96
-  languageName: node
-  linkType: hard
-
 "@w3ux/extension-assets@npm:^0.2.3":
   version: 0.2.3
   resolution: "@w3ux/extension-assets@npm:0.2.3"
@@ -2517,17 +2508,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/react-connect-kit@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@w3ux/react-connect-kit@npm:0.1.0"
+"@w3ux/react-connect-kit@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "@w3ux/react-connect-kit@npm:0.1.2"
   dependencies:
     "@chainsafe/metamask-polkadot-adapter": "npm:^0.6.0"
     "@polkadot/util": "npm:^12.6.2"
     "@polkagate/extension-dapp": "npm:^0.46.7-22"
-    "@w3ux/extension-assets": "npm:0.1.0"
+    "@w3ux/extension-assets": "npm:^0.2.3"
     "@w3ux/hooks": "npm:^0.0.3"
     "@w3ux/utils": "npm:^0.0.2"
-  checksum: 10c0/6db85d96cfe0aa091ffce930b52b8991e59bb96e5b05b941625a310df5a40025ce9594317169a322b1ce9393b840c78047a88458b32bfecd117a5e3ba5c23ad4
+  checksum: 10c0/708cf3f44e7f52f3cb5862fde553252fac8906c1c6c574145fa5b3b90cb8abe98cb2abcfc5533b7bebe48db521b63f08a134fd8502a459740b83f9d586858a8f
   languageName: node
   linkType: hard
 
@@ -6451,7 +6442,7 @@ __metadata:
     "@vitejs/plugin-react-swc": "npm:^3.6.0"
     "@w3ux/extension-assets": "npm:^0.2.3"
     "@w3ux/hooks": "npm:^0.0.3"
-    "@w3ux/react-connect-kit": "npm:^0.1.0"
+    "@w3ux/react-connect-kit": "npm:^0.1.2"
     "@w3ux/react-odometer": "npm:^0.0.3"
     "@w3ux/react-polkicon": "npm:^0.0.2"
     "@w3ux/utils": "npm:^0.0.2"
