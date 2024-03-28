@@ -8,21 +8,34 @@ import { PoolStatus } from './PoolStatus';
 import { RewardsStatus } from './RewardsStatus';
 import { Separator } from 'kits/Structure/Separator';
 import type { StatusProps } from './types';
+import { NewMember } from './NewMember';
+import { useSyncing } from 'hooks/useSyncing';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useBalances } from 'contexts/Balances';
 
 export const Status = ({ height }: StatusProps) => {
   const { activePool } = useActivePool();
+  const { getPoolMembership } = useBalances();
+  const { poolMembersipSyncing } = useSyncing();
+  const { activeAccount } = useActiveAccounts();
+  const membership = getPoolMembership(activeAccount);
+
+  const syncing = poolMembersipSyncing();
 
   return (
     <CardWrapper height={height}>
       <MembershipStatus />
       <Separator />
       <RewardsStatus />
-      {activePool && (
-        <>
-          <Separator />
-          <PoolStatus />
-        </>
-      )}
+      {!syncing &&
+        (activePool && !!membership ? (
+          <>
+            <Separator />
+            <PoolStatus />
+          </>
+        ) : (
+          membership === null && <NewMember />
+        ))}
     </CardWrapper>
   );
 };

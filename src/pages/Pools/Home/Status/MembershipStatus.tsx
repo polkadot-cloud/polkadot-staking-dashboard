@@ -13,7 +13,6 @@ import { useOverlay } from 'kits/Overlay/Provider';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useStatusButtons } from './useStatusButtons';
-import { useSyncing } from 'hooks/useSyncing';
 import type { MembershipStatusProps } from './types';
 
 export const MembershipStatus = ({
@@ -22,11 +21,10 @@ export const MembershipStatus = ({
 }: MembershipStatusProps) => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
-  const { syncing } = useSyncing();
   const { openModal } = useOverlay().modal;
   const { poolsMetaData } = useBondedPools();
   const { activeAccount } = useActiveAccounts();
-  const { label, buttons } = useStatusButtons();
+  const { label } = useStatusButtons();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getTransferOptions } = useTransferOptions();
   const { activePool, isOwner, isBouncer, isMember } = useActivePool();
@@ -84,7 +82,6 @@ export const MembershipStatus = ({
       label={t('pools.poolMembership')}
       helpKey="Pool Membership"
       stat={t('pools.notInPool')}
-      buttons={!showButtons || syncing ? [] : buttons}
       buttonType={buttonType}
     />
   );

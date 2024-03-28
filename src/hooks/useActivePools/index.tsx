@@ -33,11 +33,6 @@ export const useActivePools = ({ onCallback, poolIds }: ActivePoolsProps) => {
       const { pool, nominations } = e.detail;
       const { id } = pool;
 
-      // Call custom `onCallback` function if provided.
-      if (typeof onCallback === 'function') {
-        await onCallback(e.detail);
-      }
-
       // Persist to active pools state if this pool is specified in `poolIds`.
       if (
         poolIds === '*' ||
@@ -54,6 +49,11 @@ export const useActivePools = ({ onCallback, poolIds }: ActivePoolsProps) => {
           setPoolNominations,
           poolNominationsRef
         );
+      }
+
+      // Call custom `onCallback` function if provided.
+      if (typeof onCallback === 'function') {
+        await onCallback(e.detail);
       }
     }
   };
