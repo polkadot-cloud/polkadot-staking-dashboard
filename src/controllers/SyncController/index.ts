@@ -17,6 +17,11 @@ export class SyncController {
   // Dispatch sync events
   // ------------------------------------------------------
 
+  // Dispatch all default syncId events as syncing.
+  static dispatchAllDefault = () => {
+    this.syncIds.forEach((id) => this.dispatch(id, 'syncing'));
+  };
+
   // Dispatches a new sync event to the document.
   static dispatch = (id: SyncID, status: SyncStatus) => {
     const detail: SyncEvent = {

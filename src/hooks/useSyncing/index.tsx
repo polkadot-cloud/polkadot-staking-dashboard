@@ -40,8 +40,6 @@ export const useSyncing = (config: SyncIDConfig) => {
     }
   };
 
-  const documentRef = useRef<Document>(document);
-
   // Bootstrap existing sync statuses of interest when hook is mounted.
   useEffect(() => {
     setStateWithRef(
@@ -54,6 +52,7 @@ export const useSyncing = (config: SyncIDConfig) => {
   }, []);
 
   // Listen for new sync events.
+  const documentRef = useRef<Document>(document);
   useEventListener('new-sync-status', newSyncStatusCallback, documentRef);
 
   return { syncing: syncIds.length > 0 };
