@@ -30,7 +30,7 @@ export const Payouts = () => {
     },
   } = useNetwork();
   const { inSetup } = useStaking();
-  const { syncing } = useSyncing('*');
+  const { syncing } = useSyncing();
   const { plugins } = usePlugins();
   const { getData, injectBlockTimestamp } = useSubscanData([
     'payouts',

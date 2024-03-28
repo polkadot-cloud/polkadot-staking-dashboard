@@ -24,8 +24,8 @@ import { useSyncing } from 'hooks/useSyncing';
 
 export const Main = () => {
   const { t, i18n } = useTranslation('base');
+  const { syncing } = useSyncing();
   const { pathname } = useLocation();
-  const { syncing } = useSyncing('*');
   const { networkData } = useNetwork();
   const { getBondedAccount } = useBonded();
   const { accounts } = useImportedAccounts();

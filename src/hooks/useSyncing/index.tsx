@@ -8,7 +8,7 @@ import type { SyncID, SyncIDConfig } from 'controllers/SyncController/types';
 import { isCustomEvent } from 'controllers/utils';
 import { useEventListener } from 'usehooks-ts';
 
-export const useSyncing = (config: SyncIDConfig) => {
+export const useSyncing = (config: SyncIDConfig = '*') => {
   // Retrieve the ids from the config provided.
   const ids = SyncController.getIdsFromSyncConfig(config);
 
@@ -40,6 +40,17 @@ export const useSyncing = (config: SyncIDConfig) => {
     }
   };
 
+  // Helper to determine if pool membership is syncing.
+  const poolMembersipSyncing = (): boolean => {
+    const POOL_SYNC_IDS: SyncID[] = [
+      'initialization',
+      'balances',
+      'bonded-pools',
+      'active-pools',
+    ];
+    return syncIds.some(() => POOL_SYNC_IDS.find((id) => syncIds.includes(id)));
+  };
+
   // Bootstrap existing sync statuses of interest when hook is mounted.
   useEffect(() => {
     setStateWithRef(
@@ -55,5 +66,5 @@ export const useSyncing = (config: SyncIDConfig) => {
   const documentRef = useRef<Document>(document);
   useEventListener('new-sync-status', newSyncStatusCallback, documentRef);
 
-  return { syncing: syncIds.length > 0 };
+  return { syncing: syncIds.length > 0, poolMembersipSyncing };
 };

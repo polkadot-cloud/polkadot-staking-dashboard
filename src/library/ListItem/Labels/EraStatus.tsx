@@ -10,7 +10,7 @@ import { useSyncing } from 'hooks/useSyncing';
 
 export const EraStatus = ({ noMargin, status, totalStake }: EraStatusProps) => {
   const { t } = useTranslation('library');
-  const { syncing } = useSyncing('*');
+  const { syncing } = useSyncing();
   const { unit, units } = useNetwork().networkData;
 
   // Fallback to `waiting` status if still syncing.

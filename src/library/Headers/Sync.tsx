@@ -13,8 +13,8 @@ import { useTxMeta } from 'contexts/TxMeta';
 import { useSyncing } from 'hooks/useSyncing';
 
 export const Sync = () => {
+  const { syncing } = useSyncing();
   const { pathname } = useLocation();
-  const { syncing } = useSyncing('*');
   const { pendingNonces } = useTxMeta();
   const { payoutsSynced } = usePayouts();
   const { pluginEnabled } = usePlugins();

@@ -41,7 +41,7 @@ export const Nominations = ({
     modal: { openModal },
     canvas: { openCanvas },
   } = useOverlay();
-  const { syncing } = useSyncing('*');
+  const { syncing } = useSyncing();
   const { getNominations } = useBalances();
   const { isFastUnstaking } = useUnstaking();
   const { formatWithPrefs } = useValidators();

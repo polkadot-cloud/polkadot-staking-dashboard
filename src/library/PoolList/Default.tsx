@@ -46,7 +46,7 @@ export const PoolList = ({
   const {
     networkData: { colors },
   } = useNetwork();
-  const { syncing } = useSyncing('*');
+  const { syncing } = useSyncing();
   const { applyFilter } = usePoolFilters();
   const { listFormat, setListFormat } = usePoolList();
   const { getFilters, setMultiFilters, getSearchTerm, setSearchTerm } =

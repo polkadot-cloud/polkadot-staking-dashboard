@@ -31,8 +31,8 @@ import { WithdrawPrompt } from 'library/WithdrawPrompt';
 export const Active = () => {
   const { t } = useTranslation();
   const { openHelp } = useHelp();
+  const { syncing } = useSyncing();
   const { inSetup } = useStaking();
-  const { syncing } = useSyncing('*');
   const { getNominations } = useBalances();
   const { openCanvas } = useOverlay().canvas;
   const { isFastUnstaking } = useUnstaking();
