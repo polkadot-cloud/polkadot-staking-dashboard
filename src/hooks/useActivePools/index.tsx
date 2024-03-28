@@ -58,8 +58,6 @@ export const useActivePools = ({ onCallback, poolIds }: ActivePoolsProps) => {
     }
   };
 
-  const documentRef = useRef<Document>(document);
-
   // Bootstrap state on initial render.
   useEffect(() => {
     const initialActivePools =
@@ -94,6 +92,7 @@ export const useActivePools = ({ onCallback, poolIds }: ActivePoolsProps) => {
   }, [network, activeAccount]);
 
   // Listen for new active pool events.
+  const documentRef = useRef<Document>(document);
   useEventListener('new-active-pool', newActivePoolCallback, documentRef);
 
   return { activePools, poolNominations };

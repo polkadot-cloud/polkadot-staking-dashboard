@@ -42,16 +42,16 @@ export const HomeInner = () => {
   const { activeTab, setActiveTab } = usePoolsTabs();
   const { getPoolRoles, activePool } = useActivePool();
   const { counterForBondedPools } = useApi().poolsConfig;
-
   const membership = getPoolMembership(activeAccount);
-  const { state } = activePool?.bondedPool || {};
 
   const { activePools } = useActivePools({
     poolIds: '*',
   });
 
-  const activePoolsNoMembership = { ...activePools };
-  delete activePoolsNoMembership[membership?.poolId || -1];
+  // Calculate the number of _other_ pools the user has a role in.
+  const poolRoleCount = Object.keys(activePools).filter(
+    (poolId) => poolId === String(membership?.poolId)
+  ).length;
 
   let tabs: PageTitleTabProps[] = [
     {
@@ -76,6 +76,8 @@ export const HomeInner = () => {
     }
   );
 
+  const ROW_HEIGHT = 220;
+
   // Back to tab 0 if not in a pool & on members tab.
   useEffect(() => {
     if (!activePool) {
@@ -83,15 +85,13 @@ export const HomeInner = () => {
     }
   }, [activePool]);
 
-  const ROW_HEIGHT = 220;
-
   return (
     <>
       <PageTitle
         title={t('pools.pools')}
         tabs={tabs}
         button={
-          Object.keys(activePoolsNoMembership).length > 0
+          poolRoleCount > 0
             ? {
                 title: t('pools.allRoles'),
                 onClick: () =>
@@ -111,11 +111,8 @@ export const HomeInner = () => {
             <MinCreateBondStat />
           </StatBoxList>
 
-          {state === 'Destroying' ? (
-            <ClosurePrompts />
-          ) : (
-            <WithdrawPrompt bondFor="pool" />
-          )}
+          <ClosurePrompts />
+          <WithdrawPrompt bondFor="pool" />
 
           <PageRow>
             <RowSection hLast>
