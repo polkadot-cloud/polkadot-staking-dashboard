@@ -7,8 +7,9 @@ import { MembershipStatus } from './MembershipStatus';
 import { PoolStatus } from './PoolStatus';
 import { RewardsStatus } from './RewardsStatus';
 import { Separator } from 'kits/Structure/Separator';
+import type { StatusProps } from './types';
 
-export const Status = ({ height }: { height: number }) => {
+export const Status = ({ height }: StatusProps) => {
   const { activePool } = useActivePool();
 
   return (

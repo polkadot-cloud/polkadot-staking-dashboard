@@ -14,14 +14,12 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useStatusButtons } from './useStatusButtons';
 import { useSyncing } from 'hooks/useSyncing';
+import type { MembershipStatusProps } from './types';
 
 export const MembershipStatus = ({
   showButtons = true,
   buttonType = 'primary',
-}: {
-  showButtons?: boolean;
-  buttonType?: string;
-}) => {
+}: MembershipStatusProps) => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
   const { syncing } = useSyncing('*');
