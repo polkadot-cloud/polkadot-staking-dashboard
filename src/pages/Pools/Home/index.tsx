@@ -31,9 +31,11 @@ import type { PageTitleTabProps } from 'kits/Structure/PageTitleTabs/types';
 import { PageRow } from 'kits/Structure/PageRow';
 import { RowSection } from 'kits/Structure/RowSection';
 import { WithdrawPrompt } from 'library/WithdrawPrompt';
+import { useSyncing } from 'hooks/useSyncing';
 
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
+  const { poolMembersipSyncing } = useSyncing();
   const { favorites } = useFavoritePools();
   const { openModal } = useOverlay().modal;
   const { bondedPools } = useBondedPools();
@@ -50,7 +52,7 @@ export const HomeInner = () => {
 
   // Calculate the number of _other_ pools the user has a role in.
   const poolRoleCount = Object.keys(activePools).filter(
-    (poolId) => poolId === String(membership?.poolId)
+    (poolId) => poolId !== String(membership?.poolId)
   ).length;
 
   let tabs: PageTitleTabProps[] = [
@@ -91,7 +93,7 @@ export const HomeInner = () => {
         title={t('pools.pools')}
         tabs={tabs}
         button={
-          poolRoleCount > 0
+          !poolMembersipSyncing() && poolRoleCount > 0
             ? {
                 title: t('pools.allRoles'),
                 onClick: () =>
