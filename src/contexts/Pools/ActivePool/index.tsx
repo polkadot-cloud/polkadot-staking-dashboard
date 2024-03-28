@@ -116,6 +116,9 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
         addresses: { ...createPoolAccounts(Number(pool)) },
       }));
       ActivePoolsController.syncPools(api, newActivePools);
+    } else {
+      // No active pools to sync. Mark as complete.
+      SyncController.dispatch('active-pools', 'complete');
     }
   };
 
