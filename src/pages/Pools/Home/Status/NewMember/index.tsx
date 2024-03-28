@@ -22,35 +22,30 @@ export const NewMember = () => {
       <div className="inner">
         <section>
           <div className="buttons">
-            <button
-              className="primary"
-              onClick={() => setActiveTab(1)}
-              disabled={disableJoin()}
-            >
-              <span>
+            <div className="button primary">
+              <button onClick={() => setActiveTab(1)} disabled={disableJoin()}>
                 <FontAwesomeIcon icon={faUserPlus} /> Join a Pool
-              </span>
-            </button>
-            <button className="secondary" onClick={() => setActiveTab(1)}>
-              <span>
+              </button>
+            </div>
+            <div className="button secondary">
+              <button onClick={() => setActiveTab(1)}>
                 Browse Pools
-                <FontAwesomeIcon icon={faChevronRight} transform={'shrink-4'} />
-              </span>
-            </button>
+                <FontAwesomeIcon icon={faChevronRight} transform={'shrink-6'} />
+              </button>
+            </div>
           </div>
         </section>
         <section>
           <div className="buttons">
-            <button
-              className="secondary standalone"
-              onClick={() => setOnPoolSetup(true)}
-              disabled={disableCreate()}
-            >
-              <span>
+            <div className="button secondary standalone">
+              <button
+                onClick={() => setOnPoolSetup(true)}
+                disabled={disableCreate()}
+              >
                 Create a Pool
-                <FontAwesomeIcon icon={faChevronRight} transform={'shrink-4'} />
-              </span>
-            </button>
+                <FontAwesomeIcon icon={faChevronRight} transform={'shrink-6'} />
+              </button>
+            </div>
           </div>
         </section>
       </div>

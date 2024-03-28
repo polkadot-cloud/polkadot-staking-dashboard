@@ -42,12 +42,12 @@ export const NewMemberWrapper = styled.div`
         height: 3.75rem;
         display: flex;
 
-        > button {
-          padding: 0 1.25rem;
+        > .button {
           height: inherit;
           display: flex;
           align-items: center;
           justify-content: center;
+          overflow: hidden;
 
           &.primary {
             background: var(--accent-color-primary);
@@ -62,7 +62,6 @@ export const NewMemberWrapper = styled.div`
             background: var(--button-primary-background);
             border-top-right-radius: var(--button-border-radius);
             border-bottom-right-radius: var(--button-border-radius);
-            padding: 0 1.3rem;
             height: inherit;
 
             &.standalone {
@@ -72,18 +71,22 @@ export const NewMemberWrapper = styled.div`
             }
           }
 
-          > span {
-            transition: transform 0.2s;
-          }
+          > button {
+            color: inherit;
+            height: inherit;
+            transition: transform 0.25s;
+            width: 100%;
+            padding: 0 1.3rem;
 
-          &:hover {
-            > span {
-              transform: scale(1.02);
+            > svg {
+              margin: 0 0.5rem;
             }
           }
 
-          > span > svg {
-            margin: 0 0.5rem;
+          &:hover {
+            > button {
+              transform: scale(1.02);
+            }
           }
         }
       }
