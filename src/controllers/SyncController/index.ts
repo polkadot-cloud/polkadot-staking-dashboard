@@ -29,24 +29,31 @@ export class SyncController {
       status,
     };
 
-    // Keep class syncIds up to date.
-    if (status === 'syncing' && !this.syncIds.includes(id)) {
-      // Add syncId if it does not already exist:
+    // Whether to dispatch the event.
+    let dispatch = true;
 
-      if (!this.syncIds.includes(id)) {
+    // Keep class syncIds up to date.
+    if (status === 'syncing') {
+      if (this.syncIds.includes(id)) {
+        // Cancel event if already syncing.
+        dispatch = false;
+      } else {
         this.syncIds.push(id);
       }
     }
-    if (status === 'complete' && this.syncIds.includes(id)) {
+
+    if (status === 'complete') {
       this.syncIds = this.syncIds.filter((syncId) => syncId !== id);
     }
 
     // Dispatch event to UI.
-    document.dispatchEvent(
-      new CustomEvent('new-sync-status', {
-        detail,
-      })
-    );
+    if (dispatch) {
+      document.dispatchEvent(
+        new CustomEvent('new-sync-status', {
+          detail,
+        })
+      );
+    }
   };
 
   // Checks if event detailis a valid `new-sync-status` event.
