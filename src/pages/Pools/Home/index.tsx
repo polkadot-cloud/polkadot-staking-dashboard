@@ -115,13 +115,13 @@ export const HomeInner = () => {
           <WithdrawPrompt bondFor="pool" />
 
           <PageRow>
-            <RowSection hLast>
-              <Status height={ROW_HEIGHT} />
-            </RowSection>
-            <RowSection secondary>
+            <RowSection secondary vLast>
               <CardWrapper height={ROW_HEIGHT}>
                 <ManageBond />
               </CardWrapper>
+            </RowSection>
+            <RowSection hLast>
+              <Status height={ROW_HEIGHT} />
             </RowSection>
           </PageRow>
           {activePool !== null && (
