@@ -88,18 +88,17 @@ export const NominationStatus = ({
             ? !isUnstaking
               ? [unstakeButton]
               : []
-            : [
-                {
-                  title: startTitle,
-                  icon: faChevronCircleRight,
-                  transform: 'grow-1',
-                  disabled:
-                    !isReady ||
-                    isReadOnlyAccount(activeAccount) ||
-                    !activeAccount,
-                  onClick: () => setOnNominatorSetup(true),
-                },
-              ]
+            : isReadOnlyAccount(activeAccount)
+              ? []
+              : [
+                  {
+                    title: startTitle,
+                    icon: faChevronCircleRight,
+                    transform: 'grow-1',
+                    disabled: !isReady || !activeAccount,
+                    onClick: () => setOnNominatorSetup(true),
+                  },
+                ]
       }
       buttonType={buttonType}
     />

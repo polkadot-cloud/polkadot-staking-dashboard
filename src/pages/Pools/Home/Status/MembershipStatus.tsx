@@ -50,18 +50,21 @@ export const MembershipStatus = ({
       (poolState !== 'Destroying' && (isOwner() || isBouncer())) ||
       (isMember() && active?.isGreaterThan(0))
     ) {
-      membershipButtons.push({
-        title: t('pools.manage'),
-        icon: faCog,
-        disabled: !isReady || isReadOnlyAccount(activeAccount),
-        small: true,
-        onClick: () =>
-          openModal({
-            key: 'ManagePool',
-            options: { disableWindowResize: true, disableScroll: true },
-            size: 'sm',
-          }),
-      });
+      // Display manage button if active account is not a read-only account.
+      if (!isReadOnlyAccount(activeAccount)) {
+        membershipButtons.push({
+          title: t('pools.manage'),
+          icon: faCog,
+          disabled: !isReady,
+          small: true,
+          onClick: () =>
+            openModal({
+              key: 'ManagePool',
+              options: { disableWindowResize: true, disableScroll: true },
+              size: 'sm',
+            }),
+        });
+      }
     }
   }
 
