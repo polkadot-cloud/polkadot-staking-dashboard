@@ -1,6 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { defaultSyncIds } from './defaults';
 import type { SyncEvent, SyncID, SyncIDConfig, SyncStatus } from './types';
 
 export class SyncController {
@@ -10,7 +11,7 @@ export class SyncController {
 
   // List of all syncIds currently syncing. NOTE: `initialization` is added by default as the
   // network always initializes from initial state.
-  static syncIds: SyncID[] = ['initialization'];
+  static syncIds: SyncID[] = defaultSyncIds;
 
   // ------------------------------------------------------
   // Dispatch sync events
@@ -25,7 +26,11 @@ export class SyncController {
 
     // Keep class syncIds up to date.
     if (status === 'syncing' && !this.syncIds.includes(id)) {
-      this.syncIds.push(id);
+      // Add syncId if it does not already exist:
+
+      if (!this.syncIds.includes(id)) {
+        this.syncIds.push(id);
+      }
     }
     if (status === 'complete' && this.syncIds.includes(id)) {
       this.syncIds = this.syncIds.filter((syncId) => syncId !== id);

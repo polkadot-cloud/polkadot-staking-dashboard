@@ -20,6 +20,7 @@ import { useNetwork } from 'contexts/Network';
 import { useApi } from '../../Api';
 import { defaultBondedPoolsContext } from './defaults';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
+import { SyncController } from 'controllers/SyncController';
 
 export const BondedPoolsContext = createContext<BondedPoolsContextState>(
   defaultBondedPoolsContext
@@ -85,6 +86,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     );
 
     bondedPoolsSynced.current = 'synced';
+    SyncController.dispatch('bonded-pools', 'complete');
   };
 
   // Fetches pool nominations and updates state.
@@ -386,6 +388,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   // Clear existing state for network refresh.
   useEffectIgnoreInitial(() => {
     bondedPoolsSynced.current = 'unsynced';
+    SyncController.dispatch('bonded-pools', 'syncing');
     setStateWithRef([], setBondedPools, bondedPoolsRef);
     setPoolsMetadata({});
     setPoolsNominations({});
