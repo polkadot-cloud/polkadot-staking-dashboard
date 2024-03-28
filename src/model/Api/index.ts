@@ -92,7 +92,8 @@ export class Api {
 
   // Class initialization. Sets the `provider` and `api` class members.
   async initialize(type: ConnectionType, rpcEndpoint: string) {
-    // Add initial syncing items.
+    // Add initial syncing items. Even though `initialization` is added by default, it is called
+    // again here in case a new API is initialized.
     SyncController.dispatch('initialization', 'syncing');
 
     // Persist the network to local storage.

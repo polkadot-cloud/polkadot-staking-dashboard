@@ -13,7 +13,7 @@ export const useSyncing = (config: SyncIDConfig) => {
   const ids = SyncController.getIdsFromSyncConfig(config);
 
   // Keep a record of active sync statuses.
-  const [syncIds, setSyncIds] = useState<SyncID[]>([]);
+  const [syncIds, setSyncIds] = useState<SyncID[]>(SyncController.syncIds);
   const syncIdsRef = useRef(syncIds);
 
   // Handle new syncing status events.

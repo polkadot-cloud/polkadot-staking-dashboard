@@ -7,7 +7,10 @@ export class SyncController {
   // ------------------------------------------------------
   // Class members
   // ------------------------------------------------------
-  static syncIds: SyncID[] = [];
+
+  // List of all syncIds currently syncing. NOTE: `initialization` is added by default as the
+  // network always initializes from initial state.
+  static syncIds: SyncID[] = ['initialization'];
 
   // ------------------------------------------------------
   // Dispatch sync events
