@@ -33,6 +33,7 @@ export const Create = () => {
               iconLeft={faChevronLeft}
               iconTransform="shrink-3"
               onClick={() => setOnPoolSetup(false)}
+              lg
             />
           </span>
           <span>
@@ -42,6 +43,7 @@ export const Create = () => {
                 setOnPoolSetup(false);
                 removeSetupProgress('pool', activeAccount);
               }}
+              lg
             />
           </span>
           <div className="right" />

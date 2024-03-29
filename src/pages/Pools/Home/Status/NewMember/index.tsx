@@ -3,19 +3,22 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NewMemberWrapper } from './Wrapper';
-import { faChevronRight, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 import { useSetup } from 'contexts/Setup';
 import { usePoolsTabs } from '../../context';
 import { useStatusButtons } from '../useStatusButtons';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useTranslation } from 'react-i18next';
 
 export const NewMember = () => {
+  const { t } = useTranslation('pages');
   const { setOnPoolSetup } = useSetup();
   const { setActiveTab } = usePoolsTabs();
+  const { getPoolSetupPercent } = useSetup();
+  const { activeAccount } = useActiveAccounts();
   const { disableJoin, disableCreate } = useStatusButtons();
 
-  // TODO: update locales.
-  // title: `${t('pools.create')}${
-  // title: `${t('pools.join')}`,
+  const setupPercent = getPoolSetupPercent(activeAccount);
 
   return (
     <NewMemberWrapper>
@@ -24,13 +27,14 @@ export const NewMember = () => {
           <div className="buttons">
             <div className="button primary">
               <button onClick={() => setActiveTab(1)} disabled={disableJoin()}>
-                <FontAwesomeIcon icon={faUserPlus} /> Join a Pool
+                {t('pools.joinPool')}
+                <FontAwesomeIcon icon={faUserGroup} />
               </button>
             </div>
             <div className="button secondary">
               <button onClick={() => setActiveTab(1)}>
-                Browse Pools
-                <FontAwesomeIcon icon={faChevronRight} transform={'shrink-6'} />
+                {t('pools.browsePools')}
+                <FontAwesomeIcon icon={faChevronRight} transform={'shrink-5'} />
               </button>
             </div>
           </div>
@@ -42,8 +46,9 @@ export const NewMember = () => {
                 onClick={() => setOnPoolSetup(true)}
                 disabled={disableCreate()}
               >
-                Create a Pool
-                <FontAwesomeIcon icon={faChevronRight} transform={'shrink-6'} />
+                {t('pools.createPool')}
+                {setupPercent !== 0 && ` - In Progress`}
+                <FontAwesomeIcon icon={faChevronRight} transform={'shrink-5'} />
               </button>
             </div>
           </div>

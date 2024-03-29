@@ -18,8 +18,8 @@ export const Status = ({ height }: StatusProps) => {
   const { getPoolMembership } = useBalances();
   const { poolMembersipSyncing } = useSyncing();
   const { activeAccount } = useActiveAccounts();
-  const membership = getPoolMembership(activeAccount);
 
+  const membership = getPoolMembership(activeAccount);
   const syncing = poolMembersipSyncing();
 
   return (

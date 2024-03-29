@@ -19,7 +19,7 @@ export const NewMemberWrapper = styled.div`
       height: inherit;
 
       &:first-child {
-        flex-basis: 70%;
+        flex-grow: 1;
         border-right: 1px solid var(--border-primary-color);
         padding-right: 1.25rem;
       }
@@ -79,7 +79,7 @@ export const NewMemberWrapper = styled.div`
             padding: 0 1.3rem;
 
             > svg {
-              margin: 0 0.5rem;
+              margin: 0 0.75rem;
             }
           }
 

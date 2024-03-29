@@ -42,6 +42,7 @@ export const Setup = () => {
                   setOnNominatorSetup(false);
                 }
               }}
+              lg
             />
           </span>
           <span>
@@ -53,6 +54,7 @@ export const Setup = () => {
                 setOnNominatorSetup(false);
                 removeSetupProgress('nominator', activeAccount);
               }}
+              lg
             />
           </span>
           <div className="right" />
