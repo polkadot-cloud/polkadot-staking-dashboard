@@ -9,12 +9,14 @@ import { usePoolsTabs } from '../../context';
 import { useStatusButtons } from '../useStatusButtons';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useTranslation } from 'react-i18next';
+import { useOverlay } from 'kits/Overlay/Provider';
 
 export const NewMember = () => {
   const { t } = useTranslation('pages');
   const { setOnPoolSetup } = useSetup();
   const { setActiveTab } = usePoolsTabs();
   const { getPoolSetupPercent } = useSetup();
+  const { openCanvas } = useOverlay().canvas;
   const { activeAccount } = useActiveAccounts();
   const { disableJoin, disableCreate } = useStatusButtons();
 
@@ -26,7 +28,16 @@ export const NewMember = () => {
         <section>
           <div className="buttons">
             <div className="button primary">
-              <button onClick={() => setActiveTab(1)} disabled={disableJoin()}>
+              <button
+                onClick={() =>
+                  openCanvas({
+                    key: 'JoinPoolCanvas',
+                    options: {},
+                    size: 'xl',
+                  })
+                }
+                disabled={disableJoin()}
+              >
                 {t('pools.joinPool')}
                 <FontAwesomeIcon icon={faUserGroup} />
               </button>

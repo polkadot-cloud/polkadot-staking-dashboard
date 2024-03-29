@@ -31,6 +31,7 @@ import { ValidatorMetrics } from '../modals/ValidatorMetrics';
 import { ValidatorGeo } from '../modals/ValidatorGeo';
 import { ManageNominations } from '../canvas/ManageNominations';
 import { PoolMembers } from 'canvas/PoolMembers';
+import { JoinPool as JoinPoolCanvas } from 'canvas/JoinPool';
 import { Overlay } from 'kits/Overlay';
 
 export const Overlays = () => {
@@ -70,6 +71,7 @@ export const Overlays = () => {
       canvas={{
         ManageNominations,
         PoolMembers,
+        JoinPoolCanvas,
       }}
     />
   );
