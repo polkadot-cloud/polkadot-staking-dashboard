@@ -12,12 +12,14 @@ import { NewMember } from './NewMember';
 import { useSyncing } from 'hooks/useSyncing';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const Status = ({ height }: StatusProps) => {
   const { activePool } = useActivePool();
   const { getPoolMembership } = useBalances();
   const { poolMembersipSyncing } = useSyncing();
   const { activeAccount } = useActiveAccounts();
+  const { isReadOnlyAccount } = useImportedAccounts();
 
   const membership = getPoolMembership(activeAccount);
   const syncing = poolMembersipSyncing();
@@ -34,7 +36,8 @@ export const Status = ({ height }: StatusProps) => {
             <PoolStatus />
           </>
         ) : (
-          membership === null && <NewMember />
+          membership === null &&
+          !isReadOnlyAccount(activeAccount) && <NewMember />
         ))}
     </CardWrapper>
   );

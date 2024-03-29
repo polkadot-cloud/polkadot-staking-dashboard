@@ -2,12 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NewMemberWrapper } from './Wrapper';
+import { CallToActionWrapper } from '../../../../library/CallToAction';
 import { faChevronRight, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 import { useSetup } from 'contexts/Setup';
-import { usePoolsTabs } from '../../context';
-import { useStatusButtons } from '../useStatusButtons';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { usePoolsTabs } from '../context';
+import { useStatusButtons } from './useStatusButtons';
 import { useTranslation } from 'react-i18next';
 import { useOverlay } from 'kits/Overlay/Provider';
 
@@ -15,15 +14,15 @@ export const NewMember = () => {
   const { t } = useTranslation('pages');
   const { setOnPoolSetup } = useSetup();
   const { setActiveTab } = usePoolsTabs();
-  const { getPoolSetupPercent } = useSetup();
+  // const { getPoolSetupPercent } = useSetup();
   const { openCanvas } = useOverlay().canvas;
-  const { activeAccount } = useActiveAccounts();
+  // const { activeAccount } = useActiveAccounts();
   const { disableJoin, disableCreate } = useStatusButtons();
 
-  const setupPercent = getPoolSetupPercent(activeAccount);
+  // const setupPercent = getPoolSetupPercent(activeAccount);
 
   return (
-    <NewMemberWrapper>
+    <CallToActionWrapper>
       <div className="inner">
         <section>
           <div className="buttons">
@@ -45,7 +44,6 @@ export const NewMember = () => {
             <div className="button secondary">
               <button onClick={() => setActiveTab(1)}>
                 {t('pools.browsePools')}
-                <FontAwesomeIcon icon={faChevronRight} transform={'shrink-5'} />
               </button>
             </div>
           </div>
@@ -58,13 +56,12 @@ export const NewMember = () => {
                 disabled={disableCreate()}
               >
                 {t('pools.createPool')}
-                {setupPercent !== 0 && ` - In Progress`}
                 <FontAwesomeIcon icon={faChevronRight} transform={'shrink-5'} />
               </button>
             </div>
           </div>
         </section>
       </div>
-    </NewMemberWrapper>
+    </CallToActionWrapper>
   );
 };

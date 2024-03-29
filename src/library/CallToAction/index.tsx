@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 
-export const NewMemberWrapper = styled.div`
+export const CallToActionWrapper = styled.div`
   height: inherit;
   width: 100%;
 
@@ -18,15 +18,20 @@ export const NewMemberWrapper = styled.div`
       flex-direction: row;
       height: inherit;
 
-      &:first-child {
+      &:nth-child(1) {
         flex-grow: 1;
         border-right: 1px solid var(--border-primary-color);
-        padding-right: 1.25rem;
+        padding-right: 1rem;
       }
 
-      &:last-child {
+      &:nth-child(2) {
         flex: 1%;
-        padding-left: 1.25rem;
+        padding-left: 1rem;
+      }
+
+      &.standalone {
+        border: none;
+        padding: 0;
       }
 
       h3 {
@@ -41,12 +46,15 @@ export const NewMemberWrapper = styled.div`
         width: 100%;
         height: 3.75rem;
         display: flex;
+        flex-wrap: nowrap;
 
         > .button {
           height: inherit;
           display: flex;
           align-items: center;
           justify-content: center;
+          overflow: hidden;
+          white-space: nowrap;
           overflow: hidden;
 
           &.primary {
@@ -63,20 +71,23 @@ export const NewMemberWrapper = styled.div`
             border-top-right-radius: var(--button-border-radius);
             border-bottom-right-radius: var(--button-border-radius);
             height: inherit;
+          }
 
-            &.standalone {
-              border-top-left-radius: var(--button-border-radius);
-              border-bottom-left-radius: var(--button-border-radius);
-              flex-grow: 1;
-            }
+          &.standalone {
+            border-radius: var(--button-border-radius);
+            flex-grow: 1;
           }
 
           > button {
             color: inherit;
             height: inherit;
             transition: transform 0.25s;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: nowrap;
             width: 100%;
-            padding: 0 1.3rem;
 
             > svg {
               margin: 0 0.75rem;
