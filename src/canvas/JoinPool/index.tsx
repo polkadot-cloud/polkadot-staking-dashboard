@@ -7,15 +7,12 @@ import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useTranslation } from 'react-i18next';
+import { JoinPoolInterfaceWrapper } from './Wrappers';
 
 export const JoinPool = () => {
   const { t } = useTranslation();
-  const {
-    closeCanvas,
-    config: { options },
-  } = useOverlay().canvas;
+  const { closeCanvas } = useOverlay().canvas;
 
-  console.log('options: ', options);
   return (
     <CanvasFullScreenWrapper>
       <div className="head">
@@ -35,6 +32,13 @@ export const JoinPool = () => {
           style={{ marginLeft: '1.1rem' }}
         />
       </div>
+      <JoinPoolInterfaceWrapper>
+        <div className="header">Pool Title</div>
+        <div className="content">
+          <div>Main content</div>
+          <div>Side content</div>
+        </div>
+      </JoinPoolInterfaceWrapper>
     </CanvasFullScreenWrapper>
   );
 };
