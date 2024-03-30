@@ -80,18 +80,26 @@ export const CallToActionWrapper = styled.div`
           overflow: hidden;
 
           &.primary {
-            background: var(--accent-color-primary);
+            background-color: var(--accent-color-primary);
             border-top-left-radius: var(--button-border-radius);
             border-bottom-left-radius: var(--button-border-radius);
             color: white;
             flex-grow: 1;
+
+            &:hover {
+              filter: brightness(90%);
+            }
           }
 
           &.secondary {
-            color: var(--text-color-primary);
-            background: var(--button-primary-background);
+            background-color: var(--button-primary-background);
             border-top-right-radius: var(--button-border-radius);
             border-bottom-right-radius: var(--button-border-radius);
+            color: var(--text-color-primary);
+
+            &:hover {
+              filter: brightness(95%);
+            }
           }
 
           &.standalone {
@@ -123,12 +131,6 @@ export const CallToActionWrapper = styled.div`
 
             > svg {
               margin: 0 0.75rem;
-            }
-          }
-
-          &:hover {
-            > button {
-              transform: scale(1.02);
             }
           }
         }
