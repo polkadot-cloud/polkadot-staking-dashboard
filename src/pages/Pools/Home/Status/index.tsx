@@ -25,7 +25,10 @@ export const Status = ({ height }: StatusProps) => {
   const syncing = poolMembersipSyncing();
 
   return (
-    <CardWrapper height={height}>
+    <CardWrapper
+      height={height}
+      className={!syncing && !activePool && !membership ? 'prompt' : undefined}
+    >
       <MembershipStatus />
       <Separator />
       <RewardsStatus dimmed={membership === null} />

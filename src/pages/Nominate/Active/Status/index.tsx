@@ -19,7 +19,10 @@ export const Status = ({ height }: { height: number }) => {
   const { isReadOnlyAccount } = useImportedAccounts();
 
   return (
-    <CardWrapper height={height}>
+    <CardWrapper
+      height={height}
+      className={!syncing && inSetup() ? 'prompt' : undefined}
+    >
       <NominationStatus />
       <Separator />
       <UnclaimedPayoutsStatus dimmed={inSetup()} />
