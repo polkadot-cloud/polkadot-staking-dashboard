@@ -13,20 +13,40 @@ export const CallToActionWrapper = styled.div`
     flex-direction: row;
     margin-top: 0.38rem;
 
+    @media (max-width: 650px) {
+      flex-wrap: wrap;
+    }
+
     > section {
       display: flex;
       flex-direction: row;
       height: inherit;
 
-      &:nth-child(1) {
+      @media (max-width: 650px) {
         flex-grow: 1;
+        flex-basis: 100%;
+        margin-top: 1.1rem;
+
+        &:nth-child(1) {
+          margin-top: 0;
+        }
+      }
+
+      &:nth-child(1) {
         border-right: 1px solid var(--border-primary-color);
-        padding-right: 1rem;
+        flex-grow: 1;
+
+        @media (min-width: 651px) {
+          padding-right: 1rem;
+        }
       }
 
       &:nth-child(2) {
-        flex: 1%;
-        padding-left: 1rem;
+        flex: 1;
+
+        @media (min-width: 651px) {
+          padding-left: 1rem;
+        }
       }
 
       &.standalone {
