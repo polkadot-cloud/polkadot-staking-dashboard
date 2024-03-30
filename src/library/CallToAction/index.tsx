@@ -78,6 +78,7 @@ export const CallToActionWrapper = styled.div`
           overflow: hidden;
           white-space: nowrap;
           overflow: hidden;
+          transition: filter 0.15s;
 
           &.primary {
             background-color: var(--accent-color-primary);
