@@ -62,9 +62,11 @@ export const CallToActionWrapper = styled.div`
       }
 
       .buttons {
-        width: 100%;
+        border: 0.75px solid var(--border-primary-color);
+        border-radius: var(--button-border-radius);
         display: flex;
         flex-wrap: nowrap;
+        width: 100%;
 
         @media (max-width: 650px) {
           flex-wrap: wrap;
