@@ -26,8 +26,70 @@ export const JoinPoolInterfaceWrapper = styled.div`
       }
 
       &:last-child {
-        min-width: 300px;
+        min-width: 450px;
       }
     }
+  }
+`;
+
+export const TokenInputCardWrapper = styled.div`
+  background: var(--background-canvas-card);
+  border: 0.75px solid var(--border-primary-color);
+  box-shadow: var(--card-shadow);
+  border-radius: 1.5rem;
+  padding: 1.25rem;
+  width: 100%;
+
+  h4 {
+    display: flex;
+    align-items: center;
+    &.note {
+      color: var(--text-color-secondary);
+      font-family: Inter, sans-serif;
+    }
+  }
+
+  > h2 {
+    color: var(--text-color-secondary);
+  }
+
+  > h4 {
+    margin: 1.75rem 0 0.5rem 0;
+    color: var(--text-color-tertiary);
+
+    &.underline {
+      border-bottom: 1px solid var(--border-primary-color);
+      padding-bottom: 0.5rem;
+    }
+  }
+
+  > .input {
+    border-bottom: 1px solid var(--border-primary-color);
+    padding: 0 0.25rem;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 1.25rem;
+
+    > div {
+      &:first-child {
+        flex-grow: 1;
+        display: flex;
+        align-items: flex-end;
+
+        > h2 {
+          font-size: 2rem;
+        }
+      }
+    }
+  }
+
+  > .available {
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+  }
+
+  > .submit {
+    margin-top: 2.5rem;
   }
 `;

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit, unitToPlanck } from '@w3ux/utils';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -12,7 +12,6 @@ import { defaultPoolProgress } from 'contexts/Setup/defaults';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxMeta } from 'contexts/TxMeta';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
-import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
@@ -31,10 +30,10 @@ export const JoinPool = () => {
   const {
     networkData: { units },
   } = useNetwork();
-  const { activeAccount } = useActiveAccounts();
   const { newBatchCall } = useBatchCall();
   const { setActiveAccountSetup } = useSetup();
-  const { txFees, notEnoughFunds } = useTxMeta();
+  const { activeAccount } = useActiveAccounts();
+  const { notEnoughFunds } = useTxMeta();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
@@ -48,13 +47,9 @@ export const JoinPool = () => {
 
   const {
     pool: { totalPossibleBond },
-    transferrableBalance,
   } = getTransferOptions(activeAccount);
 
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' });
-
-  // if we are bonding, subtract tx fees from bond amount
-  const freeBondAmount = BigNumber.max(transferrableBalance.minus(txFees), 0);
 
   // local bond value
   const [bond, setBond] = useState<{ bond: string }>({
@@ -67,9 +62,9 @@ export const JoinPool = () => {
   };
 
   // Updated claim permission value
-  const [claimPermission, setClaimPermission] = useState<
-    ClaimPermission | undefined
-  >('Permissioned');
+  const [claimPermission] = useState<ClaimPermission | undefined>(
+    'Permissioned'
+  );
 
   // bond valid
   const [bondValid, setBondValid] = useState<boolean>(false);
@@ -148,14 +143,6 @@ export const JoinPool = () => {
           setters={[handleSetBond]}
           parentErrors={warnings}
           txFees={largestTxFee}
-        />
-        <ClaimPermissionInput
-          current={undefined}
-          permissioned={false}
-          onChange={(val: ClaimPermission | undefined) => {
-            setClaimPermission(val);
-          }}
-          disabled={freeBondAmount.isZero()}
         />
       </ModalPadding>
       <SubmitTx valid={bondValid} {...submitExtrinsic} />

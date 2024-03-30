@@ -93,9 +93,6 @@ export const SetClaimPermission = ({
 
         <ClaimPermissionInput
           current={membership?.claimPermission}
-          permissioned={
-            ![undefined, 'Permissioned'].includes(membership?.claimPermission)
-          }
           onChange={(val: ClaimPermission | undefined) => {
             setClaimPermission(val);
           }}

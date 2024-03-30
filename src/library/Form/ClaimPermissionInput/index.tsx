@@ -6,18 +6,15 @@ import { useTranslation } from 'react-i18next';
 import { TabWrapper, TabsWrapper } from 'library/Filter/Wrappers';
 import type { ClaimPermission } from 'contexts/Pools/types';
 import type { ClaimPermissionConfig } from '../types';
-import { ActionItem } from 'library/ActionItem';
 
 export interface ClaimPermissionInputProps {
   current: ClaimPermission | undefined;
-  permissioned: boolean;
   onChange: (value: ClaimPermission | undefined) => void;
   disabled?: boolean;
 }
 
 export const ClaimPermissionInput = ({
   current,
-  permissioned,
   onChange,
   disabled = false,
 }: ClaimPermissionInputProps) => {
@@ -25,19 +22,19 @@ export const ClaimPermissionInput = ({
 
   const claimPermissionConfig: ClaimPermissionConfig[] = [
     {
-      label: t('allowCompound'),
-      value: 'PermissionlessCompound',
-      description: t('allowAnyoneCompound'),
-    },
-    {
       label: t('allowWithdraw'),
       value: 'PermissionlessWithdraw',
       description: t('allowAnyoneWithdraw'),
     },
     {
-      label: t('allowAll'),
-      value: 'PermissionlessAll',
-      description: t('allowAnyoneCompoundWithdraw'),
+      label: t('allowCompound'),
+      value: 'PermissionlessCompound',
+      description: t('allowAnyoneCompound'),
+    },
+    {
+      label: 'Permissioned',
+      value: 'Permissioned',
+      description: 'Only you can claim rewards.',
     },
   ];
 
@@ -47,7 +44,7 @@ export const ClaimPermissionInput = ({
   );
 
   // Permissionless claim enabled.
-  const [enabled, setEnabled] = useState<boolean>(permissioned);
+  const [enabled] = useState<boolean>(true);
 
   const activeTab = claimPermissionConfig.find(
     ({ value }) => value === selected
@@ -60,28 +57,6 @@ export const ClaimPermissionInput = ({
 
   return (
     <>
-      <ActionItem
-        style={{
-          marginTop: '2rem',
-        }}
-        text={t('enablePermissionlessClaiming')}
-        toggled={enabled}
-        onToggle={(val) => {
-          // toggle enable claim permission.
-          setEnabled(val);
-
-          const newClaimPermission = val
-            ? claimPermissionConfig[0].value
-            : current === undefined
-              ? undefined
-              : 'Permissioned';
-
-          setSelected(newClaimPermission);
-          onChange(newClaimPermission);
-        }}
-        disabled={disabled}
-        inactive={disabled}
-      />
       <TabsWrapper
         style={{
           margin: '1rem 0',
@@ -97,6 +72,7 @@ export const ClaimPermissionInput = ({
               setSelected(value);
               onChange(value);
             }}
+            style={{ flexGrow: 1 }}
           >
             {label}
           </TabWrapper>
@@ -108,9 +84,13 @@ export const ClaimPermissionInput = ({
         }}
       >
         {activeTab ? (
-          <p>{activeTab.description}</p>
+          <h4 style={{ color: 'var(--text-color-secondary)' }}>
+            {activeTab.description}
+          </h4>
         ) : (
-          <p>{t('permissionlessClaimingTurnedOff')}</p>
+          <h4 style={{ color: 'var(--text-color-secondary)' }}>
+            {t('permissionlessClaimingTurnedOff')}
+          </h4>
         )}
       </div>
     </>
