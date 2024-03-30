@@ -440,6 +440,14 @@
       border: 1px solid var(--border-secondary-color);
     }
   }
+
+  &.canvas {
+    border: 1px solid var(--border-secondary-color);
+
+    &.active {
+      background: var(--button-tab-canvas-background);
+    }
+  }
 }
 
 .btn-tertiary {

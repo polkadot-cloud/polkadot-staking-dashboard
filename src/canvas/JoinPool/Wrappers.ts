@@ -34,12 +34,14 @@ export const JoinPoolInterfaceWrapper = styled.div`
 
 export const TitleWrapper = styled.div`
   display: flex;
-  margin-bottom: 2.5rem;
+  flex-direction: column;
+  margin-bottom: 1rem;
   width: 100%;
 
   > .inner {
     display: flex;
     align-items: center;
+    margin-bottom: 1rem;
     flex: 1;
 
     > div {
@@ -47,10 +49,23 @@ export const TitleWrapper = styled.div`
 
       &:nth-child(2) {
         flex-grow: 1;
-        padding-left: 1rem;
+        padding-left: 0.75rem;
+        display: flex;
+        flex-direction: column;
 
         > h1 {
           margin: 0;
+        }
+
+        > .labels {
+          display: flex;
+          margin-top: 0.75rem;
+
+          > h3 {
+            color: var(--text-color-secondary);
+            font-family: Inter, sans-serif;
+            margin: 0;
+          }
         }
       }
     }

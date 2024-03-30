@@ -4,6 +4,10 @@
 import type { PageTitleTabsProps } from '../PageTitleTabs/types';
 
 export type PageTitleProps = PageTitleTabsProps & {
+  // tab button class.
+  tabClassName?: string;
+  // whether tabs are inline.
+  inline?: boolean;
   // title of the page.
   title?: string;
   // a button right next to the page title.
