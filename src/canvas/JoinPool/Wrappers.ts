@@ -59,7 +59,7 @@ export const TitleWrapper = styled.div`
 
         > .labels {
           display: flex;
-          margin-top: 0.75rem;
+          margin-top: 0.9rem;
 
           > h3 {
             color: var(--text-color-secondary);
