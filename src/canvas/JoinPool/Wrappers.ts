@@ -51,10 +51,11 @@ export const TokenInputCardWrapper = styled.div`
 
   > h2 {
     color: var(--text-color-secondary);
+    margin: 0.25rem 0;
   }
 
   > h4 {
-    margin: 1.75rem 0 0.5rem 0;
+    margin: 1.5rem 0 0.5rem 0;
     color: var(--text-color-tertiary);
 
     &.underline {
