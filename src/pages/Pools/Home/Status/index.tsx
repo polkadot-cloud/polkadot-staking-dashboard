@@ -29,16 +29,19 @@ export const Status = ({ height }: StatusProps) => {
       <MembershipStatus />
       <Separator />
       <RewardsStatus />
-      {!syncing &&
-        (activePool && !!membership ? (
+      {!syncing ? (
+        activePool && !!membership ? (
           <>
             <Separator />
             <PoolStatus />
           </>
         ) : (
           membership === null &&
-          !isReadOnlyAccount(activeAccount) && <NewMember />
-        ))}
+          !isReadOnlyAccount(activeAccount) && <NewMember syncing={syncing} />
+        )
+      ) : (
+        <NewMember syncing={syncing} />
+      )}
     </CardWrapper>
   );
 };

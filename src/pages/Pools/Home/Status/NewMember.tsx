@@ -9,8 +9,10 @@ import { usePoolsTabs } from '../context';
 import { useStatusButtons } from './useStatusButtons';
 import { useTranslation } from 'react-i18next';
 import { useOverlay } from 'kits/Overlay/Provider';
+import type { NewMemberProps } from './types';
+import { CallToActionLoader } from 'library/Loader/CallToAction';
 
-export const NewMember = () => {
+export const NewMember = ({ syncing }: NewMemberProps) => {
   const { t } = useTranslation('pages');
   const { setOnPoolSetup } = useSetup();
   const { setActiveTab } = usePoolsTabs();
@@ -24,44 +26,57 @@ export const NewMember = () => {
   return (
     <CallToActionWrapper>
       <div className="inner">
-        <section>
-          <div className="buttons">
-            <div className="button primary">
-              <button
-                onClick={() =>
-                  openCanvas({
-                    key: 'JoinPoolCanvas',
-                    options: {},
-                    size: 'xl',
-                  })
-                }
-                disabled={disableJoin()}
-              >
-                {t('pools.joinPool')}
-                <FontAwesomeIcon icon={faUserGroup} />
-              </button>
-            </div>
-            <div className="button secondary">
-              <button onClick={() => setActiveTab(1)}>
-                {t('pools.browsePools')}
-                <FontAwesomeIcon icon={faChevronRight} transform={'shrink-4'} />
-              </button>
-            </div>
-          </div>
-        </section>
-        <section>
-          <div className="buttons">
-            <div className="button secondary standalone">
-              <button
-                onClick={() => setOnPoolSetup(true)}
-                disabled={disableCreate()}
-              >
-                {t('pools.createPool')}
-                <FontAwesomeIcon icon={faChevronRight} transform={'shrink-4'} />
-              </button>
-            </div>
-          </div>
-        </section>
+        {syncing ? (
+          <CallToActionLoader />
+        ) : (
+          <>
+            <section>
+              <div className="buttons">
+                <div className="button primary">
+                  <button
+                    onClick={() =>
+                      openCanvas({
+                        key: 'JoinPoolCanvas',
+                        options: {},
+                        size: 'xl',
+                      })
+                    }
+                    disabled={disableJoin()}
+                  >
+                    {t('pools.joinPool')}
+                    <FontAwesomeIcon icon={faUserGroup} />
+                  </button>
+                </div>
+
+                <div className="button secondary">
+                  <button onClick={() => setActiveTab(1)}>
+                    {t('pools.browsePools')}
+                    <FontAwesomeIcon
+                      icon={faChevronRight}
+                      transform={'shrink-4'}
+                    />
+                  </button>
+                </div>
+              </div>
+            </section>
+            <section>
+              <div className="buttons">
+                <div className="button secondary standalone">
+                  <button
+                    onClick={() => setOnPoolSetup(true)}
+                    disabled={disableCreate()}
+                  >
+                    {t('pools.createPool')}
+                    <FontAwesomeIcon
+                      icon={faChevronRight}
+                      transform={'shrink-4'}
+                    />
+                  </button>
+                </div>
+              </div>
+            </section>
+          </>
+        )}
       </div>
     </CallToActionWrapper>
   );

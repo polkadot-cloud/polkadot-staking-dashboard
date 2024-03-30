@@ -12,8 +12,10 @@ import { useSetup } from 'contexts/Setup';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNavigate } from 'react-router-dom';
 import { useApi } from 'contexts/Api';
+import type { NewNominatorProps } from '../types';
+import { CallToActionLoader } from 'library/Loader/CallToAction';
 
-export const NewNominator = () => {
+export const NewNominator = ({ syncing }: NewNominatorProps) => {
   const { t } = useTranslation('pages');
   const navigate = useNavigate();
   const { isReady } = useApi();
@@ -24,25 +26,29 @@ export const NewNominator = () => {
   return (
     <CallToActionWrapper>
       <div className="inner">
-        <section className="standalone">
-          <div className="buttons">
-            <div className="button primary">
-              <button
-                onClick={() => setOnNominatorSetup(true)}
-                disabled={!isReady || !activeAccount}
-              >
-                {t('nominate.startNominating')}
-                <FontAwesomeIcon icon={faChevronCircleRight} />
-              </button>
+        {syncing ? (
+          <CallToActionLoader />
+        ) : (
+          <section className="standalone">
+            <div className="buttons">
+              <div className="button primary">
+                <button
+                  onClick={() => setOnNominatorSetup(true)}
+                  disabled={!isReady || !activeAccount}
+                >
+                  {t('nominate.startNominating')}
+                  <FontAwesomeIcon icon={faChevronCircleRight} />
+                </button>
+              </div>
+              <div className="button secondary">
+                <button onClick={() => navigate('/validators')}>
+                  Browse Validators
+                  <FontAwesomeIcon icon={faChevronRight} transform="shrink-4" />
+                </button>
+              </div>
             </div>
-            <div className="button secondary">
-              <button onClick={() => navigate('/validators')}>
-                Browse Validators
-                <FontAwesomeIcon icon={faChevronRight} transform="shrink-4" />
-              </button>
-            </div>
-          </div>
-        </section>
+          </section>
+        )}
       </div>
     </CallToActionWrapper>
   );

@@ -24,15 +24,20 @@ export const Status = ({ height }: { height: number }) => {
       <Separator />
       <UnclaimedPayoutsStatus />
 
-      {!syncing &&
-        (!inSetup() ? (
+      {!syncing ? (
+        !inSetup() ? (
           <>
             <Separator />
             <PayoutDestinationStatus />
           </>
         ) : (
-          !isReadOnlyAccount(activeAccount) && <NewNominator />
-        ))}
+          !isReadOnlyAccount(activeAccount) && (
+            <NewNominator syncing={syncing} />
+          )
+        )
+      ) : (
+        <NewNominator syncing={syncing} />
+      )}
     </CardWrapper>
   );
 };

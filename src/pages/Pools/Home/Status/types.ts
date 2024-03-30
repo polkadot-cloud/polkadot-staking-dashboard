@@ -9,3 +9,7 @@ export interface MembershipStatusProps {
   showButtons?: boolean;
   buttonType?: string;
 }
+
+export interface NewMemberProps {
+  syncing: boolean;
+}
