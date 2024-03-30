@@ -4,6 +4,9 @@
 import styled from 'styled-components';
 
 export const CallToActionWrapper = styled.div`
+  --button-border-radius: 2rem;
+  --button-vertical-space: 1.1rem;
+
   height: inherit;
   width: 100%;
 
@@ -23,9 +26,9 @@ export const CallToActionWrapper = styled.div`
       height: inherit;
 
       @media (max-width: 650px) {
+        margin-top: var(--button-vertical-space);
         flex-grow: 1;
         flex-basis: 100%;
-        margin-top: 1.1rem;
 
         &:nth-child(1) {
           margin-top: 0;
@@ -33,10 +36,10 @@ export const CallToActionWrapper = styled.div`
       }
 
       &:nth-child(1) {
-        border-right: 1px solid var(--border-primary-color);
         flex-grow: 1;
 
         @media (min-width: 651px) {
+          border-right: 1px solid var(--border-primary-color);
           padding-right: 1rem;
         }
       }
@@ -59,17 +62,16 @@ export const CallToActionWrapper = styled.div`
       }
 
       .buttons {
-        --button-border-radius: 2rem;
-        background: var(--button-primary-background);
-        border-radius: var(--button-border-radius);
-        min-height: 3.75rem;
         width: 100%;
-        height: 3.75rem;
         display: flex;
         flex-wrap: nowrap;
 
+        @media (max-width: 650px) {
+          flex-wrap: wrap;
+        }
+
         > .button {
-          height: inherit;
+          height: 3.75rem;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -90,12 +92,22 @@ export const CallToActionWrapper = styled.div`
             background: var(--button-primary-background);
             border-top-right-radius: var(--button-border-radius);
             border-bottom-right-radius: var(--button-border-radius);
-            height: inherit;
           }
 
           &.standalone {
             border-radius: var(--button-border-radius);
             flex-grow: 1;
+          }
+
+          @media (max-width: 650px) {
+            border-radius: var(--button-border-radius);
+            margin-top: var(--button-vertical-space);
+            flex-grow: 1;
+            flex-basis: 100%;
+
+            &:nth-child(1) {
+              margin-top: 0;
+            }
           }
 
           > button {

@@ -3,7 +3,10 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CallToActionWrapper } from 'library/CallToAction';
-import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronCircleRight,
+  faChevronRight,
+} from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { useSetup } from 'contexts/Setup';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -35,6 +38,7 @@ export const NewNominator = () => {
             <div className="button secondary">
               <button onClick={() => navigate('/validators')}>
                 Browse Validators
+                <FontAwesomeIcon icon={faChevronRight} transform="shrink-4" />
               </button>
             </div>
           </div>

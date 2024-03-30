@@ -44,6 +44,7 @@ export const NewMember = () => {
             <div className="button secondary">
               <button onClick={() => setActiveTab(1)}>
                 {t('pools.browsePools')}
+                <FontAwesomeIcon icon={faChevronRight} transform={'shrink-4'} />
               </button>
             </div>
           </div>
@@ -56,7 +57,7 @@ export const NewMember = () => {
                 disabled={disableCreate()}
               >
                 {t('pools.createPool')}
-                <FontAwesomeIcon icon={faChevronRight} transform={'shrink-5'} />
+                <FontAwesomeIcon icon={faChevronRight} transform={'shrink-4'} />
               </button>
             </div>
           </div>
