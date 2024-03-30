@@ -199,7 +199,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const getBondedPool = (poolId: MaybePool) =>
-    bondedPools.find((p) => p.id === poolId) ?? null;
+    bondedPools.find((p) => String(p.id) === String(poolId)) ?? null;
 
   /*
    * poolSearchFilter Iterates through the supplied list and refers to the meta batch of the list to

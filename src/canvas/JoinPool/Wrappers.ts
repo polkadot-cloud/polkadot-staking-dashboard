@@ -32,6 +32,31 @@ export const JoinPoolInterfaceWrapper = styled.div`
   }
 `;
 
+export const TitleWrapper = styled.div`
+  display: flex;
+  margin-bottom: 2.5rem;
+  width: 100%;
+
+  > .inner {
+    display: flex;
+    align-items: center;
+    flex: 1;
+
+    > div {
+      display: flex;
+
+      &:nth-child(2) {
+        flex-grow: 1;
+        padding-left: 1rem;
+
+        > h1 {
+          margin: 0;
+        }
+      }
+    }
+  }
+`;
+
 export const TokenInputCardWrapper = styled.div`
   background: var(--background-canvas-card);
   border: 0.75px solid var(--border-primary-color);
