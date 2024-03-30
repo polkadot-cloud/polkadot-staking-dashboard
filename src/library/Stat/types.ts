@@ -9,6 +9,7 @@ export interface StatProps {
   stat: AnyJson;
   type?: string;
   buttons?: AnyJson[];
+  dimmed?: boolean;
   helpKey: string;
   icon?: IconProp;
   buttonType?: string;

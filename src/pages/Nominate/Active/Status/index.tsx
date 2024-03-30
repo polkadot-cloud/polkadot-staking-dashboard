@@ -22,7 +22,7 @@ export const Status = ({ height }: { height: number }) => {
     <CardWrapper height={height}>
       <NominationStatus />
       <Separator />
-      <UnclaimedPayoutsStatus />
+      <UnclaimedPayoutsStatus dimmed={inSetup()} />
 
       {!syncing ? (
         !inSetup() ? (

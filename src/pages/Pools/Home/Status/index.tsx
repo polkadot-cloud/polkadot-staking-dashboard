@@ -28,7 +28,7 @@ export const Status = ({ height }: StatusProps) => {
     <CardWrapper height={height}>
       <MembershipStatus />
       <Separator />
-      <RewardsStatus />
+      <RewardsStatus dimmed={membership === null} />
       {!syncing ? (
         activePool && !!membership ? (
           <>

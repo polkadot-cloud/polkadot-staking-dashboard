@@ -14,7 +14,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useSyncing } from 'hooks/useSyncing';
 
-export const RewardsStatus = () => {
+export const RewardsStatus = ({ dimmed }: { dimmed: boolean }) => {
   const { t } = useTranslation('pages');
   const {
     networkData: { units },
@@ -72,6 +72,7 @@ export const RewardsStatus = () => {
       helpKey="Pool Rewards"
       type="odometer"
       stat={{ value: labelRewards }}
+      dimmed={dimmed}
       buttons={syncing ? [] : buttonsRewards}
     />
   );
