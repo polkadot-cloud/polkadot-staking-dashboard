@@ -60,7 +60,7 @@ export const JoinPool = () => {
     <CanvasFullScreenWrapper>
       <div className="head">
         <ButtonPrimaryInvert
-          text={'Change Pool'}
+          text={'Choose Another Pool'}
           iconLeft={faArrowsRotate}
           onClick={() => {
             /* TODO: implement */
