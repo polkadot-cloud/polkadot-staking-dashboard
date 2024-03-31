@@ -10,7 +10,7 @@ import type { ClaimPermission } from 'contexts/Pools/types';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useState } from 'react';
-import { JoinFormWrapper } from './Wrappers';
+import { JoinFormWrapper } from '../Wrappers';
 import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput';

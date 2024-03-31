@@ -3,20 +3,23 @@
 
 import { CanvasFullScreenWrapper } from 'canvas/Wrappers';
 import { useOverlay } from 'kits/Overlay/Provider';
-import { JoinPoolInterfaceWrapper, StatsWrapper } from './Wrappers';
+import { JoinPoolInterfaceWrapper } from './Wrappers';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { JoinForm } from './JoinForm';
 import { useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { Header } from './Header';
+import { Overview } from './Overview';
+import { Nominations } from './Nominations';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 
 export const JoinPool = () => {
   const {
     closeCanvas,
     config: { options },
   } = useOverlay().canvas;
+  const { validators } = useValidators();
   const { counterForBondedPools } = useApi().poolsConfig;
-  const { getBondedPool, poolsMetaData } = useBondedPools();
+  const { getBondedPool, poolsMetaData, poolsNominations } = useBondedPools();
 
   // The active canvas tab.
   const [activeTab, setActiveTab] = useState(0);
@@ -37,6 +40,14 @@ export const JoinPool = () => {
 
   const metadata = poolsMetaData[selectedPoolId];
 
+  // Get pool nominees.
+  const targets = poolsNominations[bondedPool.id]?.targets || [];
+
+  // Extract validator entries from pool targets
+  const targetValidators = validators.filter(({ address }) =>
+    targets.includes(address)
+  );
+
   return (
     <CanvasFullScreenWrapper>
       <Header
@@ -49,14 +60,13 @@ export const JoinPool = () => {
 
       <JoinPoolInterfaceWrapper>
         <div className="content">
-          <div>
-            <StatsWrapper>
-              <h3>Active</h3>
-            </StatsWrapper>
-          </div>
-          <div>
-            <JoinForm />
-          </div>
+          {activeTab === 0 && <Overview />}
+          {activeTab === 1 && (
+            <Nominations
+              stash={bondedPool.addresses.stash}
+              targets={targetValidators}
+            />
+          )}
         </div>
       </JoinPoolInterfaceWrapper>
     </CanvasFullScreenWrapper>

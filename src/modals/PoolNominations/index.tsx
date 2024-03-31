@@ -9,11 +9,11 @@ import { ListWrapper } from './Wrappers';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 
 export const PoolNominations = () => {
+  const { t } = useTranslation('modals');
   const {
     config: { options },
   } = useOverlay().modal;
   const { nominator, targets } = options;
-  const { t } = useTranslation('modals');
 
   return (
     <>
