@@ -35,8 +35,8 @@ export const TitleWrapper = styled.div`
   border-bottom: 1px solid var(--border-secondary-color);
   display: flex;
   flex-direction: column;
-  margin: 2.25rem 0 0.75rem 0;
-  padding-bottom: 0.2rem;
+  margin: 2.45rem 0 0.75rem 0;
+  padding-bottom: 0.1rem;
   width: 100%;
 
   > .inner {
@@ -168,11 +168,42 @@ export const NominationsWrapper = styled.div`
 `;
 
 export const HeadingWrapper = styled.div`
-  margin: 0.75rem 0.5rem 0.9rem 0.5rem;
+  margin: 0.5rem 0.5rem 0.9rem 0rem;
 
-  > h3 {
+  h3 {
+    padding: 0 0.5rem;
+  }
+
+  h4 {
+    font-size: 1.2rem;
+  }
+
+  > h3,
+  h4 {
     color: var(--text-color-primary);
     font-family: Inter, sans-serif;
     margin: 0;
+    display: flex;
+
+    > span {
+      border: 1px solid var(--border-secondary-color);
+      color: var(--text-color-primary);
+      border-radius: 0.6rem;
+      padding: 0rem 1rem;
+      margin-right: 1rem;
+      height: 2.9rem;
+      display: flex;
+      align-items: center;
+
+      > .icon {
+        width: 2.2rem;
+        height: 2.2rem;
+        margin-right: 0.3rem;
+      }
+      &.inactive {
+        color: var(--text-color-tertiary);
+        border: 1px solid var(--border-secondary-color);
+      }
+    }
   }
 `;

@@ -442,9 +442,10 @@
   }
 
   &.canvas {
-    border: 1px solid var(--border-secondary-color);
 
+    color: var(--text-color-tertiary);
     &.active {
+      color: var(--text-color-primary);
       background: var(--button-tab-canvas-background);
     }
   }
