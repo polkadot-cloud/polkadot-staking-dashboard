@@ -60,7 +60,7 @@ export const JoinPool = () => {
 
       <JoinPoolInterfaceWrapper>
         <div className="content">
-          {activeTab === 0 && <Overview />}
+          {activeTab === 0 && <Overview bondedPool={bondedPool} />}
           {activeTab === 1 && (
             <Nominations
               stash={bondedPool.addresses.stash}

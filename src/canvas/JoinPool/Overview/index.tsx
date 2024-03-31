@@ -4,8 +4,10 @@
 import { useNetwork } from 'contexts/Network';
 import { HeadingWrapper } from '../Wrappers';
 import { JoinForm } from './JoinForm';
+import type { BondedPool } from 'contexts/Pools/BondedPools/types';
+import { Rewards } from 'library/Pool/Rewards';
 
-export const Overview = () => {
+export const Overview = ({ bondedPool }: { bondedPool: BondedPool }) => {
   const {
     networkData: {
       brand: { token: Token },
@@ -26,7 +28,10 @@ export const Overview = () => {
             </span>
           </h4>
         </HeadingWrapper>
+
+        <Rewards address={bondedPool.addresses.stash} displayFor="canvas" />
       </div>
+
       <div>
         <JoinForm />
       </div>

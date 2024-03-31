@@ -22,6 +22,8 @@ export const JoinPoolInterfaceWrapper = styled.div`
 
       &:first-child {
         flex-grow: 1;
+        display: flex;
+        flex-direction: column;
       }
 
       &:last-child {
