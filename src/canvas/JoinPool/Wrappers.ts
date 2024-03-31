@@ -6,7 +6,6 @@ import styled from 'styled-components';
 export const JoinPoolInterfaceWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 2rem;
   width: 100%;
 
   > .header {
@@ -36,7 +35,7 @@ export const TitleWrapper = styled.div`
   border-bottom: 1px solid var(--border-secondary-color);
   display: flex;
   flex-direction: column;
-  margin-bottom: 0.75rem;
+  margin: 0.25rem 0 0.75rem 0;
   padding-bottom: 0.2rem;
   width: 100%;
 

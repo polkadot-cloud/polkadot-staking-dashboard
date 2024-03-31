@@ -43,6 +43,12 @@ export const JoinForm = () => {
   // if we are bonding, subtract tx fees from bond amount
   const freeBondAmount = BigNumber.max(transferrableBalance.minus(txFees), 0);
 
+  // Handler to set bond as a string.
+  // TODO: Implement.
+  // const handleSetBond = (newBond: { bond: BigNumber }) => {
+  //   setBond({ bond: newBond.bond.toString() });
+  // };
+
   return (
     <JoinFormWrapper>
       <h2>Join Pool</h2>
