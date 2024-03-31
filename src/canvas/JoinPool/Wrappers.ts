@@ -6,7 +6,7 @@ import styled from 'styled-components';
 export const JoinPoolInterfaceWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 4rem;
+  margin-top: 2rem;
   width: 100%;
 
   > .header {
@@ -33,15 +33,17 @@ export const JoinPoolInterfaceWrapper = styled.div`
 `;
 
 export const TitleWrapper = styled.div`
+  border-bottom: 1px solid var(--border-secondary-color);
   display: flex;
   flex-direction: column;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.2rem;
   width: 100%;
 
   > .inner {
     display: flex;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     flex: 1;
 
     > div {
@@ -49,7 +51,7 @@ export const TitleWrapper = styled.div`
 
       &:nth-child(2) {
         flex-grow: 1;
-        padding-left: 0.75rem;
+        padding-left: 1.1rem;
         display: flex;
         flex-direction: column;
 
@@ -59,12 +61,16 @@ export const TitleWrapper = styled.div`
 
         > .labels {
           display: flex;
-          margin-top: 0.9rem;
+          margin-top: 0.65rem;
 
           > h3 {
             color: var(--text-color-secondary);
             font-family: Inter, sans-serif;
             margin: 0;
+
+            > svg {
+              margin: 0 0 0 0.2rem;
+            }
           }
         }
       }
@@ -72,12 +78,13 @@ export const TitleWrapper = styled.div`
   }
 `;
 
-export const TokenInputCardWrapper = styled.div`
+export const JoinFormWrapper = styled.div`
   background: var(--background-canvas-card);
   border: 0.75px solid var(--border-primary-color);
   box-shadow: var(--card-shadow);
   border-radius: 1.5rem;
   padding: 1.25rem;
+  margin-top: 0.75rem;
   width: 100%;
 
   h4 {
@@ -133,5 +140,15 @@ export const TokenInputCardWrapper = styled.div`
 
   > .submit {
     margin-top: 2.5rem;
+  }
+`;
+
+export const StatsWrapper = styled.div`
+  display: flex;
+
+  > h3 {
+    color: var(--text-color-secondary);
+    font-family: Inter, sans-serif;
+    margin: 0;
   }
 `;

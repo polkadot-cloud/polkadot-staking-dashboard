@@ -10,7 +10,7 @@ import type { ClaimPermission } from 'contexts/Pools/types';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useState } from 'react';
-import { TokenInputCardWrapper } from './Wrappers';
+import { JoinFormWrapper } from './Wrappers';
 import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput';
@@ -44,7 +44,7 @@ export const JoinForm = () => {
   const freeBondAmount = BigNumber.max(transferrableBalance.minus(txFees), 0);
 
   return (
-    <TokenInputCardWrapper>
+    <JoinFormWrapper>
       <h2>Join Pool</h2>
       <h4>Bond DOT</h4>
 
@@ -98,6 +98,6 @@ export const JoinForm = () => {
           </div>
         </CallToActionWrapper>
       </div>
-    </TokenInputCardWrapper>
+    </JoinFormWrapper>
   );
 };

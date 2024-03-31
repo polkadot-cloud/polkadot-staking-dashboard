@@ -1,13 +1,21 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faArrowsRotate, faTimes } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowsRotate,
+  faHashtag,
+  faTimes,
+} from '@fortawesome/free-solid-svg-icons';
 import { CanvasFullScreenWrapper } from 'canvas/Wrappers';
 import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useTranslation } from 'react-i18next';
-import { JoinPoolInterfaceWrapper, TitleWrapper } from './Wrappers';
+import {
+  JoinPoolInterfaceWrapper,
+  StatsWrapper,
+  TitleWrapper,
+} from './Wrappers';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { JoinForm } from './JoinForm';
 import { determinePoolDisplay, remToUnit } from '@w3ux/utils';
@@ -16,6 +24,7 @@ import { useState } from 'react';
 import { PageTitleTabs } from 'kits/Structure/PageTitleTabs';
 import { useApi } from 'contexts/Api';
 import type { PageTitleTabProps } from 'kits/Structure/PageTitleTabs/types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const JoinPool = () => {
   const { t } = useTranslation();
@@ -99,7 +108,7 @@ export const JoinPool = () => {
             <div>
               <Polkicon
                 address={bondedPool?.addresses.stash || ''}
-                size={remToUnit('4.25rem')}
+                size={remToUnit('4rem')}
                 outerColor="transparent"
               />
             </div>
@@ -111,21 +120,27 @@ export const JoinPool = () => {
                 )}
               </h1>
               <div className="labels">
-                <h3>Active</h3>
+                <h3>
+                  Pool <FontAwesomeIcon icon={faHashtag} transform="shrink-2" />
+                  {bondedPool.id}
+                </h3>
               </div>
             </div>
           </div>
-          {tabs.length > 0 && (
-            <PageTitleTabs
-              sticky={false}
-              tabs={tabs}
-              tabClassName="canvas"
-              inline={true}
-            />
-          )}
+
+          <PageTitleTabs
+            sticky={false}
+            tabs={tabs}
+            tabClassName="canvas"
+            inline={true}
+          />
         </TitleWrapper>
         <div className="content">
-          <div>Main content</div>
+          <div>
+            <StatsWrapper>
+              <h3>Active</h3>
+            </StatsWrapper>
+          </div>
           <div>
             <JoinForm />
           </div>
