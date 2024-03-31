@@ -51,7 +51,7 @@ export const TitleWrapper = styled.div`
 
       &:nth-child(2) {
         flex-grow: 1;
-        padding-left: 1.1rem;
+        padding-left: 1rem;
         display: flex;
         flex-direction: column;
 
