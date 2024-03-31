@@ -70,6 +70,25 @@ export const TitleWrapper = styled.div`
             > svg {
               margin: 0 0 0 0.2rem;
             }
+
+            > span {
+              color: var(--text-color-tertiary);
+              border: 1px solid var(--border-secondary-color);
+              border-radius: 0.5rem;
+              padding: 0.3rem 0.6rem;
+              margin-left: 1rem;
+              font-size: 1.1rem;
+
+              &.blocked {
+                color: var(--status-warning-color);
+                border-color: var(--status-warning-color);
+              }
+
+              &.destroying {
+                color: var(--status-danger-color);
+                border-color: var(--status-danger-color);
+              }
+            }
           }
         }
       }

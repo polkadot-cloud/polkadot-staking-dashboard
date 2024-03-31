@@ -40,20 +40,18 @@ export const Header = ({
   };
 
   // Tabs for the canvas.
-  // TODO: Implement the Nominations tab and tab switching.
-  let tabs: PageTitleTabProps[] = [
+  const tabs: PageTitleTabProps[] = [
     {
       title: t('pools.overview', { ns: 'pages' }),
       active: activeTab === 0,
       onClick: () => setActiveTab(0),
     },
+    {
+      title: 'Nominations',
+      active: activeTab === 1,
+      onClick: () => setActiveTab(1),
+    },
   ];
-
-  tabs = tabs.concat({
-    title: 'Nominations',
-    active: activeTab === 1,
-    onClick: () => setActiveTab(1),
-  });
 
   return (
     <>
@@ -92,6 +90,11 @@ export const Header = ({
               <h3>
                 Pool <FontAwesomeIcon icon={faHashtag} transform="shrink-2" />
                 {bondedPool.id}
+                {['Blocked', 'Destroying'].includes(bondedPool.state) && (
+                  <span className={bondedPool.state.toLowerCase()}>
+                    {bondedPool.state}
+                  </span>
+                )}
               </h3>
             </div>
           </div>
