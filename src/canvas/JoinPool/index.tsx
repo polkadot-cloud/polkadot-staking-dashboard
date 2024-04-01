@@ -5,26 +5,42 @@ import { CanvasFullScreenWrapper } from 'canvas/Wrappers';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { JoinPoolInterfaceWrapper } from './Wrappers';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Header } from './Header';
 import { Overview } from './Overview';
 import { Nominations } from './Nominations';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
+import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
+import { MaxEraRewardPointsEras } from 'consts';
 
 export const JoinPool = () => {
   const {
     config: { options },
   } = useOverlay().canvas;
   const { validators } = useValidators();
+  const { poolRewardPoints } = usePoolPerformance();
   const { poolsMetaData, poolsNominations, bondedPools } = useBondedPools();
 
   // The active canvas tab.
   const [activeTab, setActiveTab] = useState(0);
 
-  // Only choose an open pool.
-  const filteredBondedPools = bondedPools.filter(
-    (pool) => pool.state === 'Open'
+  // Filter bonded pools to only those that are open and that have active daily rewards for the last
+  // `MaxEraRewardPointsEras` eras.
+  const filteredBondedPools = useMemo(
+    () =>
+      bondedPools.filter((pool) => {
+        const rawEraRewardPoints = poolRewardPoints[pool.addresses.stash] || {};
+        const rewardPoints = Object.values(rawEraRewardPoints);
+        const activeDaily = rewardPoints.every((points) => Number(points) > 0);
+        return (
+          pool.state === 'Open' &&
+          activeDaily &&
+          rewardPoints.length === MaxEraRewardPointsEras
+        );
+      }),
+    [bondedPools, poolRewardPoints]
   );
+
   const randomKey = (filteredBondedPools.length * Math.random()) << 0;
   const bondedPool = filteredBondedPools[randomKey];
 
