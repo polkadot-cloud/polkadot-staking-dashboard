@@ -46,7 +46,7 @@ export const JoinPool = () => {
 
   // The selected pool id. Use the provided poolId, or assign a random pool.
   const [selectedPoolId, setSelectedPoolId] = useState<number>(
-    options?.poolId || bondedPool.id
+    options?.poolId || bondedPool.id || 0
   );
 
   // Extract validator entries from pool targets

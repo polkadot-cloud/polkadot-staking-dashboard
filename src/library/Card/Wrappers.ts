@@ -91,7 +91,6 @@ export const CardWrapper = styled.div<CardWrapperProps>`
 
     &.secondary {
       background: var(--background-canvas-card-secondary);
-      box-shadow: none;
       padding: 1rem;
     }
   }

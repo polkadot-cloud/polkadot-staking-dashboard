@@ -12,7 +12,7 @@ import { Roles } from './Roles';
 export const Overview = ({ bondedPool }: { bondedPool: BondedPool }) => (
   <>
     <div className="main">
-      <Stats />
+      <Stats bondedPool={bondedPool} />
       <RecentPerformance bondedPool={bondedPool} />
       <Addresses bondedPool={bondedPool} />
       <Roles bondedPool={bondedPool} />
