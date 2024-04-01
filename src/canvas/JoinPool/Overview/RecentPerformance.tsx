@@ -58,9 +58,14 @@ export const RecentPerformance = ({
 
   // Format labels, only displaying the first and last era.
   const labels = Object.keys(rawEraRewardPoints).map(() => '');
-  labels[0] = `Era ${Object.keys(rawEraRewardPoints)[0]}`;
-  labels[labels.length - 1] =
-    `Era ${Object.keys(rawEraRewardPoints)[labels.length - 1]}`;
+
+  const firstEra = Object.keys(rawEraRewardPoints)[0];
+  labels[0] = firstEra ? `Era ${Object.keys(rawEraRewardPoints)[0]}` : '';
+
+  const lastEra = Object.keys(rawEraRewardPoints)[labels.length - 1];
+  labels[labels.length - 1] = lastEra
+    ? `Era ${Object.keys(rawEraRewardPoints)[labels.length - 1]}`
+    : '';
 
   // Use primary color for bars.
   const color = colors.primary[mode];
