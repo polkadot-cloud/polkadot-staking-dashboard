@@ -2613,9 +2613,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zondax/ledger-substrate@npm:^0.41.3":
-  version: 0.41.3
-  resolution: "@zondax/ledger-substrate@npm:0.41.3"
+"@zondax/ledger-substrate@npm:^0.41.4":
+  version: 0.41.4
+  resolution: "@zondax/ledger-substrate@npm:0.41.4"
   dependencies:
     "@ledgerhq/hw-transport": "npm:^6.27.1"
     bip32: "npm:^4.0.0"
@@ -2626,7 +2626,7 @@ __metadata:
     hash.js: "npm:^1.1.7"
   bin:
     ledger-substrate: dist/cmd/cli.js
-  checksum: 10c0/fc1c3ce3e1b169be3dae05c5fbaf8e89bed709a4c25abceaff3c9f5f7938d4340834bb4ac21a43e67c3b603368f69486c3476f7378855dd99164d837d8c1a207
+  checksum: 10c0/ac04674236f09f76d0cc5045fd6b23afdbbce493ec2a7fa3d37c5efb48be9aac355b2f2c146bb88b42f3423f38f9c249603076e9a9fbeaf22b5dc643fb1772f3
   languageName: node
   linkType: hard
 
@@ -6513,7 +6513,7 @@ __metadata:
     "@w3ux/react-polkicon": "npm:^0.0.2"
     "@w3ux/utils": "npm:^0.0.2"
     "@w3ux/validator-assets": "npm:^0.0.4"
-    "@zondax/ledger-substrate": "npm:^0.41.3"
+    "@zondax/ledger-substrate": "npm:^0.41.4"
     bignumber.js: "npm:^9.1.2"
     bn.js: "npm:^5.2.1"
     buffer: "npm:^6.0.3"
