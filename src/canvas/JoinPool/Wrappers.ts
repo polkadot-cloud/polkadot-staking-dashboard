@@ -57,10 +57,9 @@ export const TitleWrapper = styled.div`
   border-bottom: 1px solid var(--border-secondary-color);
   display: flex;
   flex-direction: column;
-  margin: 2.45rem 0 1.55rem 0;
+  margin: 2rem 0 1.55rem 0;
   padding-bottom: 0.1rem;
   width: 100%;
-  overflow: hidden;
 
   > .inner {
     display: flex;
@@ -100,7 +99,7 @@ export const TitleWrapper = styled.div`
 
         > .labels {
           display: flex;
-          margin-top: 0.7rem;
+          margin-top: 1rem;
 
           > h3 {
             color: var(--text-color-secondary);
@@ -112,7 +111,6 @@ export const TitleWrapper = styled.div`
             }
 
             > span {
-              color: var(--text-color-tertiary);
               border: 1px solid var(--border-secondary-color);
               border-radius: 0.5rem;
               padding: 0.3rem 0.6rem;

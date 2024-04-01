@@ -26,6 +26,7 @@ export const Header = ({
   bondedPool,
   metadata,
   setSelectedPoolCount,
+  autoSelected,
 }: AnyJson) => {
   const { t } = useTranslation();
   const { closeCanvas } = useOverlay().canvas;
@@ -98,6 +99,12 @@ export const Header = ({
                   </span>
                 )}
               </h3>
+
+              {autoSelected && (
+                <h3>
+                  <span>Auto Selected</span>
+                </h3>
+              )}
             </div>
           </div>
         </div>

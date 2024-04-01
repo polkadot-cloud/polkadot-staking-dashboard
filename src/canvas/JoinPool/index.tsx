@@ -93,6 +93,7 @@ export const JoinPool = () => {
         bondedPool={bondedPool}
         metadata={poolsMetaData[selectedPoolId]}
         setSelectedPoolCount={setSelectedPoolCount}
+        autoSelected={options?.poolId === undefined}
       />
 
       <JoinPoolInterfaceWrapper>
