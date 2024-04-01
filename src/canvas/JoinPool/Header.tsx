@@ -25,15 +25,15 @@ export const Header = ({
   setSelectedPoolId,
   bondedPool,
   metadata,
+  setSelectedPoolCount,
 }: AnyJson) => {
   const { t } = useTranslation();
   const { closeCanvas } = useOverlay().canvas;
   const { counterForBondedPools } = useApi().poolsConfig;
 
   // Generate a new pool to display.
-  // TODO: Take into consideration status and recent activity.
-  // TODO: Choose a random index from bondedPools.
   const handleChooseNewPool = () => {
+    setSelectedPoolCount((prev: number) => prev + 1);
     setSelectedPoolId(
       Math.ceil(Math.random() * counterForBondedPools.minus(1).toNumber())
     );

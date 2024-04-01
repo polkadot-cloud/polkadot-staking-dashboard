@@ -16,6 +16,7 @@ import { useStaking } from 'contexts/Staking';
 
 export const JoinPool = () => {
   const {
+    closeCanvas,
     config: { options },
   } = useOverlay().canvas;
   const { eraStakers } = useStaking();
@@ -25,6 +26,9 @@ export const JoinPool = () => {
 
   // The active canvas tab.
   const [activeTab, setActiveTab] = useState(0);
+
+  // Trigger re-render when chosen selected pool is incremented.
+  const [selectedPoolCount, setSelectedPoolCount] = useState<number>(0);
 
   // Filter bonded pools to only those that are open and that have active daily rewards for the last
   // `MaxEraRewardPointsEras` eras. The second filter checks if the pool is in `eraStakers` for the
@@ -53,13 +57,26 @@ export const JoinPool = () => {
     [bondedPools, poolRewardPoints]
   );
 
-  const bondedPool =
-    filteredBondedPools[(filteredBondedPools.length * Math.random()) << 0];
+  // The bonded pool to display. Use the provided poolId, or assign a random pool.
+  const bondedPool = useMemo(
+    () =>
+      options?.poolId
+        ? bondedPools.find(({ id }) => id === options.poolId)
+        : filteredBondedPools[
+            (filteredBondedPools.length * Math.random()) << 0
+          ],
+    [selectedPoolCount]
+  );
 
   // The selected pool id. Use the provided poolId, or assign a random pool.
   const [selectedPoolId, setSelectedPoolId] = useState<number>(
-    options?.poolId || bondedPool.id || 0
+    options?.poolId || bondedPool?.id || 0
   );
+
+  if (!bondedPool) {
+    closeCanvas();
+    return null;
+  }
 
   // Extract validator entries from pool targets
   const targets = poolsNominations[bondedPool.id]?.targets || [];
@@ -75,6 +92,7 @@ export const JoinPool = () => {
         setSelectedPoolId={setSelectedPoolId}
         bondedPool={bondedPool}
         metadata={poolsMetaData[selectedPoolId]}
+        setSelectedPoolCount={setSelectedPoolCount}
       />
 
       <JoinPoolInterfaceWrapper>
