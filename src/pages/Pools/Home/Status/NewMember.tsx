@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { useOverlay } from 'kits/Overlay/Provider';
 import type { NewMemberProps } from './types';
 import { CallToActionLoader } from 'library/Loader/CallToAction';
+import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 
 export const NewMember = ({ syncing }: NewMemberProps) => {
   const { t } = useTranslation('pages');
@@ -19,6 +20,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
   // const { getPoolSetupPercent } = useSetup();
   const { openCanvas } = useOverlay().canvas;
   // const { activeAccount } = useActiveAccounts();
+  const { poolRewardPointsFetched } = usePoolPerformance();
   const { disableJoin, disableCreate } = useStatusButtons();
 
   // const setupPercent = getPoolSetupPercent(activeAccount);
@@ -41,10 +43,18 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                         size: 'xl',
                       })
                     }
-                    disabled={disableJoin()}
+                    disabled={
+                      disableJoin() || poolRewardPointsFetched !== 'synced'
+                    }
                   >
-                    {t('pools.joinPool')}
-                    <FontAwesomeIcon icon={faUserGroup} />
+                    {poolRewardPointsFetched !== 'synced' ? (
+                      'Syncing Pool Data...'
+                    ) : (
+                      <>
+                        {t('pools.joinPool')}
+                        <FontAwesomeIcon icon={faUserGroup} />
+                      </>
+                    )}
                   </button>
                 </div>
 
