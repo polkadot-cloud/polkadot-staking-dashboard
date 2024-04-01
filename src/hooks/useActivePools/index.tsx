@@ -95,5 +95,5 @@ export const useActivePools = ({ onCallback, poolIds }: ActivePoolsProps) => {
   const documentRef = useRef<Document>(document);
   useEventListener('new-active-pool', newActivePoolCallback, documentRef);
 
-  return { activePools, poolNominations };
+  return { activePools, activePoolsRef, poolNominations };
 };
