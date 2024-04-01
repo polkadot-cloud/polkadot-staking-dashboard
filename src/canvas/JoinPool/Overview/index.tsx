@@ -7,6 +7,7 @@ import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import { RecentPerformance } from './RecentPerformance';
 import { Stats } from './Stats';
 import { Addresses } from './Addresses';
+import { Roles } from './Roles';
 
 export const Overview = ({ bondedPool }: { bondedPool: BondedPool }) => (
   <>
@@ -14,9 +15,12 @@ export const Overview = ({ bondedPool }: { bondedPool: BondedPool }) => (
       <Stats />
       <RecentPerformance />
       <Addresses bondedPool={bondedPool} />
+      <Roles bondedPool={bondedPool} />
     </div>
     <div className="side">
-      <JoinForm />
+      <div>
+        <JoinForm />
+      </div>
     </div>
   </>
 );

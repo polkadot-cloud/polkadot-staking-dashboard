@@ -29,6 +29,9 @@ export const JoinPoolInterfaceWrapper = styled.div`
 
       &.side {
         min-width: 450px;
+        > div {
+          width: 100%;
+        }
       }
     }
   }
@@ -171,7 +174,7 @@ export const NominationsWrapper = styled.div`
 `;
 
 export const HeadingWrapper = styled.div`
-  margin: 0.5rem 0.5rem 0.9rem 0rem;
+  margin: 0.5rem 0.5rem 0.5rem 0rem;
 
   h3,
   p {
@@ -231,40 +234,46 @@ export const GraphWrapper = styled.div`
 
 export const AddressesWrapper = styled.div`
   display: flex;
-  padding: 0.5rem 0.5rem;
+  padding: 0rem 0.5rem 0 0.5rem;
   width: 100%;
+  flex-wrap: wrap;
 
   > section {
     display: flex;
     flex-direction: column;
     flex-basis: 50%;
+    margin: 0.9rem 0;
 
     > div {
       display: flex;
       flex-direction: row;
       align-items: center;
 
-      &.addresses {
-        > span {
-          margin-right: 0.75rem;
-        }
+      > span {
+        margin-right: 0.75rem;
+      }
 
-        > h4 {
-          color: var(--text-color-secondary);
-          font-family: InterSemiBold, sans-serif;
-          margin: 0;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          display: flex;
-          width: 100%;
+      > h3 {
+        font-family: InterSemiBold, sans-serif;
+        color: var(--text-color-secondary);
+        margin-bottom: 0.25rem;
+      }
 
-          > .label {
-            margin-left: 0.75rem;
+      > h4 {
+        font-family: InterSemiBold, sans-serif;
+        color: var(--text-color-secondary);
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: flex;
+        width: 100%;
 
-            > button {
-              color: var(--text-color-tertiary);
-            }
+        > .label {
+          margin-left: 0.75rem;
+
+          > button {
+            color: var(--text-color-tertiary);
           }
         }
       }
