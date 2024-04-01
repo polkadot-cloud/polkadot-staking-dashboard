@@ -12,11 +12,13 @@ import { Nominations } from './Nominations';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 import { MaxEraRewardPointsEras } from 'consts';
+import { useStaking } from 'contexts/Staking';
 
 export const JoinPool = () => {
   const {
     config: { options },
   } = useOverlay().canvas;
+  const { eraStakers } = useStaking();
   const { validators } = useValidators();
   const { poolRewardPoints } = usePoolPerformance();
   const { poolsMetaData, poolsNominations, bondedPools } = useBondedPools();
@@ -25,24 +27,34 @@ export const JoinPool = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   // Filter bonded pools to only those that are open and that have active daily rewards for the last
-  // `MaxEraRewardPointsEras` eras.
+  // `MaxEraRewardPointsEras` eras. The second filter checks if the pool is in `eraStakers` for the
+  // active era.
   const filteredBondedPools = useMemo(
     () =>
-      bondedPools.filter((pool) => {
-        const rawEraRewardPoints = poolRewardPoints[pool.addresses.stash] || {};
-        const rewardPoints = Object.values(rawEraRewardPoints);
-        const activeDaily = rewardPoints.every((points) => Number(points) > 0);
-        return (
-          pool.state === 'Open' &&
-          activeDaily &&
-          rewardPoints.length === MaxEraRewardPointsEras
-        );
-      }),
+      bondedPools
+        .filter((pool) => {
+          const rawEraRewardPoints =
+            poolRewardPoints[pool.addresses.stash] || {};
+          const rewardPoints = Object.values(rawEraRewardPoints);
+          const activeDaily = rewardPoints.every(
+            (points) => Number(points) > 0
+          );
+          return (
+            pool.state === 'Open' &&
+            activeDaily &&
+            rewardPoints.length === MaxEraRewardPointsEras
+          );
+        })
+        .filter((pool) =>
+          eraStakers.stakers.find((staker) =>
+            staker.others.find(({ who }) => who !== pool.addresses.stash)
+          )
+        ),
     [bondedPools, poolRewardPoints]
   );
 
-  const randomKey = (filteredBondedPools.length * Math.random()) << 0;
-  const bondedPool = filteredBondedPools[randomKey];
+  const bondedPool =
+    filteredBondedPools[(filteredBondedPools.length * Math.random()) << 0];
 
   // The selected pool id. Use the provided poolId, or assign a random pool.
   const [selectedPoolId, setSelectedPoolId] = useState<number>(
