@@ -22,7 +22,7 @@ export const AddressSection = ({
   return (
     <section>
       <HeadingWrapper>
-        <h4>
+        <h4 className="heading">
           {label}
           {!!helpKey && (
             <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />

@@ -242,6 +242,7 @@ export const HeadingWrapper = styled.div`
     > span {
       background-color: var(--background-canvas-card);
       color: var(--text-color-secondary);
+      font-family: InterBold, sans-serif;
       border-radius: 1.5rem;
       padding: 0rem 1.25rem;
       margin-right: 1rem;
@@ -322,6 +323,10 @@ export const AddressesWrapper = styled.div`
         white-space: nowrap;
         display: flex;
         width: 100%;
+
+        &.heading {
+          font-family: InterBold, sans-serif;
+        }
 
         > .label {
           margin-left: 0.75rem;
