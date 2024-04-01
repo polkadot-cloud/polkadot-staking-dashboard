@@ -242,7 +242,7 @@ export const HeadingWrapper = styled.div`
     }
 
     > span {
-      background-color: var(--background-canvas-card);
+      background-color: var(--background-canvas-card-secondary);
       color: var(--text-color-secondary);
       font-family: InterBold, sans-serif;
       border-radius: 1.5rem;
