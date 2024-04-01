@@ -166,11 +166,10 @@ export const PerformanceGraph = ({
 
       <GraphWrapper ref={graphInnerRef} style={{ height }}>
         <div
+          className="inner"
           style={{
-            position: 'absolute',
             width,
             height,
-            paddingRight: '2.5rem',
           }}
         >
           <Bar options={options} data={data} />

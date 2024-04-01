@@ -57,7 +57,7 @@ export const TitleWrapper = styled.div`
   border-bottom: 1px solid var(--border-secondary-color);
   display: flex;
   flex-direction: column;
-  margin: 2.45rem 0 1.85rem 0;
+  margin: 2.45rem 0 1.55rem 0;
   padding-bottom: 0.1rem;
   width: 100%;
   overflow: hidden;
@@ -287,6 +287,18 @@ export const GraphWrapper = styled.div`
 
   @media (max-width: 1000px) {
     padding: 0 0 0 1rem;
+  }
+
+  > .inner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding-left: 1rem;
+    padding-right: 4rem;
+
+    @media (max-width: 1000px) {
+      padding-right: 1.5rem;
+    }
   }
 `;
 
