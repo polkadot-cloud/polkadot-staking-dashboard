@@ -211,6 +211,10 @@ export const NominationsWrapper = styled.div`
 export const HeadingWrapper = styled.div`
   margin: 0.5rem 0.5rem 0.5rem 0rem;
 
+  @media (max-width: 600px) {
+    margin-right: 0;
+  }
+
   h3,
   p {
     padding: 0 0.5rem;
@@ -250,10 +254,11 @@ export const HeadingWrapper = styled.div`
 
       @media (max-width: 600px) {
         flex-grow: 1;
-        min-width: 50%;
         justify-content: center;
         margin-bottom: 1rem;
+        margin-right: 0;
         height: 2.9rem;
+        width: 100%;
 
         &:last-child {
           margin-bottom: 0;
