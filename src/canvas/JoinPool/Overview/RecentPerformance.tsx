@@ -21,6 +21,8 @@ import { graphColors } from 'theme/graphs';
 import { useTheme } from 'contexts/Themes';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { useHelp } from 'contexts/Help';
+import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
+import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 
 ChartJS.register(
   CategoryScale,
@@ -33,11 +35,34 @@ ChartJS.register(
   Legend
 );
 
-export const RecentPerformance = () => {
+export const RecentPerformance = ({
+  bondedPool,
+}: {
+  bondedPool: BondedPool;
+}) => {
   const { mode } = useTheme();
   const { openHelp } = useHelp();
   const { colors } = useNetwork().networkData;
+  const { poolRewardPoints } = usePoolPerformance();
+  const rawEraRewardPoints = poolRewardPoints[bondedPool.addresses.stash] || {};
 
+  // Format reward points as an array of strings.
+  const dataset = Object.values(
+    Object.fromEntries(
+      Object.entries(rawEraRewardPoints).map(([k, v]: AnyJson) => [
+        k,
+        new BigNumber(v).toString(),
+      ])
+    )
+  );
+
+  // Format labels, only displaying the first and last era.
+  const labels = Object.keys(rawEraRewardPoints).map(() => '');
+  labels[0] = `Era ${Object.keys(rawEraRewardPoints)[0]}`;
+  labels[labels.length - 1] =
+    `Era ${Object.keys(rawEraRewardPoints)[labels.length - 1]}`;
+
+  // Use primary color for bars.
   const color = colors.primary[mode];
 
   const options = {
@@ -98,26 +123,11 @@ export const RecentPerformance = () => {
   };
 
   const data = {
-    labels: [
-      'Era 1,123',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      'Era 1,340',
-    ],
+    labels,
     datasets: [
       {
         label: 'Era Points',
-        data: [100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 100, 90, 80, 80],
+        data: dataset,
         borderColor: color,
         backgroundColor: color,
         pointRadius: 0,

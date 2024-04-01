@@ -6,7 +6,6 @@ import { useOverlay } from 'kits/Overlay/Provider';
 import { JoinPoolInterfaceWrapper } from './Wrappers';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useState } from 'react';
-import { useApi } from 'contexts/Api';
 import { Header } from './Header';
 import { Overview } from './Overview';
 import { Nominations } from './Nominations';
@@ -14,36 +13,28 @@ import { useValidators } from 'contexts/Validators/ValidatorEntries';
 
 export const JoinPool = () => {
   const {
-    closeCanvas,
     config: { options },
   } = useOverlay().canvas;
   const { validators } = useValidators();
-  const { counterForBondedPools } = useApi().poolsConfig;
-  const { getBondedPool, poolsMetaData, poolsNominations } = useBondedPools();
+  const { poolsMetaData, poolsNominations, bondedPools } = useBondedPools();
 
   // The active canvas tab.
   const [activeTab, setActiveTab] = useState(0);
 
+  // Only choose an open pool.
+  const filteredBondedPools = bondedPools.filter(
+    (pool) => pool.state === 'Open'
+  );
+  const randomKey = (filteredBondedPools.length * Math.random()) << 0;
+  const bondedPool = filteredBondedPools[randomKey];
+
   // The selected pool id. Use the provided poolId, or assign a random pool.
   const [selectedPoolId, setSelectedPoolId] = useState<number>(
-    options?.poolId ||
-      Math.floor(Math.random() * counterForBondedPools.minus(1).toNumber())
+    options?.poolId || bondedPool.id
   );
 
-  // Ensure bonded pool exists, and close canvas if not.
-  const bondedPool = getBondedPool(selectedPoolId);
-
-  if (!bondedPool) {
-    closeCanvas();
-    return null;
-  }
-
-  const metadata = poolsMetaData[selectedPoolId];
-
-  // Get pool nominees.
-  const targets = poolsNominations[bondedPool.id]?.targets || [];
-
   // Extract validator entries from pool targets
+  const targets = poolsNominations[bondedPool.id]?.targets || [];
   const targetValidators = validators.filter(({ address }) =>
     targets.includes(address)
   );
@@ -55,7 +46,7 @@ export const JoinPool = () => {
         setActiveTab={setActiveTab}
         setSelectedPoolId={setSelectedPoolId}
         bondedPool={bondedPool}
-        metadata={metadata}
+        metadata={poolsMetaData[selectedPoolId]}
       />
 
       <JoinPoolInterfaceWrapper>
