@@ -35,7 +35,7 @@ ChartJS.register(
   Legend
 );
 
-export const RecentPerformance = ({
+export const PerformanceGraph = ({
   bondedPool,
 }: {
   bondedPool: BondedPool;
