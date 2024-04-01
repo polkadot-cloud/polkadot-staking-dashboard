@@ -255,6 +255,7 @@ export const HeadingWrapper = styled.div`
         min-width: 50%;
         justify-content: center;
         margin-bottom: 1rem;
+        height: 2.9rem;
 
         &:last-child {
           margin-bottom: 0;
