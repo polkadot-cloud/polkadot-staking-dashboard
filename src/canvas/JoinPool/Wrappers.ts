@@ -44,24 +44,42 @@ export const TitleWrapper = styled.div`
   margin: 2.45rem 0 1.85rem 0;
   padding-bottom: 0.1rem;
   width: 100%;
+  overflow: hidden;
 
   > .inner {
     display: flex;
     align-items: center;
     margin-bottom: 0.5rem;
-    flex: 1;
+    width: 100%;
 
     > div {
       display: flex;
+      flex: 1;
+
+      &:nth-child(1) {
+        max-width: 4rem;
+      }
 
       &:nth-child(2) {
-        flex-grow: 1;
         padding-left: 1rem;
-        display: flex;
         flex-direction: column;
 
-        > h1 {
-          margin: 0;
+        > .title {
+          position: relative;
+          padding-top: 2rem;
+          flex: 1;
+
+          h1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 0;
+            line-height: 2.2rem;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+          }
         }
 
         > .labels {

@@ -80,12 +80,14 @@ export const Header = ({
             />
           </div>
           <div>
-            <h1>
-              {determinePoolDisplay(
-                bondedPool?.addresses.stash || '',
-                metadata
-              )}
-            </h1>
+            <div className="title">
+              <h1>
+                {determinePoolDisplay(
+                  bondedPool?.addresses.stash || '',
+                  metadata
+                )}
+              </h1>
+            </div>
             <div className="labels">
               <h3>
                 Pool <FontAwesomeIcon icon={faHashtag} transform="shrink-2" />
