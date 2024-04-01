@@ -91,6 +91,14 @@ export const CardWrapper = styled.div<CardWrapperProps>`
 
     &.secondary {
       padding: 1rem;
+
+      @media (max-width: 1000px) {
+        background: var(--background-canvas-card);
+      }
+
+      @media (min-width: 1001px) {
+        background: var(--background-canvas-card-secondary);
+      }
     }
   }
 
