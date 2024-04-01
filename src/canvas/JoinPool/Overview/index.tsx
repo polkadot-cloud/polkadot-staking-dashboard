@@ -8,12 +8,15 @@ import { PerformanceGraph } from './PerformanceGraph';
 import { Stats } from './Stats';
 import { Addresses } from './Addresses';
 import { Roles } from './Roles';
+import { GrahpStatsWrapper } from '../Wrappers';
 
 export const Overview = ({ bondedPool }: { bondedPool: BondedPool }) => (
   <>
     <div className="main">
-      <Stats bondedPool={bondedPool} />
-      <PerformanceGraph bondedPool={bondedPool} />
+      <GrahpStatsWrapper>
+        <Stats bondedPool={bondedPool} />
+        <PerformanceGraph bondedPool={bondedPool} />
+      </GrahpStatsWrapper>
       <Addresses bondedPool={bondedPool} />
       <Roles bondedPool={bondedPool} />
     </div>

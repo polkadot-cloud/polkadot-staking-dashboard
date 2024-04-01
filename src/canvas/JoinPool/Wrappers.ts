@@ -355,3 +355,28 @@ export const AddressesWrapper = styled.div`
     }
   }
 `;
+
+export const GrahpStatsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 1001px) {
+    > div:last-child {
+      margin-top: 1.25rem;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    > div {
+      &:first-child {
+        order: 2;
+        margin-top: 1.5rem;
+        margin-bottom: 0;
+      }
+      &:last-child {
+        order: 1;
+      }
+    }
+  }
+`;

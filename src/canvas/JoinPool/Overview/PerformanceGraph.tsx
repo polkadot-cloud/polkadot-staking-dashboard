@@ -152,8 +152,8 @@ export const PerformanceGraph = ({
   };
 
   return (
-    <>
-      <HeadingWrapper style={{ marginTop: '1.75rem' }}>
+    <div>
+      <HeadingWrapper>
         <h3>
           Recent Performance
           <ButtonHelp
@@ -175,6 +175,6 @@ export const PerformanceGraph = ({
           <Bar options={options} data={data} />
         </div>
       </GraphWrapper>
-    </>
+    </div>
   );
 };
