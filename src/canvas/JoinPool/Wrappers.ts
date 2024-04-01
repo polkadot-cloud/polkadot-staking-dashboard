@@ -15,18 +15,19 @@ export const JoinPoolInterfaceWrapper = styled.div`
 
   > .content {
     display: flex;
-    flex: 1;
+    flex-grow: 1;
 
     > div {
       display: flex;
 
-      &:first-child {
+      &.main {
         flex-grow: 1;
         display: flex;
         flex-direction: column;
+        padding-right: 4rem;
       }
 
-      &:last-child {
+      &.side {
         min-width: 450px;
       }
     }
@@ -37,7 +38,7 @@ export const TitleWrapper = styled.div`
   border-bottom: 1px solid var(--border-secondary-color);
   display: flex;
   flex-direction: column;
-  margin: 2.45rem 0 0.75rem 0;
+  margin: 2.45rem 0 1.85rem 0;
   padding-bottom: 0.1rem;
   width: 100%;
 
@@ -62,7 +63,7 @@ export const TitleWrapper = styled.div`
 
         > .labels {
           display: flex;
-          margin-top: 0.65rem;
+          margin-top: 0.7rem;
 
           > h3 {
             color: var(--text-color-secondary);
@@ -172,39 +173,100 @@ export const NominationsWrapper = styled.div`
 export const HeadingWrapper = styled.div`
   margin: 0.5rem 0.5rem 0.9rem 0rem;
 
-  h3 {
+  h3,
+  p {
     padding: 0 0.5rem;
   }
 
   h4 {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
+  }
+
+  p {
+    color: var(--text-color-tertiary);
+    margin: 0.35rem 0 0 0;
   }
 
   > h3,
   h4 {
-    color: var(--text-color-primary);
+    color: var(--text-color-secondary);
     font-family: Inter, sans-serif;
     margin: 0;
     display: flex;
+    align-items: center;
 
     > span {
-      border: 1px solid var(--border-secondary-color);
-      color: var(--text-color-primary);
-      border-radius: 0.6rem;
-      padding: 0rem 1rem;
+      background-color: var(--background-canvas-card);
+      color: var(--text-color-secondary);
+      border-radius: 1.5rem;
+      padding: 0rem 1.25rem;
       margin-right: 1rem;
-      height: 2.9rem;
+      height: 2.6rem;
       display: flex;
       align-items: center;
 
+      &.balance {
+        padding-left: 0.5rem;
+      }
+
       > .icon {
-        width: 2.2rem;
-        height: 2.2rem;
+        width: 2.1rem;
+        height: 2.1rem;
         margin-right: 0.3rem;
       }
       &.inactive {
         color: var(--text-color-tertiary);
         border: 1px solid var(--border-secondary-color);
+      }
+    }
+  }
+`;
+
+export const GraphWrapper = styled.div`
+  padding: 0 3rem 0 1rem;
+  margin: 2rem 0 0 0;
+  position: relative;
+  width: 100%;
+`;
+
+export const AddressesWrapper = styled.div`
+  display: flex;
+  padding: 0.5rem 0.5rem;
+  width: 100%;
+
+  > section {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 50%;
+
+    > div {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      &.addresses {
+        > span {
+          margin-right: 0.75rem;
+        }
+
+        > h4 {
+          color: var(--text-color-secondary);
+          font-family: InterSemiBold, sans-serif;
+          margin: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          display: flex;
+          width: 100%;
+
+          > .label {
+            margin-left: 0.75rem;
+
+            > button {
+              color: var(--text-color-tertiary);
+            }
+          }
+        }
       }
     }
   }
