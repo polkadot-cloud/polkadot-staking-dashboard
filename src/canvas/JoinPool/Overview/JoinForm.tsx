@@ -4,7 +4,6 @@
 import { planckToUnit } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useHelp } from 'contexts/Help';
 import { useNetwork } from 'contexts/Network';
 import type { ClaimPermission } from 'contexts/Pools/types';
 import { useTransferOptions } from 'contexts/TransferOptions';
@@ -20,7 +19,6 @@ export const JoinForm = () => {
     networkData: { units },
   } = useNetwork();
   const { txFees } = useTxMeta();
-  const { openHelp } = useHelp();
   const { activeAccount } = useActiveAccounts();
   const { getTransferOptions } = useTransferOptions();
 
