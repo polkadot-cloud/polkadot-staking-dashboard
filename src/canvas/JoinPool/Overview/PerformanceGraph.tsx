@@ -23,6 +23,9 @@ import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { useHelp } from 'contexts/Help';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 import type { BondedPool } from 'contexts/Pools/BondedPools/types';
+import { useRef } from 'react';
+import { formatSize } from 'library/Graphs/Utils';
+import { useSize } from 'hooks/useSize';
 
 ChartJS.register(
   CategoryScale,
@@ -45,6 +48,13 @@ export const PerformanceGraph = ({
   const { colors } = useNetwork().networkData;
   const { poolRewardPoints } = usePoolPerformance();
   const rawEraRewardPoints = poolRewardPoints[bondedPool.addresses.stash] || {};
+
+  // Ref to the graph container.
+  const graphInnerRef = useRef<HTMLDivElement>(null);
+
+  // Get the size of the graph container.
+  const size = useSize(graphInnerRef?.current || undefined);
+  const { width, height } = formatSize(size, 170);
 
   // Format reward points as an array of strings.
   const dataset = Object.values(
@@ -153,8 +163,13 @@ export const PerformanceGraph = ({
           />
         </h3>
       </HeadingWrapper>
-      <GraphWrapper>
-        <Bar options={options} data={data} />
+
+      <GraphWrapper ref={graphInnerRef} style={{ height }}>
+        <div
+          style={{ position: 'absolute', width, height, paddingRight: '4rem' }}
+        >
+          <Bar options={options} data={data} />
+        </div>
       </GraphWrapper>
     </>
   );
