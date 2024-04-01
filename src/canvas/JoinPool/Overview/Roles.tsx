@@ -17,11 +17,7 @@ export const Roles = ({ bondedPool }: { bondedPool: BondedPool }) => {
         <HeadingWrapper>
           <h3>
             Pool Roles
-            <ButtonHelp
-              outline
-              marginLeft
-              onClick={() => openHelp('Pool Roles')}
-            />
+            <ButtonHelp marginLeft onClick={() => openHelp('Pool Roles')} />
           </h3>
         </HeadingWrapper>
 

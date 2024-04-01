@@ -18,7 +18,6 @@ export const Addresses = ({ bondedPool }: { bondedPool: BondedPool }) => {
           <h3>
             Pool Addresses
             <ButtonHelp
-              outline
               marginLeft
               onClick={() => openHelp('Era Points')} /* TODO: update */
             />

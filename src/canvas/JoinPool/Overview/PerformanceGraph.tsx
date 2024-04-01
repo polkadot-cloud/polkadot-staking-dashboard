@@ -54,7 +54,7 @@ export const PerformanceGraph = ({
 
   // Get the size of the graph container.
   const size = useSize(graphInnerRef?.current || undefined);
-  const { width, height } = formatSize(size, 170);
+  const { width, height } = formatSize(size, 150);
 
   // Format reward points as an array of strings.
   const dataset = Object.values(
@@ -166,7 +166,12 @@ export const PerformanceGraph = ({
 
       <GraphWrapper ref={graphInnerRef} style={{ height }}>
         <div
-          style={{ position: 'absolute', width, height, paddingRight: '4rem' }}
+          style={{
+            position: 'absolute',
+            width,
+            height,
+            paddingRight: '2.5rem',
+          }}
         >
           <Bar options={options} data={data} />
         </div>

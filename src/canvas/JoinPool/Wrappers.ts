@@ -17,6 +17,10 @@ export const JoinPoolInterfaceWrapper = styled.div`
     display: flex;
     flex-grow: 1;
 
+    @media (max-width: 1000px) {
+      flex-flow: row wrap;
+    }
+
     > div {
       display: flex;
 
@@ -25,10 +29,22 @@ export const JoinPoolInterfaceWrapper = styled.div`
         display: flex;
         flex-direction: column;
         padding-right: 4rem;
+
+        @media (max-width: 1000px) {
+          flex-basis: 100%;
+          padding-right: 0;
+        }
       }
 
       &.side {
         min-width: 450px;
+
+        @media (max-width: 1000px) {
+          flex-grow: 1;
+          flex-basis: 100%;
+          margin-top: 0.5rem;
+        }
+
         > div {
           width: 100%;
         }
@@ -125,9 +141,12 @@ export const JoinFormWrapper = styled.div`
   border: 0.75px solid var(--border-primary-color);
   box-shadow: var(--card-shadow);
   border-radius: 1.5rem;
-  padding: 1.25rem;
-  margin-top: 0.75rem;
+  padding: 1.5rem;
   width: 100%;
+
+  @media (max-width: 1000px) {
+    margin-top: 1rem;
+  }
 
   h4 {
     display: flex;
@@ -216,6 +235,10 @@ export const HeadingWrapper = styled.div`
     display: flex;
     align-items: center;
 
+    @media (max-width: 600px) {
+      flex-wrap: wrap;
+    }
+
     > span {
       background-color: var(--background-canvas-card);
       color: var(--text-color-secondary);
@@ -225,6 +248,17 @@ export const HeadingWrapper = styled.div`
       height: 2.6rem;
       display: flex;
       align-items: center;
+
+      @media (max-width: 600px) {
+        flex-grow: 1;
+        min-width: 50%;
+        justify-content: center;
+        margin-bottom: 1rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
 
       &.balance {
         padding-left: 0.5rem;
@@ -244,23 +278,31 @@ export const HeadingWrapper = styled.div`
 `;
 
 export const GraphWrapper = styled.div`
-  padding: 0 3rem 0 1rem;
-  margin: 2rem 0 0 0;
+  padding: 0 4rem 0 1rem;
+  margin-top: 2rem;
   position: relative;
   width: 100%;
+
+  @media (max-width: 1000px) {
+    padding: 0 0 0 1rem;
+  }
 `;
 
 export const AddressesWrapper = styled.div`
   display: flex;
-  padding: 0rem 0.5rem 0 0.5rem;
-  width: 100%;
+  padding: 0rem 0.25rem;
   flex-wrap: wrap;
+  width: 100%;
 
   > section {
     display: flex;
     flex-direction: column;
     flex-basis: 50%;
-    margin: 0.9rem 0;
+    margin: 0.9rem 0 0.7rem 0;
+
+    @media (max-width: 600px) {
+      flex-basis: 100%;
+    }
 
     > div {
       display: flex;
@@ -271,15 +313,9 @@ export const AddressesWrapper = styled.div`
         margin-right: 0.75rem;
       }
 
-      > h3 {
-        font-family: InterSemiBold, sans-serif;
-        color: var(--text-color-secondary);
-        margin-bottom: 0.25rem;
-      }
-
       > h4 {
-        font-family: InterSemiBold, sans-serif;
         color: var(--text-color-secondary);
+        font-family: InterSemiBold, sans-serif;
         margin: 0;
         overflow: hidden;
         text-overflow: ellipsis;
