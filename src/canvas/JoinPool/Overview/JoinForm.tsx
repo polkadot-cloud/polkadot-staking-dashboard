@@ -12,7 +12,6 @@ import { useTxMeta } from 'contexts/TxMeta';
 import { useState } from 'react';
 import { JoinFormWrapper } from '../Wrappers';
 import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput';
 import { CallToActionWrapper } from 'library/CallToAction';
 
@@ -67,13 +66,7 @@ export const JoinForm = () => {
         <h4>You have 0.5 DOT available to bond.</h4>
       </div>
 
-      <h4 className="underline">
-        Claim Setting
-        <ButtonHelp
-          marginLeft
-          onClick={() => openHelp('Permissionless Claiming')}
-        />
-      </h4>
+      <h4 className="underline">Claim Setting</h4>
 
       <ClaimPermissionInput
         current={claimPermission}
