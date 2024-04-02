@@ -23,6 +23,10 @@ export const Wrapper = styled.div`
       background: var(--background-canvas-card);
     }
 
+    &.card {
+      background: transparent;
+    }
+
     > section {
       width: 100%;
 

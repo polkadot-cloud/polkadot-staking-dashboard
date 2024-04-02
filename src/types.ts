@@ -140,7 +140,7 @@ export type Sync = 'unsynced' | 'syncing' | 'synced';
 export type BondFor = 'pool' | 'nominator';
 
 // which medium components are being displayed on.
-export type DisplayFor = 'default' | 'modal' | 'canvas';
+export type DisplayFor = 'default' | 'modal' | 'canvas' | 'card';
 
 // generic function with no args or return type.
 export type Fn = () => void;

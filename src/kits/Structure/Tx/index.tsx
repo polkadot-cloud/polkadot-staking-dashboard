@@ -39,7 +39,9 @@ export const Tx = ({
   displayFor = 'default',
 }: TxProps) => (
   <Wrapper className={margin ? 'margin' : undefined}>
-    <div className={`inner${appendOrEmpty(displayFor === 'canvas', 'canvas')}`}>
+    <div
+      className={`inner${appendOrEmpty(['canvas', 'card'].includes(displayFor), displayFor)}`}
+    >
       <p className="sign">
         <span className="badge">
           <FontAwesomeIcon icon={faPenToSquare} className="icon" />
