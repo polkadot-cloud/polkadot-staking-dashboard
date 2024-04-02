@@ -15,7 +15,7 @@ export const Addresses = ({
   return (
     <CardWrapper className="canvas secondary">
       <HeadingWrapper>
-        <h3>{t('poolAddresses')}</h3>
+        <h3>{t('addresses')}</h3>
       </HeadingWrapper>
 
       <AddressesWrapper>

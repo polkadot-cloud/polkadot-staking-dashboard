@@ -8,8 +8,10 @@ import { useApi } from 'contexts/Api';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import type { OverviewSectionProps } from '../types';
+import { useTranslation } from 'react-i18next';
 
 export const Stats = ({ bondedPool }: OverviewSectionProps) => {
+  const { t } = useTranslation('library');
   const {
     networkData: {
       units,
@@ -50,14 +52,14 @@ export const Stats = ({ bondedPool }: OverviewSectionProps) => {
   return (
     <HeadingWrapper>
       <h4>
-        <span className="active">Actively Nominating</span>
+        <span className="active">{t('activelyNominating')}</span>
 
         <span className="balance">
           <Token className="icon" />
           {!poolBalance
             ? `...`
             : planckToUnit(poolBalance, units).decimalPlaces(3).toFormat()}{' '}
-          {unit} Bonded
+          {unit} {t('bonded')}
         </span>
       </h4>
     </HeadingWrapper>

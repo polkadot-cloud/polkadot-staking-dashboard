@@ -27,9 +27,9 @@ export const ClaimPermissionInput = ({
       description: t('allowAnyoneCompound'),
     },
     {
-      label: 'Permissioned',
+      label: t('permissioned'),
       value: 'Permissioned',
-      description: 'Only you can claim rewards.',
+      description: t('permissionedSubtitle'),
     },
   ];
 
