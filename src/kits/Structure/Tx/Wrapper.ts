@@ -24,7 +24,7 @@ export const Wrapper = styled.div`
     }
 
     &.card {
-      background: transparent;
+      border-radius: 0.5rem;
     }
 
     > section {

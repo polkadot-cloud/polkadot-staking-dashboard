@@ -179,14 +179,12 @@ export const JoinFormWrapper = styled.div`
     padding-bottom: 1.25rem;
 
     > div {
-      &:first-child {
-        flex-grow: 1;
-        display: flex;
-        align-items: flex-end;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
 
-        > h2 {
-          font-size: 2rem;
-        }
+      > div {
+        margin: 0;
       }
     }
   }

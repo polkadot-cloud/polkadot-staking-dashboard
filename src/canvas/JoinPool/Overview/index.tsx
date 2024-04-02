@@ -22,7 +22,7 @@ export const Overview = ({ bondedPool }: { bondedPool: BondedPool }) => (
     </div>
     <div className="side">
       <div>
-        <JoinForm />
+        <JoinForm bondedPool={bondedPool} />
       </div>
     </div>
   </>
