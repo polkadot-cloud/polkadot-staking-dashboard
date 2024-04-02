@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { BondedPool } from 'contexts/Pools/BondedPools/types';
+import type { Validator } from 'contexts/Validators/types';
 import type { Dispatch, SetStateAction } from 'react';
 
 export interface JoinPoolHeaderProps {
@@ -13,4 +14,9 @@ export interface JoinPoolHeaderProps {
   setActiveTab: (tab: number) => void;
   setSelectedPoolId: Dispatch<SetStateAction<number>>;
   setSelectedPoolCount: Dispatch<SetStateAction<number>>;
+}
+
+export interface NominationsProps {
+  stash: string;
+  targets: Validator[];
 }

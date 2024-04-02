@@ -1,19 +1,13 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { Validator } from 'contexts/Validators/types';
 import { ValidatorList } from 'library/ValidatorList';
 import { ListWrapper } from 'modals/PoolNominations/Wrappers';
 import { useTranslation } from 'react-i18next';
 import { HeadingWrapper, NominationsWrapper } from '../Wrappers';
+import type { NominationsProps } from '../types';
 
-export const Nominations = ({
-  stash,
-  targets,
-}: {
-  stash: string;
-  targets: Validator[];
-}) => {
+export const Nominations = ({ stash, targets }: NominationsProps) => {
   const { t } = useTranslation('modals');
 
   return (
