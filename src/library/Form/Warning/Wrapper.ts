@@ -4,10 +4,10 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  background: var(--background-warning);
-  border: 1px solid var(--status-warning-color-transparent);
+  background: var(--button-primary-background);
+  border: 1px solid var(--accent-color-secondary);
   margin: 0.5rem 0;
-  padding: 0.75rem 0.75rem;
+  padding: 0.6rem 0.9rem;
   border-radius: 0.75rem;
   display: flex;
   flex-flow: row wrap;
@@ -15,11 +15,12 @@ export const Wrapper = styled.div`
   width: 100%;
 
   > h4 {
-    color: var(--status-warning-color);
+    color: var(--accent-color-secondary);
+    font-family: Inter, sans-serif;
 
     .icon {
-      color: var(--status-warning-color);
-      margin-right: 0.6rem;
+      color: var(--accent-color-secondary);
+      margin-right: 0.5rem;
     }
   }
 `;

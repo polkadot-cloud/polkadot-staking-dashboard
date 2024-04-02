@@ -118,8 +118,8 @@ export const TitleWrapper = styled.div`
               font-size: 1.1rem;
 
               &.blocked {
-                color: var(--status-warning-color);
-                border-color: var(--status-warning-color);
+                color: var(--accent-color-secondary);
+                border-color: var(--accent-color-secondary);
               }
 
               &.destroying {
