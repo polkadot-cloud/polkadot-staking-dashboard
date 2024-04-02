@@ -23,11 +23,13 @@ import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { SubmitTx } from 'library/SubmitTx';
 import type { OverviewSectionProps } from '../types';
 import { defaultClaimPermission } from 'controllers/ActivePoolsController/defaults';
+import { useTranslation } from 'react-i18next';
 
 export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
+  const { t } = useTranslation();
   const { api } = useApi();
   const {
-    networkData: { units },
+    networkData: { units, unit },
   } = useNetwork();
   const {
     closeCanvas,
@@ -126,8 +128,10 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
 
   return (
     <JoinFormWrapper>
-      <h2>Join Pool</h2>
-      <h4>Bond DOT</h4>
+      <h2>{t('joinPool', { ns: 'pages' })}</h2>
+      <h4>
+        {t('bond', { ns: 'library' })} {unit}
+      </h4>
 
       <div className="input">
         <div>
@@ -148,7 +152,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
         </div>
       </div>
 
-      <h4 className="underline">Claim Setting</h4>
+      <h4 className="underline">{t('claimSetting', { ns: 'library' })}</h4>
 
       <ClaimPermissionInput
         current={claimPermission}
@@ -160,7 +164,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
       <div className="submit">
         <SubmitTx
           displayFor="card"
-          submitText="Join Pool"
+          submitText={t('joinPool', { ns: 'pages' })}
           valid={formValid}
           {...submitExtrinsic}
           noMargin

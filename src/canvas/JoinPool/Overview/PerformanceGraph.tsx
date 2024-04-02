@@ -26,6 +26,7 @@ import { useRef } from 'react';
 import { formatSize } from 'library/Graphs/Utils';
 import { useSize } from 'hooks/useSize';
 import type { OverviewSectionProps } from '../types';
+import { useTranslation } from 'react-i18next';
 
 ChartJS.register(
   CategoryScale,
@@ -39,6 +40,7 @@ ChartJS.register(
 );
 
 export const PerformanceGraph = ({ bondedPool }: OverviewSectionProps) => {
+  const { t } = useTranslation();
   const { mode } = useTheme();
   const { openHelp } = useHelp();
   const { colors } = useNetwork().networkData;
@@ -66,11 +68,13 @@ export const PerformanceGraph = ({ bondedPool }: OverviewSectionProps) => {
   const labels = Object.keys(rawEraRewardPoints).map(() => '');
 
   const firstEra = Object.keys(rawEraRewardPoints)[0];
-  labels[0] = firstEra ? `Era ${Object.keys(rawEraRewardPoints)[0]}` : '';
+  labels[0] = firstEra
+    ? `${t('era', { ns: 'library' })} ${Object.keys(rawEraRewardPoints)[0]}`
+    : '';
 
   const lastEra = Object.keys(rawEraRewardPoints)[labels.length - 1];
   labels[labels.length - 1] = lastEra
-    ? `Era ${Object.keys(rawEraRewardPoints)[labels.length - 1]}`
+    ? `${t('era', { ns: 'library' })} ${Object.keys(rawEraRewardPoints)[labels.length - 1]}`
     : '';
 
   // Use primary color for bars.
@@ -127,7 +131,7 @@ export const PerformanceGraph = ({ bondedPool }: OverviewSectionProps) => {
         callbacks: {
           title: () => [],
           label: (context: AnyJson) =>
-            `${new BigNumber(context.parsed.y).decimalPlaces(0).toFormat()} Era Points`,
+            `${new BigNumber(context.parsed.y).decimalPlaces(0).toFormat()} ${t('eraPoints', { ns: 'library' })}`,
         },
       },
     },
@@ -137,7 +141,7 @@ export const PerformanceGraph = ({ bondedPool }: OverviewSectionProps) => {
     labels,
     datasets: [
       {
-        label: 'Era Points',
+        label: t('era', { ns: 'library' }),
         data: dataset,
         borderColor: color,
         backgroundColor: color,
@@ -151,7 +155,7 @@ export const PerformanceGraph = ({ bondedPool }: OverviewSectionProps) => {
     <div>
       <HeadingWrapper>
         <h3>
-          Recent Performance
+          {t('recentPerformance', { ns: 'library' })}
           <ButtonHelp
             outline
             marginLeft

@@ -5,18 +5,23 @@ import { CardWrapper } from 'library/Card/Wrappers';
 import { AddressesWrapper, HeadingWrapper } from '../Wrappers';
 import { AddressSection } from './AddressSection';
 import type { OverviewSectionProps } from '../types';
+import { useTranslation } from 'react-i18next';
 
 export const Addresses = ({
   bondedPool: { addresses },
-}: OverviewSectionProps) => (
-  <CardWrapper className="canvas secondary">
-    <HeadingWrapper>
-      <h3>Pool Addresses</h3>
-    </HeadingWrapper>
+}: OverviewSectionProps) => {
+  const { t } = useTranslation('library');
 
-    <AddressesWrapper>
-      <AddressSection address={addresses.stash} label="Stash" />
-      <AddressSection address={addresses.reward} label="Reward" />
-    </AddressesWrapper>
-  </CardWrapper>
-);
+  return (
+    <CardWrapper className="canvas secondary">
+      <HeadingWrapper>
+        <h3>{t('poolAddresses')}</h3>
+      </HeadingWrapper>
+
+      <AddressesWrapper>
+        <AddressSection address={addresses.stash} label="Stash" />
+        <AddressSection address={addresses.reward} label="Reward" />
+      </AddressesWrapper>
+    </CardWrapper>
+  );
+};

@@ -44,7 +44,7 @@ export const Header = ({
     <>
       <div className="head">
         <ButtonPrimaryInvert
-          text={'Choose Another Pool'}
+          text={t('chooseAnotherPool', { ns: 'library' })}
           iconLeft={faArrowsRotate}
           onClick={() => handleChooseNewPool()}
           lg
@@ -77,18 +77,19 @@ export const Header = ({
             </div>
             <div className="labels">
               <h3>
-                Pool <FontAwesomeIcon icon={faHashtag} transform="shrink-2" />
+                {t('pool', { ns: 'library' })}{' '}
+                <FontAwesomeIcon icon={faHashtag} transform="shrink-2" />
                 {bondedPool.id}
                 {['Blocked', 'Destroying'].includes(bondedPool.state) && (
                   <span className={bondedPool.state.toLowerCase()}>
-                    {bondedPool.state}
+                    {t(bondedPool.state.toLowerCase(), { ns: 'library' })}
                   </span>
                 )}
               </h3>
 
               {autoSelected && (
                 <h3>
-                  <span>Auto Selected</span>
+                  <span>{t('autoSelected', { ns: 'library' })}</span>
                 </h3>
               )}
             </div>
@@ -104,7 +105,7 @@ export const Header = ({
               onClick: () => setActiveTab(0),
             },
             {
-              title: 'Nominations',
+              title: t('nominate.nominations', { ns: 'pages' }),
               active: activeTab === 1,
               onClick: () => setActiveTab(1),
             },
