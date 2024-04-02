@@ -10,19 +10,19 @@ import { Roles } from './Roles';
 import { GrahpStatsWrapper } from '../Wrappers';
 import type { OverviewSectionProps } from '../types';
 
-export const Overview = ({ bondedPool }: OverviewSectionProps) => (
+export const Overview = (props: OverviewSectionProps) => (
   <>
     <div className="main">
       <GrahpStatsWrapper>
-        <Stats bondedPool={bondedPool} />
-        <PerformanceGraph bondedPool={bondedPool} />
+        <Stats {...props} />
+        <PerformanceGraph {...props} />
       </GrahpStatsWrapper>
-      <Addresses bondedPool={bondedPool} />
-      <Roles bondedPool={bondedPool} />
+      <Addresses {...props} />
+      <Roles {...props} />
     </div>
     <div className="side">
       <div>
-        <JoinForm bondedPool={bondedPool} />
+        <JoinForm {...props} />
       </div>
     </div>
   </>
