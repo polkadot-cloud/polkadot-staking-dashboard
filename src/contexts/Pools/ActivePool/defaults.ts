@@ -31,6 +31,5 @@ export const defaultActivePoolContext: ActivePoolContextState = {
   setActivePoolId: (p) => {},
   activePool: null,
   activePoolNominations: null,
-  activePoolMemberCount: 0,
   pendingPoolRewards: new BigNumber(0),
 };

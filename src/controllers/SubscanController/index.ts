@@ -5,7 +5,6 @@ import type {
   SubscanPoolClaim,
   SubscanData,
   SubscanPayout,
-  SubscanPoolDetails,
   SubscanPoolMember,
   SubscanRequestBody,
   SubscanEraPoints,
@@ -26,7 +25,6 @@ export class SubscanController {
   // List of endpoints to be used for Subscan API calls.
   static ENDPOINTS = {
     eraStat: '/api/scan/staking/era_stat',
-    poolDetails: '/api/scan/nomination_pool/pool',
     poolMembers: '/api/scan/nomination_pool/pool/members',
     poolRewards: '/api/scan/nomination_pool/rewards',
     rewardSlash: '/api/v2/scan/account/reward_slash',
@@ -45,7 +43,7 @@ export class SubscanController {
   static payoutData: Record<string, SubscanData> = {};
 
   // Subscan pool data, keyed by `<network>-<poolId>-<key1>-<key2>...`.
-  static poolData: Record<string, SubscanPoolDetails | PoolMember[]> = {};
+  static poolData: Record<string, PoolMember[]> = {};
 
   // Subscan era points data, keyed by `<network>-<address>-<era>`.
   static eraPointsData: Record<string, SubscanEraPoints[]> = {};
@@ -178,19 +176,6 @@ export class SubscanController {
       .splice(0, result.list.length - 1);
   };
 
-  // Fetch a pool's details from Subscan.
-  static fetchPoolDetails = async (
-    poolId: number
-  ): Promise<SubscanPoolDetails> => {
-    const result = await this.makeRequest(this.ENDPOINTS.poolDetails, {
-      pool_id: poolId,
-    });
-    if (!result) {
-      return { member_count: 0 };
-    }
-    return { member_count: result.member_count };
-  };
-
   // Fetch a pool's era points from Subscan.
   static fetchEraPoints = async (
     address: string,
@@ -231,20 +216,6 @@ export class SubscanController {
       const result = await this.fetchPoolMembers(poolId, page);
       this.poolData[dataKey] = result;
 
-      return result;
-    }
-  };
-
-  // Handle fetching pool details.
-  static handleFetchPoolDetails = async (poolId: number) => {
-    const dataKey = `${this.network}-${poolId}-details}`;
-    const currentValue = this.poolData[dataKey];
-
-    if (currentValue) {
-      return currentValue as SubscanPoolDetails;
-    } else {
-      const result = await this.fetchPoolDetails(poolId);
-      this.poolData[dataKey] = result;
       return result;
     }
   };

@@ -39,8 +39,7 @@ export interface SubscanRequestPagination {
 export type SubscanResult =
   | SubscanPayout[]
   | SubscanPoolClaim[]
-  | SubscanPoolMember[]
-  | SubscanPoolDetails;
+  | SubscanPoolMember[];
 
 export interface SubscanPoolClaim {
   account_display: {
@@ -87,10 +86,6 @@ export interface SubscanPoolMember {
     identity: boolean;
   };
   claimable: string;
-}
-
-export interface SubscanPoolDetails {
-  member_count: number;
 }
 
 export interface SubscanEraPoints {

@@ -20,12 +20,12 @@ export const PoolStats = () => {
   const {
     networkData: { units, unit },
   } = useNetwork();
+  const { activePool } = useActivePool();
   const { getCurrentCommission } = usePoolCommission();
-  const { activePool, activePoolMemberCount } = useActivePool();
 
   const poolId = activePool?.id || 0;
 
-  const { state, points } = activePool?.bondedPool || {};
+  const { state, points, memberCounter } = activePool?.bondedPool || {};
   const currentCommission = getCurrentCommission(poolId);
 
   const bonded = planckToUnit(
@@ -65,13 +65,13 @@ export const PoolStats = () => {
   items.push(
     {
       label: t('pools.poolMembers'),
-      value: `${activePoolMemberCount}`,
+      value: `${memberCounter}`,
       button: {
         text: t('pools.browseMembers'),
         onClick: () => {
           openCanvas({ key: 'PoolMembers', size: 'xl' });
         },
-        disabled: activePoolMemberCount === 0,
+        disabled: memberCounter === '0',
       },
     },
     {

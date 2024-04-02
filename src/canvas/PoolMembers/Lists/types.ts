@@ -15,5 +15,5 @@ export type DefaultMembersListProps = MembersListProps & {
 };
 
 export type FetchpageMembersListProps = MembersListProps & {
-  memberCount: number;
+  memberCount: string;
 };
