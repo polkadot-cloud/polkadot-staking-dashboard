@@ -128,7 +128,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
 
   return (
     <JoinFormWrapper>
-      <h2>{t('joinPool', { ns: 'pages' })}</h2>
+      <h2>{t('pools.joinPool', { ns: 'pages' })}</h2>
       <h4>
         {t('bond', { ns: 'library' })} {unit}
       </h4>
@@ -164,7 +164,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
       <div className="submit">
         <SubmitTx
           displayFor="card"
-          submitText={t('joinPool', { ns: 'pages' })}
+          submitText={t('pools.joinPool', { ns: 'pages' })}
           valid={formValid}
           {...submitExtrinsic}
           noMargin
