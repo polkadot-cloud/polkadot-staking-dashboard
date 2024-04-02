@@ -25,22 +25,25 @@ export const Default = ({
     submitting || !valid || !accountHasSigner(submitAddress) || !txFeesValid;
 
   return (
-    <div className="inner">
-      <div>
-        <EstimatedTxFee />
+    <>
+      <div className="inner">
+        <div>
+          <EstimatedTxFee />
+        </div>
+        <div>
+          {buttons}
+          <ButtonSubmit
+            lg={displayFor === 'canvas'}
+            text={submitText || ''}
+            iconLeft={faArrowAltCircleUp}
+            iconTransform="grow-2"
+            onClick={() => onSubmit()}
+            disabled={disabled}
+            pulse={!disabled}
+          />
+        </div>
       </div>
-      <div>
-        {buttons}
-        <ButtonSubmit
-          lg={displayFor === 'canvas'}
-          text={submitText || ''}
-          iconLeft={faArrowAltCircleUp}
-          iconTransform="grow-2"
-          onClick={() => onSubmit()}
-          disabled={disabled}
-          pulse={!disabled}
-        />
-      </div>
-    </div>
+      {displayFor === 'card' && <span>large button should go here</span>}
+    </>
   );
 };

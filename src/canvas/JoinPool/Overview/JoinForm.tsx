@@ -144,14 +144,14 @@ export const JoinForm = ({ bondedPool }: { bondedPool: BondedPool }) => {
         }}
       />
 
-      <SubmitTx
-        noMargin
-        valid={!submitDisabled}
-        {...submitExtrinsic}
-        displayFor="card"
-      />
-
       <div className="submit">
+        <SubmitTx
+          noMargin
+          valid={!submitDisabled}
+          {...submitExtrinsic}
+          displayFor="card"
+        />
+
         <CallToActionWrapper>
           <div className="inner">
             <section className="standalone">
