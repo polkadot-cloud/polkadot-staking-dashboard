@@ -201,16 +201,17 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     if (
       activePool &&
       membership?.poolId &&
+      membership?.address &&
       String(activePool.id) === String(membership.poolId)
     ) {
-      const pendingRewards = await fetchPendingRewards(membership?.address);
+      const pendingRewards = await fetchPendingRewards(membership.address);
 
       // Check if active pool has changed in the time the pending rewards were being fetched. If it
       // has, do not update.
       if (
         activePoolId &&
         activePoolsRef.current[activePoolId]?.id ===
-          Number(membership?.poolId || -1)
+          Number(membership.poolId || -1)
       ) {
         setPendingPoolRewards(pendingRewards);
       }
