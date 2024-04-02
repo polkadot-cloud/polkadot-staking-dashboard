@@ -20,3 +20,9 @@ export interface NominationsProps {
   stash: string;
   targets: Validator[];
 }
+
+export interface AddressSectionProps {
+  address: string;
+  label: string;
+  helpKey?: string;
+}

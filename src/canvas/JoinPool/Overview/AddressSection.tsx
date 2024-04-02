@@ -7,16 +7,13 @@ import { HeadingWrapper } from '../Wrappers';
 import { Polkicon } from '@w3ux/react-polkicon';
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';
 import { ellipsisFn, remToUnit } from '@w3ux/utils';
+import type { AddressSectionProps } from '../types';
 
 export const AddressSection = ({
   address,
   label,
   helpKey,
-}: {
-  address: string;
-  label: string;
-  helpKey?: string;
-}) => {
+}: AddressSectionProps) => {
   const { openHelp } = useHelp();
 
   return (
