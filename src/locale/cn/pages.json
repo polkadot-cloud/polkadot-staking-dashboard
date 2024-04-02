@@ -154,7 +154,7 @@
       "generateNominations": "生成提名",
       "inPool": "提名池中",
       "inactivePoolNotNominating": "非活跃：提名池未提名任何验证人",
-      "joinPool": "加入池",
+      "joinPool": "加入提名池",
       "leave": "离开",
       "leavingPool": "离开提名池中",
       "leftThePool": "所有成员已离开",
