@@ -17,7 +17,7 @@ import { CallToActionLoader } from 'library/Loader/CallToAction';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const NewNominator = ({ syncing }: NewNominatorProps) => {
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation();
   const { isReady } = useApi();
   const navigate = useNavigate();
   const { setOnNominatorSetup } = useSetup();
@@ -42,13 +42,13 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
                   onClick={() => setOnNominatorSetup(true)}
                   disabled={nominateButtonDisabled}
                 >
-                  {t('nominate.startNominating')}
+                  {t('nominate.startNominating', { ns: 'pages' })}
                   <FontAwesomeIcon icon={faChevronCircleRight} />
                 </button>
               </div>
               <div className="button secondary">
                 <button onClick={() => navigate('/validators')}>
-                  Browse Validators
+                  {t('browseValidators', { ns: 'library' })}
                   <FontAwesomeIcon icon={faChevronRight} transform="shrink-4" />
                 </button>
               </div>
