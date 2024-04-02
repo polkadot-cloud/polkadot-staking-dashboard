@@ -112,7 +112,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   }
 
   &.warning {
-    border: 1px solid var(--status-warning-color);
+    border: 1px solid var(--accent-color-secondary);
   }
 
   &.prompt {
