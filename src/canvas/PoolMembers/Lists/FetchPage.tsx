@@ -51,7 +51,7 @@ export const MembersListInner = ({
   };
 
   // pagination
-  const totalPages = Math.ceil(memberCount / listItemsPerPage);
+  const totalPages = Math.ceil(Number(memberCount) / listItemsPerPage);
   const pageEnd = listItemsPerPage - 1;
   const pageStart = pageEnd - (listItemsPerPage - 1);
 
