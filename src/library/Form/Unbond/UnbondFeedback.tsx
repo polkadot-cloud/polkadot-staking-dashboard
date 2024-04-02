@@ -24,6 +24,7 @@ export const UnbondFeedback = ({
   setLocalResize,
   parentErrors = [],
   txFees,
+  displayFirstWarningOnly = true,
 }: UnbondFeedbackProps) => {
   const { t } = useTranslation('library');
   const {
@@ -129,6 +130,10 @@ export const UnbondFeedback = ({
     setErrors(newErrors);
   };
 
+  // If `displayFirstWarningOnly` is set, filter errors to only the first one.
+  const filteredErrors =
+    displayFirstWarningOnly && errors.length > 1 ? [errors[0]] : errors;
+
   // update bond on account change
   useEffect(() => {
     setBond({ bond: defaultValue });
@@ -148,7 +153,7 @@ export const UnbondFeedback = ({
 
   return (
     <>
-      {errors.map((err, i) => (
+      {filteredErrors.map((err, i) => (
         <Warning key={`unbond_error_${i}`} text={err} />
       ))}
       <Spacer />
