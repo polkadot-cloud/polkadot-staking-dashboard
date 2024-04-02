@@ -25,7 +25,7 @@ export const Signer = ({
           icon={faWarning}
           className="danger"
           transform="shrink-1"
-        />{' '}
+        />
         <span className="danger">{dangerMessage}</span>
       </span>
     )}
