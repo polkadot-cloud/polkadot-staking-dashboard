@@ -169,6 +169,7 @@ export const CallToActionWrapper = styled.div`
             align-items: center;
             justify-content: center;
             flex-wrap: nowrap;
+            font-size: 1.3rem;
             width: 100%;
 
             &:disabled {

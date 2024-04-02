@@ -17,9 +17,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
   const { t } = useTranslation('pages');
   const { setOnPoolSetup } = useSetup();
   const { setActiveTab } = usePoolsTabs();
-  // const { getPoolSetupPercent } = useSetup();
   const { openCanvas } = useOverlay().canvas;
-  // const { activeAccount } = useActiveAccounts();
   const { poolRewardPointsFetched } = usePoolPerformance();
   const { disableJoin, disableCreate } = useStatusButtons();
 
@@ -27,8 +25,6 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
     disableJoin() || poolRewardPointsFetched !== 'synced';
 
   const createButtonDisabled = disableCreate();
-
-  // const setupPercent = getPoolSetupPercent(activeAccount);
 
   return (
     <CallToActionWrapper>

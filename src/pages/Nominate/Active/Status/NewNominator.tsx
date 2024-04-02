@@ -23,7 +23,6 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
   const { setOnNominatorSetup } = useSetup();
   const { activeAccount } = useActiveAccounts();
   const { isReadOnlyAccount } = useImportedAccounts();
-  // const setupPercent = getNominatorSetupPercent(activeAccount);
 
   const nominateButtonDisabled =
     !isReady || !activeAccount || isReadOnlyAccount(activeAccount);
