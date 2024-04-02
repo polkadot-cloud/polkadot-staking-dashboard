@@ -7,16 +7,16 @@ import { PerformanceGraph } from './PerformanceGraph';
 import { Stats } from './Stats';
 import { Addresses } from './Addresses';
 import { Roles } from './Roles';
-import { GrahpStatsWrapper } from '../Wrappers';
+import { GraphLayoutWrapper } from '../Wrappers';
 import type { OverviewSectionProps } from '../types';
 
 export const Overview = (props: OverviewSectionProps) => (
   <>
     <div className="main">
-      <GrahpStatsWrapper>
+      <GraphLayoutWrapper>
         <Stats {...props} />
         <PerformanceGraph {...props} />
-      </GrahpStatsWrapper>
+      </GraphLayoutWrapper>
       <Addresses {...props} />
       <Roles {...props} />
     </div>

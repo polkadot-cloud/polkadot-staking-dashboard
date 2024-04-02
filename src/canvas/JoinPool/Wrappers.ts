@@ -55,17 +55,17 @@ export const JoinPoolInterfaceWrapper = styled.div`
 
 export const TitleWrapper = styled.div`
   border-bottom: 1px solid var(--border-secondary-color);
+  flex: 1;
   display: flex;
   flex-direction: column;
   margin: 2rem 0 1.55rem 0;
   padding-bottom: 0.1rem;
-  width: 100%;
 
   > .inner {
     display: flex;
     align-items: center;
     margin-bottom: 0.5rem;
-    width: 100%;
+    flex: 1;
 
     > div {
       display: flex;
@@ -200,12 +200,6 @@ export const JoinFormWrapper = styled.div`
   }
 `;
 
-export const NominationsWrapper = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-`;
-
 export const HeadingWrapper = styled.div`
   margin: 0.5rem 0.5rem 0.5rem 0rem;
 
@@ -280,34 +274,11 @@ export const HeadingWrapper = styled.div`
   }
 `;
 
-export const GraphWrapper = styled.div`
-  padding: 0 4rem 0 1rem;
-  margin-top: 2rem;
-  position: relative;
-  width: 100%;
-
-  @media (max-width: 1000px) {
-    padding: 0 0 0 1rem;
-  }
-
-  > .inner {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    padding-left: 1rem;
-    padding-right: 4rem;
-
-    @media (max-width: 1000px) {
-      padding-right: 1.5rem;
-    }
-  }
-`;
-
 export const AddressesWrapper = styled.div`
+  flex: 1;
   display: flex;
   padding: 0rem 0.25rem;
   flex-wrap: wrap;
-  width: 100%;
 
   > section {
     display: flex;
@@ -331,12 +302,12 @@ export const AddressesWrapper = styled.div`
       > h4 {
         color: var(--text-color-secondary);
         font-family: InterSemiBold, sans-serif;
-        margin: 0;
-        overflow: hidden;
+        display: flex;
         text-overflow: ellipsis;
         white-space: nowrap;
-        display: flex;
-        width: 100%;
+        overflow: hidden;
+        margin: 0;
+        flex: 1;
 
         &.heading {
           font-family: InterBold, sans-serif;
@@ -354,8 +325,33 @@ export const AddressesWrapper = styled.div`
   }
 `;
 
-export const GrahpStatsWrapper = styled.div`
-  width: 100%;
+// Wrapper that houses the chart, allowing it to be responsive.
+export const GraphWrapper = styled.div`
+  flex: 1;
+  position: relative;
+  padding: 0 4rem 0 1rem;
+  margin-top: 2rem;
+
+  @media (max-width: 1000px) {
+    padding: 0 0 0 1rem;
+  }
+
+  > .inner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding-left: 1rem;
+    padding-right: 4rem;
+
+    @media (max-width: 1000px) {
+      padding-right: 1.5rem;
+    }
+  }
+`;
+
+// Element used to wrap graph and pool stats, allowing flex ordering on smaller screens.
+export const GraphLayoutWrapper = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
 
@@ -377,4 +373,10 @@ export const GrahpStatsWrapper = styled.div`
       }
     }
   }
+`;
+
+export const NominationsWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 `;
