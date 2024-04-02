@@ -14,7 +14,7 @@ import { CallToActionLoader } from 'library/Loader/CallToAction';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 
 export const NewMember = ({ syncing }: NewMemberProps) => {
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation();
   const { setOnPoolSetup } = useSetup();
   const { setActiveTab } = usePoolsTabs();
   const { openCanvas } = useOverlay().canvas;
@@ -49,10 +49,10 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                     disabled={joinButtonDisabled}
                   >
                     {poolRewardPointsFetched !== 'synced' ? (
-                      'Syncing Pool Data...'
+                      t('syncingPoolData', { ns: 'library' })
                     ) : (
                       <>
-                        {t('pools.joinPool')}
+                        {t('pools.joinPool', { ns: 'pages' })}
                         <FontAwesomeIcon icon={faUserGroup} />
                       </>
                     )}
@@ -61,7 +61,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
 
                 <div className="button secondary">
                   <button onClick={() => setActiveTab(1)}>
-                    {t('pools.browsePools')}
+                    {t('pools.browsePools', { ns: 'pages' })}
                     <FontAwesomeIcon
                       icon={faChevronRight}
                       transform={'shrink-4'}
@@ -79,7 +79,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                     onClick={() => setOnPoolSetup(true)}
                     disabled={createButtonDisabled}
                   >
-                    {t('pools.createPool')}
+                    {t('pools.createPool', { ns: 'pages' })}
                     <FontAwesomeIcon
                       icon={faChevronRight}
                       transform={'shrink-4'}
