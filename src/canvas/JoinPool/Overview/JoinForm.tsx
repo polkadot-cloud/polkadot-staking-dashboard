@@ -29,13 +29,17 @@ export const JoinForm = ({ bondedPool }: { bondedPool: BondedPool }) => {
     networkData: { units },
   } = useNetwork();
   const { newBatchCall } = useBatchCall();
-  const { closeCanvas } = useOverlay().canvas;
+  const {
+    closeCanvas,
+    config: { options },
+  } = useOverlay().canvas;
   const { setActiveAccountSetup } = useSetup();
   const { activeAccount } = useActiveAccounts();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' });
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
+  const onJoinCallback = options?.onJoinCallback;
 
   const {
     pool: { totalPossibleBond },
@@ -91,6 +95,9 @@ export const JoinForm = ({ bondedPool }: { bondedPool: BondedPool }) => {
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       closeCanvas();
+      if (typeof onJoinCallback === 'function') {
+        onJoinCallback();
+      }
     },
     callbackInBlock: async () => {
       // query and add account to poolMembers list
