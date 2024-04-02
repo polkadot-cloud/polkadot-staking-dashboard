@@ -148,6 +148,10 @@ export const CallToActionWrapper = styled.div`
             flex-wrap: nowrap;
             width: 100%;
 
+            &:disabled {
+              cursor: default;
+            }
+
             > svg {
               margin: 0 0.75rem;
             }
