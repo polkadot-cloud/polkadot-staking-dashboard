@@ -13,46 +13,32 @@ import { Polkicon } from '@w3ux/react-polkicon';
 import { determinePoolDisplay, remToUnit } from '@w3ux/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PageTitleTabs } from 'kits/Structure/PageTitleTabs';
-import type { PageTitleTabProps } from 'kits/Structure/PageTitleTabs/types';
-import type { AnyJson } from '@w3ux/utils/types';
-import { useApi } from 'contexts/Api';
 import { useTranslation } from 'react-i18next';
 import { useOverlay } from 'kits/Overlay/Provider';
+import type { JoinPoolHeaderProps } from './types';
 
 export const Header = ({
   activeTab,
+  bondedPool,
+  filteredBondedPools,
+  metadata,
+  autoSelected,
   setActiveTab,
   setSelectedPoolId,
-  bondedPool,
-  metadata,
   setSelectedPoolCount,
-  autoSelected,
-}: AnyJson) => {
+}: JoinPoolHeaderProps) => {
   const { t } = useTranslation();
   const { closeCanvas } = useOverlay().canvas;
-  const { counterForBondedPools } = useApi().poolsConfig;
 
-  // Generate a new pool to display.
+  // Randomly select a new pool to display.
   const handleChooseNewPool = () => {
+    // Trigger refresh of memoied selected bonded pool.
     setSelectedPoolCount((prev: number) => prev + 1);
-    setSelectedPoolId(
-      Math.ceil(Math.random() * counterForBondedPools.minus(1).toNumber())
-    );
-  };
 
-  // Tabs for the canvas.
-  const tabs: PageTitleTabProps[] = [
-    {
-      title: t('pools.overview', { ns: 'pages' }),
-      active: activeTab === 0,
-      onClick: () => setActiveTab(0),
-    },
-    {
-      title: 'Nominations',
-      active: activeTab === 1,
-      onClick: () => setActiveTab(1),
-    },
-  ];
+    // Randomly select a filtered bonded pool and set it as the selected pool.
+    const index = Math.ceil(Math.random() * filteredBondedPools.length - 1);
+    setSelectedPoolId(filteredBondedPools[index].id);
+  };
 
   return (
     <>
@@ -111,7 +97,18 @@ export const Header = ({
 
         <PageTitleTabs
           sticky={false}
-          tabs={tabs}
+          tabs={[
+            {
+              title: t('pools.overview', { ns: 'pages' }),
+              active: activeTab === 0,
+              onClick: () => setActiveTab(0),
+            },
+            {
+              title: 'Nominations',
+              active: activeTab === 1,
+              onClick: () => setActiveTab(1),
+            },
+          ]}
           tabClassName="canvas"
           inline={true}
         />
