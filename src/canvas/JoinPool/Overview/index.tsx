@@ -2,15 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { JoinForm } from './JoinForm';
-import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 
 import { PerformanceGraph } from './PerformanceGraph';
 import { Stats } from './Stats';
 import { Addresses } from './Addresses';
 import { Roles } from './Roles';
 import { GrahpStatsWrapper } from '../Wrappers';
+import type { OverviewSectionProps } from '../types';
 
-export const Overview = ({ bondedPool }: { bondedPool: BondedPool }) => (
+export const Overview = ({ bondedPool }: OverviewSectionProps) => (
   <>
     <div className="main">
       <GrahpStatsWrapper>

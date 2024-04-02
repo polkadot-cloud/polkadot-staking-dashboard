@@ -22,10 +22,10 @@ import { useTheme } from 'contexts/Themes';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { useHelp } from 'contexts/Help';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
-import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import { useRef } from 'react';
 import { formatSize } from 'library/Graphs/Utils';
 import { useSize } from 'hooks/useSize';
+import type { OverviewSectionProps } from '../types';
 
 ChartJS.register(
   CategoryScale,
@@ -38,11 +38,7 @@ ChartJS.register(
   Legend
 );
 
-export const PerformanceGraph = ({
-  bondedPool,
-}: {
-  bondedPool: BondedPool;
-}) => {
+export const PerformanceGraph = ({ bondedPool }: OverviewSectionProps) => {
   const { mode } = useTheme();
   const { openHelp } = useHelp();
   const { colors } = useNetwork().networkData;

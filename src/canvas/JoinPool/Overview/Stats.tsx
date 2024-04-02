@@ -3,13 +3,13 @@
 
 import { useNetwork } from 'contexts/Network';
 import { HeadingWrapper } from '../Wrappers';
-import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import { planckToUnit, rmCommas } from '@w3ux/utils';
 import { useApi } from 'contexts/Api';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
+import type { OverviewSectionProps } from '../types';
 
-export const Stats = ({ bondedPool }: { bondedPool: BondedPool }) => {
+export const Stats = ({ bondedPool }: OverviewSectionProps) => {
   const {
     networkData: {
       units,

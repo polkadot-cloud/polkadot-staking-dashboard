@@ -8,8 +8,8 @@ import type { ClaimPermission } from 'contexts/Pools/types';
 import type { ClaimPermissionConfig } from '../types';
 
 export interface ClaimPermissionInputProps {
-  current: ClaimPermission | undefined;
-  onChange: (value: ClaimPermission | undefined) => void;
+  current: ClaimPermission;
+  onChange: (value: ClaimPermission) => void;
   disabled?: boolean;
 }
 
@@ -39,9 +39,7 @@ export const ClaimPermissionInput = ({
   ];
 
   // Updated claim permission value
-  const [selected, setSelected] = useState<ClaimPermission | undefined>(
-    current
-  );
+  const [selected, setSelected] = useState<ClaimPermission>(current);
 
   // Permissionless claim enabled.
   const [enabled] = useState<boolean>(true);

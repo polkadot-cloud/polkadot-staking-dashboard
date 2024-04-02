@@ -13,7 +13,6 @@ import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee';
 import { useApi } from 'contexts/Api';
-import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -22,33 +21,34 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { defaultPoolProgress } from 'contexts/Setup/defaults';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { SubmitTx } from 'library/SubmitTx';
+import type { OverviewSectionProps } from '../types';
+import { defaultClaimPermission } from 'controllers/ActivePoolsController/defaults';
 
-export const JoinForm = ({ bondedPool }: { bondedPool: BondedPool }) => {
+export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   const { api } = useApi();
   const {
     networkData: { units },
   } = useNetwork();
-  const { newBatchCall } = useBatchCall();
   const {
     closeCanvas,
     config: { options },
   } = useOverlay().canvas;
+  const { newBatchCall } = useBatchCall();
   const { setActiveAccountSetup } = useSetup();
   const { activeAccount } = useActiveAccounts();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' });
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
-  const onJoinCallback = options?.onJoinCallback;
 
   const {
     pool: { totalPossibleBond },
   } = getTransferOptions(activeAccount);
 
   // Pool claim permission value.
-  const [claimPermission, setClaimPermission] = useState<
-    ClaimPermission | undefined
-  >('PermissionlessWithdraw');
+  const [claimPermission, setClaimPermission] = useState<ClaimPermission>(
+    defaultClaimPermission
+  );
 
   // Bond amount to join pool with.
   const [bond, setBond] = useState<{ bond: string }>({
@@ -67,12 +67,12 @@ export const JoinForm = ({ bondedPool }: { bondedPool: BondedPool }) => {
   };
 
   // Whether the form is ready to submit.
-  const submitDisabled = !bondValid || feedbackErrors.length > 0;
+  const formValid = bondValid && feedbackErrors.length === 0;
 
   // Get transaction for submission.
   const getTx = () => {
     const tx = null;
-    if (!api || !claimPermission) {
+    if (!api || !claimPermission || !formValid) {
       return tx;
     }
 
@@ -80,7 +80,10 @@ export const JoinForm = ({ bondedPool }: { bondedPool: BondedPool }) => {
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
     const txs = [api.tx.nominationPools.join(bondAsString, bondedPool.id)];
 
-    txs.push(api.tx.nominationPools.setClaimPermission(claimPermission));
+    // If claim permission is not the default, add it to tx.
+    if (claimPermission !== defaultClaimPermission) {
+      txs.push(api.tx.nominationPools.setClaimPermission(claimPermission));
+    }
 
     if (txs.length === 1) {
       return txs[0];
@@ -95,18 +98,22 @@ export const JoinForm = ({ bondedPool }: { bondedPool: BondedPool }) => {
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       closeCanvas();
+
+      // Optional callback function on join success.
+      const onJoinCallback = options?.onJoinCallback;
+
       if (typeof onJoinCallback === 'function') {
         onJoinCallback();
       }
     },
     callbackInBlock: async () => {
-      // query and add account to poolMembers list
+      // Query and add account to poolMembers list
       const member = await queryPoolMember(activeAccount);
       if (member) {
         addToPoolMembers(member);
       }
 
-      // reset localStorage setup progress
+      // Reset local storage setup progress
       setActiveAccountSetup('pool', defaultPoolProgress);
     },
   });
@@ -145,18 +152,18 @@ export const JoinForm = ({ bondedPool }: { bondedPool: BondedPool }) => {
 
       <ClaimPermissionInput
         current={claimPermission}
-        onChange={(val: ClaimPermission | undefined) => {
+        onChange={(val: ClaimPermission) => {
           setClaimPermission(val);
         }}
       />
 
       <div className="submit">
         <SubmitTx
-          noMargin
-          valid={!submitDisabled}
-          {...submitExtrinsic}
           displayFor="card"
           submitText="Join Pool"
+          valid={formValid}
+          {...submitExtrinsic}
+          noMargin
         />
       </div>
     </JoinFormWrapper>

@@ -26,3 +26,7 @@ export interface AddressSectionProps {
   label: string;
   helpKey?: string;
 }
+
+export interface OverviewSectionProps {
+  bondedPool: BondedPool;
+}
