@@ -9,6 +9,7 @@ SPDX-License-Identifier: GPL-3.0-only */
   --background-list-item: rgb(238 238 238 / 100%);
   --background-modal-card: rgb(237 237 237 / 75%);
   --background-canvas-card: rgb(245 245 245 / 90%);
+  --background-canvas-card-secondary: rgb(255 255 255 / 35%);
   --background-floating-card: rgb(255 255 255 / 90%);
   --background-app-footer: rgb(244 225 225 / 75%);
   --background-warning: #fdf9eb;
@@ -23,6 +24,7 @@ SPDX-License-Identifier: GPL-3.0-only */
   --button-secondary-background: #e7e5e5;
   --button-tertiary-background: #ececec;
   --button-tab-background: #e4e2e2;
+  --button-tab-canvas-background: #d9d9d9;
   --button-hover-background: #e8e6e6;
   --card-shadow-color: rgb(158 158 158 / 20%);
   --card-deep-shadow-color: rgb(158 158 158 / 50%);
@@ -44,7 +46,7 @@ SPDX-License-Identifier: GPL-3.0-only */
   --status-danger-color: #ae2324;
   --status-danger-color-transparent: rgb(255 0 0 / 25%);
   --text-color-primary: #3f3f3f;
-  --text-color-secondary: #555;
+  --text-color-secondary: #585858;
   --text-color-tertiary: #888;
   --text-color-invert: #fafafa;
   --gradient-background: linear-gradient(
@@ -86,6 +88,7 @@ SPDX-License-Identifier: GPL-3.0-only */
   --background-list-item: rgb(38 33 38 / 100%);
   --background-modal-card: rgb(32 26 32 / 50%);
   --background-canvas-card: rgb(44 40 44 / 90%);
+  --background-canvas-card-secondary: rgb(44 40 44 / 35%);
   --background-floating-card: rgb(43 38 43 / 95%);
   --background-app-footer: #262327;
   --background-warning: #33332a;
@@ -100,6 +103,7 @@ SPDX-License-Identifier: GPL-3.0-only */
   --button-secondary-background: rgb(55 50 55);
   --button-tertiary-background: rgb(54 49 54);
   --button-tab-background: rgb(56 51 56);
+  --button-tab-canvas-background: rgb(60 59 60);
   --button-hover-background: rgb(66 61 68);
   --card-shadow-color: rgb(28 24 28 / 25%);
   --card-deep-shadow-color: rgb(28 24 28 / 50%);

@@ -16,8 +16,8 @@ import { useSyncing } from 'hooks/useSyncing';
 export const PayoutDestinationStatus = () => {
   const { t } = useTranslation('pages');
   const { getPayee } = useBalances();
+  const { syncing } = useSyncing();
   const { inSetup } = useStaking();
-  const { syncing } = useSyncing('*');
   const { openModal } = useOverlay().modal;
   const { isFastUnstaking } = useUnstaking();
   const { getPayeeItems } = usePayeeConfig();

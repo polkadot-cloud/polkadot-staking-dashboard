@@ -46,6 +46,7 @@ export const ClosurePrompts = () => {
     active.toNumber() === 0 && totalUnlockChunks === 0 && !targets.length;
 
   return (
+    state === 'Destroying' &&
     depositorCanClose && (
       <PageRow>
         <CardWrapper style={{ border: `1px solid ${annuncementBorderColor}` }}>

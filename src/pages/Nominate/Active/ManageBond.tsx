@@ -31,8 +31,8 @@ export const ManageBond = () => {
     },
   } = useNetwork();
   const { openHelp } = useHelp();
+  const { syncing } = useSyncing();
   const { inSetup } = useStaking();
-  const { syncing } = useSyncing('*');
   const { getLedger } = useBalances();
   const { openModal } = useOverlay().modal;
   const { isFastUnstaking } = useUnstaking();

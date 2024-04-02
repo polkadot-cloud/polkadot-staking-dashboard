@@ -18,17 +18,21 @@ import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
 import { useApi } from 'contexts/Api';
 import { useTranslation } from 'react-i18next';
 import type { BondFor } from 'types';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 
 export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
   const { t } = useTranslation('modals');
   const { mode } = useTheme();
   const { consts } = useApi();
+  const { activePool } = useActivePool();
   const { openModal } = useOverlay().modal;
   const { colors } = useNetwork().networkData;
+
   const { syncing } = useSyncing(['balances']);
   const { activeAccount } = useActiveAccounts();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getTransferOptions } = useTransferOptions();
+  const { state } = activePool?.bondedPool || {};
 
   const { bondDuration } = consts;
   const allTransferOptions = getTransferOptions(activeAccount);
@@ -49,6 +53,9 @@ export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
   const displayPrompt = totalUnlockChunks > 0;
 
   return (
+    /* NOTE: ClosurePrompts is a component that displays a prompt to the user when a pool is being
+    destroyed. */
+    state !== 'Destroying' &&
     displayPrompt && (
       <PageRow>
         <CardWrapper style={{ border: `1px solid ${colors.secondary[mode]}` }}>

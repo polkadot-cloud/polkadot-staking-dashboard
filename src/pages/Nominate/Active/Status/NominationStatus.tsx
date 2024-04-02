@@ -1,16 +1,11 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  faBolt,
-  faChevronCircleRight,
-  faSignOutAlt,
-} from '@fortawesome/free-solid-svg-icons';
+import { faBolt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useFastUnstake } from 'contexts/FastUnstake';
-import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
 import { useNominationStatus } from 'hooks/useNominationStatus';
 import { useUnstaking } from 'hooks/useUnstaking';
@@ -41,7 +36,6 @@ export const NominationStatus = ({
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getNominationStatus } = useNominationStatus();
   const { getFastUnstakeText, isUnstaking } = useUnstaking();
-  const { setOnNominatorSetup, getNominatorSetupPercent } = useSetup();
 
   const fastUnstakeText = getFastUnstakeText();
   const controller = getBondedAccount(activeAccount);
@@ -67,15 +61,6 @@ export const NominationStatus = ({
           onClick: () => openModal({ key: 'Unstake', size: 'sm' }),
         };
 
-  // Display progress alongside start title if exists and in setup.
-  let startTitle = t('nominate.startNominating');
-  if (inSetup()) {
-    const progress = getNominatorSetupPercent(activeAccount);
-    if (progress > 0) {
-      startTitle += `: ${progress}%`;
-    }
-  }
-
   return (
     <Stat
       label={t('nominate.status')}
@@ -88,18 +73,7 @@ export const NominationStatus = ({
             ? !isUnstaking
               ? [unstakeButton]
               : []
-            : [
-                {
-                  title: startTitle,
-                  icon: faChevronCircleRight,
-                  transform: 'grow-1',
-                  disabled:
-                    !isReady ||
-                    isReadOnlyAccount(activeAccount) ||
-                    !activeAccount,
-                  onClick: () => setOnNominatorSetup(true),
-                },
-              ]
+            : []
       }
       buttonType={buttonType}
     />

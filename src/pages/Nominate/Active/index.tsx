@@ -31,8 +31,8 @@ import { WithdrawPrompt } from 'library/WithdrawPrompt';
 export const Active = () => {
   const { t } = useTranslation();
   const { openHelp } = useHelp();
+  const { syncing } = useSyncing();
   const { inSetup } = useStaking();
-  const { syncing } = useSyncing('*');
   const { getNominations } = useBalances();
   const { openCanvas } = useOverlay().canvas;
   const { isFastUnstaking } = useUnstaking();
@@ -55,13 +55,13 @@ export const Active = () => {
 
       <UnstakePrompts />
       <PageRow>
-        <RowSection hLast>
-          <Status height={ROW_HEIGHT} />
-        </RowSection>
-        <RowSection secondary>
+        <RowSection secondary vLast>
           <CardWrapper height={ROW_HEIGHT}>
             <ManageBond />
           </CardWrapper>
+        </RowSection>
+        <RowSection hLast>
+          <Status height={ROW_HEIGHT} />
         </RowSection>
       </PageRow>
       <PageRow>

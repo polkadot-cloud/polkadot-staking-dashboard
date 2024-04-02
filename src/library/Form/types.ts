@@ -49,6 +49,7 @@ export interface BondFeedbackProps {
   setLocalResize?: () => void;
   txFees: BigNumber;
   maxWidth?: boolean;
+  displayFirstWarningOnly?: boolean;
 }
 
 export interface BondInputProps {
@@ -70,6 +71,7 @@ export interface UnbondFeedbackProps {
   parentErrors?: string[];
   setLocalResize?: () => void;
   txFees: BigNumber;
+  displayFirstWarningOnly?: boolean;
 }
 
 export interface UnbondInputProps {

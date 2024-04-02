@@ -10,3 +10,7 @@ export interface BondedChartProps {
   unlocked: BigNumber;
   inactive: boolean;
 }
+
+export interface NewNominatorProps {
+  syncing: boolean;
+}

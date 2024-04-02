@@ -8,6 +8,8 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { SubmitProps } from './types';
 import { ButtonSubmit } from 'kits/Buttons/ButtonSubmit';
+import { ButtonSubmitLarge } from './ButtonSubmitLarge';
+import { appendOrEmpty } from '@w3ux/utils';
 
 export const Default = ({
   onSubmit,
@@ -25,22 +27,35 @@ export const Default = ({
     submitting || !valid || !accountHasSigner(submitAddress) || !txFeesValid;
 
   return (
-    <div className="inner">
-      <div>
-        <EstimatedTxFee />
+    <>
+      <div className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}>
+        <div>
+          <EstimatedTxFee />
+        </div>
+        <div>
+          {buttons}
+          {displayFor !== 'card' && (
+            <ButtonSubmit
+              lg={displayFor === 'canvas'}
+              text={submitText || ''}
+              iconLeft={faArrowAltCircleUp}
+              iconTransform="grow-2"
+              onClick={() => onSubmit()}
+              disabled={disabled}
+              pulse={!disabled}
+            />
+          )}
+        </div>
       </div>
-      <div>
-        {buttons}
-        <ButtonSubmit
-          lg={displayFor === 'canvas'}
-          text={submitText || ''}
-          iconLeft={faArrowAltCircleUp}
-          iconTransform="grow-2"
-          onClick={() => onSubmit()}
+      {displayFor === 'card' && (
+        <ButtonSubmitLarge
           disabled={disabled}
+          onSubmit={onSubmit}
+          submitText={submitText || ''}
+          icon={faArrowAltCircleUp}
           pulse={!disabled}
         />
-      </div>
-    </div>
+      )}
+    </>
   );
 };

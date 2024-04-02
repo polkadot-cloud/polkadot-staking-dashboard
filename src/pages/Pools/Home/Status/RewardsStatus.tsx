@@ -14,7 +14,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useSyncing } from 'hooks/useSyncing';
 
-export const RewardsStatus = () => {
+export const RewardsStatus = ({ dimmed }: { dimmed: boolean }) => {
   const { t } = useTranslation('pages');
   const {
     networkData: { units },
@@ -34,37 +34,37 @@ export const RewardsStatus = () => {
     : '0';
 
   // Display Reward buttons if unclaimed rewards is a non-zero value.
-  const buttonsRewards = pendingPoolRewards.isGreaterThan(minUnclaimedDisplay)
-    ? [
-        {
-          title: t('pools.withdraw'),
-          icon: faCircleDown,
-          disabled: !isReady || isReadOnlyAccount(activeAccount),
-          small: true,
-          onClick: () =>
-            openModal({
-              key: 'ClaimReward',
-              options: { claimType: 'withdraw' },
-              size: 'sm',
-            }),
-        },
-        {
-          title: t('pools.compound'),
-          icon: faPlus,
-          disabled:
-            !isReady ||
-            isReadOnlyAccount(activeAccount) ||
-            activePool?.bondedPool?.state === 'Destroying',
-          small: true,
-          onClick: () =>
-            openModal({
-              key: 'ClaimReward',
-              options: { claimType: 'bond' },
-              size: 'sm',
-            }),
-        },
-      ]
-    : undefined;
+  const buttonsRewards = isReadOnlyAccount(activeAccount)
+    ? []
+    : pendingPoolRewards.isGreaterThan(minUnclaimedDisplay)
+      ? [
+          {
+            title: t('pools.withdraw'),
+            icon: faCircleDown,
+            disabled: !isReady,
+            small: true,
+            onClick: () =>
+              openModal({
+                key: 'ClaimReward',
+                options: { claimType: 'withdraw' },
+                size: 'sm',
+              }),
+          },
+          {
+            title: t('pools.compound'),
+            icon: faPlus,
+            disabled:
+              !isReady || activePool?.bondedPool?.state === 'Destroying',
+            small: true,
+            onClick: () =>
+              openModal({
+                key: 'ClaimReward',
+                options: { claimType: 'bond' },
+                size: 'sm',
+              }),
+          },
+        ]
+      : undefined;
 
   return (
     <Stat
@@ -72,6 +72,7 @@ export const RewardsStatus = () => {
       helpKey="Pool Rewards"
       type="odometer"
       stat={{ value: labelRewards }}
+      dimmed={dimmed}
       buttons={syncing ? [] : buttonsRewards}
     />
   );

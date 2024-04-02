@@ -23,6 +23,10 @@ export const Wrapper = styled.div`
       background: var(--background-canvas-card);
     }
 
+    &.card {
+      border-radius: 0.5rem;
+    }
+
     > section {
       width: 100%;
 
@@ -30,6 +34,26 @@ export const Wrapper = styled.div`
         display: flex;
         flex-direction: row;
         align-items: center;
+
+        &.col {
+          flex-direction: column;
+          margin-top: 0.5rem;
+
+          > div {
+            width: 100%;
+            margin-bottom: 0.4rem;
+
+            > div,
+            > p {
+              width: 100%;
+              margin-bottom: 0.4rem;
+            }
+
+            > div:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
 
         > div {
           display: flex;
@@ -81,35 +105,35 @@ export const Wrapper = styled.div`
       }
     }
   }
+`;
 
-  .sign {
-    display: flex;
-    align-items: center;
-    font-size: 0.9rem;
-    padding-bottom: 0.5rem;
-    margin: 0;
+export const SignerWrapper = styled.p`
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  padding-bottom: 0.5rem;
+  margin: 0;
 
-    .badge {
-      border: 1px solid var(--border-secondary-color);
-      border-radius: 0.45rem;
-      padding: 0.2rem 0.5rem;
-      margin-right: 0.75rem;
+  .badge {
+    border: 1px solid var(--border-secondary-color);
+    border-radius: 0.45rem;
+    padding: 0.2rem 0.5rem;
+    margin-right: 0.75rem;
 
-      > svg {
-        margin-right: 0.5rem;
-      }
+    > svg {
+      margin-right: 0.5rem;
     }
+  }
 
-    .not-enough {
-      margin-left: 0.5rem;
-    }
+  .not-enough {
+    margin-left: 0.5rem;
+  }
 
-    .danger {
-      color: var(--status-danger-color);
-    }
+  .danger {
+    color: var(--status-danger-color);
+  }
 
-    > .icon {
-      margin-right: 0.3rem;
-    }
+  > .icon {
+    margin-right: 0.3rem;
   }
 `;

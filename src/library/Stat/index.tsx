@@ -24,6 +24,7 @@ export const Stat = ({
   helpKey,
   icon,
   copy,
+  dimmed = false,
   type = 'string',
   buttonType = 'primary',
 }: StatProps) => {
@@ -81,7 +82,10 @@ export const Stat = ({
   }
 
   return (
-    <Wrapper $isAddress={type === 'address'}>
+    <Wrapper
+      $isAddress={type === 'address'}
+      style={dimmed ? { opacity: 0.5 } : undefined}
+    >
       <h4>
         {label}
         {helpKey !== undefined ? (
