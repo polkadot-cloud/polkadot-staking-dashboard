@@ -23,6 +23,11 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
   const { poolRewardPointsFetched } = usePoolPerformance();
   const { disableJoin, disableCreate } = useStatusButtons();
 
+  const joinButtonDisabled =
+    disableJoin() || poolRewardPointsFetched !== 'synced';
+
+  const createButtonDisabled = disableCreate();
+
   // const setupPercent = getPoolSetupPercent(activeAccount);
 
   return (
@@ -34,7 +39,9 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
           <>
             <section>
               <div className="buttons">
-                <div className="button primary">
+                <div
+                  className={`button primary${joinButtonDisabled ? ` disabled` : ``}`}
+                >
                   <button
                     onClick={() =>
                       openCanvas({
@@ -43,9 +50,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                         size: 'xl',
                       })
                     }
-                    disabled={
-                      disableJoin() || poolRewardPointsFetched !== 'synced'
-                    }
+                    disabled={joinButtonDisabled}
                   >
                     {poolRewardPointsFetched !== 'synced' ? (
                       'Syncing Pool Data...'
@@ -71,10 +76,12 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
             </section>
             <section>
               <div className="buttons">
-                <div className="button secondary standalone">
+                <div
+                  className={`button secondary standalone${createButtonDisabled ? ` disabled` : ``}`}
+                >
                   <button
                     onClick={() => setOnPoolSetup(true)}
-                    disabled={disableCreate()}
+                    disabled={createButtonDisabled}
                   >
                     {t('pools.createPool')}
                     <FontAwesomeIcon

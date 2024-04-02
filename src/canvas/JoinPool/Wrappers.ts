@@ -99,7 +99,7 @@ export const TitleWrapper = styled.div`
 
         > .labels {
           display: flex;
-          margin-top: 1rem;
+          margin-top: 1.1rem;
 
           > h3 {
             color: var(--text-color-secondary);
@@ -113,7 +113,7 @@ export const TitleWrapper = styled.div`
             > span {
               border: 1px solid var(--border-secondary-color);
               border-radius: 0.5rem;
-              padding: 0.3rem 0.6rem;
+              padding: 0.4rem 0.6rem;
               margin-left: 1rem;
               font-size: 1.1rem;
 

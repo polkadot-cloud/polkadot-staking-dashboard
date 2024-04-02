@@ -92,6 +92,14 @@ export const CallToActionWrapper = styled.div`
             &:hover {
               filter: brightness(90%);
             }
+
+            &.disabled {
+              background-color: var(--accent-color-pending);
+
+              &:hover {
+                filter: none;
+              }
+            }
           }
 
           &.secondary {
@@ -102,6 +110,14 @@ export const CallToActionWrapper = styled.div`
 
             &:hover {
               filter: brightness(95%);
+            }
+
+            &.disabled {
+              opacity: 0.5;
+
+              &:hover {
+                filter: none;
+              }
             }
           }
 

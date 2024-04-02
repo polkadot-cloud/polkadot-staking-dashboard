@@ -14,14 +14,19 @@ import { useNavigate } from 'react-router-dom';
 import { useApi } from 'contexts/Api';
 import type { NewNominatorProps } from '../types';
 import { CallToActionLoader } from 'library/Loader/CallToAction';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
 export const NewNominator = ({ syncing }: NewNominatorProps) => {
   const { t } = useTranslation('pages');
-  const navigate = useNavigate();
   const { isReady } = useApi();
-  const { activeAccount } = useActiveAccounts();
+  const navigate = useNavigate();
   const { setOnNominatorSetup } = useSetup();
+  const { activeAccount } = useActiveAccounts();
+  const { isReadOnlyAccount } = useImportedAccounts();
   // const setupPercent = getNominatorSetupPercent(activeAccount);
+
+  const nominateButtonDisabled =
+    !isReady || !activeAccount || isReadOnlyAccount(activeAccount);
 
   return (
     <CallToActionWrapper>
@@ -31,10 +36,12 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
         ) : (
           <section className="standalone">
             <div className="buttons">
-              <div className="button primary">
+              <div
+                className={`button primary${nominateButtonDisabled ? ` disabled` : ``}`}
+              >
                 <button
                   onClick={() => setOnNominatorSetup(true)}
-                  disabled={!isReady || !activeAccount}
+                  disabled={nominateButtonDisabled}
                 >
                   {t('nominate.startNominating')}
                   <FontAwesomeIcon icon={faChevronCircleRight} />
