@@ -38,6 +38,7 @@ export const Wrapper = styled.div`
         &.col {
           flex-direction: column;
           margin-top: 0.5rem;
+
           > div {
             width: 100%;
             margin-bottom: 0.4rem;

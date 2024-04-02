@@ -6,12 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { TabWrapper, TabsWrapper } from 'library/Filter/Wrappers';
 import type { ClaimPermission } from 'contexts/Pools/types';
 import type { ClaimPermissionConfig } from '../types';
-
-export interface ClaimPermissionInputProps {
-  current: ClaimPermission;
-  onChange: (value: ClaimPermission) => void;
-  disabled?: boolean;
-}
+import type { ClaimPermissionInputProps } from './types';
 
 export const ClaimPermissionInput = ({
   current,
@@ -38,11 +33,8 @@ export const ClaimPermissionInput = ({
     },
   ];
 
-  // Updated claim permission value
+  // Updated claim permission value.
   const [selected, setSelected] = useState<ClaimPermission>(current);
-
-  // Permissionless claim enabled.
-  const [enabled] = useState<boolean>(true);
 
   const activeTab = claimPermissionConfig.find(
     ({ value }) => value === selected
@@ -58,14 +50,14 @@ export const ClaimPermissionInput = ({
       <TabsWrapper
         style={{
           margin: '1rem 0',
-          opacity: enabled && !disabled ? 1 : 'var(--opacity-disabled)',
+          opacity: !disabled ? 1 : 'var(--opacity-disabled)',
         }}
       >
         {claimPermissionConfig.map(({ label, value }, i) => (
           <TabWrapper
             key={`pools_tab_filter_${i}`}
-            $active={value === selected && enabled}
-            disabled={value === selected || !enabled || disabled}
+            $active={value === selected}
+            disabled={value === selected || disabled}
             onClick={() => {
               setSelected(value);
               onChange(value);
@@ -78,7 +70,7 @@ export const ClaimPermissionInput = ({
       </TabsWrapper>
       <div
         style={{
-          opacity: enabled && !disabled ? 1 : 'var(--opacity-disabled)',
+          opacity: !disabled ? 1 : 'var(--opacity-disabled)',
         }}
       >
         {activeTab ? (
