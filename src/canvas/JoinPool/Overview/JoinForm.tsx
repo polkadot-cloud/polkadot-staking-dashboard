@@ -10,7 +10,6 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useState } from 'react';
 import { JoinFormWrapper } from '../Wrappers';
 import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput';
-import { CallToActionWrapper } from 'library/CallToAction';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee';
 import { useApi } from 'contexts/Api';
@@ -150,29 +149,8 @@ export const JoinForm = ({ bondedPool }: { bondedPool: BondedPool }) => {
           valid={!submitDisabled}
           {...submitExtrinsic}
           displayFor="card"
+          submitText="Join Pool"
         />
-
-        <CallToActionWrapper>
-          <div className="inner">
-            <section className="standalone">
-              <div className="buttons">
-                <div
-                  className={`button primary standalone${submitDisabled ? ` disabled` : ``}`}
-                >
-                  <button
-                    style={{ fontSize: '1.3rem' }}
-                    onClick={() => {
-                      /* TODO: put this form-factor into `SubmitTx` */
-                    }}
-                    disabled={submitDisabled}
-                  >
-                    Join Pool
-                  </button>
-                </div>
-              </div>
-            </section>
-          </div>
-        </CallToActionWrapper>
       </div>
     </JoinFormWrapper>
   );

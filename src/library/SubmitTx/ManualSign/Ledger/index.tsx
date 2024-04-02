@@ -19,6 +19,7 @@ import { getLedgerApp } from 'contexts/Hardware/Utils';
 import type { SubmitProps } from '../../types';
 import { Submit } from './Submit';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { appendOrEmpty } from '@w3ux/utils';
 
 export const Ledger = ({
   uid,
@@ -133,7 +134,9 @@ export const Ledger = ({
         </div>
       )}
 
-      <div className="inner msg">
+      <div
+        className={`inner msg${appendOrEmpty(displayFor === 'card', 'col')}`}
+      >
         <div>
           {valid ? (
             <p className="prompt">

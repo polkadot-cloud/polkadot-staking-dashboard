@@ -100,6 +100,29 @@ export const CallToActionWrapper = styled.div`
                 filter: none;
               }
             }
+
+            &.pulse {
+              box-shadow: 0 0 30px 0 var(--accent-color-pending);
+              transform: scale(1);
+              animation: pulse 4s infinite;
+
+              @keyframes pulse {
+                0% {
+                  transform: scale(0.98);
+                  box-shadow: 0 0 0 0 var(--accent-color-pending);
+                }
+
+                70% {
+                  transform: scale(1);
+                  box-shadow: 0 0 0 10px rgb(0 0 0 / 0%);
+                }
+
+                100% {
+                  transform: scale(0.98);
+                  box-shadow: 0 0 0 0 rgb(0 0 0 / 0%);
+                }
+              }
+            }
           }
 
           &.secondary {

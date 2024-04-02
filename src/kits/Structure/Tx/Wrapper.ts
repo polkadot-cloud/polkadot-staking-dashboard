@@ -35,6 +35,25 @@ export const Wrapper = styled.div`
         flex-direction: row;
         align-items: center;
 
+        &.col {
+          flex-direction: column;
+          margin-top: 0.5rem;
+          > div {
+            width: 100%;
+            margin-bottom: 0.4rem;
+
+            > div,
+            > p {
+              width: 100%;
+              margin-bottom: 0.4rem;
+            }
+
+            > div:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+
         > div {
           display: flex;
 
