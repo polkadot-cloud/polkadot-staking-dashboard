@@ -6,9 +6,20 @@ import { ListWrapper } from 'modals/PoolNominations/Wrappers';
 import { useTranslation } from 'react-i18next';
 import { HeadingWrapper, NominationsWrapper } from '../Wrappers';
 import type { NominationsProps } from '../types';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
 
-export const Nominations = ({ stash, targets }: NominationsProps) => {
+export const Nominations = ({ stash, poolId }: NominationsProps) => {
   const { t } = useTranslation('modals');
+  const { poolsNominations } = useBondedPools();
+
+  const { validators } = useValidators();
+
+  // Extract validator entries from pool targets.
+  const targets = poolsNominations[poolId]?.targets || [];
+  const filteredTargets = validators.filter(({ address }) =>
+    targets.includes(address)
+  );
 
   return (
     <NominationsWrapper>
@@ -22,7 +33,7 @@ export const Nominations = ({ stash, targets }: NominationsProps) => {
           <ValidatorList
             format="nomination"
             bondFor="pool"
-            validators={targets}
+            validators={filteredTargets}
             nominator={stash}
             showMenu={false}
             displayFor="canvas"

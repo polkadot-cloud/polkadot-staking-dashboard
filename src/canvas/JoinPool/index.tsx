@@ -9,7 +9,6 @@ import { useMemo, useState } from 'react';
 import { Header } from './Header';
 import { Overview } from './Overview';
 import { Nominations } from './Nominations';
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 import { MaxEraRewardPointsEras } from 'consts';
 import { useStaking } from 'contexts/Staking';
@@ -20,12 +19,11 @@ export const JoinPool = () => {
     config: { options },
   } = useOverlay().canvas;
   const { eraStakers } = useStaking();
-  const { validators } = useValidators();
   const { poolRewardPoints } = usePoolPerformance();
-  const { poolsMetaData, poolsNominations, bondedPools } = useBondedPools();
+  const { poolsMetaData, bondedPools } = useBondedPools();
 
   // The active canvas tab.
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState<number>(0);
 
   // Trigger re-render when chosen selected pool is incremented.
   const [selectedPoolCount, setSelectedPoolCount] = useState<number>(0);
@@ -37,18 +35,19 @@ export const JoinPool = () => {
     () =>
       bondedPools
         .filter((pool) => {
+          // Fetch reward point data for the pool.
           const rawEraRewardPoints =
             poolRewardPoints[pool.addresses.stash] || {};
           const rewardPoints = Object.values(rawEraRewardPoints);
-          const activeDaily = rewardPoints.every(
-            (points) => Number(points) > 0
-          );
-          return (
-            pool.state === 'Open' &&
-            activeDaily &&
-            rewardPoints.length === MaxEraRewardPointsEras
-          );
+
+          // Ensure pool has been active for every era in performance data.
+          const activeDaily =
+            rewardPoints.every((points) => Number(points) > 0) &&
+            rewardPoints.length === MaxEraRewardPointsEras;
+
+          return pool.state === 'Open' && activeDaily;
         })
+        // Ensure the pool is currently in the active set of backers.
         .filter((pool) =>
           eraStakers.stakers.find((staker) =>
             staker.others.find(({ who }) => who !== pool.addresses.stash)
@@ -57,7 +56,8 @@ export const JoinPool = () => {
     [bondedPools, poolRewardPoints]
   );
 
-  // The bonded pool to display. Use the provided poolId, or assign a random pool.
+  // The bonded pool to display. Use the provided `poolId`, or assign a random eligible filtered
+  // pool otherwise. Re-fetches when the selected pool count is incremented.
   const bondedPool = useMemo(
     () =>
       options?.poolId
@@ -68,21 +68,15 @@ export const JoinPool = () => {
     [selectedPoolCount]
   );
 
-  // The selected pool id. Use the provided poolId, or assign a random pool.
+  // The selected bonded pool id.
   const [selectedPoolId, setSelectedPoolId] = useState<number>(
-    options?.poolId || bondedPool?.id || 0
+    bondedPool?.id || 0
   );
 
   if (!bondedPool) {
     closeCanvas();
     return null;
   }
-
-  // Extract validator entries from pool targets
-  const targets = poolsNominations[bondedPool.id]?.targets || [];
-  const targetValidators = validators.filter(({ address }) =>
-    targets.includes(address)
-  );
 
   return (
     <CanvasFullScreenWrapper>
@@ -102,8 +96,8 @@ export const JoinPool = () => {
           {activeTab === 0 && <Overview bondedPool={bondedPool} />}
           {activeTab === 1 && (
             <Nominations
+              poolId={bondedPool.id}
               stash={bondedPool.addresses.stash}
-              targets={targetValidators}
             />
           )}
         </div>
