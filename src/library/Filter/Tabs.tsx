@@ -11,7 +11,6 @@ export const Tabs = ({ config }: FilterTabsProps) => {
   const { resetFilters, setMultiFilters } = useFilters();
   const { poolListActiveTab, setPoolListActiveTab } = useBondedPools();
 
-  console.log(config);
   return (
     <TabsWrapper>
       {config.map((c, i) => {
