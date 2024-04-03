@@ -19,4 +19,6 @@ export const defaultBondedPoolsContext: BondedPoolsContextState = {
   poolsMetaData: {},
   poolsNominations: {},
   updatePoolNominations: (id, nominations) => {},
+  poolListActiveTab: 'Active',
+  setPoolListActiveTab: (tab) => {},
 };

@@ -6,18 +6,26 @@ import type { Sync } from 'types';
 export interface PoolPerformanceContextInterface {
   poolRewardPointsFetched: Sync;
   getPoolRewardPoints: (key: PoolRewardPointsBatchKey) => PoolRewardPoints;
+  getPerformanceFetchedKey: (key: PoolRewardPointsBatchKey) => boolean;
+  setPerformanceFetchedKey: (
+    key: PoolRewardPointsBatchKey,
+    fetched: boolean
+  ) => void;
 }
+
+// Fetching status for keys.
+export type PoolPerformanceFetched = Partial<
+  Record<PoolRewardPointsBatchKey, boolean>
+>;
 
 /*
  * Batch Key -> Pool Address -> Era -> Points.
  */
 
 // Supported reward points batch keys.
-
 export type PoolRewardPointsBatchKey = 'pool_list' | 'join_pool';
 
 // Pool reward batches, keyed by batch key.
-
 export type PoolRewardPointsBatch = Partial<Record<string, PoolRewardPoints>>;
 
 // Pool reward points are keyed by era, then by pool address.

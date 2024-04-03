@@ -5,7 +5,7 @@ import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import type { FormEvent } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { listItemsPerPage } from 'library/List/defaults';
 import { useFilters } from 'contexts/Filters';
@@ -31,6 +31,7 @@ import { useSyncing } from 'hooks/useSyncing';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { useApi } from 'contexts/Api';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 
 export const PoolList = ({
   allowMoreCols,
@@ -50,6 +51,7 @@ export const PoolList = ({
   const { applyFilter } = usePoolFilters();
   const { erasRewardPointsFetched } = useValidators();
   const { listFormat, setListFormat } = usePoolList();
+  const { setPerformanceFetchedKey } = usePoolPerformance();
   const { getFilters, getSearchTerm, setSearchTerm } = useFilters();
   const { poolSearchFilter, poolsNominations, bondedPools } = useBondedPools();
 
@@ -119,14 +121,15 @@ export const PoolList = ({
 
   // Fetch pool performance data when list items or page changes. Requires `erasRewardPoints` and
   // `bondedPools` to be fetched.
-  const fetchingPerformanceData = useRef<boolean>(false);
-
   useEffect(() => {
     if (erasRewardPointsFetched && bondedPools.length) {
-      fetchingPerformanceData.current = true;
+      setPerformanceFetchedKey('pool_list', true);
       console.log('Fetch pool performance data batch.', listPools.length, page);
+
       // TODO: replace with actual fetch call.
-      setTimeout(() => (fetchingPerformanceData.current = false), 1000);
+      setTimeout(() => {
+        setPerformanceFetchedKey('pool_list', false);
+      }, 5000);
     }
   }, [JSON.stringify(listPools), page, erasRewardPointsFetched, bondedPools]);
 
@@ -190,7 +193,6 @@ export const PoolList = ({
                   excludes: [],
                 },
               ]}
-              activeIndex={1}
             />
           </div>
           <div>

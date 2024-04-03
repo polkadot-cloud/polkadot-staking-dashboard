@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ReactNode } from 'react';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import { MaxEraRewardPointsEras } from 'consts';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import Worker from 'workers/poolPerformance?worker';
@@ -16,6 +16,7 @@ import { useStaking } from 'contexts/Staking';
 import { formatRawExposures } from 'contexts/Staking/Utils';
 import type {
   PoolPerformanceContextInterface,
+  PoolPerformanceFetched,
   PoolRewardPoints,
   PoolRewardPointsBatch,
   PoolRewardPointsBatchKey,
@@ -41,6 +42,24 @@ export const PoolPerformanceProvider = ({
   const { api, activeEra, isPagedRewardsActive } = useApi();
   const { erasRewardPointsFetched, erasRewardPoints } = useValidators();
 
+  // Store whether pool performance data is being fetched under a given key.
+  const performanceFetched = useRef<PoolPerformanceFetched>({});
+
+  // Gets whether pool performance data is being fetched under a given key.
+  const getPerformanceFetchedKey = (key: PoolRewardPointsBatchKey) =>
+    performanceFetched.current[key] || false;
+
+  // Sets whether pool performance data is being fetched under a given key.
+  const setPerformanceFetchedKey = (
+    key: PoolRewardPointsBatchKey,
+    fetched: boolean
+  ) => {
+    performanceFetched.current = {
+      ...performanceFetched.current,
+      [key]: fetched,
+    };
+  };
+
   // Store whether pool performance data is being fetched.
   const [poolRewardPointsFetched, setPoolRewardPointsFetched] =
     useState<Sync>('unsynced');
@@ -49,7 +68,7 @@ export const PoolPerformanceProvider = ({
   const [poolRewardPoints, setPoolRewardPointsState] =
     useState<PoolRewardPointsBatch>({});
 
-  // Getes a batch of pool reward points, or returns an empty object otherwise.
+  // Gets a batch of pool reward points, or returns an empty object otherwise.
   const getPoolRewardPoints = (key: PoolRewardPointsBatchKey) =>
     poolRewardPoints[key] || {};
 
@@ -171,6 +190,8 @@ export const PoolPerformanceProvider = ({
       value={{
         poolRewardPointsFetched,
         getPoolRewardPoints,
+        getPerformanceFetchedKey,
+        setPerformanceFetchedKey,
       }}
     >
       {children}

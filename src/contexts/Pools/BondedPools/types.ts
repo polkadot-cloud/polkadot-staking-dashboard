@@ -4,6 +4,7 @@
 import type { AnyApi, AnyJson, MaybeAddress } from 'types';
 import type { ActiveBondedPool } from '../ActivePool/types';
 import type { AnyFilter } from 'library/Filter/types';
+import type { Dispatch, SetStateAction } from 'react';
 
 export interface BondedPoolsContextState {
   queryBondedPool: (poolId: number) => AnyApi;
@@ -23,6 +24,8 @@ export interface BondedPoolsContextState {
   poolsMetaData: Record<number, string>;
   poolsNominations: Record<number, PoolNominations>;
   updatePoolNominations: (id: number, nominations: string[]) => void;
+  poolListActiveTab: PoolTab;
+  setPoolListActiveTab: Dispatch<SetStateAction<PoolTab>>;
 }
 
 export type BondedPool = ActiveBondedPool & {
@@ -60,3 +63,5 @@ export type AccountPoolRoles = {
   nominator: number[];
   bouncer: number[];
 } | null;
+
+export type PoolTab = 'All' | 'Active' | 'Locked' | 'Destroying';
