@@ -31,9 +31,11 @@ import { PageRow } from 'kits/Structure/PageRow';
 import { RowSection } from 'kits/Structure/RowSection';
 import { WithdrawPrompt } from 'library/WithdrawPrompt';
 import { useSyncing } from 'hooks/useSyncing';
+import { useNetwork } from 'contexts/Network';
 
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
+  const { network } = useNetwork();
   const { favorites } = useFavoritePools();
   const { openModal } = useOverlay().modal;
   const { bondedPools } = useBondedPools();
@@ -77,12 +79,10 @@ export const HomeInner = () => {
 
   const ROW_HEIGHT = 220;
 
-  // Back to tab 0 if not in a pool & on members tab.
+  // Go back to tab 0 on network change.
   useEffect(() => {
-    if (!activePool) {
-      setActiveTab(0);
-    }
-  }, [activePool]);
+    setActiveTab(0);
+  }, [network]);
 
   return (
     <>
@@ -144,10 +144,6 @@ export const HomeInner = () => {
             <PoolListProvider>
               <PoolList
                 pools={bondedPools}
-                defaultFilters={{
-                  includes: ['active'],
-                  excludes: ['locked', 'destroying'],
-                }}
                 allowMoreCols
                 allowSearch
                 pagination
