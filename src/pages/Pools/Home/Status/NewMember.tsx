@@ -50,7 +50,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                     }
                     disabled={joinButtonDisabled}
                   >
-                    {poolJoinPerformanceSynced ? (
+                    {!poolJoinPerformanceSynced ? (
                       t('syncingPoolData', { ns: 'library' })
                     ) : (
                       <>
