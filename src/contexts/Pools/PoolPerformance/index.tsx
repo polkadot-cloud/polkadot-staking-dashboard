@@ -198,13 +198,14 @@ export const PoolPerformanceProvider = ({
     if (message) {
       const { data } = message;
       const { task, key, addresses } = data;
+
       if (task !== 'processNominationPoolsRewardData') {
         return;
       }
 
       // If addresses for the given key have changed or been removed, ignore the result.
-      const fetchStatus = getPerformanceFetchedKey(key);
-      if (JSON.stringify(fetchStatus.addresses) !== JSON.stringify(addresses)) {
+      const current = getPerformanceFetchedKey(key);
+      if (current.addresses.toString() !== addresses.toString()) {
         return;
       }
 

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable no-await-in-loop */
 
+import BigNumber from 'bignumber.js';
 import type { PoolRewardPointsBatchKey } from 'contexts/Pools/PoolPerformance/types';
 import type { Exposure } from 'contexts/Staking/types';
 import type { ErasRewardPoints } from 'contexts/Validators/types';
@@ -40,26 +41,40 @@ const processErasStakersForNominationPoolRewards = async ({
 }) => {
   const poolRewardData: Record<string, Record<string, string>> = {};
 
-  for (const address of addresses) {
-    let validator = null;
-    for (const exposure of exposures) {
-      const { others } = exposure.val;
-      const inOthers = others.find(({ who }) => who === address);
+  const validators: Record<string, string[]> = {};
 
-      if (inOthers) {
-        validator = exposure.keys[1];
-        break;
+  for (const exposure of exposures) {
+    const { others } = exposure.val;
+
+    // Return the `addresses` that are present in `others` for this era.
+    const addressesInOthers = addresses.filter((a) =>
+      others.find(({ who }) => who === a)
+    );
+
+    for (const addressInOthers of addressesInOthers) {
+      if (validators[addressInOthers]) {
+        validators[addressInOthers].push(exposure.keys[1]);
+      } else {
+        validators[addressInOthers] = [exposure.keys[1]];
       }
     }
+  }
 
-    if (validator) {
-      const rewardPoints: string =
-        erasRewardPoints[era]?.individual?.[validator || ''] ?? 0;
-      if (!poolRewardData[address]) {
-        poolRewardData[address] = {};
-      }
-      poolRewardData[address][era] = rewardPoints;
+  for (const entry of Object.entries(validators)) {
+    const [entryAddress, entryValidators] = entry;
+
+    const rewardPoints = entryValidators.reduce(
+      (acc: BigNumber, entryValidator: string) =>
+        acc.plus(
+          erasRewardPoints[era]?.individual?.[entryValidator || ''] ?? 0
+        ),
+      new BigNumber(0)
+    );
+
+    if (!poolRewardData[entryAddress]) {
+      poolRewardData[entryAddress] = {};
     }
+    poolRewardData[entryAddress][era] = rewardPoints.toString();
   }
 
   return {
