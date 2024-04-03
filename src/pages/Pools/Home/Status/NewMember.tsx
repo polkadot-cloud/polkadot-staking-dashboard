@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CallToActionWrapper } from '../../../../library/CallToAction';
 import { faChevronRight, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 import { useSetup } from 'contexts/Setup';
-import { usePoolsTabs } from '../context';
 import { useStatusButtons } from './useStatusButtons';
 import { useTranslation } from 'react-i18next';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -16,7 +15,6 @@ import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 export const NewMember = ({ syncing }: NewMemberProps) => {
   const { t } = useTranslation();
   const { setOnPoolSetup } = useSetup();
-  const { setActiveTab } = usePoolsTabs();
   const { openCanvas } = useOverlay().canvas;
   const { getPerformanceFetchedKey } = usePoolPerformance();
   const { disableJoin, disableCreate } = useStatusButtons();
@@ -38,7 +36,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
             <section>
               <div className="buttons">
                 <div
-                  className={`button primary${joinButtonDisabled ? ` disabled` : ``}`}
+                  className={`button primary standalone${joinButtonDisabled ? ` disabled` : ``}`}
                 >
                   <button
                     onClick={() =>
@@ -58,16 +56,6 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                         <FontAwesomeIcon icon={faUserGroup} />
                       </>
                     )}
-                  </button>
-                </div>
-
-                <div className="button secondary">
-                  <button onClick={() => setActiveTab(1)}>
-                    {t('pools.browsePools', { ns: 'pages' })}
-                    <FontAwesomeIcon
-                      icon={faChevronRight}
-                      transform={'shrink-4'}
-                    />
                   </button>
                 </div>
               </div>
