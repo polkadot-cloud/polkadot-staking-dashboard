@@ -276,9 +276,6 @@ export const PoolPerformanceProvider = ({
         'pool_join',
         bondedPools.map(({ addresses }) => addresses.stash)
       );
-
-      // TODO: Get subset of pools for JoinPool form and call `startGetPoolPerformance` for its key
-      // here.
     }
   }, [
     bondedPools,
