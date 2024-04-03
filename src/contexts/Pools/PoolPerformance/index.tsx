@@ -11,7 +11,7 @@ import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useApi } from 'contexts/Api';
 import BigNumber from 'bignumber.js';
-import { mergeDeep, setStateWithRef, shuffle } from '@w3ux/utils';
+import { mergeDeep, setStateWithRef } from '@w3ux/utils';
 import { useStaking } from 'contexts/Staking';
 import { formatRawExposures } from 'contexts/Staking/Utils';
 import type {
@@ -265,12 +265,12 @@ export const PoolPerformanceProvider = ({
     ) {
       // Generate a subset of pools to fetch performance data for. TODO: Send pools to JoinPool
       // canvas and only select those. Move this logic to a separate context.
-      const poolJoinSelection = shuffle(
-        bondedPools
-          .filter(({ state }) => state === 'Open')
-          .map(({ addresses }) => addresses.stash)
-      ).slice(0, 25);
-      console.log(poolJoinSelection);
+      // const poolJoinSelection = shuffle(
+      //   bondedPools
+      //     .filter(({ state }) => state === 'Open')
+      //     .map(({ addresses }) => addresses.stash)
+      // ).slice(0, 25);
+      // console.log(poolJoinSelection);
 
       startGetPoolPerformance(
         'pool_join',
