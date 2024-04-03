@@ -6,9 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { isNotZero } from '@w3ux/utils';
 import { motion } from 'framer-motion';
 import type { FormEvent } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { listItemsPerBatch, listItemsPerPage } from 'library/List/defaults';
+import { listItemsPerPage } from 'library/List/defaults';
 import { useApi } from 'contexts/Api';
 import { useFilters } from 'contexts/Filters';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -30,11 +30,11 @@ import { usePoolList } from './context';
 import type { PoolListProps } from './types';
 import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import { useSyncing } from 'hooks/useSyncing';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 
 export const PoolList = ({
   allowMoreCols,
   pagination,
-  disableThrottle,
   allowSearch,
   pools,
   defaultFilters,
@@ -48,10 +48,11 @@ export const PoolList = ({
   const { syncing } = useSyncing();
   const { isReady, activeEra } = useApi();
   const { applyFilter } = usePoolFilters();
+  const { erasRewardPointsFetched } = useValidators();
   const { listFormat, setListFormat } = usePoolList();
-  const { poolSearchFilter, poolsNominations } = useBondedPools();
   const { getFilters, setMultiFilters, getSearchTerm, setSearchTerm } =
     useFilters();
+  const { poolSearchFilter, poolsNominations, bondedPools } = useBondedPools();
 
   const includes = getFilters('include', 'pools');
   const excludes = getFilters('exclude', 'pools');
@@ -59,9 +60,6 @@ export const PoolList = ({
 
   // current page
   const [page, setPage] = useState<number>(1);
-
-  // current render iteration
-  const [renderIteration, setRenderIterationState] = useState<number>(1);
 
   // default list of pools
   const [poolsDefault, setPoolsDefault] = useState<BondedPool[]>(pools || []);
@@ -72,28 +70,13 @@ export const PoolList = ({
   // is this the initial fetch
   const [fetched, setFetched] = useState<boolean>(false);
 
-  // render throttle iteration
-  const renderIterationRef = useRef(renderIteration);
-  const setRenderIteration = (iter: number) => {
-    renderIterationRef.current = iter;
-    setRenderIterationState(iter);
-  };
-
   // pagination
   const totalPages = Math.ceil(listPools.length / listItemsPerPage);
   const pageEnd = page * listItemsPerPage - 1;
   const pageStart = pageEnd - (listItemsPerPage - 1);
 
-  // render batch
-  const batchEnd = Math.min(
-    renderIteration * listItemsPerBatch - 1,
-    listItemsPerPage
-  );
-
   // get throttled subset or entire list
-  const poolsToDisplay = disableThrottle
-    ? listPools
-    : listPools.slice(pageStart).slice(0, listItemsPerPage);
+  const poolsToDisplay = listPools.slice(pageStart).slice(0, listItemsPerPage);
 
   // handle pool list bootstrapping
   const setupPoolList = () => {
@@ -112,7 +95,6 @@ export const PoolList = ({
     }
     setListPools(filteredPools);
     setPage(1);
-    setRenderIteration(1);
   };
 
   const handleSearchChange = (e: FormEvent<HTMLInputElement>) => {
@@ -127,17 +109,17 @@ export const PoolList = ({
         index === self.findIndex((i) => i.id === value.id)
     );
     setPage(1);
-    setRenderIteration(1);
     setListPools(filteredPools);
     setSearchTerm('pools', newValue);
   };
 
-  // Fetch pool performance data when pools change, or when page changes. Requires
-  // `erasRewardPoints` and `bondedPools` to be fetched.
+  // Fetch pool performance data when list items or page changes. Requires `erasRewardPoints` and
+  // `bondedPools` to be fetched.
   useEffect(() => {
-    // TODO: more dependencies, implement.
-    // console.log('fetch pool performance data batch');
-  }, [pools, page]);
+    if (erasRewardPointsFetched && bondedPools.length) {
+      console.log('Fetch pool performance data batch.', listPools.length, page);
+    }
+  }, [listPools, page, erasRewardPointsFetched, bondedPools]);
 
   // Refetch list when pool list changes.
   useEffect(() => {
@@ -152,15 +134,6 @@ export const PoolList = ({
       setupPoolList();
     }
   }, [isReady, fetched, activeEra.index]);
-
-  // Render throttling. Only render a batch of pools at a time.
-  useEffect(() => {
-    if (!(batchEnd >= pageEnd || disableThrottle)) {
-      setTimeout(() => {
-        setRenderIteration(renderIterationRef.current + 1);
-      }, 500);
-    }
-  }, [renderIterationRef.current]);
 
   // List ui changes / validator changes trigger re-render of list.
   useEffect(() => {
