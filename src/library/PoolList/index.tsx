@@ -123,12 +123,12 @@ export const PoolList = ({
   // `bondedPools` to be fetched.
   useEffect(() => {
     if (erasRewardPointsFetched && bondedPools.length) {
-      setPerformanceFetchedKey('pool_list', true);
+      setPerformanceFetchedKey('pool_list', 'syncing');
       console.log('Fetch pool performance data batch.', listPools.length, page);
 
       // TODO: replace with actual fetch call.
       setTimeout(() => {
-        setPerformanceFetchedKey('pool_list', false);
+        setPerformanceFetchedKey('pool_list', 'synced');
       }, 5000);
     }
   }, [JSON.stringify(listPools), page, erasRewardPointsFetched, bondedPools]);

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable no-await-in-loop */
 
+import type { PoolRewardPointsBatchKey } from 'contexts/Pools/PoolPerformance/types';
 import type { Exposure } from 'contexts/Staking/types';
 import type { ErasRewardPoints } from 'contexts/Validators/types';
 import type { AnyApi, AnyJson } from 'types';
@@ -25,11 +26,13 @@ ctx.addEventListener('message', async (event: AnyJson) => {
 
 // Process `erasStakersClipped` and generate nomination pool reward data.
 const processErasStakersForNominationPoolRewards = async ({
+  key,
   bondedPools,
   era,
   erasRewardPoints,
   exposures,
 }: {
+  key: PoolRewardPointsBatchKey;
   bondedPools: string[];
   era: string;
   erasRewardPoints: ErasRewardPoints;
@@ -60,6 +63,7 @@ const processErasStakersForNominationPoolRewards = async ({
   }
 
   return {
+    key,
     poolRewardData,
   };
 };

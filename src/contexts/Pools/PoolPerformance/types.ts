@@ -4,18 +4,17 @@
 import type { Sync } from 'types';
 
 export interface PoolPerformanceContextInterface {
-  poolRewardPointsFetched: Sync;
   getPoolRewardPoints: (key: PoolRewardPointsBatchKey) => PoolRewardPoints;
-  getPerformanceFetchedKey: (key: PoolRewardPointsBatchKey) => boolean;
+  getPerformanceFetchedKey: (key: PoolRewardPointsBatchKey) => Sync;
   setPerformanceFetchedKey: (
     key: PoolRewardPointsBatchKey,
-    fetched: boolean
+    fetched: Sync
   ) => void;
 }
 
 // Fetching status for keys.
 export type PoolPerformanceFetched = Partial<
-  Record<PoolRewardPointsBatchKey, boolean>
+  Record<PoolRewardPointsBatchKey, Sync>
 >;
 
 /*

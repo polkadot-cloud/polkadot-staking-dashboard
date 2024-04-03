@@ -18,11 +18,11 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
   const { setOnPoolSetup } = useSetup();
   const { setActiveTab } = usePoolsTabs();
   const { openCanvas } = useOverlay().canvas;
-  const { poolRewardPointsFetched } = usePoolPerformance();
+  const { getPerformanceFetchedKey } = usePoolPerformance();
   const { disableJoin, disableCreate } = useStatusButtons();
 
   const joinButtonDisabled =
-    disableJoin() || poolRewardPointsFetched !== 'synced';
+    disableJoin() || getPerformanceFetchedKey('pool_list') !== 'synced';
 
   const createButtonDisabled = disableCreate();
 
@@ -48,7 +48,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                     }
                     disabled={joinButtonDisabled}
                   >
-                    {poolRewardPointsFetched !== 'synced' ? (
+                    {getPerformanceFetchedKey('pool_list') !== 'synced' ? (
                       t('syncingPoolData', { ns: 'library' })
                     ) : (
                       <>

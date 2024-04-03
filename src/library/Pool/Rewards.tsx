@@ -24,7 +24,8 @@ export const Rewards = ({ address, displayFor = 'default' }: RewardProps) => {
   const { isReady } = useApi();
   const { setTooltipTextAndOpen } = useTooltip();
   const { eraPointsBoundaries } = useValidators();
-  const { getPoolRewardPoints, poolRewardPointsFetched } = usePoolPerformance();
+  const { getPoolRewardPoints, getPerformanceFetchedKey } =
+    usePoolPerformance();
 
   const poolRewardPoints = getPoolRewardPoints('pool_list');
 
@@ -40,7 +41,8 @@ export const Rewards = ({ address, displayFor = 'default' }: RewardProps) => {
   const prefilledPoints = prefillEraPoints(Object.values(normalisedPoints));
 
   const empty = Object.values(poolRewardPoints).length === 0;
-  const syncing = !isReady || poolRewardPointsFetched !== 'synced';
+  const syncing =
+    !isReady || getPerformanceFetchedKey('pool_list') !== 'synced';
   const tooltipText = `${MaxEraRewardPointsEras} ${t('dayPoolPerformance')}`;
 
   return (

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ReactNode } from 'react';
-import { createContext, useContext, useRef, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { MaxEraRewardPointsEras } from 'consts';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import Worker from 'workers/poolPerformance?worker';
@@ -43,26 +43,23 @@ export const PoolPerformanceProvider = ({
   const { erasRewardPointsFetched, erasRewardPoints } = useValidators();
 
   // Store whether pool performance data is being fetched under a given key.
-  const performanceFetched = useRef<PoolPerformanceFetched>({});
+  const [performanceFetched, setPerformanceFetched] =
+    useState<PoolPerformanceFetched>({});
 
   // Gets whether pool performance data is being fetched under a given key.
   const getPerformanceFetchedKey = (key: PoolRewardPointsBatchKey) =>
-    performanceFetched.current[key] || false;
+    performanceFetched[key] || 'unsynced';
 
   // Sets whether pool performance data is being fetched under a given key.
   const setPerformanceFetchedKey = (
     key: PoolRewardPointsBatchKey,
-    fetched: boolean
+    fetched: Sync
   ) => {
-    performanceFetched.current = {
-      ...performanceFetched.current,
+    setPerformanceFetched({
+      ...performanceFetched,
       [key]: fetched,
-    };
+    });
   };
-
-  // Store whether pool performance data is being fetched.
-  const [poolRewardPointsFetched, setPoolRewardPointsFetched] =
-    useState<Sync>('unsynced');
 
   // Store pool performance data.
   const [poolRewardPoints, setPoolRewardPointsState] =
@@ -93,7 +90,7 @@ export const PoolPerformanceProvider = ({
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
       const { data } = message;
-      const { task } = data;
+      const { task, key } = data;
       if (task !== 'processNominationPoolsRewardData') {
         return;
       }
@@ -106,26 +103,27 @@ export const PoolPerformanceProvider = ({
       );
 
       if (currentEra.isEqualTo(finishEra)) {
-        setPoolRewardPointsFetched('synced');
+        setPerformanceFetchedKey(key, 'synced');
       } else {
         const nextEra = BigNumber.max(currentEra.minus(1), 1);
-        processEra(nextEra);
+        processEra(key, nextEra);
       }
     }
   };
 
   // Start fetching pool performance calls from the current era.
-  const startGetPoolPerformance = async () => {
-    setPoolRewardPointsFetched('syncing');
+  const startGetPoolPerformance = async (key: PoolRewardPointsBatchKey) => {
+    setPerformanceFetchedKey(key, 'syncing');
+
     setFinishEra(
       BigNumber.max(activeEra.index.minus(MaxEraRewardPointsEras), 1)
     );
     const startEra = BigNumber.max(activeEra.index.minus(1), 1);
-    processEra(startEra);
+    processEra(key, startEra);
   };
 
   // Get era data and send to worker.
-  const processEra = async (era: BigNumber) => {
+  const processEra = async (key: PoolRewardPointsBatchKey, era: BigNumber) => {
     if (!api) {
       return;
     }
@@ -146,6 +144,7 @@ export const PoolPerformanceProvider = ({
 
     worker.postMessage({
       task: 'processNominationPoolsRewardData',
+      key,
       era: era.toString(),
       exposures,
       bondedPools: bondedPools.map(({ addresses }) => addresses.stash),
@@ -157,7 +156,7 @@ export const PoolPerformanceProvider = ({
   //
   // - active era is synced.
   // - era reward points are fetched.
-  // -  bonded pools have been fetched.
+  // - bonded pools have been fetched.
   //
   // Re-calculates when any of the above change.
   useEffectIgnoreInitial(() => {
@@ -166,15 +165,15 @@ export const PoolPerformanceProvider = ({
       bondedPools.length &&
       activeEra.index.isGreaterThan(0) &&
       erasRewardPointsFetched === 'synced' &&
-      poolRewardPointsFetched === 'unsynced'
+      getPerformanceFetchedKey('pool_list') === 'unsynced'
     ) {
-      startGetPoolPerformance();
+      startGetPoolPerformance('pool_list');
     }
   }, [
     bondedPools,
     activeEra,
     erasRewardPointsFetched,
-    poolRewardPointsFetched,
+    getPerformanceFetchedKey('pool_list'),
   ]);
 
   // Reset state data on network change.
@@ -182,13 +181,12 @@ export const PoolPerformanceProvider = ({
     setPoolRewardPoints('pool_list', {});
     setCurrentEra(new BigNumber(0));
     setFinishEra(new BigNumber(0));
-    setPoolRewardPointsFetched('unsynced');
+    setPerformanceFetched({});
   }, [network]);
 
   return (
     <PoolPerformanceContext.Provider
       value={{
-        poolRewardPointsFetched,
         getPoolRewardPoints,
         getPerformanceFetchedKey,
         setPerformanceFetchedKey,
