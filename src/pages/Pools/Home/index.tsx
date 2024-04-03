@@ -23,7 +23,6 @@ import { MinCreateBondStat } from './Stats/MinCreateBond';
 import { MinJoinBondStat } from './Stats/MinJoinBond';
 import { Status } from './Status';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
-import { useApi } from 'contexts/Api';
 import { useActivePools } from 'hooks/useActivePools';
 import { useBalances } from 'contexts/Balances';
 import { PageTitle } from 'kits/Structure/PageTitle';
@@ -35,15 +34,14 @@ import { useSyncing } from 'hooks/useSyncing';
 
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
-  const { poolMembersipSyncing } = useSyncing();
   const { favorites } = useFavoritePools();
   const { openModal } = useOverlay().modal;
   const { bondedPools } = useBondedPools();
   const { getPoolMembership } = useBalances();
+  const { poolMembersipSyncing } = useSyncing();
   const { activeAccount } = useActiveAccounts();
   const { activeTab, setActiveTab } = usePoolsTabs();
   const { getPoolRoles, activePool } = useActivePool();
-  const { counterForBondedPools } = useApi().poolsConfig;
   const membership = getPoolMembership(activeAccount);
 
   const { activePools } = useActivePools({
@@ -68,7 +66,6 @@ export const HomeInner = () => {
       title: t('pools.allPools'),
       active: activeTab === 1,
       onClick: () => setActiveTab(1),
-      badge: String(counterForBondedPools.toString()),
     },
     {
       title: t('pools.favorites'),
