@@ -48,6 +48,38 @@ export const PoolPerformanceProvider = ({
     useState<PoolPerformanceFetched>({});
   const performanceFetchedRef = useRef(performanceFetched);
 
+  // Store pool performance data. NOTE: Requires a ref to update state with current data.
+  const [poolRewardPoints, setPoolRewardPointsState] =
+    useState<PoolRewardPointsBatch>({});
+  const poolRewardPointsRef = useRef(poolRewardPoints);
+
+  // Gets a batch of pool reward points, or returns an empty object otherwise.
+  const getPoolRewardPoints = (key: PoolRewardPointsBatchKey) =>
+    poolRewardPoints?.[key] || {};
+
+  // Store the currently active era being processed for pool performance.
+  const [currentEra, setCurrentEra] = useState<BigNumber>(new BigNumber(0));
+
+  // Store the earliest era that should be processed.
+  const [finishEra, setFinishEra] = useState<BigNumber>(new BigNumber(0));
+
+  // Sets a batch of pool reward points.
+  const setPoolRewardPoints = (
+    key: PoolRewardPointsBatchKey,
+    batch: PoolRewardPoints
+  ) => {
+    const newRewardPoints = {
+      ...poolRewardPointsRef.current,
+      [key]: batch,
+    };
+
+    setStateWithRef(
+      newRewardPoints,
+      setPoolRewardPointsState,
+      poolRewardPointsRef
+    );
+  };
+
   // Gets whether pool performance data is being fetched under a given key.
   const getPerformanceFetchedKey = (key: PoolRewardPointsBatchKey) =>
     performanceFetched[key] || { status: 'unsynced', addresses: [] };
@@ -66,6 +98,18 @@ export const PoolPerformanceProvider = ({
       setPerformanceFetched,
       performanceFetchedRef
     );
+
+    // Reset pool reward points for the given key.
+    if (status === 'unsynced') {
+      setStateWithRef(
+        {
+          ...poolRewardPointsRef.current,
+          [key]: {},
+        },
+        setPoolRewardPointsState,
+        poolRewardPointsRef
+      );
+    }
   };
 
   // Updates an existing performance fetched key with a new status.
@@ -86,31 +130,6 @@ export const PoolPerformanceProvider = ({
     );
   };
 
-  // Store pool performance data.
-  const [poolRewardPoints, setPoolRewardPointsState] =
-    useState<PoolRewardPointsBatch>({});
-
-  // Gets a batch of pool reward points, or returns an empty object otherwise.
-  const getPoolRewardPoints = (key: PoolRewardPointsBatchKey) =>
-    poolRewardPoints[key] || {};
-
-  // Sets a batch of pool reward points.
-  const setPoolRewardPoints = (
-    key: PoolRewardPointsBatchKey,
-    batch: PoolRewardPoints
-  ) => {
-    setPoolRewardPointsState({
-      ...poolRewardPoints,
-      [key]: batch,
-    });
-  };
-
-  // Store the currently active era being processed for pool performance.
-  const [currentEra, setCurrentEra] = useState<BigNumber>(new BigNumber(0));
-
-  // Store the earliest era that should be processed.
-  const [finishEra, setFinishEra] = useState<BigNumber>(new BigNumber(0));
-
   // Start fetching pool performance calls from the current era.
   const startGetPoolPerformance = async (
     key: PoolRewardPointsBatchKey,
@@ -122,12 +141,22 @@ export const PoolPerformanceProvider = ({
       return;
     }
 
+    // If the addresses have not changed for this key, exit early.
+    const current = getPerformanceFetchedKey(key);
+    if (current.addresses.toString() === addresses.toString()) {
+      return;
+    }
+
+    // Set as syncing and start processing.
     setPerformanceFetchedKey(key, 'syncing', addresses);
+
+    // TODO: Needs to be a record for each list.
     setFinishEra(
       BigNumber.max(activeEra.index.minus(MaxEraRewardPointsEras), 1)
     );
-    const startEra = BigNumber.max(activeEra.index.minus(1), 1);
-    processEra(key, startEra);
+
+    // Start processing from the previous active era.
+    processEra(key, BigNumber.max(activeEra.index.minus(1), 1));
   };
 
   // Get era data and send to worker.
@@ -135,6 +164,8 @@ export const PoolPerformanceProvider = ({
     if (!api) {
       return;
     }
+
+    // TODO: Needs to be a record for each list.
     setCurrentEra(era);
 
     let exposures;
@@ -178,10 +209,9 @@ export const PoolPerformanceProvider = ({
       }
 
       // Update state with new data.
-      const { poolRewardData } = data;
       setPoolRewardPoints(
-        'pool_list',
-        mergeDeep(poolRewardPoints, poolRewardData)
+        key,
+        mergeDeep(getPoolRewardPoints(key), data.poolRewardData)
       );
 
       if (currentEra.isEqualTo(finishEra)) {
@@ -225,9 +255,9 @@ export const PoolPerformanceProvider = ({
 
   // Reset state data on network change.
   useEffectIgnoreInitial(() => {
-    setPoolRewardPoints('pool_list', {});
     setCurrentEra(new BigNumber(0));
     setFinishEra(new BigNumber(0));
+    setStateWithRef({}, setPoolRewardPointsState, poolRewardPointsRef);
     setStateWithRef({}, setPerformanceFetched, performanceFetchedRef);
   }, [network]);
 

@@ -39,7 +39,7 @@ export interface PoolPerformanceFetchingStatus {
  */
 
 // Supported reward points batch keys.
-export type PoolRewardPointsBatchKey = 'pool_list' | 'join_pool';
+export type PoolRewardPointsBatchKey = 'pool_list' | 'pool_page' | 'join_pool';
 
 // Pool reward batches, keyed by batch key.
 export type PoolRewardPointsBatch = Partial<Record<string, PoolRewardPoints>>;

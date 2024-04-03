@@ -27,7 +27,7 @@ export const Rewards = ({ address, displayFor = 'default' }: RewardProps) => {
   const { getPoolRewardPoints, getPerformanceFetchedKey } =
     usePoolPerformance();
 
-  const poolRewardPoints = getPoolRewardPoints('pool_list');
+  const poolRewardPoints = getPoolRewardPoints('pool_page');
 
   const eraRewardPoints = Object.fromEntries(
     Object.entries(poolRewardPoints[address] || {}).map(([k, v]: AnyJson) => [
@@ -42,7 +42,7 @@ export const Rewards = ({ address, displayFor = 'default' }: RewardProps) => {
 
   const empty = Object.values(poolRewardPoints).length === 0;
   const syncing =
-    !isReady || getPerformanceFetchedKey('pool_list').status !== 'synced';
+    !isReady || getPerformanceFetchedKey('pool_page').status !== 'synced';
   const tooltipText = `${MaxEraRewardPointsEras} ${t('dayPoolPerformance')}`;
 
   return (
