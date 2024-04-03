@@ -2136,13 +2136,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/crypto-js@npm:^4":
-  version: 4.2.2
-  resolution: "@types/crypto-js@npm:4.2.2"
-  checksum: 10c0/760a2078f36f2a3a1089ef367b0d13229876adcf4bcd6e8824d00d9e9bfad8118dc7e6a3cc66322b083535e12be3a29044ccdc9603bfb12519ff61551a3322c6
-  languageName: node
-  linkType: hard
-
 "@types/eslint@npm:^8.4.5":
   version: 8.56.6
   resolution: "@types/eslint@npm:8.56.6"
@@ -3464,13 +3457,6 @@ __metadata:
     shebang-command: "npm:^2.0.0"
     which: "npm:^2.0.1"
   checksum: 10c0/5738c312387081c98d69c98e105b6327b069197f864a60593245d64c8089c8a0a744e16349281210d56835bb9274130d825a78b2ad6853ca13cfbeffc0c31750
-  languageName: node
-  linkType: hard
-
-"crypto-js@npm:^4.2.0":
-  version: 4.2.0
-  resolution: "crypto-js@npm:4.2.0"
-  checksum: 10c0/8fbdf9d56f47aea0794ab87b0eb9833baf80b01a7c5c1b0edc7faf25f662fb69ab18dc2199e2afcac54670ff0cd9607a9045a3f7a80336cccd18d77a55b9fdf0
   languageName: node
   linkType: hard
 
@@ -6520,7 +6506,6 @@ __metadata:
     "@polkawatch/ddp-client": "npm:^2.0.11"
     "@substrate/connect": "npm:0.7.35"
     "@types/chroma-js": "npm:^2.4.4"
-    "@types/crypto-js": "npm:^4"
     "@types/lodash.debounce": "npm:^4.0.9"
     "@types/lodash.throttle": "npm:^4.1.9"
     "@types/react": "npm:^18.2.73"
@@ -6544,7 +6529,6 @@ __metadata:
     buffer: "npm:^6.0.3"
     chart.js: "npm:^4.4.2"
     chroma-js: "npm:^2.4.2"
-    crypto-js: "npm:^4.2.0"
     date-fns: "npm:^3.3.1"
     eslint: "npm:^8.57.0"
     eslint-config-prettier: "npm:^9.1.0"

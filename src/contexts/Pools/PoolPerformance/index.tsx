@@ -48,18 +48,17 @@ export const PoolPerformanceProvider = ({
 
   // Gets whether pool performance data is being fetched under a given key.
   const getPerformanceFetchedKey = (key: PoolRewardPointsBatchKey) =>
-    performanceFetched[key] || { status: 'unsynced', hash: '' };
+    performanceFetched[key] || { status: 'unsynced', addresses: [] };
 
-  // Sets a pool performance fetching state under a given key. A hash is used to determine if the
-  // provided pools are the same on subsequent requests.
+  // Sets a pool performance fetching state under a given key.
   const setPerformanceFetchedKey = (
     key: PoolRewardPointsBatchKey,
     status: Sync,
-    hash: string
+    addresses: string[]
   ) => {
     setPerformanceFetched({
       ...performanceFetched,
-      [key]: { status, hash },
+      [key]: { status, addresses },
     });
   };
 
@@ -102,37 +101,12 @@ export const PoolPerformanceProvider = ({
   // Store the earliest era that should be processed.
   const [finishEra, setFinishEra] = useState<BigNumber>(new BigNumber(0));
 
-  // Handle worker message on completed exposure check.
-  worker.onmessage = (message: MessageEvent) => {
-    if (message) {
-      const { data } = message;
-      const { task, key } = data;
-      if (task !== 'processNominationPoolsRewardData') {
-        return;
-      }
-
-      // Update state with new data.
-      const { poolRewardData } = data;
-      setPoolRewardPoints(
-        'pool_list',
-        mergeDeep(poolRewardPoints, poolRewardData)
-      );
-
-      if (currentEra.isEqualTo(finishEra)) {
-        updatePerformanceFetchedKey(key, 'synced');
-      } else {
-        const nextEra = BigNumber.max(currentEra.minus(1), 1);
-        processEra(key, nextEra);
-      }
-    }
-  };
-
   // Start fetching pool performance calls from the current era.
-  const startGetPoolPerformance = async (key: PoolRewardPointsBatchKey) => {
-    // TODO: hash provided bonded pools.
-    const hash = '';
-
-    setPerformanceFetchedKey(key, 'syncing', hash);
+  const startGetPoolPerformance = async (
+    key: PoolRewardPointsBatchKey,
+    addresses: string[]
+  ) => {
+    setPerformanceFetchedKey(key, 'syncing', addresses);
 
     setFinishEra(
       BigNumber.max(activeEra.index.minus(MaxEraRewardPointsEras), 1)
@@ -161,14 +135,41 @@ export const PoolPerformanceProvider = ({
       exposures = formatRawExposures(result);
     }
 
+    const { addresses } = getPerformanceFetchedKey(key);
+
     worker.postMessage({
       task: 'processNominationPoolsRewardData',
       key,
       era: era.toString(),
       exposures,
-      bondedPools: bondedPools.map(({ addresses }) => addresses.stash),
+      addresses,
       erasRewardPoints,
     });
+  };
+
+  // Handle worker message on completed exposure check.
+  worker.onmessage = (message: MessageEvent) => {
+    if (message) {
+      const { data } = message;
+      const { task, key } = data;
+      if (task !== 'processNominationPoolsRewardData') {
+        return;
+      }
+
+      // Update state with new data.
+      const { poolRewardData } = data;
+      setPoolRewardPoints(
+        'pool_list',
+        mergeDeep(poolRewardPoints, poolRewardData)
+      );
+
+      if (currentEra.isEqualTo(finishEra)) {
+        updatePerformanceFetchedKey(key, 'synced');
+      } else {
+        const nextEra = BigNumber.max(currentEra.minus(1), 1);
+        processEra(key, nextEra);
+      }
+    }
   };
 
   // Trigger worker to calculate pool reward data for garaphs once:
@@ -186,7 +187,10 @@ export const PoolPerformanceProvider = ({
       erasRewardPointsFetched === 'synced' &&
       getPerformanceFetchedKey('pool_list')?.status === 'unsynced'
     ) {
-      startGetPoolPerformance('pool_list');
+      startGetPoolPerformance(
+        'pool_list',
+        bondedPools.map(({ addresses }) => addresses.stash)
+      );
     }
   }, [
     bondedPools,

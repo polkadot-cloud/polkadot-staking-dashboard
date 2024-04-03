@@ -27,20 +27,20 @@ ctx.addEventListener('message', async (event: AnyJson) => {
 // Process `erasStakersClipped` and generate nomination pool reward data.
 const processErasStakersForNominationPoolRewards = async ({
   key,
-  bondedPools,
+  addresses,
   era,
   erasRewardPoints,
   exposures,
 }: {
   key: PoolRewardPointsBatchKey;
-  bondedPools: string[];
+  addresses: string[];
   era: string;
   erasRewardPoints: ErasRewardPoints;
   exposures: Exposure[];
 }) => {
   const poolRewardData: Record<string, Record<string, string>> = {};
 
-  for (const address of bondedPools) {
+  for (const address of addresses) {
     let validator = null;
     for (const exposure of exposures) {
       const { others } = exposure.val;

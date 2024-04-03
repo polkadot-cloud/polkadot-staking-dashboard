@@ -11,7 +11,7 @@ export interface PoolPerformanceContextInterface {
   setPerformanceFetchedKey: (
     key: PoolRewardPointsBatchKey,
     status: Sync,
-    hash: string
+    addresses: string[]
   ) => void;
   updatePerformanceFetchedKey: (
     key: PoolRewardPointsBatchKey,
@@ -27,7 +27,7 @@ export type PoolPerformanceFetched = Partial<
 // Performance fetching status.
 export interface PoolPerformanceFetchingStatus {
   status: Sync;
-  hash: string;
+  addresses: string[];
 }
 
 /*
