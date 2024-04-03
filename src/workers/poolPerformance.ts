@@ -64,6 +64,7 @@ const processErasStakersForNominationPoolRewards = async ({
 
   return {
     key,
+    addresses,
     poolRewardData,
   };
 };

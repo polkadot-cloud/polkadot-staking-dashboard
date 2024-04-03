@@ -123,6 +123,8 @@ export const PoolList = ({
   // `bondedPools` to be fetched.
   useEffect(() => {
     if (erasRewardPointsFetched && bondedPools.length) {
+      // TODO: if no pools provided, remove the fetch status.
+
       console.log('Fetch pool performance data batch.', listPools.length, page);
 
       // TODO: replace with actual fetch call.

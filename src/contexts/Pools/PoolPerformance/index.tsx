@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ReactNode } from 'react';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import { MaxEraRewardPointsEras } from 'consts';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import Worker from 'workers/poolPerformance?worker';
@@ -11,7 +11,7 @@ import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useApi } from 'contexts/Api';
 import BigNumber from 'bignumber.js';
-import { mergeDeep } from '@w3ux/utils';
+import { mergeDeep, setStateWithRef } from '@w3ux/utils';
 import { useStaking } from 'contexts/Staking';
 import { formatRawExposures } from 'contexts/Staking/Utils';
 import type {
@@ -42,9 +42,11 @@ export const PoolPerformanceProvider = ({
   const { api, activeEra, isPagedRewardsActive } = useApi();
   const { erasRewardPointsFetched, erasRewardPoints } = useValidators();
 
-  // Store whether pool performance data is being fetched under a given key.
+  // Store whether pool performance data is being fetched under a given key. NOTE: Requires a ref to
+  // be accessed in `processEra` before re-render.
   const [performanceFetched, setPerformanceFetched] =
     useState<PoolPerformanceFetched>({});
+  const performanceFetchedRef = useRef(performanceFetched);
 
   // Gets whether pool performance data is being fetched under a given key.
   const getPerformanceFetchedKey = (key: PoolRewardPointsBatchKey) =>
@@ -56,10 +58,14 @@ export const PoolPerformanceProvider = ({
     status: Sync,
     addresses: string[]
   ) => {
-    setPerformanceFetched({
-      ...performanceFetched,
-      [key]: { status, addresses },
-    });
+    setStateWithRef(
+      {
+        ...performanceFetched,
+        [key]: { status, addresses },
+      },
+      setPerformanceFetched,
+      performanceFetchedRef
+    );
   };
 
   // Updates an existing performance fetched key with a new status.
@@ -70,10 +76,14 @@ export const PoolPerformanceProvider = ({
     if (!getPerformanceFetchedKey(key)) {
       return;
     }
-    setPerformanceFetched({
-      ...performanceFetched,
-      [key]: { ...performanceFetched[key], status },
-    });
+    setStateWithRef(
+      {
+        ...performanceFetched,
+        [key]: { ...performanceFetched[key], status },
+      },
+      setPerformanceFetched,
+      performanceFetchedRef
+    );
   };
 
   // Store pool performance data.
@@ -135,7 +145,7 @@ export const PoolPerformanceProvider = ({
       exposures = formatRawExposures(result);
     }
 
-    const { addresses } = getPerformanceFetchedKey(key);
+    const addresses = performanceFetchedRef.current[key]?.addresses || [];
 
     worker.postMessage({
       task: 'processNominationPoolsRewardData',
@@ -151,8 +161,14 @@ export const PoolPerformanceProvider = ({
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
       const { data } = message;
-      const { task, key } = data;
+      const { task, key, addresses } = data;
       if (task !== 'processNominationPoolsRewardData') {
+        return;
+      }
+
+      // If addresses for the given key have changed or been removed, ignore the result.
+      const fetchStatus = getPerformanceFetchedKey(key);
+      if (JSON.stringify(fetchStatus.addresses) !== JSON.stringify(addresses)) {
         return;
       }
 
@@ -204,7 +220,7 @@ export const PoolPerformanceProvider = ({
     setPoolRewardPoints('pool_list', {});
     setCurrentEra(new BigNumber(0));
     setFinishEra(new BigNumber(0));
-    setPerformanceFetched({});
+    setStateWithRef({}, setPerformanceFetched, performanceFetchedRef);
   }, [network]);
 
   return (
