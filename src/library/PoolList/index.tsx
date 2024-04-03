@@ -51,7 +51,7 @@ export const PoolList = ({
   const { applyFilter } = usePoolFilters();
   const { erasRewardPointsFetched } = useValidators();
   const { listFormat, setListFormat } = usePoolList();
-  const { updatePerformanceFetchedKey } = usePoolPerformance();
+  const { startGetPoolPerformance } = usePoolPerformance();
   const { getFilters, getSearchTerm, setSearchTerm } = useFilters();
   const { poolSearchFilter, poolsNominations, bondedPools } = useBondedPools();
 
@@ -86,7 +86,7 @@ export const PoolList = ({
   const pageEnd = page * listItemsPerPage - 1;
   const pageStart = pageEnd - (listItemsPerPage - 1);
 
-  // get throttled subset or entire list
+  // get paged subset of list items.
   const poolsToDisplay = listPools.slice(pageStart).slice(0, listItemsPerPage);
 
   // Handle resetting of pool list when provided pools change.
@@ -123,12 +123,10 @@ export const PoolList = ({
   // `bondedPools` to be fetched.
   useEffect(() => {
     if (erasRewardPointsFetched && bondedPools.length) {
-      console.log('Fetch pool performance data batch.', listPools.length, page);
-
-      // TODO: replace with actual fetch call.
-      setTimeout(() => {
-        updatePerformanceFetchedKey('pool_list', 'synced');
-      }, 5000);
+      startGetPoolPerformance(
+        'pool_page',
+        poolsToDisplay.map(({ addresses }) => addresses.stash)
+      );
     }
   }, [JSON.stringify(listPools), page, erasRewardPointsFetched, bondedPools]);
 
