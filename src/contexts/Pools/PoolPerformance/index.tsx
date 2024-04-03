@@ -116,8 +116,13 @@ export const PoolPerformanceProvider = ({
     key: PoolRewardPointsBatchKey,
     addresses: string[]
   ) => {
-    setPerformanceFetchedKey(key, 'syncing', addresses);
+    // Set as synced and exit early if there are no addresses to process.
+    if (!addresses.length) {
+      setPerformanceFetchedKey(key, 'synced', addresses);
+      return;
+    }
 
+    setPerformanceFetchedKey(key, 'syncing', addresses);
     setFinishEra(
       BigNumber.max(activeEra.index.minus(MaxEraRewardPointsEras), 1)
     );
@@ -207,6 +212,9 @@ export const PoolPerformanceProvider = ({
         'pool_list',
         bondedPools.map(({ addresses }) => addresses.stash)
       );
+
+      // TODO: Get subset of pools for JoinPool form and call `startGetPoolPerformance` for its key
+      // here.
     }
   }, [
     bondedPools,
