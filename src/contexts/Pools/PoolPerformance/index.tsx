@@ -14,7 +14,12 @@ import BigNumber from 'bignumber.js';
 import { mergeDeep } from '@w3ux/utils';
 import { useStaking } from 'contexts/Staking';
 import { formatRawExposures } from 'contexts/Staking/Utils';
-import type { PoolPerformanceContextInterface } from './types';
+import type {
+  PoolPerformanceContextInterface,
+  PoolRewardPoints,
+  PoolRewardPointsBatch,
+  PoolRewardPointsBatchKey,
+} from './types';
 import { defaultPoolPerformanceContext } from './defaults';
 import type { Sync } from 'types';
 
@@ -41,9 +46,23 @@ export const PoolPerformanceProvider = ({
     useState<Sync>('unsynced');
 
   // Store pool performance data.
-  const [poolRewardPoints, setPoolRewardPoints] = useState<
-    Record<string, Record<string, string>>
-  >({});
+  const [poolRewardPoints, setPoolRewardPointsState] =
+    useState<PoolRewardPointsBatch>({});
+
+  // Getes a batch of pool reward points, or returns an empty object otherwise.
+  const getPoolRewardPoints = (key: PoolRewardPointsBatchKey) =>
+    poolRewardPoints[key] || {};
+
+  // Sets a batch of pool reward points.
+  const setPoolRewardPoints = (
+    key: PoolRewardPointsBatchKey,
+    batch: PoolRewardPoints
+  ) => {
+    setPoolRewardPointsState({
+      ...poolRewardPoints,
+      [key]: batch,
+    });
+  };
 
   // Store the currently active era being processed for pool performance.
   const [currentEra, setCurrentEra] = useState<BigNumber>(new BigNumber(0));
@@ -62,7 +81,10 @@ export const PoolPerformanceProvider = ({
 
       // Update state with new data.
       const { poolRewardData } = data;
-      setPoolRewardPoints(mergeDeep(poolRewardPoints, poolRewardData));
+      setPoolRewardPoints(
+        'pool_list',
+        mergeDeep(poolRewardPoints, poolRewardData)
+      );
 
       if (currentEra.isEqualTo(finishEra)) {
         setPoolRewardPointsFetched('synced');
@@ -107,7 +129,7 @@ export const PoolPerformanceProvider = ({
       task: 'processNominationPoolsRewardData',
       era: era.toString(),
       exposures,
-      bondedPools: bondedPools.map((b) => b.addresses.stash),
+      bondedPools: bondedPools.map(({ addresses }) => addresses.stash),
       erasRewardPoints,
     });
   };
@@ -138,7 +160,7 @@ export const PoolPerformanceProvider = ({
 
   // Reset state data on network change.
   useEffectIgnoreInitial(() => {
-    setPoolRewardPoints({});
+    setPoolRewardPoints('pool_list', {});
     setCurrentEra(new BigNumber(0));
     setFinishEra(new BigNumber(0));
     setPoolRewardPointsFetched('unsynced');
@@ -148,7 +170,7 @@ export const PoolPerformanceProvider = ({
     <PoolPerformanceContext.Provider
       value={{
         poolRewardPointsFetched,
-        poolRewardPoints,
+        getPoolRewardPoints,
       }}
     >
       {children}

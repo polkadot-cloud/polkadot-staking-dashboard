@@ -19,8 +19,10 @@ export const JoinPool = () => {
     config: { options },
   } = useOverlay().canvas;
   const { eraStakers } = useStaking();
-  const { poolRewardPoints } = usePoolPerformance();
+  const { getPoolRewardPoints } = usePoolPerformance();
   const { poolsMetaData, bondedPools } = useBondedPools();
+
+  const poolRewardPoints = getPoolRewardPoints('pool_list');
 
   // The active canvas tab.
   const [activeTab, setActiveTab] = useState<number>(0);

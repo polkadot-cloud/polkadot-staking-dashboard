@@ -24,7 +24,9 @@ export const Rewards = ({ address, displayFor = 'default' }: RewardProps) => {
   const { isReady } = useApi();
   const { setTooltipTextAndOpen } = useTooltip();
   const { eraPointsBoundaries } = useValidators();
-  const { poolRewardPoints, poolRewardPointsFetched } = usePoolPerformance();
+  const { getPoolRewardPoints, poolRewardPointsFetched } = usePoolPerformance();
+
+  const poolRewardPoints = getPoolRewardPoints('pool_list');
 
   const eraRewardPoints = Object.fromEntries(
     Object.entries(poolRewardPoints[address] || {}).map(([k, v]: AnyJson) => [
