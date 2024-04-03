@@ -22,7 +22,7 @@ export const JoinPool = () => {
   const { getPoolRewardPoints } = usePoolPerformance();
   const { poolsMetaData, bondedPools } = useBondedPools();
 
-  const poolRewardPoints = getPoolRewardPoints('pool_list');
+  const poolRewardPoints = getPoolRewardPoints('pool_join');
 
   // The active canvas tab.
   const [activeTab, setActiveTab] = useState<number>(0);

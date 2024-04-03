@@ -46,7 +46,7 @@ export const PerformanceGraph = ({ bondedPool }: OverviewSectionProps) => {
   const { colors } = useNetwork().networkData;
   const { getPoolRewardPoints } = usePoolPerformance();
 
-  const poolRewardPoints = getPoolRewardPoints('pool_list');
+  const poolRewardPoints = getPoolRewardPoints('pool_join');
   const rawEraRewardPoints = poolRewardPoints[bondedPool.addresses.stash] || {};
 
   // Ref to the graph container.
