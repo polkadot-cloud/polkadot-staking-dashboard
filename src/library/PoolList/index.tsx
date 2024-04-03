@@ -99,13 +99,13 @@ export const PoolList = ({
 
   const handleSearchChange = (e: FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
-    let filteredPools = Object.assign(poolsDefault);
+    let filteredPools: BondedPool[] = Object.assign(poolsDefault);
     filteredPools = applyFilter(includes, excludes, filteredPools);
     filteredPools = poolSearchFilter(filteredPools, newValue);
 
     // ensure no duplicates
     filteredPools = filteredPools.filter(
-      (value: BondedPool, index: number, self: BondedPool[]) =>
+      (value, index: number, self) =>
         index === self.findIndex((i) => i.id === value.id)
     );
     setPage(1);

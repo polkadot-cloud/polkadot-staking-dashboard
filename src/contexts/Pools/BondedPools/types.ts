@@ -18,7 +18,7 @@ export interface BondedPoolsContextState {
   getPoolNominationStatusCode: (statuses: NominationStatuses | null) => string;
   getAccountPoolRoles: (address: MaybeAddress) => AnyApi;
   replacePoolRoles: (poolId: number, roleEdits: AnyJson) => void;
-  poolSearchFilter: (filteredPools: AnyFilter, searchTerm: string) => void;
+  poolSearchFilter: (filteredPools: AnyFilter, searchTerm: string) => AnyJson[];
   bondedPools: BondedPool[];
   poolsMetaData: Record<number, string>;
   poolsNominations: Record<number, PoolNominations>;
