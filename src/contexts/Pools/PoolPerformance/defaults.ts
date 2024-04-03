@@ -6,6 +6,7 @@ import type { PoolPerformanceContextInterface } from './types';
 
 export const defaultPoolPerformanceContext: PoolPerformanceContextInterface = {
   getPoolRewardPoints: () => ({}),
-  getPerformanceFetchedKey: (key) => 'unsynced',
-  setPerformanceFetchedKey: (key, fetched) => {},
+  getPerformanceFetchedKey: (key) => ({ status: 'unsynced', hash: '' }),
+  setPerformanceFetchedKey: (key, status, hash) => {},
+  updatePerformanceFetchedKey: (key, status) => {},
 };

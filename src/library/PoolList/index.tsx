@@ -51,7 +51,7 @@ export const PoolList = ({
   const { applyFilter } = usePoolFilters();
   const { erasRewardPointsFetched } = useValidators();
   const { listFormat, setListFormat } = usePoolList();
-  const { setPerformanceFetchedKey } = usePoolPerformance();
+  const { updatePerformanceFetchedKey } = usePoolPerformance();
   const { getFilters, getSearchTerm, setSearchTerm } = useFilters();
   const { poolSearchFilter, poolsNominations, bondedPools } = useBondedPools();
 
@@ -123,12 +123,11 @@ export const PoolList = ({
   // `bondedPools` to be fetched.
   useEffect(() => {
     if (erasRewardPointsFetched && bondedPools.length) {
-      setPerformanceFetchedKey('pool_list', 'syncing');
       console.log('Fetch pool performance data batch.', listPools.length, page);
 
       // TODO: replace with actual fetch call.
       setTimeout(() => {
-        setPerformanceFetchedKey('pool_list', 'synced');
+        updatePerformanceFetchedKey('pool_list', 'synced');
       }, 5000);
     }
   }, [JSON.stringify(listPools), page, erasRewardPointsFetched, bondedPools]);

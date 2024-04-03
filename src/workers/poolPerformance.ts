@@ -5,7 +5,7 @@
 import type { PoolRewardPointsBatchKey } from 'contexts/Pools/PoolPerformance/types';
 import type { Exposure } from 'contexts/Staking/types';
 import type { ErasRewardPoints } from 'contexts/Validators/types';
-import type { AnyApi, AnyJson } from 'types';
+import type { AnyJson } from 'types';
 
 // eslint-disable-next-line no-restricted-globals, @typescript-eslint/no-explicit-any
 export const ctx: Worker = self as any;
@@ -14,7 +14,7 @@ export const ctx: Worker = self as any;
 ctx.addEventListener('message', async (event: AnyJson) => {
   const { data } = event;
   const { task } = data;
-  let message: AnyJson = {};
+  let message = {};
   switch (task) {
     case 'processNominationPoolsRewardData':
       message = await processErasStakersForNominationPoolRewards(data);
@@ -44,7 +44,7 @@ const processErasStakersForNominationPoolRewards = async ({
     let validator = null;
     for (const exposure of exposures) {
       const { others } = exposure.val;
-      const inOthers = others.find((o: AnyApi) => o.who === address);
+      const inOthers = others.find(({ who }) => who === address);
 
       if (inOthers) {
         validator = exposure.keys[1];

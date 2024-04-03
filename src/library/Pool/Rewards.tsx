@@ -42,7 +42,7 @@ export const Rewards = ({ address, displayFor = 'default' }: RewardProps) => {
 
   const empty = Object.values(poolRewardPoints).length === 0;
   const syncing =
-    !isReady || getPerformanceFetchedKey('pool_list') !== 'synced';
+    !isReady || getPerformanceFetchedKey('pool_list').status !== 'synced';
   const tooltipText = `${MaxEraRewardPointsEras} ${t('dayPoolPerformance')}`;
 
   return (

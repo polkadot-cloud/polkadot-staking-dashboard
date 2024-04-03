@@ -22,7 +22,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
   const { disableJoin, disableCreate } = useStatusButtons();
 
   const joinButtonDisabled =
-    disableJoin() || getPerformanceFetchedKey('pool_list') !== 'synced';
+    disableJoin() || getPerformanceFetchedKey('pool_list').status !== 'synced';
 
   const createButtonDisabled = disableCreate();
 
@@ -48,7 +48,8 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                     }
                     disabled={joinButtonDisabled}
                   >
-                    {getPerformanceFetchedKey('pool_list') !== 'synced' ? (
+                    {getPerformanceFetchedKey('pool_list').status !==
+                    'synced' ? (
                       t('syncingPoolData', { ns: 'library' })
                     ) : (
                       <>

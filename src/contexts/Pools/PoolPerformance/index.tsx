@@ -48,16 +48,32 @@ export const PoolPerformanceProvider = ({
 
   // Gets whether pool performance data is being fetched under a given key.
   const getPerformanceFetchedKey = (key: PoolRewardPointsBatchKey) =>
-    performanceFetched[key] || 'unsynced';
+    performanceFetched[key] || { status: 'unsynced', hash: '' };
 
-  // Sets whether pool performance data is being fetched under a given key.
+  // Sets a pool performance fetching state under a given key. A hash is used to determine if the
+  // provided pools are the same on subsequent requests.
   const setPerformanceFetchedKey = (
     key: PoolRewardPointsBatchKey,
-    fetched: Sync
+    status: Sync,
+    hash: string
   ) => {
     setPerformanceFetched({
       ...performanceFetched,
-      [key]: fetched,
+      [key]: { status, hash },
+    });
+  };
+
+  // Updates an existing performance fetched key with a new status.
+  const updatePerformanceFetchedKey = (
+    key: PoolRewardPointsBatchKey,
+    status: Sync
+  ) => {
+    if (!getPerformanceFetchedKey(key)) {
+      return;
+    }
+    setPerformanceFetched({
+      ...performanceFetched,
+      [key]: { ...performanceFetched[key], status },
     });
   };
 
@@ -103,7 +119,7 @@ export const PoolPerformanceProvider = ({
       );
 
       if (currentEra.isEqualTo(finishEra)) {
-        setPerformanceFetchedKey(key, 'synced');
+        updatePerformanceFetchedKey(key, 'synced');
       } else {
         const nextEra = BigNumber.max(currentEra.minus(1), 1);
         processEra(key, nextEra);
@@ -113,7 +129,10 @@ export const PoolPerformanceProvider = ({
 
   // Start fetching pool performance calls from the current era.
   const startGetPoolPerformance = async (key: PoolRewardPointsBatchKey) => {
-    setPerformanceFetchedKey(key, 'syncing');
+    // TODO: hash provided bonded pools.
+    const hash = '';
+
+    setPerformanceFetchedKey(key, 'syncing', hash);
 
     setFinishEra(
       BigNumber.max(activeEra.index.minus(MaxEraRewardPointsEras), 1)
@@ -165,7 +184,7 @@ export const PoolPerformanceProvider = ({
       bondedPools.length &&
       activeEra.index.isGreaterThan(0) &&
       erasRewardPointsFetched === 'synced' &&
-      getPerformanceFetchedKey('pool_list') === 'unsynced'
+      getPerformanceFetchedKey('pool_list')?.status === 'unsynced'
     ) {
       startGetPoolPerformance('pool_list');
     }
@@ -190,6 +209,7 @@ export const PoolPerformanceProvider = ({
         getPoolRewardPoints,
         getPerformanceFetchedKey,
         setPerformanceFetchedKey,
+        updatePerformanceFetchedKey,
       }}
     >
       {children}
