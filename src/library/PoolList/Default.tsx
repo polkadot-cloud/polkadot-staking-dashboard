@@ -61,7 +61,6 @@ export const PoolList = ({
     setSearchTerm('pools', '');
   }, []);
 
-
   // current page
   const [page, setPage] = useState<number>(1);
 
