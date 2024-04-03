@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { CardWrapper } from 'library/Card/Wrappers';
-import { PoolList } from 'library/PoolList/Default';
+import { PoolList } from 'library/PoolList';
 import { StatBoxList } from 'library/StatBoxList';
 import { useFavoritePools } from 'contexts/Pools/FavoritePools';
 import { useOverlay } from 'kits/Overlay/Provider';

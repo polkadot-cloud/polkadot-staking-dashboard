@@ -41,17 +41,17 @@ export const PoolList = ({
   allowListFormat = true,
 }: PoolListProps) => {
   const { t } = useTranslation('library');
-  const { mode } = useTheme();
-  const { isReady, activeEra } = useApi();
   const {
     networkData: { colors },
   } = useNetwork();
+  const { mode } = useTheme();
   const { syncing } = useSyncing();
+  const { isReady, activeEra } = useApi();
   const { applyFilter } = usePoolFilters();
   const { listFormat, setListFormat } = usePoolList();
+  const { poolSearchFilter, poolsNominations } = useBondedPools();
   const { getFilters, setMultiFilters, getSearchTerm, setSearchTerm } =
     useFilters();
-  const { poolSearchFilter, poolsNominations } = useBondedPools();
 
   const includes = getFilters('include', 'pools');
   const excludes = getFilters('exclude', 'pools');
@@ -131,6 +131,13 @@ export const PoolList = ({
     setListPools(filteredPools);
     setSearchTerm('pools', newValue);
   };
+
+  // Fetch pool performance data when pools change, or when page changes. Requires
+  // `erasRewardPoints` and `bondedPools` to be fetched.
+  useEffect(() => {
+    // TODO: more dependencies, implement.
+    // console.log('fetch pool performance data batch');
+  }, [pools, page]);
 
   // Refetch list when pool list changes.
   useEffect(() => {
