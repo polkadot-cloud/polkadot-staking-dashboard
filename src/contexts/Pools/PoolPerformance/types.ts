@@ -1,6 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type BigNumber from 'bignumber.js';
 import type { Sync } from 'types';
 
 export interface PoolPerformanceContextInterface {
@@ -11,7 +12,9 @@ export interface PoolPerformanceContextInterface {
   setPerformanceFetchedKey: (
     key: PoolRewardPointsBatchKey,
     status: Sync,
-    addresses: string[]
+    addresses: string[],
+    currentEra: BigNumber,
+    endEra: BigNumber
   ) => void;
   updatePerformanceFetchedKey: (
     key: PoolRewardPointsBatchKey,
@@ -32,6 +35,8 @@ export type PoolPerformanceFetched = Partial<
 export interface PoolPerformanceFetchingStatus {
   status: Sync;
   addresses: string[];
+  currentEra: BigNumber;
+  endEra: BigNumber;
 }
 
 /*

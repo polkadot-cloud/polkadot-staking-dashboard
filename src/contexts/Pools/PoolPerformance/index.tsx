@@ -21,7 +21,10 @@ import type {
   PoolRewardPointsBatch,
   PoolRewardPointsBatchKey,
 } from './types';
-import { defaultPoolPerformanceContext } from './defaults';
+import {
+  defaultPerformanceFetched,
+  defaultPoolPerformanceContext,
+} from './defaults';
 import type { Sync } from 'types';
 
 const worker = new Worker();
@@ -57,12 +60,6 @@ export const PoolPerformanceProvider = ({
   const getPoolRewardPoints = (key: PoolRewardPointsBatchKey) =>
     poolRewardPoints?.[key] || {};
 
-  // Store the currently active era being processed for pool performance.
-  const [currentEra, setCurrentEra] = useState<BigNumber>(new BigNumber(0));
-
-  // Store the earliest era that should be processed.
-  const [finishEra, setFinishEra] = useState<BigNumber>(new BigNumber(0));
-
   // Sets a batch of pool reward points.
   const setPoolRewardPoints = (
     key: PoolRewardPointsBatchKey,
@@ -82,25 +79,27 @@ export const PoolPerformanceProvider = ({
 
   // Gets whether pool performance data is being fetched under a given key.
   const getPerformanceFetchedKey = (key: PoolRewardPointsBatchKey) =>
-    performanceFetched[key] || { status: 'unsynced', addresses: [] };
+    performanceFetched[key] || defaultPerformanceFetched;
 
   // Sets a pool performance fetching state under a given key.
   const setPerformanceFetchedKey = (
     key: PoolRewardPointsBatchKey,
     status: Sync,
-    addresses: string[]
+    addresses: string[],
+    currentEra: BigNumber,
+    endEra: BigNumber
   ) => {
     setStateWithRef(
       {
-        ...performanceFetched,
-        [key]: { status, addresses },
+        ...performanceFetchedRef.current,
+        [key]: { status, addresses, endEra, currentEra },
       },
       setPerformanceFetched,
       performanceFetchedRef
     );
 
     // Reset pool reward points for the given key.
-    if (status === 'unsynced') {
+    if (status === 'syncing') {
       setStateWithRef(
         {
           ...poolRewardPointsRef.current,
@@ -110,6 +109,24 @@ export const PoolPerformanceProvider = ({
         poolRewardPointsRef
       );
     }
+  };
+
+  // Set current era for performance fetched key.
+  const updatePerformanceFetchedCurrentEra = (
+    key: PoolRewardPointsBatchKey,
+    era: BigNumber
+  ) => {
+    if (!getPerformanceFetchedKey(key)) {
+      return;
+    }
+    setStateWithRef(
+      {
+        ...performanceFetchedRef.current,
+        [key]: { ...performanceFetchedRef.current[key], currentEra: era },
+      },
+      setPerformanceFetched,
+      performanceFetchedRef
+    );
   };
 
   // Updates an existing performance fetched key with a new status.
@@ -122,8 +139,8 @@ export const PoolPerformanceProvider = ({
     }
     setStateWithRef(
       {
-        ...performanceFetched,
-        [key]: { ...performanceFetched[key], status },
+        ...performanceFetchedRef.current,
+        [key]: { ...performanceFetchedRef.current[key], status },
       },
       setPerformanceFetched,
       performanceFetchedRef
@@ -137,7 +154,13 @@ export const PoolPerformanceProvider = ({
   ) => {
     // Set as synced and exit early if there are no addresses to process.
     if (!addresses.length) {
-      setPerformanceFetchedKey(key, 'synced', addresses);
+      setPerformanceFetchedKey(
+        key,
+        'synced',
+        addresses,
+        activeEra.index,
+        activeEra.index
+      );
       return;
     }
 
@@ -147,16 +170,16 @@ export const PoolPerformanceProvider = ({
       return;
     }
 
-    // Set as syncing and start processing.
-    setPerformanceFetchedKey(key, 'syncing', addresses);
-
-    // TODO: Needs to be a record for each list.
-    setFinishEra(
-      BigNumber.max(activeEra.index.minus(MaxEraRewardPointsEras), 1)
+    const currentEra = BigNumber.max(activeEra.index.minus(1));
+    const endEra = BigNumber.max(
+      activeEra.index.minus(MaxEraRewardPointsEras),
+      1
     );
+    // Set as syncing and start processing.
+    setPerformanceFetchedKey(key, 'syncing', addresses, currentEra, endEra);
 
     // Start processing from the previous active era.
-    processEra(key, BigNumber.max(activeEra.index.minus(1), 1));
+    processEra(key, currentEra);
   };
 
   // Get era data and send to worker.
@@ -165,8 +188,8 @@ export const PoolPerformanceProvider = ({
       return;
     }
 
-    // TODO: Needs to be a record for each list.
-    setCurrentEra(era);
+    // NOTE: This will not make any difference on the first run.
+    updatePerformanceFetchedCurrentEra(key, era);
 
     let exposures;
     if (isPagedRewardsActive(era)) {
@@ -205,6 +228,7 @@ export const PoolPerformanceProvider = ({
 
       // If addresses for the given key have changed or been removed, ignore the result.
       const current = getPerformanceFetchedKey(key);
+
       if (current.addresses.toString() !== addresses.toString()) {
         return;
       }
@@ -215,10 +239,10 @@ export const PoolPerformanceProvider = ({
         mergeDeep(getPoolRewardPoints(key), data.poolRewardData)
       );
 
-      if (currentEra.isEqualTo(finishEra)) {
+      if (current.currentEra.isEqualTo(current.endEra)) {
         updatePerformanceFetchedKey(key, 'synced');
       } else {
-        const nextEra = BigNumber.max(currentEra.minus(1), 1);
+        const nextEra = BigNumber.max(current.currentEra.minus(1), 1);
         processEra(key, nextEra);
       }
     }
@@ -256,8 +280,6 @@ export const PoolPerformanceProvider = ({
 
   // Reset state data on network change.
   useEffectIgnoreInitial(() => {
-    setCurrentEra(new BigNumber(0));
-    setFinishEra(new BigNumber(0));
     setStateWithRef({}, setPoolRewardPointsState, poolRewardPointsRef);
     setStateWithRef({}, setPerformanceFetched, performanceFetchedRef);
   }, [network]);
