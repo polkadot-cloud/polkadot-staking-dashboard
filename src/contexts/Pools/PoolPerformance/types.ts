@@ -17,6 +17,10 @@ export interface PoolPerformanceContextInterface {
     key: PoolRewardPointsBatchKey,
     status: Sync
   ) => void;
+  startGetPoolPerformance: (
+    key: PoolRewardPointsBatchKey,
+    addresses: string[]
+  ) => void;
 }
 
 // Fetching status for keys.

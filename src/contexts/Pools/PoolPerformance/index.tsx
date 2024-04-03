@@ -238,6 +238,7 @@ export const PoolPerformanceProvider = ({
         getPerformanceFetchedKey,
         setPerformanceFetchedKey,
         updatePerformanceFetchedKey,
+        startGetPoolPerformance,
       }}
     >
       {children}

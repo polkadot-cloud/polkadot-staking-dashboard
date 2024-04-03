@@ -9,4 +9,5 @@ export const defaultPoolPerformanceContext: PoolPerformanceContextInterface = {
   getPerformanceFetchedKey: (key) => ({ status: 'unsynced', addresses: [] }),
   setPerformanceFetchedKey: (key, status, addresses) => {},
   updatePerformanceFetchedKey: (key, status) => {},
+  startGetPoolPerformance: (key, addresses) => {},
 };
