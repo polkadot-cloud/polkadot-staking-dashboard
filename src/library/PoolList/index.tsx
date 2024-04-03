@@ -30,28 +30,27 @@ import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import { useSyncing } from 'hooks/useSyncing';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { useApi } from 'contexts/Api';
-import { isNotZero } from '@w3ux/utils';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 
 export const PoolList = ({
   allowMoreCols,
   pagination,
   allowSearch,
   pools,
-  defaultFilters,
   allowListFormat = true,
 }: PoolListProps) => {
   const { t } = useTranslation('library');
   const {
+    network,
     networkData: { colors },
   } = useNetwork();
   const { mode } = useTheme();
+  const { activeEra } = useApi();
   const { syncing } = useSyncing();
-  const { isReady, activeEra } = useApi();
   const { applyFilter } = usePoolFilters();
   const { erasRewardPointsFetched } = useValidators();
   const { listFormat, setListFormat } = usePoolList();
-  const { getFilters, setMultiFilters, getSearchTerm, setSearchTerm } =
-    useFilters();
+  const { getFilters, getSearchTerm, setSearchTerm } = useFilters();
   const { poolSearchFilter, poolsNominations, bondedPools } = useBondedPools();
 
   const includes = getFilters('include', 'pools');
@@ -120,18 +119,16 @@ export const PoolList = ({
 
   // Fetch pool performance data when list items or page changes. Requires `erasRewardPoints` and
   // `bondedPools` to be fetched.
-
   const fetchingPerformanceData = useRef<boolean>(false);
 
   useEffect(() => {
     if (erasRewardPointsFetched && bondedPools.length) {
       fetchingPerformanceData.current = true;
       console.log('Fetch pool performance data batch.', listPools.length, page);
-
       // TODO: replace with actual fetch call.
       setTimeout(() => (fetchingPerformanceData.current = false), 1000);
     }
-  }, [listPools, page, erasRewardPointsFetched, bondedPools]);
+  }, [JSON.stringify(listPools), page, erasRewardPointsFetched, bondedPools]);
 
   // Refetch list when pool list changes.
   useEffect(() => {
@@ -139,13 +136,6 @@ export const PoolList = ({
       resetPoolList();
     }
   }, [JSON.stringify(pools)]);
-
-  // Configure pool list when network is ready to fetch.
-  useEffect(() => {
-    if (isReady && isNotZero(activeEra.index) && !synced) {
-      resetPoolList();
-    }
-  }, [isReady, synced, activeEra.index]);
 
   // List ui changes / validator changes trigger re-render of list.
   useEffect(() => {
@@ -160,15 +150,10 @@ export const PoolList = ({
     window.scrollTo(0, 0);
   }, [includes, excludes]);
 
-  // Set default filters.
-  useEffect(() => {
-    if (defaultFilters?.includes?.length) {
-      setMultiFilters('include', 'pools', defaultFilters?.includes, false);
-    }
-    if (defaultFilters?.excludes?.length) {
-      setMultiFilters('exclude', 'pools', defaultFilters?.excludes, false);
-    }
-  }, []);
+  // Reset list on network change or active era change.
+  useEffectIgnoreInitial(() => {
+    resetPoolList();
+  }, [network, activeEra.index.toString()]);
 
   return (
     <ListWrapper>
