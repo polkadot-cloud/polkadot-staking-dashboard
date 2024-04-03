@@ -12,6 +12,7 @@ import { Nominations } from './Nominations';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 import { MaxEraRewardPointsEras } from 'consts';
 import { useStaking } from 'contexts/Staking';
+import { useJoinPools } from 'contexts/Pools/JoinPools';
 
 export const JoinPool = () => {
   const {
@@ -19,9 +20,9 @@ export const JoinPool = () => {
     config: { options },
   } = useOverlay().canvas;
   const { eraStakers } = useStaking();
+  const { poolsForJoin } = useJoinPools();
   const { getPoolRewardPoints } = usePoolPerformance();
   const { poolsMetaData, bondedPools } = useBondedPools();
-
   const poolRewardPoints = getPoolRewardPoints('pool_join');
 
   // The active canvas tab.
@@ -35,7 +36,7 @@ export const JoinPool = () => {
   // active era.
   const filteredBondedPools = useMemo(
     () =>
-      bondedPools
+      poolsForJoin
         .filter((pool) => {
           // Fetch reward point data for the pool.
           const rawEraRewardPoints =
@@ -55,7 +56,7 @@ export const JoinPool = () => {
             staker.others.find(({ who }) => who !== pool.addresses.stash)
           )
         ),
-    [bondedPools, poolRewardPoints]
+    [poolsForJoin, poolRewardPoints]
   );
 
   // The bonded pool to display. Use the provided `poolId`, or assign a random eligible filtered

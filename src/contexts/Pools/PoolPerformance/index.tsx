@@ -8,7 +8,6 @@ import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import Worker from 'workers/poolPerformance?worker';
 import { useNetwork } from 'contexts/Network';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useApi } from 'contexts/Api';
 import BigNumber from 'bignumber.js';
 import { mergeDeep, setStateWithRef } from '@w3ux/utils';
@@ -40,10 +39,9 @@ export const PoolPerformanceProvider = ({
   children: ReactNode;
 }) => {
   const { network } = useNetwork();
-  const { bondedPools } = useBondedPools();
   const { getPagedErasStakers } = useStaking();
   const { api, activeEra, isPagedRewardsActive } = useApi();
-  const { erasRewardPointsFetched, erasRewardPoints } = useValidators();
+  const { erasRewardPoints } = useValidators();
 
   // Store whether pool performance data is being fetched under a given key. NOTE: Requires a ref to
   // be accessed in `processEra` before re-render.
@@ -247,42 +245,6 @@ export const PoolPerformanceProvider = ({
       }
     }
   };
-
-  // Trigger worker to calculate pool reward data for garaphs once:
-  //
-  // - active era is synced.
-  // - era reward points are fetched.
-  // - bonded pools have been fetched.
-  //
-  // Re-calculates when any of the above change.
-  useEffectIgnoreInitial(() => {
-    if (
-      api &&
-      bondedPools.length &&
-      activeEra.index.isGreaterThan(0) &&
-      erasRewardPointsFetched === 'synced' &&
-      getPerformanceFetchedKey('pool_join')?.status === 'unsynced'
-    ) {
-      // Generate a subset of pools to fetch performance data for. TODO: Send pools to JoinPool
-      // canvas and only select those. Move this logic to a separate context.
-      // const poolJoinSelection = shuffle(
-      //   bondedPools
-      //     .filter(({ state }) => state === 'Open')
-      //     .map(({ addresses }) => addresses.stash)
-      // ).slice(0, 25);
-      // console.log(poolJoinSelection);
-
-      startGetPoolPerformance(
-        'pool_join',
-        bondedPools.map(({ addresses }) => addresses.stash)
-      );
-    }
-  }, [
-    bondedPools,
-    activeEra,
-    erasRewardPointsFetched,
-    getPerformanceFetchedKey('pool_join'),
-  ]);
 
   // Reset state data on network change.
   useEffectIgnoreInitial(() => {
