@@ -82,7 +82,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
 
                     {poolJoinPerformanceTask.status === 'synced' && (
                       <>
-                        Ready to Join Pool
+                        {t('readyToJoinPool', { ns: 'library' })}
                         <FontAwesomeIcon icon={faUserPlus} />
                       </>
                     )}
