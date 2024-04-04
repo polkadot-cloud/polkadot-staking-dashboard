@@ -12,6 +12,7 @@ import type {
   MaybePool,
   NominationStatuses,
   PoolNominations,
+  PoolTab,
 } from './types';
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, MaybeAddress, Sync } from 'types';
@@ -55,6 +56,9 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const [poolsNominations, setPoolsNominations] = useState<
     Record<number, PoolNominations>
   >({});
+
+  // Store pool list active tab. Defaults to `Active` tab.
+  const [poolListActiveTab, setPoolListActiveTab] = useState<PoolTab>('Active');
 
   // Fetch all bonded pool entries and their metadata.
   const fetchBondedPools = async () => {
@@ -425,6 +429,8 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
         poolsMetaData,
         poolsNominations,
         updatePoolNominations,
+        poolListActiveTab,
+        setPoolListActiveTab,
       }}
     >
       {children}

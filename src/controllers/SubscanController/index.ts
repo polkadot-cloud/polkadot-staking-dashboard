@@ -12,7 +12,7 @@ import type {
 import type { Locale } from 'date-fns';
 import { format, fromUnixTime, getUnixTime, subDays } from 'date-fns';
 import type { PoolMember } from 'contexts/Pools/PoolMembers/types';
-import { listItemsPerPage } from 'library/List/defaults';
+import { poolMembersPerPage } from 'library/List/defaults';
 
 export class SubscanController {
   // ------------------------------------------------------
@@ -160,7 +160,7 @@ export class SubscanController {
   ): Promise<PoolMember[]> => {
     const result = await this.makeRequest(this.ENDPOINTS.poolMembers, {
       pool_id: poolId,
-      row: listItemsPerPage,
+      row: poolMembersPerPage,
       page: page - 1,
     });
     if (!result?.list) {

@@ -35,7 +35,7 @@ import { FilterHeaders } from './Filters/FilterHeaders';
 import { FilterBadges } from './Filters/FilterBadges';
 import type { NominationStatus } from './ValidatorItem/types';
 import { useSyncing } from 'hooks/useSyncing';
-import { listItemsPerBatch, listItemsPerPage } from 'library/List/defaults';
+import { validatorsPerPage } from 'library/List/defaults';
 
 export const ValidatorListInner = ({
   // Default list values.
@@ -57,9 +57,8 @@ export const ValidatorListInner = ({
   allowListFormat = true,
   defaultOrder = undefined,
   defaultFilters = undefined,
-  // Throttling and re-fetching.
+  // Re-fetching.
   alwaysRefetchValidators = false,
-  disableThrottle = false,
 }: ValidatorListProps) => {
   const { t } = useTranslation('library');
   const {
@@ -163,26 +162,10 @@ export const ValidatorListInner = ({
   // Store whether the search bar is being used.
   const [isSearching, setIsSearching] = useState<boolean>(false);
 
-  // Current render iteration.
-  const [renderIteration, setRenderIterationState] = useState<number>(1);
-
-  // Render throttle iteration.
-  const renderIterationRef = useRef(renderIteration);
-  const setRenderIteration = (iter: number) => {
-    renderIterationRef.current = iter;
-    setRenderIterationState(iter);
-  };
-
   // Pagination.
-  const totalPages = Math.ceil(validators.length / listItemsPerPage);
-  const pageEnd = page * listItemsPerPage - 1;
-  const pageStart = pageEnd - (listItemsPerPage - 1);
-
-  // Render batch.
-  const batchEnd = Math.min(
-    renderIteration * listItemsPerBatch - 1,
-    listItemsPerPage
-  );
+  const totalPages = Math.ceil(validators.length / validatorsPerPage);
+  const pageEnd = page * validatorsPerPage - 1;
+  const pageStart = pageEnd - (validatorsPerPage - 1);
 
   // handle filter / order update
   const handleValidatorsFilterUpdate = (
@@ -198,14 +181,13 @@ export const ValidatorListInner = ({
       }
       setValidators(filteredValidators);
       setPage(1);
-      setRenderIteration(1);
     }
   };
 
   // get throttled subset or entire list
-  const listValidators = disableThrottle
-    ? validators
-    : validators.slice(pageStart).slice(0, listItemsPerPage);
+  const listValidators = validators
+    .slice(pageStart)
+    .slice(0, validatorsPerPage);
 
   // if in modal, handle resize
   const maybeHandleModalResize = () => {
@@ -233,7 +215,6 @@ export const ValidatorListInner = ({
     setValidators(filteredValidators);
     setPage(1);
     setIsSearching(e.currentTarget.value !== '');
-    setRenderIteration(1);
     setSearchTerm('validators', newValue);
   };
 
@@ -300,15 +281,6 @@ export const ValidatorListInner = ({
     }
   }, [isReady, activeEra.index, syncing, fetched]);
 
-  // Control render throttle.
-  useEffect(() => {
-    if (!(batchEnd >= pageEnd || disableThrottle)) {
-      setTimeout(() => {
-        setRenderIteration(renderIterationRef.current + 1);
-      }, 50);
-    }
-  }, [renderIterationRef.current]);
-
   // Trigger `onSelected` when selection changes.
   useEffect(() => {
     if (onSelected) {
@@ -326,7 +298,7 @@ export const ValidatorListInner = ({
   // Handle modal resize on list format change.
   useEffect(() => {
     maybeHandleModalResize();
-  }, [listFormat, renderIteration, validators, page]);
+  }, [listFormat, validators, page]);
 
   return (
     <ListWrapper>

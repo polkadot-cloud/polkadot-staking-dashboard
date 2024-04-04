@@ -6,7 +6,6 @@ import type { AnySubscan } from 'types';
 export interface PayoutListProps {
   allowMoreCols?: boolean;
   pagination?: boolean;
-  disableThrottle?: boolean;
   title?: string | null;
   payoutsList?: AnySubscan;
   payouts?: AnySubscan;

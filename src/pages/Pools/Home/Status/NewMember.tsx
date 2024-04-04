@@ -3,28 +3,38 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CallToActionWrapper } from '../../../../library/CallToAction';
-import { faChevronRight, faUserGroup } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronRight,
+  faUserGroup,
+  faUserPlus,
+} from '@fortawesome/free-solid-svg-icons';
 import { useSetup } from 'contexts/Setup';
-import { usePoolsTabs } from '../context';
 import { useStatusButtons } from './useStatusButtons';
 import { useTranslation } from 'react-i18next';
 import { useOverlay } from 'kits/Overlay/Provider';
 import type { NewMemberProps } from './types';
 import { CallToActionLoader } from 'library/Loader/CallToAction';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
+import { FindingPoolsPercent } from './FindingPoolPercent';
+import { useJoinPools } from 'contexts/Pools/JoinPools';
 
 export const NewMember = ({ syncing }: NewMemberProps) => {
   const { t } = useTranslation();
   const { setOnPoolSetup } = useSetup();
-  const { setActiveTab } = usePoolsTabs();
+  const { poolsForJoin } = useJoinPools();
   const { openCanvas } = useOverlay().canvas;
-  const { poolRewardPointsFetched } = usePoolPerformance();
-  const { disableJoin, disableCreate } = useStatusButtons();
+  const { startJoinPoolFetch } = useJoinPools();
+  const { getPoolPerformanceTask } = usePoolPerformance();
+  const { getJoinDisabled, getCreateDisabled } = useStatusButtons();
 
-  const joinButtonDisabled =
-    disableJoin() || poolRewardPointsFetched !== 'synced';
+  // Get the pool performance task to determine if performance data is ready.
+  const poolJoinPerformanceTask = getPoolPerformanceTask('pool_join');
 
-  const createButtonDisabled = disableCreate();
+  // Alias for create button disabled state.
+  const createDisabled = getCreateDisabled();
+
+  // Disable opening the canvas if data is not ready.
+  const joinButtonDisabled = getJoinDisabled() || !poolsForJoin.length;
 
   return (
     <CallToActionWrapper>
@@ -33,39 +43,51 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
           <CallToActionLoader />
         ) : (
           <>
-            <section>
+            <section className="fixedWidth">
               <div className="buttons">
                 <div
-                  className={`button primary${joinButtonDisabled ? ` disabled` : ``}`}
+                  className={`button primary standalone${getJoinDisabled() ? ` disabled` : ``}${poolJoinPerformanceTask.status === 'synced' ? ` pulse` : ``}${poolJoinPerformanceTask.status === 'syncing' ? ` inactive` : ``}`}
                 >
                   <button
-                    onClick={() =>
-                      openCanvas({
-                        key: 'JoinPool',
-                        options: {},
-                        size: 'xl',
-                      })
-                    }
+                    onClick={() => {
+                      // Start sync process, otherwise, open canvas.
+                      if (poolJoinPerformanceTask.status === 'unsynced') {
+                        startJoinPoolFetch();
+                      } else if (poolJoinPerformanceTask.status === 'synced') {
+                        openCanvas({
+                          key: 'JoinPool',
+                          options: {},
+                          size: 'xl',
+                        });
+                      } else {
+                        // Syncing in progress, don't do anything.
+                        return;
+                      }
+                    }}
                     disabled={joinButtonDisabled}
                   >
-                    {poolRewardPointsFetched !== 'synced' ? (
-                      t('syncingPoolData', { ns: 'library' })
-                    ) : (
+                    {poolJoinPerformanceTask.status === 'unsynced' && (
                       <>
                         {t('pools.joinPool', { ns: 'pages' })}
                         <FontAwesomeIcon icon={faUserGroup} />
                       </>
                     )}
-                  </button>
-                </div>
 
-                <div className="button secondary">
-                  <button onClick={() => setActiveTab(1)}>
-                    {t('pools.browsePools', { ns: 'pages' })}
-                    <FontAwesomeIcon
-                      icon={faChevronRight}
-                      transform={'shrink-4'}
-                    />
+                    {poolJoinPerformanceTask.status === 'syncing' && (
+                      <>
+                        {t('syncingPoolData', { ns: 'library' })}{' '}
+                        <div className="loader"></div>
+                      </>
+                    )}
+
+                    {poolJoinPerformanceTask.status === 'synced' && (
+                      <>
+                        {t('readyToJoinPool', { ns: 'library' })}
+                        <FontAwesomeIcon icon={faUserPlus} />
+                      </>
+                    )}
+
+                    <FindingPoolsPercent />
                   </button>
                 </div>
               </div>
@@ -73,11 +95,11 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
             <section>
               <div className="buttons">
                 <div
-                  className={`button secondary standalone${createButtonDisabled ? ` disabled` : ``}`}
+                  className={`button secondary standalone${createDisabled ? ` disabled` : ``}`}
                 >
                   <button
                     onClick={() => setOnPoolSetup(true)}
-                    disabled={createButtonDisabled}
+                    disabled={createDisabled}
                   >
                     {t('pools.createPool', { ns: 'pages' })}
                     <FontAwesomeIcon

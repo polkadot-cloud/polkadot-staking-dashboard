@@ -143,7 +143,6 @@ export const Nominations = ({
           format="nomination"
           refetchOnListUpdate
           allowMoreCols
-          disableThrottle
           allowListFormat={false}
         />
       ) : poolDestroying ? (

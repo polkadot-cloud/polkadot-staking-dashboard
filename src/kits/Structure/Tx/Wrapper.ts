@@ -127,13 +127,13 @@ export const SignerWrapper = styled.p`
 
   .not-enough {
     margin-left: 0.5rem;
-  }
 
-  .danger {
-    color: var(--status-danger-color);
-  }
+    > .danger {
+      color: var(--status-danger-color);
+    }
 
-  > .icon {
-    margin-right: 0.3rem;
+    > .icon {
+      margin-right: 0.3rem;
+    }
   }
 `;

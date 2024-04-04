@@ -25,19 +25,20 @@ export const Header = ({
   autoSelected,
   setActiveTab,
   setSelectedPoolId,
-  setSelectedPoolCount,
 }: JoinPoolHeaderProps) => {
   const { t } = useTranslation();
   const { closeCanvas } = useOverlay().canvas;
 
   // Randomly select a new pool to display.
   const handleChooseNewPool = () => {
-    // Trigger refresh of memoied selected bonded pool.
-    setSelectedPoolCount((prev: number) => prev + 1);
+    // Remove current pool from filtered so it is not selected again.
+    const filteredPools = filteredBondedPools.filter(
+      (pool) => String(pool.id) !== String(bondedPool.id)
+    );
 
     // Randomly select a filtered bonded pool and set it as the selected pool.
-    const index = Math.ceil(Math.random() * filteredBondedPools.length - 1);
-    setSelectedPoolId(filteredBondedPools[index].id);
+    const index = Math.ceil(Math.random() * filteredPools.length - 1);
+    setSelectedPoolId(filteredPools[index].id);
   };
 
   return (

@@ -4,7 +4,11 @@
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
 import type { AnyFunction, AnyJson } from 'types';
-import { defaultFiltersInterface } from './defaults';
+import {
+  defaultExcludes,
+  defaultFiltersInterface,
+  defaultIncludes,
+} from './defaults';
 import type {
   FilterItem,
   FilterItems,
@@ -24,10 +28,10 @@ export const useFilters = () => useContext(FiltersContext);
 
 export const FiltersProvider = ({ children }: { children: ReactNode }) => {
   // groups along with their includes
-  const [includes, setIncludes] = useState<FilterItems>([]);
+  const [includes, setIncludes] = useState<FilterItems>(defaultIncludes);
 
   // groups along with their excludes.
-  const [excludes, setExcludes] = useState<FilterItems>([]);
+  const [excludes, setExcludes] = useState<FilterItems>(defaultExcludes);
 
   // groups along with their order.
   const [orders, setOrders] = useState<FilterOrders>([]);

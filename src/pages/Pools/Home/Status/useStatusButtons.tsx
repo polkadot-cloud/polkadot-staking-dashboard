@@ -26,7 +26,7 @@ export const useStatusButtons = () => {
   const membership = getPoolMembership(activeAccount);
   const { active } = getTransferOptions(activeAccount).pool;
 
-  const disableCreate = () => {
+  const getCreateDisabled = () => {
     if (!isReady || isReadOnlyAccount(activeAccount) || !activeAccount) {
       return true;
     }
@@ -41,7 +41,7 @@ export const useStatusButtons = () => {
 
   let label;
 
-  const disableJoin = () =>
+  const getJoinDisabled = () =>
     !isReady ||
     isReadOnlyAccount(activeAccount) ||
     !activeAccount ||
@@ -56,5 +56,5 @@ export const useStatusButtons = () => {
   } else {
     label = `${t('pools.leavingPool')} ${membership.poolId}`;
   }
-  return { label, disableJoin, disableCreate };
+  return { label, getJoinDisabled, getCreateDisabled };
 };
