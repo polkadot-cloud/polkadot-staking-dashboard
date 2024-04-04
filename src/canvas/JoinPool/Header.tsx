@@ -38,7 +38,6 @@ export const Header = ({
 
     // Randomly select a filtered bonded pool and set it as the selected pool.
     const index = Math.ceil(Math.random() * filteredPools.length - 1);
-    console.log(filteredPools[index].id);
     setSelectedPoolId(filteredPools[index].id);
   };
 
