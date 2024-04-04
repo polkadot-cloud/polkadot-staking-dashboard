@@ -11,6 +11,7 @@ import { useOverlay } from 'kits/Overlay/Provider';
 import type { NewMemberProps } from './types';
 import { CallToActionLoader } from 'library/Loader/CallToAction';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
+import { FindingPoolsPercent } from './FindingPoolPercent';
 
 export const NewMember = ({ syncing }: NewMemberProps) => {
   const { t } = useTranslation();
@@ -36,10 +37,10 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
           <CallToActionLoader />
         ) : (
           <>
-            <section>
+            <section className="fixedWidth">
               <div className="buttons">
                 <div
-                  className={`button primary standalone${joinButtonDisabled ? ` disabled` : ``}`}
+                  className={`button primary standalone${getJoinDisabled() ? ` disabled` : ``}`}
                 >
                   <button
                     onClick={() =>
@@ -52,13 +53,19 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                     disabled={joinButtonDisabled}
                   >
                     {poolJoinPerformanceTask.status !== 'synced' ? (
-                      t('syncingPoolData', { ns: 'library' })
+                      <>{t('syncingPoolData', { ns: 'library' })}</>
                     ) : (
                       <>
                         {t('pools.joinPool', { ns: 'pages' })}
                         <FontAwesomeIcon icon={faUserGroup} />
                       </>
                     )}
+
+                    {poolJoinPerformanceTask.status !== 'synced' && (
+                      <div className="loader"></div>
+                    )}
+
+                    <FindingPoolsPercent />
                   </button>
                 </div>
               </div>

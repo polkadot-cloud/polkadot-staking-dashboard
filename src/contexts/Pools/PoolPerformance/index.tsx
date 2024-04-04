@@ -86,10 +86,12 @@ export const PoolPerformanceProvider = ({
     currentEra: BigNumber,
     endEra: BigNumber
   ) => {
+    const startEra = activeEra.index;
+
     setStateWithRef(
       {
         ...tasksRef.current,
-        [key]: { status, addresses, endEra, currentEra },
+        [key]: { status, addresses, startEra, endEra, currentEra },
       },
       setTasks,
       tasksRef

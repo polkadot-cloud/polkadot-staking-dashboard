@@ -185,7 +185,7 @@
     "signing": "Signing",
     "submitTransaction": "Ready to submit transaction.",
     "syncing": "Syncing",
-    "syncingPoolData": "Syncing Pool Data",
+    "syncingPoolData": "Finding Pools to Join",
     "syncingPoolList": "Syncing Pool list",
     "tooSmall": "Bond amount is too small.",
     "top": "Top",

@@ -11,6 +11,7 @@ import type {
 export const defaultPoolPerformanceTask: PoolPerformanceTaskStatus = {
   status: 'unsynced',
   addresses: [],
+  startEra: BigNumber(0),
   currentEra: BigNumber(0),
   endEra: BigNumber(0),
 };

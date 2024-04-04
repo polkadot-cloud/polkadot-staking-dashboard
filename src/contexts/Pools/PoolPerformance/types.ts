@@ -32,6 +32,7 @@ export type PoolPerformanceTasks = Partial<
 export interface PoolPerformanceTaskStatus {
   status: Sync;
   addresses: string[];
+  startEra: BigNumber;
   currentEra: BigNumber;
   endEra: BigNumber;
 }

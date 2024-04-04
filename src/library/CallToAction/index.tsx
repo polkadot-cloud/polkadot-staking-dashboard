@@ -37,10 +37,20 @@ export const CallToActionWrapper = styled.div`
 
       &:nth-child(1) {
         flex-grow: 1;
-
         @media (min-width: 651px) {
           border-right: 1px solid var(--border-primary-color);
           padding-right: 1rem;
+
+          &.fixedWidth {
+            flex-grow: 0;
+            flex-basis: 70%;
+          }
+        }
+
+        @media (max-width: 650px) {
+          &.fixedWidth {
+            flex-basis: 100%;
+          }
         }
       }
 
@@ -170,8 +180,68 @@ export const CallToActionWrapper = styled.div`
             justify-content: center;
             flex-wrap: nowrap;
             font-size: 1.3rem;
+            line-height: 1.3rem;
             width: 100%;
 
+            .counter {
+              font-family: InterBold, sans-serif;
+              font-size: 1.1rem;
+              margin-left: 0.75rem;
+            }
+
+            .loader {
+              height: 0.8rem;
+              margin-left: 1.6rem;
+              aspect-ratio: 5;
+              --_g: no-repeat radial-gradient(farthest-side, white 94%, #0000);
+              background: var(--_g), var(--_g), var(--_g), var(--_g);
+              background-size: 20% 100%;
+              animation:
+                l40-1 0.75s infinite alternate,
+                l40-2 1.5s infinite alternate;
+            }
+            @keyframes l40-1 {
+              0%,
+              10% {
+                background-position:
+                  0 0,
+                  0 0,
+                  0 0,
+                  0 0;
+              }
+              33% {
+                background-position:
+                  0 0,
+                  calc(100% / 3) 0,
+                  calc(100% / 3) 0,
+                  calc(100% / 3) 0;
+              }
+              66% {
+                background-position:
+                  0 0,
+                  calc(100% / 3) 0,
+                  calc(2 * 100% / 3) 0,
+                  calc(2 * 100% / 3) 0;
+              }
+              90%,
+              100% {
+                background-position:
+                  0 0,
+                  calc(100% / 3) 0,
+                  calc(2 * 100% / 3) 0,
+                  100% 0;
+              }
+            }
+            @keyframes l40-2 {
+              0%,
+              49.99% {
+                transform: scale(1);
+              }
+              50%,
+              100% {
+                transform: scale(-1);
+              }
+            }
             &:disabled {
               cursor: default;
             }

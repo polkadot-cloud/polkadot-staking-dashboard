@@ -182,7 +182,7 @@
     "signing": "签署中",
     "submitTransaction": "准备提交交易",
     "syncing": "正在同步",
-    "syncingPoolData": "同步提名池数据中",
+    "syncingPoolData": "Finding Pools to Join",
     "syncingPoolList": "同步提名池列表",
     "tooSmall": "质押金额太少",
     "top": "首",
