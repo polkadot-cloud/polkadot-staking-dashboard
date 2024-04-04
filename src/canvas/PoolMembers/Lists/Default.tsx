@@ -4,7 +4,7 @@
 import { isNotZero } from '@w3ux/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { listItemsPerPage } from 'library/List/defaults';
+import { poolMembersPerPage } from 'library/List/defaults';
 import { useApi } from 'contexts/Api';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { List, ListStatusHeader, Wrapper as ListWrapper } from 'library/List';
@@ -39,12 +39,12 @@ export const MembersListInner = ({
   const [fetched, setFetched] = useState<Sync>('unsynced');
 
   // pagination
-  const totalPages = Math.ceil(members.length / listItemsPerPage);
-  const pageEnd = page * listItemsPerPage - 1;
-  const pageStart = pageEnd - (listItemsPerPage - 1);
+  const totalPages = Math.ceil(members.length / poolMembersPerPage);
+  const pageEnd = page * poolMembersPerPage - 1;
+  const pageStart = pageEnd - (poolMembersPerPage - 1);
 
   // get throttled subset or entire list
-  const listMembers = members.slice(pageStart).slice(0, listItemsPerPage);
+  const listMembers = members.slice(pageStart).slice(0, poolMembersPerPage);
 
   // handle validator list bootstrapping
   const setupMembersList = () => {

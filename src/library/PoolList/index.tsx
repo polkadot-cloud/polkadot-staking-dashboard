@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import type { FormEvent } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { listItemsPerPage } from 'library/List/defaults';
+import { poolsPerPage } from 'library/List/defaults';
 import { useFilters } from 'contexts/Filters';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTheme } from 'contexts/Themes';
@@ -82,12 +82,12 @@ export const PoolList = ({
   const [synced, setSynced] = useState<boolean>(false);
 
   // pagination
-  const totalPages = Math.ceil(listPools.length / listItemsPerPage);
-  const pageEnd = page * listItemsPerPage - 1;
-  const pageStart = pageEnd - (listItemsPerPage - 1);
+  const totalPages = Math.ceil(listPools.length / poolsPerPage);
+  const pageEnd = page * poolsPerPage - 1;
+  const pageStart = pageEnd - (poolsPerPage - 1);
 
   // get paged subset of list items.
-  const poolsToDisplay = listPools.slice(pageStart).slice(0, listItemsPerPage);
+  const poolsToDisplay = listPools.slice(pageStart).slice(0, poolsPerPage);
 
   // Handle resetting of pool list when provided pools change.
   const resetPoolList = () => {

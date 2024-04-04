@@ -3,7 +3,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { listItemsPerPage } from 'library/List/defaults';
+import { poolMembersPerPage } from 'library/List/defaults';
 import { usePlugins } from 'contexts/Plugins';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
@@ -40,9 +40,9 @@ export const MembersListInner = ({
   const [page, setPage] = useState<number>(1);
 
   // pagination
-  const totalPages = Math.ceil(Number(memberCount) / listItemsPerPage);
-  const pageEnd = listItemsPerPage - 1;
-  const pageStart = pageEnd - (listItemsPerPage - 1);
+  const totalPages = Math.ceil(Number(memberCount) / poolMembersPerPage);
+  const pageEnd = poolMembersPerPage - 1;
+  const pageStart = pageEnd - (poolMembersPerPage - 1);
 
   // handle validator list bootstrapping
   const fetchingMemberList = useRef<boolean>(false);
@@ -68,7 +68,7 @@ export const MembersListInner = ({
   // get throttled subset or entire list
   const listMembers = poolMembersApi
     .slice(pageStart)
-    .slice(0, listItemsPerPage);
+    .slice(0, poolMembersPerPage);
 
   // Refetch list when page changes.
   useEffect(() => {

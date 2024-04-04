@@ -25,7 +25,7 @@ import { useNetwork } from 'contexts/Network';
 import { ItemWrapper } from '../Wrappers';
 import type { PayoutListProps } from '../types';
 import { PayoutListProvider, usePayoutList } from './context';
-import { listItemsPerPage } from 'library/List/defaults';
+import { payoutsPerPage } from 'library/List/defaults';
 
 export const PayoutListInner = ({
   allowMoreCols,
@@ -53,9 +53,9 @@ export const PayoutListInner = ({
   const [fetched, setFetched] = useState<boolean>(false);
 
   // pagination
-  const totalPages = Math.ceil(payouts.length / listItemsPerPage);
-  const pageEnd = page * listItemsPerPage - 1;
-  const pageStart = pageEnd - (listItemsPerPage - 1);
+  const totalPages = Math.ceil(payouts.length / payoutsPerPage);
+  const pageEnd = page * payoutsPerPage - 1;
+  const pageStart = pageEnd - (payoutsPerPage - 1);
 
   // refetch list when list changes
   useEffect(() => {
@@ -74,7 +74,7 @@ export const PayoutListInner = ({
   let listPayouts = [];
 
   // get throttled subset or entire list
-  listPayouts = payouts.slice(pageStart).slice(0, listItemsPerPage);
+  listPayouts = payouts.slice(pageStart).slice(0, payoutsPerPage);
 
   if (!payouts.length) {
     return null;

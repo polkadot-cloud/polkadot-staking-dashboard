@@ -35,7 +35,7 @@ import { FilterHeaders } from './Filters/FilterHeaders';
 import { FilterBadges } from './Filters/FilterBadges';
 import type { NominationStatus } from './ValidatorItem/types';
 import { useSyncing } from 'hooks/useSyncing';
-import { listItemsPerPage } from 'library/List/defaults';
+import { validatorsPerPage } from 'library/List/defaults';
 
 export const ValidatorListInner = ({
   // Default list values.
@@ -163,9 +163,9 @@ export const ValidatorListInner = ({
   const [isSearching, setIsSearching] = useState<boolean>(false);
 
   // Pagination.
-  const totalPages = Math.ceil(validators.length / listItemsPerPage);
-  const pageEnd = page * listItemsPerPage - 1;
-  const pageStart = pageEnd - (listItemsPerPage - 1);
+  const totalPages = Math.ceil(validators.length / validatorsPerPage);
+  const pageEnd = page * validatorsPerPage - 1;
+  const pageStart = pageEnd - (validatorsPerPage - 1);
 
   // handle filter / order update
   const handleValidatorsFilterUpdate = (
@@ -185,7 +185,9 @@ export const ValidatorListInner = ({
   };
 
   // get throttled subset or entire list
-  const listValidators = validators.slice(pageStart).slice(0, listItemsPerPage);
+  const listValidators = validators
+    .slice(pageStart)
+    .slice(0, validatorsPerPage);
 
   // if in modal, handle resize
   const maybeHandleModalResize = () => {
