@@ -3,7 +3,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { listItemsPerBatch, listItemsPerPage } from 'library/List/defaults';
+import { listItemsPerPage } from 'library/List/defaults';
 import { usePlugins } from 'contexts/Plugins';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
@@ -21,7 +21,6 @@ import { SubscanController } from 'controllers/SubscanController';
 export const MembersListInner = ({
   pagination,
   batchKey,
-  disableThrottle = false,
   memberCount,
 }: FetchpageMembersListProps) => {
   const { t } = useTranslation('pages');
@@ -40,26 +39,10 @@ export const MembersListInner = ({
   // current page.
   const [page, setPage] = useState<number>(1);
 
-  // current render iteration.
-  const [renderIteration, setRenderIterationState] = useState<number>(1);
-
-  // render throttle iteration.
-  const renderIterationRef = useRef(renderIteration);
-  const setRenderIteration = (iter: number) => {
-    renderIterationRef.current = iter;
-    setRenderIterationState(iter);
-  };
-
   // pagination
   const totalPages = Math.ceil(Number(memberCount) / listItemsPerPage);
   const pageEnd = listItemsPerPage - 1;
   const pageStart = pageEnd - (listItemsPerPage - 1);
-
-  // render batch
-  const batchEnd = Math.min(
-    renderIteration * listItemsPerBatch - 1,
-    listItemsPerPage
-  );
 
   // handle validator list bootstrapping
   const fetchingMemberList = useRef<boolean>(false);
@@ -108,15 +91,6 @@ export const MembersListInner = ({
       setupMembersList();
     }
   }, [fetchedPoolMembersApi, activePool]);
-
-  // Render throttle.
-  useEffect(() => {
-    if (!(batchEnd >= pageEnd || disableThrottle)) {
-      setTimeout(() => {
-        setRenderIteration(renderIterationRef.current + 1);
-      }, 500);
-    }
-  }, [renderIterationRef.current]);
 
   return (
     <ListWrapper>

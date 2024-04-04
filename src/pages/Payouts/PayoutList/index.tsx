@@ -7,7 +7,7 @@ import { ellipsisFn, isNotZero, planckToUnit } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { formatDistance, fromUnixTime } from 'date-fns';
 import { motion } from 'framer-motion';
-import { Component, useEffect, useRef, useState } from 'react';
+import { Component, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -25,14 +25,13 @@ import { useNetwork } from 'contexts/Network';
 import { ItemWrapper } from '../Wrappers';
 import type { PayoutListProps } from '../types';
 import { PayoutListProvider, usePayoutList } from './context';
-import { listItemsPerPage, listItemsPerBatch } from 'library/List/defaults';
+import { listItemsPerPage } from 'library/List/defaults';
 
 export const PayoutListInner = ({
   allowMoreCols,
   pagination,
   title,
   payouts: initialPayouts,
-  disableThrottle = false,
 }: PayoutListProps) => {
   const { i18n, t } = useTranslation('pages');
   const { mode } = useTheme();
@@ -47,32 +46,16 @@ export const PayoutListInner = ({
   // current page
   const [page, setPage] = useState<number>(1);
 
-  // current render iteration
-  const [renderIteration, _setRenderIteration] = useState<number>(1);
-
   // manipulated list (ordering, filtering) of payouts
   const [payouts, setPayouts] = useState<AnySubscan>(initialPayouts);
 
   // is this the initial fetch
   const [fetched, setFetched] = useState<boolean>(false);
 
-  // render throttle iteration
-  const renderIterationRef = useRef(renderIteration);
-  const setRenderIteration = (iter: number) => {
-    renderIterationRef.current = iter;
-    _setRenderIteration(iter);
-  };
-
   // pagination
   const totalPages = Math.ceil(payouts.length / listItemsPerPage);
   const pageEnd = page * listItemsPerPage - 1;
   const pageStart = pageEnd - (listItemsPerPage - 1);
-
-  // render batch
-  const batchEnd = Math.min(
-    renderIteration * listItemsPerBatch - 1,
-    listItemsPerPage
-  );
 
   // refetch list when list changes
   useEffect(() => {
@@ -87,24 +70,11 @@ export const PayoutListInner = ({
     }
   }, [isReady, fetched, activeEra.index]);
 
-  // render throttle
-  useEffect(() => {
-    if (!(batchEnd >= pageEnd || disableThrottle)) {
-      setTimeout(() => {
-        setRenderIteration(renderIterationRef.current + 1);
-      }, 500);
-    }
-  }, [renderIterationRef.current]);
-
   // get list items to render
   let listPayouts = [];
 
   // get throttled subset or entire list
-  if (!disableThrottle) {
-    listPayouts = payouts.slice(pageStart).slice(0, listItemsPerPage);
-  } else {
-    listPayouts = payouts;
-  }
+  listPayouts = payouts.slice(pageStart).slice(0, listItemsPerPage);
 
   if (!payouts.length) {
     return null;

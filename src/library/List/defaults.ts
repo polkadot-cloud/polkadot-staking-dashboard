@@ -16,8 +16,5 @@ export const defaultContext: ListContextInterface = {
   selectToggleable: true,
 };
 
-// Total list items to show per page.
+// The default amount of list items to show per page.
 export const listItemsPerPage = 25;
-
-// If throttling a list of items, how many items to show per batch.
-export const listItemsPerBatch = 25;
