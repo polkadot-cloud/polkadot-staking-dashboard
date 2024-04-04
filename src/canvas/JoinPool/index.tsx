@@ -5,7 +5,7 @@ import { CanvasFullScreenWrapper } from 'canvas/Wrappers';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { JoinPoolInterfaceWrapper } from './Wrappers';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Header } from './Header';
 import { Overview } from './Overview';
 import { Nominations } from './Nominations';
@@ -27,9 +27,6 @@ export const JoinPool = () => {
 
   // The active canvas tab.
   const [activeTab, setActiveTab] = useState<number>(0);
-
-  // Trigger re-render when chosen selected pool is incremented.
-  const [selectedPoolCount, setSelectedPoolCount] = useState<number>(0);
 
   // Filter bonded pools to only those that are open and that have active daily rewards for the last
   // `MaxEraRewardPointsEras` eras. The second filter checks if the pool is in `eraStakers` for the
@@ -59,25 +56,36 @@ export const JoinPool = () => {
     [poolsForJoin, poolRewardPoints]
   );
 
+  const initialSelectedPoolId = useMemo(
+    () =>
+      options?.poolId ||
+      filteredBondedPools[(filteredBondedPools.length * Math.random()) << 0]
+        .id ||
+      0,
+    []
+  );
+
+  // The selected bonded pool id. Assigns a random id if one is not provided.
+  const [selectedPoolId, setSelectedPoolId] = useState<number>(
+    initialSelectedPoolId
+  );
+
   // The bonded pool to display. Use the provided `poolId`, or assign a random eligible filtered
   // pool otherwise. Re-fetches when the selected pool count is incremented.
   const bondedPool = useMemo(
-    () =>
-      options?.poolId
-        ? bondedPools.find(({ id }) => id === options.poolId)
-        : filteredBondedPools[
-            (filteredBondedPools.length * Math.random()) << 0
-          ],
-    [selectedPoolCount]
+    () => bondedPools.find(({ id }) => id === selectedPoolId),
+    [selectedPoolId]
   );
 
-  // The selected bonded pool id.
-  const [selectedPoolId, setSelectedPoolId] = useState<number>(
-    bondedPool?.id || 0
-  );
+  // Close canvas if no pool id is selected.
+  useEffect(() => {
+    if (selectedPoolId === 0) {
+      closeCanvas();
+    }
+  }, [selectedPoolId]);
 
+  // Ensure bonded pool exists before rendering. Canvas should close if this is the case.
   if (!bondedPool) {
-    closeCanvas();
     return null;
   }
 
@@ -89,7 +97,6 @@ export const JoinPool = () => {
         setSelectedPoolId={setSelectedPoolId}
         bondedPool={bondedPool}
         metadata={poolsMetaData[selectedPoolId]}
-        setSelectedPoolCount={setSelectedPoolCount}
         autoSelected={options?.poolId === undefined}
         filteredBondedPools={filteredBondedPools}
       />
