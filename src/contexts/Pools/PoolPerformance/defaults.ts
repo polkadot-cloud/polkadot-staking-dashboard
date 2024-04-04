@@ -5,10 +5,10 @@
 import BigNumber from 'bignumber.js';
 import type {
   PoolPerformanceContextInterface,
-  PoolPerformanceFetchingStatus,
+  PoolPerformanceTaskStatus,
 } from './types';
 
-export const defaultPerformanceFetched: PoolPerformanceFetchingStatus = {
+export const defaultPoolPerformanceTask: PoolPerformanceTaskStatus = {
   status: 'unsynced',
   addresses: [],
   currentEra: BigNumber(0),
@@ -16,8 +16,8 @@ export const defaultPerformanceFetched: PoolPerformanceFetchingStatus = {
 };
 export const defaultPoolPerformanceContext: PoolPerformanceContextInterface = {
   getPoolRewardPoints: () => ({}),
-  getPerformanceFetchedKey: (key) => defaultPerformanceFetched,
-  setPerformanceFetchedKey: (key, status, addresses) => {},
-  updatePerformanceFetchedKey: (key, status) => {},
-  startGetPoolPerformance: (key, addresses) => {},
+  getPoolPerformanceTask: (key) => defaultPoolPerformanceTask,
+  setNewPoolPerformanceTask: (key, status, addresses) => {},
+  updatePoolPerformanceTask: (key, status) => {},
+  startPoolRewardPointsFetch: (key, addresses) => {},
 };

@@ -23,7 +23,7 @@ export const JoinPoolsProvider = ({ children }: { children: ReactNode }) => {
   const { api, activeEra } = useApi();
   const { bondedPools } = useBondedPools();
   const { erasRewardPointsFetched } = useValidators();
-  const { getPerformanceFetchedKey, startGetPoolPerformance } =
+  const { getPoolPerformanceTask, startPoolRewardPointsFetch } =
     usePoolPerformance();
 
   // Save the bonded pools subset for pool joining.
@@ -36,7 +36,7 @@ export const JoinPoolsProvider = ({ children }: { children: ReactNode }) => {
       bondedPools.length &&
       activeEra.index.isGreaterThan(0) &&
       erasRewardPointsFetched === 'synced' &&
-      getPerformanceFetchedKey('pool_join')?.status === 'unsynced'
+      getPoolPerformanceTask('pool_join')?.status === 'unsynced'
     ) {
       // Generate a subset of pools to fetch performance data for. TODO: Send pools to JoinPool
       // canvas and only select those. Move this logic to a separate context.
@@ -46,7 +46,7 @@ export const JoinPoolsProvider = ({ children }: { children: ReactNode }) => {
 
       setPoolsToJoin(poolJoinSelection);
 
-      startGetPoolPerformance(
+      startPoolRewardPointsFetch(
         'pool_join',
         poolJoinSelection.map(({ addresses }) => addresses.stash)
       );
@@ -55,7 +55,7 @@ export const JoinPoolsProvider = ({ children }: { children: ReactNode }) => {
     bondedPools,
     activeEra,
     erasRewardPointsFetched,
-    getPerformanceFetchedKey('pool_join'),
+    getPoolPerformanceTask('pool_join'),
   ]);
 
   return (

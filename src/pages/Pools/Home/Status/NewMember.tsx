@@ -16,11 +16,11 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
   const { t } = useTranslation();
   const { setOnPoolSetup } = useSetup();
   const { openCanvas } = useOverlay().canvas;
-  const { getPerformanceFetchedKey } = usePoolPerformance();
+  const { getPoolPerformanceTask } = usePoolPerformance();
   const { disableJoin, disableCreate } = useStatusButtons();
 
   const poolJoinPerformanceSynced =
-    getPerformanceFetchedKey('pool_join').status === 'synced';
+    getPoolPerformanceTask('pool_join').status === 'synced';
 
   const joinButtonDisabled = disableJoin() || !poolJoinPerformanceSynced;
 

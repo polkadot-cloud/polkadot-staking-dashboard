@@ -5,34 +5,31 @@ import type BigNumber from 'bignumber.js';
 import type { Sync } from 'types';
 
 export interface PoolPerformanceContextInterface {
-  getPoolRewardPoints: (key: PoolRewardPointsBatchKey) => PoolRewardPoints;
-  getPerformanceFetchedKey: (
-    key: PoolRewardPointsBatchKey
-  ) => PoolPerformanceFetchingStatus;
-  setPerformanceFetchedKey: (
-    key: PoolRewardPointsBatchKey,
+  getPoolRewardPoints: (key: PoolRewardPointsKey) => PoolRewardPoints;
+  getPoolPerformanceTask: (
+    key: PoolRewardPointsKey
+  ) => PoolPerformanceTaskStatus;
+  setNewPoolPerformanceTask: (
+    key: PoolRewardPointsKey,
     status: Sync,
     addresses: string[],
     currentEra: BigNumber,
     endEra: BigNumber
   ) => void;
-  updatePerformanceFetchedKey: (
-    key: PoolRewardPointsBatchKey,
-    status: Sync
-  ) => void;
-  startGetPoolPerformance: (
-    key: PoolRewardPointsBatchKey,
+  updatePoolPerformanceTask: (key: PoolRewardPointsKey, status: Sync) => void;
+  startPoolRewardPointsFetch: (
+    key: PoolRewardPointsKey,
     addresses: string[]
   ) => void;
 }
 
 // Fetching status for keys.
-export type PoolPerformanceFetched = Partial<
-  Record<PoolRewardPointsBatchKey, PoolPerformanceFetchingStatus>
+export type PoolPerformanceTasks = Partial<
+  Record<PoolRewardPointsKey, PoolPerformanceTaskStatus>
 >;
 
 // Performance fetching status.
-export interface PoolPerformanceFetchingStatus {
+export interface PoolPerformanceTaskStatus {
   status: Sync;
   addresses: string[];
   currentEra: BigNumber;
@@ -44,10 +41,10 @@ export interface PoolPerformanceFetchingStatus {
  */
 
 // Supported reward points batch keys.
-export type PoolRewardPointsBatchKey = 'pool_join' | 'pool_page';
+export type PoolRewardPointsKey = 'pool_join' | 'pool_page';
 
 // Pool reward batches, keyed by batch key.
-export type PoolRewardPointsBatch = Partial<Record<string, PoolRewardPoints>>;
+export type PoolRewardPointsMap = Partial<Record<string, PoolRewardPoints>>;
 
 // Pool reward points are keyed by era, then by pool address.
 

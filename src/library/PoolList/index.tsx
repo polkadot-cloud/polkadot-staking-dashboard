@@ -51,7 +51,7 @@ export const PoolList = ({
   const { applyFilter } = usePoolFilters();
   const { erasRewardPointsFetched } = useValidators();
   const { listFormat, setListFormat } = usePoolList();
-  const { startGetPoolPerformance } = usePoolPerformance();
+  const { startPoolRewardPointsFetch } = usePoolPerformance();
   const { getFilters, getSearchTerm, setSearchTerm } = useFilters();
   const { poolSearchFilter, poolsNominations, bondedPools } = useBondedPools();
 
@@ -123,7 +123,7 @@ export const PoolList = ({
   // `bondedPools` to be fetched.
   useEffect(() => {
     if (erasRewardPointsFetched && bondedPools.length) {
-      startGetPoolPerformance(
+      startPoolRewardPointsFetch(
         'pool_page',
         poolsToDisplay.map(({ addresses }) => addresses.stash)
       );

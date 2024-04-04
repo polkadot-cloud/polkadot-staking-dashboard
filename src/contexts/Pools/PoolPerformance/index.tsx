@@ -15,13 +15,13 @@ import { useStaking } from 'contexts/Staking';
 import { formatRawExposures } from 'contexts/Staking/Utils';
 import type {
   PoolPerformanceContextInterface,
-  PoolPerformanceFetched,
+  PoolPerformanceTasks,
   PoolRewardPoints,
-  PoolRewardPointsBatch,
-  PoolRewardPointsBatchKey,
+  PoolRewardPointsMap,
+  PoolRewardPointsKey,
 } from './types';
 import {
-  defaultPerformanceFetched,
+  defaultPoolPerformanceTask,
   defaultPoolPerformanceContext,
 } from './defaults';
 import type { Sync } from 'types';
@@ -40,27 +40,26 @@ export const PoolPerformanceProvider = ({
 }) => {
   const { network } = useNetwork();
   const { getPagedErasStakers } = useStaking();
-  const { api, activeEra, isPagedRewardsActive } = useApi();
   const { erasRewardPoints } = useValidators();
+  const { api, activeEra, isPagedRewardsActive } = useApi();
 
-  // Store whether pool performance data is being fetched under a given key. NOTE: Requires a ref to
-  // be accessed in `processEra` before re-render.
-  const [performanceFetched, setPerformanceFetched] =
-    useState<PoolPerformanceFetched>({});
-  const performanceFetchedRef = useRef(performanceFetched);
+  // Store  pool performance task data under a given key as it is being fetched . NOTE: Requires a
+  // ref to be accessed in `processEra` before re-render.
+  const [tasks, setTasks] = useState<PoolPerformanceTasks>({});
+  const tasksRef = useRef(tasks);
 
   // Store pool performance data. NOTE: Requires a ref to update state with current data.
   const [poolRewardPoints, setPoolRewardPointsState] =
-    useState<PoolRewardPointsBatch>({});
+    useState<PoolRewardPointsMap>({});
   const poolRewardPointsRef = useRef(poolRewardPoints);
 
   // Gets a batch of pool reward points, or returns an empty object otherwise.
-  const getPoolRewardPoints = (key: PoolRewardPointsBatchKey) =>
+  const getPoolRewardPoints = (key: PoolRewardPointsKey) =>
     poolRewardPoints?.[key] || {};
 
   // Sets a batch of pool reward points.
   const setPoolRewardPoints = (
-    key: PoolRewardPointsBatchKey,
+    key: PoolRewardPointsKey,
     batch: PoolRewardPoints
   ) => {
     const newRewardPoints = {
@@ -76,12 +75,12 @@ export const PoolPerformanceProvider = ({
   };
 
   // Gets whether pool performance data is being fetched under a given key.
-  const getPerformanceFetchedKey = (key: PoolRewardPointsBatchKey) =>
-    performanceFetched[key] || defaultPerformanceFetched;
+  const getPoolPerformanceTask = (key: PoolRewardPointsKey) =>
+    tasks[key] || defaultPoolPerformanceTask;
 
-  // Sets a pool performance fetching state under a given key.
-  const setPerformanceFetchedKey = (
-    key: PoolRewardPointsBatchKey,
+  // Sets a pool performance task under a given key.
+  const setNewPoolPerformanceTask = (
+    key: PoolRewardPointsKey,
     status: Sync,
     addresses: string[],
     currentEra: BigNumber,
@@ -89,11 +88,11 @@ export const PoolPerformanceProvider = ({
   ) => {
     setStateWithRef(
       {
-        ...performanceFetchedRef.current,
+        ...tasksRef.current,
         [key]: { status, addresses, endEra, currentEra },
       },
-      setPerformanceFetched,
-      performanceFetchedRef
+      setTasks,
+      tasksRef
     );
 
     // Reset pool reward points for the given key.
@@ -110,49 +109,46 @@ export const PoolPerformanceProvider = ({
   };
 
   // Set current era for performance fetched key.
-  const updatePerformanceFetchedCurrentEra = (
-    key: PoolRewardPointsBatchKey,
-    era: BigNumber
-  ) => {
-    if (!getPerformanceFetchedKey(key)) {
+  const updateTaskCurrentEra = (key: PoolRewardPointsKey, era: BigNumber) => {
+    if (!getPoolPerformanceTask(key)) {
       return;
     }
     setStateWithRef(
       {
-        ...performanceFetchedRef.current,
-        [key]: { ...performanceFetchedRef.current[key], currentEra: era },
+        ...tasksRef.current,
+        [key]: { ...tasksRef.current[key], currentEra: era },
       },
-      setPerformanceFetched,
-      performanceFetchedRef
+      setTasks,
+      tasksRef
     );
   };
 
   // Updates an existing performance fetched key with a new status.
-  const updatePerformanceFetchedKey = (
-    key: PoolRewardPointsBatchKey,
+  const updatePoolPerformanceTask = (
+    key: PoolRewardPointsKey,
     status: Sync
   ) => {
-    if (!getPerformanceFetchedKey(key)) {
+    if (!getPoolPerformanceTask(key)) {
       return;
     }
     setStateWithRef(
       {
-        ...performanceFetchedRef.current,
-        [key]: { ...performanceFetchedRef.current[key], status },
+        ...tasksRef.current,
+        [key]: { ...tasksRef.current[key], status },
       },
-      setPerformanceFetched,
-      performanceFetchedRef
+      setTasks,
+      tasksRef
     );
   };
 
-  // Start fetching pool performance calls from the current era.
-  const startGetPoolPerformance = async (
-    key: PoolRewardPointsBatchKey,
+  // Start fetching pool performance data, starting from the current era.
+  const startPoolRewardPointsFetch = async (
+    key: PoolRewardPointsKey,
     addresses: string[]
   ) => {
     // Set as synced and exit early if there are no addresses to process.
     if (!addresses.length) {
-      setPerformanceFetchedKey(
+      setNewPoolPerformanceTask(
         key,
         'synced',
         addresses,
@@ -163,7 +159,7 @@ export const PoolPerformanceProvider = ({
     }
 
     // If the addresses have not changed for this key, exit early.
-    const current = getPerformanceFetchedKey(key);
+    const current = getPoolPerformanceTask(key);
     if (current.addresses.toString() === addresses.toString()) {
       return;
     }
@@ -174,20 +170,20 @@ export const PoolPerformanceProvider = ({
       1
     );
     // Set as syncing and start processing.
-    setPerformanceFetchedKey(key, 'syncing', addresses, currentEra, endEra);
+    setNewPoolPerformanceTask(key, 'syncing', addresses, currentEra, endEra);
 
     // Start processing from the previous active era.
     processEra(key, currentEra);
   };
 
   // Get era data and send to worker.
-  const processEra = async (key: PoolRewardPointsBatchKey, era: BigNumber) => {
+  const processEra = async (key: PoolRewardPointsKey, era: BigNumber) => {
     if (!api) {
       return;
     }
 
     // NOTE: This will not make any difference on the first run.
-    updatePerformanceFetchedCurrentEra(key, era);
+    updateTaskCurrentEra(key, era);
 
     let exposures;
     if (isPagedRewardsActive(era)) {
@@ -202,7 +198,7 @@ export const PoolPerformanceProvider = ({
       exposures = formatRawExposures(result);
     }
 
-    const addresses = performanceFetchedRef.current[key]?.addresses || [];
+    const addresses = tasksRef.current[key]?.addresses || [];
 
     worker.postMessage({
       task: 'processNominationPoolsRewardData',
@@ -225,7 +221,7 @@ export const PoolPerformanceProvider = ({
       }
 
       // If addresses for the given key have changed or been removed, ignore the result.
-      const current = getPerformanceFetchedKey(key);
+      const current = getPoolPerformanceTask(key);
 
       if (current.addresses.toString() !== addresses.toString()) {
         return;
@@ -238,7 +234,7 @@ export const PoolPerformanceProvider = ({
       );
 
       if (current.currentEra.isEqualTo(current.endEra)) {
-        updatePerformanceFetchedKey(key, 'synced');
+        updatePoolPerformanceTask(key, 'synced');
       } else {
         const nextEra = BigNumber.max(current.currentEra.minus(1), 1);
         processEra(key, nextEra);
@@ -249,17 +245,17 @@ export const PoolPerformanceProvider = ({
   // Reset state data on network change.
   useEffectIgnoreInitial(() => {
     setStateWithRef({}, setPoolRewardPointsState, poolRewardPointsRef);
-    setStateWithRef({}, setPerformanceFetched, performanceFetchedRef);
+    setStateWithRef({}, setTasks, tasksRef);
   }, [network]);
 
   return (
     <PoolPerformanceContext.Provider
       value={{
         getPoolRewardPoints,
-        getPerformanceFetchedKey,
-        setPerformanceFetchedKey,
-        updatePerformanceFetchedKey,
-        startGetPoolPerformance,
+        getPoolPerformanceTask,
+        setNewPoolPerformanceTask,
+        updatePoolPerformanceTask,
+        startPoolRewardPointsFetch,
       }}
     >
       {children}

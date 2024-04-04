@@ -3,7 +3,7 @@
 /* eslint-disable no-await-in-loop */
 
 import BigNumber from 'bignumber.js';
-import type { PoolRewardPointsBatchKey } from 'contexts/Pools/PoolPerformance/types';
+import type { PoolRewardPointsKey } from 'contexts/Pools/PoolPerformance/types';
 import type { Exposure } from 'contexts/Staking/types';
 import type { ErasRewardPoints } from 'contexts/Validators/types';
 import type { AnyJson } from 'types';
@@ -33,7 +33,7 @@ const processErasStakersForNominationPoolRewards = async ({
   erasRewardPoints,
   exposures,
 }: {
-  key: PoolRewardPointsBatchKey;
+  key: PoolRewardPointsKey;
   addresses: string[];
   era: string;
   erasRewardPoints: ErasRewardPoints;
