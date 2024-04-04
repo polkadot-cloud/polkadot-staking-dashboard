@@ -23,7 +23,7 @@ export const Signer = ({
         / &nbsp;
         <FontAwesomeIcon
           icon={faWarning}
-          className="danger"
+          className="danger icon"
           transform="shrink-1"
         />
         <span className="danger">{dangerMessage}</span>
