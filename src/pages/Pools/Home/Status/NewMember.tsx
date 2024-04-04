@@ -17,14 +17,17 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
   const { setOnPoolSetup } = useSetup();
   const { openCanvas } = useOverlay().canvas;
   const { getPoolPerformanceTask } = usePoolPerformance();
-  const { disableJoin, disableCreate } = useStatusButtons();
+  const { getJoinDisabled, getCreateDisabled } = useStatusButtons();
 
-  const poolJoinPerformanceSynced =
-    getPoolPerformanceTask('pool_join').status === 'synced';
+  // Get the pool performance task to determine if performance data is ready.
+  const poolJoinPerformanceTask = getPoolPerformanceTask('pool_join');
 
-  const joinButtonDisabled = disableJoin() || !poolJoinPerformanceSynced;
+  // Disable opening the canvas if data is not ready.
+  const joinButtonDisabled =
+    getJoinDisabled() || poolJoinPerformanceTask.status !== 'synced';
 
-  const createButtonDisabled = disableCreate();
+  // Alias for create button disabled state.
+  const createDisabled = getCreateDisabled();
 
   return (
     <CallToActionWrapper>
@@ -48,7 +51,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                     }
                     disabled={joinButtonDisabled}
                   >
-                    {!poolJoinPerformanceSynced ? (
+                    {poolJoinPerformanceTask.status !== 'synced' ? (
                       t('syncingPoolData', { ns: 'library' })
                     ) : (
                       <>
@@ -63,11 +66,11 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
             <section>
               <div className="buttons">
                 <div
-                  className={`button secondary standalone${createButtonDisabled ? ` disabled` : ``}`}
+                  className={`button secondary standalone${createDisabled ? ` disabled` : ``}`}
                 >
                   <button
                     onClick={() => setOnPoolSetup(true)}
-                    disabled={createButtonDisabled}
+                    disabled={createDisabled}
                   >
                     {t('pools.createPool', { ns: 'pages' })}
                     <FontAwesomeIcon
