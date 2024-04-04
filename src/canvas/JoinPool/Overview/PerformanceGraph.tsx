@@ -14,7 +14,7 @@ import {
 } from 'chart.js';
 import { useNetwork } from 'contexts/Network';
 import { GraphWrapper, HeadingWrapper } from '../Wrappers';
-import { Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import BigNumber from 'bignumber.js';
 import type { AnyJson } from 'types';
 import { graphColors } from 'theme/graphs';
@@ -102,6 +102,7 @@ export const PerformanceGraph = ({ bondedPool }: OverviewSectionProps) => {
       },
       y: {
         stacked: true,
+        beginAtZero: true,
         ticks: {
           font: {
             size: 10,
@@ -134,6 +135,10 @@ export const PerformanceGraph = ({ bondedPool }: OverviewSectionProps) => {
           title: () => [],
           label: (context: AnyJson) =>
             `${new BigNumber(context.parsed.y).decimalPlaces(0).toFormat()} ${t('eraPoints', { ns: 'library' })}`,
+        },
+        intersect: false,
+        interaction: {
+          mode: 'nearest',
         },
       },
     },
@@ -174,7 +179,7 @@ export const PerformanceGraph = ({ bondedPool }: OverviewSectionProps) => {
             height,
           }}
         >
-          <Bar options={options} data={data} />
+          <Line options={options} data={data} />
         </div>
       </GraphWrapper>
     </div>
