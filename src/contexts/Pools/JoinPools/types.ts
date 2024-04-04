@@ -5,4 +5,5 @@ import type { BondedPool } from '../BondedPools/types';
 
 export interface JoinPoolsContextInterface {
   poolsForJoin: BondedPool[];
+  startJoinPoolFetch: () => void;
 }

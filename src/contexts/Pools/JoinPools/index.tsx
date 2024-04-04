@@ -29,6 +29,14 @@ export const JoinPoolsProvider = ({ children }: { children: ReactNode }) => {
   // Save the bonded pools subset for pool joining.
   const [poolsForJoin, setPoolsToJoin] = useState<BondedPool[]>([]);
 
+  // Start finding pools to join.
+  const startJoinPoolFetch = () => {
+    startPoolRewardPointsFetch(
+      'pool_join',
+      poolsForJoin.map(({ addresses }) => addresses.stash)
+    );
+  };
+
   // Trigger worker to calculate join pool performance data.
   useEffectIgnoreInitial(() => {
     if (
@@ -45,11 +53,6 @@ export const JoinPoolsProvider = ({ children }: { children: ReactNode }) => {
       ).slice(0, MaxPoolsForJoin);
 
       setPoolsToJoin(poolJoinSelection);
-
-      startPoolRewardPointsFetch(
-        'pool_join',
-        poolJoinSelection.map(({ addresses }) => addresses.stash)
-      );
     }
   }, [
     bondedPools,
@@ -59,7 +62,7 @@ export const JoinPoolsProvider = ({ children }: { children: ReactNode }) => {
   ]);
 
   return (
-    <JoinPoolsContext.Provider value={{ poolsForJoin }}>
+    <JoinPoolsContext.Provider value={{ poolsForJoin, startJoinPoolFetch }}>
       {children}
     </JoinPoolsContext.Provider>
   );

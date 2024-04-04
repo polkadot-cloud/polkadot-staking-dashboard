@@ -10,7 +10,7 @@ export const FindingPoolsPercent = () => {
   // Get the pool performance task to determine if performance data is ready.
   const poolJoinPerformanceTask = getPoolPerformanceTask('pool_join');
 
-  if (poolJoinPerformanceTask.status === 'synced') {
+  if (poolJoinPerformanceTask.status !== 'syncing') {
     return null;
   }
 

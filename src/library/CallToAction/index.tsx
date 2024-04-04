@@ -250,6 +250,12 @@ export const CallToActionWrapper = styled.div`
               margin: 0 0.75rem;
             }
           }
+
+          &.inactive {
+            > button {
+              cursor: default;
+            }
+          }
         }
       }
     }
