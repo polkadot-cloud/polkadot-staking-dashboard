@@ -31,9 +31,7 @@ export const defaultSetupContext: SetupContextInterface = {
   setActiveAccountSetup: (t, p) => {},
   setActiveAccountSetupSection: (t, s) => {},
   setOnNominatorSetup: (v) => {},
-  setOnPoolSetup: (v) => {},
   onNominatorSetup: false,
-  onPoolSetup: false,
   getNominatorSetup: (address) => ({
     section: 1,
     progress: defaultNominatorProgress,

@@ -34,7 +34,6 @@ export const Main = () => {
   const { inSetup: inNominatorSetup, addressDifferentToStash } = useStaking();
   const {
     onNominatorSetup,
-    onPoolSetup,
     getPoolSetupPercent,
     getNominatorSetupPercent,
   }: SetupContextInterface = useSetup();
@@ -102,20 +101,12 @@ export const Main = () => {
       if (uri === `${import.meta.env.BASE_URL}pools`) {
         // configure Pools action
         const inPool = membership;
-        const setupPercent = getPoolSetupPercent(activeAccount);
 
         if (inPool) {
           pages[i].action = {
             type: 'text',
             status: 'success',
             text: t('active'),
-          };
-        }
-        if (!inPool && (setupPercent > 0 || onPoolSetup)) {
-          pages[i].action = {
-            type: 'text',
-            status: 'warning',
-            text: `${setupPercent}%`,
           };
         }
       }
@@ -138,7 +129,6 @@ export const Main = () => {
     getPoolSetupPercent(activeAccount),
     i18n.resolvedLanguage,
     onNominatorSetup,
-    onPoolSetup,
   ]);
 
   // remove pages that network does not support

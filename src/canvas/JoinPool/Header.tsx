@@ -8,7 +8,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
-import { TitleWrapper } from './Wrappers';
 import { Polkicon } from '@w3ux/react-polkicon';
 import { determinePoolDisplay, remToUnit } from '@w3ux/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,6 +15,7 @@ import { PageTitleTabs } from 'kits/Structure/PageTitleTabs';
 import { useTranslation } from 'react-i18next';
 import { useOverlay } from 'kits/Overlay/Provider';
 import type { JoinPoolHeaderProps } from './types';
+import { CanvasTitleWrapper } from 'canvas/Wrappers';
 
 export const Header = ({
   activeTab,
@@ -51,14 +51,14 @@ export const Header = ({
           lg
         />
         <ButtonPrimary
-          text={t('cancel', { ns: 'library' })}
+          text={t('pools.back', { ns: 'pages' })}
           lg
           onClick={() => closeCanvas()}
           iconLeft={faTimes}
           style={{ marginLeft: '1.1rem' }}
         />
       </div>
-      <TitleWrapper>
+      <CanvasTitleWrapper>
         <div className="inner">
           <div>
             <Polkicon
@@ -114,7 +114,7 @@ export const Header = ({
           tabClassName="canvas"
           inline={true}
         />
-      </TitleWrapper>
+      </CanvasTitleWrapper>
     </>
   );
 };

@@ -9,7 +9,7 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { Roles } from '../../Roles';
+import { Roles } from 'pages/Pools/Roles';
 import type { PoolProgress } from 'contexts/Setup/types';
 import type { PoolRoles as PoolRolesInterface } from 'contexts/Pools/ActivePool/types';
 
