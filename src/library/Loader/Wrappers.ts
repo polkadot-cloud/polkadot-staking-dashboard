@@ -13,7 +13,7 @@ export const LoaderWrapper = styled.div`
     var(--shimmer-foreground) 100%
   );
   background-repeat: no-repeat;
-  background-size: 600px 104px;
+  background-size: 600px 100%;
   animation-duration: 1.5s;
   animation-fill-mode: forwards;
   animation-iteration-count: infinite;

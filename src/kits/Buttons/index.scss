@@ -397,7 +397,6 @@
 .btn-tab {
   @include btn-core;
   @include btn-layout;
-  @include btn-disabled;
 
   color: var(--text-color-primary);
   transition:
@@ -418,35 +417,59 @@
     opacity: 0.9;
   }
 
-  > .badge {
-    border: 1px solid var(--border-primary-color);
-    color: var(--text-color-tertiary);
-    font-size: var(--button-font-size-small);
-    margin-left: var(--button-spacing-large);
-    display: flex;
-    padding: 0.3rem 0.6rem;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.4rem;
-    overflow: hidden;
-    width: fit-content;
-    max-width: 3rem;
-  }
-
-  &.active {
-    background: var(--button-tab-background);
-
-    > .badge {
-      border: 1px solid var(--border-secondary-color);
-    }
-  }
-
   &.canvas {
     color: var(--text-color-tertiary);
 
     &.active {
       color: var(--text-color-primary);
       background: var(--button-tab-canvas-background);
+    }
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+
+  > span {
+    display: flex;
+    align-items: center;
+
+    &.preload {
+      opacity: 0;
+    }
+
+    > .badge {
+      border: 1px solid var(--border-primary-color);
+      color: var(--text-color-tertiary);
+      font-size: var(--button-font-size-small);
+      margin-left: var(--button-spacing-large);
+      display: flex;
+      padding: 0.3rem 0.6rem;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.4rem;
+      overflow: hidden;
+      width: fit-content;
+      max-width: 3rem;
+    }
+  }
+
+  &.active {
+    background: var(--button-tab-background);
+
+    > span > .badge {
+      border: 1px solid var(--border-secondary-color);
+    }
+  }
+
+  &.preload {
+    background: var(--shimmer-foreground);
+  }
+
+  &.canvas {
+    &.preload {
+      background: var(--shimmer-foreground);
+      opacity: 1;
     }
   }
 }

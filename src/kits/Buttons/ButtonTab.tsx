@@ -14,6 +14,8 @@ export type ButtonTabProps = ComponentBaseWithClassName &
     title: string;
     // a badge value can represent the main content of the tab page
     badge?: string | number;
+    // whether this tab is acting as a preloader.
+    asPreloader?: boolean;
   };
 
 /**
@@ -31,17 +33,20 @@ export const ButtonTab = ({
   onMouseOver,
   onMouseMove,
   onMouseOut,
+  asPreloader,
 }: ButtonTabProps) => (
   <button
     className={`btn-tab${appendOrEmpty(active, 'active')}${
       className ? ` ${className}` : ''
-    }`}
+    }${asPreloader ? ` preload` : ``}`}
     style={style}
     type="button"
     disabled={disabled}
     {...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
   >
-    {title}
-    {badge ? <span className="badge">{badge}</span> : null}
+    <span className={`${asPreloader ? `preload` : ``}`}>
+      {title}
+      {badge ? <span className="badge">{badge}</span> : null}
+    </span>
   </button>
 );

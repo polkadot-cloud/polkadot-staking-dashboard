@@ -23,6 +23,7 @@
     "allowCompound": "Allow Compound",
     "allowWithdraw": "Allow Withdraw",
     "alreadyImported": "Address Already Imported",
+    "analyzingPoolPerformance": "Analyzing pool performance and finding optimal pools.",
     "asAPoolMember": "as a pool member.",
     "asThePoolDepositor": "as the pool depositor.",
     "atLeast": "Bond amount must be at least",

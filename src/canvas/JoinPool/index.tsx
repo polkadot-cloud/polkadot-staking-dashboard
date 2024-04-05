@@ -13,16 +13,22 @@ import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 import { MaxEraRewardPointsEras } from 'consts';
 import { useStaking } from 'contexts/Staking';
 import { useJoinPools } from 'contexts/Pools/JoinPools';
+import { Preloader } from './Preloader';
 
 export const JoinPool = () => {
   const {
-    closeCanvas,
     config: { options },
   } = useOverlay().canvas;
   const { eraStakers } = useStaking();
   const { poolsForJoin } = useJoinPools();
-  const { getPoolRewardPoints } = usePoolPerformance();
   const { poolsMetaData, bondedPools } = useBondedPools();
+  const { getPoolRewardPoints, getPoolPerformanceTask } = usePoolPerformance();
+
+  // Get the pool performance task to determine if performance data is ready.
+  const poolJoinPerformanceTask = getPoolPerformanceTask('pool_join');
+  const performanceDataReady = poolJoinPerformanceTask.status === 'synced';
+
+  // Get performance data: Assumed to be fetched now.
   const poolRewardPoints = getPoolRewardPoints('pool_join');
 
   // The active canvas tab.
@@ -53,14 +59,14 @@ export const JoinPool = () => {
             staker.others.find(({ who }) => who !== pool.addresses.stash)
           )
         ),
-    [poolsForJoin, poolRewardPoints]
+    [poolsForJoin, poolRewardPoints, performanceDataReady]
   );
 
   const initialSelectedPoolId = useMemo(
     () =>
       options?.poolId ||
       filteredBondedPools[(filteredBondedPools.length * Math.random()) << 0]
-        .id ||
+        ?.id ||
       0,
     []
   );
@@ -77,41 +83,45 @@ export const JoinPool = () => {
     [selectedPoolId]
   );
 
-  // Close canvas if no pool id is selected.
+  // If syncing completes within the canvas, assign a selected pool.
   useEffect(() => {
-    if (selectedPoolId === 0) {
-      closeCanvas();
+    if (performanceDataReady && selectedPoolId === 0) {
+      setSelectedPoolId(
+        filteredBondedPools[(filteredBondedPools.length * Math.random()) << 0]
+          ?.id || 0
+      );
     }
-  }, [selectedPoolId]);
-
-  // Ensure bonded pool exists before rendering. Canvas should close if this is the case.
-  if (!bondedPool) {
-    return null;
-  }
+  }, [performanceDataReady]);
 
   return (
     <CanvasFullScreenWrapper>
-      <Header
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        setSelectedPoolId={setSelectedPoolId}
-        bondedPool={bondedPool}
-        metadata={poolsMetaData[selectedPoolId]}
-        autoSelected={options?.poolId === undefined}
-        filteredBondedPools={filteredBondedPools}
-      />
+      {poolJoinPerformanceTask.status !== 'synced' || !bondedPool ? (
+        <Preloader />
+      ) : (
+        <>
+          <Header
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            setSelectedPoolId={setSelectedPoolId}
+            bondedPool={bondedPool}
+            metadata={poolsMetaData[selectedPoolId]}
+            autoSelected={options?.poolId === undefined}
+            filteredBondedPools={filteredBondedPools}
+          />
 
-      <JoinPoolInterfaceWrapper>
-        <div className="content">
-          {activeTab === 0 && <Overview bondedPool={bondedPool} />}
-          {activeTab === 1 && (
-            <Nominations
-              poolId={bondedPool.id}
-              stash={bondedPool.addresses.stash}
-            />
-          )}
-        </div>
-      </JoinPoolInterfaceWrapper>
+          <JoinPoolInterfaceWrapper>
+            <div className="content">
+              {activeTab === 0 && <Overview bondedPool={bondedPool} />}
+              {activeTab === 1 && (
+                <Nominations
+                  poolId={bondedPool.id}
+                  stash={bondedPool.addresses.stash}
+                />
+              )}
+            </div>
+          </JoinPoolInterfaceWrapper>
+        </>
+      )}
     </CanvasFullScreenWrapper>
   );
 };

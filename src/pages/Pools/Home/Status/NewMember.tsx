@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CallToActionWrapper } from '../../../../library/CallToAction';
+import { CallToActionWrapper } from 'library/CallToAction';
 import {
   faChevronRight,
   faUserGroup,
@@ -15,8 +15,9 @@ import { useOverlay } from 'kits/Overlay/Provider';
 import type { NewMemberProps } from './types';
 import { CallToActionLoader } from 'library/Loader/CallToAction';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
-import { FindingPoolsPercent } from './FindingPoolPercent';
+import { PoolSync } from 'library/PoolSync';
 import { useJoinPools } from 'contexts/Pools/JoinPools';
+import { StyledLoader } from 'library/PoolSync/Loader';
 
 export const NewMember = ({ syncing }: NewMemberProps) => {
   const { t } = useTranslation();
@@ -46,23 +47,20 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
             <section className="fixedWidth">
               <div className="buttons">
                 <div
-                  className={`button primary standalone${getJoinDisabled() ? ` disabled` : ``}${poolJoinPerformanceTask.status === 'synced' ? ` pulse` : ``}${poolJoinPerformanceTask.status === 'syncing' ? ` inactive` : ``}`}
+                  className={`button primary standalone${getJoinDisabled() ? ` disabled` : ``}${poolJoinPerformanceTask.status === 'synced' ? ` pulse` : ``}`}
                 >
                   <button
                     onClick={() => {
                       // Start sync process, otherwise, open canvas.
                       if (poolJoinPerformanceTask.status === 'unsynced') {
                         startJoinPoolFetch();
-                      } else if (poolJoinPerformanceTask.status === 'synced') {
-                        openCanvas({
-                          key: 'JoinPool',
-                          options: {},
-                          size: 'xl',
-                        });
-                      } else {
-                        // Syncing in progress, don't do anything.
-                        return;
                       }
+
+                      openCanvas({
+                        key: 'JoinPool',
+                        options: {},
+                        size: 'xl',
+                      });
                     }}
                     disabled={joinButtonDisabled}
                   >
@@ -76,7 +74,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                     {poolJoinPerformanceTask.status === 'syncing' && (
                       <>
                         {t('syncingPoolData', { ns: 'library' })}{' '}
-                        <div className="loader"></div>
+                        <StyledLoader />
                       </>
                     )}
 
@@ -87,7 +85,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                       </>
                     )}
 
-                    <FindingPoolsPercent />
+                    <PoolSync />
                   </button>
                 </div>
               </div>
