@@ -54,9 +54,7 @@ export interface SetupContextInterface {
   ) => void;
   setActiveAccountSetupSection: (t: BondFor, s: number) => void;
   setOnNominatorSetup: (v: boolean) => void;
-  setOnPoolSetup: (v: boolean) => void;
   onNominatorSetup: boolean;
-  onPoolSetup: boolean;
   getNominatorSetup: (address: MaybeAddress) => NominatorSetup;
   getPoolSetup: (address: MaybeAddress) => PoolSetup;
 }
