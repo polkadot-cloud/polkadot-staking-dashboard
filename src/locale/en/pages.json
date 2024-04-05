@@ -139,6 +139,7 @@
       "bondedFunds": "Bonded Funds",
       "bouncer": "Bouncer",
       "browseMembers": "Browse Members",
+      "joinPoolHeading": "Join {{totalMembers}} pool members staking a total of {{totalPoolPoints}} {{unit}} on {{network}}.",
       "cancel": "Cancel",
       "closePool": "You can now withdraw and close the pool.",
       "compound": "Compound",

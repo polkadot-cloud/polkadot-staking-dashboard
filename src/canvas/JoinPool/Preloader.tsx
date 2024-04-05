@@ -37,8 +37,6 @@ export const Preloader = () => {
     .decimalPlaces(0)
     .toFormat();
 
-  const title = `Join ${new BigNumber(counterForPoolMembers).toFormat()} other pool members staking a total of ${totalPoolPointsUnit} ${unit} on ${capitalizeFirstLetter(network)}.`;
-
   return (
     <>
       <div className="head">
@@ -58,7 +56,14 @@ export const Preloader = () => {
               <h1>Join Pool</h1>
             </div>
             <div className="labels">
-              <h3>{title}</h3>
+              <h3>
+                {t('pools.joinPoolHeading', {
+                  totalMembers: new BigNumber(counterForPoolMembers).toFormat(),
+                  totalPoolPoints: totalPoolPointsUnit,
+                  unit,
+                  network: capitalizeFirstLetter(network),
+                })}
+              </h3>
             </div>
           </div>
         </div>
