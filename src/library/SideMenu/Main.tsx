@@ -101,20 +101,12 @@ export const Main = () => {
       if (uri === `${import.meta.env.BASE_URL}pools`) {
         // configure Pools action
         const inPool = membership;
-        const setupPercent = getPoolSetupPercent(activeAccount);
 
         if (inPool) {
           pages[i].action = {
             type: 'text',
             status: 'success',
             text: t('active'),
-          };
-        }
-        if (!inPool && setupPercent > 0) {
-          pages[i].action = {
-            type: 'text',
-            status: 'warning',
-            text: `${setupPercent}%`,
           };
         }
       }
