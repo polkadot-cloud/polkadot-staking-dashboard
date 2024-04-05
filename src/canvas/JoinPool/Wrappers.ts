@@ -58,6 +58,14 @@ export const JoinPoolInterfaceWrapper = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
+
+      &.progress {
+        margin-top: 1rem;
+
+        > .counter {
+          font-family: InterSemiBold, sans-serif;
+        }
+      }
     }
   }
 `;

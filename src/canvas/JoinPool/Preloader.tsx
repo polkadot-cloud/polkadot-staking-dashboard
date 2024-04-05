@@ -12,7 +12,7 @@ import { CanvasTitleWrapper } from 'canvas/Wrappers';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import BigNumber from 'bignumber.js';
 import type { BondedPool } from 'contexts/Pools/BondedPools/types';
-import { planckToUnit, rmCommas } from '@w3ux/utils';
+import { capitalizeFirstLetter, planckToUnit, rmCommas } from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
 import { PoolSync } from 'library/PoolSync';
@@ -20,6 +20,7 @@ import { PoolSync } from 'library/PoolSync';
 export const Preloader = () => {
   const { t } = useTranslation('pages');
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
   const { bondedPools } = useBondedPools();
@@ -36,7 +37,7 @@ export const Preloader = () => {
     .decimalPlaces(0)
     .toFormat();
 
-  const title = `Join ${new BigNumber(counterForPoolMembers).toFormat()} other pool members staking a total of ${totalPoolPointsUnit} ${unit}.`;
+  const title = `Join ${new BigNumber(counterForPoolMembers).toFormat()} other pool members staking a total of ${totalPoolPointsUnit} ${unit} on ${capitalizeFirstLetter(network)}.`;
 
   return (
     <>
@@ -97,7 +98,7 @@ export const Preloader = () => {
           <h2 className="tip">
             {t('analyzingPoolPerformance', { ns: 'library' })}...
           </h2>
-          <h2 className="tip">
+          <h2 className="tip progress">
             <PoolSync />
           </h2>
         </div>
