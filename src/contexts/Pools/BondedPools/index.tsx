@@ -292,7 +292,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // Gets all pools that the account has a role in. Returns an object with each pool role as keys,
-  // and and array of pool ids as their values.
+  // and array of pool ids as their values.
   const accumulateAccountPoolRoles = (who: MaybeAddress): AccountPoolRoles => {
     if (!who) {
       return {
