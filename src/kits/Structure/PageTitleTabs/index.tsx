@@ -24,7 +24,14 @@ export const PageTitleTabs = ({
       <div className="inner">
         {tabs.map(
           (
-            { active, onClick, title, badge, disabled }: PageTitleTabProps,
+            {
+              active,
+              onClick,
+              title,
+              badge,
+              disabled,
+              asPreloader,
+            }: PageTitleTabProps,
             i: number
           ) => (
             <ButtonTab
@@ -35,6 +42,7 @@ export const PageTitleTabs = ({
               title={title}
               badge={badge}
               disabled={disabled === undefined ? false : disabled}
+              asPreloader={asPreloader == undefined ? false : asPreloader}
             />
           )
         )}

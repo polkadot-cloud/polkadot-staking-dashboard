@@ -69,10 +69,6 @@ export const TitleWrapper = styled.div`
   margin: 2rem 0 1.55rem 0;
   padding-bottom: 0.1rem;
 
-  &.preload {
-    padding-bottom: 1rem;
-  }
-
   > .inner {
     display: flex;
     align-items: center;
@@ -164,6 +160,11 @@ export const JoinFormWrapper = styled.div`
 
   @media (max-width: 1000px) {
     margin-top: 1rem;
+  }
+
+  &.preload {
+    padding: 0;
+    opacity: 0.5;
   }
 
   h4 {

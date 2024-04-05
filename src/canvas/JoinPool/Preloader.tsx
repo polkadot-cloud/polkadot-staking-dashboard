@@ -7,12 +7,15 @@ import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useTranslation } from 'react-i18next';
 import {
+  JoinFormWrapper,
   JoinPoolInterfaceWrapper,
   PreloaderWrapper,
   TitleWrapper,
 } from './Wrappers';
 import { PoolSync } from 'library/PoolSync';
 import { CallToActionLoader } from 'library/Loader/CallToAction';
+import { LoaderWrapper } from 'library/Loader/Wrappers';
+import { PageTitleTabs } from 'kits/Structure/PageTitleTabs';
 
 export const Preloader = () => {
   const { t } = useTranslation();
@@ -35,7 +38,7 @@ export const Preloader = () => {
           style={{ marginLeft: '1.1rem' }}
         />
       </div>
-      <TitleWrapper className="preload">
+      <TitleWrapper>
         <div className="inner">
           <div className="empty"></div>
           <div className="standalone">
@@ -50,13 +53,47 @@ export const Preloader = () => {
             </div>
           </div>
         </div>
+        <PageTitleTabs
+          sticky={false}
+          tabs={[
+            {
+              title: t('pools.overview', { ns: 'pages' }),
+              active: true,
+              onClick: () => {
+                /* Do nothing */
+              },
+              disabled: true,
+              asPreloader: true,
+            },
+            {
+              title: t('nominate.nominations', { ns: 'pages' }),
+              active: true,
+              onClick: () => {
+                /* Do nothing */
+              },
+              disabled: true,
+              asPreloader: true,
+            },
+          ]}
+          tabClassName="canvas"
+          inline={true}
+        />
       </TitleWrapper>
 
       <JoinPoolInterfaceWrapper>
         <div className="content">
-          <PreloaderWrapper>
-            <CallToActionLoader />
-          </PreloaderWrapper>
+          <div className="main">
+            <PreloaderWrapper>
+              <CallToActionLoader />
+            </PreloaderWrapper>
+          </div>
+          <div className="side">
+            <div>
+              <JoinFormWrapper className="preload">
+                <LoaderWrapper style={{ width: '100%', height: '30rem' }} />
+              </JoinFormWrapper>
+            </div>
+          </div>
         </div>
       </JoinPoolInterfaceWrapper>
     </>
