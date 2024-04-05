@@ -20,6 +20,7 @@ import { useApi } from 'contexts/Api';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { SummaryWrapper } from './Wrapper';
+import { useOverlay } from 'kits/Overlay/Provider';
 
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
@@ -29,6 +30,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   } = useNetwork();
   const { newBatchCall } = useBatchCall();
   const { getPayeeItems } = usePayeeConfig();
+  const { closeCanvas } = useOverlay().canvas;
   const { accountHasSigner } = useImportedAccounts();
   const { activeAccount, activeProxy } = useActiveAccounts();
   const { getNominatorSetup, removeSetupProgress } = useSetup();
@@ -70,6 +72,10 @@ export const Summary = ({ section }: SetupStepProps) => {
     from: activeAccount,
     shouldSubmit: true,
     callbackInBlock: () => {
+      // Close the canvas after the extrinsic is included in a block.
+      closeCanvas();
+
+      // Reset setup progress.
       removeSetupProgress('nominator', activeAccount);
     },
   });

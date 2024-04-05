@@ -3,7 +3,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CallToActionWrapper } from 'library/CallToAction';
-import { faUserGroup, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useStatusButtons } from './useStatusButtons';
 import { useTranslation } from 'react-i18next';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -61,7 +61,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                     {poolJoinPerformanceTask.status === 'unsynced' && (
                       <>
                         {t('pools.joinPool', { ns: 'pages' })}
-                        <FontAwesomeIcon icon={faUserGroup} />
+                        <FontAwesomeIcon icon={faUserPlus} />
                       </>
                     )}
 
