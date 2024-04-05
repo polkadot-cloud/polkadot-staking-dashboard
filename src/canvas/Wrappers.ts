@@ -29,6 +29,10 @@ export const CanvasTitleWrapper = styled.div`
   margin: 2rem 0 1.55rem 0;
   padding-bottom: 0.1rem;
 
+  &.padding {
+    padding-bottom: 0.75rem;
+  }
+
   > .inner {
     display: flex;
     align-items: center;

@@ -53,11 +53,40 @@ export const JoinPoolInterfaceWrapper = styled.div`
 
     > .tip {
       color: var(--accent-color-primary);
-      margin-top: 1rem;
+      margin-bottom: 1rem;
       font-family: Inter, sans-serif;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
+
+      > .loader {
+        border: 1.5px solid var(--accent-color-pending);
+        color: var(--accent-color-primary);
+        width: 100%;
+        height: 1.5rem;
+        border-radius: 1rem;
+        position: relative;
+
+        > div {
+          position: absolute;
+          top: 0.25rem;
+          left: 0.3rem;
+          width: calc(100% - 0.6rem);
+          height: calc(100% - 0.5rem);
+          border-radius: 1rem;
+
+          > .progress {
+            background-color: var(--accent-color-primary);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            border-radius: 2rem;
+            transition: width 1s cubic-bezier(0.1, 1, 0.1, 1);
+          }
+        }
+      }
     }
   }
 `;

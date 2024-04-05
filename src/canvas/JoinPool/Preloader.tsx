@@ -6,7 +6,6 @@ import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useTranslation } from 'react-i18next';
 import { JoinPoolInterfaceWrapper } from './Wrappers';
-import { PageTitleTabs } from 'kits/Structure/PageTitleTabs';
 import { CanvasTitleWrapper } from 'canvas/Wrappers';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import BigNumber from 'bignumber.js';
@@ -14,7 +13,7 @@ import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import { capitalizeFirstLetter, planckToUnit, rmCommas } from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
-import { PoolSync } from 'library/PoolSync';
+import { PoolSyncBar } from 'library/PoolSync/Bar';
 
 export const Preloader = () => {
   const { t } = useTranslation('pages');
@@ -47,7 +46,7 @@ export const Preloader = () => {
           style={{ marginLeft: '1.1rem' }}
         />
       </div>
-      <CanvasTitleWrapper>
+      <CanvasTitleWrapper className="padding">
         <div className="inner">
           <div className="empty"></div>
           <div className="standalone">
@@ -66,31 +65,6 @@ export const Preloader = () => {
             </div>
           </div>
         </div>
-        <PageTitleTabs
-          sticky={false}
-          tabs={[
-            {
-              title: t('pools.overview', { ns: 'pages' }),
-              active: true,
-              onClick: () => {
-                /* Do nothing */
-              },
-              disabled: true,
-              asPreloader: true,
-            },
-            {
-              title: t('nominate.nominations', { ns: 'pages' }),
-              active: true,
-              onClick: () => {
-                /* Do nothing */
-              },
-              disabled: true,
-              asPreloader: true,
-            },
-          ]}
-          tabClassName="canvas"
-          inline={true}
-        />
       </CanvasTitleWrapper>
 
       <JoinPoolInterfaceWrapper>
@@ -98,8 +72,9 @@ export const Preloader = () => {
           <h2 className="tip">
             {t('analyzingPoolPerformance', { ns: 'library' })}...
           </h2>
+
           <h2 className="tip">
-            <PoolSync />
+            <PoolSyncBar />
           </h2>
         </div>
       </JoinPoolInterfaceWrapper>
