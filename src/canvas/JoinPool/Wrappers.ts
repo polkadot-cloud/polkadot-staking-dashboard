@@ -83,7 +83,7 @@ export const JoinPoolInterfaceWrapper = styled.div`
             width: 0;
             height: 100%;
             border-radius: 2rem;
-            transition: width 0.5s ease-in-out;
+            transition: width 1s cubic-bezier(0.1, 1, 0.1, 1);
           }
         }
       }
