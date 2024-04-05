@@ -83,7 +83,7 @@ export const JoinPool = () => {
     [selectedPoolId]
   );
 
-  // If syncing completes within the canvas, assign a selected pool
+  // If syncing completes within the canvas, assign a selected pool.
   useEffect(() => {
     if (performanceDataReady && selectedPoolId === 0) {
       setSelectedPoolId(

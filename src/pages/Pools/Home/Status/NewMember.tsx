@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CallToActionWrapper } from '../../../../library/CallToAction';
+import { CallToActionWrapper } from 'library/CallToAction';
 import {
   faChevronRight,
   faUserGroup,
@@ -15,7 +15,7 @@ import { useOverlay } from 'kits/Overlay/Provider';
 import type { NewMemberProps } from './types';
 import { CallToActionLoader } from 'library/Loader/CallToAction';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
-import { PoolSync } from '../../../../library/PoolSync';
+import { PoolSync } from 'library/PoolSync';
 import { useJoinPools } from 'contexts/Pools/JoinPools';
 import { StyledLoader } from 'library/PoolSync/Loader';
 
