@@ -12,11 +12,9 @@ import {
   TitleWrapper,
 } from './Wrappers';
 import { PoolSync } from 'library/PoolSync';
-import { PageTitleTabs } from 'kits/Structure/PageTitleTabs';
-import type { PreloaderProps } from './types';
 import { CallToActionLoader } from 'library/Loader/CallToAction';
 
-export const Preloader = ({ activeTab, setActiveTab }: PreloaderProps) => {
+export const Preloader = () => {
   const { t } = useTranslation();
   const { closeCanvas } = useOverlay().canvas;
 
@@ -37,7 +35,7 @@ export const Preloader = ({ activeTab, setActiveTab }: PreloaderProps) => {
           style={{ marginLeft: '1.1rem' }}
         />
       </div>
-      <TitleWrapper>
+      <TitleWrapper className="preload">
         <div className="inner">
           <div className="empty"></div>
           <div className="standalone">
@@ -52,26 +50,8 @@ export const Preloader = ({ activeTab, setActiveTab }: PreloaderProps) => {
             </div>
           </div>
         </div>
-        <PageTitleTabs
-          sticky={false}
-          tabs={[
-            {
-              title: t('pools.overview', { ns: 'pages' }),
-              active: activeTab === 0,
-              onClick: () => setActiveTab(0),
-              disabled: true,
-            },
-            {
-              title: t('nominate.nominations', { ns: 'pages' }),
-              active: activeTab === 1,
-              onClick: () => setActiveTab(1),
-              disabled: true,
-            },
-          ]}
-          tabClassName="canvas"
-          inline={true}
-        />
       </TitleWrapper>
+
       <JoinPoolInterfaceWrapper>
         <div className="content">
           <PreloaderWrapper>

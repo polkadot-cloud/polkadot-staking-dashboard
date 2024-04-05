@@ -69,6 +69,10 @@ export const TitleWrapper = styled.div`
   margin: 2rem 0 1.55rem 0;
   padding-bottom: 0.1rem;
 
+  &.preload {
+    padding-bottom: 1rem;
+  }
+
   > .inner {
     display: flex;
     align-items: center;

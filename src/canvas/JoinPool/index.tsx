@@ -96,7 +96,7 @@ export const JoinPool = () => {
   return (
     <CanvasFullScreenWrapper>
       {poolJoinPerformanceTask.status !== 'synced' || !bondedPool ? (
-        <Preloader activeTab={activeTab} setActiveTab={setActiveTab} />
+        <Preloader />
       ) : (
         <>
           <Header
