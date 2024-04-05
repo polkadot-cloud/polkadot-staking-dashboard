@@ -61,10 +61,6 @@ export const JoinPoolInterfaceWrapper = styled.div`
 
       &.progress {
         margin-top: 1rem;
-
-        > .counter {
-          font-family: InterSemiBold, sans-serif;
-        }
       }
     }
   }
