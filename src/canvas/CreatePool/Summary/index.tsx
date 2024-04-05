@@ -79,17 +79,17 @@ export const Summary = ({ section }: SetupStepProps) => {
       // Close canvas.
       closeCanvas();
 
-      // query and add created pool to bondedPools list
+      // Query and add created pool to bondedPools list.
       const pool = await queryBondedPool(poolId.toNumber());
       addToBondedPools(pool);
 
-      // query and add account to poolMembers list
+      // Query and add account to poolMembers list.
       const member = await queryPoolMember(activeAccount);
       if (member) {
         addToPoolMembers(member);
       }
 
-      // reset localStorage setup progress
+      // Reset setup progress.
       removeSetupProgress('pool', activeAccount);
     },
   });

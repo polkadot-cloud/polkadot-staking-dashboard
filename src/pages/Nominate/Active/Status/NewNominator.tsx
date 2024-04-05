@@ -8,19 +8,19 @@ import {
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
-import { useSetup } from 'contexts/Setup';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNavigate } from 'react-router-dom';
 import { useApi } from 'contexts/Api';
 import type { NewNominatorProps } from '../types';
 import { CallToActionLoader } from 'library/Loader/CallToAction';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useOverlay } from 'kits/Overlay/Provider';
 
 export const NewNominator = ({ syncing }: NewNominatorProps) => {
   const { t } = useTranslation();
   const { isReady } = useApi();
   const navigate = useNavigate();
-  const { setOnNominatorSetup } = useSetup();
+  const { openCanvas } = useOverlay().canvas;
   const { activeAccount } = useActiveAccounts();
   const { isReadOnlyAccount } = useImportedAccounts();
 
@@ -39,7 +39,13 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
                 className={`button primary${nominateButtonDisabled ? ` disabled` : ``}`}
               >
                 <button
-                  onClick={() => setOnNominatorSetup(true)}
+                  onClick={() =>
+                    openCanvas({
+                      key: 'NominatorSetup',
+                      options: {},
+                      size: 'xl',
+                    })
+                  }
                   disabled={nominateButtonDisabled}
                 >
                   {t('nominate.startNominating', { ns: 'pages' })}

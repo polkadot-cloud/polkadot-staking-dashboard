@@ -32,6 +32,7 @@ import { ManageNominations } from '../canvas/ManageNominations';
 import { PoolMembers } from 'canvas/PoolMembers';
 import { JoinPool } from 'canvas/JoinPool';
 import { CreatePool } from 'canvas/CreatePool';
+import { NominatorSetup } from 'canvas/NominatorSetup';
 import { Overlay } from 'kits/Overlay';
 
 export const Overlays = () => {
@@ -72,6 +73,7 @@ export const Overlays = () => {
         PoolMembers,
         JoinPool,
         CreatePool,
+        NominatorSetup,
       }}
     />
   );
