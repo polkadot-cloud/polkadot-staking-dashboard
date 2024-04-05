@@ -12,7 +12,6 @@ import type { NewNominatorProps } from '../types';
 import { CallToActionLoader } from 'library/Loader/CallToAction';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOverlay } from 'kits/Overlay/Provider';
-import { faCirclePlay } from '@fortawesome/free-regular-svg-icons';
 
 export const NewNominator = ({ syncing }: NewNominatorProps) => {
   const { t } = useTranslation();
@@ -48,7 +47,6 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
                     disabled={nominateButtonDisabled}
                   >
                     {t('nominate.startNominating', { ns: 'pages' })}
-                    <FontAwesomeIcon icon={faCirclePlay} transform="grow-2" />
                   </button>
                 </div>
               </div>
