@@ -53,7 +53,7 @@ export const Preloader = () => {
           <div className="empty"></div>
           <div className="standalone">
             <div className="title">
-              <h1>Join Pool</h1>
+              <h1>{t('pools.joinPool')}</h1>
             </div>
             <div className="labels">
               <h3>
