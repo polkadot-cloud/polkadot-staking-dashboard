@@ -44,7 +44,7 @@ export const Preloader = () => {
             </div>
             <div className="labels">
               <h3>
-                Analyzing pool performance and finding optimal pools.
+                {t('analyzingPoolPerformance', { ns: 'library' })}
                 <PoolSync label={t('complete', { ns: 'library' })} />
               </h3>
             </div>
