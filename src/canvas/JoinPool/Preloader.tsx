@@ -10,12 +10,12 @@ import {
   JoinFormWrapper,
   JoinPoolInterfaceWrapper,
   PreloaderWrapper,
-  TitleWrapper,
 } from './Wrappers';
 import { PoolSync } from 'library/PoolSync';
 import { CallToActionLoader } from 'library/Loader/CallToAction';
 import { LoaderWrapper } from 'library/Loader/Wrappers';
 import { PageTitleTabs } from 'kits/Structure/PageTitleTabs';
+import { CanvasTitleWrapper } from 'canvas/Wrappers';
 
 export const Preloader = () => {
   const { t } = useTranslation();
@@ -31,14 +31,14 @@ export const Preloader = () => {
           lg
         />
         <ButtonPrimary
-          text={t('cancel', { ns: 'library' })}
+          text={t('pools.back', { ns: 'pages' })}
           lg
           onClick={() => closeCanvas()}
           iconLeft={faTimes}
           style={{ marginLeft: '1.1rem' }}
         />
       </div>
-      <TitleWrapper>
+      <CanvasTitleWrapper>
         <div className="inner">
           <div className="empty"></div>
           <div className="standalone">
@@ -78,7 +78,7 @@ export const Preloader = () => {
           tabClassName="canvas"
           inline={true}
         />
-      </TitleWrapper>
+      </CanvasTitleWrapper>
 
       <JoinPoolInterfaceWrapper>
         <div className="content">

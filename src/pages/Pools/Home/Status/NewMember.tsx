@@ -8,7 +8,6 @@ import {
   faUserGroup,
   faUserPlus,
 } from '@fortawesome/free-solid-svg-icons';
-import { useSetup } from 'contexts/Setup';
 import { useStatusButtons } from './useStatusButtons';
 import { useTranslation } from 'react-i18next';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -21,7 +20,6 @@ import { StyledLoader } from 'library/PoolSync/Loader';
 
 export const NewMember = ({ syncing }: NewMemberProps) => {
   const { t } = useTranslation();
-  const { setOnPoolSetup } = useSetup();
   const { poolsForJoin } = useJoinPools();
   const { openCanvas } = useOverlay().canvas;
   const { startJoinPoolFetch } = useJoinPools();
@@ -84,7 +82,6 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                         <FontAwesomeIcon icon={faUserPlus} />
                       </>
                     )}
-
                     <PoolSync />
                   </button>
                 </div>
@@ -96,7 +93,13 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                   className={`button secondary standalone${createDisabled ? ` disabled` : ``}`}
                 >
                   <button
-                    onClick={() => setOnPoolSetup(true)}
+                    onClick={() =>
+                      openCanvas({
+                        key: 'CreatePool',
+                        options: {},
+                        size: 'xl',
+                      })
+                    }
                     disabled={createDisabled}
                   >
                     {t('pools.createPool', { ns: 'pages' })}
