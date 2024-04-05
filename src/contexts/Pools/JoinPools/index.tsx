@@ -11,7 +11,8 @@ import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { usePoolPerformance } from '../PoolPerformance';
 import type { BondedPool } from '../BondedPools/types';
-import { shuffle } from '@w3ux/utils';
+import { rmCommas, shuffle } from '@w3ux/utils';
+import BigNumber from 'bignumber.js';
 
 export const JoinPoolsContext = createContext<JoinPoolsContextInterface>(
   defaultJoinPoolsContext
@@ -20,7 +21,11 @@ export const JoinPoolsContext = createContext<JoinPoolsContextInterface>(
 export const useJoinPools = () => useContext(JoinPoolsContext);
 
 export const JoinPoolsProvider = ({ children }: { children: ReactNode }) => {
-  const { api, activeEra } = useApi();
+  const {
+    api,
+    activeEra,
+    networkMetrics: { minimumActiveStake },
+  } = useApi();
   const { bondedPools } = useBondedPools();
   const { erasRewardPointsFetched } = useValidators();
   const { getPoolPerformanceTask, startPoolRewardPointsFetch } =
@@ -46,12 +51,38 @@ export const JoinPoolsProvider = ({ children }: { children: ReactNode }) => {
       erasRewardPointsFetched === 'synced' &&
       getPoolPerformanceTask('pool_join')?.status === 'unsynced'
     ) {
-      // Generate a subset of pools to fetch performance data for. TODO: Send pools to JoinPool
-      // canvas and only select those. Move this logic to a separate context.
-      const poolJoinSelection = shuffle(
-        bondedPools.filter(({ state }) => state === 'Open')
-      ).slice(0, MaxPoolsForJoin);
+      // Generate a subset of pools to fetch performance data for. Start by only considering active pools.
+      const activeBondedPools = bondedPools.filter(
+        ({ state }) => state === 'Open'
+      );
 
+      // Filter pools that do not have at least double the minimum active stake in points. NOTE:
+      // assumes that points are a 1:1 ratio between balance and points.
+      const rewardBondedPools = activeBondedPools.filter(({ points }) => {
+        const pointsBn = new BigNumber(rmCommas(points));
+        const threshold = minimumActiveStake.multipliedBy(2);
+        return pointsBn.isGreaterThanOrEqualTo(threshold);
+      });
+
+      // Order active bonded pools by member count.
+      const sortedBondedPools = rewardBondedPools.sort(
+        (a, b) =>
+          Number(rmCommas(a.memberCounter)) - Number(rmCommas(b.memberCounter))
+      );
+
+      // Take lower third of sorted bonded pools to join.
+      const lowerThirdBondedPools = sortedBondedPools.slice(
+        0,
+        Math.floor(sortedBondedPools.length / 3)
+      );
+
+      // Shuffle the lower third of bonded pools to join, and select a random subset of them.
+      const poolJoinSelection = shuffle(lowerThirdBondedPools).slice(
+        0,
+        MaxPoolsForJoin
+      );
+
+      // Commit final pool selection to state.
       setPoolsToJoin(poolJoinSelection);
     }
   }, [
