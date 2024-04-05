@@ -5,8 +5,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useTranslation } from 'react-i18next';
-import { JoinPoolInterfaceWrapper, PreloaderWrapper } from './Wrappers';
-import { CallToActionLoader } from 'library/Loader/CallToAction';
+import { JoinPoolInterfaceWrapper } from './Wrappers';
 import { PageTitleTabs } from 'kits/Structure/PageTitleTabs';
 import { CanvasTitleWrapper } from 'canvas/Wrappers';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -96,14 +95,10 @@ export const Preloader = () => {
 
       <JoinPoolInterfaceWrapper>
         <div className="content" style={{ flexDirection: 'column' }}>
-          <PreloaderWrapper>
-            <CallToActionLoader />
-          </PreloaderWrapper>
-
           <h2 className="tip">
             {t('analyzingPoolPerformance', { ns: 'library' })}...
           </h2>
-          <h2 className="tip progress">
+          <h2 className="tip">
             <PoolSync />
           </h2>
         </div>

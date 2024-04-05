@@ -53,15 +53,11 @@ export const JoinPoolInterfaceWrapper = styled.div`
 
     > .tip {
       color: var(--accent-color-primary);
-      margin-top: 1.5rem;
+      margin-top: 1rem;
       font-family: Inter, sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
-
-      &.progress {
-        margin-top: 1rem;
-      }
     }
   }
 `;
@@ -69,7 +65,7 @@ export const JoinPoolInterfaceWrapper = styled.div`
 export const PreloaderWrapper = styled.div`
   background-color: var(--background-floating-card);
   width: 100%;
-  height: 3.75rem;
+  height: 2rem;
   border-radius: 2rem;
   opacity: 0.4;
 `;
