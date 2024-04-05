@@ -1,35 +1,46 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faArrowsRotate, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
-import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useTranslation } from 'react-i18next';
-import {
-  JoinFormWrapper,
-  JoinPoolInterfaceWrapper,
-  PreloaderWrapper,
-} from './Wrappers';
-import { PoolSync } from 'library/PoolSync';
+import { JoinPoolInterfaceWrapper, PreloaderWrapper } from './Wrappers';
 import { CallToActionLoader } from 'library/Loader/CallToAction';
-import { LoaderWrapper } from 'library/Loader/Wrappers';
 import { PageTitleTabs } from 'kits/Structure/PageTitleTabs';
 import { CanvasTitleWrapper } from 'canvas/Wrappers';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import BigNumber from 'bignumber.js';
+import type { BondedPool } from 'contexts/Pools/BondedPools/types';
+import { planckToUnit, rmCommas } from '@w3ux/utils';
+import { useNetwork } from 'contexts/Network';
+import { useApi } from 'contexts/Api';
+import { PoolSync } from 'library/PoolSync';
 
 export const Preloader = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('pages');
+  const {
+    networkData: { units, unit },
+  } = useNetwork();
+  const { bondedPools } = useBondedPools();
+  const {
+    poolsConfig: { counterForPoolMembers },
+  } = useApi();
   const { closeCanvas } = useOverlay().canvas;
+
+  let totalPoolPoints = new BigNumber(0);
+  bondedPools.forEach((b: BondedPool) => {
+    totalPoolPoints = totalPoolPoints.plus(rmCommas(b.points));
+  });
+  const totalPoolPointsUnit = planckToUnit(totalPoolPoints, units)
+    .decimalPlaces(0)
+    .toFormat();
+
+  const title = `Join ${new BigNumber(counterForPoolMembers).toFormat()} other pool members staking a total of ${totalPoolPointsUnit} ${unit}.`;
 
   return (
     <>
       <div className="head">
-        <ButtonPrimaryInvert
-          text={t('chooseAnotherPool', { ns: 'library' })}
-          iconLeft={faArrowsRotate}
-          disabled
-          lg
-        />
         <ButtonPrimary
           text={t('pools.back', { ns: 'pages' })}
           lg
@@ -43,13 +54,10 @@ export const Preloader = () => {
           <div className="empty"></div>
           <div className="standalone">
             <div className="title">
-              <h1>{t('syncingPoolData', { ns: 'library' })}...</h1>
+              <h1>Join Pool</h1>
             </div>
             <div className="labels">
-              <h3>
-                {t('analyzingPoolPerformance', { ns: 'library' })}
-                <PoolSync label={t('complete', { ns: 'library' })} />
-              </h3>
+              <h3>{title}</h3>
             </div>
           </div>
         </div>
@@ -81,19 +89,17 @@ export const Preloader = () => {
       </CanvasTitleWrapper>
 
       <JoinPoolInterfaceWrapper>
-        <div className="content">
-          <div className="main">
-            <PreloaderWrapper>
-              <CallToActionLoader />
-            </PreloaderWrapper>
-          </div>
-          <div className="side">
-            <div>
-              <JoinFormWrapper className="preload">
-                <LoaderWrapper style={{ width: '100%', height: '30rem' }} />
-              </JoinFormWrapper>
-            </div>
-          </div>
+        <div className="content" style={{ flexDirection: 'column' }}>
+          <PreloaderWrapper>
+            <CallToActionLoader />
+          </PreloaderWrapper>
+
+          <h2 className="tip">
+            {t('analyzingPoolPerformance', { ns: 'library' })}...
+          </h2>
+          <h2 className="tip">
+            <PoolSync />
+          </h2>
         </div>
       </JoinPoolInterfaceWrapper>
     </>

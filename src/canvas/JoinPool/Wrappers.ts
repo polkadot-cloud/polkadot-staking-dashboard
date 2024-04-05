@@ -50,6 +50,15 @@ export const JoinPoolInterfaceWrapper = styled.div`
         }
       }
     }
+
+    > .tip {
+      color: var(--accent-color-primary);
+      margin-top: 1.5rem;
+      font-family: Inter, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 `;
 
