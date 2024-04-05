@@ -73,7 +73,6 @@ export const Main = () => {
         // configure Stake action
         const staking = !inNominatorSetup();
         const warning = !syncing && controllerDifferentToStash;
-        const setupPercent = getNominatorSetupPercent(activeAccount);
 
         if (staking) {
           pages[i].action = {
@@ -88,32 +87,17 @@ export const Main = () => {
             status: 'warning',
           };
         }
-        if (!staking && setupPercent > 0) {
-          pages[i].action = {
-            type: 'text',
-            status: 'warning',
-            text: `${setupPercent}%`,
-          };
-        }
       }
 
       if (uri === `${import.meta.env.BASE_URL}pools`) {
         // configure Pools action
         const inPool = membership;
-        const setupPercent = getPoolSetupPercent(activeAccount);
 
         if (inPool) {
           pages[i].action = {
             type: 'text',
             status: 'success',
             text: t('active'),
-          };
-        }
-        if (!inPool && setupPercent > 0) {
-          pages[i].action = {
-            type: 'text',
-            status: 'warning',
-            text: `${setupPercent}%`,
           };
         }
       }
