@@ -13,7 +13,7 @@ export const LoaderWrapper = styled.div`
     var(--shimmer-foreground) 100%
   );
   background-repeat: no-repeat;
-  background-size: 600px 100%;
+  background-size: 60% 100%;
   animation-duration: 1.5s;
   animation-fill-mode: forwards;
   animation-iteration-count: infinite;
@@ -30,7 +30,7 @@ export const LoaderWrapper = styled.div`
       background-position: 0px 0;
     }
     100% {
-      background-position: 150% 0;
+      background-position: 200% 0;
     }
   }
 `;
