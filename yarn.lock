@@ -2555,6 +2555,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@w3ux/extension-assets@npm:^0.2.4":
+  version: 0.2.4
+  resolution: "@w3ux/extension-assets@npm:0.2.4"
+  peerDependencies:
+    react: ^18
+  checksum: 10c0/a5609003a211b8106218177596d9d67861761e50d540c0af47c884dd9e168cb1371db1b0b0c14e46e986b16ec5883246b86e11ed607eedde866db49b37ba0a88
+  languageName: node
+  linkType: hard
+
 "@w3ux/hooks@npm:^0.0.3":
   version: 0.0.3
   resolution: "@w3ux/hooks@npm:0.0.3"
@@ -6516,7 +6525,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^7.5.0"
     "@typescript-eslint/parser": "npm:^7.4.0"
     "@vitejs/plugin-react-swc": "npm:^3.6.0"
-    "@w3ux/extension-assets": "npm:^0.2.3"
+    "@w3ux/extension-assets": "npm:^0.2.4"
     "@w3ux/hooks": "npm:^0.0.3"
     "@w3ux/react-connect-kit": "npm:^0.1.2"
     "@w3ux/react-odometer": "npm:^0.0.3"
