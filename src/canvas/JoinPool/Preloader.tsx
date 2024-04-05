@@ -47,7 +47,7 @@ export const Preloader = ({ activeTab, setActiveTab }: PreloaderProps) => {
             <div className="labels">
               <h3>
                 Analyzing pool performance and finding optimal pools.
-                <PoolSync label="Completed" />
+                <PoolSync label={t('complete', { ns: 'library' })} />
               </h3>
             </div>
           </div>
