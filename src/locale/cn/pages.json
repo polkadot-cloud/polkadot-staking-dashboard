@@ -154,7 +154,7 @@
       "inPool": "提名池中",
       "inactivePoolNotNominating": "非活跃：提名池未提名任何验证人",
       "joinPool": "加入提名池",
-      "joinPoolHeading": "Join {{totalMembers}} pool members staking a total of {{totalPoolPoints}} {{unit}} on {{network}}.",
+      "joinPoolHeading": " {{totalMembers}} 个提名池成员在{{network}}上抵押共{{totalPoolPoints}} 个{{unit}} ",
       "leave": "离开",
       "leavingPool": "离开提名池中",
       "leftThePool": "所有成员已离开",
