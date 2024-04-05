@@ -3,11 +3,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CallToActionWrapper } from 'library/CallToAction';
-import {
-  faChevronRight,
-  faUserGroup,
-  faUserPlus,
-} from '@fortawesome/free-solid-svg-icons';
+import { faUserGroup, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useStatusButtons } from './useStatusButtons';
 import { useTranslation } from 'react-i18next';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -103,10 +99,6 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                     disabled={createDisabled}
                   >
                     {t('pools.createPool', { ns: 'pages' })}
-                    <FontAwesomeIcon
-                      icon={faChevronRight}
-                      transform={'shrink-4'}
-                    />
                   </button>
                 </div>
               </div>
