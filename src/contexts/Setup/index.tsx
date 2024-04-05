@@ -44,11 +44,7 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
   const { accounts } = useImportedAccounts();
   const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
-
   const poolMembership = getPoolMembership(activeAccount);
-
-  // is the user actively on the setup page
-  const [onNominatorSetup, setOnNominatorSetup] = useState<boolean>(false);
 
   // Store all imported accounts nominator setups.
   const [nominatorSetups, setNominatorSetups] = useState<NominatorSetups>({});
@@ -268,13 +264,6 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Move away from setup pages on completion / network change.
-  useEffectIgnoreInitial(() => {
-    if (!inSetup()) {
-      setOnNominatorSetup(false);
-    }
-  }, [inSetup(), network, poolMembership]);
-
   // Update setup state when activeAccount changes
   useEffectIgnoreInitial(() => {
     if (accounts.length) {
@@ -290,8 +279,6 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
         getPoolSetupPercent,
         setActiveAccountSetup,
         setActiveAccountSetupSection,
-        setOnNominatorSetup,
-        onNominatorSetup,
         getNominatorSetup,
         getPoolSetup,
       }}

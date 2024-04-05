@@ -53,8 +53,6 @@ export interface SetupContextInterface {
     p: NominatorProgress | PoolProgress
   ) => void;
   setActiveAccountSetupSection: (t: BondFor, s: number) => void;
-  setOnNominatorSetup: (v: boolean) => void;
-  onNominatorSetup: boolean;
   getNominatorSetup: (address: MaybeAddress) => NominatorSetup;
   getPoolSetup: (address: MaybeAddress) => PoolSetup;
 }

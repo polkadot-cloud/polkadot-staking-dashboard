@@ -33,7 +33,6 @@ export const Main = () => {
   const { activeAccount } = useActiveAccounts();
   const { inSetup: inNominatorSetup, addressDifferentToStash } = useStaking();
   const {
-    onNominatorSetup,
     getPoolSetupPercent,
     getNominatorSetupPercent,
   }: SetupContextInterface = useSetup();
@@ -89,7 +88,7 @@ export const Main = () => {
             status: 'warning',
           };
         }
-        if (!staking && (onNominatorSetup || setupPercent > 0)) {
+        if (!staking && setupPercent > 0) {
           pages[i].action = {
             type: 'text',
             status: 'warning',
@@ -136,7 +135,6 @@ export const Main = () => {
     getNominatorSetupPercent(activeAccount),
     getPoolSetupPercent(activeAccount),
     i18n.resolvedLanguage,
-    onNominatorSetup,
   ]);
 
   // remove pages that network does not support
