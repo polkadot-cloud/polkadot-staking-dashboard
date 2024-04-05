@@ -13,7 +13,6 @@ import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useStaking } from '../Staking';
 import {
   defaultNominatorProgress,
   defaultPoolProgress,
@@ -28,7 +27,6 @@ import type {
   PoolSetups,
   SetupContextInterface,
 } from './types';
-import { useBalances } from 'contexts/Balances';
 
 export const SetupContext =
   createContext<SetupContextInterface>(defaultSetupContext);
@@ -36,15 +34,12 @@ export const SetupContext =
 export const useSetup = () => useContext(SetupContext);
 
 export const SetupProvider = ({ children }: { children: ReactNode }) => {
-  const { inSetup } = useStaking();
   const {
     network,
     networkData: { units },
   } = useNetwork();
   const { accounts } = useImportedAccounts();
-  const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
-  const poolMembership = getPoolMembership(activeAccount);
 
   // Store all imported accounts nominator setups.
   const [nominatorSetups, setNominatorSetups] = useState<NominatorSetups>({});
