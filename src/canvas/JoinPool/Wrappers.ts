@@ -53,6 +53,14 @@ export const JoinPoolInterfaceWrapper = styled.div`
   }
 `;
 
+export const PreloaderWrapper = styled.div`
+  background-color: var(--background-floating-card);
+  width: 100%;
+  height: 3.75rem;
+  border-radius: 2rem;
+  opacity: 0.4;
+`;
+
 export const TitleWrapper = styled.div`
   border-bottom: 1px solid var(--border-secondary-color);
   flex: 1;
@@ -73,11 +81,19 @@ export const TitleWrapper = styled.div`
 
       &:nth-child(1) {
         max-width: 4rem;
+
+        &.empty {
+          max-width: 0px;
+        }
       }
 
       &:nth-child(2) {
         padding-left: 1rem;
         flex-direction: column;
+
+        &.standalone {
+          padding-left: 0;
+        }
 
         > .title {
           position: relative;

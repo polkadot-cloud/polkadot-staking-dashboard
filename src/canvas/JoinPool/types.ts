@@ -14,6 +14,11 @@ export interface JoinPoolHeaderProps {
   setSelectedPoolId: Dispatch<SetStateAction<number>>;
 }
 
+export interface PreloaderProps {
+  activeTab: number;
+  setActiveTab: (tab: number) => void;
+}
+
 export interface NominationsProps {
   stash: string;
   poolId: number;

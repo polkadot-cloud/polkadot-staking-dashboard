@@ -397,7 +397,6 @@
 .btn-tab {
   @include btn-core;
   @include btn-layout;
-  @include btn-disabled;
 
   color: var(--text-color-primary);
   transition:
@@ -448,6 +447,15 @@
       color: var(--text-color-primary);
       background: var(--button-tab-canvas-background);
     }
+  }
+
+  &:disabled {
+    opacity: 0.4;
+
+    &:hover {
+      opacity: 0.6;
+    }
+    cursor: default;
   }
 }
 

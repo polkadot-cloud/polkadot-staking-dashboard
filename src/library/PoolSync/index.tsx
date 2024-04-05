@@ -4,7 +4,7 @@
 import BigNumber from 'bignumber.js';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 
-export const FindingPoolsPercent = () => {
+export const PoolSync = ({ label }: { label?: string }) => {
   const { getPoolPerformanceTask } = usePoolPerformance();
 
   // Get the pool performance task to determine if performance data is ready.
@@ -24,7 +24,7 @@ export const FindingPoolsPercent = () => {
 
   return (
     <span className="counter">
-      {percentPassed.decimalPlaces(0).toFormat()}%
+      {percentPassed.decimalPlaces(0).toFormat()}%{label && ` ${label}`}
     </span>
   );
 };
