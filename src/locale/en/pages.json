@@ -156,6 +156,7 @@
       "inPool": "In Pool",
       "inactivePoolNotNominating": "Inactive: Pool Not Nominating",
       "joinPool": "Join Pool",
+      "joinPoolHeading": "Join {{totalMembers}} pool members staking a total of {{totalPoolPoints}} {{unit}} on {{network}}.",
       "leave": "Leave",
       "leavingPool": "Leaving Pool",
       "leftThePool": "All members have now left the pool",
