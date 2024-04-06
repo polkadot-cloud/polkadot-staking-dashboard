@@ -1,30 +1,31 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useActivePool } from 'contexts/Pools/ActivePool'
-import { CallToActionWrapper } from 'library/CallToAction'
-import { CallToActionLoader } from 'library/Loader/CallToAction'
-import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
-import { useOverlay } from 'ui-overlay'
-import type { NewNominatorProps } from '../types'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CallToActionWrapper } from 'library/CallToAction';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useNavigate } from 'react-router-dom';
+import { useApi } from 'contexts/Api';
+import type { NewNominatorProps } from '../types';
+import { CallToActionLoader } from 'library/Loader/CallToAction';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { registerSaEvent } from 'Utils';
+import { useNetwork } from 'contexts/Network';
 
 export const NewNominator = ({ syncing }: NewNominatorProps) => {
-  const { t } = useTranslation()
-  const { isReady } = useApi()
-  const navigate = useNavigate()
-  const { inPool } = useActivePool()
-  const { openCanvas } = useOverlay().canvas
-  const { activeAccount } = useActiveAccounts()
-  const { isReadOnlyAccount } = useImportedAccounts()
+  const { t } = useTranslation();
+  const { isReady } = useApi();
+  const navigate = useNavigate();
+  const { network } = useNetwork();
+  const { openCanvas } = useOverlay().canvas;
+  const { activeAccount } = useActiveAccounts();
+  const { isReadOnlyAccount } = useImportedAccounts();
 
   const nominateButtonDisabled =
-    !isReady || !activeAccount || isReadOnlyAccount(activeAccount) || inPool()
+    !isReady || !activeAccount || isReadOnlyAccount(activeAccount);
 
   return (
     <CallToActionWrapper>
@@ -36,19 +37,23 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
             <section className="standalone">
               <div className="buttons">
                 <div
-                  className={`button primary standalone${nominateButtonDisabled ? ` disabled` : ` pulse`}`}
+                  className={`button primary standalone${nominateButtonDisabled ? ` disabled` : ``}`}
                 >
                   <button
-                    onClick={() =>
+                    onClick={() => {
+                      registerSaEvent(
+                        `${network.toLowerCase()}_nominate_setup_button_pressed`
+                      );
+
                       openCanvas({
                         key: 'NominatorSetup',
                         options: {},
                         size: 'xl',
-                      })
-                    }
+                      });
+                    }}
                     disabled={nominateButtonDisabled}
                   >
-                    {t('startNominating', { ns: 'pages' })}
+                    {t('nominate.startNominating', { ns: 'pages' })}
                   </button>
                 </div>
               </div>
@@ -57,7 +62,7 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
               <div className="buttons">
                 <div className={`button secondary standalone`}>
                   <button onClick={() => navigate('/validators')}>
-                    {t('browseValidators', { ns: 'app' })}
+                    {t('browseValidators', { ns: 'library' })}
                     <FontAwesomeIcon
                       icon={faChevronRight}
                       transform="shrink-4"
@@ -70,5 +75,5 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
         )}
       </div>
     </CallToActionWrapper>
-  )
-}
+  );
+};
