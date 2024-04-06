@@ -12,11 +12,14 @@ import type { NewNominatorProps } from '../types';
 import { CallToActionLoader } from 'library/Loader/CallToAction';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOverlay } from 'kits/Overlay/Provider';
+import { registerSaEvent } from 'Utils';
+import { useNetwork } from 'contexts/Network';
 
 export const NewNominator = ({ syncing }: NewNominatorProps) => {
   const { t } = useTranslation();
   const { isReady } = useApi();
   const navigate = useNavigate();
+  const { network } = useNetwork();
   const { openCanvas } = useOverlay().canvas;
   const { activeAccount } = useActiveAccounts();
   const { isReadOnlyAccount } = useImportedAccounts();
@@ -37,13 +40,17 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
                   className={`button primary standalone${nominateButtonDisabled ? ` disabled` : ``}`}
                 >
                   <button
-                    onClick={() =>
+                    onClick={() => {
+                      registerSaEvent(
+                        `${network.toLowerCase()}_nominate_setup_button_pressed`
+                      );
+
                       openCanvas({
                         key: 'NominatorSetup',
                         options: {},
                         size: 'xl',
-                      })
-                    }
+                      });
+                    }}
                     disabled={nominateButtonDisabled}
                   >
                     {t('nominate.startNominating', { ns: 'pages' })}

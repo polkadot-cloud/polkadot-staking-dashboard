@@ -13,9 +13,12 @@ import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 import { PoolSync } from 'library/PoolSync';
 import { useJoinPools } from 'contexts/Pools/JoinPools';
 import { StyledLoader } from 'library/PoolSync/Loader';
+import { registerSaEvent } from 'Utils';
+import { useNetwork } from 'contexts/Network';
 
 export const NewMember = ({ syncing }: NewMemberProps) => {
   const { t } = useTranslation();
+  const { network } = useNetwork();
   const { poolsForJoin } = useJoinPools();
   const { openCanvas } = useOverlay().canvas;
   const { startJoinPoolFetch } = useJoinPools();
@@ -49,6 +52,9 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                       if (poolJoinPerformanceTask.status === 'unsynced') {
                         startJoinPoolFetch();
                       }
+                      registerSaEvent(
+                        `${network.toLowerCase()}_pool_join_button_pressed`
+                      );
 
                       openCanvas({
                         key: 'JoinPool',
@@ -89,13 +95,17 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                   className={`button secondary standalone${createDisabled ? ` disabled` : ``}`}
                 >
                   <button
-                    onClick={() =>
+                    onClick={() => {
+                      registerSaEvent(
+                        `${network.toLowerCase()}_pool_create_button_pressed`
+                      );
+
                       openCanvas({
                         key: 'CreatePool',
                         options: {},
                         size: 'xl',
-                      })
-                    }
+                      });
+                    }}
                     disabled={createDisabled}
                   >
                     {t('pools.createPool', { ns: 'pages' })}
