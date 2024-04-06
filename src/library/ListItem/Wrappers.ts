@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
   &.member {
     --height-bottom-row: 2.75rem;
   }
-  &.pool-join {
+  &.pool-more {
     --height-bottom-row: 7.5rem;
   }
 
@@ -154,6 +154,12 @@ export const Labels = styled.div`
 
         &:hover {
           opacity: 1;
+        }
+
+        &:disabled {
+          &:hover {
+            opacity: var(--opacity-disabled);
+          }
         }
         > svg {
           margin-left: 0.3rem;

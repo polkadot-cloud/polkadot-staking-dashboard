@@ -24,12 +24,21 @@ export const JoinPool = () => {
   const { poolsMetaData, bondedPools } = useBondedPools();
   const { getPoolRewardPoints, getPoolPerformanceTask } = usePoolPerformance();
 
+  // Get the provided pool id and performance batch key from options, if available.
+  const providedPool = options?.providedPool;
+  const providedPoolId = providedPool?.id || null;
+  const performanceKey =
+    providedPoolId && providedPool?.performanceBatchKey
+      ? providedPool?.performanceBatchKey
+      : 'pool_join';
+
   // Get the pool performance task to determine if performance data is ready.
-  const poolJoinPerformanceTask = getPoolPerformanceTask('pool_join');
+  const poolJoinPerformanceTask = getPoolPerformanceTask(performanceKey);
+
   const performanceDataReady = poolJoinPerformanceTask.status === 'synced';
 
   // Get performance data: Assumed to be fetched now.
-  const poolRewardPoints = getPoolRewardPoints('pool_join');
+  const poolRewardPoints = getPoolRewardPoints(performanceKey);
 
   // The active canvas tab.
   const [activeTab, setActiveTab] = useState<number>(0);
@@ -64,7 +73,7 @@ export const JoinPool = () => {
 
   const initialSelectedPoolId = useMemo(
     () =>
-      options?.poolId ||
+      providedPoolId ||
       filteredBondedPools[(filteredBondedPools.length * Math.random()) << 0]
         ?.id ||
       0,
@@ -96,7 +105,7 @@ export const JoinPool = () => {
   return (
     <CanvasFullScreenWrapper>
       {poolJoinPerformanceTask.status !== 'synced' || !bondedPool ? (
-        <Preloader />
+        <Preloader performanceKey={performanceKey} />
       ) : (
         <>
           <Header
@@ -105,13 +114,19 @@ export const JoinPool = () => {
             setSelectedPoolId={setSelectedPoolId}
             bondedPool={bondedPool}
             metadata={poolsMetaData[selectedPoolId]}
-            autoSelected={options?.poolId === undefined}
+            autoSelected={providedPoolId === undefined}
             filteredBondedPools={filteredBondedPools}
+            providedPoolId={providedPoolId}
           />
 
           <JoinPoolInterfaceWrapper>
             <div className="content">
-              {activeTab === 0 && <Overview bondedPool={bondedPool} />}
+              {activeTab === 0 && (
+                <Overview
+                  bondedPool={bondedPool}
+                  performanceKey={performanceKey}
+                />
+              )}
               {activeTab === 1 && (
                 <Nominations
                   poolId={bondedPool.id}

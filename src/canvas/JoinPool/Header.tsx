@@ -25,6 +25,7 @@ export const Header = ({
   autoSelected,
   setActiveTab,
   setSelectedPoolId,
+  providedPoolId,
 }: JoinPoolHeaderProps) => {
   const { t } = useTranslation();
   const { closeCanvas } = useOverlay().canvas;
@@ -44,12 +45,14 @@ export const Header = ({
   return (
     <>
       <div className="head">
-        <ButtonPrimaryInvert
-          text={t('chooseAnotherPool', { ns: 'library' })}
-          iconLeft={faArrowsRotate}
-          onClick={() => handleChooseNewPool()}
-          lg
-        />
+        {providedPoolId === null && (
+          <ButtonPrimaryInvert
+            text={t('chooseAnotherPool', { ns: 'library' })}
+            iconLeft={faArrowsRotate}
+            onClick={() => handleChooseNewPool()}
+            lg
+          />
+        )}
         <ButtonPrimary
           text={t('pools.back', { ns: 'pages' })}
           lg
