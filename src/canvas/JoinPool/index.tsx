@@ -32,8 +32,6 @@ export const JoinPool = () => {
       ? providedPool?.performanceBatchKey
       : 'pool_join';
 
-  console.log(providedPoolId);
-
   // Get the pool performance task to determine if performance data is ready.
   const poolJoinPerformanceTask = getPoolPerformanceTask(performanceKey);
 
@@ -120,6 +118,7 @@ export const JoinPool = () => {
             metadata={poolsMetaData[selectedPoolId]}
             autoSelected={providedPoolId === undefined}
             filteredBondedPools={filteredBondedPools}
+            providedPoolId={providedPoolId}
           />
 
           <JoinPoolInterfaceWrapper>

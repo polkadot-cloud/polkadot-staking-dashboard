@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
   &.member {
     --height-bottom-row: 2.75rem;
   }
-  &.pool-join {
+  &.pool-more {
     --height-bottom-row: 7.5rem;
   }
 

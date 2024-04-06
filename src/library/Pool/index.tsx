@@ -8,37 +8,24 @@ import { PoolCommission } from 'library/ListItem/Labels/PoolCommission';
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
 import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
 import { usePoolsTabs } from 'pages/Pools/Home/context';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { JoinPool } from '../ListItem/Labels/JoinPool';
 import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
 import type { PoolProps } from './types';
 import { Rewards } from './Rewards';
-import { useBalances } from 'contexts/Balances';
 import { useSyncing } from 'hooks/useSyncing';
 
 export const Pool = ({ pool }: PoolProps) => {
   const { memberCounter, addresses, id, state } = pool;
   const { setActiveTab } = usePoolsTabs();
-  const { getPoolMembership } = useBalances();
-  const { activeAccount } = useActiveAccounts();
   const { syncing } = useSyncing(['active-pools']);
-  const { isReadOnlyAccount } = useImportedAccounts();
   const { getCurrentCommission } = usePoolCommission();
 
-  const membership = getPoolMembership(activeAccount);
   const currentCommission = getCurrentCommission(id);
-
-  const displayJoin =
-    !syncing &&
-    state === 'Open' &&
-    !membership &&
-    !isReadOnlyAccount(activeAccount) &&
-    activeAccount;
+  const displayMore = !syncing && state === 'Open';
 
   return (
-    <Wrapper className={displayJoin ? 'pool-join' : 'pool'}>
+    <Wrapper className={displayMore ? 'pool-more' : 'pool'}>
       <div className="inner">
         <div className="row top">
           <PoolIdentity pool={pool} />
@@ -62,7 +49,7 @@ export const Pool = ({ pool }: PoolProps) => {
               <Members members={memberCounter} />
             </Labels>
             <PoolBonded pool={pool} />
-            {displayJoin && (
+            {displayMore && (
               <Labels style={{ marginTop: '1rem' }}>
                 <JoinPool id={id} setActiveTab={setActiveTab} />
               </Labels>

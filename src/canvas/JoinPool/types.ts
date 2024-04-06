@@ -13,6 +13,7 @@ export interface JoinPoolHeaderProps {
   autoSelected: boolean;
   setActiveTab: (tab: number) => void;
   setSelectedPoolId: Dispatch<SetStateAction<number>>;
+  providedPoolId: number;
 }
 
 export interface NominationsProps {

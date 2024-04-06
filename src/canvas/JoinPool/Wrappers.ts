@@ -28,21 +28,21 @@ export const JoinPoolInterfaceWrapper = styled.div`
         flex-grow: 1;
         display: flex;
         flex-direction: column;
-        padding-right: 4rem;
 
         @media (max-width: 1000px) {
           flex-basis: 100%;
-          padding-right: 0;
         }
       }
 
       &.side {
         min-width: 450px;
+        padding-left: 4rem;
 
         @media (max-width: 1000px) {
           flex-grow: 1;
           flex-basis: 100%;
           margin-top: 0.5rem;
+          padding-left: 0;
         }
 
         > div {
