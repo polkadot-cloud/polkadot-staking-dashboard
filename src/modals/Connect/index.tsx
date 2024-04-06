@@ -46,12 +46,10 @@ export const Connect = () => {
   const inMobileWallet = inNova || inSubWallet;
 
   // Get supported extensions. NOTE: Snaps are currently disabled.
-  const extensionsAsArray = Object.entries(extensions)
-    .filter(([key]) => !['polkagate-snap'].includes(key))
-    .map(([key, value]) => ({
-      id: key,
-      ...value,
-    })) as ExtensionArrayListItem[];
+  const extensionsAsArray = Object.entries(extensions).map(([key, value]) => ({
+    id: key,
+    ...value,
+  })) as ExtensionArrayListItem[];
 
   // If in SubWallet Mobile, keep `subwallet-js` only.
   const web = inSubWallet
