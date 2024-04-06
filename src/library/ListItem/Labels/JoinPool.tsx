@@ -13,7 +13,7 @@ export const JoinPool = ({
   id: number;
   setActiveTab: (t: number) => void;
 }) => {
-  const { t } = useTranslation('library');
+  const { t } = useTranslation('tips');
   const { openCanvas } = useOverlay().canvas;
 
   return (
@@ -34,7 +34,7 @@ export const JoinPool = ({
           });
         }}
       >
-        {t('join')}
+        {t('module.more')}
         <FontAwesomeIcon icon={faCaretRight} transform="shrink-2" />
       </button>
     </div>
