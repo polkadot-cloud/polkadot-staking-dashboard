@@ -11,6 +11,7 @@ import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useNetwork } from 'contexts/Network';
 import { useTxMeta } from 'contexts/TxMeta';
 import { ButtonSubmit } from 'kits/Buttons/ButtonSubmit';
+import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge';
 import type { LedgerSubmitProps } from 'library/SubmitTx/types';
 import { useTranslation } from 'react-i18next';
 
@@ -73,7 +74,7 @@ export const Submit = ({
   // Button icon.
   const icon = !integrityChecked ? faUsb : faSquarePen;
 
-  return (
+  return displayFor !== 'card' ? (
     <ButtonSubmit
       lg={displayFor === 'canvas'}
       iconLeft={icon}
@@ -81,6 +82,14 @@ export const Submit = ({
       text={text}
       onClick={handleOnClick}
       disabled={disabled}
+      pulse={!disabled}
+    />
+  ) : (
+    <ButtonSubmitLarge
+      disabled={disabled}
+      onSubmit={handleOnClick}
+      submitText={text}
+      icon={icon}
       pulse={!disabled}
     />
   );

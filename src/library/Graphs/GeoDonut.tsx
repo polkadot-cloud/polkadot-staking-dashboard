@@ -76,8 +76,8 @@ export const GeoDonut = ({
       {
         label: title,
         data,
-        // We make a gradient of N+2 colors from active to inactive, and we discard both ends
-        // N is the number of datapoints to plot
+        // We make a gradient of N+2 colors from active to inactive, and we discard both ends N is
+        // the number of datapoints to plot.
         backgroundColor: chroma
           .scale([backgroundColor, graphColors.inactive[mode]])
           .colors(data.length + 1),

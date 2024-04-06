@@ -27,7 +27,7 @@ export const Wrapper = styled(motion.div)`
       border: 1px solid var(--accent-color-primary);
     }
     &.warning {
-      border: 1px solid var(--status-warning-color);
+      border: 1px solid var(--accent-color-secondary);
     }
   }
 
@@ -68,8 +68,8 @@ export const Wrapper = styled(motion.div)`
         border: 1px solid var(--accent-color-primary);
       }
       &.warning {
-        color: var(--status-warning-color);
-        border: 1px solid var(--status-warning-color-transparent);
+        color: var(--accent-color-secondary);
+        border: 1px solid var(--accent-color-secondary);
       }
       border-radius: 0.5rem;
       padding: 0.15rem 0.5rem;
@@ -82,7 +82,7 @@ export const Wrapper = styled(motion.div)`
     }
     &.warning {
       svg {
-        color: var(--status-warning-color);
+        color: var(--accent-color-secondary);
       }
     }
     &.minimised {

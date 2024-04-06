@@ -12,6 +12,7 @@ import type {
   MaybePool,
   NominationStatuses,
   PoolNominations,
+  PoolTab,
 } from './types';
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, MaybeAddress, Sync } from 'types';
@@ -20,6 +21,7 @@ import { useNetwork } from 'contexts/Network';
 import { useApi } from '../../Api';
 import { defaultBondedPoolsContext } from './defaults';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
+import { SyncController } from 'controllers/SyncController';
 
 export const BondedPoolsContext = createContext<BondedPoolsContextState>(
   defaultBondedPoolsContext
@@ -55,6 +57,9 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     Record<number, PoolNominations>
   >({});
 
+  // Store pool list active tab. Defaults to `Active` tab.
+  const [poolListActiveTab, setPoolListActiveTab] = useState<PoolTab>('Active');
+
   // Fetch all bonded pool entries and their metadata.
   const fetchBondedPools = async () => {
     if (!api || bondedPoolsSynced.current !== 'unsynced') {
@@ -85,6 +90,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     );
 
     bondedPoolsSynced.current = 'synced';
+    SyncController.dispatch('bonded-pools', 'complete');
   };
 
   // Fetches pool nominations and updates state.
@@ -197,7 +203,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const getBondedPool = (poolId: MaybePool) =>
-    bondedPools.find((p) => p.id === poolId) ?? null;
+    bondedPools.find((p) => String(p.id) === String(poolId)) ?? null;
 
   /*
    * poolSearchFilter Iterates through the supplied list and refers to the meta batch of the list to
@@ -286,7 +292,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // Gets all pools that the account has a role in. Returns an object with each pool role as keys,
-  // and and array of pool ids as their values.
+  // and array of pool ids as their values.
   const accumulateAccountPoolRoles = (who: MaybeAddress): AccountPoolRoles => {
     if (!who) {
       return {
@@ -386,6 +392,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   // Clear existing state for network refresh.
   useEffectIgnoreInitial(() => {
     bondedPoolsSynced.current = 'unsynced';
+    SyncController.dispatch('bonded-pools', 'syncing');
     setStateWithRef([], setBondedPools, bondedPoolsRef);
     setPoolsMetadata({});
     setPoolsNominations({});
@@ -422,6 +429,8 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
         poolsMetaData,
         poolsNominations,
         updatePoolNominations,
+        poolListActiveTab,
+        setPoolListActiveTab,
       }}
     >
       {children}

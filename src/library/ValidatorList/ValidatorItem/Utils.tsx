@@ -72,7 +72,7 @@ export const normaliseEraPoints = (
   return Object.fromEntries(
     Object.entries(eraPoints).map(([era, points]) => [
       era,
-      points.dividedBy(percentile).multipliedBy(0.01).toNumber(),
+      Math.min(points.dividedBy(percentile).multipliedBy(0.01).toNumber(), 1),
     ])
   );
 };

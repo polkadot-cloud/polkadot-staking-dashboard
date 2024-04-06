@@ -13,22 +13,18 @@ import { useOverlay } from 'kits/Overlay/Provider';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useStatusButtons } from './useStatusButtons';
-import { useSyncing } from 'hooks/useSyncing';
+import type { MembershipStatusProps } from './types';
 
 export const MembershipStatus = ({
   showButtons = true,
   buttonType = 'primary',
-}: {
-  showButtons?: boolean;
-  buttonType?: string;
-}) => {
+}: MembershipStatusProps) => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
-  const { syncing } = useSyncing('*');
   const { openModal } = useOverlay().modal;
   const { poolsMetaData } = useBondedPools();
   const { activeAccount } = useActiveAccounts();
-  const { label, buttons } = useStatusButtons();
+  const { label } = useStatusButtons();
   const { isReadOnlyAccount } = useImportedAccounts();
   const { getTransferOptions } = useTransferOptions();
   const { activePool, isOwner, isBouncer, isMember } = useActivePool();
@@ -52,18 +48,21 @@ export const MembershipStatus = ({
       (poolState !== 'Destroying' && (isOwner() || isBouncer())) ||
       (isMember() && active?.isGreaterThan(0))
     ) {
-      membershipButtons.push({
-        title: t('pools.manage'),
-        icon: faCog,
-        disabled: !isReady || isReadOnlyAccount(activeAccount),
-        small: true,
-        onClick: () =>
-          openModal({
-            key: 'ManagePool',
-            options: { disableWindowResize: true, disableScroll: true },
-            size: 'sm',
-          }),
-      });
+      // Display manage button if active account is not a read-only account.
+      if (!isReadOnlyAccount(activeAccount)) {
+        membershipButtons.push({
+          title: t('pools.manage'),
+          icon: faCog,
+          disabled: !isReady,
+          small: true,
+          onClick: () =>
+            openModal({
+              key: 'ManagePool',
+              options: { disableWindowResize: true, disableScroll: true },
+              size: 'sm',
+            }),
+        });
+      }
     }
   }
 
@@ -83,7 +82,6 @@ export const MembershipStatus = ({
       label={t('pools.poolMembership')}
       helpKey="Pool Membership"
       stat={t('pools.notInPool')}
-      buttons={!showButtons || syncing ? [] : buttons}
       buttonType={buttonType}
     />
   );

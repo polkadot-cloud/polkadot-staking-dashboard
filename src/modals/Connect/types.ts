@@ -20,6 +20,7 @@ export interface ExtensionMetaProps {
         url: string;
         text: string;
       };
+  otherEcosystems?: string[];
 }
 
 export interface ListWithInputProps {

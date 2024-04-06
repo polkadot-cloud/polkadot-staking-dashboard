@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { isNotZero } from '@w3ux/utils';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { listItemsPerBatch, listItemsPerPage } from 'library/List/defaults';
+import { poolMembersPerPage } from 'library/List/defaults';
 import { useApi } from 'contexts/Api';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { List, ListStatusHeader, Wrapper as ListWrapper } from 'library/List';
@@ -20,7 +20,6 @@ export const MembersListInner = ({
   pagination,
   batchKey,
   members: initialMembers,
-  disableThrottle = false,
 }: DefaultMembersListProps) => {
   const { t } = useTranslation('pages');
   const { isReady, activeEra } = useApi();
@@ -28,9 +27,6 @@ export const MembersListInner = ({
 
   // current page
   const [page, setPage] = useState<number>(1);
-
-  // current render iteration
-  const [renderIteration, setRenderIterationState] = useState<number>(1);
 
   // default list of validators
   const [membersDefault, setMembersDefault] =
@@ -42,26 +38,13 @@ export const MembersListInner = ({
   // is this the initial fetch
   const [fetched, setFetched] = useState<Sync>('unsynced');
 
-  // render throttle iteration
-  const renderIterationRef = useRef(renderIteration);
-  const setRenderIteration = (iter: number) => {
-    renderIterationRef.current = iter;
-    setRenderIterationState(iter);
-  };
-
   // pagination
-  const totalPages = Math.ceil(members.length / listItemsPerPage);
-  const pageEnd = page * listItemsPerPage - 1;
-  const pageStart = pageEnd - (listItemsPerPage - 1);
-
-  // render batch
-  const batchEnd = Math.min(
-    renderIteration * listItemsPerBatch - 1,
-    listItemsPerPage
-  );
+  const totalPages = Math.ceil(members.length / poolMembersPerPage);
+  const pageEnd = page * poolMembersPerPage - 1;
+  const pageStart = pageEnd - (poolMembersPerPage - 1);
 
   // get throttled subset or entire list
-  const listMembers = members.slice(pageStart).slice(0, listItemsPerPage);
+  const listMembers = members.slice(pageStart).slice(0, poolMembersPerPage);
 
   // handle validator list bootstrapping
   const setupMembersList = () => {
@@ -84,15 +67,6 @@ export const MembersListInner = ({
       setupMembersList();
     }
   }, [isReady, fetched, activeEra.index]);
-
-  // Render throttle.
-  useEffect(() => {
-    if (!(batchEnd >= pageEnd || disableThrottle)) {
-      setTimeout(() => {
-        setRenderIteration(renderIterationRef.current + 1);
-      }, 500);
-    }
-  }, [renderIterationRef.current]);
 
   return !members.length ? null : (
     <ListWrapper>

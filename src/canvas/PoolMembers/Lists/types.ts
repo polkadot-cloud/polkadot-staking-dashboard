@@ -6,7 +6,6 @@ import type { AnyJson } from 'types';
 export interface MembersListProps {
   pagination: boolean;
   batchKey: string;
-  disableThrottle?: boolean;
   selectToggleable?: boolean;
 }
 
@@ -15,5 +14,5 @@ export type DefaultMembersListProps = MembersListProps & {
 };
 
 export type FetchpageMembersListProps = MembersListProps & {
-  memberCount: number;
+  memberCount: string;
 };

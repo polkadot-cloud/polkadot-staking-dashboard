@@ -19,6 +19,7 @@ import { useBalances } from 'contexts/Balances';
 import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
+import { defaultClaimPermission } from 'controllers/ActivePoolsController/defaults';
 
 export const SetClaimPermission = ({
   setSection,
@@ -92,10 +93,7 @@ export const SetClaimPermission = ({
         ) : null}
 
         <ClaimPermissionInput
-          current={membership?.claimPermission}
-          permissioned={
-            ![undefined, 'Permissioned'].includes(membership?.claimPermission)
-          }
+          current={membership?.claimPermission || defaultClaimPermission}
           onChange={(val: ClaimPermission | undefined) => {
             setClaimPermission(val);
           }}

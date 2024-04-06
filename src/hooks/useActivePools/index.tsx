@@ -33,11 +33,6 @@ export const useActivePools = ({ onCallback, poolIds }: ActivePoolsProps) => {
       const { pool, nominations } = e.detail;
       const { id } = pool;
 
-      // Call custom `onCallback` function if provided.
-      if (typeof onCallback === 'function') {
-        await onCallback(e.detail);
-      }
-
       // Persist to active pools state if this pool is specified in `poolIds`.
       if (
         poolIds === '*' ||
@@ -55,10 +50,13 @@ export const useActivePools = ({ onCallback, poolIds }: ActivePoolsProps) => {
           poolNominationsRef
         );
       }
+
+      // Call custom `onCallback` function if provided.
+      if (typeof onCallback === 'function') {
+        await onCallback(e.detail);
+      }
     }
   };
-
-  const documentRef = useRef<Document>(document);
 
   // Bootstrap state on initial render.
   useEffect(() => {
@@ -94,7 +92,8 @@ export const useActivePools = ({ onCallback, poolIds }: ActivePoolsProps) => {
   }, [network, activeAccount]);
 
   // Listen for new active pool events.
+  const documentRef = useRef<Document>(document);
   useEventListener('new-active-pool', newActivePoolCallback, documentRef);
 
-  return { activePools, poolNominations };
+  return { activePools, activePoolsRef, poolNominations };
 };

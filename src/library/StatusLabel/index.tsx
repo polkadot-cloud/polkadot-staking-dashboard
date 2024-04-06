@@ -22,9 +22,9 @@ export const StatusLabel = ({
   status = 'sync_or_setup',
 }: StatusLabelProps) => {
   const { openHelp } = useHelp();
+  const { syncing } = useSyncing();
   const { plugins } = usePlugins();
   const { inSetup } = useStaking();
-  const { syncing } = useSyncing('*');
   const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
 

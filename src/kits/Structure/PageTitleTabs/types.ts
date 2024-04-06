@@ -19,4 +19,8 @@ export interface PageTitleTabProps {
   onClick: () => void;
   // a badge that can have a glance at before visting the tab page.
   badge?: string | number;
+  // whether the tab button is disabled.
+  disabled?: boolean;
+  // whether the tab is acting as a preloader.
+  asPreloader?: boolean;
 }

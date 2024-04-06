@@ -13,12 +13,7 @@ export interface PoolListProps {
   allowMoreCols?: boolean;
   allowSearch?: boolean;
   pagination?: boolean;
-  disableThrottle?: boolean;
   refetchOnListUpdate?: string;
   allowListFormat?: boolean;
   pools?: BondedPool[];
-  defaultFilters?: {
-    includes: string[] | null;
-    excludes: string[] | null;
-  };
 }

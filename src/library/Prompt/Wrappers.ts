@@ -89,7 +89,7 @@ export const TitleWrapper = styled.div`
     align-items: center;
     padding: 0 0.5rem;
 
-    button {
+    > button {
       padding: 0;
     }
 

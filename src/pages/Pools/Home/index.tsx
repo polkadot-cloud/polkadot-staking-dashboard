@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { CardWrapper } from 'library/Card/Wrappers';
-import { PoolList } from 'library/PoolList/Default';
+import { PoolList } from 'library/PoolList';
 import { StatBoxList } from 'library/StatBoxList';
 import { useFavoritePools } from 'contexts/Pools/FavoritePools';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -23,7 +23,6 @@ import { MinCreateBondStat } from './Stats/MinCreateBond';
 import { MinJoinBondStat } from './Stats/MinJoinBond';
 import { Status } from './Status';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
-import { useApi } from 'contexts/Api';
 import { useActivePools } from 'hooks/useActivePools';
 import { useBalances } from 'contexts/Balances';
 import { PageTitle } from 'kits/Structure/PageTitle';
@@ -31,27 +30,30 @@ import type { PageTitleTabProps } from 'kits/Structure/PageTitleTabs/types';
 import { PageRow } from 'kits/Structure/PageRow';
 import { RowSection } from 'kits/Structure/RowSection';
 import { WithdrawPrompt } from 'library/WithdrawPrompt';
+import { useSyncing } from 'hooks/useSyncing';
+import { useNetwork } from 'contexts/Network';
 
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
+  const { network } = useNetwork();
   const { favorites } = useFavoritePools();
   const { openModal } = useOverlay().modal;
   const { bondedPools } = useBondedPools();
   const { getPoolMembership } = useBalances();
+  const { poolMembersipSyncing } = useSyncing();
   const { activeAccount } = useActiveAccounts();
   const { activeTab, setActiveTab } = usePoolsTabs();
   const { getPoolRoles, activePool } = useActivePool();
-  const { counterForBondedPools } = useApi().poolsConfig;
-
   const membership = getPoolMembership(activeAccount);
-  const { state } = activePool?.bondedPool || {};
 
   const { activePools } = useActivePools({
     poolIds: '*',
   });
 
-  const activePoolsNoMembership = { ...activePools };
-  delete activePoolsNoMembership[membership?.poolId || -1];
+  // Calculate the number of _other_ pools the user has a role in.
+  const poolRoleCount = Object.keys(activePools).filter(
+    (poolId) => poolId !== String(membership?.poolId)
+  ).length;
 
   let tabs: PageTitleTabProps[] = [
     {
@@ -66,7 +68,6 @@ export const HomeInner = () => {
       title: t('pools.allPools'),
       active: activeTab === 1,
       onClick: () => setActiveTab(1),
-      badge: String(counterForBondedPools.toString()),
     },
     {
       title: t('pools.favorites'),
@@ -76,14 +77,12 @@ export const HomeInner = () => {
     }
   );
 
-  // Back to tab 0 if not in a pool & on members tab.
-  useEffect(() => {
-    if (!activePool) {
-      setActiveTab(0);
-    }
-  }, [activePool]);
-
   const ROW_HEIGHT = 220;
+
+  // Go back to tab 0 on network change.
+  useEffect(() => {
+    setActiveTab(0);
+  }, [network]);
 
   return (
     <>
@@ -91,7 +90,7 @@ export const HomeInner = () => {
         title={t('pools.pools')}
         tabs={tabs}
         button={
-          Object.keys(activePoolsNoMembership).length > 0
+          !poolMembersipSyncing() && poolRoleCount > 0
             ? {
                 title: t('pools.allRoles'),
                 onClick: () =>
@@ -111,20 +110,17 @@ export const HomeInner = () => {
             <MinCreateBondStat />
           </StatBoxList>
 
-          {state === 'Destroying' ? (
-            <ClosurePrompts />
-          ) : (
-            <WithdrawPrompt bondFor="pool" />
-          )}
+          <ClosurePrompts />
+          <WithdrawPrompt bondFor="pool" />
 
           <PageRow>
-            <RowSection hLast>
-              <Status height={ROW_HEIGHT} />
-            </RowSection>
-            <RowSection secondary>
+            <RowSection secondary vLast>
               <CardWrapper height={ROW_HEIGHT}>
                 <ManageBond />
               </CardWrapper>
+            </RowSection>
+            <RowSection hLast>
+              <Status height={ROW_HEIGHT} />
             </RowSection>
           </PageRow>
           {activePool !== null && (
@@ -148,10 +144,6 @@ export const HomeInner = () => {
             <PoolListProvider>
               <PoolList
                 pools={bondedPools}
-                defaultFilters={{
-                  includes: ['active'],
-                  excludes: ['locked', 'destroying'],
-                }}
                 allowMoreCols
                 allowSearch
                 pagination

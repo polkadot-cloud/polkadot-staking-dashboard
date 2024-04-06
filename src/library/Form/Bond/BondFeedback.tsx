@@ -27,6 +27,7 @@ export const BondFeedback = ({
   txFees,
   maxWidth,
   syncing = false,
+  displayFirstWarningOnly = true,
 }: BondFeedbackProps) => {
   const { t } = useTranslation('library');
   const {
@@ -145,6 +146,10 @@ export const BondFeedback = ({
     setErrors(newErrors);
   };
 
+  // If `displayFirstWarningOnly` is set, filter errors to only the first one.
+  const filteredErrors =
+    displayFirstWarningOnly && errors.length > 1 ? [errors[0]] : errors;
+
   // update bond on account change
   useEffect(() => {
     setBond({
@@ -168,7 +173,7 @@ export const BondFeedback = ({
 
   return (
     <>
-      {errors.map((err, i) => (
+      {filteredErrors.map((err, i) => (
         <Warning key={`setup_error_${i}`} text={err} />
       ))}
       <Spacer />

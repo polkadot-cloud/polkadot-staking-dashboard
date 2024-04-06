@@ -13,7 +13,6 @@ import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useStaking } from '../Staking';
 import {
   defaultNominatorProgress,
   defaultPoolProgress,
@@ -28,7 +27,6 @@ import type {
   PoolSetups,
   SetupContextInterface,
 } from './types';
-import { useBalances } from 'contexts/Balances';
 
 export const SetupContext =
   createContext<SetupContextInterface>(defaultSetupContext);
@@ -36,22 +34,12 @@ export const SetupContext =
 export const useSetup = () => useContext(SetupContext);
 
 export const SetupProvider = ({ children }: { children: ReactNode }) => {
-  const { inSetup } = useStaking();
   const {
     network,
     networkData: { units },
   } = useNetwork();
   const { accounts } = useImportedAccounts();
-  const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
-
-  const poolMembership = getPoolMembership(activeAccount);
-
-  // is the user actively on the setup page
-  const [onNominatorSetup, setOnNominatorSetup] = useState<boolean>(false);
-
-  // is the user actively on the pool creation page
-  const [onPoolSetup, setOnPoolSetup] = useState<boolean>(false);
 
   // Store all imported accounts nominator setups.
   const [nominatorSetups, setNominatorSetups] = useState<NominatorSetups>({});
@@ -271,16 +259,6 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Move away from setup pages on completion / network change.
-  useEffectIgnoreInitial(() => {
-    if (!inSetup()) {
-      setOnNominatorSetup(false);
-    }
-    if (poolMembership) {
-      setOnPoolSetup(false);
-    }
-  }, [inSetup(), network, poolMembership]);
-
   // Update setup state when activeAccount changes
   useEffectIgnoreInitial(() => {
     if (accounts.length) {
@@ -296,10 +274,6 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
         getPoolSetupPercent,
         setActiveAccountSetup,
         setActiveAccountSetupSection,
-        setOnNominatorSetup,
-        setOnPoolSetup,
-        onNominatorSetup,
-        onPoolSetup,
         getNominatorSetup,
         getPoolSetup,
       }}

@@ -19,7 +19,6 @@ export interface LargerFilterItemProps {
 }
 export interface FilterTabsProps {
   config: FilterConfig[];
-  activeIndex: number;
 }
 
 export interface FilterConfig {

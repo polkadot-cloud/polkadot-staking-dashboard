@@ -331,6 +331,11 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   const reInitialiseApi = async (type: ConnectionType) => {
     setApiStatus('disconnected');
+
+    // Dispatch all default syncIds as syncing.
+    SyncController.dispatchAllDefault();
+
+    // Instanaite new API instance.
     await ApiController.instantiate(network, type, rpcEndpoint);
   };
 

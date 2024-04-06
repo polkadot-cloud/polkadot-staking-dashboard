@@ -94,6 +94,7 @@ export const PayoutBar = ({
       });
       return `${dateObj}`;
     }),
+
     datasets: [
       {
         order: 1,

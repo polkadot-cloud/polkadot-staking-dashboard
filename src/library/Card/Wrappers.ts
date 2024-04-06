@@ -72,6 +72,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
  * Used to separate the main modules throughout the app.
  */
 export const CardWrapper = styled.div<CardWrapperProps>`
+  border: 1px solid transparent;
   box-shadow: var(--card-shadow);
   background: var(--background-primary);
   border-radius: 1.1rem;
@@ -82,10 +83,23 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   overflow: hidden;
   margin-top: 1.4rem;
   padding: 1.5rem;
+  transition: border 0.2s;
 
   &.canvas {
     background: var(--background-canvas-card);
     padding: 1.25rem;
+
+    &.secondary {
+      padding: 1rem;
+
+      @media (max-width: 1000px) {
+        background: var(--background-canvas-card);
+      }
+
+      @media (min-width: 1001px) {
+        background: var(--background-canvas-card-secondary);
+      }
+    }
   }
 
   &.transparent {
@@ -98,7 +112,11 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   }
 
   &.warning {
-    border: 1px solid var(--status-warning-color);
+    border: 1px solid var(--accent-color-secondary);
+  }
+
+  &.prompt {
+    border: 1px solid var(--accent-color-pending);
   }
 
   @media (max-width: ${PageWidthMediumThreshold}px) {

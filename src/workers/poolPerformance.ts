@@ -2,9 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable no-await-in-loop */
 
+import BigNumber from 'bignumber.js';
+import type { PoolRewardPointsKey } from 'contexts/Pools/PoolPerformance/types';
 import type { Exposure } from 'contexts/Staking/types';
 import type { ErasRewardPoints } from 'contexts/Validators/types';
-import type { AnyApi, AnyJson } from 'types';
+import type { AnyJson } from 'types';
 
 // eslint-disable-next-line no-restricted-globals, @typescript-eslint/no-explicit-any
 export const ctx: Worker = self as any;
@@ -13,7 +15,7 @@ export const ctx: Worker = self as any;
 ctx.addEventListener('message', async (event: AnyJson) => {
   const { data } = event;
   const { task } = data;
-  let message: AnyJson = {};
+  let message = {};
   switch (task) {
     case 'processNominationPoolsRewardData':
       message = await processErasStakersForNominationPoolRewards(data);
@@ -25,41 +27,59 @@ ctx.addEventListener('message', async (event: AnyJson) => {
 
 // Process `erasStakersClipped` and generate nomination pool reward data.
 const processErasStakersForNominationPoolRewards = async ({
-  bondedPools,
+  key,
+  addresses,
   era,
   erasRewardPoints,
   exposures,
 }: {
-  bondedPools: string[];
+  key: PoolRewardPointsKey;
+  addresses: string[];
   era: string;
   erasRewardPoints: ErasRewardPoints;
   exposures: Exposure[];
 }) => {
   const poolRewardData: Record<string, Record<string, string>> = {};
 
-  for (const address of bondedPools) {
-    let validator = null;
-    for (const exposure of exposures) {
-      const { others } = exposure.val;
-      const inOthers = others.find((o: AnyApi) => o.who === address);
+  const validators: Record<string, string[]> = {};
 
-      if (inOthers) {
-        validator = exposure.keys[1];
-        break;
-      }
-    }
+  for (const exposure of exposures) {
+    const { others } = exposure.val;
 
-    if (validator) {
-      const rewardPoints: string =
-        erasRewardPoints[era]?.individual?.[validator || ''] ?? 0;
-      if (!poolRewardData[address]) {
-        poolRewardData[address] = {};
+    // Return the `addresses` that are present in `others` for this era.
+    const addressesInOthers = addresses.filter((a) =>
+      others.find(({ who }) => who === a)
+    );
+
+    for (const addressInOthers of addressesInOthers) {
+      if (validators[addressInOthers]) {
+        validators[addressInOthers].push(exposure.keys[1]);
+      } else {
+        validators[addressInOthers] = [exposure.keys[1]];
       }
-      poolRewardData[address][era] = rewardPoints;
     }
   }
 
+  for (const entry of Object.entries(validators)) {
+    const [entryAddress, entryValidators] = entry;
+
+    const rewardPoints = entryValidators.reduce(
+      (acc: BigNumber, entryValidator: string) =>
+        acc.plus(
+          erasRewardPoints[era]?.individual?.[entryValidator || ''] ?? 0
+        ),
+      new BigNumber(0)
+    );
+
+    if (!poolRewardData[entryAddress]) {
+      poolRewardData[entryAddress] = {};
+    }
+    poolRewardData[entryAddress][era] = rewardPoints.toString();
+  }
+
   return {
+    key,
+    addresses,
     poolRewardData,
   };
 };

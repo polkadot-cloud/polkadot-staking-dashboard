@@ -14,20 +14,20 @@ export const JoinPool = ({
   setActiveTab: (t: number) => void;
 }) => {
   const { t } = useTranslation('library');
-  const { openModal } = useOverlay().modal;
+  const { openCanvas } = useOverlay().canvas;
 
   return (
     <div className="label button-with-text">
       <button
         type="button"
         onClick={() => {
-          openModal({
+          openCanvas({
             key: 'JoinPool',
             options: {
-              id,
-              setActiveTab,
+              poolId: id,
+              onJoinCallback: () => setActiveTab(0),
             },
-            size: 'sm',
+            size: 'xl',
           });
         }}
       >

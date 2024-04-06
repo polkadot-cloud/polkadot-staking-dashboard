@@ -11,6 +11,10 @@ export const Wrapper = styled.section`
   margin-top: 0.9rem;
   max-width: 100%;
 
+  &.inline {
+    border-bottom: none;
+  }
+
   @media (max-width: ${PageWidthMediumThreshold}px) {
     margin-top: 0.5rem;
   }

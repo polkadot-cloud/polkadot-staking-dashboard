@@ -43,13 +43,15 @@ export const Nomination = ({
             <Labels className={displayFor}>
               <CopyAddress address={address} />
               {toggleFavorites && <FavoriteValidator address={address} />}
-              <Metrics
-                address={address}
-                display={getIdentityDisplay(
-                  validatorIdentities[address],
-                  validatorSupers[address]
-                )}
-              />
+              {displayFor !== 'canvas' && (
+                <Metrics
+                  address={address}
+                  display={getIdentityDisplay(
+                    validatorIdentities[address],
+                    validatorSupers[address]
+                  )}
+                />
+              )}
             </Labels>
           </div>
         </div>

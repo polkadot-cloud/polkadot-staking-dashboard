@@ -19,7 +19,6 @@ export interface ActivePoolContextState {
   setActivePoolId: (p: string) => void;
   activePool: ActivePool | null;
   activePoolNominations: Nominations | null;
-  activePoolMemberCount: number;
   pendingPoolRewards: BigNumber;
 }
 

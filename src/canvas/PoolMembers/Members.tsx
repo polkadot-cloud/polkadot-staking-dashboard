@@ -18,14 +18,15 @@ export const Members = () => {
   const { mode } = useTheme();
   const { pluginEnabled } = usePlugins();
   const { getMembersOfPoolFromNode } = usePoolMembers();
-  const { activePool, isOwner, isBouncer, activePoolMemberCount } =
-    useActivePool();
+  const { activePool, isOwner, isBouncer } = useActivePool();
 
   const { colors } = useNetwork().networkData;
   const annuncementBorderColor = colors.secondary[mode];
 
   const showBlockedPrompt =
     activePool?.bondedPool?.state === 'Blocked' && (isOwner() || isBouncer());
+
+  const memberCount = activePool?.bondedPool?.memberCounter ?? '0';
 
   const membersListProps = {
     batchKey: 'active_pool_members',
@@ -80,7 +81,7 @@ export const Members = () => {
         {pluginEnabled('subscan') ? (
           <FetchPageMemberList
             {...membersListProps}
-            memberCount={activePoolMemberCount}
+            memberCount={memberCount}
           />
         ) : (
           <DefaultMemberList

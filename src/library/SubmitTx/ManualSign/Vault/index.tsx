@@ -11,6 +11,8 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { SubmitProps } from '../../types';
 import { SignPrompt } from './SignPrompt';
 import { ButtonSubmit } from 'kits/Buttons/ButtonSubmit';
+import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge';
+import { appendOrEmpty } from '@w3ux/utils';
 
 export const Vault = ({
   onSubmit,
@@ -30,38 +32,51 @@ export const Vault = ({
   const disabled =
     submitting || !valid || !accountHasSigner(submitAddress) || !txFeesValid;
 
+  // Format submit button based on whether signature currently exists or submission is ongoing.
+  let buttonText: string;
+  let buttonOnClick: () => void;
+  let buttonDisabled: boolean;
+  let buttonPulse: boolean;
+
+  if (getTxSignature() !== null || submitting) {
+    buttonText = submitText || '';
+    buttonOnClick = onSubmit;
+    buttonDisabled = disabled;
+    buttonPulse = !(!valid || promptStatus !== 0);
+  } else {
+    buttonText = promptStatus === 0 ? t('sign') : t('signing');
+    buttonOnClick = async () => {
+      openPromptWith(<SignPrompt submitAddress={submitAddress} />, 'small');
+    };
+    buttonDisabled = disabled || promptStatus !== 0;
+    buttonPulse = !disabled || promptStatus === 0;
+  }
+
   return (
-    <div className="inner">
+    <div className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}>
       <div>
         <EstimatedTxFee />
         {valid ? <p>{t('submitTransaction')}</p> : <p>...</p>}
       </div>
       <div>
         {buttons}
-        {getTxSignature() !== null || submitting ? (
+        {displayFor !== 'card' ? (
           <ButtonSubmit
+            disabled={buttonDisabled}
             lg={displayFor === 'canvas'}
-            text={submitText || ''}
+            text={buttonText}
             iconLeft={faSquarePen}
             iconTransform="grow-2"
-            onClick={() => onSubmit()}
-            disabled={disabled}
-            pulse={!(!valid || promptStatus !== 0)}
+            onClick={() => buttonOnClick()}
+            pulse={buttonPulse}
           />
         ) : (
-          <ButtonSubmit
-            lg={displayFor === 'canvas'}
-            text={promptStatus === 0 ? t('sign') : t('signing')}
-            iconLeft={faSquarePen}
-            iconTransform="grow-2"
-            onClick={async () => {
-              openPromptWith(
-                <SignPrompt submitAddress={submitAddress} />,
-                'small'
-              );
-            }}
-            disabled={disabled || promptStatus !== 0}
-            pulse={!disabled || promptStatus === 0}
+          <ButtonSubmitLarge
+            disabled={disabled}
+            submitText={buttonText}
+            onSubmit={buttonOnClick}
+            icon={faSquarePen}
+            pulse={!disabled}
           />
         )}
       </div>

@@ -32,7 +32,7 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   const { openHelp } = useHelp();
   const { plugins } = usePlugins();
   const { inSetup } = useStaking();
-  const { syncing } = useSyncing('*');
+  const { syncing } = useSyncing();
   const { getData, injectBlockTimestamp } = useSubscanData([
     'payouts',
     'unclaimedPayouts',

@@ -24,7 +24,9 @@ export const Rewards = ({ address, displayFor = 'default' }: RewardProps) => {
   const { isReady } = useApi();
   const { setTooltipTextAndOpen } = useTooltip();
   const { eraPointsBoundaries } = useValidators();
-  const { poolRewardPoints, poolRewardPointsFetched } = usePoolPerformance();
+  const { getPoolRewardPoints, getPoolPerformanceTask } = usePoolPerformance();
+
+  const poolRewardPoints = getPoolRewardPoints('pool_page');
 
   const eraRewardPoints = Object.fromEntries(
     Object.entries(poolRewardPoints[address] || {}).map(([k, v]: AnyJson) => [
@@ -38,7 +40,8 @@ export const Rewards = ({ address, displayFor = 'default' }: RewardProps) => {
   const prefilledPoints = prefillEraPoints(Object.values(normalisedPoints));
 
   const empty = Object.values(poolRewardPoints).length === 0;
-  const syncing = !isReady || poolRewardPointsFetched !== 'synced';
+  const syncing =
+    !isReady || getPoolPerformanceTask('pool_page').status !== 'synced';
   const tooltipText = `${MaxEraRewardPointsEras} ${t('dayPoolPerformance')}`;
 
   return (
@@ -129,7 +132,7 @@ export const RewardsGraph = ({ points = [], syncing }: RewardsGraphProps) => {
             key={`line_coord_${index}`}
             strokeWidth={5}
             opacity={1}
-            stroke="var(--accent-color-tertiary)"
+            stroke="var(--accent-color-transparent)"
             x1={x1}
             y1={y1}
             x2={x2}
@@ -146,7 +149,7 @@ export const RewardsGraph = ({ points = [], syncing }: RewardsGraphProps) => {
             stroke={
               zero
                 ? 'var(--text-color-tertiary)'
-                : 'var(--accent-color-secondary)'
+                : 'var(--accent-color-primary)'
             }
             x1={x1}
             y1={y1}

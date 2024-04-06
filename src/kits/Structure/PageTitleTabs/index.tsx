@@ -11,18 +11,38 @@ import { Wrapper } from './Wrapper';
  * @name PageTitleTabs
  * @summary The element in a page title. Inculding the ButtonTab.
  */
-export const PageTitleTabs = ({ sticky, tabs = [] }: PageTitleProps) => (
-  <Wrapper className={`${appendOrEmpty(sticky, 'sticky')}`}>
+export const PageTitleTabs = ({
+  sticky,
+  tabs = [],
+  inline = false,
+  tabClassName,
+}: PageTitleProps) => (
+  <Wrapper
+    className={`${appendOrEmpty(sticky, 'sticky')} ${inline ? 'inline' : undefined}`}
+  >
     <div className="scroll">
       <div className="inner">
         {tabs.map(
-          ({ active, onClick, title, badge }: PageTitleTabProps, i: number) => (
+          (
+            {
+              active,
+              onClick,
+              title,
+              badge,
+              disabled,
+              asPreloader,
+            }: PageTitleTabProps,
+            i: number
+          ) => (
             <ButtonTab
+              className={tabClassName}
               active={!!active}
               key={`page_tab_${i}`}
               onClick={() => onClick()}
               title={title}
               badge={badge}
+              disabled={disabled === undefined ? false : disabled}
+              asPreloader={asPreloader == undefined ? false : asPreloader}
             />
           )
         )}

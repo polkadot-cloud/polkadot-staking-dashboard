@@ -24,8 +24,8 @@ import { useSyncing } from 'hooks/useSyncing';
 
 export const Main = () => {
   const { t, i18n } = useTranslation('base');
+  const { syncing } = useSyncing();
   const { pathname } = useLocation();
-  const { syncing } = useSyncing('*');
   const { networkData } = useNetwork();
   const { getBondedAccount } = useBonded();
   const { accounts } = useImportedAccounts();
@@ -33,8 +33,6 @@ export const Main = () => {
   const { activeAccount } = useActiveAccounts();
   const { inSetup: inNominatorSetup, addressDifferentToStash } = useStaking();
   const {
-    onNominatorSetup,
-    onPoolSetup,
     getPoolSetupPercent,
     getNominatorSetupPercent,
   }: SetupContextInterface = useSetup();
@@ -75,7 +73,6 @@ export const Main = () => {
         // configure Stake action
         const staking = !inNominatorSetup();
         const warning = !syncing && controllerDifferentToStash;
-        const setupPercent = getNominatorSetupPercent(activeAccount);
 
         if (staking) {
           pages[i].action = {
@@ -90,32 +87,17 @@ export const Main = () => {
             status: 'warning',
           };
         }
-        if (!staking && (onNominatorSetup || setupPercent > 0)) {
-          pages[i].action = {
-            type: 'text',
-            status: 'warning',
-            text: `${setupPercent}%`,
-          };
-        }
       }
 
       if (uri === `${import.meta.env.BASE_URL}pools`) {
         // configure Pools action
         const inPool = membership;
-        const setupPercent = getPoolSetupPercent(activeAccount);
 
         if (inPool) {
           pages[i].action = {
             type: 'text',
             status: 'success',
             text: t('active'),
-          };
-        }
-        if (!inPool && (setupPercent > 0 || onPoolSetup)) {
-          pages[i].action = {
-            type: 'text',
-            status: 'warning',
-            text: `${setupPercent}%`,
           };
         }
       }
@@ -137,8 +119,6 @@ export const Main = () => {
     getNominatorSetupPercent(activeAccount),
     getPoolSetupPercent(activeAccount),
     i18n.resolvedLanguage,
-    onNominatorSetup,
-    onPoolSetup,
   ]);
 
   // remove pages that network does not support

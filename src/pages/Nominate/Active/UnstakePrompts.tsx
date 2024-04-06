@@ -19,7 +19,7 @@ import { ButtonRow } from 'kits/Structure/ButtonRow';
 export const UnstakePrompts = () => {
   const { t } = useTranslation('pages');
   const { mode } = useTheme();
-  const { syncing } = useSyncing('*');
+  const { syncing } = useSyncing();
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
   const { unit, colors } = useNetwork().networkData;

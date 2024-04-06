@@ -13,7 +13,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 
-export const UnclaimedPayoutsStatus = () => {
+export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
   const { t } = useTranslation();
   const {
     networkData: { units },
@@ -43,6 +43,7 @@ export const UnclaimedPayoutsStatus = () => {
           2
         ),
       }}
+      dimmed={dimmed}
       buttons={
         Object.keys(unclaimedPayouts || {}).length > 0 &&
         !totalUnclaimed.isZero()
