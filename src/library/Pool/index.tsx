@@ -16,13 +16,13 @@ import { Rewards } from './Rewards';
 import { useSyncing } from 'hooks/useSyncing';
 
 export const Pool = ({ pool }: PoolProps) => {
-  const { memberCounter, addresses, id, state } = pool;
+  const { memberCounter, addresses, id } = pool;
   const { setActiveTab } = usePoolsTabs();
   const { syncing } = useSyncing(['active-pools']);
   const { getCurrentCommission } = usePoolCommission();
 
   const currentCommission = getCurrentCommission(id);
-  const displayMore = !syncing && state === 'Open';
+  const displayMore = !syncing;
 
   return (
     <Wrapper className={displayMore ? 'pool-more' : 'pool'}>

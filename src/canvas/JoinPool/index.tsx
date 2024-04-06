@@ -35,8 +35,6 @@ export const JoinPool = () => {
   // Get the pool performance task to determine if performance data is ready.
   const poolJoinPerformanceTask = getPoolPerformanceTask(performanceKey);
 
-  console.log(poolJoinPerformanceTask);
-
   const performanceDataReady = poolJoinPerformanceTask.status === 'synced';
 
   // Get performance data: Assumed to be fetched now.

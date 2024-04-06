@@ -23,15 +23,13 @@ export const Nominations = ({ stash, poolId }: NominationsProps) => {
     <NominationsWrapper>
       <HeadingWrapper>
         <h3>
-          {targets.length}{' '}
           {!targets.length
             ? t('nominate.noNominationsSet', { ns: 'pages' })
-            : ``}{' '}
-          {t('nominations', { ns: 'library', count: targets.length })}
+            : `${targets.length} ${t('nominations', { ns: 'library', count: targets.length })}`}
         </h3>
       </HeadingWrapper>
 
-      {targets.length > 0 ? (
+      {targets.length > 0 && (
         <ValidatorList
           format="nomination"
           bondFor="pool"
@@ -43,8 +41,6 @@ export const Nominations = ({ stash, poolId }: NominationsProps) => {
           allowMoreCols={true}
           refetchOnListUpdate
         />
-      ) : (
-        <h3>{t('poolIsNotNominating', { ns: 'modals' })}</h3>
       )}
     </NominationsWrapper>
   );

@@ -16,7 +16,14 @@ export const Overview = (props: OverviewSectionProps) => {
   const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
 
-  const membership = getPoolMembership(activeAccount);
+  const {
+    bondedPool: { state },
+  } = props;
+
+  const showJoinForm =
+    activeAccount !== null &&
+    state === 'Open' &&
+    getPoolMembership(activeAccount) === null;
 
   return (
     <>
@@ -28,14 +35,13 @@ export const Overview = (props: OverviewSectionProps) => {
         <Addresses {...props} />
         <Roles {...props} />
       </div>
-      {activeAccount === null ||
-        (membership === null && (
-          <div className="side">
-            <div>
-              <JoinForm {...props} />
-            </div>
+      {showJoinForm && (
+        <div className="side">
+          <div>
+            <JoinForm {...props} />
           </div>
-        ))}
+        </div>
+      )}
     </>
   );
 };

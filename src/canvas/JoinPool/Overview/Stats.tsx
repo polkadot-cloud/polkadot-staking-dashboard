@@ -9,8 +9,10 @@ import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import type { OverviewSectionProps } from '../types';
 import { useTranslation } from 'react-i18next';
+import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
+import { MaxEraRewardPointsEras } from 'consts';
 
-export const Stats = ({ bondedPool }: OverviewSectionProps) => {
+export const Stats = ({ bondedPool, performanceKey }: OverviewSectionProps) => {
   const { t } = useTranslation('library');
   const {
     networkData: {
@@ -20,6 +22,11 @@ export const Stats = ({ bondedPool }: OverviewSectionProps) => {
     },
   } = useNetwork();
   const { isReady, api } = useApi();
+  const { getPoolRewardPoints } = usePoolPerformance();
+  const poolRewardPoints = getPoolRewardPoints(performanceKey);
+  const rawEraRewardPoints = Object.values(
+    poolRewardPoints[bondedPool.addresses.stash] || {}
+  );
 
   // Store the pool balance.
   const [poolBalance, setPoolBalance] = useState<BigNumber | null>(null);
@@ -52,7 +59,9 @@ export const Stats = ({ bondedPool }: OverviewSectionProps) => {
   return (
     <HeadingWrapper>
       <h4>
-        <span className="active">{t('activelyNominating')}</span>
+        {rawEraRewardPoints.length === MaxEraRewardPointsEras && (
+          <span className="active">{t('activelyNominating')}</span>
+        )}
 
         <span className="balance">
           <Token className="icon" />
