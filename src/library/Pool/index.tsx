@@ -22,10 +22,9 @@ export const Pool = ({ pool }: PoolProps) => {
   const { getCurrentCommission } = usePoolCommission();
 
   const currentCommission = getCurrentCommission(id);
-  const displayMore = !syncing;
 
   return (
-    <Wrapper className={displayMore ? 'pool-more' : 'pool'}>
+    <Wrapper className="pool-more">
       <div className="inner">
         <div className="row top">
           <PoolIdentity pool={pool} />
@@ -49,11 +48,14 @@ export const Pool = ({ pool }: PoolProps) => {
               <Members members={memberCounter} />
             </Labels>
             <PoolBonded pool={pool} />
-            {displayMore && (
-              <Labels style={{ marginTop: '1rem' }}>
-                <JoinPool id={id} setActiveTab={setActiveTab} />
-              </Labels>
-            )}
+
+            <Labels style={{ marginTop: '1rem' }}>
+              <JoinPool
+                id={id}
+                setActiveTab={setActiveTab}
+                disabled={syncing}
+              />
+            </Labels>
           </div>
         </div>
       </div>

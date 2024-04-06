@@ -9,9 +9,11 @@ import { useOverlay } from 'kits/Overlay/Provider';
 export const JoinPool = ({
   id,
   setActiveTab,
+  disabled,
 }: {
   id: number;
   setActiveTab: (t: number) => void;
+  disabled: boolean;
 }) => {
   const { t } = useTranslation('tips');
   const { openCanvas } = useOverlay().canvas;
@@ -33,6 +35,7 @@ export const JoinPool = ({
             size: 'xl',
           });
         }}
+        disabled={disabled}
       >
         {t('module.more')}
         <FontAwesomeIcon icon={faCaretRight} transform="shrink-2" />

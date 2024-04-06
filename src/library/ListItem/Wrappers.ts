@@ -155,6 +155,12 @@ export const Labels = styled.div`
         &:hover {
           opacity: 1;
         }
+
+        &:disabled {
+          &:hover {
+            opacity: var(--opacity-disabled);
+          }
+        }
         > svg {
           margin-left: 0.3rem;
         }
