@@ -2546,21 +2546,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@w3ux/extension-assets@npm:0.2.6":
+  version: 0.2.6
+  resolution: "@w3ux/extension-assets@npm:0.2.6"
+  peerDependencies:
+    react: ^18
+  checksum: 10c0/e789249b579c8786669cbeb13e0835bd790a092b61964f7714ec758b6d8b211287e09b934b02890991ffa660ba8bc18626364f5d7bf111e42ae640bb48258691
+  languageName: node
+  linkType: hard
+
 "@w3ux/extension-assets@npm:^0.2.3":
   version: 0.2.3
   resolution: "@w3ux/extension-assets@npm:0.2.3"
   peerDependencies:
     react: ^18
   checksum: 10c0/7cda51bf0653e22df71f46c1bd449df8605433e1b6d1ffc85f1b9d468d2da57377aada90783d21e4b737570098f22a10a46c94cc3e4b278d36962591db80f73e
-  languageName: node
-  linkType: hard
-
-"@w3ux/extension-assets@npm:^0.2.4":
-  version: 0.2.4
-  resolution: "@w3ux/extension-assets@npm:0.2.4"
-  peerDependencies:
-    react: ^18
-  checksum: 10c0/a5609003a211b8106218177596d9d67861761e50d540c0af47c884dd9e168cb1371db1b0b0c14e46e986b16ec5883246b86e11ed607eedde866db49b37ba0a88
   languageName: node
   linkType: hard
 
@@ -2573,9 +2573,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/react-connect-kit@npm:^0.1.2":
-  version: 0.1.2
-  resolution: "@w3ux/react-connect-kit@npm:0.1.2"
+"@w3ux/react-connect-kit@npm:0.1.6":
+  version: 0.1.6
+  resolution: "@w3ux/react-connect-kit@npm:0.1.6"
   dependencies:
     "@chainsafe/metamask-polkadot-adapter": "npm:^0.6.0"
     "@polkadot/util": "npm:^12.6.2"
@@ -2583,7 +2583,7 @@ __metadata:
     "@w3ux/extension-assets": "npm:^0.2.3"
     "@w3ux/hooks": "npm:^0.0.3"
     "@w3ux/utils": "npm:^0.0.2"
-  checksum: 10c0/708cf3f44e7f52f3cb5862fde553252fac8906c1c6c574145fa5b3b90cb8abe98cb2abcfc5533b7bebe48db521b63f08a134fd8502a459740b83f9d586858a8f
+  checksum: 10c0/77046448b22062770006cae03dd25c33ff8ab69130a8fc46c3643b70d1519e41df52a683193f7a68ade1e015343eaebd5f63083ada3cd7a11611e5da8d7fef4c
   languageName: node
   linkType: hard
 
@@ -6525,9 +6525,9 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^7.5.0"
     "@typescript-eslint/parser": "npm:^7.4.0"
     "@vitejs/plugin-react-swc": "npm:^3.6.0"
-    "@w3ux/extension-assets": "npm:^0.2.4"
+    "@w3ux/extension-assets": "npm:0.2.6"
     "@w3ux/hooks": "npm:^0.0.3"
-    "@w3ux/react-connect-kit": "npm:^0.1.2"
+    "@w3ux/react-connect-kit": "npm:0.1.6"
     "@w3ux/react-odometer": "npm:^0.0.3"
     "@w3ux/react-polkicon": "npm:^0.0.2"
     "@w3ux/utils": "npm:^0.0.2"

@@ -59,7 +59,7 @@ export const Providers = () => {
     [APIProvider, { network }],
     VaultAccountsProvider,
     LedgerHardwareProvider,
-    ExtensionsProvider,
+    [ExtensionsProvider, { options: { chainSafeSnapEnabled: true } }],
     [
       ExtensionAccountsProvider,
       { dappName: DappName, network, ss58, activeAccount, setActiveAccount },
