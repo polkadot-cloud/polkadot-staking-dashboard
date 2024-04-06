@@ -35,8 +35,8 @@ export const JoinPoolInterfaceWrapper = styled.div`
       }
 
       &.side {
-        min-width: 450px;
-        padding-left: 4rem;
+        min-width: 460px;
+        padding-left: 2.5rem;
 
         @media (max-width: 1000px) {
           flex-grow: 1;
