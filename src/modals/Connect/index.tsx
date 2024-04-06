@@ -45,7 +45,7 @@ export const Connect = () => {
   // Whether the app is running on of mobile wallets.
   const inMobileWallet = inNova || inSubWallet;
 
-  // Get supported extensions. NOTE: Snaps are currently disabled.
+  // Get supported extensions.
   const extensionsAsArray = Object.entries(extensions).map(([key, value]) => ({
     id: key,
     ...value,
