@@ -3,12 +3,19 @@
 
 import BigNumber from 'bignumber.js';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
+import type { PoolRewardPointsKey } from 'contexts/Pools/PoolPerformance/types';
 
-export const PoolSync = ({ label }: { label?: string }) => {
+export const PoolSync = ({
+  label,
+  performanceKey,
+}: {
+  label?: string;
+  performanceKey: PoolRewardPointsKey;
+}) => {
   const { getPoolPerformanceTask } = usePoolPerformance();
 
   // Get the pool performance task to determine if performance data is ready.
-  const poolJoinPerformanceTask = getPoolPerformanceTask('pool_join');
+  const poolJoinPerformanceTask = getPoolPerformanceTask(performanceKey);
 
   if (poolJoinPerformanceTask.status !== 'syncing') {
     return null;

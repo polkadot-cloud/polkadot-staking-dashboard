@@ -39,14 +39,17 @@ ChartJS.register(
   Legend
 );
 
-export const PerformanceGraph = ({ bondedPool }: OverviewSectionProps) => {
+export const PerformanceGraph = ({
+  bondedPool,
+  performanceKey,
+}: OverviewSectionProps) => {
   const { t } = useTranslation();
   const { mode } = useTheme();
   const { openHelp } = useHelp();
   const { colors } = useNetwork().networkData;
   const { getPoolRewardPoints } = usePoolPerformance();
 
-  const poolRewardPoints = getPoolRewardPoints('pool_join');
+  const poolRewardPoints = getPoolRewardPoints(performanceKey);
   const rawEraRewardPoints = poolRewardPoints[bondedPool.addresses.stash] || {};
 
   // Ref to the graph container.

@@ -24,7 +24,10 @@ export const JoinPool = ({
           openCanvas({
             key: 'JoinPool',
             options: {
-              poolId: id,
+              providedPool: {
+                id,
+                performanceBatchKey: 'pool_page',
+              },
               onJoinCallback: () => setActiveTab(0),
             },
             size: 'xl',
