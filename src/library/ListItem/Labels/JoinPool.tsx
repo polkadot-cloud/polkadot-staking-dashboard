@@ -9,11 +9,13 @@ import { useOverlay } from 'kits/Overlay/Provider';
 export const JoinPool = ({
   id,
   setActiveTab,
+  disabled,
 }: {
   id: number;
   setActiveTab: (t: number) => void;
+  disabled: boolean;
 }) => {
-  const { t } = useTranslation('library');
+  const { t } = useTranslation('tips');
   const { openCanvas } = useOverlay().canvas;
 
   return (
@@ -24,14 +26,18 @@ export const JoinPool = ({
           openCanvas({
             key: 'JoinPool',
             options: {
-              poolId: id,
+              providedPool: {
+                id,
+                performanceBatchKey: 'pool_page',
+              },
               onJoinCallback: () => setActiveTab(0),
             },
             size: 'xl',
           });
         }}
+        disabled={disabled}
       >
-        {t('join')}
+        {t('module.more')}
         <FontAwesomeIcon icon={faCaretRight} transform="shrink-2" />
       </button>
     </div>

@@ -14,8 +14,13 @@ import { capitalizeFirstLetter, planckToUnit, rmCommas } from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
 import { PoolSyncBar } from 'library/PoolSync/Bar';
+import type { PoolRewardPointsKey } from 'contexts/Pools/PoolPerformance/types';
 
-export const Preloader = () => {
+export const Preloader = ({
+  performanceKey,
+}: {
+  performanceKey: PoolRewardPointsKey;
+}) => {
   const { t } = useTranslation('pages');
   const {
     network,
@@ -51,7 +56,7 @@ export const Preloader = () => {
           <div className="empty"></div>
           <div className="standalone">
             <div className="title">
-              <h1>{t('pools.joinPool')}</h1>
+              <h1>{t('pools.pools')}</h1>
             </div>
             <div className="labels">
               <h3>
@@ -74,7 +79,7 @@ export const Preloader = () => {
           </h2>
 
           <h2 className="tip">
-            <PoolSyncBar />
+            <PoolSyncBar performanceKey={performanceKey} />
           </h2>
         </div>
       </JoinPoolInterfaceWrapper>

@@ -84,7 +84,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                         <FontAwesomeIcon icon={faUserPlus} />
                       </>
                     )}
-                    <PoolSync />
+                    <PoolSync performanceKey="pool_join" />
                   </button>
                 </div>
               </div>
