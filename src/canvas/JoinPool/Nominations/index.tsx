@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ValidatorList } from 'library/ValidatorList';
-import { ListWrapper } from 'modals/PoolNominations/Wrappers';
 import { useTranslation } from 'react-i18next';
 import { HeadingWrapper, NominationsWrapper } from '../Wrappers';
 import type { NominationsProps } from '../types';
@@ -31,23 +30,22 @@ export const Nominations = ({ stash, poolId }: NominationsProps) => {
           {t('nominations', { ns: 'library', count: targets.length })}
         </h3>
       </HeadingWrapper>
-      <ListWrapper>
-        {targets.length > 0 ? (
-          <ValidatorList
-            format="nomination"
-            bondFor="pool"
-            validators={filteredTargets}
-            nominator={stash}
-            showMenu={false}
-            displayFor="canvas"
-            allowListFormat={false}
-            allowMoreCols={true}
-            refetchOnListUpdate
-          />
-        ) : (
-          <h3>{t('poolIsNotNominating', { ns: 'modals' })}</h3>
-        )}
-      </ListWrapper>
+
+      {targets.length > 0 ? (
+        <ValidatorList
+          format="nomination"
+          bondFor="pool"
+          validators={filteredTargets}
+          nominator={stash}
+          showMenu={false}
+          displayFor="canvas"
+          allowListFormat={false}
+          allowMoreCols={true}
+          refetchOnListUpdate
+        />
+      ) : (
+        <h3>{t('poolIsNotNominating', { ns: 'modals' })}</h3>
+      )}
     </NominationsWrapper>
   );
 };
