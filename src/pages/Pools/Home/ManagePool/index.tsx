@@ -9,18 +9,14 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { Nominations } from 'library/Nominations';
 import { useOverlay } from 'kits/Overlay/Provider';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useSyncing } from 'hooks/useSyncing';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 
 export const ManagePool = () => {
   const { t } = useTranslation();
-  const { syncing } = useSyncing(['active-pools']);
   const { openCanvas } = useOverlay().canvas;
   const { formatWithPrefs } = useValidators();
-  const { activeAccount } = useActiveAccounts();
   const { isOwner, isNominator, activePoolNominations, activePool } =
     useActivePool();
 
@@ -38,9 +34,7 @@ export const ManagePool = () => {
   return (
     <PageRow>
       <CardWrapper>
-        {syncing ? (
-          <Nominations bondFor="pool" nominator={activeAccount} />
-        ) : canNominate && !isNominating && state !== 'Destroying' ? (
+        {canNominate && !isNominating && state !== 'Destroying' ? (
           <>
             <CardHeaderWrapper $withAction $withMargin>
               <h3>

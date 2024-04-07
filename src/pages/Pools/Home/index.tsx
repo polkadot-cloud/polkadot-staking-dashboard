@@ -47,7 +47,7 @@ export const HomeInner = () => {
   const membership = getPoolMembership(activeAccount);
 
   const { activePools } = useActivePools({
-    poolIds: '*',
+    who: activeAccount,
   });
 
   // Calculate the number of _other_ pools the user has a role in.

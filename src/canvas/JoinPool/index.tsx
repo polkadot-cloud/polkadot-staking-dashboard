@@ -60,7 +60,7 @@ export const JoinPool = () => {
             rewardPoints.every((points) => Number(points) > 0) &&
             rewardPoints.length === MaxEraRewardPointsEras;
 
-          return pool.state === 'Open' && activeDaily;
+          return activeDaily;
         })
         // Ensure the pool is currently in the active set of backers.
         .filter((pool) =>

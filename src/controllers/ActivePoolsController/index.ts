@@ -5,8 +5,14 @@ import type { VoidFn } from '@polkadot/api/types';
 import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
 import type { ActivePool, PoolRoles } from 'contexts/Pools/ActivePool/types';
 import { IdentitiesController } from 'controllers/IdentitiesController';
-import type { AnyApi } from 'types';
-import type { ActivePoolItem, DetailActivePool } from './types';
+import type { AnyApi, MaybeAddress } from 'types';
+import type {
+  AccountActivePools,
+  AccountPoolNominations,
+  AccountUnsubs,
+  ActivePoolItem,
+  DetailActivePool,
+} from './types';
 import { SyncController } from 'controllers/SyncController';
 import type { Nominations } from 'contexts/Balances/types';
 import type { ApiPromise } from '@polkadot/api';
@@ -16,17 +22,18 @@ export class ActivePoolsController {
   // Class members.
   // ------------------------------------------------------
 
-  // Pool ids that are being subscribed to.
-  static pools: ActivePoolItem[] = [];
+  // Pool ids that are being subscribed to. Keyed by address.
+  static pools: Record<string, ActivePoolItem[]> = {};
 
-  // Active pools that are being returned from subscriptions, keyed by pool id.
-  static activePools: Record<string, ActivePool | null> = {};
+  // Active pools that are being returned from subscriptions, keyed by account address, then pool
+  // id.
+  static activePools: Record<string, AccountActivePools> = {};
 
-  // Active pool nominations, keyed by pool id.
-  static poolNominations: Record<string, Nominations> = {};
+  // Active pool nominations, keyed by account address, then pool id.
+  static poolNominations: Record<string, AccountPoolNominations> = {};
 
-  // Unsubscribe objects.
-  static #unsubs: Record<string, VoidFn> = {};
+  // Unsubscribe objects, keyed by account address, then pool id.
+  static #unsubs: Record<string, AccountUnsubs> = {};
 
   // ------------------------------------------------------
   // Pool membership syncing.
@@ -35,23 +42,27 @@ export class ActivePoolsController {
   // Subscribes to pools and unsubscribes from removed pools.
   static syncPools = async (
     api: ApiPromise,
+    address: MaybeAddress,
     newPools: ActivePoolItem[]
   ): Promise<void> => {
-    // Sync: Checking active pools.
-    SyncController.dispatch('active-pools', 'syncing');
+    if (!address) {
+      return;
+    }
 
     // Handle pools that have been removed.
-    this.handleRemovedPools(newPools);
+    this.handleRemovedPools(address, newPools);
+
+    const currentPools = this.getPools(address);
 
     // Determine new pools that need to be subscribed to.
     const poolsAdded = newPools.filter(
-      (newPool) => !this.pools.find((pool) => pool.id === newPool.id)
+      (newPool) => !currentPools.find(({ id }) => id === newPool.id)
     );
 
     if (poolsAdded.length) {
       // Subscribe to and add new pool data.
       poolsAdded.forEach(async (pool) => {
-        this.pools.push(pool);
+        this.pools[address] = currentPools.concat(pool);
 
         const unsub = await api.queryMulti<AnyApi>(
           [
@@ -69,26 +80,31 @@ export class ActivePoolsController {
             // NOTE: async: fetches identity data for roles.
             await this.handleActivePoolCallback(
               api,
+              address,
               pool,
               bondedPool,
               rewardPool,
               accountData
             );
-            this.handleNominatorsCallback(pool, nominators);
+            this.handleNominatorsCallback(address, pool, nominators);
 
-            if (this.activePools[pool.id] && this.poolNominations[pool.id]) {
+            if (
+              this.activePools?.[address]?.[pool.id] &&
+              this.poolNominations?.[address]?.[pool.id]
+            ) {
               document.dispatchEvent(
                 new CustomEvent('new-active-pool', {
                   detail: {
-                    pool: this.activePools[pool.id],
-                    nominations: this.poolNominations[pool.id],
+                    address,
+                    pool: this.activePools[address][pool.id],
+                    nominations: this.poolNominations[address][pool.id],
                   },
                 })
               );
             }
           }
         );
-        this.#unsubs[pool.id] = unsub;
+        this.setUnsub(address, pool.id, unsub);
       });
     } else {
       // Status: Pools Synced Completed.
@@ -99,6 +115,7 @@ export class ActivePoolsController {
   // Handle active pool callback.
   static handleActivePoolCallback = async (
     api: ApiPromise,
+    address: string,
     pool: ActivePoolItem,
     bondedPoolResult: AnyApi,
     rewardPoolResult: AnyApi,
@@ -126,15 +143,16 @@ export class ActivePoolsController {
         rewardAccountBalance,
       };
 
-      this.activePools[pool.id] = newPool;
+      this.setActivePool(address, pool.id, newPool);
     } else {
       // Invalid pools were returned. To signal pool was synced, set active pool to `null`.
-      this.activePools[pool.id] = null;
+      this.setActivePool(address, pool.id, null);
     }
   };
 
   // Handle nominators callback.
   static handleNominatorsCallback = (
+    address: string,
     pool: ActivePoolItem,
     nominatorsResult: AnyApi
   ): void => {
@@ -148,28 +166,50 @@ export class ActivePoolsController {
             submittedIn: maybeNewNominations.submittedIn.toHuman(),
           };
 
-    this.poolNominations[pool.id] = newNominations;
+    this.setPoolNominations(address, pool.id, newNominations);
   };
 
   // Remove pools that no longer exist.
-  static handleRemovedPools = (newPools: ActivePoolItem[]): void => {
+  static handleRemovedPools = (
+    address: string,
+    newPools: ActivePoolItem[]
+  ): void => {
+    const currentPools = this.getPools(address);
+
     // Determine removed pools - current ones that no longer exist in `newPools`.
-    const poolsRemoved = this.pools.filter(
+    const poolsRemoved = currentPools.filter(
       (pool) => !newPools.find((newPool) => newPool.id === pool.id)
     );
 
     // Unsubscribe from removed pool subscriptions.
     poolsRemoved.forEach((pool) => {
-      if (this.#unsubs[pool.id]) {
-        this.#unsubs[pool.id]();
+      if (this.#unsubs?.[address]?.[pool.id]) {
+        this.#unsubs[address][pool.id]();
       }
-      delete this.#unsubs[pool.id];
-      delete this.activePools[pool.id];
-      delete this.poolNominations[pool.id];
+      delete this.activePools[address][pool.id];
+      delete this.poolNominations[address][pool.id];
     });
 
     // Remove removed pools from class.
-    this.pools = this.pools.filter((pool) => !poolsRemoved.includes(pool));
+    this.pools[address] = currentPools.filter(
+      (pool) => !poolsRemoved.includes(pool)
+    );
+
+    // Tidy up empty class state.
+    if (!this.pools[address].length) {
+      delete this.pools[address];
+    }
+
+    if (!this.activePools[address]) {
+      delete this.activePools[address];
+    }
+
+    if (!this.poolNominations[address]) {
+      delete this.poolNominations[address];
+    }
+    if (!this.#unsubs[address]) {
+      delete this.#unsubs[address];
+    }
   };
 
   // ------------------------------------------------------
@@ -178,21 +218,50 @@ export class ActivePoolsController {
 
   // Unsubscribe from all subscriptions and reset class members.
   static unsubscribe = (): void => {
-    Object.values(this.#unsubs).forEach((unsub) => {
-      unsub();
+    Object.values(this.#unsubs).forEach((accountUnsubs) => {
+      Object.values(accountUnsubs).forEach((unsub) => {
+        unsub();
+      });
     });
+
     this.#unsubs = {};
   };
 
   static resetState = (): void => {
-    this.pools = [];
+    this.pools = {};
     this.activePools = {};
     this.poolNominations = {};
   };
 
   // ------------------------------------------------------
-  // Class helpers.
+  // Getters.
   // ------------------------------------------------------
+
+  // Gets pools for a provided address.
+  static getPools = (address: MaybeAddress): ActivePoolItem[] => {
+    if (!address) {
+      return [];
+    }
+    return this.pools?.[address] || [];
+  };
+
+  // Gets active pools for a provided address.
+  static getActivePools = (address: MaybeAddress): AccountActivePools => {
+    if (!address) {
+      return {};
+    }
+    return this.activePools?.[address] || {};
+  };
+
+  // Gets active pool nominations for a provided address.
+  static getPoolNominations = (
+    address: MaybeAddress
+  ): AccountPoolNominations => {
+    if (!address) {
+      return {};
+    }
+    return this.poolNominations?.[address] || {};
+  };
 
   // Gets unique role addresses from a bonded pool's `roles` record.
   static getUniqueRoleAddresses = (roles: PoolRoles): string[] => {
@@ -202,9 +271,65 @@ export class ActivePoolsController {
     return roleAddresses;
   };
 
+  // ------------------------------------------------------
+  // Setters.
+  // ------------------------------------------------------
+
+  // Set an active pool for an address.
+  static setActivePool = (
+    address: string,
+    poolId: string,
+    activePool: ActivePool | null
+  ): void => {
+    if (!this.activePools[address]) {
+      this.activePools[address] = {};
+    }
+    this.activePools[address][poolId] = activePool;
+  };
+
+  // Set pool nominations for an address.
+  static setPoolNominations = (
+    address: string,
+    poolId: string,
+    nominations: Nominations
+  ): void => {
+    if (!this.poolNominations[address]) {
+      this.poolNominations[address] = {};
+    }
+    this.poolNominations[address][poolId] = nominations;
+  };
+
+  // Set unsub for an address and pool id.
+  static setUnsub = (address: string, poolId: string, unsub: VoidFn): void => {
+    if (!this.#unsubs[address]) {
+      this.#unsubs[address] = {};
+    }
+    this.#unsubs[address][poolId] = unsub;
+  };
+
+  // ------------------------------------------------------
+  // Class helpers.
+  // ------------------------------------------------------
+
+  // Format pools into active pool items (id and addresses only).
+  static getformattedPoolItems = (address: MaybeAddress): ActivePoolItem[] => {
+    if (!address) {
+      return [];
+    }
+    return (
+      this.pools?.[address]?.map(({ id, addresses }) => ({
+        id: id.toString(),
+        addresses,
+      })) || []
+    );
+  };
+
   // Checks if event detailis a valid `new-active-pool` event.
   static isValidNewActivePool = (
     event: CustomEvent
   ): event is CustomEvent<DetailActivePool> =>
-    event.detail && event.detail.pool && event.detail.nominations;
+    event.detail &&
+    event.detail.address &&
+    event.detail.pool &&
+    event.detail.nominations;
 }
