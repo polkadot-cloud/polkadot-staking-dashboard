@@ -43,7 +43,7 @@ export const AccountPoolRoles = () => {
           )}
           <h4>
             {t('activeRoles', {
-              count: activePools?.length || 0,
+              count: Object.keys(activePools)?.length || 0,
             })}
           </h4>
           <div className="items">

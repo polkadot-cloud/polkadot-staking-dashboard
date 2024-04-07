@@ -56,8 +56,8 @@ export const JoinPoolsProvider = ({ children }: { children: ReactNode }) => {
         ({ state }) => state === 'Open'
       );
 
-      // Filter pools that do not have at least double the minimum active stake in points. NOTE:
-      // assumes that points are a 1:1 ratio between balance and points.
+      // Filter pools that do not have at least double the minimum stake to earn rewards, in points.
+      // NOTE: assumes that points are a 1:1 ratio between balance and points.
       const rewardBondedPools = activeBondedPools.filter(({ points }) => {
         const pointsBn = new BigNumber(rmCommas(points));
         const threshold = minimumActiveStake.multipliedBy(2);

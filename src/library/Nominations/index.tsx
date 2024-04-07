@@ -41,7 +41,7 @@ export const Nominations = ({
     modal: { openModal },
     canvas: { openCanvas },
   } = useOverlay();
-  const { syncing } = useSyncing();
+  const { syncing } = useSyncing(['balances', 'era-stakers']);
   const { getNominations } = useBalances();
   const { isFastUnstaking } = useUnstaking();
   const { formatWithPrefs } = useValidators();
@@ -77,7 +77,7 @@ export const Nominations = ({
   // Determine whether buttons are disabled.
   const btnsDisabled =
     (!isPool && inSetup()) ||
-    syncing ||
+    (!isPool && syncing) ||
     isReadOnlyAccount(activeAccount) ||
     poolDestroying ||
     isFastUnstaking;
@@ -131,7 +131,7 @@ export const Nominations = ({
           )}
         </div>
       </CardHeaderWrapper>
-      {syncing ? (
+      {!isPool && syncing ? (
         <ListStatusHeader>{`${t('nominate.syncing')}...`}</ListStatusHeader>
       ) : !nominator ? (
         <ListStatusHeader>{t('nominate.notNominating')}.</ListStatusHeader>
