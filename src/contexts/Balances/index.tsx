@@ -46,8 +46,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
       isCustomEvent(e) &&
       BalancesController.isValidNewAccountBalanceEvent(e)
     ) {
-      // Update whether all account balances have been synced. Uses greater than to account for
-      // possible errors on the API side.
+      // Update whether all account balances have been synced.
       checkBalancesSynced();
     }
   };
