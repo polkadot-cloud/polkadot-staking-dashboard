@@ -60,7 +60,10 @@ export const Providers = () => {
     [APIProvider, { network }],
     VaultAccountsProvider,
     LedgerHardwareProvider,
-    [ExtensionsProvider, { options: { chainSafeSnapEnabled: true } }],
+    [
+      ExtensionsProvider,
+      { options: { chainSafeSnapEnabled: true, polkagateSnapEnabled: true } },
+    ],
     [
       ExtensionAccountsProvider,
       {
