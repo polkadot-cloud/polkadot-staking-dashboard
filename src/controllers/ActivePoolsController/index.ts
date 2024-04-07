@@ -228,7 +228,7 @@ export class ActivePoolsController {
   };
 
   // ------------------------------------------------------
-  // Class helpers.
+  // Getters.
   // ------------------------------------------------------
 
   // Gets pools for a provided address.
@@ -254,6 +254,18 @@ export class ActivePoolsController {
     }
     return this.poolNominations?.[address] || {};
   };
+
+  // Gets unique role addresses from a bonded pool's `roles` record.
+  static getUniqueRoleAddresses = (roles: PoolRoles): string[] => {
+    const roleAddresses: string[] = [
+      ...new Set(Object.values(roles).filter((role) => role !== undefined)),
+    ];
+    return roleAddresses;
+  };
+
+  // ------------------------------------------------------
+  // Setters.
+  // ------------------------------------------------------
 
   // Set an active pool for an address.
   static setActivePool = (
@@ -287,12 +299,21 @@ export class ActivePoolsController {
     this.#unsubs[address][poolId] = unsub;
   };
 
-  // Gets unique role addresses from a bonded pool's `roles` record.
-  static getUniqueRoleAddresses = (roles: PoolRoles): string[] => {
-    const roleAddresses: string[] = [
-      ...new Set(Object.values(roles).filter((role) => role !== undefined)),
-    ];
-    return roleAddresses;
+  // ------------------------------------------------------
+  // Class helpers.
+  // ------------------------------------------------------
+
+  // Format pools into active pool items (id and addresses only).
+  static getformattedPoolItems = (address: MaybeAddress): ActivePoolItem[] => {
+    if (!address) {
+      return [];
+    }
+    return (
+      this.pools?.[address]?.map(({ id, addresses }) => ({
+        id: id.toString(),
+        addresses,
+      })) || []
+    );
   };
 
   // Checks if event detailis a valid `new-active-pool` event.

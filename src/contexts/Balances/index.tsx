@@ -54,23 +54,19 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
       // Update whether all account balances have been synced.
       checkBalancesSynced();
 
-      // If a pool membership exists, let `ActivePools` know of pool membership to re-sync pool
-      // details and nominations.
       const { address, ...newBalances } = e.detail;
       const { poolMembership } = newBalances;
 
+      // If a pool membership exists, let `ActivePools` know of pool membership to re-sync pool
+      // details and nominations.
       if (api && poolMembership) {
         const { poolId } = poolMembership;
-        const newPools = (
-          ActivePoolsController.pools?.[address]?.map(({ id, addresses }) => ({
-            id,
-            addresses,
-          })) || []
+        const newPools = ActivePoolsController.getformattedPoolItems(
+          address
         ).concat({
           id: String(poolId),
           addresses: { ...createPoolAccounts(Number(poolId)) },
         });
-
         ActivePoolsController.syncPools(api, address, newPools);
       }
     }
