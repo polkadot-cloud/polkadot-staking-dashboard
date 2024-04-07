@@ -42,6 +42,7 @@ ChartJS.register(
 export const PerformanceGraph = ({
   bondedPool,
   performanceKey,
+  graphSyncing,
 }: OverviewSectionProps) => {
   const { t } = useTranslation();
   const { mode } = useTheme();
@@ -59,15 +60,17 @@ export const PerformanceGraph = ({
   const size = useSize(graphInnerRef?.current || undefined);
   const { width, height } = formatSize(size, 150);
 
-  // Format reward points as an array of strings.
-  const dataset = Object.values(
-    Object.fromEntries(
-      Object.entries(rawEraRewardPoints).map(([k, v]: AnyJson) => [
-        k,
-        new BigNumber(v).toString(),
-      ])
-    )
-  );
+  // Format reward points as an array of strings, or an empty array if syncing.
+  const dataset = graphSyncing
+    ? []
+    : Object.values(
+        Object.fromEntries(
+          Object.entries(rawEraRewardPoints).map(([k, v]: AnyJson) => [
+            k,
+            new BigNumber(v).toString(),
+          ])
+        )
+      );
 
   // Format labels, only displaying the first and last era.
   const labels = Object.keys(rawEraRewardPoints).map(() => '');
