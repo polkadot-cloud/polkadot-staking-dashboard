@@ -91,12 +91,10 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     new BigNumber(0)
   );
 
-  const activePool = activePoolId
-    ? getActivePools(activeAccount, activePoolId)
-    : null;
+  const activePool = activePoolId ? getActivePools(activePoolId) : null;
 
   const activePoolNominations = activePoolId
-    ? getPoolNominations(activeAccount, activePoolId)
+    ? getPoolNominations(activePoolId)
     : null;
 
   // Sync active pool subscriptions.
