@@ -12,7 +12,6 @@ import type {
   ActivePoolsState,
 } from './types';
 import { useNetwork } from 'contexts/Network';
-import type { MaybeAddress } from 'types';
 
 export const useActivePools = ({ onCallback, who }: ActivePoolsProps) => {
   const { network } = useNetwork();
@@ -58,21 +57,12 @@ export const useActivePools = ({ onCallback, who }: ActivePoolsProps) => {
     }
   };
 
-  // Get active pools for an address.
-  const getActivePools = (address: MaybeAddress, poolId: string) => {
-    if (!address) {
-      return null;
-    }
-    return activePools?.[poolId] || null;
-  };
+  // Get an active pool.
+  const getActivePools = (poolId: string) => activePools?.[poolId] || null;
 
-  // Get active pool nominations for an address.
-  const getPoolNominations = (address: MaybeAddress, poolId: string) => {
-    if (!address) {
-      return null;
-    }
-    return poolNominations?.[poolId] || null;
-  };
+  // Get an active pool's nominations.
+  const getPoolNominations = (poolId: string) =>
+    poolNominations?.[poolId] || null;
 
   // Reset state on network change.
   useEffect(() => {

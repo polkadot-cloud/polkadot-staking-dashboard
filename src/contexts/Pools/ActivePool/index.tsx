@@ -75,11 +75,11 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     {
       who: activeAccount,
       onCallback: async () => {
-        const accountPoolCount =
-          ActivePoolsController.getPools(activeAccount).length;
-
         // Sync: active pools synced once all account pools have been reported.
-        if (accountPoolIds.length <= accountPoolCount) {
+        if (
+          accountPoolIds.length <=
+          ActivePoolsController.getPools(activeAccount).length
+        ) {
           SyncController.dispatch('active-pools', 'complete');
         }
       },
@@ -91,11 +91,13 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     new BigNumber(0)
   );
 
-  const activePool =
-    (activePoolId && getActivePools(activeAccount, activePoolId)) || null;
+  const activePool = activePoolId
+    ? getActivePools(activeAccount, activePoolId)
+    : null;
 
-  const activePoolNominations =
-    (activePoolId && getPoolNominations(activeAccount, activePoolId)) || null;
+  const activePoolNominations = activePoolId
+    ? getPoolNominations(activeAccount, activePoolId)
+    : null;
 
   // Sync active pool subscriptions.
   const syncActivePoolSubscriptions = async () => {
