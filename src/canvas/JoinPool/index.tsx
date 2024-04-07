@@ -104,7 +104,8 @@ export const JoinPool = () => {
 
   return (
     <CanvasFullScreenWrapper>
-      {poolJoinPerformanceTask.status !== 'synced' || !bondedPool ? (
+      {(!providedPoolId && poolJoinPerformanceTask.status !== 'synced') ||
+      !bondedPool ? (
         <Preloader performanceKey={performanceKey} />
       ) : (
         <>
@@ -125,6 +126,10 @@ export const JoinPool = () => {
                 <Overview
                   bondedPool={bondedPool}
                   performanceKey={performanceKey}
+                  graphSyncing={
+                    providedPoolId &&
+                    poolJoinPerformanceTask.status !== 'synced'
+                  }
                 />
               )}
               {activeTab === 1 && (
