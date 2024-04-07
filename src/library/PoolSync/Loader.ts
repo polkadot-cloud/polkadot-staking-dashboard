@@ -7,7 +7,8 @@ export const StyledLoader = styled.div`
   height: 0.8rem;
   margin-left: 1.6rem;
   aspect-ratio: 5;
-  --_g: no-repeat radial-gradient(farthest-side, white 94%, #0000);
+  --_g: no-repeat
+    radial-gradient(farthest-side, var(--loader-color, white) 94%, #0000);
   background: var(--_g), var(--_g), var(--_g), var(--_g);
   background-size: 20% 100%;
   animation:
