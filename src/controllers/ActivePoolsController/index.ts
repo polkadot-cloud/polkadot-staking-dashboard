@@ -6,7 +6,13 @@ import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
 import type { ActivePool, PoolRoles } from 'contexts/Pools/ActivePool/types';
 import { IdentitiesController } from 'controllers/IdentitiesController';
 import type { AnyApi, MaybeAddress } from 'types';
-import type { ActivePoolItem, DetailActivePool } from './types';
+import type {
+  AccountActivePools,
+  AccountPoolNominations,
+  AccountUnsubs,
+  ActivePoolItem,
+  DetailActivePool,
+} from './types';
 import { SyncController } from 'controllers/SyncController';
 import type { Nominations } from 'contexts/Balances/types';
 import type { ApiPromise } from '@polkadot/api';
@@ -21,13 +27,13 @@ export class ActivePoolsController {
 
   // Active pools that are being returned from subscriptions, keyed by account address, then pool
   // id.
-  static activePools: Record<string, Record<string, ActivePool | null>> = {};
+  static activePools: Record<string, AccountActivePools> = {};
 
   // Active pool nominations, keyed by account address, then pool id.
-  static poolNominations: Record<string, Record<string, Nominations>> = {};
+  static poolNominations: Record<string, AccountPoolNominations> = {};
 
   // Unsubscribe objects, keyed by account address, then pool id.
-  static #unsubs: Record<string, Record<string, VoidFn>> = {};
+  static #unsubs: Record<string, AccountUnsubs> = {};
 
   // ------------------------------------------------------
   // Pool membership syncing.
@@ -240,7 +246,7 @@ export class ActivePoolsController {
   };
 
   // Gets active pools for a provided address.
-  static getActivePools = (address: MaybeAddress) => {
+  static getActivePools = (address: MaybeAddress): AccountActivePools => {
     if (!address) {
       return {};
     }
@@ -248,7 +254,9 @@ export class ActivePoolsController {
   };
 
   // Gets active pool nominations for a provided address.
-  static getPoolNominations = (address: MaybeAddress) => {
+  static getPoolNominations = (
+    address: MaybeAddress
+  ): AccountPoolNominations => {
     if (!address) {
       return {};
     }
