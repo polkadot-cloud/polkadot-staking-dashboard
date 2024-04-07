@@ -313,7 +313,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [apiStatus]);
 
-  // handle syncing with eraStakers
+  // handle syncing with eraStakers.
   useEffectIgnoreInitial(() => {
     if (isReady) {
       fetchActiveEraStakers();

@@ -14,6 +14,9 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useActiveBalances } from 'hooks/useActiveBalances';
 import { useBonded } from 'contexts/Bonded';
 import { SyncController } from 'controllers/SyncController';
+import { useApi } from 'contexts/Api';
+import { ActivePoolsController } from 'controllers/ActivePoolsController';
+import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 
 export const BalancesContext = createContext<BalancesContextInterface>(
   defaults.defaultBalancesContext
@@ -22,8 +25,10 @@ export const BalancesContext = createContext<BalancesContextInterface>(
 export const useBalances = () => useContext(BalancesContext);
 
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
+  const { api } = useApi();
   const { getBondedAccount } = useBonded();
   const { accounts } = useImportedAccounts();
+  const createPoolAccounts = useCreatePoolAccounts();
   const { activeAccount, activeProxy } = useActiveAccounts();
   const controller = getBondedAccount(activeAccount);
 
@@ -48,6 +53,26 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     ) {
       // Update whether all account balances have been synced.
       checkBalancesSynced();
+
+      // If a pool membership exists, let `ActivePools` know of pool membership to re-sync pool
+      // details and nominations.
+      const { address, ...newBalances } = e.detail;
+      const { poolMembership } = newBalances;
+
+      if (api && poolMembership) {
+        const { poolId } = poolMembership;
+        const newPools = (
+          ActivePoolsController.pools?.[address]?.map(({ id, addresses }) => ({
+            id,
+            addresses,
+          })) || []
+        ).concat({
+          id: String(poolId),
+          addresses: { ...createPoolAccounts(Number(poolId)) },
+        });
+
+        ActivePoolsController.syncPools(api, address, newPools);
+      }
     }
   };
 

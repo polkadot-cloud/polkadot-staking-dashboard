@@ -5,6 +5,7 @@ import type { Nominations } from 'contexts/Balances/types';
 import type { ActivePool } from 'contexts/Pools/ActivePool/types';
 
 export interface DetailActivePool {
+  address: string;
   pool: ActivePool;
   nominations: Nominations;
 }

@@ -68,20 +68,23 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     setStateWithRef(id, setActivePoolIdState, activePoolIdRef);
   };
 
-  // Only listen to the currently selected active pool, otherwise return an empty array.
-  const poolIds = activePoolIdRef.current ? [activePoolIdRef.current] : [];
+  // Only listen to the active account's active pools, otherwise return an empty array. NOTE:
+  // `activePoolsRef` is needed to check if the pool has changed after the async call of fetching
+  // pending rewards.
+  const { getActivePools, activePoolsRef, getPoolNominations } = useActivePools(
+    {
+      who: activeAccount,
+      onCallback: async () => {
+        const accountPoolCount =
+          ActivePoolsController.getPools(activeAccount).length;
 
-  // Listen for active pools. NOTE: `activePoolsRef` is needed to check if the pool has changed
-  // after the async call of fetching pending rewards.
-  const { activePools, activePoolsRef, poolNominations } = useActivePools({
-    poolIds,
-    onCallback: async () => {
-      // Sync: active pools synced once all account pools have been reported.
-      if (accountPoolIds.length <= ActivePoolsController.pools.length) {
-        SyncController.dispatch('active-pools', 'complete');
-      }
-    },
-  });
+        // Sync: active pools synced once all account pools have been reported.
+        if (accountPoolIds.length <= accountPoolCount) {
+          SyncController.dispatch('active-pools', 'complete');
+        }
+      },
+    }
+  );
 
   // Store the currently active pool's pending rewards for the active account.
   const [pendingPoolRewards, setPendingPoolRewards] = useState<BigNumber>(
@@ -89,14 +92,10 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const activePool =
-    activePoolId && activePools[activePoolId]
-      ? activePools[activePoolId]
-      : null;
+    (activePoolId && getActivePools(activeAccount, activePoolId)) || null;
 
   const activePoolNominations =
-    activePoolId && poolNominations[activePoolId]
-      ? poolNominations[activePoolId]
-      : null;
+    (activePoolId && getPoolNominations(activeAccount, activePoolId)) || null;
 
   // Sync active pool subscriptions.
   const syncActivePoolSubscriptions = async () => {
@@ -105,7 +104,9 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
         id: pool,
         addresses: { ...createPoolAccounts(Number(pool)) },
       }));
-      ActivePoolsController.syncPools(api, newActivePools);
+
+      SyncController.dispatch('active-pools', 'syncing');
+      ActivePoolsController.syncPools(api, activeAccount, newActivePools);
     } else {
       // No active pools to sync. Mark as complete.
       SyncController.dispatch('active-pools', 'complete');

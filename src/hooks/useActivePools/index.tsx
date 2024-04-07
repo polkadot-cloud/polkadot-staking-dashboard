@@ -11,33 +11,33 @@ import type {
   ActivePoolsProps,
   ActivePoolsState,
 } from './types';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
+import type { MaybeAddress } from 'types';
 
-export const useActivePools = ({ onCallback, poolIds }: ActivePoolsProps) => {
+export const useActivePools = ({ onCallback, who }: ActivePoolsProps) => {
   const { network } = useNetwork();
-  const { activeAccount } = useActiveAccounts();
 
   // Stores active pools.
-  const [activePools, setActivePools] = useState<ActivePoolsState>({});
+  const [activePools, setActivePools] = useState<ActivePoolsState>(
+    ActivePoolsController.getActivePools(who)
+  );
   const activePoolsRef = useRef(activePools);
 
   // Store nominations of active pools.
   const [poolNominations, setPoolNominations] =
-    useState<ActiveNominationsState>({});
+    useState<ActiveNominationsState>(
+      ActivePoolsController.getPoolNominations(who)
+    );
   const poolNominationsRef = useRef(poolNominations);
 
   // Handle report of new active pool data.
   const newActivePoolCallback = async (e: Event) => {
     if (isCustomEvent(e) && ActivePoolsController.isValidNewActivePool(e)) {
-      const { pool, nominations } = e.detail;
+      const { address, pool, nominations } = e.detail;
       const { id } = pool;
 
-      // Persist to active pools state if this pool is specified in `poolIds`.
-      if (
-        poolIds === '*' ||
-        (Array.isArray(poolIds) && poolIds.includes(String(id)))
-      ) {
+      // Persist to active pools state for the specified account.
+      if (address === who) {
         const newActivePools = { ...activePoolsRef.current };
         newActivePools[id] = pool;
         setStateWithRef(newActivePools, setActivePools, activePoolsRef);
@@ -58,42 +58,50 @@ export const useActivePools = ({ onCallback, poolIds }: ActivePoolsProps) => {
     }
   };
 
-  // Bootstrap state on initial render.
-  useEffect(() => {
-    const initialActivePools =
-      poolIds === '*'
-        ? ActivePoolsController.activePools
-        : Object.fromEntries(
-            Object.entries(ActivePoolsController.activePools).filter(([key]) =>
-              poolIds.includes(key)
-            )
-          );
-    setStateWithRef(initialActivePools || {}, setActivePools, activePoolsRef);
+  // Get active pools for an address.
+  const getActivePools = (address: MaybeAddress, poolId: string) => {
+    if (!address) {
+      return null;
+    }
+    return activePools?.[poolId] || null;
+  };
 
-    const initialPoolNominations =
-      poolIds === '*'
-        ? ActivePoolsController.poolNominations
-        : Object.fromEntries(
-            Object.entries(ActivePoolsController.poolNominations).filter(
-              ([key]) => poolIds.includes(key)
-            )
-          );
-    setStateWithRef(
-      initialPoolNominations,
-      setPoolNominations,
-      poolNominationsRef
-    );
-  }, [JSON.stringify(poolIds)]);
+  // Get active pool nominations for an address.
+  const getPoolNominations = (address: MaybeAddress, poolId: string) => {
+    if (!address) {
+      return null;
+    }
+    return poolNominations?.[poolId] || null;
+  };
 
-  // Reset state on active account or network change.
+  // Reset state on network change.
   useEffect(() => {
     setStateWithRef({}, setActivePools, activePoolsRef);
     setStateWithRef({}, setPoolNominations, poolNominationsRef);
-  }, [network, activeAccount]);
+  }, [network]);
+
+  // Update state on account change.
+  useEffect(() => {
+    setStateWithRef(
+      ActivePoolsController.getActivePools(who),
+      setActivePools,
+      activePoolsRef
+    );
+    setStateWithRef(
+      ActivePoolsController.getPoolNominations(who),
+      setPoolNominations,
+      poolNominationsRef
+    );
+  }, [who]);
 
   // Listen for new active pool events.
   const documentRef = useRef<Document>(document);
   useEventListener('new-active-pool', newActivePoolCallback, documentRef);
 
-  return { activePools, activePoolsRef, poolNominations };
+  return {
+    activePools,
+    activePoolsRef,
+    getActivePools,
+    getPoolNominations,
+  };
 };
