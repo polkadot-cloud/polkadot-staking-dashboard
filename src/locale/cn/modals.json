@@ -71,6 +71,7 @@
     "developerTools": "开发者工具",
     "differentNetworkAddress": "不同的网络地址",
     "disconnect": "断开",
+    "disconnectFromExtension": "请重新确认断开与此扩展的连接，这将重新加载该应用",
     "done": "完成",
     "ensureLedgerIsConnected": "提示:请确保您的Ledger设备已连接",
     "exitYourStakingPosition": "退出抵押",

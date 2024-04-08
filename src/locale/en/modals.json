@@ -74,6 +74,7 @@
     "developerTools": "Developer Tools",
     "differentNetworkAddress": "Different Network Address",
     "disconnect": "Disconnect",
+    "disconnectFromExtension": "Are you sure you want to disconnect from this extension? This will reload the dashboard.",
     "done": "Done",
     "ensureLedgerIsConnected": "Tip: Ensure your Ledger device is connected before continuing.",
     "exitYourStakingPosition": "Exit your staking position.",
