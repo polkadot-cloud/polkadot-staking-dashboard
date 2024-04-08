@@ -15,6 +15,7 @@ import type { ExtensionProps } from './types';
 import { NotificationsController } from 'controllers/NotificationsController';
 import { ModalConnectItem } from 'kits/Overlay/structure/ModalConnectItem';
 import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit';
+import { localStorageOrDefault } from '@w3ux/utils';
 
 export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const { t } = useTranslation('modals');
@@ -32,16 +33,34 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
 
   // Click to connect to extension.
   const handleClick = async () => {
-    if (canConnect) {
-      const success = await connectExtensionAccounts(id);
-      // force re-render to display error messages
-      setIncrement(increment + 1);
+    if (!connected) {
+      if (canConnect) {
+        const success = await connectExtensionAccounts(id);
+        // force re-render to display error messages
+        setIncrement(increment + 1);
 
-      if (success) {
-        NotificationsController.emit({
-          title: t('extensionConnected'),
-          subtitle: `${t('titleExtensionConnected', { title })}`,
-        });
+        if (success) {
+          NotificationsController.emit({
+            title: t('extensionConnected'),
+            subtitle: `${t('titleExtensionConnected', { title })}`,
+          });
+        }
+      }
+    } else {
+      if (
+        confirm(
+          'Are you sure you want to disconnect from this extension? This will reload the dashboard.'
+        )
+      ) {
+        const updatedAtiveExtensions = (
+          localStorageOrDefault('active_extensions', [], true) as string[]
+        ).filter((ext: string) => ext !== id);
+
+        localStorage.setItem(
+          'active_extensions',
+          JSON.stringify(updatedAtiveExtensions)
+        );
+        location.reload();
       }
     }
   };
@@ -53,20 +72,22 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
       : id;
   const Icon = ExtensionIcons[iconId];
 
-  // determine message to be displayed based on extension status.
+  // Determine message to be displayed based on extension status.
   let statusJsx;
   switch (extensionsStatus[id]) {
     case 'connected':
       statusJsx = (
-        <p className="danger">
+        <p className="active">
           <FontAwesomeIcon icon={faMinus} className="plus" />
           Disconnect
         </p>
       );
       break;
+
     case 'not_authenticated':
       statusJsx = <p>{t('notAuthenticated')}</p>;
       break;
+
     default:
       statusJsx = (
         <p className="active">
@@ -78,8 +99,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
 
   const websiteText = typeof website === 'string' ? website : website.text;
   const websiteUrl = typeof website === 'string' ? website : website.url;
-
-  const disabled = connected || !isInstalled;
+  const disabled = !isInstalled;
 
   return (
     <ModalConnectItem canConnect={canConnect}>
