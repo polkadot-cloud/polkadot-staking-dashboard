@@ -1,7 +1,11 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faExternalLinkAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+import {
+  faExternalLinkAlt,
+  faMinus,
+  faPlus,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -24,14 +28,16 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   // Force re-render on click.
   const [increment, setIncrement] = useState<number>(0);
 
-  // click to connect to extension
+  const connected = extensionsStatus[id] === 'connected';
+
+  // Click to connect to extension.
   const handleClick = async () => {
     if (canConnect) {
-      const connected = await connectExtensionAccounts(id);
+      const success = await connectExtensionAccounts(id);
       // force re-render to display error messages
       setIncrement(increment + 1);
 
-      if (connected) {
+      if (success) {
         NotificationsController.emit({
           title: t('extensionConnected'),
           subtitle: `${t('titleExtensionConnected', { title })}`,
@@ -51,7 +57,12 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   let statusJsx;
   switch (extensionsStatus[id]) {
     case 'connected':
-      statusJsx = <p className="success">{t('connected')}</p>;
+      statusJsx = (
+        <p className="danger">
+          <FontAwesomeIcon icon={faMinus} className="plus" />
+          Disconnect
+        </p>
+      );
       break;
     case 'not_authenticated':
       statusJsx = <p>{t('notAuthenticated')}</p>;
@@ -68,7 +79,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const websiteText = typeof website === 'string' ? website : website.text;
   const websiteUrl = typeof website === 'string' ? website : website.url;
 
-  const disabled = extensionsStatus[id] === 'connected' || !isInstalled;
+  const disabled = connected || !isInstalled;
 
   return (
     <ModalConnectItem canConnect={canConnect}>
@@ -94,6 +105,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
             </div>
             <div className="row">
               <h3>{title}</h3>
+              {connected && <p className="active inline">{t('connected')}</p>}
             </div>
           </div>
           <div className="foot">
