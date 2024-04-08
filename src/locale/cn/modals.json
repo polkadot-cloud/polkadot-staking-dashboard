@@ -71,6 +71,7 @@
     "developerTools": "开发者工具",
     "differentNetworkAddress": "不同的网络地址",
     "disconnect": "断开",
+    "disconnectFromExtension": "Are you sure you want to disconnect from this extension? This will reload the dashboard.",
     "done": "完成",
     "ensureLedgerIsConnected": "提示:请确保您的Ledger设备已连接",
     "exitYourStakingPosition": "退出抵押",

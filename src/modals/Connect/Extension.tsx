@@ -47,11 +47,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
         }
       }
     } else {
-      if (
-        confirm(
-          'Are you sure you want to disconnect from this extension? This will reload the dashboard.'
-        )
-      ) {
+      if (confirm(t('disconnectFromExtension'))) {
         const updatedAtiveExtensions = (
           localStorageOrDefault('active_extensions', [], true) as string[]
         ).filter((ext: string) => ext !== id);
@@ -79,7 +75,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
       statusJsx = (
         <p className="active">
           <FontAwesomeIcon icon={faMinus} className="plus" />
-          Disconnect
+          {t('disconnect')}
         </p>
       );
       break;
