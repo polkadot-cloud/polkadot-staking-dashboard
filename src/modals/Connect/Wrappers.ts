@@ -26,19 +26,43 @@ export const ExtensionInner = styled.div`
 
   h3 {
     font-family: InterSemiBold, sans-serif;
-    margin: 1rem 0 0 0;
+    margin: 0;
+
     > svg {
       margin-right: 0.5rem;
     }
   }
+
   p {
     color: var(--text-color-secondary);
     padding: 0;
     margin: 0;
-    .plus {
+
+    &.success {
+      color: var(--status-success-color);
+    }
+
+    &.danger {
+      color: var(--status-danger-color);
+    }
+
+    &.active {
+      color: var(--accent-color-primary);
+    }
+
+    &.inline {
+      color: var(--status-success-color);
+      border: 0.75px solid var(--status-success-color);
+      border-radius: 0.4rem;
+      margin-left: 0.75rem;
+      padding: 0.1rem 0.4rem;
+    }
+
+    > .plus {
       margin-right: 0.4rem;
     }
   }
+
   .body {
     width: 100%;
     padding: 1.35rem 0.85rem 0.75rem 0.85rem;
@@ -60,24 +84,27 @@ export const ExtensionInner = styled.div`
   .row {
     width: 100%;
     display: flex;
+    align-items: center;
   }
   .foot {
     padding: 0.25rem 1rem 1rem 1rem;
   }
+
   .status {
     position: absolute;
     top: 0.9rem;
     right: 0.9rem;
-    .success {
-      color: var(--status-success-color);
-    }
-    .active {
-      color: var(--accent-color-primary);
+    display: flex;
+
+    > p {
+      margin-left: 1rem;
     }
   }
+
   .icon {
     color: var(--text-color-primary);
     width: 100%;
+    margin-bottom: 0.75rem;
 
     svg {
       max-width: 2.6rem;
