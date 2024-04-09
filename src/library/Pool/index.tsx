@@ -13,28 +13,15 @@ import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
 import type { PoolProps } from './types';
 import { useSyncing } from 'hooks/useSyncing';
-import { useNetwork } from 'contexts/Network';
-import { planckToUnit, rmCommas } from '@w3ux/utils';
-import BigNumber from 'bignumber.js';
+import { PoolBonded } from 'library/ListItem/Labels/PoolBonded';
 
 export const Pool = ({ pool }: PoolProps) => {
-  const { memberCounter, addresses, id, points } = pool;
+  const { memberCounter, addresses, id } = pool;
   const { setActiveTab } = usePoolsTabs();
   const { syncing } = useSyncing(['active-pools']);
   const { getCurrentCommission } = usePoolCommission();
-  const {
-    networkData: {
-      units,
-      brand: { inline },
-    },
-  } = useNetwork();
-
-  const TokenIcon = inline.svg;
 
   const currentCommission = getCurrentCommission(id);
-
-  // Calculate total bonded pool amount.
-  const bonded = planckToUnit(new BigNumber(rmCommas(points)), units);
 
   return (
     <Wrapper className="pool-more">
@@ -63,10 +50,7 @@ export const Pool = ({ pool }: PoolProps) => {
               )}
               <PoolId id={id} />
               <Members members={memberCounter} />
-              <div className="label pool">
-                <TokenIcon height="1rem" style={{ marginRight: '0.25rem' }} />{' '}
-                {bonded.decimalPlaces(0).toFormat()}
-              </div>
+              {<PoolBonded pool={pool} />}
             </Labels>
 
             <Labels>
