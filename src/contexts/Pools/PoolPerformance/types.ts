@@ -24,8 +24,9 @@ export interface PoolPerformanceContextInterface {
 }
 
 // Fetching status for keys.
-export type PoolPerformanceTasks = Partial<
-  Record<PoolRewardPointsKey, PoolPerformanceTaskStatus>
+export type PoolPerformanceTasks = Record<
+  PoolRewardPointsKey,
+  PoolPerformanceTaskStatus
 >;
 
 // Performance fetching status.
@@ -42,10 +43,10 @@ export interface PoolPerformanceTaskStatus {
  */
 
 // Supported reward points batch keys.
-export type PoolRewardPointsKey = 'pool_join' | 'pool_page';
+export type PoolRewardPointsKey = string;
 
 // Pool reward batches, keyed by batch key.
-export type PoolRewardPointsMap = Partial<Record<string, PoolRewardPoints>>;
+export type PoolRewardPointsMap = Record<PoolRewardPointsKey, PoolRewardPoints>;
 
 // Pool reward points are keyed by era, then by pool address.
 

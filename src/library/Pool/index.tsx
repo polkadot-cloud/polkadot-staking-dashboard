@@ -3,17 +3,17 @@
 
 import { usePoolCommission } from 'hooks/usePoolCommission';
 import { FavoritePool } from 'library/ListItem/Labels/FavoritePool';
-import { PoolBonded } from 'library/ListItem/Labels/PoolBonded';
+import { PoolNominateStatus } from 'library/ListItem/Labels/PoolNominateStatus';
 import { PoolCommission } from 'library/ListItem/Labels/PoolCommission';
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
 import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
 import { usePoolsTabs } from 'pages/Pools/Home/context';
-import { JoinPool } from '../ListItem/Labels/JoinPool';
+import { More } from '../ListItem/Labels/More';
 import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
 import type { PoolProps } from './types';
-import { Rewards } from './Rewards';
 import { useSyncing } from 'hooks/useSyncing';
+import { PoolBonded } from 'library/ListItem/Labels/PoolBonded';
 
 export const Pool = ({ pool }: PoolProps) => {
   const { memberCounter, addresses, id } = pool;
@@ -35,23 +35,24 @@ export const Pool = ({ pool }: PoolProps) => {
           </div>
         </div>
         <Separator />
-        <div className="row bottom lg">
+        <div className="row bottom lg pools">
           <div>
-            <Rewards address={addresses.stash} displayFor="default" />
+            <Labels className="yMargin">&nbsp;</Labels>
+            <PoolNominateStatus pool={pool} />
           </div>
           <div>
-            <Labels style={{ marginBottom: '0.9rem' }}>
+            <Labels className="yMargin">
               {currentCommission > 0 && (
                 <PoolCommission commission={`${currentCommission}%`} />
               )}
               <PoolId id={id} />
               <Members members={memberCounter} />
+              <PoolBonded pool={pool} />
             </Labels>
-            <PoolBonded pool={pool} />
 
-            <Labels style={{ marginTop: '1rem' }}>
-              <JoinPool
-                id={id}
+            <Labels>
+              <More
+                pool={pool}
                 setActiveTab={setActiveTab}
                 disabled={syncing}
               />

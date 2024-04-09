@@ -17,7 +17,7 @@ export const defaultContext: ListContextInterface = {
 };
 
 // The amount of pools per page.
-export const poolsPerPage = 21;
+export const poolsPerPage = 30;
 
 // The amount of validators per page.
 export const validatorsPerPage = 30;
