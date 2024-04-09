@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { CardWrapper } from 'library/Card/Wrappers';
-import { PoolList } from 'library/PoolList/Default';
+import { PoolList } from 'library/PoolList';
 import { StatBoxList } from 'library/StatBoxList';
 import { useFavoritePools } from 'contexts/Pools/FavoritePools';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -23,7 +23,6 @@ import { MinCreateBondStat } from './Stats/MinCreateBond';
 import { MinJoinBondStat } from './Stats/MinJoinBond';
 import { Status } from './Status';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
-import { useApi } from 'contexts/Api';
 import { useActivePools } from 'hooks/useActivePools';
 import { useBalances } from 'contexts/Balances';
 import { PageTitle } from 'kits/Structure/PageTitle';
@@ -32,22 +31,23 @@ import { PageRow } from 'kits/Structure/PageRow';
 import { RowSection } from 'kits/Structure/RowSection';
 import { WithdrawPrompt } from 'library/WithdrawPrompt';
 import { useSyncing } from 'hooks/useSyncing';
+import { useNetwork } from 'contexts/Network';
 
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
-  const { poolMembersipSyncing } = useSyncing();
+  const { network } = useNetwork();
   const { favorites } = useFavoritePools();
   const { openModal } = useOverlay().modal;
   const { bondedPools } = useBondedPools();
   const { getPoolMembership } = useBalances();
+  const { poolMembersipSyncing } = useSyncing();
   const { activeAccount } = useActiveAccounts();
   const { activeTab, setActiveTab } = usePoolsTabs();
   const { getPoolRoles, activePool } = useActivePool();
-  const { counterForBondedPools } = useApi().poolsConfig;
   const membership = getPoolMembership(activeAccount);
 
   const { activePools } = useActivePools({
-    poolIds: '*',
+    who: activeAccount,
   });
 
   // Calculate the number of _other_ pools the user has a role in.
@@ -68,7 +68,6 @@ export const HomeInner = () => {
       title: t('pools.allPools'),
       active: activeTab === 1,
       onClick: () => setActiveTab(1),
-      badge: String(counterForBondedPools.toString()),
     },
     {
       title: t('pools.favorites'),
@@ -80,12 +79,10 @@ export const HomeInner = () => {
 
   const ROW_HEIGHT = 220;
 
-  // Back to tab 0 if not in a pool & on members tab.
+  // Go back to tab 0 on network change.
   useEffect(() => {
-    if (!activePool) {
-      setActiveTab(0);
-    }
-  }, [activePool]);
+    setActiveTab(0);
+  }, [network]);
 
   return (
     <>
@@ -147,10 +144,6 @@ export const HomeInner = () => {
             <PoolListProvider>
               <PoolList
                 pools={bondedPools}
-                defaultFilters={{
-                  includes: ['active'],
-                  excludes: ['locked', 'destroying'],
-                }}
                 allowMoreCols
                 allowSearch
                 pagination

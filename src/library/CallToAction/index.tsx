@@ -37,10 +37,20 @@ export const CallToActionWrapper = styled.div`
 
       &:nth-child(1) {
         flex-grow: 1;
-
         @media (min-width: 651px) {
           border-right: 1px solid var(--border-primary-color);
           padding-right: 1rem;
+
+          &.fixedWidth {
+            flex-grow: 0;
+            flex-basis: 70%;
+          }
+        }
+
+        @media (max-width: 650px) {
+          &.fixedWidth {
+            flex-basis: 100%;
+          }
         }
       }
 
@@ -170,7 +180,14 @@ export const CallToActionWrapper = styled.div`
             justify-content: center;
             flex-wrap: nowrap;
             font-size: 1.3rem;
+            line-height: 1.3rem;
             width: 100%;
+
+            .counter {
+              font-family: InterBold, sans-serif;
+              font-size: 1.1rem;
+              margin-left: 0.75rem;
+            }
 
             &:disabled {
               cursor: default;
@@ -178,6 +195,12 @@ export const CallToActionWrapper = styled.div`
 
             > svg {
               margin: 0 0.75rem;
+            }
+          }
+
+          &.inactive {
+            > button {
+              cursor: default;
             }
           }
         }

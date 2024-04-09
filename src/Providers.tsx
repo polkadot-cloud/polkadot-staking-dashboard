@@ -44,6 +44,7 @@ import type { Provider } from 'hooks/withProviders';
 import { withProviders } from 'hooks/withProviders';
 import { CommunityProvider } from 'contexts/Community';
 import { OverlayProvider } from 'kits/Overlay/Provider';
+import { JoinPoolsProvider } from 'contexts/Pools/JoinPools';
 
 export const Providers = () => {
   const {
@@ -58,7 +59,10 @@ export const Providers = () => {
     [APIProvider, { network }],
     VaultAccountsProvider,
     LedgerHardwareProvider,
-    ExtensionsProvider,
+    [
+      ExtensionsProvider,
+      { options: { chainSafeSnapEnabled: true, polkagateSnapEnabled: true } },
+    ],
     [
       ExtensionAccountsProvider,
       { dappName: DappName, network, ss58, activeAccount, setActiveAccount },
@@ -83,6 +87,7 @@ export const Providers = () => {
     FastUnstakeProvider,
     PayoutsProvider,
     PoolPerformanceProvider,
+    JoinPoolsProvider,
     SetupProvider,
     MenuProvider,
     TooltipProvider,

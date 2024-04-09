@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import extensions from '@w3ux/extension-assets';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Close } from 'library/Modal/Close';
@@ -26,6 +25,8 @@ import { ModalMotionThreeSection } from 'kits/Overlay/structure/ModalMotionThree
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { useExtensions } from '@w3ux/react-connect-kit';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import extensions from '@w3ux/extension-assets';
+import type { ExtensionArrayListItem } from '@w3ux/extension-assets/util';
 
 export const Connect = () => {
   const { t } = useTranslation('modals');
@@ -44,12 +45,13 @@ export const Connect = () => {
   // Whether the app is running on of mobile wallets.
   const inMobileWallet = inNova || inSubWallet;
 
-  // If in SubWallet Mobile, keep `subwallet-js` only.
+  // Get supported extensions.
   const extensionsAsArray = Object.entries(extensions).map(([key, value]) => ({
     id: key,
     ...value,
-  }));
+  })) as ExtensionArrayListItem[];
 
+  // If in SubWallet Mobile, keep `subwallet-js` only.
   const web = inSubWallet
     ? extensionsAsArray.filter((a) => a.id === 'subwallet-js')
     : // If in Nova Wallet, fetch nova wallet metadata and replace its id with `polkadot-js`.

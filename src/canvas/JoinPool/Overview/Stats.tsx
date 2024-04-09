@@ -9,8 +9,17 @@ import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import type { OverviewSectionProps } from '../types';
 import { useTranslation } from 'react-i18next';
+import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
+import { MaxEraRewardPointsEras } from 'consts';
+import { StyledLoader } from 'library/PoolSync/Loader';
+import type { CSSProperties } from 'styled-components';
+import { PoolSync } from 'library/PoolSync';
 
-export const Stats = ({ bondedPool }: OverviewSectionProps) => {
+export const Stats = ({
+  bondedPool,
+  performanceKey,
+  graphSyncing,
+}: OverviewSectionProps) => {
   const { t } = useTranslation('library');
   const {
     networkData: {
@@ -20,6 +29,11 @@ export const Stats = ({ bondedPool }: OverviewSectionProps) => {
     },
   } = useNetwork();
   const { isReady, api } = useApi();
+  const { getPoolRewardPoints } = usePoolPerformance();
+  const poolRewardPoints = getPoolRewardPoints(performanceKey);
+  const rawEraRewardPoints = Object.values(
+    poolRewardPoints[bondedPool.addresses.stash] || {}
+  );
 
   // Store the pool balance.
   const [poolBalance, setPoolBalance] = useState<BigNumber | null>(null);
@@ -49,18 +63,36 @@ export const Stats = ({ bondedPool }: OverviewSectionProps) => {
     }
   }, [bondedPool.id, bondedPool.points, isReady]);
 
+  const vars = {
+    '--loader-color': 'var(--text-color-secondary)',
+  } as CSSProperties;
+
   return (
     <HeadingWrapper>
       <h4>
-        <span className="active">{t('activelyNominating')}</span>
+        {graphSyncing ? (
+          <span>
+            {t('syncing')}
+            <StyledLoader style={{ ...vars, marginRight: '1.25rem' }} />
+            <PoolSync performanceKey={performanceKey} />
+          </span>
+        ) : (
+          <>
+            {rawEraRewardPoints.length === MaxEraRewardPointsEras && (
+              <span className="active">{t('activelyNominating')}</span>
+            )}
 
-        <span className="balance">
-          <Token className="icon" />
-          {!poolBalance
-            ? `...`
-            : planckToUnit(poolBalance, units).decimalPlaces(3).toFormat()}{' '}
-          {unit} {t('bonded')}
-        </span>
+            <span className="balance">
+              <Token className="icon" />
+              {!poolBalance
+                ? `...`
+                : planckToUnit(poolBalance, units)
+                    .decimalPlaces(3)
+                    .toFormat()}{' '}
+              {unit} {t('bonded')}
+            </span>
+          </>
+        )}
       </h4>
     </HeadingWrapper>
   );

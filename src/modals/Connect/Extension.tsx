@@ -1,7 +1,11 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faExternalLinkAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+import {
+  faExternalLinkAlt,
+  faMinus,
+  faPlus,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +15,7 @@ import type { ExtensionProps } from './types';
 import { NotificationsController } from 'controllers/NotificationsController';
 import { ModalConnectItem } from 'kits/Overlay/structure/ModalConnectItem';
 import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit';
+import { localStorageOrDefault } from '@w3ux/utils';
 
 export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const { t } = useTranslation('modals');
@@ -24,18 +29,34 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   // Force re-render on click.
   const [increment, setIncrement] = useState<number>(0);
 
-  // click to connect to extension
-  const handleClick = async () => {
-    if (canConnect) {
-      const connected = await connectExtensionAccounts(id);
-      // force re-render to display error messages
-      setIncrement(increment + 1);
+  const connected = extensionsStatus[id] === 'connected';
 
-      if (connected) {
-        NotificationsController.emit({
-          title: t('extensionConnected'),
-          subtitle: `${t('titleExtensionConnected', { title })}`,
-        });
+  // Click to connect to extension.
+  const handleClick = async () => {
+    if (!connected) {
+      if (canConnect) {
+        const success = await connectExtensionAccounts(id);
+        // force re-render to display error messages
+        setIncrement(increment + 1);
+
+        if (success) {
+          NotificationsController.emit({
+            title: t('extensionConnected'),
+            subtitle: `${t('titleExtensionConnected', { title })}`,
+          });
+        }
+      }
+    } else {
+      if (confirm(t('disconnectFromExtension'))) {
+        const updatedAtiveExtensions = (
+          localStorageOrDefault('active_extensions', [], true) as string[]
+        ).filter((ext: string) => ext !== id);
+
+        localStorage.setItem(
+          'active_extensions',
+          JSON.stringify(updatedAtiveExtensions)
+        );
+        location.reload();
       }
     }
   };
@@ -47,15 +68,22 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
       : id;
   const Icon = ExtensionIcons[iconId];
 
-  // determine message to be displayed based on extension status.
+  // Determine message to be displayed based on extension status.
   let statusJsx;
   switch (extensionsStatus[id]) {
     case 'connected':
-      statusJsx = <p className="success">{t('connected')}</p>;
+      statusJsx = (
+        <p className="active">
+          <FontAwesomeIcon icon={faMinus} className="plus" />
+          {t('disconnect')}
+        </p>
+      );
       break;
+
     case 'not_authenticated':
       statusJsx = <p>{t('notAuthenticated')}</p>;
       break;
+
     default:
       statusJsx = (
         <p className="active">
@@ -67,8 +95,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
 
   const websiteText = typeof website === 'string' ? website : website.text;
   const websiteUrl = typeof website === 'string' ? website : website.url;
-
-  const disabled = extensionsStatus[id] === 'connected' || !isInstalled;
+  const disabled = !isInstalled;
 
   return (
     <ModalConnectItem canConnect={canConnect}>
@@ -94,6 +121,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
             </div>
             <div className="row">
               <h3>{title}</h3>
+              {connected && <p className="active inline">{t('connected')}</p>}
             </div>
           </div>
           <div className="foot">

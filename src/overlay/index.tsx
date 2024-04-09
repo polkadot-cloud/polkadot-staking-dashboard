@@ -19,7 +19,6 @@ import { ImportVault } from '../modals/ImportVault';
 import { ManageFastUnstake } from '../modals/ManageFastUnstake';
 import { ManagePool } from '../modals/ManagePool';
 import { Networks } from '../modals/Networks';
-import { PoolNominations } from '../modals/PoolNominations';
 import { Settings } from '../modals/Settings';
 import { Unbond } from '../modals/Unbond';
 import { UnlockChunks } from '../modals/UnlockChunks';
@@ -31,6 +30,8 @@ import { ValidatorGeo } from '../modals/ValidatorGeo';
 import { ManageNominations } from '../canvas/ManageNominations';
 import { PoolMembers } from 'canvas/PoolMembers';
 import { JoinPool } from 'canvas/JoinPool';
+import { CreatePool } from 'canvas/CreatePool';
+import { NominatorSetup } from 'canvas/NominatorSetup';
 import { Overlay } from 'kits/Overlay';
 
 export const Overlays = () => {
@@ -56,7 +57,6 @@ export const Overlays = () => {
         ManagePool,
         ManageFastUnstake,
         Networks,
-        PoolNominations,
         Settings,
         ValidatorMetrics,
         ValidatorGeo,
@@ -70,6 +70,8 @@ export const Overlays = () => {
         ManageNominations,
         PoolMembers,
         JoinPool,
+        CreatePool,
+        NominatorSetup,
       }}
     />
   );

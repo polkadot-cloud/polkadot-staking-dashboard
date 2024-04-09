@@ -1,6 +1,6 @@
 {
   "name": "polkadot-staking-dashboard",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "type": "module",
   "license": "GPL-3.0-only",
   "scripts": {
@@ -31,9 +31,9 @@
     "@polkadot/util-crypto": "^12.6.2",
     "@polkawatch/ddp-client": "^2.0.11",
     "@substrate/connect": "0.7.35",
-    "@w3ux/extension-assets": "^0.2.3",
+    "@w3ux/extension-assets": "0.2.6",
     "@w3ux/hooks": "^0.0.3",
-    "@w3ux/react-connect-kit": "^0.1.2",
+    "@w3ux/react-connect-kit": "0.1.8",
     "@w3ux/react-odometer": "^0.0.3",
     "@w3ux/react-polkicon": "^0.0.2",
     "@w3ux/utils": "^0.0.2",

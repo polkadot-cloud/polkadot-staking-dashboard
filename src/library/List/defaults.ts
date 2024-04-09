@@ -16,8 +16,14 @@ export const defaultContext: ListContextInterface = {
   selectToggleable: true,
 };
 
-// Total list items to show per page.
-export const listItemsPerPage = 25;
+// The amount of pools per page.
+export const poolsPerPage = 30;
 
-// If throttling a list of items, how many items to show per batch.
-export const listItemsPerBatch = 25;
+// The amount of validators per page.
+export const validatorsPerPage = 30;
+
+// The amount of payouts per page.
+export const payoutsPerPage = 50;
+
+// The amount of pool members per page.
+export const poolMembersPerPage = 50;

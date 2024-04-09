@@ -3,24 +3,21 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CallToActionWrapper } from 'library/CallToAction';
-import {
-  faChevronCircleRight,
-  faChevronRight,
-} from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
-import { useSetup } from 'contexts/Setup';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNavigate } from 'react-router-dom';
 import { useApi } from 'contexts/Api';
 import type { NewNominatorProps } from '../types';
 import { CallToActionLoader } from 'library/Loader/CallToAction';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useOverlay } from 'kits/Overlay/Provider';
 
 export const NewNominator = ({ syncing }: NewNominatorProps) => {
   const { t } = useTranslation();
   const { isReady } = useApi();
   const navigate = useNavigate();
-  const { setOnNominatorSetup } = useSetup();
+  const { openCanvas } = useOverlay().canvas;
   const { activeAccount } = useActiveAccounts();
   const { isReadOnlyAccount } = useImportedAccounts();
 
@@ -33,27 +30,41 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
         {syncing ? (
           <CallToActionLoader />
         ) : (
-          <section className="standalone">
-            <div className="buttons">
-              <div
-                className={`button primary${nominateButtonDisabled ? ` disabled` : ``}`}
-              >
-                <button
-                  onClick={() => setOnNominatorSetup(true)}
-                  disabled={nominateButtonDisabled}
+          <>
+            <section className="standalone">
+              <div className="buttons">
+                <div
+                  className={`button primary standalone${nominateButtonDisabled ? ` disabled` : ``}`}
                 >
-                  {t('nominate.startNominating', { ns: 'pages' })}
-                  <FontAwesomeIcon icon={faChevronCircleRight} />
-                </button>
+                  <button
+                    onClick={() =>
+                      openCanvas({
+                        key: 'NominatorSetup',
+                        options: {},
+                        size: 'xl',
+                      })
+                    }
+                    disabled={nominateButtonDisabled}
+                  >
+                    {t('nominate.startNominating', { ns: 'pages' })}
+                  </button>
+                </div>
               </div>
-              <div className="button secondary">
-                <button onClick={() => navigate('/validators')}>
-                  {t('browseValidators', { ns: 'library' })}
-                  <FontAwesomeIcon icon={faChevronRight} transform="shrink-4" />
-                </button>
+            </section>
+            <section>
+              <div className="buttons">
+                <div className={`button secondary standalone`}>
+                  <button onClick={() => navigate('/validators')}>
+                    {t('browseValidators', { ns: 'library' })}
+                    <FontAwesomeIcon
+                      icon={faChevronRight}
+                      transform="shrink-4"
+                    />
+                  </button>
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          </>
         )}
       </div>
     </CallToActionWrapper>

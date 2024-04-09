@@ -21,6 +21,7 @@ import { useApi } from 'contexts/Api';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { SummaryWrapper } from './Wrapper';
+import { useOverlay } from 'kits/Overlay/Provider';
 
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
@@ -32,11 +33,12 @@ export const Summary = ({ section }: SetupStepProps) => {
     networkData: { units, unit },
   } = useNetwork();
   const { newBatchCall } = useBatchCall();
+  const { closeCanvas } = useOverlay().canvas;
   const { accountHasSigner } = useImportedAccounts();
   const { getPoolSetup, removeSetupProgress } = useSetup();
+  const { activeAccount, activeProxy } = useActiveAccounts();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { queryBondedPool, addToBondedPools } = useBondedPools();
-  const { activeAccount, activeProxy } = useActiveAccounts();
 
   const poolId = lastPoolId.plus(1);
   const setup = getPoolSetup(activeAccount);
@@ -74,17 +76,20 @@ export const Summary = ({ section }: SetupStepProps) => {
     from: activeAccount,
     shouldSubmit: true,
     callbackInBlock: async () => {
-      // query and add created pool to bondedPools list
+      // Close canvas.
+      closeCanvas();
+
+      // Query and add created pool to bondedPools list.
       const pool = await queryBondedPool(poolId.toNumber());
       addToBondedPools(pool);
 
-      // query and add account to poolMembers list
+      // Query and add account to poolMembers list.
       const member = await queryPoolMember(activeAccount);
       if (member) {
         addToPoolMembers(member);
       }
 
-      // reset localStorage setup progress
+      // Reset setup progress.
       removeSetupProgress('pool', activeAccount);
     },
   });

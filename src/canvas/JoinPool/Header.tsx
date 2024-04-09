@@ -8,7 +8,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
-import { TitleWrapper } from './Wrappers';
 import { Polkicon } from '@w3ux/react-polkicon';
 import { determinePoolDisplay, remToUnit } from '@w3ux/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,6 +15,7 @@ import { PageTitleTabs } from 'kits/Structure/PageTitleTabs';
 import { useTranslation } from 'react-i18next';
 import { useOverlay } from 'kits/Overlay/Provider';
 import type { JoinPoolHeaderProps } from './types';
+import { CanvasTitleWrapper } from 'canvas/Wrappers';
 
 export const Header = ({
   activeTab,
@@ -25,39 +25,43 @@ export const Header = ({
   autoSelected,
   setActiveTab,
   setSelectedPoolId,
-  setSelectedPoolCount,
+  providedPoolId,
 }: JoinPoolHeaderProps) => {
   const { t } = useTranslation();
   const { closeCanvas } = useOverlay().canvas;
 
   // Randomly select a new pool to display.
   const handleChooseNewPool = () => {
-    // Trigger refresh of memoied selected bonded pool.
-    setSelectedPoolCount((prev: number) => prev + 1);
+    // Remove current pool from filtered so it is not selected again.
+    const filteredPools = filteredBondedPools.filter(
+      (pool) => String(pool.id) !== String(bondedPool.id)
+    );
 
     // Randomly select a filtered bonded pool and set it as the selected pool.
-    const index = Math.ceil(Math.random() * filteredBondedPools.length - 1);
-    setSelectedPoolId(filteredBondedPools[index].id);
+    const index = Math.ceil(Math.random() * filteredPools.length - 1);
+    setSelectedPoolId(filteredPools[index].id);
   };
 
   return (
     <>
       <div className="head">
-        <ButtonPrimaryInvert
-          text={t('chooseAnotherPool', { ns: 'library' })}
-          iconLeft={faArrowsRotate}
-          onClick={() => handleChooseNewPool()}
-          lg
-        />
+        {providedPoolId === null && (
+          <ButtonPrimaryInvert
+            text={t('chooseAnotherPool', { ns: 'library' })}
+            iconLeft={faArrowsRotate}
+            onClick={() => handleChooseNewPool()}
+            lg
+          />
+        )}
         <ButtonPrimary
-          text={t('cancel', { ns: 'library' })}
+          text={t('pools.back', { ns: 'pages' })}
           lg
           onClick={() => closeCanvas()}
           iconLeft={faTimes}
           style={{ marginLeft: '1.1rem' }}
         />
       </div>
-      <TitleWrapper>
+      <CanvasTitleWrapper>
         <div className="inner">
           <div>
             <Polkicon
@@ -113,7 +117,7 @@ export const Header = ({
           tabClassName="canvas"
           inline={true}
         />
-      </TitleWrapper>
+      </CanvasTitleWrapper>
     </>
   );
 };

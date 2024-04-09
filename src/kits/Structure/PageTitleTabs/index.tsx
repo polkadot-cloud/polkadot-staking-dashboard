@@ -23,7 +23,17 @@ export const PageTitleTabs = ({
     <div className="scroll">
       <div className="inner">
         {tabs.map(
-          ({ active, onClick, title, badge }: PageTitleTabProps, i: number) => (
+          (
+            {
+              active,
+              onClick,
+              title,
+              badge,
+              disabled,
+              asPreloader,
+            }: PageTitleTabProps,
+            i: number
+          ) => (
             <ButtonTab
               className={tabClassName}
               active={!!active}
@@ -31,6 +41,8 @@ export const PageTitleTabs = ({
               onClick={() => onClick()}
               title={title}
               badge={badge}
+              disabled={disabled === undefined ? false : disabled}
+              asPreloader={asPreloader == undefined ? false : asPreloader}
             />
           )
         )}

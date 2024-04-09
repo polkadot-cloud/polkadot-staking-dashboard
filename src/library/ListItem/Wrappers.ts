@@ -12,8 +12,8 @@ export const Wrapper = styled.div`
   &.member {
     --height-bottom-row: 2.75rem;
   }
-  &.pool-join {
-    --height-bottom-row: 7.5rem;
+  &.pool-more {
+    --height-bottom-row: 5.75rem;
   }
 
   --height-total: calc(var(--height-top-row) + var(--height-bottom-row));
@@ -63,9 +63,14 @@ export const Wrapper = styled.div`
       &.bottom {
         height: var(--height-bottom-row);
 
+        &.pools {
+          align-items: flex-start;
+        }
+
         &.lg {
           display: flex;
           align-items: center;
+
           > div {
             &:first-child {
               flex-grow: 1;
@@ -93,6 +98,10 @@ export const Labels = styled.div`
   flex-grow: 1;
   padding: 0 0 0 0.25rem;
   height: inherit;
+
+  &.yMargin {
+    margin-bottom: 0.9rem;
+  }
 
   button {
     background: var(--shimmer-foreground);
@@ -129,16 +138,13 @@ export const Labels = styled.div`
     align-items: center;
     justify-content: center;
     font-size: inherit;
+    margin: 0 0.4em;
 
-    @media (min-width: ${SmallFontSizeMaxWidth}px) {
-      margin: 0 0.35rem;
-      &.pool {
-        margin: 0 0.45rem;
-      }
+    > .token {
+      margin-right: 0.25rem;
     }
-
     &.button-with-text {
-      margin-right: 0;
+      margin: 0.25rem 0 0 0;
 
       button {
         color: var(--accent-color-secondary);
@@ -154,6 +160,12 @@ export const Labels = styled.div`
 
         &:hover {
           opacity: 1;
+        }
+
+        &:disabled {
+          &:hover {
+            opacity: var(--opacity-disabled);
+          }
         }
         > svg {
           margin-left: 0.3rem;
@@ -244,6 +256,43 @@ export const ValidatorStatusWrapper = styled.div<{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+`;
+
+export const PoolStatusWrapper = styled.div<{
+  $status: string;
+}>`
+  h4,
+  h5 {
+    display: flex;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  h4 {
+    color: var(--text-color-tertiary);
+    font-size: 1rem;
+
+    padding-top: ${(props) =>
+      props.$status === 'active' ? '0.15rem' : '0.25rem'};
+
+    > span {
+      color: ${(props) =>
+        props.$status === 'active'
+          ? 'var(--status-success-color)'
+          : 'var(--text-color-tertiary)'};
+
+      border: 0.75px solid
+        ${(props) =>
+          props.$status === 'active'
+            ? 'var(--status-success-color)'
+            : 'transparent'};
+
+      padding: ${(props) => (props.$status === 'active' ? '0 0.5rem' : '0')};
+      border-radius: 0.3rem;
+      opacity: ${(props) => (props.$status === 'active' ? 1 : 0.6)};
+    }
   }
 `;
 

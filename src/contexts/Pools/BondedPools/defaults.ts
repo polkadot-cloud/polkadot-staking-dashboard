@@ -14,9 +14,11 @@ export const defaultBondedPoolsContext: BondedPoolsContextState = {
   getPoolNominationStatusCode: (statuses) => '',
   getAccountPoolRoles: (address) => null,
   replacePoolRoles: (poolId, roleEdits) => {},
-  poolSearchFilter: (filteredPools, searchTerm) => {},
+  poolSearchFilter: (filteredPools, searchTerm) => [],
   bondedPools: [],
   poolsMetaData: {},
   poolsNominations: {},
   updatePoolNominations: (id, nominations) => {},
+  poolListActiveTab: 'Active',
+  setPoolListActiveTab: (tab) => {},
 };

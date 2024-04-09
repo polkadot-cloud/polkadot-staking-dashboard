@@ -8,7 +8,7 @@ import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useFavoritePools } from 'contexts/Pools/FavoritePools';
 import { CardWrapper } from 'library/Card/Wrappers';
-import { PoolList } from 'library/PoolList/Default';
+import { PoolList } from 'library/PoolList';
 import { ListStatusHeader } from 'library/List';
 import { PoolListProvider } from 'library/PoolList/context';
 import type { BondedPool } from 'contexts/Pools/BondedPools/types';

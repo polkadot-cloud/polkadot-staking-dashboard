@@ -6,7 +6,7 @@ import { stringToU8a } from '@polkadot/util';
 /*
  * Global Constants
  */
-export const AppVersion = '1.1.6';
+export const AppVersion = '1.3.1';
 export const DappName = 'Polkadot Staking Dashboard';
 export const PolkadotUrl = 'https://polkadot.network/features/staking/';
 export const ManualSigners = ['ledger', 'vault'];
@@ -37,4 +37,4 @@ export const TipsThresholdMedium = 1200;
  * Misc Values
  */
 export const MaxPayoutDays = 60;
-export const MaxEraRewardPointsEras = 14;
+export const MaxEraRewardPointsEras = 10;
