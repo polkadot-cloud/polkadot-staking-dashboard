@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
     --height-bottom-row: 2.75rem;
   }
   &.pool-more {
-    --height-bottom-row: 5.5rem;
+    --height-bottom-row: 5.75rem;
   }
 
   --height-total: calc(var(--height-top-row) + var(--height-bottom-row));
@@ -63,6 +63,10 @@ export const Wrapper = styled.div`
       &.bottom {
         height: var(--height-bottom-row);
 
+        &.pools {
+          align-items: flex-start;
+        }
+
         &.lg {
           display: flex;
           align-items: center;
@@ -94,6 +98,10 @@ export const Labels = styled.div`
   flex-grow: 1;
   padding: 0 0 0 0.25rem;
   height: inherit;
+
+  &.yMargin {
+    margin-bottom: 0.9rem;
+  }
 
   button {
     background: var(--shimmer-foreground);
@@ -130,14 +138,11 @@ export const Labels = styled.div`
     align-items: center;
     justify-content: center;
     font-size: inherit;
+    margin: 0 0.4em;
 
-    @media (min-width: ${SmallFontSizeMaxWidth}px) {
-      margin: 0 0.35rem;
-      &.pool {
-        margin: 0 0.45rem;
-      }
+    > .token {
+      margin-right: 0.25rem;
     }
-
     &.button-with-text {
       margin: 0.25rem 0 0 0;
 

@@ -35,22 +35,19 @@ export const Pool = ({ pool }: PoolProps) => {
           </div>
         </div>
         <Separator />
-        <div
-          className="row bottom lg"
-          style={{ alignItems: 'flex-start', paddingTop: '0.75rem' }}
-        >
+        <div className="row bottom lg pools">
           <div>
-            <Labels style={{ marginBottom: '0.9rem' }}>&nbsp;</Labels>
+            <Labels className="yMargin">&nbsp;</Labels>
             <PoolNominateStatus pool={pool} />
           </div>
           <div>
-            <Labels style={{ marginBottom: '0.9rem' }}>
+            <Labels className="yMargin">
               {currentCommission > 0 && (
                 <PoolCommission commission={`${currentCommission}%`} />
               )}
               <PoolId id={id} />
               <Members members={memberCounter} />
-              {<PoolBonded pool={pool} />}
+              <PoolBonded pool={pool} />
             </Labels>
 
             <Labels>

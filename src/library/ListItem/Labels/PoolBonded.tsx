@@ -14,7 +14,7 @@ export const PoolBonded = ({ pool }: { pool: Pool }) => {
   const {
     networkData: {
       units,
-      brand: { inline },
+      brand: { token },
     },
   } = useNetwork();
   const { setTooltipTextAndOpen } = useTooltip();
@@ -22,7 +22,7 @@ export const PoolBonded = ({ pool }: { pool: Pool }) => {
   const tooltipText = t('bonded');
 
   const { points } = pool;
-  const TokenIcon = inline.svg;
+  const TokenIcon = token;
 
   // Format total bonded pool amount.
   const bonded = planckToUnit(new BigNumber(rmCommas(points)), units);
@@ -35,7 +35,10 @@ export const PoolBonded = ({ pool }: { pool: Pool }) => {
         onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
       />
 
-      <TokenIcon height="1rem" style={{ marginRight: '0.25rem' }} />
+      <TokenIcon
+        style={{ maxWidth: '1.25rem', height: '1.25rem' }}
+        className="token"
+      />
       {bonded.decimalPlaces(0).toFormat()}
     </div>
   );
