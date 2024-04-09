@@ -15,7 +15,7 @@ export const StakeStatus = () => {
 
   return (
     <CardWrapper style={{ padding: 0 }}>
-      <StatusWrapper>
+      <StatusWrapper borderBottom={showTips}>
         <RowSection secondary>
           <section>
             <NominationStatus showButtons={false} />
