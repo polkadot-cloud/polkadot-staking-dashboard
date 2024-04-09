@@ -5,30 +5,39 @@ import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
 import { useOverlay } from 'kits/Overlay/Provider';
+import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
+import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 
-export const JoinPool = ({
-  id,
+export const More = ({
+  pool,
   setActiveTab,
   disabled,
 }: {
-  id: number;
+  pool: BondedPool;
   setActiveTab: (t: number) => void;
   disabled: boolean;
 }) => {
   const { t } = useTranslation('tips');
   const { openCanvas } = useOverlay().canvas;
+  const { startPoolRewardPointsFetch } = usePoolPerformance();
+
+  const { id, addresses } = pool;
+
+  // Define a unique pool performance data key
+  const performanceKey = `pool_page_standalone_${id}`;
 
   return (
     <div className="label button-with-text">
       <button
         type="button"
         onClick={() => {
+          startPoolRewardPointsFetch(performanceKey, [addresses.stash]);
           openCanvas({
             key: 'JoinPool',
             options: {
               providedPool: {
                 id,
-                performanceBatchKey: 'pool_page',
+                performanceBatchKey: performanceKey,
               },
               onJoinCallback: () => setActiveTab(0),
             },

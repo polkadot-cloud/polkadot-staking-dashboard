@@ -28,10 +28,8 @@ import { usePoolList } from './context';
 import type { PoolListProps } from './types';
 import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import { useSyncing } from 'hooks/useSyncing';
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { useApi } from 'contexts/Api';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 
 export const PoolList = ({
   allowMoreCols,
@@ -49,11 +47,9 @@ export const PoolList = ({
   const { activeEra } = useApi();
   const { syncing } = useSyncing();
   const { applyFilter } = usePoolFilters();
-  const { erasRewardPointsFetched } = useValidators();
   const { listFormat, setListFormat } = usePoolList();
-  const { startPoolRewardPointsFetch } = usePoolPerformance();
+  const { poolSearchFilter, poolsNominations } = useBondedPools();
   const { getFilters, getSearchTerm, setSearchTerm } = useFilters();
-  const { poolSearchFilter, poolsNominations, bondedPools } = useBondedPools();
 
   const includes = getFilters('include', 'pools');
   const excludes = getFilters('exclude', 'pools');
@@ -81,12 +77,12 @@ export const PoolList = ({
   // Whether this the initial render.
   const [synced, setSynced] = useState<boolean>(false);
 
-  // pagination
+  // Handle Pagination.
   const totalPages = Math.ceil(listPools.length / poolsPerPage);
   const pageEnd = page * poolsPerPage - 1;
   const pageStart = pageEnd - (poolsPerPage - 1);
 
-  // get paged subset of list items.
+  // Get paged subset of list items.
   const poolsToDisplay = listPools.slice(pageStart).slice(0, poolsPerPage);
 
   // Handle resetting of pool list when provided pools change.
@@ -96,7 +92,7 @@ export const PoolList = ({
     setSynced(true);
   };
 
-  // handle filter / order update
+  // Handle filter / order update
   const handlePoolsFilterUpdate = () => {
     const filteredPools = filterPoolList();
     setListPools(filteredPools);
@@ -118,17 +114,6 @@ export const PoolList = ({
     setListPools(filteredPools);
     setSearchTerm('pools', newValue);
   };
-
-  // Fetch pool performance data when list items or page changes. Requires `erasRewardPoints` and
-  // `bondedPools` to be fetched.
-  useEffect(() => {
-    if (erasRewardPointsFetched && bondedPools.length) {
-      startPoolRewardPointsFetch(
-        'pool_page',
-        poolsToDisplay.map(({ addresses }) => addresses.stash)
-      );
-    }
-  }, [JSON.stringify(listPools), page, erasRewardPointsFetched, bondedPools]);
 
   // Refetch list when pool list changes.
   useEffect(() => {
