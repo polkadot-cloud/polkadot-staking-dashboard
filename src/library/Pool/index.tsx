@@ -3,7 +3,7 @@
 
 import { usePoolCommission } from 'hooks/usePoolCommission';
 import { FavoritePool } from 'library/ListItem/Labels/FavoritePool';
-import { PoolBonded } from 'library/ListItem/Labels/PoolBonded';
+import { PoolNominateStatus } from 'library/ListItem/Labels/PoolNominateStatus';
 import { PoolCommission } from 'library/ListItem/Labels/PoolCommission';
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
 import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
@@ -54,7 +54,7 @@ export const Pool = ({ pool }: PoolProps) => {
         >
           <div>
             <Labels style={{ marginBottom: '0.9rem' }}>&nbsp;</Labels>
-            <PoolBonded pool={pool} />
+            <PoolNominateStatus pool={pool} />
           </div>
           <div>
             <Labels style={{ marginBottom: '0.9rem' }}>

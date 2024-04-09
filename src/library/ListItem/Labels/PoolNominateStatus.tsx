@@ -9,7 +9,7 @@ import { useStaking } from 'contexts/Staking';
 import { PoolStatusWrapper } from 'library/ListItem/Wrappers';
 import type { Pool } from 'library/Pool/types';
 
-export const PoolBonded = ({ pool }: { pool: Pool }) => {
+export const PoolNominateStatus = ({ pool }: { pool: Pool }) => {
   const { t } = useTranslation('library');
   const { getPoolNominationStatusCode, poolsNominations } = useBondedPools();
   const { eraStakers, getNominationsStatusFromTargets } = useStaking();
