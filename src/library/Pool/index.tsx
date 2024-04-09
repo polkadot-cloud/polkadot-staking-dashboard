@@ -8,7 +8,7 @@ import { PoolCommission } from 'library/ListItem/Labels/PoolCommission';
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
 import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
 import { usePoolsTabs } from 'pages/Pools/Home/context';
-import { JoinPool } from '../ListItem/Labels/JoinPool';
+import { More } from '../ListItem/Labels/More';
 import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
 import type { PoolProps } from './types';
@@ -54,8 +54,8 @@ export const Pool = ({ pool }: PoolProps) => {
             </Labels>
 
             <Labels>
-              <JoinPool
-                id={id}
+              <More
+                pool={pool}
                 setActiveTab={setActiveTab}
                 disabled={syncing}
               />
