@@ -1,24 +1,19 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { capitalizeFirstLetter, planckToUnit, rmCommas } from '@w3ux/utils';
-import BigNumber from 'bignumber.js';
+import { capitalizeFirstLetter } from '@w3ux/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
-import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
+import { PoolStatusWrapper } from 'library/ListItem/Wrappers';
 import type { Pool } from 'library/Pool/types';
-import { useNetwork } from 'contexts/Network';
 
 export const PoolBonded = ({ pool }: { pool: Pool }) => {
   const { t } = useTranslation('library');
-  const {
-    networkData: { units, unit },
-  } = useNetwork();
   const { getPoolNominationStatusCode, poolsNominations } = useBondedPools();
   const { eraStakers, getNominationsStatusFromTargets } = useStaking();
-  const { addresses, points } = pool;
+  const { addresses } = pool;
 
   // get pool targets from nominations meta batch
   const nominations = poolsNominations[pool.id];
@@ -54,25 +49,22 @@ export const PoolBonded = ({ pool }: { pool: Pool }) => {
     handleNominationsStatus();
   }, [pool, eraStakers.stakers.length, Object.keys(poolsNominations).length]);
 
-  // calculate total bonded pool amount
-  const poolBonded = planckToUnit(new BigNumber(rmCommas(points)), units);
-
   // determine nominations status and display
   const nominationStatus = getPoolNominationStatusCode(
     nominationsStatus || null
   );
 
   return (
-    <ValidatorStatusWrapper $status={nominationStatus} $noMargin>
-      <h5>
-        {nominationStatus === null || !eraStakers.stakers.length
-          ? `${t('syncing')}...`
-          : targets.length
-            ? capitalizeFirstLetter(t(`${nominationStatus}`) ?? '')
-            : t('notNominating')}
-        {' / '}
-        {t('bonded')}: {poolBonded.decimalPlaces(3).toFormat()} {unit}
-      </h5>
-    </ValidatorStatusWrapper>
+    <PoolStatusWrapper $status={nominationStatus}>
+      <h4>
+        <span>
+          {nominationStatus === null || !eraStakers.stakers.length
+            ? `${t('syncing')}...`
+            : targets.length
+              ? capitalizeFirstLetter(t(`${nominationStatus}`) ?? '')
+              : t('notNominating')}
+        </span>
+      </h4>
+    </PoolStatusWrapper>
   );
 };

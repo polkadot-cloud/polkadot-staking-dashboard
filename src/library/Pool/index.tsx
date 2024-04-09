@@ -12,16 +12,29 @@ import { JoinPool } from '../ListItem/Labels/JoinPool';
 import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
 import type { PoolProps } from './types';
-import { Rewards } from './Rewards';
 import { useSyncing } from 'hooks/useSyncing';
+import { useNetwork } from 'contexts/Network';
+import { planckToUnit, rmCommas } from '@w3ux/utils';
+import BigNumber from 'bignumber.js';
 
 export const Pool = ({ pool }: PoolProps) => {
-  const { memberCounter, addresses, id } = pool;
+  const { memberCounter, addresses, id, points } = pool;
   const { setActiveTab } = usePoolsTabs();
   const { syncing } = useSyncing(['active-pools']);
   const { getCurrentCommission } = usePoolCommission();
+  const {
+    networkData: {
+      units,
+      brand: { inline },
+    },
+  } = useNetwork();
+
+  const TokenIcon = inline.svg;
 
   const currentCommission = getCurrentCommission(id);
+
+  // Calculate total bonded pool amount.
+  const bonded = planckToUnit(new BigNumber(rmCommas(points)), units);
 
   return (
     <Wrapper className="pool-more">
@@ -35,9 +48,13 @@ export const Pool = ({ pool }: PoolProps) => {
           </div>
         </div>
         <Separator />
-        <div className="row bottom lg">
+        <div
+          className="row bottom lg"
+          style={{ alignItems: 'flex-start', paddingTop: '0.75rem' }}
+        >
           <div>
-            <Rewards address={addresses.stash} displayFor="default" />
+            <Labels style={{ marginBottom: '0.9rem' }}>&nbsp;</Labels>
+            <PoolBonded pool={pool} />
           </div>
           <div>
             <Labels style={{ marginBottom: '0.9rem' }}>
@@ -46,10 +63,13 @@ export const Pool = ({ pool }: PoolProps) => {
               )}
               <PoolId id={id} />
               <Members members={memberCounter} />
+              <div className="label pool">
+                <TokenIcon height="1rem" style={{ marginRight: '0.25rem' }} />{' '}
+                {bonded.decimalPlaces(0).toFormat()}
+              </div>
             </Labels>
-            <PoolBonded pool={pool} />
 
-            <Labels style={{ marginTop: '1rem' }}>
+            <Labels>
               <JoinPool
                 id={id}
                 setActiveTab={setActiveTab}
