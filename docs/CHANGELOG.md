@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.1](https://github.com/paritytech/polkadot-staking-dashboard/compare/v1.3.0...v1.3.1) (2024-04-09)
+
+
+### Features
+
+* **ux:** Simplify pool list, fetch performance on More ([#2070](https://github.com/paritytech/polkadot-staking-dashboard/issues/2070)) ([fb5008d](https://github.com/paritytech/polkadot-staking-dashboard/commit/fb5008d0ebae166943ee6b3749f4c350758c9315))
+
+
 ## [1.3.0](https://github.com/paritytech/polkadot-staking-dashboard/compare/v1.2.1...v1.3.0) (2024-04-08)
 
 
