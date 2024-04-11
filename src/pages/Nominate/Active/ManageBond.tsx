@@ -4,7 +4,7 @@
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { Odometer } from '@w3ux/react-odometer';
 import { minDecimalPlaces, planckToUnit } from '@w3ux/utils';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';
 import { useHelp } from 'contexts/Help';
@@ -37,19 +37,15 @@ export const ManageBond = () => {
   const { openModal } = useOverlay().modal;
   const { isFastUnstaking } = useUnstaking();
   const { isReadOnlyAccount } = useImportedAccounts();
-  const { getTransferOptions, feeReserve } = useTransferOptions();
+  const { getTransferOptions } = useTransferOptions();
   const { activeAccount } = useActiveAccounts();
   const ledger = getLedger({ stash: activeAccount });
   const { active }: { active: BigNumber } = ledger;
   const allTransferOptions = getTransferOptions(activeAccount);
 
-  const { freeBalance, edReserved } = allTransferOptions;
+  const { freeBalance } = allTransferOptions;
   const { totalUnlocking, totalUnlocked, totalUnlockChunks } =
     allTransferOptions.nominate;
-  const totalFree = BigNumber.max(
-    0,
-    freeBalance.minus(edReserved.plus(feeReserve))
-  );
 
   return (
     <>
@@ -123,7 +119,7 @@ export const ManageBond = () => {
         active={planckToUnit(active, units)}
         unlocking={planckToUnit(totalUnlocking, units)}
         unlocked={planckToUnit(totalUnlocked, units)}
-        free={planckToUnit(totalFree, units)}
+        free={planckToUnit(freeBalance, units)}
         inactive={active.isZero()}
       />
     </>
