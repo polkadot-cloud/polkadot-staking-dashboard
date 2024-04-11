@@ -107,13 +107,15 @@ export const BalanceChart = () => {
 
   // Available balance data.
   const fundsLockedPlank = BigNumber.max(frozen.minus(lockStakingAmount), 0);
+  const fundsReservedPlank = edReserved.plus(feeReserve);
+
   const fundsLocked = planckToUnit(fundsLockedPlank, units);
-  let fundsReserved = planckToUnit(edReserved.plus(feeReserve), units);
+  let fundsReserved = planckToUnit(fundsReservedPlank, units);
 
   const fundsFree = planckToUnit(
     BigNumber.max(
       allTransferOptions.freeBalance
-        .minus(fundsReserved)
+        .minus(fundsReservedPlank)
         .minus(fundsLockedPlank),
       0
     ),
