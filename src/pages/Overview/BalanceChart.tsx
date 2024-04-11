@@ -113,12 +113,7 @@ export const BalanceChart = () => {
   let fundsReserved = planckToUnit(fundsReservedPlank, units);
 
   const fundsFree = planckToUnit(
-    BigNumber.max(
-      allTransferOptions.freeBalance
-        .minus(fundsReservedPlank)
-        .minus(fundsLockedPlank),
-      0
-    ),
+    BigNumber.max(allTransferOptions.freeBalance.minus(fundsLockedPlank), 0),
     units
   );
 
