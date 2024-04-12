@@ -84,7 +84,6 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     new BigNumber(0)
   );
 
-  console.log(activePoolId);
   const activePool = activePoolId ? getActivePools(activePoolId) : null;
 
   const activePoolNominations = activePoolId
