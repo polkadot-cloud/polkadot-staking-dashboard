@@ -28,8 +28,8 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
   const { isReady, api } = useApi();
   const { getPoolMembership } = useBalances();
-  const createPoolAccounts = useCreatePoolAccounts();
   const { activeAccount } = useActiveAccounts();
+  const createPoolAccounts = useCreatePoolAccounts();
   const { getAccountPoolRoles, bondedPools } = useBondedPools();
 
   const membership = getPoolMembership(activeAccount);
