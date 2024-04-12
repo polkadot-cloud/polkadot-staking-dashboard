@@ -3,14 +3,7 @@
 
 import { setStateWithRef } from '@w3ux/utils';
 import type { ReactNode } from 'react';
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { createContext, useContext, useMemo, useRef, useState } from 'react';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -35,8 +28,8 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
   const { isReady, api } = useApi();
   const { getPoolMembership } = useBalances();
-  const { activeAccount } = useActiveAccounts();
   const createPoolAccounts = useCreatePoolAccounts();
+  const { activeAccount } = useActiveAccounts();
   const { getAccountPoolRoles, bondedPools } = useBondedPools();
 
   const membership = getPoolMembership(activeAccount);
@@ -91,6 +84,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     new BigNumber(0)
   );
 
+  console.log(activePoolId);
   const activePool = activePoolId ? getActivePools(activePoolId) : null;
 
   const activePoolNominations = activePoolId
@@ -235,20 +229,14 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [network, isReady, accountPoolIds]);
 
-  // Reset everything when `activeAccount` changes.
-  useEffectIgnoreInitial(() => {
-    ActivePoolsController.unsubscribe();
-    resetActivePoolId();
-  }, [activeAccount]);
-
   // Reset on network change and component unmount. NOTE: ActivePoolsController also unsubscribes on
   // network change; this is handled by the Api instance.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     resetActivePoolId();
     return () => {
       resetActivePoolId();
     };
-  }, [network]);
+  }, [activeAccount, network]);
 
   return (
     <ActivePoolContext.Provider
