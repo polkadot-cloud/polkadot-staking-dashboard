@@ -20,12 +20,6 @@ import { useLedgerAccounts } from '@w3ux/react-connect-kit';
 
 export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {
   const { t } = useTranslation('modals');
-  const { network } = useNetwork();
-
-  const { getIsExecuting } = useLedgerHardware();
-  const isExecuting = getIsExecuting();
-  const { openPromptWith } = usePrompt();
-  const { renameOtherAccount } = useOtherAccounts();
   const {
     ledgerAccountExists,
     getLedgerAccount,
@@ -33,9 +27,15 @@ export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {
     removeLedgerAccount,
     renameLedgerAccount,
   } = useLedgerAccounts();
+  const { network } = useNetwork();
+  const { openPromptWith } = usePrompt();
+  const { getIsExecuting } = useLedgerHardware();
+  const { renameOtherAccount } = useOtherAccounts();
+
+  const isExecuting = getIsExecuting();
 
   const renameHandler = (address: string, newName: string) => {
-    renameLedgerAccount(address, newName);
+    renameLedgerAccount(network, address, newName);
     renameOtherAccount(address, newName);
   };
 
@@ -73,6 +73,7 @@ export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {
           return (
             <HardwareAddress
               key={i}
+              network={network}
               address={address}
               index={index}
               initial={initialName}

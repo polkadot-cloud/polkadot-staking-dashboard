@@ -5,6 +5,8 @@ import type { ReactNode } from 'react';
 import type { ComponentBase } from 'types';
 
 export type HardwareAddressProps = ComponentBase & {
+  // the network of the address.
+  network: string;
   // the address to import.
   address: string;
   // the index of the address.
@@ -18,7 +20,7 @@ export type HardwareAddressProps = ComponentBase & {
   // handle rename
   renameHandler: (address: string, newName: string) => void;
   // handle whether address already exists.
-  existsHandler: (address: string) => boolean;
+  existsHandler: (network: string, address: string) => boolean;
   // handle remove UI.
   openRemoveHandler: (address: string) => void;
   // handle confirm import UI.

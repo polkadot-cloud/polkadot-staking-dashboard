@@ -33,7 +33,7 @@
     "@substrate/connect": "0.7.35",
     "@w3ux/extension-assets": "0.2.6",
     "@w3ux/hooks": "^0.0.3",
-    "@w3ux/react-connect-kit": "^0.1.12",
+    "@w3ux/react-connect-kit": "^0.1.15",
     "@w3ux/react-odometer": "^0.0.3",
     "@w3ux/react-polkicon": "^0.0.2",
     "@w3ux/utils": "^0.0.2",

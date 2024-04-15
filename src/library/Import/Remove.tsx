@@ -11,9 +11,11 @@ import { ellipsisFn } from '@w3ux/utils';
 import { NotificationsController } from 'controllers/NotificationsController';
 import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
 import { ButtonMono } from 'kits/Buttons/ButtonMono';
+import { useNetwork } from 'contexts/Network';
 
 export const Remove = ({ address, getHandler, removeHandler }: RemoveProps) => {
   const { t } = useTranslation('modals');
+  const { network } = useNetwork();
   const { setStatus } = usePrompt();
   const { forgetOtherAccounts } = useOtherAccounts();
 
@@ -34,9 +36,9 @@ export const Remove = ({ address, getHandler, removeHandler }: RemoveProps) => {
         <ButtonMono
           text={t('removeAccount')}
           onClick={() => {
-            const account = getHandler(address);
+            const account = getHandler(network, address);
             if (account) {
-              removeHandler(address, removeAccountCallback);
+              removeHandler(network, address, removeAccountCallback);
               forgetOtherAccounts([account]);
               setStatus(0);
             }

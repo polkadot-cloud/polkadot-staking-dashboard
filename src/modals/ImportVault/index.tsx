@@ -21,25 +21,29 @@ import { ButtonText } from 'kits/Buttons/ButtonText';
 import { HardwareAddress } from 'library/Hardware/HardwareAddress';
 import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar';
 import { useVaultAccounts } from '@w3ux/react-connect-kit';
+import { useNetwork } from 'contexts/Network';
 
 export const ImportVault = () => {
   const { t } = useTranslation();
+  const { network } = useNetwork();
   const { replaceModal } = useOverlay().modal;
   const { renameOtherAccount } = useOtherAccounts();
   const { openPromptWith, status: promptStatus } = usePrompt();
 
   const {
-    vaultAccounts,
+    addVaultAccount,
+    getVaultAccount,
+    getVaultAccounts,
     vaultAccountExists,
     renameVaultAccount,
-    addVaultAccount,
     removeVaultAccount,
-    getVaultAccount,
   } = useVaultAccounts();
   const { setModalResize } = useOverlay().modal;
 
+  const vaultAccounts = getVaultAccounts(network);
+
   const renameHandler = (address: string, newName: string) => {
-    renameVaultAccount(address, newName);
+    renameVaultAccount(network, address, newName);
     renameOtherAccount(address, newName);
   };
 
@@ -63,7 +67,7 @@ export const ImportVault = () => {
 
   useEffect(() => {
     setModalResize();
-  }, [vaultAccounts]);
+  }, [JSON.stringify(vaultAccounts)]);
 
   return vaultAccounts.length === 0 ? (
     <NoAccounts
@@ -89,6 +93,7 @@ export const ImportVault = () => {
         <div className="items">
           {vaultAccounts.map(({ address, name, index }: AnyJson, i) => (
             <HardwareAddress
+              network={network}
               key={i}
               address={address}
               index={index}
