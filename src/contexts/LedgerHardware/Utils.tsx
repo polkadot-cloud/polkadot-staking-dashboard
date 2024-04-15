@@ -3,7 +3,7 @@
 
 import { localStorageOrDefault } from '@w3ux/utils';
 import { LedgerApps } from 'config/ledger';
-import type { LedgerAddress } from './Ledger/types';
+import type { LedgerAddress } from './types';
 
 // Ledger error keyed by type of error.
 const LedgerErrorsByType = {

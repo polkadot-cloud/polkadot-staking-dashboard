@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useTranslation } from 'react-i18next';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
-import { getLedgerApp } from 'contexts/Hardware/Utils';
+import { useLedgerHardware } from 'contexts/LedgerHardware';
+import { getLedgerApp } from 'contexts/LedgerHardware/Utils';
 import { useHelp } from 'contexts/Help';
 import { usePrompt } from 'contexts/Prompt';
 import LedgerSVG from '@w3ux/extension-assets/LedgerSquare.svg?react';

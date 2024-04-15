@@ -11,7 +11,7 @@ import {
 } from '@w3ux/react-connect-kit';
 import { FastUnstakeProvider } from 'contexts/FastUnstake';
 import { FiltersProvider } from 'contexts/Filters';
-import { LedgerHardwareProvider } from 'contexts/Hardware/Ledger/LedgerHardware';
+import { LedgerHardwareProvider } from 'contexts/LedgerHardware';
 import { HelpProvider } from 'contexts/Help';
 import { MenuProvider } from 'contexts/Menu';
 import { MigrateProvider } from 'contexts/Migrate';
