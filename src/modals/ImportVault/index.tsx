@@ -5,7 +5,6 @@ import { faQrcode } from '@fortawesome/free-solid-svg-icons';
 import { Polkicon } from '@w3ux/react-polkicon';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useVaultAccounts } from 'contexts/Hardware/Vault/VaultAccounts';
 import { usePrompt } from 'contexts/Prompt';
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react';
 import { Confirm } from 'library/Import/Confirm';
@@ -21,6 +20,7 @@ import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 import { ButtonText } from 'kits/Buttons/ButtonText';
 import { HardwareAddress } from 'library/Hardware/HardwareAddress';
 import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar';
+import { useVaultAccounts } from '@w3ux/react-connect-kit';
 
 export const ImportVault = () => {
   const { t } = useTranslation();

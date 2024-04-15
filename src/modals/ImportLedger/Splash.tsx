@@ -4,7 +4,7 @@
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
+import { useLedgerHardware } from 'contexts/LedgerHardware';
 import { useHelp } from 'contexts/Help';
 import { useTheme } from 'contexts/Themes';
 import LedgerLogoSvg from '@w3ux/extension-assets/Ledger.svg?react';

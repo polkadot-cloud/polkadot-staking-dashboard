@@ -4,7 +4,6 @@
 import { isValidAddress } from '@w3ux/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useVaultAccounts } from 'contexts/Hardware/Vault/VaultAccounts';
 import { usePrompt } from 'contexts/Prompt';
 import { QRViewerWrapper } from 'library/Import/Wrappers';
 import { QrScanSignature } from 'library/QRCode/ScanSignature';
@@ -13,6 +12,7 @@ import { formatAccountSs58 } from 'contexts/Connect/Utils';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { AnyJson } from 'types';
 import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
+import { useVaultAccounts } from '@w3ux/react-connect-kit';
 
 export const Reader = () => {
   const { t } = useTranslation('modals');

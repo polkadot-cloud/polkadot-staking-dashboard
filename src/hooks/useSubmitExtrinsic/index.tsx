@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DappName, ManualSigners } from 'consts';
 import { useApi } from 'contexts/Api';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
+import { useLedgerHardware } from 'contexts/LedgerHardware';
 import { useTxMeta } from 'contexts/TxMeta';
 import type { AnyApi, AnyJson } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';

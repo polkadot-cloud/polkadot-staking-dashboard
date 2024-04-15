@@ -4,12 +4,15 @@
 import { ellipsisFn, setStateWithRef } from '@w3ux/utils';
 import type { FC } from 'react';
 import { useEffect, useRef, useState } from 'react';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
-import { getLedgerApp, getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
+import { useLedgerHardware } from 'contexts/LedgerHardware';
+import {
+  getLedgerApp,
+  getLocalLedgerAddresses,
+} from 'contexts/LedgerHardware/Utils';
 import type {
   LedgerAddress,
   LedgerResponse,
-} from 'contexts/Hardware/Ledger/types';
+} from 'contexts/LedgerHardware/types';
 import type { AnyJson } from 'types';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';

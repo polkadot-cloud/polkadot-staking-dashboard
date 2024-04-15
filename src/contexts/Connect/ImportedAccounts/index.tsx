@@ -16,6 +16,7 @@ import type { ImportedAccountsContextInterface } from './types';
 import { useOtherAccounts } from '../OtherAccounts';
 import { BalancesController } from 'controllers/BalancesController';
 import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
 
 export const ImportedAccountsContext =
   createContext<ImportedAccountsContextInterface>(
@@ -30,8 +31,15 @@ export const ImportedAccountsProvider = ({
   children: ReactNode;
 }) => {
   const { isReady, api } = useApi();
+  const {
+    networkData: { ss58 },
+  } = useNetwork();
   const { otherAccounts } = useOtherAccounts();
-  const { extensionAccounts } = useExtensionAccounts();
+  const { getExtensionAccounts } = useExtensionAccounts();
+
+  // Get the imported extension accounts formatted with the current network's ss58 prefix.
+  const extensionAccounts = getExtensionAccounts(ss58);
+
   const allAccounts = extensionAccounts.concat(otherAccounts);
 
   // Stringify account addresses and account names to determine if they have changed. Ignore other properties including `signer` and `source`.
