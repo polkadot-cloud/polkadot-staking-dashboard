@@ -195,7 +195,7 @@ export const OtherAccountsProvider = ({
       // Finally, fetch any read-only accounts that have been added by `system` or `user`.
       importLocalOtherAccounts(getLocalExternalAccounts);
     }
-  }, [extensionAccountsSynced]);
+  }, [network, extensionAccountsSynced]);
 
   // Account fetching complete, mark accounts as initialised. Does not include read only accounts.
   useEffectIgnoreInitial(() => {

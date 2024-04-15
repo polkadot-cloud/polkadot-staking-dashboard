@@ -17,12 +17,15 @@ import { useVaultAccounts } from '@w3ux/react-connect-kit';
 export const Reader = () => {
   const { t } = useTranslation('modals');
   const {
+    network,
     networkData: { ss58 },
   } = useNetwork();
-  const { addOtherAccounts } = useOtherAccounts();
   const { closePrompt } = usePrompt();
-  const { addVaultAccount, vaultAccountExists, vaultAccounts } =
+  const { addOtherAccounts } = useOtherAccounts();
+  const { addVaultAccount, vaultAccountExists, getVaultAccounts } =
     useVaultAccounts();
+
+  const vaultAccounts = getVaultAccounts(network);
 
   // Store data from QR Code scanner.
   const [qrData, setQrData] = useState<AnyJson>(undefined);
@@ -36,7 +39,7 @@ export const Reader = () => {
 
   const valid =
     isValidAddress(qrData) &&
-    !vaultAccountExists(qrData) &&
+    !vaultAccountExists(network, qrData) &&
     !formatAccountSs58(qrData, ss58);
 
   // Reset QR data on open.
@@ -47,7 +50,7 @@ export const Reader = () => {
   useEffect(() => {
     // Add account and close overlay if valid.
     if (valid) {
-      const account = addVaultAccount(qrData, vaultAccounts.length);
+      const account = addVaultAccount(network, qrData, vaultAccounts.length);
       if (account) {
         addOtherAccounts([account]);
       }
@@ -61,7 +64,7 @@ export const Reader = () => {
         : isValidAddress(qrData)
           ? formatAccountSs58(qrData, ss58)
             ? `${t('differentNetworkAddress')}`
-            : vaultAccountExists(qrData)
+            : vaultAccountExists(network, qrData)
               ? `${t('accountAlreadyImported')}`
               : `${t('addressReceived')}`
           : `${t('invalidAddress')}`

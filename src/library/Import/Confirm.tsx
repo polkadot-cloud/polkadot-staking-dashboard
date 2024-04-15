@@ -12,9 +12,11 @@ import { NotificationsController } from 'controllers/NotificationsController';
 import { ellipsisFn } from '@w3ux/utils';
 import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
 import { ButtonMono } from 'kits/Buttons/ButtonMono';
+import { useNetwork } from 'contexts/Network';
 
 export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
   const { t } = useTranslation('modals');
+  const { network } = useNetwork();
   const { setStatus } = usePrompt();
   const { addOtherAccounts } = useOtherAccounts();
 
@@ -37,7 +39,12 @@ export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
         <ButtonMono
           text={t('importAccount')}
           onClick={() => {
-            const account = addHandler(address, index, addAccountCallback);
+            const account = addHandler(
+              network,
+              address,
+              index,
+              addAccountCallback
+            );
             if (account) {
               addOtherAccounts([account]);
             }
