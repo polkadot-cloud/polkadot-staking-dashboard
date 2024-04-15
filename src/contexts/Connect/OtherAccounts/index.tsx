@@ -3,10 +3,6 @@
 
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import {
-  getLocalLedgerAccounts,
-  getLocalVaultAccounts,
-} from 'contexts/Hardware/Utils';
 import type { MaybeAddress, NetworkName } from 'types';
 import { setStateWithRef } from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
@@ -22,6 +18,8 @@ import { useEventListener } from 'usehooks-ts';
 import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit';
 import type { ImportedAccount } from '@w3ux/react-connect-kit/types';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import { getLocalVaultAccounts } from '@w3ux/react-connect-kit/VaultAccountsProvider/utils';
+import { getLocalLedgerAccounts } from '@w3ux/react-connect-kit/LedgerAccountsProvider/utils';
 
 export const OtherAccountsContext =
   createContext<OtherAccountsContextInterface>(defaultOtherAccountsContext);
