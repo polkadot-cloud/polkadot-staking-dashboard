@@ -3,7 +3,7 @@
 
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { isValidAddress, remToUnit } from '@w3ux/utils';
+import { isValidAddress, remToUnit, formatAccountSs58 } from '@w3ux/utils';
 import type { ChangeEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,6 @@ import { Polkicon } from '@w3ux/react-polkicon';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useNetwork } from 'contexts/Network';
-import { formatAccountSs58 } from 'contexts/Connect/Utils';
 import { Wrapper } from './Wrapper';
 import type { PayeeInputProps } from './types';
 
