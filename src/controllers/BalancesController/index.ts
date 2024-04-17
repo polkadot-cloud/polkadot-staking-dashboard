@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { rmCommas } from '@w3ux/utils';
+import { rmCommas, stringToBigNumber } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { AnyApi, MaybeAddress } from 'types';
 import type {
@@ -171,11 +171,11 @@ export class BalancesController {
 
     this.ledgers[address] = {
       stash: stash.toString(),
-      active: this.stringToBigNumber(active.toString()),
-      total: this.stringToBigNumber(total.toString()),
+      active: stringToBigNumber(active.toString()),
+      total: stringToBigNumber(total.toString()),
       unlocking: unlocking.toHuman().map(({ era, value }: UnlockChunkRaw) => ({
         era: Number(rmCommas(era)),
-        value: this.stringToBigNumber(value),
+        value: stringToBigNumber(value),
       })),
     };
   };
@@ -189,16 +189,16 @@ export class BalancesController {
     this.balances[address] = {
       nonce: nonce.toNumber(),
       balance: {
-        free: this.stringToBigNumber(accountData.free.toString()),
-        reserved: this.stringToBigNumber(accountData.reserved.toString()),
-        frozen: this.stringToBigNumber(accountData.frozen.toString()),
+        free: stringToBigNumber(accountData.free.toString()),
+        reserved: stringToBigNumber(accountData.reserved.toString()),
+        frozen: stringToBigNumber(accountData.frozen.toString()),
       },
       locks: locksResult
         .toHuman()
         .map((lock: { id: string; amount: string }) => ({
           ...lock,
           id: lock.id.trim(),
-          amount: this.stringToBigNumber(lock.amount),
+          amount: stringToBigNumber(lock.amount),
         })),
     };
   };
@@ -337,10 +337,6 @@ export class BalancesController {
   // ------------------------------------------------------
   // Class helpers.
   // ------------------------------------------------------
-
-  // Converts a balance string into a `BigNumber`.
-  static stringToBigNumber = (value: string): BigNumber =>
-    new BigNumber(rmCommas(value));
 
   // Checks if event detailis a valid `new-account-balance` event. Note that `ledger` may not exist
   // and therefore cannot be tested.
