@@ -324,16 +324,6 @@ export class BalancesController {
     this.#unsubs = {};
   };
 
-  // Reset all saved state.
-  static resetState = (): void => {
-    this.accounts = [];
-    this.ledgers = {};
-    this.balances = {};
-    this.payees = {};
-    this.poolMemberships = {};
-    this.nominations = {};
-  };
-
   // ------------------------------------------------------
   // Class helpers.
   // ------------------------------------------------------
