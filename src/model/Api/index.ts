@@ -366,15 +366,9 @@ export class Api {
       },
       activeEra,
       poolsConfig: {
-        counterForPoolMembers: stringToBigNumber(
-          networkMetrics[5].toString()
-        ),
-        counterForBondedPools: stringToBigNumber(
-          networkMetrics[6].toString()
-        ),
-        counterForRewardPools: stringToBigNumber(
-          networkMetrics[7].toString()
-        ),
+        counterForPoolMembers: stringToBigNumber(networkMetrics[5].toString()),
+        counterForBondedPools: stringToBigNumber(networkMetrics[6].toString()),
+        counterForRewardPools: stringToBigNumber(networkMetrics[7].toString()),
         lastPoolId: stringToBigNumber(networkMetrics[8].toString()),
         maxPoolMembers,
         maxPoolMembersPerPool,
@@ -388,9 +382,7 @@ export class Api {
       stakingMetrics: {
         totalNominators: stringToBigNumber(networkMetrics[15].toString()),
         totalValidators: stringToBigNumber(networkMetrics[16].toString()),
-        maxValidatorsCount: stringToBigNumber(
-          networkMetrics[17].toString()
-        ),
+        maxValidatorsCount: stringToBigNumber(networkMetrics[17].toString()),
         validatorCount: stringToBigNumber(networkMetrics[18].toString()),
         lastReward: stringToBigNumber(networkMetrics[19].toString()),
         lastTotalStake: stringToBigNumber(networkMetrics[20].toString()),
