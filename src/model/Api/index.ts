@@ -16,7 +16,7 @@ import type {
 import { SyncController } from 'controllers/SyncController';
 import type { AnyApi, NetworkName } from 'types';
 import { NetworkList, NetworksWithPagedRewards } from 'config/networks';
-import { makeCancelable, rmCommas } from '@w3ux/utils';
+import { makeCancelable, rmCommas, stringToBigNumber } from '@w3ux/utils';
 import { WellKnownChain } from '@substrate/connect';
 import type { BlockNumber } from '@polkadot/types/interfaces';
 import type {
@@ -324,35 +324,35 @@ export class Api {
     return {
       consts: {
         bondDuration: consts[0]
-          ? this.stringToBigNumber(consts[0].toString())
+          ? stringToBigNumber(consts[0].toString())
           : this.FALLBACK.BONDING_DURATION,
         maxNominations: consts[1]
-          ? this.stringToBigNumber(consts[1].toString())
+          ? stringToBigNumber(consts[1].toString())
           : this.FALLBACK.MAX_NOMINATIONS,
         sessionsPerEra: consts[2]
-          ? this.stringToBigNumber(consts[2].toString())
+          ? stringToBigNumber(consts[2].toString())
           : this.FALLBACK.SESSIONS_PER_ERA,
         maxElectingVoters: consts[3]
-          ? this.stringToBigNumber(consts[3].toString())
+          ? stringToBigNumber(consts[3].toString())
           : this.FALLBACK.MAX_ELECTING_VOTERS,
         expectedBlockTime: consts[4]
-          ? this.stringToBigNumber(consts[4].toString())
+          ? stringToBigNumber(consts[4].toString())
           : this.FALLBACK.EXPECTED_BLOCK_TIME,
         epochDuration: consts[5]
-          ? this.stringToBigNumber(consts[5].toString())
+          ? stringToBigNumber(consts[5].toString())
           : this.FALLBACK.EPOCH_DURATION,
         existentialDeposit: consts[6]
-          ? this.stringToBigNumber(consts[6].toString())
+          ? stringToBigNumber(consts[6].toString())
           : new BigNumber(0),
         historyDepth: consts[7]
-          ? this.stringToBigNumber(consts[7].toString())
+          ? stringToBigNumber(consts[7].toString())
           : new BigNumber(0),
         fastUnstakeDeposit: consts[8]
-          ? this.stringToBigNumber(consts[8].toString())
+          ? stringToBigNumber(consts[8].toString())
           : new BigNumber(0),
         poolsPalletId: consts[9] ? consts[9].toU8a() : new Uint8Array(0),
         maxExposurePageSize: consts[10]
-          ? this.stringToBigNumber(consts[10].toString())
+          ? stringToBigNumber(consts[10].toString())
           : NetworkList[this.network].maxExposurePageSize,
       },
       networkMetrics: {
@@ -366,36 +366,28 @@ export class Api {
       },
       activeEra,
       poolsConfig: {
-        counterForPoolMembers: this.stringToBigNumber(
-          networkMetrics[5].toString()
-        ),
-        counterForBondedPools: this.stringToBigNumber(
-          networkMetrics[6].toString()
-        ),
-        counterForRewardPools: this.stringToBigNumber(
-          networkMetrics[7].toString()
-        ),
-        lastPoolId: this.stringToBigNumber(networkMetrics[8].toString()),
+        counterForPoolMembers: stringToBigNumber(networkMetrics[5].toString()),
+        counterForBondedPools: stringToBigNumber(networkMetrics[6].toString()),
+        counterForRewardPools: stringToBigNumber(networkMetrics[7].toString()),
+        lastPoolId: stringToBigNumber(networkMetrics[8].toString()),
         maxPoolMembers,
         maxPoolMembersPerPool,
         maxPools,
-        minCreateBond: this.stringToBigNumber(networkMetrics[12].toString()),
-        minJoinBond: this.stringToBigNumber(networkMetrics[13].toString()),
+        minCreateBond: stringToBigNumber(networkMetrics[12].toString()),
+        minJoinBond: stringToBigNumber(networkMetrics[13].toString()),
         globalMaxCommission: Number(
           String(networkMetrics[14]?.toHuman() || '100%').slice(0, -1)
         ),
       },
       stakingMetrics: {
-        totalNominators: this.stringToBigNumber(networkMetrics[15].toString()),
-        totalValidators: this.stringToBigNumber(networkMetrics[16].toString()),
-        maxValidatorsCount: this.stringToBigNumber(
-          networkMetrics[17].toString()
-        ),
-        validatorCount: this.stringToBigNumber(networkMetrics[18].toString()),
-        lastReward: this.stringToBigNumber(networkMetrics[19].toString()),
-        lastTotalStake: this.stringToBigNumber(networkMetrics[20].toString()),
-        minNominatorBond: this.stringToBigNumber(networkMetrics[21].toString()),
-        totalStaked: this.stringToBigNumber(networkMetrics[22].toString()),
+        totalNominators: stringToBigNumber(networkMetrics[15].toString()),
+        totalValidators: stringToBigNumber(networkMetrics[16].toString()),
+        maxValidatorsCount: stringToBigNumber(networkMetrics[17].toString()),
+        validatorCount: stringToBigNumber(networkMetrics[18].toString()),
+        lastReward: stringToBigNumber(networkMetrics[19].toString()),
+        lastTotalStake: stringToBigNumber(networkMetrics[20].toString()),
+        minNominatorBond: stringToBigNumber(networkMetrics[21].toString()),
+        totalStaked: stringToBigNumber(networkMetrics[22].toString()),
       },
     };
   };
@@ -500,15 +492,15 @@ export class Api {
             : null;
 
           const poolsConfig = {
-            counterForPoolMembers: this.stringToBigNumber(result[0].toString()),
-            counterForBondedPools: this.stringToBigNumber(result[1].toString()),
-            counterForRewardPools: this.stringToBigNumber(result[2].toString()),
-            lastPoolId: this.stringToBigNumber(result[3].toString()),
+            counterForPoolMembers: stringToBigNumber(result[0].toString()),
+            counterForBondedPools: stringToBigNumber(result[1].toString()),
+            counterForRewardPools: stringToBigNumber(result[2].toString()),
+            lastPoolId: stringToBigNumber(result[3].toString()),
             maxPoolMembers,
             maxPoolMembersPerPool,
             maxPools,
-            minCreateBond: this.stringToBigNumber(result[7].toString()),
-            minJoinBond: this.stringToBigNumber(result[8].toString()),
+            minCreateBond: stringToBigNumber(result[7].toString()),
+            minJoinBond: stringToBigNumber(result[8].toString()),
             globalMaxCommission: Number(
               String(result[9]?.toHuman() || '100%').slice(0, -1)
             ),
@@ -549,14 +541,14 @@ export class Api {
         ],
         (result) => {
           const stakingMetrics = {
-            totalNominators: this.stringToBigNumber(result[0].toString()),
-            totalValidators: this.stringToBigNumber(result[1].toString()),
-            maxValidatorsCount: this.stringToBigNumber(result[2].toString()),
-            validatorCount: this.stringToBigNumber(result[3].toString()),
-            lastReward: this.stringToBigNumber(result[4].toString()),
-            lastTotalStake: this.stringToBigNumber(result[5].toString()),
-            minNominatorBond: this.stringToBigNumber(result[6].toString()),
-            totalStaked: this.stringToBigNumber(result[7].toString()),
+            totalNominators: stringToBigNumber(result[0].toString()),
+            totalValidators: stringToBigNumber(result[1].toString()),
+            maxValidatorsCount: stringToBigNumber(result[2].toString()),
+            validatorCount: stringToBigNumber(result[3].toString()),
+            lastReward: stringToBigNumber(result[4].toString()),
+            lastTotalStake: stringToBigNumber(result[5].toString()),
+            minNominatorBond: stringToBigNumber(result[6].toString()),
+            totalStaked: stringToBigNumber(result[7].toString()),
           };
 
           document.dispatchEvent(
@@ -597,10 +589,6 @@ export class Api {
     });
     this.#unsubs = {};
   };
-
-  // Converts a balance string into a `BigNumber`.
-  stringToBigNumber = (value: string): BigNumber =>
-    new BigNumber(rmCommas(value));
 
   // ------------------------------------------------------
   // Disconnect.

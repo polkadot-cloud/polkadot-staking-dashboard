@@ -3,12 +3,7 @@
 
 import { localStorageOrDefault } from '@w3ux/utils';
 import { LedgerApps } from 'config/ledger';
-import type { MaybeString } from 'types';
-import type {
-  LedgerAccount,
-  VaultAccount,
-} from '@w3ux/react-connect-kit/types';
-import type { LedgerAddress } from './Ledger/types';
+import type { LedgerAddress } from './types';
 
 // Ledger error keyed by type of error.
 const LedgerErrorsByType = {
@@ -61,57 +56,3 @@ export const getLocalLedgerAddresses = (network?: string) => {
     ? localAddresses.filter((a) => a.network === network)
     : localAddresses;
 };
-
-// Gets imported Ledger accounts from local storage.
-export const getLocalLedgerAccounts = (network?: string): LedgerAccount[] => {
-  const localAddresses = localStorageOrDefault(
-    'ledger_accounts',
-    [],
-    true
-  ) as LedgerAccount[];
-
-  return network
-    ? localAddresses.filter((a) => a.network === network)
-    : localAddresses;
-};
-
-// Renames a record from local ledger addresses.
-export const renameLocalLedgerAddress = (
-  address: string,
-  name: string,
-  network: string
-) => {
-  const localLedger = (
-    localStorageOrDefault('ledger_addresses', [], true) as LedgerAddress[]
-  )?.map((i) =>
-    !(i.address === address && i.network === network)
-      ? i
-      : {
-          ...i,
-          name,
-        }
-  );
-  if (localLedger) {
-    localStorage.setItem('ledger_addresses', JSON.stringify(localLedger));
-  }
-};
-
-// Gets imported Vault accounts from local storage.
-export const getLocalVaultAccounts = (network?: string) => {
-  const localAddresses = localStorageOrDefault(
-    'polkadot_vault_accounts',
-    [],
-    true
-  ) as VaultAccount[];
-
-  return network
-    ? localAddresses.filter((a) => a.network === network)
-    : localAddresses;
-};
-
-// Gets whether an address is a local network address.
-export const isLocalNetworkAddress = (
-  chain: string,
-  a: { address: MaybeString; network: string },
-  address: string
-) => a.address === address && a.network === chain;

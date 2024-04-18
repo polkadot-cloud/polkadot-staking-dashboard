@@ -7,11 +7,11 @@ import {
   ExtensionsProvider,
   ExtensionAccountsProvider,
   LedgerAccountsProvider,
+  VaultAccountsProvider,
 } from '@w3ux/react-connect-kit';
 import { FastUnstakeProvider } from 'contexts/FastUnstake';
 import { FiltersProvider } from 'contexts/Filters';
-import { LedgerHardwareProvider } from 'contexts/Hardware/Ledger/LedgerHardware';
-import { VaultAccountsProvider } from 'contexts/Hardware/Vault/VaultAccounts';
+import { LedgerHardwareProvider } from 'contexts/LedgerHardware';
 import { HelpProvider } from 'contexts/Help';
 import { MenuProvider } from 'contexts/Menu';
 import { MigrateProvider } from 'contexts/Migrate';
@@ -48,17 +48,13 @@ import { OverlayProvider } from 'kits/Overlay/Provider';
 import { JoinPoolsProvider } from 'contexts/Pools/JoinPools';
 
 export const Providers = () => {
-  const {
-    network,
-    networkData: { ss58 },
-  } = useNetwork();
+  const { network } = useNetwork();
   const { activeAccount, setActiveAccount } = useActiveAccounts();
 
   // !! Provider order matters.
   const providers: Provider[] = [
     UIProvider,
     [APIProvider, { network }],
-    VaultAccountsProvider,
     LedgerHardwareProvider,
     [
       ExtensionsProvider,
@@ -67,12 +63,10 @@ export const Providers = () => {
     [
       ExtensionAccountsProvider,
       {
-        ss58,
+        dappName: DappName,
         network,
         activeAccount,
-        setActiveAccount,
-        dappName: DappName,
-        // Successful extension enabled event.
+        setActiveAccount, // Successful extension enabled event.
         onExtensionEnabled: (id: string) => {
           registerSaEvent(`${network.toLowerCase()}_extension_connected`, {
             id,
@@ -80,7 +74,8 @@ export const Providers = () => {
         },
       },
     ],
-    [LedgerAccountsProvider, { network }],
+    VaultAccountsProvider,
+    LedgerAccountsProvider,
     ExternalAccountsProvider,
     OtherAccountsProvider,
     ImportedAccountsProvider,

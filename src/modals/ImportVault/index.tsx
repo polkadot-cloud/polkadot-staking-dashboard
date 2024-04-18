@@ -5,7 +5,6 @@ import { faQrcode } from '@fortawesome/free-solid-svg-icons';
 import { Polkicon } from '@w3ux/react-polkicon';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useVaultAccounts } from 'contexts/Hardware/Vault/VaultAccounts';
 import { usePrompt } from 'contexts/Prompt';
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react';
 import { Confirm } from 'library/Import/Confirm';
@@ -21,26 +20,31 @@ import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 import { ButtonText } from 'kits/Buttons/ButtonText';
 import { HardwareAddress } from 'library/Hardware/HardwareAddress';
 import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar';
+import { useVaultAccounts } from '@w3ux/react-connect-kit';
+import { useNetwork } from 'contexts/Network';
 
 export const ImportVault = () => {
   const { t } = useTranslation();
+  const { network } = useNetwork();
   const { replaceModal } = useOverlay().modal;
   const { renameOtherAccount } = useOtherAccounts();
   const { openPromptWith, status: promptStatus } = usePrompt();
 
   const {
-    vaultAccounts,
+    addVaultAccount,
+    getVaultAccount,
+    getVaultAccounts,
     vaultAccountExists,
     renameVaultAccount,
-    addVaultAccount,
     removeVaultAccount,
-    getVaultAccount,
   } = useVaultAccounts();
   const { setModalResize } = useOverlay().modal;
   const source = 'vault';
 
+  const vaultAccounts = getVaultAccounts(network);
+
   const renameHandler = (address: string, newName: string) => {
-    renameVaultAccount(address, newName);
+    renameVaultAccount(network, address, newName);
     renameOtherAccount(address, newName);
   };
 
@@ -70,7 +74,7 @@ export const ImportVault = () => {
 
   useEffect(() => {
     setModalResize();
-  }, [vaultAccounts]);
+  }, [JSON.stringify(vaultAccounts)]);
 
   return vaultAccounts.length === 0 ? (
     <NoAccounts
@@ -96,6 +100,7 @@ export const ImportVault = () => {
         <div className="items">
           {vaultAccounts.map(({ address, name, index }: AnyJson, i) => (
             <HardwareAddress
+              network={network}
               key={i}
               address={address}
               index={index}

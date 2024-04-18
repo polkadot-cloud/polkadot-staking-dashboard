@@ -54,7 +54,7 @@ export const ManageNominations = () => {
   // Default nominators, from canvas options.
   const [defaultNominations, setDefaultNominations] =
     useState<NominationSelectionWithResetCounter>({
-      nominations: options?.nominated || [],
+      nominations: [...(options?.nominated || [])],
       reset: 0,
     });
 
@@ -70,7 +70,7 @@ export const ManageNominations = () => {
 
   // Handler for reverting nomination updates.
   const handleRevertChanges = () => {
-    setNewNominations({ nominations: defaultNominations.nominations });
+    setNewNominations({ nominations: [...defaultNominations.nominations] });
     setDefaultNominations({
       nominations: defaultNominations.nominations,
       reset: defaultNominations.reset + 1,
@@ -194,7 +194,7 @@ export const ManageNominations = () => {
               set: handleSetupUpdate,
             },
           ]}
-          nominations={defaultNominations}
+          nominations={newNominations}
         />
       </CanvasFullScreenWrapper>
       <CanvasSubmitTxFooter>

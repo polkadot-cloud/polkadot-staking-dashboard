@@ -44,7 +44,12 @@ export const Confirm = ({
         <ButtonMono
           text={t('importAccount')}
           onClick={() => {
-            const account = addHandler(address, index, addAccountCallback);
+            const account = addHandler(
+              network,
+              address,
+              index,
+              addAccountCallback
+            );
             if (account) {
               addOtherAccounts([account]);
               registerSaEvent(

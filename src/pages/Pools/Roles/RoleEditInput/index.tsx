@@ -1,11 +1,10 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { isValidAddress } from '@w3ux/utils';
+import { isValidAddress, formatAccountSs58 } from '@w3ux/utils';
 import type { FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNetwork } from 'contexts/Network';
-import { formatAccountSs58 } from 'contexts/Connect/Utils';
 import { Wrapper } from './Wrapper';
 import type { RoleEditInputProps } from '../types';
 

@@ -227,12 +227,6 @@ export class ActivePoolsController {
     this.#unsubs = {};
   };
 
-  static resetState = (): void => {
-    this.pools = {};
-    this.activePools = {};
-    this.poolNominations = {};
-  };
-
   // ------------------------------------------------------
   // Getters.
   // ------------------------------------------------------

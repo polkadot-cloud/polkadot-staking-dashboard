@@ -10,7 +10,7 @@ import { Title } from 'library/Modal/Title';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
+import { useLedgerHardware } from 'contexts/LedgerHardware';
 import { Forms } from './Forms';
 import { Overview } from './Overview';
 import type { UnlockChunk } from 'contexts/Balances/types';

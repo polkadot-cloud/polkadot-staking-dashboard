@@ -42,9 +42,9 @@ export const Remove = ({
         <ButtonMono
           text={t('removeAccount')}
           onClick={() => {
-            const account = getHandler(address);
+            const account = getHandler(network, address);
             if (account) {
-              removeHandler(address, removeAccountCallback);
+              removeHandler(network, address, removeAccountCallback);
               forgetOtherAccounts([account]);
               registerSaEvent(
                 `${network.toLowerCase()}_${source}_account_removal`

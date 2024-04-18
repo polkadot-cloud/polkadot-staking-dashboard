@@ -134,9 +134,14 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
     if (o === 'default') {
       newOrders = [...orders].filter((order) => order.key !== g);
     } else if (orders.length) {
+      // Attempt to replace the order record if it exists.
       newOrders = [...orders].map((order) =>
         order.key !== g ? order : { ...order, order: o }
       );
+      // If order for this key does not exist, add it.
+      if (newOrders.find(({ key }) => key === g) === undefined) {
+        newOrders.push({ key: g, order: o });
+      }
     } else {
       newOrders = [{ key: g, order: o }];
     }
@@ -151,9 +156,15 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
   const setSearchTerm = (g: string, t: string) => {
     let newSearchTerms = [];
     if (orders.length) {
+      // Attempt to replace the search term if it exists.
       newSearchTerms = [...searchTerms].map((term) =>
         term.key !== g ? term : { ...term, searchTerm: t }
       );
+
+      // If search term for this key does not exist, add it.
+      if (newSearchTerms.find(({ key }) => key === g) === undefined) {
+        newSearchTerms.push({ key: g, searchTerm: t });
+      }
     } else {
       newSearchTerms = [{ key: g, searchTerm: t }];
     }

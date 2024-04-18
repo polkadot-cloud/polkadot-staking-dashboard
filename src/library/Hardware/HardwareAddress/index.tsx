@@ -16,6 +16,7 @@ import { ButtonText } from '../../../kits/Buttons/ButtonText';
 import type { HardwareAddressProps } from './types';
 
 export const HardwareAddress = ({
+  network,
   address,
   index,
   initial,
@@ -59,7 +60,8 @@ export const HardwareAddress = ({
     setEditName(val);
   };
 
-  const isImported = existsHandler(address);
+  const isImported = existsHandler(network, address);
+
   return (
     <Wrapper>
       <div className="content">

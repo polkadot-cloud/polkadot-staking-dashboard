@@ -101,6 +101,7 @@ export const PoolList = ({
 
   const handleSearchChange = (e: FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
+
     let filteredPools: BondedPool[] = Object.assign(poolsDefault);
     filteredPools = applyFilter(includes, excludes, filteredPools);
     filteredPools = poolSearchFilter(filteredPools, newValue);

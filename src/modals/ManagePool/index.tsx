@@ -7,7 +7,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Title } from 'library/Modal/Title';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from 'kits/Overlay/Provider';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
+import { useLedgerHardware } from 'contexts/LedgerHardware';
 import { Forms } from './Forms';
 import { Tasks } from './Tasks';
 import { ModalSection } from 'kits/Overlay/structure/ModalSection';
