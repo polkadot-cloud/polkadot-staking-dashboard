@@ -68,7 +68,10 @@ export const useFetchMehods = () => {
     // filter validators to find active candidates
     filtered = applyFilter(
       ['active'],
-      ['all_commission', 'blocked_nominations', 'missing_identity'],
+      [
+        'all_commission',
+        'blocked_nominations' /* 'missing_identity', NOTE: disabled until People chain supported */,
+      ],
       filtered
     );
 
@@ -101,7 +104,7 @@ export const useFetchMehods = () => {
       [
         'all_commission',
         'blocked_nominations',
-        'missing_identity',
+        /* 'missing_identity', NOTE: disabled until People chain supported */
         'in_session',
       ],
       waiting
@@ -110,7 +113,10 @@ export const useFetchMehods = () => {
     // filter validators to find active candidates
     active = applyFilter(
       ['active'],
-      ['all_commission', 'blocked_nominations', 'missing_identity'],
+      [
+        'all_commission',
+        'blocked_nominations' /* 'missing_identity', NOTE: disabled until People chain supported */,
+      ],
       active
     );
 
@@ -141,7 +147,8 @@ export const useFetchMehods = () => {
         [
           'all_commission',
           'blocked_nominations',
-          'missing_identity',
+          /* 'missing_identity', NOTE: disabled until People chain supported */
+
           'not_parachain_validator',
         ],
         all
@@ -152,7 +159,10 @@ export const useFetchMehods = () => {
     const active =
       applyFilter(
         ['active'],
-        ['all_commission', 'blocked_nominations', 'missing_identity'],
+        [
+          'all_commission',
+          'blocked_nominations' /* 'missing_identity', NOTE: disabled until People chain supported */,
+        ],
         all
       ).filter(
         (n: Validator) => !nominations.find((o) => o.address === n.address)
@@ -166,7 +176,10 @@ export const useFetchMehods = () => {
     const random =
       applyFilter(
         null,
-        ['all_commission', 'blocked_nominations', 'missing_identity'],
+        [
+          'all_commission',
+          'blocked_nominations' /* 'missing_identity', NOTE: disabled until People chain supported */,
+        ],
         all
       ).filter(
         (n: Validator) => !nominations.find((o) => o.address === n.address)
