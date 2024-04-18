@@ -212,8 +212,8 @@ export const ValidatorListInner = ({
         index === self.findIndex((i) => i.address === value.address)
     );
 
-    setValidators(filteredValidators);
     setPage(1);
+    setValidators(filteredValidators);
     setIsSearching(e.currentTarget.value !== '');
     setSearchTerm('validators', newValue);
   };
