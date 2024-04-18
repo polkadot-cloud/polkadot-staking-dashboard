@@ -20,10 +20,10 @@ import BigNumber from 'bignumber.js';
 // DEPRECATION: Paged Rewards
 //
 // Temporary until paged rewards migration has completed on all networks.
-export const NetworksWithPagedRewards: NetworkName[] = ['westend'];
+export const NetworksWithPagedRewards: NetworkName[] = ['westend', 'kusama'];
 export const PagedRewardsStartEra: Record<NetworkName, BigNumber | null> = {
   polkadot: null,
-  kusama: null,
+  kusama: new BigNumber(6514),
   westend: new BigNumber(7167),
 };
 

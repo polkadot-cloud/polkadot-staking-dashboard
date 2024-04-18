@@ -14,6 +14,13 @@ export const FilterValidators = () => {
   const { getFilters, toggleFilter } = useFilters();
   const { excludesToLabels, includesToLabels } = useValidatorFilters();
 
+  // Filtering missing_identity until People chain is supported.
+  const filteredExcludesToLabels = Object.fromEntries(
+    Object.entries(excludesToLabels).filter(
+      ([key]) => key !== 'missing_identity'
+    )
+  );
+
   const includes = getFilters('include', 'validators');
   const excludes = getFilters('exclude', 'validators');
 
@@ -40,7 +47,7 @@ export const FilterValidators = () => {
         ))}
 
         <h4>{t('exclude')}:</h4>
-        {Object.entries(excludesToLabels).map(([f, l], i) => (
+        {Object.entries(filteredExcludesToLabels).map(([f, l], i) => (
           <FilterListButton
             $active={excludes?.includes(f) ?? false}
             key={`validator_exclude_${i}`}
