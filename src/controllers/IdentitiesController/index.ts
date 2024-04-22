@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyApi } from 'types';
+import type { AnyApi, AnyJson } from 'types';
 import type { ApiPromise } from '@polkadot/api';
 
 export class IdentitiesController {
@@ -11,8 +11,16 @@ export class IdentitiesController {
       const result = (await api.query.identity.identityOf.multi(addresses)).map(
         (identity) => identity.toHuman()
       );
+
+      // Take identity data (first index) of results.
+      const data = result.map(
+        (resultArray: AnyJson | null) => resultArray?.[0] || null
+      );
+
       return Object.fromEntries(
-        result.map((k, i) => [addresses[i], k]).filter(([, v]) => v !== null)
+        data
+          .map((key: string, index: number) => [addresses[index], key])
+          .filter(([, value]: AnyJson) => value !== null)
       );
     };
 
@@ -21,6 +29,7 @@ export class IdentitiesController {
       const supersRaw = (await api.query.identity.superOf.multi(addresses)).map(
         (superOf) => superOf.toHuman()
       );
+
       const supers = Object.fromEntries(
         supersRaw
           .map((k, i) => [
@@ -38,12 +47,17 @@ export class IdentitiesController {
         )
       ).map((superIdentity) => superIdentity.toHuman());
 
+      // Take identity data (first index) of results.
+      const data = superIdentities.map(
+        (resultArray: AnyJson | null) => resultArray?.[0] || null
+      );
+
       const supersWithIdentity = Object.fromEntries(
         Object.entries(supers).map(([k, v]: AnyApi, i) => [
           k,
           {
             ...v,
-            identity: superIdentities[i],
+            identity: data[i],
           },
         ])
       );
