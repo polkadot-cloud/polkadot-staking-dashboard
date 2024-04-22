@@ -145,8 +145,6 @@
     "optimalSelectionSubtitle": "选择表现最佳且定期活跃的验证人",
     "order": "顺序",
     "orderValidators": "验证人排序",
-    "overSubscribed": " 己超额认选",
-    "overSubscribedMinReward": "超额认选：最低奖励质押为",
     "page": "{{page}} / {{total}}",
     "payout": "收益",
     "payoutAccount": "收益到账账户",
