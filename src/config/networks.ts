@@ -19,10 +19,15 @@ import BigNumber from 'bignumber.js';
 
 // DEPRECATION: Paged Rewards
 //
-// Temporary until paged rewards migration has completed on all networks.
-export const NetworksWithPagedRewards: NetworkName[] = ['westend', 'kusama'];
+// Temporary until paged rewards migration has completed on all networks. Wait 84 eras from Polkadot
+// start: 1420 + 84 = 1504, when full history depth will be moved over to new paged rewards storage.
+export const NetworksWithPagedRewards: NetworkName[] = [
+  'polkadot',
+  'kusama',
+  'westend',
+];
 export const PagedRewardsStartEra: Record<NetworkName, BigNumber | null> = {
-  polkadot: null,
+  polkadot: new BigNumber(1420),
   kusama: new BigNumber(6514),
   westend: new BigNumber(7167),
 };
