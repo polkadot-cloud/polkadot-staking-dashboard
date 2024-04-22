@@ -44,10 +44,6 @@ export interface NominationStatusProps {
   noMargin?: boolean;
 }
 
-export interface OversubscribedProps {
-  address: MaybeAddress;
-}
-
 export interface SelectProps {
   item: {
     address: string;

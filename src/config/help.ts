@@ -126,7 +126,6 @@ export const HelpConfig: HelpItems = [
       'Self Stake',
       'Nominator Stake',
       'Commission',
-      'Over Subscribed',
       'Blocked Nominations',
       'Rewards By Country And Network',
     ],
