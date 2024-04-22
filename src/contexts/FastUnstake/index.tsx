@@ -34,16 +34,19 @@ export const FastUnstakeContext = createContext<FastUnstakeContextInterface>(
 export const useFastUnstake = () => useContext(FastUnstakeContext);
 
 export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
-  const { activeEra } = useApi();
   const { network } = useNetwork();
   const { activeAccount } = useActiveAccounts();
   const { inSetup, fetchEraStakers, isBonding } = useStaking();
   const {
     api,
+    consts,
     isReady,
+    activeEra,
     consts: { bondDuration },
     networkMetrics: { fastUnstakeErasToCheckPerBlock },
   } = useApi();
+
+  const { maxExposurePageSize } = consts;
 
   // store whether a fast unstake check is in progress.
   const [checking, setChecking] = useState<boolean>(false);
@@ -262,6 +265,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
       who: activeAccount,
       networkName: network,
       exitOnExposed: true,
+      maxExposurePageSize: maxExposurePageSize.toString(),
       exposures,
     });
   };

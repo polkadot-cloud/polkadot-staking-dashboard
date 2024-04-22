@@ -223,12 +223,6 @@
           "请在Ledger设备上打开 {NETWORK_NAME} App 然后重试."
         ]
       ],
-      "overSubscribed": [
-        "超额认选",
-        [
-          "只有每个验证人的前{MAX_EXPOSURE_PAGE_SIZE}名提名人才能在{NETWORK_NAME}获得奖励. 当超过该数时,该验证人将被视为超额认选."
-        ]
-      ],
       "payout": [
         "收益",
         [

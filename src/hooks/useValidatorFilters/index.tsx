@@ -5,10 +5,8 @@ import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useTranslation } from 'react-i18next';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { AnyFunction, AnyJson } from 'types';
-import { useStaking } from 'contexts/Staking';
 import { MaxEraRewardPointsEras } from 'consts';
 import type { AnyFilter } from 'library/Filter/types';
-import { useSyncing } from 'hooks/useSyncing';
 
 export const useValidatorFilters = () => {
   const { t } = useTranslation('library');
@@ -19,8 +17,6 @@ export const useValidatorFilters = () => {
     validatorSupers,
     validatorEraPointsHistory,
   } = useValidators();
-  const { syncing } = useSyncing(['era-stakers']);
-  const { getLowestRewardFromStaker } = useStaking();
 
   /*
    * filterMissingIdentity: Iterates through the supplied list and filters those with missing
@@ -47,29 +43,6 @@ export const useValidatorFilters = () => {
     }
     return filteredList;
   };
-
-  /*
-   * filterOverSubscribed: Iterates through the supplied list and filters those who are over
-   * subscribed. Returns the updated filtered list.
-   */
-  const filterOverSubscribed = (list: AnyFilter) => {
-    // Return list early if eraStakers is still syncing.
-    if (syncing) {
-      return list;
-    }
-
-    const filteredList: AnyFilter = [];
-    for (const validator of list) {
-      const { oversubscribed } = getLowestRewardFromStaker(validator.address);
-
-      if (!oversubscribed) {
-        filteredList.push(validator);
-        continue;
-      }
-    }
-    return filteredList;
-  };
-
   /*
    * filterAllCommission: Filters the supplied list and removes items with 100% commission. Returns
    * the updated filtered list.
@@ -131,7 +104,6 @@ export const useValidatorFilters = () => {
   };
 
   const excludesToLabels: Record<string, string> = {
-    over_subscribed: t('overSubscribed'),
     all_commission: t('100Commission'),
     blocked_nominations: t('blockedNominations'),
     missing_identity: t('missingIdentity'),
@@ -140,7 +112,6 @@ export const useValidatorFilters = () => {
   const filterToFunction: Record<string, AnyFunction> = {
     active: filterActive,
     missing_identity: filterMissingIdentity,
-    over_subscribed: filterOverSubscribed,
     all_commission: filterAllCommission,
     blocked_nominations: filterBlockedNominations,
     not_parachain_validator: filterNonParachainValidator,

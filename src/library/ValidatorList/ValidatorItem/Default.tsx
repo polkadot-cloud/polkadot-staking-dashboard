@@ -23,7 +23,6 @@ import { Commission } from '../../ListItem/Labels/Commission';
 import { EraStatus } from '../../ListItem/Labels/EraStatus';
 import { FavoriteValidator } from '../../ListItem/Labels/FavoriteValidator';
 import { Identity } from '../../ListItem/Labels/Identity';
-import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
 import { Select } from '../../ListItem/Labels/Select';
 import { getIdentityDisplay } from './Utils';
 import type { ValidatorItemProps } from './types';
@@ -122,7 +121,6 @@ export const Default = ({
           <div>
             <Labels style={{ marginBottom: '0.9rem' }}>
               <Quartile address={address} />
-              <Oversubscribed address={address} />
               <Blocked prefs={prefs} />
               <Commission commission={commission} />
               <ParaValidator address={address} />

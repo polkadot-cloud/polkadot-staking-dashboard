@@ -4,8 +4,7 @@
       "activeNominators": [
         "Active Nominators",
         [
-          "Nominators who are active in the current session.",
-          "Being an active nominator does not guarantee rewards, as your nominees may be oversubscribed."
+          "Nominators who are active in the current session."
         ]
       ],
       "activePools": [
@@ -223,12 +222,6 @@
         [
           "This message occurs when the {NETWORK_NAME} Ledger app is not currently open on the connected device.",
           "Open the {NETWORK_NAME} app on the Ledger device and try again."
-        ]
-      ],
-      "overSubscribed": [
-        "Over Subscribed",
-        [
-          "Only the top {MAX_EXPOSURE_PAGE_SIZE} nominators for each validator are rewarded in {NETWORK_NAME}. When this number is surpassed, this validator is considered over subscribed."
         ]
       ],
       "payout": [
