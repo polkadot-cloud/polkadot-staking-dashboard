@@ -96,6 +96,7 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
         who: activeAccount,
         networkName: network,
         maxExposurePageSize: maxExposurePageSize.toString(),
+        exitOnExposed: false,
         exposures,
       });
     }
