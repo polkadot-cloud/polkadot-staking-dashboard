@@ -119,15 +119,7 @@ const processEraForExposure = (data: ProcessEraForExposureArgs) => {
 //
 // abstracts active nominators erasStakers.
 const processExposures = (data: ProcessExposuresArgs) => {
-  const {
-    task,
-    networkName,
-    era,
-    units,
-    exposures,
-    activeAccount,
-    maxExposurePageSize,
-  } = data;
+  const { task, networkName, era, units, exposures, activeAccount } = data;
 
   const stakers: Staker[] = [];
   let activeValidators = 0;
@@ -152,25 +144,8 @@ const processExposures = (data: ProcessExposuresArgs) => {
         return r.isZero() ? 0 : r.isLessThan(0) ? -1 : 1;
       });
 
-      const lowestRewardIndex = Math.min(
-        maxExposurePageSize - 1,
-        others.length
-      );
-
-      const lowestReward =
-        others.length > 0
-          ? planckToUnit(
-              new BigNumber(others[lowestRewardIndex]?.value || 0),
-              units
-            ).toString()
-          : '0';
-
-      const oversubscribed = others.length > maxExposurePageSize;
-
       stakers.push({
         address,
-        lowestReward,
-        oversubscribed,
         others,
         own: rmCommas(val.own),
         total: rmCommas(val.total),

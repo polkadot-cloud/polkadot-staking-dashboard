@@ -15,7 +15,6 @@ export interface ProcessExposuresArgs {
   activeAccount: MaybeAddress;
   units: number;
   exposures: Exposure[];
-  maxExposurePageSize: number;
 }
 
 export interface ProcessExposuresResponse {
