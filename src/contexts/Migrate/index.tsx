@@ -6,8 +6,6 @@ import { createContext, useState } from 'react';
 import { AppVersion } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { localStorageOrDefault } from '@w3ux/utils';
-import type { ExternalAccount } from '@w3ux/react-connect-kit/types';
 import { useSyncing } from 'hooks/useSyncing';
 
 export const MigrateContext = createContext<null>(null);
@@ -22,42 +20,37 @@ export const MigrateProvider = ({ children }: { children: ReactNode }) => {
   // Store whether the migration check has taken place.
   const [done, setDone] = useState<boolean>(localAppVersion === AppVersion);
 
-  // Removes `system` added external accounts from local storage.
-  const removeSystemExternalAccounts = () => {
-    const current = localStorageOrDefault('external_accounts', [], true);
-    if (!current.length) {
-      return;
-    }
+  // Removes local era stakers data and locale data.
+  const removeLocalErasAndLocales = () => {
+    console.log('fire update');
+    // Remove local exposure and validator data.
+    localStorage.removeItem('polkadot_validators');
+    localStorage.removeItem('polkadot_exposures');
+    localStorage.removeItem('polkadot_era_exposures');
 
-    const updated =
-      (current as ExternalAccount[])?.filter((a) => a.addedBy !== 'system') ||
-      [];
+    localStorage.removeItem('kusama_validators');
+    localStorage.removeItem('kusama_exposures');
+    localStorage.removeItem('kusama_era_exposures');
 
-    if (!updated.length) {
-      localStorage.removeItem('external_accounts');
-    } else {
-      localStorage.setItem('external_accounts', JSON.stringify(updated));
-    }
-  };
-
-  // Removes `westend_era_exposures` from local storage.
-  const removeWestendEraExposures = () => {
+    localStorage.removeItem('westend_validators');
+    localStorage.removeItem('westend_exposures');
     localStorage.removeItem('westend_era_exposures');
+
+    // Remove locale data.
+    localStorage.removeItem('lng_resources');
   };
 
   useEffectIgnoreInitial(() => {
     if (isReady && !syncing && !done) {
       // Carry out migrations if local version is different to current version.
       if (localAppVersion !== AppVersion) {
-        // Added in 1.1.2
+        // Added in 1.4.3
         //
-        // Remove local `system` external accounts.
-        removeSystemExternalAccounts();
-
-        // Added in 1.1.3
-        //
-        // Remove local `era_exposures`.
-        removeWestendEraExposures();
+        // Remove local era stakers data and locale data. Paged rewards are now active and local
+        // exposure data is now stale. Over subscribed data has also been removed, so locale data
+        // pertaining to over subscribed validators is also stale and causes errors as keys point to
+        // undefined data now.
+        removeLocalErasAndLocales();
 
         // Finally,
         //
