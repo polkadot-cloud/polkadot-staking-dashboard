@@ -210,9 +210,13 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
         const era = unclaimedRewardsEntries[i][0];
         const validator = unclaimedRewardsEntries[i][1];
         const exposure = getLocalEraExposure(network, era, activeAccount);
+        const exposedPage =
+          exposure?.[validator]?.exposedPage !== undefined
+            ? String(exposure[validator].exposedPage)
+            : undefined;
 
         // Add to `unclaimedRewards` if payout page has not yet been claimed.
-        if (!pages.includes(exposure.exposedPage)) {
+        if (!pages.includes(exposedPage)) {
           if (unclaimedRewards?.[validator]) {
             unclaimedRewards[validator].push(era);
           } else {
@@ -316,7 +320,7 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
         const staked = new BigNumber(localExposed?.staked || '0');
         const total = new BigNumber(localExposed?.total || '0');
         const isValidator = localExposed?.isValidator || false;
-        const exposedPage = localExposed?.exposedPage || 1;
+        const exposedPage = localExposed?.exposedPage || 0;
 
         // Calculate the validator's share of total era payout.
         const totalRewardPoints = new BigNumber(
@@ -371,8 +375,35 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
     if (!unclaimedPayouts) {
       return;
     }
+
+    // Delete the payout from local storage.
+    const localPayouts = localStorage.getItem(`${network}_unclaimed_payouts`);
+    if (localPayouts && activeAccount) {
+      const parsed = JSON.parse(localPayouts);
+
+      if (parsed?.[activeAccount]?.[era]?.[validator]) {
+        delete parsed[activeAccount][era][validator];
+
+        // Delete the era if it has no more payouts.
+        if (Object.keys(parsed[activeAccount][era]).length === 0) {
+          delete parsed[activeAccount][era];
+        }
+
+        // Delete the active account if it has no more eras.
+        if (Object.keys(parsed[activeAccount]).length === 0) {
+          delete parsed[activeAccount];
+        }
+      }
+      localStorage.setItem(
+        `${network}_unclaimed_payouts`,
+        JSON.stringify(parsed)
+      );
+    }
+
+    // Remove the payout from state.
     const newUnclaimedPayouts = { ...unclaimedPayouts };
     delete newUnclaimedPayouts[era][validator];
+
     setUnclaimedPayouts(newUnclaimedPayouts);
   };
 
