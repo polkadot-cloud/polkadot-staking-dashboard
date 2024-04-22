@@ -22,7 +22,6 @@ export const MigrateProvider = ({ children }: { children: ReactNode }) => {
 
   // Removes local era stakers data and locale data.
   const removeLocalErasAndLocales = () => {
-    console.log('fire update');
     // Remove local exposure and validator data.
     localStorage.removeItem('polkadot_validators');
     localStorage.removeItem('polkadot_exposures');
