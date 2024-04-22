@@ -1,7 +1,6 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type BigNumber from 'bignumber.js';
 import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
 import type { MaybeAddress } from 'types';
 
@@ -31,8 +30,6 @@ export interface ExposureValue {
 
 export type Staker = ExposureValue & {
   address: string;
-  lowestReward: string;
-  oversubscribed: boolean;
 };
 
 export interface ActiveAccountStaker {
@@ -43,11 +40,6 @@ export interface ActiveAccountStaker {
 export interface ExposureOther {
   who: string;
   value: string;
-}
-
-interface LowestReward {
-  lowest: BigNumber;
-  oversubscribed: boolean;
 }
 
 export interface StakingContextInterface {
@@ -61,7 +53,6 @@ export interface StakingContextInterface {
   isBonding: () => boolean;
   isNominating: () => boolean;
   inSetup: () => boolean;
-  getLowestRewardFromStaker: (a: MaybeAddress) => LowestReward;
   eraStakers: EraStakers;
   getPagedErasStakers: (e: string) => Promise<Exposure[]>;
 }

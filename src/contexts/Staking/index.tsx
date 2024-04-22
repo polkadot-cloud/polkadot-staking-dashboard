@@ -45,9 +45,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const { getLedger, getNominations } = useBalances();
   const { accounts: connectAccounts } = useImportedAccounts();
   const { activeAccount, getActiveAccount } = useActiveAccounts();
-  const { isReady, api, apiStatus, consts, activeEra, isPagedRewardsActive } =
-    useApi();
-  const { maxExposurePageSize } = consts;
+  const { isReady, api, apiStatus, activeEra, isPagedRewardsActive } = useApi();
 
   // Store eras stakers in state.
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers);
@@ -140,7 +138,6 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       activeAccount,
       units: networkData.units,
       exposures,
-      maxExposurePageSize: maxExposurePageSize.toNumber(),
     });
   };
 
@@ -226,20 +223,6 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const inSetup = () =>
     !activeAccount ||
     (!hasController() && !isBonding() && !isNominating() && !isUnlocking());
-
-  // Helper function to get the lowest reward from an active validator.
-  const getLowestRewardFromStaker = (address: MaybeAddress) => {
-    const staker = eraStakersRef.current.stakers.find(
-      (s) => s.address === address
-    );
-    const lowest = new BigNumber(staker?.lowestReward || 0);
-    const oversubscribed = staker?.oversubscribed || false;
-
-    return {
-      lowest,
-      oversubscribed,
-    };
-  };
 
   // If paged rewards are active for the era, fetch eras stakers from the new storage items,
   // otherwise use the old storage items.
@@ -330,7 +313,6 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
         isBonding,
         isNominating,
         inSetup,
-        getLowestRewardFromStaker,
         eraStakers,
         getPagedErasStakers,
       }}
