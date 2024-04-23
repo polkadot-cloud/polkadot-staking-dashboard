@@ -1587,9 +1587,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkagate/extension-dapp@npm:^0.46.12":
-  version: 0.46.12
-  resolution: "@polkagate/extension-dapp@npm:0.46.12"
+"@polkagate/extension-dapp@npm:^0.46.13":
+  version: 0.46.13
+  resolution: "@polkagate/extension-dapp@npm:0.46.13"
   dependencies:
     "@polkadot/extension-inject": "npm:0.46.9"
     "@polkadot/types": "npm:^10.11.2"
@@ -1600,7 +1600,7 @@ __metadata:
     "@polkadot/api": "*"
     "@polkadot/util": "*"
     "@polkadot/util-crypto": "*"
-  checksum: 10c0/a4e41d566eb6cf4d2b5092627b03ec1b1a4a029445264a340cb3ede6b2e9e60e6cc658a58291395194700542842626b859d82b60aca1deb1166a1fce9c76c3d8
+  checksum: 10c0/fecad5ba8ed04c7a745b5870c75d67636dd8bbe8230a809aad443d73dcac3ba4d0bc4ba164317564f1e1fcb425e47c0c2189d5ada583e39975ec64b47254fa17
   languageName: node
   linkType: hard
 
@@ -2521,17 +2521,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/react-connect-kit@npm:^0.1.16":
-  version: 0.1.16
-  resolution: "@w3ux/react-connect-kit@npm:0.1.16"
+"@w3ux/react-connect-kit@npm:0.2.0":
+  version: 0.2.0
+  resolution: "@w3ux/react-connect-kit@npm:0.2.0"
   dependencies:
     "@chainsafe/metamask-polkadot-adapter": "npm:^0.6.0"
     "@polkadot/util": "npm:^12.6.2"
-    "@polkagate/extension-dapp": "npm:^0.46.12"
+    "@polkagate/extension-dapp": "npm:^0.46.13"
     "@w3ux/extension-assets": "npm:^0.2.3"
     "@w3ux/hooks": "npm:^0.0.3"
     "@w3ux/utils": "npm:^0.1.1"
-  checksum: 10c0/30ff5d63cd81757b48b65b8e689b1d05dbdd94e57adcf1eb4872eb6d5a5e8cdfe29e0f6a76752438e6dec0f75094822a21cc4ed0d2dc00894c73718a41111a05
+  checksum: 10c0/88835d7b4dab40b6dbcedf23ddcd4b10c63bf312eaae0710f3f49b74b793baabd92b7812b6a3d7e3a8ca18ca8ef7c68d52614c258c86b2151f61cd58c19735a1
   languageName: node
   linkType: hard
 
@@ -6450,7 +6450,7 @@ __metadata:
     "@vitejs/plugin-react-swc": "npm:^3.6.0"
     "@w3ux/extension-assets": "npm:^0.2.6"
     "@w3ux/hooks": "npm:^0.0.3"
-    "@w3ux/react-connect-kit": "npm:^0.1.16"
+    "@w3ux/react-connect-kit": "npm:0.2.0"
     "@w3ux/react-odometer": "npm:^0.0.3"
     "@w3ux/react-polkicon": "npm:^0.0.3"
     "@w3ux/utils": "npm:^0.1.1"
