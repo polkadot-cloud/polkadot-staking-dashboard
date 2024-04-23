@@ -1,6 +1,6 @@
 {
   "name": "polkadot-staking-dashboard",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "type": "module",
   "license": "GPL-3.0-only",
   "scripts": {

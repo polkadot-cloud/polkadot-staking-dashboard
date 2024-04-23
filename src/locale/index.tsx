@@ -4,7 +4,7 @@
 import { enGB, zhCN } from 'date-fns/locale';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { AppVersion } from 'consts';
+import { version } from '../../package.json';
 import type { AnyJson } from 'types';
 import baseEn from './en/base.json';
 import helpEn from './en/help.json';
@@ -51,7 +51,7 @@ export const fallbackResources = {
 
 // Refresh local storage resources if in development, or if new app version is present.
 if (
-  localStorage.getItem('app_version') !== AppVersion ||
+  localStorage.getItem('app_version') !== version ||
   import.meta.env.MODE === 'development'
 ) {
   localStorage.removeItem('lng_resources');

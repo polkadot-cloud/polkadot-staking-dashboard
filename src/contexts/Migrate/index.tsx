@@ -3,10 +3,10 @@
 
 import type { ReactNode } from 'react';
 import { createContext, useState } from 'react';
-import { AppVersion } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useSyncing } from 'hooks/useSyncing';
+import { version } from '../../../package.json';
 
 export const MigrateContext = createContext<null>(null);
 
@@ -18,7 +18,7 @@ export const MigrateProvider = ({ children }: { children: ReactNode }) => {
   const localAppVersion = localStorage.getItem('app_version');
 
   // Store whether the migration check has taken place.
-  const [done, setDone] = useState<boolean>(localAppVersion === AppVersion);
+  const [done, setDone] = useState<boolean>(localAppVersion === version);
 
   // Removes local era stakers data and locale data.
   const removeLocalErasAndLocales = () => {
@@ -42,7 +42,7 @@ export const MigrateProvider = ({ children }: { children: ReactNode }) => {
   useEffectIgnoreInitial(() => {
     if (isReady && !syncing && !done) {
       // Carry out migrations if local version is different to current version.
-      if (localAppVersion !== AppVersion) {
+      if (localAppVersion !== version) {
         // Added in 1.4.3
         //
         // Remove local era stakers data and locale data. Paged rewards are now active and local
@@ -54,7 +54,7 @@ export const MigrateProvider = ({ children }: { children: ReactNode }) => {
         // Finally,
         //
         // Update local version to current app version.
-        localStorage.setItem('app_version', AppVersion);
+        localStorage.setItem('app_version', version);
         setDone(true);
       }
     }
