@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ReactNode } from 'react';
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import type { MaybeAddress } from 'types';
 import { setStateWithRef } from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
@@ -62,12 +62,6 @@ export const ActiveAccountsProvider = ({
 
   // Getter for the active account.
   const getActiveAccount = () => activeAccountRef.current;
-
-  // Disconnect from the active account on network change, but don't remove local record.
-  useEffect(() => {
-    setActiveAccount(null, false);
-    setActiveProxy(null, false);
-  }, [network]);
 
   return (
     <ActiveAccountsContext.Provider
