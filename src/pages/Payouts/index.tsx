@@ -69,7 +69,10 @@ export const Payouts = ({ page: { key } }: PageProps) => {
         (data?.payouts || []).concat(data?.poolClaims || [])
       )
     );
-  }, [data?.payouts?.length, data?.poolClaims?.length]);
+  }, [
+    JSON.stringify(data?.payouts || {}),
+    JSON.stringify(data?.poolClaims || {}),
+  ]);
 
   return (
     <>
