@@ -32,7 +32,7 @@ export const Forms = forwardRef(
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const { t } = useTranslation('modals');
-    const { api, isPagedRewardsActive } = useApi();
+    const { api } = useApi();
     const {
       networkData: { units, unit },
     } = useNetwork();
@@ -68,16 +68,9 @@ export const Forms = forwardRef(
         if (!paginatedValidators) {
           return [];
         }
-
-        return paginatedValidators.forEach(([page, v]) => {
-          if (isPagedRewardsActive(new BigNumber(era))) {
-            return calls.push(api.tx.staking.payoutStakersByPage(v, era, page));
-          }
-          // DEPRECATION: Paged Rewards
-          //
-          // Fall back to deprecated `payoutStakers` if not on paged reward era.
-          return calls.push(api.tx.staking.payoutStakers(v, era));
-        });
+        return paginatedValidators.forEach(([page, v]) =>
+          calls.push(api.tx.staking.payoutStakersByPage(v, era, page))
+        );
       });
       return calls;
     };
