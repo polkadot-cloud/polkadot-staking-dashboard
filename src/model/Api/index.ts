@@ -15,7 +15,7 @@ import type {
 } from 'contexts/Api/types';
 import { SyncController } from 'controllers/SyncController';
 import type { AnyApi, NetworkName } from 'types';
-import { NetworkList, NetworksWithPagedRewards } from 'config/networks';
+import { NetworkList } from 'config/networks';
 import { makeCancelable, rmCommas, stringToBigNumber } from '@w3ux/utils';
 import { WellKnownChain } from '@substrate/connect';
 import type { BlockNumber } from '@polkadot/types/interfaces';
@@ -245,19 +245,8 @@ export class Api {
       this.api.consts.staking.historyDepth,
       this.api.consts.fastUnstake.deposit,
       this.api.consts.nominationPools.palletId,
+      this.api.consts.staking.maxExposurePageSize,
     ];
-
-    // DEPRECATION: Paged Rewards
-    //
-    // Fetch `maxExposurePageSize` instead of `maxNominatorRewardedPerValidator` for networks that
-    // have paged rewards.
-    if (NetworksWithPagedRewards.includes(this.network)) {
-      allPromises.push(this.api.consts.staking.maxExposurePageSize);
-    } else {
-      allPromises.push(
-        this.api.consts.staking.maxNominatorRewardedPerValidator
-      );
-    }
 
     const consts = await Promise.all(allPromises);
 
