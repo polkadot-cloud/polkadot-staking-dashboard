@@ -30,7 +30,7 @@
     "@polkadot/util": "^12.6.2",
     "@polkadot/util-crypto": "^12.6.2",
     "@polkawatch/ddp-client": "^2.0.11",
-    "@substrate/connect": "0.7.35",
+    "@substrate/connect": "0.8.10",
     "@w3ux/extension-assets": "^0.2.6",
     "@w3ux/hooks": "^0.0.3",
     "@w3ux/react-connect-kit": "0.2.0",
