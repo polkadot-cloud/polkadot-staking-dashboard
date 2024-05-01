@@ -6482,7 +6482,7 @@ __metadata:
     prettier: "npm:^3.2.5"
     prettier-plugin-organize-imports: "npm:^3.2.4"
     qrcode-generator: "npm:1.4.4"
-    rc-slider: "npm:^10.5.0"
+    rc-slider: "npm:^10.6.2"
     react: "npm:^18.2.0"
     react-chartjs-2: "npm:^5.2.0"
     react-dom: "npm:^18.2.0"
@@ -6650,21 +6650,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rc-slider@npm:^10.5.0":
-  version: 10.5.0
-  resolution: "rc-slider@npm:10.5.0"
+"rc-slider@npm:^10.6.2":
+  version: 10.6.2
+  resolution: "rc-slider@npm:10.6.2"
   dependencies:
     "@babel/runtime": "npm:^7.10.1"
     classnames: "npm:^2.2.5"
-    rc-util: "npm:^5.27.0"
+    rc-util: "npm:^5.36.0"
   peerDependencies:
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
-  checksum: 10c0/f9d6d4afc7cc62e81fe4dc4de465195c30af123e8e7fb695ded09ecdb6bffdbf696e5764d3c4faa8a7ee3fd43cf80897f83de04e23e2aaad0b97ce4a0bf34696
+  checksum: 10c0/f2d156ffa88596419957f3955a2be86a98705140546f24e53180a17baa20f948187db55529759451adcfbcc52dc67c72bd26b4d3afd54529be8f092e81fa8f65
   languageName: node
   linkType: hard
 
-"rc-util@npm:^5.27.0":
+"rc-util@npm:^5.36.0":
   version: 5.39.1
   resolution: "rc-util@npm:5.39.1"
   dependencies:
