@@ -47,7 +47,7 @@
     "date-fns": "^3.3.1",
     "framer-motion": "^11.0.24",
     "html5-qrcode": "^2.3.8",
-    "i18next": "^23.10.0",
+    "i18next": "^23.11.3",
     "i18next-browser-languagedetector": "^7.2.1",
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",
