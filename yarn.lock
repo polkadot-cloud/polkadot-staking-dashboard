@@ -6496,7 +6496,7 @@ __metadata:
     typescript: "npm:^5.4.3"
     usehooks-ts: "npm:^3.0.2"
     vite: "npm:^5.2.10"
-    vite-bundle-visualizer: "npm:^1.1.0"
+    vite-bundle-visualizer: "npm:^1.2.1"
     vite-plugin-checker: "npm:^0.6.4"
     vite-plugin-eslint: "npm:^1.8.1"
     vite-plugin-svgr: "npm:^4.2.0"
@@ -8061,9 +8061,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-bundle-visualizer@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "vite-bundle-visualizer@npm:1.1.0"
+"vite-bundle-visualizer@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "vite-bundle-visualizer@npm:1.2.1"
   dependencies:
     cac: "npm:^6.7.14"
     import-from-esm: "npm:^1.3.3"
@@ -8071,7 +8071,7 @@ __metadata:
     tmp: "npm:^0.2.1"
   bin:
     vite-bundle-visualizer: bin.js
-  checksum: 10c0/e29029abec176ac7578de58fb1079ed514775f388a4f0b2bd4226ed21ee7209b8811dc4b79c89ce4b25e167c89f6f931f91080698278eeab8869c0a76c5a262b
+  checksum: 10c0/038946556ba742726927047de97b0e38fbc2191ebbeb79d2e0767d1fb6fad1500ffeaea6c69bd9c906fdd26327165c9adcdb211286da166fb08ab02100149b41
   languageName: node
   linkType: hard
 
