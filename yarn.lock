@@ -1604,12 +1604,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkawatch/ddp-client@npm:^2.0.11":
-  version: 2.0.11
-  resolution: "@polkawatch/ddp-client@npm:2.0.11"
+"@polkawatch/ddp-client@npm:^2.0.14":
+  version: 2.0.14
+  resolution: "@polkawatch/ddp-client@npm:2.0.14"
   dependencies:
     axios: "npm:^0.21.4"
-  checksum: 10c0/057ba58f8525741e40974f5158a8442c3e0dbf4b0a99ae3ca4e9433566473946c36a19feeecd9f48426b1537f185d10a838212b46ff698ad629fae3805faf1ba
+  checksum: 10c0/7a135539aa4159f5fe8430c86833678e44e2fbb1888e4be777ccacda8e0b4b443557436b80b4f7b04702588ce6f1888f1b00ec6394b3c3d2a3ade44eaeb3a249
   languageName: node
   linkType: hard
 
@@ -6435,7 +6435,7 @@ __metadata:
     "@polkadot/rpc-provider": "npm:10.11.2"
     "@polkadot/util": "npm:^12.6.2"
     "@polkadot/util-crypto": "npm:^12.6.2"
-    "@polkawatch/ddp-client": "npm:^2.0.11"
+    "@polkawatch/ddp-client": "npm:^2.0.14"
     "@substrate/connect": "npm:0.7.35"
     "@types/chroma-js": "npm:^2.4.4"
     "@types/lodash.debounce": "npm:^4.0.9"
