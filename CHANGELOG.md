@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.5.0](https://github.com/OKEAMAH/polkadot-staking-dashboard/compare/v1.4.4...v1.5.0) (2024-05-27)
+## [1.5.0](https://github.com/OKEAMAH/polkadot-staking-dashboard/compare/v1.4.4...v1.5.0) (2024-06-05)
 
 
 ### Features
@@ -56,6 +56,7 @@
 * **refactor:** stricter validator operator svgs ([#1986](https://github.com/OKEAMAH/polkadot-staking-dashboard/issues/1986)) ([058cb24](https://github.com/OKEAMAH/polkadot-staking-dashboard/commit/058cb24dd52e41ebc254522e162c9ba55cb74b5b))
 * **refactor:** Subscan refactor, remove fetching from Providers ([#1878](https://github.com/OKEAMAH/polkadot-staking-dashboard/issues/1878)) ([57e2a1b](https://github.com/OKEAMAH/polkadot-staking-dashboard/commit/57e2a1bed952b41441635dc9eba02b79d63d3fc0))
 * **refactor:** Syncing improvements ([#1935](https://github.com/OKEAMAH/polkadot-staking-dashboard/issues/1935)) ([61645b1](https://github.com/OKEAMAH/polkadot-staking-dashboard/commit/61645b17cb8efb0a1a72532930583ab2c671c1af))
+* **refactor:** Tidy up `TxMeta` context ([#2130](https://github.com/OKEAMAH/polkadot-staking-dashboard/issues/2130)) ([95468bf](https://github.com/OKEAMAH/polkadot-staking-dashboard/commit/95468bfcee68759560d5ea46b399d7c1756c3eaf))
 * **refactor:** types to all `useState` hooks ([#1844](https://github.com/OKEAMAH/polkadot-staking-dashboard/issues/1844)) ([69413b5](https://github.com/OKEAMAH/polkadot-staking-dashboard/commit/69413b5cffb9202de918bbd763d9b8cc049509ef))
 * **refactor:** use @w3ux/extension-assets and @w3ux/validator-assets ([#1987](https://github.com/OKEAMAH/polkadot-staking-dashboard/issues/1987)) ([f0b5eaa](https://github.com/OKEAMAH/polkadot-staking-dashboard/commit/f0b5eaa82b8fdeda0793d376f4c18a05358201dd))
 * **refactor:** use @w3ux/utils ([#1988](https://github.com/OKEAMAH/polkadot-staking-dashboard/issues/1988)) ([70b02ff](https://github.com/OKEAMAH/polkadot-staking-dashboard/commit/70b02ffa860a3e230417f9a4b91f1745ac36de8f))
@@ -131,6 +132,7 @@
 * stringify nomination comparison ([#1952](https://github.com/OKEAMAH/polkadot-staking-dashboard/issues/1952)) ([f454dbf](https://github.com/OKEAMAH/polkadot-staking-dashboard/commit/f454dbf4ee14745c6791b2d5ec763ad0a77d6fc2))
 * unlock Chunk unit type ([afe9b1c](https://github.com/OKEAMAH/polkadot-staking-dashboard/commit/afe9b1c0256eb9840a375f1d7574895a07ba0f4a))
 * updated typo in modals file ([#2022](https://github.com/OKEAMAH/polkadot-staking-dashboard/issues/2022)) ([621ff1b](https://github.com/OKEAMAH/polkadot-staking-dashboard/commit/621ff1b218410c2aa314680a1d0852bfd8f911a0))
+* upgrade @substrate/connect from 0.7.35 to 0.8.10 ([52050cd](https://github.com/OKEAMAH/polkadot-staking-dashboard/commit/52050cd6d95372d66f1918a9a49fbc4b7a13440b))
 * upgrade multiple dependencies with Snyk ([7d738a7](https://github.com/OKEAMAH/polkadot-staking-dashboard/commit/7d738a7f4e32eb2ee5e078952c2d69fc4584d259))
 * use transient prop for styled components ([#2081](https://github.com/OKEAMAH/polkadot-staking-dashboard/issues/2081)) ([f2a0d73](https://github.com/OKEAMAH/polkadot-staking-dashboard/commit/f2a0d73a172d815cd8d12207320947b82a24dc99))
 * **worker:** add worker format ([f45d6ed](https://github.com/OKEAMAH/polkadot-staking-dashboard/commit/f45d6ed08fbf339b3e27ecc0a53a6246e2f55f8d))
