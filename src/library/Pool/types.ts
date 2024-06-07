@@ -4,7 +4,7 @@
 import type { PoolRoles, PoolState } from 'contexts/Pools/ActivePool/types';
 import type { PoolAddresses } from 'contexts/Pools/BondedPools/types';
 import type { Identity, SuperIdentity } from 'contexts/Validators/types';
-import type { DisplayFor } from 'types';
+import type { DisplayFor } from '@w3ux/types';
 
 export interface PoolProps {
   pool: Pool;

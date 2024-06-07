@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { useStaking } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { graphColors } from 'theme/graphs';
-import type { AnyJson, AnySubscan } from 'types';
+import type { AnySubscan } from 'types';
 import { useNetwork } from 'contexts/Network';
 import type { PayoutLineProps } from './types';
 import {
@@ -28,6 +28,7 @@ import {
 import { useBalances } from 'contexts/Balances';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useSyncing } from 'hooks/useSyncing';
+import type { AnyJson } from '@w3ux/types';
 
 ChartJS.register(
   CategoryScale,

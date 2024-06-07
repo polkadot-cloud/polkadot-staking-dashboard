@@ -8,7 +8,7 @@ import { DappName, ManualSigners } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/LedgerHardware';
 import { useTxMeta } from 'contexts/TxMeta';
-import type { AnyApi, AnyJson } from 'types';
+import type { AnyApi } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useBuildPayload } from '../useBuildPayload';
@@ -16,6 +16,7 @@ import { useProxySupported } from '../useProxySupported';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 import { NotificationsController } from 'controllers/NotificationsController';
 import { useExtensions } from '@w3ux/react-connect-kit';
+import type { AnyJson } from '@w3ux/types';
 
 export const useSubmitExtrinsic = ({
   tx,

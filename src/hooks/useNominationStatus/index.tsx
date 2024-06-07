@@ -5,9 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useStaking } from 'contexts/Staking';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import type { AnyJson, BondFor, MaybeAddress } from 'types';
+import type { BondFor, MaybeAddress } from 'types';
 import { useSyncing } from 'hooks/useSyncing';
 import { useBalances } from 'contexts/Balances';
+import type { AnyJson } from '@w3ux/types';
 
 export const useNominationStatus = () => {
   const { t } = useTranslation();

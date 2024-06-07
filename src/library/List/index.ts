@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components';
-import type { DisplayFor } from 'types';
+import type { DisplayFor } from '@w3ux/types';
 import type { ListProps, PaginationWrapperProps } from './types';
 
 export const Wrapper = styled.div`

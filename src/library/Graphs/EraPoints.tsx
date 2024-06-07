@@ -17,7 +17,7 @@ import { useTheme } from 'contexts/Themes';
 import { graphColors } from 'theme/graphs';
 import { useNetwork } from 'contexts/Network';
 import type { EraPointsProps } from './types';
-import type { AnyJson } from 'types';
+import type { AnyJson } from '@w3ux/types';
 
 ChartJS.register(
   CategoryScale,

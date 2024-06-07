@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyFunction, AnyJson } from 'types';
+import type { AnyFunction, AnyJson } from '@w3ux/types';
 
 export type FilterType = 'exclude' | 'include';
 

@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { MaybeAddress } from '@w3ux/react-connect-kit/types';
+import type { DisplayFor } from '@w3ux/types';
 import type { ValidatorListEntry } from 'contexts/Validators/types';
-import type { BondFor, DisplayFor } from 'types';
+import type { BondFor } from 'types';
 
 export interface ValidatorItemProps {
   validator: ValidatorListEntry;

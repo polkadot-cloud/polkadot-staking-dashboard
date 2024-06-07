@@ -18,7 +18,7 @@ import { Identity } from 'library/ListItem/Labels/Identity';
 import { PoolMemberBonded } from 'library/ListItem/Labels/PoolMemberBonded';
 import { Select } from 'library/ListItem/Labels/Select';
 import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
-import type { AnyJson } from 'types';
+import type { AnyJson } from '@w3ux/types';
 import { usePrompt } from 'contexts/Prompt';
 import { UnbondMember } from '../Prompts/UnbondMember';
 import { WithdrawMember } from '../Prompts/WithdrawMember';

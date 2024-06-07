@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { useTheme } from 'contexts/Themes';
 import type { Theme } from 'contexts/Themes/types';
-import type { AnyJson } from 'types';
+import type { AnyJson } from '@w3ux/types';
 
 export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
   const { mode } = useTheme();

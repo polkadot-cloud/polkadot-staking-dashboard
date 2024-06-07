@@ -10,7 +10,7 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { List, ListStatusHeader, Wrapper as ListWrapper } from 'library/List';
 import { Pagination } from 'library/List/Pagination';
 import { ListProvider } from 'library/List/context';
-import type { Sync } from 'types';
+import type { Sync } from '@w3ux/types';
 import { Member } from './Member';
 import type { DefaultMembersListProps } from './types';
 import type { PoolMember } from 'contexts/Pools/PoolMembers/types';

@@ -15,7 +15,8 @@ import type {
   PoolTab,
 } from './types';
 import { useStaking } from 'contexts/Staking';
-import type { AnyApi, AnyJson, MaybeAddress, Sync } from 'types';
+import type { AnyApi, MaybeAddress } from 'types';
+import type { AnyJson, Sync } from '@w3ux/types';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from '../../Api';

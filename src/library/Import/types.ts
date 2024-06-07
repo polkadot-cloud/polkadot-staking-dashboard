@@ -3,7 +3,7 @@
 
 import type { ImportedAccount } from '@w3ux/react-connect-kit/types';
 import type { FunctionComponent, SVGProps } from 'react';
-import type { AnyFunction } from 'types';
+import type { AnyFunction } from '@w3ux/types';
 
 export interface HeadingProps {
   connectTo?: string;

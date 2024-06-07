@@ -12,7 +12,7 @@ import type { SetupContextInterface } from 'contexts/Setup/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import type { UIContextInterface } from 'contexts/UI/types';
-import type { AnyJson, PageCategory, PageItem, PagesConfigItems } from 'types';
+import type { PageCategory, PageItem, PagesConfigItems } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -21,6 +21,7 @@ import { Primary } from './Primary';
 import { LogoWrapper } from './Wrapper';
 import { useBalances } from 'contexts/Balances';
 import { useSyncing } from 'hooks/useSyncing';
+import type { AnyJson } from '@w3ux/types';
 
 export const Main = () => {
   const { t, i18n } = useTranslation('base');

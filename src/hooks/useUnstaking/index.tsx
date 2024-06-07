@@ -6,7 +6,7 @@ import { useApi } from 'contexts/Api';
 import { useFastUnstake } from 'contexts/FastUnstake';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import type { AnyJson } from 'types';
+import type { AnyJson } from '@w3ux/types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNominationStatus } from '../useNominationStatus';
 

@@ -3,7 +3,7 @@
 
 import type { ForwardedRef } from 'react';
 import { forwardRef } from 'react';
-import type { ComponentBaseWithClassName } from 'types';
+import type { ComponentBaseWithClassName } from '@w3ux/types';
 
 /**
  * @name ModalCard

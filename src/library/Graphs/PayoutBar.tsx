@@ -20,13 +20,14 @@ import { useStaking } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { DefaultLocale, locales } from 'locale';
 import { graphColors } from 'theme/graphs';
-import type { AnyJson, AnySubscan } from 'types';
+import type { AnySubscan } from 'types';
 import { useNetwork } from 'contexts/Network';
 import type { PayoutBarProps } from './types';
 import { formatRewardsForGraphs } from './Utils';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
 import { useSyncing } from 'hooks/useSyncing';
+import type { AnyJson } from '@w3ux/types';
 
 ChartJS.register(
   CategoryScale,

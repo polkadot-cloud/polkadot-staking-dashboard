@@ -9,7 +9,7 @@ import {
   useLayoutEffect,
   useRef,
 } from 'react';
-import type { AnyJson } from 'types';
+import type { AnyJson } from '@w3ux/types';
 import { SelectItemsWrapper, TwoThreshold } from './Wrapper';
 import type { SelectItemsProps } from './types';
 

@@ -3,7 +3,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
-import type { ComponentBaseWithClassName } from 'types';
+import type { ComponentBaseWithClassName } from '@w3ux/types';
 import { appendOr, appendOrEmpty } from '@w3ux/utils';
 import type { ButtonCommonProps, ButtonIconProps } from './types';
 import { onMouseHandlers } from './Utils';

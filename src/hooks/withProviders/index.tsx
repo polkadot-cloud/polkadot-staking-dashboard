@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { FC } from 'react';
-import type { AnyJson } from 'types';
+import type { AnyJson } from '@w3ux/types';
 
 // `providers` accepts standalone functional components or an array of a functional component and its props.
 export type Provider = FC<AnyJson> | [FC<AnyJson>, AnyJson];

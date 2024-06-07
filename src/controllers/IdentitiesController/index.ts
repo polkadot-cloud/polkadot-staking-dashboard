@@ -1,8 +1,9 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyApi, AnyJson } from 'types';
+import type { AnyApi } from 'types';
 import type { ApiPromise } from '@polkadot/api';
+import type { AnyJson } from '@w3ux/types';
 
 export class IdentitiesController {
   static fetch = async (api: ApiPromise, addresses: string[]) => {
@@ -20,7 +21,7 @@ export class IdentitiesController {
       return Object.fromEntries(
         data
           .map((key: string, index: number) => [addresses[index], key])
-          .filter(([, value]: AnyJson) => value !== null)
+          .filter(([, value]) => value !== null)
       );
     };
 

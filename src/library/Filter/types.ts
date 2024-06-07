@@ -3,7 +3,7 @@
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import type { ReactNode } from 'react';
-import type { AnyFunction } from 'types';
+import type { AnyFunction } from '@w3ux/types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyFilter = any;

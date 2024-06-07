@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { Sync } from 'types';
+import type { Sync } from '@w3ux/types';
 
 export interface PayoutsContextInterface {
   payoutsSynced: Sync;

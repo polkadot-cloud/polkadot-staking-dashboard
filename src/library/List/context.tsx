@@ -3,7 +3,7 @@
 
 import { createContext, useContext, useState } from 'react';
 import { defaultContext } from './defaults';
-import type { AnyJson } from 'types';
+import type { AnyJson } from '@w3ux/types';
 import type { ListContextInterface, ListProviderProps } from './types';
 import type { ListFormat } from 'library/PoolList/types';
 
