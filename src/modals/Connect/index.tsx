@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Close } from 'library/Modal/Close';
 import { SelectItems } from 'library/SelectItems';
-import type { AnyFunction } from 'types';
+import type { AnyFunction } from '@w3ux/types';
 import { Extension } from './Extension';
 import { Ledger } from './Ledger';
 import { Proxies } from './Proxies';

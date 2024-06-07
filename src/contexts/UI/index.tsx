@@ -6,7 +6,7 @@ import type { ReactNode, RefObject } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { PageWidthMediumThreshold } from 'consts';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import type { AnyJson } from 'types';
+import type { AnyJson } from '@w3ux/types';
 import * as defaults from './defaults';
 import type { UIContextInterface } from './types';
 

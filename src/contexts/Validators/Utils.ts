@@ -1,6 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { AnyJson } from '@w3ux/types';
 import BigNumber from 'bignumber.js';
 import type { LocalMeta } from 'contexts/FastUnstake/types';
 import type {
@@ -8,7 +9,7 @@ import type {
   LocalValidatorEntriesData,
   Validator,
 } from 'contexts/Validators/types';
-import type { AnyJson, NetworkName } from 'types';
+import type { NetworkName } from 'types';
 
 // Get favorite validators from local storage.
 export const getLocalFavorites = (network: NetworkName) => {

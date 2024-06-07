@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { FunctionComponent, SVGProps } from 'react';
-import type { ComponentBase } from 'types';
+import type { ComponentBase } from '@w3ux/types';
 
 export type HardwareStatusBarProps = ComponentBase & {
   // whether to animate in the status bar.

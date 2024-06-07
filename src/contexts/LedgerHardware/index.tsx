@@ -5,7 +5,7 @@ import { setStateWithRef } from '@w3ux/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AnyJson, MaybeString } from 'types';
+import type { MaybeString } from 'types';
 import { useApi } from 'contexts/Api';
 import { getLedgerErrorType } from './Utils';
 import { defaultFeedback, defaultLedgerHardwareContext } from './defaults';
@@ -17,6 +17,7 @@ import type {
   LedgerStatusCode,
 } from './types';
 import { Ledger } from './static/ledger';
+import type { AnyJson } from '@w3ux/types';
 
 export const LedgerHardwareContext =
   createContext<LedgerHardwareContextInterface>(defaultLedgerHardwareContext);

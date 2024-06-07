@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import type { AnyJson, NetworkName } from 'types';
+import type { NetworkName } from 'types';
 import type { LocalValidatorExposure } from './types';
+import type { AnyJson } from '@w3ux/types';
 
 // Check if local exposure entry exists for an era.
 export const hasLocalEraExposure = (

@@ -8,7 +8,7 @@ import type {
   ExposureOther,
   Staker,
 } from 'contexts/Staking/types';
-import type { AnyJson } from 'types';
+import type { AnyJson } from '@w3ux/types';
 import type { LocalValidatorExposure } from 'contexts/Payouts/types';
 import type { ProcessExposuresArgs, ProcessEraForExposureArgs } from './types';
 

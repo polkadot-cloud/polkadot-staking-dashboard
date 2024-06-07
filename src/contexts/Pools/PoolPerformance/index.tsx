@@ -24,7 +24,7 @@ import {
   defaultPoolPerformanceTask,
   defaultPoolPerformanceContext,
 } from './defaults';
-import type { Sync } from 'types';
+import type { Sync } from '@w3ux/types';
 
 const worker = new Worker();
 

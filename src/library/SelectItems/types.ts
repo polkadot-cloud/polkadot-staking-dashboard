@@ -1,8 +1,9 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { AnyJson } from '@w3ux/types';
 import type { Dispatch, ReactNode, SetStateAction } from 'react';
-import type { AnyJson, MaybeAddress } from 'types';
+import type { MaybeAddress } from 'types';
 
 export interface SelectItemsProps {
   layout?: 'two-col' | 'three-col';

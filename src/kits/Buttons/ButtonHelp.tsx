@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import InfoSVG from './svg/help.svg?react';
-import type { ComponentBaseWithClassName } from 'types';
+import type { ComponentBaseWithClassName } from '@w3ux/types';
 import type { ButtonCommonProps } from './types';
 import { appendOrEmpty } from '@w3ux/utils';
 import { onMouseHandlers } from './Utils';

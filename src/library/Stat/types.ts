@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
-import type { AnyJson, MaybeAddress } from 'types';
+import type { AnyJson } from '@w3ux/types';
+import type { MaybeAddress } from 'types';
 
 export interface StatProps {
   label: string;

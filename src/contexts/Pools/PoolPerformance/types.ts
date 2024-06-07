@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
-import type { Sync } from 'types';
+import type { Sync } from '@w3ux/types';
 
 export interface PoolPerformanceContextInterface {
   getPoolRewardPoints: (key: PoolRewardPointsKey) => PoolRewardPoints;

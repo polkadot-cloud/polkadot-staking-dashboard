@@ -2815,19 +2815,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/react-connect-kit@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@w3ux/react-connect-kit@npm:1.1.0"
+"@w3ux/react-connect-kit@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@w3ux/react-connect-kit@npm:1.2.1"
   dependencies:
     "@chainsafe/metamask-polkadot-adapter": "npm:^0.6.0"
     "@polkadot/util": "npm:^12.6.2"
     "@polkagate/extension-dapp": "npm:^0.46.13"
     "@w3ux/extension-assets": "npm:^0.2.6"
     "@w3ux/hooks": "npm:^1.0.0"
-    "@w3ux/utils": "npm:^0.2.0"
+    "@w3ux/utils": "npm:^0.3.0"
   peerDependencies:
     "@polkadot/api": ^11
-  checksum: 10c0/5e2b38ee8296ba24895fb962aaecbb6d81e00ae7e45a34f4a4a35cb374491640c8095d9d040fa7bf29b949e24e311ff20fa78b070dbc77096aaae4ef8a99d3ff
+  checksum: 10c0/6bf636f0fd39942dfcbc7c72fd9f9883c34fb65d8f3dce128f507418b6c80522a5463b339fbe8803932cbe4725b70e2210175483677b9f9b2f1e49af1590f2e4
   languageName: node
   linkType: hard
 
@@ -2838,25 +2838,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/react-polkicon@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@w3ux/react-polkicon@npm:1.1.0"
+"@w3ux/react-polkicon@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@w3ux/react-polkicon@npm:1.1.1"
   dependencies:
     "@polkadot/util": "npm:^12.6.2"
-    "@w3ux/utils": "npm:^0.2.0"
+    "@w3ux/utils": "npm:^0.3.0"
     framer-motion: "npm:^11.2.10"
-  checksum: 10c0/9504131146f023a64d8178789c7a3eb10376747346480b3cfcd43310a6a43f3ab7ace06a3af67b143ab8d42d48413652d9371eec5f2de841ad8d487facd5573c
+  checksum: 10c0/c88b5b112ca208a432d8581c7a43de1ac4b7d60fe28c36905ce22d23e8eaec2cbe49546df85adc41e071a19fe63189766eceb26cc304d8119a6f15824c0d9252
   languageName: node
   linkType: hard
 
-"@w3ux/utils@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "@w3ux/utils@npm:0.2.0"
+"@w3ux/types@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@w3ux/types@npm:0.1.0"
+  checksum: 10c0/b7e55a4dea37298c5e34edf16cd049ef4b5e0a1f28bfe927f6615a31fc1c6e0810c509bbac20530256725f2438348979d7b750da9a03732d2e8214ab4ea9859c
+  languageName: node
+  linkType: hard
+
+"@w3ux/utils@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "@w3ux/utils@npm:0.3.0"
   dependencies:
     "@polkadot/keyring": "npm:^12.6.2"
     "@polkadot/util": "npm:^12.6.2"
     bignumber.js: "npm:^9.1.1"
-  checksum: 10c0/33f0fa63f04338f72f1569d1e2c44470a7dfbf8ec3edfc087e29d6ebfa254928985ba94a534d1965620a4d35143deb0a201f6a37d0b349771b8ce049342ba77f
+  checksum: 10c0/8e5b231d4d39c0c5fa88d81f2fdcdf7a8f5a4fd5e8047124c8953fe539bc120593d80801432837247911a0fcc6eb877867c545283d1bdb2b1a7103ebf24257cf
   languageName: node
   linkType: hard
 
@@ -6610,10 +6617,11 @@ __metadata:
     "@vitejs/plugin-react-swc": "npm:^3.7.0"
     "@w3ux/extension-assets": "npm:^0.2.6"
     "@w3ux/hooks": "npm:^1.0.0"
-    "@w3ux/react-connect-kit": "npm:^1.1.0"
+    "@w3ux/react-connect-kit": "npm:^1.2.1"
     "@w3ux/react-odometer": "npm:^1.0.0"
-    "@w3ux/react-polkicon": "npm:^1.1.0"
-    "@w3ux/utils": "npm:^0.2.0"
+    "@w3ux/react-polkicon": "npm:^1.1.1"
+    "@w3ux/types": "npm:^0.1.0"
+    "@w3ux/utils": "npm:^0.3.0"
     "@w3ux/validator-assets": "npm:^0.1.0"
     "@zondax/ledger-substrate": "npm:^0.44.2"
     bignumber.js: "npm:^9.1.2"

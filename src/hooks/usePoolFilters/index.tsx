@@ -4,7 +4,7 @@
 import { useTranslation } from 'react-i18next';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
-import type { AnyFunction, AnyJson } from 'types';
+import type { AnyFunction, AnyJson } from '@w3ux/types';
 import type { AnyFilter } from 'library/Filter/types';
 import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 

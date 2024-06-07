@@ -3,7 +3,7 @@
 
 import { appendOrEmpty } from '@w3ux/utils';
 import type { CSSProperties } from 'react';
-import type { ComponentBase } from 'types';
+import type { ComponentBase } from '@w3ux/types';
 import { Wrapper } from './Wrapper';
 
 export type SideProps = ComponentBase & {

@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { usePlugins } from 'contexts/Plugins';
 import { useUnitPrice } from 'hooks/useUnitPrice';
 import { useNetwork } from 'contexts/Network';
-import type { AnyJson } from 'types';
+import type { AnyJson } from '@w3ux/types';
 
 export const usePrices = () => {
   const { network } = useNetwork();

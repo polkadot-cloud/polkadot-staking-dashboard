@@ -1,7 +1,8 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyMetaBatch, MaybeAddress, Sync } from 'types';
+import type { Sync } from '@w3ux/types';
+import type { AnyMetaBatch, MaybeAddress } from 'types';
 
 export interface PoolMemberContext {
   fetchPoolMembersMetaBatch: (k: string, v: AnyMetaBatch[], r: boolean) => void;

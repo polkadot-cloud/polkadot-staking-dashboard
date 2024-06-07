@@ -11,7 +11,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useFillVariables } from 'hooks/useFillVariables';
-import type { AnyJson } from 'types';
+import type { AnyJson } from '@w3ux/types';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Items } from './Items';

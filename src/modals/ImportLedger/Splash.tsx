@@ -8,7 +8,7 @@ import { useLedgerHardware } from 'contexts/LedgerHardware';
 import { useHelp } from 'contexts/Help';
 import { useTheme } from 'contexts/Themes';
 import LedgerLogoSvg from '@w3ux/extension-assets/Ledger.svg?react';
-import type { AnyFunction } from 'types';
+import type { AnyFunction } from '@w3ux/types';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { SplashWrapper } from './Wrappers';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';

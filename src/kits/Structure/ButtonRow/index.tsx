@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ComponentBase } from 'types';
+import type { ComponentBase } from '@w3ux/types';
 import { Wrapper } from './Wrapper';
 
 export type RowProps = ComponentBase & {

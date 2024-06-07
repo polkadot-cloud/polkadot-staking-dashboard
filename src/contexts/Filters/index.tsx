@@ -3,7 +3,7 @@
 
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
-import type { AnyFunction, AnyJson } from 'types';
+import type { AnyFunction, AnyJson } from '@w3ux/types';
 import {
   defaultExcludes,
   defaultFiltersInterface,
