@@ -5,13 +5,14 @@ import { setStateWithRef } from '@w3ux/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import { usePlugins } from 'contexts/Plugins';
-import type { AnyApi, AnyMetaBatch, Fn, MaybeAddress, Sync } from 'types';
+import type { AnyApi, AnyMetaBatch, Fn, MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from '../../Api';
 import { defaultPoolMembers } from './defaults';
 import type { PoolMember, PoolMemberContext } from './types';
+import type { Sync } from '@w3ux/types';
 
 export const PoolMembersContext =
   createContext<PoolMemberContext>(defaultPoolMembers);

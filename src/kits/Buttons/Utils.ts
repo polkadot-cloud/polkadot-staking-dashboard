@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { MouseEvent } from 'react';
-import type { AnyJson } from 'types';
+import type { AnyJson } from '@w3ux/types';
 
 // Formats mouse handlers for buttons given its props.
 export const onMouseHandlers = (props: AnyJson) => {

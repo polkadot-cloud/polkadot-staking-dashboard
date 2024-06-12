@@ -8,7 +8,8 @@ import {
 import { useBonded } from 'contexts/Bonded';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useProxies } from 'contexts/Proxies';
-import type { AnyApi, AnyJson, MaybeAddress } from 'types';
+import type { AnyApi, MaybeAddress } from 'types';
+import type { AnyJson } from '@w3ux/types';
 
 export const useProxySupported = () => {
   const { getBondedAccount } = useBonded();

@@ -1,7 +1,7 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ComponentBaseWithClassName } from 'types';
+import type { ComponentBaseWithClassName } from '@w3ux/types';
 import type { ButtonCommonProps } from './types';
 import { appendOrEmpty } from '@w3ux/utils';
 import { onMouseHandlers } from './Utils';

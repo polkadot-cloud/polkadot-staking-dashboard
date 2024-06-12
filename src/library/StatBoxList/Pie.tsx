@@ -9,7 +9,7 @@ import { StatBox } from './Item';
 import type { PieProps } from './types';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { SimplePie } from 'library/SimplePie';
-import type { AnyJson } from 'types';
+import type { AnyJson } from '@w3ux/types';
 
 export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
   const help = helpKey !== undefined;

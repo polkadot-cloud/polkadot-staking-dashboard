@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { Validator } from 'contexts/Validators/types';
-import type { AnyFunction, DisplayFor } from 'types';
+import type { AnyFunction, DisplayFor } from '@w3ux/types';
 
 export interface GenerateNominationsProps {
   setters: AnyFunction[];

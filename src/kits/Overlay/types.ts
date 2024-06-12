@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnimationProps } from 'framer-motion';
-import type { ComponentBase } from 'types';
+import type { ComponentBase } from '@w3ux/types';
 
 export type ModalAnimationProps = ComponentBase & AnimationProps;
 

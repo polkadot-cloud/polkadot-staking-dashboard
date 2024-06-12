@@ -4,7 +4,7 @@
 import { capitalizeFirstLetter, planckToUnit } from '@w3ux/utils';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
-import type { AnyJson } from 'types';
+import type { AnyJson } from '@w3ux/types';
 import { useErasPerDay } from '../useErasPerDay';
 
 export const useFillVariables = () => {

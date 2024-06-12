@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import _qrcode from 'qrcode-generator';
-import type { AnyJson } from 'types';
+import type { AnyJson } from '@w3ux/types';
 
 // A small hurdle to jump through, just to get the default/default correct (as generated)
 const qrcode: typeof _qrcode = _qrcode;

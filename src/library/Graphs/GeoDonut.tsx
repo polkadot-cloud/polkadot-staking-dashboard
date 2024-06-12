@@ -9,7 +9,7 @@ import chroma from 'chroma-js';
 import { ellipsisFn } from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
 import type { GeoDonutProps } from './types';
-import type { AnyJson } from 'types';
+import type { AnyJson } from '@w3ux/types';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

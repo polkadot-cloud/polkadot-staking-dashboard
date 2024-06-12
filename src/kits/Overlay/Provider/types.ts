@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { RefObject, FC } from 'react';
-import type { AnyJson } from 'types';
+import type { AnyJson } from '@w3ux/types';
 
 export interface OverlayContextInterface {
   openOverlayInstances: number;

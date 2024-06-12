@@ -97,7 +97,7 @@ export const SideMenu = () => {
           />
           <Secondary
             onClick={() => openModal({ key: 'GoToFeedback' })}
-            name={t('feedback')}
+            name={t('support')}
             minimised={sideMenuMinimised}
             icon={{
               Svg: ForumSVG,

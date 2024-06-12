@@ -7,7 +7,7 @@ import { getLocalLedgerAddresses } from 'contexts/LedgerHardware/Utils';
 import type { LedgerAddress } from 'contexts/LedgerHardware/types';
 import { usePrompt } from 'contexts/Prompt';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
-import type { AnyJson } from 'types';
+import type { AnyJson } from '@w3ux/types';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useNetwork } from 'contexts/Network';
 import type { LedgerAccount } from '@w3ux/react-connect-kit/types';

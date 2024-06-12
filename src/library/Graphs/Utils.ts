@@ -13,8 +13,9 @@ import {
   subDays,
 } from 'date-fns';
 import { MaxPayoutDays } from 'consts';
-import type { AnyApi, AnyJson, AnySubscan } from 'types';
+import type { AnyApi, AnySubscan } from 'types';
 import type { PayoutDayCursor } from './types';
+import type { AnyJson } from '@w3ux/types';
 
 // Given payouts, calculate daily income and fill missing days with zero amounts.
 export const calculateDailyPayouts = (

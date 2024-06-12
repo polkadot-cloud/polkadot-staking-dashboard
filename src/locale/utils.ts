@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { registerSaEvent } from 'Utils';
+import type { AnyJson } from '@w3ux/types';
 import { extractUrlValue, varToUrlHash } from '@w3ux/utils';
 import {
   DefaultLocale,
@@ -9,7 +10,7 @@ import {
   fallbackResources,
   lngNamespaces,
 } from 'locale';
-import type { AnyApi, AnyJson } from 'types';
+import type { AnyApi } from 'types';
 
 // Gets the active language
 //

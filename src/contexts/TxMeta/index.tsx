@@ -7,7 +7,7 @@ import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import { useBonded } from 'contexts/Bonded';
 import { useStaking } from 'contexts/Staking';
-import type { AnyJson, MaybeAddress } from 'types';
+import type { MaybeAddress } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import * as defaults from './defaults';
@@ -15,6 +15,7 @@ import type { TxMetaContextInterface } from './types';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useActiveBalances } from 'hooks/useActiveBalances';
 import { useApi } from 'contexts/Api';
+import type { AnyJson } from '@w3ux/types';
 
 export const TxMetaContext = createContext<TxMetaContextInterface>(
   defaults.defaultTxMeta
@@ -49,10 +50,18 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
     uid: number;
   } | null>(null);
   const txPayloadRef = useRef(txPayload);
+  const getPayloadUid = () => txPayloadRef.current?.uid || 1;
+  const getTxPayload = () => txPayloadRef.current?.payload || null;
 
   // Store an optional signed transaction if extrinsics require manual signing (e.g. Ledger).
   const [txSignature, setTxSignatureState] = useState<AnyJson>(null);
   const txSignatureRef = useRef(txSignature);
+  const getTxSignature = () => txSignatureRef.current;
+
+  // Set the transaction signature. Overwrites any existing signature.
+  const setTxSignature = (s: AnyJson) => {
+    setStateWithRef(s, setTxSignatureState, txSignatureRef);
+  };
 
   // Store the pending nonces of transactions. NOTE: Ref is required as `pendingNonces` is read in
   // callbacks.
@@ -64,18 +73,7 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
     accounts: [sender],
   });
 
-  const senderBalances = getBalance(sender);
-
-  const resetTxFees = () => {
-    setTxFees(new BigNumber(0));
-  };
-
-  const getPayloadUid = () => txPayloadRef.current?.uid || 1;
-
-  const incrementPayloadUid = () => (txPayloadRef.current?.uid || 0) + 1;
-
-  const getTxPayload = () => txPayloadRef.current?.payload || null;
-
+  // Set the transaction payload and uid. Overwrites any existing payload.
   const setTxPayload = (p: AnyJson, uid: number) => {
     setStateWithRef(
       {
@@ -87,23 +85,12 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
-  const resetTxPayloads = () => {
+  // Removes the transaction payload and uid from state.
+  const resetTxPayload = () => {
     setStateWithRef(null, setTxPayloadState, txPayloadRef);
   };
 
-  const getTxSignature = () => txSignatureRef.current;
-
-  const setTxSignature = (s: AnyJson) => {
-    setStateWithRef(s, setTxSignatureState, txSignatureRef);
-  };
-
-  const txFeesValid = (() => {
-    if (txFees.isZero() || notEnoughFunds) {
-      return false;
-    }
-    return true;
-  })();
-
+  // TODO: Remove controller checks once controller deprecation is completed on chain.
   const controllerSignerAvailable = (
     stash: MaybeAddress,
     proxySupported: boolean
@@ -127,6 +114,7 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
     return 'ok';
   };
 
+  // Adds a pending nonce to the list of pending nonces.
   const addPendingNonce = (nonce: string) => {
     setStateWithRef(
       [...pendingNoncesRef.current].concat(nonce),
@@ -135,6 +123,7 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
+  // Removes a pending nonce from the list of pending nonces.
   const removePendingNonce = (nonce: string) => {
     setStateWithRef(
       pendingNoncesRef.current.filter((n) => n !== nonce),
@@ -143,7 +132,19 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
-  // Refresh not enough fee status when txfees or sender changes.
+  // Utility to reset transaction fees to zero.
+  const resetTxFees = () => {
+    setTxFees(new BigNumber(0));
+  };
+
+  // Utility to increment payload uid to maintain unique ids for payloads.
+  const incrementPayloadUid = () => (txPayloadRef.current?.uid || 0) + 1;
+
+  // Check if the transaction fees are valid.
+  const txFeesValid = txFees.isZero() || notEnoughFunds ? false : true;
+
+  // Refresh not enough funds status when sender, balance or txFees change.
+  const senderBalances = getBalance(sender);
   useEffectIgnoreInitial(() => {
     const edReserved = getEdReserved(sender, existentialDeposit);
     const { free, frozen } = senderBalances;
@@ -155,24 +156,24 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
   return (
     <TxMetaContext.Provider
       value={{
-        controllerSignerAvailable,
-        txFees,
-        notEnoughFunds,
-        setTxFees,
-        resetTxFees,
-        txFeesValid,
         sender,
         setSender,
-        incrementPayloadUid,
+        txFees,
+        txFeesValid,
+        setTxFees,
+        resetTxFees,
+        notEnoughFunds,
         getPayloadUid,
         getTxPayload,
         setTxPayload,
-        resetTxPayloads,
+        incrementPayloadUid,
+        resetTxPayload,
         getTxSignature,
         setTxSignature,
+        pendingNonces,
         addPendingNonce,
         removePendingNonce,
-        pendingNonces,
+        controllerSignerAvailable,
       }}
     >
       {children}

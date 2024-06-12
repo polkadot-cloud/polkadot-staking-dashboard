@@ -12,7 +12,7 @@ import { Heading } from 'library/Import/Heading';
 import { NoAccounts } from 'library/Import/NoAccounts';
 import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
-import type { AnyJson } from 'types';
+import type { AnyJson } from '@w3ux/types';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { Reader } from './Reader';

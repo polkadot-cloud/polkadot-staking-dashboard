@@ -4,7 +4,7 @@
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useTranslation } from 'react-i18next';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import type { AnyFunction, AnyJson } from 'types';
+import type { AnyFunction, AnyJson } from '@w3ux/types';
 import { MaxEraRewardPointsEras } from 'consts';
 import type { AnyFilter } from 'library/Filter/types';
 

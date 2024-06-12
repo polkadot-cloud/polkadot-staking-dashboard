@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { appendOr, appendOrEmpty } from '@w3ux/utils';
-import type { ComponentBase } from 'types';
+import type { ComponentBase } from '@w3ux/types';
 import { RowPrimaryWrapper, RowSecondaryWrapper } from './Wrappers';
 
 export type RowSectionProps = ComponentBase & {

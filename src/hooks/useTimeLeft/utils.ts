@@ -7,7 +7,7 @@ import {
   getUnixTime,
   intervalToDuration,
 } from 'date-fns';
-import type { AnyFunction } from 'types';
+import type { AnyFunction } from '@w3ux/types';
 import { defaultDuration } from './defaults';
 import type { TimeleftDuration } from './types';
 

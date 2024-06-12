@@ -3,7 +3,7 @@
 
 import type { ListFormat } from 'library/PoolList/types';
 import type { FormEvent, ReactNode } from 'react';
-import type { AnyJson, DisplayFor } from 'types';
+import type { AnyJson, DisplayFor } from '@w3ux/types';
 
 export interface PaginationWrapperProps {
   $next: boolean;

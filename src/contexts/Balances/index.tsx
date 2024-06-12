@@ -32,7 +32,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { activeAccount, activeProxy } = useActiveAccounts();
   const controller = getBondedAccount(activeAccount);
 
-  // Listen to balance updates for the active account, active proxy and controller..
+  // Listen to balance updates for the active account, active proxy and controller.
   const {
     activeBalances,
     getLocks,
