@@ -1,8 +1,8 @@
 # Contribution Guide
 
-This section aims to familiarise developers to the Polkadot Staking Dashboard [[GitHub](https://github.com/paritytech/polkadot-staking-dashboard), [Demo](https://paritytech.github.io/polkadot-staking-dashboard/#/overview)] for the purpose of contributing to the project.
+This section aims to familiarise developers to the Polkadot Staking Dashboard [[Deployment](https://staking.polkadot.cloud).
 
-Reach out to ross@parity.io for clarification of any content within this document.
+Reach out to ross@jkrb.io for clarification of any content within this document.
 
 ## Submitting Pull Requests
 
@@ -42,14 +42,14 @@ Release Please is a GitHub action maintained by Google that automates CHANGELOG 
 
 Optionally apply envrionment variables in an environment file such as `.env` or with `yarn build` to customise the build of staking dashboard.
 
-Refer to the [`.env`](https://github.com/paritytech/polkadot-staking-dashboard/blob/main/.env) file in the root of the repository for all supported variables.
+Refer to the [`.env`](https://github.com/polkadot-cloud/polkadot-staking-dashboard/blob/main/.env) file in the root of the repository for all supported variables.
 
 ## Config Files
 
 There are some ad-hoc files defining app configuration where needed. These just provide a means of bootstrapping app data, and further abstraction could be explored in the future.
 
-- [`config/pages.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/main/src/config/pages.ts): provides the pages and page categories of the app.
-- [`config/help.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/main/src/config/help.ts): provides the help content.
+- [`config/pages.ts`](https://github.com/polkadot-cloud/polkadot-staking-dashboard/blob/main/src/config/pages.ts): provides the pages and page categories of the app.
+- [`config/help.ts`](https://github.com/polkadot-cloud/polkadot-staking-dashboard/blob/main/src/config/help.ts): provides the help content.
 
 ## App Entry
 
