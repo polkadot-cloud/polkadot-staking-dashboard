@@ -5,8 +5,7 @@
   "license": "GPL-3.0-only",
   "scripts": {
     "build": "tsc && vite build --base '/'",
-    "build:netlify": "tsc && vite build --base '/'",
-    "build:pages": "tsc && vite build --base '/polkadot-staking-dashboard/'",
+    "build:pages": "tsc && vite build --base '/'",
     "clear": "rm -rf node_modules build tsconfig.tsbuildinfo yarn.lock",
     "dev": "vite",
     "deploy": "gh-pages -d build",
