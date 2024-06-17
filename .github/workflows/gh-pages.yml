@@ -1,0 +1,39 @@
+name: GitHub Pages Publish
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  gh-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-deploy
+          
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          registry-url: https://registry.npmjs.org
+          cache: 'yarn'
+
+      - name: Merge
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          from_branch: main
+          target_branch: gh-deploy
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install
+        run: yarn install
+
+      - name: Build
+        working-directory: '.'
+        run: yarn build:pages
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build
