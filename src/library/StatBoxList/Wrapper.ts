@@ -51,7 +51,7 @@ export const StatBoxWrapper = styled(motion.div)`
       box-shadow: var(--card-shadow);
     }
     display: flex;
-    border-radius: 0.95rem;
+    border-radius: 0.6rem;
     margin-right: 1.25rem;
     padding: 0.9rem 0rem;
     max-height: 5.25rem;
@@ -63,7 +63,8 @@ export const StatBoxWrapper = styled(motion.div)`
     }
 
     h4 {
-      font-family: Inter, sans-serif;
+      color: var(--text-color-secondary);
+      font-family: InterSemiBold, sans-serif;
       flex: 1;
       display: flex;
       flex-flow: row wrap;
