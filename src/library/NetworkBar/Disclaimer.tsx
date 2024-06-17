@@ -1,4 +1,4 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { Title } from 'library/Prompt/Title';
@@ -21,7 +21,7 @@ export const Disclaimer = () => (
         </a>{' '}
         (a copy of the dashboard code is{' '}
         <a
-          href="https://github.com/paritytech/polkadot-staking-dashboard"
+          href="https://github.com/polkadot-cloud/polkadot-staking-dashboard"
           target="_blank"
           rel="noreferrer"
         >
