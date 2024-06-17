@@ -1,4 +1,4 @@
-// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons';
@@ -138,7 +138,7 @@ export const SideMenu = () => {
             type="button"
             onClick={() =>
               window.open(
-                'https://github.com/paritytech/polkadot-staking-dashboard',
+                'https://github.com/polkadot-cloud/polkadot-staking-dashboard',
                 '_blank'
               )
             }
