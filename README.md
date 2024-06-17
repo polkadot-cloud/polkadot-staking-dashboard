@@ -1,5 +1,8 @@
 [![Polkadot - App](https://img.shields.io/badge/Polkadot-App-E6007A?logo=polkadot&logoColor=E6007A)](https://staking.polkadot.network) ![ci](https://github.com/polkadot-cloud/polkadot-staking-dashboard/actions/workflows/ci.yml/badge.svg) [![License](https://img.shields.io/badge/License-GPL3.0-blue.svg)](https://opensource.org/licenses/GPL-3.0)
 
+> #### 📢 17/06/2024: Repository Migration
+> This repository was previously at `paritytech/polkadot-staking-dashboard`. As of 17/06/2024, Polkadot Staking Dashboard lives at `polkadot-cloud/polkadot-staking-dashboard`.
+
 # Polkadot Staking Dashboard
 
 <img width="1727" alt="Screenshot 2023-08-29 at 18 54 33" src="https://github.com/polkadot-cloud/polkadot-staking-dashboard/assets/13929023/6291d682-0434-4b77-b6e9-383d277893b0">
