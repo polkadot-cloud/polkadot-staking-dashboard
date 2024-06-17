@@ -88,6 +88,9 @@ export const PayoutBar = ({
     ? colors.transparent[mode]
     : colors.secondary[mode];
 
+  // Bar border radius
+  const borderRadius = 4;
+
   const data = {
     labels: graphPayouts.map((item: AnySubscan) => {
       const dateObj = format(fromUnixTime(item.block_timestamp), 'do MMM', {
@@ -104,7 +107,7 @@ export const PayoutBar = ({
         borderColor: colorPayouts,
         backgroundColor: colorPayouts,
         pointRadius: 0,
-        borderRadius: 3,
+        borderRadius,
       },
       {
         order: 2,
@@ -113,7 +116,7 @@ export const PayoutBar = ({
         borderColor: colorPoolClaims,
         backgroundColor: colorPoolClaims,
         pointRadius: 0,
-        borderRadius: 3,
+        borderRadius,
       },
       {
         order: 3,
@@ -122,7 +125,7 @@ export const PayoutBar = ({
         borderColor: colorPayouts,
         backgroundColor: colors.pending[mode],
         pointRadius: 0,
-        borderRadius: 3,
+        borderRadius,
       },
     ],
   };
@@ -130,8 +133,8 @@ export const PayoutBar = ({
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    barPercentage: 0.4,
-    maxBarThickness: 13,
+    barPercentage: 0.5,
+    maxBarThickness: 15,
     scales: {
       x: {
         stacked: true,
