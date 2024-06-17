@@ -9,11 +9,10 @@ export const Disclaimer = () => (
     <ModalPadding>
       <p>
         This Polkadot Staking Dashboard (“Dashboard”) is made available free of
-        charge by Web 3.0 Technologies Foundation, Parity Technologies Limited
-        and their affiliates (&quot;Web3 entities&quot;) as open source software
-        under the Apache 2.0 licence found{' '}
+        charge by JKRB Investments Limited and its affiliates (&quot;Web3
+        entities&quot;) as open source software under the GPL 3.0 licence found{' '}
         <a
-          href="https://www.apache.org/licenses/LICENSE-2.0"
+          href="https://www.gnu.org/licenses/gpl-3.0.en.html"
           target="_blank"
           rel="noreferrer"
         >
@@ -45,7 +44,7 @@ export const Disclaimer = () => (
         AND BLOCKCHAIN TECHNOLOGY.
       </p>
       <p>
-        Without prejudice to the Apache 2.0 licence, the dashboard and any
+        Without prejudice to the GPL 3.0 licence, the dashboard and any
         information provided by or in connection with it (“content”) are
         PROVIDED ON AN &apos;AS IS&apos; AND &apos;AS AVAILABLE&apos; BASIS AND
         YOU ARE SOLELY RESPONSIBLE FOR ALL DECISIONS AND ACTIONS YOU TAKE
