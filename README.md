@@ -1,4 +1,4 @@
-[![Polkadot - App](https://img.shields.io/badge/Polkadot-App-E6007A?logo=polkadot&logoColor=E6007A)](https://staking.polkadot.network) ![ci](https://github.com/polkadot-cloud/polkadot-staking-dashboard/actions/workflows/ci.yml/badge.svg) [![License](https://img.shields.io/badge/License-GPL3.0-blue.svg)](https://opensource.org/licenses/GPL-3.0)
+[![Polkadot - App](https://img.shields.io/badge/Polkadot-App-E6007A?logo=polkadot&logoColor=E6007A)](https://staking.polkadot.cloud) ![ci](https://github.com/polkadot-cloud/polkadot-staking-dashboard/actions/workflows/ci.yml/badge.svg) [![License](https://img.shields.io/badge/License-GPL3.0-blue.svg)](https://opensource.org/licenses/GPL-3.0)
 
 > #### 📢 17/06/2024: Repository Migration
 > This repository was previously at `paritytech/polkadot-staking-dashboard`. As of 17/06/2024, Polkadot Staking Dashboard lives at `polkadot-cloud/polkadot-staking-dashboard`.
@@ -30,7 +30,7 @@ URL variables take precedence over saved values in local storage, and will overw
 The following URL will load Kusama and use the Chinese localisation resource:
 
 ```
-staking.polkadot.network/#/overview?n=kusama&l=cn
+staking.polkadot.cloud/#/overview?n=kusama&l=cn
 ```
 
 ## Using Containers
