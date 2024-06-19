@@ -121,6 +121,13 @@
       "slashed": "Slashed",
       "subscanDisabled": "Subscan Disabled"
     },
+    "decentralization": {
+        "howDecentralizedIsYourNomination": "How decentralized is your Nomination?",
+        "totalPayoutsAnalysed": "Total Payouts Analysed",
+        "maxErasAnalyzed": "Max Eras Analysed",
+        "PayoutDistribution": "Payout Distribution",
+        "byRegionCountryNetwork": "by Region, Country and Network"
+    },
     "pools": {
       "activePools": "Active Pools",
       "address": "Address",
