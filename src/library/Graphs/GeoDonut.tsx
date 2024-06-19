@@ -18,6 +18,7 @@ export const GeoDonut = ({
   series = { labels: [], data: [] },
   height = 'auto',
   width = 'auto',
+  legendHeight = 25
 }: GeoDonutProps) => {
   const { mode } = useTheme();
   const { colors } = useNetwork().networkData;
@@ -46,7 +47,7 @@ export const GeoDonut = ({
       legend: {
         display: true,
         position: 'bottom' as const,
-        maxHeight: 25,
+        maxHeight: legendHeight,
         labels: {
           boxWidth: 10,
           generateLabels: (chart: AnyJson) => {
