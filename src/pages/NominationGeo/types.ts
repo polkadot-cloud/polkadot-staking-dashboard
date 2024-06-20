@@ -1,10 +1,8 @@
 // Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { NominatorDetail } from '@polkawatch/ddp-client';
+import type { NominatorDetail, ChainMetadata } from '@polkawatch/ddp-client';
 export type { NominatorDetail } from '@polkawatch/ddp-client';
-
-import type { ChainMetadata } from '@polkawatch/ddp-client';
 
 export type { ChainMetadata } from '@polkawatch/ddp-client';
 

@@ -15,7 +15,7 @@ export const AnalyzedEras = ({ meta }: AnalyzedErasProps) => {
     label: t('decentralization.maxErasAnalyzed'),
     value: meta?.ErasPerMonth || 0,
     unit: 'Eras',
-    helpKey: 'Max Eras Analysed',
+    helpKey: 'Decentralization Analytics Period',
   };
   return <Number {...params} />;
 };

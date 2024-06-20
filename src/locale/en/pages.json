@@ -11,6 +11,14 @@
       "validator_other": "{{count}} Validators",
       "website": "Website"
     },
+    "decentralization": {
+      "PayoutDistribution": "Payout Distribution",
+      "byRegionCountryNetwork": "by Region, Country and Network",
+      "howDecentralizedIsYourNomination": "How decentralized is your Nomination?",
+      "maxErasAnalyzed": "Max Eras Analysed",
+      "totalPayoutsAnalysed": "Total Payouts Analysed",
+      "DecentralizationPerNomination": "Geolocation per nomination"
+    },
     "nominate": {
       "activeNominations": "Active Nominations",
       "addressCopied": "Address Copied to Clipboard",
@@ -120,13 +128,6 @@
       "recentPayouts": "Recent Payouts",
       "slashed": "Slashed",
       "subscanDisabled": "Subscan Disabled"
-    },
-    "decentralization": {
-        "howDecentralizedIsYourNomination": "How decentralized is your Nomination?",
-        "totalPayoutsAnalysed": "Total Payouts Analysed",
-        "maxErasAnalyzed": "Max Eras Analysed",
-        "PayoutDistribution": "Payout Distribution",
-        "byRegionCountryNetwork": "by Region, Country and Network"
     },
     "pools": {
       "activePools": "Active Pools",

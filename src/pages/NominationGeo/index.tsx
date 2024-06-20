@@ -19,12 +19,10 @@ import { AnalyzedPayouts } from './Stats/AnalyzedPayouts';
 import { AnalyzedDays } from './Stats/AnalyzedDays';
 import { AnalyzedEras } from './Stats/AnalyzedEras';
 
-
 import { PageRow } from 'kits/Structure/PageRow';
 import { PageHeadingWrapper } from 'kits/Structure/PageHeading/Wrapper';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { PluginLabel } from 'library/PluginLabel';
-//import { RowSection } from 'kits/Structure/RowSection';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
 import { GeoDonut } from 'library/Graphs/GeoDonut';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
@@ -128,7 +126,7 @@ export const NominationGeo = ({ page: { key } }: PageProps) => {
               {t('decentralization.PayoutDistribution', { ns: 'pages' })}
               <ButtonHelp
                 marginLeft
-                onClick={() => openHelp('Payout Distribution')}
+                onClick={() => openHelp('Nomination Payout Distribution')}
               />
             </h4>
             <h2>
@@ -151,6 +149,7 @@ export const NominationGeo = ({ page: { key } }: PageProps) => {
                 height={`${300}px`}
                 width={300}
                 legendHeight={50}
+                maxLabelLen={0}
               />
             </GraphWrapper>
             <GraphWrapper>
@@ -160,6 +159,7 @@ export const NominationGeo = ({ page: { key } }: PageProps) => {
                 height={`${300}px`}
                 width={300}
                 legendHeight={50}
+                maxLabelLen={10}
               />
             </GraphWrapper>
             <GraphWrapper>
@@ -169,6 +169,7 @@ export const NominationGeo = ({ page: { key } }: PageProps) => {
                 height={`${300}px`}
                 width={300}
                 legendHeight={50}
+                maxLabelLen={10}
               />
             </GraphWrapper>
           </div>
@@ -178,7 +179,9 @@ export const NominationGeo = ({ page: { key } }: PageProps) => {
         <CardWrapper>
           <NominationGeoList
             allowMoreCols={true}
-            title={'Geolocation of each nomination'}
+            title={t('decentralization.DecentralizationPerNomination', {
+              ns: 'pages',
+            })}
             data={nominationDetail}
           />
         </CardWrapper>
