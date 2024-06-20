@@ -52,4 +52,5 @@ export interface GeoDonutProps {
   width?: string | number;
   height?: string | number;
   legendHeight?: number;
+  maxLabelLen?: number;
 }
