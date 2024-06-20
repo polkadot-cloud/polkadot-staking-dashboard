@@ -12,12 +12,16 @@
       "website": "Website"
     },
     "decentralization": {
-      "PayoutDistribution": "Payout Distribution",
+      "analyticsNotAvailable": "Analytics Not Available",
+      "analyticsNotSupported": "Analytics Not Supported",
       "byRegionCountryNetwork": "by Region, Country and Network",
+      "decentralizationPerNomination": "Geolocation per nomination",
       "howDecentralizedIsYourNomination": "How decentralized is your Nomination?",
       "maxErasAnalyzed": "Max Eras Analysed",
-      "totalPayoutsAnalysed": "Total Payouts Analysed",
-      "DecentralizationPerNomination": "Geolocation per nomination"
+      "networkNotSupported": "Network Not Supported",
+      "payoutDistribution": "Payout Distribution",
+      "polkawatchDisabled": "Polkawatch Disabled",
+      "totalPayoutsAnalysed": "Total Payouts Analysed"
     },
     "nominate": {
       "activeNominations": "Active Nominations",

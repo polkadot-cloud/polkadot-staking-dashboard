@@ -29,6 +29,7 @@ import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { useHelp } from 'contexts/Help';
 import { Separator } from 'kits/Structure/Separator';
 import { NominationGeoList } from './NominationGeoList';
+import { StatusLabel } from 'library/StatusLabel';
 
 export const NominationGeo = ({ page: { key } }: PageProps) => {
   const { activeAccount } = useActiveAccounts();
@@ -70,7 +71,7 @@ export const NominationGeo = ({ page: { key } }: PageProps) => {
     {} as NominatorDetail
   );
 
-  const [, setAnalyticsAvailable] = useState<boolean>(true);
+  const [analyticsAvailable, setAnalyticsAvailable] = useState<boolean>(true);
 
   const networkSupported =
     PolkaWatchController.SUPPORTED_NETWORKS.includes(network);
@@ -123,7 +124,7 @@ export const NominationGeo = ({ page: { key } }: PageProps) => {
           <PluginLabel plugin="polkawatch" />
           <CardHeaderWrapper>
             <h4>
-              {t('decentralization.PayoutDistribution', { ns: 'pages' })}
+              {t('decentralization.payoutDistribution', { ns: 'pages' })}
               <ButtonHelp
                 marginLeft
                 onClick={() => openHelp('Nomination Payout Distribution')}
@@ -142,6 +143,28 @@ export const NominationGeo = ({ page: { key } }: PageProps) => {
               flexWrap: 'wrap',
             }}
           >
+            {!enabled || analyticsAvailable ? (
+              <StatusLabel
+                status="active_service"
+                statusFor="polkawatch"
+                title={t('decentralization.polkawatchDisabled', {
+                  ns: 'pages',
+                })}
+              />
+            ) : (
+              <StatusLabel
+                status="no_analytic_data"
+                title={
+                  networkSupported
+                    ? t('decentralization.analyticsNotAvailable', {
+                        ns: 'pages',
+                      })
+                    : t('decentralization.analyticsNotSupported', {
+                        ns: 'pages',
+                      })
+                }
+              />
+            )}
             <GraphWrapper>
               <GeoDonut
                 title={t('rewards')}
@@ -175,17 +198,19 @@ export const NominationGeo = ({ page: { key } }: PageProps) => {
           </div>
         </CardWrapper>
       </PageRow>
-      <PageRow>
-        <CardWrapper>
-          <NominationGeoList
-            allowMoreCols={true}
-            title={t('decentralization.DecentralizationPerNomination', {
-              ns: 'pages',
-            })}
-            data={nominationDetail}
-          />
-        </CardWrapper>
-      </PageRow>
+      {nominationDetail?.nodeDistributionDetail && (
+        <PageRow>
+          <CardWrapper>
+            <NominationGeoList
+              allowMoreCols={true}
+              title={t('decentralization.decentralizationPerNomination', {
+                ns: 'pages',
+              })}
+              data={nominationDetail}
+            />
+          </CardWrapper>
+        </PageRow>
+      )}
     </>
   );
 };
