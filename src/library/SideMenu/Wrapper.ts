@@ -93,7 +93,7 @@ export const LogoWrapper = styled.div<MinimisedProps>`
   > span {
     font-family: InterSemiBold, sans-serif;
     color: var(--accent-color-primary);
-    margin-left: 0.5rem;
+    margin-left: 0.55rem;
     font-size: 1.1rem;
     background-clip: text;
   }
