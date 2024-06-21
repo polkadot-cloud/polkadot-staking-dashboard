@@ -77,12 +77,6 @@ export interface Network {
     token: FunctionComponent<
       SVGProps<SVGSVGElement> & { title?: string | undefined }
     >;
-    logo: {
-      svg: FunctionComponent<
-        SVGProps<SVGSVGElement> & { title?: string | undefined }
-      >;
-      width: string;
-    };
     inline: {
       svg: FunctionComponent<
         SVGProps<SVGSVGElement> & { title?: string | undefined }
