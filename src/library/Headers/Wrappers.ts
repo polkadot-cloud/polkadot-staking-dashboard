@@ -14,9 +14,9 @@ export const Wrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
   align-content: center;
-  padding: 0 1.25rem;
+  padding: 0 1.05rem;
   transition: all var(--transition-duration);
-  margin: 0.5rem 0;
+  margin: 0.3rem 0;
   height: 4rem;
   z-index: 6;
 

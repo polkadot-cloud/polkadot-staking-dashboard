@@ -3,13 +3,10 @@
 
 import KusamaIconSVG from 'img/kusama_icon.svg?react';
 import KusamaInlineSVG from 'img/kusama_inline.svg?react';
-import KusamaLogoSVG from 'img/kusama_logo.svg?react';
 import PolkadotIconSVG from 'img/polkadot_icon.svg?react';
 import PolkadotInlineSVG from 'img/polkadot_inline.svg?react';
-import PolkadotLogoSVG from 'img/polkadot_logo.svg?react';
 import WestendIconSVG from 'img/westend_icon.svg?react';
 import WestendInlineSVG from 'img/westend_inline.svg?react';
-import WestendLogoSVG from 'img/westend_logo.svg?react';
 import PolkadotTokenSVG from 'config/tokens/svg/DOT.svg?react';
 import KusamaTokenSVG from 'config/tokens/svg/KSM.svg?react';
 import WestendTokenSVG from 'config/tokens/svg/WND.svg?react';
@@ -78,10 +75,6 @@ export const NetworkList: Networks = {
     brand: {
       icon: PolkadotIconSVG,
       token: PolkadotTokenSVG,
-      logo: {
-        svg: PolkadotLogoSVG,
-        width: '7.2em',
-      },
       inline: {
         svg: PolkadotInlineSVG,
         size: '1.05em',
@@ -139,10 +132,6 @@ export const NetworkList: Networks = {
     brand: {
       icon: KusamaIconSVG,
       token: KusamaTokenSVG,
-      logo: {
-        svg: KusamaLogoSVG,
-        width: '7.2em',
-      },
       inline: {
         svg: KusamaInlineSVG,
         size: '1.35em',
@@ -199,10 +188,6 @@ export const NetworkList: Networks = {
     brand: {
       icon: WestendIconSVG,
       token: WestendTokenSVG,
-      logo: {
-        svg: WestendLogoSVG,
-        width: '7.1em',
-      },
       inline: {
         svg: WestendInlineSVG,
         size: '0.96em',
