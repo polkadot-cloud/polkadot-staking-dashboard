@@ -2,8 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useTranslation } from 'react-i18next';
-import type { PageProps } from 'types';
-import { PageTitle } from 'kits/Structure/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { useNetwork } from 'contexts/Network';
 import { useEffect, useState } from 'react';
@@ -20,7 +18,6 @@ import { AnalyzedDays } from './Stats/AnalyzedDays';
 import { AnalyzedEras } from './Stats/AnalyzedEras';
 
 import { PageRow } from 'kits/Structure/PageRow';
-import { PageHeadingWrapper } from 'kits/Structure/PageHeading/Wrapper';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { PluginLabel } from 'library/PluginLabel';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
@@ -31,7 +28,7 @@ import { Separator } from 'kits/Structure/Separator';
 import { NominationGeoList } from './NominationGeoList';
 import { StatusLabel } from 'library/StatusLabel';
 
-export const NominationGeo = ({ page: { key } }: PageProps) => {
+export const NominationGeo = () => {
   const { activeAccount } = useActiveAccounts();
   const { t } = useTranslation();
   const { openHelp } = useHelp();
@@ -104,21 +101,6 @@ export const NominationGeo = ({ page: { key } }: PageProps) => {
 
   return (
     <>
-      <PageTitle title={t(key, { ns: 'base' })} />
-      <PageRow>
-        <PageHeadingWrapper>
-          <h3>
-            {t('decentralization.howDecentralizedIsYourNomination', {
-              ns: 'pages',
-            })}
-          </h3>
-        </PageHeadingWrapper>
-      </PageRow>
-      <StatBoxList>
-        <AnalyzedPayouts data={nominationDetail} />
-        <AnalyzedEras meta={networkMeta} />
-        <AnalyzedDays />
-      </StatBoxList>
       <PageRow>
         <CardWrapper>
           <PluginLabel plugin="polkawatch" />
@@ -198,6 +180,11 @@ export const NominationGeo = ({ page: { key } }: PageProps) => {
           </div>
         </CardWrapper>
       </PageRow>
+      <StatBoxList>
+        <AnalyzedPayouts data={nominationDetail} />
+        <AnalyzedEras meta={networkMeta} />
+        <AnalyzedDays />
+      </StatBoxList>
       {nominationDetail?.nodeDistributionDetail && (
         <PageRow>
           <CardWrapper>
