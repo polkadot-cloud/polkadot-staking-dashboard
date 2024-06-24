@@ -1879,6 +1879,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@substrate/connect-discovery@npm:^0.0.6":
+  version: 0.0.6
+  resolution: "@substrate/connect-discovery@npm:0.0.6"
+  dependencies:
+    "@substrate/discovery": ^0.0.1
+  checksum: 8/1334c198a50711c5679640695a6644f92be139aeee175db7a42c36c181c109e61cd6dfad07889db89a49fbe7c97a616dce85f8c0d969478de82f2dd64fc8ef26
+  languageName: node
+  linkType: hard
+
 "@substrate/connect-extension-protocol@npm:^2.0.0":
   version: 2.0.0
   resolution: "@substrate/connect-extension-protocol@npm:2.0.0"
@@ -1897,6 +1906,13 @@ __metadata:
   version: 1.1.5
   resolution: "@substrate/connect-known-chains@npm:1.1.5"
   checksum: 8/2f95b18d0a0dd196e67c398d1862d5b84385f017672aa65e537ca8fac3e85883f1ca8357f7622b9fdd42c316ccc39ed9fdea91428f19dc52864d7cc7e7cab078
+  languageName: node
+  linkType: hard
+
+"@substrate/connect-known-chains@npm:^1.1.6":
+  version: 1.1.6
+  resolution: "@substrate/connect-known-chains@npm:1.1.6"
+  checksum: 8/2ed04da37e721e773b15778732b8331031c175a3a95742b60ed04ee317c332be1d7435320012c4040a7a9d3dea590d3ecaf875aeba2bab7d93bd5a0ff74e5e0a
   languageName: node
   linkType: hard
 
@@ -1921,6 +1937,26 @@ __metadata:
     "@substrate/light-client-extension-helpers": "npm:^0.0.4"
     smoldot: "npm:2.0.22"
   checksum: d2507a5c2392523c31b1e25a4b0955b7c271406d527511c5ceab561fff0d8788262d638ff996dc2978464998f5db78cf373b34d2af86b040686c86f36093ec65
+  languageName: node
+  linkType: hard
+
+"@substrate/connect@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@substrate/connect@npm:1.0.2"
+  dependencies:
+    "@substrate/connect-discovery": ^0.0.6
+    "@substrate/connect-extension-protocol": ^2.0.0
+    "@substrate/connect-known-chains": ^1.1.6
+    "@substrate/smoldot-discovery": ^0.0.6
+    smoldot: 2.0.29
+  checksum: 8/c8726ab3d5a4bddf722b01f60ca610029304e7b9d13fcda6a588cb12fb4e53bc0c04e027ff3dba3da0336b7713c4790c7efd67eafdd6cd4efa03de5469a88d45
+  languageName: node
+  linkType: hard
+
+"@substrate/discovery@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "@substrate/discovery@npm:0.0.1"
+  checksum: 8/ed4b00bcc8ada643a941e25806207363dd98eaef38b867bb2d9eecb77c0347eed12243ce17bd5abbbc3be86b88d4de06acfb03689ab695ee6b2c48650dd12bb5
   languageName: node
   linkType: hard
 
@@ -1955,6 +1991,15 @@ __metadata:
   peerDependencies:
     smoldot: 2.x
   checksum: 8/a0cc169e6edf56cdbfd839a32487e31ad0bcb4cc9d4d50bac632c16f95d6ebf54638b268c1f7b8e651482e201f38411139a90071bc91268a2c01e5b50f39f338
+  languageName: node
+  linkType: hard
+
+"@substrate/smoldot-discovery@npm:^0.0.6":
+  version: 0.0.6
+  resolution: "@substrate/smoldot-discovery@npm:0.0.6"
+  dependencies:
+    "@substrate/discovery": ^0.0.1
+  checksum: 8/db2c341a5e25a9ff6a289f90d29e2a24d9080720ebf9ba104d3492429172d2b63c0da0c900d08d29f1abda0086855106a0748abcc5a2943966aa10411ce8fdd7
   languageName: node
   linkType: hard
 
@@ -6519,7 +6564,7 @@ __metadata:
     "@polkadot/util": ^12.6.2
     "@polkadot/util-crypto": ^12.6.2
     "@polkawatch/ddp-client": ^2.0.11
-    "@substrate/connect": 0.8.10
+    "@substrate/connect": 1.0.2
     "@types/chroma-js": ^2.4.4
     "@types/lodash.debounce": ^4.0.9
     "@types/lodash.throttle": ^4.1.9
@@ -7457,6 +7502,15 @@ __metadata:
   dependencies:
     ws: "npm:^8.8.1"
   checksum: fa439bebfe0d0d46e4da342a313d0653fd56557b6459b5ba3db1fd6bcfb345e9d9577c27e1f6692e67dec0206addb95de6b594c17041729f5689b4b123974495
+  languageName: node
+  linkType: hard
+
+"smoldot@npm:2.0.29":
+  version: 2.0.29
+  resolution: "smoldot@npm:2.0.29"
+  dependencies:
+    ws: ^8.8.1
+  checksum: 8/38d0e420e577ac7932a53ce2325790bcdd33085846fb0adba3fe2a6acd665723e6bcc0fb68e322bfe5697af2e6e183b6dfb969faca3b81c08b0ad5565e2b79cf
   languageName: node
   linkType: hard
 
