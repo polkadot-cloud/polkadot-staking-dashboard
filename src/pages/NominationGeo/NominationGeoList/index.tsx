@@ -3,6 +3,7 @@
 
 import {
   faBars,
+  faChartPie,
   faExternalLinkAlt,
   faGripVertical,
 } from '@fortawesome/free-solid-svg-icons';
@@ -22,6 +23,9 @@ import { useStaking } from 'contexts/Staking';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { useHelp } from 'contexts/Help';
+import { TooltipTrigger } from 'library/ListItem/Wrappers';
+import { useTooltip } from 'contexts/Tooltip';
+import { useTranslation } from 'react-i18next';
 
 export const NominationGeoList = (props: NomninationGeoListProps) => (
   <NominationGeoListProvider>
@@ -35,6 +39,7 @@ export const NominationGeoListInner = ({
   data,
 }: NomninationGeoListProps) => {
   const { mode } = useTheme();
+  const { t } = useTranslation('pages');
   const {
     network,
     networkData: { colors },
@@ -43,6 +48,7 @@ export const NominationGeoListInner = ({
   const { isNominating } = useStaking();
   const { activeAccount } = useActiveAccounts();
   const { openHelp } = useHelp();
+  const { setTooltipTextAndOpen } = useTooltip();
 
   if (!data?.nodeDistributionDetail) {
     return null;
@@ -52,6 +58,8 @@ export const NominationGeoListInner = ({
     (acc, n) => acc + n.TokenRewards,
     0
   );
+
+  const tooltipText = t('decentralization.nominationShareInRewards');
 
   return (
     <>
@@ -83,60 +91,66 @@ export const NominationGeoListInner = ({
           <MotionContainer>
             {data.nodeDistributionDetail
               .sort((a, b) => b.TokenRewards - a.TokenRewards)
-              .map((n, index: number) => {
-                const labelClass = 'reward';
-
-                return (
-                  <motion.div
-                    className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
-                    key={`nomination_${index}`}
-                    variants={{
-                      hidden: {
-                        y: 15,
-                        opacity: 0,
-                      },
-                      show: {
-                        y: 0,
-                        opacity: 1,
-                      },
-                    }}
-                  >
-                    <ItemWrapper>
-                      <div className="inner">
-                        <div className="row">
+              .map((n, index: number) => (
+                <motion.div
+                  className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
+                  key={`nomination_${index}`}
+                  variants={{
+                    hidden: {
+                      y: 15,
+                      opacity: 0,
+                    },
+                    show: {
+                      y: 0,
+                      opacity: 1,
+                    },
+                  }}
+                >
+                  <ItemWrapper>
+                    <div className="inner">
+                      <div className="row">
+                        <div>
                           <div>
-                            <div>
-                              <h4 className={labelClass}>
-                                <p>
-                                  {n.LastNetwork}, {n.LastCountry},{' '}
-                                  {n.LastRegion}{' '}
-                                  {n.Countries + n.Regions > 2 ? '++.' : '.'}
-                                </p>
-                              </h4>
-                            </div>
-                            <div />
+                            <h4 className="reward">
+                              <p>
+                                {n.LastNetwork}, {n.LastCountry}, {n.LastRegion}{' '}
+                                {n.Countries + n.Regions > 2 ? '++.' : '.'}
+                              </p>
+                            </h4>
                           </div>
+                          <div />
                         </div>
-                        <div className="row">
+                      </div>
+                      <div className="row">
+                        <div>
                           <div>
-                            <div>
-                              <Identity address={n.Id} />
-                            </div>
-                            <div>
-                              <h5>
-                                {Math.round(
-                                  (n.TokenRewards / totalRewards) * 1000
-                                ) / 10}{' '}
-                                %
-                              </h5>
-                            </div>
+                            <Identity address={n.Id} />
+                          </div>
+                          <div>
+                            <h5>
+                              <TooltipTrigger
+                                className="tooltip-trigger-element"
+                                data-tooltip-text={tooltipText}
+                                onMouseMove={() =>
+                                  setTooltipTextAndOpen(tooltipText)
+                                }
+                              />
+                              {Math.round(
+                                (n.TokenRewards / totalRewards) * 1000
+                              ) / 10}{' '}
+                              %{' '}
+                              <FontAwesomeIcon
+                                icon={faChartPie}
+                                transform="shrink-1"
+                              />
+                            </h5>
                           </div>
                         </div>
                       </div>
-                    </ItemWrapper>
-                  </motion.div>
-                );
-              })}
+                    </div>
+                  </ItemWrapper>
+                </motion.div>
+              ))}
           </MotionContainer>
         </List>
       </ListWrapper>

@@ -17,6 +17,7 @@
       "decentralizationPerNomination": "每个提名的地理位置",
       "howDecentralizedIsYourNomination": "您的提名去中心化程度如何？",
       "maxErasAnalyzed": "最大分析Era数",
+      "nominationShareInRewards": "奖励份额",
       "payoutDistribution": "收益分布",
       "polkawatchDisabled": "Polkawatch己断开",
       "totalPayoutsAnalysed": "总收益分析"
