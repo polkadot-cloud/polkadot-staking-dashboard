@@ -101,6 +101,11 @@ export const NominationGeo = () => {
 
   return (
     <>
+      <StatBoxList>
+        <AnalyzedPayouts data={nominationDetail} />
+        <AnalyzedEras meta={networkMeta} />
+        <AnalyzedDays />
+      </StatBoxList>
       <PageRow>
         <CardWrapper>
           <PluginLabel plugin="polkawatch" />
@@ -180,11 +185,6 @@ export const NominationGeo = () => {
           </div>
         </CardWrapper>
       </PageRow>
-      <StatBoxList>
-        <AnalyzedPayouts data={nominationDetail} />
-        <AnalyzedEras meta={networkMeta} />
-        <AnalyzedDays />
-      </StatBoxList>
       {nominationDetail?.nodeDistributionDetail && (
         <PageRow>
           <CardWrapper>

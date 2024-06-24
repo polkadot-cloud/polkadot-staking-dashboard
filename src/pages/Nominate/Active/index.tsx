@@ -23,7 +23,6 @@ import { useSyncing } from 'hooks/useSyncing';
 import { useBalances } from 'contexts/Balances';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
-import { PageTitle } from 'kits/Structure/PageTitle';
 import { PageRow } from 'kits/Structure/PageRow';
 import { RowSection } from 'kits/Structure/RowSection';
 import { WithdrawPrompt } from 'library/WithdrawPrompt';
@@ -44,7 +43,6 @@ export const Active = () => {
 
   return (
     <>
-      <PageTitle title={t('nominate.nominate', { ns: 'pages' })} />
       <StatBoxList>
         <ActiveNominatorsStat />
         <MinimumNominatorBondStat />
