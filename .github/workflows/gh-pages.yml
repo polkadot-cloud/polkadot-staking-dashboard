@@ -5,13 +5,13 @@ on:
     branches: [main]
 
 jobs:
-  gh-deploy:
+  merge:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: gh-deploy
-          
+
       - uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -26,6 +26,21 @@ jobs:
           target_branch: gh-deploy
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
+
+  build:
+    runs-on: ubuntu-latest
+    needs: merge
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-deploy
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          registry-url: https://registry.npmjs.org
+          cache: 'yarn'
+
       - name: Install
         run: yarn install
 
@@ -33,7 +48,34 @@ jobs:
         working-directory: '.'
         run: yarn build:pages
 
-      - name: Deploy
+      - name: Update `gh-pages` branch
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: build
+
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          name: github-pages
+          path: build
+                
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    permissions:
+      id-token: write
+      pages: write
+
+    environment:
+      name: github-pages
+      url: ${{steps.deployment.outputs.page_url}}
+      
+    steps:
+    - uses: actions/download-artifact@master
+      with:
+        name: github-pages
+        path: build
+    - uses: actions/configure-pages@v5
+    - id: deployment
+      uses: actions/deploy-pages@main
