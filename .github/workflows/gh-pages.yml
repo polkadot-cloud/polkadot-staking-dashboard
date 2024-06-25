@@ -16,7 +16,6 @@ jobs:
         with:
           node-version: 18
           registry-url: https://registry.npmjs.org
-          cache: 'yarn'
 
       - name: Merge
         uses: devmasx/merge-branch@master
@@ -39,7 +38,6 @@ jobs:
         with:
           node-version: 18
           registry-url: https://registry.npmjs.org
-          cache: 'yarn'
 
       - name: Install
         run: yarn install
