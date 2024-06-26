@@ -1,5 +1,5 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
 
 import react from '@vitejs/plugin-react-swc';
 import { defineConfig } from 'vite';
@@ -9,8 +9,9 @@ import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
+//
+// - `BASE_URL`env variable is used in the codebase to refer to the supplied base.
 export default defineConfig({
-  base: '/',
   plugins: [
     eslint(),
     react(),
@@ -22,10 +23,17 @@ export default defineConfig({
   ],
   build: {
     outDir: 'build',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          '@substrate/connect': ['@substrate/connect'],
+        },
+      },
+    },
   },
   server: {
     fs: {
-      strict: true,
+      strict: false,
     },
   },
   optimizeDeps: {
