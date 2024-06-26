@@ -5,9 +5,7 @@
   "license": "GPL-3.0-only",
   "scripts": {
     "build": "tsc && vite build --base '/'",
-    "build:pages": "tsc && vite build --base '/polkadot-staking-dashboard/'",
     "clear": "rm -rf node_modules build tsconfig.tsbuildinfo yarn.lock",
-    "deploy:pages": "yarn build:pages && gh-pages -d build",
     "dev": "vite",
     "lint": "eslint . --fix && npx prettier --write . && npx prettier --write ./.scripts && node ./.scripts/localeOrderKeys.cjs",
     "locale:order": "node ./.scripts/localeOrderKeys.cjs",
@@ -88,7 +86,6 @@
     "eslint-plugin-react": "^7.34.2",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-unused-imports": "3.2.0",
-    "gh-pages": "^6.1.1",
     "prettier": "^3.3.1",
     "prettier-plugin-organize-imports": "^3.2.4",
     "sass": "^1.77.4",
