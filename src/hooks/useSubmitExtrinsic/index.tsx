@@ -265,7 +265,7 @@ export const useSubmitExtrinsic = ({
       try {
         const unsub = await txRef.current.signAndSend(
           fromRef.current,
-          { signer },
+          { signer, withSignedTransaction: true },
           ({ status, events = [] }: AnyApi) => {
             if (!didTxReset.current) {
               didTxReset.current = true;
