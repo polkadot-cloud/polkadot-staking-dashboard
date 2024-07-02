@@ -41,6 +41,7 @@ export const useBuildPayload = () => {
         signedExtensions: api.registry.signedExtensions,
         tip: api.registry.createType('Compact<Balance>', 0).toHex(),
         version: tx.version,
+        withSignedTransaction: true,
       };
       const raw = api.registry.createType('ExtrinsicPayload', payload, {
         version: payload.version,
