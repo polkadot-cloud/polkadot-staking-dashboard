@@ -34,7 +34,7 @@ export const Submit = ({
   const { getAccount } = useImportedAccounts();
   const { activeAccount } = useActiveAccounts();
   const { getTxPayload, getPayloadUid } = useTxMeta();
-  const { appName } = getLedgerApp(network);
+  const { txMetadataChainId } = getLedgerApp(network);
 
   const getAddressIndex = () =>
     (getAccount(activeAccount) as LedgerAccount)?.index || 0;
@@ -44,12 +44,12 @@ export const Submit = ({
     const uid = getPayloadUid();
     const accountIndex = getAddressIndex();
     const payload = await getTxPayload();
-    await handleSignTx(appName, uid, accountIndex, payload);
+    await handleSignTx(txMetadataChainId, uid, accountIndex, payload);
   };
 
   // Check device runtime version.
   const handleCheckRuntimeVersion = async () => {
-    await checkRuntimeVersion(appName);
+    await checkRuntimeVersion(txMetadataChainId);
   };
 
   // Is the transaction ready to be submitted?

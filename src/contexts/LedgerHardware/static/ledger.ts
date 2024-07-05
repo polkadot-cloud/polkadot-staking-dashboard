@@ -14,11 +14,11 @@ export class Ledger {
   static isPaired = false;
 
   // Initialise ledger transport, initialise app, and return with device info.
-  static initialise = async (appName: string) => {
+  static initialise = async (txMetadataChainId: string) => {
     this.transport = await TransportWebHID.create();
     const app = new PolkadotGenericApp(
       Ledger.transport,
-      appName,
+      txMetadataChainId,
       'https://api.zondax.ch/polkadot/transaction/metadata'
     );
     const { productName } = this.transport.device;

@@ -13,7 +13,7 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   transportResponse: null,
   integrityChecked: false,
   setIntegrityChecked: (checked) => {},
-  checkRuntimeVersion: async (appName) => new Promise((resolve) => resolve()),
+  checkRuntimeVersion: async (network) => new Promise((resolve) => resolve()),
   setStatusCode: (a, s) => {},
   setIsExecuting: (b) => {},
   getIsExecuting: () => false,
@@ -23,10 +23,10 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   setFeedback: (s, h) => {},
   resetFeedback: () => {},
   handleUnmount: () => {},
-  handleErrors: (appName, err) => {},
-  handleGetAddress: (appName, accountIndex) =>
+  handleErrors: (err) => {},
+  handleGetAddress: (txMetadataChainId, accountIndex) =>
     new Promise((resolve) => resolve()),
-  handleSignTx: (appName, uid, index, payload) =>
+  handleSignTx: (txMetadataChainId, uid, index, payload) =>
     new Promise((resolve) => resolve()),
   handleResetLedgerTask: () => {},
   runtimesInconsistent: false,

@@ -34,7 +34,7 @@ export const ImportLedger: FC = () => {
     handleUnmount,
     handleGetAddress,
   } = useLedgerHardware();
-  const { appName } = getLedgerApp(network);
+  const { txMetadataChainId } = getLedgerApp(network);
 
   // Store addresses retreived from Ledger device. Defaults to local addresses.
   const [addresses, setAddresses] = useState<LedgerAddress[]>(
@@ -51,7 +51,7 @@ export const ImportLedger: FC = () => {
   };
 
   const onGetAddress = async () => {
-    await handleGetAddress(appName, getNextAddressIndex());
+    await handleGetAddress(txMetadataChainId, getNextAddressIndex());
   };
 
   const removeLedgerAddress = (address: string) => {

@@ -8,12 +8,12 @@ import PolkadotSVG from 'img/appIcons/polkadot.svg?react';
 export const LedgerApps: LedgerApp[] = [
   {
     network: 'polkadot',
-    appName: 'dot',
+    txMetadataChainId: 'dot',
     Icon: PolkadotSVG,
   },
   {
     network: 'kusama',
-    appName: 'ksm',
+    txMetadataChainId: 'ksm',
     Icon: KusamaSVG,
   },
 ];
