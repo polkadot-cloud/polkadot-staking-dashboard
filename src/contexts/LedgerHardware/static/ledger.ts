@@ -39,17 +39,6 @@ export class Ledger {
     }
   };
 
-  // Check if a response is an error.
-  static isError = (result: AnyJson) => {
-    const error = result?.error_message;
-    if (error) {
-      if (!error.startsWith('No errors')) {
-        return true;
-      }
-    }
-    return false;
-  };
-
   // Gets device runtime version.
   static getVersion = async (app: PolkadotGenericApp) => {
     await this.ensureOpen();

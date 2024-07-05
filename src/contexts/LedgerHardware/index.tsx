@@ -93,14 +93,12 @@ export const LedgerHardwareProvider = ({
       setIsExecuting(true);
       const { app } = await Ledger.initialise(txMetadataChainId);
       const result = await Ledger.getVersion(app);
+      const major = result?.major || 0;
 
-      if (Ledger.isError(result)) {
-        throw new Error(result.error_message);
-      }
       setIsExecuting(false);
       resetFeedback();
 
-      if (result.major < transactionVersion) {
+      if (major < transactionVersion) {
         runtimesInconsistent.current = true;
       }
       setIntegrityChecked(true);
@@ -119,9 +117,6 @@ export const LedgerHardwareProvider = ({
       const { app, productName } = await Ledger.initialise(txMetadataChainId);
       const result = await Ledger.getAddress(app, accountIndex, ss58Prefix);
 
-      if (Ledger.isError(result)) {
-        throw new Error(result.error_message);
-      }
       setIsExecuting(false);
       setFeedback(t('successfullyFetchedAddress'));
       setTransportResponse({
@@ -151,12 +146,7 @@ export const LedgerHardwareProvider = ({
       setFeedback(t('approveTransactionLedger'));
 
       const result = await Ledger.signPayload(app, index, payload);
-      // TODO: extract error message from result
-      // const signature = bufferToU8a(result.signature);
 
-      if (Ledger.isError(result)) {
-        throw new Error('Error');
-      }
       setTransportResponse({
         statusCode: 'SignedPayload',
         device: { productName },
