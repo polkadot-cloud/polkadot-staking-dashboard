@@ -76,7 +76,7 @@ export interface LedgerAddress {
   pubKey: string;
 }
 
-export interface LedgerApp {
+export interface LedgerChain {
   network: NetworkName;
   txMetadataChainId: string;
   Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
