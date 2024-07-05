@@ -69,6 +69,7 @@ export const useBuildPayload = () => {
         signedExtensions: api.registry.signedExtensions,
         tip: api.registry.createType('Compact<Balance>', 0).toHex(),
         version: tx.version,
+        withSignedTransaction: true,
       };
 
       // If the source is `ledger`, add the metadata hash to the payload.
