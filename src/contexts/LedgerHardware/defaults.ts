@@ -13,7 +13,8 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   transportResponse: null,
   integrityChecked: false,
   setIntegrityChecked: (checked) => {},
-  checkRuntimeVersion: async (network) => new Promise((resolve) => resolve()),
+  checkRuntimeVersion: async (txMetadataChainId) =>
+    new Promise((resolve) => resolve()),
   setStatusCode: (a, s) => {},
   setIsExecuting: (b) => {},
   getIsExecuting: () => false,
