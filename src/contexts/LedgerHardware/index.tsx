@@ -30,7 +30,9 @@ export const LedgerHardwareProvider = ({
   children: ReactNode;
 }) => {
   const { t } = useTranslation('modals');
-  const { transactionVersion } = useApi().chainState.version;
+  const { chainState } = useApi();
+  const { ss58Prefix } = chainState;
+  const { transactionVersion } = chainState.version;
 
   // Store whether a Ledger device task is in progress.
   const [isExecuting, setIsExecutingState] = useState<boolean>(false);
@@ -113,7 +115,7 @@ export const LedgerHardwareProvider = ({
     try {
       setIsExecuting(true);
       const { app, productName } = await Ledger.initialise(appName);
-      const result = await Ledger.getAddress(app, accountIndex);
+      const result = await Ledger.getAddress(app, accountIndex, ss58Prefix);
 
       if (Ledger.isError(result)) {
         throw new Error(result.error_message);
@@ -148,9 +150,11 @@ export const LedgerHardwareProvider = ({
       setFeedback(t('approveTransactionLedger'));
 
       const result = await Ledger.signPayload(app, index, payload);
+      // TODO: extract error message from result
+      // const signature = bufferToU8a(result.signature);
 
       if (Ledger.isError(result)) {
-        throw new Error(result.error_message);
+        throw new Error('Error');
       }
       setTransportResponse({
         statusCode: 'SignedPayload',
@@ -161,6 +165,7 @@ export const LedgerHardwareProvider = ({
         },
       });
     } catch (err) {
+      console.log('handleSignTx error');
       console.log(err);
       handleErrors(appName, err);
     }
