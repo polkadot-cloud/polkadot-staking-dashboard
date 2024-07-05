@@ -23,7 +23,8 @@ export interface LedgerHardwareContextInterface {
   runtimesInconsistent: boolean;
   handleGetAddress: (
     txMetadataChainId: string,
-    accountIndex: number
+    accountIndex: number,
+    ss58Prefix: number
   ) => Promise<void>;
   handleSignTx: (
     txMetadataChainId: string,

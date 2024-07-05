@@ -31,7 +31,6 @@ export const LedgerHardwareProvider = ({
 }) => {
   const { t } = useTranslation('modals');
   const { chainState } = useApi();
-  const { ss58Prefix } = chainState;
   const { transactionVersion } = chainState.version;
 
   // Store whether a Ledger device task is in progress.
@@ -110,7 +109,8 @@ export const LedgerHardwareProvider = ({
   // Gets an address from Ledger device.
   const handleGetAddress = async (
     txMetadataChainId: string,
-    accountIndex: number
+    accountIndex: number,
+    ss58Prefix: number
   ) => {
     try {
       setIsExecuting(true);
