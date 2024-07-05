@@ -4,7 +4,6 @@
 import TransportWebHID from '@ledgerhq/hw-transport-webhid';
 import { PolkadotGenericApp } from '@zondax/ledger-substrate';
 import { withTimeout } from '@w3ux/utils';
-import { u8aToBuffer } from '@polkadot/util';
 import type { AnyJson } from '@w3ux/types';
 
 export class Ledger {
@@ -68,7 +67,7 @@ export class Ledger {
     ss58Prefix: number
   ) => {
     await this.ensureOpen();
-    // NOTE: Used with new Ledger API.
+
     const bip42Path = `m/44'/354'/${index}'/${0}'/${0}'`;
 
     const result = await withTimeout(
@@ -90,10 +89,8 @@ export class Ledger {
   ) => {
     await this.ensureOpen();
 
-    // NOTE: Used with new Ledger API.
     const bip42Path = `m/44'/354'/${index}'/${0}'/${0}'`;
-
-    const result = await app.sign(bip42Path, u8aToBuffer(payload.toU8a(true)));
+    const result = await app.sign(bip42Path, Buffer.from(payload.toU8a(true)));
     await this.ensureClosed();
     return result;
   };
