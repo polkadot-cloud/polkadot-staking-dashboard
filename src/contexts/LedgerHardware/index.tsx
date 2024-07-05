@@ -105,8 +105,7 @@ export const LedgerHardwareProvider = ({
       }
       setIntegrityChecked(true);
     } catch (err) {
-      console.log(err);
-      handleErrors(appName, err);
+      handleErrors(err);
     }
   };
 
@@ -132,8 +131,7 @@ export const LedgerHardwareProvider = ({
         body: [result],
       });
     } catch (err) {
-      console.log(err);
-      handleErrors(appName, err);
+      handleErrors(err);
     }
   };
 
@@ -165,14 +163,12 @@ export const LedgerHardwareProvider = ({
         },
       });
     } catch (err) {
-      console.log('handleSignTx error');
-      console.log(err);
-      handleErrors(appName, err);
+      handleErrors(err);
     }
   };
 
   // Handles errors that occur during device calls.
-  const handleErrors = (appName: string, err: unknown) => {
+  const handleErrors = (err: unknown) => {
     // Update feedback and status code state based on error received.
     switch (getLedgerErrorType(String(err))) {
       // Occurs when the device does not respond to a request within the timeout period.
@@ -229,7 +225,7 @@ export const LedgerHardwareProvider = ({
       // Occurs when the app (e.g. Polkadot) is not open.
       case 'appNotOpen':
         setStatusFeedback({
-          message: t('openAppOnLedger', { appName }),
+          message: t('openAppOnLedger'),
           helpKey: 'Open App On Ledger',
           code: 'TransactionRejected',
         });
@@ -251,7 +247,7 @@ export const LedgerHardwareProvider = ({
         break;
       // Handle all other errors.
       default:
-        setFeedback(t('openAppOnLedger', { appName }), 'Open App On Ledger');
+        setFeedback(t('openAppOnLedger'), 'Open App On Ledger');
         setStatusCode('failure', 'AppNotOpen');
     }
 
