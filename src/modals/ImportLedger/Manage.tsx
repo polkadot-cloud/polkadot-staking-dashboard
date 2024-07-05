@@ -14,6 +14,7 @@ import { useNetwork } from 'contexts/Network';
 import { Addresess } from './Addresses';
 import { Reset } from './Reset';
 import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar';
+import { capitalizeFirstLetter } from '@w3ux/utils';
 
 export const Manage = ({
   addresses,
@@ -27,7 +28,7 @@ export const Manage = ({
   const { replaceModal } = useOverlay().modal;
   const { handleResetLedgerTask, getIsExecuting, getFeedback } =
     useLedgerHardware();
-  const { appName, Icon } = getLedgerApp(network);
+  const { Icon } = getLedgerApp(network);
   const isExecuting = getIsExecuting();
 
   const fallbackMessage = `${t('ledgerAccounts', {
@@ -42,7 +43,7 @@ export const Manage = ({
       <Heading
         connectTo="Ledger"
         Icon={Icon}
-        title={appName}
+        title={capitalizeFirstLetter(network)}
         handleReset={() => {
           openPromptWith(
             <Reset removeLedgerAddress={removeLedgerAddress} />,

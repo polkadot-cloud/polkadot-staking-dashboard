@@ -36,3 +36,5 @@ export const TipsThresholdMedium = 1200;
  */
 export const MaxPayoutDays = 60;
 export const MaxEraRewardPointsEras = 10;
+export const ZondaxMetadataHashApiUrl =
+  'https://api.zondax.ch/polkadot/node/metadata/hash';
