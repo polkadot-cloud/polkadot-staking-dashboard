@@ -2,14 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import TransportWebHID from '@ledgerhq/hw-transport-webhid';
-import { newSubstrateApp, type SubstrateApp } from '@zondax/ledger-substrate';
+import { PolkadotGenericApp } from '@zondax/ledger-substrate';
 import { withTimeout } from '@w3ux/utils';
-import { u8aToBuffer } from '@polkadot/util';
 import type { AnyJson } from '@w3ux/types';
-
-const LEDGER_DEFAULT_ACCOUNT = 0x80000000;
-const LEDGER_DEFAULT_CHANGE = 0x80000000;
-const LEDGER_DEFAULT_INDEX = 0x80000000;
 
 export class Ledger {
   // The ledger device transport. `null` when not actively in use.
@@ -19,9 +14,13 @@ export class Ledger {
   static isPaired = false;
 
   // Initialise ledger transport, initialise app, and return with device info.
-  static initialise = async (appName: string) => {
+  static initialise = async (txMetadataChainId: string) => {
     this.transport = await TransportWebHID.create();
-    const app = newSubstrateApp(Ledger.transport, appName);
+    const app = new PolkadotGenericApp(
+      Ledger.transport,
+      txMetadataChainId,
+      'https://api.zondax.ch/polkadot/transaction/metadata'
+    );
     const { productName } = this.transport.device;
     return { app, productName };
   };
@@ -40,19 +39,8 @@ export class Ledger {
     }
   };
 
-  // Check if a response is an error.
-  static isError = (result: AnyJson) => {
-    const error = result?.error_message;
-    if (error) {
-      if (!error.startsWith('No errors')) {
-        return true;
-      }
-    }
-    return false;
-  };
-
   // Gets device runtime version.
-  static getVersion = async (app: SubstrateApp) => {
+  static getVersion = async (app: PolkadotGenericApp) => {
     await this.ensureOpen();
     const result = await withTimeout(3000, app.getVersion(), {
       onTimeout: () => this.transport?.close(),
@@ -62,16 +50,18 @@ export class Ledger {
   };
 
   // Gets an address from transport.
-  static getAddress = async (app: SubstrateApp, index: number) => {
+  static getAddress = async (
+    app: PolkadotGenericApp,
+    index: number,
+    ss58Prefix: number
+  ) => {
     await this.ensureOpen();
+
+    const bip42Path = `m/44'/354'/${index}'/${0}'/${0}'`;
+
     const result = await withTimeout(
       3000,
-      app.getAddress(
-        LEDGER_DEFAULT_ACCOUNT + index,
-        LEDGER_DEFAULT_CHANGE,
-        LEDGER_DEFAULT_INDEX + 0,
-        false
-      ),
+      app.getAddress(bip42Path, ss58Prefix, false),
       {
         onTimeout: () => this.transport?.close(),
       }
@@ -82,17 +72,14 @@ export class Ledger {
 
   // Signs a payload on device.
   static signPayload = async (
-    app: SubstrateApp,
+    app: PolkadotGenericApp,
     index: number,
     payload: AnyJson
   ) => {
     await this.ensureOpen();
-    const result = await app.sign(
-      LEDGER_DEFAULT_ACCOUNT + index,
-      LEDGER_DEFAULT_CHANGE,
-      LEDGER_DEFAULT_INDEX + 0,
-      u8aToBuffer(payload.toU8a(true))
-    );
+
+    const bip42Path = `m/44'/354'/${index}'/${0}'/${0}'`;
+    const result = await app.sign(bip42Path, Buffer.from(payload.toU8a(true)));
     await this.ensureClosed();
     return result;
   };

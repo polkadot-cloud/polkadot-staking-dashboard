@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { localStorageOrDefault } from '@w3ux/utils';
-import { LedgerApps } from 'config/ledger';
+import { LedgerChains } from 'config/ledger';
 import type { LedgerAddress } from './types';
 
 // Ledger error keyed by type of error.
@@ -42,7 +42,7 @@ export const getLedgerErrorType = (err: string) => {
 
 // Gets ledger app from local storage, fallback to first entry.
 export const getLedgerApp = (network: string) =>
-  LedgerApps.find((a) => a.network === network) || LedgerApps[0];
+  LedgerChains.find((a) => a.network === network) || LedgerChains[0];
 
 // Gets saved ledger addresses from local storage.
 export const getLocalLedgerAddresses = (network?: string) => {

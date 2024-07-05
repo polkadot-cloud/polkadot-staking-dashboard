@@ -16,7 +16,6 @@ import { useProxySupported } from '../useProxySupported';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 import { NotificationsController } from 'controllers/NotificationsController';
 import { useExtensions } from '@w3ux/react-connect-kit';
-import type { AnyJson } from '@w3ux/types';
 
 export const useSubmitExtrinsic = ({
   tx,
@@ -38,7 +37,7 @@ export const useSubmitExtrinsic = ({
     txFees,
     setTxFees,
     setSender,
-    getTxPayload,
+    getTxPayloadValue,
     getTxSignature,
     setTxSignature,
     resetTxPayload,
@@ -230,13 +229,17 @@ export const useSubmitExtrinsic = ({
     // pre-submission state update
     setSubmitting(true);
 
-    const txPayload: AnyJson = getTxPayload();
-    const txSignature: AnyJson = getTxSignature();
+    const txPayloadValue = getTxPayloadValue();
+    const txSignature = getTxSignature();
 
     // handle signed transaction.
     if (getTxSignature()) {
       try {
-        txRef.current.addSignature(fromRef.current, txSignature, txPayload);
+        txRef.current.addSignature(
+          fromRef.current,
+          txSignature,
+          txPayloadValue
+        );
 
         const unsub = await txRef.current.send(
           ({ status, events = [] }: AnyApi) => {

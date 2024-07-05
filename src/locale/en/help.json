@@ -218,7 +218,7 @@
         "Open App On Ledger",
         [
           "This message occurs when the {NETWORK_NAME} Ledger app is not currently open on the connected device.",
-          "Open the {NETWORK_NAME} app on the Ledger device and try again."
+          "Open the Polkadot app on the Ledger device and try again."
         ]
       ],
       "payout": [
