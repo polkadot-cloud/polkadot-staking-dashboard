@@ -103,6 +103,7 @@ export const LedgerHardwareProvider = ({
       }
       setIntegrityChecked(true);
     } catch (err) {
+      console.log(err);
       handleErrors(appName, err);
     }
   };
@@ -129,6 +130,7 @@ export const LedgerHardwareProvider = ({
         body: [result],
       });
     } catch (err) {
+      console.log(err);
       handleErrors(appName, err);
     }
   };
@@ -150,8 +152,6 @@ export const LedgerHardwareProvider = ({
       if (Ledger.isError(result)) {
         throw new Error(result.error_message);
       }
-      setIsExecuting(false);
-      setFeedback(t('signedTransactionSuccessfully'));
       setTransportResponse({
         statusCode: 'SignedPayload',
         device: { productName },
@@ -161,6 +161,7 @@ export const LedgerHardwareProvider = ({
         },
       });
     } catch (err) {
+      console.log(err);
       handleErrors(appName, err);
     }
   };

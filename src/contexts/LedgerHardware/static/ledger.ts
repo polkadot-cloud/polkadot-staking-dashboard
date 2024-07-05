@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import TransportWebHID from '@ledgerhq/hw-transport-webhid';
-import { newSubstrateApp, type SubstrateApp } from '@zondax/ledger-substrate';
+import { PolkadotGenericAppLegacy } from '@zondax/ledger-substrate';
+
 import { withTimeout } from '@w3ux/utils';
 import { u8aToBuffer } from '@polkadot/util';
 import type { AnyJson } from '@w3ux/types';
@@ -21,7 +22,12 @@ export class Ledger {
   // Initialise ledger transport, initialise app, and return with device info.
   static initialise = async (appName: string) => {
     this.transport = await TransportWebHID.create();
-    const app = newSubstrateApp(Ledger.transport, appName);
+    const app = new PolkadotGenericAppLegacy(
+      Ledger.transport,
+      0, // TODO: plug in real ss58 prefix.
+      appName,
+      'https://api.zondax.ch/polkadot/transaction/metadata'
+    );
     const { productName } = this.transport.device;
     return { app, productName };
   };
@@ -52,7 +58,7 @@ export class Ledger {
   };
 
   // Gets device runtime version.
-  static getVersion = async (app: SubstrateApp) => {
+  static getVersion = async (app: PolkadotGenericAppLegacy) => {
     await this.ensureOpen();
     const result = await withTimeout(3000, app.getVersion(), {
       onTimeout: () => this.transport?.close(),
@@ -62,8 +68,11 @@ export class Ledger {
   };
 
   // Gets an address from transport.
-  static getAddress = async (app: SubstrateApp, index: number) => {
+  static getAddress = async (app: PolkadotGenericAppLegacy, index: number) => {
     await this.ensureOpen();
+    // NOTE: Used with new Ledger API.
+    // const bip42Path = `m/44'/354'/${index}'/${0}'/${0}'`;
+
     const result = await withTimeout(
       3000,
       app.getAddress(
@@ -82,11 +91,15 @@ export class Ledger {
 
   // Signs a payload on device.
   static signPayload = async (
-    app: SubstrateApp,
+    app: PolkadotGenericAppLegacy,
     index: number,
     payload: AnyJson
   ) => {
     await this.ensureOpen();
+
+    // NOTE: Used with new Ledger API.
+    // const bip42Path = `m/44'/354'/${index}'/${0}'/${0}'`;
+
     const result = await app.sign(
       LEDGER_DEFAULT_ACCOUNT + index,
       LEDGER_DEFAULT_CHANGE,
