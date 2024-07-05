@@ -28,6 +28,22 @@ export const useBuildPayload = () => {
       const accountNonce = getNonce(from);
       const nonce = api.registry.createType('Compact<Index>', accountNonce);
 
+      // Fetch the payload of the transaction.
+      // TODO: only if signing with Ledger.
+      const requestMetadataHash = await fetch(
+        'https://api.zondax.ch/polkadot/node/metadata/hash',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id: 'dot' }),
+        }
+      );
+
+      const responseMetadataHash = await requestMetadataHash.json();
+      const metadataHash = `0x${responseMetadataHash.metadataHash}`;
+
       const payload = {
         specVersion: api.runtimeVersion.specVersion.toHex(),
         transactionVersion: api.runtimeVersion.transactionVersion.toHex(),
@@ -42,7 +58,10 @@ export const useBuildPayload = () => {
         tip: api.registry.createType('Compact<Balance>', 0).toHex(),
         version: tx.version,
         withSignedTransaction: true,
+        mode: 1,
+        metadataHash,
       };
+
       const raw = api.registry.createType('ExtrinsicPayload', payload, {
         version: payload.version,
       });
