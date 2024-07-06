@@ -16,6 +16,7 @@ import type {
 import { SyncController } from 'controllers/SyncController';
 import type { Nominations } from 'contexts/Balances/types';
 import type { ApiPromise } from '@polkadot/api';
+import { PeopleChainNetworks } from 'consts';
 
 export class ActivePoolsController {
   // ------------------------------------------------------
@@ -126,11 +127,16 @@ export class ActivePoolsController {
     const balance = accountDataResult.data;
     const rewardAccountBalance = balance?.free.toString();
 
-    // Fetch identities for roles and expand `bondedPool` state to store them.
-    bondedPool.roleIdentities = await IdentitiesController.fetch(
-      api,
-      this.getUniqueRoleAddresses(bondedPool.roles)
-    );
+    // PEOPLE CHAIN MIGRATION: Currently ignoring identities while People Chain is not supported.
+    if (
+      !PeopleChainNetworks.includes(api.runtimeChain.toString().toLowerCase())
+    ) {
+      // Fetch identities for roles and expand `bondedPool` state to store them.
+      bondedPool.roleIdentities = await IdentitiesController.fetch(
+        api,
+        this.getUniqueRoleAddresses(bondedPool.roles)
+      );
+    }
 
     // Only persist the active pool to class state (and therefore dispatch an event) if both the
     // bonded pool and reward pool are returned.
