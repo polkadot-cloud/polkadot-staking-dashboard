@@ -15,7 +15,6 @@ export interface AnalyzedErasProps {
 }
 
 export interface NomninationGeoListProps {
-  allowMoreCols: boolean;
   title: string;
   data?: NominatorDetail;
 }

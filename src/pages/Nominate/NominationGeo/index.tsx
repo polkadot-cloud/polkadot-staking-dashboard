@@ -189,7 +189,6 @@ export const NominationGeo = () => {
         <PageRow>
           <CardWrapper>
             <NominationGeoList
-              allowMoreCols={true}
               title={t('decentralization.decentralizationPerNomination', {
                 ns: 'pages',
               })}

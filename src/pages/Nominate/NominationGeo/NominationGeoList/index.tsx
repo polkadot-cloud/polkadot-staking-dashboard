@@ -15,11 +15,7 @@ import { useHelp } from 'contexts/Help';
 import { Node } from './Node';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 
-export const NominationGeoList = ({
-  allowMoreCols,
-  title,
-  data,
-}: NomninationGeoListProps) => {
+export const NominationGeoList = ({ title, data }: NomninationGeoListProps) => {
   const { network } = useNetwork();
   const { openHelp } = useHelp();
   const { isNominating } = useStaking();
@@ -49,7 +45,7 @@ export const NominationGeoList = ({
             </CardHeaderWrapper>
           </div>
         </Header>
-        <List $flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
+        <List $flexBasisLarge={'33.33%'}>
           <MotionContainer>
             {data.nodeDistributionDetail
               .sort((a, b) => b.TokenRewards - a.TokenRewards)

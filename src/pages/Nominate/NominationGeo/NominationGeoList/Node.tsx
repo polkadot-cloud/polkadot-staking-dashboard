@@ -18,7 +18,7 @@ export const Node = ({
 
   return (
     <motion.div
-      className="item row"
+      className="item col"
       variants={{
         hidden: {
           y: 15,
