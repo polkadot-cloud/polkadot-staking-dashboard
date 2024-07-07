@@ -5,7 +5,6 @@ import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import type { NomninationGeoListProps } from '../types';
-import { NominationGeoListProvider } from './context';
 import { useNetwork } from 'contexts/Network';
 import { Separator } from 'kits/Structure/Separator';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
@@ -16,13 +15,7 @@ import { useHelp } from 'contexts/Help';
 import { Node } from './Node';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 
-export const NominationGeoList = (props: NomninationGeoListProps) => (
-  <NominationGeoListProvider>
-    <NominationGeoListInner {...props} />
-  </NominationGeoListProvider>
-);
-
-export const NominationGeoListInner = ({
+export const NominationGeoList = ({
   allowMoreCols,
   title,
   data,

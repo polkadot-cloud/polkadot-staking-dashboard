@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { RewardsByValidationNode } from '@polkawatch/ddp-client';
-import { useNominationGeoList } from './context';
 import { motion } from 'framer-motion';
 import { Labels, Wrapper, Separator } from 'library/ListItem/Wrappers';
 import { Identity } from 'library/ListItem/Labels/Identity';
@@ -15,13 +14,11 @@ export const Node = ({
   node: RewardsByValidationNode;
   rewardTotal: number;
 }) => {
-  const { listFormat } = useNominationGeoList();
-
   const rewardShare = Math.round((node.TokenRewards / rewardTotal) * 1000) / 10;
 
   return (
     <motion.div
-      className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
+      className="item row"
       variants={{
         hidden: {
           y: 15,
