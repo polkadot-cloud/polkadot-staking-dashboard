@@ -201,7 +201,7 @@
         "Nomination Payout Distribution",
         [
           "The decentralization of your nomination.",
-          "The following charts display the distribution of rewards aggregated by the Region, Country and IP Network of the validator the payed out the reward."
+          "The following charts display the distribution of rewards aggregated by the region, country and IP network of the validator the payed out the reward."
         ]
       ],
       "nominationPools": [
