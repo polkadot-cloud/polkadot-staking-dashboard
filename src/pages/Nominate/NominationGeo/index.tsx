@@ -24,27 +24,29 @@ import { GraphWrapper } from 'library/Graphs/Wrapper';
 import { GeoDonut } from 'library/Graphs/GeoDonut';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { useHelp } from 'contexts/Help';
-import { Separator } from 'kits/Structure/Separator';
 import { NominationGeoList } from './NominationGeoList';
 import { StatusLabel } from 'library/StatusLabel';
+import { GraphsWrapper } from './Wrappers';
+import { useStaking } from 'contexts/Staking';
 
 export const NominationGeo = () => {
-  const { activeAccount } = useActiveAccounts();
   const { t } = useTranslation();
   const { openHelp } = useHelp();
   const { network } = useNetwork();
+  const { isNominating } = useStaking();
   const { pluginEnabled } = usePlugins();
+  const { activeAccount } = useActiveAccounts();
+
   const enabled = pluginEnabled('polkawatch');
 
   // Polkawatch Analytics chain metadata, contains information about how the decentralization is 1
   // computed for this particular blockchain
-
   const [networkMeta, setNetworkMeta] = useState<ChainMetadata>(
     {} as ChainMetadata
   );
 
   useEffect(() => {
-    if (networkSupported && enabled) {
+    if (networkSupported && enabled && isNominating()) {
       const polkaWatchApi = new PolkawatchApi(
         PolkaWatchController.apiConfig(network)
       );
@@ -62,7 +64,7 @@ export const NominationGeo = () => {
       setNetworkMeta({} as ChainMetadata);
       setAnalyticsAvailable(false);
     }
-  }, [network]);
+  }, [network, isNominating()]);
 
   const [nominationDetail, setNominationDetail] = useState<NominatorDetail>(
     {} as NominatorDetail
@@ -72,6 +74,20 @@ export const NominationGeo = () => {
 
   const networkSupported =
     PolkaWatchController.SUPPORTED_NETWORKS.includes(network);
+
+  // Min height of the graph container.
+  const graphContainerMinHeight = analyticsAvailable ? 320 : 25;
+
+  // Donut size and legend height.
+  const donutSize = '300px';
+  const legendHeight = 50;
+  const maxLabelLen = 10;
+
+  // Status label config.
+  const showDisabledLabel = !enabled;
+  const showNotNominatingLabel = enabled && !isNominating();
+  const showNotAvailableLabel =
+    enabled && !analyticsAvailable && isNominating();
 
   // Please note that the list of dependencies assume that changing network
   // triggers a change of account also (i.e. different network prefix).
@@ -121,16 +137,9 @@ export const NominationGeo = () => {
               {t('decentralization.byRegionCountryNetwork', { ns: 'pages' })}
             </h2>
           </CardHeaderWrapper>
-          <Separator />
-          <div
-            style={{
-              minHeight: `${350}px`,
-              display: 'flex',
-              justifyContent: 'space-evenly',
-              flexWrap: 'wrap',
-            }}
-          >
-            {!enabled || analyticsAvailable ? (
+
+          <GraphsWrapper style={{ minHeight: graphContainerMinHeight }}>
+            {showDisabledLabel && (
               <StatusLabel
                 status="active_service"
                 statusFor="polkawatch"
@@ -138,7 +147,18 @@ export const NominationGeo = () => {
                   ns: 'pages',
                 })}
               />
-            ) : (
+            )}
+
+            {showNotNominatingLabel && (
+              <StatusLabel
+                status="no_data"
+                title={t('notNominating', {
+                  ns: 'library',
+                })}
+              />
+            )}
+
+            {showNotAvailableLabel && (
               <StatusLabel
                 status="no_analytic_data"
                 title={
@@ -152,37 +172,42 @@ export const NominationGeo = () => {
                 }
               />
             )}
-            <GraphWrapper>
-              <GeoDonut
-                title={t('rewards')}
-                series={nominationDetail.topRegionalDistributionChart}
-                height={`${300}px`}
-                width={300}
-                legendHeight={50}
-                maxLabelLen={0}
-              />
-            </GraphWrapper>
-            <GraphWrapper>
-              <GeoDonut
-                title={t('rewards')}
-                series={nominationDetail.topCountryDistributionChart}
-                height={`${300}px`}
-                width={300}
-                legendHeight={50}
-                maxLabelLen={10}
-              />
-            </GraphWrapper>
-            <GraphWrapper>
-              <GeoDonut
-                title={t('rewards')}
-                series={nominationDetail.topNetworkDistributionChart}
-                height={`${300}px`}
-                width={300}
-                legendHeight={50}
-                maxLabelLen={10}
-              />
-            </GraphWrapper>
-          </div>
+
+            {enabled && analyticsAvailable && (
+              <>
+                <GraphWrapper>
+                  <GeoDonut
+                    title={t('rewards')}
+                    series={nominationDetail.topRegionalDistributionChart}
+                    height={donutSize}
+                    width={donutSize}
+                    legendHeight={legendHeight}
+                    maxLabelLen={0}
+                  />
+                </GraphWrapper>
+                <GraphWrapper>
+                  <GeoDonut
+                    title={t('rewards')}
+                    series={nominationDetail.topCountryDistributionChart}
+                    height={donutSize}
+                    width={donutSize}
+                    legendHeight={legendHeight}
+                    maxLabelLen={maxLabelLen}
+                  />
+                </GraphWrapper>
+                <GraphWrapper>
+                  <GeoDonut
+                    title={t('rewards')}
+                    series={nominationDetail.topNetworkDistributionChart}
+                    height={donutSize}
+                    width={donutSize}
+                    legendHeight={legendHeight}
+                    maxLabelLen={maxLabelLen}
+                  />
+                </GraphWrapper>
+              </>
+            )}
+          </GraphsWrapper>
         </CardWrapper>
       </PageRow>
       {nominationDetail?.nodeDistributionDetail && (

@@ -43,7 +43,7 @@ export const GeoDonut = ({
     responsive: true,
     maintainAspectRatio: false,
     spacing: 0,
-    cutout: '70%',
+    cutout: '75%',
     plugins: {
       legend: {
         display: true,
