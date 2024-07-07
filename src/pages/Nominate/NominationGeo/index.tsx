@@ -45,27 +45,6 @@ export const NominationGeo = () => {
     {} as ChainMetadata
   );
 
-  useEffect(() => {
-    if (networkSupported && enabled && isNominating()) {
-      const polkaWatchApi = new PolkawatchApi(
-        PolkaWatchController.apiConfig(network)
-      );
-      polkaWatchApi
-        .ddpIpfsAboutChain()
-        .then((response) => {
-          setAnalyticsAvailable(true);
-          setNetworkMeta(response.data);
-        })
-        .catch(() => {
-          setNetworkMeta({} as ChainMetadata);
-          setAnalyticsAvailable(false);
-        });
-    } else {
-      setNetworkMeta({} as ChainMetadata);
-      setAnalyticsAvailable(false);
-    }
-  }, [network, enabled, isNominating()]);
-
   const [nominationDetail, setNominationDetail] = useState<NominatorDetail>(
     {} as NominatorDetail
   );
@@ -89,10 +68,34 @@ export const NominationGeo = () => {
   const showNotAvailableLabel =
     enabled && !analyticsAvailable && isNominating();
 
-  // Please note that the list of dependencies assume that changing network
+  // Whether to interact with Polkawatch API.
+  const callPolkawatchApi = networkSupported && enabled && isNominating();
+
+  useEffect(() => {
+    if (callPolkawatchApi) {
+      const polkaWatchApi = new PolkawatchApi(
+        PolkaWatchController.apiConfig(network)
+      );
+      polkaWatchApi
+        .ddpIpfsAboutChain()
+        .then((response) => {
+          setAnalyticsAvailable(true);
+          setNetworkMeta(response.data);
+        })
+        .catch(() => {
+          setNetworkMeta({} as ChainMetadata);
+          setAnalyticsAvailable(false);
+        });
+    } else {
+      setNetworkMeta({} as ChainMetadata);
+      setAnalyticsAvailable(false);
+    }
+  }, [activeAccount, network, enabled, isNominating()]);
+
+  // NOTE: The list of dependencies assume that changing network
   // triggers a change of account also (i.e. different network prefix).
   useEffect(() => {
-    if (networkSupported && enabled) {
+    if (callPolkawatchApi) {
       const polkaWatchApi = new PolkawatchApi(
         PolkaWatchController.apiConfig(network)
       );
@@ -113,7 +116,7 @@ export const NominationGeo = () => {
       setNominationDetail({} as NominatorDetail);
       setAnalyticsAvailable(false);
     }
-  }, [activeAccount, enabled]);
+  }, [activeAccount, network, enabled, isNominating()]);
 
   return (
     <>
