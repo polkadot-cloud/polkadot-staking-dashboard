@@ -151,7 +151,6 @@ export const NominationGeo = () => {
                 })}
               />
             )}
-
             {showNotNominatingLabel && (
               <StatusLabel
                 status="no_data"
@@ -160,7 +159,6 @@ export const NominationGeo = () => {
                 })}
               />
             )}
-
             {showNotAvailableLabel && (
               <StatusLabel
                 status="no_analytic_data"
@@ -175,7 +173,6 @@ export const NominationGeo = () => {
                 }
               />
             )}
-
             {enabled && analyticsAvailable && (
               <>
                 <GraphWrapper>

@@ -39,7 +39,7 @@ export const NominationGeoList = ({ title, data }: NomninationGeoListProps) => {
                 {title}
                 <ButtonHelp
                   marginLeft
-                  onClick={() => openHelp('Nominations')}
+                  onClick={() => openHelp('Geolocation of Each Nomination')}
                 />
               </h3>
             </CardHeaderWrapper>
