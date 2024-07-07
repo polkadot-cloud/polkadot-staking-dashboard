@@ -106,7 +106,7 @@
       "geolocationOfEachNomination": [
         "Geolocation of Each Nomination",
         [
-          "Each nominated validator runs at a given datacenter that can be geolocated by its IP address. ",
+          "Each nominated validator runs at a given data center that can be geolocated by its IP address.",
           "The table displays the last Region, Country and Network where each nominated validator was geolocated.",
           "When the validator has been located at more than one location during the analytic period a ++ sign will be displayed.",
           "The percentage shown is the proportion of rewards payed out to you by this validator in the analytic period."
