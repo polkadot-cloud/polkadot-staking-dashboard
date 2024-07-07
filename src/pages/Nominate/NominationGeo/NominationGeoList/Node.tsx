@@ -40,7 +40,7 @@ export const Node = ({
             <div>
               <h4 style={{ paddingLeft: '0.25rem', fontSize: '0.95em' }}>
                 {node.LastNetwork}, {node.LastCountry}, {node.LastRegion}{' '}
-                {node.Countries + node.Regions > 2 ? '++.' : '.'}
+                {node.Countries + node.Regions > 2 ? ', ++' : ''}
               </h4>
             </div>
 
