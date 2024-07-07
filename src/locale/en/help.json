@@ -76,10 +76,8 @@
       "decentralizationAnalyticsPeriod": [
         "Decentralization Analytics Period",
         [
-          "The decentralization of your nomination is calculated analysing the rewards payed out in the last 30 days.",
-          "Depending on the Network this will translate into a number of Eras.",
-          "30 days provides enough information for the aggregation to be meaningful.",
-          "30 days is also short enough for changes in nominations to start impacting this analysis after a few days."
+          "The decentralization of your nomination is calculated by analysing the rewards payed out in the last 30 days. Depending on the network, this will translate into a number of Eras.",
+          "30 days provides enough information for the aggregation to be meaningful, and is also short enough for changes in nominations to start impacting this analysis after a few days."
         ]
       ],
       "epoch": [
