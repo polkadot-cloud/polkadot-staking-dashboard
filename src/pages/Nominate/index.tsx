@@ -10,17 +10,17 @@ import type { PageTitleTabProps } from 'kits/Structure/PageTitleTabs/types';
 import { useState } from 'react';
 
 export const Nominate = () => {
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<number>(0);
 
   const tabs: PageTitleTabProps[] = [
     {
-      title: t('nominate.overview'),
+      title: t('overview', { ns: 'base' }),
       active: activeTab === 0,
       onClick: () => setActiveTab(0),
     },
     {
-      title: t('nominate.decentralization'),
+      title: t('decentralization', { ns: 'base' }),
       active: activeTab === 1,
       onClick: () => setActiveTab(1),
     },
