@@ -64,7 +64,7 @@ export const NominationGeo = () => {
       setNetworkMeta({} as ChainMetadata);
       setAnalyticsAvailable(false);
     }
-  }, [network, isNominating()]);
+  }, [network, enabled, isNominating()]);
 
   const [nominationDetail, setNominationDetail] = useState<NominatorDetail>(
     {} as NominatorDetail
@@ -113,7 +113,7 @@ export const NominationGeo = () => {
       setNominationDetail({} as NominatorDetail);
       setAnalyticsAvailable(false);
     }
-  }, [activeAccount]);
+  }, [activeAccount, enabled]);
 
   return (
     <>
