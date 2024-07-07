@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 export const AnalyzedDays = () => {
   const { t } = useTranslation('pages');
   const params = {
-    label: t('decentralization.maxErasAnalyzed'),
+    label: t('decentralization.maxDaysAnalyzed'),
     value: 30,
     unit: 'Days',
     helpKey: 'Decentralization Analytics Period',

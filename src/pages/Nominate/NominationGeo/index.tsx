@@ -102,9 +102,9 @@ export const NominationGeo = () => {
   return (
     <>
       <StatBoxList>
-        <AnalyzedPayouts data={nominationDetail} />
-        <AnalyzedEras meta={networkMeta} />
         <AnalyzedDays />
+        <AnalyzedEras meta={networkMeta} />
+        <AnalyzedPayouts data={nominationDetail} />
       </StatBoxList>
       <PageRow>
         <CardWrapper>
