@@ -7,7 +7,6 @@ import { stringToU8a } from '@polkadot/util';
  * Global Constants
  */
 export const DappName = 'Polkadot Staking Dashboard';
-export const PolkadotUrl = 'https://polkadot.network/features/staking/';
 export const ManualSigners = ['ledger', 'vault'];
 
 /*
@@ -22,7 +21,7 @@ export const U32Opts = { bitLength: 32, isLe: true };
  */
 
 export const MaxPageWidth = 1450;
-export const SideMenuMaximisedWidth = 185;
+export const SideMenuMaximisedWidth = 195;
 export const SideMenuMinimisedWidth = 75;
 export const SectionFullWidthThreshold = 1000;
 export const PageWidthSmallThreshold = 825;
@@ -37,3 +36,10 @@ export const TipsThresholdMedium = 1200;
  */
 export const MaxPayoutDays = 60;
 export const MaxEraRewardPointsEras = 10;
+export const ZondaxMetadataHashApiUrl =
+  'https://api.zondax.ch/polkadot/node/metadata/hash';
+
+/*
+ * People Chain migration - disallow identities on networks where People Chain is live.
+ */
+export const PeopleChainNetworks = ['westend', 'kusama'];

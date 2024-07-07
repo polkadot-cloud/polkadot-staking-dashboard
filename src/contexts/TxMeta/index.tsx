@@ -47,11 +47,13 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
   // before submitting it.
   const [txPayload, setTxPayloadState] = useState<{
     payload: AnyJson;
+    payloadValue: AnyJson;
     uid: number;
   } | null>(null);
   const txPayloadRef = useRef(txPayload);
   const getPayloadUid = () => txPayloadRef.current?.uid || 1;
   const getTxPayload = () => txPayloadRef.current?.payload || null;
+  const getTxPayloadValue = () => txPayloadRef.current?.payloadValue || null;
 
   // Store an optional signed transaction if extrinsics require manual signing (e.g. Ledger).
   const [txSignature, setTxSignatureState] = useState<AnyJson>(null);
@@ -74,10 +76,15 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
   });
 
   // Set the transaction payload and uid. Overwrites any existing payload.
-  const setTxPayload = (p: AnyJson, uid: number) => {
+  const setTxPayload = (
+    payload: AnyJson,
+    payloadValue: AnyJson,
+    uid: number
+  ) => {
     setStateWithRef(
       {
-        payload: p,
+        payload,
+        payloadValue,
         uid,
       },
       setTxPayloadState,
@@ -165,6 +172,7 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
         notEnoughFunds,
         getPayloadUid,
         getTxPayload,
+        getTxPayloadValue,
         setTxPayload,
         incrementPayloadUid,
         resetTxPayload,
