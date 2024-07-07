@@ -15,10 +15,10 @@ export const Page = ({ page }: { page: PageItem }) => {
   return (
     <PageWrapper>
       <Helmet>
-        <title>{`${t(key, { ns: 'base' })} : ${t('title', {
+        <title>{`${t('title', {
           context: `${network}`,
           ns: 'base',
-        })}`}</title>
+        })} : ${t(key, { ns: 'base' })}`}</title>
       </Helmet>
       <Entry page={page} />
     </PageWrapper>

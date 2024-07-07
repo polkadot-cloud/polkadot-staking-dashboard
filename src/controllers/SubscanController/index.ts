@@ -19,9 +19,6 @@ export class SubscanController {
   // Class members.
   // ------------------------------------------------------
 
-  // Public Subscan API Key.
-  static API_KEY = 'd37149339f64775155a82a53f4253b27';
-
   // List of endpoints to be used for Subscan API calls.
   static ENDPOINTS = {
     eraStat: '/api/scan/staking/era_stat',
@@ -323,7 +320,6 @@ export class SubscanController {
     const res: Response = await fetch(this.getEndpoint() + endpoint, {
       headers: {
         'Content-Type': 'application/json',
-        'X-API-Key': this.API_KEY,
       },
       body: JSON.stringify(body),
       method: 'POST',
