@@ -147,6 +147,9 @@ export const LedgerHardwareProvider = ({
 
       const result = await Ledger.signPayload(app, index, payload);
 
+      setIsExecuting(false);
+      setFeedback(t('signedTransactionSuccessfully'));
+
       setTransportResponse({
         statusCode: 'SignedPayload',
         device: { productName },
