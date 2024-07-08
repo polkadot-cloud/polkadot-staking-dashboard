@@ -8,7 +8,7 @@ import type { MaybeString, NetworkName } from 'types';
 export interface LedgerHardwareContextInterface {
   integrityChecked: boolean;
   setIntegrityChecked: (checked: boolean) => void;
-  checkRuntimeVersion: (appName: string) => Promise<void>;
+  checkRuntimeVersion: (txMetadataChainId: string) => Promise<void>;
   transportResponse: AnyJson;
   setStatusCode: (ack: string, statusCode: LedgerStatusCode) => void;
   setIsExecuting: (v: boolean) => void;
@@ -19,11 +19,15 @@ export interface LedgerHardwareContextInterface {
   setFeedback: (s: MaybeString, helpKey?: MaybeString) => void;
   resetFeedback: () => void;
   handleUnmount: () => void;
-  handleErrors: (appName: string, err: unknown) => void;
+  handleErrors: (err: unknown) => void;
   runtimesInconsistent: boolean;
-  handleGetAddress: (appName: string, accountIndex: number) => Promise<void>;
+  handleGetAddress: (
+    txMetadataChainId: string,
+    accountIndex: number,
+    ss58Prefix: number
+  ) => Promise<void>;
   handleSignTx: (
-    appName: string,
+    txMetadataChainId: string,
     uid: number,
     index: number,
     payload: AnyJson
@@ -72,9 +76,9 @@ export interface LedgerAddress {
   pubKey: string;
 }
 
-export interface LedgerApp {
+export interface LedgerChain {
   network: NetworkName;
-  appName: string;
+  txMetadataChainId: string;
   Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
 }
 

@@ -24,6 +24,11 @@ export const Header = styled.div<{ $displayFor?: DisplayFor }>`
   padding: 0 0.25rem 0.75rem 0.25rem;
   flex: 1;
 
+  &.noBorder {
+    border: none;
+    padding-bottom: 0;
+  }
+
   h4 {
     color: var(--text-color-secondary);
     font-family: InterSemiBold, sans-serif;

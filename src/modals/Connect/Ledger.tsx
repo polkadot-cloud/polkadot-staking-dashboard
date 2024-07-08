@@ -2,10 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChrome, faUsb } from '@fortawesome/free-brands-svg-icons';
-import {
-  faExclamationTriangle,
-  faExternalLinkAlt,
-} from '@fortawesome/free-solid-svg-icons';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { inChrome } from '@w3ux/utils';
 import { useHelp } from 'contexts/Help';
@@ -40,15 +37,6 @@ export const Ledger = () => {
             <LedgerLogoSVG className="logo" />
           </div>
           <div className="row margin">
-            <ButtonText
-              text={network === 'polkadot' ? 'BETA' : 'EXPERIMENTAL'}
-              disabled
-              marginRight
-              iconLeft={
-                network === 'polkadot' ? undefined : faExclamationTriangle
-              }
-              style={{ opacity: 0.5 }}
-            />
             <ButtonText
               text="Chrome / Brave"
               disabled

@@ -175,7 +175,7 @@
     "notePoolDepositorMinBond_member": "作为一名提名池成员，你必须至少持有 {{bond}} {{unit}}",
     "onceUnbonding": "一旦解除质押，您的资金过了{{bondDurationFormatted}} 后就能获回",
     "onceUnbondingPoolMember": "一旦解除绑定，这些资金需要{{bondDurationFormatted}}才能解锁。一旦解锁，即可被取出",
-    "openAppOnLedger": "在您的Ledger设备中打开{{appName}} App",
+    "openAppOnLedger": "在您的Ledger设备中打开Polkadot App",
     "openSupport": "在 Polkadot Support",
     "payeeAdded": "已添加收款人",
     "payoutDestination": "收益到账地址",

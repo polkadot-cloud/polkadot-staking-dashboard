@@ -186,7 +186,7 @@
     "notePoolDepositorMinBond_member": "As a pool member you must maintain a bond of at least {{bond}} {{unit}}.",
     "onceUnbonding": "Once unbonding, your funds will become available after {{bondDurationFormatted}}.",
     "onceUnbondingPoolMember": "Once unbonding, it will take {{bondDurationFormatted}} for these funds to unlock. Once unlocked, they can be withdrawn.",
-    "openAppOnLedger": "Open the {{appName}} app on your Ledger device.",
+    "openAppOnLedger": "Open the Polkadot app on your Ledger device.",
     "openSupport": "Go To Polkadot Support",
     "payeeAdded": "Payee Added",
     "payoutDestination": "Payout Destination",
