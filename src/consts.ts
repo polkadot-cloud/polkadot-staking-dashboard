@@ -42,4 +42,4 @@ export const ZondaxMetadataHashApiUrl =
 /*
  * People Chain migration - disallow identities on networks where People Chain is live.
  */
-export const PeopleChainNetworks = ['westend', 'kusama'];
+export const PeopleChainNetworks = ['polkadot', 'westend', 'kusama'];
