@@ -43,6 +43,7 @@
     "buffer": "^6.0.3",
     "chart.js": "^4.4.3",
     "chroma-js": "^2.4.2",
+    "compare-versions": "^6.1.1",
     "date-fns": "^3.3.1",
     "framer-motion": "^11.2.10",
     "html5-qrcode": "^2.3.8",

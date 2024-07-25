@@ -3564,6 +3564,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"compare-versions@npm:^6.1.1":
+  version: 6.1.1
+  resolution: "compare-versions@npm:6.1.1"
+  checksum: 10c0/415205c7627f9e4f358f571266422980c9fe2d99086be0c9a48008ef7c771f32b0fbe8e97a441ffedc3910872f917a0675fe0fe3c3b6d331cda6d8690be06338
+  languageName: node
+  linkType: hard
+
 "concat-map@npm:0.0.1":
   version: 0.0.1
   resolution: "concat-map@npm:0.0.1"
@@ -6468,6 +6475,7 @@ __metadata:
     buffer: "npm:^6.0.3"
     chart.js: "npm:^4.4.3"
     chroma-js: "npm:^2.4.2"
+    compare-versions: "npm:^6.1.1"
     date-fns: "npm:^3.3.1"
     eslint: "npm:8.57.0"
     eslint-config-prettier: "npm:^9.1.0"
