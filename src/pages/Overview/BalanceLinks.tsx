@@ -16,6 +16,13 @@ export const BalanceLinks = () => {
   const { isNominating } = useStaking();
   const { activeAccount } = useActiveAccounts();
 
+  const openDuneDashboard = () => {
+    if (activeAccount) {
+      const duneUrl = `https://dune.com/substrate/polkadot-staking-pool-member?user_ss58_t300ae=${activeAccount}`;
+      window.open(duneUrl, '_blank');
+    }
+  };
+
   return (
     <MoreWrapper>
       <Separator />
@@ -46,6 +53,7 @@ export const BalanceLinks = () => {
           iconRight={faExternalLinkAlt}
           iconTransform="shrink-2"
           text="Polkawatch"
+          marginRight
           disabled={
             !(
               activeAccount &&
@@ -53,6 +61,15 @@ export const BalanceLinks = () => {
               isNominating()
             )
           }
+        />
+        <ButtonPrimaryInvert
+          lg
+          onClick={openDuneDashboard}
+          iconRight={faExternalLinkAlt}
+          iconTransform="shrink-2"
+          text="Dune Dashboard"
+          marginRight
+          disabled={!activeAccount}
         />
       </section>
     </MoreWrapper>
