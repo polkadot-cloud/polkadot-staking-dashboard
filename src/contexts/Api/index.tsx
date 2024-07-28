@@ -36,11 +36,12 @@ import { SyncController } from 'controllers/SyncController';
 import { ApiController } from 'controllers/ApiController';
 import type { ApiStatus, ConnectionType } from 'model/Api/types';
 import { StakingConstants } from 'model/Query/StakingConstants';
-import { ActiveEra } from 'model/Query/ActiveEra';
+import { Era } from 'model/Query/Era';
 import { NetworkMeta } from 'model/Query/NetworkMeta';
 import { SubscriptionsController } from 'controllers/SubscriptionsController';
 import { BlockNumber } from 'model/Subscribe/BlockNumber';
 import { NetworkMetrics } from 'model/Subscribe/NetworkMetrics';
+import { ActiveEra } from 'model/Subscribe/ActiveEra';
 
 export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 
@@ -161,8 +162,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     const newConsts = await new StakingConstants().fetch(api, network);
 
     // Get active and previous era.
-    const { activeEra: newActiveEra, previousEra } =
-      await new ActiveEra().fetch(api);
+    const { activeEra: newActiveEra, previousEra } = await new Era().fetch(api);
 
     // Get network meta data related to staking and pools.
     const {
@@ -206,9 +206,12 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       new NetworkMetrics(network)
     );
 
+    // Initialise active era subscription. Also handles (re)subscribing to subscriptions that depend
+    // on active era.
+    SubscriptionsController.set(network, 'activeEra', new ActiveEra(network));
+
     // TODO: Initialise from SubscriptionsController.
     apiInstance.subscribePoolsConfig();
-    apiInstance.subscribeActiveEra();
   };
 
   // Handle Api disconnection.

@@ -5,7 +5,7 @@ import type { ApiPromise } from '@polkadot/api';
 import BigNumber from 'bignumber.js';
 import type { AnyApi } from 'types';
 
-export class ActiveEra {
+export class Era {
   // Fetch network constants.
   async fetch(api: ApiPromise) {
     // Fetch the active era.

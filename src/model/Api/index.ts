@@ -8,7 +8,7 @@ import BigNumber from 'bignumber.js';
 import { defaultActiveEra } from 'contexts/Api/defaults';
 import type { APIActiveEra } from 'contexts/Api/types';
 import { SyncController } from 'controllers/SyncController';
-import type { AnyApi, NetworkName } from 'types';
+import type { NetworkName } from 'types';
 import { NetworkList } from 'config/networks';
 import { makeCancelable, rmCommas, stringToBigNumber } from '@w3ux/utils';
 import { WellKnownChain } from '@substrate/connect';
@@ -193,38 +193,6 @@ export class Api {
 
   // TODO: Move these to `SubscriptionsController`, separate from this Api class.
 
-  // Subscribe to active era.
-  //
-  // Also handles (re)subscribing to subscriptions that depend on active era.
-  subscribeActiveEra = async (): Promise<void> => {
-    const unsub = await this.api.query.staking.activeEra((result: AnyApi) => {
-      // determine activeEra: toString used as alternative to `toHuman`, that puts commas in
-      // numbers
-      const activeEra = JSON.parse(result.unwrapOrDefault().toString());
-      // Store active era.
-      this.activeEra = {
-        index: new BigNumber(activeEra.index),
-        start: new BigNumber(activeEra.start),
-      };
-
-      // (Re)Subscribe to staking metrics `activeEra` has updated.
-      if (this.#unsubs['stakingMetrics']) {
-        this.#unsubs['stakingMetrics']();
-        delete this.#unsubs['stakingMetrics'];
-      }
-      this.subscribeStakingMetrics();
-
-      // NOTE: Sending `activeEra` to document as a strings. UI needs to parse values into
-      // BigNumber.
-      document.dispatchEvent(
-        new CustomEvent(`new-active-era`, {
-          detail: { activeEra },
-        })
-      );
-    });
-    this.#unsubs['activeEra'] = unsub as unknown as VoidFn;
-  };
-
   // Subscribe to pools config.
   subscribePoolsConfig = async (): Promise<void> => {
     if (this.#unsubs['poolsConfig'] === undefined) {
@@ -278,51 +246,6 @@ export class Api {
         }
       );
       this.#unsubs['poolsConfig'] = unsub as unknown as VoidFn;
-    }
-  };
-
-  // Subscribe to staking metrics.
-  subscribeStakingMetrics = async (): Promise<void> => {
-    if (this.#unsubs['stakingMetrics'] === undefined) {
-      const previousEra = BigNumber.max(
-        0,
-        new BigNumber(this.activeEra.index).minus(1)
-      );
-
-      const unsub = await this.api.queryMulti(
-        [
-          this.api.query.staking.counterForNominators,
-          this.api.query.staking.counterForValidators,
-          this.api.query.staking.maxValidatorsCount,
-          this.api.query.staking.validatorCount,
-          [this.api.query.staking.erasValidatorReward, previousEra.toString()],
-          [this.api.query.staking.erasTotalStake, previousEra.toString()],
-          this.api.query.staking.minNominatorBond,
-          [
-            this.api.query.staking.erasTotalStake,
-            this.activeEra.index.toString(),
-          ],
-        ],
-        (result) => {
-          const stakingMetrics = {
-            totalNominators: stringToBigNumber(result[0].toString()),
-            totalValidators: stringToBigNumber(result[1].toString()),
-            maxValidatorsCount: stringToBigNumber(result[2].toString()),
-            validatorCount: stringToBigNumber(result[3].toString()),
-            lastReward: stringToBigNumber(result[4].toString()),
-            lastTotalStake: stringToBigNumber(result[5].toString()),
-            minNominatorBond: stringToBigNumber(result[6].toString()),
-            totalStaked: stringToBigNumber(result[7].toString()),
-          };
-
-          document.dispatchEvent(
-            new CustomEvent(`new-staking-metrics`, {
-              detail: { stakingMetrics },
-            })
-          );
-        }
-      );
-      this.#unsubs['stakingMetrics'] = unsub as unknown as VoidFn;
     }
   };
 

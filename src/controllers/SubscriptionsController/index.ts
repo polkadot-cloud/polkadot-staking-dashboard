@@ -64,10 +64,7 @@ export class SubscriptionsController {
   // ------------------------------------------------------
 
   // Unsubscribe from a subscription and remove it from class state.
-  static async remove(
-    network: NetworkName,
-    subscriptionId: string
-  ): Promise<void> {
+  static remove(network: NetworkName, subscriptionId: string): void {
     if (this.#subs[network]) {
       try {
         delete this.#subs[network]![subscriptionId];
