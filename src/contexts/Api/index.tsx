@@ -42,6 +42,7 @@ import { SubscriptionsController } from 'controllers/SubscriptionsController';
 import { BlockNumber } from 'model/Subscribe/BlockNumber';
 import { NetworkMetrics } from 'model/Subscribe/NetworkMetrics';
 import { ActiveEra } from 'model/Subscribe/ActiveEra';
+import { PoolsConfig } from 'model/Subscribe/PoolsConfig';
 
 export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 
@@ -206,12 +207,16 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       new NetworkMetrics(network)
     );
 
+    // Initialise pool config subscription.
+    SubscriptionsController.set(
+      network,
+      'poolsConfig',
+      new PoolsConfig(network)
+    );
+
     // Initialise active era subscription. Also handles (re)subscribing to subscriptions that depend
     // on active era.
     SubscriptionsController.set(network, 'activeEra', new ActiveEra(network));
-
-    // TODO: Initialise from SubscriptionsController.
-    apiInstance.subscribePoolsConfig();
   };
 
   // Handle Api disconnection.
