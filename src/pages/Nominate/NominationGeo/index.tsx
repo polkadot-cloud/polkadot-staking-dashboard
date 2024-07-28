@@ -11,7 +11,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 import type { NominatorDetail, ChainMetadata } from './types';
 import { PolkawatchApi } from '@polkawatch/ddp-client';
-import { PolkaWatchController } from 'controllers/PolkaWatchController';
+import { PolkaWatchController } from 'controllers/PolkaWatch';
 
 import { AnalyzedPayouts } from './Stats/AnalyzedPayouts';
 import { AnalyzedDays } from './Stats/AnalyzedDays';

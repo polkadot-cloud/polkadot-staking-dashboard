@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import type {
   NotificationInterface,
   NotificationItem,
-} from 'controllers/NotificationsController/types';
+} from 'controllers/Notifications/types';
 import { Wrapper } from './Wrapper';
 import { useRef, useState } from 'react';
 import { setStateWithRef } from '@w3ux/utils';

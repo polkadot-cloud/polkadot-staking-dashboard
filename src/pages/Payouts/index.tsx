@@ -21,7 +21,7 @@ import { PluginLabel } from 'library/PluginLabel';
 import { PayoutList } from './PayoutList';
 import { LastEraPayoutStat } from './Stats/LastEraPayout';
 import { useSubscanData } from 'hooks/useSubscanData';
-import { SubscanController } from 'controllers/SubscanController';
+import { SubscanController } from 'controllers/Subscan';
 import { DefaultLocale, locales } from 'locale';
 import { useSyncing } from 'hooks/useSyncing';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';

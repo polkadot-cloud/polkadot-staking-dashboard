@@ -4,8 +4,8 @@
 import type { VoidFn } from '@polkadot/api/types';
 import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
-import { ApiController } from 'controllers/ApiController';
-import type { Unsubscribable } from 'controllers/SubscriptionsController/types';
+import { ApiController } from 'controllers/Api';
+import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { NetworkName } from 'types';
 
 export class NetworkMetrics implements Unsubscribable {

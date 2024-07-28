@@ -7,7 +7,7 @@ import { faWarning } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useRef, useState } from 'react';
 import { useEventListener } from 'usehooks-ts';
 import { isCustomEvent } from 'controllers/utils';
-import { OnlineStatusController } from 'controllers/OnlineStatusController';
+import { OnlineStatusController } from 'controllers/OnlineStatus';
 
 export const Offline = () => {
   // Whether the app is offline.

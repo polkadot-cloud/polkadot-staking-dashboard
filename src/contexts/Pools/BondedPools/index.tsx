@@ -22,7 +22,7 @@ import { useNetwork } from 'contexts/Network';
 import { useApi } from '../../Api';
 import { defaultBondedPoolsContext } from './defaults';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
-import { SyncController } from 'controllers/SyncController';
+import { SyncController } from 'controllers/Sync';
 
 export const BondedPoolsContext = createContext<BondedPoolsContextState>(
   defaultBondedPoolsContext

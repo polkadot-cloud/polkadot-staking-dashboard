@@ -3,7 +3,7 @@
 
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
-import { SyncController } from 'controllers/SyncController';
+import { SyncController } from 'controllers/Sync';
 import type { NetworkName } from 'types';
 import { NetworkList } from 'config/networks';
 import { makeCancelable } from '@w3ux/utils';
@@ -14,7 +14,7 @@ import type {
   EventApiStatus,
   SubstrateConnect,
 } from './types';
-import { SubscriptionsController } from 'controllers/SubscriptionsController';
+import { SubscriptionsController } from 'controllers/Subscriptions';
 
 export class Api {
   // ------------------------------------------------------
