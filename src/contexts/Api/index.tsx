@@ -35,6 +35,9 @@ import BigNumber from 'bignumber.js';
 import { SyncController } from 'controllers/SyncController';
 import { ApiController } from 'controllers/ApiController';
 import type { ApiStatus, ConnectionType } from 'model/Api/types';
+import { StakingConstants } from 'model/Query/StakingConstants';
+import { ActiveEra } from 'model/Query/ActiveEra';
+import { NetworkMeta } from 'model/Query/NetworkMeta';
 
 export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 
@@ -147,16 +150,26 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Bootstrap app-wide chain state.
   const bootstrapNetworkConfig = async () => {
     const apiInstance = ApiController.get(network);
+    const api = apiInstance.api;
 
+    // 1. Fetch network data for bootstrapping app state:
+
+    // Get general network constants for staking UI.
+    const newConsts = await new StakingConstants().fetch(api, network);
+
+    // Get active and previous era.
+    const { activeEra: newActiveEra, previousEra } =
+      await new ActiveEra().fetch(api);
+
+    // Get network meta data related to staking and pools.
     const {
-      consts: newConsts,
       networkMetrics: newNetworkMetrics,
-      activeEra: newActiveEra,
       poolsConfig: newPoolsConfig,
       stakingMetrics: newStakingMetrics,
-    } = await apiInstance.bootstrapNetworkConfig();
+    } = await new NetworkMeta().fetch(api, newActiveEra, previousEra);
 
-    // Populate all config state.
+    // 2. Populate all config state:
+
     setConsts(newConsts);
     setStateWithRef(newNetworkMetrics, setNetworkMetrics, networkMetricsRef);
     const { index, start } = newActiveEra;

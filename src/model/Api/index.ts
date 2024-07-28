@@ -6,13 +6,7 @@ import type { VoidFn } from '@polkadot/api/types';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import BigNumber from 'bignumber.js';
 import { defaultActiveEra } from 'contexts/Api/defaults';
-import type {
-  APIActiveEra,
-  APIConstants,
-  APINetworkMetrics,
-  APIPoolsConfig,
-  APIStakingMetrics,
-} from 'contexts/Api/types';
+import type { APIActiveEra } from 'contexts/Api/types';
 import { SyncController } from 'controllers/SyncController';
 import type { AnyApi, NetworkName } from 'types';
 import { NetworkList } from 'config/networks';
@@ -25,9 +19,6 @@ import type {
   EventApiStatus,
   SubstrateConnect,
 } from './types';
-import { StakingConstants } from 'model/Query/StakingConstants';
-import { ActiveEra } from 'model/Query/ActiveEra';
-import { NetworkMeta } from 'model/Query/NetworkMeta';
 
 export class Api {
   // ------------------------------------------------------
@@ -215,33 +206,6 @@ export class Api {
       // Block number subscription now initialised. Store unsub.
       this.#unsubs['blockNumber'] = unsub as unknown as VoidFn;
     }
-  };
-
-  // Fetch network config to bootstrap UI state.
-  bootstrapNetworkConfig = async (): Promise<{
-    consts: APIConstants;
-    networkMetrics: APINetworkMetrics;
-    activeEra: APIActiveEra;
-    poolsConfig: APIPoolsConfig;
-    stakingMetrics: APIStakingMetrics;
-  }> => {
-    // Get general network constants for staking UI.
-    const consts = await new StakingConstants().fetch(this.api, this.network);
-
-    // Get active and previous era.
-    const { activeEra, previousEra } = await new ActiveEra().fetch(this.api);
-
-    // Get network meta data related to staking and pools.
-    const { networkMetrics, poolsConfig, stakingMetrics } =
-      await new NetworkMeta().fetch(this.api, activeEra, previousEra);
-
-    return {
-      consts,
-      activeEra,
-      poolsConfig,
-      networkMetrics,
-      stakingMetrics,
-    };
   };
 
   // ------------------------------------------------------
