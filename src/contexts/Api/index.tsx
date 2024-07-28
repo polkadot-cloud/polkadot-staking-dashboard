@@ -35,6 +35,14 @@ import BigNumber from 'bignumber.js';
 import { SyncController } from 'controllers/SyncController';
 import { ApiController } from 'controllers/ApiController';
 import type { ApiStatus, ConnectionType } from 'model/Api/types';
+import { StakingConstants } from 'model/Query/StakingConstants';
+import { Era } from 'model/Query/Era';
+import { NetworkMeta } from 'model/Query/NetworkMeta';
+import { SubscriptionsController } from 'controllers/SubscriptionsController';
+import { BlockNumber } from 'model/Subscribe/BlockNumber';
+import { NetworkMetrics } from 'model/Subscribe/NetworkMetrics';
+import { ActiveEra } from 'model/Subscribe/ActiveEra';
+import { PoolsConfig } from 'model/Subscribe/PoolsConfig';
 
 export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 
@@ -147,16 +155,25 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Bootstrap app-wide chain state.
   const bootstrapNetworkConfig = async () => {
     const apiInstance = ApiController.get(network);
+    const api = apiInstance.api;
 
+    // 1. Fetch network data for bootstrapping app state:
+
+    // Get general network constants for staking UI.
+    const newConsts = await new StakingConstants().fetch(api, network);
+
+    // Get active and previous era.
+    const { activeEra: newActiveEra, previousEra } = await new Era().fetch(api);
+
+    // Get network meta data related to staking and pools.
     const {
-      consts: newConsts,
       networkMetrics: newNetworkMetrics,
-      activeEra: newActiveEra,
       poolsConfig: newPoolsConfig,
       stakingMetrics: newStakingMetrics,
-    } = await apiInstance.bootstrapNetworkConfig();
+    } = await new NetworkMeta().fetch(api, newActiveEra, previousEra);
 
-    // Populate all config state.
+    // 2. Populate all config state:
+
     setConsts(newConsts);
     setStateWithRef(newNetworkMetrics, setNetworkMetrics, networkMetricsRef);
     const { index, start } = newActiveEra;
@@ -174,11 +191,32 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     // Set `initialization` syncing to complete.
     SyncController.dispatch('initialization', 'complete');
 
-    // Initialise subscriptions.
-    apiInstance.subscribeBlockNumber();
-    apiInstance.subscribeNetworkMetrics();
-    apiInstance.subscribePoolsConfig();
-    apiInstance.subscribeActiveEra();
+    // 3. Initialise subscriptions:
+
+    // Initialise block number subscription.
+    SubscriptionsController.set(
+      network,
+      'blockNumber',
+      new BlockNumber(network)
+    );
+
+    // Initialise network metrics subscription.
+    SubscriptionsController.set(
+      network,
+      'networkMetrics',
+      new NetworkMetrics(network)
+    );
+
+    // Initialise pool config subscription.
+    SubscriptionsController.set(
+      network,
+      'poolsConfig',
+      new PoolsConfig(network)
+    );
+
+    // Initialise active era subscription. Also handles (re)subscribing to subscriptions that depend
+    // on active era.
+    SubscriptionsController.set(network, 'activeEra', new ActiveEra(network));
   };
 
   // Handle Api disconnection.
