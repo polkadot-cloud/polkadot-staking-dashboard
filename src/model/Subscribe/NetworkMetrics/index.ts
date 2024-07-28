@@ -2,20 +2,19 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { VoidFn } from '@polkadot/api/types';
+import { rmCommas } from '@w3ux/utils';
+import BigNumber from 'bignumber.js';
 import { ApiController } from 'controllers/ApiController';
 import type { Unsubscribable } from 'controllers/SubscriptionsController/types';
 import type { NetworkName } from 'types';
 
-export class BlockNumber implements Unsubscribable {
+export class NetworkMetrics implements Unsubscribable {
   // ------------------------------------------------------
   // Class members.
   // ------------------------------------------------------
 
   // The associated network for this instance.
   #network: NetworkName;
-
-  // The current block number.
-  blockNumber = '0';
 
   // Unsubscribe object.
   #unsub: VoidFn;
@@ -40,20 +39,32 @@ export class BlockNumber implements Unsubscribable {
       const { api } = ApiController.get(this.#network);
 
       if (api && this.#unsub === undefined) {
-        // Get block numbers.
-        const unsub = await api.query.system.number((num: number) => {
-          // Update class block number.
-          this.blockNumber = num.toString();
+        const unsub = await api.queryMulti(
+          [
+            api.query.balances.totalIssuance,
+            api.query.auctions.auctionCounter,
+            api.query.paraSessionInfo.earliestStoredSession,
+            api.query.fastUnstake.erasToCheckPerBlock,
+            api.query.staking.minimumActiveStake,
+          ],
+          (result) => {
+            const networkMetrics = {
+              totalIssuance: new BigNumber(result[0].toString()),
+              auctionCounter: new BigNumber(result[1].toString()),
+              earliestStoredSession: new BigNumber(result[2].toString()),
+              fastUnstakeErasToCheckPerBlock: Number(
+                rmCommas(result[3].toString())
+              ),
+              minimumActiveStake: new BigNumber(result[4].toString()),
+            };
 
-          // Send block number to UI.
-          document.dispatchEvent(
-            new CustomEvent('new-block-number', {
-              detail: {
-                blockNumber: num.toString(),
-              },
-            })
-          );
-        });
+            document.dispatchEvent(
+              new CustomEvent(`new-network-metrics`, {
+                detail: { networkMetrics },
+              })
+            );
+          }
+        );
 
         // Subscription now initialised. Store unsub.
         this.#unsub = unsub as unknown as VoidFn;

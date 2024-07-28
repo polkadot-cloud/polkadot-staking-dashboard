@@ -40,6 +40,7 @@ import { ActiveEra } from 'model/Query/ActiveEra';
 import { NetworkMeta } from 'model/Query/NetworkMeta';
 import { SubscriptionsController } from 'controllers/SubscriptionsController';
 import { BlockNumber } from 'model/Subscribe/BlockNumber';
+import { NetworkMetrics } from 'model/Subscribe/NetworkMetrics';
 
 export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 
@@ -198,8 +199,14 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       new BlockNumber(network)
     );
 
+    // Initialise network metrics subscription.
+    SubscriptionsController.set(
+      network,
+      'networkMetrics',
+      new NetworkMetrics(network)
+    );
+
     // TODO: Initialise from SubscriptionsController.
-    apiInstance.subscribeNetworkMetrics();
     apiInstance.subscribePoolsConfig();
     apiInstance.subscribeActiveEra();
   };

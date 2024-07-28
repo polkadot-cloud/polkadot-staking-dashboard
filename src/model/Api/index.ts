@@ -193,39 +193,6 @@ export class Api {
 
   // TODO: Move these to `SubscriptionsController`, separate from this Api class.
 
-  // Subscribe to network metrics.
-  subscribeNetworkMetrics = async (): Promise<void> => {
-    if (this.#unsubs['networkMetrics'] === undefined) {
-      const unsub = await this.api.queryMulti(
-        [
-          this.api.query.balances.totalIssuance,
-          this.api.query.auctions.auctionCounter,
-          this.api.query.paraSessionInfo.earliestStoredSession,
-          this.api.query.fastUnstake.erasToCheckPerBlock,
-          this.api.query.staking.minimumActiveStake,
-        ],
-        (result) => {
-          const networkMetrics = {
-            totalIssuance: new BigNumber(result[0].toString()),
-            auctionCounter: new BigNumber(result[1].toString()),
-            earliestStoredSession: new BigNumber(result[2].toString()),
-            fastUnstakeErasToCheckPerBlock: Number(
-              rmCommas(result[3].toString())
-            ),
-            minimumActiveStake: new BigNumber(result[4].toString()),
-          };
-
-          document.dispatchEvent(
-            new CustomEvent(`new-network-metrics`, {
-              detail: { networkMetrics },
-            })
-          );
-        }
-      );
-      this.#unsubs['networkMetrics'] = unsub as unknown as VoidFn;
-    }
-  };
-
   // Subscribe to active era.
   //
   // Also handles (re)subscribing to subscriptions that depend on active era.
