@@ -5,19 +5,19 @@ import type { FC, FunctionComponent, SVGProps } from 'react';
 import type { Theme } from 'contexts/Themes/types';
 import type { ExtensionInjected } from '@w3ux/react-connect-kit/types';
 import type BigNumber from 'bignumber.js';
-import type { NotificationItem } from 'controllers/NotificationsController/types';
+import type { NotificationItem } from 'controllers/Notifications/types';
 import type { ActiveBalance } from 'contexts/Balances/types';
-import type { PayoutType } from 'controllers/SubscanController/types';
+import type { PayoutType } from 'controllers/Subscan/types';
 import type {
   APIActiveEra,
   APINetworkMetrics,
   APIPoolsConfig,
   APIStakingMetrics,
 } from 'contexts/Api/types';
-import type { SyncEvent } from 'controllers/SyncController/types';
-import type { DetailActivePool } from 'controllers/ActivePoolsController/types';
+import type { SyncEvent } from 'controllers/Sync/types';
+import type { DetailActivePool } from 'controllers/ActivePools/types';
 import type { APIEventDetail } from 'model/Api/types';
-import type { OnlineStatusEvent } from 'controllers/OnlineStatusController/types';
+import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types';
 import type { AnyJson } from '@w3ux/types';
 import type { BlockNumberEventDetail } from 'model/Subscribe/BlockNumber/types';
 

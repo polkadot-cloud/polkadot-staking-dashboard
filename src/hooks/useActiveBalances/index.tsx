@@ -14,7 +14,7 @@ import type {
 } from 'contexts/Balances/types';
 import { useNetwork } from 'contexts/Network';
 import { useEffect, useRef, useState } from 'react';
-import { BalancesController } from 'controllers/BalancesController';
+import { BalancesController } from 'controllers/Balances';
 import { isCustomEvent } from 'controllers/utils';
 import { useEventListener } from 'usehooks-ts';
 import BigNumber from 'bignumber.js';
@@ -22,7 +22,7 @@ import {
   defaultBalance,
   defaultLedger,
   defaultPayee,
-} from 'controllers/BalancesController/defaults';
+} from 'controllers/Balances/defaults';
 import type { PayeeConfig } from 'contexts/Setup/types';
 import type { PoolMembership } from 'contexts/Pools/types';
 

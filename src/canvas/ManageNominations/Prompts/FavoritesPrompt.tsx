@@ -13,7 +13,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FooterWrapper, PromptListItem } from 'library/Prompt/Wrappers';
 import type { FavoritesPromptProps } from '../types';
-import { NotificationsController } from 'controllers/NotificationsController';
+import { NotificationsController } from 'controllers/Notifications';
 import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 
 export const FavoritesPrompt = ({

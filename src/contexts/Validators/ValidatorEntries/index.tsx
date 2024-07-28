@@ -31,7 +31,7 @@ import {
 } from './defaults';
 import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
 import { useErasPerDay } from 'hooks/useErasPerDay';
-import { IdentitiesController } from 'controllers/IdentitiesController';
+import { IdentitiesController } from 'controllers/Identities';
 import type { AnyJson, Sync } from '@w3ux/types';
 
 export const ValidatorsContext = createContext<ValidatorsContextInterface>(

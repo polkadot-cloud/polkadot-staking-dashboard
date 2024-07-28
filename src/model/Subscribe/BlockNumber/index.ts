@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { VoidFn } from '@polkadot/api/types';
-import { ApiController } from 'controllers/ApiController';
-import type { Unsubscribable } from 'controllers/SubscriptionsController/types';
+import { ApiController } from 'controllers/Api';
+import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { NetworkName } from 'types';
 
 export class BlockNumber implements Unsubscribable {
