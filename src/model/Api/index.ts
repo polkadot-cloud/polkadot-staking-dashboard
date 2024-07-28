@@ -25,22 +25,14 @@ import type {
   EventApiStatus,
   SubstrateConnect,
 } from './types';
+import { StakingConstants } from 'model/Query/StakingConstants';
+import { ActiveEra } from 'model/Query/ActiveEra';
+import { NetworkMeta } from 'model/Query/NetworkMeta';
 
 export class Api {
   // ------------------------------------------------------
   // Class members.
   // ------------------------------------------------------
-
-  // Network config fallback values.
-  // TODO: Explore how these values can be removed.
-  FALLBACK = {
-    MAX_NOMINATIONS: new BigNumber(16),
-    BONDING_DURATION: new BigNumber(28),
-    SESSIONS_PER_ERA: new BigNumber(6),
-    MAX_ELECTING_VOTERS: new BigNumber(22500),
-    EXPECTED_BLOCK_TIME: new BigNumber(6000),
-    EPOCH_DURATION: new BigNumber(2400),
-  };
 
   // The network name associated with this Api instance.
   network: NetworkName;
@@ -233,157 +225,30 @@ export class Api {
     poolsConfig: APIPoolsConfig;
     stakingMetrics: APIStakingMetrics;
   }> => {
-    // Fetch network constants.
-    const allPromises = [
-      this.api.consts.staking.bondingDuration,
-      this.api.consts.staking.maxNominations,
-      this.api.consts.staking.sessionsPerEra,
-      this.api.consts.electionProviderMultiPhase.maxElectingVoters,
-      this.api.consts.babe.expectedBlockTime,
-      this.api.consts.babe.epochDuration,
-      this.api.consts.balances.existentialDeposit,
-      this.api.consts.staking.historyDepth,
-      this.api.consts.fastUnstake.deposit,
-      this.api.consts.nominationPools.palletId,
-      this.api.consts.staking.maxExposurePageSize,
-    ];
+    // Get general network constants for staking UI.
+    const consts = await new StakingConstants().fetch(this.api, this.network);
 
-    const consts = await Promise.all(allPromises);
+    // Get active and previous era.
+    const { activeEra, previousEra } = await new ActiveEra().fetch(this.api);
 
-    // Fetch the active era. Needed for previous era and for queries below.
-    const activeEra = JSON.parse(
-      ((await this.api.query.staking.activeEra()) as AnyApi)
-        .unwrapOrDefault()
-        .toString()
-    );
-    // Store active era.
-    this.activeEra = {
-      index: new BigNumber(activeEra.index),
-      start: new BigNumber(activeEra.start),
-    };
-    // Get previous era.
-    const previousEra = BigNumber.max(
-      0,
-      new BigNumber(activeEra.index).minus(1)
-    );
-
-    // Fetch network configuration.
-    const networkMetrics = await this.api.queryMulti([
-      // Network metrics.
-      this.api.query.balances.totalIssuance,
-      this.api.query.auctions.auctionCounter,
-      this.api.query.paraSessionInfo.earliestStoredSession,
-      this.api.query.fastUnstake.erasToCheckPerBlock,
-      this.api.query.staking.minimumActiveStake,
-      // Nomination pool configs.
-      this.api.query.nominationPools.counterForPoolMembers,
-      this.api.query.nominationPools.counterForBondedPools,
-      this.api.query.nominationPools.counterForRewardPools,
-      this.api.query.nominationPools.lastPoolId,
-      this.api.query.nominationPools.maxPoolMembers,
-      this.api.query.nominationPools.maxPoolMembersPerPool,
-      this.api.query.nominationPools.maxPools,
-      this.api.query.nominationPools.minCreateBond,
-      this.api.query.nominationPools.minJoinBond,
-      this.api.query.nominationPools.globalMaxCommission,
-      // Staking metrics.
-      this.api.query.staking.counterForNominators,
-      this.api.query.staking.counterForValidators,
-      this.api.query.staking.maxValidatorsCount,
-      this.api.query.staking.validatorCount,
-      [this.api.query.staking.erasValidatorReward, previousEra.toString()],
-      [this.api.query.staking.erasTotalStake, previousEra.toString()],
-      this.api.query.staking.minNominatorBond,
-      [this.api.query.staking.erasTotalStake, activeEra.index.toString()],
-    ]);
-
-    // format optional configs to BigNumber or null.
-    const maxPoolMembers = networkMetrics[9].toHuman()
-      ? new BigNumber(rmCommas(networkMetrics[9].toString()))
-      : null;
-
-    const maxPoolMembersPerPool = networkMetrics[10].toHuman()
-      ? new BigNumber(rmCommas(networkMetrics[10].toString()))
-      : null;
-
-    const maxPools = networkMetrics[11].toHuman()
-      ? new BigNumber(rmCommas(networkMetrics[11].toString()))
-      : null;
+    // Get network meta data related to staking and pools.
+    const { networkMetrics, poolsConfig, stakingMetrics } =
+      await new NetworkMeta().fetch(this.api, activeEra, previousEra);
 
     return {
-      consts: {
-        bondDuration: consts[0]
-          ? stringToBigNumber(consts[0].toString())
-          : this.FALLBACK.BONDING_DURATION,
-        maxNominations: consts[1]
-          ? stringToBigNumber(consts[1].toString())
-          : this.FALLBACK.MAX_NOMINATIONS,
-        sessionsPerEra: consts[2]
-          ? stringToBigNumber(consts[2].toString())
-          : this.FALLBACK.SESSIONS_PER_ERA,
-        maxElectingVoters: consts[3]
-          ? stringToBigNumber(consts[3].toString())
-          : this.FALLBACK.MAX_ELECTING_VOTERS,
-        expectedBlockTime: consts[4]
-          ? stringToBigNumber(consts[4].toString())
-          : this.FALLBACK.EXPECTED_BLOCK_TIME,
-        epochDuration: consts[5]
-          ? stringToBigNumber(consts[5].toString())
-          : this.FALLBACK.EPOCH_DURATION,
-        existentialDeposit: consts[6]
-          ? stringToBigNumber(consts[6].toString())
-          : new BigNumber(0),
-        historyDepth: consts[7]
-          ? stringToBigNumber(consts[7].toString())
-          : new BigNumber(0),
-        fastUnstakeDeposit: consts[8]
-          ? stringToBigNumber(consts[8].toString())
-          : new BigNumber(0),
-        poolsPalletId: consts[9] ? consts[9].toU8a() : new Uint8Array(0),
-        maxExposurePageSize: consts[10]
-          ? stringToBigNumber(consts[10].toString())
-          : NetworkList[this.network].maxExposurePageSize,
-      },
-      networkMetrics: {
-        totalIssuance: new BigNumber(networkMetrics[0].toString()),
-        auctionCounter: new BigNumber(networkMetrics[1].toString()),
-        earliestStoredSession: new BigNumber(networkMetrics[2].toString()),
-        fastUnstakeErasToCheckPerBlock: Number(
-          rmCommas(networkMetrics[3].toString())
-        ),
-        minimumActiveStake: new BigNumber(networkMetrics[4].toString()),
-      },
+      consts,
       activeEra,
-      poolsConfig: {
-        counterForPoolMembers: stringToBigNumber(networkMetrics[5].toString()),
-        counterForBondedPools: stringToBigNumber(networkMetrics[6].toString()),
-        counterForRewardPools: stringToBigNumber(networkMetrics[7].toString()),
-        lastPoolId: stringToBigNumber(networkMetrics[8].toString()),
-        maxPoolMembers,
-        maxPoolMembersPerPool,
-        maxPools,
-        minCreateBond: stringToBigNumber(networkMetrics[12].toString()),
-        minJoinBond: stringToBigNumber(networkMetrics[13].toString()),
-        globalMaxCommission: Number(
-          String(networkMetrics[14]?.toHuman() || '100%').slice(0, -1)
-        ),
-      },
-      stakingMetrics: {
-        totalNominators: stringToBigNumber(networkMetrics[15].toString()),
-        totalValidators: stringToBigNumber(networkMetrics[16].toString()),
-        maxValidatorsCount: stringToBigNumber(networkMetrics[17].toString()),
-        validatorCount: stringToBigNumber(networkMetrics[18].toString()),
-        lastReward: stringToBigNumber(networkMetrics[19].toString()),
-        lastTotalStake: stringToBigNumber(networkMetrics[20].toString()),
-        minNominatorBond: stringToBigNumber(networkMetrics[21].toString()),
-        totalStaked: stringToBigNumber(networkMetrics[22].toString()),
-      },
+      poolsConfig,
+      networkMetrics,
+      stakingMetrics,
     };
   };
 
   // ------------------------------------------------------
   // Subscription handling.
   // ------------------------------------------------------
+
+  // TODO: Move these to `SubscriptionsController`, separate from this Api class.
 
   // Subscribe to network metrics.
   subscribeNetworkMetrics = async (): Promise<void> => {
