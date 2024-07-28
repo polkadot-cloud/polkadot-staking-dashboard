@@ -35,7 +35,6 @@ export class BlockNumber implements Unsubscribable {
   // Subscription.
   // ------------------------------------------------------
 
-  // Subscribe to block number.
   subscribe = async (): Promise<void> => {
     try {
       const { api } = ApiController.get(this.#network);

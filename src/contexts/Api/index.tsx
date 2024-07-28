@@ -39,7 +39,7 @@ import { StakingConstants } from 'model/Query/StakingConstants';
 import { ActiveEra } from 'model/Query/ActiveEra';
 import { NetworkMeta } from 'model/Query/NetworkMeta';
 import { SubscriptionsController } from 'controllers/SubscriptionsController';
-import { BlockNumber } from 'controllers/BlockNumber';
+import { BlockNumber } from 'model/Subscribe/BlockNumber';
 
 export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 

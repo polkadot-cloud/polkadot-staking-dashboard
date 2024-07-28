@@ -19,7 +19,7 @@ import type { DetailActivePool } from 'controllers/ActivePoolsController/types';
 import type { APIEventDetail } from 'model/Api/types';
 import type { OnlineStatusEvent } from 'controllers/OnlineStatusController/types';
 import type { AnyJson } from '@w3ux/types';
-import type { BlockNumberEventDetail } from 'controllers/BlockNumber/types';
+import type { BlockNumberEventDetail } from 'model/Subscribe/BlockNumber/types';
 
 declare global {
   interface Window {
