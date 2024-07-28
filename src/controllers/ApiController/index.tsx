@@ -36,8 +36,8 @@ export class ApiController {
     type: ConnectionType,
     rpcEndpoint: string
   ) {
-    // NOTE: This method should only be called to connect to a new instance. We therefore assume we
-    // want to disconnect from all other existing instances.
+    // NOTE: This method should only be called to connect to a new network. We therefore assume we
+    // want to disconnect from all other existing instances for the previous network.
     await Promise.all(
       Object.entries(this.#instances).map(async ([key, instance]) => {
         // Cancel pending Sc loading before destroying instance.
@@ -46,7 +46,10 @@ export class ApiController {
       })
     );
 
+    // TODO: Add People chain instance.
     this.instances[network] = new Api(network);
+
+    // TODO: Initialize People chain instance.
     await this.instances[network].initialize(type, rpcEndpoint);
   }
 

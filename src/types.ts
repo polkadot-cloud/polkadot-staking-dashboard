@@ -19,6 +19,7 @@ import type { DetailActivePool } from 'controllers/ActivePoolsController/types';
 import type { APIEventDetail } from 'model/Api/types';
 import type { OnlineStatusEvent } from 'controllers/OnlineStatusController/types';
 import type { AnyJson } from '@w3ux/types';
+import type { BlockNumberEventDetail } from 'model/Subscribe/BlockNumber/types';
 
 declare global {
   interface Window {
@@ -30,7 +31,7 @@ declare global {
     notification: CustomEvent<NotificationItem>;
     'api-status': CustomEvent<APIEventDetail>;
     'online-status': CustomEvent<OnlineStatusEvent>;
-    'new-block-number': CustomEvent<{ blockNumber: string }>;
+    'new-block-number': CustomEvent<BlockNumberEventDetail>;
     'new-network-metrics': CustomEvent<{
       networkMetrics: APINetworkMetrics;
     }>;
