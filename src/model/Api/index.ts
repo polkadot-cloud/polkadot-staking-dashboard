@@ -19,6 +19,7 @@ import type {
   EventApiStatus,
   SubstrateConnect,
 } from './types';
+import { SubscriptionsController } from 'controllers/SubscriptionsController';
 
 export class Api {
   // ------------------------------------------------------
@@ -400,12 +401,23 @@ export class Api {
     return 'error' as EventApiStatus;
   };
 
-  // Unsubscribe from all active subscriptions.
+  // Unsubscribe from all active subscriptions and remove them from subscriptions controller.
   unsubscribe = () => {
+    // TODO: Remove this once subscriptions are active.
     Object.values(this.#unsubs).forEach((unsub) => {
       unsub();
     });
     this.#unsubs = {};
+    // ---
+
+    const subs = SubscriptionsController.getAll(this.network);
+
+    if (subs) {
+      Object.entries(subs).forEach(([subscriptionId, subscription]) => {
+        subscription.unsubscribe();
+        SubscriptionsController.remove(this.network, subscriptionId);
+      });
+    }
   };
 
   // ------------------------------------------------------
