@@ -12,7 +12,6 @@ import type { AnyApi, NetworkName } from 'types';
 import { NetworkList } from 'config/networks';
 import { makeCancelable, rmCommas, stringToBigNumber } from '@w3ux/utils';
 import { WellKnownChain } from '@substrate/connect';
-import type { BlockNumber } from '@polkadot/types/interfaces';
 import type {
   APIEventDetail,
   ConnectionType,
@@ -187,27 +186,6 @@ export class Api {
     }
     document.dispatchEvent(new CustomEvent('api-status', { detail }));
   }
-
-  // ------------------------------------------------------
-  // Bootstrap from network.
-  // ------------------------------------------------------
-
-  // Subscribe to block number.
-  subscribeBlockNumber = async (): Promise<void> => {
-    if (this.#unsubs['blockNumber'] === undefined) {
-      // Get block numbers.
-      const unsub = await this.api.query.system.number((num: BlockNumber) => {
-        document.dispatchEvent(
-          new CustomEvent(`new-block-number`, {
-            detail: { blockNumber: num.toString() },
-          })
-        );
-      });
-
-      // Block number subscription now initialised. Store unsub.
-      this.#unsubs['blockNumber'] = unsub as unknown as VoidFn;
-    }
-  };
 
   // ------------------------------------------------------
   // Subscription handling.
