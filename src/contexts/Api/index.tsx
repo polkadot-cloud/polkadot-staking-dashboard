@@ -190,7 +190,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     // Set `initialization` syncing to complete.
     SyncController.dispatch('initialization', 'complete');
 
-    // 3. Initialise subscriptions.
+    // 3. Initialise subscriptions:
 
     // Initialise block number subscription.
     SubscriptionsController.set(
