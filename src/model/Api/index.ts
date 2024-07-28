@@ -2,10 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import type { VoidFn } from '@polkadot/api/types';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
-import { defaultActiveEra } from 'contexts/Api/defaults';
-import type { APIActiveEra } from 'contexts/Api/types';
 import { SyncController } from 'controllers/SyncController';
 import type { NetworkName } from 'types';
 import { NetworkList } from 'config/networks';
@@ -39,14 +36,8 @@ export class Api {
   // The current connection type.
   #connectionType: ConnectionType;
 
-  // Unsubscribe objects.
-  #unsubs: Record<string, VoidFn> = {};
-
   // Cancel function of dynamic substrate connect import.
   cancelFn: () => void;
-
-  // Store the active era.
-  activeEra: APIActiveEra = defaultActiveEra;
 
   // ------------------------------------------------------
   // Getters.
@@ -208,15 +199,7 @@ export class Api {
 
   // Unsubscribe from all active subscriptions and remove them from subscriptions controller.
   unsubscribe = () => {
-    // TODO: Remove this once subscriptions are active.
-    Object.values(this.#unsubs).forEach((unsub) => {
-      unsub();
-    });
-    this.#unsubs = {};
-    // ---
-
     const subs = SubscriptionsController.getAll(this.network);
-
     if (subs) {
       Object.entries(subs).forEach(([subscriptionId, subscription]) => {
         subscription.unsubscribe();
