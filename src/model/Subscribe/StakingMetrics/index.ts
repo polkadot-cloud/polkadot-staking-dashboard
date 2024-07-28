@@ -5,8 +5,8 @@ import type { VoidFn } from '@polkadot/api/types';
 import { stringToBigNumber } from '@w3ux/utils';
 import type BigNumber from 'bignumber.js';
 import type { APIActiveEra } from 'contexts/Api/types';
-import { ApiController } from 'controllers/ApiController';
-import type { Unsubscribable } from 'controllers/SubscriptionsController/types';
+import { ApiController } from 'controllers/Api';
+import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { NetworkName } from 'types';
 
 export class StakingMetrics implements Unsubscribable {

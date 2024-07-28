@@ -5,9 +5,9 @@ import type { VoidFn } from '@polkadot/api/types';
 import BigNumber from 'bignumber.js';
 import { defaultActiveEra } from 'contexts/Api/defaults';
 import type { APIActiveEra } from 'contexts/Api/types';
-import { ApiController } from 'controllers/ApiController';
-import { SubscriptionsController } from 'controllers/SubscriptionsController';
-import type { Unsubscribable } from 'controllers/SubscriptionsController/types';
+import { ApiController } from 'controllers/Api';
+import { SubscriptionsController } from 'controllers/Subscriptions';
+import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { AnyApi, NetworkName } from 'types';
 import { StakingMetrics } from '../StakingMetrics';
 

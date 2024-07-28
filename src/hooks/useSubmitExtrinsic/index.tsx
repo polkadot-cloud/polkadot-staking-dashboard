@@ -14,7 +14,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useBuildPayload } from '../useBuildPayload';
 import { useProxySupported } from '../useProxySupported';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
-import { NotificationsController } from 'controllers/NotificationsController';
+import { NotificationsController } from 'controllers/Notifications';
 import { useExtensions } from '@w3ux/react-connect-kit';
 
 export const useSubmitExtrinsic = ({

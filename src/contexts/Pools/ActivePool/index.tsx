@@ -12,9 +12,9 @@ import { useBondedPools } from '../BondedPools';
 import type { ActivePoolContextState } from './types';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import { useBalances } from 'contexts/Balances';
-import { ActivePoolsController } from 'controllers/ActivePoolsController';
+import { ActivePoolsController } from 'controllers/ActivePools';
 import { defaultActivePoolContext, defaultPoolRoles } from './defaults';
-import { SyncController } from 'controllers/SyncController';
+import { SyncController } from 'controllers/Sync';
 import { useActivePools } from 'hooks/useActivePools';
 import BigNumber from 'bignumber.js';
 

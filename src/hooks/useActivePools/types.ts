@@ -3,7 +3,7 @@
 
 import type { Nominations } from 'contexts/Balances/types';
 import type { ActivePool } from 'contexts/Pools/ActivePool/types';
-import type { DetailActivePool } from 'controllers/ActivePoolsController/types';
+import type { DetailActivePool } from 'controllers/ActivePools/types';
 import type { MaybeAddress } from 'types';
 
 export interface ActivePoolsProps {

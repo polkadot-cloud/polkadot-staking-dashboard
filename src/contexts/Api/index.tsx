@@ -32,13 +32,13 @@ import {
 import { isCustomEvent } from 'controllers/utils';
 import { useEventListener } from 'usehooks-ts';
 import BigNumber from 'bignumber.js';
-import { SyncController } from 'controllers/SyncController';
-import { ApiController } from 'controllers/ApiController';
+import { SyncController } from 'controllers/Sync';
+import { ApiController } from 'controllers/Api';
 import type { ApiStatus, ConnectionType } from 'model/Api/types';
 import { StakingConstants } from 'model/Query/StakingConstants';
 import { Era } from 'model/Query/Era';
 import { NetworkMeta } from 'model/Query/NetworkMeta';
-import { SubscriptionsController } from 'controllers/SubscriptionsController';
+import { SubscriptionsController } from 'controllers/Subscriptions';
 import { BlockNumber } from 'model/Subscribe/BlockNumber';
 import { NetworkMetrics } from 'model/Subscribe/NetworkMetrics';
 import { ActiveEra } from 'model/Subscribe/ActiveEra';

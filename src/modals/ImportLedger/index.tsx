@@ -19,7 +19,7 @@ import { useNetwork } from 'contexts/Network';
 import { useTranslation } from 'react-i18next';
 import { Manage } from './Manage';
 import { Splash } from './Splash';
-import { NotificationsController } from 'controllers/NotificationsController';
+import { NotificationsController } from 'controllers/Notifications';
 import { useOverlay } from 'kits/Overlay/Provider';
 
 export const ImportLedger: FC = () => {

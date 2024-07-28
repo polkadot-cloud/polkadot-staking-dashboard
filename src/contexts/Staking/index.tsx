@@ -29,7 +29,7 @@ import {
   formatRawExposures,
 } from './Utils';
 import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
-import { SyncController } from 'controllers/SyncController';
+import { SyncController } from 'controllers/Sync';
 
 const worker = new Worker();
 
