@@ -1,38 +1,46 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { merkleizeMetadata } from '@polkadot-api/merkleize-metadata';
+import type { ApiPromise } from '@polkadot/api';
+import { objectSpread, u8aToHex } from '@polkadot/util';
 import type { AnyJson } from '@w3ux/types';
-import { ZondaxMetadataHashApiUrl } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useNetwork } from 'contexts/Network';
 import { useTxMeta } from 'contexts/TxMeta';
 import type { AnyApi } from 'types';
 
 export const useBuildPayload = () => {
   const { api } = useApi();
   const { getNonce } = useBalances();
-  const {
-    networkData: { unit },
-  } = useNetwork();
+  const { setTxPayload } = useTxMeta();
   const { getAccount } = useImportedAccounts();
 
-  const { setTxPayload } = useTxMeta();
-
   // Request a metadata hash from Zondax API service.
-  const fetchMetadataHash = async () => {
-    const requestMetadataHash = await fetch(ZondaxMetadataHashApiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id: unit.toLowerCase() }),
-    });
+  const fetchMetadataHash = async (a: ApiPromise, p: AnyJson) => {
+    const metadata = await a.call.metadata.metadataAtVersion(15);
+    const { specName, specVersion } = a.runtimeVersion;
 
-    const response = await requestMetadataHash.json();
+    const opts = {
+      base58Prefix: (a.consts.system.ss58Prefix as AnyApi).toNumber(),
+      decimals: a.registry.chainDecimals[0],
+      specName: specName.toString(),
+      specVersion: specVersion.toNumber(),
+      tokenSymbol: a.registry.chainTokens[0],
+    };
 
-    return `0x${response.metadataHash}`;
+    const merkleizedMetadata = merkleizeMetadata(metadata.toHex(), opts);
+    const metadataHash = u8aToHex(merkleizedMetadata.digest());
+    const payload = objectSpread({}, p, { metadataHash, mode: 1 });
+    const newPayload = a.registry.createType('ExtrinsicPayload', payload);
+
+    return {
+      newPayload,
+      newTxMetadata: merkleizedMetadata.getProofForExtrinsicPayload(
+        u8aToHex(newPayload.toU8a(true))
+      ),
+    };
   };
 
   // Build and set payload of the transaction and store it in TxMetaContext.
@@ -56,9 +64,11 @@ export const useBuildPayload = () => {
       const nonce = api.registry.createType('Compact<Index>', accountNonce);
 
       // Construct the payload value.
-      const payload: AnyJson = {
+      const payloadJson: AnyJson = {
         specVersion: api.runtimeVersion.specVersion.toHex(),
         transactionVersion: api.runtimeVersion.transactionVersion.toHex(),
+        runtimeVersion: api.runtimeVersion,
+        version: api.extrinsicVersion,
         address: from,
         blockHash: lastHeader.hash.toHex(),
         blockNumber: blockNumber.toHex(),
@@ -68,28 +78,30 @@ export const useBuildPayload = () => {
         nonce: nonce.toHex(),
         signedExtensions: api.registry.signedExtensions,
         tip: api.registry.createType('Compact<Balance>', 0).toHex(),
-        version: tx.version,
         withSignedTransaction: true,
       };
 
+      let payload;
+      let txMetadata = null;
+
       // If the source is `ledger`, add the metadata hash to the payload.
       if (source === 'ledger') {
-        const metadataHash = await fetchMetadataHash();
-        payload.mode = 1;
-        payload.metadataHash = metadataHash;
+        const { newPayload, newTxMetadata } = await fetchMetadataHash(
+          api,
+          payloadJson
+        );
+        payload = newPayload;
+        txMetadata = newTxMetadata;
+      } else {
+        // Create the payload raw.
+        payload = api.registry.createType('ExtrinsicPayload', payload, {
+          version: payloadJson.version,
+        });
+        txMetadata = null;
       }
 
-      // Create the payload bytes.
-      const payloadBytes = api.registry.createType(
-        'ExtrinsicPayload',
-        payload,
-        {
-          version: payload.version,
-        }
-      );
-
       // Persist both the payload and the payload bytes in state, indexed by its uid.
-      setTxPayload(payloadBytes, payload, uid);
+      setTxPayload(txMetadata, payload, uid);
     }
   };
 

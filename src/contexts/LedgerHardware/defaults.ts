@@ -27,7 +27,7 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   handleErrors: (err) => {},
   handleGetAddress: (txMetadataChainId, accountIndex, ss58Prefix) =>
     new Promise((resolve) => resolve()),
-  handleSignTx: (txMetadataChainId, uid, index, payload) =>
+  handleSignTx: (txMetadataChainId, uid, index, payload, txMetadata) =>
     new Promise((resolve) => resolve()),
   handleResetLedgerTask: () => {},
   runtimesInconsistent: false,

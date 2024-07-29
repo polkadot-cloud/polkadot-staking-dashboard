@@ -23,7 +23,7 @@ export const useNominationStatus = () => {
     const nominations =
       type === 'nominator'
         ? getNominations(who)
-        : activePoolNominations?.targets ?? [];
+        : (activePoolNominations?.targets ?? []);
 
     return getNominationsStatusFromTargets(who, nominations);
   };

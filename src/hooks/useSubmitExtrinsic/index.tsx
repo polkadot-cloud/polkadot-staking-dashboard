@@ -40,7 +40,7 @@ export const useSubmitExtrinsic = ({
     txFees,
     setTxFees,
     setSender,
-    getTxPayloadValue,
+    getTxPayload,
     getTxSignature,
     setTxSignature,
     resetTxPayload,
@@ -242,7 +242,7 @@ export const useSubmitExtrinsic = ({
     // pre-submission state update
     setSubmitting(true);
 
-    const txPayloadValue = getTxPayloadValue();
+    const txPayloadValue = getTxPayload();
     const txSignature = getTxSignature();
 
     // handle signed transaction.
@@ -251,7 +251,7 @@ export const useSubmitExtrinsic = ({
         txRef.current.addSignature(
           fromRef.current,
           txSignature,
-          txPayloadValue
+          txPayloadValue.toHex()
         );
 
         const unsub = await txRef.current.send(
