@@ -14,8 +14,8 @@ export interface TxMetaContextInterface {
   resetTxFees: () => void;
   notEnoughFunds: boolean;
   getPayloadUid: () => number;
+  getTxMetadata: () => AnyJson;
   getTxPayload: () => AnyJson;
-  getTxPayloadValue: () => AnyJson;
   setTxPayload: (payload: AnyJson, payloadValue: AnyJson, uid: number) => void;
   incrementPayloadUid: () => number;
   resetTxPayload: () => void;

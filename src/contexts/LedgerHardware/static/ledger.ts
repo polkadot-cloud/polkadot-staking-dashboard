@@ -16,11 +16,7 @@ export class Ledger {
   // Initialise ledger transport, initialise app, and return with device info.
   static initialise = async (txMetadataChainId: string) => {
     this.transport = await TransportWebHID.create();
-    const app = new PolkadotGenericApp(
-      Ledger.transport,
-      txMetadataChainId,
-      'https://api.zondax.ch/polkadot/transaction/metadata'
-    );
+    const app = new PolkadotGenericApp(Ledger.transport, txMetadataChainId);
     const { productName } = this.transport.device;
     return { app, productName };
   };
@@ -74,12 +70,20 @@ export class Ledger {
   static signPayload = async (
     app: PolkadotGenericApp,
     index: number,
-    payload: AnyJson
+    payload: AnyJson,
+    txMetadata: AnyJson
   ) => {
     await this.ensureOpen();
 
     const bip42Path = `m/44'/354'/${index}'/${0}'/${0}'`;
-    const result = await app.sign(bip42Path, Buffer.from(payload.toU8a(true)));
+    const buff = Buffer.from(txMetadata);
+
+    const result = await app.signWithMetadata(
+      bip42Path,
+      payload.toU8a(true),
+      buff
+    );
+
     await this.ensureClosed();
     return result;
   };

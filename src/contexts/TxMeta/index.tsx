@@ -46,14 +46,14 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
   // reason we give every payload a uid, and check whether this uid matches the active extrinsic
   // before submitting it.
   const [txPayload, setTxPayloadState] = useState<{
-    payload: AnyJson;
+    txMetadata: AnyJson;
     payloadValue: AnyJson;
     uid: number;
   } | null>(null);
   const txPayloadRef = useRef(txPayload);
   const getPayloadUid = () => txPayloadRef.current?.uid || 1;
-  const getTxPayload = () => txPayloadRef.current?.payload || null;
-  const getTxPayloadValue = () => txPayloadRef.current?.payloadValue || null;
+  const getTxMetadata = () => txPayloadRef.current?.txMetadata || null;
+  const getTxPayload = () => txPayloadRef.current?.payloadValue || null;
 
   // Store an optional signed transaction if extrinsics require manual signing (e.g. Ledger).
   const [txSignature, setTxSignatureState] = useState<AnyJson>(null);
@@ -77,13 +77,13 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
 
   // Set the transaction payload and uid. Overwrites any existing payload.
   const setTxPayload = (
-    payload: AnyJson,
+    txMetadata: AnyJson,
     payloadValue: AnyJson,
     uid: number
   ) => {
     setStateWithRef(
       {
-        payload,
+        txMetadata,
         payloadValue,
         uid,
       },
@@ -171,8 +171,8 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
         resetTxFees,
         notEnoughFunds,
         getPayloadUid,
+        getTxMetadata,
         getTxPayload,
-        getTxPayloadValue,
         setTxPayload,
         incrementPayloadUid,
         resetTxPayload,
