@@ -17,7 +17,9 @@ const PoolAccount = ({ label, pool, syncing }: PoolAccountProps) => {
   // Default display text value.
   const defaultDisplay = ellipsisFn(pool.addresses.stash);
 
-  let text = syncing ? t('syncing') : poolsMetaData[pool.id] ?? defaultDisplay;
+  let text = syncing
+    ? t('syncing')
+    : (poolsMetaData[pool.id] ?? defaultDisplay);
 
   // Check if super identity has been byte encoded.
   const displayAsBytes = u8aToString(u8aUnwrapBytes(text));

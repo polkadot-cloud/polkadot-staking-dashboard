@@ -33,7 +33,7 @@ export const Submit = ({
   const { getTxSignature } = useTxMeta();
   const { getAccount } = useImportedAccounts();
   const { activeAccount } = useActiveAccounts();
-  const { getTxPayload, getPayloadUid } = useTxMeta();
+  const { getTxMetadata, getTxPayload, getPayloadUid } = useTxMeta();
   const { txMetadataChainId } = getLedgerApp(network);
 
   const getAddressIndex = () =>
@@ -43,8 +43,16 @@ export const Submit = ({
   const handleTxSubmit = async () => {
     const uid = getPayloadUid();
     const accountIndex = getAddressIndex();
+    const txMetadata = await getTxMetadata();
     const payload = await getTxPayload();
-    await handleSignTx(txMetadataChainId, uid, accountIndex, payload);
+
+    await handleSignTx(
+      txMetadataChainId,
+      uid,
+      accountIndex,
+      payload,
+      txMetadata
+    );
   };
 
   // Check device runtime version.
