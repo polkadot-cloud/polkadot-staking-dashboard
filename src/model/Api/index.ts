@@ -2,19 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import { SyncController } from 'controllers/Sync';
 import type { NetworkName } from 'types';
 import { NetworkList } from 'config/networks';
-import { makeCancelable } from '@w3ux/utils';
-import { WellKnownChain } from '@substrate/connect';
-import type {
-  APIEventDetail,
-  ConnectionType,
-  EventApiStatus,
-  SubstrateConnect,
-} from './types';
+import type { APIEventDetail, ConnectionType, EventApiStatus } from './types';
 import { SubscriptionsController } from 'controllers/Subscriptions';
+import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
+import * as Sc from '@substrate/connect';
 
 export class Api {
   // ------------------------------------------------------
@@ -35,9 +29,6 @@ export class Api {
 
   // The current connection type.
   #connectionType: ConnectionType;
-
-  // Cancel function of dynamic substrate connect import.
-  cancelFn: () => void;
 
   // ------------------------------------------------------
   // Getters.
@@ -121,17 +112,11 @@ export class Api {
 
   // Dynamically load and connect to Substrate Connect.
   async initScProvider() {
-    // Dynamically load Substrate Connect.
-    const ScPromise = makeCancelable(import('@substrate/connect'));
-    this.cancelFn = ScPromise.cancel;
-    const Sc = (await ScPromise.promise) as SubstrateConnect;
-
     // Get light client key from network list.
-    const lightClientKey = NetworkList[this.network].endpoints
-      .lightClient as WellKnownChain;
+    const lightClientKey = NetworkList[this.network].endpoints.lightClient;
 
     // Instantiate light client provider.
-    this.#provider = new ScProvider(Sc, WellKnownChain[lightClientKey]);
+    this.#provider = new ScProvider(Sc, Sc.WellKnownChain[lightClientKey]);
     await this.#provider.connect();
   }
 
