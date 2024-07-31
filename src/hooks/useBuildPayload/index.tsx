@@ -94,7 +94,7 @@ export const useBuildPayload = () => {
         txMetadata = newTxMetadata;
       } else {
         // Create the payload raw.
-        payload = api.registry.createType('ExtrinsicPayload', payload, {
+        payload = api.registry.createType('ExtrinsicPayload', payloadJson, {
           version: payloadJson.version,
         });
         txMetadata = null;
