@@ -44,6 +44,9 @@ export class ApiController {
         await this.destroy(key as NetworkName);
       })
     );
+
+    // 1. Update local storage and sync status.
+
     // Persist the selected network to local storage.
     localStorage.setItem('network', network);
 
@@ -51,14 +54,23 @@ export class ApiController {
     // here in case the user switches networks.
     SyncController.dispatch('initialization', 'syncing');
 
+    // 2. Instantiate chain Api instances.
+
     // Instantiate Api instance for relay chain.
     this.instances[network] = new Api(network, 'relay');
 
-    // TODO: Add People chain instance.
-    // this.instances[`${network}_people`] = new Api(`${network}_people`, 'system');
+    //  Instantiate Api instance for People chain.
+    this.instances[`people-${network}`] = new Api(
+      `people-${network}`,
+      'system'
+    );
 
-    // TODO: Initialize People chain instance.
-    await this.instances[network].initialize(type, rpcEndpoint);
+    //3. Initialize chain instances.
+
+    await Promise.all([
+      this.instances[network].initialize(type, rpcEndpoint),
+      this.instances[`people-${network}`].initialize('ws', 'Parity'),
+    ]);
   }
 
   // Gracefully disconnect and then destroy an Api instance.

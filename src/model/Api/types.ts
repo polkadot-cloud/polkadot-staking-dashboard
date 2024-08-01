@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { NetworkName } from 'types';
+import type { NetworkName, SystemChainId } from 'types';
 
 export interface APIConfig {
   type: ConnectionType;
@@ -10,7 +10,7 @@ export interface APIConfig {
 
 export interface APIEventDetail {
   status: EventApiStatus;
-  network: NetworkName;
+  network: NetworkName | SystemChainId;
   type: ConnectionType;
   rpcEndpoint: string;
   err?: string;

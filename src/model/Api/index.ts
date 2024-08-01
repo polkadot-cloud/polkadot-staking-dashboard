@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import type { NetworkName } from 'types';
+import type { NetworkName, SystemChainId } from 'types';
 import { NetworkList, SystemChainList } from 'config/networks';
 import type {
   ApiChainType,
@@ -20,7 +20,7 @@ export class Api {
   // ------------------------------------------------------
 
   // The network name associated with this Api instance.
-  network: NetworkName;
+  network: NetworkName | SystemChainId;
 
   // The type of chain being connected to.
   #chainType: ApiChainType;
@@ -53,7 +53,7 @@ export class Api {
   // Constructor.
   // ------------------------------------------------------
 
-  constructor(network: NetworkName, chainType: ApiChainType) {
+  constructor(network: NetworkName | SystemChainId, chainType: ApiChainType) {
     this.network = network;
     this.#chainType = chainType;
   }

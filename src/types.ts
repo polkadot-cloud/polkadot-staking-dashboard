@@ -50,6 +50,11 @@ declare global {
 
 export type NetworkName = 'polkadot' | 'kusama' | 'westend';
 
+export type SystemChainId =
+  | 'people-polkadot'
+  | 'people-kusama'
+  | 'people-westend';
+
 export type Networks = Record<string, Network>;
 
 type NetworkColor =
