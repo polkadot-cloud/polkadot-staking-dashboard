@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { NetworkName } from 'types';
+import type { NetworkName, SystemChainId } from 'types';
 import type { ChainSubscriptions, Subscription } from './types';
 
 // A class to manage subscriptions.
@@ -12,7 +12,9 @@ export class SubscriptionsController {
   // ------------------------------------------------------
 
   // Subscription objects, keyed by an network.
-  static #subs: Partial<Record<NetworkName, ChainSubscriptions>> = {};
+  static #subs: Partial<
+    Record<NetworkName | SystemChainId, ChainSubscriptions>
+  > = {};
 
   // ------------------------------------------------------
   // Getters.
@@ -23,13 +25,15 @@ export class SubscriptionsController {
   }
 
   // Gets all subscriptions for a network.
-  static getAll(network: NetworkName): ChainSubscriptions | undefined {
+  static getAll(
+    network: NetworkName | SystemChainId
+  ): ChainSubscriptions | undefined {
     return this.#subs[network];
   }
 
   // Get a subscription by network and subscriptionId.
   static get(
-    network: NetworkName,
+    network: NetworkName | SystemChainId,
     subscriptionId: string
   ): Subscription | undefined {
     return this.#subs[network]?.[subscriptionId] || undefined;
@@ -64,7 +68,10 @@ export class SubscriptionsController {
   // ------------------------------------------------------
 
   // Unsubscribe from a subscription and remove it from class state.
-  static remove(network: NetworkName, subscriptionId: string): void {
+  static remove(
+    network: NetworkName | SystemChainId,
+    subscriptionId: string
+  ): void {
     if (this.#subs[network]) {
       try {
         delete this.#subs[network]![subscriptionId];

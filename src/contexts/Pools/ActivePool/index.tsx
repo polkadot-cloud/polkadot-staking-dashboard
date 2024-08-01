@@ -26,8 +26,8 @@ export const useActivePool = () => useContext(ActivePoolContext);
 
 export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
-  const { isReady, api } = useApi();
   const { getPoolMembership } = useBalances();
+  const { isReady, api, peopleApi } = useApi();
   const { activeAccount } = useActiveAccounts();
   const createPoolAccounts = useCreatePoolAccounts();
   const { getAccountPoolRoles, bondedPools } = useBondedPools();
@@ -99,7 +99,14 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
       }));
 
       SyncController.dispatch('active-pools', 'syncing');
-      ActivePoolsController.syncPools(api, activeAccount, newActivePools);
+      if (peopleApi) {
+        ActivePoolsController.syncPools(
+          api,
+          peopleApi,
+          activeAccount,
+          newActivePools
+        );
+      }
     } else {
       // No active pools to sync. Mark as complete.
       SyncController.dispatch('active-pools', 'complete');

@@ -9,7 +9,7 @@ import type { AnyApi, Fn } from 'types';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
-import { MaxEraRewardPointsEras, PeopleChainNetworks } from 'consts';
+import { MaxEraRewardPointsEras } from 'consts';
 import { useStaking } from 'contexts/Staking';
 import type {
   EraPointsBoundaries,
@@ -45,6 +45,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const {
     isReady,
     api,
+    peopleApi,
     consts: { historyDepth },
     networkMetrics: { earliestStoredSession },
   } = useApi();
@@ -316,11 +317,10 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     // NOTE: validators are shuffled before committed to state.
     setValidators(shuffle(validatorEntries));
 
-    // PEOPLE CHAIN MIGRATION: Currently ignoring identities while People Chain is not supported.
-    if (!PeopleChainNetworks.includes(network)) {
+    if (peopleApi) {
       const addresses = validatorEntries.map(({ address }) => address);
       const { identities, supers } = await IdentitiesController.fetch(
-        api,
+        peopleApi,
         addresses
       );
       setValidatorIdentities(identities);
