@@ -78,6 +78,7 @@ export const defaultApiContext: APIContextInterface = {
   chainState: defaultChainState,
   isReady: false,
   apiStatus: 'disconnected',
+  peopleApiStatus: 'disconnected',
   connectionType: 'ws',
   setConnectionType: (connectionType) => {},
   rpcEndpoint: '',

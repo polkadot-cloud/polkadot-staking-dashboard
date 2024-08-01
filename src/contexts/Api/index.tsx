@@ -48,6 +48,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Store Api connection status for the current network.
   const [apiStatus, setApiStatus] = useState<ApiStatus>('disconnected');
 
+  // Store Api connection status for People system chain.
+  const [peopleApiStatus] = useState<ApiStatus>('disconnected');
+
   // Store whether light client is active.
   const [connectionType, setConnectionTypeState] = useState<ConnectionType>(
     localStorage.getItem('light_client') ? 'sc' : 'ws'
@@ -239,7 +242,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       ) {
         return;
       }
-
       switch (status) {
         case 'ready':
           onApiReady();
@@ -437,6 +439,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         api: ApiController.get(network)?.api || null,
         chainState,
         apiStatus,
+        peopleApiStatus,
         connectionType,
         setConnectionType,
         rpcEndpoint,

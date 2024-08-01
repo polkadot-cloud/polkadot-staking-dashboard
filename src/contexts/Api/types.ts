@@ -76,6 +76,7 @@ export interface APIContextInterface {
   chainState: APIChainState;
   isReady: boolean;
   apiStatus: ApiStatus;
+  peopleApiStatus: ApiStatus;
   connectionType: ConnectionType;
   setConnectionType: (connectionType: ConnectionType) => void;
   rpcEndpoint: string;
