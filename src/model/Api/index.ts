@@ -162,7 +162,7 @@ export class Api {
     const detail: APIEventDetail = {
       network: this.network,
       status,
-      type: this.#connectionType,
+      connectionType: this.#connectionType,
       rpcEndpoint: this.#rpcEndpoint,
     };
     if (options?.err) {

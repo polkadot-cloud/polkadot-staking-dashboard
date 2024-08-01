@@ -230,14 +230,14 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       const {
         status,
         network: eventNetwork,
-        type,
+        connectionType: eventConnectionType,
         rpcEndpoint: eventRpcEndpoints,
       } = e.detail;
 
       // UI is only interested in events for the current network.
       if (
         eventNetwork !== network ||
-        connectionTypeRef.current !== type ||
+        connectionTypeRef.current !== eventConnectionType ||
         rpcEndpointRef.current !== eventRpcEndpoints
       ) {
         return;
@@ -258,7 +258,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         case 'error':
           // Reinitialise api on error. We can confidently do this with well-known RPC providers,
           // but not with custom endpoints.
-          reInitialiseApi(connectionType);
+          reInitialiseApi(eventConnectionType);
           break;
       }
     }
