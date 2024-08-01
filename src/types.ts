@@ -50,6 +50,11 @@ declare global {
 
 export type NetworkName = 'polkadot' | 'kusama' | 'westend';
 
+export type SystemChainId =
+  | 'people-polkadot'
+  | 'people-kusama'
+  | 'people-westend';
+
 export type Networks = Record<string, Network>;
 
 type NetworkColor =
@@ -65,7 +70,6 @@ export interface Network {
     defaultRpcEndpoint: string;
     rpcEndpoints: Record<string, string>;
   };
-  namespace: string;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   colors: Record<NetworkColor, { [key in Theme]: string }>;
   unit: string;
@@ -91,6 +95,17 @@ export interface Network {
   };
   defaultFeeReserve: number;
   maxExposurePageSize: BigNumber;
+}
+
+export interface SystemChain {
+  name: string;
+  ss58: number;
+  units: number;
+  unit: string;
+  endpoints: {
+    lightClient: string;
+    rpcEndpoints: Record<string, string>;
+  };
 }
 
 export interface PageCategory {

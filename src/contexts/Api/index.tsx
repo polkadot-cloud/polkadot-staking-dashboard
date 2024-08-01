@@ -30,7 +30,11 @@ import { useEventListener } from 'usehooks-ts';
 import BigNumber from 'bignumber.js';
 import { SyncController } from 'controllers/Sync';
 import { ApiController } from 'controllers/Api';
-import type { ApiStatus, ConnectionType } from 'model/Api/types';
+import type {
+  APIEventDetail,
+  ApiStatus,
+  ConnectionType,
+} from 'model/Api/types';
 import { StakingConstants } from 'model/Query/StakingConstants';
 import { Era } from 'model/Query/Era';
 import { NetworkMeta } from 'model/Query/NetworkMeta';
@@ -47,6 +51,10 @@ export const useApi = () => useContext(APIContext);
 export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Store Api connection status for the current network.
   const [apiStatus, setApiStatus] = useState<ApiStatus>('disconnected');
+
+  // Store Api connection status for People system chain.
+  const [peopleApiStatus, setPeopleApiStatus] =
+    useState<ApiStatus>('disconnected');
 
   // Store whether light client is active.
   const [connectionType, setConnectionTypeState] = useState<ConnectionType>(
@@ -184,7 +192,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     // API is now ready to be used.
     setApiStatus('ready');
 
-    // Set `initialization` syncing to complete.
+    // Set `initialization` syncing to complete. NOTE: This synchonisation is only considering the
+    // relay chain sync state, and not system/para chains.
     SyncController.dispatch('initialization', 'complete');
 
     // 3. Initialise subscriptions:
@@ -215,49 +224,89 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     SubscriptionsController.set(network, 'activeEra', new ActiveEra(network));
   };
 
-  // Handle Api disconnection.
-  const onApiDisconnected = () => {
-    setApiStatus('disconnected');
-  };
-
   // Handle `polkadot-api` events.
   const handleNewApiStatus = (e: Event) => {
     if (isCustomEvent(e)) {
-      const {
-        status,
-        network: eventNetwork,
-        type,
-        rpcEndpoint: eventRpcEndpoints,
-      } = e.detail;
+      const { chainType } = e.detail;
 
-      // UI is only interested in events for the current network.
-      if (
-        eventNetwork !== network ||
-        connectionTypeRef.current !== type ||
-        rpcEndpointRef.current !== eventRpcEndpoints
-      ) {
-        return;
+      if (chainType === 'relay') {
+        handleRelayApiStatus(e.detail);
+      } else if (chainType === 'system') {
+        handleSystemApiStatus(e.detail);
       }
+    }
+  };
 
-      switch (status) {
-        case 'ready':
-          onApiReady();
-          break;
-        case 'connecting':
-          setApiStatus('connecting');
-          break;
-        case 'connected':
-          setApiStatus('connected');
-          break;
-        case 'disconnected':
-          onApiDisconnected();
-          break;
-        case 'error':
-          // Reinitialise api on error. We can confidently do this with well-known RPC providers,
-          // but not with custom endpoints.
-          reInitialiseApi(connectionType);
-          break;
-      }
+  // Handle an Api status event for a relay chain.
+  const handleRelayApiStatus = (detail: APIEventDetail) => {
+    const {
+      status,
+      network: eventNetwork,
+      connectionType: eventConnectionType,
+      rpcEndpoint: eventRpcEndpoint,
+    } = detail;
+
+    // UI is only interested in events for the current network.
+    if (
+      eventNetwork !== network ||
+      connectionTypeRef.current !== eventConnectionType ||
+      rpcEndpointRef.current !== eventRpcEndpoint
+    ) {
+      return;
+    }
+    switch (status) {
+      case 'ready':
+        onApiReady();
+        break;
+      case 'connecting':
+        setApiStatus('connecting');
+        break;
+      case 'connected':
+        setApiStatus('connected');
+        break;
+      case 'disconnected':
+        setApiStatus('disconnected');
+        break;
+      case 'error':
+        // Reinitialise api on error. We can confidently do this with well-known RPC providers,
+        // but not with custom endpoints.
+        reInitialiseApi(eventConnectionType);
+        break;
+    }
+  };
+
+  // Handle an Api status event for a system chain. NOTE: Only People chain is currently being used.
+  const handleSystemApiStatus = (detail: APIEventDetail) => {
+    const {
+      status,
+      network: eventNetwork,
+      connectionType: eventConnectionType,
+    } = detail;
+
+    // UI is only interested in events for the People system chain.
+    if (
+      eventNetwork !== `people-${network}` ||
+      connectionTypeRef.current !== eventConnectionType
+      /* || rpcEndpointRef.current !== eventRpcEndpoint // NOTE: Only `Parity` being used currently. */
+    ) {
+      return;
+    }
+    switch (status) {
+      case 'ready':
+        setPeopleApiStatus('ready');
+        break;
+      case 'connecting':
+        setPeopleApiStatus('connecting');
+        break;
+      case 'connected':
+        setPeopleApiStatus('connected');
+        break;
+      case 'disconnected':
+        setPeopleApiStatus('disconnected');
+        break;
+      case 'error':
+        // Silently fail.
+        break;
     }
   };
 
@@ -434,8 +483,10 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     <APIContext.Provider
       value={{
         api: ApiController.get(network)?.api || null,
+        peopleApi: ApiController.get(`people-${network}`)?.api || null,
         chainState,
         apiStatus,
+        peopleApiStatus,
         connectionType,
         setConnectionType,
         rpcEndpoint,
