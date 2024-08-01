@@ -85,5 +85,4 @@ export interface APIContextInterface {
   activeEra: APIActiveEra;
   poolsConfig: APIPoolsConfig;
   stakingMetrics: APIStakingMetrics;
-  isPagedRewardsActive: (era: BigNumber) => boolean;
 }
