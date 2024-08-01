@@ -184,7 +184,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     // API is now ready to be used.
     setApiStatus('ready');
 
-    // Set `initialization` syncing to complete.
+    // Set `initialization` syncing to complete. NOTE: This synchonisation is only considering the
+    // relay chain sync state, and not system/para chains.
     SyncController.dispatch('initialization', 'complete');
 
     // 3. Initialise subscriptions:
