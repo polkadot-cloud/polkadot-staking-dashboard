@@ -30,7 +30,11 @@ import { useEventListener } from 'usehooks-ts';
 import BigNumber from 'bignumber.js';
 import { SyncController } from 'controllers/Sync';
 import { ApiController } from 'controllers/Api';
-import type { ApiStatus, ConnectionType } from 'model/Api/types';
+import type {
+  APIEventDetail,
+  ApiStatus,
+  ConnectionType,
+} from 'model/Api/types';
 import { StakingConstants } from 'model/Query/StakingConstants';
 import { Era } from 'model/Query/Era';
 import { NetworkMeta } from 'model/Query/NetworkMeta';
@@ -227,42 +231,51 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Handle `polkadot-api` events.
   const handleNewApiStatus = (e: Event) => {
     if (isCustomEvent(e)) {
-      const {
-        status,
-        network: eventNetwork,
-        chainType,
-        connectionType: eventConnectionType,
-        rpcEndpoint: eventRpcEndpoints,
-      } = e.detail;
+      const { chainType } = e.detail;
 
-      // UI is only interested in events for the current network.
-      if (
-        chainType !== 'relay' ||
-        eventNetwork !== network ||
-        connectionTypeRef.current !== eventConnectionType ||
-        rpcEndpointRef.current !== eventRpcEndpoints
-      ) {
-        return;
+      if (chainType === 'relay') {
+        handleRelayApiStatus(e.detail);
+      } else if (chainType === 'system') {
+        // TODO: implement.
       }
-      switch (status) {
-        case 'ready':
-          onApiReady();
-          break;
-        case 'connecting':
-          setApiStatus('connecting');
-          break;
-        case 'connected':
-          setApiStatus('connected');
-          break;
-        case 'disconnected':
-          onApiDisconnected();
-          break;
-        case 'error':
-          // Reinitialise api on error. We can confidently do this with well-known RPC providers,
-          // but not with custom endpoints.
-          reInitialiseApi(eventConnectionType);
-          break;
-      }
+    }
+  };
+
+  // Handle an Api status event for a relay chain.
+  const handleRelayApiStatus = (detail: APIEventDetail) => {
+    const {
+      status,
+      network: eventNetwork,
+      connectionType: eventConnectionType,
+      rpcEndpoint: eventRpcEndpoints,
+    } = detail;
+
+    // UI is only interested in events for the current network.
+    if (
+      eventNetwork !== network ||
+      connectionTypeRef.current !== eventConnectionType ||
+      rpcEndpointRef.current !== eventRpcEndpoints
+    ) {
+      return;
+    }
+    switch (status) {
+      case 'ready':
+        onApiReady();
+        break;
+      case 'connecting':
+        setApiStatus('connecting');
+        break;
+      case 'connected':
+        setApiStatus('connected');
+        break;
+      case 'disconnected':
+        onApiDisconnected();
+        break;
+      case 'error':
+        // Reinitialise api on error. We can confidently do this with well-known RPC providers,
+        // but not with custom endpoints.
+        reInitialiseApi(eventConnectionType);
+        break;
     }
   };
 
