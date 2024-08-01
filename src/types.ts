@@ -97,7 +97,10 @@ export interface SystemChain {
   ss58: number;
   units: number;
   unit: string;
-  rpcEndpoints: Record<string, string>;
+  endpoints: {
+    lightClient: string;
+    rpcEndpoints: Record<string, string>;
+  };
 }
 
 export interface PageCategory {
