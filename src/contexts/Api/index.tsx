@@ -230,12 +230,14 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       const {
         status,
         network: eventNetwork,
+        chainType,
         connectionType: eventConnectionType,
         rpcEndpoint: eventRpcEndpoints,
       } = e.detail;
 
       // UI is only interested in events for the current network.
       if (
+        chainType !== 'relay' ||
         eventNetwork !== network ||
         connectionTypeRef.current !== eventConnectionType ||
         rpcEndpointRef.current !== eventRpcEndpoints

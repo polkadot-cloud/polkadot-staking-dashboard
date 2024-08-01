@@ -11,6 +11,7 @@ export interface APIConfig {
 export interface APIEventDetail {
   status: EventApiStatus;
   network: NetworkName | SystemChainId;
+  chainType: ApiChainType;
   connectionType: ConnectionType;
   rpcEndpoint: string;
   err?: string;

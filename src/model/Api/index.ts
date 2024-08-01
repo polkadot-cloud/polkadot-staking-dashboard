@@ -161,6 +161,7 @@ export class Api {
   ) {
     const detail: APIEventDetail = {
       network: this.network,
+      chainType: this.#chainType,
       status,
       connectionType: this.#connectionType,
       rpcEndpoint: this.#rpcEndpoint,
