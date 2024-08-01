@@ -65,7 +65,6 @@ export interface Network {
     defaultRpcEndpoint: string;
     rpcEndpoints: Record<string, string>;
   };
-  namespace: string;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   colors: Record<NetworkColor, { [key in Theme]: string }>;
   unit: string;
@@ -91,6 +90,14 @@ export interface Network {
   };
   defaultFeeReserve: number;
   maxExposurePageSize: BigNumber;
+}
+
+export interface SystemChain {
+  name: string;
+  ss58: number;
+  units: number;
+  unit: string;
+  rpcEndpoints: Record<string, string>;
 }
 
 export interface PageCategory {
