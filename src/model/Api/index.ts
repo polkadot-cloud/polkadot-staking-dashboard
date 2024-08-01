@@ -2,10 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import { SyncController } from 'controllers/Sync';
 import type { NetworkName } from 'types';
-import { NetworkList } from 'config/networks';
-import type { APIEventDetail, ConnectionType, EventApiStatus } from './types';
+import { NetworkList, SystemChainList } from 'config/networks';
+import type {
+  ApiChainType,
+  APIEventDetail,
+  ConnectionType,
+  EventApiStatus,
+} from './types';
 import { SubscriptionsController } from 'controllers/Subscriptions';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import * as Sc from '@substrate/connect';
@@ -17,6 +21,9 @@ export class Api {
 
   // The network name associated with this Api instance.
   network: NetworkName;
+
+  // The type of chain being connected to.
+  #chainType: ApiChainType;
 
   // API provider.
   #provider: WsProvider | ScProvider;
@@ -46,8 +53,9 @@ export class Api {
   // Constructor.
   // ------------------------------------------------------
 
-  constructor(network: NetworkName) {
+  constructor(network: NetworkName, chainType: ApiChainType) {
     this.network = network;
+    this.#chainType = chainType;
   }
 
   // ------------------------------------------------------
@@ -56,13 +64,6 @@ export class Api {
 
   // Class initialization. Sets the `provider` and `api` class members.
   async initialize(type: ConnectionType, rpcEndpoint: string) {
-    // Add initial syncing items. Even though `initialization` is added by default, it is called
-    // again here in case a new API is initialized.
-    SyncController.dispatch('initialization', 'syncing');
-
-    // Persist the network to local storage.
-    localStorage.setItem('network', this.network);
-
     // Set connection metadata.
     this.#rpcEndpoint = rpcEndpoint;
     this.#connectionType = type;
@@ -105,15 +106,23 @@ export class Api {
 
   // Initiate Websocket Provider.
   initWsProvider() {
-    this.#provider = new WsProvider(
-      NetworkList[this.network].endpoints.rpcEndpoints[this.#rpcEndpoint]
-    );
+    const endpoint =
+      this.#chainType === 'relay'
+        ? NetworkList[this.network].endpoints.rpcEndpoints[this.#rpcEndpoint]
+        : SystemChainList[this.network].endpoints.rpcEndpoints[
+            this.#rpcEndpoint
+          ];
+
+    this.#provider = new WsProvider(endpoint);
   }
 
   // Dynamically load and connect to Substrate Connect.
   async initScProvider() {
     // Get light client key from network list.
-    const lightClientKey = NetworkList[this.network].endpoints.lightClient;
+    const lightClientKey =
+      this.#chainType === 'relay'
+        ? NetworkList[this.network].endpoints.lightClient
+        : SystemChainList[this.network].endpoints.lightClient;
 
     // Instantiate light client provider.
     this.#provider = new ScProvider(Sc, Sc.WellKnownChain[lightClientKey]);

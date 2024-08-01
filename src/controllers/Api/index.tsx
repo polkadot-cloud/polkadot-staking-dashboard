@@ -1,6 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { SyncController } from 'controllers/Sync';
 import { Api } from 'model/Api';
 import type { ConnectionType } from 'model/Api/types';
 import type { NetworkName } from 'types';
@@ -43,9 +44,18 @@ export class ApiController {
         await this.destroy(key as NetworkName);
       })
     );
+    // Persist the selected network to local storage.
+    localStorage.setItem('network', network);
+
+    // Set app initializing. Even though `initialization` is added by default, it is called again
+    // here in case the user switches networks.
+    SyncController.dispatch('initialization', 'syncing');
+
+    // Instantiate Api instance for relay chain.
+    this.instances[network] = new Api(network, 'relay');
 
     // TODO: Add People chain instance.
-    this.instances[network] = new Api(network);
+    // this.instances[`${network}_people`] = new Api(`${network}_people`, 'system');
 
     // TODO: Initialize People chain instance.
     await this.instances[network].initialize(type, rpcEndpoint);

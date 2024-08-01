@@ -21,3 +21,5 @@ export type ConnectionType = 'ws' | 'sc';
 export type ApiStatus = 'connecting' | 'connected' | 'disconnected' | 'ready';
 
 export type EventApiStatus = ApiStatus | 'error';
+
+export type ApiChainType = 'relay' | 'system';
