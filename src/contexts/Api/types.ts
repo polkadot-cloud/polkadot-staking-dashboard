@@ -73,6 +73,7 @@ export interface APIStakingMetrics {
 
 export interface APIContextInterface {
   api: ApiPromise | null;
+  peopleApi: ApiPromise | null;
   chainState: APIChainState;
   isReady: boolean;
   apiStatus: ApiStatus;

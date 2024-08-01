@@ -4,7 +4,7 @@
 import { SyncController } from 'controllers/Sync';
 import { Api } from 'model/Api';
 import type { ConnectionType } from 'model/Api/types';
-import type { NetworkName } from 'types';
+import type { NetworkName, SystemChainId } from 'types';
 
 export class ApiController {
   // ------------------------------------------------------
@@ -19,7 +19,7 @@ export class ApiController {
   // ------------------------------------------------------
 
   // Get an Api instance.
-  static get(network: NetworkName) {
+  static get(network: NetworkName | SystemChainId) {
     return this.#instances[network];
   }
 
