@@ -45,7 +45,7 @@
     "chroma-js": "^2.4.2",
     "compare-versions": "^6.1.1",
     "date-fns": "^3.3.1",
-    "framer-motion": "^11.2.10",
+    "framer-motion": "^11.3.21",
     "html5-qrcode": "^2.3.8",
     "i18next": "^23.11.5",
     "i18next-browser-languagedetector": "^8.0.0",
