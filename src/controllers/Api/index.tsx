@@ -75,10 +75,18 @@ export class ApiController {
 
   // Gracefully disconnect and then destroy an Api instance.
   static async destroy(network: NetworkName) {
+    // Disconnect from relay chain Api instance.
     const api = this.instances[network];
     if (api) {
       await api.disconnect(true);
       delete this.instances[network];
+    }
+
+    // Disconnect from People chain Api instance.
+    const peopleApi = this.instances[`people-${network}`];
+    if (peopleApi) {
+      await peopleApi.disconnect(true);
+      delete this.instances[`people-${network}`];
     }
   }
 }
