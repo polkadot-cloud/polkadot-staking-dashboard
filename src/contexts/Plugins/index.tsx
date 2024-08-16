@@ -11,7 +11,7 @@ import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { SubscanController } from 'controllers/SubscanController';
+import { SubscanController } from 'controllers/Subscan';
 import { getAvailablePlugins } from './Utils';
 
 export const PluginsContext = createContext<PluginsContextInterface>(

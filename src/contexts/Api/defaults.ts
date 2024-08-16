@@ -75,9 +75,11 @@ export const defaultStakingMetrics: APIStakingMetrics = {
 
 export const defaultApiContext: APIContextInterface = {
   api: null,
+  peopleApi: null,
   chainState: defaultChainState,
   isReady: false,
   apiStatus: 'disconnected',
+  peopleApiStatus: 'disconnected',
   connectionType: 'ws',
   setConnectionType: (connectionType) => {},
   rpcEndpoint: '',
@@ -87,5 +89,4 @@ export const defaultApiContext: APIContextInterface = {
   activeEra: defaultActiveEra,
   poolsConfig: defaultPoolsConfig,
   stakingMetrics: defaultStakingMetrics,
-  isPagedRewardsActive: (e) => false,
 };

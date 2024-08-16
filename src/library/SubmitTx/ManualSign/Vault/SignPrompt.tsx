@@ -21,6 +21,7 @@ import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
 export const SignPrompt = ({ submitAddress }: SignerPromptProps) => {
   const { t } = useTranslation('library');
   const { getTxPayload, setTxSignature } = useTxMeta();
+
   const payload = getTxPayload();
   const payloadU8a = payload?.toU8a();
   const { closePrompt } = usePrompt();

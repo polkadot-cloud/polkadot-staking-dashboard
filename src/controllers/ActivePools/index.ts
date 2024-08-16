@@ -4,7 +4,7 @@
 import type { VoidFn } from '@polkadot/api/types';
 import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
 import type { ActivePool, PoolRoles } from 'contexts/Pools/ActivePool/types';
-import { IdentitiesController } from 'controllers/IdentitiesController';
+import { IdentitiesController } from 'controllers/Identities';
 import type { AnyApi, MaybeAddress } from 'types';
 import type {
   AccountActivePools,
@@ -13,10 +13,9 @@ import type {
   ActivePoolItem,
   DetailActivePool,
 } from './types';
-import { SyncController } from 'controllers/SyncController';
+import { SyncController } from 'controllers/Sync';
 import type { Nominations } from 'contexts/Balances/types';
 import type { ApiPromise } from '@polkadot/api';
-import { PeopleChainNetworks } from 'consts';
 
 export class ActivePoolsController {
   // ------------------------------------------------------
@@ -43,6 +42,7 @@ export class ActivePoolsController {
   // Subscribes to pools and unsubscribes from removed pools.
   static syncPools = async (
     api: ApiPromise,
+    peopleApi: ApiPromise,
     address: MaybeAddress,
     newPools: ActivePoolItem[]
   ): Promise<void> => {
@@ -81,6 +81,7 @@ export class ActivePoolsController {
             // NOTE: async: fetches identity data for roles.
             await this.handleActivePoolCallback(
               api,
+              peopleApi,
               address,
               pool,
               bondedPool,
@@ -116,6 +117,7 @@ export class ActivePoolsController {
   // Handle active pool callback.
   static handleActivePoolCallback = async (
     api: ApiPromise,
+    peopleApi: ApiPromise,
     address: string,
     pool: ActivePoolItem,
     bondedPoolResult: AnyApi,
@@ -127,13 +129,10 @@ export class ActivePoolsController {
     const balance = accountDataResult.data;
     const rewardAccountBalance = balance?.free.toString();
 
-    // PEOPLE CHAIN MIGRATION: Currently ignoring identities while People Chain is not supported.
-    if (
-      !PeopleChainNetworks.includes(api.runtimeChain.toString().toLowerCase())
-    ) {
+    if (peopleApi) {
       // Fetch identities for roles and expand `bondedPool` state to store them.
       bondedPool.roleIdentities = await IdentitiesController.fetch(
-        api,
+        peopleApi,
         this.getUniqueRoleAddresses(bondedPool.roles)
       );
     }

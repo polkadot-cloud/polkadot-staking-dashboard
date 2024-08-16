@@ -152,14 +152,15 @@ export const LedgerHardwareProvider = ({
     txMetadataChainId: string,
     uid: number,
     index: number,
-    payload: AnyJson
+    payload: AnyJson,
+    txMetadata: AnyJson
   ) => {
     try {
       setIsExecuting(true);
       const { app, productName } = await Ledger.initialise(txMetadataChainId);
       setFeedback(t('approveTransactionLedger'));
 
-      const result = await Ledger.signPayload(app, index, payload);
+      const result = await Ledger.signPayload(app, index, payload, txMetadata);
 
       setIsExecuting(false);
       setFeedback(t('signedTransactionSuccessfully'));
