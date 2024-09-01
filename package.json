@@ -42,7 +42,7 @@
     "bn.js": "^5.2.1",
     "buffer": "^6.0.3",
     "chart.js": "^4.4.3",
-    "chroma-js": "^2.4.2",
+    "chroma-js": "^3.0.0",
     "compare-versions": "^6.1.1",
     "date-fns": "^3.3.1",
     "framer-motion": "^11.2.10",
