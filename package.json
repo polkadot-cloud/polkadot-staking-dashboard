@@ -23,7 +23,7 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@ledgerhq/hw-transport-webhid": "^6.29.2",
     "@polkadot-api/merkleize-metadata": "^1.1.2",
-    "@polkadot/api": "^12.2.3",
+    "@polkadot/api": "^12.4.2",
     "@polkadot/keyring": "^13.0.2",
     "@polkadot/rpc-provider": "^12.2.3",
     "@polkadot/util": "^13.0.2",
