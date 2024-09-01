@@ -41,7 +41,7 @@
     "bignumber.js": "^9.1.2",
     "bn.js": "^5.2.1",
     "buffer": "^6.0.3",
-    "chart.js": "^4.4.3",
+    "chart.js": "^4.4.4",
     "chroma-js": "^2.4.2",
     "compare-versions": "^6.1.1",
     "date-fns": "^3.3.1",
