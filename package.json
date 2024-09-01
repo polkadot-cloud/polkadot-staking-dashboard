@@ -80,7 +80,7 @@
     "@w3ux/types": "0.2.0",
     "eslint": "8.57.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-import-resolver-typescript": "^3.6.3",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-prefer-arrow-functions": "^3.3.2",
