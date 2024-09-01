@@ -28,7 +28,7 @@
     "@polkadot/rpc-provider": "^12.2.3",
     "@polkadot/util": "^13.0.2",
     "@polkadot/util-crypto": "^13.0.2",
-    "@polkawatch/ddp-client": "^2.0.16",
+    "@polkawatch/ddp-client": "^2.0.20",
     "@substrate/connect": "^1.1.0",
     "@w3ux/extension-assets": "0.3.1",
     "@w3ux/hooks": "1.1.0",
