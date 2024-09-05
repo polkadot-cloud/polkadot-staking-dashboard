@@ -25,10 +25,10 @@ export const BalancesContext = createContext<BalancesContextInterface>(
 export const useBalances = () => useContext(BalancesContext);
 
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
-  const { api, peopleApi } = useApi();
   const { getBondedAccount } = useBonded();
   const { accounts } = useImportedAccounts();
   const createPoolAccounts = useCreatePoolAccounts();
+  const { api, peopleApi, peopleApiStatus } = useApi();
   const { activeAccount, activeProxy } = useActiveAccounts();
   const controller = getBondedAccount(activeAccount);
 
@@ -68,7 +68,13 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
           addresses: { ...createPoolAccounts(Number(poolId)) },
         });
         if (peopleApi) {
-          ActivePoolsController.syncPools(api, peopleApi, address, newPools);
+          ActivePoolsController.syncPools(
+            api,
+            peopleApi,
+            peopleApiStatus,
+            address,
+            newPools
+          );
         }
       }
     }
