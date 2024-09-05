@@ -27,9 +27,9 @@ export const useActivePool = () => useContext(ActivePoolContext);
 export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
   const { getPoolMembership } = useBalances();
-  const { isReady, api, peopleApi } = useApi();
   const { activeAccount } = useActiveAccounts();
   const createPoolAccounts = useCreatePoolAccounts();
+  const { isReady, api, peopleApi, peopleApiStatus } = useApi();
   const { getAccountPoolRoles, bondedPools } = useBondedPools();
 
   const membership = getPoolMembership(activeAccount);
@@ -103,6 +103,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
         ActivePoolsController.syncPools(
           api,
           peopleApi,
+          peopleApiStatus,
           activeAccount,
           newActivePools
         );
