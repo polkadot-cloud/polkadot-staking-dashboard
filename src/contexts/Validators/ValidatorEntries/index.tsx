@@ -46,6 +46,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     isReady,
     api,
     peopleApi,
+    peopleApiStatus,
     consts: { historyDepth },
     networkMetrics: { earliestStoredSession },
   } = useApi();
@@ -317,7 +318,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     // NOTE: validators are shuffled before committed to state.
     setValidators(shuffle(validatorEntries));
 
-    if (peopleApi) {
+    if (peopleApi && peopleApiStatus === 'ready') {
       const addresses = validatorEntries.map(({ address }) => address);
       const { identities, supers } = await IdentitiesController.fetch(
         peopleApi,
@@ -532,11 +533,21 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch validators and era reward points when fetched status changes.
   useEffect(() => {
-    if (isReady && activeEra.index.isGreaterThan(0)) {
+    if (
+      isReady &&
+      peopleApiStatus === 'ready' &&
+      activeEra.index.isGreaterThan(0)
+    ) {
       fetchValidators();
       fetchErasRewardPoints();
     }
-  }, [validatorsFetched, erasRewardPointsFetched, isReady, activeEra]);
+  }, [
+    validatorsFetched,
+    erasRewardPointsFetched,
+    isReady,
+    peopleApiStatus,
+    activeEra,
+  ]);
 
   // Mark unsynced and fetch session validators and average reward when activeEra changes.
   useEffectIgnoreInitial(() => {

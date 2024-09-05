@@ -43,6 +43,7 @@ export class ActivePoolsController {
   static syncPools = async (
     api: ApiPromise,
     peopleApi: ApiPromise,
+    peopleApiStatus: string,
     address: MaybeAddress,
     newPools: ActivePoolItem[]
   ): Promise<void> => {
@@ -80,8 +81,8 @@ export class ActivePoolsController {
           ]): Promise<void> => {
             // NOTE: async: fetches identity data for roles.
             await this.handleActivePoolCallback(
-              api,
               peopleApi,
+              peopleApiStatus,
               address,
               pool,
               bondedPool,
@@ -116,8 +117,8 @@ export class ActivePoolsController {
 
   // Handle active pool callback.
   static handleActivePoolCallback = async (
-    api: ApiPromise,
     peopleApi: ApiPromise,
+    peopleApiStatus: string,
     address: string,
     pool: ActivePoolItem,
     bondedPoolResult: AnyApi,
@@ -129,7 +130,7 @@ export class ActivePoolsController {
     const balance = accountDataResult.data;
     const rewardAccountBalance = balance?.free.toString();
 
-    if (peopleApi) {
+    if (peopleApi && peopleApiStatus === 'ready') {
       // Fetch identities for roles and expand `bondedPool` state to store them.
       bondedPool.roleIdentities = await IdentitiesController.fetch(
         peopleApi,
