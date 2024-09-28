@@ -72,7 +72,6 @@ export const CallToActionWrapper = styled.div`
       }
 
       .buttons {
-        border: 0.75px solid var(--border-primary-color);
         border-radius: var(--button-border-radius);
         display: flex;
         flex-wrap: nowrap;
@@ -157,6 +156,15 @@ export const CallToActionWrapper = styled.div`
           &.standalone {
             border-radius: var(--button-border-radius);
             flex-grow: 1;
+            margin-left: 0.75rem;
+
+            &:nth-child(1) {
+              margin-left: 0;
+            }
+
+            @media (max-width: 650px) {
+              margin-left: 0;
+            }
           }
 
           @media (max-width: 650px) {

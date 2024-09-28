@@ -9,7 +9,7 @@ import { ConfirmWrapper } from 'library/Import/Wrappers';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useNetwork } from 'contexts/Network';
 import type { ConfirmProps } from './types';
-import { NotificationsController } from 'controllers/NotificationsController';
+import { NotificationsController } from 'controllers/Notifications';
 import { ellipsisFn } from '@w3ux/utils';
 import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
 import { ButtonMono } from 'kits/Buttons/ButtonMono';

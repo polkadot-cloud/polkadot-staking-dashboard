@@ -12,9 +12,9 @@ import { useBondedPools } from '../BondedPools';
 import type { ActivePoolContextState } from './types';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import { useBalances } from 'contexts/Balances';
-import { ActivePoolsController } from 'controllers/ActivePoolsController';
+import { ActivePoolsController } from 'controllers/ActivePools';
 import { defaultActivePoolContext, defaultPoolRoles } from './defaults';
-import { SyncController } from 'controllers/SyncController';
+import { SyncController } from 'controllers/Sync';
 import { useActivePools } from 'hooks/useActivePools';
 import BigNumber from 'bignumber.js';
 
@@ -26,10 +26,10 @@ export const useActivePool = () => useContext(ActivePoolContext);
 
 export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
-  const { isReady, api } = useApi();
   const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
   const createPoolAccounts = useCreatePoolAccounts();
+  const { isReady, api, peopleApi, peopleApiStatus } = useApi();
   const { getAccountPoolRoles, bondedPools } = useBondedPools();
 
   const membership = getPoolMembership(activeAccount);
@@ -99,7 +99,15 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
       }));
 
       SyncController.dispatch('active-pools', 'syncing');
-      ActivePoolsController.syncPools(api, activeAccount, newActivePools);
+      if (peopleApi) {
+        ActivePoolsController.syncPools(
+          api,
+          peopleApi,
+          peopleApiStatus,
+          activeAccount,
+          newActivePools
+        );
+      }
     } else {
       // No active pools to sync. Mark as complete.
       SyncController.dispatch('active-pools', 'complete');

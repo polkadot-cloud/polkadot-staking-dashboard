@@ -18,6 +18,7 @@ import type {
 } from './types';
 import { Ledger } from './static/ledger';
 import type { AnyJson } from '@w3ux/types';
+import { compare } from 'compare-versions';
 
 export const LedgerHardwareContext =
   createContext<LedgerHardwareContextInterface>(defaultLedgerHardwareContext);
@@ -93,11 +94,24 @@ export const LedgerHardwareProvider = ({
       const { app } = await Ledger.initialise(txMetadataChainId);
       const result = await Ledger.getVersion(app);
       const major = result?.major || 0;
+      const minor = result?.minor || 0;
+      const patch = result?.major || 0;
+
+      // The current version of the Polkadot Ledger app.
+      const currentSemVer = `${major}.${minor}.${patch}`;
+
+      // The version the Generic Polkadot Ledger app was introduced.
+      const genericLaunchSemVer = '100.0.5';
+
+      // Check if the current version is upgraded for the Generic Polkadot Ledger app.
+      const isLegacy = compare(currentSemVer, genericLaunchSemVer, '<');
 
       setIsExecuting(false);
       resetFeedback();
 
-      if (major < transactionVersion) {
+      // If the current version is less than the transaction version, or the app is not the generic
+      // app, set the runtimesInconsistent flag.
+      if (major < transactionVersion || isLegacy) {
         runtimesInconsistent.current = true;
       }
       setIntegrityChecked(true);
@@ -138,14 +152,15 @@ export const LedgerHardwareProvider = ({
     txMetadataChainId: string,
     uid: number,
     index: number,
-    payload: AnyJson
+    payload: AnyJson,
+    txMetadata: AnyJson
   ) => {
     try {
       setIsExecuting(true);
       const { app, productName } = await Ledger.initialise(txMetadataChainId);
       setFeedback(t('approveTransactionLedger'));
 
-      const result = await Ledger.signPayload(app, index, payload);
+      const result = await Ledger.signPayload(app, index, payload, txMetadata);
 
       setIsExecuting(false);
       setFeedback(t('signedTransactionSuccessfully'));

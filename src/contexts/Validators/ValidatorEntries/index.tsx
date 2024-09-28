@@ -9,7 +9,7 @@ import type { AnyApi, Fn } from 'types';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
-import { MaxEraRewardPointsEras, PeopleChainNetworks } from 'consts';
+import { MaxEraRewardPointsEras } from 'consts';
 import { useStaking } from 'contexts/Staking';
 import type {
   EraPointsBoundaries,
@@ -31,7 +31,7 @@ import {
 } from './defaults';
 import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
 import { useErasPerDay } from 'hooks/useErasPerDay';
-import { IdentitiesController } from 'controllers/IdentitiesController';
+import { IdentitiesController } from 'controllers/Identities';
 import type { AnyJson, Sync } from '@w3ux/types';
 
 export const ValidatorsContext = createContext<ValidatorsContextInterface>(
@@ -45,6 +45,8 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const {
     isReady,
     api,
+    peopleApi,
+    peopleApiStatus,
     consts: { historyDepth },
     networkMetrics: { earliestStoredSession },
   } = useApi();
@@ -316,11 +318,10 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     // NOTE: validators are shuffled before committed to state.
     setValidators(shuffle(validatorEntries));
 
-    // PEOPLE CHAIN MIGRATION: Currently ignoring identities while People Chain is not supported.
-    if (!PeopleChainNetworks.includes(network)) {
+    if (peopleApi && peopleApiStatus === 'ready') {
       const addresses = validatorEntries.map(({ address }) => address);
       const { identities, supers } = await IdentitiesController.fetch(
-        api,
+        peopleApi,
         addresses
       );
       setValidatorIdentities(identities);
@@ -532,11 +533,21 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch validators and era reward points when fetched status changes.
   useEffect(() => {
-    if (isReady && activeEra.index.isGreaterThan(0)) {
+    if (
+      isReady &&
+      peopleApiStatus === 'ready' &&
+      activeEra.index.isGreaterThan(0)
+    ) {
       fetchValidators();
       fetchErasRewardPoints();
     }
-  }, [validatorsFetched, erasRewardPointsFetched, isReady, activeEra]);
+  }, [
+    validatorsFetched,
+    erasRewardPointsFetched,
+    isReady,
+    peopleApiStatus,
+    activeEra,
+  ]);
 
   // Mark unsynced and fetch session validators and average reward when activeEra changes.
   useEffectIgnoreInitial(() => {

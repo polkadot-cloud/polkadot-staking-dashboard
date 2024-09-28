@@ -9,13 +9,13 @@ import * as defaults from './defaults';
 import type { BalancesContextInterface } from './types';
 import { useEventListener } from 'usehooks-ts';
 import { isCustomEvent } from 'controllers/utils';
-import { BalancesController } from 'controllers/BalancesController';
+import { BalancesController } from 'controllers/Balances';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useActiveBalances } from 'hooks/useActiveBalances';
 import { useBonded } from 'contexts/Bonded';
-import { SyncController } from 'controllers/SyncController';
+import { SyncController } from 'controllers/Sync';
 import { useApi } from 'contexts/Api';
-import { ActivePoolsController } from 'controllers/ActivePoolsController';
+import { ActivePoolsController } from 'controllers/ActivePools';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 
 export const BalancesContext = createContext<BalancesContextInterface>(
@@ -25,10 +25,10 @@ export const BalancesContext = createContext<BalancesContextInterface>(
 export const useBalances = () => useContext(BalancesContext);
 
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
-  const { api } = useApi();
   const { getBondedAccount } = useBonded();
   const { accounts } = useImportedAccounts();
   const createPoolAccounts = useCreatePoolAccounts();
+  const { api, peopleApi, peopleApiStatus } = useApi();
   const { activeAccount, activeProxy } = useActiveAccounts();
   const controller = getBondedAccount(activeAccount);
 
@@ -67,7 +67,15 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
           id: String(poolId),
           addresses: { ...createPoolAccounts(Number(poolId)) },
         });
-        ActivePoolsController.syncPools(api, address, newPools);
+        if (peopleApi) {
+          ActivePoolsController.syncPools(
+            api,
+            peopleApi,
+            peopleApiStatus,
+            address,
+            newPools
+          );
+        }
       }
     }
   };

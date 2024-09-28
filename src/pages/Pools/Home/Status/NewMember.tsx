@@ -13,13 +13,15 @@ import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 import { PoolSync } from 'library/PoolSync';
 import { useJoinPools } from 'contexts/Pools/JoinPools';
 import { StyledLoader } from 'library/PoolSync/Loader';
-import { registerSaEvent } from 'Utils';
 import { useNetwork } from 'contexts/Network';
+import { usePoolsTabs } from '../context';
+import { registerSaEvent } from 'Utils';
 
 export const NewMember = ({ syncing }: NewMemberProps) => {
   const { t } = useTranslation();
   const { network } = useNetwork();
   const { poolsForJoin } = useJoinPools();
+  const { setActiveTab } = usePoolsTabs();
   const { openCanvas } = useOverlay().canvas;
   const { startJoinPoolFetch } = useJoinPools();
   const { getPoolPerformanceTask } = usePoolPerformance();
@@ -92,7 +94,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
             <section>
               <div className="buttons">
                 <div
-                  className={`button secondary standalone${createDisabled ? ` disabled` : ``}`}
+                  className={`button standalone secondary ${createDisabled ? ` disabled` : ``}`}
                 >
                   <button
                     onClick={() => {
@@ -109,6 +111,11 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                     disabled={createDisabled}
                   >
                     {t('pools.createPool', { ns: 'pages' })}
+                  </button>
+                </div>
+                <div className={`button standalone secondary`}>
+                  <button onClick={() => setActiveTab(1)}>
+                    {t('pools.browsePools', { ns: 'pages' })}
                   </button>
                 </div>
               </div>

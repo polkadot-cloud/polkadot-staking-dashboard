@@ -19,7 +19,7 @@ import { useBalances } from 'contexts/Balances';
 import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
-import { defaultClaimPermission } from 'controllers/ActivePoolsController/defaults';
+import { defaultClaimPermission } from 'controllers/ActivePools/defaults';
 
 export const SetClaimPermission = ({
   setSection,

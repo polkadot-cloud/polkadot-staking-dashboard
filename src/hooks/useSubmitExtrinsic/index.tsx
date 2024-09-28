@@ -16,7 +16,7 @@ import { useNetwork } from 'contexts/Network';
 import { useBuildPayload } from '../useBuildPayload';
 import { useProxySupported } from '../useProxySupported';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
-import { NotificationsController } from 'controllers/NotificationsController';
+import { NotificationsController } from 'controllers/Notifications';
 import { useExtensions } from '@w3ux/react-connect-kit';
 
 export const useSubmitExtrinsic = ({
@@ -40,7 +40,7 @@ export const useSubmitExtrinsic = ({
     txFees,
     setTxFees,
     setSender,
-    getTxPayloadValue,
+    getTxPayload,
     getTxSignature,
     setTxSignature,
     resetTxPayload,
@@ -242,7 +242,7 @@ export const useSubmitExtrinsic = ({
     // pre-submission state update
     setSubmitting(true);
 
-    const txPayloadValue = getTxPayloadValue();
+    const txPayloadValue = getTxPayload();
     const txSignature = getTxSignature();
 
     // handle signed transaction.
@@ -251,7 +251,7 @@ export const useSubmitExtrinsic = ({
         txRef.current.addSignature(
           fromRef.current,
           txSignature,
-          txPayloadValue
+          txPayloadValue.toHex()
         );
 
         const unsub = await txRef.current.send(

@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { ExtensionIcons } from '@w3ux/extension-assets/util';
 import { ExtensionInner } from './Wrappers';
 import type { ExtensionProps } from './types';
-import { NotificationsController } from 'controllers/NotificationsController';
+import { NotificationsController } from 'controllers/Notifications';
 import { ModalConnectItem } from 'kits/Overlay/structure/ModalConnectItem';
 import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit';
 import { localStorageOrDefault } from '@w3ux/utils';

@@ -5,20 +5,21 @@ import type { FC, FunctionComponent, SVGProps } from 'react';
 import type { Theme } from 'contexts/Themes/types';
 import type { ExtensionInjected } from '@w3ux/react-connect-kit/types';
 import type BigNumber from 'bignumber.js';
-import type { NotificationItem } from 'controllers/NotificationsController/types';
+import type { NotificationItem } from 'controllers/Notifications/types';
 import type { ActiveBalance } from 'contexts/Balances/types';
-import type { PayoutType } from 'controllers/SubscanController/types';
+import type { PayoutType } from 'controllers/Subscan/types';
 import type {
   APIActiveEra,
   APINetworkMetrics,
   APIPoolsConfig,
   APIStakingMetrics,
 } from 'contexts/Api/types';
-import type { SyncEvent } from 'controllers/SyncController/types';
-import type { DetailActivePool } from 'controllers/ActivePoolsController/types';
+import type { SyncEvent } from 'controllers/Sync/types';
+import type { DetailActivePool } from 'controllers/ActivePools/types';
 import type { APIEventDetail } from 'model/Api/types';
-import type { OnlineStatusEvent } from 'controllers/OnlineStatusController/types';
+import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types';
 import type { AnyJson } from '@w3ux/types';
+import type { BlockNumberEventDetail } from 'model/Subscribe/BlockNumber/types';
 
 declare global {
   interface Window {
@@ -30,7 +31,7 @@ declare global {
     notification: CustomEvent<NotificationItem>;
     'api-status': CustomEvent<APIEventDetail>;
     'online-status': CustomEvent<OnlineStatusEvent>;
-    'new-block-number': CustomEvent<{ blockNumber: string }>;
+    'new-block-number': CustomEvent<BlockNumberEventDetail>;
     'new-network-metrics': CustomEvent<{
       networkMetrics: APINetworkMetrics;
     }>;
@@ -49,6 +50,11 @@ declare global {
 
 export type NetworkName = 'polkadot' | 'kusama' | 'westend';
 
+export type SystemChainId =
+  | 'people-polkadot'
+  | 'people-kusama'
+  | 'people-westend';
+
 export type Networks = Record<string, Network>;
 
 type NetworkColor =
@@ -64,7 +70,6 @@ export interface Network {
     defaultRpcEndpoint: string;
     rpcEndpoints: Record<string, string>;
   };
-  namespace: string;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   colors: Record<NetworkColor, { [key in Theme]: string }>;
   unit: string;
@@ -90,6 +95,17 @@ export interface Network {
   };
   defaultFeeReserve: number;
   maxExposurePageSize: BigNumber;
+}
+
+export interface SystemChain {
+  name: string;
+  ss58: number;
+  units: number;
+  unit: string;
+  endpoints: {
+    lightClient: string;
+    rpcEndpoints: Record<string, string>;
+  };
 }
 
 export interface PageCategory {

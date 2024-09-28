@@ -73,9 +73,11 @@ export interface APIStakingMetrics {
 
 export interface APIContextInterface {
   api: ApiPromise | null;
+  peopleApi: ApiPromise | null;
   chainState: APIChainState;
   isReady: boolean;
   apiStatus: ApiStatus;
+  peopleApiStatus: ApiStatus;
   connectionType: ConnectionType;
   setConnectionType: (connectionType: ConnectionType) => void;
   rpcEndpoint: string;
@@ -85,5 +87,4 @@ export interface APIContextInterface {
   activeEra: APIActiveEra;
   poolsConfig: APIPoolsConfig;
   stakingMetrics: APIStakingMetrics;
-  isPagedRewardsActive: (era: BigNumber) => boolean;
 }
