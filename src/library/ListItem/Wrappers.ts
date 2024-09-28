@@ -12,8 +12,8 @@ export const Wrapper = styled.div`
   &.member {
     --height-bottom-row: 2.75rem;
   }
-  &.pool-more {
-    --height-bottom-row: 5.75rem;
+  &.pool {
+    --height-bottom-row: 3.25rem;
   }
 
   --height-total: calc(var(--height-top-row) + var(--height-bottom-row));

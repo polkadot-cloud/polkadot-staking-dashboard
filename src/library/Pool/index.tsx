@@ -24,38 +24,34 @@ export const Pool = ({ pool }: PoolProps) => {
   const currentCommission = getCurrentCommission(id);
 
   return (
-    <Wrapper className="pool-more">
+    <Wrapper className="pool">
       <div className="inner">
         <div className="row top">
           <PoolIdentity pool={pool} />
           <div>
             <Labels>
               <FavoritePool address={addresses.stash} />
+              <More
+                pool={pool}
+                setActiveTab={setActiveTab}
+                disabled={syncing}
+              />
             </Labels>
           </div>
         </div>
         <Separator />
         <div className="row bottom lg pools">
           <div>
-            <Labels className="yMargin">&nbsp;</Labels>
             <PoolNominateStatus pool={pool} />
           </div>
           <div>
-            <Labels className="yMargin">
+            <Labels>
               {currentCommission > 0 && (
                 <PoolCommission commission={`${currentCommission}%`} />
               )}
               <PoolId id={id} />
               <Members members={memberCounter} />
               <PoolBonded pool={pool} />
-            </Labels>
-
-            <Labels>
-              <More
-                pool={pool}
-                setActiveTab={setActiveTab}
-                disabled={syncing}
-              />
             </Labels>
           </div>
         </div>
