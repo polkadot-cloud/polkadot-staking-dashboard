@@ -5081,12 +5081,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:^23.11.5":
-  version: 23.12.2
-  resolution: "i18next@npm:23.12.2"
+"i18next@npm:^23.15.1":
+  version: 23.15.1
+  resolution: "i18next@npm:23.15.1"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-  checksum: 10c0/aa7654afefc3f5383513563226401994558675a57eb562f0c4580d573d8410d24954f25112d45f9b6b1ca3f88c7beea1ac802ed50ad4081a06a17d08857e3c5d
+  checksum: 10c0/06bf6c45c70ebe8cc1181ce5f367f6a60acc798abb1926329e67e092a25762cabbfed64ac149745d515f724d2a6fef3bf809bd4fd8f505a7966e9e4dd2e3fd69
   languageName: node
   linkType: hard
 
@@ -6494,7 +6494,7 @@ __metadata:
     eslint-plugin-unused-imports: "npm:3.2.0"
     framer-motion: "npm:^11.2.10"
     html5-qrcode: "npm:^2.3.8"
-    i18next: "npm:^23.11.5"
+    i18next: "npm:^23.15.1"
     i18next-browser-languagedetector: "npm:^8.0.0"
     lodash.debounce: "npm:^4.0.8"
     lodash.throttle: "npm:^4.1.1"
