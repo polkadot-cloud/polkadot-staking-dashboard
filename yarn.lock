@@ -2140,10 +2140,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@substrate/connect-known-chains@npm:^1.1.1, @substrate/connect-known-chains@npm:^1.1.4, @substrate/connect-known-chains@npm:^1.2.0":
+"@substrate/connect-extension-protocol@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@substrate/connect-extension-protocol@npm:2.1.0"
+  checksum: 10c0/950898136d591fadf4086b040357cbb5f28fbd4b069df48fba2d78eda09025c52cb9c8766d8bad278e9b26431500cc570bc7afa242d43ffbf86405b4d820eaf3
+  languageName: node
+  linkType: hard
+
+"@substrate/connect-known-chains@npm:^1.1.1, @substrate/connect-known-chains@npm:^1.1.4":
   version: 1.2.0
   resolution: "@substrate/connect-known-chains@npm:1.2.0"
   checksum: 10c0/ca092873cc9dbe404fea3773389485953c2aa28aaf4368cf5abe2c186496b6594a7c49f7acd6360311ccbcdcdb4dc6f3be41746eb95103b81fc888810cfef3be
+  languageName: node
+  linkType: hard
+
+"@substrate/connect-known-chains@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "@substrate/connect-known-chains@npm:1.4.1"
+  checksum: 10c0/fbfe7e7af93bbf5209332e059b54baa71f63a2cc05c4f4dd9f010862e4b36e46de73585f90b9d1c07b8ddd60ef75cecab0fc9e43faeec034976195e9a02f23ab
   languageName: node
   linkType: hard
 
@@ -2171,22 +2185,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@substrate/connect@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@substrate/connect@npm:1.1.0"
+"@substrate/connect@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@substrate/connect@npm:1.2.1"
   dependencies:
-    "@substrate/connect-extension-protocol": "npm:^2.0.0"
-    "@substrate/connect-known-chains": "npm:^1.2.0"
-    "@substrate/smoldot-discovery": "npm:^1.0.0"
-    smoldot: "npm:2.0.29"
-  checksum: 10c0/5b2ef266f4ebc0a6605ff6e33ff29bbeb82a780c7d4b862bb3138efde5a3e15d43351e038d1ab9a46da21355e49bcfa6fb907839e04d954dd75b33b916e65cc0
+    "@substrate/connect-extension-protocol": "npm:^2.1.0"
+    "@substrate/connect-known-chains": "npm:^1.4.1"
+    "@substrate/smoldot-discovery": "npm:^1.1.0"
+    smoldot: "npm:2.0.30"
+  checksum: 10c0/a00f496cb910464744c4e6602bbbeb2854897b5a33df9571957cf99c377fadeac10a14b503d31367fff562b49183f72e8537c7e4e8222258c59e6e6314c2e814
   languageName: node
   linkType: hard
 
-"@substrate/discovery@npm:^0.0.1":
-  version: 0.0.1
-  resolution: "@substrate/discovery@npm:0.0.1"
-  checksum: 10c0/c5ed807322e5dc1901c3f86aa9b1a2a1794fb845637be66ae54da306a8bf66cedfcd460c36aa424efbaaa750b526e5cc082b45facfcf4524a0828dbb82681309
+"@substrate/discovery@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@substrate/discovery@npm:0.1.0"
+  checksum: 10c0/aafdfaadba22130966ac42c04bbb457b85bc1606c86dea6a4218142791387939fd1f10544b07ecd4845eb504bbec423e9ab67fef8a707ced6a1c5ce5d73d755b
   languageName: node
   linkType: hard
 
@@ -2224,12 +2238,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@substrate/smoldot-discovery@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@substrate/smoldot-discovery@npm:1.0.0"
+"@substrate/smoldot-discovery@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@substrate/smoldot-discovery@npm:1.1.0"
   dependencies:
-    "@substrate/discovery": "npm:^0.0.1"
-  checksum: 10c0/4b9863c53b9e0cc7b8398a9c412dd7f20d425d15f227a1ceeba146887885dd11cac2b8e5301342619fbc19f8610b3d7d3cd462a24841bc27f28cfef0f31b9fe7
+    "@substrate/discovery": "npm:^0.1.0"
+  checksum: 10c0/d30382c0882a04f23495a600fb9514e3402eca56945b5a30218757053e5e78da3de19cddd154b4410daf7bafa7a61ac5e6ec607848692f8d9b09e0fc0f0ef2af
   languageName: node
   linkType: hard
 
@@ -6454,7 +6468,7 @@ __metadata:
     "@polkadot/util": "npm:^13.0.2"
     "@polkadot/util-crypto": "npm:^13.0.2"
     "@polkawatch/ddp-client": "npm:^2.0.16"
-    "@substrate/connect": "npm:^1.1.0"
+    "@substrate/connect": "npm:^1.2.1"
     "@types/chroma-js": "npm:^2.4.4"
     "@types/lodash.debounce": "npm:^4.0.9"
     "@types/lodash.throttle": "npm:^4.1.9"
@@ -7361,12 +7375,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"smoldot@npm:2.0.29":
-  version: 2.0.29
-  resolution: "smoldot@npm:2.0.29"
+"smoldot@npm:2.0.30":
+  version: 2.0.30
+  resolution: "smoldot@npm:2.0.30"
   dependencies:
     ws: "npm:^8.8.1"
-  checksum: 10c0/9b807cfd4cc35a47c646cf330edf5efa1a3296cd06d7e3fe5385764b7b4f7c4d7821274dd529a01d364880d499b0a9f835f49b30d74d78c315ecb7c6d85438a6
+  checksum: 10c0/d4aaa7169f2933d3cbcc78720d22a8dee7d038c01f5868d1ccc022e5ebb9deab33ee7fe235f933ae863eccccc65735313c4e2645864730f8a421d44dbd11398b
   languageName: node
   linkType: hard
 
