@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ApiPromise } from '@polkadot/api';
-import type { U8aLike } from '@polkadot/util/types';
 import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import type { NetworkName } from '../../types';
@@ -31,7 +30,7 @@ export interface APIConstants {
   epochDuration: BigNumber;
   existentialDeposit: BigNumber;
   fastUnstakeDeposit: BigNumber;
-  poolsPalletId: U8aLike;
+  poolsPalletId: number[] | Uint8Array | string;
 }
 
 export interface APINetworkMetrics {
