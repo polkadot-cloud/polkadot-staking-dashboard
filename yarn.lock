@@ -2972,9 +2972,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/react-connect-kit@npm:1.3.1":
-  version: 1.3.1
-  resolution: "@w3ux/react-connect-kit@npm:1.3.1"
+"@w3ux/react-connect-kit@npm:1.5.1":
+  version: 1.5.1
+  resolution: "@w3ux/react-connect-kit@npm:1.5.1"
   dependencies:
     "@chainsafe/metamask-polkadot-adapter": "npm:^0.6.0"
     "@polkadot/util": "npm:^12.6.2"
@@ -2984,7 +2984,7 @@ __metadata:
     "@w3ux/utils": "npm:^0.4.0"
   peerDependencies:
     "@polkadot/api": ^11
-  checksum: 10c0/0198e09fb7b318619b63c2c2ae4c5a77b8e63809834df98352d70bef0b2b8aef0f6feb59164938e4e7b8c59aa633decbeda22afbe7e1833f9a9a8f922c87af86
+  checksum: 10c0/5404d9e2f065a1f3191e9a0dd404560e76c53b8722e3f795178118de7472bd0a62a6eb77ae115b1e4703d3042ce5eff0b14cb7ae130c815131921b69fd4b5951
   languageName: node
   linkType: hard
 
@@ -6583,7 +6583,7 @@ __metadata:
     "@vitejs/plugin-react-swc": "npm:^3.7.0"
     "@w3ux/extension-assets": "npm:0.3.1"
     "@w3ux/hooks": "npm:1.1.0"
-    "@w3ux/react-connect-kit": "npm:1.3.1"
+    "@w3ux/react-connect-kit": "npm:1.5.1"
     "@w3ux/react-odometer": "npm:1.1.0"
     "@w3ux/react-polkicon": "npm:1.2.0"
     "@w3ux/types": "npm:0.2.0"
