@@ -52,14 +52,16 @@ export const PayeeInput = ({
   // Handle change of account value. Updates setup progress if the account is a valid value.
   const handleChangeAccount = (e: ChangeEvent<HTMLInputElement>) => {
     const newAddress = e.target.value;
-    const formatted = formatAccountSs58(newAddress, ss58) || newAddress || null;
-    const isValid = isValidAddress(formatted || '');
+    const formattedAccount =
+      formatAccountSs58(newAddress, ss58) || newAddress || null;
+    const isValid =
+      formattedAccount !== null && isValidAddress(formattedAccount);
 
     setValid(isValid);
-    setAccount(formatted);
+    setAccount(formattedAccount);
 
     if (isValid) {
-      handleChange(formatted);
+      handleChange(formattedAccount);
     } else {
       handleChange(null);
     }
