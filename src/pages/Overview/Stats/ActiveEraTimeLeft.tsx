@@ -35,7 +35,7 @@ export const ActiveEraStat = () => {
       value1: activeEra.index.isZero() ? 0 : percentSurpassed.toNumber(),
       value2: activeEra.index.isZero() ? 100 : percentRemaining.toNumber(),
     },
-    tooltip: `Era ${new BigNumber(activeEra.index).toFormat()}` ?? undefined,
+    tooltip: `Era ${new BigNumber(activeEra.index).toFormat()}`,
     helpKey: 'Era',
   };
   return <Timeleft {...params} />;
