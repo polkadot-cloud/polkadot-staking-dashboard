@@ -24,7 +24,7 @@
     "@ledgerhq/hw-transport-webhid": "^6.29.2",
     "@polkadot-api/merkleize-metadata": "^1.1.2",
     "@polkadot/api": "^12.2.3",
-    "@polkadot/rpc-provider": "^12.2.3",
+    "@polkadot/rpc-provider": "^14.0.1",
     "@polkadot/util": "^13.0.2",
     "@polkadot/util-crypto": "^13.0.2",
     "@polkawatch/ddp-client": "^2.0.16",
