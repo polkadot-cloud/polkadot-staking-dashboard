@@ -39,7 +39,7 @@ export const Reader = () => {
   const valid =
     isValidAddress(qrData) &&
     !vaultAccountExists(network, qrData) &&
-    !formatAccountSs58(qrData, ss58);
+    formatAccountSs58(qrData, ss58) === qrData;
 
   // Reset QR data on open.
   useEffect(() => {
@@ -61,7 +61,7 @@ export const Reader = () => {
       qrData === undefined
         ? `${t('waitingForQRCode')}`
         : isValidAddress(qrData)
-          ? formatAccountSs58(qrData, ss58)
+          ? formatAccountSs58(qrData, ss58) !== qrData
             ? `${t('differentNetworkAddress')}`
             : vaultAccountExists(network, qrData)
               ? `${t('accountAlreadyImported')}`

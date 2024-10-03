@@ -80,7 +80,13 @@ export const AccountInput = ({
   const handleImport = async () => {
     // reformat address if in wrong format
     const addressFormatted = formatAccountSs58(value, ss58);
-    if (addressFormatted) {
+
+    if (!addressFormatted) {
+      setValid('not_valid');
+      return;
+    }
+
+    if (addressFormatted !== value) {
       setValid('confirm_reformat');
       setValue(addressFormatted);
       setReformatted(true);
