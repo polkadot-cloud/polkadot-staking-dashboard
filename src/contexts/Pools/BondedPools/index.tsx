@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
+import { u8aToString, u8aUnwrapBytes } from '@w3ux/utils/util';
 import { rmCommas, setStateWithRef, shuffle } from '@w3ux/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';

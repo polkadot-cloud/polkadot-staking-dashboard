@@ -2,9 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useContext, type ReactNode, createContext } from 'react';
-import Keyring from '@polkadot/keyring';
 import { useNetwork } from 'contexts/Network';
-import { ellipsisFn } from '@w3ux/utils';
+import { ellipsisFn, formatAccountSs58 } from '@w3ux/utils';
 import type {
   ExternalAccount,
   ExternalAccountAddedBy,
@@ -45,12 +44,15 @@ export const ExternalAccountsProvider = ({
     address: string,
     addedBy: ExternalAccountAddedBy
   ): AddExternalAccountResult | null => {
-    // ensure account is formatted correctly.
-    const keyring = new Keyring();
-    keyring.setSS58Format(ss58);
+    const formattedAddress = formatAccountSs58(address, ss58);
+
+    // Address should be valid, but if not, return null early.
+    if (!formattedAddress) {
+      return null;
+    }
 
     let newEntry = {
-      address: keyring.addFromAddress(address).address,
+      address: formattedAddress,
       network,
       name: ellipsisFn(address),
       source: 'external',
