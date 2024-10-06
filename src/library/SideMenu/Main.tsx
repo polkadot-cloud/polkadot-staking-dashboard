@@ -21,6 +21,7 @@ import { LogoWrapper } from './Wrapper';
 import { useBalances } from 'contexts/Balances';
 import { useSyncing } from 'hooks/useSyncing';
 import type { AnyJson } from '@w3ux/types';
+import LogoSVG from 'img/logo.svg?react';
 
 export const Main = () => {
   const { t, i18n } = useTranslation('base');
@@ -31,12 +32,12 @@ export const Main = () => {
   const { accounts } = useImportedAccounts();
   const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
-  const { inSetup: inNominatorSetup, addressDifferentToStash } = useStaking();
   const {
     getPoolSetupPercent,
     getNominatorSetupPercent,
   }: SetupContextInterface = useSetup();
   const { sideMenuMinimised }: UIContextInterface = useUi();
+  const { inSetup: inNominatorSetup, addressDifferentToStash } = useStaking();
 
   const membership = getPoolMembership(activeAccount);
   const controller = getBondedAccount(activeAccount);
@@ -141,7 +142,9 @@ export const Main = () => {
               }}
             />
 
-            <span>Staking Dashboard</span>
+            <span>
+              <LogoSVG className="logo" />
+            </span>
           </>
         )}
       </LogoWrapper>
