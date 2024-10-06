@@ -168,7 +168,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.10.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.23.2, @babel/runtime@npm:^7.23.9":
+"@babel/runtime@npm:^7.10.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.23.2, @babel/runtime@npm:^7.25.0":
   version: 7.25.7
   resolution: "@babel/runtime@npm:7.25.7"
   dependencies:
@@ -823,7 +823,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/devices@npm:^8.3.0, @ledgerhq/devices@npm:^8.4.0, @ledgerhq/devices@npm:^8.4.4":
+"@ledgerhq/devices@npm:^8.3.0, @ledgerhq/devices@npm:^8.4.2, @ledgerhq/devices@npm:^8.4.4":
   version: 8.4.4
   resolution: "@ledgerhq/devices@npm:8.4.4"
   dependencies:
@@ -835,7 +835,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/errors@npm:^6.16.4, @ledgerhq/errors@npm:^6.17.0, @ledgerhq/errors@npm:^6.19.1":
+"@ledgerhq/errors@npm:^6.16.4, @ledgerhq/errors@npm:^6.18.0, @ledgerhq/errors@npm:^6.19.1":
   version: 6.19.1
   resolution: "@ledgerhq/errors@npm:6.19.1"
   checksum: 10c0/5cfbd5ff5e4316afc88c456a74d3dc0e0032dafd88f656e80a5cb5b297a75ba6701c53ce38ef3f38a84a8591c499b0b9248cdf352ff34c97a550440cdaddd8d2
@@ -866,15 +866,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/hw-transport@npm:6.31.0":
-  version: 6.31.0
-  resolution: "@ledgerhq/hw-transport@npm:6.31.0"
+"@ledgerhq/hw-transport@npm:6.31.2":
+  version: 6.31.2
+  resolution: "@ledgerhq/hw-transport@npm:6.31.2"
   dependencies:
-    "@ledgerhq/devices": "npm:^8.4.0"
-    "@ledgerhq/errors": "npm:^6.17.0"
+    "@ledgerhq/devices": "npm:^8.4.2"
+    "@ledgerhq/errors": "npm:^6.18.0"
     "@ledgerhq/logs": "npm:^6.12.0"
     events: "npm:^3.3.0"
-  checksum: 10c0/6d277a05eb5a202a17a7a942e63022ae26321795c640d59a75b032e33274c731da5f23fbf00132efa57bc715bea8505d6a1293c20b121d603459b25c1d784444
+  checksum: 10c0/3fc61c2e844639b7ec73e5eaec2f34235a414ec802df2491ea3d32d854f5f53c592b35b874a9ce899a6087a74a5a750b20c91aae19aaa44eea2faa390edf593f
   languageName: node
   linkType: hard
 
@@ -1945,7 +1945,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkawatch/ddp-client@npm:^2.0.16":
+"@polkawatch/ddp-client@npm:^2.0.20":
   version: 2.0.20
   resolution: "@polkawatch/ddp-client@npm:2.0.20"
   dependencies:
@@ -2562,16 +2562,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/hoist-non-react-statics@npm:*":
-  version: 3.3.5
-  resolution: "@types/hoist-non-react-statics@npm:3.3.5"
-  dependencies:
-    "@types/react": "npm:*"
-    hoist-non-react-statics: "npm:^3.3.0"
-  checksum: 10c0/2a3b64bf3d9817d7830afa60ee314493c475fb09570a64e7737084cd482d2177ebdddf888ce837350bac51741278b077683facc9541f052d4bbe8487b4e3e618
-  languageName: node
-  linkType: hard
-
 "@types/json-schema@npm:*":
   version: 7.0.15
   resolution: "@types/json-schema@npm:7.0.15"
@@ -2661,17 +2651,6 @@ __metadata:
     "@types/prop-types": "npm:*"
     csstype: "npm:^3.0.2"
   checksum: 10c0/ce80512246ca5bda69db85b9f4f1835189334acfb6b2c4f3eda8cabff1ff1a3ea9ce4f3b895bdbc18c94140aa45592331aa3fdeb557f525c1b048de7ce84fc0e
-  languageName: node
-  linkType: hard
-
-"@types/styled-components@npm:^5.1.34":
-  version: 5.1.34
-  resolution: "@types/styled-components@npm:5.1.34"
-  dependencies:
-    "@types/hoist-non-react-statics": "npm:*"
-    "@types/react": "npm:*"
-    csstype: "npm:^3.0.2"
-  checksum: 10c0/5bce93ea2c6161fc45daaf863eefdc20672e839ae486597c40b95e7978e249c160c1bc9706f56cb5152a7ef63cf485d15a9502889169ef945281f511e4b2d5a0
   languageName: node
   linkType: hard
 
@@ -2956,23 +2935,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zondax/ledger-js@npm:^0.8.2":
-  version: 0.8.2
-  resolution: "@zondax/ledger-js@npm:0.8.2"
+"@zondax/ledger-js@npm:^0.11.0":
+  version: 0.11.0
+  resolution: "@zondax/ledger-js@npm:0.11.0"
   dependencies:
     "@ledgerhq/hw-transport": "npm:6.30.6"
-  checksum: 10c0/93c4e241dc37098a66829561fa6d8f62daa2b2c70ce51d1134c1ec4a74b38e22044fc764882f9a195f1f6d3a3a4879182978aead8aa7b4dbc4fe398163b5b96b
+  checksum: 10c0/d6f93d2cdc7a78df971181ca1cc0b09d608c7549d09146b48d89c3496203e707fe650f3951d9a74c32e0a9d82d877415c6707a9a118380c4371ecda4b0aa6484
   languageName: node
   linkType: hard
 
-"@zondax/ledger-substrate@npm:^0.44.7":
-  version: 0.44.7
-  resolution: "@zondax/ledger-substrate@npm:0.44.7"
+"@zondax/ledger-substrate@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@zondax/ledger-substrate@npm:1.0.0"
   dependencies:
-    "@ledgerhq/hw-transport": "npm:6.31.0"
-    "@zondax/ledger-js": "npm:^0.8.2"
-    axios: "npm:^1.7.2"
-  checksum: 10c0/f5cf07ae8671b449bf787e21f226fc9c0ac1ed0cc68a5f42e7d4c55b9f9738f2e3c277a4b3eff2cfb66d4664ad7d150eb08156df3fbbcb80b4f5129ac1a659a2
+    "@ledgerhq/hw-transport": "npm:6.31.2"
+    "@zondax/ledger-js": "npm:^0.11.0"
+    axios: "npm:^1.7.4"
+  checksum: 10c0/e3e25d28dbb768b48e5a5e0dff46d71c6061691f8706092728de7b0751c402f14bc5406230240a55297caa8bb2ddee02fc711fc37a10a53333dc5f7d18fd557f
   languageName: node
   linkType: hard
 
@@ -3257,7 +3236,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.7.2":
+"axios@npm:^1.7.4":
   version: 1.7.7
   resolution: "axios@npm:1.7.7"
   dependencies:
@@ -3470,7 +3449,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chart.js@npm:^4.4.3":
+"chart.js@npm:^4.4.4":
   version: 4.4.4
   resolution: "chart.js@npm:4.4.4"
   dependencies:
@@ -3514,10 +3493,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chroma-js@npm:^2.4.2":
-  version: 2.6.0
-  resolution: "chroma-js@npm:2.6.0"
-  checksum: 10c0/6e17f43246f9b3eba8a9db67f5ee9a2d0ef1360077211887da09ec1f0934bb98a358eefaf021003c0bd47cbab540f573a373f362d6b2ba04d0e80ab7677e1640
+"chroma-js@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "chroma-js@npm:3.1.1"
+  checksum: 10c0/fb5e3cd958a954b8cd44017f70aff42ae37bc561cdcea0ebeeb6d2df5989e7402e02c674274af2eefd1478ee172e05ce51ac353e3cbe1db139f599b338523339
   languageName: node
   linkType: hard
 
@@ -4214,7 +4193,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-import-resolver-typescript@npm:^3.6.1":
+"eslint-import-resolver-typescript@npm:^3.6.3":
   version: 3.6.3
   resolution: "eslint-import-resolver-typescript@npm:3.6.3"
   dependencies:
@@ -4700,6 +4679,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"framer-motion@npm:^11.11.1":
+  version: 11.11.1
+  resolution: "framer-motion@npm:11.11.1"
+  dependencies:
+    tslib: "npm:^2.4.0"
+  peerDependencies:
+    "@emotion/is-prop-valid": "*"
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  peerDependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 10c0/ef02a4194fcc791c31c1dc00db7eeeebd5c39aa594fd999b91dcc4036e08870d512c9a743132f2914e36ea39839ee1ea723850b920acedb3b545b1b50194b28a
+  languageName: node
+  linkType: hard
+
 "framer-motion@npm:^11.2.10":
   version: 11.10.0
   resolution: "framer-motion@npm:11.10.0"
@@ -5039,15 +5038,6 @@ __metadata:
   dependencies:
     function-bind: "npm:^1.1.2"
   checksum: 10c0/3769d434703b8ac66b209a4cca0737519925bbdb61dd887f93a16372b14694c63ff4e797686d87c90f08168e81082248b9b028bad60d4da9e0d1148766f56eb9
-  languageName: node
-  linkType: hard
-
-"hoist-non-react-statics@npm:^3.3.0":
-  version: 3.3.2
-  resolution: "hoist-non-react-statics@npm:3.3.2"
-  dependencies:
-    react-is: "npm:^16.7.0"
-  checksum: 10c0/fe0889169e845d738b59b64badf5e55fa3cf20454f9203d1eb088df322d49d4318df774828e789898dcb280e8a5521bb59b3203385662ca5e9218a6ca5820e74
   languageName: node
   linkType: hard
 
@@ -6488,7 +6478,7 @@ __metadata:
     "@polkadot-api/merkleize-metadata": "npm:^1.1.4"
     "@polkadot/api": "npm:^14.0.1"
     "@polkadot/rpc-provider": "npm:^14.0.1"
-    "@polkawatch/ddp-client": "npm:^2.0.16"
+    "@polkawatch/ddp-client": "npm:^2.0.20"
     "@substrate/connect": "npm:^1.1.0"
     "@types/chroma-js": "npm:^2.4.4"
     "@types/lodash.debounce": "npm:^4.0.9"
@@ -6497,7 +6487,6 @@ __metadata:
     "@types/react-dom": "npm:^18.2.25"
     "@types/react-helmet": "npm:^6.1.11"
     "@types/react-scroll": "npm:^1.8.10"
-    "@types/styled-components": "npm:^5.1.34"
     "@typescript-eslint/eslint-plugin": "npm:^7.12.0"
     "@typescript-eslint/parser": "npm:^7.12.0"
     "@vitejs/plugin-react-swc": "npm:^3.7.0"
@@ -6509,17 +6498,17 @@ __metadata:
     "@w3ux/types": "npm:0.2.0"
     "@w3ux/utils": "npm:0.9.0"
     "@w3ux/validator-assets": "npm:^0.2.0"
-    "@zondax/ledger-substrate": "npm:^0.44.7"
+    "@zondax/ledger-substrate": "npm:^1.0.0"
     bignumber.js: "npm:^9.1.2"
     bn.js: "npm:^5.2.1"
     buffer: "npm:^6.0.3"
-    chart.js: "npm:^4.4.3"
-    chroma-js: "npm:^2.4.2"
+    chart.js: "npm:^4.4.4"
+    chroma-js: "npm:^3.1.1"
     compare-versions: "npm:^6.1.1"
     date-fns: "npm:^3.3.1"
     eslint: "npm:8.57.0"
     eslint-config-prettier: "npm:^9.1.0"
-    eslint-import-resolver-typescript: "npm:^3.6.1"
+    eslint-import-resolver-typescript: "npm:^3.6.3"
     eslint-plugin-import: "npm:^2.29.1"
     eslint-plugin-prefer-arrow: "npm:^1.2.3"
     eslint-plugin-prefer-arrow-functions: "npm:^3.3.2"
@@ -6527,7 +6516,7 @@ __metadata:
     eslint-plugin-react: "npm:^7.34.2"
     eslint-plugin-react-hooks: "npm:^4.6.2"
     eslint-plugin-unused-imports: "npm:3.2.0"
-    framer-motion: "npm:^11.2.10"
+    framer-motion: "npm:^11.11.1"
     html5-qrcode: "npm:^2.3.8"
     i18next: "npm:^23.11.5"
     i18next-browser-languagedetector: "npm:^8.0.0"
@@ -6536,17 +6525,17 @@ __metadata:
     prettier: "npm:^3.3.1"
     prettier-plugin-organize-imports: "npm:^4.0.0"
     qrcode-generator: "npm:1.4.4"
-    rc-slider: "npm:^10.6.2"
+    rc-slider: "npm:^11.1.6"
     react: "npm:^18.3.1"
     react-chartjs-2: "npm:^5.2.0"
     react-dom: "npm:^18.2.0"
     react-error-boundary: "npm:^4.0.13"
     react-helmet: "npm:^6.1.0"
-    react-i18next: "npm:^14.1.2"
+    react-i18next: "npm:^15.0.2"
     react-router-dom: "npm:^6.23.1"
     react-scroll: "npm:^1.9.0"
     sass: "npm:1.77.6"
-    styled-components: "npm:^6.1.11"
+    styled-components: "npm:^6.1.13"
     typescript: "npm:^5.4.3"
     usehooks-ts: "npm:^3.0.2"
     vite: "npm:^5.2.12"
@@ -6708,9 +6697,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rc-slider@npm:^10.6.2":
-  version: 10.6.2
-  resolution: "rc-slider@npm:10.6.2"
+"rc-slider@npm:^11.1.6":
+  version: 11.1.6
+  resolution: "rc-slider@npm:11.1.6"
   dependencies:
     "@babel/runtime": "npm:^7.10.1"
     classnames: "npm:^2.2.5"
@@ -6718,7 +6707,7 @@ __metadata:
   peerDependencies:
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
-  checksum: 10c0/f2d156ffa88596419957f3955a2be86a98705140546f24e53180a17baa20f948187db55529759451adcfbcc52dc67c72bd26b4d3afd54529be8f092e81fa8f65
+  checksum: 10c0/9b1fbf056155487781c9abe338d37708985ddf4e38eb2d4482aebc139e785ec5d8082cc009e0ff0d2c5f59b99aeb545a96cb2eeafef6162993262681d3ba413d
   languageName: node
   linkType: hard
 
@@ -6789,11 +6778,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:^14.1.2":
-  version: 14.1.3
-  resolution: "react-i18next@npm:14.1.3"
+"react-i18next@npm:^15.0.2":
+  version: 15.0.2
+  resolution: "react-i18next@npm:15.0.2"
   dependencies:
-    "@babel/runtime": "npm:^7.23.9"
+    "@babel/runtime": "npm:^7.25.0"
     html-parse-stringify: "npm:^3.0.1"
   peerDependencies:
     i18next: ">= 23.2.3"
@@ -6803,11 +6792,11 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: 10c0/a10426585a3bdfecbec5afc7eeb35df8005fa9d47032dd70dea170adb5506c13ea4e5f417a50669f59c547537d1b3a80e638580987f1c1bbc628ddc8f5974ec9
+  checksum: 10c0/59ff253978f8341464712cf5e8df33d5ec856ada5995384e9b282bdcd82b2f3fa687b2f48eb12691aa923596115a7aab5d5c3187f26e3c4f33fece51f54b3cca
   languageName: node
   linkType: hard
 
-"react-is@npm:^16.13.1, react-is@npm:^16.7.0":
+"react-is@npm:^16.13.1":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: 10c0/33977da7a5f1a287936a0c85639fec6ca74f4f15ef1e59a6bc20338fc73dc69555381e211f7a3529b8150a1f71e4225525b41b60b52965bda53ce7d47377ada1
@@ -7664,7 +7653,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"styled-components@npm:^6.1.11":
+"styled-components@npm:^6.1.13":
   version: 6.1.13
   resolution: "styled-components@npm:6.1.13"
   dependencies:
