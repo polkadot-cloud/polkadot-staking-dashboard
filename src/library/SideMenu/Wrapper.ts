@@ -91,11 +91,21 @@ export const LogoWrapper = styled.div<MinimisedProps>`
   }
 
   > span {
-    font-family: InterSemiBold, sans-serif;
     color: var(--accent-color-primary);
-    margin-left: 0.55rem;
-    font-size: 1.1rem;
+    margin-top: 0.25rem;
+    margin-left: 0.75rem;
     background-clip: text;
+    display: flex;
+    align-items: center;
+
+    .logo {
+      width: auto;
+      height: 1.4rem;
+
+      path {
+        fill: var(--accent-color-primary);
+      }
+    }
   }
 `;
 
