@@ -25,7 +25,7 @@ export const PageTitleWrapper = styled.header`
   justify-content: flex-end;
   position: sticky;
   margin-top: 5rem;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
   padding-top: 0.5rem;
   padding-bottom: 0;
   top: 0;
@@ -37,6 +37,7 @@ export const PageTitleWrapper = styled.header`
     top: 4rem;
     padding-top: 0.75rem;
     padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .title {
@@ -44,6 +45,11 @@ export const PageTitleWrapper = styled.header`
     flex-wrap: wrap;
     align-items: center;
     width: 100%;
+    margin-bottom: 0.5rem;
+
+    @media (max-width: ${PageWidthMediumThreshold}px) {
+      margin-bottom: 0.5rem;
+    }
 
     > .right {
       padding-left: 1rem;
@@ -53,15 +59,15 @@ export const PageTitleWrapper = styled.header`
 
   h1 {
     font-size: 2rem;
-    font-family: Unbounded, sans-serif;
+    font-family: Poppins700, sans-serif;
     font-weight: 700;
     position: relative;
     transform: scale(1);
     left: 0;
 
     @media (max-width: ${PageWidthMediumThreshold}px) {
-      left: -1rem;
-      transform: scale(0.85);
+      left: 0rem;
+      transform: scale(0.9);
     }
 
     transition: all var(--transition-duration);
@@ -71,13 +77,14 @@ export const PageTitleWrapper = styled.header`
   &.sticky {
     padding-top: 1.5rem;
     padding-bottom: 0.25rem;
+    margin-bottom: 0.25rem;
 
     .title {
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
 
       h1 {
-        transform: scale(0.75);
-        left: -1.25rem;
+        transform: scale(0.85);
+        left: -0.75rem;
       }
     }
   }

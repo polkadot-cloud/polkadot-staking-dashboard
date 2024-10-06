@@ -31,10 +31,8 @@ import { Side } from 'kits/Structure/Side';
 
 export const SideMenu = () => {
   const { t } = useTranslation('base');
+  const { openHelp } = useHelp();
   const { apiStatus } = useApi();
-  const { networkData, network } = useNetwork();
-  const { mode, toggleTheme } = useTheme();
-  const { openModal } = useOverlay().modal;
   const {
     setSideMenu,
     sideMenuOpen,
@@ -42,9 +40,11 @@ export const SideMenu = () => {
     userSideMenuMinimised,
     setUserSideMenuMinimised,
   }: UIContextInterface = useUi();
-  const { openHelp } = useHelp();
+  const { mode, toggleTheme } = useTheme();
+  const { openModal } = useOverlay().modal;
+  const { networkData, network } = useNetwork();
 
-  // listen to window resize to hide SideMenu
+  // listen to window resize to automatically hide the side menu on window resize.
   useEffect(() => {
     window.addEventListener('resize', windowThrottle);
     return () => {
