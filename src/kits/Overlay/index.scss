@@ -119,12 +119,12 @@
     margin: 1rem 0;
 
     &.unbounded {
-      font-family: Unbounded, sans-serif;
+      font-family: Poppins700, sans-serif;
       font-weight: 700;
     }
 
     &.title {
-      font-size: 1.35rem;
+      font-size: 1.5rem;
       margin: 1.25rem 0 0;
     }
   }
@@ -238,7 +238,7 @@
   }
 
   h1 {
-    font-family: Unbounded, sans-serif;
+    font-family: Poppins700, sans-serif;
     margin-bottom: 1.75rem;
   }
 
@@ -264,7 +264,7 @@
       h1 {
         color: var(--text-color-primary);
         font-size: 1.4rem;
-        font-family: Unbounded, sans-serif;
+        font-family: Poppins700, sans-serif;
         font-weight: 700;
         padding: 0 0.5rem;
         display: flex;

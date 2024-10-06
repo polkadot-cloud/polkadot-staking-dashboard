@@ -38,7 +38,7 @@ export const Vault = (): ReactElement => {
               style={{
                 opacity: 1,
                 color: 'var(--accent-color-primary)',
-                fontFamily: 'Unbounded',
+                fontFamily: 'Poppins700',
               }}
             />
           </div>
