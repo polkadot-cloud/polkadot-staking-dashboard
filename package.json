@@ -94,7 +94,7 @@
     "vite-plugin-checker": "^0.7.0",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^4.2.0",
-    "vite-tsconfig-paths": "^4.3.2",
+    "vite-tsconfig-paths": "^5.0.1",
     "vitest": "^1.6.0"
   },
   "packageManager": "yarn@4.1.1"
