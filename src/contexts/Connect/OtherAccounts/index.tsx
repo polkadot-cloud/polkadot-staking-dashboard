@@ -69,9 +69,12 @@ export const OtherAccountsProvider = ({
         setOtherAccounts,
         otherAccountsRef
       );
-      // If the currently active account is being forgotten, disconnect.
+      // If the currently active account is being forgotten, and it is not present in extension
+      // accounts, disconnect.
       if (
-        forget.find(({ address }) => address === activeAccount) !== undefined
+        forget.find(({ address }) => address === activeAccount) !== undefined &&
+        extensionAccounts.find(({ address }) => address === activeAccount) ===
+          undefined
       ) {
         setActiveAccount(null);
       }
