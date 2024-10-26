@@ -278,6 +278,38 @@ export const WalletConnectProvider = ({
     return result?.signature || null;
   };
 
+  const fetchAddresses = async (): Promise<string[]> => {
+    if (!api) {
+      return [];
+    }
+    // Retrieve a new session or get current one.
+    const wcSession = await initializeWcSession();
+    if (wcSession === null) {
+      return [];
+    }
+
+    // Get accounts from session.
+    const walletConnectAccounts = Object.values(wcSession.namespaces)
+      .map((namespace: AnyJson) => namespace.accounts)
+      .flat();
+
+    const caip = api.genesisHash.toHex().substring(2).substring(0, 32);
+
+    // Only get accounts for the currently selected `caip`.
+    let filteredAccounts = walletConnectAccounts.filter((wcAccount) => {
+      const prefix = wcAccount.split(':')[1];
+      return prefix === caip;
+    });
+
+    // grab account addresses from CAIP account formatted accounts
+    filteredAccounts = filteredAccounts.map((wcAccount) => {
+      const address = wcAccount.split(':')[2];
+      return address;
+    });
+
+    return filteredAccounts;
+  };
+
   // On initial render, initiate the WalletConnect provider.
   useEffect(() => {
     if (!wcProvider.current) {
@@ -316,6 +348,7 @@ export const WalletConnectProvider = ({
         disconnectWcSession,
         wcInitialized,
         wcSessionActive,
+        fetchAddresses,
         signWcTx,
       }}
     >

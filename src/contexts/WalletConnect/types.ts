@@ -10,6 +10,7 @@ export interface WalletConnectContextInterface {
   initializeWcSession: () => Promise<AnyJson>;
   updateWcSession: () => Promise<void>;
   disconnectWcSession: () => Promise<void>;
+  fetchAddresses: () => Promise<string[]>;
   signWcTx: (
     caip: string,
     payload: AnyJson,

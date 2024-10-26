@@ -30,7 +30,7 @@ export const ImportWalletConnect = () => {
   const { network } = useNetwork();
   const { status: promptStatus } = usePrompt();
   const { replaceModal, setModalResize } = useOverlay().modal;
-  const { wcInitialized, initializeWcSession } = useWalletConnect();
+  const { wcInitialized, fetchAddresses } = useWalletConnect();
   const { renameOtherAccount, addOtherAccounts } = useOtherAccounts();
 
   const wcAccounts = getWcAccounts(network);
@@ -46,30 +46,8 @@ export const ImportWalletConnect = () => {
       return;
     }
 
-    // Retrieve a new session or get current one.
-    const wcSession = await initializeWcSession();
-    if (wcSession === null) {
-      return;
-    }
-
-    // Get accounts from session.
-    const walletConnectAccounts = Object.values(wcSession.namespaces)
-      .map((namespace: AnyJson) => namespace.accounts)
-      .flat();
-
-    const caip = api.genesisHash.toHex().substring(2).substring(0, 32);
-
-    // Only get accounts for the currently selected `caip`.
-    let filteredAccounts = walletConnectAccounts.filter((wcAccount) => {
-      const prefix = wcAccount.split(':')[1];
-      return prefix === caip;
-    });
-
-    // grab account addresses from CAIP account formatted accounts
-    filteredAccounts = filteredAccounts.map((wcAccount) => {
-      const address = wcAccount.split(':')[2];
-      return address;
-    });
+    // Fetch wallet connect accounts.
+    const filteredAccounts = await fetchAddresses();
 
     // Save accounts to local storage.
     filteredAccounts.forEach((address) => {
