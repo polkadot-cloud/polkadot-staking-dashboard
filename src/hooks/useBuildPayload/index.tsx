@@ -17,7 +17,7 @@ export const useBuildPayload = () => {
   const { setTxPayload } = useTxMeta();
   const { getAccount } = useImportedAccounts();
 
-  // Request a metadata hash from Zondax API service.
+  // Build metadata hash and return updated payload.
   const fetchMetadataHash = async (a: ApiPromise, p: AnyJson) => {
     const metadata = await a.call.metadata.metadataAtVersion(15);
     const { specName, specVersion } = a.runtimeVersion;
