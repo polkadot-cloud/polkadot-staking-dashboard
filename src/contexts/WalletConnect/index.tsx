@@ -12,6 +12,8 @@ import { getSdkError } from '@walletconnect/utils';
 import { getUnixTime } from 'date-fns';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
+import { useWcAccounts } from '@w3ux/react-connect-kit';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 
 export const WalletConnectContext =
   createContext<WalletConnectContextInterface>(defaults.defaultWalletConnect);
@@ -28,6 +30,8 @@ export const WalletConnectProvider = ({
 }) => {
   const { network } = useNetwork();
   const { isReady, api } = useApi();
+  const { forgetOtherAccounts } = useOtherAccounts();
+  const { getWcAccounts, removeWcAccount } = useWcAccounts();
 
   // Check if the API is present.
   const apiPresent = api !== null;
@@ -242,10 +246,20 @@ export const WalletConnectProvider = ({
         topic,
         reason: getSdkError('USER_DISCONNECTED'),
       });
-
       delete wcProvider.current.session;
     }
 
+    // Remove imported Wallet Connect accounts.
+    const wcAccounts = getWcAccounts(network);
+
+    if (wcAccounts.length) {
+      forgetOtherAccounts(wcAccounts);
+      wcAccounts.forEach((account) => {
+        removeWcAccount(network, account.address);
+      });
+    }
+
+    // Reset session state data.
     pairingInitiated.current = false;
     sessionChain.current = network;
     setWcSessionActive(false);
