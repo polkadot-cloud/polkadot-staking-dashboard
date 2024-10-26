@@ -7,7 +7,7 @@ import { stringToU8a } from '@w3ux/utils/util';
  * Global Constants
  */
 export const DappName = 'Polkadot Staking Dashboard';
-export const ManualSigners = ['ledger', 'vault'];
+export const ManualSigners = ['ledger', 'vault', 'wallet_connect'];
 
 /*
  * Byte Helpers
