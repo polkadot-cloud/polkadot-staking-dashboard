@@ -3699,12 +3699,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/hooks@npm:1.1.0, @w3ux/hooks@npm:^1.1.0":
+"@w3ux/hooks@npm:^1.1.0":
   version: 1.1.0
   resolution: "@w3ux/hooks@npm:1.1.0"
   peerDependencies:
     react: ^18
   checksum: 10c0/7889411294f9b33c2f43bdf7ac174e483ebfc6f415a866ed3ed4f31f8d0196704248f04d20915a0168412bff64d3a14439d0a97fa96cb07c6ac7b8985bcdf7af
+  languageName: node
+  linkType: hard
+
+"@w3ux/hooks@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@w3ux/hooks@npm:1.1.1"
+  peerDependencies:
+    react: ^18
+  checksum: 10c0/abd315cd4cd5cb45f5dd73d1d661e82de64230d0c9b167d5cb64c768044efc9a52c7a2fe0a88cc951072b2295835738fae05abd1a8f9ac2e07cb811dba184375
   languageName: node
   linkType: hard
 
@@ -8652,7 +8661,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^7.12.0"
     "@vitejs/plugin-react-swc": "npm:^3.7.0"
     "@w3ux/extension-assets": "npm:0.3.1"
-    "@w3ux/hooks": "npm:1.1.0"
+    "@w3ux/hooks": "npm:^1.1.1"
     "@w3ux/react-connect-kit": "npm:^1.7.0"
     "@w3ux/react-odometer": "npm:1.1.0"
     "@w3ux/react-polkicon": "npm:1.3.0"
