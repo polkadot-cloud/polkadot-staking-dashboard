@@ -32,7 +32,11 @@ export const useBuildPayload = () => {
 
     const merkleizedMetadata = merkleizeMetadata(metadata.toHex(), opts);
     const metadataHash = u8aToHex(merkleizedMetadata.digest());
-    const payload = objectSpread({}, p, { metadataHash, mode: 1 });
+    const payload = objectSpread({}, p, {
+      metadataHash,
+      mode: 1,
+      withSignedTransaction: true,
+    });
     const newPayload = a.registry.createType('ExtrinsicPayload', payload);
 
     return {
@@ -78,7 +82,6 @@ export const useBuildPayload = () => {
         nonce: nonce.toHex(),
         signedExtensions: api.registry.signedExtensions,
         tip: api.registry.createType('Compact<Balance>', 0).toHex(),
-        withSignedTransaction: true,
       };
 
       let payload;
@@ -101,7 +104,7 @@ export const useBuildPayload = () => {
       }
 
       // Persist both the payload and the payload bytes in state, indexed by its uid.
-      setTxPayload(txMetadata, payload, uid);
+      setTxPayload(txMetadata, payload, payloadJson, uid);
     }
   };
 
