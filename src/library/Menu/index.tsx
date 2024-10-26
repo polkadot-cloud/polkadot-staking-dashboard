@@ -4,7 +4,7 @@
 import { useEffect, useRef } from 'react';
 import { useMenu } from 'contexts/Menu';
 import { Wrapper } from './Wrappers';
-import { useOutsideAlerter } from 'hooks/useOutsideAlerter';
+import { useOutsideAlerter } from '@w3ux/hooks';
 
 export const Menu = () => {
   const {
