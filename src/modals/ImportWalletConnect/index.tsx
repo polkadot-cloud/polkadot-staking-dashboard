@@ -7,10 +7,8 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePrompt } from 'contexts/Prompt';
 import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react';
-import { Confirm } from 'library/Import/Confirm';
 import { Heading } from 'library/Import/Heading';
 import { NoAccounts } from 'library/Import/NoAccounts';
-import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from '@w3ux/types';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -21,22 +19,20 @@ import { HardwareAddress } from 'library/Hardware/HardwareAddress';
 import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar';
 import { useWcAccounts } from '@w3ux/react-connect-kit';
 import { useNetwork } from 'contexts/Network';
+import { useWalletConnect } from 'contexts/WalletConnect';
+import { useApi } from 'contexts/Api';
 
 export const ImportWalletConnect = () => {
   const { t } = useTranslation();
+  const { api } = useApi();
   const { network } = useNetwork();
   const { replaceModal } = useOverlay().modal;
+  const { status: promptStatus } = usePrompt();
   const { renameOtherAccount } = useOtherAccounts();
-  const { openPromptWith, status: promptStatus } = usePrompt();
-
-  const {
-    addWcAccount,
-    getWcAccount,
-    getWcAccounts,
-    wcAccountExists,
-    renameWcAccount,
-    removeWcAccount,
-  } = useWcAccounts();
+  const { addWcAccount, getWcAccounts, wcAccountExists, renameWcAccount } =
+    useWcAccounts();
+  const { wcInitialized, wcSessionActive, initializeWcSession } =
+    useWalletConnect();
   const { setModalResize } = useOverlay().modal;
 
   const wcAccounts = getWcAccounts(network);
@@ -46,22 +42,41 @@ export const ImportWalletConnect = () => {
     renameOtherAccount(address, newName);
   };
 
-  const openConfirmHandler = (address: string, index: number) => {
-    openPromptWith(
-      <Confirm address={address} index={index} addHandler={addWcAccount} />,
-      'small'
-    );
-  };
+  // Handle wallet account importing.
+  const handleImportAddresses = async () => {
+    if (!wcInitialized || !api || !wcSessionActive) {
+      return;
+    }
 
-  const openRemoveHandler = (address: string) => {
-    openPromptWith(
-      <Remove
-        address={address}
-        removeHandler={removeWcAccount}
-        getHandler={getWcAccount}
-      />,
-      'small'
-    );
+    // Retrieve a new session or get current one.
+    const wcSession = await initializeWcSession();
+    if (wcSession === null) {
+      return;
+    }
+
+    // Get accounts from session.
+    const walletConnectAccounts = Object.values(wcSession.namespaces)
+      .map((namespace: AnyJson) => namespace.accounts)
+      .flat();
+
+    const caip = `polkadot:${api.genesisHash.toHex().substring(2).substring(0, 32)}`;
+
+    // Only get accounts for the currently selected `caip`.
+    let filteredAccounts = walletConnectAccounts.filter((wcAccount) => {
+      const prefix = wcAccount.split(':')[1];
+      return prefix === caip;
+    });
+
+    // grab account addresses from CAIP account formatted accounts
+    filteredAccounts = filteredAccounts.map((wcAccount) => {
+      const address = wcAccount.split(':')[2];
+      return address;
+    });
+
+    // Save accounts to local storage.
+    filteredAccounts.forEach((address) => {
+      addWcAccount(network, address, wcAccounts.length);
+    });
   };
 
   useEffect(() => {
@@ -98,8 +113,12 @@ export const ImportWalletConnect = () => {
               Identicon={<Polkicon address={address} size={40} />}
               existsHandler={wcAccountExists}
               renameHandler={renameHandler}
-              openRemoveHandler={openRemoveHandler}
-              openConfirmHandler={openConfirmHandler}
+              openRemoveHandler={() => {
+                // Do nothing.
+              }}
+              openConfirmHandler={() => {
+                // Do nothing.
+              }}
               t={{
                 tRemove: t('remove', { ns: 'modals' }),
                 tImport: t('import', { ns: 'modals' }),
@@ -109,6 +128,7 @@ export const ImportWalletConnect = () => {
         </div>
         <div className="more">
           <ButtonText
+            onClick={() => handleImportAddresses()}
             iconLeft={faRefresh}
             text={t('refreshAccounts', { ns: 'modals' })}
             disabled={promptStatus !== 0}
