@@ -8,6 +8,7 @@ import {
   ExtensionAccountsProvider,
   LedgerAccountsProvider,
   VaultAccountsProvider,
+  WCAccountsProvider,
 } from '@w3ux/react-connect-kit';
 import { FastUnstakeProvider } from 'contexts/FastUnstake';
 import { FiltersProvider } from 'contexts/Filters';
@@ -46,6 +47,7 @@ import { withProviders } from 'hooks/withProviders';
 import { CommunityProvider } from 'contexts/Community';
 import { OverlayProvider } from 'kits/Overlay/Provider';
 import { JoinPoolsProvider } from 'contexts/Pools/JoinPools';
+import { WalletConnectProvider } from 'contexts/WalletConnect';
 
 export const Providers = () => {
   const { network } = useNetwork();
@@ -74,11 +76,13 @@ export const Providers = () => {
         },
       },
     ],
+    WCAccountsProvider,
     VaultAccountsProvider,
     LedgerAccountsProvider,
     ExternalAccountsProvider,
     OtherAccountsProvider,
     ImportedAccountsProvider,
+    WalletConnectProvider,
     ProxiesProvider,
     HelpProvider,
     PluginsProvider,

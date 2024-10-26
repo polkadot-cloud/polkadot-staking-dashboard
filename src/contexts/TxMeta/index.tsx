@@ -48,12 +48,14 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
   const [txPayload, setTxPayloadState] = useState<{
     txMetadata: AnyJson;
     payloadValue: AnyJson;
+    payloadJson: AnyJson;
     uid: number;
   } | null>(null);
   const txPayloadRef = useRef(txPayload);
   const getPayloadUid = () => txPayloadRef.current?.uid || 1;
   const getTxMetadata = () => txPayloadRef.current?.txMetadata || null;
   const getTxPayload = () => txPayloadRef.current?.payloadValue || null;
+  const getTxPayloadJson = () => txPayloadRef.current?.payloadJson || null;
 
   // Store an optional signed transaction if extrinsics require manual signing (e.g. Ledger).
   const [txSignature, setTxSignatureState] = useState<AnyJson>(null);
@@ -79,12 +81,14 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
   const setTxPayload = (
     txMetadata: AnyJson,
     payloadValue: AnyJson,
+    payloadJson: AnyJson,
     uid: number
   ) => {
     setStateWithRef(
       {
         txMetadata,
         payloadValue,
+        payloadJson,
         uid,
       },
       setTxPayloadState,
@@ -174,6 +178,7 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
         getTxMetadata,
         getTxPayload,
         setTxPayload,
+        getTxPayloadJson,
         incrementPayloadUid,
         resetTxPayload,
         getTxSignature,

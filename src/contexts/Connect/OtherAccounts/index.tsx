@@ -20,7 +20,7 @@ import type { ImportedAccount } from '@w3ux/react-connect-kit/types';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { getLocalVaultAccounts } from '@w3ux/react-connect-kit/VaultAccountsProvider/utils';
 import { getLocalLedgerAccounts } from '@w3ux/react-connect-kit/LedgerAccountsProvider/utils';
-
+import { getLocalWcAccounts } from '@w3ux/react-connect-kit/WCAccountsProvider/utils';
 export const OtherAccountsContext =
   createContext<OtherAccountsContextInterface>(defaultOtherAccountsContext);
 
@@ -211,6 +211,7 @@ export const OtherAccountsProvider = ({
       // Fetch accounts from supported hardware wallets.
       importLocalOtherAccounts(getLocalVaultAccounts);
       importLocalOtherAccounts(getLocalLedgerAccounts);
+      importLocalOtherAccounts(getLocalWcAccounts);
 
       // Mark hardware wallets as initialised.
       setOtherAccountsSynced(true);

@@ -33,6 +33,7 @@ import { JoinPool } from 'canvas/JoinPool';
 import { CreatePool } from 'canvas/CreatePool';
 import { NominatorSetup } from 'canvas/NominatorSetup';
 import { Overlay } from 'kits/Overlay';
+import { ImportWalletConnect } from 'modals/ImportWalletConnect';
 
 export const Overlays = () => {
   const { status } = useHelp();
@@ -54,6 +55,7 @@ export const Overlays = () => {
         GoToFeedback,
         ImportLedger,
         ImportVault,
+        ImportWalletConnect,
         ManagePool,
         ManageFastUnstake,
         Networks,
