@@ -23,7 +23,7 @@ export const useBuildPayload = () => {
     const { specName, specVersion } = a.runtimeVersion;
 
     const opts = {
-      base58Prefix: (a.consts.system.ss58Prefix as AnyApi).toNumber(),
+      base58Prefix: Number(a.consts.system.ss58Prefix.toString()),
       decimals: a.registry.chainDecimals[0],
       specName: specName.toString(),
       specVersion: specVersion.toNumber(),
@@ -100,7 +100,6 @@ export const useBuildPayload = () => {
         payload = api.registry.createType('ExtrinsicPayload', payloadJson, {
           version: payloadJson.version,
         });
-        txMetadata = null;
       }
 
       // Persist both the payload and the payload bytes in state, indexed by its uid.
