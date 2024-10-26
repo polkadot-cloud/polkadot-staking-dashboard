@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { ExtensionIcons } from '@w3ux/extension-assets/util';
 import LedgerSVG from '@w3ux/extension-assets/LedgerSquare.svg?react';
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react';
+import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react';
 import { Polkicon } from '@w3ux/react-polkicon';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
@@ -50,7 +51,9 @@ export const AccountButton = ({
       ? LedgerSVG
       : meta?.source === 'vault'
         ? PolkadotVaultSVG
-        : ExtensionIcons[meta?.source || ''] || undefined;
+        : meta?.source === 'wallet_connect'
+          ? WalletConnectSVG
+          : ExtensionIcons[meta?.source || ''] || undefined;
 
   // Determine if this account is active (active account or proxy).
   const isActive =

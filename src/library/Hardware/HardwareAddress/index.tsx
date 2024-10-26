@@ -21,6 +21,7 @@ export const HardwareAddress = ({
   index,
   initial,
   disableEditIfImported = false,
+  allowAction = true,
   Identicon,
   existsHandler,
   renameHandler,
@@ -118,21 +119,23 @@ export const HardwareAddress = ({
           </div>
         </div>
       </div>
-      <div className="action">
-        {isImported ? (
-          <ButtonText
-            iconLeft={faTimes}
-            text={tRemove}
-            onClick={() => openRemoveHandler(address)}
-          />
-        ) : (
-          <ButtonText
-            iconLeft={faPlus}
-            text={tImport}
-            onClick={() => openConfirmHandler(address, index)}
-          />
-        )}
-      </div>
+      {allowAction && (
+        <div className="action">
+          {isImported ? (
+            <ButtonText
+              iconLeft={faTimes}
+              text={tRemove}
+              onClick={() => openRemoveHandler(address)}
+            />
+          ) : (
+            <ButtonText
+              iconLeft={faPlus}
+              text={tImport}
+              onClick={() => openConfirmHandler(address, index)}
+            />
+          )}
+        </div>
+      )}
     </Wrapper>
   );
 };
