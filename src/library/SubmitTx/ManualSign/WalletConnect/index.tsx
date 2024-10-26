@@ -88,8 +88,8 @@ export const WalletConnect = ({
   const buttonText = alreadySubmitted
     ? submitText || ''
     : isSgning
-      ? 'Signing...'
-      : 'Sign';
+      ? t('signing')
+      : t('sign');
 
   return (
     <div className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}>

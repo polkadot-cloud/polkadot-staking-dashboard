@@ -26,7 +26,7 @@ export const WalletConnect = (): ReactElement => {
           </div>
           <div className="row margin">
             <ButtonText
-              text="Wallet Connect: BETA"
+              text="Wallet Connect"
               disabled
               style={{ opacity: 0.75 }}
             />
