@@ -15,6 +15,8 @@ export type HardwareAddressProps = ComponentBase & {
   initial: string;
   // whether to disable editing if address is imported.
   disableEditIfImported?: boolean;
+  // whether confirm & remove actions are supported.
+  allowAction?: boolean;
   // identicon of address.
   Identicon: ReactNode;
   // handle rename
