@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faQrcode, faRefresh } from '@fortawesome/free-solid-svg-icons';
+import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { Polkicon } from '@w3ux/react-polkicon';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -24,16 +24,14 @@ import { useApi } from 'contexts/Api';
 
 export const ImportWalletConnect = () => {
   const { t } = useTranslation();
-  const { api } = useApi();
-  const { network } = useNetwork();
-  const { replaceModal } = useOverlay().modal;
-  const { status: promptStatus } = usePrompt();
-  const { renameOtherAccount } = useOtherAccounts();
   const { addWcAccount, getWcAccounts, wcAccountExists, renameWcAccount } =
     useWcAccounts();
-  const { wcInitialized, wcSessionActive, initializeWcSession } =
-    useWalletConnect();
-  const { setModalResize } = useOverlay().modal;
+  const { api } = useApi();
+  const { network } = useNetwork();
+  const { status: promptStatus } = usePrompt();
+  const { replaceModal, setModalResize } = useOverlay().modal;
+  const { wcInitialized, initializeWcSession } = useWalletConnect();
+  const { renameOtherAccount, addOtherAccounts } = useOtherAccounts();
 
   const wcAccounts = getWcAccounts(network);
 
@@ -44,7 +42,7 @@ export const ImportWalletConnect = () => {
 
   // Handle wallet account importing.
   const handleImportAddresses = async () => {
-    if (!wcInitialized || !api || !wcSessionActive) {
+    if (!wcInitialized || !api) {
       return;
     }
 
@@ -59,7 +57,7 @@ export const ImportWalletConnect = () => {
       .map((namespace: AnyJson) => namespace.accounts)
       .flat();
 
-    const caip = `polkadot:${api.genesisHash.toHex().substring(2).substring(0, 32)}`;
+    const caip = api.genesisHash.toHex().substring(2).substring(0, 32);
 
     // Only get accounts for the currently selected `caip`.
     let filteredAccounts = walletConnectAccounts.filter((wcAccount) => {
@@ -75,7 +73,10 @@ export const ImportWalletConnect = () => {
 
     // Save accounts to local storage.
     filteredAccounts.forEach((address) => {
-      addWcAccount(network, address, wcAccounts.length);
+      const account = addWcAccount(network, address, wcAccounts.length);
+      if (account) {
+        addOtherAccounts([account]);
+      }
     });
   };
 
@@ -91,8 +92,9 @@ export const ImportWalletConnect = () => {
       <div>
         <ButtonPrimary
           lg
-          iconLeft={faQrcode}
-          text={t('importAccount', { ns: 'modals' })}
+          onClick={() => handleImportAddresses()}
+          iconLeft={faRefresh}
+          text={t('import', { ns: 'modals' })}
           disabled={promptStatus !== 0}
         />
       </div>
