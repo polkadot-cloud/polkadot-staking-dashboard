@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { u8aToString, u8aUnwrapBytes } from '@w3ux/utils/util';
+import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import type { Dispatch, FormEvent, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
