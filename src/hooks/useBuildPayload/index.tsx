@@ -3,7 +3,7 @@
 
 import { merkleizeMetadata } from '@polkadot-api/merkleize-metadata';
 import type { ApiPromise } from '@polkadot/api';
-import { objectSpread, u8aToHex } from '@w3ux/utils/util';
+import { objectSpread, u8aToHex } from '@polkadot/util';
 import type { AnyJson } from '@w3ux/types';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
