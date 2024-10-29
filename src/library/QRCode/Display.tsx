@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { objectSpread } from '@w3ux/utils/util';
-import { xxhashAsHex } from '@w3ux/utils/util-crypto';
+import { objectSpread } from '@polkadot/util';
+import { xxhashAsHex } from '@polkadot/util-crypto';
 import type { ReactElement } from 'react';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { DisplayWrapper } from './Wrappers.js';
