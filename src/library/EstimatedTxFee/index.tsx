@@ -10,6 +10,7 @@ import type { TxMetaContextInterface } from 'contexts/TxMeta/types';
 import { useNetwork } from 'contexts/Network';
 import { Wrapper } from './Wrapper';
 import type { EstimatedTxFeeProps } from './types';
+import BigNumber from 'bignumber.js';
 
 export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
   const { t } = useTranslation('library');
@@ -18,7 +19,9 @@ export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
 
   useEffect(() => () => resetTxFees(), []);
 
-  const txFeesUnit = planckToUnit(txFees, units).toFormat();
+  const txFeesUnit = new BigNumber(
+    planckToUnit(txFees.toString(), units)
+  ).toFormat();
 
   return format === 'table' ? (
     <>

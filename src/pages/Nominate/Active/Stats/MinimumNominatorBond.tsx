@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Number } from 'library/StatBoxList/Number';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
+import BigNumber from 'bignumber.js';
 
 export const MinimumNominatorBondStat = () => {
   const { t } = useTranslation('pages');
@@ -14,7 +15,9 @@ export const MinimumNominatorBondStat = () => {
 
   const params = {
     label: t('nominate.minimumToNominate'),
-    value: planckToUnit(minNominatorBond, units).toNumber(),
+    value: new BigNumber(
+      planckToUnit(minNominatorBond.toString(), units)
+    ).toNumber(),
     decimals: 3,
     unit: `${unit}`,
     helpKey: 'Bonding',

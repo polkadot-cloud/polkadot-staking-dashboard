@@ -86,7 +86,7 @@ export const Stats = ({
               <Token className="icon" />
               {!poolBalance
                 ? `...`
-                : planckToUnit(poolBalance, units)
+                : new BigNumber(planckToUnit(poolBalance.toString(), units))
                     .decimalPlaces(3)
                     .toFormat()}{' '}
               {unit} {t('bonded')}

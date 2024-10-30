@@ -40,7 +40,7 @@ export const NominationStatus = ({
     const staker = stakers?.find((s) => s.address === address);
     const exists = (staker?.others || []).find(({ who }) => who === nominator);
     if (exists) {
-      stakedAmount = planckToUnit(new BigNumber(exists.value), units);
+      stakedAmount = new BigNumber(planckToUnit(exists.value, units));
     }
   }
 

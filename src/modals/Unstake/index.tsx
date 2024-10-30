@@ -25,6 +25,7 @@ import { useBalances } from 'contexts/Balances';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
+import BigNumber from 'bignumber.js';
 
 export const Unstake = () => {
   const { t } = useTranslation('modals');
@@ -56,7 +57,7 @@ export const Unstake = () => {
   );
 
   // convert BigNumber values to number
-  const freeToUnbond = planckToUnit(active, units);
+  const freeToUnbond = new BigNumber(planckToUnit(active.toString(), units));
 
   // local bond value
   const [bond, setBond] = useState<{ bond: string }>({

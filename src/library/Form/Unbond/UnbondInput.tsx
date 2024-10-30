@@ -25,7 +25,9 @@ export const UnbondInput = ({
   const { activeAccount } = useActiveAccounts();
 
   // get the actively bonded amount.
-  const activeUnit = planckToUnit(active, networkData.units);
+  const activeUnit = new BigNumber(
+    planckToUnit(active.toString(), networkData.units)
+  );
 
   // the current local bond value.
   const [localBond, setLocalBond] = useState<string>(value);
@@ -58,7 +60,9 @@ export const UnbondInput = ({
   };
 
   // unbond to min as unit.
-  const unbondToMinUnit = planckToUnit(unbondToMin, networkData.units);
+  const unbondToMinUnit = new BigNumber(
+    planckToUnit(unbondToMin.toString(), networkData.units)
+  );
 
   // available funds as jsx.
   const maxBondedJsx = (

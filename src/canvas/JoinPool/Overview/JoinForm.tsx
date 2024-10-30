@@ -54,7 +54,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
 
   // Bond amount to join pool with.
   const [bond, setBond] = useState<{ bond: string }>({
-    bond: planckToUnit(totalPossibleBond, units).toString(),
+    bond: planckToUnit(totalPossibleBond.toString(), units),
   });
 
   // Whether the bond amount is valid.

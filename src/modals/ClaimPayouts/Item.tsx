@@ -36,7 +36,7 @@ export const Item = ({
             </span>
           </h4>
           <h2>
-            {planckToUnit(totalPayout, units).toString()} {unit}
+            {planckToUnit(totalPayout.toString(), units)} {unit}
           </h2>
         </section>
 

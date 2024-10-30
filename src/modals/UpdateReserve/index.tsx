@@ -37,13 +37,16 @@ export const UpdateReserve = () => {
     useTransferOptions();
 
   const { edReserved } = getTransferOptions(activeAccount);
-  const minReserve = planckToUnit(edReserved, units);
+  const minReserve = new BigNumber(planckToUnit(edReserved.toString(), units));
   const maxReserve = minReserve.plus(
     ['polkadot', 'westend'].includes(network) ? 3 : 1
   );
 
   const [sliderReserve, setSliderReserve] = useState<number>(
-    planckToUnit(feeReserve, units).plus(minReserve).decimalPlaces(3).toNumber()
+    new BigNumber(planckToUnit(feeReserve.toString(), units))
+      .plus(minReserve)
+      .decimalPlaces(3)
+      .toNumber()
   );
 
   const handleChange = (val: BigNumber) => {

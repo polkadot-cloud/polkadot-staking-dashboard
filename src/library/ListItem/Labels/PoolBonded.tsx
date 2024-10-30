@@ -25,7 +25,7 @@ export const PoolBonded = ({ pool }: { pool: Pool }) => {
   const TokenIcon = token;
 
   // Format total bonded pool amount.
-  const bonded = planckToUnit(new BigNumber(rmCommas(points)), units);
+  const bonded = new BigNumber(planckToUnit(rmCommas(points), units));
 
   return (
     <div className="label pool">

@@ -30,7 +30,7 @@ export const PoolMemberBonded = ({
   if (poolMember) {
     const { points, unbondingEras } = poolMember;
 
-    bonded = planckToUnit(new BigNumber(rmCommas(points)), units);
+    bonded = new BigNumber(planckToUnit(rmCommas(points), units));
     status = bonded.isGreaterThan(0) ? 'active' : 'inactive';
 
     // converting unbonding eras from points to units
@@ -39,7 +39,9 @@ export const PoolMemberBonded = ({
       const amountBn = new BigNumber(rmCommas(amount as string));
       totalUnbondingUnit = totalUnbondingUnit.plus(amountBn);
     });
-    totalUnbonding = planckToUnit(new BigNumber(totalUnbondingUnit), units);
+    totalUnbonding = new BigNumber(
+      planckToUnit(totalUnbondingUnit.toString(), units)
+    );
   }
 
   return (

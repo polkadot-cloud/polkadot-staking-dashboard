@@ -80,12 +80,12 @@ export const ValidatorMetrics = () => {
   const stats = [
     {
       label: t('selfStake'),
-      value: `${planckToUnit(validatorOwnStake, units).toFormat()} ${unit}`,
+      value: `${new BigNumber(planckToUnit(validatorOwnStake.toString(), units)).toFormat()} ${unit}`,
       help: 'Self Stake',
     },
     {
       label: t('nominatorStake'),
-      value: `${planckToUnit(otherStake, units).toFormat()} ${unit}`,
+      value: `${new BigNumber(planckToUnit(otherStake.toString(), units)).toFormat()} ${unit}`,
       help: 'Nominator Stake',
     },
   ];

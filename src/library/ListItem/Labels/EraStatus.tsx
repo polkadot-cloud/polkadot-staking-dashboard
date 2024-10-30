@@ -7,6 +7,7 @@ import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useNetwork } from 'contexts/Network';
 import type { EraStatusProps } from '../types';
 import { useSyncing } from 'hooks/useSyncing';
+import BigNumber from 'bignumber.js';
 
 export const EraStatus = ({ noMargin, status, totalStake }: EraStatusProps) => {
   const { t } = useTranslation('library');
@@ -22,7 +23,9 @@ export const EraStatus = ({ noMargin, status, totalStake }: EraStatusProps) => {
         {syncing
           ? t('syncing')
           : validatorStatus !== 'waiting'
-            ? `${t('listItemActive')} / ${planckToUnit(totalStake, units)
+            ? `${t('listItemActive')} / ${new BigNumber(
+                planckToUnit(totalStake.toString(), units)
+              )
                 .integerValue()
                 .toFormat()} ${unit}`
             : capitalizeFirstLetter(t(`${validatorStatus}`) ?? '')}

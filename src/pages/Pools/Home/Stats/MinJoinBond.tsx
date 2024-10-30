@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Number } from 'library/StatBoxList/Number';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
+import BigNumber from 'bignumber.js';
 
 export const MinJoinBondStat = () => {
   const { t } = useTranslation('pages');
@@ -16,7 +17,9 @@ export const MinJoinBondStat = () => {
 
   const params = {
     label: t('pools.minimumToJoinPool'),
-    value: planckToUnit(minJoinBond, units).toNumber(),
+    value: new BigNumber(
+      planckToUnit(minJoinBond.toString(), units)
+    ).toNumber(),
     decimals: 3,
     unit: ` ${unit}`,
     helpKey: 'Minimum To Join Pool',

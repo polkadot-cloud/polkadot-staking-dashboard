@@ -101,7 +101,7 @@ export const ClaimReward = () => {
         ) : null}
         <ActionItem
           text={`${t('claim')} ${`${planckToUnit(
-            pendingPoolRewards,
+            pendingPoolRewards.toString(),
             units
           )} ${unit}`}`}
         />

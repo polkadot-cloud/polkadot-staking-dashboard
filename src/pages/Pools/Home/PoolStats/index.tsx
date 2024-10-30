@@ -28,9 +28,8 @@ export const PoolStats = () => {
   const { state, points, memberCounter } = activePool?.bondedPool || {};
   const currentCommission = getCurrentCommission(poolId);
 
-  const bonded = planckToUnit(
-    new BigNumber(points ? rmCommas(points) : 0),
-    units
+  const bonded = new BigNumber(
+    planckToUnit(points ? rmCommas(points) : 0, units)
   )
     .decimalPlaces(3)
     .toFormat();

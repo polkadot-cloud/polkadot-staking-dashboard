@@ -6,6 +6,7 @@ import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import type { AnyJson } from '@w3ux/types';
 import { useErasPerDay } from '../useErasPerDay';
+import BigNumber from 'bignumber.js';
 
 export const useFillVariables = () => {
   const {
@@ -29,25 +30,33 @@ export const useFillVariables = () => {
           ['{MAX_NOMINATIONS}', maxNominations.toString()],
           [
             '{MIN_ACTIVE_STAKE}',
-            planckToUnit(minimumActiveStake, networkData.units)
+            new BigNumber(
+              planckToUnit(minimumActiveStake.toString(), networkData.units)
+            )
               .decimalPlaces(3)
               .toFormat(),
           ],
           [
             '{MIN_POOL_JOIN_BOND}',
-            planckToUnit(minJoinBond, networkData.units)
+            new BigNumber(
+              planckToUnit(minJoinBond.toString(), networkData.units)
+            )
               .decimalPlaces(3)
               .toFormat(),
           ],
           [
             '{MIN_POOL_CREATE_BOND}',
-            planckToUnit(minCreateBond, networkData.units)
+            new BigNumber(
+              planckToUnit(minCreateBond.toString(), networkData.units)
+            )
               .decimalPlaces(3)
               .toFormat(),
           ],
           [
             '{EXISTENTIAL_DEPOSIT}',
-            planckToUnit(existentialDeposit, networkData.units).toFormat(),
+            new BigNumber(
+              planckToUnit(existentialDeposit.toString(), networkData.units)
+            ).toFormat(),
           ],
         ];
 

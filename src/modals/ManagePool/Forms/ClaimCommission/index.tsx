@@ -84,7 +84,7 @@ export const ClaimCommission = ({
         ) : null}
         <ActionItem
           text={`${t('claim')} ${planckToUnit(
-            pendingCommission,
+            pendingCommission.toString(),
             units
           )} ${unit} `}
         />

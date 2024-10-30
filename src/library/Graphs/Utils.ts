@@ -67,7 +67,7 @@ export const calculateDailyPayouts = (
     // handle surpassed maximum days.
     if (daysPassed(thisDay, fromDate) >= maxDays) {
       dailyPayouts.push({
-        amount: planckToUnit(curPayout.amount, units),
+        amount: new BigNumber(planckToUnit(curPayout.amount.toString(), units)),
         event_id: getEventId(curPayout),
         block_timestamp: getUnixTime(curDay),
       });
@@ -81,7 +81,7 @@ export const calculateDailyPayouts = (
     if (daysDiff > 0) {
       // add current payout cursor to dailyPayouts.
       dailyPayouts.push({
-        amount: planckToUnit(curPayout.amount, units),
+        amount: new BigNumber(planckToUnit(curPayout.amount.toString(), units)),
         event_id: getEventId(curPayout),
         block_timestamp: getUnixTime(curDay),
       });
@@ -106,7 +106,7 @@ export const calculateDailyPayouts = (
       (p === payouts.length && !curPayout.amount.isZero())
     ) {
       dailyPayouts.push({
-        amount: planckToUnit(curPayout.amount, units),
+        amount: new BigNumber(planckToUnit(curPayout.amount.toString(), units)),
         event_id: getEventId(curPayout),
         block_timestamp: getUnixTime(curDay),
       });

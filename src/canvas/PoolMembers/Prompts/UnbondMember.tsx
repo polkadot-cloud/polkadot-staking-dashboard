@@ -49,7 +49,7 @@ export const UnbondMember = ({
 
   const { bondDuration } = consts;
   const { points } = member;
-  const freeToUnbond = planckToUnit(new BigNumber(rmCommas(points)), units);
+  const freeToUnbond = new BigNumber(planckToUnit(rmCommas(points), units));
 
   const bondDurationFormatted = timeleftAsString(
     t,

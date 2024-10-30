@@ -24,6 +24,7 @@ import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
+import BigNumber from 'bignumber.js';
 
 export const LeavePool = ({
   setSection,
@@ -53,10 +54,12 @@ export const LeavePool = ({
     true
   );
 
-  const pendingRewardsUnit = planckToUnit(pendingPoolRewards, units);
+  const pendingRewardsUnit = new BigNumber(
+    planckToUnit(pendingPoolRewards.toString(), units)
+  );
 
   // convert BigNumber values to number
-  const freeToUnbond = planckToUnit(activeBn, units);
+  const freeToUnbond = new BigNumber(planckToUnit(activeBn.toString(), units));
 
   // local bond value
   const [bond, setBond] = useState<{ bond: string }>({

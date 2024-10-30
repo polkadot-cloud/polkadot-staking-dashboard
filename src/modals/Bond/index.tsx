@@ -44,18 +44,24 @@ export const Bond = () => {
   const isPooling = bondFor === 'pool';
   const { nominate, transferrableBalance } = getTransferOptions(activeAccount);
 
-  const freeToBond = planckToUnit(
-    (bondFor === 'nominator'
-      ? nominate.totalAdditionalBond
-      : transferrableBalance
-    ).minus(feeReserve),
-    units
+  const freeToBond = new BigNumber(
+    planckToUnit(
+      (bondFor === 'nominator'
+        ? nominate.totalAdditionalBond
+        : transferrableBalance
+      )
+        .minus(feeReserve)
+        .toString(),
+      units
+    )
   );
 
   const largestTxFee = useBondGreatestFee({ bondFor });
 
   // Format unclaimed pool rewards.
-  const pendingRewardsUnit = planckToUnit(pendingPoolRewards, units);
+  const pendingRewardsUnit = new BigNumber(
+    planckToUnit(pendingPoolRewards.toString(), units)
+  );
 
   // local bond value.
   const [bond, setBond] = useState<{ bond: string }>({
@@ -76,7 +82,7 @@ export const Bond = () => {
   // bond minus tx fees.
   const enoughToCoverTxFees: boolean = freeToBond
     .minus(bond.bond)
-    .isGreaterThan(planckToUnit(largestTxFee, units));
+    .isGreaterThan(planckToUnit(largestTxFee.toString(), units));
 
   // bond value after max tx fees have been deducated.
   let bondAfterTxFees: BigNumber;

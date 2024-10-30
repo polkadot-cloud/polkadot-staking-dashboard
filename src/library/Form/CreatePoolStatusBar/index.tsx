@@ -10,6 +10,7 @@ import type { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 import { useApi } from 'contexts/Api';
 import { useSyncing } from 'hooks/useSyncing';
+import BigNumber from 'bignumber.js';
 
 export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
   const { t } = useTranslation('library');
@@ -17,7 +18,9 @@ export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
   const { unit, units } = useNetwork().networkData;
   const { syncing } = useSyncing(['initialization']);
 
-  const minCreateBondUnit = planckToUnit(minCreateBond, units);
+  const minCreateBondUnit = new BigNumber(
+    planckToUnit(minCreateBond.toString(), units)
+  );
   const sectionClassName =
     value.isGreaterThanOrEqualTo(minCreateBondUnit) && !syncing ? 'invert' : '';
 

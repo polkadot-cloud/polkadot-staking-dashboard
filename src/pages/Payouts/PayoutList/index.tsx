@@ -4,7 +4,6 @@
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn, planckToUnit } from '@w3ux/utils';
-import BigNumber from 'bignumber.js';
 import { formatDistance, fromUnixTime } from 'date-fns';
 import { motion } from 'framer-motion';
 import { Component, useEffect, useState } from 'react';
@@ -158,11 +157,7 @@ export const PayoutListInner = ({
                           <h4 className={labelClass}>
                             <>
                               {p.event_id === 'Slashed' ? '-' : '+'}
-                              {planckToUnit(
-                                new BigNumber(p.amount),
-                                units
-                              ).toString()}{' '}
-                              {unit}
+                              {planckToUnit(p.amount, units).toString()} {unit}
                             </>
                           </h4>
                         </div>

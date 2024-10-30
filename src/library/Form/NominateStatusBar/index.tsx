@@ -12,6 +12,7 @@ import { Wrapper } from './Wrapper';
 import { useApi } from 'contexts/Api';
 import { useSyncing } from 'hooks/useSyncing';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import BigNumber from 'bignumber.js';
 
 export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
   const { t } = useTranslation('library');
@@ -23,8 +24,12 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
   const { unit, units } = useNetwork().networkData;
   const { syncing } = useSyncing(['initialization']);
 
-  const minNominatorBondUnit = planckToUnit(minNominatorBond, units);
-  const minimumActiveStakeUnit = planckToUnit(minimumActiveStake, units);
+  const minNominatorBondUnit = new BigNumber(
+    planckToUnit(minNominatorBond.toString(), units)
+  );
+  const minimumActiveStakeUnit = new BigNumber(
+    planckToUnit(minimumActiveStake.toString(), units)
+  );
   const gtMinNominatorBond = value.isGreaterThanOrEqualTo(minNominatorBondUnit);
   const gtMinActiveStake = value.isGreaterThanOrEqualTo(minimumActiveStakeUnit);
 

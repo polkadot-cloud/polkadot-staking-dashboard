@@ -19,8 +19,12 @@ export const SupplyStakedStat = () => {
   const { totalIssuance } = networkMetrics;
 
   // total supply as percent.
-  const totalIssuanceUnit = planckToUnit(totalIssuance, units);
-  const lastTotalStakeUnit = planckToUnit(lastTotalStake, units);
+  const totalIssuanceUnit = new BigNumber(
+    planckToUnit(totalIssuance.toString(), units)
+  );
+  const lastTotalStakeUnit = new BigNumber(
+    planckToUnit(lastTotalStake.toString(), units)
+  );
   const supplyAsPercent =
     lastTotalStakeUnit.isZero() || totalIssuanceUnit.isZero()
       ? new BigNumber(0)

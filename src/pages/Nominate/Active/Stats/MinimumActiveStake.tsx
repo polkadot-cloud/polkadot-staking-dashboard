@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Number } from 'library/StatBoxList/Number';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
+import BigNumber from 'bignumber.js';
 
 export const MinimumActiveStakeStat = () => {
   const { t } = useTranslation('pages');
@@ -16,7 +17,9 @@ export const MinimumActiveStakeStat = () => {
 
   const params = {
     label: t('nominate.minimumToEarnRewards'),
-    value: planckToUnit(minimumActiveStake, units).toNumber(),
+    value: new BigNumber(
+      planckToUnit(minimumActiveStake.toString(), units)
+    ).toNumber(),
     decimals: 3,
     unit: `${unit}`,
     helpKey: 'Bonding',

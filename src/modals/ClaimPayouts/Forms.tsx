@@ -145,10 +145,7 @@ export const Forms = forwardRef(
             ) : null}
             <div style={{ marginBottom: '2rem' }}>
               <ActionItem
-                text={`${t('claim')} ${planckToUnit(
-                  totalPayout,
-                  units
-                )} ${unit}`}
+                text={`${t('claim')} ${planckToUnit(totalPayout.toString(), units)} ${unit}`}
               />
               <p>{t('afterClaiming')}</p>
             </div>

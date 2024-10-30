@@ -15,11 +15,11 @@ import { useSubscanData } from 'hooks/useSubscanData';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { Odometer } from '@w3ux/react-odometer';
 import { locales, DefaultLocale } from 'locale';
-import BigNumber from 'bignumber.js';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { minDecimalPlaces, planckToUnit } from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
 import { useSyncing } from 'hooks/useSyncing';
+import BigNumber from 'bignumber.js';
 
 export const Payouts = () => {
   const { i18n, t } = useTranslation('pages');
@@ -85,9 +85,8 @@ export const Payouts = () => {
             value={minDecimalPlaces(
               lastReward === null
                 ? '0'
-                : planckToUnit(
-                    new BigNumber(lastReward.amount),
-                    units
+                : new BigNumber(
+                    planckToUnit(lastReward.amount, units)
                   ).toFormat(),
               2
             )}

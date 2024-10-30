@@ -29,14 +29,19 @@ export const Announcements = () => {
     0,
     new BigNumber(rewardAccountBalance || 0).minus(existentialDeposit)
   );
-  const rewardBalance = planckToUnit(rewardPoolBalance, units);
+  const rewardBalance = new BigNumber(
+    planckToUnit(rewardPoolBalance.toString(), units)
+  );
 
   // calculate total rewards claimed
-  const rewardsClaimed = planckToUnit(
-    totalRewardsClaimed
-      ? new BigNumber(rmCommas(totalRewardsClaimed))
-      : new BigNumber(0),
-    units
+  const rewardsClaimed = new BigNumber(
+    planckToUnit(
+      (totalRewardsClaimed
+        ? new BigNumber(rmCommas(totalRewardsClaimed))
+        : new BigNumber(0)
+      ).toString(),
+      units
+    )
   );
 
   const container = {

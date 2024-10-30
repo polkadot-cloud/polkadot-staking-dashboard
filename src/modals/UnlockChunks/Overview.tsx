@@ -84,7 +84,9 @@ export const Overview = forwardRef(
                   {t('unlocked')}
                 </h4>
                 <h2>
-                  {planckToUnit(withdrawAvailable, units)
+                  {new BigNumber(
+                    planckToUnit(withdrawAvailable.toString(), units)
+                  )
                     .decimalPlaces(3)
                     .toFormat()}{' '}
                   {unit}
@@ -98,7 +100,12 @@ export const Overview = forwardRef(
                   {t('unbonding')}
                 </h4>
                 <h2>
-                  {planckToUnit(totalUnbonding.minus(withdrawAvailable), units)
+                  {new BigNumber(
+                    planckToUnit(
+                      totalUnbonding.minus(withdrawAvailable).toString(),
+                      units
+                    )
+                  )
                     .decimalPlaces(3)
                     .toFormat()}{' '}
                   {unit}
@@ -109,7 +116,7 @@ export const Overview = forwardRef(
               <div className="inner">
                 <h4>{t('total')}</h4>
                 <h2>
-                  {planckToUnit(totalUnbonding, units)
+                  {new BigNumber(planckToUnit(totalUnbonding.toString(), units))
                     .decimalPlaces(3)
                     .toFormat()}{' '}
                   {unit}

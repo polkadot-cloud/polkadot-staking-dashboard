@@ -35,7 +35,9 @@ export const Announcements = () => {
   bondedPools.forEach((b: BondedPool) => {
     totalPoolPoints = totalPoolPoints.plus(rmCommas(b.points));
   });
-  const totalPoolPointsUnit = planckToUnit(totalPoolPoints, units);
+  const totalPoolPointsUnit = new BigNumber(
+    planckToUnit(totalPoolPoints.toString(), units)
+  );
 
   const container = {
     hidden: { opacity: 0 },
@@ -65,7 +67,9 @@ export const Announcements = () => {
     announcements.push({
       class: 'neutral',
       title: t('overview.networkCurrentlyStaked', {
-        total: planckToUnit(totalStaked, units).integerValue().toFormat(),
+        total: new BigNumber(planckToUnit(totalStaked.toString(), units))
+          .integerValue()
+          .toFormat(),
         unit,
         network: capitalizeFirstLetter(network),
       }),

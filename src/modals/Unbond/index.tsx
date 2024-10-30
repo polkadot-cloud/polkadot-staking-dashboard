@@ -63,7 +63,9 @@ export const Unbond = () => {
     true
   );
 
-  const pendingRewardsUnit = planckToUnit(pendingPoolRewards, units);
+  const pendingRewardsUnit = new BigNumber(
+    planckToUnit(pendingPoolRewards.toString(), units)
+  );
 
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
@@ -74,10 +76,16 @@ export const Unbond = () => {
     : allTransferOptions.nominate;
 
   // convert BigNumber values to number
-  const freeToUnbond = planckToUnit(activeBn, units);
-  const minJoinBond = planckToUnit(minJoinBondBn, units);
-  const minCreateBond = planckToUnit(minCreateBondBn, units);
-  const minNominatorBond = planckToUnit(minNominatorBondBn, units);
+  const freeToUnbond = new BigNumber(planckToUnit(activeBn.toString(), units));
+  const minJoinBond = new BigNumber(
+    planckToUnit(minJoinBondBn.toString(), units)
+  );
+  const minCreateBond = new BigNumber(
+    planckToUnit(minCreateBondBn.toString(), units)
+  );
+  const minNominatorBond = new BigNumber(
+    planckToUnit(minNominatorBondBn.toString(), units)
+  );
 
   // local bond value
   const [bond, setBond] = useState<{ bond: string }>({
@@ -162,7 +170,7 @@ export const Unbond = () => {
   if (poolActiveBelowMin) {
     warnings.push(
       t('unbondErrorBelowMinimum', {
-        bond: planckToUnit(poolToMinBn, units),
+        bond: new BigNumber(planckToUnit(poolToMinBn.toString(), units)),
         unit,
       })
     );

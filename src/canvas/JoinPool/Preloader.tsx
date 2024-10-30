@@ -36,7 +36,9 @@ export const Preloader = ({
   bondedPools.forEach((b: BondedPool) => {
     totalPoolPoints = totalPoolPoints.plus(rmCommas(b.points));
   });
-  const totalPoolPointsUnit = planckToUnit(totalPoolPoints, units)
+  const totalPoolPointsUnit = new BigNumber(
+    planckToUnit(totalPoolPoints.toString(), units)
+  )
     .decimalPlaces(0)
     .toFormat();
 

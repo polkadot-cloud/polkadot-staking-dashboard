@@ -6,13 +6,16 @@ import { useTranslation } from 'react-i18next';
 import { Number } from 'library/StatBoxList/Number';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
+import BigNumber from 'bignumber.js';
 
 export const LastEraPayoutStat = () => {
   const { t } = useTranslation('pages');
   const { unit, units } = useNetwork().networkData;
   const { lastReward } = useApi().stakingMetrics;
 
-  const lastRewardUnit = planckToUnit(lastReward, units).toNumber();
+  const lastRewardUnit = new BigNumber(
+    planckToUnit(lastReward.toString(), units)
+  ).toNumber();
 
   const params = {
     label: t('payouts.lastEraPayout'),

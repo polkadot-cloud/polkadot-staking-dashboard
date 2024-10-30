@@ -127,9 +127,8 @@ export const AccountButton = ({
         </section>
         <section className="foot">
           <span className="balance">
-            {`${t('free')}: ${planckToUnit(
-              transferrableBalance || new BigNumber(0),
-              units
+            {`${t('free')}: ${new BigNumber(
+              planckToUnit(transferrableBalance?.toString() || 0n, units)
             )
               .decimalPlaces(3)
               .toFormat()} ${unit}`}

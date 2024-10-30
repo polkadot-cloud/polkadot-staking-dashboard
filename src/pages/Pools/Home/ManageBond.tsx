@@ -18,6 +18,7 @@ import { useSyncing } from 'hooks/useSyncing';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 import { ButtonRow } from 'kits/Structure/ButtonRow';
+import BigNumber from 'bignumber.js';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');
@@ -54,7 +55,7 @@ export const ManageBond = () => {
         <h2>
           <Token className="networkIcon" />
           <Odometer
-            value={minDecimalPlaces(planckToUnit(active, units).toFormat(), 2)}
+            value={minDecimalPlaces(planckToUnit(active.toString(), units), 2)}
             zeroDecimals={2}
           />
         </h2>
@@ -116,10 +117,14 @@ export const ManageBond = () => {
         </ButtonRow>
       </CardHeaderWrapper>
       <BondedChart
-        active={planckToUnit(active, units)}
-        unlocking={planckToUnit(totalUnlocking, units)}
-        unlocked={planckToUnit(totalUnlocked, units)}
-        free={planckToUnit(transferrableBalance, units)}
+        active={new BigNumber(planckToUnit(active.toString(), units))}
+        unlocking={
+          new BigNumber(planckToUnit(totalUnlocking.toString(), units))
+        }
+        unlocked={new BigNumber(planckToUnit(totalUnlocked.toString(), units))}
+        free={
+          new BigNumber(planckToUnit(transferrableBalance.toString(), units))
+        }
         inactive={active.isZero()}
       />
     </>

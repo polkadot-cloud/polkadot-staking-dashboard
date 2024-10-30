@@ -56,8 +56,10 @@ export const WithdrawMember = ({
     }
   });
 
-  const bonded = planckToUnit(new BigNumber(rmCommas(points)), units);
-  const totalWithdraw = planckToUnit(new BigNumber(totalWithdrawUnit), units);
+  const bonded = new BigNumber(planckToUnit(rmCommas(points), units));
+  const totalWithdraw = new BigNumber(
+    planckToUnit(totalWithdrawUnit.toString(), units)
+  );
 
   // valid to submit transaction
   const [valid] = useState<boolean>(!totalWithdraw.isZero());

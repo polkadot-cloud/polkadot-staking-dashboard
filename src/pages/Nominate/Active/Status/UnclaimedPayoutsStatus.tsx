@@ -39,7 +39,9 @@ export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
       type="odometer"
       stat={{
         value: minDecimalPlaces(
-          planckToUnit(totalUnclaimed, units).toFormat(),
+          new BigNumber(
+            planckToUnit(totalUnclaimed.toString(), units)
+          ).toFormat(),
           2
         ),
       }}

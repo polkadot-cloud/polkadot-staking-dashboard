@@ -4,7 +4,7 @@
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { Odometer } from '@w3ux/react-odometer';
 import { minDecimalPlaces, planckToUnit } from '@w3ux/utils';
-import type BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';
 import { useHelp } from 'contexts/Help';
@@ -57,7 +57,7 @@ export const ManageBond = () => {
         <h2>
           <Token className="networkIcon" />
           <Odometer
-            value={minDecimalPlaces(planckToUnit(active, units).toFormat(), 2)}
+            value={minDecimalPlaces(planckToUnit(active.toString(), units), 2)}
             zeroDecimals={2}
           />
         </h2>
@@ -116,10 +116,12 @@ export const ManageBond = () => {
         </ButtonRow>
       </CardHeaderWrapper>
       <BondedChart
-        active={planckToUnit(active, units)}
-        unlocking={planckToUnit(totalUnlocking, units)}
-        unlocked={planckToUnit(totalUnlocked, units)}
-        free={planckToUnit(freeBalance, units)}
+        active={new BigNumber(planckToUnit(active.toString(), units))}
+        unlocking={
+          new BigNumber(planckToUnit(totalUnlocking.toString(), units))
+        }
+        unlocked={new BigNumber(planckToUnit(totalUnlocked.toString(), units))}
+        free={new BigNumber(planckToUnit(freeBalance.toString(), units))}
         inactive={active.isZero()}
       />
     </>

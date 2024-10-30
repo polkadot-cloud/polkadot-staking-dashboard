@@ -91,7 +91,7 @@ export const BondFeedback = ({
         ? minCreateBond
         : minJoinBond
       : minNominatorBond;
-  const minBondUnit = planckToUnit(minBondBn, units);
+  const minBondUnit = new BigNumber(planckToUnit(minBondBn.toString(), units));
 
   // handle error updates
   const handleErrors = () => {
@@ -166,7 +166,7 @@ export const BondFeedback = ({
   useEffect(() => {
     if (!disableTxFeeUpdate) {
       if (bondBn.isGreaterThan(freeToBond)) {
-        setBond({ bond: String(planckToUnit(freeToBond, units)) });
+        setBond({ bond: planckToUnit(freeToBond.toString(), units) });
       }
     }
   }, [txFees]);
@@ -189,7 +189,7 @@ export const BondFeedback = ({
           syncing={syncing}
           disabled={bondDisabled}
           setters={setters}
-          freeToBond={planckToUnit(freeToBond, units)}
+          freeToBond={new BigNumber(planckToUnit(freeToBond.toString(), units))}
           disableTxFeeUpdate={disableTxFeeUpdate}
         />
       </div>

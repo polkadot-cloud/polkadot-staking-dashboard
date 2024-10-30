@@ -49,29 +49,38 @@ export const BalanceChart = () => {
 
   // User's total balance.
   const { free, frozen } = balance;
-  const totalBalance = planckToUnit(
-    free.plus(poolBondOpions.active).plus(unlockingPools),
-    units
+  const totalBalance = new BigNumber(
+    planckToUnit(
+      free.plus(poolBondOpions.active).plus(unlockingPools).toString(),
+      units
+    )
   );
+
   // Convert balance to fiat value.
   const freeFiat = totalBalance.multipliedBy(
     new BigNumber(prices.lastPrice).decimalPlaces(2)
   );
 
   // Total funds nominating.
-  const nominating = planckToUnit(
-    allTransferOptions.nominate.active
-      .plus(allTransferOptions.nominate.totalUnlocking)
-      .plus(allTransferOptions.nominate.totalUnlocked),
-    units
+  const nominating = new BigNumber(
+    planckToUnit(
+      allTransferOptions.nominate.active
+        .plus(allTransferOptions.nominate.totalUnlocking)
+        .plus(allTransferOptions.nominate.totalUnlocked)
+        .toString(),
+      units
+    )
   );
 
   // Total funds in pool.
-  const inPool = planckToUnit(
-    allTransferOptions.pool.active
-      .plus(allTransferOptions.pool.totalUnlocking)
-      .plus(allTransferOptions.pool.totalUnlocked),
-    units
+  const inPool = new BigNumber(
+    planckToUnit(
+      allTransferOptions.pool.active
+        .plus(allTransferOptions.pool.totalUnlocking)
+        .plus(allTransferOptions.pool.totalUnlocked)
+        .toString(),
+      units
+    )
   );
 
   // Check account non-staking locks.
@@ -82,9 +91,11 @@ export const BalanceChart = () => {
     : new BigNumber(0);
 
   // Total funds available, including existential deposit, minus staking.
-  const graphAvailable = planckToUnit(
-    BigNumber.max(free.minus(lockStakingAmount), 0),
-    units
+  const graphAvailable = new BigNumber(
+    planckToUnit(
+      BigNumber.max(free.minus(lockStakingAmount), 0).toString(),
+      units
+    )
   );
   const notStaking = graphAvailable;
 
@@ -107,12 +118,21 @@ export const BalanceChart = () => {
 
   // Available balance data.
   const fundsLockedPlank = BigNumber.max(frozen.minus(lockStakingAmount), 0);
-  const fundsLocked = planckToUnit(fundsLockedPlank, units);
-  let fundsReserved = planckToUnit(edReserved.plus(feeReserve), units);
+  const fundsLocked = new BigNumber(
+    planckToUnit(fundsLockedPlank.toString(), units)
+  );
+  let fundsReserved = new BigNumber(
+    planckToUnit(edReserved.plus(feeReserve).toString(), units)
+  );
 
-  const fundsFree = planckToUnit(
-    BigNumber.max(allTransferOptions.freeBalance.minus(fundsLockedPlank), 0),
-    units
+  const fundsFree = new BigNumber(
+    planckToUnit(
+      BigNumber.max(
+        allTransferOptions.freeBalance.minus(fundsLockedPlank),
+        0
+      ).toString(),
+      units
+    )
   );
 
   // Available balance percentages.

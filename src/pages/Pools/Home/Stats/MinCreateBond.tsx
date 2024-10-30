@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Number } from 'library/StatBoxList/Number';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
+import BigNumber from 'bignumber.js';
 
 export const MinCreateBondStat = () => {
   const { t } = useTranslation('pages');
@@ -16,7 +17,9 @@ export const MinCreateBondStat = () => {
 
   const params = {
     label: t('pools.minimumToCreatePool'),
-    value: planckToUnit(minCreateBond, units).toNumber(),
+    value: new BigNumber(
+      planckToUnit(minCreateBond.toString(), units)
+    ).toNumber(),
     decimals: 3,
     unit,
     helpKey: 'Minimum To Create Pool',

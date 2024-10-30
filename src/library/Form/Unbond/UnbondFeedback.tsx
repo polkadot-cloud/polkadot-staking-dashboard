@@ -71,7 +71,7 @@ export const UnbondFeedback = ({
         ? minCreateBond
         : minJoinBond
       : minNominatorBond;
-  const minBondUnit = planckToUnit(minBondBn, units);
+  const minBondUnit = new BigNumber(planckToUnit(minBondBn.toString(), units));
 
   // unbond amount to minimum threshold
   const unbondToMin =

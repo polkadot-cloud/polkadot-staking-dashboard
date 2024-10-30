@@ -100,8 +100,8 @@ export const Forms = forwardRef(
 
         // if no more bonded funds from pool, remove from poolMembers list
         if (bondFor === 'pool') {
-          const points = membership?.points ? rmCommas(membership.points) : 0;
-          const bonded = planckToUnit(new BigNumber(points), units);
+          const points = membership?.points ? rmCommas(membership.points) : '0';
+          const bonded = new BigNumber(planckToUnit(points, units));
           if (bonded.isZero()) {
             removePoolMember(activeAccount);
           }
@@ -143,7 +143,7 @@ export const Forms = forwardRef(
                 <>
                   <ActionItem
                     text={`${t('rebond')} ${planckToUnit(
-                      value,
+                      value.toString(),
                       units
                     )} ${unit}`}
                   />
@@ -154,7 +154,7 @@ export const Forms = forwardRef(
                 <>
                   <ActionItem
                     text={`${t('withdraw')} ${planckToUnit(
-                      value,
+                      value.toString(),
                       units
                     )} ${unit}`}
                   />
