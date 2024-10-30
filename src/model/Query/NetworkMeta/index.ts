@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ApiPromise } from '@polkadot/api';
-import { rmCommas, stringToBigNumber } from '@w3ux/utils';
+import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { APIActiveEra } from 'contexts/Api/types';
 
@@ -67,29 +67,43 @@ export class NetworkMeta {
         minimumActiveStake: new BigNumber(networkMeta[4].toString()),
       },
       poolsConfig: {
-        counterForPoolMembers: stringToBigNumber(networkMeta[5].toString()),
-        counterForBondedPools: stringToBigNumber(networkMeta[6].toString()),
-        counterForRewardPools: stringToBigNumber(networkMeta[7].toString()),
-        lastPoolId: stringToBigNumber(networkMeta[8].toString()),
+        counterForPoolMembers: this.stringToBigNumber(
+          networkMeta[5].toString()
+        ),
+        counterForBondedPools: this.stringToBigNumber(
+          networkMeta[6].toString()
+        ),
+        counterForRewardPools: this.stringToBigNumber(
+          networkMeta[7].toString()
+        ),
+        lastPoolId: this.stringToBigNumber(networkMeta[8].toString()),
         maxPoolMembers,
         maxPoolMembersPerPool,
         maxPools,
-        minCreateBond: stringToBigNumber(networkMeta[12].toString()),
-        minJoinBond: stringToBigNumber(networkMeta[13].toString()),
+        minCreateBond: this.stringToBigNumber(networkMeta[12].toString()),
+        minJoinBond: this.stringToBigNumber(networkMeta[13].toString()),
         globalMaxCommission: Number(
           String(networkMeta[14]?.toHuman() || '100%').slice(0, -1)
         ),
       },
       stakingMetrics: {
-        totalNominators: stringToBigNumber(networkMeta[15].toString()),
-        totalValidators: stringToBigNumber(networkMeta[16].toString()),
-        maxValidatorsCount: stringToBigNumber(networkMeta[17].toString()),
-        validatorCount: stringToBigNumber(networkMeta[18].toString()),
-        lastReward: stringToBigNumber(networkMeta[19].toString()),
-        lastTotalStake: stringToBigNumber(networkMeta[20].toString()),
-        minNominatorBond: stringToBigNumber(networkMeta[21].toString()),
-        totalStaked: stringToBigNumber(networkMeta[22].toString()),
+        totalNominators: this.stringToBigNumber(networkMeta[15].toString()),
+        totalValidators: this.stringToBigNumber(networkMeta[16].toString()),
+        maxValidatorsCount: this.stringToBigNumber(networkMeta[17].toString()),
+        validatorCount: this.stringToBigNumber(networkMeta[18].toString()),
+        lastReward: this.stringToBigNumber(networkMeta[19].toString()),
+        lastTotalStake: this.stringToBigNumber(networkMeta[20].toString()),
+        minNominatorBond: this.stringToBigNumber(networkMeta[21].toString()),
+        totalStaked: this.stringToBigNumber(networkMeta[22].toString()),
       },
     };
   }
+
+  // ------------------------------------------------------
+  // Utils.
+  // ------------------------------------------------------
+
+  // Convert string to BigNumber.
+  stringToBigNumber = (value: string): BigNumber =>
+    new BigNumber(rmCommas(value));
 }

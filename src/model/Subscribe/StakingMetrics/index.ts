@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { VoidFn } from '@polkadot/api/types';
-import { stringToBigNumber } from '@w3ux/utils';
-import type BigNumber from 'bignumber.js';
+import { rmCommas } from '@w3ux/utils';
+import BigNumber from 'bignumber.js';
 import type { APIActiveEra } from 'contexts/Api/types';
 import { ApiController } from 'controllers/Api';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
@@ -69,14 +69,14 @@ export class StakingMetrics implements Unsubscribable {
           ],
           (result) => {
             const stakingMetrics = {
-              totalNominators: stringToBigNumber(result[0].toString()),
-              totalValidators: stringToBigNumber(result[1].toString()),
-              maxValidatorsCount: stringToBigNumber(result[2].toString()),
-              validatorCount: stringToBigNumber(result[3].toString()),
-              lastReward: stringToBigNumber(result[4].toString()),
-              lastTotalStake: stringToBigNumber(result[5].toString()),
-              minNominatorBond: stringToBigNumber(result[6].toString()),
-              totalStaked: stringToBigNumber(result[7].toString()),
+              totalNominators: this.stringToBigNumber(result[0].toString()),
+              totalValidators: this.stringToBigNumber(result[1].toString()),
+              maxValidatorsCount: this.stringToBigNumber(result[2].toString()),
+              validatorCount: this.stringToBigNumber(result[3].toString()),
+              lastReward: this.stringToBigNumber(result[4].toString()),
+              lastTotalStake: this.stringToBigNumber(result[5].toString()),
+              minNominatorBond: this.stringToBigNumber(result[6].toString()),
+              totalStaked: this.stringToBigNumber(result[7].toString()),
             };
 
             document.dispatchEvent(
@@ -104,4 +104,12 @@ export class StakingMetrics implements Unsubscribable {
       this.#unsub();
     }
   };
+
+  // ------------------------------------------------------
+  // Utils.
+  // ------------------------------------------------------
+
+  // Convert string to BigNumber.
+  stringToBigNumber = (value: string): BigNumber =>
+    new BigNumber(rmCommas(value));
 }

@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { rmCommas, stringToBigNumber } from '@w3ux/utils';
+import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { AnyApi, MaybeAddress } from 'types';
 import type {
@@ -171,11 +171,11 @@ export class BalancesController {
 
     this.ledgers[address] = {
       stash: stash.toString(),
-      active: stringToBigNumber(active.toString()),
-      total: stringToBigNumber(total.toString()),
+      active: this.stringToBigNumber(active.toString()),
+      total: this.stringToBigNumber(total.toString()),
       unlocking: unlocking.toHuman().map(({ era, value }: UnlockChunkRaw) => ({
         era: Number(rmCommas(era)),
-        value: stringToBigNumber(value),
+        value: this.stringToBigNumber(value),
       })),
     };
   };
@@ -189,16 +189,16 @@ export class BalancesController {
     this.balances[address] = {
       nonce: nonce.toNumber(),
       balance: {
-        free: stringToBigNumber(accountData.free.toString()),
-        reserved: stringToBigNumber(accountData.reserved.toString()),
-        frozen: stringToBigNumber(accountData.frozen.toString()),
+        free: this.stringToBigNumber(accountData.free.toString()),
+        reserved: this.stringToBigNumber(accountData.reserved.toString()),
+        frozen: this.stringToBigNumber(accountData.frozen.toString()),
       },
       locks: locksResult
         .toHuman()
         .map((lock: { id: string; amount: string }) => ({
           ...lock,
           id: lock.id.trim(),
-          amount: stringToBigNumber(lock.amount),
+          amount: this.stringToBigNumber(lock.amount),
         })),
     };
   };
@@ -334,4 +334,8 @@ export class BalancesController {
     event: CustomEvent
   ): event is CustomEvent<ActiveBalance & { address: string }> =>
     event.detail && event.detail.address && event.detail.balances;
+
+  // Convert string to BigNumber.
+  static stringToBigNumber = (value: string): BigNumber =>
+    new BigNumber(rmCommas(value));
 }
