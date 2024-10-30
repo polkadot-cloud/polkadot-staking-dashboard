@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { greaterThanZero, planckToUnit } from '@w3ux/utils';
+import { planckToUnit } from '@w3ux/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -79,7 +79,7 @@ export const ClaimReward = () => {
     submitExtrinsic.proxySupported
   );
 
-  if (!greaterThanZero(pendingPoolRewards)) {
+  if (!pendingPoolRewards.isGreaterThan(0)) {
     warnings.push(`${t('noRewards')}`);
   }
 

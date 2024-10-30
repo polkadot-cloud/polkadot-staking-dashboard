@@ -4,7 +4,6 @@
 import { Polkicon } from '@w3ux/react-polkicon';
 import {
   ellipsisFn,
-  greaterThanZero,
   planckToUnit,
   remToUnit,
   rmCommas,
@@ -68,7 +67,7 @@ export const UnbondMember = ({
   const [bondValid, setBondValid] = useState<boolean>(false);
 
   // unbond all validation
-  const isValid = (() => greaterThanZero(freeToUnbond))();
+  const isValid = (() => freeToUnbond.isGreaterThan(0))();
 
   // update bond value on task change
   useEffect(() => {

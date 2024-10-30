@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { greaterThanZero, planckToUnit, unitToPlanck } from '@w3ux/utils';
+import { planckToUnit, unitToPlanck } from '@w3ux/utils';
 import { getUnixTime } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -67,7 +67,7 @@ export const Unstake = () => {
   const [bondValid, setBondValid] = useState<boolean>(false);
 
   // unbond all validation
-  const isValid = (() => greaterThanZero(freeToUnbond))();
+  const isValid = (() => freeToUnbond.isGreaterThan(0))();
 
   // update bond value on task change
   useEffect(() => {
@@ -125,7 +125,7 @@ export const Unstake = () => {
             ))}
           </ModalWarnings>
         ) : null}
-        {greaterThanZero(freeToUnbond) ? (
+        {freeToUnbond.isGreaterThan(0) ? (
           <ActionItem
             text={t('unstakeUnbond', {
               bond: freeToUnbond.toFormat(),

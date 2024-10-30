@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { greaterThanZero, planckToUnit } from '@w3ux/utils';
+import { planckToUnit } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useStaking } from 'contexts/Staking';
@@ -48,7 +48,7 @@ export const NominationStatus = ({
     <ValidatorStatusWrapper $status={status || 'waiting'} $noMargin={noMargin}>
       <h5>
         {t(`${status || 'waiting'}`)}
-        {greaterThanZero(stakedAmount)
+        {stakedAmount.isGreaterThan(0)
           ? ` / ${syncing ? '...' : `${stakedAmount.toFormat()} ${unit}`}`
           : null}
       </h5>

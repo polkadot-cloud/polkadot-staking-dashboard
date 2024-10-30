@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { greaterThanZero, planckToUnit, rmCommas } from '@w3ux/utils';
+import { planckToUnit, rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
@@ -46,7 +46,7 @@ export const ClaimCommission = ({
   const [valid, setValid] = useState<boolean>(false);
 
   useEffect(() => {
-    setValid(isOwner() && greaterThanZero(pendingCommission));
+    setValid(isOwner() && pendingCommission.isGreaterThan(0));
   }, [activePool, pendingCommission]);
 
   // tx to submit

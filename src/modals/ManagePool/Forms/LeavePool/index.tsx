@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { greaterThanZero, planckToUnit, unitToPlanck } from '@w3ux/utils';
+import { planckToUnit, unitToPlanck } from '@w3ux/utils';
 import { getUnixTime } from 'date-fns';
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
@@ -67,7 +67,7 @@ export const LeavePool = ({
   const [bondValid, setBondValid] = useState<boolean>(false);
 
   // unbond all validation
-  const isValid = (() => greaterThanZero(freeToUnbond))();
+  const isValid = (() => freeToUnbond.isGreaterThan(0))();
 
   // update bond value on task change
   useEffect(() => {
@@ -106,7 +106,7 @@ export const LeavePool = ({
     submitExtrinsic.proxySupported
   );
 
-  if (greaterThanZero(pendingRewardsUnit)) {
+  if (pendingRewardsUnit.isGreaterThan(0)) {
     warnings.push(
       `${t('unbondingWithdraw')} ${pendingRewardsUnit.toString()} ${unit}.`
     );

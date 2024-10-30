@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { isNotZero, planckToUnit, unitToPlanck } from '@w3ux/utils';
+import { planckToUnit, unitToPlanck } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { getUnixTime } from 'date-fns';
 import { useEffect, useState } from 'react';
@@ -134,7 +134,7 @@ export const Unbond = () => {
 
   const nominatorActiveBelowMin =
     bondFor === 'nominator' &&
-    isNotZero(activeBn) &&
+    !activeBn.isZero() &&
     activeBn.isLessThan(minNominatorBondBn);
 
   const poolToMinBn = isDepositor() ? minCreateBondBn : minJoinBondBn;

@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { isNotZero, planckToUnit, unitToPlanck } from '@w3ux/utils';
+import { planckToUnit, unitToPlanck } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -84,7 +84,7 @@ export const UnbondFeedback = ({
   // check if bonded is below the minimum required
   const nominatorActiveBelowMin =
     bondFor === 'nominator' &&
-    isNotZero(active) &&
+    !active.isZero() &&
     active.isLessThan(minNominatorBond);
   const poolToMinBn = isDepositor() ? minCreateBond : minJoinBond;
   const poolActiveBelowMin =

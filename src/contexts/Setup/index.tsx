@@ -1,11 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  greaterThanZero,
-  localStorageOrDefault,
-  unitToPlanck,
-} from '@w3ux/utils';
+import { localStorageOrDefault, unitToPlanck } from '@w3ux/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
 import type { BondFor, MaybeAddress } from 'types';
@@ -183,7 +179,7 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
 
     const p = 33;
     let percentage = 0;
-    if (greaterThanZero(bond)) {
+    if (bond.isGreaterThan(0)) {
       percentage += p;
     }
     if (progress.nominations.length) {
@@ -209,7 +205,7 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
     if (progress.metadata !== '') {
       percentage += p;
     }
-    if (greaterThanZero(bond)) {
+    if (bond.isGreaterThan(0)) {
       percentage += p;
     }
     if (progress.nominations.length) {

@@ -3,7 +3,7 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ellipsisFn, isNotZero, planckToUnit } from '@w3ux/utils';
+import { ellipsisFn, planckToUnit } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { formatDistance, fromUnixTime } from 'date-fns';
 import { motion } from 'framer-motion';
@@ -64,7 +64,7 @@ export const PayoutListInner = ({
 
   // configure list when network is ready to fetch
   useEffect(() => {
-    if (isReady && isNotZero(activeEra.index) && !fetched) {
+    if (isReady && !activeEra.index.isZero() && !fetched) {
       setPayouts(initialPayouts);
       setFetched(true);
     }
@@ -220,11 +220,6 @@ export const PayoutListInner = ({
   );
 };
 
-export const PayoutList = (props: PayoutListProps) => (
-  <PayoutListProvider>
-    <PayoutListShouldUpdate {...props} />
-  </PayoutListProvider>
-);
 
 export class PayoutListShouldUpdate extends Component {
   static contextType = StakingContext;

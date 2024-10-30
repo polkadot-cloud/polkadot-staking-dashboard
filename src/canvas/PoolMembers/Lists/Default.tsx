@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { isNotZero } from '@w3ux/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { poolMembersPerPage } from 'library/List/defaults';
@@ -63,7 +62,7 @@ export const MembersListInner = ({
 
   // Configure list when network is ready to fetch.
   useEffect(() => {
-    if (isReady && isNotZero(activeEra.index) && fetched === 'unsynced') {
+    if (isReady && !activeEra.index.isZero() && fetched === 'unsynced') {
       setupMembersList();
     }
   }, [isReady, fetched, activeEra.index]);
