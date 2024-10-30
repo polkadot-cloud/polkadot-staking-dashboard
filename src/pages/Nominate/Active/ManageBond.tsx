@@ -57,7 +57,9 @@ export const ManageBond = () => {
         <h2>
           <Token className="networkIcon" />
           <Odometer
-            value={minDecimalPlaces(planckToUnit(active.toString(), units), 2)}
+            value={new BigNumber(
+              minDecimalPlaces(planckToUnit(active.toString(), units), 2)
+            ).toFormat()}
             zeroDecimals={2}
           />
         </h2>
