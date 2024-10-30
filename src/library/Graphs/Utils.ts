@@ -368,7 +368,7 @@ export const getLatestReward = (
 ) => {
   // get most recent payout
   const payoutExists =
-    payouts.find((p: AnySubscan) => new BigNumber(p.amount)).isGreaterThan(0) ??
+    payouts.find((p: AnySubscan) => new BigNumber(p.amount).isGreaterThan(0)) ??
     null;
   const poolClaimExists =
     poolClaims.find((p: AnySubscan) =>
