@@ -88,7 +88,9 @@ export const LeavePool = ({
       return tx;
     }
 
-    const bondToSubmit = unitToPlanck(!bondValid ? '0' : bond.bond, units);
+    const bondToSubmit = new BigNumber(
+      unitToPlanck(!bondValid ? '0' : bond.bond, units).toString()
+    );
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
     tx = api.tx.nominationPools.unbond(activeAccount, bondAsString);
     return tx;

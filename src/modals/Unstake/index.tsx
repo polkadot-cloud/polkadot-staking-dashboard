@@ -86,11 +86,10 @@ export const Unstake = () => {
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = unitToPlanck(
-      String(!bondValid ? '0' : bond.bond),
-      units
+    const bondToSubmit = new BigNumber(
+      unitToPlanck(String(!bondValid ? '0' : bond.bond), units).toString()
     );
-    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
+    const bondAsString = bondToSubmit.toString();
 
     if (!bondAsString) {
       return api.tx.staking.chill();

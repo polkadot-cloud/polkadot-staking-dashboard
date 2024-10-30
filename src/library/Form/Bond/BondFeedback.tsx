@@ -69,7 +69,7 @@ export const BondFeedback = ({
   };
 
   // current bond value BigNumber
-  const bondBn = unitToPlanck(bond.bond, units);
+  const bondBn = new BigNumber(unitToPlanck(bond.bond, units).toString());
 
   // whether bond is disabled
   const [bondDisabled, setBondDisabled] = useState<boolean>(false);

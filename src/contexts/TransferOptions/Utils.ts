@@ -15,7 +15,7 @@ export const getLocalFeeReserve = (
   const reserves = JSON.parse(localStorage.getItem('reserve_balances') ?? '{}');
   return new BigNumber(
     reserves?.[network]?.[address || ''] ??
-      unitToPlanck(String(defaultReserve), units)
+      unitToPlanck(defaultReserve, units).toString()
   );
 };
 

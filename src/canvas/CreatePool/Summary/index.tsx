@@ -55,7 +55,7 @@ export const Summary = ({ section }: SetupStepProps) => {
       ({ address }: { address: string }) => address
     );
 
-    const bondToSubmit = unitToPlanck(bond, units);
+    const bondToSubmit = new BigNumber(unitToPlanck(bond, units).toString());
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
 
     const txs = [

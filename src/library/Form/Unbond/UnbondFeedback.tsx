@@ -59,7 +59,9 @@ export const UnbondFeedback = ({
   };
 
   // current bond value BigNumber
-  const bondBn = unitToPlanck(String(bond.bond), units);
+  const bondBn = new BigNumber(
+    unitToPlanck(String(bond.bond), units).toString()
+  );
 
   // add this component's setBond to setters
   setters.push(handleSetBond);
