@@ -21,7 +21,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const Bond = () => {
   const { t } = useTranslation('modals');

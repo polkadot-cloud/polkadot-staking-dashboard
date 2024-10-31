@@ -5,7 +5,7 @@ import type { ApiPromise } from '@polkadot/api';
 import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { APIActiveEra } from 'contexts/Api/types';
-import { stringToBn } from 'Utils';
+import { stringToBn } from 'library/Utils';
 
 export class NetworkMeta {
   // Fetch network constants.

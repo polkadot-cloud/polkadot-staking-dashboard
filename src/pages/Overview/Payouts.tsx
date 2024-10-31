@@ -20,7 +20,7 @@ import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { minDecimalPlaces } from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
 import { useSyncing } from 'hooks/useSyncing';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const Payouts = () => {
   const { i18n, t } = useTranslation('pages');

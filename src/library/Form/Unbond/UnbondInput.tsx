@@ -10,7 +10,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { InputWrapper } from '../Wrappers';
 import type { UnbondInputProps } from '../types';
 import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const UnbondInput = ({
   defaultValue,

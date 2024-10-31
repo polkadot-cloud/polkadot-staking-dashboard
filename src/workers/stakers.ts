@@ -11,7 +11,7 @@ import type {
 import type { AnyJson } from '@w3ux/types';
 import type { LocalValidatorExposure } from 'contexts/Payouts/types';
 import type { ProcessExposuresArgs, ProcessEraForExposureArgs } from './types';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 // eslint-disable-next-line no-restricted-globals, @typescript-eslint/no-explicit-any
 export const ctx: Worker = self as any;

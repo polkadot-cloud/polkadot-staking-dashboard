@@ -7,7 +7,7 @@ import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useNetwork } from 'contexts/Network';
 import type { EraStatusProps } from '../types';
 import { useSyncing } from 'hooks/useSyncing';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const EraStatus = ({ noMargin, status, totalStake }: EraStatusProps) => {
   const { t } = useTranslation('library');

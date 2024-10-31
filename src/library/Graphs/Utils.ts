@@ -15,7 +15,7 @@ import { MaxPayoutDays } from 'consts';
 import type { AnyApi, AnySubscan } from 'types';
 import type { PayoutDayCursor } from './types';
 import type { AnyJson } from '@w3ux/types';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 // Given payouts, calculate daily income and fill missing days with zero amounts.
 export const calculateDailyPayouts = (

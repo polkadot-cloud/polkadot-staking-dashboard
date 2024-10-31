@@ -12,7 +12,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useSyncing } from 'hooks/useSyncing';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const RewardsStatus = ({ dimmed }: { dimmed: boolean }) => {
   const { t } = useTranslation('pages');

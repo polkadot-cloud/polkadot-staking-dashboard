@@ -23,7 +23,7 @@ import { Title } from 'library/Prompt/Title';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const UnbondMember = ({
   who,

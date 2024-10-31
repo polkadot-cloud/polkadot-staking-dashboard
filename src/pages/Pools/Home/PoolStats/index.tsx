@@ -13,7 +13,7 @@ import { Announcements } from './Announcements';
 import type { PoolStatLabel } from 'library/Announcements/types';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { Wrapper } from 'library/Announcements/Wrappers';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const PoolStats = () => {
   const { t } = useTranslation('pages');

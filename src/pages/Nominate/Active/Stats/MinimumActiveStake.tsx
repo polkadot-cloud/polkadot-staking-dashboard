@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Number } from 'library/StatBoxList/Number';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const MinimumActiveStakeStat = () => {
   const { t } = useTranslation('pages');

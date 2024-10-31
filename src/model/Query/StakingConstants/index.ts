@@ -4,7 +4,7 @@
 import type { ApiPromise } from '@polkadot/api';
 import BigNumber from 'bignumber.js';
 import { NetworkList } from 'config/networks';
-import { stringToBn } from 'Utils';
+import { stringToBn } from 'library/Utils';
 
 export class StakingConstants {
   // ------------------------------------------------------

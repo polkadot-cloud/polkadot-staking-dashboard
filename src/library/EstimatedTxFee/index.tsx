@@ -9,7 +9,7 @@ import type { TxMetaContextInterface } from 'contexts/TxMeta/types';
 import { useNetwork } from 'contexts/Network';
 import { Wrapper } from './Wrapper';
 import type { EstimatedTxFeeProps } from './types';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
   const { t } = useTranslation('library');

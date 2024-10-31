@@ -14,7 +14,7 @@ import { Spacer } from '../Wrappers';
 import type { BondFeedbackProps } from '../types';
 import { BondInput } from './BondInput';
 import { useApi } from 'contexts/Api';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const BondFeedback = ({
   bondFor,

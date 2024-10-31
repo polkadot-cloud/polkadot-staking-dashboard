@@ -9,7 +9,7 @@ import type { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 import { useApi } from 'contexts/Api';
 import { useSyncing } from 'hooks/useSyncing';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
   const { t } = useTranslation('library');

@@ -18,7 +18,7 @@ import { useSyncing } from 'hooks/useSyncing';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 import { ButtonRow } from 'kits/Structure/ButtonRow';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');

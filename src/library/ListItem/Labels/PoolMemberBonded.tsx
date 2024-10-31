@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useNetwork } from 'contexts/Network';
 import type { AnyMetaBatch } from 'types';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const PoolMemberBonded = ({
   meta,

@@ -13,7 +13,7 @@ import { useNetwork } from 'contexts/Network';
 import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import { useApi } from 'contexts/Api';
 import { Item } from 'library/Announcements/Wrappers';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const Announcements = () => {
   const { t } = useTranslation('pages');

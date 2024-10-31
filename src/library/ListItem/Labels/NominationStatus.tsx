@@ -8,7 +8,7 @@ import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useNetwork } from 'contexts/Network';
 import type { NominationStatusProps } from '../types';
 import { useSyncing } from 'hooks/useSyncing';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const NominationStatus = ({
   address,

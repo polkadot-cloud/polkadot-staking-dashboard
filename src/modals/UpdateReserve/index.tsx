@@ -22,7 +22,7 @@ import { StyledSlider } from 'library/StyledSlider';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const UpdateReserve = () => {
   const { t } = useTranslation('modals');

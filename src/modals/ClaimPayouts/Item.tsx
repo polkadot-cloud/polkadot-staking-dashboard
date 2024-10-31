@@ -7,7 +7,7 @@ import { ItemWrapper } from './Wrappers';
 import type { ItemProps } from './types';
 import { getTotalPayout } from './Utils';
 import { ButtonSubmit } from 'kits/Buttons/ButtonSubmit';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const Item = ({
   era,

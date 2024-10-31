@@ -12,7 +12,7 @@ import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
   const { t } = useTranslation();

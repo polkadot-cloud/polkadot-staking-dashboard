@@ -15,7 +15,7 @@ import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
 import { PoolSyncBar } from 'library/PoolSync/Bar';
 import type { PoolRewardPointsKey } from 'contexts/Pools/PoolPerformance/types';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const Preloader = ({
   performanceKey,

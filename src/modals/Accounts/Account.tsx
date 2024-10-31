@@ -17,7 +17,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
 import BigNumber from 'bignumber.js';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const AccountButton = ({
   label,

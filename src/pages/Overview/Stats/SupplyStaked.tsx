@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Pie } from 'library/StatBoxList/Pie';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const SupplyStakedStat = () => {
   const { t } = useTranslation('pages');

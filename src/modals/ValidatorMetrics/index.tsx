@@ -25,7 +25,7 @@ import { usePlugins } from 'contexts/Plugins';
 import { useApi } from 'contexts/Api';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');

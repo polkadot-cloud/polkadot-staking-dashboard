@@ -25,7 +25,7 @@ import { useBalances } from 'contexts/Balances';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const Unstake = () => {
   const { t } = useTranslation('modals');

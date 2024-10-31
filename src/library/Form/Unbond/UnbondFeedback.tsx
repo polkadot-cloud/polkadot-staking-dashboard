@@ -14,7 +14,7 @@ import { Spacer } from '../Wrappers';
 import type { UnbondFeedbackProps } from '../types';
 import { UnbondInput } from './UnbondInput';
 import { useApi } from 'contexts/Api';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const UnbondFeedback = ({
   bondFor,

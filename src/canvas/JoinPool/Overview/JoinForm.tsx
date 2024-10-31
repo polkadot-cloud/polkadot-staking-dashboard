@@ -24,7 +24,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import type { OverviewSectionProps } from '../types';
 import { defaultClaimPermission } from 'controllers/ActivePools/defaults';
 import { useTranslation } from 'react-i18next';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   const { t } = useTranslation();

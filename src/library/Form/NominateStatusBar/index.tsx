@@ -11,7 +11,7 @@ import { Wrapper } from './Wrapper';
 import { useApi } from 'contexts/Api';
 import { useSyncing } from 'hooks/useSyncing';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
   const { t } = useTranslation('library');

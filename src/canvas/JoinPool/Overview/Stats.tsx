@@ -14,7 +14,7 @@ import { MaxEraRewardPointsEras } from 'consts';
 import { StyledLoader } from 'library/PoolSync/Loader';
 import type { CSSProperties } from 'styled-components';
 import { PoolSync } from 'library/PoolSync';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const Stats = ({
   bondedPool,

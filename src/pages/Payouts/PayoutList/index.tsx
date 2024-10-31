@@ -26,7 +26,7 @@ import { ItemWrapper } from '../Wrappers';
 import type { PayoutListProps } from '../types';
 import { PayoutListProvider, usePayoutList } from './context';
 import { payoutsPerPage } from 'library/List/defaults';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const PayoutListInner = ({
   allowMoreCols,

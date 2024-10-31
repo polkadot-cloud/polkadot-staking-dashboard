@@ -8,7 +8,7 @@ import type { Pool } from 'library/Pool/types';
 import { TooltipTrigger } from '../Wrappers';
 import { useTranslation } from 'react-i18next';
 import { useTooltip } from 'contexts/Tooltip';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const PoolBonded = ({ pool }: { pool: Pool }) => {
   const { t } = useTranslation('library');

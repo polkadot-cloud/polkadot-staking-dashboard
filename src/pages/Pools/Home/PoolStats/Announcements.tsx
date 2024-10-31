@@ -12,7 +12,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
 import { useNetwork } from 'contexts/Network';
 import { Item } from 'library/Announcements/Wrappers';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const Announcements = () => {
   const { t } = useTranslation('pages');

@@ -17,7 +17,7 @@ import { SyncController } from 'controllers/Sync';
 import { defaultNominations } from './defaults';
 import type { VoidFn } from '@polkadot/api/types';
 import type { ApiPromise } from '@polkadot/api';
-import { stringToBn } from 'Utils';
+import { stringToBn } from 'library/Utils';
 
 export class BalancesController {
   // ------------------------------------------------------

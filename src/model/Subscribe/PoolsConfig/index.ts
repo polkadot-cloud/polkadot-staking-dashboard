@@ -7,7 +7,7 @@ import BigNumber from 'bignumber.js';
 import { ApiController } from 'controllers/Api';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { NetworkName } from 'types';
-import { stringToBn } from 'Utils';
+import { stringToBn } from 'library/Utils';
 
 export class PoolsConfig implements Unsubscribable {
   // ------------------------------------------------------

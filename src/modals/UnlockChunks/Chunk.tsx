@@ -15,7 +15,7 @@ import { ChunkWrapper } from './Wrappers';
 import type { ChunkProps } from './types';
 import { useApi } from 'contexts/Api';
 import { ButtonSubmit } from 'kits/Buttons/ButtonSubmit';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
   const { t } = useTranslation('modals');

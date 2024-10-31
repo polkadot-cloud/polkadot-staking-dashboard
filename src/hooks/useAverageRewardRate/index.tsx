@@ -8,7 +8,7 @@ import type { AverageRewardRate, UseAverageRewardRate } from './types';
 import { defaultAverageRewardRate } from './defaults';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const useAverageRewardRate = (): UseAverageRewardRate => {
   const { erasPerDay } = useErasPerDay();

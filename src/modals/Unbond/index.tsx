@@ -26,7 +26,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const Unbond = () => {
   const { t } = useTranslation('modals');

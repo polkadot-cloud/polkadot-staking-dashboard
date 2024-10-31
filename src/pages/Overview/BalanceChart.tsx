@@ -20,7 +20,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useSyncing } from 'hooks/useSyncing';
 import { ButtonTertiary } from 'kits/Buttons/ButtonTertiary';
-import { planckToUnitBn } from 'Utils';
+import { planckToUnitBn } from 'library/Utils';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
