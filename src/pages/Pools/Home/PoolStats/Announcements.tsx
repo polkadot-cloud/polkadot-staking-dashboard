@@ -3,7 +3,7 @@
 
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { planckToUnit, rmCommas } from '@w3ux/utils';
+import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +12,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
 import { useNetwork } from 'contexts/Network';
 import { Item } from 'library/Announcements/Wrappers';
+import { planckToUnitBn } from 'Utils';
 
 export const Announcements = () => {
   const { t } = useTranslation('pages');
@@ -29,10 +30,10 @@ export const Announcements = () => {
     0,
     new BigNumber(rewardAccountBalance || 0).minus(existentialDeposit)
   );
-  const rewardBalance = planckToUnit(rewardPoolBalance, units);
+  const rewardBalance = planckToUnitBn(rewardPoolBalance, units);
 
   // calculate total rewards claimed
-  const rewardsClaimed = planckToUnit(
+  const rewardsClaimed = planckToUnitBn(
     totalRewardsClaimed
       ? new BigNumber(rmCommas(totalRewardsClaimed))
       : new BigNumber(0),

@@ -3,7 +3,6 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { isNotZero } from '@w3ux/utils';
 import { motion } from 'framer-motion';
 import type { FormEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
@@ -276,7 +275,7 @@ export const ValidatorListInner = ({
 
   // Configure validator list when network is ready to fetch.
   useEffect(() => {
-    if (isReady && isNotZero(activeEra.index)) {
+    if (isReady && !activeEra.index.isZero()) {
       setupValidatorList();
     }
   }, [isReady, activeEra.index, syncing, fetched]);

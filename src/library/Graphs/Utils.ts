@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { greaterThanZero, planckToUnit } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import {
   addDays,
@@ -16,6 +15,7 @@ import { MaxPayoutDays } from 'consts';
 import type { AnyApi, AnySubscan } from 'types';
 import type { PayoutDayCursor } from './types';
 import type { AnyJson } from '@w3ux/types';
+import { planckToUnitBn } from 'Utils';
 
 // Given payouts, calculate daily income and fill missing days with zero amounts.
 export const calculateDailyPayouts = (
@@ -67,7 +67,7 @@ export const calculateDailyPayouts = (
     // handle surpassed maximum days.
     if (daysPassed(thisDay, fromDate) >= maxDays) {
       dailyPayouts.push({
-        amount: planckToUnit(curPayout.amount, units),
+        amount: planckToUnitBn(curPayout.amount, units),
         event_id: getEventId(curPayout),
         block_timestamp: getUnixTime(curDay),
       });
@@ -81,7 +81,7 @@ export const calculateDailyPayouts = (
     if (daysDiff > 0) {
       // add current payout cursor to dailyPayouts.
       dailyPayouts.push({
-        amount: planckToUnit(curPayout.amount, units),
+        amount: planckToUnitBn(curPayout.amount, units),
         event_id: getEventId(curPayout),
         block_timestamp: getUnixTime(curDay),
       });
@@ -106,7 +106,7 @@ export const calculateDailyPayouts = (
       (p === payouts.length && !curPayout.amount.isZero())
     ) {
       dailyPayouts.push({
-        amount: planckToUnit(curPayout.amount, units),
+        amount: planckToUnitBn(curPayout.amount, units),
         event_id: getEventId(curPayout),
         block_timestamp: getUnixTime(curDay),
       });
@@ -368,11 +368,11 @@ export const getLatestReward = (
 ) => {
   // get most recent payout
   const payoutExists =
-    payouts.find((p: AnySubscan) => greaterThanZero(new BigNumber(p.amount))) ??
+    payouts.find((p: AnySubscan) => new BigNumber(p.amount).isGreaterThan(0)) ??
     null;
   const poolClaimExists =
     poolClaims.find((p: AnySubscan) =>
-      greaterThanZero(new BigNumber(p.amount))
+      new BigNumber(p.amount).isGreaterThan(0)
     ) ?? null;
 
   // calculate which payout was most recent

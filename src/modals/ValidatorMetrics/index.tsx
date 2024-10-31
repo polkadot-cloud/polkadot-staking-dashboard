@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Polkicon } from '@w3ux/react-polkicon';
-import { ellipsisFn, planckToUnit } from '@w3ux/utils';
+import { ellipsisFn } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +25,7 @@ import { usePlugins } from 'contexts/Plugins';
 import { useApi } from 'contexts/Api';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { planckToUnitBn } from 'Utils';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');
@@ -80,12 +81,12 @@ export const ValidatorMetrics = () => {
   const stats = [
     {
       label: t('selfStake'),
-      value: `${planckToUnit(validatorOwnStake, units).toFormat()} ${unit}`,
+      value: `${planckToUnitBn(validatorOwnStake, units).toFormat()} ${unit}`,
       help: 'Self Stake',
     },
     {
       label: t('nominatorStake'),
-      value: `${planckToUnit(otherStake, units).toFormat()} ${unit}`,
+      value: `${planckToUnitBn(otherStake, units).toFormat()} ${unit}`,
       help: 'Nominator Stake',
     },
   ];

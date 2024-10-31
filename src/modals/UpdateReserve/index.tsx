@@ -3,7 +3,7 @@
 
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { planckToUnit, unitToPlanck } from '@w3ux/utils';
+import { unitToPlanck } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -22,6 +22,7 @@ import { StyledSlider } from 'library/StyledSlider';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { planckToUnitBn } from 'Utils';
 
 export const UpdateReserve = () => {
   const { t } = useTranslation('modals');
@@ -37,13 +38,16 @@ export const UpdateReserve = () => {
     useTransferOptions();
 
   const { edReserved } = getTransferOptions(activeAccount);
-  const minReserve = planckToUnit(edReserved, units);
+  const minReserve = planckToUnitBn(edReserved, units);
   const maxReserve = minReserve.plus(
     ['polkadot', 'westend'].includes(network) ? 3 : 1
   );
 
   const [sliderReserve, setSliderReserve] = useState<number>(
-    planckToUnit(feeReserve, units).plus(minReserve).decimalPlaces(3).toNumber()
+    planckToUnitBn(feeReserve, units)
+      .plus(minReserve)
+      .decimalPlaces(3)
+      .toNumber()
   );
 
   const handleChange = (val: BigNumber) => {
@@ -52,7 +56,7 @@ export const UpdateReserve = () => {
     const actualReserve = BigNumber.max(val.minus(minReserve), 0).toNumber();
     const actualReservePlanck = unitToPlanck(actualReserve.toString(), units);
     setSliderReserve(val.decimalPlaces(3).toNumber());
-    setFeeReserveBalance(actualReservePlanck);
+    setFeeReserveBalance(new BigNumber(actualReservePlanck.toString()));
   };
 
   return (

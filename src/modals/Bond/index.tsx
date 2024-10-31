@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit, unitToPlanck } from '@w3ux/utils';
+import { unitToPlanck } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +21,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
+import { planckToUnitBn } from 'Utils';
 
 export const Bond = () => {
   const { t } = useTranslation('modals');
@@ -44,7 +45,7 @@ export const Bond = () => {
   const isPooling = bondFor === 'pool';
   const { nominate, transferrableBalance } = getTransferOptions(activeAccount);
 
-  const freeToBond = planckToUnit(
+  const freeToBond = planckToUnitBn(
     (bondFor === 'nominator'
       ? nominate.totalAdditionalBond
       : transferrableBalance
@@ -55,7 +56,7 @@ export const Bond = () => {
   const largestTxFee = useBondGreatestFee({ bondFor });
 
   // Format unclaimed pool rewards.
-  const pendingRewardsUnit = planckToUnit(pendingPoolRewards, units);
+  const pendingRewardsUnit = planckToUnitBn(pendingPoolRewards, units);
 
   // local bond value.
   const [bond, setBond] = useState<{ bond: string }>({
@@ -76,16 +77,18 @@ export const Bond = () => {
   // bond minus tx fees.
   const enoughToCoverTxFees: boolean = freeToBond
     .minus(bond.bond)
-    .isGreaterThan(planckToUnit(largestTxFee, units));
+    .isGreaterThan(planckToUnitBn(largestTxFee, units));
 
   // bond value after max tx fees have been deducated.
   let bondAfterTxFees: BigNumber;
 
   if (enoughToCoverTxFees) {
-    bondAfterTxFees = unitToPlanck(String(bond.bond), units);
+    bondAfterTxFees = new BigNumber(unitToPlanck(bond.bond, units).toString());
   } else {
     bondAfterTxFees = BigNumber.max(
-      unitToPlanck(String(bond.bond), units).minus(largestTxFee),
+      new BigNumber(unitToPlanck(String(bond.bond), units).toString()).minus(
+        largestTxFee
+      ),
       0
     );
   }

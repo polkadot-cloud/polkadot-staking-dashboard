@@ -3,7 +3,6 @@
 
 import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { planckToUnit } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { getUnixTime } from 'date-fns';
 import type { Dispatch, ForwardedRef, SetStateAction } from 'react';
@@ -23,6 +22,7 @@ import type { UnlockChunk } from 'contexts/Balances/types';
 import { ButtonSubmit } from 'kits/Buttons/ButtonSubmit';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
+import { planckToUnitBn } from 'Utils';
 
 interface OverviewProps {
   unlocking: UnlockChunk[];
@@ -84,7 +84,7 @@ export const Overview = forwardRef(
                   {t('unlocked')}
                 </h4>
                 <h2>
-                  {planckToUnit(withdrawAvailable, units)
+                  {planckToUnitBn(withdrawAvailable, units)
                     .decimalPlaces(3)
                     .toFormat()}{' '}
                   {unit}
@@ -98,7 +98,10 @@ export const Overview = forwardRef(
                   {t('unbonding')}
                 </h4>
                 <h2>
-                  {planckToUnit(totalUnbonding.minus(withdrawAvailable), units)
+                  {planckToUnitBn(
+                    totalUnbonding.minus(withdrawAvailable),
+                    units
+                  )
                     .decimalPlaces(3)
                     .toFormat()}{' '}
                   {unit}
@@ -109,7 +112,7 @@ export const Overview = forwardRef(
               <div className="inner">
                 <h4>{t('total')}</h4>
                 <h2>
-                  {planckToUnit(totalUnbonding, units)
+                  {planckToUnitBn(totalUnbonding, units)
                     .decimalPlaces(3)
                     .toFormat()}{' '}
                   {unit}

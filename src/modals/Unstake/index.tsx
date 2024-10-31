@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { greaterThanZero, planckToUnit, unitToPlanck } from '@w3ux/utils';
+import { unitToPlanck } from '@w3ux/utils';
 import { getUnixTime } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +25,7 @@ import { useBalances } from 'contexts/Balances';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
+import { planckToUnitBn } from 'Utils';
 
 export const Unstake = () => {
   const { t } = useTranslation('modals');
@@ -56,7 +57,7 @@ export const Unstake = () => {
   );
 
   // convert BigNumber values to number
-  const freeToUnbond = planckToUnit(active, units);
+  const freeToUnbond = planckToUnitBn(active, units);
 
   // local bond value
   const [bond, setBond] = useState<{ bond: string }>({
@@ -67,7 +68,7 @@ export const Unstake = () => {
   const [bondValid, setBondValid] = useState<boolean>(false);
 
   // unbond all validation
-  const isValid = (() => greaterThanZero(freeToUnbond))();
+  const isValid = (() => freeToUnbond.isGreaterThan(0))();
 
   // update bond value on task change
   useEffect(() => {
@@ -89,12 +90,14 @@ export const Unstake = () => {
       String(!bondValid ? '0' : bond.bond),
       units
     );
-    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
 
-    if (!bondAsString) {
+    if (bondToSubmit == 0n) {
       return api.tx.staking.chill();
     }
-    const txs = [api.tx.staking.chill(), api.tx.staking.unbond(bondAsString)];
+    const txs = [
+      api.tx.staking.chill(),
+      api.tx.staking.unbond(bondToSubmit.toString()),
+    ];
     return newBatchCall(txs, controller);
   };
 
@@ -125,7 +128,7 @@ export const Unstake = () => {
             ))}
           </ModalWarnings>
         ) : null}
-        {greaterThanZero(freeToUnbond) ? (
+        {freeToUnbond.isGreaterThan(0) ? (
           <ActionItem
             text={t('unstakeUnbond', {
               bond: freeToUnbond.toFormat(),

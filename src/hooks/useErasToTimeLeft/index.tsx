@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { greaterThanZero } from '@w3ux/utils';
 import type BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 
@@ -11,7 +10,7 @@ export const useErasToTimeLeft = () => {
 
   // converts a number of eras to timeleft in seconds.
   const erasToSeconds = (eras: BigNumber) => {
-    if (!greaterThanZero(eras)) {
+    if (!eras.isGreaterThan(0)) {
       return 0;
     }
     // store the duration of an era in number of blocks.

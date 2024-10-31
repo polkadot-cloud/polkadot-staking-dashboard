@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit } from '@w3ux/utils';
 import type { Context } from 'react';
 import { Component, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +9,7 @@ import type { TxMetaContextInterface } from 'contexts/TxMeta/types';
 import { useNetwork } from 'contexts/Network';
 import { Wrapper } from './Wrapper';
 import type { EstimatedTxFeeProps } from './types';
+import { planckToUnitBn } from 'Utils';
 
 export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
   const { t } = useTranslation('library');
@@ -18,7 +18,7 @@ export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
 
   useEffect(() => () => resetTxFees(), []);
 
-  const txFeesUnit = planckToUnit(txFees, units).toFormat();
+  const txFeesUnit = planckToUnitBn(txFees, units).toFormat();
 
   return format === 'table' ? (
     <>

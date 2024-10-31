@@ -6,12 +6,13 @@ import { Stat } from 'library/Stat';
 import { usePayouts } from 'contexts/Payouts';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
-import { minDecimalPlaces, planckToUnit } from '@w3ux/utils';
+import { minDecimalPlaces } from '@w3ux/utils';
 import { faCircleDown } from '@fortawesome/free-solid-svg-icons';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { planckToUnitBn } from 'Utils';
 
 export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
   const { t } = useTranslation();
@@ -39,7 +40,7 @@ export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
       type="odometer"
       stat={{
         value: minDecimalPlaces(
-          planckToUnit(totalUnclaimed, units).toFormat(),
+          planckToUnitBn(totalUnclaimed, units).toFormat(),
           2
         ),
       }}

@@ -17,9 +17,10 @@ import { Odometer } from '@w3ux/react-odometer';
 import { locales, DefaultLocale } from 'locale';
 import BigNumber from 'bignumber.js';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
-import { minDecimalPlaces, planckToUnit } from '@w3ux/utils';
+import { minDecimalPlaces } from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
 import { useSyncing } from 'hooks/useSyncing';
+import { planckToUnitBn } from 'Utils';
 
 export const Payouts = () => {
   const { i18n, t } = useTranslation('pages');
@@ -85,7 +86,7 @@ export const Payouts = () => {
             value={minDecimalPlaces(
               lastReward === null
                 ? '0'
-                : planckToUnit(
+                : planckToUnitBn(
                     new BigNumber(lastReward.amount),
                     units
                   ).toFormat(),

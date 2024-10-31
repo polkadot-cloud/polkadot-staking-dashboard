@@ -3,12 +3,7 @@
 
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  capitalizeFirstLetter,
-  planckToUnit,
-  rmCommas,
-  sortWithNull,
-} from '@w3ux/utils';
+import { capitalizeFirstLetter, rmCommas, sortWithNull } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +13,7 @@ import { useNetwork } from 'contexts/Network';
 import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import { useApi } from 'contexts/Api';
 import { Item } from 'library/Announcements/Wrappers';
+import { planckToUnitBn } from 'Utils';
 
 export const Announcements = () => {
   const { t } = useTranslation('pages');
@@ -35,7 +31,7 @@ export const Announcements = () => {
   bondedPools.forEach((b: BondedPool) => {
     totalPoolPoints = totalPoolPoints.plus(rmCommas(b.points));
   });
-  const totalPoolPointsUnit = planckToUnit(totalPoolPoints, units);
+  const totalPoolPointsUnit = planckToUnitBn(totalPoolPoints, units);
 
   const container = {
     hidden: { opacity: 0 },
@@ -65,7 +61,7 @@ export const Announcements = () => {
     announcements.push({
       class: 'neutral',
       title: t('overview.networkCurrentlyStaked', {
-        total: planckToUnit(totalStaked, units).integerValue().toFormat(),
+        total: planckToUnitBn(totalStaked, units).integerValue().toFormat(),
         unit,
         network: capitalizeFirstLetter(network),
       }),

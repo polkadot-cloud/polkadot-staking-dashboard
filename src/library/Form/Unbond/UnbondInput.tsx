@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { ChangeEvent } from 'react';
 import { useEffect, useState } from 'react';
@@ -11,6 +10,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { InputWrapper } from '../Wrappers';
 import type { UnbondInputProps } from '../types';
 import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
+import { planckToUnitBn } from 'Utils';
 
 export const UnbondInput = ({
   defaultValue,
@@ -25,7 +25,7 @@ export const UnbondInput = ({
   const { activeAccount } = useActiveAccounts();
 
   // get the actively bonded amount.
-  const activeUnit = planckToUnit(active, networkData.units);
+  const activeUnit = planckToUnitBn(active, networkData.units);
 
   // the current local bond value.
   const [localBond, setLocalBond] = useState<string>(value);
@@ -58,7 +58,7 @@ export const UnbondInput = ({
   };
 
   // unbond to min as unit.
-  const unbondToMinUnit = planckToUnit(unbondToMin, networkData.units);
+  const unbondToMinUnit = planckToUnitBn(unbondToMin, networkData.units);
 
   // available funds as jsx.
   const maxBondedJsx = (

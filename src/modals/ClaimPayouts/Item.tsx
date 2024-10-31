@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useTranslation } from 'react-i18next';
-import { planckToUnit } from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
 import { ItemWrapper } from './Wrappers';
 import type { ItemProps } from './types';
 import { getTotalPayout } from './Utils';
 import { ButtonSubmit } from 'kits/Buttons/ButtonSubmit';
+import { planckToUnitBn } from 'Utils';
 
 export const Item = ({
   era,
@@ -36,7 +36,7 @@ export const Item = ({
             </span>
           </h4>
           <h2>
-            {planckToUnit(totalPayout, units).toString()} {unit}
+            {planckToUnitBn(totalPayout, units).toString()} {unit}
           </h2>
         </section>
 

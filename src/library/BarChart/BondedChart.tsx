@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { greaterThanZero } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { BarSegment } from 'library/BarChart/BarSegment';
@@ -29,14 +28,14 @@ export const BondedChart = ({
   // graph percentages
   const graphTotal = active.plus(totalUnlocking).plus(free);
 
-  const graphActive = greaterThanZero(active)
+  const graphActive = active.isGreaterThan(0)
     ? BigNumber.max(
         active.dividedBy(graphTotal.multipliedBy(0.01)),
         active.isGreaterThan(MinimumLowerBound) ? MinimumNoNZeroPercent : 0
       )
     : new BigNumber(0);
 
-  const graphUnlocking = greaterThanZero(totalUnlocking)
+  const graphUnlocking = totalUnlocking.isGreaterThan(0)
     ? BigNumber.max(
         totalUnlocking.dividedBy(graphTotal.multipliedBy(0.01)),
         totalUnlocking.isGreaterThan(MinimumLowerBound)
@@ -48,7 +47,7 @@ export const BondedChart = ({
   const freeToBond = free.decimalPlaces(3);
   const remaining = new BigNumber(100).minus(graphActive).minus(graphUnlocking);
 
-  const graphFree = greaterThanZero(remaining)
+  const graphFree = remaining.isGreaterThan(0)
     ? BigNumber.max(
         remaining,
         freeToBond.isGreaterThan(MinimumLowerBound) ? MinimumNoNZeroPercent : 0
@@ -63,15 +62,15 @@ export const BondedChart = ({
       <Legend>
         {totalUnlocking.plus(active).isZero() ? (
           <LegendItem dataClass="d4" label={t('available')} />
-        ) : greaterThanZero(active) ? (
+        ) : active.isGreaterThan(0) ? (
           <LegendItem dataClass="d1" label={t('bonded')} />
         ) : null}
 
-        {greaterThanZero(totalUnlocking) ? (
+        {totalUnlocking.isGreaterThan(0) ? (
           <LegendItem dataClass="d3" label={t('unlocking')} />
         ) : null}
 
-        {greaterThanZero(totalUnlocking.plus(active)) ? (
+        {totalUnlocking.plus(active).isGreaterThan(0) ? (
           <LegendItem dataClass="d4" label={t('free')} />
         ) : null}
       </Legend>

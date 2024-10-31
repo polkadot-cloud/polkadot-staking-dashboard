@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { isNotZero, planckToUnit, unitToPlanck } from '@w3ux/utils';
+import { unitToPlanck } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +14,7 @@ import { Spacer } from '../Wrappers';
 import type { UnbondFeedbackProps } from '../types';
 import { UnbondInput } from './UnbondInput';
 import { useApi } from 'contexts/Api';
+import { planckToUnitBn } from 'Utils';
 
 export const UnbondFeedback = ({
   bondFor,
@@ -59,7 +60,9 @@ export const UnbondFeedback = ({
   };
 
   // current bond value BigNumber
-  const bondBn = unitToPlanck(String(bond.bond), units);
+  const bondBn = new BigNumber(
+    unitToPlanck(String(bond.bond), units).toString()
+  );
 
   // add this component's setBond to setters
   setters.push(handleSetBond);
@@ -71,7 +74,7 @@ export const UnbondFeedback = ({
         ? minCreateBond
         : minJoinBond
       : minNominatorBond;
-  const minBondUnit = planckToUnit(minBondBn, units);
+  const minBondUnit = planckToUnitBn(minBondBn, units);
 
   // unbond amount to minimum threshold
   const unbondToMin =
@@ -84,7 +87,7 @@ export const UnbondFeedback = ({
   // check if bonded is below the minimum required
   const nominatorActiveBelowMin =
     bondFor === 'nominator' &&
-    isNotZero(active) &&
+    !active.isZero() &&
     active.isLessThan(minNominatorBond);
   const poolToMinBn = isDepositor() ? minCreateBond : minJoinBond;
   const poolActiveBelowMin =

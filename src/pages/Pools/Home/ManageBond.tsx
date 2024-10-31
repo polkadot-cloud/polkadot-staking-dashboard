@@ -3,7 +3,7 @@
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { Odometer } from '@w3ux/react-odometer';
-import { minDecimalPlaces, planckToUnit } from '@w3ux/utils';
+import { minDecimalPlaces } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { useActivePool } from 'contexts/Pools/ActivePool';
@@ -18,6 +18,7 @@ import { useSyncing } from 'hooks/useSyncing';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 import { ButtonRow } from 'kits/Structure/ButtonRow';
+import { planckToUnitBn } from 'Utils';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');
@@ -54,7 +55,10 @@ export const ManageBond = () => {
         <h2>
           <Token className="networkIcon" />
           <Odometer
-            value={minDecimalPlaces(planckToUnit(active, units).toFormat(), 2)}
+            value={minDecimalPlaces(
+              planckToUnitBn(active, units).toFormat(),
+              2
+            )}
             zeroDecimals={2}
           />
         </h2>
@@ -116,10 +120,10 @@ export const ManageBond = () => {
         </ButtonRow>
       </CardHeaderWrapper>
       <BondedChart
-        active={planckToUnit(active, units)}
-        unlocking={planckToUnit(totalUnlocking, units)}
-        unlocked={planckToUnit(totalUnlocked, units)}
-        free={planckToUnit(transferrableBalance, units)}
+        active={planckToUnitBn(active, units)}
+        unlocking={planckToUnitBn(totalUnlocking, units)}
+        unlocked={planckToUnitBn(totalUnlocked, units)}
+        free={planckToUnitBn(transferrableBalance, units)}
         inactive={active.isZero()}
       />
     </>

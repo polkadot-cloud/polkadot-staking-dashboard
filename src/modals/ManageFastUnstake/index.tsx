@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -23,6 +22,7 @@ import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
 import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
+import { planckToUnitBn } from 'Utils';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
@@ -113,7 +113,7 @@ export const ManageFastUnstake = () => {
   if (!isFastUnstaking) {
     if (!enoughForDeposit) {
       warnings.push(
-        `${t('noEnough')} ${planckToUnit(
+        `${t('noEnough')} ${planckToUnitBn(
           fastUnstakeDeposit,
           units
         ).toString()} ${unit}`
@@ -175,7 +175,7 @@ export const ManageFastUnstake = () => {
             <ModalNotes>
               <p>
                 {t('registerFastUnstake')}{' '}
-                {planckToUnit(fastUnstakeDeposit, units).toString()} {unit}.{' '}
+                {planckToUnitBn(fastUnstakeDeposit, units).toString()} {unit}.{' '}
                 {t('fastUnstakeOnceRegistered')}
               </p>
               <p>

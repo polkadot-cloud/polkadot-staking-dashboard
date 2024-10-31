@@ -2,13 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Polkicon } from '@w3ux/react-polkicon';
-import {
-  ellipsisFn,
-  isNotZero,
-  planckToUnit,
-  remToUnit,
-  rmCommas,
-} from '@w3ux/utils';
+import { ellipsisFn, remToUnit, rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { RefObject } from 'react';
 import { useState } from 'react';
@@ -27,6 +21,7 @@ import { useTranslation } from 'react-i18next';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
+import { planckToUnitBn } from 'Utils';
 
 export const WithdrawMember = ({
   who,
@@ -62,11 +57,11 @@ export const WithdrawMember = ({
     }
   });
 
-  const bonded = planckToUnit(new BigNumber(rmCommas(points)), units);
-  const totalWithdraw = planckToUnit(new BigNumber(totalWithdrawUnit), units);
+  const bonded = planckToUnitBn(new BigNumber(rmCommas(points)), units);
+  const totalWithdraw = planckToUnitBn(new BigNumber(totalWithdrawUnit), units);
 
   // valid to submit transaction
-  const [valid] = useState<boolean>(isNotZero(totalWithdraw) ?? false);
+  const [valid] = useState<boolean>(!totalWithdraw.isZero());
 
   // tx to submit
   const getTx = () => {

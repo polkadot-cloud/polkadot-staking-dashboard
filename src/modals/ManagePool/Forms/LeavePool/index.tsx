@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { greaterThanZero, planckToUnit, unitToPlanck } from '@w3ux/utils';
+import { unitToPlanck } from '@w3ux/utils';
 import { getUnixTime } from 'date-fns';
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
@@ -24,6 +24,7 @@ import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
+import { planckToUnitBn } from 'Utils';
 
 export const LeavePool = ({
   setSection,
@@ -53,10 +54,10 @@ export const LeavePool = ({
     true
   );
 
-  const pendingRewardsUnit = planckToUnit(pendingPoolRewards, units);
+  const pendingRewardsUnit = planckToUnitBn(pendingPoolRewards, units);
 
   // convert BigNumber values to number
-  const freeToUnbond = planckToUnit(activeBn, units);
+  const freeToUnbond = planckToUnitBn(activeBn, units);
 
   // local bond value
   const [bond, setBond] = useState<{ bond: string }>({
@@ -67,7 +68,7 @@ export const LeavePool = ({
   const [bondValid, setBondValid] = useState<boolean>(false);
 
   // unbond all validation
-  const isValid = (() => greaterThanZero(freeToUnbond))();
+  const isValid = (() => freeToUnbond.isGreaterThan(0))();
 
   // update bond value on task change
   useEffect(() => {
@@ -85,9 +86,12 @@ export const LeavePool = ({
       return tx;
     }
 
-    const bondToSubmit = unitToPlanck(!bondValid ? '0' : bond.bond, units);
-    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
-    tx = api.tx.nominationPools.unbond(activeAccount, bondAsString);
+    const bondToSubmit = unitToPlanck(
+      !bondValid ? '0' : bond.bond,
+      units
+    ).toString();
+
+    tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);
     return tx;
   };
 
@@ -106,7 +110,7 @@ export const LeavePool = ({
     submitExtrinsic.proxySupported
   );
 
-  if (greaterThanZero(pendingRewardsUnit)) {
+  if (pendingRewardsUnit.isGreaterThan(0)) {
     warnings.push(
       `${t('unbondingWithdraw')} ${pendingRewardsUnit.toString()} ${unit}.`
     );

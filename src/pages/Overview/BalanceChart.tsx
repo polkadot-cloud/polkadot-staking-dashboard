@@ -3,7 +3,7 @@
 
 import { faCheck, faCheckDouble } from '@fortawesome/free-solid-svg-icons';
 import { Odometer } from '@w3ux/react-odometer';
-import { greaterThanZero, minDecimalPlaces, planckToUnit } from '@w3ux/utils';
+import { minDecimalPlaces } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';
@@ -20,6 +20,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useSyncing } from 'hooks/useSyncing';
 import { ButtonTertiary } from 'kits/Buttons/ButtonTertiary';
+import { planckToUnitBn } from 'Utils';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
@@ -49,7 +50,7 @@ export const BalanceChart = () => {
 
   // User's total balance.
   const { free, frozen } = balance;
-  const totalBalance = planckToUnit(
+  const totalBalance = planckToUnitBn(
     free.plus(poolBondOpions.active).plus(unlockingPools),
     units
   );
@@ -59,7 +60,7 @@ export const BalanceChart = () => {
   );
 
   // Total funds nominating.
-  const nominating = planckToUnit(
+  const nominating = planckToUnitBn(
     allTransferOptions.nominate.active
       .plus(allTransferOptions.nominate.totalUnlocking)
       .plus(allTransferOptions.nominate.totalUnlocked),
@@ -67,7 +68,7 @@ export const BalanceChart = () => {
   );
 
   // Total funds in pool.
-  const inPool = planckToUnit(
+  const inPool = planckToUnitBn(
     allTransferOptions.pool.active
       .plus(allTransferOptions.pool.totalUnlocking)
       .plus(allTransferOptions.pool.totalUnlocked),
@@ -82,7 +83,7 @@ export const BalanceChart = () => {
     : new BigNumber(0);
 
   // Total funds available, including existential deposit, minus staking.
-  const graphAvailable = planckToUnit(
+  const graphAvailable = planckToUnitBn(
     BigNumber.max(free.minus(lockStakingAmount), 0),
     units
   );
@@ -90,15 +91,15 @@ export const BalanceChart = () => {
 
   // Graph percentages.
   const graphTotal = nominating.plus(inPool).plus(graphAvailable);
-  const graphNominating = greaterThanZero(nominating)
+  const graphNominating = nominating.isGreaterThan(0)
     ? nominating.dividedBy(graphTotal.multipliedBy(0.01))
     : new BigNumber(0);
 
-  const graphInPool = greaterThanZero(inPool)
+  const graphInPool = inPool.isGreaterThan(0)
     ? inPool.dividedBy(graphTotal.multipliedBy(0.01))
     : new BigNumber(0);
 
-  const graphNotStaking = greaterThanZero(graphTotal)
+  const graphNotStaking = graphTotal.isGreaterThan(0)
     ? BigNumber.max(
         new BigNumber(100).minus(graphNominating).minus(graphInPool),
         0
@@ -107,20 +108,20 @@ export const BalanceChart = () => {
 
   // Available balance data.
   const fundsLockedPlank = BigNumber.max(frozen.minus(lockStakingAmount), 0);
-  const fundsLocked = planckToUnit(fundsLockedPlank, units);
-  let fundsReserved = planckToUnit(edReserved.plus(feeReserve), units);
+  const fundsLocked = planckToUnitBn(fundsLockedPlank, units);
+  let fundsReserved = planckToUnitBn(edReserved.plus(feeReserve), units);
 
-  const fundsFree = planckToUnit(
+  const fundsFree = planckToUnitBn(
     BigNumber.max(allTransferOptions.freeBalance.minus(fundsLockedPlank), 0),
     units
   );
 
   // Available balance percentages.
-  const graphLocked = greaterThanZero(fundsLocked)
+  const graphLocked = fundsLocked.isGreaterThan(0)
     ? fundsLocked.dividedBy(graphAvailable.multipliedBy(0.01))
     : new BigNumber(0);
 
-  const graphFree = greaterThanZero(fundsFree)
+  const graphFree = fundsFree.isGreaterThan(0)
     ? fundsFree.dividedBy(graphAvailable.multipliedBy(0.01))
     : new BigNumber(0);
 
@@ -135,12 +136,11 @@ export const BalanceChart = () => {
     currency: 'USD',
   });
 
-  const isNominating = greaterThanZero(nominating);
-  const isInPool = greaterThanZero(
-    poolBondOpions.active
-      .plus(poolBondOpions.totalUnlocked)
-      .plus(poolBondOpions.totalUnlocking)
-  );
+  const isNominating = nominating.isGreaterThan(0);
+  const isInPool = poolBondOpions.active
+    .plus(poolBondOpions.totalUnlocked)
+    .plus(poolBondOpions.totalUnlocking)
+    .isGreaterThan(0);
 
   return (
     <>
@@ -165,7 +165,7 @@ export const BalanceChart = () => {
           {isNominating ? (
             <LegendItem dataClass="d1" label={t('overview.nominating')} />
           ) : null}
-          {greaterThanZero(inPool) ? (
+          {inPool.isGreaterThan(0) ? (
             <LegendItem dataClass="d2" label={t('overview.inPool')} />
           ) : null}
           <LegendItem dataClass="d4" label={t('overview.notStaking')} />
@@ -197,7 +197,7 @@ export const BalanceChart = () => {
               flex: 1,
               minWidth: '8.5rem',
               flexBasis: `${
-                greaterThanZero(graphFree) && greaterThanZero(graphLocked)
+                graphFree.isGreaterThan(0) && graphLocked.isGreaterThan(0)
                   ? `${graphFree.toFixed(2)}%`
                   : 'auto'
               }`,
@@ -215,7 +215,7 @@ export const BalanceChart = () => {
               />
             </Bar>
           </div>
-          {greaterThanZero(fundsLocked) ? (
+          {fundsLocked.isGreaterThan(0) ? (
             <div
               style={{
                 flex: 1,
