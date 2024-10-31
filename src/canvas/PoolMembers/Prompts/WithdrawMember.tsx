@@ -3,7 +3,6 @@
 
 import { Polkicon } from '@w3ux/react-polkicon';
 import { ellipsisFn, planckToUnit, remToUnit, rmCommas } from '@w3ux/utils';
-import BigNumber from 'bignumber.js';
 import type { RefObject } from 'react';
 import { useState } from 'react';
 import { useApi } from 'contexts/Api';
@@ -45,24 +44,21 @@ export const WithdrawMember = ({
   const { unbondingEras, points } = member;
 
   // calculate total for withdraw
-  let totalWithdrawUnit = new BigNumber(0);
+  let totalWithdrawUnit = 0n;
 
   Object.entries(unbondingEras).forEach((entry) => {
     const [era, amount] = entry;
     if (activeEra.index.isGreaterThan(era)) {
-      totalWithdrawUnit = totalWithdrawUnit.plus(
-        new BigNumber(rmCommas(amount as string))
-      );
+      totalWithdrawUnit =
+        totalWithdrawUnit + BigInt(rmCommas(amount as string));
     }
   });
 
-  const bonded = new BigNumber(planckToUnit(rmCommas(points), units));
-  const totalWithdraw = new BigNumber(
-    planckToUnit(totalWithdrawUnit.toString(), units)
-  );
+  const bonded = planckToUnit(rmCommas(points), units);
+  const totalWithdraw = planckToUnit(totalWithdrawUnit, units);
 
   // valid to submit transaction
-  const [valid] = useState<boolean>(!totalWithdraw.isZero());
+  const [valid] = useState<boolean>(totalWithdraw != '0');
 
   // tx to submit
   const getTx = () => {
@@ -84,7 +80,7 @@ export const WithdrawMember = ({
     },
     callbackInBlock: () => {
       // remove the pool member from context if no more funds bonded.
-      if (bonded.isZero()) {
+      if (bonded !== '0') {
         removePoolMember(who);
       }
     },
