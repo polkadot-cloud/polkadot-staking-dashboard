@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit, unitToPlanck } from '@w3ux/utils';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import type { ClaimPermission } from 'contexts/Pools/types';
@@ -78,11 +78,12 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
       return tx;
     }
 
-    const bondToSubmit = new BigNumber(
-      unitToPlanck(!bondValid ? '0' : bond.bond, units).toString()
-    );
-    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
-    const txs = [api.tx.nominationPools.join(bondAsString, bondedPool.id)];
+    const bondToSubmit = unitToPlanck(
+      !bondValid ? '0' : bond.bond,
+      units
+    ).toString();
+
+    const txs = [api.tx.nominationPools.join(bondToSubmit, bondedPool.id)];
 
     // If claim permission is not the default, add it to tx.
     if (claimPermission !== defaultClaimPermission) {
