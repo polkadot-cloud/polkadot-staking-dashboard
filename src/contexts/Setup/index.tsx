@@ -23,7 +23,6 @@ import type {
   PoolSetups,
   SetupContextInterface,
 } from './types';
-import BigNumber from 'bignumber.js';
 
 export const SetupContext =
   createContext<SetupContextInterface>(defaultSetupContext);
@@ -176,13 +175,11 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
     }
     const setup = getSetupProgress('nominator', address) as NominatorSetup;
     const { progress } = setup;
-    const bond = new BigNumber(
-      unitToPlanck(progress?.bond || '0', units).toString()
-    );
+    const bond = unitToPlanck(progress?.bond || '0', units);
 
     const p = 33;
     let percentage = 0;
-    if (bond.isGreaterThan(0)) {
+    if (bond > 0) {
       percentage += p;
     }
     if (progress.nominations.length) {
@@ -201,16 +198,14 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
     }
     const setup = getSetupProgress('pool', address) as PoolSetup;
     const { progress } = setup;
-    const bond = new BigNumber(
-      unitToPlanck(progress?.bond || '0', units).toString()
-    );
+    const bond = unitToPlanck(progress?.bond || '0', units);
 
     const p = 25;
     let percentage = 0;
     if (progress.metadata !== '') {
       percentage += p;
     }
-    if (bond.isGreaterThan(0)) {
+    if (bond > 0) {
       percentage += p;
     }
     if (progress.nominations.length) {
