@@ -8,9 +8,13 @@ import { useTranslation } from 'react-i18next';
 import { JoinPoolInterfaceWrapper } from './Wrappers';
 import { CanvasTitleWrapper } from 'canvas/Wrappers';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import BigNumber from 'bignumber.js';
 import type { BondedPool } from 'contexts/Pools/BondedPools/types';
-import { capitalizeFirstLetter, planckToUnit, rmCommas } from '@w3ux/utils';
+import {
+  capitalizeFirstLetter,
+  formatNumber,
+  planckToUnit,
+  rmCommas,
+} from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
 import { PoolSyncBar } from 'library/PoolSync/Bar';
@@ -32,15 +36,15 @@ export const Preloader = ({
   } = useApi();
   const { closeCanvas } = useOverlay().canvas;
 
-  let totalPoolPoints = new BigNumber(0);
+  let totalPoolPoints = 0n;
   bondedPools.forEach((b: BondedPool) => {
-    totalPoolPoints = totalPoolPoints.plus(rmCommas(b.points));
+    totalPoolPoints = totalPoolPoints + BigInt(rmCommas(b.points));
   });
-  const totalPoolPointsUnit = new BigNumber(
-    planckToUnit(totalPoolPoints.toString(), units)
-  )
-    .decimalPlaces(0)
-    .toFormat();
+  const totalPoolPointsUnit = formatNumber(
+    planckToUnit(totalPoolPoints, units),
+    0,
+    true
+  );
 
   return (
     <>
@@ -63,7 +67,11 @@ export const Preloader = ({
             <div className="labels">
               <h3>
                 {t('pools.joinPoolHeading', {
-                  totalMembers: new BigNumber(counterForPoolMembers).toFormat(),
+                  totalMembers: formatNumber(
+                    counterForPoolMembers.toString(),
+                    'auto',
+                    true
+                  ),
                   totalPoolPoints: totalPoolPointsUnit,
                   unit,
                   network: capitalizeFirstLetter(network),
