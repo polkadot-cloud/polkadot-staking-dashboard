@@ -3,8 +3,7 @@
 
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ellipsisFn, unitToPlanck } from '@w3ux/utils';
-import BigNumber from 'bignumber.js';
+import { ellipsisFn, formatNumber, unitToPlanck } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import { useSetup } from 'contexts/Setup';
 import { Warning } from 'library/Form/Warning';
@@ -57,13 +56,10 @@ export const Summary = ({ section }: SetupStepProps) => {
           }
         : payee.destination;
 
-    const bondToSubmit = new BigNumber(
-      unitToPlanck(bond || '0', units).toString()
-    );
-    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
+    const bondToSubmit = unitToPlanck(bond || '0', units).toString();
 
     const txs = [
-      api.tx.staking.bond(bondAsString, payeeToSubmit),
+      api.tx.staking.bond(bondToSubmit, payeeToSubmit),
       api.tx.staking.nominate(targetsToSubmit),
     ];
     return newBatchCall(txs, activeAccount);
@@ -123,7 +119,7 @@ export const Summary = ({ section }: SetupStepProps) => {
               {t('nominate.bondAmount')}:
             </div>
             <div>
-              {new BigNumber(bond || 0).toFormat()} {unit}
+              {formatNumber(bond || 0, 'auto', true)} {unit}
             </div>
           </section>
         </SummaryWrapper>
