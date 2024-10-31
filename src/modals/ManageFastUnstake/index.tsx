@@ -116,7 +116,7 @@ export const ManageFastUnstake = () => {
         `${t('noEnough')} ${planckToUnitBn(
           fastUnstakeDeposit,
           units
-        ).toString()} ${unit}`
+        )} ${unit}`
       );
     }
 

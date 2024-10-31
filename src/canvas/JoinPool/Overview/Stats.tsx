@@ -5,7 +5,6 @@ import { useNetwork } from 'contexts/Network';
 import { HeadingWrapper } from '../Wrappers';
 import { rmCommas } from '@w3ux/utils';
 import { useApi } from 'contexts/Api';
-import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import type { OverviewSectionProps } from '../types';
 import { useTranslation } from 'react-i18next';
@@ -37,7 +36,7 @@ export const Stats = ({
   );
 
   // Store the pool balance.
-  const [poolBalance, setPoolBalance] = useState<BigNumber | null>(null);
+  const [poolBalance, setPoolBalance] = useState<bigint | undefined>();
 
   // Fetches the balance of the bonded pool.
   const getPoolBalance = async () => {
@@ -53,7 +52,7 @@ export const Stats = ({
     ).toString();
 
     if (balance) {
-      setPoolBalance(new BigNumber(balance));
+      setPoolBalance(BigInt(balance));
     }
   };
 

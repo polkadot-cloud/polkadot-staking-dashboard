@@ -54,7 +54,9 @@ export const UpdateReserve = () => {
     // deduct ED from reserve amount.
     val = val.decimalPlaces(3);
     const actualReserve = BigNumber.max(val.minus(minReserve), 0).toNumber();
-    const actualReservePlanck = unitToPlanck(actualReserve.toString(), units);
+    const actualReservePlanck = new BigNumber(
+      unitToPlanck(actualReserve.toString(), units).toString()
+    );
     setSliderReserve(val.decimalPlaces(3).toNumber());
     setFeeReserveBalance(new BigNumber(actualReservePlanck.toString()));
   };

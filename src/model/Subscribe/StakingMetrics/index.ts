@@ -104,4 +104,12 @@ export class StakingMetrics implements Unsubscribable {
       this.#unsub();
     }
   };
+
+  // ------------------------------------------------------
+  // Utils.
+  // ------------------------------------------------------
+
+  // Convert string to BigNumber.
+  stringToBigNumber = (value: string): BigNumber =>
+    new BigNumber(rmCommas(value));
 }

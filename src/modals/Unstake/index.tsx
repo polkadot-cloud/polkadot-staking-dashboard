@@ -86,9 +86,8 @@ export const Unstake = () => {
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = unitToPlanck(
-      String(!bondValid ? '0' : bond.bond),
-      units
+    const bondToSubmit = new BigNumber(
+      unitToPlanck(String(!bondValid ? '0' : bond.bond), units).toString()
     );
 
     if (bondToSubmit == 0n) {

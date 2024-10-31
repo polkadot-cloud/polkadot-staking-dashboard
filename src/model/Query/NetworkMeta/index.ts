@@ -93,4 +93,12 @@ export class NetworkMeta {
       },
     };
   }
+
+  // ------------------------------------------------------
+  // Utils.
+  // ------------------------------------------------------
+
+  // Convert string to BigNumber.
+  stringToBigNumber = (value: string): BigNumber =>
+    new BigNumber(rmCommas(value));
 }

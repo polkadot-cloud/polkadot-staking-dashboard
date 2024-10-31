@@ -55,20 +55,20 @@ export const UnbondMember = ({
 
   // local bond value
   const [bond, setBond] = useState<{ bond: string }>({
-    bond: freeToUnbond.toString(),
+    bond: freeToUnbond,
   });
 
   // bond valid
   const [bondValid, setBondValid] = useState<boolean>(false);
 
-  // unbond all validation
-  const isValid = (() => freeToUnbond.isGreaterThan(0))();
+  // unbond validation
+  const isValid = (() => freeToUnbond !== '0')();
 
   // update bond value on task change
   useEffect(() => {
-    setBond({ bond: freeToUnbond.toString() });
+    setBond({ bond: freeToUnbond });
     setBondValid(isValid);
-  }, [freeToUnbond.toString(), isValid]);
+  }, [freeToUnbond, isValid]);
 
   // tx to submit
   const getTx = () => {

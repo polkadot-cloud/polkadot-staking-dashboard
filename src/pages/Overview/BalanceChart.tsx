@@ -54,6 +54,7 @@ export const BalanceChart = () => {
     free.plus(poolBondOpions.active).plus(unlockingPools),
     units
   );
+
   // Convert balance to fiat value.
   const freeFiat = totalBalance.multipliedBy(
     new BigNumber(prices.lastPrice).decimalPlaces(2)

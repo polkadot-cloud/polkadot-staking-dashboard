@@ -74,4 +74,12 @@ export class StakingConstants {
         : NetworkList[network].maxExposurePageSize,
     };
   }
+
+  // ------------------------------------------------------
+  // Utils.
+  // ------------------------------------------------------
+
+  // Convert string to BigNumber.
+  stringToBigNumber = (value: string): BigNumber =>
+    new BigNumber(rmCommas(value));
 }

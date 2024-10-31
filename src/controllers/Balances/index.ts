@@ -335,4 +335,8 @@ export class BalancesController {
     event: CustomEvent
   ): event is CustomEvent<ActiveBalance & { address: string }> =>
     event.detail && event.detail.address && event.detail.balances;
+
+  // Convert string to BigNumber.
+  static stringToBigNumber = (value: string): BigNumber =>
+    new BigNumber(rmCommas(value));
 }
