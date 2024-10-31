@@ -9,7 +9,6 @@ import {
   rmCommas,
   unitToPlanck,
 } from '@w3ux/utils';
-import BigNumber from 'bignumber.js';
 import { getUnixTime } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -49,7 +48,7 @@ export const UnbondMember = ({
 
   const { bondDuration } = consts;
   const { points } = member;
-  const freeToUnbond = new BigNumber(planckToUnit(rmCommas(points), units));
+  const freeToUnbond = planckToUnit(rmCommas(points), units);
 
   const bondDurationFormatted = timeleftAsString(
     t,
@@ -60,20 +59,20 @@ export const UnbondMember = ({
 
   // local bond value
   const [bond, setBond] = useState<{ bond: string }>({
-    bond: freeToUnbond.toString(),
+    bond: freeToUnbond,
   });
 
   // bond valid
   const [bondValid, setBondValid] = useState<boolean>(false);
 
-  // unbond all validation
-  const isValid = (() => freeToUnbond.isGreaterThan(0))();
+  // unbond validation
+  const isValid = (() => freeToUnbond !== '0')();
 
   // update bond value on task change
   useEffect(() => {
-    setBond({ bond: freeToUnbond.toString() });
+    setBond({ bond: freeToUnbond });
     setBondValid(isValid);
-  }, [freeToUnbond.toString(), isValid]);
+  }, [freeToUnbond, isValid]);
 
   // tx to submit
   const getTx = () => {
@@ -82,11 +81,12 @@ export const UnbondMember = ({
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = new BigNumber(
-      unitToPlanck(!bondValid ? '0' : bond.bond, units).toString()
-    );
-    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
-    tx = api.tx.nominationPools.unbond(who, bondAsString);
+    const bondToSubmit = unitToPlanck(
+      !bondValid ? '0' : bond.bond,
+      units
+    ).toString();
+
+    tx = api.tx.nominationPools.unbond(who, bondToSubmit);
     return tx;
   };
 
