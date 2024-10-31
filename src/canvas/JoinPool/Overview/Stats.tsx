@@ -35,7 +35,7 @@ export const Stats = ({
   );
 
   // Store the pool balance.
-  const [poolBalance, setPoolBalance] = useState<bigint | null>(null);
+  const [poolBalance, setPoolBalance] = useState<bigint | undefined>();
 
   // Fetches the balance of the bonded pool.
   const getPoolBalance = async () => {
