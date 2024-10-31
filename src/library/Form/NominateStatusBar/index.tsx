@@ -3,7 +3,6 @@
 
 import { faFlag } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { planckToUnit } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { useNetwork } from 'contexts/Network';
@@ -12,6 +11,7 @@ import { Wrapper } from './Wrapper';
 import { useApi } from 'contexts/Api';
 import { useSyncing } from 'hooks/useSyncing';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { planckToUnitBn } from 'Utils';
 
 export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
   const { t } = useTranslation('library');
@@ -23,8 +23,8 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
   const { unit, units } = useNetwork().networkData;
   const { syncing } = useSyncing(['initialization']);
 
-  const minNominatorBondUnit = planckToUnit(minNominatorBond, units);
-  const minimumActiveStakeUnit = planckToUnit(minimumActiveStake, units);
+  const minNominatorBondUnit = planckToUnitBn(minNominatorBond, units);
+  const minimumActiveStakeUnit = planckToUnitBn(minimumActiveStake, units);
   const gtMinNominatorBond = value.isGreaterThanOrEqualTo(minNominatorBondUnit);
   const gtMinActiveStake = value.isGreaterThanOrEqualTo(minimumActiveStakeUnit);
 

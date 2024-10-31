@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { rmCommas, stringToBigNumber } from '@w3ux/utils';
+import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { AnyApi, MaybeAddress } from 'types';
 import type {
@@ -17,6 +17,7 @@ import { SyncController } from 'controllers/Sync';
 import { defaultNominations } from './defaults';
 import type { VoidFn } from '@polkadot/api/types';
 import type { ApiPromise } from '@polkadot/api';
+import { stringToBn } from 'Utils';
 
 export class BalancesController {
   // ------------------------------------------------------
@@ -171,11 +172,11 @@ export class BalancesController {
 
     this.ledgers[address] = {
       stash: stash.toString(),
-      active: stringToBigNumber(active.toString()),
-      total: stringToBigNumber(total.toString()),
+      active: stringToBn(active.toString()),
+      total: stringToBn(total.toString()),
       unlocking: unlocking.toHuman().map(({ era, value }: UnlockChunkRaw) => ({
         era: Number(rmCommas(era)),
-        value: stringToBigNumber(value),
+        value: stringToBn(value),
       })),
     };
   };
@@ -189,16 +190,16 @@ export class BalancesController {
     this.balances[address] = {
       nonce: nonce.toNumber(),
       balance: {
-        free: stringToBigNumber(accountData.free.toString()),
-        reserved: stringToBigNumber(accountData.reserved.toString()),
-        frozen: stringToBigNumber(accountData.frozen.toString()),
+        free: stringToBn(accountData.free.toString()),
+        reserved: stringToBn(accountData.reserved.toString()),
+        frozen: stringToBn(accountData.frozen.toString()),
       },
       locks: locksResult
         .toHuman()
         .map((lock: { id: string; amount: string }) => ({
           ...lock,
           id: lock.id.trim(),
-          amount: stringToBigNumber(lock.amount),
+          amount: stringToBn(lock.amount),
         })),
     };
   };

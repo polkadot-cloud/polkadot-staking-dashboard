@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit, unitToPlanck } from '@w3ux/utils';
+import { unitToPlanck } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +14,7 @@ import { Spacer } from '../Wrappers';
 import type { BondFeedbackProps } from '../types';
 import { BondInput } from './BondInput';
 import { useApi } from 'contexts/Api';
+import { planckToUnitBn } from 'Utils';
 
 export const BondFeedback = ({
   bondFor,
@@ -69,7 +70,7 @@ export const BondFeedback = ({
   };
 
   // current bond value BigNumber
-  const bondBn = unitToPlanck(bond.bond, units);
+  const bondBn = new BigNumber(unitToPlanck(bond.bond, units).toString());
 
   // whether bond is disabled
   const [bondDisabled, setBondDisabled] = useState<boolean>(false);
@@ -91,7 +92,7 @@ export const BondFeedback = ({
         ? minCreateBond
         : minJoinBond
       : minNominatorBond;
-  const minBondUnit = planckToUnit(minBondBn, units);
+  const minBondUnit = planckToUnitBn(minBondBn, units);
 
   // handle error updates
   const handleErrors = () => {
@@ -166,7 +167,7 @@ export const BondFeedback = ({
   useEffect(() => {
     if (!disableTxFeeUpdate) {
       if (bondBn.isGreaterThan(freeToBond)) {
-        setBond({ bond: String(planckToUnit(freeToBond, units)) });
+        setBond({ bond: String(planckToUnitBn(freeToBond, units)) });
       }
     }
   }, [txFees]);
@@ -189,7 +190,7 @@ export const BondFeedback = ({
           syncing={syncing}
           disabled={bondDisabled}
           setters={setters}
-          freeToBond={planckToUnit(freeToBond, units)}
+          freeToBond={planckToUnitBn(freeToBond, units)}
           disableTxFeeUpdate={disableTxFeeUpdate}
         />
       </div>

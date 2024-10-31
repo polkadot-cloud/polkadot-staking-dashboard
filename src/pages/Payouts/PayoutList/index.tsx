@@ -3,7 +3,7 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ellipsisFn, planckToUnit } from '@w3ux/utils';
+import { ellipsisFn } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { formatDistance, fromUnixTime } from 'date-fns';
 import { motion } from 'framer-motion';
@@ -26,6 +26,7 @@ import { ItemWrapper } from '../Wrappers';
 import type { PayoutListProps } from '../types';
 import { PayoutListProvider, usePayoutList } from './context';
 import { payoutsPerPage } from 'library/List/defaults';
+import { planckToUnitBn } from 'Utils';
 
 export const PayoutListInner = ({
   allowMoreCols,
@@ -158,7 +159,7 @@ export const PayoutListInner = ({
                           <h4 className={labelClass}>
                             <>
                               {p.event_id === 'Slashed' ? '-' : '+'}
-                              {planckToUnit(
+                              {planckToUnitBn(
                                 new BigNumber(p.amount),
                                 units
                               ).toString()}{' '}

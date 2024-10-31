@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import { Number } from 'library/StatBoxList/Number';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
+import { planckToUnitBn } from 'Utils';
 
 export const MinimumNominatorBondStat = () => {
   const { t } = useTranslation('pages');
@@ -14,7 +14,7 @@ export const MinimumNominatorBondStat = () => {
 
   const params = {
     label: t('nominate.minimumToNominate'),
-    value: planckToUnit(minNominatorBond, units).toNumber(),
+    value: planckToUnitBn(minNominatorBond, units).toNumber(),
     decimals: 3,
     unit: `${unit}`,
     helpKey: 'Bonding',

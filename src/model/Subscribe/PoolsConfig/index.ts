@@ -2,11 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { VoidFn } from '@polkadot/api/types';
-import { rmCommas, stringToBigNumber } from '@w3ux/utils';
+import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { ApiController } from 'controllers/Api';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { NetworkName } from 'types';
+import { stringToBn } from 'Utils';
 
 export class PoolsConfig implements Unsubscribable {
   // ------------------------------------------------------
@@ -67,15 +68,15 @@ export class PoolsConfig implements Unsubscribable {
               : null;
 
             const poolsConfig = {
-              counterForPoolMembers: stringToBigNumber(result[0].toString()),
-              counterForBondedPools: stringToBigNumber(result[1].toString()),
-              counterForRewardPools: stringToBigNumber(result[2].toString()),
-              lastPoolId: stringToBigNumber(result[3].toString()),
+              counterForPoolMembers: stringToBn(result[0].toString()),
+              counterForBondedPools: stringToBn(result[1].toString()),
+              counterForRewardPools: stringToBn(result[2].toString()),
+              lastPoolId: stringToBn(result[3].toString()),
               maxPoolMembers,
               maxPoolMembersPerPool,
               maxPools,
-              minCreateBond: stringToBigNumber(result[7].toString()),
-              minJoinBond: stringToBigNumber(result[8].toString()),
+              minCreateBond: stringToBn(result[7].toString()),
+              minJoinBond: stringToBn(result[8].toString()),
               globalMaxCommission: Number(
                 String(result[9]?.toHuman() || '100%').slice(0, -1)
               ),

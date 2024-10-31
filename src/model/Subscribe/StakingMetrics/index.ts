@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { VoidFn } from '@polkadot/api/types';
-import { stringToBigNumber } from '@w3ux/utils';
 import type BigNumber from 'bignumber.js';
 import type { APIActiveEra } from 'contexts/Api/types';
 import { ApiController } from 'controllers/Api';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { NetworkName } from 'types';
+import { stringToBn } from 'Utils';
 
 export class StakingMetrics implements Unsubscribable {
   // ------------------------------------------------------
@@ -69,14 +69,14 @@ export class StakingMetrics implements Unsubscribable {
           ],
           (result) => {
             const stakingMetrics = {
-              totalNominators: stringToBigNumber(result[0].toString()),
-              totalValidators: stringToBigNumber(result[1].toString()),
-              maxValidatorsCount: stringToBigNumber(result[2].toString()),
-              validatorCount: stringToBigNumber(result[3].toString()),
-              lastReward: stringToBigNumber(result[4].toString()),
-              lastTotalStake: stringToBigNumber(result[5].toString()),
-              minNominatorBond: stringToBigNumber(result[6].toString()),
-              totalStaked: stringToBigNumber(result[7].toString()),
+              totalNominators: stringToBn(result[0].toString()),
+              totalValidators: stringToBn(result[1].toString()),
+              maxValidatorsCount: stringToBn(result[2].toString()),
+              validatorCount: stringToBn(result[3].toString()),
+              lastReward: stringToBn(result[4].toString()),
+              lastTotalStake: stringToBn(result[5].toString()),
+              minNominatorBond: stringToBn(result[6].toString()),
+              totalStaked: stringToBn(result[7].toString()),
             };
 
             document.dispatchEvent(

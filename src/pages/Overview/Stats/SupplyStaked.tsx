@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { Pie } from 'library/StatBoxList/Pie';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
+import { planckToUnitBn } from 'Utils';
 
 export const SupplyStakedStat = () => {
   const { t } = useTranslation('pages');
@@ -19,8 +19,8 @@ export const SupplyStakedStat = () => {
   const { totalIssuance } = networkMetrics;
 
   // total supply as percent.
-  const totalIssuanceUnit = planckToUnit(totalIssuance, units);
-  const lastTotalStakeUnit = planckToUnit(lastTotalStake, units);
+  const totalIssuanceUnit = planckToUnitBn(totalIssuance, units);
+  const lastTotalStakeUnit = planckToUnitBn(lastTotalStake, units);
   const supplyAsPercent =
     lastTotalStakeUnit.isZero() || totalIssuanceUnit.isZero()
       ? new BigNumber(0)

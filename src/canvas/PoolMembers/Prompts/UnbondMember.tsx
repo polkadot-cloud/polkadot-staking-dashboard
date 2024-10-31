@@ -2,13 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Polkicon } from '@w3ux/react-polkicon';
-import {
-  ellipsisFn,
-  planckToUnit,
-  remToUnit,
-  rmCommas,
-  unitToPlanck,
-} from '@w3ux/utils';
+import { ellipsisFn, remToUnit, rmCommas, unitToPlanck } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { getUnixTime } from 'date-fns';
 import { useEffect, useState } from 'react';
@@ -29,6 +23,7 @@ import { Title } from 'library/Prompt/Title';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
+import { planckToUnitBn } from 'Utils';
 
 export const UnbondMember = ({
   who,
@@ -49,7 +44,7 @@ export const UnbondMember = ({
 
   const { bondDuration } = consts;
   const { points } = member;
-  const freeToUnbond = planckToUnit(new BigNumber(rmCommas(points)), units);
+  const freeToUnbond = planckToUnitBn(new BigNumber(rmCommas(points)), units);
 
   const bondDurationFormatted = timeleftAsString(
     t,
@@ -82,9 +77,11 @@ export const UnbondMember = ({
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = unitToPlanck(!bondValid ? '0' : bond.bond, units);
-    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
-    tx = api.tx.nominationPools.unbond(who, bondAsString);
+    const bondToSubmit = unitToPlanck(
+      !bondValid ? '0' : bond.bond,
+      units
+    ).toString();
+    tx = api.tx.nominationPools.unbond(who, bondToSubmit);
     return tx;
   };
 

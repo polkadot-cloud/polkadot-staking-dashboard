@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit, unitToPlanck } from '@w3ux/utils';
+import { unitToPlanck } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { getUnixTime } from 'date-fns';
 import { useEffect, useState } from 'react';
@@ -26,6 +26,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
+import { planckToUnitBn } from 'Utils';
 
 export const Unbond = () => {
   const { t } = useTranslation('modals');
@@ -63,7 +64,7 @@ export const Unbond = () => {
     true
   );
 
-  const pendingRewardsUnit = planckToUnit(pendingPoolRewards, units);
+  const pendingRewardsUnit = planckToUnitBn(pendingPoolRewards, units);
 
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
@@ -74,10 +75,10 @@ export const Unbond = () => {
     : allTransferOptions.nominate;
 
   // convert BigNumber values to number
-  const freeToUnbond = planckToUnit(activeBn, units);
-  const minJoinBond = planckToUnit(minJoinBondBn, units);
-  const minCreateBond = planckToUnit(minCreateBondBn, units);
-  const minNominatorBond = planckToUnit(minNominatorBondBn, units);
+  const freeToUnbond = planckToUnitBn(activeBn, units);
+  const minJoinBond = planckToUnitBn(minJoinBondBn, units);
+  const minCreateBond = planckToUnitBn(minCreateBondBn, units);
+  const minNominatorBond = planckToUnitBn(minNominatorBondBn, units);
 
   // local bond value
   const [bond, setBond] = useState<{ bond: string }>({
@@ -109,14 +110,16 @@ export const Unbond = () => {
       return tx;
     }
 
-    const bondToSubmit = unitToPlanck(!bondValid ? '0' : bond.bond, units);
-    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
+    const bondToSubmit = unitToPlanck(
+      !bondValid ? '0' : bond.bond,
+      units
+    ).toString();
 
     // determine tx
     if (isPooling) {
-      tx = api.tx.nominationPools.unbond(activeAccount, bondAsString);
+      tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);
     } else if (isStaking) {
-      tx = api.tx.staking.unbond(bondAsString);
+      tx = api.tx.staking.unbond(bondToSubmit);
     }
     return tx;
   };
@@ -162,7 +165,7 @@ export const Unbond = () => {
   if (poolActiveBelowMin) {
     warnings.push(
       t('unbondErrorBelowMinimum', {
-        bond: planckToUnit(poolToMinBn, units),
+        bond: planckToUnitBn(poolToMinBn, units),
         unit,
       })
     );

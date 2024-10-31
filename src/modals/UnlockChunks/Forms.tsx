@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { planckToUnit, rmCommas } from '@w3ux/utils';
+import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { ForwardedRef } from 'react';
 import { forwardRef, useEffect, useState } from 'react';
@@ -27,6 +27,7 @@ import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
+import { planckToUnitBn } from 'Utils';
 
 export const Forms = forwardRef(
   (
@@ -101,7 +102,7 @@ export const Forms = forwardRef(
         // if no more bonded funds from pool, remove from poolMembers list
         if (bondFor === 'pool') {
           const points = membership?.points ? rmCommas(membership.points) : 0;
-          const bonded = planckToUnit(new BigNumber(points), units);
+          const bonded = planckToUnitBn(new BigNumber(points), units);
           if (bonded.isZero()) {
             removePoolMember(activeAccount);
           }
@@ -142,7 +143,7 @@ export const Forms = forwardRef(
               {task === 'rebond' && (
                 <>
                   <ActionItem
-                    text={`${t('rebond')} ${planckToUnit(
+                    text={`${t('rebond')} ${planckToUnitBn(
                       value,
                       units
                     )} ${unit}`}
@@ -153,7 +154,7 @@ export const Forms = forwardRef(
               {task === 'withdraw' && (
                 <>
                   <ActionItem
-                    text={`${t('withdraw')} ${planckToUnit(
+                    text={`${t('withdraw')} ${planckToUnitBn(
                       value,
                       units
                     )} ${unit}`}

@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit, rmCommas } from '@w3ux/utils';
+import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useActivePool } from 'contexts/Pools/ActivePool';
@@ -13,6 +13,7 @@ import { Announcements } from './Announcements';
 import type { PoolStatLabel } from 'library/Announcements/types';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { Wrapper } from 'library/Announcements/Wrappers';
+import { planckToUnitBn } from 'Utils';
 
 export const PoolStats = () => {
   const { t } = useTranslation('pages');
@@ -28,7 +29,7 @@ export const PoolStats = () => {
   const { state, points, memberCounter } = activePool?.bondedPool || {};
   const currentCommission = getCurrentCommission(poolId);
 
-  const bonded = planckToUnit(
+  const bonded = planckToUnitBn(
     new BigNumber(points ? rmCommas(points) : 0),
     units
   )

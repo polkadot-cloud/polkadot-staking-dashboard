@@ -179,7 +179,7 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
 
     const p = 33;
     let percentage = 0;
-    if (bond.isGreaterThan(0)) {
+    if (bond > 0) {
       percentage += p;
     }
     if (progress.nominations.length) {
@@ -205,7 +205,7 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
     if (progress.metadata !== '') {
       percentage += p;
     }
-    if (bond.isGreaterThan(0)) {
+    if (bond > 0) {
       percentage += p;
     }
     if (progress.nominations.length) {

@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit, rmCommas } from '@w3ux/utils';
+import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type {
   ActiveAccountStaker,
@@ -11,6 +11,7 @@ import type {
 import type { AnyJson } from '@w3ux/types';
 import type { LocalValidatorExposure } from 'contexts/Payouts/types';
 import type { ProcessExposuresArgs, ProcessEraForExposureArgs } from './types';
+import { planckToUnitBn } from 'Utils';
 
 // eslint-disable-next-line no-restricted-globals, @typescript-eslint/no-explicit-any
 export const ctx: Worker = self as any;
@@ -176,7 +177,7 @@ const processExposures = (data: ProcessExposuresArgs) => {
       if (own !== undefined) {
         activeAccountOwnStake.push({
           address,
-          value: planckToUnit(
+          value: planckToUnitBn(
             new BigNumber(rmCommas(own.value)),
             units
           ).toString(),
