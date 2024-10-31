@@ -32,7 +32,7 @@
     "@w3ux/react-connect-kit": "^1.8.0",
     "@w3ux/react-odometer": "^1.1.0",
     "@w3ux/react-polkicon": "^1.3.0",
-    "@w3ux/utils": "^1.0.0-alpha.2",
+    "@w3ux/utils": "^1.0.0",
     "@w3ux/validator-assets": "^0.2.0",
     "@zondax/ledger-substrate": "^1.0.0",
     "bignumber.js": "^9.1.2",
