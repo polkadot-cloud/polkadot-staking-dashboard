@@ -87,7 +87,7 @@ export const ClaimCommission = ({
           text={`${t('claim')} ${planckToUnitBn(
             pendingCommission,
             units
-          )} ${unit} `}
+          ).toString()} ${unit} `}
         />
         <ModalNotes>
           <p>{t('sentToCommissionPayee')}</p>

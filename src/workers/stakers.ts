@@ -176,9 +176,7 @@ const processExposures = (data: ProcessExposuresArgs) => {
       if (own !== undefined) {
         activeAccountOwnStake.push({
           address,
-          value: new BigNumber(
-            planckToUnit(rmCommas(own.value), units)
-          ).toString(),
+          value: planckToUnit(rmCommas(own.value), units),
         });
       }
     }
