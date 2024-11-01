@@ -73,7 +73,7 @@
     "@types/react-helmet": "^6.1.11",
     "@types/react-scroll": "^1.8.10",
     "@typescript-eslint/eslint-plugin": "^7.12.0",
-    "@typescript-eslint/parser": "^7.12.0",
+    "@typescript-eslint/parser": "^8.12.2",
     "@vitejs/plugin-react-swc": "^3.7.0",
     "@w3ux/types": "^0.2.0",
     "eslint": "8.57.0",
