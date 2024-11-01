@@ -8726,7 +8726,7 @@ __metadata:
     styled-components: "npm:^6.1.13"
     typescript: "npm:^5.4.3"
     usehooks-ts: "npm:^3.0.2"
-    viem: "npm:^2.21.35"
+    viem: "npm:^2.21.38"
     vite: "npm:^5.2.12"
     vite-bundle-visualizer: "npm:^1.2.1"
     vite-plugin-checker: "npm:^0.7.0"
@@ -10770,7 +10770,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:^2.1.1, viem@npm:^2.21.35":
+"viem@npm:^2.1.1":
   version: 2.21.35
   resolution: "viem@npm:2.21.35"
   dependencies:
@@ -10789,6 +10789,28 @@ __metadata:
     typescript:
       optional: true
   checksum: 10c0/d35c0004aa46099c45fdde142f074da124246cf9b58304246bf29c4ddd9218a1114ebc9eae08e7907238daabee6bb870fbf72219d5655c9980cd377c8e66941d
+  languageName: node
+  linkType: hard
+
+"viem@npm:^2.21.38":
+  version: 2.21.38
+  resolution: "viem@npm:2.21.38"
+  dependencies:
+    "@adraffy/ens-normalize": "npm:1.11.0"
+    "@noble/curves": "npm:1.6.0"
+    "@noble/hashes": "npm:1.5.0"
+    "@scure/bip32": "npm:1.5.0"
+    "@scure/bip39": "npm:1.4.0"
+    abitype: "npm:1.0.6"
+    isows: "npm:1.0.6"
+    webauthn-p256: "npm:0.0.10"
+    ws: "npm:8.18.0"
+  peerDependencies:
+    typescript: ">=5.0.4"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/eca1ba239b20b97f06c77d095b93e72bf11331e80d7720325aff07873c228babed3a06dbd7a66a6052cabb8304e9df025dfde75206e2beb763ca5d9a74d43c6f
   languageName: node
   linkType: hard
 
