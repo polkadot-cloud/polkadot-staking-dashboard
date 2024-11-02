@@ -80,7 +80,7 @@ export class StakingMetrics implements Unsubscribable {
             };
 
             document.dispatchEvent(
-              new CustomEvent(`new-staking-metrics`, {
+              new CustomEvent('new-staking-metrics', {
                 detail: { stakingMetrics },
               })
             );
