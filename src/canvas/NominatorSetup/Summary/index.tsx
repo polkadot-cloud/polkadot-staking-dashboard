@@ -58,11 +58,10 @@ export const Summary = ({ section }: SetupStepProps) => {
           }
         : payee.destination;
 
-    const bondToSubmit = unitToPlanck(bond || '0', units);
-    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
+    const bondToSubmit = unitToPlanck(bond || '0', units).toString();
 
     const txs = [
-      api.tx.staking.bond(bondAsString, payeeToSubmit),
+      api.tx.staking.bond(bondToSubmit, payeeToSubmit),
       api.tx.staking.nominate(targetsToSubmit),
     ];
     return newBatchCall(txs, activeAccount);

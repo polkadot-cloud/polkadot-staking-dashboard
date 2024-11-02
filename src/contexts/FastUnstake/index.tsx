@@ -1,12 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  greaterThanZero,
-  isNotZero,
-  rmCommas,
-  setStateWithRef,
-} from '@w3ux/utils';
+import { rmCommas, setStateWithRef } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
@@ -111,7 +106,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
     if (
       isReady &&
       activeAccount &&
-      isNotZero(activeEra.index) &&
+      !activeEra.index.isZero() &&
       fastUnstakeErasToCheckPerBlock > 0 &&
       isBonding()
     ) {
@@ -238,7 +233,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
     // ensure current era has synced
     if (
       era.isLessThan(0) ||
-      !greaterThanZero(bondDuration) ||
+      !bondDuration.isGreaterThan(0) ||
       !api ||
       !a ||
       checkingRef.current ||

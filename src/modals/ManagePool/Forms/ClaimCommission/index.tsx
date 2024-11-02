@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { greaterThanZero, planckToUnit, rmCommas } from '@w3ux/utils';
+import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
@@ -21,6 +21,7 @@ import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
 import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
+import { planckToUnitBn } from 'library/Utils';
 
 export const ClaimCommission = ({
   setSection,
@@ -46,7 +47,7 @@ export const ClaimCommission = ({
   const [valid, setValid] = useState<boolean>(false);
 
   useEffect(() => {
-    setValid(isOwner() && greaterThanZero(pendingCommission));
+    setValid(isOwner() && pendingCommission.isGreaterThan(0));
   }, [activePool, pendingCommission]);
 
   // tx to submit
@@ -83,10 +84,10 @@ export const ClaimCommission = ({
           </ModalWarnings>
         ) : null}
         <ActionItem
-          text={`${t('claim')} ${planckToUnit(
+          text={`${t('claim')} ${planckToUnitBn(
             pendingCommission,
             units
-          )} ${unit} `}
+          ).toString()} ${unit} `}
         />
         <ModalNotes>
           <p>{t('sentToCommissionPayee')}</p>

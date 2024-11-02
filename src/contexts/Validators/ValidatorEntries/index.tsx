@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { greaterThanZero, rmCommas, shuffle } from '@w3ux/utils';
+import { rmCommas, shuffle } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
@@ -573,7 +573,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch parachain session validators when `earliestStoredSession` ready.
   useEffectIgnoreInitial(() => {
-    if (isReady && greaterThanZero(earliestStoredSession)) {
+    if (isReady && earliestStoredSession.isGreaterThan(0)) {
       subscribeParachainValidators();
     }
   }, [isReady, earliestStoredSession]);

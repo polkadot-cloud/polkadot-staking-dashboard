@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCircleDown, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { planckToUnit } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -13,6 +12,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useSyncing } from 'hooks/useSyncing';
+import { planckToUnitBn } from 'library/Utils';
 
 export const RewardsStatus = ({ dimmed }: { dimmed: boolean }) => {
   const { t } = useTranslation('pages');
@@ -30,7 +30,7 @@ export const RewardsStatus = ({ dimmed }: { dimmed: boolean }) => {
   const minUnclaimedDisplay = new BigNumber(1_000_000);
 
   const labelRewards = pendingPoolRewards.isGreaterThan(minUnclaimedDisplay)
-    ? planckToUnit(pendingPoolRewards, units).toString()
+    ? planckToUnitBn(pendingPoolRewards, units).toString()
     : '0';
 
   // Display Reward buttons if unclaimed rewards is a non-zero value.

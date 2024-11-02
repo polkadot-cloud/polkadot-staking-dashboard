@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { greaterThanZero } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useStaking } from 'contexts/Staking';
@@ -17,7 +16,7 @@ export const ActiveValidatorsStat = () => {
 
   // active validators as percent. Avoiding dividing by zero.
   let activeValidatorsAsPercent = new BigNumber(0);
-  if (greaterThanZero(validatorCount)) {
+  if (validatorCount.isGreaterThan(0)) {
     activeValidatorsAsPercent = new BigNumber(activeValidators).dividedBy(
       validatorCount.multipliedBy(0.01)
     );

@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit, unitToPlanck } from '@w3ux/utils';
+import { unitToPlanck } from '@w3ux/utils';
 import type BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
@@ -24,6 +24,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import type { OverviewSectionProps } from '../types';
 import { defaultClaimPermission } from 'controllers/ActivePools/defaults';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn } from 'library/Utils';
 
 export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   const { t } = useTranslation();
@@ -54,7 +55,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
 
   // Bond amount to join pool with.
   const [bond, setBond] = useState<{ bond: string }>({
-    bond: planckToUnit(totalPossibleBond, units).toString(),
+    bond: planckToUnitBn(totalPossibleBond, units).toString(),
   });
 
   // Whether the bond amount is valid.
@@ -78,9 +79,11 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
       return tx;
     }
 
-    const bondToSubmit = unitToPlanck(!bondValid ? '0' : bond.bond, units);
-    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
-    const txs = [api.tx.nominationPools.join(bondAsString, bondedPool.id)];
+    const bondToSubmit = unitToPlanck(
+      !bondValid ? '0' : bond.bond,
+      units
+    ).toString();
+    const txs = [api.tx.nominationPools.join(bondToSubmit, bondedPool.id)];
 
     // If claim permission is not the default, add it to tx.
     if (claimPermission !== defaultClaimPermission) {

@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import { Number } from 'library/StatBoxList/Number';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
+import { planckToUnitBn } from 'library/Utils';
 
 export const MinJoinBondStat = () => {
   const { t } = useTranslation('pages');
@@ -16,7 +16,7 @@ export const MinJoinBondStat = () => {
 
   const params = {
     label: t('pools.minimumToJoinPool'),
-    value: planckToUnit(minJoinBond, units).toNumber(),
+    value: planckToUnitBn(minJoinBond, units).toNumber(),
     decimals: 3,
     unit: ` ${unit}`,
     helpKey: 'Minimum To Join Pool',

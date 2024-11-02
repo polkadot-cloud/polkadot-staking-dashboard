@@ -1,13 +1,14 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit, rmCommas } from '@w3ux/utils';
+import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useNetwork } from 'contexts/Network';
 import type { Pool } from 'library/Pool/types';
 import { TooltipTrigger } from '../Wrappers';
 import { useTranslation } from 'react-i18next';
 import { useTooltip } from 'contexts/Tooltip';
+import { planckToUnitBn } from 'library/Utils';
 
 export const PoolBonded = ({ pool }: { pool: Pool }) => {
   const { t } = useTranslation('library');
@@ -25,7 +26,7 @@ export const PoolBonded = ({ pool }: { pool: Pool }) => {
   const TokenIcon = token;
 
   // Format total bonded pool amount.
-  const bonded = planckToUnit(new BigNumber(rmCommas(points)), units);
+  const bonded = planckToUnitBn(new BigNumber(rmCommas(points)), units);
 
   return (
     <div className="label pool">

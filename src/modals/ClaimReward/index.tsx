@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { greaterThanZero, planckToUnit } from '@w3ux/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -18,6 +17,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
+import { planckToUnit } from '@w3ux/utils';
 
 export const ClaimReward = () => {
   const { t } = useTranslation('modals');
@@ -79,7 +79,7 @@ export const ClaimReward = () => {
     submitExtrinsic.proxySupported
   );
 
-  if (!greaterThanZero(pendingPoolRewards)) {
+  if (!pendingPoolRewards.isGreaterThan(0)) {
     warnings.push(`${t('noRewards')}`);
   }
 
@@ -101,7 +101,7 @@ export const ClaimReward = () => {
         ) : null}
         <ActionItem
           text={`${t('claim')} ${`${planckToUnit(
-            pendingPoolRewards,
+            pendingPoolRewards.toString(),
             units
           )} ${unit}`}`}
         />
