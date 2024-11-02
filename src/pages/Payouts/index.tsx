@@ -26,6 +26,7 @@ import { DefaultLocale, locales } from 'locale';
 import { useSyncing } from 'hooks/useSyncing';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { PageTitle } from 'kits/Structure/PageTitle';
+import { useUi } from 'contexts/UI';
 
 export const Payouts = ({ page: { key } }: PageProps) => {
   const { i18n, t } = useTranslation();
@@ -33,6 +34,7 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   const { plugins } = usePlugins();
   const { inSetup } = useStaking();
   const { syncing } = useSyncing();
+  const { containerRefs } = useUi();
   const { getData, injectBlockTimestamp } = useSubscanData([
     'payouts',
     'unclaimedPayouts',
@@ -43,7 +45,7 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   const [payoutsList, setPayoutLists] = useState<AnySubscan>([]);
 
   const ref = useRef<HTMLDivElement>(null);
-  const size = useSize(ref?.current || undefined);
+  const size = useSize(ref, containerRefs?.mainInterface);
   const { width, height, minHeight } = formatSize(size, 280);
 
   // Get data safely from subscan hook.
