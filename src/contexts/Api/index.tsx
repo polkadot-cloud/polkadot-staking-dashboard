@@ -181,11 +181,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     setConsts(newConsts);
     setStateWithRef(newNetworkMetrics, setNetworkMetrics, networkMetricsRef);
     const { index, start } = newActiveEra;
-    setStateWithRef(
-      { index: new BigNumber(index), start: new BigNumber(start) },
-      setActiveEra,
-      activeEraRef
-    );
+    setStateWithRef({ index, start }, setActiveEra, activeEraRef);
     setStateWithRef(newPoolsConfig, setPoolsConfig, poolsConfigRef);
     setStateWithRef(newStakingMetrics, setStakingMetrics, stakingMetricsRef);
 
@@ -336,7 +332,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     if (isCustomEvent(e)) {
       let { activeEra: newActiveEra } = e.detail;
       const { index, start } = newActiveEra;
-
+      if (index === 0 || !start) {
+        return;
+      }
       newActiveEra = {
         index: new BigNumber(index),
         start: new BigNumber(start),

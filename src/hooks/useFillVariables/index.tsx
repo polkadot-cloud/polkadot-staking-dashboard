@@ -1,11 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { capitalizeFirstLetter, planckToUnit } from '@w3ux/utils';
+import { capitalizeFirstLetter } from '@w3ux/utils';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import type { AnyJson } from '@w3ux/types';
 import { useErasPerDay } from '../useErasPerDay';
+import { planckToUnitBn } from 'library/Utils';
 
 export const useFillVariables = () => {
   const {
@@ -29,25 +30,25 @@ export const useFillVariables = () => {
           ['{MAX_NOMINATIONS}', maxNominations.toString()],
           [
             '{MIN_ACTIVE_STAKE}',
-            planckToUnit(minimumActiveStake, networkData.units)
+            planckToUnitBn(minimumActiveStake, networkData.units)
               .decimalPlaces(3)
               .toFormat(),
           ],
           [
             '{MIN_POOL_JOIN_BOND}',
-            planckToUnit(minJoinBond, networkData.units)
+            planckToUnitBn(minJoinBond, networkData.units)
               .decimalPlaces(3)
               .toFormat(),
           ],
           [
             '{MIN_POOL_CREATE_BOND}',
-            planckToUnit(minCreateBond, networkData.units)
+            planckToUnitBn(minCreateBond, networkData.units)
               .decimalPlaces(3)
               .toFormat(),
           ],
           [
             '{EXISTENTIAL_DEPOSIT}',
-            planckToUnit(existentialDeposit, networkData.units).toFormat(),
+            planckToUnitBn(existentialDeposit, networkData.units).toFormat(),
           ],
         ];
 

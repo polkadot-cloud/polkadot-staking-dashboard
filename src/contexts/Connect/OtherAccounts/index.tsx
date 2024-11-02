@@ -20,7 +20,7 @@ import type { ImportedAccount } from '@w3ux/react-connect-kit/types';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { getLocalVaultAccounts } from '@w3ux/react-connect-kit/VaultAccountsProvider/utils';
 import { getLocalLedgerAccounts } from '@w3ux/react-connect-kit/LedgerAccountsProvider/utils';
-
+import { getLocalWcAccounts } from '@w3ux/react-connect-kit/WCAccountsProvider/utils';
 export const OtherAccountsContext =
   createContext<OtherAccountsContextInterface>(defaultOtherAccountsContext);
 
@@ -35,10 +35,13 @@ export const OtherAccountsProvider = ({
     network,
     networkData: { ss58 },
   } = useNetwork();
+  const { extensionAccountsSynced, getExtensionAccounts } =
+    useExtensionAccounts();
   const { checkingInjectedWeb3 } = useExtensions();
   const { addExternalAccount } = useExternalAccounts();
-  const { extensionAccountsSynced } = useExtensionAccounts();
   const { activeAccount, setActiveAccount } = useActiveAccounts();
+
+  const extensionAccounts = getExtensionAccounts(ss58);
 
   // Store whether other (non-extension) accounts have been initialised.
   const [otherAccountsSynced, setOtherAccountsSynced] =
@@ -66,9 +69,12 @@ export const OtherAccountsProvider = ({
         setOtherAccounts,
         otherAccountsRef
       );
-      // If the currently active account is being forgotten, disconnect.
+      // If the currently active account is being forgotten, and it is not present in extension
+      // accounts, disconnect.
       if (
-        forget.find(({ address }) => address === activeAccount) !== undefined
+        forget.find(({ address }) => address === activeAccount) !== undefined &&
+        extensionAccounts.find(({ address }) => address === activeAccount) ===
+          undefined
       ) {
         setActiveAccount(null);
       }
@@ -90,6 +96,23 @@ export const OtherAccountsProvider = ({
         localAccounts.find(
           ({ address }) => address === getActiveAccountLocal(network, ss58)
         ) ?? null;
+
+      // remove accounts that are already imported via web extension.
+      const alreadyInExtension = localAccounts.filter(
+        (l) =>
+          extensionAccounts.find(({ address }) => address === l.address) !==
+          undefined
+      );
+
+      if (alreadyInExtension.length) {
+        forgetOtherAccounts(alreadyInExtension);
+      }
+
+      localAccounts = localAccounts.filter(
+        (l) =>
+          extensionAccounts.find(({ address }) => address === l.address) ===
+          undefined
+      );
 
       // remove already-imported accounts.
       localAccounts = localAccounts.filter(
@@ -126,9 +149,9 @@ export const OtherAccountsProvider = ({
   };
 
   // Add other accounts to context state.
-  const addOtherAccounts = (account: ImportedAccount[]) => {
+  const addOtherAccounts = (accounts: ImportedAccount[]) => {
     setStateWithRef(
-      [...otherAccountsRef.current].concat(account),
+      [...otherAccountsRef.current].concat(accounts),
       setOtherAccounts,
       otherAccountsRef
     );
@@ -188,6 +211,7 @@ export const OtherAccountsProvider = ({
       // Fetch accounts from supported hardware wallets.
       importLocalOtherAccounts(getLocalVaultAccounts);
       importLocalOtherAccounts(getLocalLedgerAccounts);
+      importLocalOtherAccounts(getLocalWcAccounts);
 
       // Mark hardware wallets as initialised.
       setOtherAccountsSynced(true);

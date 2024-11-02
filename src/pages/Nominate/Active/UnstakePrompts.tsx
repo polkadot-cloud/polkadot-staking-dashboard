@@ -3,7 +3,6 @@
 
 import { faBolt, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { PageRow } from 'kits/Structure/PageRow';
-import { isNotZero } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
@@ -35,7 +34,7 @@ export const UnstakePrompts = () => {
     isUnstaking &&
     active.isZero() &&
     totalUnlocking.isZero() &&
-    isNotZero(totalUnlocked);
+    !totalUnlocked.isZero();
 
   return (
     (isUnstaking || isFastUnstaking) &&

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Polkicon } from '@w3ux/react-polkicon';
-import { ellipsisFn, planckToUnit } from '@w3ux/utils';
+import { ellipsisFn } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,7 @@ import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { EraPoints as EraPointsGraph } from 'library/Graphs/EraPoints';
 import { formatSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
-import { useSize } from 'hooks/useSize';
+import { useSize } from '@w3ux/hooks';
 import { Title } from 'library/Modal/Title';
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { StatusLabel } from 'library/StatusLabel';
@@ -25,6 +25,8 @@ import { usePlugins } from 'contexts/Plugins';
 import { useApi } from 'contexts/Api';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { planckToUnitBn } from 'library/Utils';
+import { useUi } from 'contexts/UI';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');
@@ -33,6 +35,7 @@ export const ValidatorMetrics = () => {
   } = useNetwork();
   const { activeEra } = useApi();
   const { plugins } = usePlugins();
+  const { containerRefs } = useUi();
   const { options } = useOverlay().modal.config;
   const { address, identity } = options;
   const {
@@ -58,7 +61,9 @@ export const ValidatorMetrics = () => {
   const [list, setList] = useState<AnyJson[]>([]);
 
   const ref = useRef<HTMLDivElement>(null);
-  const size = useSize(ref?.current || undefined);
+  const size = useSize(ref, {
+    outerElement: containerRefs?.mainInterface,
+  });
   const { width, height, minHeight } = formatSize(size, 300);
 
   const handleEraPoints = async () => {
@@ -80,12 +85,12 @@ export const ValidatorMetrics = () => {
   const stats = [
     {
       label: t('selfStake'),
-      value: `${planckToUnit(validatorOwnStake, units).toFormat()} ${unit}`,
+      value: `${planckToUnitBn(validatorOwnStake, units).toFormat()} ${unit}`,
       help: 'Self Stake',
     },
     {
       label: t('nominatorStake'),
-      value: `${planckToUnit(otherStake, units).toFormat()} ${unit}`,
+      value: `${planckToUnitBn(otherStake, units).toFormat()} ${unit}`,
       help: 'Nominator Stake',
     },
   ];

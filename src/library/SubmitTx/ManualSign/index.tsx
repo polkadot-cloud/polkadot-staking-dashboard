@@ -8,6 +8,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { SubmitProps } from '../types';
 import { Ledger } from './Ledger';
 import { Vault } from './Vault';
+import { WalletConnect } from './WalletConnect';
 
 export const ManualSign = (props: SubmitProps & { buttons?: ReactNode[] }) => {
   const { getAccount } = useImportedAccounts();
@@ -29,6 +30,8 @@ export const ManualSign = (props: SubmitProps & { buttons?: ReactNode[] }) => {
   switch (source) {
     case 'vault':
       return <Vault {...props} />;
+    case 'wallet_connect':
+      return <WalletConnect {...props} />;
     default:
       return <Ledger {...props} />;
   }

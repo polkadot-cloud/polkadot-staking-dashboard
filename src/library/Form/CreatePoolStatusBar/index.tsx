@@ -3,13 +3,13 @@
 
 import { faFlag } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { planckToUnit } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import { useNetwork } from 'contexts/Network';
 import type { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 import { useApi } from 'contexts/Api';
 import { useSyncing } from 'hooks/useSyncing';
+import { planckToUnitBn } from 'library/Utils';
 
 export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
   const { t } = useTranslation('library');
@@ -17,7 +17,7 @@ export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
   const { unit, units } = useNetwork().networkData;
   const { syncing } = useSyncing(['initialization']);
 
-  const minCreateBondUnit = planckToUnit(minCreateBond, units);
+  const minCreateBondUnit = planckToUnitBn(minCreateBond, units);
   const sectionClassName =
     value.isGreaterThanOrEqualTo(minCreateBondUnit) && !syncing ? 'invert' : '';
 

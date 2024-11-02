@@ -10,7 +10,12 @@ export const ActiveAccounsWrapper = styled.div`
 
   > div {
     border-bottom: 1px solid var(--border-primary-color);
-    padding: 0.65rem 0;
+    padding: 0.5rem 0;
+
+    &:first-child {
+      border: 1px solid;
+      padding-top: 0;
+    }
 
     &:last-child {
       border: none;

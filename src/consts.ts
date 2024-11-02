@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { stringToU8a } from '@w3ux/utils/util';
+import { stringToU8a } from '@polkadot/util';
 
 /*
  * Global Constants
  */
 export const DappName = 'Polkadot Staking Dashboard';
-export const ManualSigners = ['ledger', 'vault'];
+export const ManualSigners = ['ledger', 'vault', 'wallet_connect'];
 
 /*
  * Byte Helpers

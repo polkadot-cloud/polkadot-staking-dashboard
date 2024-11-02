@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { fromUnixTime } from 'date-fns';
 import { useEffect } from 'react';
@@ -16,6 +15,7 @@ import { ChunkWrapper } from './Wrappers';
 import type { ChunkProps } from './types';
 import { useApi } from 'contexts/Api';
 import { ButtonSubmit } from 'kits/Buttons/ButtonSubmit';
+import { planckToUnitBn } from 'library/Utils';
 
 export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
   const { t } = useTranslation('modals');
@@ -48,7 +48,7 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
     <ChunkWrapper>
       <div>
         <section>
-          <h2>{`${planckToUnit(new BigNumber(value), units)} ${unit}`}</h2>
+          <h2>{`${planckToUnitBn(new BigNumber(value), units)} ${unit}`}</h2>
           <h4>
             {left.isLessThanOrEqualTo(0) ? (
               t('unlocked')

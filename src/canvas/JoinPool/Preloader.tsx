@@ -10,11 +10,12 @@ import { CanvasTitleWrapper } from 'canvas/Wrappers';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import BigNumber from 'bignumber.js';
 import type { BondedPool } from 'contexts/Pools/BondedPools/types';
-import { capitalizeFirstLetter, planckToUnit, rmCommas } from '@w3ux/utils';
+import { capitalizeFirstLetter, rmCommas } from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
 import { PoolSyncBar } from 'library/PoolSync/Bar';
 import type { PoolRewardPointsKey } from 'contexts/Pools/PoolPerformance/types';
+import { planckToUnitBn } from 'library/Utils';
 
 export const Preloader = ({
   performanceKey,
@@ -36,7 +37,7 @@ export const Preloader = ({
   bondedPools.forEach((b: BondedPool) => {
     totalPoolPoints = totalPoolPoints.plus(rmCommas(b.points));
   });
-  const totalPoolPointsUnit = planckToUnit(totalPoolPoints, units)
+  const totalPoolPointsUnit = planckToUnitBn(totalPoolPoints, units)
     .decimalPlaces(0)
     .toFormat();
 

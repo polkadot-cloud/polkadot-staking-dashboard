@@ -27,6 +27,7 @@ import { useExtensions } from '@w3ux/react-connect-kit';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import extensions from '@w3ux/extension-assets';
 import type { ExtensionArrayListItem } from '@w3ux/extension-assets/util';
+import { WalletConnect } from './WalletConnect';
 
 export const Connect = () => {
   const { t } = useTranslation('modals');
@@ -113,9 +114,11 @@ export const Connect = () => {
       <ActionItem text={t('hardware')} />
       <ExtensionsWrapper>
         <SelectItems layout="two-col">
-          {[Vault, Ledger].map((Item: AnyFunction, i: number) => (
-            <Item key={`hardware_item_${i}`} />
-          ))}
+          {[Vault, Ledger, WalletConnect].map(
+            (Item: AnyFunction, i: number) => (
+              <Item key={`hardware_item_${i}`} />
+            )
+          )}
         </SelectItems>
       </ExtensionsWrapper>
     </>

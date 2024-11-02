@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { isNotZero, setStateWithRef } from '@w3ux/utils';
+import { setStateWithRef } from '@w3ux/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import type { Plugin } from 'config/plugins';
@@ -51,7 +51,7 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
   useEffectIgnoreInitial(() => {
     if (!plugins.includes('subscan')) {
       SubscanController.resetData();
-    } else if (isReady && isNotZero(activeEra.index)) {
+    } else if (isReady && !activeEra.index.isZero()) {
       SubscanController.network = network;
       if (activeAccount) {
         SubscanController.handleFetchPayouts(activeAccount);

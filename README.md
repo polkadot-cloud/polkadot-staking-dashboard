@@ -6,7 +6,7 @@
 
 # Polkadot Staking Dashboard
 
-<img width="1727" alt="Screenshot 2023-08-29 at 18 54 33" src="https://github.com/polkadot-cloud/polkadot-staking-dashboard/assets/13929023/6291d682-0434-4b77-b6e9-383d277893b0">
+<img width="1479" alt="Screenshot 2024-10-06 at 13 56 44" src="https://github.com/user-attachments/assets/d8edbbae-3cf0-4330-bac3-280e74f5d3cc">
 
 ## Contributing Community Assets
 

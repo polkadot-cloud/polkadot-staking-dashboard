@@ -10,7 +10,7 @@ import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { GeoDonut } from 'library/Graphs/GeoDonut';
 import { formatSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
-import { useSize } from 'hooks/useSize';
+import { useSize } from '@w3ux/hooks';
 import { Title } from 'library/Modal/Title';
 import { StatusLabel } from 'library/StatusLabel';
 import { PolkawatchApi, type ValidatorDetail } from '@polkawatch/ddp-client';
@@ -20,17 +20,22 @@ import { usePlugins } from 'contexts/Plugins';
 import { useNetwork } from 'contexts/Network';
 import { PolkaWatchController } from 'controllers/PolkaWatch';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { useUi } from 'contexts/UI';
 
 export const ValidatorGeo = () => {
   const { t } = useTranslation('modals');
+  const { openHelp } = useHelp();
   const { network } = useNetwork();
+  const { containerRefs } = useUi();
   const { options } = useOverlay().modal.config;
   const { address, identity } = options;
-  const { openHelp } = useHelp();
 
   const ref = useRef<HTMLDivElement>(null);
-  const size = useSize(ref?.current || undefined);
+  const size = useSize(ref, {
+    outerElement: containerRefs?.mainInterface,
+  });
   const { height, minHeight } = formatSize(size, 300);
+
   const [pwData, setPwData] = useState<ValidatorDetail>({} as ValidatorDetail);
   const [analyticsAvailable, setAnalyticsAvailable] = useState<boolean>(true);
   const { pluginEnabled } = usePlugins();
