@@ -168,7 +168,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
     // Get active and previous era.
     const { activeEra: newActiveEra, previousEra } = await new Era().fetch(api);
-    console.log(newActiveEra.start.toString());
 
     // Get network meta data related to staking and pools.
     const {
