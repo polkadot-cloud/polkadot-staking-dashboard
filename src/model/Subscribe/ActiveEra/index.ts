@@ -77,7 +77,7 @@ export class ActiveEra implements Unsubscribable {
           );
 
           document.dispatchEvent(
-            new CustomEvent(`new-active-era`, {
+            new CustomEvent('new-active-era', {
               detail: { activeEra },
             })
           );

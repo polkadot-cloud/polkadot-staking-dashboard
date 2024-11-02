@@ -83,7 +83,7 @@ export class PoolsConfig implements Unsubscribable {
             };
 
             document.dispatchEvent(
-              new CustomEvent(`new-pools-config`, {
+              new CustomEvent('new-pools-config', {
                 detail: { poolsConfig },
               })
             );

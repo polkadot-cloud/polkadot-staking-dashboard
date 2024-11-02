@@ -59,7 +59,7 @@ export class NetworkMetrics implements Unsubscribable {
             };
 
             document.dispatchEvent(
-              new CustomEvent(`new-network-metrics`, {
+              new CustomEvent('new-network-metrics', {
                 detail: { networkMetrics },
               })
             );
