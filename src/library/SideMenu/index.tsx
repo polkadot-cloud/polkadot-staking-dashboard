@@ -4,8 +4,7 @@
 import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { capitalizeFirstLetter } from '@w3ux/utils';
-import throttle from 'lodash.throttle';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SideMenuMaximisedWidth, PageWidthMediumThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -26,7 +25,7 @@ import { Heading } from './Heading/Heading';
 import { Main } from './Main';
 import { Secondary } from './Secondary';
 import { ConnectionSymbol, Separator, Wrapper } from './Wrapper';
-import { useOutsideAlerter } from '@w3ux/hooks';
+import { useOutsideAlerter, useOnResize } from '@w3ux/hooks';
 import { Side } from 'kits/Structure/Side';
 
 export const SideMenu = () => {
@@ -44,24 +43,14 @@ export const SideMenu = () => {
   const { openModal } = useOverlay().modal;
   const { networkData, network } = useNetwork();
 
-  // listen to window resize to automatically hide the side menu on window resize.
-  useEffect(() => {
-    window.addEventListener('resize', windowThrottle);
-    return () => {
-      window.removeEventListener('resize', windowThrottle);
-    };
-  }, []);
-
-  const throttleCallback = () => {
+  // Listen to window resize to automatically hide the side menu on window resize.
+  useOnResize(() => {
     if (window.innerWidth >= PageWidthMediumThreshold) {
       setSideMenu(false);
     }
-  };
-  const windowThrottle = throttle(throttleCallback, 200, {
-    trailing: true,
-    leading: false,
   });
 
+  // Define side menu ref and close the side menu when clicking outside of it.
   const ref = useRef(null);
   useOutsideAlerter(ref, () => {
     setSideMenu(false);

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@w3ux/utils';
-import throttle from 'lodash.throttle';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TipsConfig } from 'config/tips';
@@ -23,6 +22,7 @@ import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useSyncing } from 'hooks/useSyncing';
 import { DefaultLocale } from 'locale';
+import { useOnResize } from '@w3ux/hooks';
 
 export const Tips = () => {
   const { i18n, t } = useTranslation();
@@ -77,30 +77,16 @@ export const Tips = () => {
     return Math.ceil(start / itemsPerPage);
   };
 
-  // resize callback
-  const resizeCallback = () => {
+  // Re-sync page and items per page on resize.
+  useOnResize(() => {
     setStateWithRef(getPage(), setPage, pageRef);
     setStateWithRef(getItemsPerPage(), setItemsPerPageState, itemsPerPageRef);
-  };
-
-  // throttle resize callback
-  const throttledResizeCallback = throttle(resizeCallback, 200, {
-    trailing: true,
-    leading: false,
   });
 
   // re-sync page when active account changes
   useEffect(() => {
     setStateWithRef(getPage(), setPage, pageRef);
   }, [activeAccount, network]);
-
-  // resize event listener
-  useEffect(() => {
-    window.addEventListener('resize', throttledResizeCallback);
-    return () => {
-      window.removeEventListener('resize', throttledResizeCallback);
-    };
-  }, []);
 
   // store the current amount of allowed items on display
   const [itemsPerPage, setItemsPerPageState] =

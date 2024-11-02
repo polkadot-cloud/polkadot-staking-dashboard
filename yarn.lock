@@ -3718,21 +3718,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@w3ux/hooks@npm:1.2.1-beta.0":
+  version: 1.2.1-beta.0
+  resolution: "@w3ux/hooks@npm:1.2.1-beta.0"
+  peerDependencies:
+    react: ^18
+  checksum: 10c0/d9abedf6a2508bb7b321d0b5c69c015481122939cc2bc39e44030f3b8a5f99b7d432e0ce38dc273d4614cceb711882fd60b7823836c099aaa895758dc48c7de7
+  languageName: node
+  linkType: hard
+
 "@w3ux/hooks@npm:^1.1.0":
   version: 1.1.0
   resolution: "@w3ux/hooks@npm:1.1.0"
   peerDependencies:
     react: ^18
   checksum: 10c0/7889411294f9b33c2f43bdf7ac174e483ebfc6f415a866ed3ed4f31f8d0196704248f04d20915a0168412bff64d3a14439d0a97fa96cb07c6ac7b8985bcdf7af
-  languageName: node
-  linkType: hard
-
-"@w3ux/hooks@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "@w3ux/hooks@npm:1.2.0"
-  peerDependencies:
-    react: ^18
-  checksum: 10c0/bd8163cb95a722864274dee3b81f49b64b7f2432ec8d13cb8b91f5757c56d889b02f105d0e65cbfa146b6f3e8817d6649d5dfcd903d5ba4985bb900d44de9dee
   languageName: node
   linkType: hard
 
@@ -8678,7 +8678,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^7.12.0"
     "@vitejs/plugin-react-swc": "npm:^3.7.0"
     "@w3ux/extension-assets": "npm:^0.4.0"
-    "@w3ux/hooks": "npm:^1.2.0"
+    "@w3ux/hooks": "npm:1.2.1-beta.0"
     "@w3ux/react-connect-kit": "npm:^1.8.0"
     "@w3ux/react-odometer": "npm:^1.1.0"
     "@w3ux/react-polkicon": "npm:^1.3.0"
