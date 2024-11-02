@@ -24,7 +24,7 @@ import { useHelp } from 'contexts/Help';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 import { useRef } from 'react';
 import { formatSize } from 'library/Graphs/Utils';
-import { useSize } from 'hooks/useSize';
+import { useSize } from '@w3ux/hooks';
 import type { OverviewSectionProps } from '../types';
 import { useTranslation } from 'react-i18next';
 import { useUi } from 'contexts/UI';
@@ -59,7 +59,9 @@ export const PerformanceGraph = ({
   const graphInnerRef = useRef<HTMLDivElement>(null);
 
   // Get the size of the graph container.
-  const size = useSize(graphInnerRef, containerRefs?.mainInterface);
+  const size = useSize(graphInnerRef, {
+    outerElement: containerRefs?.mainInterface,
+  });
   const { width, height } = formatSize(size, 150);
 
   // Format reward points as an array of strings, or an empty array if syncing.
