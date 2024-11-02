@@ -41,8 +41,7 @@ import { DappName } from 'consts';
 import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts';
 import { PoolPerformanceProvider } from 'contexts/Pools/PoolPerformance';
 import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts';
-import type { Provider } from 'hooks/withProviders';
-import { withProviders } from 'hooks/withProviders';
+import { withProviders } from '@w3ux/factories';
 import { CommunityProvider } from 'contexts/Community';
 import { OverlayProvider } from 'kits/Overlay/Provider';
 import { JoinPoolsProvider } from 'contexts/Pools/JoinPools';
@@ -52,53 +51,54 @@ export const Providers = () => {
   const { network } = useNetwork();
   const { activeAccount, setActiveAccount } = useActiveAccounts();
 
-  // !! Provider order matters.
-  const providers: Provider[] = [
-    UIProvider,
-    [APIProvider, { network }],
-    LedgerHardwareProvider,
+  return withProviders(
+    // !! Provider order matters.
     [
-      ExtensionsProvider,
-      { options: { chainSafeSnapEnabled: true, polkagateSnapEnabled: true } },
+      UIProvider,
+      [APIProvider, { network }],
+      LedgerHardwareProvider,
+      [
+        ExtensionsProvider,
+        { options: { chainSafeSnapEnabled: true, polkagateSnapEnabled: true } },
+      ],
+      [
+        ExtensionAccountsProvider,
+        { dappName: DappName, network, activeAccount, setActiveAccount },
+      ],
+      WCAccountsProvider,
+      VaultAccountsProvider,
+      LedgerAccountsProvider,
+      ExternalAccountsProvider,
+      OtherAccountsProvider,
+      ImportedAccountsProvider,
+      WalletConnectProvider,
+      ProxiesProvider,
+      HelpProvider,
+      PluginsProvider,
+      BondedProvider,
+      BalancesProvider,
+      StakingProvider,
+      FavoritePoolsProvider,
+      BondedPoolsProvider,
+      PoolMembersProvider,
+      ActivePoolProvider,
+      TransferOptionsProvider,
+      ValidatorsProvider,
+      FavoriteValidatorsProvider,
+      FastUnstakeProvider,
+      PayoutsProvider,
+      PoolPerformanceProvider,
+      JoinPoolsProvider,
+      SetupProvider,
+      MenuProvider,
+      TooltipProvider,
+      TxMetaProvider,
+      OverlayProvider,
+      PromptProvider,
+      MigrateProvider,
+      FiltersProvider,
+      CommunityProvider,
     ],
-    [
-      ExtensionAccountsProvider,
-      { dappName: DappName, network, activeAccount, setActiveAccount },
-    ],
-    WCAccountsProvider,
-    VaultAccountsProvider,
-    LedgerAccountsProvider,
-    ExternalAccountsProvider,
-    OtherAccountsProvider,
-    ImportedAccountsProvider,
-    WalletConnectProvider,
-    ProxiesProvider,
-    HelpProvider,
-    PluginsProvider,
-    BondedProvider,
-    BalancesProvider,
-    StakingProvider,
-    FavoritePoolsProvider,
-    BondedPoolsProvider,
-    PoolMembersProvider,
-    ActivePoolProvider,
-    TransferOptionsProvider,
-    ValidatorsProvider,
-    FavoriteValidatorsProvider,
-    FastUnstakeProvider,
-    PayoutsProvider,
-    PoolPerformanceProvider,
-    JoinPoolsProvider,
-    SetupProvider,
-    MenuProvider,
-    TooltipProvider,
-    TxMetaProvider,
-    OverlayProvider,
-    PromptProvider,
-    MigrateProvider,
-    FiltersProvider,
-    CommunityProvider,
-  ];
-
-  return withProviders(providers, ThemedRouter);
+    ThemedRouter
+  );
 };
