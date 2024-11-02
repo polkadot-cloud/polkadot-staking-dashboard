@@ -86,11 +86,11 @@ export const AccountButton = ({
           >
             {delegator && (
               <div className="delegator">
-                <Polkicon address={delegator} size={23} />
+                <Polkicon address={delegator} />
               </div>
             )}
             <div className="identicon">
-              <Polkicon address={address ?? ''} size={23} />
+              <Polkicon address={address ?? ''} />
             </div>
             <span className="name">
               {delegator && (

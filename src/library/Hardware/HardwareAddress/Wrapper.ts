@@ -39,12 +39,14 @@ export const Wrapper = styled.div`
         flex-shrink: 1;
         flex-grow: 0;
         position: relative;
+        font-size: 2.75rem;
 
         .index-icon {
           background: var(--background-primary);
           border: 1px solid var(--border-primary-color);
           color: var(--text-color-secondary);
           font-family: InterSemiBold, sans-serif;
+          font-size: 1rem;
           border-radius: 50%;
           position: absolute;
           bottom: -0.25rem;

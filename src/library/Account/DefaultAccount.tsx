@@ -3,7 +3,7 @@
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ellipsisFn, remToUnit } from '@w3ux/utils';
+import { ellipsisFn } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import { Polkicon } from '@w3ux/react-polkicon';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -41,7 +41,7 @@ const DefaultAccount = ({ value, label, readOnly }: AccountProps) => {
       ) : (
         <>
           <span className="identicon">
-            <Polkicon address={value || ''} size={remToUnit('1.45rem')} />
+            <Polkicon address={value || ''} transform="grow-3" />
           </span>
           <span className="title">{text}</span>
         </>

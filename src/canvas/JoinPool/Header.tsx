@@ -9,7 +9,7 @@ import {
 import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
 import { Polkicon } from '@w3ux/react-polkicon';
-import { determinePoolDisplay, remToUnit } from '@w3ux/utils';
+import { determinePoolDisplay } from '@w3ux/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PageTitleTabs } from 'kits/Structure/PageTitleTabs';
 import { useTranslation } from 'react-i18next';
@@ -64,11 +64,12 @@ export const Header = ({
       <CanvasTitleWrapper>
         <div className="inner">
           <div>
-            <Polkicon
-              address={bondedPool?.addresses.stash || ''}
-              size={remToUnit('4rem')}
-              outerColor="transparent"
-            />
+            <span style={{ fontSize: '4rem' }}>
+              <Polkicon
+                address={bondedPool?.addresses.stash || ''}
+                outerColor="transparent"
+              />
+            </span>
           </div>
           <div>
             <div className="title">

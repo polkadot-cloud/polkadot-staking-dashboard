@@ -114,10 +114,9 @@ export const Stat = ({
           ) : null}
           {type === 'address' ? (
             <div className="identicon">
-              <Polkicon
-                address={(stat as StatAddress)?.address || ''}
-                size="2.4rem"
-              />
+              <span style={{ fontSize: '2.4rem' }}>
+                <Polkicon address={(stat as StatAddress)?.address || ''} />
+              </span>
             </div>
           ) : null}
           {display}

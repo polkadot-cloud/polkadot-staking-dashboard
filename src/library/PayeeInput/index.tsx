@@ -104,10 +104,9 @@ export const PayeeInput = ({
           {showEmpty ? (
             <div className="emptyIcon" />
           ) : (
-            <Polkicon
-              address={accountDisplay || ''}
-              size={remToUnit('2.5rem')}
-            />
+            <span style={{ fontSize: '2.5rem' }}>
+              <Polkicon address={accountDisplay || ''} />
+            </span>
           )}
           <div className="input" ref={showingRef}>
             <input

@@ -98,7 +98,9 @@ export const ValidatorMetrics = () => {
     <>
       <Title title={t('validatorMetrics')} />
       <div className="header">
-        <Polkicon address={address} size={33} />
+        <span style={{ fontSize: '2.75rem' }}>
+          <Polkicon address={address} />
+        </span>
         <h2>
           &nbsp;&nbsp;
           {identity === null ? ellipsisFn(address) : identity}

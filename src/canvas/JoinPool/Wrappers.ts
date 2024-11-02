@@ -267,6 +267,8 @@ export const AddressesWrapper = styled.div`
 
       > span {
         margin-right: 0.75rem;
+        font-size: 1rem;
+        padding: 0.5rem;
       }
 
       > h4 {

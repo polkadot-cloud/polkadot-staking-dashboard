@@ -95,8 +95,8 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
               {externalAccounts.map((a, i) => (
                 <ManualAccount key={`user_external_account_${i}`}>
                   <div>
-                    <span>
-                      <Polkicon address={a.address} size={26} />
+                    <span style={{ fontSize: '1.9rem' }}>
+                      <Polkicon address={a.address} />
                     </span>
                     <div className="text">
                       <h4>{a.address}</h4>

@@ -3664,6 +3664,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@w3ux/crypto@npm:1.0.0-beta.0":
+  version: 1.0.0-beta.0
+  resolution: "@w3ux/crypto@npm:1.0.0-beta.0"
+  checksum: 10c0/45d840c523eef7da79a116a439a530bd3cdd5163093a1e486f0265e7b435c327b4472aa74ff89b136cae10ed8a01661cc8e9f0a16ce6bc027a55e4a5b232067a
+  languageName: node
+  linkType: hard
+
 "@w3ux/extension-assets@npm:0.4.0, @w3ux/extension-assets@npm:^0.4.0":
   version: 0.4.0
   resolution: "@w3ux/extension-assets@npm:0.4.0"
@@ -3722,13 +3729,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/react-polkicon@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "@w3ux/react-polkicon@npm:1.3.0"
+"@w3ux/react-polkicon@npm:2.0.0-alpha.7":
+  version: 2.0.0-alpha.7
+  resolution: "@w3ux/react-polkicon@npm:2.0.0-alpha.7"
   dependencies:
-    "@w3ux/utils": "npm:^0.9.0"
-    framer-motion: "npm:^11.2.10"
-  checksum: 10c0/ebd40b62fcf985013b594c410fb2fa58c750eb7247811788afac48179508445c3167a23da63aa070fcf312ec0077f15ad67f919526f8aa63d1902a28989de342
+    "@polkadot-api/substrate-bindings": "npm:^0.9.3"
+    "@w3ux/crypto": "npm:1.0.0-beta.0"
+    blakejs: "npm:^1.2.1"
+  checksum: 10c0/8c7ffc12deb41d80c5c7bc223e8337e08da5b629edf3b9435f5d54d2e380f73cc71475842a6c13ed727e09a802f6102ce4bfa78ed4148c3a7fb2805fe8a62446
   languageName: node
   linkType: hard
 
@@ -4494,6 +4502,13 @@ __metadata:
   version: 2.3.0
   resolution: "binary-extensions@npm:2.3.0"
   checksum: 10c0/75a59cafc10fb12a11d510e77110c6c7ae3f4ca22463d52487709ca7f18f69d886aa387557cc9864fbdb10153d0bdb4caacabf11541f55e89ed6e18d12ece2b5
+  languageName: node
+  linkType: hard
+
+"blakejs@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "blakejs@npm:1.2.1"
+  checksum: 10c0/c284557ce55b9c70203f59d381f1b85372ef08ee616a90162174d1291a45d3e5e809fdf9edab6e998740012538515152471dc4f1f9dbfa974ba2b9c1f7b9aad7
   languageName: node
   linkType: hard
 
@@ -6272,7 +6287,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^11.11.1, framer-motion@npm:^11.2.10":
+"framer-motion@npm:^11.11.1":
   version: 11.11.11
   resolution: "framer-motion@npm:11.11.11"
   dependencies:
@@ -8576,7 +8591,7 @@ __metadata:
     "@w3ux/hooks": "npm:1.2.1-beta.0"
     "@w3ux/react-connect-kit": "npm:^1.8.0"
     "@w3ux/react-odometer": "npm:^1.1.0"
-    "@w3ux/react-polkicon": "npm:^1.3.0"
+    "@w3ux/react-polkicon": "npm:2.0.0-alpha.7"
     "@w3ux/types": "npm:^0.2.0"
     "@w3ux/utils": "npm:^1.1.0"
     "@w3ux/validator-assets": "npm:^0.2.0"

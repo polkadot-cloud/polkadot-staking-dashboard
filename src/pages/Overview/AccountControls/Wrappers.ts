@@ -32,6 +32,7 @@ export const ItemWrapper = styled.div`
   width: 100%;
 
   .delegator {
+    font-size: 1.7rem;
     width: 0.75rem;
     z-index: 0;
     margin-top: 0.1rem;
@@ -43,8 +44,7 @@ export const ItemWrapper = styled.div`
   }
 
   .icon {
-    position: relative;
-    top: 0.1rem;
+    font-size: 1.7rem;
     margin-right: 0.5rem;
     z-index: 1;
   }
