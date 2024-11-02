@@ -3429,15 +3429,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash.throttle@npm:^4.1.9":
-  version: 4.1.9
-  resolution: "@types/lodash.throttle@npm:4.1.9"
-  dependencies:
-    "@types/lodash": "npm:*"
-  checksum: 10c0/93f7096dcaea8f54a4f52d5175d97a471f155f5bae4649c967cc29bcae506a456476d13b4392361799b31c3b96659560e1bbfddf00f550a50c685f6c037411a6
-  languageName: node
-  linkType: hard
-
 "@types/lodash@npm:*":
   version: 4.17.10
   resolution: "@types/lodash@npm:4.17.10"
@@ -8669,7 +8660,6 @@ __metadata:
     "@substrate/connect": "npm:^1.1.0"
     "@types/chroma-js": "npm:^2.4.4"
     "@types/lodash.debounce": "npm:^4.0.9"
-    "@types/lodash.throttle": "npm:^4.1.9"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.2.25"
     "@types/react-helmet": "npm:^6.1.11"
@@ -8708,7 +8698,6 @@ __metadata:
     i18next: "npm:^23.11.5"
     i18next-browser-languagedetector: "npm:^8.0.0"
     lodash.debounce: "npm:^4.0.8"
-    lodash.throttle: "npm:^4.1.1"
     prettier: "npm:^3.3.1"
     prettier-plugin-organize-imports: "npm:^4.0.0"
     qrcode-generator: "npm:1.4.4"
