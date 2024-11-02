@@ -31,7 +31,7 @@ export const AddressSection = ({
         <span>
           <Polkicon
             address={address}
-            outerColor="transparent"
+            background="transparent"
             transform="grow-10"
           />
         </span>

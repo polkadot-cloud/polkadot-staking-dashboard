@@ -3729,14 +3729,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/react-polkicon@npm:2.0.0-alpha.7":
-  version: 2.0.0-alpha.7
-  resolution: "@w3ux/react-polkicon@npm:2.0.0-alpha.7"
+"@w3ux/react-polkicon@npm:2.0.0-beta.1":
+  version: 2.0.0-beta.1
+  resolution: "@w3ux/react-polkicon@npm:2.0.0-beta.1"
   dependencies:
     "@polkadot-api/substrate-bindings": "npm:^0.9.3"
     "@w3ux/crypto": "npm:1.0.0-beta.0"
     blakejs: "npm:^1.2.1"
-  checksum: 10c0/8c7ffc12deb41d80c5c7bc223e8337e08da5b629edf3b9435f5d54d2e380f73cc71475842a6c13ed727e09a802f6102ce4bfa78ed4148c3a7fb2805fe8a62446
+  checksum: 10c0/da6e194deeb3cbe3270642804c588fd8de37ee4d9c4643adaf28a77b4086eb00792aefdfe4d1b881b0f6c6740d90f9c50b1c81c629cab9787981ce754c782cbd
   languageName: node
   linkType: hard
 
@@ -8591,7 +8591,7 @@ __metadata:
     "@w3ux/hooks": "npm:1.2.1-beta.0"
     "@w3ux/react-connect-kit": "npm:^1.8.0"
     "@w3ux/react-odometer": "npm:^1.1.0"
-    "@w3ux/react-polkicon": "npm:2.0.0-alpha.7"
+    "@w3ux/react-polkicon": "npm:2.0.0-beta.1"
     "@w3ux/types": "npm:^0.2.0"
     "@w3ux/utils": "npm:^1.1.0"
     "@w3ux/validator-assets": "npm:^0.2.0"

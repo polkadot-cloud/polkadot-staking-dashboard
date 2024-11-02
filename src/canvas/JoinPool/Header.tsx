@@ -67,7 +67,7 @@ export const Header = ({
             <span style={{ fontSize: '4rem' }}>
               <Polkicon
                 address={bondedPool?.addresses.stash || ''}
-                outerColor="transparent"
+                background="transparent"
               />
             </span>
           </div>
