@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { localStorageOrDefault, setStateWithRef } from '@w3ux/utils';
-import type { ReactNode, RefObject } from 'react';
+import type { MutableRefObject, ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { PageWidthMediumThreshold } from 'consts';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
@@ -25,9 +25,11 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
 
   // Store references for main app containers.
   const [containerRefs, setContainerRefsState] = useState<
-    Record<string, RefObject<HTMLDivElement>>
+    Record<string, MutableRefObject<HTMLDivElement | null>>
   >({});
-  const setContainerRefs = (v: Record<string, RefObject<HTMLDivElement>>) => {
+  const setContainerRefs = (
+    v: Record<string, MutableRefObject<HTMLDivElement | null>>
+  ) => {
     setContainerRefsState(v);
   };
 

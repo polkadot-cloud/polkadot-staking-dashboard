@@ -27,6 +27,7 @@ import { formatSize } from 'library/Graphs/Utils';
 import { useSize } from 'hooks/useSize';
 import type { OverviewSectionProps } from '../types';
 import { useTranslation } from 'react-i18next';
+import { useUi } from 'contexts/UI';
 
 ChartJS.register(
   CategoryScale,
@@ -47,6 +48,7 @@ export const PerformanceGraph = ({
   const { t } = useTranslation();
   const { mode } = useTheme();
   const { openHelp } = useHelp();
+  const { containerRefs } = useUi();
   const { colors } = useNetwork().networkData;
   const { getPoolRewardPoints } = usePoolPerformance();
 
@@ -57,7 +59,7 @@ export const PerformanceGraph = ({
   const graphInnerRef = useRef<HTMLDivElement>(null);
 
   // Get the size of the graph container.
-  const size = useSize(graphInnerRef?.current || undefined);
+  const size = useSize(graphInnerRef, containerRefs?.mainInterface);
   const { width, height } = formatSize(size, 150);
 
   // Format reward points as an array of strings, or an empty array if syncing.
