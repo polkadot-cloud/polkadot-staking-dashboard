@@ -1,12 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { greaterThanZero, planckToUnit, rmCommas } from '@w3ux/utils';
+import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useNetwork } from 'contexts/Network';
 import type { AnyMetaBatch } from 'types';
+import { planckToUnitBn } from 'library/Utils';
 
 export const PoolMemberBonded = ({
   meta,
@@ -30,8 +31,8 @@ export const PoolMemberBonded = ({
   if (poolMember) {
     const { points, unbondingEras } = poolMember;
 
-    bonded = planckToUnit(new BigNumber(rmCommas(points)), units);
-    status = greaterThanZero(bonded) ? 'active' : 'inactive';
+    bonded = planckToUnitBn(new BigNumber(rmCommas(points)), units);
+    status = bonded.isGreaterThan(0) ? 'active' : 'inactive';
 
     // converting unbonding eras from points to units
     let totalUnbondingUnit = new BigNumber(0);
@@ -39,7 +40,7 @@ export const PoolMemberBonded = ({
       const amountBn = new BigNumber(rmCommas(amount as string));
       totalUnbondingUnit = totalUnbondingUnit.plus(amountBn);
     });
-    totalUnbonding = planckToUnit(new BigNumber(totalUnbondingUnit), units);
+    totalUnbonding = planckToUnitBn(new BigNumber(totalUnbondingUnit), units);
   }
 
   return (
@@ -49,7 +50,7 @@ export const PoolMemberBonded = ({
           <h5>{t('syncing')}...</h5>
         </ValidatorStatusWrapper>
       ) : (
-        greaterThanZero(bonded) && (
+        bonded.isGreaterThan(0) && (
           <ValidatorStatusWrapper $status={status}>
             <h5>
               {t('bonded')}: {bonded.decimalPlaces(3).toFormat()} {unit}
@@ -58,7 +59,7 @@ export const PoolMemberBonded = ({
         )
       )}
 
-      {poolMember && greaterThanZero(totalUnbonding) && (
+      {poolMember && totalUnbonding.isGreaterThan(0) && (
         <ValidatorStatusWrapper $status="inactive">
           <h5>
             {t('unbonding')} {totalUnbonding.decimalPlaces(3).toFormat()} {unit}

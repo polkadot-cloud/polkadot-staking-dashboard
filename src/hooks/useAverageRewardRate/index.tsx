@@ -7,8 +7,8 @@ import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { AverageRewardRate, UseAverageRewardRate } from './types';
 import { defaultAverageRewardRate } from './defaults';
 import { useNetwork } from 'contexts/Network';
-import { planckToUnit } from '@w3ux/utils';
 import { useApi } from 'contexts/Api';
+import { planckToUnitBn } from 'library/Utils';
 
 export const useAverageRewardRate = (): UseAverageRewardRate => {
   const { erasPerDay } = useErasPerDay();
@@ -31,8 +31,8 @@ export const useAverageRewardRate = (): UseAverageRewardRate => {
     }
 
     // total supply as percent.
-    const totalIssuanceUnit = planckToUnit(totalIssuance, units);
-    const lastTotalStakeUnit = planckToUnit(lastTotalStake, units);
+    const totalIssuanceUnit = planckToUnitBn(totalIssuance, units);
+    const lastTotalStakeUnit = planckToUnitBn(lastTotalStake, units);
     const supplyStaked =
       lastTotalStakeUnit.isZero() || totalIssuanceUnit.isZero()
         ? new BigNumber(0)

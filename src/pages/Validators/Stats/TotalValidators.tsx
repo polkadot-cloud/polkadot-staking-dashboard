@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { greaterThanZero } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { Pie } from 'library/StatBoxList/Pie';
@@ -15,7 +14,7 @@ export const TotalValidatorsStat = () => {
 
   // total validators as percent
   let totalValidatorsAsPercent = 0;
-  if (greaterThanZero(maxValidatorsCount)) {
+  if (maxValidatorsCount.isGreaterThan(0)) {
     totalValidatorsAsPercent = totalValidators
       .div(maxValidatorsCount.dividedBy(100))
       .toNumber();

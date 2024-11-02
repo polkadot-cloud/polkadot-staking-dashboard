@@ -1,11 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  greaterThanZero,
-  localStorageOrDefault,
-  unitToPlanck,
-} from '@w3ux/utils';
+import { localStorageOrDefault, unitToPlanck } from '@w3ux/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
 import type { BondFor, MaybeAddress } from 'types';
@@ -27,6 +23,7 @@ import type {
   PoolSetups,
   SetupContextInterface,
 } from './types';
+import BigNumber from 'bignumber.js';
 
 export const SetupContext =
   createContext<SetupContextInterface>(defaultSetupContext);
@@ -179,11 +176,13 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
     }
     const setup = getSetupProgress('nominator', address) as NominatorSetup;
     const { progress } = setup;
-    const bond = unitToPlanck(progress?.bond || '0', units);
+    const bond = new BigNumber(
+      unitToPlanck(progress?.bond || '0', units).toString()
+    );
 
     const p = 33;
     let percentage = 0;
-    if (greaterThanZero(bond)) {
+    if (bond.isGreaterThan(0)) {
       percentage += p;
     }
     if (progress.nominations.length) {
@@ -202,14 +201,16 @@ export const SetupProvider = ({ children }: { children: ReactNode }) => {
     }
     const setup = getSetupProgress('pool', address) as PoolSetup;
     const { progress } = setup;
-    const bond = unitToPlanck(progress?.bond || '0', units);
+    const bond = new BigNumber(
+      unitToPlanck(progress?.bond || '0', units).toString()
+    );
 
     const p = 25;
     let percentage = 0;
     if (progress.metadata !== '') {
       percentage += p;
     }
-    if (greaterThanZero(bond)) {
+    if (bond.isGreaterThan(0)) {
       percentage += p;
     }
     if (progress.nominations.length) {

@@ -3,7 +3,7 @@
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ellipsisFn, planckToUnit } from '@w3ux/utils';
+import { ellipsisFn } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import { ExtensionIcons } from '@w3ux/extension-assets/util';
 import LedgerSVG from '@w3ux/extension-assets/LedgerSquare.svg?react';
@@ -17,6 +17,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
 import BigNumber from 'bignumber.js';
+import { planckToUnitBn } from 'library/Utils';
 
 export const AccountButton = ({
   label,
@@ -127,7 +128,7 @@ export const AccountButton = ({
         </section>
         <section className="foot">
           <span className="balance">
-            {`${t('free')}: ${planckToUnit(
+            {`${t('free')}: ${planckToUnitBn(
               transferrableBalance || new BigNumber(0),
               units
             )

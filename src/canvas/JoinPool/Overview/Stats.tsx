@@ -3,7 +3,7 @@
 
 import { useNetwork } from 'contexts/Network';
 import { HeadingWrapper } from '../Wrappers';
-import { planckToUnit, rmCommas } from '@w3ux/utils';
+import { rmCommas } from '@w3ux/utils';
 import { useApi } from 'contexts/Api';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
@@ -14,6 +14,7 @@ import { MaxEraRewardPointsEras } from 'consts';
 import { StyledLoader } from 'library/PoolSync/Loader';
 import type { CSSProperties } from 'styled-components';
 import { PoolSync } from 'library/PoolSync';
+import { planckToUnitBn } from 'library/Utils';
 
 export const Stats = ({
   bondedPool,
@@ -86,7 +87,7 @@ export const Stats = ({
               <Token className="icon" />
               {!poolBalance
                 ? `...`
-                : planckToUnit(poolBalance, units)
+                : planckToUnitBn(poolBalance, units)
                     .decimalPlaces(3)
                     .toFormat()}{' '}
               {unit} {t('bonded')}

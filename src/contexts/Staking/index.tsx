@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { greaterThanZero, rmCommas, setStateWithRef } from '@w3ux/utils';
+import { rmCommas, setStateWithRef } from '@w3ux/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import { useBalances } from 'contexts/Balances';
@@ -205,7 +205,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   // Helper function to determine whether the active account is bonding, or is yet to start.
   const isBonding = () =>
     hasController() &&
-    greaterThanZero(getLedger({ stash: activeAccount }).active);
+    getLedger({ stash: activeAccount }).active.isGreaterThan(0);
 
   // Helper function to determine whether the active account.
   const isUnlocking = () =>
