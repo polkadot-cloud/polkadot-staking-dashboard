@@ -21,6 +21,7 @@ import { minDecimalPlaces } from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
 import { useSyncing } from 'hooks/useSyncing';
 import { planckToUnitBn } from 'library/Utils';
+import { useUi } from 'contexts/UI';
 
 export const Payouts = () => {
   const { i18n, t } = useTranslation('pages');
@@ -33,6 +34,7 @@ export const Payouts = () => {
   const { inSetup } = useStaking();
   const { syncing } = useSyncing();
   const { plugins } = usePlugins();
+  const { containerRefs } = useUi();
   const { getData, injectBlockTimestamp } = useSubscanData([
     'payouts',
     'unclaimedPayouts',
@@ -50,7 +52,7 @@ export const Payouts = () => {
   const graphInnerRef = useRef<HTMLDivElement>(null);
 
   // Get the size of the graph container.
-  const size = useSize(graphInnerRef?.current || undefined);
+  const size = useSize(graphInnerRef, containerRefs?.mainInterface);
   const { width, height, minHeight } = formatSize(size, 260);
 
   // Get the last reward with its timestmap.

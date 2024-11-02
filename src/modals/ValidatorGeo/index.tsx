@@ -20,17 +20,20 @@ import { usePlugins } from 'contexts/Plugins';
 import { useNetwork } from 'contexts/Network';
 import { PolkaWatchController } from 'controllers/PolkaWatch';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { useUi } from 'contexts/UI';
 
 export const ValidatorGeo = () => {
   const { t } = useTranslation('modals');
+  const { openHelp } = useHelp();
   const { network } = useNetwork();
+  const { containerRefs } = useUi();
   const { options } = useOverlay().modal.config;
   const { address, identity } = options;
-  const { openHelp } = useHelp();
 
   const ref = useRef<HTMLDivElement>(null);
-  const size = useSize(ref?.current || undefined);
+  const size = useSize(ref, containerRefs?.mainInterface);
   const { height, minHeight } = formatSize(size, 300);
+
   const [pwData, setPwData] = useState<ValidatorDetail>({} as ValidatorDetail);
   const [analyticsAvailable, setAnalyticsAvailable] = useState<boolean>(true);
   const { pluginEnabled } = usePlugins();

@@ -26,6 +26,7 @@ import { useApi } from 'contexts/Api';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { planckToUnitBn } from 'library/Utils';
+import { useUi } from 'contexts/UI';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');
@@ -34,6 +35,7 @@ export const ValidatorMetrics = () => {
   } = useNetwork();
   const { activeEra } = useApi();
   const { plugins } = usePlugins();
+  const { containerRefs } = useUi();
   const { options } = useOverlay().modal.config;
   const { address, identity } = options;
   const {
@@ -59,7 +61,7 @@ export const ValidatorMetrics = () => {
   const [list, setList] = useState<AnyJson[]>([]);
 
   const ref = useRef<HTMLDivElement>(null);
-  const size = useSize(ref?.current || undefined);
+  const size = useSize(ref, containerRefs?.mainInterface);
   const { width, height, minHeight } = formatSize(size, 300);
 
   const handleEraPoints = async () => {
