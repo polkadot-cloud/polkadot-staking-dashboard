@@ -49,6 +49,12 @@ export class ActiveEra implements Unsubscribable {
           // determine activeEra: toString used as alternative to `toHuman`, that puts commas in
           // numbers
           const activeEra = JSON.parse(result.unwrapOrDefault().toString());
+
+          // Return early if errornous active era is returned.
+          if (activeEra.index === 0 || !activeEra.start) {
+            return;
+          }
+
           // Store active era.
           this.activeEra = {
             index: new BigNumber(activeEra.index),
