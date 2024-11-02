@@ -10,7 +10,7 @@ import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { GeoDonut } from 'library/Graphs/GeoDonut';
 import { formatSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
-import { useSize } from 'hooks/useSize';
+import { useSize } from '@w3ux/hooks';
 import { Title } from 'library/Modal/Title';
 import { StatusLabel } from 'library/StatusLabel';
 import { PolkawatchApi, type ValidatorDetail } from '@polkawatch/ddp-client';
@@ -31,7 +31,9 @@ export const ValidatorGeo = () => {
   const { address, identity } = options;
 
   const ref = useRef<HTMLDivElement>(null);
-  const size = useSize(ref, containerRefs?.mainInterface);
+  const size = useSize(ref, {
+    outerElement: containerRefs?.mainInterface,
+  });
   const { height, minHeight } = formatSize(size, 300);
 
   const [pwData, setPwData] = useState<ValidatorDetail>({} as ValidatorDetail);

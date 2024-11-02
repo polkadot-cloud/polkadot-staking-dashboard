@@ -13,7 +13,7 @@ import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
 import { formatSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
-import { useSize } from 'hooks/useSize';
+import { useSize } from '@w3ux/hooks';
 import { StatBoxList } from 'library/StatBoxList';
 import { StatusLabel } from 'library/StatusLabel';
 import type { AnySubscan, PageProps } from 'types';
@@ -45,7 +45,9 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   const [payoutsList, setPayoutLists] = useState<AnySubscan>([]);
 
   const ref = useRef<HTMLDivElement>(null);
-  const size = useSize(ref, containerRefs?.mainInterface);
+  const size = useSize(ref, {
+    outerElement: containerRefs?.mainInterface,
+  });
   const { width, height, minHeight } = formatSize(size, 280);
 
   // Get data safely from subscan hook.

@@ -9,7 +9,7 @@ import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
 import { formatRewardsForGraphs, formatSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
-import { useSize } from 'hooks/useSize';
+import { useSize } from '@w3ux/hooks';
 import { StatusLabel } from 'library/StatusLabel';
 import { useSubscanData } from 'hooks/useSubscanData';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
@@ -52,7 +52,9 @@ export const Payouts = () => {
   const graphInnerRef = useRef<HTMLDivElement>(null);
 
   // Get the size of the graph container.
-  const size = useSize(graphInnerRef, containerRefs?.mainInterface);
+  const size = useSize(graphInnerRef, {
+    outerElement: containerRefs?.mainInterface,
+  });
   const { width, height, minHeight } = formatSize(size, 260);
 
   // Get the last reward with its timestmap.
