@@ -3739,6 +3739,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@w3ux/utils@npm:1.1.1-beta.4":
+  version: 1.1.1-beta.4
+  resolution: "@w3ux/utils@npm:1.1.1-beta.4"
+  dependencies:
+    "@polkadot-api/substrate-bindings": "npm:^0.9.3"
+  checksum: 10c0/d9592856c9ec993f455354b0981d50cbb01463a744ef320e864fbbac9fe3255f7c230d46bfcb400d8084b0ab3e2d5d2bb38bc8adf047dd62d920cfcd1dc945e5
+  languageName: node
+  linkType: hard
+
 "@w3ux/utils@npm:^0.9.0":
   version: 0.9.1
   resolution: "@w3ux/utils@npm:0.9.1"
@@ -3747,15 +3756,6 @@ __metadata:
     "@polkadot/util-crypto": "npm:^13.1.1"
     bignumber.js: "npm:^9.1.1"
   checksum: 10c0/624ca3fd80cd5a0ed16b28342b41d643cc1aac7dbe68e00f3c4a9e460da21ac28d09e86582aad7c642e5907069c4544705c3bc638d836625916694e21774861c
-  languageName: node
-  linkType: hard
-
-"@w3ux/utils@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@w3ux/utils@npm:1.1.0"
-  dependencies:
-    "@polkadot-api/substrate-bindings": "npm:^0.9.3"
-  checksum: 10c0/98edea2d49ee40b3735a62d2f239b203d2bcfa643db5ddb9424c013dfb175afa940dc0c2752daace04e171d39db0a5e55c0f5674ac526918ead132a5878188dc
   languageName: node
   linkType: hard
 
@@ -8585,7 +8585,7 @@ __metadata:
     "@w3ux/react-odometer": "npm:^1.1.0"
     "@w3ux/react-polkicon": "npm:2.0.1-alpha.0"
     "@w3ux/types": "npm:^0.2.0"
-    "@w3ux/utils": "npm:^1.1.0"
+    "@w3ux/utils": "npm:1.1.1-beta.4"
     "@w3ux/validator-assets": "npm:^0.2.0"
     "@zondax/ledger-substrate": "npm:^1.0.0"
     bignumber.js: "npm:^9.1.2"

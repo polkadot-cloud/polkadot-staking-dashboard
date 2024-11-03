@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { isString, u8aConcat, u8aToU8a } from '@polkadot/util';
+import { u8aConcat, u8aToU8a } from '@polkadot/util';
 import { decodeAddress } from '@polkadot/util-crypto';
 import { CRYPTO_SR25519, FRAME_SIZE, SUBSTRATE_ID } from './constants.js';
 
@@ -68,7 +68,7 @@ export const createImgSize = (
     };
   }
 
-  const width = isString(size) ? size : `${size}px`;
+  const width = `${size}px`;
 
   return {
     width,
