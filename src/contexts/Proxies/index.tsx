@@ -1,17 +1,14 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { VoidFn } from '@polkadot/api/types';
 import {
   addedTo,
   ellipsisFn,
   localStorageOrDefault,
   matchedProperties,
   removedFrom,
-  rmCommas,
   setStateWithRef,
 } from '@w3ux/utils';
-import BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import { isSupportedProxy } from 'config/proxies';
@@ -33,6 +30,10 @@ import type {
   ProxyDelegate,
 } from './types';
 import { defaultNetwork } from 'contexts/Network/defaults';
+import { SubscriptionsController } from 'controllers/Subscriptions';
+import { AccountProxies } from 'model/Subscribe/AccountProxies';
+import { useEventListener } from 'usehooks-ts';
+import { isCustomEvent } from 'controllers/utils';
 
 export const ProxiesContext = createContext<ProxiesContextInterface>(
   defaults.defaultProxiesContext
@@ -51,7 +52,6 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   // Store the proxy accounts of each imported account.
   const [proxies, setProxies] = useState<Proxies>([]);
   const proxiesRef = useRef(proxies);
-  const unsubs = useRef<Record<string, VoidFn>>({});
 
   // Store the last network proxies were synced on.
   const [lastSyncedNetwork, setLastSyncedNetwork] =
@@ -106,16 +106,9 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
             addOrReplaceOtherAccount(importResult.account, importResult.type);
           }
         } else {
-          const unsub = unsubs.current[address];
-          if (unsub) {
-            unsub();
-          }
+          SubscriptionsController.remove(network, `proxies-${address}`);
         }
       });
-
-      unsubs.current = Object.fromEntries(
-        Object.entries(unsubs.current).filter(([key]) => !removed.includes(key))
-      );
     };
     // Sync added accounts.
     const handleAddedAccounts = () => {
@@ -143,53 +136,13 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
     setLastSyncedNetwork(network);
   };
 
+  // Initialize account proxies subscription.
   const subscribeToProxies = async (address: string) => {
-    if (!api) {
-      return undefined;
-    }
-
-    // TODO: Move to a `Subscription`.
-    // Move subscription logic to `Subscribe` class.
-    // Listen to subscription changes via event listener in this class.
-
-    const unsub = await api.queryMulti<AnyApi>(
-      [[api.query.proxy.proxies, address]],
-      async ([result]) => {
-        const data = result.toHuman();
-        const newProxies = data[0];
-        const reserved = new BigNumber(rmCommas(data[1]));
-
-        if (newProxies.length) {
-          setStateWithRef(
-            [...proxiesRef.current]
-              .filter(({ delegator }) => delegator !== address)
-              .concat({
-                address,
-                delegator: address,
-                delegates: newProxies.map((d: AnyApi) => ({
-                  delegate: d.delegate.toString(),
-                  proxyType: d.proxyType.toString(),
-                })),
-                reserved,
-              }),
-            setProxies,
-            proxiesRef
-          );
-        } else {
-          // no proxies: remove stale proxies if already in list.
-          setStateWithRef(
-            [...proxiesRef.current].filter(
-              ({ delegator }) => delegator !== address
-            ),
-            setProxies,
-            proxiesRef
-          );
-        }
-      }
+    SubscriptionsController.set(
+      network,
+      `proxies-${address}`,
+      new AccountProxies(network, address)
     );
-
-    unsubs.current[address] = unsub;
-    return unsub;
   };
 
   // Gets the delegates of the given account.
@@ -250,6 +203,40 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
       .find((p) => p.delegator === delegator)
       ?.delegates.find((d) => d.delegate === delegate) ?? null;
 
+  // Handle new account proxies event.
+  const handleNewAccountProxies = (e: Event) => {
+    if (isCustomEvent(e)) {
+      const { address, proxies: eventProxies } = e.detail;
+
+      if (eventProxies) {
+        // Add address proxies to context state.
+        setStateWithRef(
+          [...proxiesRef.current]
+            .filter(({ delegator }) => delegator !== address)
+            .concat(eventProxies),
+          setProxies,
+          proxiesRef
+        );
+      } else {
+        // no proxies: remove stale proxies if already in list.
+        setStateWithRef(
+          [...proxiesRef.current].filter(
+            ({ delegator }) => delegator !== address
+          ),
+          setProxies,
+          proxiesRef
+        );
+      }
+    }
+  };
+
+  // Listen for new bonded accounts.
+  useEventListener(
+    'new-account-proxies',
+    handleNewAccountProxies,
+    useRef<Document>(document)
+  );
+
   // If active proxy has not yet been set, check local storage `activeProxy` & set it as active
   // proxy if it is the delegate of `activeAccount`.
   useEffectIgnoreInitial(() => {
@@ -301,16 +288,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   useEffectIgnoreInitial(() => {
     setStateWithRef([], setProxies, proxiesRef);
     setActiveProxy(null, false);
-    unsubAll();
-    return () => unsubAll();
   }, [network]);
-
-  const unsubAll = () => {
-    for (const unsub of Object.values(unsubs.current)) {
-      unsub();
-    }
-    unsubs.current = {};
-  };
 
   return (
     <ProxiesContext.Provider
