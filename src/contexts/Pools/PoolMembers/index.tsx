@@ -34,10 +34,9 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
   // Store whether pool members from api have been fetched.
   const fetchedPoolMembersApi = useRef<Sync>('unsynced');
 
-  // Stores the meta data batches for pool member lists.
-  const [poolMembersMetaBatches, setPoolMembersMetaBatch] =
-    useState<AnyMetaBatch>({});
-  const poolMembersMetaBatchesRef = useRef(poolMembersMetaBatches);
+  // Stores pages of metadata for pool member lists.
+  const [poolMemberPages, setPoolMembersPages] = useState<AnyMetaBatch>({});
+  const poolMemberPagesRef = useRef(poolMemberPages);
 
   // Stores the meta batch subscriptions for pool lists.
   const poolMembersSubs = useRef<Record<string, Fn[]>>({});
@@ -85,7 +84,7 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
     Object.values(poolMembersSubs.current).map((batch: Fn[]) =>
       Object.entries(batch).map(([, v]) => v())
     );
-    setStateWithRef({}, setPoolMembersMetaBatch, poolMembersMetaBatchesRef);
+    setStateWithRef({}, setPoolMembersPages, poolMemberPagesRef);
   };
 
   // Fetch all pool members entries from node.
@@ -128,21 +127,8 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
     } as PoolMember;
   };
 
-  /*
-    Fetches a new batch of pool member metadata.
-    structure:
-    {
-      key: {
-        [
-          {
-          identities: [],
-          super_identities: [],
-        }
-      ]
-    },
-  };
-  */
-  const fetchPoolMembersMetaBatch = async (
+  // Fetches a batch of pool member metadata.;
+  const fetchPoolMembersPage = async (
     key: string,
     p: AnyMetaBatch,
     refetch = false
@@ -155,19 +141,19 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
     }
     if (!refetch) {
       // if already exists, do not re-fetch
-      if (poolMembersMetaBatchesRef.current[key] !== undefined) {
+      if (poolMemberPagesRef.current[key] !== undefined) {
         return;
       }
     } else {
       // tidy up if existing batch exists
-      const updatedPoolMembersMetaBatches: AnyMetaBatch = {
-        ...poolMembersMetaBatchesRef.current,
+      const updatedPoolMemberPages: AnyMetaBatch = {
+        ...poolMemberPagesRef.current,
       };
-      delete updatedPoolMembersMetaBatches[key];
+      delete updatedPoolMemberPages[key];
       setStateWithRef(
-        updatedPoolMembersMetaBatches,
-        setPoolMembersMetaBatch,
-        poolMembersMetaBatchesRef
+        updatedPoolMemberPages,
+        setPoolMembersPages,
+        poolMemberPagesRef
       );
 
       if (poolMembersSubs.current[key] !== undefined) {
@@ -184,14 +170,18 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
     }
 
     // store batch addresses
-    const batchesUpdated = Object.assign(poolMembersMetaBatchesRef.current);
+    const batchesUpdated = Object.assign(poolMemberPagesRef.current);
     batchesUpdated[key] = {};
     batchesUpdated[key].addresses = addresses;
     setStateWithRef(
       { ...batchesUpdated },
-      setPoolMembersMetaBatch,
-      poolMembersMetaBatchesRef
+      setPoolMembersPages,
+      poolMemberPagesRef
     );
+
+    // TODO: Move to a `Subscription`.
+    // Move subscription logic to `Subscribe` class.
+    // Listen to subscription changes via event listener in this class.
 
     const subscribeToPoolMembers = async (addr: string[]) => {
       const unsub = await api.query.nominationPools.poolMembers.multi<AnyApi>(
@@ -201,12 +191,12 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
           for (const _pool of _pools) {
             pools.push(_pool.toHuman());
           }
-          const updated = Object.assign(poolMembersMetaBatchesRef.current);
+          const updated = Object.assign(poolMemberPagesRef.current);
           updated[key].poolMembers = pools;
           setStateWithRef(
             { ...updated },
-            setPoolMembersMetaBatch,
-            poolMembersMetaBatchesRef
+            setPoolMembersPages,
+            poolMemberPagesRef
           );
         }
       );
@@ -258,7 +248,7 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
   return (
     <PoolMembersContext.Provider
       value={{
-        fetchPoolMembersMetaBatch,
+        fetchPoolMembersPage,
         queryPoolMember,
         getMembersOfPoolFromNode,
         addToPoolMembers,
@@ -267,7 +257,7 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
         poolMembersApi,
         setPoolMembersApi,
         fetchedPoolMembersApi: fetchedPoolMembersApi.current,
-        meta: poolMembersMetaBatchesRef.current,
+        meta: poolMemberPagesRef.current,
         setFetchedPoolMembersApi,
       }}
     >

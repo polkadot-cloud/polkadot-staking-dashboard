@@ -33,7 +33,7 @@ export const MembersListInner = ({
     setPoolMembersApi,
     fetchedPoolMembersApi,
     setFetchedPoolMembersApi,
-    fetchPoolMembersMetaBatch,
+    fetchPoolMembersPage,
   } = usePoolMembers();
 
   // current page.
@@ -60,7 +60,7 @@ export const MembersListInner = ({
 
       fetchingMemberList.current = false;
       setPoolMembersApi([...newMembers]);
-      fetchPoolMembersMetaBatch(batchKey, newMembers, true);
+      fetchPoolMembersPage(batchKey, newMembers, true);
       setFetchedPoolMembersApi('synced');
     }
   };

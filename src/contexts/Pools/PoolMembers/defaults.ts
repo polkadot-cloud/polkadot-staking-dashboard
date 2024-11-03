@@ -5,7 +5,7 @@
 import type { PoolMemberContext } from './types';
 
 export const defaultPoolMembers: PoolMemberContext = {
-  fetchPoolMembersMetaBatch: (k, v, r) => {},
+  fetchPoolMembersPage: (k, v, r) => {},
   queryPoolMember: (who) => new Promise((resolve) => resolve(null)),
   getMembersOfPoolFromNode: (poolId) => null,
   addToPoolMembers: (m) => {},

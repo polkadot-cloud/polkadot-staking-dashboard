@@ -5,7 +5,7 @@ import type { Sync } from '@w3ux/types';
 import type { AnyMetaBatch, MaybeAddress } from 'types';
 
 export interface PoolMemberContext {
-  fetchPoolMembersMetaBatch: (k: string, v: AnyMetaBatch[], r: boolean) => void;
+  fetchPoolMembersPage: (k: string, v: AnyMetaBatch[], r: boolean) => void;
   queryPoolMember: (who: MaybeAddress) => Promise<PoolMember | null>;
   getMembersOfPoolFromNode: (poolId: number) => PoolMember[] | null;
   addToPoolMembers: (member: PoolMember) => void;

@@ -22,7 +22,7 @@ export const MembersListInner = ({
 }: DefaultMembersListProps) => {
   const { t } = useTranslation('pages');
   const { isReady, activeEra } = useApi();
-  const { fetchPoolMembersMetaBatch } = usePoolMembers();
+  const { fetchPoolMembersPage } = usePoolMembers();
 
   // current page
   const [page, setPage] = useState<number>(1);
@@ -49,7 +49,7 @@ export const MembersListInner = ({
   const setupMembersList = () => {
     setMembersDefault(initialMembers);
     setMembers(initialMembers);
-    fetchPoolMembersMetaBatch(batchKey, initialMembers, false);
+    fetchPoolMembersPage(batchKey, initialMembers, false);
     setFetched('synced');
   };
 
