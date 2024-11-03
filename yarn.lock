@@ -3691,16 +3691,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/hooks@npm:^1.1.0":
-  version: 1.2.0
-  resolution: "@w3ux/hooks@npm:1.2.0"
-  peerDependencies:
-    react: ^18
-  checksum: 10c0/bd8163cb95a722864274dee3b81f49b64b7f2432ec8d13cb8b91f5757c56d889b02f105d0e65cbfa146b6f3e8817d6649d5dfcd903d5ba4985bb900d44de9dee
-  languageName: node
-  linkType: hard
-
-"@w3ux/hooks@npm:^1.2.1":
+"@w3ux/hooks@npm:^1.1.0, @w3ux/hooks@npm:^1.2.1":
   version: 1.2.1
   resolution: "@w3ux/hooks@npm:1.2.1"
   peerDependencies:
@@ -3731,13 +3722,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/react-polkicon@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@w3ux/react-polkicon@npm:2.0.0"
+"@w3ux/react-polkicon@npm:2.0.1-alpha.0":
+  version: 2.0.1-alpha.0
+  resolution: "@w3ux/react-polkicon@npm:2.0.1-alpha.0"
   dependencies:
     "@polkadot-api/substrate-bindings": "npm:^0.9.3"
     "@w3ux/crypto": "npm:1.0.0"
-  checksum: 10c0/096ca2dedb680410fb19e4ecaebbbfb4ba7f147ae6c9024525d606a2a3e429f69275f81d6de7566b93a41c13a38d6ae55086af3fd239b09c0cd11d3a714a6530
+  checksum: 10c0/4390646debb6f4f09717806a10ecb811d48e96c32ac7a958944e321a9c4b3330d538b154e7a23891b4808b764bf8525203c26d7075270a3b280504d14cda555e
   languageName: node
   linkType: hard
 
@@ -4683,9 +4674,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001669":
-  version: 1.0.30001676
-  resolution: "caniuse-lite@npm:1.0.30001676"
-  checksum: 10c0/53d310d76b5282947c99638a65d7534ac28a80aae1920de085a616ec8ad603358fad67cebacfc0452b1efdea12cce24fd37a50a712d074986b4962110e87d82b
+  version: 1.0.30001677
+  resolution: "caniuse-lite@npm:1.0.30001677"
+  checksum: 10c0/22b4aa738b213b5d0bc820c26ba23fa265ca90a5c59776e1a686b9ab6fff9120d0825fd920c0a601a4b65056ef40d01548405feb95c8dd6083255f50c71a0864
   languageName: node
   linkType: hard
 
@@ -8592,7 +8583,7 @@ __metadata:
     "@w3ux/hooks": "npm:^1.2.1"
     "@w3ux/react-connect-kit": "npm:^1.8.0"
     "@w3ux/react-odometer": "npm:^1.1.0"
-    "@w3ux/react-polkicon": "npm:^2.0.0"
+    "@w3ux/react-polkicon": "npm:2.0.1-alpha.0"
     "@w3ux/types": "npm:^0.2.0"
     "@w3ux/utils": "npm:^1.1.0"
     "@w3ux/validator-assets": "npm:^0.2.0"
@@ -10656,8 +10647,8 @@ __metadata:
   linkType: hard
 
 "viem@npm:^2.1.1, viem@npm:^2.21.35":
-  version: 2.21.38
-  resolution: "viem@npm:2.21.38"
+  version: 2.21.39
+  resolution: "viem@npm:2.21.39"
   dependencies:
     "@adraffy/ens-normalize": "npm:1.11.0"
     "@noble/curves": "npm:1.6.0"
@@ -10673,7 +10664,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/eca1ba239b20b97f06c77d095b93e72bf11331e80d7720325aff07873c228babed3a06dbd7a66a6052cabb8304e9df025dfde75206e2beb763ca5d9a74d43c6f
+  checksum: 10c0/b9d2f8eadeccd12da8171a159450ee40b9df1ea5c25a8ec17a3542ab5a133db50dcd38558aeeaec1c53a2b5bbec60c71d2e6440933855c7fd07c22fc32e399ed
   languageName: node
   linkType: hard
 

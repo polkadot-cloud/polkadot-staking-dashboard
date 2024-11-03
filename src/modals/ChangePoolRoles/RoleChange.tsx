@@ -17,9 +17,7 @@ export const RoleChange = ({
     <div className="label">{roleName}</div>
     <div className="role-change">
       <div className="input-wrap selected">
-        <span style={{ fontSize: '2rem' }}>
-          <Polkicon address={oldAddress ?? ''} />
-        </span>
+        <Polkicon address={oldAddress ?? ''} fontSize="2rem" />
         <input
           className="input"
           disabled
@@ -30,9 +28,7 @@ export const RoleChange = ({
         <FontAwesomeIcon icon={faAnglesRight} />
       </span>
       <div className="input-wrap selected">
-        <span style={{ fontSize: '2rem' }}>
-          <Polkicon address={newAddress ?? ''} />
-        </span>
+        <Polkicon address={newAddress ?? ''} fontSize="2rem" />
         <input
           className="input"
           disabled

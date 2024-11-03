@@ -31,8 +31,8 @@ export const Identity = ({ address }: IdentityProps) => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      <span style={{ paddingRight: '0.25rem', fontSize: '2rem' }}>
-        <Polkicon address={address} />
+      <span style={{ paddingRight: '0.25rem' }}>
+        <Polkicon address={address} fontSize="2rem" />
       </span>
       <div className="inner">
         {validatorsFetched && display !== null ? (

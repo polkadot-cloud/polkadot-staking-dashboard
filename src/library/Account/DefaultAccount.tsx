@@ -40,9 +40,7 @@ const DefaultAccount = ({ value, label, readOnly }: AccountProps) => {
         <span className="title unassigned">{t('notStaking')}</span>
       ) : (
         <>
-          <span className="identicon">
-            <Polkicon address={value || ''} transform="grow-3" />
-          </span>
+          <Polkicon address={value || ''} transform="grow-3" />
           <span className="title">{text}</span>
         </>
       )}

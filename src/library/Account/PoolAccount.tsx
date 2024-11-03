@@ -34,9 +34,7 @@ const PoolAccount = ({ label, pool, syncing }: PoolAccountProps) => {
   return (
     <Wrapper>
       {label !== undefined && <div className="account-label">{label}</div>}
-      <span className="identicon">
-        <Polkicon address={pool.addresses.stash} transform="grow-3" />
-      </span>
+      <Polkicon address={pool.addresses.stash} transform="grow-3" />
       <span className={`title${syncing === true ? ` syncing` : ``}`}>
         {text}
       </span>

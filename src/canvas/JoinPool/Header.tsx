@@ -64,12 +64,11 @@ export const Header = ({
       <CanvasTitleWrapper>
         <div className="inner">
           <div>
-            <span style={{ fontSize: '4rem' }}>
-              <Polkicon
-                address={bondedPool?.addresses.stash || ''}
-                background="transparent"
-              />
-            </span>
+            <Polkicon
+              address={bondedPool?.addresses.stash || ''}
+              background="transparent"
+              fontSize="4rem"
+            />
           </div>
           <div>
             <div className="title">

@@ -28,13 +28,11 @@ export const AddressSection = ({
       </HeadingWrapper>
 
       <div>
-        <span>
-          <Polkicon
-            address={address}
-            background="transparent"
-            transform="grow-10"
-          />
-        </span>
+        <Polkicon
+          address={address}
+          background="transparent"
+          transform="grow-10"
+        />
         <h4>
           {ellipsisFn(address, 6)}
           <CopyAddress address={address} />

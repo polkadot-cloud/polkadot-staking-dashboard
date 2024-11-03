@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
   &:hover {
     transform: scale(1.025);
   }
-  .identicon {
+  .polkicon {
     margin: 0.15rem 0.25rem 0 0;
   }
   .account-label {
