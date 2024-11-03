@@ -5,14 +5,18 @@ import { setStateWithRef } from '@w3ux/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import { usePlugins } from 'contexts/Plugins';
-import type { AnyApi, AnyMetaBatch, Fn, MaybeAddress } from 'types';
+import type { AnyApi, AnyMetaBatch, MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from '../../Api';
 import { defaultPoolMembers } from './defaults';
 import type { PoolMember, PoolMemberContext } from './types';
-import type { Sync } from '@w3ux/types';
+import type { AnyJson, Sync } from '@w3ux/types';
+import { useEventListener } from 'usehooks-ts';
+import { isCustomEvent } from 'controllers/utils';
+import { SubscriptionsController } from 'controllers/Subscriptions';
+import { PoolMembers } from 'model/Subscribe/PoolMembers';
 
 export const PoolMembersContext =
   createContext<PoolMemberContext>(defaultPoolMembers);
@@ -38,9 +42,6 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
   const [poolMemberPages, setPoolMembersPages] = useState<AnyMetaBatch>({});
   const poolMemberPagesRef = useRef(poolMemberPages);
 
-  // Stores the meta batch subscriptions for pool lists.
-  const poolMembersSubs = useRef<Record<string, Fn[]>>({});
-
   // Update poolMembersApi fetched status.
   const setFetchedPoolMembersApi = (status: Sync) => {
     fetchedPoolMembersApi.current = status;
@@ -50,12 +51,12 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
   useEffectIgnoreInitial(() => {
     setPoolMembersNode([]);
     setPoolMembersApi([]);
-    unsubscribeAndResetMeta();
+    removePageSubscriptions();
   }, [network]);
 
   // Clear meta state when activeAccount changes
   useEffectIgnoreInitial(() => {
-    unsubscribeAndResetMeta();
+    removePageSubscriptions();
   }, [activeAccount]);
 
   // Initial setup for fetching members if Subscan is not enabled. Ensure poolMembers are reset if
@@ -75,14 +76,15 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
   }, [network, isReady, pluginEnabled('subscan')]);
 
   const unsubscribe = () => {
-    unsubscribeAndResetMeta();
+    removePageSubscriptions();
     setPoolMembersNode([]);
     setPoolMembersApi([]);
   };
 
-  const unsubscribeAndResetMeta = () => {
-    Object.values(poolMembersSubs.current).map((batch: Fn[]) =>
-      Object.entries(batch).map(([, v]) => v())
+  // Remove all subscriptions and reset meta state.
+  const removePageSubscriptions = () => {
+    Object.keys(poolMemberPagesRef.current).map((key) =>
+      SubscriptionsController.remove(network, key)
     );
     setStateWithRef({}, setPoolMembersPages, poolMemberPagesRef);
   };
@@ -141,25 +143,27 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
     }
     if (!refetch) {
       // if already exists, do not re-fetch
-      if (poolMemberPagesRef.current[key] !== undefined) {
+      if (poolMemberPagesRef.current?.[key] !== undefined) {
         return;
       }
     } else {
-      // tidy up if existing batch exists
-      const updatedPoolMemberPages: AnyMetaBatch = {
-        ...poolMemberPagesRef.current,
-      };
-      delete updatedPoolMemberPages[key];
+      // Remove the existing page if it exists and update state.
+      const updatedPoolMemberPages = Object.keys(poolMemberPagesRef.current)
+        .filter((k) => k !== key)
+        .reduce((acc: AnyJson, k) => {
+          acc[k] = poolMemberPagesRef.current[k];
+          return acc;
+        }, {});
+
       setStateWithRef(
         updatedPoolMemberPages,
         setPoolMembersPages,
         poolMemberPagesRef
       );
 
-      if (poolMembersSubs.current[key] !== undefined) {
-        for (const unsub of poolMembersSubs.current[key]) {
-          unsub();
-        }
+      // Remove the existing subscription if it exists.
+      if (poolMemberPages.current?.[key] !== undefined) {
+        SubscriptionsController.remove(network, key);
       }
     }
 
@@ -169,46 +173,24 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
       addresses.push(who);
     }
 
-    // store batch addresses
-    const batchesUpdated = Object.assign(poolMemberPagesRef.current);
-    batchesUpdated[key] = {};
-    batchesUpdated[key].addresses = addresses;
-    setStateWithRef(
-      { ...batchesUpdated },
-      setPoolMembersPages,
-      poolMemberPagesRef
+    // Store pool member addresses as a new page record.
+    initializePoolMemberPage(key, addresses);
+
+    // Initialise subscription to pool members.
+    SubscriptionsController.set(
+      network,
+      key,
+      new PoolMembers(network, key, addresses)
     );
+  };
 
-    // TODO: Move to a `Subscription`.
-    // Move subscription logic to `Subscribe` class.
-    // Listen to subscription changes via event listener in this class.
-
-    const subscribeToPoolMembers = async (addr: string[]) => {
-      const unsub = await api.query.nominationPools.poolMembers.multi<AnyApi>(
-        addr,
-        (_pools) => {
-          const pools = [];
-          for (const _pool of _pools) {
-            pools.push(_pool.toHuman());
-          }
-          const updated = Object.assign(poolMemberPagesRef.current);
-          updated[key].poolMembers = pools;
-          setStateWithRef(
-            { ...updated },
-            setPoolMembersPages,
-            poolMemberPagesRef
-          );
-        }
-      );
-      return unsub;
+  // Initializes a new set of pool members for a given key.
+  const initializePoolMemberPage = (key: string, addresses: string[]) => {
+    const updatedPages = { ...poolMemberPagesRef.current };
+    updatedPages[key] = {
+      addresses,
     };
-
-    // initiate subscriptions
-    await Promise.all([subscribeToPoolMembers(addresses)]).then(
-      (unsubs: Fn[]) => {
-        addMetaBatchUnsubs(key, unsubs);
-      }
-    );
+    setStateWithRef(updatedPages, setPoolMembersPages, poolMemberPagesRef);
   };
 
   // Removes a member from the member list and updates state.
@@ -234,16 +216,27 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  /*
-   * Helper: to add mataBatch unsubs by key.
-   */
-  const addMetaBatchUnsubs = (key: string, unsubs: Fn[]) => {
-    const subs = poolMembersSubs.current;
-    const sub = subs[key] ?? [];
-    sub.push(...unsubs);
-    subs[key] = sub;
-    poolMembersSubs.current = subs;
+  // Handle new pool members event.
+  const handleNewPoolMembers = (e: Event) => {
+    if (isCustomEvent(e)) {
+      const { key, pools } = e.detail;
+
+      const newPoolMemberPages = { ...poolMemberPagesRef.current };
+      newPoolMemberPages[key].poolMembers = pools;
+      setStateWithRef(
+        newPoolMemberPages,
+        setPoolMembersPages,
+        poolMemberPagesRef
+      );
+    }
   };
+
+  // Listen for new pool member pages.
+  useEventListener(
+    'new-pool-members',
+    handleNewPoolMembers,
+    useRef<Document>(document)
+  );
 
   return (
     <PoolMembersContext.Provider
