@@ -16,10 +16,6 @@ import BigNumber from 'bignumber.js';
 import { defaultNominations } from 'controllers/Balances/defaults';
 
 export class Balance implements Unsubscribable {
-  // ------------------------------------------------------
-  // Class members.
-  // ------------------------------------------------------
-
   // The associated network for this instance.
   #network: NetworkName;
 
@@ -44,19 +40,11 @@ export class Balance implements Unsubscribable {
   // Unsubscribe object.
   #unsub: VoidFn;
 
-  // ------------------------------------------------------
-  // Constructor.
-  // ------------------------------------------------------
-
   constructor(network: NetworkName, address: string) {
     this.#network = network;
     this.#address = address;
     this.subscribe();
   }
-
-  // ------------------------------------------------------
-  // Subscription.
-  // ------------------------------------------------------
 
   subscribe = async (): Promise<void> => {
     try {
@@ -255,10 +243,6 @@ export class Balance implements Unsubscribable {
             submittedIn: nominators.submittedIn.toHuman(),
           };
   };
-
-  // ------------------------------------------------------
-  // Unsubscribe handler.
-  // ------------------------------------------------------
 
   // Unsubscribe from class subscription.
   unsubscribe = (): void => {

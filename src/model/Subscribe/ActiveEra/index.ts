@@ -12,10 +12,6 @@ import type { AnyApi, NetworkName } from 'types';
 import { StakingMetrics } from '../StakingMetrics';
 
 export class ActiveEra implements Unsubscribable {
-  // ------------------------------------------------------
-  // Class members.
-  // ------------------------------------------------------
-
   // The associated network for this instance.
   #network: NetworkName;
 
@@ -25,20 +21,12 @@ export class ActiveEra implements Unsubscribable {
   // Store the active era.
   activeEra: APIActiveEra = defaultActiveEra;
 
-  // ------------------------------------------------------
-  // Constructor.
-  // ------------------------------------------------------
-
   constructor(network: NetworkName) {
     this.#network = network;
 
     // Subscribe immediately.
     this.subscribe();
   }
-
-  // ------------------------------------------------------
-  // Subscription.
-  // ------------------------------------------------------
 
   subscribe = async (): Promise<void> => {
     try {
@@ -96,10 +84,6 @@ export class ActiveEra implements Unsubscribable {
       // Silently fail.
     }
   };
-
-  // ------------------------------------------------------
-  // Unsubscribe handler.
-  // ------------------------------------------------------
 
   // Unsubscribe from class subscription.
   unsubscribe = (): void => {

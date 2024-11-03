@@ -8,10 +8,6 @@ import type { AnyApi, NetworkName } from 'types';
 import type { AnyJson } from '@w3ux/types';
 
 export class PoolMembers implements Unsubscribable {
-  // ------------------------------------------------------
-  // Class members.
-  // ------------------------------------------------------
-
   // The associated network for this instance.
   #network: NetworkName;
 
@@ -27,20 +23,12 @@ export class PoolMembers implements Unsubscribable {
   // Store the pool memberes of this subscription.
   pools: AnyJson;
 
-  // ------------------------------------------------------
-  // Constructor.
-  // ------------------------------------------------------
-
   constructor(network: NetworkName, key: string, addresses: string[]) {
     this.#network = network;
     this.addresses = addresses;
     this.key = key;
     this.subscribe();
   }
-
-  // ------------------------------------------------------
-  // Subscription.
-  // ------------------------------------------------------
 
   subscribe = async (): Promise<void> => {
     try {
@@ -73,10 +61,6 @@ export class PoolMembers implements Unsubscribable {
       // Silently fail.
     }
   };
-
-  // ------------------------------------------------------
-  // Unsubscribe handler.
-  // ------------------------------------------------------
 
   // Unsubscribe from class subscription.
   unsubscribe = (): void => {

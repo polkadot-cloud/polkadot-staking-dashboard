@@ -10,10 +10,6 @@ import type { NetworkName } from 'types';
 import { stringToBn } from 'library/Utils';
 
 export class StakingMetrics implements Unsubscribable {
-  // ------------------------------------------------------
-  // Class members.
-  // ------------------------------------------------------
-
   // The associated network for this instance.
   #network: NetworkName;
 
@@ -23,10 +19,6 @@ export class StakingMetrics implements Unsubscribable {
 
   // Unsubscribe object.
   #unsub: VoidFn;
-
-  // ------------------------------------------------------
-  // Constructor.
-  // ------------------------------------------------------
 
   constructor(
     network: NetworkName,
@@ -40,10 +32,6 @@ export class StakingMetrics implements Unsubscribable {
     // Subscribe immediately.
     this.subscribe();
   }
-
-  // ------------------------------------------------------
-  // Subscription.
-  // ------------------------------------------------------
 
   subscribe = async (): Promise<void> => {
     try {
@@ -93,10 +81,6 @@ export class StakingMetrics implements Unsubscribable {
       // Silently fail.
     }
   };
-
-  // ------------------------------------------------------
-  // Unsubscribe handler.
-  // ------------------------------------------------------
 
   // Unsubscribe from class subscription.
   unsubscribe = (): void => {

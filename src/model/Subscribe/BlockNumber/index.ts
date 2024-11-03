@@ -7,10 +7,6 @@ import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { NetworkName } from 'types';
 
 export class BlockNumber implements Unsubscribable {
-  // ------------------------------------------------------
-  // Class members.
-  // ------------------------------------------------------
-
   // The associated network for this instance.
   #network: NetworkName;
 
@@ -20,20 +16,12 @@ export class BlockNumber implements Unsubscribable {
   // Unsubscribe object.
   #unsub: VoidFn;
 
-  // ------------------------------------------------------
-  // Constructor.
-  // ------------------------------------------------------
-
   constructor(network: NetworkName) {
     this.#network = network;
 
     // Subscribe immediately.
     this.subscribe();
   }
-
-  // ------------------------------------------------------
-  // Subscription.
-  // ------------------------------------------------------
 
   subscribe = async (): Promise<void> => {
     try {
@@ -62,10 +50,6 @@ export class BlockNumber implements Unsubscribable {
       // Silently fail.
     }
   };
-
-  // ------------------------------------------------------
-  // Unsubscribe handler.
-  // ------------------------------------------------------
 
   // Unsubscribe from class subscription.
   unsubscribe = (): void => {

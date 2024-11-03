@@ -9,19 +9,11 @@ import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { NetworkName } from 'types';
 
 export class NetworkMetrics implements Unsubscribable {
-  // ------------------------------------------------------
-  // Class members.
-  // ------------------------------------------------------
-
   // The associated network for this instance.
   #network: NetworkName;
 
   // Unsubscribe object.
   #unsub: VoidFn;
-
-  // ------------------------------------------------------
-  // Constructor.
-  // ------------------------------------------------------
 
   constructor(network: NetworkName) {
     this.#network = network;
@@ -29,10 +21,6 @@ export class NetworkMetrics implements Unsubscribable {
     // Subscribe immediately.
     this.subscribe();
   }
-
-  // ------------------------------------------------------
-  // Subscription.
-  // ------------------------------------------------------
 
   subscribe = async (): Promise<void> => {
     try {
@@ -73,10 +61,6 @@ export class NetworkMetrics implements Unsubscribable {
       // Silently fail.
     }
   };
-
-  // ------------------------------------------------------
-  // Unsubscribe handler.
-  // ------------------------------------------------------
 
   // Unsubscribe from class subscription.
   unsubscribe = (): void => {

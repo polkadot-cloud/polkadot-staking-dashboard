@@ -8,10 +8,6 @@ import type { AnyApi, NetworkName } from 'types';
 import type { BondedAccount } from './types';
 
 export class Bonded implements Unsubscribable {
-  // ------------------------------------------------------
-  // Class members.
-  // ------------------------------------------------------
-
   // The associated network for this instance.
   #network: NetworkName;
 
@@ -24,19 +20,11 @@ export class Bonded implements Unsubscribable {
   // Store the bonded account of this subscription.
   bondedAccount: BondedAccount;
 
-  // ------------------------------------------------------
-  // Constructor.
-  // ------------------------------------------------------
-
   constructor(network: NetworkName, address: string) {
     this.#network = network;
     this.#address = address;
     this.subscribe();
   }
-
-  // ------------------------------------------------------
-  // Subscription.
-  // ------------------------------------------------------
 
   subscribe = async (): Promise<void> => {
     try {
@@ -71,10 +59,6 @@ export class Bonded implements Unsubscribable {
       // Silently fail.
     }
   };
-
-  // ------------------------------------------------------
-  // Unsubscribe handler.
-  // ------------------------------------------------------
 
   // Unsubscribe from class subscription.
   unsubscribe = (): void => {

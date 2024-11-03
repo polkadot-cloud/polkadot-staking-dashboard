@@ -7,10 +7,6 @@ import { NetworkList } from 'config/networks';
 import { stringToBn } from 'library/Utils';
 
 export class StakingConstants {
-  // ------------------------------------------------------
-  // Class members.
-  // ------------------------------------------------------
-
   // Network config fallback values.
   FALLBACK = {
     MAX_NOMINATIONS: new BigNumber(16),
