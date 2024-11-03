@@ -66,6 +66,10 @@ export class ActivePoolsController {
       poolsAdded.forEach(async (pool) => {
         this.pools[address] = currentPools.concat(pool);
 
+        // TODO: Move to a `Subscription`.
+        // Move subscription logic to `Subscribe` class.
+        // Listen to subscription changes via event listener in this class.
+
         const unsub = await api.queryMulti<AnyApi>(
           [
             [api.query.nominationPools.bondedPools, pool.id],

@@ -148,6 +148,10 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
       return undefined;
     }
 
+    // TODO: Move to a `Subscription`.
+    // Move subscription logic to `Subscribe` class.
+    // Listen to subscription changes via event listener in this class.
+
     const unsub = await api.queryMulti<AnyApi>(
       [[api.query.proxy.proxies, address]],
       async ([result]) => {

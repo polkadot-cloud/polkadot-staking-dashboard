@@ -73,6 +73,11 @@ export class BalancesController {
     // Subscribe to and add new accounts data.
     accountsAdded.forEach(async (address) => {
       this.accounts.push(address);
+
+      // TODO: Move to a `Subscription`.
+      // Move subscription logic to `Subscribe` class.
+      // Listen to subscription changes via event listener in this class.
+
       const unsub = await api.queryMulti(
         [
           [api.query.staking.ledger, address],

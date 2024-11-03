@@ -6,18 +6,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
 import { usePlugins } from 'contexts/Plugins';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useTheme } from 'contexts/Themes';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { useNetwork } from 'contexts/Network';
-import { MembersList as DefaultMemberList } from './Lists/Default';
 import { MembersList as FetchPageMemberList } from './Lists/FetchPage';
 
 export const Members = () => {
   const { t } = useTranslation('pages');
   const { mode } = useTheme();
   const { pluginEnabled } = usePlugins();
-  const { getMembersOfPoolFromNode } = usePoolMembers();
   const { activePool, isOwner, isBouncer } = useActivePool();
 
   const { colors } = useNetwork().networkData;
@@ -78,15 +75,10 @@ export const Members = () => {
       )}
 
       <CardWrapper className="transparent">
-        {pluginEnabled('subscan') ? (
+        {pluginEnabled('subscan') && (
           <FetchPageMemberList
             {...membersListProps}
             memberCount={memberCount}
-          />
-        ) : (
-          <DefaultMemberList
-            {...membersListProps}
-            members={getMembersOfPoolFromNode(activePool?.id ?? 0)}
           />
         )}
       </CardWrapper>
