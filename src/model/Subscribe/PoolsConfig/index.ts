@@ -94,7 +94,7 @@ export class PoolsConfig implements Unsubscribable {
         this.#unsub = unsub as unknown as VoidFn;
       }
     } catch (e) {
-      // Subscription failed.
+      // Silently fail.
     }
   };
 

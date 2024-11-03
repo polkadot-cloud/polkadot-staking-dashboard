@@ -90,7 +90,7 @@ export class StakingMetrics implements Unsubscribable {
         this.#unsub = unsub as unknown as VoidFn;
       }
     } catch (e) {
-      // Block number subscription failed.
+      // Silently fail.
     }
   };
 
