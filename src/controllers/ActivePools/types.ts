@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { VoidFn } from '@polkadot/api/types';
-import type { Nominations } from 'contexts/Balances/types';
 import type { ActivePool } from 'contexts/Pools/ActivePool/types';
+import type { Nominations } from 'model/Subscribe/Balance/types';
 
 export interface DetailActivePool {
   address: string;

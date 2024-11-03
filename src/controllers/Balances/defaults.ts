@@ -3,8 +3,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import BigNumber from 'bignumber.js';
-import type { Balance, Ledger, Nominations } from 'contexts/Balances/types';
 import type { PayeeConfig } from 'contexts/Setup/types';
+import type {
+  Balance,
+  Ledger,
+  Nominations,
+} from 'model/Subscribe/Balance/types';
 
 export const defaultBalance: Balance = {
   free: new BigNumber(0),

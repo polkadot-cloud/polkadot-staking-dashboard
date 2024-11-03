@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import type { UnlockChunk } from './types';
+import type { UnlockChunk } from 'model/Subscribe/Balance/types';
 
 // Gets the total unlocking and unlocked amount.
 export const getUnlocking = (chunks: UnlockChunk[], thisEra: BigNumber) => {

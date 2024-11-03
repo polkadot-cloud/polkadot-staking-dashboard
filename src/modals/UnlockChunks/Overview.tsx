@@ -18,11 +18,11 @@ import type { BondFor } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { Chunk } from './Chunk';
 import { ContentWrapper } from './Wrappers';
-import type { UnlockChunk } from 'contexts/Balances/types';
 import { ButtonSubmit } from 'kits/Buttons/ButtonSubmit';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
 import { planckToUnitBn } from 'library/Utils';
+import type { UnlockChunk } from 'model/Subscribe/Balance/types';
 
 interface OverviewProps {
   unlocking: UnlockChunk[];

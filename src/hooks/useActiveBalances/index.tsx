@@ -7,10 +7,6 @@ import { setStateWithRef } from '@w3ux/utils';
 import type {
   ActiveBalancesState,
   ActiveLedgerSource,
-  BalanceLock,
-  BalanceLocks,
-  Ledger,
-  Targets,
 } from 'contexts/Balances/types';
 import { useNetwork } from 'contexts/Network';
 import { useEffect, useRef, useState } from 'react';
@@ -25,6 +21,12 @@ import {
 } from 'controllers/Balances/defaults';
 import type { PayeeConfig } from 'contexts/Setup/types';
 import type { PoolMembership } from 'contexts/Pools/types';
+import type {
+  BalanceLock,
+  BalanceLocks,
+  Ledger,
+  Targets,
+} from 'model/Subscribe/Balance/types';
 
 export const useActiveBalances = ({
   accounts,
@@ -80,7 +82,7 @@ export const useActiveBalances = ({
       const stash = source['stash'];
       return (
         Object.values(activeBalances).find(
-          (activeBalance) => activeBalance.ledger?.['stash'] === stash
+          (activeBalance) => activeBalance.ledger?.stash === stash
         )?.ledger || defaultLedger
       );
     }
@@ -170,7 +172,10 @@ export const useActiveBalances = ({
     for (const account of uniqueAccounts) {
       // Adds an active balance record if it exists in `BalancesController`.
       if (account) {
-        const accountBalances = BalancesController.getAccountBalances(account);
+        const accountBalances = BalancesController.getAccountBalances(
+          network,
+          account
+        );
         if (accountBalances) {
           newActiveBalances[account] = accountBalances;
         }

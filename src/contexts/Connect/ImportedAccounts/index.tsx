@@ -118,7 +118,7 @@ export const ImportedAccountsProvider = ({
   useEffectIgnoreInitial(() => {
     if (api && isReady) {
       BalancesController.syncAccounts(
-        api,
+        network,
         allAccounts.map((a) => a.address)
       );
     }

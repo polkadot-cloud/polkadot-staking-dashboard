@@ -14,8 +14,8 @@ import type {
   DetailActivePool,
 } from './types';
 import { SyncController } from 'controllers/Sync';
-import type { Nominations } from 'contexts/Balances/types';
 import type { ApiPromise } from '@polkadot/api';
+import type { Nominations } from 'model/Subscribe/Balance/types';
 
 export class ActivePoolsController {
   // ------------------------------------------------------

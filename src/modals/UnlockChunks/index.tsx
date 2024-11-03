@@ -13,10 +13,10 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useLedgerHardware } from 'contexts/LedgerHardware';
 import { Forms } from './Forms';
 import { Overview } from './Overview';
-import type { UnlockChunk } from 'contexts/Balances/types';
 import { ModalSection } from 'kits/Overlay/structure/ModalSection';
 import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle';
 import { ModalMotionTwoSection } from 'kits/Overlay/structure/ModalMotionTwoSection';
+import type { UnlockChunk } from 'model/Subscribe/Balance/types';
 
 export const UnlockChunks = () => {
   const { t } = useTranslation('modals');
