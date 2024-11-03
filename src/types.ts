@@ -21,6 +21,7 @@ import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types';
 import type { AnyJson } from '@w3ux/types';
 import type { BlockNumberEventDetail } from 'model/Subscribe/BlockNumber/types';
 import type { BondedAccount } from 'model/Subscribe/Bonded/types';
+import type { PoomMembersEvent } from 'model/Subscribe/PoolMembers/types';
 
 declare global {
   interface Window {
@@ -38,6 +39,7 @@ declare global {
     }>;
     'new-active-era': CustomEvent<{ activeEra: APIActiveEra }>;
     'new-bonded-account': CustomEvent<BondedAccount>;
+    'new-pool-members': CustomEvent<PoomMembersEvent>;
     'new-pools-config': CustomEvent<{ poolsConfig: APIPoolsConfig }>;
     'new-staking-metrics': CustomEvent<{
       stakingMetrics: APIStakingMetrics;

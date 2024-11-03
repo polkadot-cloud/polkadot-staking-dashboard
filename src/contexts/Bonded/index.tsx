@@ -96,7 +96,7 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
     bondedAccountsRef.current.find((a) => a.address === address)?.bonded ||
     null;
 
-  // Check all accounts have been synced. App-wide syncing state for all accounts.
+  // Handle new bonded account event.
   const handleNewBondedAccount = (e: Event) => {
     if (isCustomEvent(e)) {
       const { address, bonded } = e.detail;
