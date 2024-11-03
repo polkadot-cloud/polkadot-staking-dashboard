@@ -22,8 +22,7 @@ export const Wrapper = styled.div`
     }
 
     .icon {
-      position: relative;
-      top: 0.1rem;
+      font-size: 1.7rem;
       margin-right: 0.5rem;
     }
     h4 {

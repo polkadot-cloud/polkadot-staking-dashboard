@@ -77,7 +77,7 @@ export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {
               address={address}
               index={index}
               initial={initialName}
-              Identicon={<Polkicon address={address} size={40} />}
+              Identicon={<Polkicon address={address} />}
               existsHandler={ledgerAccountExists}
               renameHandler={renameHandler}
               openRemoveHandler={openRemoveHandler}

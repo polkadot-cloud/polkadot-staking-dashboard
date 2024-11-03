@@ -28,7 +28,9 @@ export const Remove = ({ address, getHandler, removeHandler }: RemoveProps) => {
 
   return (
     <ConfirmWrapper>
-      <Polkicon address={address} size="3rem" />
+      <h2>
+        <Polkicon address={address} transform="grow-10" />
+      </h2>
       <h3>{t('removeAccount')}</h3>
       <h5>{address}</h5>
       <div className="footer">

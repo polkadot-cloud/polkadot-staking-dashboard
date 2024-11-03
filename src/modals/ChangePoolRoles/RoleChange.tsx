@@ -3,7 +3,7 @@
 
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ellipsisFn, remToUnit } from '@w3ux/utils';
+import { ellipsisFn } from '@w3ux/utils';
 import { Polkicon } from '@w3ux/react-polkicon';
 import { RoleChangeWrapper } from './Wrapper';
 import type { RoleChangeProps } from './types';
@@ -17,7 +17,7 @@ export const RoleChange = ({
     <div className="label">{roleName}</div>
     <div className="role-change">
       <div className="input-wrap selected">
-        <Polkicon address={oldAddress ?? ''} size={remToUnit('2rem')} />
+        <Polkicon address={oldAddress ?? ''} fontSize="2rem" />
         <input
           className="input"
           disabled
@@ -28,7 +28,7 @@ export const RoleChange = ({
         <FontAwesomeIcon icon={faAnglesRight} />
       </span>
       <div className="input-wrap selected">
-        <Polkicon address={newAddress ?? ''} size={remToUnit('2rem')} />
+        <Polkicon address={newAddress ?? ''} fontSize="2rem" />
         <input
           className="input"
           disabled

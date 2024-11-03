@@ -76,9 +76,7 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                     {delegators.map(({ delegator, proxyType }, j) => (
                       <ManualAccount key={`user_delegate_${i}_delegator_${j}`}>
                         <div>
-                          <span>
-                            <Polkicon address={delegate} size={26} />
-                          </span>
+                          <Polkicon address={delegate} fontSize="2.4rem" />
                           <div className="text">
                             <h4 className="title">
                               <span>

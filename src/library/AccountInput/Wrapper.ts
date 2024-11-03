@@ -46,6 +46,7 @@ export const AccountInputWrapper = styled.div`
       > div {
         &:first-child {
           padding-right: 0.5rem;
+
           .ph {
             background: var(--background-default);
             width: 22px;
@@ -53,6 +54,7 @@ export const AccountInputWrapper = styled.div`
             border-radius: 50%;
           }
         }
+
         &:last-child {
           display: flex;
           flex-flow: column wrap;

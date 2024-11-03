@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Polkicon } from '@w3ux/react-polkicon';
-import { ellipsisFn, remToUnit, rmCommas } from '@w3ux/utils';
+import { ellipsisFn, rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { RefObject } from 'react';
 import { useState } from 'react';
@@ -107,8 +107,8 @@ export const WithdrawMember = ({
           </ModalWarnings>
         ) : null}
 
-        <h3 className="modal-action-item">
-          <Polkicon address={who} size={remToUnit('2rem')} />
+        <h3 style={{ display: 'flex', alignItems: 'center' }}>
+          <Polkicon address={who} transform="grow-3" />
           &nbsp; {ellipsisFn(who, 7)}
         </h3>
 

@@ -4,7 +4,7 @@
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ellipsisFn, remToUnit } from '@w3ux/utils';
+import { ellipsisFn } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import type { NotificationText } from 'controllers/Notifications/types';
 import { useProxies } from 'contexts/Proxies';
@@ -43,14 +43,11 @@ export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
             <>
               {delegatorAddress && (
                 <div className="delegator">
-                  <Polkicon
-                    address={delegatorAddress || ''}
-                    size={remToUnit('1.7rem')}
-                  />
+                  <Polkicon address={delegatorAddress || ''} />
                 </div>
               )}
               <div className="icon">
-                <Polkicon address={primaryAddress} size={remToUnit('1.7rem')} />
+                <Polkicon address={primaryAddress} />
               </div>
               {delegatorAddress && (
                 <span>

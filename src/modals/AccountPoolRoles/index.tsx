@@ -89,7 +89,7 @@ const Button = ({
       className="item"
     >
       <div className="icon">
-        <Polkicon address={stash} size={30} />
+        <Polkicon address={stash} transform="grow-10" />
       </div>
 
       <div className="details">

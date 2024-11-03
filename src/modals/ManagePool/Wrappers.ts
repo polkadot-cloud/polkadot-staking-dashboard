@@ -141,6 +141,7 @@ export const ButtonRowWrapper = styled.div`
 
       > .icon {
         margin-right: 0.75rem;
+        font-size: 3rem;
       }
 
       > div > h3 {

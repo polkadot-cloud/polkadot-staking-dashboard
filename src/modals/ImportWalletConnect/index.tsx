@@ -90,7 +90,7 @@ export const ImportWalletConnect = () => {
               index={index}
               initial={name}
               allowAction={false}
-              Identicon={<Polkicon address={address} size={40} />}
+              Identicon={<Polkicon address={address} />}
               existsHandler={wcAccountExists}
               renameHandler={renameHandler}
               openRemoveHandler={() => {
