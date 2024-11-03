@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { ellipsisFn, remToUnit } from '@w3ux/utils';
+import { ellipsisFn } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Polkicon } from '@w3ux/react-polkicon';
@@ -34,9 +34,7 @@ const PoolAccount = ({ label, pool, syncing }: PoolAccountProps) => {
   return (
     <Wrapper>
       {label !== undefined && <div className="account-label">{label}</div>}
-      <span className="identicon">
-        <Polkicon address={pool.addresses.stash} size={remToUnit('1.45rem')} />
-      </span>
+      <Polkicon address={pool.addresses.stash} transform="grow-3" />
       <span className={`title${syncing === true ? ` syncing` : ``}`}>
         {text}
       </span>

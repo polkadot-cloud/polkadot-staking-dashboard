@@ -3664,6 +3664,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@w3ux/crypto@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@w3ux/crypto@npm:1.0.0"
+  dependencies:
+    blakejs: "npm:^1.2.1"
+  checksum: 10c0/c32d5ca52496d06a1e57d7dceb739c00cf099221a90998461827be6f685923a7b848f2c3d6b7c85839dcd307b08593a65b411d9e7b8a7ddf579fb8cadc02a00b
+  languageName: node
+  linkType: hard
+
 "@w3ux/extension-assets@npm:0.4.0, @w3ux/extension-assets@npm:^0.4.0":
   version: 0.4.0
   resolution: "@w3ux/extension-assets@npm:0.4.0"
@@ -3673,30 +3682,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/factories@npm:1.0.0-beta.0":
-  version: 1.0.0-beta.0
-  resolution: "@w3ux/factories@npm:1.0.0-beta.0"
+"@w3ux/factories@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@w3ux/factories@npm:1.0.0"
   peerDependencies:
     react: ^18
-  checksum: 10c0/1c2a8adb966300fe7e36410e4b91381221a70f2470dfa3c1b5612ddc2e84c4579b6928ac7d4c9cad34291b7d8e1cbc97cbba66ae46fd04627042df50e9646b66
+  checksum: 10c0/c1c02d40d60fc242cdec74be93f2d24b04f87ea908ef9a523ea3811bc13199d07941b267424b6316c2a4d2f003ad5a65a8aaf9937fe48a6da1dba2f7c36ef8a5
   languageName: node
   linkType: hard
 
-"@w3ux/hooks@npm:1.2.1-beta.0":
-  version: 1.2.1-beta.0
-  resolution: "@w3ux/hooks@npm:1.2.1-beta.0"
+"@w3ux/hooks@npm:^1.1.0, @w3ux/hooks@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@w3ux/hooks@npm:1.2.1"
   peerDependencies:
     react: ^18
-  checksum: 10c0/d9abedf6a2508bb7b321d0b5c69c015481122939cc2bc39e44030f3b8a5f99b7d432e0ce38dc273d4614cceb711882fd60b7823836c099aaa895758dc48c7de7
-  languageName: node
-  linkType: hard
-
-"@w3ux/hooks@npm:^1.1.0":
-  version: 1.2.0
-  resolution: "@w3ux/hooks@npm:1.2.0"
-  peerDependencies:
-    react: ^18
-  checksum: 10c0/bd8163cb95a722864274dee3b81f49b64b7f2432ec8d13cb8b91f5757c56d889b02f105d0e65cbfa146b6f3e8817d6649d5dfcd903d5ba4985bb900d44de9dee
+  checksum: 10c0/542eae337e26c2202b53625ee7178bcf8fd748aac5b37c8851ef143251a09e37bf8a95916039661dcf76fe31004d3231c87d2dad6237251dc843351282173d72
   languageName: node
   linkType: hard
 
@@ -3722,13 +3722,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/react-polkicon@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "@w3ux/react-polkicon@npm:1.3.0"
+"@w3ux/react-polkicon@npm:2.0.1-alpha.0":
+  version: 2.0.1-alpha.0
+  resolution: "@w3ux/react-polkicon@npm:2.0.1-alpha.0"
   dependencies:
-    "@w3ux/utils": "npm:^0.9.0"
-    framer-motion: "npm:^11.2.10"
-  checksum: 10c0/ebd40b62fcf985013b594c410fb2fa58c750eb7247811788afac48179508445c3167a23da63aa070fcf312ec0077f15ad67f919526f8aa63d1902a28989de342
+    "@polkadot-api/substrate-bindings": "npm:^0.9.3"
+    "@w3ux/crypto": "npm:1.0.0"
+  checksum: 10c0/4390646debb6f4f09717806a10ecb811d48e96c32ac7a958944e321a9c4b3330d538b154e7a23891b4808b764bf8525203c26d7075270a3b280504d14cda555e
   languageName: node
   linkType: hard
 
@@ -4497,6 +4497,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"blakejs@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "blakejs@npm:1.2.1"
+  checksum: 10c0/c284557ce55b9c70203f59d381f1b85372ef08ee616a90162174d1291a45d3e5e809fdf9edab6e998740012538515152471dc4f1f9dbfa974ba2b9c1f7b9aad7
+  languageName: node
+  linkType: hard
+
 "bn.js@npm:^4.11.9":
   version: 4.12.0
   resolution: "bn.js@npm:4.12.0"
@@ -4667,9 +4674,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001669":
-  version: 1.0.30001676
-  resolution: "caniuse-lite@npm:1.0.30001676"
-  checksum: 10c0/53d310d76b5282947c99638a65d7534ac28a80aae1920de085a616ec8ad603358fad67cebacfc0452b1efdea12cce24fd37a50a712d074986b4962110e87d82b
+  version: 1.0.30001677
+  resolution: "caniuse-lite@npm:1.0.30001677"
+  checksum: 10c0/22b4aa738b213b5d0bc820c26ba23fa265ca90a5c59776e1a686b9ab6fff9120d0825fd920c0a601a4b65056ef40d01548405feb95c8dd6083255f50c71a0864
   languageName: node
   linkType: hard
 
@@ -6272,7 +6279,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^11.11.1, framer-motion@npm:^11.2.10":
+"framer-motion@npm:^11.11.1":
   version: 11.11.11
   resolution: "framer-motion@npm:11.11.11"
   dependencies:
@@ -8572,11 +8579,11 @@ __metadata:
     "@typescript-eslint/parser": "npm:^7.12.0"
     "@vitejs/plugin-react-swc": "npm:^3.7.0"
     "@w3ux/extension-assets": "npm:^0.4.0"
-    "@w3ux/factories": "npm:1.0.0-beta.0"
-    "@w3ux/hooks": "npm:1.2.1-beta.0"
+    "@w3ux/factories": "npm:^1.0.0"
+    "@w3ux/hooks": "npm:^1.2.1"
     "@w3ux/react-connect-kit": "npm:^1.8.0"
     "@w3ux/react-odometer": "npm:^1.1.0"
-    "@w3ux/react-polkicon": "npm:^1.3.0"
+    "@w3ux/react-polkicon": "npm:2.0.1-alpha.0"
     "@w3ux/types": "npm:^0.2.0"
     "@w3ux/utils": "npm:^1.1.0"
     "@w3ux/validator-assets": "npm:^0.2.0"
@@ -10640,8 +10647,8 @@ __metadata:
   linkType: hard
 
 "viem@npm:^2.1.1, viem@npm:^2.21.35":
-  version: 2.21.38
-  resolution: "viem@npm:2.21.38"
+  version: 2.21.39
+  resolution: "viem@npm:2.21.39"
   dependencies:
     "@adraffy/ens-normalize": "npm:1.11.0"
     "@noble/curves": "npm:1.6.0"
@@ -10657,7 +10664,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/eca1ba239b20b97f06c77d095b93e72bf11331e80d7720325aff07873c228babed3a06dbd7a66a6052cabb8304e9df025dfde75206e2beb763ca5d9a74d43c6f
+  checksum: 10c0/b9d2f8eadeccd12da8171a159450ee40b9df1ea5c25a8ec17a3542ab5a133db50dcd38558aeeaec1c53a2b5bbec60c71d2e6440933855c7fd07c22fc32e399ed
   languageName: node
   linkType: hard
 

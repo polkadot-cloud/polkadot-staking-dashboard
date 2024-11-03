@@ -105,7 +105,7 @@ export const ImportVault = () => {
               address={address}
               index={index}
               initial={name}
-              Identicon={<Polkicon address={address} size={40} />}
+              Identicon={<Polkicon address={address} />}
               existsHandler={vaultAccountExists}
               renameHandler={renameHandler}
               openRemoveHandler={openRemoveHandler}

@@ -68,7 +68,7 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
         line-height: 1.4rem;
       }
 
-      .identicon {
+      .icon {
         position: absolute;
         display: flex;
         left: 0;

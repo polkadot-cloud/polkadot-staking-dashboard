@@ -3,7 +3,7 @@
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ellipsisFn, remToUnit } from '@w3ux/utils';
+import { ellipsisFn } from '@w3ux/utils';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import type { NotificationText } from 'controllers/Notifications/types';
@@ -46,14 +46,14 @@ export const PoolAccount = ({ address, pool }: PoolAccountProps) => {
         ) : synced && display !== null ? (
           <>
             <div className="icon">
-              <Polkicon address={address} size={remToUnit('1.6rem')} />
+              <Polkicon address={address} />
             </div>
             <h4>{display}</h4>
           </>
         ) : (
           <>
             <div className="icon">
-              <Polkicon address={address} size={remToUnit('1.6rem')} />
+              <Polkicon address={address} />
             </div>
             <h4>{ellipsisFn(address)}</h4>
           </>

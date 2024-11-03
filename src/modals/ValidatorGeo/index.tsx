@@ -74,7 +74,7 @@ export const ValidatorGeo = () => {
     <>
       <Title title={t('validatorDecentralization')} />
       <div className="header">
-        <Polkicon address={address} size={33} />
+        <Polkicon address={address} fontSize="2.75rem" />
         <h2>
           &nbsp;&nbsp;
           {identity === null ? ellipsisFn(address) : identity}

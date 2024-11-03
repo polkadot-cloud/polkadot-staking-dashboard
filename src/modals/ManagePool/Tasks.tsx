@@ -12,7 +12,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ButtonRowWrapper, ContentWrapper } from './Wrappers';
 import type { TasksProps } from './types';
 import { useApi } from 'contexts/Api';
-import { ellipsisFn, remToUnit } from '@w3ux/utils';
+import { ellipsisFn } from '@w3ux/utils';
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';
 import { ButtonOption } from 'kits/Buttons/ButtonOption';
 
@@ -47,7 +47,7 @@ export const Tasks = forwardRef(
               <section>
                 <div className="inner">
                   <span className="icon">
-                    <Polkicon address={stash} size={remToUnit('3rem')} />
+                    <Polkicon address={stash} />
                   </span>
                   <div>
                     <h3>
@@ -61,7 +61,7 @@ export const Tasks = forwardRef(
               <section>
                 <div className="inner">
                   <span className="icon">
-                    <Polkicon address={reward} size={remToUnit('3rem')} />
+                    <Polkicon address={reward} />
                   </span>
                   <div>
                     <h3>

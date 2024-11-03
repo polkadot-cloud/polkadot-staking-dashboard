@@ -6,7 +6,7 @@ import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { HeadingWrapper } from '../Wrappers';
 import { Polkicon } from '@w3ux/react-polkicon';
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';
-import { ellipsisFn, remToUnit } from '@w3ux/utils';
+import { ellipsisFn } from '@w3ux/utils';
 import type { AddressSectionProps } from '../types';
 
 export const AddressSection = ({
@@ -28,13 +28,11 @@ export const AddressSection = ({
       </HeadingWrapper>
 
       <div>
-        <span>
-          <Polkicon
-            address={address}
-            size={remToUnit('2.25rem')}
-            outerColor="transparent"
-          />
-        </span>
+        <Polkicon
+          address={address}
+          background="transparent"
+          transform="grow-10"
+        />
         <h4>
           {ellipsisFn(address, 6)}
           <CopyAddress address={address} />

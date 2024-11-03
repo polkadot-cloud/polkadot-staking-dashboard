@@ -182,7 +182,9 @@ export const AccountInput = ({
         <section>
           <div>
             {isValidAddress(value) ? (
-              <Polkicon address={value} size="2rem" />
+              <span style={{ padding: '0 0.5rem' }}>
+                <Polkicon address={value} transform="grow-10" />
+              </span>
             ) : (
               <div className="ph" />
             )}

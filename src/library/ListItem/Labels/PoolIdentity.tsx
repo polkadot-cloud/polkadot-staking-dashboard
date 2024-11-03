@@ -20,7 +20,7 @@ export const PoolIdentity = ({
 
   return (
     <IdentityWrapper className="identity">
-      <Polkicon address={addresses.stash} size="2rem" />
+      <Polkicon address={addresses.stash} fontSize="2rem" />
       <div className="inner">
         {!metadataSynced ? (
           <h4>{ellipsisFn(addresses.stash)}</h4>
