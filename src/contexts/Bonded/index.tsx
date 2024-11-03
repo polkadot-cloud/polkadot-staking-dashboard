@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { VoidFn } from '@polkadot/api/types';
 import {
   addedTo,
   matchedProperties,
@@ -9,16 +8,21 @@ import {
   setStateWithRef,
 } from '@w3ux/utils';
 import type { ReactNode } from 'react';
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
-import type { AnyApi, MaybeAddress } from 'types';
+import type { MaybeAddress } from 'types';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
 import * as defaults from './defaults';
-import type { BondedAccount, BondedContextInterface } from './types';
+import type { BondedContextInterface } from './types';
+import type { BondedAccount } from 'model/Subscribe/Bonded/types';
+import { useEventListener } from 'usehooks-ts';
+import { isCustomEvent } from 'controllers/utils';
+import { SubscriptionsController } from 'controllers/Subscriptions';
+import { Bonded } from 'model/Subscribe/Bonded';
 
 export const BondedContext = createContext<BondedContextInterface>(
   defaults.defaultBondedContext
@@ -37,8 +41,6 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
   const [bondedAccounts, setBondedAccounts] = useState<BondedAccount[]>([]);
   const bondedAccountsRef = useRef(bondedAccounts);
 
-  const unsubs = useRef<Record<string, VoidFn>>({});
-
   // Handle the syncing of accounts on accounts change.
   const handleSyncAccounts = () => {
     // Sync removed accounts.
@@ -48,16 +50,10 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
       ]).map(({ address }) => address);
 
       removed?.forEach((address) => {
-        const unsub = unsubs.current[address];
-        if (unsub) {
-          unsub();
-        }
+        SubscriptionsController.remove(network, `bondedAccount-${address}`);
       });
-
-      unsubs.current = Object.fromEntries(
-        Object.entries(unsubs.current).filter(([key]) => !removed.includes(key))
-      );
     };
+
     // Sync added accounts.
     const handleAddedAccounts = () => {
       const added = addedTo(accounts, bondedAccountsRef.current, ['address']);
@@ -87,47 +83,49 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
       return undefined;
     }
 
-    const unsub = await api.queryMulti<AnyApi>(
-      [[api.query.staking.bonded, address]],
-      async ([controller]) => {
-        const newAccount: BondedAccount = {
-          address,
-        };
-
-        // set account bonded (controller) or null
-        let newController = controller.unwrapOr(null);
-        newController =
-          newController === null
-            ? null
-            : (newController.toHuman() as string | null);
-        newAccount.bonded = newController;
-
-        // add bonded (controller) account as external account if not presently imported
-        if (newController) {
-          if (accounts.find((s) => s.address === newController) === undefined) {
-            const result = addExternalAccount(newController, 'system');
-            if (result) {
-              addOrReplaceOtherAccount(result.account, result.type);
-            }
-          }
-        }
-
-        // remove stale account if it's already in list.
-        const newBonded = Object.values(bondedAccountsRef.current)
-          .filter((a) => a.address !== address)
-          .concat(newAccount);
-
-        setStateWithRef(newBonded, setBondedAccounts, bondedAccountsRef);
-      }
+    // Initialise bonded subscription.
+    SubscriptionsController.set(
+      network,
+      `bondedAccount-${address}`,
+      new Bonded(network, address)
     );
-
-    unsubs.current[address] = unsub;
-    return unsub;
   };
 
+  // Get bonded account by address.
   const getBondedAccount = (address: MaybeAddress) =>
     bondedAccountsRef.current.find((a) => a.address === address)?.bonded ||
     null;
+
+  // Check all accounts have been synced. App-wide syncing state for all accounts.
+  const handleNewBondedAccount = (e: Event) => {
+    if (isCustomEvent(e)) {
+      const { address, bonded } = e.detail;
+
+      // Add `bonded` (controller) account as external account if not presently imported
+      if (bonded) {
+        if (accounts.find((s) => s.address === bonded) === undefined) {
+          const result = addExternalAccount(bonded, 'system');
+          if (result) {
+            addOrReplaceOtherAccount(result.account, result.type);
+          }
+        }
+      }
+
+      // Remove stale account if it's already in list.
+      const newBonded = Object.values(bondedAccountsRef.current)
+        .filter((a) => a.address !== address)
+        .concat({ address, bonded });
+
+      setStateWithRef(newBonded, setBondedAccounts, bondedAccountsRef);
+    }
+  };
+
+  // Listen for new bonded accounts.
+  useEventListener(
+    'new-bonded-account',
+    handleNewBondedAccount,
+    useRef<Document>(document)
+  );
 
   // Handle accounts sync on connected accounts change.
   useEffectIgnoreInitial(() => {
@@ -136,14 +134,6 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [accounts, network, isReady]);
 
-  // Unsubscribe from subscriptions on unmount.
-  useEffect(
-    () => () =>
-      Object.values(unsubs.current).forEach((unsub) => {
-        unsub();
-      }),
-    []
-  );
   return (
     <BondedContext.Provider
       value={{
