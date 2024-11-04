@@ -4,12 +4,12 @@
 import styled from 'styled-components';
 
 export const DisplayWrapper = styled.div`
-  .ui--qr-Display {
+  > div {
     height: 100%;
     width: 100%;
 
-    img,
-    svg {
+    > img,
+    > svg {
       background: white;
       height: auto !important;
       max-height: 100%;
@@ -20,7 +20,7 @@ export const DisplayWrapper = styled.div`
 `;
 
 export const ScanWrapper = styled.div`
-  .ui--qr-Scan {
+  > div {
     display: inline-block;
     height: 100%;
     transform: matrix(-1, 0, 0, 1, 0, 0);

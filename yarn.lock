@@ -3739,6 +3739,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@w3ux/utils@npm:1.1.1-beta.6":
+  version: 1.1.1-beta.6
+  resolution: "@w3ux/utils@npm:1.1.1-beta.6"
+  dependencies:
+    "@polkadot-api/substrate-bindings": "npm:^0.9.3"
+  checksum: 10c0/082e4a83c29bd7afe5ea17f81789e79ad1098c1bf69d01f8f8283601b56468e8f832022cb62517e18a7765af1d82e611382858f825adc6f8576f983b6c13a0ec
+  languageName: node
+  linkType: hard
+
 "@w3ux/utils@npm:^0.9.0":
   version: 0.9.1
   resolution: "@w3ux/utils@npm:0.9.1"
@@ -3747,15 +3756,6 @@ __metadata:
     "@polkadot/util-crypto": "npm:^13.1.1"
     bignumber.js: "npm:^9.1.1"
   checksum: 10c0/624ca3fd80cd5a0ed16b28342b41d643cc1aac7dbe68e00f3c4a9e460da21ac28d09e86582aad7c642e5907069c4544705c3bc638d836625916694e21774861c
-  languageName: node
-  linkType: hard
-
-"@w3ux/utils@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@w3ux/utils@npm:1.1.0"
-  dependencies:
-    "@polkadot-api/substrate-bindings": "npm:^0.9.3"
-  checksum: 10c0/98edea2d49ee40b3735a62d2f239b203d2bcfa643db5ddb9424c013dfb175afa940dc0c2752daace04e171d39db0a5e55c0f5674ac526918ead132a5878188dc
   languageName: node
   linkType: hard
 
@@ -8585,7 +8585,7 @@ __metadata:
     "@w3ux/react-odometer": "npm:^1.1.0"
     "@w3ux/react-polkicon": "npm:2.0.1-alpha.0"
     "@w3ux/types": "npm:^0.2.0"
-    "@w3ux/utils": "npm:^1.1.0"
+    "@w3ux/utils": "npm:1.1.1-beta.6"
     "@w3ux/validator-assets": "npm:^0.2.0"
     "@zondax/ledger-substrate": "npm:^1.0.0"
     bignumber.js: "npm:^9.1.2"
@@ -8635,6 +8635,7 @@ __metadata:
     vite-tsconfig-paths: "npm:^5.0.1"
     vitest: "npm:^1.6.0"
     wagmi: "npm:^2.12.25"
+    xxhash-wasm: "npm:^1.0.2"
   languageName: unknown
   linkType: soft
 
@@ -11238,6 +11239,13 @@ __metadata:
   version: 4.0.2
   resolution: "xtend@npm:4.0.2"
   checksum: 10c0/366ae4783eec6100f8a02dff02ac907bf29f9a00b82ac0264b4d8b832ead18306797e283cf19de776538babfdcb2101375ec5646b59f08c52128ac4ab812ed0e
+  languageName: node
+  linkType: hard
+
+"xxhash-wasm@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "xxhash-wasm@npm:1.0.2"
+  checksum: 10c0/5ba899d9216d9897de2d61a5331b16c99226e75ce47895fc8c730bac5cb00e6e50856dd8f489c12b3012f0fc81b6894806b2e44d2eb3cc7843919793485a30d1
   languageName: node
   linkType: hard
 
