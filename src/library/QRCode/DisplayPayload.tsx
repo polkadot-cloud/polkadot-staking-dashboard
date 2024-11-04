@@ -5,7 +5,27 @@ import type { ReactElement } from 'react';
 import { memo, useMemo } from 'react';
 import { QrDisplay } from './Display.js';
 import type { DisplayPayloadProps } from './types.js';
-import { createSignPayload } from './util.js';
+import { u8aConcat } from '@w3ux/utils';
+import { decodeAddress } from '@polkadot/util-crypto';
+
+const createSignPayload = (
+  address: string,
+  cmd: number,
+  payload: Uint8Array,
+  genesisHash: Uint8Array
+): Uint8Array => {
+  const SUBSTRATE_ID = new Uint8Array([0x53]);
+  const CRYPTO_SR25519 = new Uint8Array([0x01]);
+
+  return u8aConcat(
+    SUBSTRATE_ID,
+    CRYPTO_SR25519,
+    new Uint8Array([cmd]),
+    decodeAddress(address),
+    payload,
+    genesisHash
+  );
+};
 
 const DisplayPayload = ({
   address,

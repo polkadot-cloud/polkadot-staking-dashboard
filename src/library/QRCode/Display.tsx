@@ -1,14 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { objectSpread } from '@polkadot/util';
-import { xxhashAsHex } from '@polkadot/util-crypto';
 import type { ReactElement } from 'react';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { DisplayWrapper } from './Wrappers.js';
-import { qrcode } from './qrcode.js';
+import { qrcode } from './qrcode';
 import type { DisplayProps, FrameState, TimerState } from './types.js';
 import { createFrames, createImgSize } from './util.js';
+import xxhash from 'xxhash-wasm';
 
 const DEFAULT_FRAME_DELAY = 2750;
 const TIMER_INC = 500;
@@ -27,17 +26,18 @@ const getDataUrl = (value: Uint8Array): string => {
 const Display = ({
   className = '',
   size,
-  skipEncoding,
-  style = {},
   timerDelay = DEFAULT_FRAME_DELAY,
   value,
+  style,
 }: DisplayProps): ReactElement<DisplayProps> | null => {
-  const [{ image }, setFrameState] = useState<FrameState>({
+  const [frameState, setFrameState] = useState<FrameState>({
     frameIdx: 0,
     frames: [],
     image: null,
-    valueHash: null,
+    valueHash: 0n,
   });
+
+  const { image } = frameState;
   const timerRef = useRef<TimerState>({ timerDelay, timerId: null });
 
   const containerStyle = useMemo(() => createImgSize(size), [size]);
@@ -59,13 +59,13 @@ const Display = ({
           timerRef.current.timerDelay += TIMER_INC;
         }
 
-        // only encode the frames on demand, not above as part of the
-        // state derivation - in the case of large payloads, this should
-        // be slightly more responsive on initial load
-        const newState = objectSpread<FrameState>({}, state, {
+        // only encode the frames on demand, not above as part of the state derivation - in the case
+        // of large payloads, this should be slightly more responsive on initial load
+        const newState = {
+          ...state,
           frameIdx,
           image: getDataUrl(state.frames[frameIdx]),
-        });
+        };
 
         // set the new timer last
         timerRef.current.timerId = setTimeout(
@@ -88,33 +88,29 @@ const Display = ({
     };
   }, []);
 
-  useEffect((): void => {
-    setFrameState((state): FrameState => {
-      const valueHash = xxhashAsHex(value);
+  const handleFrameState = async () => {
+    const { h64 } = await xxhash();
+    const valueHash = h64(value.toString());
 
-      if (valueHash === state.valueHash) {
-        return state;
-      }
+    if (valueHash !== frameState.valueHash) {
+      const newFrames: Uint8Array[] = createFrames(value);
 
-      const frames: Uint8Array[] = skipEncoding ? [value] : createFrames(value);
-
-      // encode on demand
-      return {
+      setFrameState({
         frameIdx: 0,
-        frames,
-        image: getDataUrl(frames[0]),
+        frames: newFrames,
+        image: getDataUrl(newFrames[0]),
         valueHash,
-      };
-    });
-  }, [skipEncoding, value]);
+      });
+    }
+  };
 
-  if (!image) {
-    return null;
-  }
+  useEffect(() => {
+    handleFrameState();
+  }, [value]);
 
-  return (
+  return !image ? null : (
     <DisplayWrapper className={className} style={containerStyle}>
-      <div className="ui--qr-Display" style={style}>
+      <div style={style}>
         <img src={image} alt="img" />
       </div>
     </DisplayWrapper>
