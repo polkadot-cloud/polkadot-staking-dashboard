@@ -9,13 +9,13 @@ import {
 import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
 import { Polkicon } from '@w3ux/react-polkicon';
-import { determinePoolDisplay } from '@w3ux/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PageTitleTabs } from 'kits/Structure/PageTitleTabs';
 import { useTranslation } from 'react-i18next';
 import { useOverlay } from 'kits/Overlay/Provider';
 import type { JoinPoolHeaderProps } from './types';
 import { CanvasTitleWrapper } from 'canvas/Wrappers';
+import { determinePoolDisplay } from 'contexts/Pools/util';
 
 export const Header = ({
   activeTab,
