@@ -3,7 +3,7 @@
 
 import { merkleizeMetadata } from '@polkadot-api/merkleize-metadata';
 import type { ApiPromise } from '@polkadot/api';
-import { u8aToHex } from '@polkadot/util';
+import { u8aToHex, objectSpread } from '@polkadot/util';
 import type { AnyJson } from '@w3ux/types';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -32,12 +32,11 @@ export const useBuildPayload = () => {
 
     const merkleizedMetadata = merkleizeMetadata(metadata.toHex(), opts);
     const metadataHash = u8aToHex(merkleizedMetadata.digest());
-    const payload = {
-      ...p,
+    const payload = objectSpread({}, p, {
       metadataHash,
       mode: 1,
       withSignedTransaction: true,
-    };
+    });
     const newPayload = a.registry.createType('ExtrinsicPayload', payload);
 
     return {
