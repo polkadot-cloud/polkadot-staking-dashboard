@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { u8aUnwrapBytes } from '@polkadot/util';
-import { ellipsisFn, u8aToString } from '@w3ux/utils';
+import { u8aUnwrapBytes, u8aToString } from '@polkadot/util';
+import { ellipsisFn } from '@w3ux/utils';
 import { useTranslation } from 'react-i18next';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Polkicon } from '@w3ux/react-polkicon';
