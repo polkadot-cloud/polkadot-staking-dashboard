@@ -5,7 +5,7 @@ import type { ReactElement } from 'react';
 import { memo, useMemo } from 'react';
 import { QrDisplay } from './Display.js';
 import type { DisplayPayloadProps } from './types.js';
-import { u8aConcat } from '@w3ux/utils';
+import { u8aConcat } from '@polkadot/util';
 import { decodeAddress } from '@polkadot/util-crypto';
 
 const createSignPayload = (

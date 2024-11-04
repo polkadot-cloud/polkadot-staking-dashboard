@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { u8aConcat } from '@w3ux/utils';
+import { u8aConcat } from '@polkadot/util';
 
 const MULTIPART = new Uint8Array([0]);
 

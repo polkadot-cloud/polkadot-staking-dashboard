@@ -1,11 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { u8aUnwrapBytes } from '@polkadot/util';
+import { u8aUnwrapBytes, u8aToString } from '@polkadot/util';
 import type BigNumber from 'bignumber.js';
 import { MaxEraRewardPointsEras } from 'consts';
 import type { AnyJson } from '@w3ux/types';
-import { u8aToString } from '@w3ux/utils';
 
 export const getIdentityDisplay = (
   _identity: AnyJson,

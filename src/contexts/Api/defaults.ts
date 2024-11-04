@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function */
 
-import { stringToU8a } from '@w3ux/utils';
+import { stringToU8a } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
 import type {
   APIActiveEra,
