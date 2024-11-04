@@ -10,7 +10,6 @@ import { useBalances } from 'contexts/Balances';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useTxMeta } from 'contexts/TxMeta';
 import type { AnyApi } from 'types';
-import { objectSpread } from '@w3ux/utils';
 
 export const useBuildPayload = () => {
   const { api } = useApi();
@@ -33,11 +32,12 @@ export const useBuildPayload = () => {
 
     const merkleizedMetadata = merkleizeMetadata(metadata.toHex(), opts);
     const metadataHash = u8aToHex(merkleizedMetadata.digest());
-    const payload = objectSpread({}, p, {
+    const payload = {
+      ...p,
       metadataHash,
       mode: 1,
       withSignedTransaction: true,
-    });
+    };
     const newPayload = a.registry.createType('ExtrinsicPayload', payload);
 
     return {

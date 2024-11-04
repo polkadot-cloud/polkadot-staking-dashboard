@@ -3739,12 +3739,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/utils@npm:1.1.1-beta.5":
-  version: 1.1.1-beta.5
-  resolution: "@w3ux/utils@npm:1.1.1-beta.5"
+"@w3ux/utils@npm:1.1.1-beta.6":
+  version: 1.1.1-beta.6
+  resolution: "@w3ux/utils@npm:1.1.1-beta.6"
   dependencies:
     "@polkadot-api/substrate-bindings": "npm:^0.9.3"
-  checksum: 10c0/6624225240e5ffbc85f9efc86020e292f7e9dbcbe0b69790654d99f565e65bb33e47072bd9dd1c2b33fd3f0bcf38dd2fa4d7355126e526d7a87b301516644ba5
+  checksum: 10c0/082e4a83c29bd7afe5ea17f81789e79ad1098c1bf69d01f8f8283601b56468e8f832022cb62517e18a7765af1d82e611382858f825adc6f8576f983b6c13a0ec
   languageName: node
   linkType: hard
 
@@ -8585,7 +8585,7 @@ __metadata:
     "@w3ux/react-odometer": "npm:^1.1.0"
     "@w3ux/react-polkicon": "npm:2.0.1-alpha.0"
     "@w3ux/types": "npm:^0.2.0"
-    "@w3ux/utils": "npm:1.1.1-beta.5"
+    "@w3ux/utils": "npm:1.1.1-beta.6"
     "@w3ux/validator-assets": "npm:^0.2.0"
     "@zondax/ledger-substrate": "npm:^1.0.0"
     bignumber.js: "npm:^9.1.2"
