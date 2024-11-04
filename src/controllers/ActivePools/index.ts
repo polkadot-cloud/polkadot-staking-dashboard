@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { VoidFn } from '@polkadot/api/types';
-import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
 import type { ActivePool, PoolRoles } from 'contexts/Pools/ActivePool/types';
 import { IdentitiesController } from 'controllers/Identities';
 import type { AnyApi, MaybeAddress } from 'types';
@@ -16,6 +15,8 @@ import type {
 import { SyncController } from 'controllers/Sync';
 import type { ApiPromise } from '@polkadot/api';
 import type { Nominations } from 'model/Subscribe/Balance/types';
+import { defaultNominations } from 'controllers/Balances/defaults';
+import { ApiController } from 'controllers/Api';
 
 export class ActivePoolsController {
   // ------------------------------------------------------
@@ -42,8 +43,6 @@ export class ActivePoolsController {
   // Subscribes to pools and unsubscribes from removed pools.
   static syncPools = async (
     api: ApiPromise,
-    peopleApi: ApiPromise,
-    peopleApiStatus: string,
     address: MaybeAddress,
     newPools: ActivePoolItem[]
   ): Promise<void> => {
@@ -85,8 +84,6 @@ export class ActivePoolsController {
           ]): Promise<void> => {
             // NOTE: async: fetches identity data for roles.
             await this.handleActivePoolCallback(
-              peopleApi,
-              peopleApiStatus,
               address,
               pool,
               bondedPool,
@@ -121,8 +118,6 @@ export class ActivePoolsController {
 
   // Handle active pool callback.
   static handleActivePoolCallback = async (
-    peopleApi: ApiPromise,
-    peopleApiStatus: string,
     address: string,
     pool: ActivePoolItem,
     bondedPoolResult: AnyApi,
@@ -134,10 +129,12 @@ export class ActivePoolsController {
     const balance = accountDataResult.data;
     const rewardAccountBalance = balance?.free.toString();
 
-    if (peopleApi && peopleApiStatus === 'ready') {
+    const peopleApi = ApiController.get('people-polkadot');
+
+    if (peopleApi?.status === 'ready') {
       // Fetch identities for roles and expand `bondedPool` state to store them.
       bondedPool.roleIdentities = await IdentitiesController.fetch(
-        peopleApi,
+        peopleApi.api,
         this.getUniqueRoleAddresses(bondedPool.roles)
       );
     }
@@ -170,7 +167,7 @@ export class ActivePoolsController {
 
     const newNominations: Nominations =
       maybeNewNominations === null
-        ? defaultPoolNominations
+        ? defaultNominations
         : {
             targets: maybeNewNominations.targets.toHuman(),
             submittedIn: maybeNewNominations.submittedIn.toHuman(),

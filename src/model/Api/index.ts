@@ -31,6 +31,9 @@ export class Api {
   // API instance.
   #api: ApiPromise;
 
+  // The connection status of the api.
+  #status: EventApiStatus = 'disconnected';
+
   // The current RPC endpoint.
   #rpcEndpoint: string;
 
@@ -47,6 +50,10 @@ export class Api {
 
   get connectionType() {
     return this.#connectionType;
+  }
+
+  get status() {
+    return this.#status;
   }
 
   // ------------------------------------------------------
@@ -83,6 +90,7 @@ export class Api {
       }
 
       // Tell UI api is connecting.
+      this.#status = 'connecting';
       this.dispatchEvent(this.ensureEventStatus('connecting'));
 
       // Initialise api.
@@ -93,10 +101,10 @@ export class Api {
 
       // Wait for api to be ready.
       await this.#api.isReady;
+      this.#status = 'ready';
     } catch (e) {
       // TODO: report a custom api status error that can flag to the UI the rpcEndpoint failed -
       // retry or select another one. Useful for custom endpoint configs.
-      // this.dispatchEvent(this.ensureEventStatus('error'));
     }
   }
 
@@ -136,18 +144,22 @@ export class Api {
   // Set up API event listeners. Sends information to the UI.
   async initApiEvents() {
     this.#api.on('ready', async () => {
+      this.#status = 'ready';
       this.dispatchEvent(this.ensureEventStatus('ready'));
     });
 
     this.#api.on('connected', () => {
+      this.#status = 'connected';
       this.dispatchEvent(this.ensureEventStatus('connected'));
     });
 
     this.#api.on('disconnected', () => {
+      this.#status = 'disconnected';
       this.dispatchEvent(this.ensureEventStatus('disconnected'));
     });
 
     this.#api.on('error', () => {
+      this.#status = 'error';
       this.dispatchEvent(this.ensureEventStatus('error'));
     });
   }
@@ -214,6 +226,7 @@ export class Api {
     // Disconnect provider and api.
     await this.#provider?.disconnect();
     await this.#api?.disconnect();
+    this.#status = 'disconnected';
 
     // Tell UI Api is destroyed.
     if (destroy) {

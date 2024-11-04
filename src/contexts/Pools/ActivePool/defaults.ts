@@ -14,7 +14,7 @@ export const defaultPoolRoles = {
   bouncer: '',
 };
 
-export const defaultPoolNominations = {
+export const defaultNominations = {
   targets: [],
   submittedIn: 0,
 };

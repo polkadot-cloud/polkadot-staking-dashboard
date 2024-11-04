@@ -11,7 +11,7 @@ export class ApiController {
   // Class members.
   // ------------------------------------------------------
 
-  // The currently instantiated API instances, keyed by tab id.
+  // The currently instantiated API instances, keyed by id.
   static #instances: Record<string, Api> = {};
 
   // ------------------------------------------------------
