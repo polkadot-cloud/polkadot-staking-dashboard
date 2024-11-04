@@ -33,7 +33,7 @@
     "@w3ux/react-connect-kit": "^1.8.0",
     "@w3ux/react-odometer": "^1.1.0",
     "@w3ux/react-polkicon": "2.0.1-alpha.0",
-    "@w3ux/utils": "^1.1.0",
+    "@w3ux/utils": "1.1.1-beta.6",
     "@w3ux/validator-assets": "^0.2.0",
     "@zondax/ledger-substrate": "^1.0.0",
     "bignumber.js": "^9.1.2",
@@ -61,7 +61,8 @@
     "styled-components": "^6.1.13",
     "usehooks-ts": "^3.0.2",
     "viem": "^2.21.35",
-    "wagmi": "^2.12.25"
+    "wagmi": "^2.12.25",
+    "xxhash-wasm": "^1.0.2"
   },
   "devDependencies": {
     "@ledgerhq/logs": "^6.12.0",
