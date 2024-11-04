@@ -1826,7 +1826,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot/api@npm:14.2.2, @polkadot/api@npm:^14.0.1":
+"@polkadot/api@npm:14.2.2, @polkadot/api@npm:^14.2.2":
   version: 14.2.2
   resolution: "@polkadot/api@npm:14.2.2"
   dependencies:
@@ -1997,7 +1997,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot/rpc-provider@npm:14.2.2, @polkadot/rpc-provider@npm:^14.0.1":
+"@polkadot/rpc-provider@npm:14.2.2, @polkadot/rpc-provider@npm:^14.2.2":
   version: 14.2.2
   resolution: "@polkadot/rpc-provider@npm:14.2.2"
   dependencies:
@@ -8565,8 +8565,8 @@ __metadata:
     "@ledgerhq/hw-transport-webhid": "npm:^6.29.2"
     "@ledgerhq/logs": "npm:^6.12.0"
     "@polkadot-api/merkleize-metadata": "npm:^1.1.4"
-    "@polkadot/api": "npm:^14.0.1"
-    "@polkadot/rpc-provider": "npm:^14.0.1"
+    "@polkadot/api": "npm:^14.2.2"
+    "@polkadot/rpc-provider": "npm:^14.2.2"
     "@polkawatch/ddp-client": "npm:^2.0.20"
     "@substrate/connect": "npm:^1.1.0"
     "@types/chroma-js": "npm:^2.4.4"
