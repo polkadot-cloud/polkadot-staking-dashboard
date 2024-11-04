@@ -30,7 +30,7 @@ export interface APIConstants {
   epochDuration: BigNumber;
   existentialDeposit: BigNumber;
   fastUnstakeDeposit: BigNumber;
-  poolsPalletId: number[] | Uint8Array | string;
+  poolsPalletId: Uint8Array;
 }
 
 export interface APINetworkMetrics {

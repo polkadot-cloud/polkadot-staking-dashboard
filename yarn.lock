@@ -3739,12 +3739,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/utils@npm:1.1.1-beta.4":
-  version: 1.1.1-beta.4
-  resolution: "@w3ux/utils@npm:1.1.1-beta.4"
+"@w3ux/utils@npm:1.1.1-beta.5":
+  version: 1.1.1-beta.5
+  resolution: "@w3ux/utils@npm:1.1.1-beta.5"
   dependencies:
     "@polkadot-api/substrate-bindings": "npm:^0.9.3"
-  checksum: 10c0/d9592856c9ec993f455354b0981d50cbb01463a744ef320e864fbbac9fe3255f7c230d46bfcb400d8084b0ab3e2d5d2bb38bc8adf047dd62d920cfcd1dc945e5
+  checksum: 10c0/6624225240e5ffbc85f9efc86020e292f7e9dbcbe0b69790654d99f565e65bb33e47072bd9dd1c2b33fd3f0bcf38dd2fa4d7355126e526d7a87b301516644ba5
   languageName: node
   linkType: hard
 
@@ -8585,7 +8585,7 @@ __metadata:
     "@w3ux/react-odometer": "npm:^1.1.0"
     "@w3ux/react-polkicon": "npm:2.0.1-alpha.0"
     "@w3ux/types": "npm:^0.2.0"
-    "@w3ux/utils": "npm:1.1.1-beta.4"
+    "@w3ux/utils": "npm:1.1.1-beta.5"
     "@w3ux/validator-assets": "npm:^0.2.0"
     "@zondax/ledger-substrate": "npm:^1.0.0"
     bignumber.js: "npm:^9.1.2"
@@ -8635,6 +8635,7 @@ __metadata:
     vite-tsconfig-paths: "npm:^5.0.1"
     vitest: "npm:^1.6.0"
     wagmi: "npm:^2.12.25"
+    xxhash-wasm: "npm:^1.0.2"
   languageName: unknown
   linkType: soft
 
@@ -11238,6 +11239,13 @@ __metadata:
   version: 4.0.2
   resolution: "xtend@npm:4.0.2"
   checksum: 10c0/366ae4783eec6100f8a02dff02ac907bf29f9a00b82ac0264b4d8b832ead18306797e283cf19de776538babfdcb2101375ec5646b59f08c52128ac4ab812ed0e
+  languageName: node
+  linkType: hard
+
+"xxhash-wasm@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "xxhash-wasm@npm:1.0.2"
+  checksum: 10c0/5ba899d9216d9897de2d61a5331b16c99226e75ce47895fc8c730bac5cb00e6e50856dd8f489c12b3012f0fc81b6894806b2e44d2eb3cc7843919793485a30d1
   languageName: node
   linkType: hard
 

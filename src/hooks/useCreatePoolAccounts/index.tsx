@@ -1,7 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { bnToU8a, u8aConcat } from '@polkadot/util';
+import { bnToU8a } from '@polkadot/util';
+import { u8aConcat } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { BN } from 'bn.js';
 import { EmptyH256, ModPrefix, U32Opts } from 'consts';

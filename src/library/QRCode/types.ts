@@ -7,7 +7,7 @@ export interface FrameState {
   frames: Uint8Array[];
   frameIdx: number;
   image: string | null;
-  valueHash: string | null;
+  valueHash: bigint;
 }
 
 export interface ScanType {
@@ -32,7 +32,7 @@ export interface DisplayPayloadProps {
   address: string;
   className?: string;
   cmd: number;
-  genesisHash: Uint8Array | string;
+  genesisHash: Uint8Array;
   payload: Uint8Array;
   size?: string | number;
   style?: CSSProperties;

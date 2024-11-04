@@ -1,9 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { u8aConcat, u8aToU8a } from '@polkadot/util';
-import { decodeAddress } from '@polkadot/util-crypto';
-import { CRYPTO_SR25519, FRAME_SIZE, SUBSTRATE_ID } from './constants.js';
+import { u8aConcat } from '@w3ux/utils';
 
 const MULTIPART = new Uint8Array([0]);
 
@@ -22,29 +20,14 @@ export const encodeString = (value: string): Uint8Array => {
   return u8a;
 };
 
-export const createSignPayload = (
-  address: string,
-  cmd: number,
-  payload: string | Uint8Array,
-  genesisHash: string | Uint8Array
-): Uint8Array =>
-  u8aConcat(
-    SUBSTRATE_ID,
-    CRYPTO_SR25519,
-    new Uint8Array([cmd]),
-    decodeAddress(address),
-    u8aToU8a(payload),
-    u8aToU8a(genesisHash)
-  );
-
 export const createFrames = (input: Uint8Array): Uint8Array[] => {
   const frames = [];
+  const frameSize = 1024;
+
   let idx = 0;
-
   while (idx < input.length) {
-    frames.push(input.subarray(idx, idx + FRAME_SIZE));
-
-    idx += FRAME_SIZE;
+    frames.push(input.subarray(idx, idx + frameSize));
+    idx += frameSize;
   }
 
   return frames.map(
@@ -60,18 +43,7 @@ export const createFrames = (input: Uint8Array): Uint8Array[] => {
 
 export const createImgSize = (
   size?: string | number
-): Record<string, string> => {
-  if (!size) {
-    return {
-      height: 'auto',
-      width: '100%',
-    };
-  }
-
-  const width = `${size}px`;
-
-  return {
-    width,
-    height: 'auto',
-  };
-};
+): Record<string, string> => ({
+  width: size ? `${size}px` : 'auto',
+  height: 'auto',
+});
