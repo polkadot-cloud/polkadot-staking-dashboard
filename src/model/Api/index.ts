@@ -23,11 +23,11 @@ import { getObservableClient } from '@polkadot-api/observable-client';
 import { getDataFromObservable } from 'controllers/Subscriptions/util';
 import { ChainSpec } from 'model/Observables/ChainSpec';
 import { TaggedMetadata } from 'model/Observables/TaggedMetadata';
-import { formatChainSpecName } from './util';
 import {
   getDynamicBuilder,
   getLookupFn,
 } from '@polkadot-api/metadata-builders';
+import { formatChainSpecName } from './util';
 // import { getSmProvider } from '@polkadot-api/sm-provider';
 
 export class Api {
@@ -141,7 +141,7 @@ export class Api {
       await this.#api.isReady;
 
       // Fetch chain spec and metadata from PAPI client.
-      this.fetchChainSpec();
+      await this.fetchChainSpec();
     } catch (e) {
       // TODO: report a custom api status error that can flag to the UI the rpcEndpoint failed -
       // retry or select another one. Useful for custom endpoint configs.
@@ -175,7 +175,7 @@ export class Api {
       const metadataLookup = getLookupFn(resultTaggedMetadata);
       this.#papiBuilder = getDynamicBuilder(metadataLookup);
 
-      // // Format resulting class chain spec and persist to class.
+      // Format resulting class chain spec and persist to class.
       this.#papiChainSpec = {
         chain: formatChainSpecName(resultChainSpec.specName),
         version: resultChainSpec.specVersion,
