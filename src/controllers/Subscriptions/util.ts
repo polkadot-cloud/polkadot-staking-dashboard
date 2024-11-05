@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0
 
 import { SubscriptionsController } from '.';
-import type { Subscription } from './types';
+import type { ObservableGetSubscription, Subscription } from './types';
 import type { NetworkName, SystemChainId } from 'types';
 
 // Gets a result from an Observable class asynchronously, and adds the process to the subscriptions
@@ -15,13 +15,11 @@ export const getDataFromObservable = async (
 ) => {
   // Instantiate chain spec observable and add it to subscriptions in case the Api is terminated
   // before the subscription is resolved.
-  SubscriptionsController.set(network, subscriptionKey, getter);
-
-  // Get the observable immediately and await subscribe() to resolve with chain spec data.
-  const observable = SubscriptionsController.getObservableGetter(
+  const observable = SubscriptionsController.set(
     network,
-    subscriptionKey
-  );
+    subscriptionKey,
+    getter
+  ) as ObservableGetSubscription;
 
   // Get the result from the observable.
   let result = undefined;
