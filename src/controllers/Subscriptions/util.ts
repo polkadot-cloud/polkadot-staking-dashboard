@@ -3,13 +3,13 @@
 
 import { SubscriptionsController } from '.';
 import type { Subscription } from './types';
-import type { NetworkName } from 'types';
+import type { NetworkName, SystemChainId } from 'types';
 
 // Gets a result from an Observable class asynchronously, and adds the process to the subscriptions
 // controller. This ensures that the process is tidied up if the API is terminated before the
 // subscription is resolved.
 export const getDataFromObservable = async (
-  network: NetworkName,
+  network: NetworkName | SystemChainId,
   subscriptionKey: string,
   getter: Subscription
 ) => {

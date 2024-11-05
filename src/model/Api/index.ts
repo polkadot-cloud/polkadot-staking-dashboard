@@ -5,6 +5,7 @@ import { ApiPromise, WsProvider } from '@polkadot/api';
 import type { NetworkName, SystemChainId } from 'types';
 import { NetworkList, SystemChainList } from 'config/networks';
 import type {
+  APIChainSpec,
   ApiChainType,
   APIEventDetail,
   ConnectionType,
@@ -16,15 +17,18 @@ import { SubscriptionsController } from 'controllers/Subscriptions';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import * as Sc from '@substrate/connect';
 import type { JsonRpcProvider } from '@polkadot-api/substrate-client';
-import type { MetadataLookup } from '@polkadot-api/metadata-builders';
 import { getWsProvider } from '@polkadot-api/ws-provider/web';
 import { createClient as createRawClient } from '@polkadot-api/substrate-client';
 import { getObservableClient } from '@polkadot-api/observable-client';
+import { getDataFromObservable } from 'controllers/Subscriptions/util';
+import { ChainSpec } from 'model/Observables/ChainSpec';
+import { TaggedMetadata } from 'model/Observables/TaggedMetadata';
+import { formatChainSpecName } from './util';
+import {
+  getDynamicBuilder,
+  getLookupFn,
+} from '@polkadot-api/metadata-builders';
 // import { getSmProvider } from '@polkadot-api/sm-provider';
-// import {
-//   getLookupFn,
-//   getDynamicBuilder,
-// } from '@polkadot-api/metadata-builders';
 
 export class Api {
   // The network name associated with this Api instance.
@@ -48,8 +52,8 @@ export class Api {
   // PAPI Dynamic Builder.
   #papiBuilder: PapiDynamicBuilder;
 
-  // PAPI metadata.
-  #papiMetadata: MetadataLookup;
+  // PAPI chain spec.
+  #papiChainSpec: APIChainSpec;
 
   // The current RPC endpoint.
   #rpcEndpoint: string;
@@ -77,8 +81,8 @@ export class Api {
     return this.#papiBuilder;
   }
 
-  get papiMetadata() {
-    return this.#papiMetadata;
+  get papiChainSpec() {
+    return this.#papiChainSpec;
   }
 
   // ------------------------------------------------------
@@ -110,8 +114,6 @@ export class Api {
       // Initiate provider based on connection type.
       if (this.#connectionType === 'ws') {
         this.initWsProvider();
-        // Initialize PAPI provider.
-        this.#papiProvider = getWsProvider(this.#rpcEndpoint);
       } else {
         await this.initScProvider();
         //TODO: connect to PAPI smProvider.
@@ -135,11 +137,11 @@ export class Api {
       // Initialise api events.
       this.initApiEvents();
 
-      // Fetch chain spec and metadata from PAPI client.
-      await this.fetchChainSpec();
-
       // Wait for api to be ready.
       await this.#api.isReady;
+
+      // Fetch chain spec and metadata from PAPI client.
+      this.fetchChainSpec();
     } catch (e) {
       // TODO: report a custom api status error that can flag to the UI the rpcEndpoint failed -
       // retry or select another one. Useful for custom endpoint configs.
@@ -149,7 +151,38 @@ export class Api {
 
   async fetchChainSpec() {
     try {
-      // TODO: Implement.
+      const [resultChainSpec, resultTaggedMetadata] = await Promise.all([
+        // Get chain spec via observable.
+        getDataFromObservable(
+          this.network,
+          'chainSpec',
+          new ChainSpec(this.network)
+        ),
+        // Get metadata via observable.
+        getDataFromObservable(
+          this.network,
+          'metadata',
+          new TaggedMetadata(this.network)
+        ),
+      ]);
+
+      if (!resultChainSpec || !resultTaggedMetadata) {
+        throw new Error();
+      }
+
+      // Now metadata has been retrieved, create a dynamic builder for the metadata and persist it
+      // to this class.
+      const metadataLookup = getLookupFn(resultTaggedMetadata);
+      this.#papiBuilder = getDynamicBuilder(metadataLookup);
+
+      // // Format resulting class chain spec and persist to class.
+      this.#papiChainSpec = {
+        chain: formatChainSpecName(resultChainSpec.specName),
+        version: resultChainSpec.specVersion,
+        // ss58Prefix: Number(ss58Prefix), // TODO: Derive from metadata constants.
+        metadata: metadataLookup,
+        consts: {},
+      };
     } catch (e) {
       // Flag an error if there are any issues bootstrapping chain spec.
       this.dispatchEvent(this.ensureEventStatus('error'), {
@@ -171,7 +204,11 @@ export class Api {
             this.#rpcEndpoint
           ];
 
+    // Initialize Polkadot JS provider.
     this.#provider = new WsProvider(endpoint);
+
+    // Initialize PAPI provider.
+    this.#papiProvider = getWsProvider(endpoint);
   }
 
   // Dynamically load and connect to Substrate Connect.
