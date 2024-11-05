@@ -24,3 +24,11 @@ export type ApiStatus = 'connecting' | 'connected' | 'disconnected' | 'ready';
 export type EventApiStatus = ApiStatus | 'error';
 
 export type ApiChainType = 'relay' | 'system';
+
+// NOTE: Replace with actual PAPI client interface when available.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type PapiObservableClient = any;
+
+// NOTE: Replace with actual PAPI builder interface when available.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type PapiDynamicBuilder = any;

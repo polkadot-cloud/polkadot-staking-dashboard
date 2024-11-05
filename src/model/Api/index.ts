@@ -9,16 +9,24 @@ import type {
   APIEventDetail,
   ConnectionType,
   EventApiStatus,
+  PapiDynamicBuilder,
+  PapiObservableClient,
 } from './types';
 import { SubscriptionsController } from 'controllers/Subscriptions';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import * as Sc from '@substrate/connect';
+import type { JsonRpcProvider } from '@polkadot-api/substrate-client';
+import type { MetadataLookup } from '@polkadot-api/metadata-builders';
+import { getWsProvider } from '@polkadot-api/ws-provider/web';
+import { createClient as createRawClient } from '@polkadot-api/substrate-client';
+import { getObservableClient } from '@polkadot-api/observable-client';
+// import { getSmProvider } from '@polkadot-api/sm-provider';
+// import {
+//   getLookupFn,
+//   getDynamicBuilder,
+// } from '@polkadot-api/metadata-builders';
 
 export class Api {
-  // ------------------------------------------------------
-  // Class members.
-  // ------------------------------------------------------
-
   // The network name associated with this Api instance.
   network: NetworkName | SystemChainId;
 
@@ -31,15 +39,23 @@ export class Api {
   // API instance.
   #api: ApiPromise;
 
+  // PAPI Provider.
+  #papiProvider: JsonRpcProvider;
+
+  // PAPI Instance.
+  #papiClient: PapiObservableClient;
+
+  // PAPI Dynamic Builder.
+  #papiBuilder: PapiDynamicBuilder;
+
+  // PAPI metadata.
+  #papiMetadata: MetadataLookup;
+
   // The current RPC endpoint.
   #rpcEndpoint: string;
 
   // The current connection type.
   #connectionType: ConnectionType;
-
-  // ------------------------------------------------------
-  // Getters.
-  // ------------------------------------------------------
 
   get api() {
     return this.#api;
@@ -47,6 +63,22 @@ export class Api {
 
   get connectionType() {
     return this.#connectionType;
+  }
+
+  get papiProvider() {
+    return this.#papiProvider;
+  }
+
+  get papiClient() {
+    return this.#papiClient;
+  }
+
+  get papiBuilder() {
+    return this.#papiBuilder;
+  }
+
+  get papiMetadata() {
+    return this.#papiMetadata;
   }
 
   // ------------------------------------------------------
@@ -78,15 +110,27 @@ export class Api {
       // Initiate provider based on connection type.
       if (this.#connectionType === 'ws') {
         this.initWsProvider();
+        // Initialize PAPI provider.
+        this.#papiProvider = getWsProvider(this.#rpcEndpoint);
       } else {
         await this.initScProvider();
+        //TODO: connect to PAPI smProvider.
       }
 
       // Tell UI api is connecting.
       this.dispatchEvent(this.ensureEventStatus('connecting'));
 
-      // Initialise api.
+      // Initialise Polkadot JS API.
       this.#api = new ApiPromise({ provider: this.#provider });
+
+      // Initialize PAPI Client.
+      this.#papiClient = getObservableClient(
+        createRawClient(this.#papiProvider)
+      );
+
+      // NOTE: Unlike Polkadot JS API, observable client does not have an asynchronous
+      // initialization stage that leads to `isReady`. If using observable client, we can
+      // immediately attempt to fetch the chainSpec via the client.
 
       // Initialise api events.
       this.initApiEvents();
