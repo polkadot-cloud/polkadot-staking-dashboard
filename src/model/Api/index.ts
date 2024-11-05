@@ -135,12 +135,26 @@ export class Api {
       // Initialise api events.
       this.initApiEvents();
 
+      // Fetch chain spec and metadata from PAPI client.
+      await this.fetchChainSpec();
+
       // Wait for api to be ready.
       await this.#api.isReady;
     } catch (e) {
       // TODO: report a custom api status error that can flag to the UI the rpcEndpoint failed -
       // retry or select another one. Useful for custom endpoint configs.
       // this.dispatchEvent(this.ensureEventStatus('error'));
+    }
+  }
+
+  async fetchChainSpec() {
+    try {
+      // TODO: Implement.
+    } catch (e) {
+      // Flag an error if there are any issues bootstrapping chain spec.
+      this.dispatchEvent(this.ensureEventStatus('error'), {
+        err: 'ChainSpecError',
+      });
     }
   }
 
