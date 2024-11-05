@@ -30,6 +30,7 @@ import {
 import { formatChainSpecName } from './util';
 import { getSmProvider } from '@polkadot-api/sm-provider';
 import { SmoldotController } from 'controllers/Smoldot';
+import { PalletConstants } from 'model/PalletConstants';
 // import { getSmProvider } from '@polkadot-api/sm-provider';
 
 export class Api {
@@ -56,6 +57,9 @@ export class Api {
 
   // PAPI chain spec.
   #papiChainSpec: APIChainSpec;
+
+  // PAPI constants.
+  #papiConstants: PalletConstants;
 
   // The current RPC endpoint.
   #rpcEndpoint: string;
@@ -176,11 +180,17 @@ export class Api {
       const metadataLookup = getLookupFn(resultTaggedMetadata);
       this.#papiBuilder = getDynamicBuilder(metadataLookup);
 
+      //  Initialise PalletConstants from metadata.
+      this.#papiConstants = new PalletConstants(resultTaggedMetadata);
+
+      // Get SS58 Prefix - defaults to 0.
+      const ss58Prefix = this.getConstant('System', 'SS58Prefix', 0);
+
       // Format resulting class chain spec and persist to class.
       this.#papiChainSpec = {
         chain: formatChainSpecName(resultChainSpec.specName),
         version: resultChainSpec.specVersion,
-        // ss58Prefix: Number(ss58Prefix), // TODO: Derive from metadata constants.
+        ss58Prefix: Number(ss58Prefix),
         metadata: metadataLookup,
         consts: {},
       };
@@ -309,6 +319,17 @@ export class Api {
         subscription.unsubscribe();
         SubscriptionsController.remove(this.network, subscriptionId);
       });
+    }
+  };
+
+  // Get a pallet constant, with a fallback value.
+  getConstant = <T>(pallet: string, key: string, fallback: T): T => {
+    try {
+      return this.#papiBuilder
+        .buildConstant(pallet, key)
+        .dec(this.#papiConstants.getConstantValue(pallet, key) || '0x');
+    } catch (e) {
+      return fallback;
     }
   };
 

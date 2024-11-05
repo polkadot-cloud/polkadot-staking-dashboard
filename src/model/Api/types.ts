@@ -38,7 +38,7 @@ export type PapiDynamicBuilder = any;
 export interface APIChainSpec {
   chain: string | null;
   version: APIChainSpecVersion;
-  // ss58Prefix: number; // TODO: Derive and add back.
+  ss58Prefix: number;
   metadata: MetadataLookup;
   consts: AnyJson;
 }
