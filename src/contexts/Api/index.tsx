@@ -34,6 +34,7 @@ import type {
   APIEventDetail,
   ApiStatus,
   ConnectionType,
+  PAPIChainSpecs,
 } from 'model/Api/types';
 import { StakingConstants } from 'model/Query/StakingConstants';
 import { Era } from 'model/Query/Era';
@@ -132,8 +133,12 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const [stakingMetrics, setStakingMetrics] = useState<APIStakingMetrics>(
     defaultStakingMetrics
   );
+
+  const [, setChainSpecs] = useState<PAPIChainSpecs | undefined>(undefined);
+
   const stakingMetricsRef = useRef(stakingMetrics);
 
+  // TODO: Discontinue this function & state in favour of the above function.
   // Fetch chain state. Called once `provider` has been initialised.
   const onApiReady = async () => {
     const { api } = ApiController.get(network);
@@ -230,6 +235,21 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         handleRelayApiStatus(e.detail);
       } else if (chainType === 'system') {
         handleSystemApiStatus(e.detail);
+      }
+    }
+  };
+
+  const handlePapiReady = (e: Event) => {
+    if (isCustomEvent(e)) {
+      const { chainType, chain, specs, ss58Prefix } = e.detail;
+      // We are only interested in the Relay chain.
+      if (chainType === 'relay') {
+        const newChainSpecs = {
+          chain,
+          specs,
+          ss58Prefix,
+        };
+        setChainSpecs(newChainSpecs);
       }
     }
   };
@@ -464,6 +484,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Add event listener for api events and subscription updates.
   const documentRef = useRef<Document>(document);
+  useEventListener('papi-ready', handlePapiReady, documentRef);
   useEventListener('api-status', handleNewApiStatus, documentRef);
   useEventListener(
     'new-network-metrics',

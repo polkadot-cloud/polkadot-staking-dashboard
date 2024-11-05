@@ -40,7 +40,6 @@ export interface APIChainSpec {
   version: APIChainSpecVersion;
   ss58Prefix: number;
   metadata: V15;
-  consts: AnyJson;
 }
 
 export interface APIChainSpecVersion {
@@ -53,3 +52,27 @@ export interface APIChainSpecVersion {
   stateVersion: number;
   transactionVersion: number;
 }
+
+export interface PAPISpecs {
+  apis: string[];
+  implName: string;
+  implVersion: number;
+  specName: NetworkName | SystemChainId;
+  specVersion: number;
+  transactionVersion: number;
+}
+
+export interface PAPIChainSpecs {
+  specs: PAPISpecs;
+  chain: string;
+  ss58Prefix: number;
+}
+
+export type PAPIChainSpec = PAPIChainSpecs & {
+  metadata: V15;
+};
+
+export type PAPIReadyEvent = PAPIChainSpecs & {
+  network: NetworkName | SystemChainId;
+  chainType: ApiChainType;
+};

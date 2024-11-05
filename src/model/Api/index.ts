@@ -5,11 +5,11 @@ import { ApiPromise, WsProvider } from '@polkadot/api';
 import type { NetworkName, SystemChainId } from 'types';
 import { NetworkList, SystemChainList } from 'config/networks';
 import type {
-  APIChainSpec,
   ApiChainType,
   APIEventDetail,
   ConnectionType,
   EventApiStatus,
+  PAPIChainSpec,
   PapiDynamicBuilder,
   PapiObservableClient,
 } from './types';
@@ -31,7 +31,6 @@ import { formatChainSpecName } from './util';
 import { getSmProvider } from '@polkadot-api/sm-provider';
 import { SmoldotController } from 'controllers/Smoldot';
 import { PalletConstants } from 'model/PalletConstants';
-// import { getSmProvider } from '@polkadot-api/sm-provider';
 
 export class Api {
   // The network name associated with this Api instance.
@@ -56,7 +55,7 @@ export class Api {
   #papiBuilder: PapiDynamicBuilder;
 
   // PAPI chain spec.
-  #papiChainSpec: APIChainSpec;
+  #papiChainSpec: PAPIChainSpec;
 
   // PAPI constants.
   #papiConstants: PalletConstants;
@@ -236,11 +235,13 @@ export class Api {
       // Format resulting class chain spec and persist to class.
       this.#papiChainSpec = {
         chain: formatChainSpecName(resultChainSpec.specName),
-        version: resultChainSpec.specVersion,
+        specs: resultChainSpec,
         ss58Prefix: Number(ss58Prefix),
         metadata: resultTaggedMetadata,
-        consts: {},
       };
+
+      // Dispatch 'papi-ready' event to let contexts populate constants.
+      this.dispatchPapiReadyEvent();
     } catch (e) {
       console.log('PAPI chain spec failed');
       // Flag an error if there are any issues bootstrapping chain spec.
@@ -249,6 +250,19 @@ export class Api {
       //   err: 'ChainSpecError',
       // });
     }
+  }
+
+  // Handler for dispatching `papi-ready` events.
+  dispatchPapiReadyEvent() {
+    const { chain, specs, ss58Prefix } = this.#papiChainSpec;
+    const detail = {
+      network: this.network,
+      chainType: this.#chainType,
+      specs,
+      chain,
+      ss58Prefix,
+    };
+    document.dispatchEvent(new CustomEvent('papi-ready', { detail }));
   }
 
   // ------------------------------------------------------
@@ -274,7 +288,7 @@ export class Api {
     });
   }
 
-  // Handler for dispatching events.
+  // Handler for dispatching `api-status` events.
   dispatchEvent(
     status: EventApiStatus,
     options?: {
