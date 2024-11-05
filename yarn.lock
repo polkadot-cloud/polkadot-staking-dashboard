@@ -1604,6 +1604,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@polkadot-api/known-chains@npm:^0.5.5":
+  version: 0.5.5
+  resolution: "@polkadot-api/known-chains@npm:0.5.5"
+  checksum: 10c0/89ea415b162504f90af3b42a12179256671455691f41e7f927152faa4007e791343fd28af47b80cabdaadca6147206d6db7a24f88ea897dd9e08c4fb1b95a609
+  languageName: node
+  linkType: hard
+
 "@polkadot-api/merkleize-metadata@npm:^1.1.9":
   version: 1.1.9
   resolution: "@polkadot-api/merkleize-metadata@npm:1.1.9"
@@ -1682,6 +1689,16 @@ __metadata:
   peerDependencies:
     smoldot: ">=2"
   checksum: 10c0/3109fe47e8a0011f6c1464c57c1087915a1144bb79e80c7df491f1003dd51abf1fe7e564c06360b7da6747818354cb2e090ac056bcc78a1e401309c000d50fa0
+  languageName: node
+  linkType: hard
+
+"@polkadot-api/smoldot@npm:^0.3.3":
+  version: 0.3.3
+  resolution: "@polkadot-api/smoldot@npm:0.3.3"
+  dependencies:
+    "@types/node": "npm:^22.2.0"
+    smoldot: "npm:2.0.30"
+  checksum: 10c0/503b8eb4fb47d9a938b42de7a8852f55bc3b997d364cd6952f464f878b70eb99d789f5b275f34b2b00edc3d1faadd49e3f634e03a7f8e3f13049608ae680b1fa
   languageName: node
   linkType: hard
 
@@ -3493,6 +3510,15 @@ __metadata:
   dependencies:
     undici-types: "npm:~6.19.8"
   checksum: 10c0/14372885db80059ed6e92c320b2bcd8f7dc271698adce11f51aa0f424a3f82aa1749a4f66321b87043791b894346b2458d514cbb65ce70167c2fd8a78a124947
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^22.2.0":
+  version: 22.9.0
+  resolution: "@types/node@npm:22.9.0"
+  dependencies:
+    undici-types: "npm:~6.19.8"
+  checksum: 10c0/3f46cbe0a49bab4ba30494025e4c8a6e699b98ac922857aa1f0209ce11a1313ee46e6808b8f13fe5b8b960a9d7796b77c8d542ad4e9810e85ef897d5593b5d51
   languageName: node
   linkType: hard
 
@@ -8644,10 +8670,12 @@ __metadata:
     "@fortawesome/react-fontawesome": "npm:^0.2.2"
     "@ledgerhq/hw-transport-webhid": "npm:^6.29.2"
     "@ledgerhq/logs": "npm:^6.12.0"
+    "@polkadot-api/known-chains": "npm:^0.5.5"
     "@polkadot-api/merkleize-metadata": "npm:^1.1.9"
     "@polkadot-api/metadata-builders": "npm:^0.9.1"
     "@polkadot-api/observable-client": "npm:^0.5.14"
     "@polkadot-api/sm-provider": "npm:^0.1.3"
+    "@polkadot-api/smoldot": "npm:^0.3.3"
     "@polkadot-api/substrate-client": "npm:^0.2.2"
     "@polkadot-api/ws-provider": "npm:^0.3.4"
     "@polkadot/api": "npm:^14.0.1"

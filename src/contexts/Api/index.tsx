@@ -43,6 +43,7 @@ import { BlockNumber } from 'model/Subscribe/BlockNumber';
 import { NetworkMetrics } from 'model/Subscribe/NetworkMetrics';
 import { ActiveEra } from 'model/Subscribe/ActiveEra';
 import { PoolsConfig } from 'model/Subscribe/PoolsConfig';
+import { SmoldotController } from 'controllers/Smoldot';
 
 export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 
@@ -67,14 +68,14 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Setter for whether light client is active. Updates state and local storage.
   const setConnectionType = (value: ConnectionType) => {
+    if (value === 'ws') {
+      SmoldotController.terminate();
+      localStorage.removeItem('light_client');
+    } else {
+      localStorage.setItem('light_client', 'true');
+    }
     connectionTypeRef.current = value;
     setConnectionTypeState(value);
-
-    if (value === 'ws') {
-      localStorage.removeItem('light_client');
-      return;
-    }
-    localStorage.setItem('light_client', 'true');
   };
 
   // Store the active RPC provider.

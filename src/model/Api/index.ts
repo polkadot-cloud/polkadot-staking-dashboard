@@ -28,6 +28,8 @@ import {
   getLookupFn,
 } from '@polkadot-api/metadata-builders';
 import { formatChainSpecName } from './util';
+import { getSmProvider } from '@polkadot-api/sm-provider';
+import { SmoldotController } from 'controllers/Smoldot';
 // import { getSmProvider } from '@polkadot-api/sm-provider';
 
 export class Api {
@@ -116,7 +118,6 @@ export class Api {
         this.initWsProvider();
       } else {
         await this.initScProvider();
-        //TODO: connect to PAPI smProvider.
       }
 
       // Tell UI api is connecting.
@@ -184,10 +185,12 @@ export class Api {
         consts: {},
       };
     } catch (e) {
+      console.log('PAPI chain spec failed');
       // Flag an error if there are any issues bootstrapping chain spec.
-      this.dispatchEvent(this.ensureEventStatus('error'), {
-        err: 'ChainSpecError',
-      });
+      // NOTE: This can happen when PAPI is the standalone connection method.
+      // this.dispatchEvent(this.ensureEventStatus('error'), {
+      //   err: 'ChainSpecError',
+      // });
     }
   }
 
@@ -219,9 +222,20 @@ export class Api {
         ? NetworkList[this.network].endpoints.lightClient
         : SystemChainList[this.network].endpoints.lightClient;
 
-    // Instantiate light client provider.
+    // Start up smoldot worker.
+    SmoldotController.initialise();
+
+    // Initialise Polkadot JS light client provider.
     this.#provider = new ScProvider(Sc, Sc.WellKnownChain[lightClientKey]);
     await this.#provider.connect();
+
+    // Initialise PAPI light client provider.
+    const url = `@polkadot-api/known-chains/${lightClientKey}`;
+    this.#papiProvider = getSmProvider(
+      import(url).then(({ chainSpec }) =>
+        SmoldotController.addChain({ chainSpec })
+      )
+    );
   }
 
   // ------------------------------------------------------
