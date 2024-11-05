@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { MetadataLookup } from '@polkadot-api/metadata-builders';
+import type { V15 } from '@polkadot-api/substrate-bindings';
 import type { AnyJson } from '@w3ux/types';
 import type { NetworkName, SystemChainId } from 'types';
 
@@ -39,7 +39,7 @@ export interface APIChainSpec {
   chain: string | null;
   version: APIChainSpecVersion;
   ss58Prefix: number;
-  metadata: MetadataLookup;
+  metadata: V15;
   consts: AnyJson;
 }
 

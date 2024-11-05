@@ -154,56 +154,6 @@ export class Api {
     }
   }
 
-  async fetchChainSpec() {
-    try {
-      const [resultChainSpec, resultTaggedMetadata] = await Promise.all([
-        // Get chain spec via observable.
-        getDataFromObservable(
-          this.network,
-          'chainSpec',
-          new ChainSpec(this.network)
-        ),
-        // Get metadata via observable.
-        getDataFromObservable(
-          this.network,
-          'metadata',
-          new TaggedMetadata(this.network)
-        ),
-      ]);
-
-      if (!resultChainSpec || !resultTaggedMetadata) {
-        throw new Error();
-      }
-
-      // Now metadata has been retrieved, create a dynamic builder for the metadata and persist it
-      // to this class.
-      const metadataLookup = getLookupFn(resultTaggedMetadata);
-      this.#papiBuilder = getDynamicBuilder(metadataLookup);
-
-      //  Initialise PalletConstants from metadata.
-      this.#papiConstants = new PalletConstants(resultTaggedMetadata);
-
-      // Get SS58 Prefix - defaults to 0.
-      const ss58Prefix = this.getConstant('System', 'SS58Prefix', 0);
-
-      // Format resulting class chain spec and persist to class.
-      this.#papiChainSpec = {
-        chain: formatChainSpecName(resultChainSpec.specName),
-        version: resultChainSpec.specVersion,
-        ss58Prefix: Number(ss58Prefix),
-        metadata: metadataLookup,
-        consts: {},
-      };
-    } catch (e) {
-      console.log('PAPI chain spec failed');
-      // Flag an error if there are any issues bootstrapping chain spec.
-      // NOTE: This can happen when PAPI is the standalone connection method.
-      // this.dispatchEvent(this.ensureEventStatus('error'), {
-      //   err: 'ChainSpecError',
-      // });
-    }
-  }
-
   // ------------------------------------------------------
   // Provider initialization.
   // ------------------------------------------------------
@@ -246,6 +196,59 @@ export class Api {
         SmoldotController.addChain({ chainSpec })
       )
     );
+  }
+
+  // ------------------------------------------------------
+  // Fetch metadata & chain spec.
+  // ------------------------------------------------------
+
+  async fetchChainSpec() {
+    try {
+      const [resultChainSpec, resultTaggedMetadata] = await Promise.all([
+        // Get chain spec via observable.
+        getDataFromObservable(
+          this.network,
+          'chainSpec',
+          new ChainSpec(this.network)
+        ),
+        // Get metadata via observable.
+        getDataFromObservable(
+          this.network,
+          'metadata',
+          new TaggedMetadata(this.network)
+        ),
+      ]);
+
+      if (!resultChainSpec || !resultTaggedMetadata) {
+        throw new Error();
+      }
+
+      // Now metadata has been retrieved, create a dynamic builder for the metadata and persist it
+      // to this class.
+      this.#papiBuilder = getDynamicBuilder(getLookupFn(resultTaggedMetadata));
+
+      //  Initialise PalletConstants from metadata.
+      this.#papiConstants = new PalletConstants(resultTaggedMetadata);
+
+      // Get SS58 Prefix - defaults to 0.
+      const ss58Prefix = this.getConstant('System', 'SS58Prefix', 0);
+
+      // Format resulting class chain spec and persist to class.
+      this.#papiChainSpec = {
+        chain: formatChainSpecName(resultChainSpec.specName),
+        version: resultChainSpec.specVersion,
+        ss58Prefix: Number(ss58Prefix),
+        metadata: resultTaggedMetadata,
+        consts: {},
+      };
+    } catch (e) {
+      console.log('PAPI chain spec failed');
+      // Flag an error if there are any issues bootstrapping chain spec.
+      // NOTE: This can happen when PAPI is the standalone connection method.
+      // this.dispatchEvent(this.ensureEventStatus('error'), {
+      //   err: 'ChainSpecError',
+      // });
+    }
   }
 
   // ------------------------------------------------------
@@ -329,6 +332,7 @@ export class Api {
         .buildConstant(pallet, key)
         .dec(this.#papiConstants.getConstantValue(pallet, key) || '0x');
     } catch (e) {
+      console.log(e);
       return fallback;
     }
   };

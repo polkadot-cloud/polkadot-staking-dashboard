@@ -1,15 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { MetadataLookup } from '@polkadot-api/metadata-builders';
+import type { V15 } from '@polkadot-api/substrate-bindings';
 
 // Class to handle fetching pallet constants from metadata.
 export class PalletConstants {
   // Holds the metadata lookup instance for accessing pallet metadata.
-  metadataLookup: MetadataLookup;
+  metadataLookup: V15;
 
-  // Constructor that initializes the PalletConstants with a MetadataLookup instance.
-  constructor(metadataLookup: MetadataLookup) {
+  // Constructor that initializes the PalletConstants with a `V15` instance.
+  constructor(metadataLookup: V15) {
     this.metadataLookup = metadataLookup;
   }
 
@@ -43,7 +43,7 @@ export class PalletConstants {
   // @returns {Pallet | undefined} - The pallet metadata if found, otherwise undefined.
   getPallet(palletName: string) {
     // Search for the specified pallet within the metadata lookup.
-    const pallet = this.metadataLookup.metadata.pallets.find(
+    const pallet = this.metadataLookup.pallets.find(
       ({ name }: { name: string }) => name === palletName // Destructure the name from pallet object.
     );
 
