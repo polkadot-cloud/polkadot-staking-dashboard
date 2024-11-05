@@ -7,7 +7,6 @@ import { NetworkList } from 'config/networks';
 
 import type {
   APIActiveEra,
-  APIChainState,
   APIConstants,
   APIContextInterface,
   APINetworkMetrics,
@@ -20,10 +19,10 @@ import {
   defaultConsts,
   defaultActiveEra,
   defaultApiContext,
-  defaultChainState,
   defaultPoolsConfig,
   defaultNetworkMetrics,
   defaultStakingMetrics,
+  defaultChainSpecs,
 } from './defaults';
 import { isCustomEvent } from 'controllers/utils';
 import { useEventListener } from 'usehooks-ts';
@@ -107,10 +106,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     setRpcEndpointState(key);
   };
 
-  // Store chain state.
-  const [chainState, setChainState] =
-    useState<APIChainState>(defaultChainState);
-
   // Store network constants.
   const [consts, setConsts] = useState<APIConstants>(defaultConsts);
 
@@ -134,30 +129,14 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     defaultStakingMetrics
   );
 
-  const [, setChainSpecs] = useState<PAPIChainSpecs | undefined>(undefined);
+  const [chainSpecs, setChainSpecs] = useState<
+    PAPIChainSpecs & { received: boolean }
+  >(defaultChainSpecs);
 
   const stakingMetricsRef = useRef(stakingMetrics);
 
-  // TODO: Discontinue this function & state in favour of the above function.
   // Fetch chain state. Called once `provider` has been initialised.
   const onApiReady = async () => {
-    const { api } = ApiController.get(network);
-
-    const newChainState = await Promise.all([
-      api.rpc.system.chain(),
-      api.consts.system.version,
-      api.consts.system.ss58Prefix,
-    ]);
-
-    // Check that chain values have been fetched before committing to state. Could be expanded to
-    // check supported chains.
-    if (newChainState.every((c) => !!c?.toHuman())) {
-      const chain = newChainState[0]?.toString();
-      const version = newChainState[1]?.toJSON();
-      const ss58Prefix = Number(newChainState[2]?.toString());
-      setChainState({ chain, version, ss58Prefix });
-    }
-
     // Assume chain state is correct and bootstrap network consts.
     bootstrapNetworkConfig();
   };
@@ -249,7 +228,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
           specs,
           ss58Prefix,
         };
-        setChainSpecs(newChainSpecs);
+        setChainSpecs({ ...newChainSpecs, received: true });
       }
     }
   };
@@ -456,7 +435,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
     // Reset consts and chain state.
     setConsts(defaultConsts);
-    setChainState(defaultChainState);
+    setChainSpecs(defaultChainSpecs);
     setStateWithRef(
       defaultNetworkMetrics,
       setNetworkMetrics,
@@ -504,14 +483,14 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       value={{
         api: ApiController.get(network)?.api || null,
         peopleApi: ApiController.get(`people-${network}`)?.api || null,
-        chainState,
+        chainSpecs,
         apiStatus,
         peopleApiStatus,
         connectionType,
         setConnectionType,
         rpcEndpoint,
         setRpcEndpoint,
-        isReady: apiStatus === 'ready',
+        isReady: apiStatus === 'ready' && chainSpecs.received === true,
         consts,
         networkMetrics,
         activeEra,
