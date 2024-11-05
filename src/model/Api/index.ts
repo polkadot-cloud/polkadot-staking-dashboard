@@ -232,7 +232,7 @@ export class Api {
     // Initialise PAPI light client provider.
     const url = `@polkadot-api/known-chains/${lightClientKey}`;
     this.#papiProvider = getSmProvider(
-      import(url).then(({ chainSpec }) =>
+      import(/* @vite-ignore */ url).then(({ chainSpec }) =>
         SmoldotController.addChain({ chainSpec })
       )
     );
