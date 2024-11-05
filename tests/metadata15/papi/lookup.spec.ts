@@ -1,5 +1,5 @@
-// Copyright 2024 @polkadot-cloud/polkadot-developer-console authors & contributors
-// SPDX-License-Identifier: AGPL-3.0
+// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
 
 import assert from 'assert';
 import * as metadataJson from '../../data/metadataV15_PAPI.json';
