@@ -70,7 +70,7 @@ export class SubscriptionsController {
     network: NetworkName | SystemChainId,
     subscriptionId: string,
     subscription: Subscription
-  ): void {
+  ): Subscription | undefined {
     // Ignore if there is already a subscription for this network and subscriptionId.
     if (this.#subs?.[network]?.[subscriptionId]) {
       return;
@@ -83,6 +83,8 @@ export class SubscriptionsController {
 
     // NOTE: We know for certain that `this.#subs[network]` is defined here.
     this.#subs[network]![subscriptionId] = subscription;
+
+    return subscription;
   }
 
   // ------------------------------------------------------
