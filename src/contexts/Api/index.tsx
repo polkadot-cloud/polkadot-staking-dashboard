@@ -43,7 +43,6 @@ import { NetworkMetrics } from 'model/Subscribe/NetworkMetrics';
 import { ActiveEra } from 'model/Subscribe/ActiveEra';
 import { PoolsConfig } from 'model/Subscribe/PoolsConfig';
 import { SmoldotController } from 'controllers/Smoldot';
-import type { AnyApi } from 'types';
 
 export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 
@@ -278,8 +277,9 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         const poolsPalletId = apiInstance.getConstant(
           'NominationPools',
           'PalletId',
-          new Uint8Array(0)
-        ) as AnyApi;
+          new Uint8Array(0),
+          'asBytes'
+        );
 
         setConsts({
           maxNominations: new BigNumber(16),
@@ -292,7 +292,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
           epochDuration: new BigNumber(epochDuration.toString()),
           existentialDeposit: new BigNumber(existentialDeposit.toString()),
           fastUnstakeDeposit: new BigNumber(fastUnstakeDeposit.toString()),
-          poolsPalletId: poolsPalletId?.asBytes() || new Uint8Array(0),
+          poolsPalletId,
         });
       }
     }

@@ -340,13 +340,24 @@ export class Api {
   };
 
   // Get a pallet constant, with a fallback value.
-  getConstant = <T>(pallet: string, key: string, fallback: T): T => {
+  getConstant = <T>(
+    pallet: string,
+    key: string,
+    fallback: T,
+    formatter?: 'asBytes'
+  ): T => {
     try {
-      return this.#papiBuilder
+      const result = this.#papiBuilder
         .buildConstant(pallet, key)
         .dec(this.#papiConstants.getConstantValue(pallet, key) || '0x');
+
+      switch (formatter) {
+        case 'asBytes':
+          return result.asBytes();
+        default:
+          return result;
+      }
     } catch (e) {
-      console.log(e);
       return fallback;
     }
   };
