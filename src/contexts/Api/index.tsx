@@ -7,7 +7,6 @@ import { NetworkList } from 'config/networks';
 
 import type {
   APIActiveEra,
-  APIChainState,
   APIConstants,
   APIContextInterface,
   APINetworkMetrics,
@@ -20,10 +19,10 @@ import {
   defaultConsts,
   defaultActiveEra,
   defaultApiContext,
-  defaultChainState,
   defaultPoolsConfig,
   defaultNetworkMetrics,
   defaultStakingMetrics,
+  defaultChainSpecs,
 } from './defaults';
 import { isCustomEvent } from 'controllers/utils';
 import { useEventListener } from 'usehooks-ts';
@@ -34,8 +33,8 @@ import type {
   APIEventDetail,
   ApiStatus,
   ConnectionType,
+  PAPIChainSpecs,
 } from 'model/Api/types';
-import { StakingConstants } from 'model/Query/StakingConstants';
 import { Era } from 'model/Query/Era';
 import { NetworkMeta } from 'model/Query/NetworkMeta';
 import { SubscriptionsController } from 'controllers/Subscriptions';
@@ -43,6 +42,7 @@ import { BlockNumber } from 'model/Subscribe/BlockNumber';
 import { NetworkMetrics } from 'model/Subscribe/NetworkMetrics';
 import { ActiveEra } from 'model/Subscribe/ActiveEra';
 import { PoolsConfig } from 'model/Subscribe/PoolsConfig';
+import { SmoldotController } from 'controllers/Smoldot';
 
 export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 
@@ -67,14 +67,14 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Setter for whether light client is active. Updates state and local storage.
   const setConnectionType = (value: ConnectionType) => {
+    if (value === 'ws') {
+      SmoldotController.terminate();
+      localStorage.removeItem('light_client');
+    } else {
+      localStorage.setItem('light_client', 'true');
+    }
     connectionTypeRef.current = value;
     setConnectionTypeState(value);
-
-    if (value === 'ws') {
-      localStorage.removeItem('light_client');
-      return;
-    }
-    localStorage.setItem('light_client', 'true');
   };
 
   // Store the active RPC provider.
@@ -105,12 +105,13 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     setRpcEndpointState(key);
   };
 
-  // Store chain state.
-  const [chainState, setChainState] =
-    useState<APIChainState>(defaultChainState);
+  // Store network constants. Set in an event callback - ref also needed.
+  const [consts, setConstsState] = useState<APIConstants>(defaultConsts);
+  const constsRef = useRef(consts);
 
-  // Store network constants.
-  const [consts, setConsts] = useState<APIConstants>(defaultConsts);
+  const setConsts = (newConsts: APIConstants) => {
+    setStateWithRef(newConsts, setConstsState, constsRef);
+  };
 
   // Store network metrics in state.
   const [networkMetrics, setNetworkMetrics] = useState<APINetworkMetrics>(
@@ -131,27 +132,15 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const [stakingMetrics, setStakingMetrics] = useState<APIStakingMetrics>(
     defaultStakingMetrics
   );
+
+  const [chainSpecs, setChainSpecs] = useState<
+    PAPIChainSpecs & { received: boolean }
+  >(defaultChainSpecs);
+
   const stakingMetricsRef = useRef(stakingMetrics);
 
   // Fetch chain state. Called once `provider` has been initialised.
   const onApiReady = async () => {
-    const { api } = ApiController.get(network);
-
-    const newChainState = await Promise.all([
-      api.rpc.system.chain(),
-      api.consts.system.version,
-      api.consts.system.ss58Prefix,
-    ]);
-
-    // Check that chain values have been fetched before committing to state. Could be expanded to
-    // check supported chains.
-    if (newChainState.every((c) => !!c?.toHuman())) {
-      const chain = newChainState[0]?.toString();
-      const version = newChainState[1]?.toJSON();
-      const ss58Prefix = Number(newChainState[2]?.toString());
-      setChainState({ chain, version, ss58Prefix });
-    }
-
     // Assume chain state is correct and bootstrap network consts.
     bootstrapNetworkConfig();
   };
@@ -162,9 +151,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     const api = apiInstance.api;
 
     // 1. Fetch network data for bootstrapping app state:
-
-    // Get general network constants for staking UI.
-    const newConsts = await new StakingConstants().fetch(api, network);
 
     // Get active and previous era.
     const { activeEra: newActiveEra, previousEra } = await new Era().fetch(api);
@@ -178,7 +164,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
     // 2. Populate all config state:
 
-    setConsts(newConsts);
     setStateWithRef(newNetworkMetrics, setNetworkMetrics, networkMetricsRef);
     const { index, start } = newActiveEra;
     setStateWithRef({ index, start }, setActiveEra, activeEraRef);
@@ -229,6 +214,86 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         handleRelayApiStatus(e.detail);
       } else if (chainType === 'system') {
         handleSystemApiStatus(e.detail);
+      }
+    }
+  };
+
+  const handlePapiReady = (e: Event) => {
+    if (isCustomEvent(e)) {
+      const { chainType, chain, specs, ss58Prefix } = e.detail;
+      // We are only interested in the Relay chain.
+      if (chainType === 'relay') {
+        const newChainSpecs = {
+          chain,
+          specs,
+          ss58Prefix,
+        };
+        setChainSpecs({ ...newChainSpecs, received: true });
+
+        // Fetch chain constants. NOTE: Once we go chain agnostic default values can be removed in
+        // favour of throwing an error that'll need UI.
+        const apiInstance = ApiController.get(network);
+
+        const bondingDuration = apiInstance.getConstant(
+          'Staking',
+          'BondingDuration',
+          0
+        );
+        const sessionsPerEra = apiInstance.getConstant(
+          'Staking',
+          'SessionsPerEra',
+          0
+        );
+        const maxExposurePageSize = apiInstance.getConstant(
+          'Staking',
+          'MaxExposurePageSize',
+          0
+        );
+        const historyDepth = apiInstance.getConstant(
+          'Staking',
+          'HistoryDepth',
+          0
+        );
+        const expectedBlockTime = apiInstance.getConstant(
+          'Babe',
+          'ExpectedBlockTime',
+          0
+        );
+        const epochDuration = apiInstance.getConstant(
+          'Babe',
+          'EpochDuration',
+          0
+        );
+        const existentialDeposit = apiInstance.getConstant(
+          'Balances',
+          'ExistentialDeposit',
+          0
+        );
+        const fastUnstakeDeposit = apiInstance.getConstant(
+          'FastUnstake',
+          'Deposit',
+          0
+        );
+        const poolsPalletId = apiInstance.getConstant(
+          'NominationPools',
+          'PalletId',
+          new Uint8Array(0),
+          'asBytes'
+        );
+
+        setConsts({
+          maxNominations: new BigNumber(16),
+          maxElectingVoters: new BigNumber(22500),
+          bondDuration: new BigNumber(bondingDuration),
+          sessionsPerEra: new BigNumber(sessionsPerEra),
+          maxExposurePageSize: new BigNumber(maxExposurePageSize),
+          historyDepth: new BigNumber(historyDepth),
+          expectedBlockTime: new BigNumber(expectedBlockTime.toString()),
+          epochDuration: new BigNumber(epochDuration.toString()),
+          existentialDeposit: new BigNumber(existentialDeposit.toString()),
+          fastUnstakeDeposit: new BigNumber(fastUnstakeDeposit.toString()),
+          poolsPalletId,
+        });
       }
     }
   };
@@ -435,7 +500,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
     // Reset consts and chain state.
     setConsts(defaultConsts);
-    setChainState(defaultChainState);
+    setChainSpecs(defaultChainSpecs);
     setStateWithRef(
       defaultNetworkMetrics,
       setNetworkMetrics,
@@ -463,6 +528,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Add event listener for api events and subscription updates.
   const documentRef = useRef<Document>(document);
+  useEventListener('papi-ready', handlePapiReady, documentRef);
   useEventListener('api-status', handleNewApiStatus, documentRef);
   useEventListener(
     'new-network-metrics',
@@ -482,14 +548,14 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       value={{
         api: ApiController.get(network)?.api || null,
         peopleApi: ApiController.get(`people-${network}`)?.api || null,
-        chainState,
+        chainSpecs,
         apiStatus,
         peopleApiStatus,
         connectionType,
         setConnectionType,
         rpcEndpoint,
         setRpcEndpoint,
-        isReady: apiStatus === 'ready',
+        isReady: apiStatus === 'ready' && chainSpecs.received === true,
         consts,
         networkMetrics,
         activeEra,

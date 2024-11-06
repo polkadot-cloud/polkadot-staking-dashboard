@@ -2,7 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { NetworkName, SystemChainId } from 'types';
-import type { ChainSubscriptions, Subscription } from './types';
+import {
+  ObservableGetSubscription,
+  Unsubscribable,
+  type ChainSubscriptions,
+  type Subscription,
+  type UnsubSubscription,
+} from './types';
 
 // A class to manage subscriptions.
 
@@ -35,8 +41,24 @@ export class SubscriptionsController {
   static get(
     network: NetworkName | SystemChainId,
     subscriptionId: string
-  ): Subscription | undefined {
-    return this.#subs[network]?.[subscriptionId] || undefined;
+  ): UnsubSubscription | undefined {
+    const subscription = this.#subs[network]?.[subscriptionId];
+    if (!(subscription instanceof Unsubscribable)) {
+      return undefined;
+    }
+    return subscription as UnsubSubscription;
+  }
+
+  // Get an observable getter by network and subscriptionId.
+  static getObservableGetter(
+    network: NetworkName | SystemChainId,
+    subscriptionId: string
+  ): ObservableGetSubscription | undefined {
+    const subscription = this.#subs[network]?.[subscriptionId];
+    if (!(subscription instanceof ObservableGetSubscription)) {
+      return undefined;
+    }
+    return subscription as ObservableGetSubscription;
   }
 
   // ------------------------------------------------------
@@ -45,10 +67,10 @@ export class SubscriptionsController {
 
   // Sets a new subscription for a network.
   static set(
-    network: NetworkName,
+    network: NetworkName | SystemChainId,
     subscriptionId: string,
     subscription: Subscription
-  ): void {
+  ): Subscription | undefined {
     // Ignore if there is already a subscription for this network and subscriptionId.
     if (this.#subs?.[network]?.[subscriptionId]) {
       return;
@@ -61,6 +83,8 @@ export class SubscriptionsController {
 
     // NOTE: We know for certain that `this.#subs[network]` is defined here.
     this.#subs[network]![subscriptionId] = subscription;
+
+    return subscription;
   }
 
   // ------------------------------------------------------
