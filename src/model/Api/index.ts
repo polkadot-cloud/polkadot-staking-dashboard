@@ -9,16 +9,30 @@ import type {
   APIEventDetail,
   ConnectionType,
   EventApiStatus,
+  PAPIChainSpec,
+  PapiDynamicBuilder,
+  PapiObservableClient,
 } from './types';
 import { SubscriptionsController } from 'controllers/Subscriptions';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import * as Sc from '@substrate/connect';
+import type { JsonRpcProvider } from '@polkadot-api/substrate-client';
+import { getWsProvider } from '@polkadot-api/ws-provider/web';
+import { createClient as createRawClient } from '@polkadot-api/substrate-client';
+import { getObservableClient } from '@polkadot-api/observable-client';
+import { getDataFromObservable } from 'controllers/Subscriptions/util';
+import { ChainSpec } from 'model/Observables/ChainSpec';
+import { TaggedMetadata } from 'model/Observables/TaggedMetadata';
+import {
+  getDynamicBuilder,
+  getLookupFn,
+} from '@polkadot-api/metadata-builders';
+import { formatChainSpecName } from './util';
+import { getSmProvider } from '@polkadot-api/sm-provider';
+import { SmoldotController } from 'controllers/Smoldot';
+import { PalletConstants } from 'model/PalletConstants';
 
 export class Api {
-  // ------------------------------------------------------
-  // Class members.
-  // ------------------------------------------------------
-
   // The network name associated with this Api instance.
   network: NetworkName | SystemChainId;
 
@@ -31,15 +45,26 @@ export class Api {
   // API instance.
   #api: ApiPromise;
 
+  // PAPI Provider.
+  #papiProvider: JsonRpcProvider;
+
+  // PAPI Instance.
+  #papiClient: PapiObservableClient;
+
+  // PAPI Dynamic Builder.
+  #papiBuilder: PapiDynamicBuilder;
+
+  // PAPI chain spec.
+  #papiChainSpec: PAPIChainSpec;
+
+  // PAPI constants.
+  #papiConstants: PalletConstants;
+
   // The current RPC endpoint.
   #rpcEndpoint: string;
 
   // The current connection type.
   #connectionType: ConnectionType;
-
-  // ------------------------------------------------------
-  // Getters.
-  // ------------------------------------------------------
 
   get api() {
     return this.#api;
@@ -47,6 +72,22 @@ export class Api {
 
   get connectionType() {
     return this.#connectionType;
+  }
+
+  get papiProvider() {
+    return this.#papiProvider;
+  }
+
+  get papiClient() {
+    return this.#papiClient;
+  }
+
+  get papiBuilder() {
+    return this.#papiBuilder;
+  }
+
+  get papiChainSpec() {
+    return this.#papiChainSpec;
   }
 
   // ------------------------------------------------------
@@ -85,14 +126,26 @@ export class Api {
       // Tell UI api is connecting.
       this.dispatchEvent(this.ensureEventStatus('connecting'));
 
-      // Initialise api.
+      // Initialise Polkadot JS API.
       this.#api = new ApiPromise({ provider: this.#provider });
+
+      // Initialize PAPI Client.
+      this.#papiClient = getObservableClient(
+        createRawClient(this.#papiProvider)
+      );
+
+      // NOTE: Unlike Polkadot JS API, observable client does not have an asynchronous
+      // initialization stage that leads to `isReady`. If using observable client, we can
+      // immediately attempt to fetch the chainSpec via the client.
 
       // Initialise api events.
       this.initApiEvents();
 
       // Wait for api to be ready.
       await this.#api.isReady;
+
+      // Fetch chain spec and metadata from PAPI client.
+      await this.fetchChainSpec();
     } catch (e) {
       // TODO: report a custom api status error that can flag to the UI the rpcEndpoint failed -
       // retry or select another one. Useful for custom endpoint configs.
@@ -113,7 +166,11 @@ export class Api {
             this.#rpcEndpoint
           ];
 
+    // Initialize Polkadot JS provider.
     this.#provider = new WsProvider(endpoint);
+
+    // Initialize PAPI provider.
+    this.#papiProvider = getWsProvider(endpoint);
   }
 
   // Dynamically load and connect to Substrate Connect.
@@ -124,9 +181,89 @@ export class Api {
         ? NetworkList[this.network].endpoints.lightClient
         : SystemChainList[this.network].endpoints.lightClient;
 
-    // Instantiate light client provider.
+    // Start up smoldot worker.
+    SmoldotController.initialise();
+
+    // Initialise Polkadot JS light client provider.
     this.#provider = new ScProvider(Sc, Sc.WellKnownChain[lightClientKey]);
     await this.#provider.connect();
+
+    // Initialise PAPI light client provider.
+    const url = `@polkadot-api/known-chains/${lightClientKey}`;
+    this.#papiProvider = getSmProvider(
+      import(/* @vite-ignore */ url).then(({ chainSpec }) =>
+        SmoldotController.addChain({ chainSpec })
+      )
+    );
+  }
+
+  // ------------------------------------------------------
+  // Fetch metadata & chain spec.
+  // ------------------------------------------------------
+
+  async fetchChainSpec() {
+    try {
+      const [resultChainSpec, resultTaggedMetadata] = await Promise.all([
+        // Get chain spec via observable.
+        getDataFromObservable(
+          this.network,
+          'chainSpec',
+          new ChainSpec(this.network)
+        ),
+        // Get metadata via observable.
+        getDataFromObservable(
+          this.network,
+          'metadata',
+          new TaggedMetadata(this.network)
+        ),
+      ]);
+
+      if (!resultChainSpec || !resultTaggedMetadata) {
+        throw new Error();
+      }
+
+      // Now metadata has been retrieved, create a dynamic builder for the metadata and persist it
+      // to this class.
+      this.#papiBuilder = getDynamicBuilder(getLookupFn(resultTaggedMetadata));
+
+      //  Initialise PalletConstants from metadata.
+      this.#papiConstants = new PalletConstants(resultTaggedMetadata);
+
+      // Get SS58 Prefix - defaults to 0.
+      const ss58Prefix = this.getConstant('System', 'SS58Prefix', 0);
+
+      // Format resulting class chain spec and persist to class.
+      this.#papiChainSpec = {
+        chain: formatChainSpecName(resultChainSpec.specName),
+        specs: resultChainSpec,
+        ss58Prefix: Number(ss58Prefix),
+        metadata: resultTaggedMetadata,
+      };
+
+      // Dispatch 'papi-ready' event to let contexts populate constants.
+      this.dispatchPapiReadyEvent();
+    } catch (e) {
+      console.debug('PAPI chain spec failed');
+      // TODO: Expand this when PJS API has been removed.
+      // Flag an error if there are any issues bootstrapping chain spec.
+      // NOTE: This can happen when PAPI is the standalone connection method.
+      // this.dispatchEvent(this.ensureEventStatus('error'), {
+      //   err: 'ChainSpecError',
+      // });
+    }
+  }
+
+  // Handler for dispatching `papi-ready` events.
+  dispatchPapiReadyEvent() {
+    const { chain, specs, ss58Prefix } = this.#papiChainSpec;
+    const detail = {
+      network: this.network,
+      chainType: this.#chainType,
+      specs,
+      chain,
+      ss58Prefix,
+    };
+    document.dispatchEvent(new CustomEvent('papi-ready', { detail }));
   }
 
   // ------------------------------------------------------
@@ -152,7 +289,7 @@ export class Api {
     });
   }
 
-  // Handler for dispatching events.
+  // Handler for dispatching `api-status` events.
   dispatchEvent(
     status: EventApiStatus,
     options?: {
@@ -200,6 +337,29 @@ export class Api {
         subscription.unsubscribe();
         SubscriptionsController.remove(this.network, subscriptionId);
       });
+    }
+  };
+
+  // Get a pallet constant, with a fallback value.
+  getConstant = <T>(
+    pallet: string,
+    key: string,
+    fallback: T,
+    formatter?: 'asBytes'
+  ): T => {
+    try {
+      const result = this.#papiBuilder
+        .buildConstant(pallet, key)
+        .dec(this.#papiConstants.getConstantValue(pallet, key) || '0x');
+
+      switch (formatter) {
+        case 'asBytes':
+          return result.asBytes();
+        default:
+          return result;
+      }
+    } catch (e) {
+      return fallback;
     }
   };
 
