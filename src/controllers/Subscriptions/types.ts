@@ -10,7 +10,6 @@ import type { ChainSpec } from 'model/Observables/ChainSpec';
 import type { TaggedMetadata } from 'model/Observables/TaggedMetadata';
 
 // Define all possible subscription classes.
-// TODO: Add subscription classes here.
 export type Subscription = UnsubSubscription | ObservableGetter;
 
 // Polkadot JS API subscriptions (unsubscribe functions).
