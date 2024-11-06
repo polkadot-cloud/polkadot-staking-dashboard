@@ -6,20 +6,26 @@ import { stringToU8a } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
 import type {
   APIActiveEra,
-  APIChainState,
   APIConstants,
   APIContextInterface,
   APINetworkMetrics,
   APIPoolsConfig,
   APIStakingMetrics,
 } from 'contexts/Api/types';
+import type { PAPIChainSpecs } from 'model/Api/types';
 
-export const defaultChainState: APIChainState = {
-  chain: null,
-  version: {
+export const defaultChainSpecs: PAPIChainSpecs & { received: boolean } = {
+  chain: 'Polkadot',
+  specs: {
+    apis: [],
+    implName: '',
+    implVersion: 0,
+    specName: 'polkadot',
     specVersion: 0,
+    transactionVersion: 0,
   },
   ss58Prefix: 0,
+  received: false,
 };
 
 export const defaultConsts: APIConstants = {
@@ -76,7 +82,7 @@ export const defaultStakingMetrics: APIStakingMetrics = {
 export const defaultApiContext: APIContextInterface = {
   api: null,
   peopleApi: null,
-  chainState: defaultChainState,
+  chainSpecs: defaultChainSpecs,
   isReady: false,
   apiStatus: 'disconnected',
   peopleApiStatus: 'disconnected',

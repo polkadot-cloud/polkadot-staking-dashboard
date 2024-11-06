@@ -31,6 +31,14 @@ export class ApiController {
   // Api instance methods.
   // ------------------------------------------------------
 
+  // Get an instance `api` by `key`. Returns Polkadot JS API instance by default, or Polkadot API's
+  // Observable client if `observable` is true.
+  static getInstanceApi(key: NetworkName | SystemChainId, observable = false) {
+    return !observable
+      ? this.#instances[key].api
+      : this.#instances[key].papiClient;
+  }
+
   // Instantiate a new `Api` instance with the supplied chain id and endpoint.
   static async instantiate(
     network: NetworkName,
@@ -65,7 +73,7 @@ export class ApiController {
       'system'
     );
 
-    //3. Initialize chain instances.
+    // 3. Initialize chain instances.
 
     await Promise.all([
       this.instances[network].initialize(type, rpcEndpoint),

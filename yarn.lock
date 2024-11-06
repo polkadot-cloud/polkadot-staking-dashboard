@@ -1569,6 +1569,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@polkadot-api/json-rpc-provider-proxy@npm:0.2.3":
+  version: 0.2.3
+  resolution: "@polkadot-api/json-rpc-provider-proxy@npm:0.2.3"
+  checksum: 10c0/eeaa46751fba879c03bde24a06a9aa4941bd901d166e1c49ae8d3596b7c6e8a868d4f25ba75c4a9761283953c2511057a51dd3ae27e4c0d7823d55f55af384b9
+  languageName: node
+  linkType: hard
+
 "@polkadot-api/json-rpc-provider-proxy@npm:^0.1.0":
   version: 0.1.0
   resolution: "@polkadot-api/json-rpc-provider-proxy@npm:0.1.0"
@@ -1590,7 +1597,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot-api/merkleize-metadata@npm:^1.1.4":
+"@polkadot-api/json-rpc-provider@npm:0.0.4":
+  version: 0.0.4
+  resolution: "@polkadot-api/json-rpc-provider@npm:0.0.4"
+  checksum: 10c0/5615394380bff2d8885592c8001055f1b006e3dd2f650b6a0e41ec836d61e903d78cc4ed06297827020523b0eecc9dff0af661fed7ae82523c97e294a2dc2e27
+  languageName: node
+  linkType: hard
+
+"@polkadot-api/known-chains@npm:^0.5.5":
+  version: 0.5.5
+  resolution: "@polkadot-api/known-chains@npm:0.5.5"
+  checksum: 10c0/89ea415b162504f90af3b42a12179256671455691f41e7f927152faa4007e791343fd28af47b80cabdaadca6147206d6db7a24f88ea897dd9e08c4fb1b95a609
+  languageName: node
+  linkType: hard
+
+"@polkadot-api/merkleize-metadata@npm:^1.1.9":
   version: 1.1.9
   resolution: "@polkadot-api/merkleize-metadata@npm:1.1.9"
   dependencies:
@@ -1621,7 +1642,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot-api/metadata-builders@npm:0.9.1":
+"@polkadot-api/metadata-builders@npm:0.9.1, @polkadot-api/metadata-builders@npm:^0.9.1":
   version: 0.9.1
   resolution: "@polkadot-api/metadata-builders@npm:0.9.1"
   dependencies:
@@ -1642,6 +1663,42 @@ __metadata:
     "@polkadot-api/substrate-client": 0.1.4
     rxjs: ">=7.8.0"
   checksum: 10c0/9f93fab03c37af0483f5c8487ec5250d366eb401a2c9744c014dfb4c7aa524645ae71f6b0e60761e2bca89bdcd862c119e4ac0e798123d8ee9f037eb2f4aaef3
+  languageName: node
+  linkType: hard
+
+"@polkadot-api/observable-client@npm:^0.5.14":
+  version: 0.5.14
+  resolution: "@polkadot-api/observable-client@npm:0.5.14"
+  dependencies:
+    "@polkadot-api/metadata-builders": "npm:0.9.1"
+    "@polkadot-api/substrate-bindings": "npm:0.9.3"
+    "@polkadot-api/utils": "npm:0.1.2"
+  peerDependencies:
+    "@polkadot-api/substrate-client": 0.2.2
+    rxjs: ">=7.8.0"
+  checksum: 10c0/9f53bf5cd4ffc9aa4f1c4ddd5854e1a6f13822170fa692f07d6ea28b2e128d1daa0040a8409b4507f26be754120de8b1be06512390b14d692d8b0519e6950324
+  languageName: node
+  linkType: hard
+
+"@polkadot-api/sm-provider@npm:^0.1.3":
+  version: 0.1.3
+  resolution: "@polkadot-api/sm-provider@npm:0.1.3"
+  dependencies:
+    "@polkadot-api/json-rpc-provider": "npm:0.0.4"
+    "@polkadot-api/json-rpc-provider-proxy": "npm:0.2.3"
+  peerDependencies:
+    smoldot: ">=2"
+  checksum: 10c0/3109fe47e8a0011f6c1464c57c1087915a1144bb79e80c7df491f1003dd51abf1fe7e564c06360b7da6747818354cb2e090ac056bcc78a1e401309c000d50fa0
+  languageName: node
+  linkType: hard
+
+"@polkadot-api/smoldot@npm:^0.3.3":
+  version: 0.3.3
+  resolution: "@polkadot-api/smoldot@npm:0.3.3"
+  dependencies:
+    "@types/node": "npm:^22.2.0"
+    smoldot: "npm:2.0.30"
+  checksum: 10c0/503b8eb4fb47d9a938b42de7a8852f55bc3b997d364cd6952f464f878b70eb99d789f5b275f34b2b00edc3d1faadd49e3f634e03a7f8e3f13049608ae680b1fa
   languageName: node
   linkType: hard
 
@@ -1698,6 +1755,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@polkadot-api/substrate-client@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "@polkadot-api/substrate-client@npm:0.2.2"
+  dependencies:
+    "@polkadot-api/json-rpc-provider": "npm:0.0.4"
+    "@polkadot-api/utils": "npm:0.1.2"
+  checksum: 10c0/c41322f554a77a5983573007db933907c73728e9f32788ff49f0b00f9b57ee575571b4fd94f9ed3c9e121274445d3a3019fe6b3b4d127b39e377f950d4cbc61c
+  languageName: node
+  linkType: hard
+
 "@polkadot-api/utils@npm:0.0.1-492c132563ea6b40ae1fc5470dec4cd18768d182.1.0":
   version: 0.0.1-492c132563ea6b40ae1fc5470dec4cd18768d182.1.0
   resolution: "@polkadot-api/utils@npm:0.0.1-492c132563ea6b40ae1fc5470dec4cd18768d182.1.0"
@@ -1716,6 +1783,17 @@ __metadata:
   version: 0.1.2
   resolution: "@polkadot-api/utils@npm:0.1.2"
   checksum: 10c0/530270141ab7a8d114aff68adabbc643a7b7f5abcfb974a5dac5044e1f5a459881f427e357a7eadfecf55847da5e48828be6dbcf502dd22e097c87546762a036
+  languageName: node
+  linkType: hard
+
+"@polkadot-api/ws-provider@npm:^0.3.4":
+  version: 0.3.4
+  resolution: "@polkadot-api/ws-provider@npm:0.3.4"
+  dependencies:
+    "@polkadot-api/json-rpc-provider": "npm:0.0.4"
+    "@polkadot-api/json-rpc-provider-proxy": "npm:0.2.3"
+    ws: "npm:^8.18.0"
+  checksum: 10c0/39243a8f1545dd8191c62f43ee05e2450b5a7758adfe974f2d4a965546ea5001f19ff7ca14c87d1655dba1526ad08f8118a2cc6597f53d3a3172860b5da4d10d
   languageName: node
   linkType: hard
 
@@ -3432,6 +3510,15 @@ __metadata:
   dependencies:
     undici-types: "npm:~6.19.8"
   checksum: 10c0/14372885db80059ed6e92c320b2bcd8f7dc271698adce11f51aa0f424a3f82aa1749a4f66321b87043791b894346b2458d514cbb65ce70167c2fd8a78a124947
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^22.2.0":
+  version: 22.9.0
+  resolution: "@types/node@npm:22.9.0"
+  dependencies:
+    undici-types: "npm:~6.19.8"
+  checksum: 10c0/3f46cbe0a49bab4ba30494025e4c8a6e699b98ac922857aa1f0209ce11a1313ee46e6808b8f13fe5b8b960a9d7796b77c8d542ad4e9810e85ef897d5593b5d51
   languageName: node
   linkType: hard
 
@@ -8583,7 +8670,14 @@ __metadata:
     "@fortawesome/react-fontawesome": "npm:^0.2.2"
     "@ledgerhq/hw-transport-webhid": "npm:^6.29.2"
     "@ledgerhq/logs": "npm:^6.12.0"
-    "@polkadot-api/merkleize-metadata": "npm:^1.1.4"
+    "@polkadot-api/known-chains": "npm:^0.5.5"
+    "@polkadot-api/merkleize-metadata": "npm:^1.1.9"
+    "@polkadot-api/metadata-builders": "npm:^0.9.1"
+    "@polkadot-api/observable-client": "npm:^0.5.14"
+    "@polkadot-api/sm-provider": "npm:^0.1.3"
+    "@polkadot-api/smoldot": "npm:^0.3.3"
+    "@polkadot-api/substrate-client": "npm:^0.2.2"
+    "@polkadot-api/ws-provider": "npm:^0.3.4"
     "@polkadot/api": "npm:^14.0.1"
     "@polkadot/rpc-provider": "npm:^14.0.1"
     "@polkawatch/ddp-client": "npm:^2.0.20"
