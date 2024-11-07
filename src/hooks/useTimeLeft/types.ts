@@ -25,7 +25,6 @@ export interface TimeLeftFormatted {
 
 export interface TimeLeftAll {
   raw: TimeLeftRaw;
-  formatted: TimeLeftFormatted;
 }
 
 export interface TimeleftHookProps {
