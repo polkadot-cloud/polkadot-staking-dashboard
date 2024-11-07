@@ -283,7 +283,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
         setConsts({
           maxNominations: new BigNumber(16),
-          maxElectingVoters: new BigNumber(22500),
           bondDuration: new BigNumber(bondingDuration),
           sessionsPerEra: new BigNumber(sessionsPerEra),
           maxExposurePageSize: new BigNumber(maxExposurePageSize),
