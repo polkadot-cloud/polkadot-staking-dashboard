@@ -237,32 +237,32 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         const bondingDuration = apiInstance.getConstant(
           'Staking',
           'BondingDuration',
-          0
+          28
         );
         const sessionsPerEra = apiInstance.getConstant(
           'Staking',
           'SessionsPerEra',
-          0
+          6
         );
         const maxExposurePageSize = apiInstance.getConstant(
           'Staking',
           'MaxExposurePageSize',
-          0
+          NetworkList[network].maxExposurePageSize
         );
         const historyDepth = apiInstance.getConstant(
           'Staking',
           'HistoryDepth',
-          0
+          84
         );
         const expectedBlockTime = apiInstance.getConstant(
           'Babe',
           'ExpectedBlockTime',
-          0
+          6000
         );
         const epochDuration = apiInstance.getConstant(
           'Babe',
           'EpochDuration',
-          0
+          2400
         );
         const existentialDeposit = apiInstance.getConstant(
           'Balances',
