@@ -27,7 +27,8 @@ export class ChainSpec implements ObservableGetSubscription {
         const observable = client.chainHead$().follow$;
 
         // Handle subscription failure.
-        const error = async () => {
+        const error = async (err: AnyJson) => {
+          console.log(err);
           this.unsubscribe();
           reject(null);
         };
@@ -54,6 +55,7 @@ export class ChainSpec implements ObservableGetSubscription {
                 !('specVersion' in spec) ||
                 !('transactionVersion' in spec)
               ) {
+                this.unsubscribe();
                 reject(null);
               } else {
                 // Persist chain spec data to class.
@@ -62,6 +64,7 @@ export class ChainSpec implements ObservableGetSubscription {
 
               // Call `complete` to stop observable emissions & resolve function.
               subscription.complete();
+              this.unsubscribe();
             }
           },
           error,
@@ -78,6 +81,7 @@ export class ChainSpec implements ObservableGetSubscription {
   // Unsubscribe from class subscription.
   unsubscribe = (): void => {
     if (typeof this.#unsub === 'function') {
+      console.log('UNSUBSCRIBING FROM CHAINSPEC');
       this.#unsub();
     }
   };
