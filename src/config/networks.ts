@@ -18,7 +18,7 @@ export const NetworkList: Networks = {
     name: 'polkadot',
     endpoints: {
       lightClient: 'polkadot',
-      defaultRpcEndpoint: 'IBP-GeoDNS1',
+      defaultRpcEndpoint: 'Automata 1RPC',
       rpcEndpoints: {
         'Automata 1RPC': 'wss://1rpc.io/dot',
         Dwellir: 'wss://polkadot-rpc.dwellir.com',
@@ -74,7 +74,7 @@ export const NetworkList: Networks = {
     name: 'kusama',
     endpoints: {
       lightClient: 'ksmcc3',
-      defaultRpcEndpoint: 'IBP-GeoDNS1',
+      defaultRpcEndpoint: 'Automata 1RPC',
       rpcEndpoints: {
         'Automata 1RPC': 'wss://1rpc.io/ksm',
         Dwellir: 'wss://kusama-rpc.dwellir.com',
@@ -130,7 +130,7 @@ export const NetworkList: Networks = {
     name: 'westend',
     endpoints: {
       lightClient: 'westend2',
-      defaultRpcEndpoint: 'IBP-GeoDNS1',
+      defaultRpcEndpoint: 'Automata 1RPC',
       rpcEndpoints: {
         Dwellir: 'wss://westend-rpc.dwellir.com',
         'Dwellir Tunisia': 'wss://westend-rpc-tn.dwellir.com',
