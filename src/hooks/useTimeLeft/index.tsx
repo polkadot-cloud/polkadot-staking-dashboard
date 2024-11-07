@@ -3,19 +3,19 @@
 
 import { setStateWithRef } from '@w3ux/utils';
 import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useNetwork } from 'contexts/Network';
-import type {
-  TimeLeftAll,
-  TimeLeftFormatted,
-  TimeLeftRaw,
-  TimeleftDuration,
-} from './types';
+import type { TimeLeftAll, TimeLeftRaw, TimeleftDuration } from './types';
 import { getDuration } from './utils';
 
-export const useTimeLeft = () => {
-  const { network } = useNetwork();
-  const { t, i18n } = useTranslation();
+export interface UseTimeleftProps {
+  // Dependencies to trigger re-calculation of timeleft.
+  depsTimeleft: unknown[];
+  // Dependencies to trigger re-render of timeleft, e.g. if language switching occurs.
+  depsFormat: unknown[];
+}
+
+export const useTimeLeft = (props?: UseTimeleftProps) => {
+  const depsTimeleft = props?.depsTimeleft || [];
+  const depsFormat = props?.depsFormat || [];
 
   // check whether timeleft is within a minute of finishing.
   const inLastHour = () => {
@@ -35,28 +35,16 @@ export const useTimeLeft = () => {
   // calculate resulting timeleft object from latest duration.
   const getTimeleft = (c?: TimeleftDuration): TimeLeftAll => {
     const { days, hours, minutes, seconds } = c || getDuration(toRef.current);
-
     const raw: TimeLeftRaw = {
       days,
       hours,
       minutes,
     };
-    const formatted: TimeLeftFormatted = {
-      days: [days, t('time.day', { count: days, ns: 'base' })],
-      hours: [hours, t('time.hr', { count: hours, ns: 'base' })],
-      minutes: [minutes, t('time.min', { count: minutes, ns: 'base' })],
-    };
     if (!days && !hours) {
-      formatted.seconds = [
-        seconds,
-        t('time.second', { count: seconds, ns: 'base' }),
-      ];
       raw.seconds = seconds;
     }
-
     return {
       raw,
-      formatted,
     };
   };
 
@@ -106,12 +94,12 @@ export const useTimeLeft = () => {
       }, 60000);
       setStateWithRef(interval, setMinInterval, minIntervalRef);
     }
-  }, [to, inLastHour(), lastMinuteCountdown(), network]);
+  }, [to, inLastHour(), lastMinuteCountdown(), ...depsTimeleft]);
 
-  // re-render the timeleft upon langauge switch.
+  // re-render the timeleft upon formatting changes.
   useEffect(() => {
     setTimeleft(getTimeleft());
-  }, [i18n.resolvedLanguage]);
+  }, [...depsFormat]);
 
   // clear intervals on unmount
   useEffect(
