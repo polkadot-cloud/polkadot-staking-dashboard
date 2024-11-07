@@ -97,12 +97,9 @@ export const useTimeLeft = (props?: UseTimeleftProps) => {
   }, [to, inLastHour(), lastMinuteCountdown(), ...depsTimeleft]);
 
   // re-render the timeleft upon formatting changes.
-  useEffect(
-    () => {
-      setTimeleft(getTimeleft());
-    },
-    depsFormat ? [...depsFormat] : undefined
-  );
+  useEffect(() => {
+    setTimeleft(getTimeleft());
+  }, [...depsFormat]);
 
   // clear intervals on unmount
   useEffect(
