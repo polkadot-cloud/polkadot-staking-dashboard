@@ -34,7 +34,6 @@ export const defaultConsts: APIConstants = {
   sessionsPerEra: new BigNumber(0),
   maxExposurePageSize: new BigNumber(0),
   historyDepth: new BigNumber(0),
-  maxElectingVoters: new BigNumber(0),
   expectedBlockTime: new BigNumber(0),
   epochDuration: new BigNumber(0),
   existentialDeposit: new BigNumber(0),
@@ -77,6 +76,7 @@ export const defaultStakingMetrics: APIStakingMetrics = {
   maxValidatorsCount: new BigNumber(0),
   minNominatorBond: new BigNumber(0),
   totalStaked: new BigNumber(0),
+  counterForNominators: new BigNumber(0),
 };
 
 export const defaultApiContext: APIContextInterface = {

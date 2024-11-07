@@ -9,27 +9,28 @@ import { Pie } from 'library/StatBoxList/Pie';
 
 export const ActiveNominatorsStat = () => {
   const { t } = useTranslation('pages');
-  const { consts } = useApi();
-  const { maxElectingVoters } = consts;
+  const {
+    stakingMetrics: { counterForNominators },
+  } = useApi();
   const { totalActiveNominators } = useStaking().eraStakers;
 
   // active nominators as percent
   let totalNominatorsAsPercent = 0;
-  if (maxElectingVoters.isGreaterThan(0)) {
+  if (counterForNominators.isGreaterThan(0)) {
     totalNominatorsAsPercent =
-      totalActiveNominators / maxElectingVoters.dividedBy(100).toNumber();
+      totalActiveNominators / counterForNominators.dividedBy(100).toNumber();
   }
 
   const params = {
     label: t('overview.activeNominators'),
     stat: {
       value: totalActiveNominators,
-      total: maxElectingVoters.toNumber(),
+      total: counterForNominators.toNumber(),
       unit: '',
     },
     graph: {
       value1: totalActiveNominators,
-      value2: maxElectingVoters.minus(totalActiveNominators).toNumber(),
+      value2: counterForNominators.minus(totalActiveNominators).toNumber(),
     },
     tooltip: `${new BigNumber(totalNominatorsAsPercent)
       .decimalPlaces(2)
