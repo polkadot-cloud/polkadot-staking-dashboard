@@ -29,11 +29,13 @@ export class TaggedMetadata implements ObservableGetSubscription {
 
         // Handle subscription failure.
         const error = async () => {
+          this.unsubscribe();
           reject(null);
         };
 
         // Handle completion.
         const complete = async () => {
+          this.unsubscribe();
           resolve(this.#value);
         };
 
@@ -68,6 +70,7 @@ export class TaggedMetadata implements ObservableGetSubscription {
 
         this.#unsub = subscription.unsubscribe;
       } catch (e) {
+        this.unsubscribe();
         reject(null);
       }
     });
