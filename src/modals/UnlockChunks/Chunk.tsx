@@ -15,22 +15,26 @@ import { ChunkWrapper } from './Wrappers';
 import type { ChunkProps } from './types';
 import { useApi } from 'contexts/Api';
 import { ButtonSubmit } from 'kits/Buttons/ButtonSubmit';
-import { planckToUnitBn } from 'library/Utils';
+import { formatTimeleft, planckToUnitBn } from 'library/Utils';
 
 export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
-  const { t } = useTranslation('modals');
+  const { t, i18n } = useTranslation('modals');
 
   const { activeEra } = useApi();
   const {
     networkData: { units, unit },
     network,
   } = useNetwork();
-  const { activeAccount } = useActiveAccounts();
   const { isFastUnstaking } = useUnstaking();
+  const { activeAccount } = useActiveAccounts();
   const { erasToSeconds } = useErasToTimeLeft();
-  const { timeleft, setFromNow } = useTimeLeft();
-  const isStaking = bondFor === 'nominator';
 
+  const { timeleft, setFromNow } = useTimeLeft({
+    depsTimeleft: [network],
+    depsFormat: [i18n.resolvedLanguage],
+  });
+
+  const isStaking = bondFor === 'nominator';
   const { era, value } = chunk;
   const left = new BigNumber(era).minus(activeEra.index);
   const start = activeEra.start.multipliedBy(0.001);
@@ -38,6 +42,7 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
 
   const dateFrom = fromUnixTime(start.toNumber());
   const dateTo = fromUnixTime(start.plus(erasDuration).toNumber());
+  const formatted = formatTimeleft(t, timeleft.raw);
 
   // reset timer on account or network change.
   useEffect(() => {
@@ -55,7 +60,7 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
             ) : (
               <>
                 {t('unlocksInEra')} {era} /&nbsp;
-                <Countdown timeleft={timeleft.formatted} markup={false} />
+                <Countdown timeleft={formatted} markup={false} />
               </>
             )}
           </h4>
