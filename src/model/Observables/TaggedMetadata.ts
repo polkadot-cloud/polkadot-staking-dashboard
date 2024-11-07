@@ -54,6 +54,7 @@ export class TaggedMetadata implements ObservableGetSubscription {
               !('outerEnums' in data) ||
               !('custom' in data)
             ) {
+              this.unsubscribe();
               reject(null);
             } else {
               // Persist data to class. NOTE: Currently not using `LookupEntry`, can explore this
