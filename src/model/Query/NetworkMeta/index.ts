@@ -42,6 +42,7 @@ export class NetworkMeta {
       [api.query.staking.erasTotalStake, previousEra.toString()],
       api.query.staking.minNominatorBond,
       [api.query.staking.erasTotalStake, activeEra.index.toString()],
+      api.query.staking.counterForNominators,
     ]);
 
     // format optional configs to BigNumber or null.
@@ -90,6 +91,7 @@ export class NetworkMeta {
         lastTotalStake: stringToBn(networkMeta[20].toString()),
         minNominatorBond: stringToBn(networkMeta[21].toString()),
         totalStaked: stringToBn(networkMeta[22].toString()),
+        counterForNominators: stringToBn(networkMeta[23].toString()),
       },
     };
   }

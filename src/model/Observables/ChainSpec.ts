@@ -81,7 +81,6 @@ export class ChainSpec implements ObservableGetSubscription {
   // Unsubscribe from class subscription.
   unsubscribe = (): void => {
     if (typeof this.#unsub === 'function') {
-      console.log('UNSUBSCRIBING FROM CHAINSPEC');
       this.#unsub();
     }
   };
