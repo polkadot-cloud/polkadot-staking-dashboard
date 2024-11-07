@@ -37,7 +37,7 @@ export const useEraTimeLeft = () => {
       ? new BigNumber(0)
       : new BigNumber(100).minus(percentRemaining);
 
-    return { timeleft, percentSurpassed, percentRemaining };
+    return { timeleft, end, percentSurpassed, percentRemaining };
   };
 
   return { get };
