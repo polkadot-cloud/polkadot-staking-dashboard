@@ -31,8 +31,8 @@ export const LedgerHardwareProvider = ({
   children: ReactNode;
 }) => {
   const { t } = useTranslation('modals');
-  const { chainSpecs } = useApi();
-  const { transactionVersion } = chainSpecs.specs;
+  const { chainState } = useApi();
+  const { transactionVersion } = chainState.version;
 
   // Store whether a Ledger device task is in progress.
   const [isExecuting, setIsExecutingState] = useState<boolean>(false);
