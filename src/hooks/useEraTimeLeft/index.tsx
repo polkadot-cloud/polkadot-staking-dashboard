@@ -30,8 +30,12 @@ export const useEraTimeLeft = () => {
 
     // percentage of eraDuration
     const percentage = eraDuration.multipliedBy(0.01);
-    const percentRemaining = timeleft.dividedBy(percentage);
-    const percentSurpassed = new BigNumber(100).minus(percentRemaining);
+    const percentRemaining = timeleft.isZero()
+      ? new BigNumber(100)
+      : timeleft.dividedBy(percentage);
+    const percentSurpassed = timeleft.isZero()
+      ? new BigNumber(0)
+      : new BigNumber(100).minus(percentRemaining);
 
     return { timeleft, percentSurpassed, percentRemaining };
   };
