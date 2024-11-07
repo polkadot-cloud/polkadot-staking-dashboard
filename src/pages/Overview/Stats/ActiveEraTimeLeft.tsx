@@ -23,7 +23,6 @@ export const ActiveEraStat = () => {
 
   // re-set timer on era change (also covers network change).
   useEffect(() => {
-    console.log('end: ', timeleftResult.end.toString());
     setFromNow(dateFrom, dateTo);
   }, [activeEra, timeleftResult.end.toString()]);
 
