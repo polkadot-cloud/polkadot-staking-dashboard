@@ -29,17 +29,13 @@ export const ActiveEraStat = () => {
   const timeleftResult = getEraTimeleft();
   const dateFrom = fromUnixTime(Date.now() / 1000);
   const formatted = formatTimeleft(t, timeleft.raw);
-  const dateToUnix = getUnixTime(dateTo);
   const dateTo = fromNow(timeleftResult.timeleft.toNumber());
-
+  const dateToUnix = getUnixTime(dateTo);
 
   // re-set timer on era change (also covers network change).
   useEffect(() => {
     setFromNow(dateFrom, dateTo);
-  }, [activeEra, timeleftResult.end.toString()]);
-
-  // NOTE: this maybe should be called in an interval. Needs more testing.
-  const { percentSurpassed, percentRemaining } = timeleftResult;
+  }, [activeEra, dateToUnix]);
 
   const params = {
     label: t('overview.timeRemainingThisEra'),
