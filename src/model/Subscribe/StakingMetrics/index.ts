@@ -66,6 +66,7 @@ export class StakingMetrics implements Unsubscribable {
               api.query.staking.erasTotalStake,
               this.#activeEra.index.toString(),
             ],
+            api.query.staking.counterForNominators,
           ],
           (result) => {
             const stakingMetrics = {
@@ -77,6 +78,7 @@ export class StakingMetrics implements Unsubscribable {
               lastTotalStake: stringToBn(result[5].toString()),
               minNominatorBond: stringToBn(result[6].toString()),
               totalStaked: stringToBn(result[7].toString()),
+              counterForNominators: stringToBn(result[8].toString()),
             };
 
             document.dispatchEvent(

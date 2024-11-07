@@ -22,7 +22,6 @@ export interface APIConstants {
   sessionsPerEra: BigNumber;
   maxExposurePageSize: BigNumber;
   historyDepth: BigNumber;
-  maxElectingVoters: BigNumber;
   expectedBlockTime: BigNumber;
   epochDuration: BigNumber;
   existentialDeposit: BigNumber;
@@ -65,6 +64,7 @@ export interface APIStakingMetrics {
   maxValidatorsCount: BigNumber;
   minNominatorBond: BigNumber;
   totalStaked: BigNumber;
+  counterForNominators: BigNumber;
 }
 
 export interface APIContextInterface {
