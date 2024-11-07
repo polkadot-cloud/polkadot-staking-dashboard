@@ -16,7 +16,7 @@ import type {
 } from 'contexts/Api/types';
 import type { SyncEvent } from 'controllers/Sync/types';
 import type { DetailActivePool } from 'controllers/ActivePools/types';
-import type { APIEventDetail, PAPIReadyEvent } from 'model/Api/types';
+import type { APIEventDetail } from 'model/Api/types';
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types';
 import type { AnyJson } from '@w3ux/types';
 import type { BlockNumberEventDetail } from 'model/Subscribe/BlockNumber/types';
@@ -30,7 +30,6 @@ declare global {
   interface DocumentEventMap {
     notification: CustomEvent<NotificationItem>;
     'api-status': CustomEvent<APIEventDetail>;
-    'papi-ready': CustomEvent<PAPIReadyEvent>;
     'online-status': CustomEvent<OnlineStatusEvent>;
     'new-block-number': CustomEvent<BlockNumberEventDetail>;
     'new-network-metrics': CustomEvent<{

@@ -190,7 +190,7 @@ export const SystemChainList: Record<string, SystemChain> = {
     units: 10,
     unit: 'DOT',
     endpoints: {
-      lightClient: 'polkadot_people',
+      lightClient: 'people_polkadot', // NOTE: Currently not being used. TODO: Revise this and activate once People chain specs are available to use.
       rpcEndpoints: {
         Parity: 'wss://polkadot-people-rpc.polkadot.io',
       },
@@ -202,7 +202,7 @@ export const SystemChainList: Record<string, SystemChain> = {
     units: 12,
     unit: 'KSM',
     endpoints: {
-      lightClient: 'ksmcc3_people',
+      lightClient: 'people_kusama', // NOTE: Currently not being used. TODO: Revise this and activate once People chain specs are available to use.
       rpcEndpoints: {
         Parity: 'wss://kusama-people-rpc.polkadot.io',
       },
@@ -214,7 +214,7 @@ export const SystemChainList: Record<string, SystemChain> = {
     units: 12,
     unit: 'WND',
     endpoints: {
-      lightClient: 'westend2_people',
+      lightClient: 'people_westend', // NOTE: Currently not being used. TODO: Revise this and activate once People chain specs are available to use.
       rpcEndpoints: {
         Parity: 'wss://westend-people-rpc.polkadot.io',
       },

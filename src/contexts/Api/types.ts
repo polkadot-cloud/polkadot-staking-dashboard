@@ -5,15 +5,18 @@ import type { ApiPromise } from '@polkadot/api';
 import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import type { NetworkName } from '../../types';
-import type {
-  ApiStatus,
-  ConnectionType,
-  PAPIChainSpecs,
-} from 'model/Api/types';
+import type { ApiStatus, ConnectionType } from 'model/Api/types';
+import type { AnyJson } from '@w3ux/types';
 
 export interface APIProviderProps {
   children: ReactNode;
   network: NetworkName;
+}
+
+export interface APIChainState {
+  chain: string | null;
+  version: AnyJson;
+  ss58Prefix: number;
 }
 
 export interface APIConstants {
@@ -70,7 +73,7 @@ export interface APIStakingMetrics {
 export interface APIContextInterface {
   api: ApiPromise | null;
   peopleApi: ApiPromise | null;
-  chainSpecs: PAPIChainSpecs;
+  chainState: APIChainState;
   isReady: boolean;
   apiStatus: ApiStatus;
   peopleApiStatus: ApiStatus;
