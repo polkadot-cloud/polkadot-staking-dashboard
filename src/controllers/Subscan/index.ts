@@ -61,29 +61,33 @@ export class SubscanController {
   // ------------------------------------------------------
 
   // Handle fetching the various types of payout and set state in one render.
-  static handleFetchPayouts = async (address: string) => {
-    if (!this.payoutData[address]) {
-      const results = await Promise.all([
-        this.fetchNominatorPayouts(address),
-        this.fetchPoolClaims(address),
-      ]);
-      const { payouts, unclaimedPayouts } = results[0];
-      const poolClaims = results[1];
+  static handleFetchPayouts = async (address: string): Promise<void> => {
+    try {
+      if (!this.payoutData[address]) {
+        const results = await Promise.all([
+          this.fetchNominatorPayouts(address),
+          this.fetchPoolClaims(address),
+        ]);
+        const { payouts, unclaimedPayouts } = results[0];
+        const poolClaims = results[1];
 
-      // Persist results to class.
-      this.payoutData[address] = {
-        payouts,
-        unclaimedPayouts,
-        poolClaims,
-      };
+        // Persist results to class.
+        this.payoutData[address] = {
+          payouts,
+          unclaimedPayouts,
+          poolClaims,
+        };
 
-      document.dispatchEvent(
-        new CustomEvent('subscan-data-updated', {
-          detail: {
-            keys: ['payouts', 'unclaimedPayouts', 'poolClaims'],
-          },
-        })
-      );
+        document.dispatchEvent(
+          new CustomEvent('subscan-data-updated', {
+            detail: {
+              keys: ['payouts', 'unclaimedPayouts', 'poolClaims'],
+            },
+          })
+        );
+      }
+    } catch (e) {
+      // Silently fail request.
     }
   };
 
@@ -99,55 +103,66 @@ export class SubscanController {
     payouts: SubscanPayout[];
     unclaimedPayouts: SubscanPayout[];
   }> => {
-    const result = await this.makeRequest(this.ENDPOINTS.rewardSlash, {
-      address,
-      is_stash: true,
-      row: 100,
-      page: 0,
-    });
+    try {
+      const result = await this.makeRequest(this.ENDPOINTS.rewardSlash, {
+        address,
+        is_stash: true,
+        row: 100,
+        page: 0,
+      });
 
-    const payouts =
-      result?.list?.filter(
-        ({ block_timestamp }: SubscanPayout) => block_timestamp !== 0
-      ) || [];
+      const payouts =
+        result?.list?.filter(
+          ({ block_timestamp }: SubscanPayout) => block_timestamp !== 0
+        ) || [];
 
-    let unclaimedPayouts =
-      result?.list?.filter((l: SubscanPayout) => l.block_timestamp === 0) || [];
+      let unclaimedPayouts =
+        result?.list?.filter((l: SubscanPayout) => l.block_timestamp === 0) ||
+        [];
 
-    // Further filter unclaimed payouts to ensure that payout records of `stash` and
-    // `validator_stash` are not repeated for an era. NOTE: This was introduced to remove errornous
-    // data where there were duplicated payout records (with different amounts) for a stash -
-    // validator - era record. from Subscan.
-    unclaimedPayouts = unclaimedPayouts.filter(
-      (u: SubscanPayout) =>
-        !payouts.find(
-          (p: SubscanPayout) =>
-            p.stash === u.stash &&
-            p.validator_stash === u.validator_stash &&
-            p.era === u.era
-        )
-    );
+      // Further filter unclaimed payouts to ensure that payout records of `stash` and
+      // `validator_stash` are not repeated for an era. NOTE: This was introduced to remove errornous
+      // data where there were duplicated payout records (with different amounts) for a stash -
+      // validator - era record. from Subscan.
+      unclaimedPayouts = unclaimedPayouts.filter(
+        (u: SubscanPayout) =>
+          !payouts.find(
+            (p: SubscanPayout) =>
+              p.stash === u.stash &&
+              p.validator_stash === u.validator_stash &&
+              p.era === u.era
+          )
+      );
 
-    return { payouts, unclaimedPayouts };
+      return { payouts, unclaimedPayouts };
+    } catch (e) {
+      // Silently fail request and return empty records.
+      return { payouts: [], unclaimedPayouts: [] };
+    }
   };
 
   // Fetch pool claims from Subscan, ensuring no payouts have block_timestamp of 0.
   static fetchPoolClaims = async (
     address: string
   ): Promise<SubscanPoolClaim[]> => {
-    const result = await this.makeRequest(this.ENDPOINTS.poolRewards, {
-      address,
-      row: 100,
-      page: 0,
-    });
-    if (!result?.list) {
+    try {
+      const result = await this.makeRequest(this.ENDPOINTS.poolRewards, {
+        address,
+        row: 100,
+        page: 0,
+      });
+      if (!result?.list) {
+        return [];
+      }
+      // Remove claims with a `block_timestamp`.
+      const poolClaims = result.list.filter(
+        (l: SubscanPoolClaim) => l.block_timestamp !== 0
+      );
+      return poolClaims;
+    } catch (e) {
+      // Silently fail request and return empty record.
       return [];
     }
-    // Remove claims with a `block_timestamp`.
-    const poolClaims = result.list.filter(
-      (l: SubscanPoolClaim) => l.block_timestamp !== 0
-    );
-    return poolClaims;
   };
 
   // Fetch a page of pool members from Subscan.
