@@ -2972,17 +2972,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@substrate/connect-extension-protocol@npm:^2.0.0, @substrate/connect-extension-protocol@npm:^2.2.0":
+"@substrate/connect-extension-protocol@npm:^2.0.0":
   version: 2.2.0
   resolution: "@substrate/connect-extension-protocol@npm:2.2.0"
   checksum: 10c0/ab3a76adc233376e511b6c585ebe3bbac6ef6d7d3ccaf06fb13f19b88207341f22590c6e6ccda5f404e952291e2d8651328ab5fe1eac03a5ac8049b56d9f096c
   languageName: node
   linkType: hard
 
-"@substrate/connect-known-chains@npm:^1.1.1, @substrate/connect-known-chains@npm:^1.1.5, @substrate/connect-known-chains@npm:^1.6.0":
+"@substrate/connect-extension-protocol@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "@substrate/connect-extension-protocol@npm:2.2.1"
+  checksum: 10c0/5e066c1cbdfe9d4cae6bc85dd0adbe62832af08733b0fe6dab4aee05520ef0f85c3b892e58ba59c83a0d70a3587e16e91f61265e961e978a721dfddd6eb8b1f4
+  languageName: node
+  linkType: hard
+
+"@substrate/connect-known-chains@npm:^1.1.1, @substrate/connect-known-chains@npm:^1.1.5":
   version: 1.6.0
   resolution: "@substrate/connect-known-chains@npm:1.6.0"
   checksum: 10c0/4ddf3c06d08bbfedf8e0c2e183a236656cb3411e373b8abf90601bfca1f066565734188f9b2731ace4a4810edfe26e64e32d212be0af54cc5a6b9913768bb89b
+  languageName: node
+  linkType: hard
+
+"@substrate/connect-known-chains@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "@substrate/connect-known-chains@npm:1.7.0"
+  checksum: 10c0/454f115eed8c2299b9ba66c8c3328af80767c501fb15a4e54e6788cc5d9ab6289c91a44a215dbaab8df4fda41063bafff5eee3926b43cd8787af86610e45c673
   languageName: node
   linkType: hard
 
@@ -3010,22 +3024,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@substrate/connect@npm:^1.1.0":
-  version: 1.3.1
-  resolution: "@substrate/connect@npm:1.3.1"
+"@substrate/connect@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@substrate/connect@npm:2.0.1"
   dependencies:
-    "@substrate/connect-extension-protocol": "npm:^2.2.0"
-    "@substrate/connect-known-chains": "npm:^1.6.0"
-    "@substrate/smoldot-discovery": "npm:^1.2.0"
+    "@substrate/connect-extension-protocol": "npm:^2.2.1"
+    "@substrate/connect-known-chains": "npm:^1.7.0"
+    "@substrate/smoldot-discovery": "npm:^2.0.1"
     smoldot: "npm:2.0.30"
-  checksum: 10c0/4103ff6d8b42bdcce9156743d1ec29d04bf2ce1de1e524b5ee9266d15d985aca41f683ad01a9b39c11f5a439d68d36e2d3d13968edd477357f3cfd92876abd7b
+  checksum: 10c0/b6e828a980cae0a07d6330fd68bb80f8c337fd1698a1aa19ff5117c5b67c60848678ef4a6a6fde55eb419e9c82c974d98eaa4cfd19834fcd641bf4a38d870ddc
   languageName: node
   linkType: hard
 
-"@substrate/discovery@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "@substrate/discovery@npm:0.2.0"
-  checksum: 10c0/7b258764022f1522d1cb7eb06bf0366a610580de05f740c6c92745814b209bf4c3ad52cf27a433fca1665cf54dbec892c29bd7fd9fa49e2c68634d82431f1fbf
+"@substrate/discovery@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "@substrate/discovery@npm:0.2.1"
+  checksum: 10c0/91b101d7cde80a29dfb38fb4b22d92559d1f49f1c6141896f715dab1169f9ee03ce6e8e493c01705cad73d4d82f07b5e6c26d7e5bfea3f9912e2cb7b070b7252
   languageName: node
   linkType: hard
 
@@ -3063,12 +3077,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@substrate/smoldot-discovery@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "@substrate/smoldot-discovery@npm:1.2.0"
+"@substrate/smoldot-discovery@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@substrate/smoldot-discovery@npm:2.0.1"
   dependencies:
-    "@substrate/discovery": "npm:^0.2.0"
-  checksum: 10c0/4ce1db4ddc2d90bfefd692956539681199612102dd2bb836697c6eb64cd0c1a22e311ca37eae774fcbb8d5442cd5b370f8bba7e34f44963db687f10d7ec0bdd9
+    "@substrate/discovery": "npm:^0.2.1"
+  checksum: 10c0/81ef9af7d7398b7b53a28487054636d26b65ae3804c6d3465e488248629d94e9c9ded09a0f5c2a3b72ff6feef4efb8409df8c94b79b2adb0028360e69c7b71da
   languageName: node
   linkType: hard
 
@@ -8587,7 +8601,7 @@ __metadata:
     "@polkadot/api": "npm:^14.2.3"
     "@polkadot/rpc-provider": "npm:^14.2.3"
     "@polkawatch/ddp-client": "npm:^2.0.20"
-    "@substrate/connect": "npm:^1.1.0"
+    "@substrate/connect": "npm:^2.0.1"
     "@types/chroma-js": "npm:^2.4.4"
     "@types/lodash.debounce": "npm:^4.0.9"
     "@types/lodash.throttle": "npm:^4"

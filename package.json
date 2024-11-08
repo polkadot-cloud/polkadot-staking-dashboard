@@ -26,7 +26,7 @@
     "@polkadot/api": "^14.2.3",
     "@polkadot/rpc-provider": "^14.2.3",
     "@polkawatch/ddp-client": "^2.0.20",
-    "@substrate/connect": "^1.1.0",
+    "@substrate/connect": "^2.0.1",
     "@w3ux/extension-assets": "^0.4.0",
     "@w3ux/factories": "^1.0.0",
     "@w3ux/hooks": "^1.2.1",
