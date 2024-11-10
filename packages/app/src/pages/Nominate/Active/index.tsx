@@ -22,7 +22,7 @@ import { UnstakePrompts } from './UnstakePrompts';
 import { useSyncing } from 'hooks/useSyncing';
 import { useBalances } from 'contexts/Balances';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
-import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonPrimary } from 'ui-buttons';
 import { PageRow } from 'kits/Structure/PageRow';
 import { RowSection } from 'kits/Structure/RowSection';
 import { WithdrawPrompt } from 'library/WithdrawPrompt';
@@ -80,7 +80,7 @@ export const Active = () => {
                   <ButtonPrimary
                     iconLeft={faChevronCircleRight}
                     iconTransform="grow-1"
-                    text={t('nominate.nominate', { ns: 'pages' })}
+                    text={`${t('nominate.nominate', { ns: 'pages' })}`}
                     disabled={inSetup() || syncing || isFastUnstaking}
                     onClick={() =>
                       openCanvas({

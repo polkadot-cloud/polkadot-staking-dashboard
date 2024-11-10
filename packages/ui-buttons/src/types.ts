@@ -29,7 +29,15 @@ export interface ButtonCommonProps {
   onMouseOut?: (e?: MouseEvent<HTMLButtonElement>) => void;
 }
 
-// Icon support for buttons.
+// Button mouse event handler props.
+export interface OnMouseHandlersProps {
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  onMouseOver?: (e: MouseEvent<HTMLButtonElement>) => void;
+  onMouseMove?: (e: MouseEvent<HTMLButtonElement>) => void;
+  onMouseOut?: (e: MouseEvent<HTMLButtonElement>) => void;
+}
+
+// Button icon support.
 export interface ButtonIconProps {
   // include a left icon with the button.
   iconLeft?: IconProp | IconDefinition;

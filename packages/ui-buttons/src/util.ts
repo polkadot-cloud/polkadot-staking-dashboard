@@ -2,13 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { MouseEvent } from 'react';
-
-export interface OnMouseHandlersProps {
-  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-  onMouseMove?: (e: MouseEvent<HTMLButtonElement>) => void;
-  onMouseOut?: (e: MouseEvent<HTMLButtonElement>) => void;
-  onMouseOver?: (e: MouseEvent<HTMLButtonElement>) => void;
-}
+import type { OnMouseHandlersProps } from './types';
 
 // Formats mouse handlers for buttons given its props.
 export const onMouseHandlers = (props: OnMouseHandlersProps) => {
@@ -18,6 +12,10 @@ export const onMouseHandlers = (props: OnMouseHandlersProps) => {
       typeof onClick == 'function'
         ? (e: MouseEvent<HTMLButtonElement>) => onClick(e)
         : undefined,
+    onMouseOver:
+      typeof onMouseOver == 'function'
+        ? (e: MouseEvent<HTMLButtonElement>) => onMouseOver(e)
+        : undefined,
     onMouseMove:
       typeof onMouseMove == 'function'
         ? (e: MouseEvent<HTMLButtonElement>) => onMouseMove(e)
@@ -25,10 +23,6 @@ export const onMouseHandlers = (props: OnMouseHandlersProps) => {
     onMouseOut:
       typeof onMouseOut == 'function'
         ? (e: MouseEvent<HTMLButtonElement>) => onMouseOut(e)
-        : undefined,
-    onMouseOver:
-      typeof onMouseOver == 'function'
-        ? (e: MouseEvent<HTMLButtonElement>) => onMouseOver(e)
         : undefined,
   };
 };
