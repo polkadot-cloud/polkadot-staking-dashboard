@@ -66,6 +66,15 @@
   }
 }
 
+.btnActiveTransforms {
+  &:hover {
+    transform: scale(1.02);
+  }
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
 /*
 TODO: Refactor into CSS Module.
 @mixin btn-submit {

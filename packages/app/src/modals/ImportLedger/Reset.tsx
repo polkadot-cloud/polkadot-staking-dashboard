@@ -9,7 +9,7 @@ import { ConfirmWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from '@w3ux/types';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { LedgerAccount } from '@w3ux/react-connect-kit/types';
-import { ButtonMono } from 'kits/Buttons/ButtonMono';
+import { ButtonMono } from 'ui-buttons';
 import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useLedgerAccounts } from '@w3ux/react-connect-kit';

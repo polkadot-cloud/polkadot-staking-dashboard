@@ -13,12 +13,3 @@
   background: var(--accent-color-secondary);
   border: 1px solid var(--accent-color-secondary);
 }
-
-.btnPrimary_activeTransforms {
-  &:hover {
-    transform: scale(1.02);
-  }
-  &:active {
-    transform: scale(0.98);
-  }
-}

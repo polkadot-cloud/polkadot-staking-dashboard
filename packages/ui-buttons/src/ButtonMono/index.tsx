@@ -1,25 +1,22 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { onMouseHandlers } from '../util';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classes from './index.module.scss';
-import commonClasses from '../common.module.scss';
 import classNames from 'classnames';
-import type { ButtonPrimaryProps } from './types';
+import commonClasses from '../common.module.scss';
+import classes from './index.module.scss';
+import { onMouseHandlers } from '../util';
+import type { ButtonMonoProps } from './types';
 
 /**
- * @name ButtonPrimary
- * @description Primary button style used within the main interface of the dashboard. This button
- * component supports icons, conditional styling, and dynamic sizing and margin options.
+ * @name ButtonMono
+ * @description Monotone button style used within the main interface of dashboards.
+ * @param {ButtonMonoProps} props - The properties used to configure the ButtonMono component.
  *
- * @param {ButtonPrimaryProps} props - The props for the ButtonPrimary component.
- * @returns {JSX.Element} The rendered primary button component.
+ * @returns {JSX.Element} The rendered ButtonMono component.
  */
-export const ButtonPrimary = (props: ButtonPrimaryProps): JSX.Element => {
+export const ButtonMono = (props: ButtonMonoProps): JSX.Element => {
   const {
-    className,
-    colorSecondary,
     disabled,
     grow,
     iconLeft,
@@ -29,17 +26,18 @@ export const ButtonPrimary = (props: ButtonPrimaryProps): JSX.Element => {
     marginLeft,
     marginRight,
     marginX,
-    onClick,
-    onMouseMove,
-    onMouseOut,
-    onMouseOver,
+    className,
     style,
     text,
+    onClick,
+    onMouseOver,
+    onMouseMove,
+    onMouseOut,
   } = props;
 
   const buttonClasses = classNames(
     commonClasses.btnCore,
-    classes.btnPrimary,
+    classes.btnMono,
     {
       [commonClasses.btnLarge]: lg,
       [commonClasses.btnSmall]: !lg,
@@ -49,7 +47,6 @@ export const ButtonPrimary = (props: ButtonPrimaryProps): JSX.Element => {
       [commonClasses.btnMarginX]: marginX,
       [commonClasses.btnDisabled]: disabled,
       [commonClasses.btnActiveTransforms]: !disabled,
-      [classes.btnPrimary_secondaryColor]: colorSecondary,
     },
     className
   );

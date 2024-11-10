@@ -119,32 +119,6 @@
 
 /* Button Styles */
 
-.btn-mono {
-  @include btn-core;
-  @include btn-layout;
-  @include btn-spacing;
-  @include btn-icons;
-  @include btn-disabled;
-
-  background: var(--text-color-primary);
-  border: 1px solid var(--text-color-primary);
-  border-radius: var(--button-border-radius-large);
-  color: var(--text-color-invert);
-
-  &.secondary-color {
-    border-color: var(--text-color-secondary);
-    background: var(--text-color-secondary);
-  }
-
-  &.sm {
-    @include btn-small;
-  }
-
-  &.lg {
-    @include btn-large;
-  }
-}
-
 .btn-mono-invert {
   @include btn-core;
   @include btn-layout;

@@ -3,3 +3,4 @@
 
 export * from './ButtonPrimary';
 export * from './ButtonHelp';
+export * from './ButtonMono';
