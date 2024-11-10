@@ -1720,69 +1720,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot-staking-dashboard/app@workspace:packages/app":
-  version: 0.0.0-use.local
-  resolution: "@polkadot-staking-dashboard/app@workspace:packages/app"
-  dependencies:
-    "@dotlottie/player-component": "npm:^2.7.12"
-    "@fortawesome/fontawesome-svg-core": "npm:^6.5.2"
-    "@fortawesome/free-brands-svg-icons": "npm:^6.5.2"
-    "@fortawesome/free-regular-svg-icons": "npm:^6.5.2"
-    "@fortawesome/free-solid-svg-icons": "npm:^6.5.2"
-    "@fortawesome/react-fontawesome": "npm:^0.2.2"
-    "@ledgerhq/hw-transport-webhid": "npm:^6.29.2"
-    "@polkadot-api/merkleize-metadata": "npm:^1.1.4"
-    "@polkadot/api": "npm:^14.2.3"
-    "@polkadot/rpc-provider": "npm:^14.2.3"
-    "@polkawatch/ddp-client": "npm:^2.0.20"
-    "@substrate/connect": "npm:^2.0.1"
-    "@w3ux/extension-assets": "npm:^0.4.0"
-    "@w3ux/factories": "npm:^1.0.0"
-    "@w3ux/hooks": "npm:^1.2.1"
-    "@w3ux/react-connect-kit": "npm:^1.8.0"
-    "@w3ux/react-odometer": "npm:^1.1.0"
-    "@w3ux/react-polkicon": "npm:^2.0.1-alpha.0"
-    "@w3ux/utils": "npm:1.1.1-beta.9"
-    "@w3ux/validator-assets": "npm:^0.2.0"
-    "@zondax/ledger-substrate": "npm:^1.0.0"
-    bignumber.js: "npm:^9.1.2"
-    bn.js: "npm:^5.2.1"
-    buffer: "npm:^6.0.3"
-    chart.js: "npm:^4.4.4"
-    chroma-js: "npm:^3.1.1"
-    compare-versions: "npm:^6.1.1"
-    date-fns: "npm:^4.1.0"
-    framer-motion: "npm:^11.11.1"
-    html5-qrcode: "npm:^2.3.8"
-    i18next: "npm:^23.11.5"
-    i18next-browser-languagedetector: "npm:^8.0.0"
-    lodash.debounce: "npm:^4.0.8"
-    lodash.throttle: "npm:^4.1.1"
-    qrcode-generator: "npm:1.4.4"
-    rc-slider: "npm:^11.1.6"
-    react: "npm:^18.3.1"
-    react-chartjs-2: "npm:^5.2.0"
-    react-dom: "npm:^18.2.0"
-    react-error-boundary: "npm:^4.0.13"
-    react-helmet: "npm:^6.1.0"
-    react-i18next: "npm:^15.0.2"
-    react-router-dom: "npm:^6.23.1"
-    react-scroll: "npm:^1.9.0"
-    styled-components: "npm:^6.1.13"
-    usehooks-ts: "npm:^3.0.2"
-    viem: "npm:^2.21.35"
-    vite: "npm:^5.2.12"
-    vite-bundle-visualizer: "npm:^1.2.1"
-    vite-plugin-checker: "npm:^0.7.0"
-    vite-plugin-eslint: "npm:^1.8.1"
-    vite-plugin-svgr: "npm:^4.2.0"
-    vite-tsconfig-paths: "npm:^5.0.1"
-    vitest: "npm:^1.6.0"
-    wagmi: "npm:^2.12.25"
-    xxhash-wasm: "npm:^1.0.2"
-  languageName: unknown
-  linkType: soft
-
 "@polkadot/api-augment@npm:10.13.1":
   version: 10.13.1
   resolution: "@polkadot/api-augment@npm:10.13.1"
@@ -4454,6 +4391,70 @@ __metadata:
   checksum: 10c0/57b06ae984bc32a0d22592c87384cd88fe4511b1dd7581497831c56d41939c8a001b28e7b853e1450f2bf61992dfcaa8ae2d0d161a0a90c4fb631ef07098fbac
   languageName: node
   linkType: hard
+
+"app@workspace:packages/app":
+  version: 0.0.0-use.local
+  resolution: "app@workspace:packages/app"
+  dependencies:
+    "@dotlottie/player-component": "npm:^2.7.12"
+    "@fortawesome/fontawesome-svg-core": "npm:^6.5.2"
+    "@fortawesome/free-brands-svg-icons": "npm:^6.5.2"
+    "@fortawesome/free-regular-svg-icons": "npm:^6.5.2"
+    "@fortawesome/free-solid-svg-icons": "npm:^6.5.2"
+    "@fortawesome/react-fontawesome": "npm:^0.2.2"
+    "@ledgerhq/hw-transport-webhid": "npm:^6.29.2"
+    "@polkadot-api/merkleize-metadata": "npm:^1.1.4"
+    "@polkadot/api": "npm:^14.2.3"
+    "@polkadot/rpc-provider": "npm:^14.2.3"
+    "@polkawatch/ddp-client": "npm:^2.0.20"
+    "@substrate/connect": "npm:^2.0.1"
+    "@w3ux/extension-assets": "npm:^0.4.0"
+    "@w3ux/factories": "npm:^1.0.0"
+    "@w3ux/hooks": "npm:^1.2.1"
+    "@w3ux/react-connect-kit": "npm:^1.8.0"
+    "@w3ux/react-odometer": "npm:^1.1.0"
+    "@w3ux/react-polkicon": "npm:^2.0.1-alpha.0"
+    "@w3ux/utils": "npm:1.1.1-beta.9"
+    "@w3ux/validator-assets": "npm:^0.2.0"
+    "@zondax/ledger-substrate": "npm:^1.0.0"
+    bignumber.js: "npm:^9.1.2"
+    bn.js: "npm:^5.2.1"
+    buffer: "npm:^6.0.3"
+    chart.js: "npm:^4.4.4"
+    chroma-js: "npm:^3.1.1"
+    compare-versions: "npm:^6.1.1"
+    date-fns: "npm:^4.1.0"
+    framer-motion: "npm:^11.11.1"
+    html5-qrcode: "npm:^2.3.8"
+    i18next: "npm:^23.11.5"
+    i18next-browser-languagedetector: "npm:^8.0.0"
+    lodash.debounce: "npm:^4.0.8"
+    lodash.throttle: "npm:^4.1.1"
+    qrcode-generator: "npm:1.4.4"
+    rc-slider: "npm:^11.1.6"
+    react: "npm:^18.3.1"
+    react-chartjs-2: "npm:^5.2.0"
+    react-dom: "npm:^18.2.0"
+    react-error-boundary: "npm:^4.0.13"
+    react-helmet: "npm:^6.1.0"
+    react-i18next: "npm:^15.0.2"
+    react-router-dom: "npm:^6.23.1"
+    react-scroll: "npm:^1.9.0"
+    styled-components: "npm:^6.1.13"
+    ui-buttons: "workspace:*"
+    usehooks-ts: "npm:^3.0.2"
+    viem: "npm:^2.21.35"
+    vite: "npm:^5.2.12"
+    vite-bundle-visualizer: "npm:^1.2.1"
+    vite-plugin-checker: "npm:^0.7.0"
+    vite-plugin-eslint: "npm:^1.8.1"
+    vite-plugin-svgr: "npm:^4.2.0"
+    vite-tsconfig-paths: "npm:^5.0.1"
+    vitest: "npm:^1.6.0"
+    wagmi: "npm:^2.12.25"
+    xxhash-wasm: "npm:^1.0.2"
+  languageName: unknown
+  linkType: soft
 
 "argparse@npm:^2.0.1":
   version: 2.0.1
@@ -10583,6 +10584,12 @@ __metadata:
   checksum: 10c0/b5dc4dc435c49c9ef8890f1b280a19ee4d0954d1d6f9ab66ce62ce64dd04c7be476781531f952a07c678d51638d02ad4b98e16237be29149295b0f7c09cda765
   languageName: node
   linkType: hard
+
+"ui-buttons@workspace:*, ui-buttons@workspace:packages/ui-buttons":
+  version: 0.0.0-use.local
+  resolution: "ui-buttons@workspace:packages/ui-buttons"
+  languageName: unknown
+  linkType: soft
 
 "uint8arrays@npm:3.1.0":
   version: 3.1.0

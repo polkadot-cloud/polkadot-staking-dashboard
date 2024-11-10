@@ -1,15 +1,12 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "src",
-    "outDir": "build",
-
     "target": "ESNext",
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "module": "ESNext",
     "skipLibCheck": true,
-
+    
     /* Bundler mode */
     "moduleResolution": "Bundler",
     "allowSyntheticDefaultImports": true,
@@ -19,8 +16,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "noEmit": true
+    "noEmit": true,
   },
-  "include": ["src", "tests"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": [
+    "src"
+  ]
 }

@@ -1,0 +1,14 @@
+{
+  "name": "ui-buttons",
+  "version": "1.0.0",
+  "type": "module",
+  "license": "GPL-3.0-only",
+  "scripts": {
+    "clear": "rm -rf build tsconfig.tsbuildinfo dist",
+    "reset": "npm run clear &&  rm -rf node_modules yarn.lock && yarn",
+    "dev": "vite",
+    "lint": "eslint . --fix && npx prettier --write . && npx prettier --write ./.scripts"
+  },
+  "main": "src/index.tsx",
+  "packageManager": "yarn@4.1.1"
+}

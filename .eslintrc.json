@@ -84,7 +84,7 @@
         "fixStyle": "separate-type-imports"
       }
     ],
-    "@typescript-eslint/no-shadow": ["error"]
+    "@typescript-eslint/no-shadow": "error"
   },
   "settings": {
     "react": {

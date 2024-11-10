@@ -4,10 +4,12 @@
   "type": "module",
   "license": "GPL-3.0-only",
   "scripts": {
-    "clear": "npm run --workspaces clear && rm -rf node_modules build tsconfig.tsbuildinfo",
-    "reset": "npm run clear && rm -rf yarn.lock && yarn",
     "build": "npm run build --workspaces --if-present",
-    "lint": "eslint './**' --fix && npx prettier --write .",
+    "clear": "npm run --workspaces clear && rm -rf build dist tsconfig.tsbuildinfo",
+    "dev": "cd packages/app && yarn dev",
+    "lint": "eslint './**' --fix --ignore-path .eslintignore && npx prettier --write .",
+    "preview": "cd packages/app && yarn preview",
+    "reset": "npm run clear && rm -rf node_modules yarn.lock && yarn",
     "test": "npm run test --workspaces --if-present"
   },
   "workspaces": [
