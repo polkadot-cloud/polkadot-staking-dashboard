@@ -11,7 +11,7 @@ export const useBatchCall = () => {
   const { activeProxy } = useActiveAccounts();
   const { isProxySupported } = useProxySupported();
 
-  const newBatchCall = (txs: AnyApi[], from: MaybeAddress) => {
+  const newBatchCall = (txs: AnyApi[], from: MaybeAddress): AnyApi => {
     if (!api) {
       return undefined;
     }

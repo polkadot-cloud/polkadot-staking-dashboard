@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import type { NetworkName, SystemChainId } from 'types';
+import type { AnyApi, NetworkName, SystemChainId } from 'types';
 import { NetworkList, SystemChainList } from 'config/networks';
 import type {
   ApiChainType,
@@ -12,6 +12,7 @@ import type {
 } from './types';
 import { SubscriptionsController } from 'controllers/Subscriptions';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
+import { WellKnownChain } from '@substrate/connect';
 import * as Sc from '@substrate/connect';
 
 export class Api {
@@ -125,7 +126,10 @@ export class Api {
         : SystemChainList[this.network].endpoints.lightClient;
 
     // Instantiate light client provider.
-    this.#provider = new ScProvider(Sc, Sc.WellKnownChain[lightClientKey]);
+    this.#provider = new ScProvider(
+      Sc as AnyApi,
+      WellKnownChain[lightClientKey as keyof typeof WellKnownChain]
+    );
     await this.#provider.connect();
   }
 
