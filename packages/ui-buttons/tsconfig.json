@@ -6,8 +6,6 @@
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "module": "ESNext",
     "skipLibCheck": true,
-    
-    /* Bundler mode */
     "moduleResolution": "Bundler",
     "allowSyntheticDefaultImports": true,
     "allowImportingTsExtensions": true,
@@ -19,6 +17,7 @@
     "noEmit": true,
   },
   "include": [
-    "src"
+    "src",
+    "env.d.ts"
   ]
 }

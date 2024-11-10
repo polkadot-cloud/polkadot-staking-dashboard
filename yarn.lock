@@ -3840,7 +3840,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/utils@npm:1.1.1-beta.9":
+"@w3ux/utils@npm:1.1.1-beta.9, @w3ux/utils@npm:^1.1.1-beta.9":
   version: 1.1.1-beta.9
   resolution: "@w3ux/utils@npm:1.1.1-beta.9"
   dependencies:
@@ -4974,7 +4974,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:^2.2.5":
+"classnames@npm:^2.2.5, classnames@npm:^2.5.1":
   version: 2.5.1
   resolution: "classnames@npm:2.5.1"
   checksum: 10c0/afff4f77e62cea2d79c39962980bf316bacb0d7c49e13a21adaadb9221e1c6b9d3cdb829d8bb1b23c406f4e740507f37e1dcf506f7e3b7113d17c5bab787aa69
@@ -8809,6 +8809,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^7.12.0"
     "@vitejs/plugin-react-swc": "npm:^3.7.0"
     "@w3ux/types": "npm:^0.2.0"
+    classnames: "npm:^2.5.1"
     eslint: "npm:8.57.0"
     eslint-config-prettier: "npm:^9.1.0"
     eslint-import-resolver-typescript: "npm:^3.6.3"
@@ -10588,6 +10589,10 @@ __metadata:
 "ui-buttons@workspace:*, ui-buttons@workspace:packages/ui-buttons":
   version: 0.0.0-use.local
   resolution: "ui-buttons@workspace:packages/ui-buttons"
+  dependencies:
+    "@fortawesome/react-fontawesome": "npm:^0.2.2"
+    "@w3ux/types": "npm:^0.2.0"
+    "@w3ux/utils": "npm:^1.1.1-beta.9"
   languageName: unknown
   linkType: soft
 
