@@ -22,7 +22,7 @@ import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { PluginLabel } from 'library/PluginLabel';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
 import { GeoDonut } from 'library/Graphs/GeoDonut';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'ui-buttons';
 import { useHelp } from 'contexts/Help';
 import { NominationGeoList } from './NominationGeoList';
 import { StatusLabel } from 'library/StatusLabel';

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useHelp } from 'contexts/Help';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'ui-buttons';
 import { HeadingWrapper } from '../Wrappers';
 import { Polkicon } from '@w3ux/react-polkicon';
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';

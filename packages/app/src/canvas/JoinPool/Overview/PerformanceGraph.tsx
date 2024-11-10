@@ -19,7 +19,7 @@ import BigNumber from 'bignumber.js';
 import type { AnyJson } from '@w3ux/types';
 import { graphColors } from 'theme/graphs';
 import { useTheme } from 'contexts/Themes';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'ui-buttons';
 import { useHelp } from 'contexts/Help';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 import { useRef } from 'react';

@@ -7,7 +7,7 @@ import { useHelp } from 'contexts/Help';
 import BigNumber from 'bignumber.js';
 import { StatBox } from './Item';
 import type { PieProps } from './types';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'ui-buttons';
 import { SimplePie } from 'library/SimplePie';
 import type { AnyJson } from '@w3ux/types';
 

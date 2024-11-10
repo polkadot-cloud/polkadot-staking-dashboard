@@ -6,7 +6,7 @@ import { useHelp } from 'contexts/Help';
 import BigNumber from 'bignumber.js';
 import { StatBox } from './Item';
 import type { NumberProps } from './types';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'ui-buttons';
 
 export const Number = ({
   label,

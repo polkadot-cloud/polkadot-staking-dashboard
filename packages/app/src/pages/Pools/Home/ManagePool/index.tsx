@@ -10,7 +10,7 @@ import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { Nominations } from 'library/Nominations';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'ui-buttons';
 import { ButtonPrimary } from 'ui-buttons';
 
 export const ManagePool = () => {

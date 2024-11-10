@@ -9,7 +9,7 @@ import { useHelp } from 'contexts/Help';
 import LedgerLogoSVG from '@w3ux/extension-assets/Ledger.svg?react';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'ui-buttons';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
 import { ButtonText } from 'kits/Buttons/ButtonText';
 import { ModalConnectItem } from 'kits/Overlay/structure/ModalConnectItem';

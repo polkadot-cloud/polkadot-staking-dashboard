@@ -10,7 +10,7 @@ import { Separator } from 'kits/Structure/Separator';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
 import { useStaking } from 'contexts/Staking';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'ui-buttons';
 import { useHelp } from 'contexts/Help';
 import { Node } from './Node';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';

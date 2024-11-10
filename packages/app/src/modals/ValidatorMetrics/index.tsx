@@ -23,7 +23,7 @@ import type { AnyJson } from '@w3ux/types';
 import { SubscanController } from 'controllers/Subscan';
 import { usePlugins } from 'contexts/Plugins';
 import { useApi } from 'contexts/Api';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'ui-buttons';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { planckToUnitBn } from 'library/Utils';
 import { useUi } from 'contexts/UI';

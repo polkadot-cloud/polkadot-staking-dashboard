@@ -3,7 +3,7 @@
 
 import { CardWrapper } from 'library/Card/Wrappers';
 import { AddressesWrapper, HeadingWrapper } from '../Wrappers';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'ui-buttons';
 import { useHelp } from 'contexts/Help';
 import { AddressSection } from './AddressSection';
 import type { OverviewSectionProps } from '../types';

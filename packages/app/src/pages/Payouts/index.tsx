@@ -24,7 +24,7 @@ import { useSubscanData } from 'hooks/useSubscanData';
 import { SubscanController } from 'controllers/Subscan';
 import { DefaultLocale, locales } from 'locale';
 import { useSyncing } from 'hooks/useSyncing';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'ui-buttons';
 import { PageTitle } from 'kits/Structure/PageTitle';
 import { useUi } from 'contexts/UI';
 

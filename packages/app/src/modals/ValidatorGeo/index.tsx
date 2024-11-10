@@ -19,7 +19,7 @@ import { PluginLabel } from 'library/PluginLabel';
 import { usePlugins } from 'contexts/Plugins';
 import { useNetwork } from 'contexts/Network';
 import { PolkaWatchController } from 'controllers/PolkaWatch';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'ui-buttons';
 import { useUi } from 'contexts/UI';
 
 export const ValidatorGeo = () => {

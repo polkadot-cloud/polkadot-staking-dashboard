@@ -16,7 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import type { SubmitProps } from '../../types';
 import { Submit } from './Submit';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'ui-buttons';
 import { appendOrEmpty } from '@w3ux/utils';
 
 export const Ledger = ({

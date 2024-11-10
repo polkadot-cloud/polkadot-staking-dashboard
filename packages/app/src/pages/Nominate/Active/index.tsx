@@ -21,7 +21,7 @@ import { Status } from './Status';
 import { UnstakePrompts } from './UnstakePrompts';
 import { useSyncing } from 'hooks/useSyncing';
 import { useBalances } from 'contexts/Balances';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'ui-buttons';
 import { ButtonPrimary } from 'ui-buttons';
 import { PageRow } from 'kits/Structure/PageRow';
 import { RowSection } from 'kits/Structure/RowSection';

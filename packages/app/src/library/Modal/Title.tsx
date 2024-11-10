@@ -10,7 +10,7 @@ import { useOverlay } from 'kits/Overlay/Provider';
 import { TitleWrapper } from './Wrappers';
 import type { AnyJson } from '@w3ux/types';
 import type { CSSProperties } from 'styled-components';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'ui-buttons';
 
 interface TitleProps {
   title: string;

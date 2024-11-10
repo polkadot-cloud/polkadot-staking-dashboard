@@ -22,7 +22,7 @@ import { usePoolCommission } from './provider';
 import { CommissionCurrent } from './CommissionCurrent';
 import { MaxCommission } from './MaxCommission';
 import { ChangeRate } from './ChangeRate';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'ui-buttons';
 import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';

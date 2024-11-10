@@ -10,7 +10,7 @@ import type { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 import { useApi } from 'contexts/Api';
 import { useSyncing } from 'hooks/useSyncing';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'ui-buttons';
 import { planckToUnitBn } from 'library/Utils';
 
 export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {

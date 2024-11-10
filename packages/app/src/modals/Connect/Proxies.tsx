@@ -20,7 +20,7 @@ import {
   ManualAccountsWrapper,
 } from './Wrappers';
 import type { ListWithInputProps } from './types';
-import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
+import { ButtonHelp } from 'ui-buttons';
 import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
 import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
 
