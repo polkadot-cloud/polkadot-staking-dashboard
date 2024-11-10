@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Wrapper } from './Wrapper';
-import { ButtonHelp } from 'ui-buttons';
-import { ButtonMonoInvert } from '../../../kits/Buttons/ButtonMonoInvert';
+import { ButtonHelp, ButtonMonoInvert } from 'ui-buttons';
 import { ButtonPrimaryInvert } from '../../../kits/Buttons/ButtonPrimaryInvert';
 import type { HardwareStatusBarProps } from './types';
 

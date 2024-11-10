@@ -4,3 +4,4 @@
 export * from './ButtonPrimary';
 export * from './ButtonHelp';
 export * from './ButtonMono';
+export * from './ButtonMonoInvert';

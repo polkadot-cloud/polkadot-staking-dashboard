@@ -20,8 +20,7 @@ import {
   ManualAccountsWrapper,
 } from './Wrappers';
 import type { ListWithInputProps } from './types';
-import { ButtonHelp } from 'ui-buttons';
-import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
+import { ButtonHelp, ButtonMonoInvert } from 'ui-buttons';
 import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
 
 export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {

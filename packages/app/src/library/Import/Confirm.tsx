@@ -10,8 +10,7 @@ import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { ConfirmProps } from './types';
 import { NotificationsController } from 'controllers/Notifications';
 import { ellipsisFn } from '@w3ux/utils';
-import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
-import { ButtonMono } from 'ui-buttons';
+import { ButtonMonoInvert, ButtonMono } from 'ui-buttons';
 import { useNetwork } from 'contexts/Network';
 
 export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
