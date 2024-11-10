@@ -9,7 +9,7 @@ import { Title } from 'library/Prompt/Title';
 import { usePrompt } from 'contexts/Prompt';
 import { usePlugins } from 'contexts/Plugins';
 import type { TipProps } from './types';
-import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonPrimary } from 'ui-buttons';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
 import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
 

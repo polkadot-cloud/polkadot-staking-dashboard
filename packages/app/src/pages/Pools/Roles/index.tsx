@@ -23,7 +23,7 @@ import type { RoleEditEntry, RolesProps } from './types';
 import { useSyncing } from 'hooks/useSyncing';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
-import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonPrimary } from 'ui-buttons';
 
 export const Roles = ({
   defaultRoles,

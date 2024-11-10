@@ -12,7 +12,7 @@ import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useSyncing } from 'hooks/useSyncing';
-import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonPrimary } from 'ui-buttons';
 import { ButtonRow } from 'kits/Structure/ButtonRow';
 
 export const ClosurePrompts = () => {

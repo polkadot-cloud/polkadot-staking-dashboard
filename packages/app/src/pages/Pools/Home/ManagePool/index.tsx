@@ -11,7 +11,7 @@ import { Nominations } from 'library/Nominations';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
-import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonPrimary } from 'ui-buttons';
 
 export const ManagePool = () => {
   const { t } = useTranslation();

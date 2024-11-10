@@ -13,7 +13,7 @@ import { AddressesWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from '@w3ux/types';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonPrimary } from 'ui-buttons';
 import { ButtonText } from 'kits/Buttons/ButtonText';
 import { HardwareAddress } from 'library/Hardware/HardwareAddress';
 import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar';

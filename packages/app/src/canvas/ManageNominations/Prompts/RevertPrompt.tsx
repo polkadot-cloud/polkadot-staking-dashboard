@@ -5,7 +5,7 @@ import { Title } from 'library/Prompt/Title';
 import { useTranslation } from 'react-i18next';
 import { FooterWrapper } from 'library/Prompt/Wrappers';
 import type { RevertPromptProps } from '../types';
-import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonPrimary } from 'ui-buttons';
 
 export const RevertPrompt = ({ onRevert }: RevertPromptProps) => {
   const { t } = useTranslation('modals');

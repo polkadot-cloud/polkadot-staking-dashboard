@@ -18,7 +18,7 @@ import { ListStatusHeader } from 'library/List';
 import { Wrapper } from './Wrapper';
 import { useSyncing } from 'hooks/useSyncing';
 import { useBalances } from 'contexts/Balances';
-import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonPrimary } from 'ui-buttons';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 
 export const Nominations = ({

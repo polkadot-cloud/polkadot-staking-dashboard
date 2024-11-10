@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonPrimary } from 'ui-buttons';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useTranslation } from 'react-i18next';
 import { JoinPoolInterfaceWrapper } from './Wrappers';

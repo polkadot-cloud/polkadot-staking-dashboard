@@ -25,7 +25,7 @@ import { CanvasSubmitTxFooter, CanvasFullScreenWrapper } from '../Wrappers';
 import { NotificationsController } from 'controllers/Notifications';
 import { ButtonHelp } from 'kits/Buttons/ButtonHelp';
 import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
-import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonPrimary } from 'ui-buttons';
 
 export const ManageNominations = () => {
   const { t } = useTranslation('library');

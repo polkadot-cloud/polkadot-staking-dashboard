@@ -11,7 +11,7 @@ import { Bond } from 'canvas/CreatePool/Bond';
 import { PoolName } from 'canvas/CreatePool/PoolName';
 import { PoolRoles } from 'canvas/CreatePool/PoolRoles';
 import { CanvasFullScreenWrapper, CanvasTitleWrapper } from 'canvas/Wrappers';
-import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonPrimary } from 'ui-buttons';
 import { useOverlay } from 'kits/Overlay/Provider';
 
 export const CreatePool = () => {

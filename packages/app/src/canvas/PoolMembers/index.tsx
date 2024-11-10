@@ -6,7 +6,7 @@ import { useOverlay } from 'kits/Overlay/Provider';
 import { CanvasFullScreenWrapper } from 'canvas/Wrappers';
 import { Members } from 'canvas/PoolMembers/Members';
 import { useTranslation } from 'react-i18next';
-import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonPrimary } from 'ui-buttons';
 
 export const PoolMembers = () => {
   const { t } = useTranslation();

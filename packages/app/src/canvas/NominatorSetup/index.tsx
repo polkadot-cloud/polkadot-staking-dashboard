@@ -10,7 +10,7 @@ import { Payee } from 'canvas/NominatorSetup/Payee';
 import { Bond } from 'canvas/NominatorSetup/Bond';
 import { Summary } from 'canvas/NominatorSetup/Summary';
 import { CanvasFullScreenWrapper, CanvasTitleWrapper } from 'canvas/Wrappers';
-import { ButtonPrimary } from 'kits/Buttons/ButtonPrimary';
+import { ButtonPrimary } from 'ui-buttons';
 import { useOverlay } from 'kits/Overlay/Provider';
 
 export const NominatorSetup = () => {
