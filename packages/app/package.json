@@ -62,6 +62,7 @@
     "react-router-dom": "^6.23.1",
     "react-scroll": "^1.9.0",
     "styled-components": "^6.1.13",
+    "styles": "workspace:*",
     "ui-buttons": "workspace:*",
     "ui-structure": "workspace:*",
     "usehooks-ts": "^3.0.2",

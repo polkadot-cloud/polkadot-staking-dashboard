@@ -5,14 +5,14 @@ import { createRoot } from 'react-dom/client';
 import { App } from 'App';
 
 // Network styles.
-import 'theme/accents/polkadot-relay.css';
-import 'theme/accents/kusama-relay.css';
-import 'theme/accents/westend-relay.css';
+import 'styles/accents/polkadot-relay.css';
+import 'styles/accents/kusama-relay.css';
+import 'styles/accents/westend-relay.css';
 
 // App styles.
-import 'theme/fonts.scss';
-import 'theme/theme.scss';
-import 'theme/index.scss';
+import 'styles/fonts/font.scss';
+import 'styles/theme/theme.scss';
+import 'styles/theme/index.scss';
 
 // Library styles.
 import 'kits/Structure/index.scss';

@@ -1,30 +1,6 @@
 /* Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 SPDX-License-Identifier: GPL-3.0-only */
 
-/* NOTE: This file should be imported in the main library entry file. */
-
-/* Define theme variables. */
-
-:root {
-  /* Button variables. */
-  --button-border-radius-small: 0.75rem;
-  --button-border-radius-large: 1.5rem;
-  --button-padding-small: 0.41rem 1rem;
-  --button-padding-large: 0.53rem 1rem;
-  --button-spacing-small: 0.125rem;
-  --button-spacing-large: 0.625rem;
-  --button-font-size-small: 1rem;
-  --button-font-size-large: 1.15rem;
-
-  /* Transition variables. */
-  --transition-duration: 0.15s;
-
-  /* Miscellaneous variables. */
-  --opacity-disabled: 0.3;
-}
-
-/* Define global font sizes. */
-
 html {
   font-size: 10.5px;
   @media (min-width: 600px) {
@@ -32,13 +8,9 @@ html {
   }
 }
 
-/* Every element conforms to border-box by default. */
-
 * {
   box-sizing: border-box;
 }
-
-/* Body style. */
 
 body {
   font-family: Inter, sans-serif;
@@ -48,8 +20,6 @@ body {
   font-weight: normal;
   margin: 0;
 }
-
-/* Header styling. */
 
 h1 {
   color: var(--text-color-primary);
@@ -95,8 +65,6 @@ h5 {
   margin: 0;
 }
 
-/* Pragraph style. */
-
 p {
   color: var(--text-color-secondary);
   font-size: 1.04rem;
@@ -104,15 +72,11 @@ p {
   margin: 0.75rem 0;
 }
 
-/* Anchor style. */
-
 a {
   color: var(--text-color-secondary);
   text-decoration: none;
   cursor: pointer;
 }
-
-/* Base button style. */
 
 button {
   -webkit-tap-highlight-color: transparent;
@@ -123,8 +87,6 @@ button {
   margin: 0;
   padding: 0;
 }
-
-/* Base input style. */
 
 input {
   color: var(--text-color-primary);
@@ -149,8 +111,6 @@ select:focus,
 textarea:focus {
   outline: none;
 }
-
-/* Base SVG style. */
 
 path.primary,
 ellipse.primary {

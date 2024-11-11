@@ -4442,6 +4442,7 @@ __metadata:
     react-router-dom: "npm:^6.23.1"
     react-scroll: "npm:^1.9.0"
     styled-components: "npm:^6.1.13"
+    styles: "workspace:*"
     ui-buttons: "workspace:*"
     ui-structure: "workspace:*"
     usehooks-ts: "npm:^3.0.2"
@@ -10260,6 +10261,14 @@ __metadata:
   checksum: 10c0/dd0379179c6ce9655c97285e9f6475b533d4cc4cad72e8f16824c5454803a9d12126877d8b2837cd5b54520250c55cde97a183e813eed720d2575362d9646663
   languageName: node
   linkType: hard
+
+"styles@workspace:*, styles@workspace:packages/styles":
+  version: 0.0.0-use.local
+  resolution: "styles@workspace:packages/styles"
+  dependencies:
+    "@polkadot/util": "npm:^13.2.2"
+  languageName: unknown
+  linkType: soft
 
 "stylis@npm:4.3.2":
   version: 4.3.2

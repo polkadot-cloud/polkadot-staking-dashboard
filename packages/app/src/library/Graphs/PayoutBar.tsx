@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next';
 import { useStaking } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { DefaultLocale, locales } from 'locale';
-import { graphColors } from 'theme/graphs';
+import graphColors from 'styles/graphs/index.json';
 import type { AnySubscan } from 'types';
 import { useNetwork } from 'contexts/Network';
 import type { PayoutBarProps } from './types';

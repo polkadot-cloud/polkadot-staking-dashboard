@@ -1,6 +1,22 @@
 /* Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 SPDX-License-Identifier: GPL-3.0-only */
 
+/* general styles */
+:root {
+  --button-border-radius-small: 0.75rem;
+  --button-border-radius-large: 1.5rem;
+  --button-padding-small: 0.41rem 1rem;
+  --button-padding-large: 0.53rem 1rem;
+  --button-spacing-small: 0.125rem;
+  --button-spacing-large: 0.625rem;
+  --button-font-size-small: 1rem;
+  --button-font-size-large: 1.15rem;
+
+  --transition-duration: 0.15s;
+
+  --opacity-disabled: 0.3;
+}
+
 /* light theme colors */
 .theme-light {
   --background-default: #efeeee;
