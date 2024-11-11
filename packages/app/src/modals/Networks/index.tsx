@@ -23,7 +23,7 @@ import {
   NetworkButton,
 } from './Wrapper';
 import { ProvidersPrompt } from './ProvidersPrompt';
-import { ButtonTertiary } from 'kits/Buttons/ButtonTertiary';
+import { ButtonTertiary } from 'ui-buttons';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 
 export const Networks = () => {

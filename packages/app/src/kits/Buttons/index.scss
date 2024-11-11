@@ -161,16 +161,3 @@
     }
   }
 }
-
-.btn-tertiary {
-  @include btn-core;
-  @include btn-layout;
-  @include btn-spacing;
-  @include btn-icons;
-  @include btn-disabled;
-  @include btn-small;
-
-  border: 1px solid var(--button-secondary-background);
-  border-radius: var(--button-border-radius-large);
-  color: var(--text-color-secondary);
-}

@@ -19,7 +19,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useSyncing } from 'hooks/useSyncing';
-import { ButtonTertiary } from 'kits/Buttons/ButtonTertiary';
+import { ButtonTertiary } from 'ui-buttons';
 import { planckToUnitBn } from 'library/Utils';
 
 export const BalanceChart = () => {

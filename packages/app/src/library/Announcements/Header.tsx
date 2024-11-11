@@ -4,8 +4,7 @@
 import { useHelp } from 'contexts/Help';
 import { HeaderWrapper } from './Wrappers';
 import type { HeaderProps } from './types';
-import { ButtonHelp } from 'ui-buttons';
-import { ButtonTertiary } from 'kits/Buttons/ButtonTertiary';
+import { ButtonHelp, ButtonTertiary } from 'ui-buttons';
 
 export const Header = ({ items }: HeaderProps) => {
   const { openHelp } = useHelp();
