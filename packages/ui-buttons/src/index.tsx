@@ -10,6 +10,6 @@ export * from './ButtonPrimaryInvert';
 export * from './ButtonSecondary';
 export * from './ButtonSubmit';
 export * from './ButtonSubmitInvert';
+export * from './ButtonTab';
 export * from './ButtonTertiary';
-
 export * from './ButtonText';

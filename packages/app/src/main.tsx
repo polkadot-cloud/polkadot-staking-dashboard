@@ -15,7 +15,6 @@ import 'theme/theme.scss';
 import 'theme/index.scss';
 
 // Library styles.
-import 'kits/Buttons/index.scss';
 import 'kits/Structure/index.scss';
 import 'kits/Overlay/index.scss';
 

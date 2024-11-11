@@ -115,6 +115,7 @@ export const Header = ({
           ]}
           tabClassName="canvas"
           inline={true}
+          colorSecondary={true}
         />
       </CanvasTitleWrapper>
     </>

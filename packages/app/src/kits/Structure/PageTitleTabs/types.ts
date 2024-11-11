@@ -21,6 +21,4 @@ export interface PageTitleTabProps {
   badge?: string | number;
   // whether the tab button is disabled.
   disabled?: boolean;
-  // whether the tab is acting as a preloader.
-  asPreloader?: boolean;
 }
