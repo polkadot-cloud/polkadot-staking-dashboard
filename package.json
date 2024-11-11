@@ -6,7 +6,7 @@
   "scripts": {
     "clear": "yarn run --workspaces clear && rm -rf build dist tsconfig.tsbuildinfo",
     "dev": "cd packages/app && yarn dev",
-    "lint": "eslint './**' --fix && npx prettier --write .",
+    "lint": "eslint './**' --fix && npx prettier --write . && yarn run lint --workspaces --if-present",
     "preview": "cd packages/app && yarn preview",
     "reset": "yarn run clear && rm -rf node_modules yarn.lock && yarn",
     "test": "yarn run test --workspaces --if-present"
