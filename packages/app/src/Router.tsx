@@ -29,7 +29,7 @@ import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Notifications } from 'library/Notifications';
 import { NotificationsController } from 'controllers/Notifications';
-import { Page } from 'Page';
+import { PageWithTitle } from 'PageWithTitle';
 import { Body, Main } from 'ui-structure';
 import { Offline } from 'library/Offline';
 
@@ -114,7 +114,7 @@ const RouterInner = () => {
                 <Route
                   key={`main_interface_page_${i}`}
                   path={page.hash}
-                  element={<Page page={page} />}
+                  element={<PageWithTitle page={page} />}
                 />
               ))}
 

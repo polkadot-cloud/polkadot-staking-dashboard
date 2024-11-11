@@ -4,16 +4,16 @@
 import { useNetwork } from 'contexts/Network';
 import { Helmet } from 'react-helmet';
 import type { PageItem } from 'types';
-import { PageWrapper } from 'kits/Structure/Page/Wrapper';
+import { Page } from 'ui-structure';
 import { useTranslation } from 'react-i18next';
 
-export const Page = ({ page }: { page: PageItem }) => {
+export const PageWithTitle = ({ page }: { page: PageItem }) => {
   const { t } = useTranslation();
   const { network } = useNetwork();
   const { Entry, key } = page;
 
   return (
-    <PageWrapper>
+    <Page>
       <Helmet>
         <title>{`${t('title', {
           context: `${network}`,
@@ -21,6 +21,6 @@ export const Page = ({ page }: { page: PageItem }) => {
         })} : ${t(key, { ns: 'base' })}`}</title>
       </Helmet>
       <Entry page={page} />
-    </PageWrapper>
+    </Page>
   );
 };

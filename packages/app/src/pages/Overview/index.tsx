@@ -15,8 +15,7 @@ import { ActiveEraStat } from './Stats/ActiveEraTimeLeft';
 import { AverageRewardRateStat } from './Stats/AveragelRewardRate';
 import { SupplyStakedStat } from './Stats/SupplyStaked';
 import { PageTitle } from 'kits/Structure/PageTitle';
-import { PageHeadingWrapper } from 'kits/Structure/PageHeading/Wrapper';
-import { PageRow } from 'ui-structure';
+import { PageHeading, PageRow } from 'ui-structure';
 import { RowSection } from 'kits/Structure/RowSection';
 
 export const Overview = () => {
@@ -28,9 +27,9 @@ export const Overview = () => {
     <>
       <PageTitle title={t('overview.overview')} />
       <PageRow>
-        <PageHeadingWrapper>
+        <PageHeading>
           <AccountControls />
-        </PageHeadingWrapper>
+        </PageHeading>
       </PageRow>
       <StatBoxList>
         <AverageRewardRateStat />

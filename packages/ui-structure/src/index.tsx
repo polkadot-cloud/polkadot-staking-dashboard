@@ -5,4 +5,6 @@ export * from './Body';
 export * from './ButtonRow';
 export * from './Entry';
 export * from './Main';
+export * from './Page';
 export * from './PageRow';
+export * from './PageHeading';
