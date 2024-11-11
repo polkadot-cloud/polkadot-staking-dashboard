@@ -11,8 +11,7 @@ import LedgerLogoSvg from '@w3ux/extension-assets/Ledger.svg?react';
 import type { AnyFunction } from '@w3ux/types';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { SplashWrapper } from './Wrappers';
-import { ButtonHelp } from 'ui-buttons';
-import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
+import { ButtonHelp, ButtonSecondary } from 'ui-buttons';
 
 export const Splash = ({ onGetAddress }: AnyFunction) => {
   const { t } = useTranslation('modals');

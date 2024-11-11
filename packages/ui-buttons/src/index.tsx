@@ -7,3 +7,4 @@ export * from './ButtonMonoInvert';
 export * from './ButtonOption';
 export * from './ButtonPrimary';
 export * from './ButtonPrimaryInvert';
+export * from './ButtonSecondary';

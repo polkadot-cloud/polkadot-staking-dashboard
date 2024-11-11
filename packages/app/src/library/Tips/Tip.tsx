@@ -9,8 +9,11 @@ import { Title } from 'library/Prompt/Title';
 import { usePrompt } from 'contexts/Prompt';
 import { usePlugins } from 'contexts/Plugins';
 import type { TipProps } from './types';
-import { ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons';
-import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
+import {
+  ButtonPrimary,
+  ButtonPrimaryInvert,
+  ButtonSecondary,
+} from 'ui-buttons';
 
 export const Tip = ({ title, description, page }: TipProps) => {
   const { t } = useTranslation();

@@ -10,7 +10,7 @@ import { QrScanSignature } from 'library/QRCode/ScanSignature';
 import { useNetwork } from 'contexts/Network';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import type { AnyJson } from '@w3ux/types';
-import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
+import { ButtonSecondary } from 'ui-buttons';
 import { useVaultAccounts } from '@w3ux/react-connect-kit';
 
 export const Reader = () => {

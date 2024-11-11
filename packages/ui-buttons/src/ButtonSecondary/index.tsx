@@ -2,25 +2,22 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import type { ButtonPrimaryInvertProps } from './types';
-import { onMouseHandlers } from '../util';
-import classes from './index.module.scss';
-import commonClasses from '../common.module.scss';
+import type { ButtonSecondaryProps } from './types';
 import classNames from 'classnames';
+import commonClasses from '../common.module.scss';
+import classes from './index.module.scss';
+import { onMouseHandlers } from '../util';
 
 /**
- * @name ButtonPrimaryInvert
+ * @name ButtonSecondary
  * @description Primary button style used within the main interface of the dashboard. This button
  * component supports icons, conditional styling, and dynamic sizing and margin options.
  *
- * @param {ButtonPrimaryInvertProps} props - The props for the ButtonPrimary component.
+ * @param {ButtonSecondaryProps} props - The props for the ButtonSecondary component.
  * @returns {JSX.Element} The rendered primary button component.
  */
-export const ButtonPrimaryInvert = (
-  props: ButtonPrimaryInvertProps
-): JSX.Element => {
+export const ButtonSecondary = (props: ButtonSecondaryProps): JSX.Element => {
   const {
-    colorSecondary,
     disabled,
     grow,
     iconLeft,
@@ -41,7 +38,7 @@ export const ButtonPrimaryInvert = (
 
   const buttonClasses = classNames(
     commonClasses.btnCore,
-    classes.btnPrimaryInvert,
+    classes.btnSecondary,
     {
       [commonClasses.btnLarge]: lg,
       [commonClasses.btnSmall]: !lg,
@@ -51,7 +48,6 @@ export const ButtonPrimaryInvert = (
       [commonClasses.btnMarginX]: marginX,
       [commonClasses.btnDisabled]: disabled,
       [commonClasses.btnActiveTransforms]: !disabled,
-      [classes.btnPrimaryInvert_secondaryColor]: colorSecondary,
     },
     className
   );

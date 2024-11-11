@@ -10,8 +10,7 @@ import { useFilters } from 'contexts/Filters';
 import { usePrompt } from 'contexts/Prompt';
 import { OrderValidators } from '../OrderValidators';
 import { FilterValidators } from '../FilterValidators';
-import { ButtonPrimaryInvert } from 'ui-buttons';
-import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
+import { ButtonPrimaryInvert, ButtonSecondary } from 'ui-buttons';
 
 export const FilterHeaders = () => {
   const { t } = useTranslation('library');

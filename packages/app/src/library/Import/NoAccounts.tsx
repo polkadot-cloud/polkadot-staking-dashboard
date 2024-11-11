@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { NoAccountsWrapper } from './Wrappers';
 import type { FunctionComponent, ReactNode, SVGProps } from 'react';
-import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
+import { ButtonSecondary } from 'ui-buttons';
 
 export const NoAccounts = ({
   children,

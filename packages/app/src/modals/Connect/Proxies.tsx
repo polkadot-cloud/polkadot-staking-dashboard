@@ -20,8 +20,7 @@ import {
   ManualAccountsWrapper,
 } from './Wrappers';
 import type { ListWithInputProps } from './types';
-import { ButtonHelp, ButtonMonoInvert } from 'ui-buttons';
-import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
+import { ButtonHelp, ButtonMonoInvert, ButtonSecondary } from 'ui-buttons';
 
 export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');

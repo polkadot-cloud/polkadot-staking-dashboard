@@ -12,8 +12,7 @@ import { Wrapper } from './Wrapper';
 import type { StatAddress, StatProps } from './types';
 import { NotificationsController } from 'controllers/Notifications';
 import type { AnyJson } from '@w3ux/types';
-import { ButtonPrimary, ButtonHelp } from 'ui-buttons';
-import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
+import { ButtonPrimary, ButtonHelp, ButtonSecondary } from 'ui-buttons';
 import { Odometer } from '@w3ux/react-odometer';
 
 export const Stat = ({

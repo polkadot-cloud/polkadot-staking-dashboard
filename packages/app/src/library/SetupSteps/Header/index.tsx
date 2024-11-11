@@ -7,8 +7,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { HeaderProps } from '../types';
 import { Wrapper } from './Wrapper';
 import { useHelp } from 'contexts/Help';
-import { ButtonHelp } from 'ui-buttons';
-import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
+import { ButtonHelp, ButtonSecondary } from 'ui-buttons';
 
 export const Header = ({
   title,

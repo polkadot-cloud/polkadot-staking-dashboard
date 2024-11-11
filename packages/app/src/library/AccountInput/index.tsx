@@ -13,7 +13,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useNetwork } from 'contexts/Network';
 import { AccountInputWrapper } from './Wrapper';
 import type { AccountInputProps } from './types';
-import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
+import { ButtonSecondary } from 'ui-buttons';
 
 export const AccountInput = ({
   successCallback,

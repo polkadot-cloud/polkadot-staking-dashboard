@@ -8,8 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { usePrompt } from 'contexts/Prompt';
 import { TitleWrapper } from './Wrappers';
-import { ButtonHelp } from 'ui-buttons';
-import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
+import { ButtonHelp, ButtonSecondary } from 'ui-buttons';
 
 interface TitleProps {
   title: string;

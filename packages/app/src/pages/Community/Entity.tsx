@@ -14,7 +14,7 @@ import { Item } from './Item';
 import { ItemsWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
 import type { Validator } from 'contexts/Validators/types';
-import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
+import { ButtonSecondary } from 'ui-buttons';
 import { PageHeadingWrapper } from 'kits/Structure/PageHeading/Wrapper';
 
 export const Entity = () => {
