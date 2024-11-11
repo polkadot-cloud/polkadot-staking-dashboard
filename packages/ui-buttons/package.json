@@ -1,0 +1,18 @@
+{
+  "name": "ui-buttons",
+  "version": "1.0.0",
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "main": "src/index.tsx",
+  "scripts": {
+    "clear": "rm -rf build tsconfig.tsbuildinfo dist",
+    "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn",
+    "dev": "vite"
+  },
+  "dependencies": {
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@w3ux/types": "^0.2.0",
+    "@w3ux/utils": "^1.1.1-beta.9"
+  },
+  "packageManager": "yarn@4.1.1"
+}

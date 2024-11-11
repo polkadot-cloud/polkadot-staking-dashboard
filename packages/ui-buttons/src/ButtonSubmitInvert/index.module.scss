@@ -1,0 +1,18 @@
+// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+.btnSubmitInvert {
+  border: 1px solid var(--accent-color-stroke);
+  border-radius: var(--button-border-radius-small);
+  color: var(--accent-color-stroke);
+}
+
+.btnSubmitInvert_sm {
+  padding: var(--button-padding-large);
+  font-size: var(--button-font-size-small);
+}
+
+.btnSubmitInvert_lg {
+  padding: var(--button-padding-large);
+  font-size: var(--button-font-size-large);
+}
