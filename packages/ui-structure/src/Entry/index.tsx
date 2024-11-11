@@ -2,12 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ComponentBase } from '@w3ux/types';
-import { Wrapper } from './Wrapper';
+import classes from './index.module.scss';
 
 export type EntryProps = ComponentBase & {
-  // the theme mode.
   mode: 'light' | 'dark';
-  // the active theme.
   theme: string;
 };
 
@@ -16,7 +14,10 @@ export type EntryProps = ComponentBase & {
  * @summary The outer-most wrapper that hosts core tag styling.
  */
 export const Entry = ({ children, style, mode, theme }: EntryProps) => (
-  <Wrapper className={`theme-${mode} theme-${theme}`} style={style}>
+  <div
+    className={`${classes.entry} theme-${mode} theme-${theme}`}
+    style={style}
+  >
     {children}
-  </Wrapper>
+  </div>
 );
