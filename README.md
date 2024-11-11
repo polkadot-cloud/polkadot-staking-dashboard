@@ -34,26 +34,6 @@ The following URL will load Kusama and use the Chinese localisation resource:
 staking.polkadot.cloud/#/overview?n=kusama&l=cn
 ```
 
-## Using Containers
-
-You may build a container using:
-
-```
-./shell/build-container.sh
-```
-
-Then run your container with:
-
-```
-podman run --d -p 8080:80 localhost/polkadot-staking-dashboard
-```
-
-<!-- markdown-link-check-disable -->
-
-And access the **Staking Dashboard** at http://localhost:8080/.
-
-<!-- markdown-link-check-enable-->
-
 ## Presentations
 
 - 29/06/2023: [[Video] Polkadot Decoded 2023: The Next Step of the Polkadot UX Journey](https://www.youtube.com/watch?v=s78SZZ_ZA64)
