@@ -17,5 +17,5 @@
 **/CHANGELOG.md
 **/.yarn
 **/.licenserc.json
-**/lottie/player.jsx
+**/lottie/player.js
 **/vite.config.ts

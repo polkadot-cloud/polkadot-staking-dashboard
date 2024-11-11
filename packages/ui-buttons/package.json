@@ -6,9 +6,9 @@
   "main": "src/index.tsx",
   "scripts": {
     "clear": "rm -rf build tsconfig.tsbuildinfo dist",
-    "reset": "npm run clear &&  rm -rf node_modules yarn.lock && yarn",
+    "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn",
     "dev": "vite",
-    "lint": "eslint . --fix && npx prettier --write . && npx prettier --write ./.scripts"
+    "lint": "npx eslint . --ignore-path ../../.eslintignore --fix && npx prettier --write ."
   },
   "dependencies": {
     "@fortawesome/react-fontawesome": "^0.2.2",
