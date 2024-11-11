@@ -16,7 +16,7 @@ import { useOverlay } from 'kits/Overlay/Provider';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { ClaimPermission } from 'contexts/Pools/types';
 import { useBalances } from 'contexts/Balances';
-import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
+import { ButtonSubmitInvert } from 'ui-buttons';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { defaultClaimPermission } from 'controllers/ActivePools/defaults';

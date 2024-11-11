@@ -21,7 +21,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { FormProps, ActivePayout } from './types';
 import { ContentWrapper } from './Wrappers';
 import { SubscanController } from 'controllers/Subscan';
-import { ButtonSubmitInvert } from 'kits/Buttons/ButtonSubmitInvert';
+import { ButtonSubmitInvert } from 'ui-buttons';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';

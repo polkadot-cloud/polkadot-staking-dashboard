@@ -69,18 +69,6 @@
   font-size: var(--button-font-size-large);
 }
 
-@mixin btn-submit {
-  &.sm {
-    padding: var(--button-padding-large);
-    font-size: var(--button-font-size-small);
-  }
-
-  &.lg {
-    padding: var(--button-padding-large);
-    font-size: var(--button-font-size-large);
-  }
-}
-
 @mixin btn-disabled {
   transition:
     opacity var(--transition-duration),
@@ -92,45 +80,7 @@
   }
 }
 
-@mixin btn-pulse {
-  &.pulse {
-    box-shadow: 0 0 30px 0 var(--accent-color-pending);
-    transform: scale(1);
-    animation: pulse 2s infinite;
-
-    @keyframes pulse {
-      0% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 var(--accent-color-pending);
-      }
-
-      70% {
-        transform: scale(1);
-        box-shadow: 0 0 0 10px rgb(0 0 0 / 0%);
-      }
-
-      100% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgb(0 0 0 / 0%);
-      }
-    }
-  }
-}
-
 /* Button Styles */
-
-.btn-submit-invert {
-  @include btn-core;
-  @include btn-layout;
-  @include btn-spacing;
-  @include btn-icons;
-  @include btn-submit;
-  @include btn-disabled;
-
-  border: 1px solid var(--accent-color-stroke);
-  border-radius: var(--button-border-radius-small);
-  color: var(--accent-color-stroke);
-}
 
 .btn-tab {
   @include btn-core;
