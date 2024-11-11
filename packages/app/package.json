@@ -4,9 +4,9 @@
   "type": "module",
   "license": "GPL-3.0-only",
   "scripts": {
-    "build": "tsc && vite build --base '/'",
+    "build": "npx tsc && vite build --base '/'",
     "clear": "rm -rf build dist tsconfig.tsbuildinfo",
-    "reset": "npm run clear &&  rm -rf node_modules yarn.lock && yarn",
+    "reset": "npx run clear &&  rm -rf node_modules yarn.lock && yarn",
     "dev": "vite",
     "lint": "npx eslint . --fix && npx prettier --write . && npx prettier --write ./.scripts && node ./.scripts/localeOrderKeys.cjs",
     "locale:order": "node ./.scripts/localeOrderKeys.cjs",
