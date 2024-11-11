@@ -8,8 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react';
 import { useOverlay } from 'kits/Overlay/Provider';
-import { ButtonHelp, ButtonPrimaryInvert } from 'ui-buttons';
-import { ButtonText } from 'kits/Buttons/ButtonText';
+import { ButtonHelp, ButtonPrimaryInvert, ButtonText } from 'ui-buttons';
 import { ModalHardwareItem } from 'kits/Overlay/structure/ModalHardwareItem';
 import { ModalConnectItem } from 'kits/Overlay/structure/ModalConnectItem';
 

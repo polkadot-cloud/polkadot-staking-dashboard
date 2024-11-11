@@ -7,8 +7,7 @@ import type { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react';
 import { useOverlay } from 'kits/Overlay/Provider';
-import { ButtonPrimaryInvert } from 'ui-buttons';
-import { ButtonText } from 'kits/Buttons/ButtonText';
+import { ButtonPrimaryInvert, ButtonText } from 'ui-buttons';
 import { ModalHardwareItem } from 'kits/Overlay/structure/ModalHardwareItem';
 import { ModalConnectItem } from 'kits/Overlay/structure/ModalConnectItem';
 

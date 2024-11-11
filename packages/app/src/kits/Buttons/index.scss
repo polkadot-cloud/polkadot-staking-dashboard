@@ -244,20 +244,3 @@
   border-radius: var(--button-border-radius-large);
   color: var(--text-color-secondary);
 }
-
-.btn-text {
-  @include btn-core;
-  @include btn-layout;
-  @include btn-spacing;
-  @include btn-icons;
-  @include btn-disabled;
-
-  color: var(--text-color-primary);
-  border-radius: var(--button-border-radius-large);
-  font-size: var(--button-font-size-small);
-  padding: 0.45rem;
-
-  &.secondary-color {
-    border-color: var(--text-color-secondary);
-  }
-}

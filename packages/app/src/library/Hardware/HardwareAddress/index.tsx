@@ -12,7 +12,7 @@ import type { FormEvent } from 'react';
 import { useState } from 'react';
 import { ellipsisFn, unescape } from '@w3ux/utils';
 import { Wrapper } from './Wrapper';
-import { ButtonText } from '../../../kits/Buttons/ButtonText';
+import { ButtonText } from 'ui-buttons';
 import type { HardwareAddressProps } from './types';
 
 export const HardwareAddress = ({

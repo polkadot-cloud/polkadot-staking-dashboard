@@ -14,7 +14,7 @@ import { AddressesWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from '@w3ux/types';
 import { useNetwork } from 'contexts/Network';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import { ButtonText } from 'kits/Buttons/ButtonText';
+import { ButtonText } from 'ui-buttons';
 import { HardwareAddress } from 'library/Hardware/HardwareAddress';
 import { useLedgerAccounts } from '@w3ux/react-connect-kit';
 

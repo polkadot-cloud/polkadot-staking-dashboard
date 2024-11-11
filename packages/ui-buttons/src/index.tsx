@@ -8,3 +8,5 @@ export * from './ButtonOption';
 export * from './ButtonPrimary';
 export * from './ButtonPrimaryInvert';
 export * from './ButtonSecondary';
+
+export * from './ButtonText';

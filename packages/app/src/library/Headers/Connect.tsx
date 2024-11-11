@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { ConnectedAccount, HeadingWrapper } from './Wrappers';
-import { ButtonText } from 'kits/Buttons/ButtonText';
+import { ButtonText } from 'ui-buttons';
 
 export const Connect = () => {
   const { t } = useTranslation('library');
