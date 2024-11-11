@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.7.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/v1.6.0...v1.7.0) (2024-11-08)
+
+
+### Features
+
+* **fix:** Render timeleft on `end` time update ([#2320](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2320)) ([fd7c52b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/fd7c52b1d38d7ca29686f6a59db5a6f14205731e))
+* Logo and font update ([#2269](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2269)) ([96b952f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/96b952fc95e0c6b687574c507506e06cde6ed0b1))
+* **refactor:** Abstract `useTimeleft` ([#2321](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2321)) ([950081f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/950081fafc6b05bde7bbbbcd47d05d2810e6f301))
+* **refactor:** Generalise `useSize` hook ([#2312](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2312)) ([51ec08a](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/51ec08aa057d46a87099eb125e13b955e515abcb))
+* **refactor:** Initialise PAPI, ws & smoldot support, fetch network consts, tests ([#2318](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2318)) ([a670f90](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a670f9018e7949685fdbb1101c750f5a4878f374))
+* **refactor:** Update `withProviders` ([#2314](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2314)) ([d43bd60](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/d43bd604f777952ca0fe77035f0b6bfe9f1a1d23))
+* **refactor:** Update Release Please ([#2268](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2268)) ([9b52f6d](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/9b52f6d3ba919b30df71fb45a4afe2f161d0f787))
+* **refactor:** Update to latest w3ux utils ([#2283](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2283)) ([fa4df58](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/fa4df58066e19381687299151b2f055ebdd4d689))
+* **refactor:** Use `useOnResize`, remove `lodash.throttle`. ([#2313](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2313)) ([5d012c0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/5d012c06c71176e5ff398dc2e2f73d0f735edaf4))
+* **refactor:** Use latest `@w3ux/utils`, rm `@polkadot/keyring` ([#2262](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2262)) ([a5c969f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a5c969f5b476600cda7da4bdf64f6089cea3eef9))
+* **refactor:** Use new Polkicon from `@w3ux/polkicon` ([#2315](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2315)) ([be74cd5](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/be74cd52aa9f741e6f882302751b23db09a249fc))
+* **refactor:** Use re-exported `[@polkadot](https://github.com/polkadot)` utils. ([#2267](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2267)) ([63d0b55](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/63d0b55ce117a3835cb27f170d71291ca5cbb4cb))
+* Replace `maxElectingVoters` const with `counterForNominators` storage ([#2319](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2319)) ([f55229f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/f55229f101977f82904504cdc9bde577710eebfb))
+* simplify pool item UI ([#2238](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2238)) ([fdfcaf0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/fdfcaf0cbab26bc23b505ead99e05fb5f8f0d456))
+* Wallet Connect support ([#2276](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2276)) ([388b882](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/388b882fa20464a3a0effeb7d1295b65819d0283))
+
+
+### Bug Fixes
+
+* era subscription bug ([6bbc917](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6bbc9177f6ed60c7eeaf94e66921ebc0a3e91e76))
+* other account duplicate when added to extension ([#2272](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2272)) ([72d2412](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/72d241294ad0972329f86a8fc5abc6ea49443be2))
+* people status on identity sync ([#2236](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2236)) ([52f7998](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/52f7998c75f16c43b69ec4811f135fc9b62551de))
+
 ## [1.6.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/v1.5.0...v1.6.0) (2024-08-01)
 
 
