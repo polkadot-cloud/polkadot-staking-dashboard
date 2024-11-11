@@ -1,4 +1,8 @@
+<!-- markdown-link-check-disable -->
+
 [![Polkadot - App](https://img.shields.io/badge/Polkadot-App-E6007A?logo=polkadot&logoColor=E6007A)](https://staking.polkadot.cloud) ![ci](https://github.com/polkadot-cloud/polkadot-staking-dashboard/actions/workflows/ci.yml/badge.svg) [![License](https://img.shields.io/badge/License-GPL3.0-blue.svg)](https://opensource.org/licenses/GPL-3.0)
+
+<!-- markdown-link-check-enable -->
 
 > #### 📢 17/06/2024: Repository Migration
 >
