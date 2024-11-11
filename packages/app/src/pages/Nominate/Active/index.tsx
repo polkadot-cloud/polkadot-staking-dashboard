@@ -22,7 +22,7 @@ import { UnstakePrompts } from './UnstakePrompts';
 import { useSyncing } from 'hooks/useSyncing';
 import { useBalances } from 'contexts/Balances';
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons';
-import { PageRow } from 'kits/Structure/PageRow';
+import { PageRow } from 'ui-structure';
 import { RowSection } from 'kits/Structure/RowSection';
 import { WithdrawPrompt } from 'library/WithdrawPrompt';
 

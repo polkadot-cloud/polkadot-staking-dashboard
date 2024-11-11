@@ -2,5 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export * from './Body';
+export * from './ButtonRow';
 export * from './Entry';
 export * from './Main';
+export * from './PageRow';

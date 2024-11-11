@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { PageRow } from 'kits/Structure/PageRow';
+import { PageRow } from 'ui-structure';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';

@@ -16,7 +16,7 @@ import { AverageRewardRateStat } from './Stats/AveragelRewardRate';
 import { SupplyStakedStat } from './Stats/SupplyStaked';
 import { PageTitle } from 'kits/Structure/PageTitle';
 import { PageHeadingWrapper } from 'kits/Structure/PageHeading/Wrapper';
-import { PageRow } from 'kits/Structure/PageRow';
+import { PageRow } from 'ui-structure';
 import { RowSection } from 'kits/Structure/RowSection';
 
 export const Overview = () => {

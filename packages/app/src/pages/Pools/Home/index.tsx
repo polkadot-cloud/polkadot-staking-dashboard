@@ -27,7 +27,7 @@ import { useActivePools } from 'hooks/useActivePools';
 import { useBalances } from 'contexts/Balances';
 import { PageTitle } from 'kits/Structure/PageTitle';
 import type { PageTitleTabProps } from 'kits/Structure/PageTitleTabs/types';
-import { PageRow } from 'kits/Structure/PageRow';
+import { PageRow } from 'ui-structure';
 import { RowSection } from 'kits/Structure/RowSection';
 import { WithdrawPrompt } from 'library/WithdrawPrompt';
 import { useSyncing } from 'hooks/useSyncing';
