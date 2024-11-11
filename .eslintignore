@@ -11,9 +11,11 @@
 *.txt
 *.html
 *.webmanifest
-LICENSE
-dist
-build
-CHANGELOG.md
-.yarn
-.licenserc.json
+**/LICENSE
+**/dist
+**/build
+**/CHANGELOG.md
+**/.yarn
+**/.licenserc.json
+**/lottie/player.jsx
+**/vite.config.ts
