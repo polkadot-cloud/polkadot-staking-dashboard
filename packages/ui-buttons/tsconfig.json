@@ -17,7 +17,7 @@
     "noEmit": true,
   },
   "include": [
-    "src",
-    "env.d.ts"
+    "../../env.d.ts",
+    "src"
   ]
 }
