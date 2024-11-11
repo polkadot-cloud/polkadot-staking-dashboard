@@ -8,7 +8,6 @@ import { AllValidators } from './AllValidators';
 import { ValidatorFavorites } from './Favorites';
 import { ValidatorsTabsProvider, useValidatorsTabs } from './context';
 import { PageTitle } from 'kits/Structure/PageTitle';
-import type { PageTitleTabProps } from 'kits/Structure/PageTitleTabs/types';
 
 export const ValidatorsInner = () => {
   const { t } = useTranslation('pages');
@@ -22,24 +21,24 @@ export const ValidatorsInner = () => {
     }
   }, []);
 
-  let tabs: PageTitleTabProps[] = [
-    {
-      title: t('validators.allValidators'),
-      active: activeTab === 0,
-      onClick: () => setActiveTab(0),
-    },
-  ];
-
-  tabs = tabs.concat({
-    title: t('validators.favorites'),
-    active: activeTab === 1,
-    onClick: () => setActiveTab(1),
-    badge: String(favorites.length),
-  });
-
   return (
     <>
-      <PageTitle title={t('validators.validators')} tabs={tabs} />
+      <PageTitle
+        title={t('validators.validators')}
+        tabs={[
+          {
+            title: t('validators.allValidators'),
+            active: activeTab === 0,
+            onClick: () => setActiveTab(0),
+          },
+          {
+            title: t('validators.favorites'),
+            active: activeTab === 1,
+            onClick: () => setActiveTab(1),
+            badge: String(favorites.length),
+          },
+        ]}
+      />
       {activeTab === 0 && <AllValidators />}
       {activeTab === 1 && <ValidatorFavorites />}
     </>

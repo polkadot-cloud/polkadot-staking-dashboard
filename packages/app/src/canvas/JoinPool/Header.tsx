@@ -9,7 +9,7 @@ import {
 import { ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons';
 import { Polkicon } from '@w3ux/react-polkicon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { PageTitleTabs } from 'kits/Structure/PageTitleTabs';
+import { PageTitleTabs } from 'ui-structure';
 import { useTranslation } from 'react-i18next';
 import { useOverlay } from 'kits/Overlay/Provider';
 import type { JoinPoolHeaderProps } from './types';

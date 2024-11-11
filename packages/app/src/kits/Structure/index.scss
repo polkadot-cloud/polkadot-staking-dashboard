@@ -5,13 +5,13 @@
   padding-left: 1.25rem;
   padding-right: 1.25rem;
 
-  /* NOTE: same as `PageWidthSmallThreshold` + 1 constant in `src/consts.ts`. */
+  /* NOTE: same as `PageWidthSmallThreshold` + 1 constant in `consts` package. */
   @media (min-width: 826px) {
     padding-left: 3.5rem;
     padding-right: 3.5rem;
   }
 
-  /* NOTE: same as `PageWidthSmallThreshold` + 1 constant in `src/consts.ts`. */
+  /* NOTE: same as `PageWidthSmallThreshold` + 1 constant in `consts` package. */
   @media (min-width: 826px) {
     padding: 0 5rem 0 2.5rem;
   }

@@ -26,7 +26,6 @@ import { PoolsTabsProvider, usePoolsTabs } from './context';
 import { useActivePools } from 'hooks/useActivePools';
 import { useBalances } from 'contexts/Balances';
 import { PageTitle } from 'kits/Structure/PageTitle';
-import type { PageTitleTabProps } from 'kits/Structure/PageTitleTabs/types';
 import { PageRow } from 'ui-structure';
 import { RowSection } from 'kits/Structure/RowSection';
 import { WithdrawPrompt } from 'library/WithdrawPrompt';
@@ -55,28 +54,6 @@ export const HomeInner = () => {
     (poolId) => poolId !== String(membership?.poolId)
   ).length;
 
-  let tabs: PageTitleTabProps[] = [
-    {
-      title: t('pools.overview'),
-      active: activeTab === 0,
-      onClick: () => setActiveTab(0),
-    },
-  ];
-
-  tabs = tabs.concat(
-    {
-      title: t('pools.allPools'),
-      active: activeTab === 1,
-      onClick: () => setActiveTab(1),
-    },
-    {
-      title: t('pools.favorites'),
-      active: activeTab === 2,
-      onClick: () => setActiveTab(2),
-      badge: String(favorites.length),
-    }
-  );
-
   const ROW_HEIGHT = 220;
 
   // Go back to tab 0 on network change.
@@ -88,7 +65,24 @@ export const HomeInner = () => {
     <>
       <PageTitle
         title={t('pools.pools')}
-        tabs={tabs}
+        tabs={[
+          {
+            title: t('pools.overview'),
+            active: activeTab === 0,
+            onClick: () => setActiveTab(0),
+          },
+          {
+            title: t('pools.allPools'),
+            active: activeTab === 1,
+            onClick: () => setActiveTab(1),
+          },
+          {
+            title: t('pools.favorites'),
+            active: activeTab === 2,
+            onClick: () => setActiveTab(2),
+            badge: String(favorites.length),
+          },
+        ]}
         button={
           !poolMembersipSyncing() && poolRoleCount > 0
             ? {

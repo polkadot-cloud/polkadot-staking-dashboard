@@ -3,7 +3,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { PageTitleTabs } from '../PageTitleTabs';
+import { PageTitleTabs } from 'ui-structure';
 import { ButtonSecondary } from 'ui-buttons';
 import { appendOrEmpty } from '@w3ux/utils';
 import type { PageTitleProps } from './types';
