@@ -1,6 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+@import 'styles/theme/_variables';
+
 .pageTitleTabs {
   border-bottom: 1px solid var(--border-primary-color);
   overflow: hidden;
@@ -8,9 +10,7 @@
   margin-top: 0.9rem;
   max-width: 100%;
 
-  // NOTE: This is the same as `PageWidthMediumThreshold` constant in `consts` package. Could
-  // migrate to scss variables in the future.
-  @media (max-width: 1150px) {
+  @media (max-width: $page-width-medium-threshold) {
     margin-top: 0.5rem;
   }
 }

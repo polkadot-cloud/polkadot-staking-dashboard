@@ -1,6 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+@import 'styles/theme/_variables';
+
 .pageTitle_scrollWrapper {
   background: var(--background-default);
   display: none;
@@ -10,9 +12,7 @@
   height: 4rem;
   z-index: 4;
 
-  // NOTE: This is the same as `PageWidthMediumThreshold` constant in `consts` package. Could
-  // migrate to scss variables in the future.
-  @media (max-width: 1150px) {
+  @media (max-width: $page-width-medium-threshold) {
     display: block;
   }
 }
@@ -32,20 +32,16 @@
   padding-left: 1.25rem;
   padding-right: 1.25rem;
 
-  /* NOTE: same as `PageWidthSmallThreshold` + 1 constant in `consts` package. */
-  @media (min-width: 826px) {
+  @media (min-width: $page-width-small-threshold) {
     padding-left: 3.5rem;
     padding-right: 3.5rem;
   }
-  /* NOTE: same as `PageWidthSmallThreshold` + 1 constant in `consts` package. */
-  @media (min-width: 826px) {
+  @media (min-width: $page-width-small-threshold) {
     padding-right: 5rem ;
     padding-left: 2.5rem;
   }
 
-  // NOTE: This is the same as `PageWidthMediumThreshold` constant in `consts` package. Could
-  // migrate to scss variables in the future.
-  @media (max-width: 1150px) {
+  @media (max-width: $page-width-medium-threshold) {
     top: 4rem;
     padding-top: 0.75rem;
     padding-bottom: 0.5rem;
@@ -83,9 +79,7 @@
   font-weight: 700;
   position: relative;
 
-  // NOTE: This is the same as `PageWidthMediumThreshold` constant in `consts` package. Could
-  // migrate to scss variables in the future.
-  @media (max-width: 1150px) {
+  @media (max-width: $page-width-medium-threshold) {
     left: 0rem;
     transform: scale(0.9);
   }
