@@ -14,7 +14,7 @@
   },
   "include": [
     "packages/**/*",
-    "env.d.ts",
+    "env.d.ts"
   ],
   "exclude": [
     "**/*/node_modules",
