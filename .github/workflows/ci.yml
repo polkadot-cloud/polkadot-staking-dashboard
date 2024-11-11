@@ -40,13 +40,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn install
-        working-directory: packages/app
       - run: yarn build
         working-directory: packages/app
       - run: yarn lint
-        working-directory: packages/app
       - run: yarn test
-        working-directory: packages/app
 
   validate-locales:
     runs-on: ubuntu-latest
@@ -57,7 +54,6 @@ jobs:
         with:
           node-version: 18.x
       - run: yarn install
-        working-directory: packages/app
       - run: yarn run locale:validate
         working-directory: packages/app
 
