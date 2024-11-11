@@ -62,6 +62,7 @@
     "react-scroll": "^1.9.0",
     "styled-components": "^6.1.13",
     "ui-buttons": "workspace:*",
+    "ui-structure": "workspace:*",
     "usehooks-ts": "^3.0.2",
     "viem": "^2.21.35",
     "wagmi": "^2.12.25",

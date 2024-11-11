@@ -30,7 +30,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Notifications } from 'library/Notifications';
 import { NotificationsController } from 'controllers/Notifications';
 import { Page } from 'Page';
-import { Body } from 'kits/Structure/Body';
+import { Body } from 'ui-structure';
 import { Main } from 'kits/Structure/Main';
 import { Offline } from 'library/Offline';
 
