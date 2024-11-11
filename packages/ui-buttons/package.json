@@ -13,6 +13,5 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@w3ux/types": "^0.2.0",
     "@w3ux/utils": "^1.1.1-beta.9"
-  },
-  "packageManager": "yarn@4.1.1"
+  }
 }
