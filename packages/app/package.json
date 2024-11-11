@@ -75,6 +75,5 @@
     "vite-plugin-svgr": "^4.2.0",
     "vite-tsconfig-paths": "^5.0.1",
     "vitest": "^1.6.0"
-  },
-  "packageManager": "yarn@4.1.1"
+  }
 }
