@@ -7,7 +7,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useStaking } from 'contexts/Staking';
 import { MoreWrapper } from './Wrappers';
-import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { ButtonPrimaryInvert } from 'ui-buttons';
 import { Separator } from 'kits/Structure/Separator';
 
 export const BalanceLinks = () => {

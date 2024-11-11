@@ -9,8 +9,7 @@ import { Title } from 'library/Prompt/Title';
 import { usePrompt } from 'contexts/Prompt';
 import { usePlugins } from 'contexts/Plugins';
 import type { TipProps } from './types';
-import { ButtonPrimary } from 'ui-buttons';
-import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons';
 import { ButtonSecondary } from 'kits/Buttons/ButtonSecondary';
 
 export const Tip = ({ title, description, page }: TipProps) => {

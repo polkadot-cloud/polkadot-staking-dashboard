@@ -19,8 +19,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { StyledSlider } from 'library/StyledSlider';
-import { ButtonHelp } from 'ui-buttons';
-import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { ButtonHelp, ButtonPrimaryInvert } from 'ui-buttons';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { planckToUnitBn } from 'library/Utils';
 

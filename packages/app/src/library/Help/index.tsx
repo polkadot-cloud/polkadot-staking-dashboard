@@ -18,7 +18,7 @@ import { useFillVariables } from 'hooks/useFillVariables';
 import { Definition } from './Items/Definition';
 import { External } from './Items/External';
 import { ActiveDefinition } from './Items/ActiveDefinition';
-import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { ButtonPrimaryInvert } from 'ui-buttons';
 import { CanvasContainer } from 'kits/Overlay/structure/CanvasContainer';
 import { CanvasScroll } from 'kits/Overlay/structure/CanvasScroll';
 import { ModalContent } from 'kits/Overlay/structure/ModalContent';

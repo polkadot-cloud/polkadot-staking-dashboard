@@ -13,7 +13,7 @@ import { Proxies } from './Proxies';
 import { ReadOnly } from './ReadOnly';
 import { Vault } from './Vault';
 import { ExtensionsWrapper } from './Wrappers';
-import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { ButtonPrimaryInvert } from 'ui-buttons';
 import { ButtonTab } from 'kits/Buttons/ButtonTab';
 import { mobileCheck } from './Utils';
 import { useOverlay } from 'kits/Overlay/Provider';

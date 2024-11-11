@@ -6,8 +6,7 @@ import {
   faHashtag,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary } from 'ui-buttons';
-import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons';
 import { Polkicon } from '@w3ux/react-polkicon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PageTitleTabs } from 'kits/Structure/PageTitleTabs';

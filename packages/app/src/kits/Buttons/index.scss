@@ -119,31 +119,6 @@
 
 /* Button Styles */
 
-.btn-primary-invert {
-  @include btn-core;
-  @include btn-layout;
-  @include btn-spacing;
-  @include btn-icons;
-  @include btn-disabled;
-
-  border: 1px solid var(--accent-color-stroke);
-  border-radius: var(--button-border-radius-large);
-  color: var(--accent-color-stroke);
-
-  &.secondary-color {
-    border: 1px solid var(--accent-color-secondary);
-    color: var(--accent-color-secondary);
-  }
-
-  &.sm {
-    @include btn-small;
-  }
-
-  &.lg {
-    @include btn-large;
-  }
-}
-
 .btn-secondary {
   @include btn-core;
   @include btn-layout;

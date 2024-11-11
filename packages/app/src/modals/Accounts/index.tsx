@@ -21,7 +21,7 @@ import type { MaybeAddress } from 'types';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
-import { ButtonPrimaryInvert } from 'kits/Buttons/ButtonPrimaryInvert';
+import { ButtonPrimaryInvert } from 'ui-buttons';
 import { ButtonText } from 'kits/Buttons/ButtonText';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
