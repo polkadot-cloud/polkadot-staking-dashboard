@@ -1,0 +1,42 @@
+// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+.btnOption {
+  background: var(--button-primary-background);
+  transition: all var(--transition-duration);
+  padding: 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  &:hover {
+    background: var(--button-hover-background);
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:disabled {
+    opacity: var(--opacity-disabled);
+    cursor: default;
+  }
+
+
+  > div:last-child {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.btnContent_details {
+  display: flex;
+}
+
+.btnContent_icon {
+  margin-right: 0.5rem;
+}

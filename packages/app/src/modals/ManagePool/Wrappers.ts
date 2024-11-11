@@ -164,3 +164,25 @@ export const ButtonRowWrapper = styled.div`
     }
   }
 `;
+
+export const TaskInnerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  h3,
+  p {
+    text-align: left;
+    margin: 0;
+  }
+
+  h3 {
+    font-family: InterSemiBold, sans-serif;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: var(--text-color-primary);
+    font-size: 1rem;
+  }
+`;

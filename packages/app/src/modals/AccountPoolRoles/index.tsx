@@ -12,9 +12,11 @@ import { ContentWrapper } from './Wrappers';
 import { useBalances } from 'contexts/Balances';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import type { ActivePool } from 'contexts/Pools/ActivePool/types';
-import { ButtonOption } from 'kits/Buttons/ButtonOption';
+import { ButtonOption } from 'ui-buttons';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 
+// TODO: Deprecate this feature and revisit in the future where global admin features are more
+// developed.
 export const AccountPoolRoles = () => {
   const { t } = useTranslation('modals');
   const { getPoolMembership } = useBalances();
@@ -95,12 +97,10 @@ const Button = ({
       <div className="details">
         <h3>
           {t('pool')} {poolId}
-        </h3>
-        <h4>
           {roles?.root === who ? <span>{t('root')}</span> : null}
           {roles?.nominator === who ? <span>{t('nominator')}</span> : null}
           {roles?.bouncer === who ? <span>{t('bouncer')}</span> : null}
-        </h4>
+        </h3>
       </div>
     </ButtonOption>
   );

@@ -9,12 +9,12 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { ButtonRowWrapper, ContentWrapper } from './Wrappers';
+import { ButtonRowWrapper, ContentWrapper, TaskInnerWrapper } from './Wrappers';
 import type { TasksProps } from './types';
 import { useApi } from 'contexts/Api';
 import { ellipsisFn } from '@w3ux/utils';
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';
-import { ButtonOption } from 'kits/Buttons/ButtonOption';
+import { ButtonOption } from 'ui-buttons';
 
 export const Tasks = forwardRef(
   ({ setSection, setTask }: TasksProps, ref: ForwardedRef<HTMLDivElement>) => {
@@ -82,10 +82,10 @@ export const Tasks = forwardRef(
                     setTask('claim_commission');
                   }}
                 >
-                  <div>
+                  <TaskInnerWrapper>
                     <h3>{t('claimCommission')}</h3>
                     <p>{t('claimOutstandingCommission')}</p>
-                  </div>
+                  </TaskInnerWrapper>
                 </ButtonOption>
                 <ButtonOption
                   onClick={() => {
@@ -93,10 +93,10 @@ export const Tasks = forwardRef(
                     setTask('manage_commission');
                   }}
                 >
-                  <div>
+                  <TaskInnerWrapper>
                     <h3>{t('manageCommission')}</h3>
                     <p>{t('updatePoolCommission')}</p>
-                  </div>
+                  </TaskInnerWrapper>
                 </ButtonOption>
               </>
             )}
@@ -106,10 +106,10 @@ export const Tasks = forwardRef(
                 setTask('set_claim_permission');
               }}
             >
-              <div>
+              <TaskInnerWrapper>
                 <h3>{t('updateClaimPermission')}</h3>
                 <p>{t('updateWhoClaimRewards')}</p>
-              </div>
+              </TaskInnerWrapper>
             </ButtonOption>
 
             {isOwner() && (
@@ -120,10 +120,10 @@ export const Tasks = forwardRef(
                   setTask('set_pool_metadata');
                 }}
               >
-                <div>
+                <TaskInnerWrapper>
                   <h3>{t('renamePool')}</h3>
                   <p>{t('updateName')}</p>
-                </div>
+                </TaskInnerWrapper>
               </ButtonOption>
             )}
             {(isOwner() || isBouncer()) && (
@@ -136,10 +136,10 @@ export const Tasks = forwardRef(
                       setTask('unlock_pool');
                     }}
                   >
-                    <div>
+                    <TaskInnerWrapper>
                       <h3>{t('unlockPool')}</h3>
                       <p>{t('allowToJoin')}</p>
-                    </div>
+                    </TaskInnerWrapper>
                   </ButtonOption>
                 ) : (
                   <ButtonOption
@@ -149,10 +149,10 @@ export const Tasks = forwardRef(
                       setTask('lock_pool');
                     }}
                   >
-                    <div>
+                    <TaskInnerWrapper>
                       <h3>{t('lockPool')}</h3>
                       <p>{t('stopJoiningPool')}</p>
-                    </div>
+                    </TaskInnerWrapper>
                   </ButtonOption>
                 )}
                 <ButtonOption
@@ -162,10 +162,10 @@ export const Tasks = forwardRef(
                     setTask('destroy_pool');
                   }}
                 >
-                  <div>
+                  <TaskInnerWrapper>
                     <h3>{t('destroyPool')}</h3>
                     <p>{t('changeToDestroy')}</p>
-                  </div>
+                  </TaskInnerWrapper>
                 </ButtonOption>
               </>
             )}
@@ -176,10 +176,10 @@ export const Tasks = forwardRef(
                   setTask('leave_pool');
                 }}
               >
-                <div>
+                <TaskInnerWrapper>
                   <h3>{t('leavePool')}</h3>
                   <p>{t('unbondFundsLeavePool')}</p>
-                </div>
+                </TaskInnerWrapper>
               </ButtonOption>
             )}
           </div>
