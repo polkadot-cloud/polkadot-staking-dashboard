@@ -37,7 +37,7 @@ export const ButtonHelp = (props: ButtonHelpProps): JSX.Element => {
     classes.btnHelp,
     {
       [classes.btnHelp_secondaryBackground]: background === 'secondary',
-      [classes.btnBackgroundNone]: background === 'none',
+      [classes.btnHelp_noBackground]: background === 'none',
       [classes.btnHelp_outline]: outline,
       [commonClasses.btnSpacingLeft]: marginLeft,
       [commonClasses.btnSpacingRight]: marginRight,

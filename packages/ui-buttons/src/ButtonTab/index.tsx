@@ -56,7 +56,7 @@ export const ButtonTab = (props: ButtonTabProps): JSX.Element => {
     >
       <span className={classes.btnTab_inner}>
         {title}
-        {badge ? <span className={classes.btnTab_badge}>{badge}</span> : null}
+        {badge && <span className={classes.btnTab_badge}>{badge}</span>}
       </span>
     </button>
   );
