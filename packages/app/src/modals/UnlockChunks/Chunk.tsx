@@ -14,7 +14,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ChunkWrapper } from './Wrappers';
 import type { ChunkProps } from './types';
 import { useApi } from 'contexts/Api';
-import { ButtonSubmit } from 'kits/Buttons/ButtonSubmit';
+import { ButtonSubmit } from 'ui-buttons';
 import { formatTimeleft, planckToUnitBn } from 'library/Utils';
 
 export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {

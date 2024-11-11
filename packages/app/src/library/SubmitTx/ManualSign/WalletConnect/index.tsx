@@ -8,7 +8,7 @@ import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { SubmitProps } from '../../types';
-import { ButtonSubmit } from 'kits/Buttons/ButtonSubmit';
+import { ButtonSubmit } from 'ui-buttons';
 import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge';
 import { appendOrEmpty } from '@w3ux/utils';
 import { useWalletConnect } from 'contexts/WalletConnect';

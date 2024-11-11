@@ -6,7 +6,7 @@ import { useNetwork } from 'contexts/Network';
 import { ItemWrapper } from './Wrappers';
 import type { ItemProps } from './types';
 import { getTotalPayout } from './Utils';
-import { ButtonSubmit } from 'kits/Buttons/ButtonSubmit';
+import { ButtonSubmit } from 'ui-buttons';
 import { planckToUnitBn } from 'library/Utils';
 
 export const Item = ({
