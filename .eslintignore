@@ -12,6 +12,7 @@
 *.html
 *.webmanifest
 **/LICENSE
+**/node_modules
 **/dist
 **/build
 **/CHANGELOG.md
