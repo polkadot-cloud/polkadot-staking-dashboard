@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ComponentBase } from '@w3ux/types';
-import { Wrapper } from './Wrapper';
 import type { ForwardedRef } from 'react';
 import { forwardRef } from 'react';
+import classes from './index.module.scss';
 
 /**
  * @name Main
@@ -12,9 +12,9 @@ import { forwardRef } from 'react';
  */
 export const Main = forwardRef(
   ({ children, style }: ComponentBase, ref?: ForwardedRef<HTMLDivElement>) => (
-    <Wrapper ref={ref} style={style}>
+    <div className={classes.main} ref={ref} style={style}>
       {children}
-    </Wrapper>
+    </div>
   )
 );
 Main.displayName = 'Main';

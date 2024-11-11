@@ -3,3 +3,4 @@
 
 export * from './Body';
 export * from './Entry';
+export * from './Main';
