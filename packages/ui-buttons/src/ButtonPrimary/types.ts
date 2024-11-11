@@ -5,7 +5,7 @@ import type { ComponentBaseWithClassName } from '@w3ux/types';
 import type { ButtonCommonProps, ButtonIconProps } from '../types';
 
 /**
- * @typedef {Object} ButtonPrimaryProps
+ * @name {Object} ButtonPrimaryProps
  * @description Props for the ButtonPrimary component.
  * @property {string | undefined} [className] - Additional custom class name(s) to apply to the
  * button.
