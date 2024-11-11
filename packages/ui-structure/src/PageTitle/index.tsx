@@ -5,9 +5,9 @@ import { useEffect, useRef, useState } from 'react';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { PageTitleTabs } from 'ui-structure';
 import { ButtonSecondary } from 'ui-buttons';
-import { appendOrEmpty } from '@w3ux/utils';
-import type { PageTitleProps } from './types';
-import { PageTitleWrapper, ScrollableWrapper } from './Wrappers';
+import type { PageTitleProps } from '../types';
+import classes from './index.module.scss';
+import classNames from 'classnames';
 
 /**
  * @name PageTitle
@@ -20,52 +20,52 @@ export const PageTitle = ({ title, button, tabs = [] }: PageTitleProps) => {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const cachedRef = ref.current;
     const observer = new IntersectionObserver(
-      ([e]) => {
-        setSticky(e.intersectionRatio < 1);
-      },
+      ([entry]) => setSticky(entry.intersectionRatio < 1),
       { threshold: [1], rootMargin: '-1px 0px 0px 0px' }
     );
-
-    if (cachedRef) {
-      observer.observe(cachedRef);
+    if (ref.current) {
+      observer.observe(ref.current);
     }
-    // unmount.
     return () => {
-      if (cachedRef) {
-        observer.unobserve(cachedRef);
+      if (ref.current) {
+        observer.unobserve(ref.current);
       }
     };
   }, [sticky]);
 
+  const buttonClasses = classNames(classes.pageTitle, {
+    [classes.pageTitle_default]: !sticky,
+    [classes.pageTitle_sticky]: sticky,
+  });
+
+  const h1Classes = classNames(classes.pageTitle_h1, {
+    [classes.pageTitle_h1_default]: !sticky,
+    [classes.pageTitle_h1_sticky]: sticky,
+  });
+
   return (
     <>
-      <ScrollableWrapper />
-      <PageTitleWrapper
-        ref={ref}
-        className={`page-padding${appendOrEmpty(sticky, 'sticky')}`}
-      >
-        <section className="title">
+      <div className={classes.pageTitle_scrollWrapper} />
+      <header className={buttonClasses} ref={ref}>
+        <section className={classes.pageTitle_title}>
           <div>
-            <h1>{title}</h1>
+            <h1 className={h1Classes}>{title}</h1>
           </div>
-          <div className="right">
-            {button && (
+          {button && (
+            <div className={classes.pageTitle_title_right}>
               <ButtonSecondary
                 text={button.title}
-                onClick={() => button.onClick()}
+                onClick={button.onClick}
                 iconRight={faBars}
-                iconTransform={'shrink-4'}
+                iconTransform="shrink-4"
                 lg
               />
-            )}
-          </div>
+            </div>
+          )}
         </section>
         {tabs.length > 0 && <PageTitleTabs sticky={sticky} tabs={tabs} />}
-      </PageTitleWrapper>
+      </header>
     </>
   );
 };
-
-PageTitle.displayName = 'PageTitle';

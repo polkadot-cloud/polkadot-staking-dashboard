@@ -14,8 +14,7 @@ import { StakeStatus } from './StakeStatus';
 import { ActiveEraStat } from './Stats/ActiveEraTimeLeft';
 import { AverageRewardRateStat } from './Stats/AveragelRewardRate';
 import { SupplyStakedStat } from './Stats/SupplyStaked';
-import { PageTitle } from 'kits/Structure/PageTitle';
-import { PageHeading, PageRow } from 'ui-structure';
+import { PageTitle, PageHeading, PageRow } from 'ui-structure';
 import { RowSection } from 'kits/Structure/RowSection';
 
 export const Overview = () => {

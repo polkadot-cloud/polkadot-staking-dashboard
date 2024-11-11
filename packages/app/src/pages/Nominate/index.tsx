@@ -4,7 +4,7 @@
 import { Active } from './Active';
 import { NominationGeo } from './NominationGeo';
 import { Wrapper } from './Wrappers';
-import { PageTitle } from '../../kits/Structure/PageTitle';
+import { PageTitle } from 'ui-structure';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { usePlugins } from 'contexts/Plugins';

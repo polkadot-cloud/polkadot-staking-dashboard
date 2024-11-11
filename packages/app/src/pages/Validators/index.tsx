@@ -7,7 +7,7 @@ import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { AllValidators } from './AllValidators';
 import { ValidatorFavorites } from './Favorites';
 import { ValidatorsTabsProvider, useValidatorsTabs } from './context';
-import { PageTitle } from 'kits/Structure/PageTitle';
+import { PageTitle } from 'ui-structure';
 
 export const ValidatorsInner = () => {
   const { t } = useTranslation('pages');

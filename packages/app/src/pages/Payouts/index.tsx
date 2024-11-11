@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PageRow } from 'ui-structure';
+import { PageRow, PageTitle } from 'ui-structure';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MaxPayoutDays } from 'consts';
@@ -25,7 +25,6 @@ import { SubscanController } from 'controllers/Subscan';
 import { DefaultLocale, locales } from 'locale';
 import { useSyncing } from 'hooks/useSyncing';
 import { ButtonHelp } from 'ui-buttons';
-import { PageTitle } from 'kits/Structure/PageTitle';
 import { useUi } from 'contexts/UI';
 
 export const Payouts = ({ page: { key } }: PageProps) => {

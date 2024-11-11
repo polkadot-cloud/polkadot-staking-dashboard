@@ -1,0 +1,107 @@
+// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+.pageTitle_scrollWrapper {
+  background: var(--background-default);
+  display: none;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 4rem;
+  z-index: 4;
+
+  // NOTE: This is the same as `PageWidthMediumThreshold` constant in `consts` package. Could
+  // migrate to scss variables in the future.
+  @media (max-width: 1150px) {
+    display: block;
+  }
+}
+
+.pageTitle {
+  background: var(--background-default);
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: flex-end;
+  position: sticky;
+  margin-top: 5rem;
+  top: 0;
+  transition: padding 0.3s ease-out;
+  width: 100%;
+  z-index: 5;
+
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+
+  /* NOTE: same as `PageWidthSmallThreshold` + 1 constant in `consts` package. */
+  @media (min-width: 826px) {
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
+  }
+  /* NOTE: same as `PageWidthSmallThreshold` + 1 constant in `consts` package. */
+  @media (min-width: 826px) {
+    padding-right: 5rem ;
+    padding-left: 2.5rem;
+  }
+
+  // NOTE: This is the same as `PageWidthMediumThreshold` constant in `consts` package. Could
+  // migrate to scss variables in the future.
+  @media (max-width: 1150px) {
+    top: 4rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
+}
+
+.pageTitle_default {
+  margin-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0;
+}
+
+.pageTitle_sticky {
+  padding-top: 1.5rem;
+  padding-bottom: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.pageTitle_title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+
+.pageTitle_title_right{
+  padding-left: 1rem;
+}
+
+.pageTitle_h1 {
+  font-size: 2rem;
+  font-family: Poppins700, sans-serif;
+  font-weight: 700;
+  position: relative;
+
+  // NOTE: This is the same as `PageWidthMediumThreshold` constant in `consts` package. Could
+  // migrate to scss variables in the future.
+  @media (max-width: 1150px) {
+    left: 0rem;
+    transform: scale(0.9);
+  }
+  transition: all var(--transition-duration);
+  margin: 0;
+}
+.pageTitle_h1_default {
+  left: 0;
+  transform: scale(1);
+}
+
+.pageTitle_h1_sticky  {
+  left: -0.75rem;
+  transform: scale(0.85);
+}
+
+.pageTitle_sticky_title {
+  margin-bottom: 0.5rem;
+}

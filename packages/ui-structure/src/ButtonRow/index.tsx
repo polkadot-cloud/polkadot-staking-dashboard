@@ -10,7 +10,7 @@ import type { RowProps } from '../types';
  * @summary A flex container for a row of buttons.
  */
 export const ButtonRow = ({ children, style, yMargin }: RowProps) => {
-  const buttonClasses = classNames(classes.buttonRow, 'page-padding', {
+  const buttonClasses = classNames(classes.buttonRow, {
     [classes.buttonRow_yMargin]: yMargin,
   });
 

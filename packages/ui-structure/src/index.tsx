@@ -8,4 +8,5 @@ export * from './Main';
 export * from './Page';
 export * from './PageRow';
 export * from './PageHeading';
+export * from './PageTitle';
 export * from './PageTitleTabs';
