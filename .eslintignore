@@ -1,4 +1,7 @@
 *.css
+*.scss
+*.lottie
+*.woff2
 *.svg
 *.png
 *.json
@@ -18,5 +21,5 @@
 **/CHANGELOG.md
 **/.yarn
 **/.licenserc.json
-**/lottie/player.js
+**/lottie
 **/vite.config.ts
