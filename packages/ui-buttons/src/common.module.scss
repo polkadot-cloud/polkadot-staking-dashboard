@@ -1,0 +1,119 @@
+// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+.btnCore {
+  font-family: InterSemiBold, sans-serif;
+  box-sizing: border-box;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.btnGrow {
+  flex: 1 1 0%;
+}
+
+.btnSpacingLeft {
+  margin-left: var(--button-spacing-large);
+}
+
+.btnSpacingRight {
+  margin-right: var(--button-spacing-large);
+}
+
+.btnMarginX {
+  margin: 0 var(--button-spacing-large);
+}
+
+.btnSmall {
+  padding: var(--button-padding-small);
+  font-size: var(--button-font-size-small);
+}
+
+.btnLarge {
+  padding: var(--button-padding-large);
+  font-size: var(--button-font-size-large);
+}
+
+.btnIconLeftSpacing {
+  margin-left: var(--button-spacing-small);
+  margin-right: var(--button-spacing-large);
+}
+
+.btnIconRightSpacing {
+  margin-left: var(--button-spacing-large);
+  margin-right: var(--button-spacing-small);
+}
+
+.btnDisabled {
+  transition:
+    opacity var(--transition-duration),
+    color var(--transition-duration);
+
+  &:disabled {
+    opacity: var(--opacity-disabled);
+    cursor: default;
+  }
+}
+
+.btnActiveTransforms {
+  &:hover {
+    transform: scale(1.02);
+  }
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+/*
+TODO: Refactor into CSS Module.
+@mixin btn-submit {
+  &.sm {
+    padding: var(--button-padding-large);
+    font-size: var(--button-font-size-small);
+  }
+
+  &.lg {
+    padding: var(--button-padding-large);
+    font-size: var(--button-font-size-large);
+  }
+}
+*/
+
+/*
+TODO: Refactor into CSS Module.
+@mixin btn-pulse {
+  &.pulse {
+    box-shadow: 0 0 30px 0 var(--accent-color-pending);
+    transform: scale(1);
+    animation: pulse 2s infinite;
+
+    @keyframes pulse {
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 var(--accent-color-pending);
+      }
+
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgb(0 0 0 / 0%);
+      }
+
+      100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgb(0 0 0 / 0%);
+      }
+    }
+  }
+}
+*/

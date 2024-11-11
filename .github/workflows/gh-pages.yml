@@ -42,14 +42,14 @@ jobs:
         run: yarn install
 
       - name: Build
-        working-directory: '.'
+        working-directory: 'packages/app'
         run: yarn build
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
-          path: build
+          path: package/app/build
 
   deploy:
     runs-on: ubuntu-latest
@@ -67,7 +67,7 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: github-pages
-          path: build
+          path: package/app/build
       - uses: actions/configure-pages@v5
       - id: deployment
         uses: actions/deploy-pages@main

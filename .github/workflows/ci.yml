@@ -41,6 +41,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: yarn install
       - run: yarn build
+        working-directory: packages/app
       - run: yarn lint
       - run: yarn test
 
@@ -54,6 +55,7 @@ jobs:
           node-version: 18.x
       - run: yarn install
       - run: yarn run locale:validate
+        working-directory: packages/app
 
   all:
     needs: [check-license, markdown-link-check, build, validate-locales]

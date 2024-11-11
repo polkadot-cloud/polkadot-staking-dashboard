@@ -84,14 +84,17 @@
         "fixStyle": "separate-type-imports"
       }
     ],
-    "@typescript-eslint/no-shadow": ["error"]
+    "@typescript-eslint/no-shadow": "error"
   },
   "settings": {
     "react": {
       "version": "detect"
     },
     "import/resolver": {
-      "typescript": {}
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": ["tsconfig.json", "packages/*/tsconfig.json"]
+      }
     }
   }
 }
