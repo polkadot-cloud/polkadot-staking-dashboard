@@ -12,7 +12,6 @@ export class StakingConstants {
   // ------------------------------------------------------
 
   // Network config fallback values.
-  // TODO: Explore how these values can be removed.
   FALLBACK = {
     MAX_NOMINATIONS: new BigNumber(16),
     BONDING_DURATION: new BigNumber(28),
