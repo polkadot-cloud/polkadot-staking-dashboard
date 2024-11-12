@@ -3792,12 +3792,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/hooks@npm:^1.1.0, @w3ux/hooks@npm:^1.2.1":
+"@w3ux/hooks@npm:^1.1.0":
   version: 1.2.1
   resolution: "@w3ux/hooks@npm:1.2.1"
   peerDependencies:
     react: ^18
   checksum: 10c0/542eae337e26c2202b53625ee7178bcf8fd748aac5b37c8851ef143251a09e37bf8a95916039661dcf76fe31004d3231c87d2dad6237251dc843351282173d72
+  languageName: node
+  linkType: hard
+
+"@w3ux/hooks@npm:^1.3.1-beta.7":
+  version: 1.3.1-beta.7
+  resolution: "@w3ux/hooks@npm:1.3.1-beta.7"
+  dependencies:
+    "@w3ux/utils": "npm:^1.1.1-beta.9"
+    date-fns: "npm:^4.1.0"
+  peerDependencies:
+    react: ^18
+  checksum: 10c0/e1b936275254901bff5432102a428c7b9d7f7b53791ae2e83e49079d7aaae0deeec2639f254d7857d8f8cef2141d554907fb1b1d36a739a8f3f78ee548658cfe
   languageName: node
   linkType: hard
 
@@ -3830,6 +3842,13 @@ __metadata:
     "@polkadot-api/substrate-bindings": "npm:^0.9.3"
     "@w3ux/crypto": "npm:1.0.0"
   checksum: 10c0/4390646debb6f4f09717806a10ecb811d48e96c32ac7a958944e321a9c4b3330d538b154e7a23891b4808b764bf8525203c26d7075270a3b280504d14cda555e
+  languageName: node
+  linkType: hard
+
+"@w3ux/types@npm:0.2.1-beta.1":
+  version: 0.2.1-beta.1
+  resolution: "@w3ux/types@npm:0.2.1-beta.1"
+  checksum: 10c0/34336e708a7b4881476cc8b88c716d331a00cb44e32ba2a6223ded45efb30d1a574c4e3f92fc3449089196a3860c2740c1bf3c97e5ddf176b62addab6ff2628b
   languageName: node
   linkType: hard
 
@@ -4410,7 +4429,7 @@ __metadata:
     "@substrate/connect": "npm:^2.0.1"
     "@w3ux/extension-assets": "npm:^0.4.0"
     "@w3ux/factories": "npm:^1.0.0"
-    "@w3ux/hooks": "npm:^1.2.1"
+    "@w3ux/hooks": "npm:^1.3.1-beta.7"
     "@w3ux/react-connect-kit": "npm:^1.8.0"
     "@w3ux/react-odometer": "npm:^1.1.0"
     "@w3ux/react-polkicon": "npm:^2.0.1-alpha.0"
@@ -8819,7 +8838,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^7.12.0"
     "@typescript-eslint/parser": "npm:^7.12.0"
     "@vitejs/plugin-react-swc": "npm:^3.7.0"
-    "@w3ux/types": "npm:^0.2.0"
+    "@w3ux/types": "npm:0.2.1-beta.1"
     classnames: "npm:^2.5.1"
     eslint: "npm:8.57.0"
     eslint-config-prettier: "npm:^9.1.0"
