@@ -36,9 +36,9 @@ export const ButtonHelp = (props: ButtonHelpProps): JSX.Element => {
     commonClasses.btnCore,
     classes.btnHelp,
     {
-      [classes.btnHelp_secondaryBackground]: background === 'secondary',
-      [classes.btnHelp_noBackground]: background === 'none',
-      [classes.btnHelp_outline]: outline,
+      [classes.btnHelpSecondaryBackground]: background === 'secondary',
+      [classes.btnHelpNoBackground]: background === 'none',
+      [classes.btnHelpOutline]: outline,
       [commonClasses.btnSpacingLeft]: marginLeft,
       [commonClasses.btnSpacingRight]: marginRight,
       [commonClasses.marginLeft]: marginLeft,
@@ -61,7 +61,7 @@ export const ButtonHelp = (props: ButtonHelpProps): JSX.Element => {
         viewBox="0 0 64 64"
         width="100%"
         height="100%"
-        className={classes.btnHelp_icon}
+        className={classes.btnHelpIcon}
       >
         <path d="M32 15c-2.5 0-4.5 2-4.5 4.5s2 4.5 4.5 4.5 4.5-2 4.5-4.5-2-4.5-4.5-4.5zm0 14.5c-2.5 0-4.5 2-4.5 4.5v12c0 2.5 2 4.5 4.5 4.5s4.5-2 4.5-4.5V34c0-2.5-2-4.5-4.5-4.5z" />
       </svg>

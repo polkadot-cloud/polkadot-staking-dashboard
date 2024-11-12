@@ -16,7 +16,7 @@ import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import { useStaking } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
-import { graphColors } from 'theme/graphs';
+import graphColors from 'styles/graphs/index.json';
 import type { AnySubscan } from 'types';
 import { useNetwork } from 'contexts/Network';
 import type { PayoutLineProps } from './types';

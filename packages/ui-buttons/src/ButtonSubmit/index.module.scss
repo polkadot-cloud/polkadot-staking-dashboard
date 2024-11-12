@@ -8,22 +8,22 @@
   color: white;
 }
 
-.btnSubmit_secondaryColor {
+.btnSubmitSecondaryColor {
   border-color: var(--accent-color-secondary);
   background: var(--accent-color-secondary);
 }
 
-.btnSubmit_sm {
+.btnSubmitSm {
   padding: var(--button-padding-large);
   font-size: var(--button-font-size-small);
 }
 
-.btnSubmit_lg {
+.btnSubmitLg {
   padding: var(--button-padding-large);
   font-size: var(--button-font-size-large);
 }
 
-.btnSubmit_pulse {
+.btnSubmitPulse {
   box-shadow: 0 0 30px 0 var(--accent-color-pending);
   transform: scale(1);
   animation: pulse 2s infinite;

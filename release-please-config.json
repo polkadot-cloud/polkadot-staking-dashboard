@@ -3,6 +3,9 @@
   "include-component-in-tag": true,
   "packages": {
     "packages/app": {},
-    "packages/ui-buttons": {}
+    "packages/consts": {},
+    "packages/styles": {},
+    "packages/ui-buttons": {},
+    "packages/ui-structure": {}
   }
 }

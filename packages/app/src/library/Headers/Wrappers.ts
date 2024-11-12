@@ -3,7 +3,7 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { PageWidthSmallThreshold, PageWidthMediumThreshold } from 'consts';
+import { PageWidthMediumThreshold } from 'consts';
 
 export const Wrapper = styled.div`
   position: fixed;
@@ -130,7 +130,7 @@ export const ItemInactive = styled(motion.div)`
 
 export const LargeScreensOnly = styled.div`
   display: flex;
-  @media (max-width: ${PageWidthSmallThreshold}px) {
+  @media (max-width: 850px) {
     display: none;
   }
 `;

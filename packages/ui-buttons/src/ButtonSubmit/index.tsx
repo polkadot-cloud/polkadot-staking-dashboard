@@ -48,10 +48,10 @@ export const ButtonSubmit = (props: ButtonSubmitProps): JSX.Element => {
       [commonClasses.btnMarginX]: marginX,
       [commonClasses.btnDisabled]: disabled,
       [commonClasses.btnActiveTransforms]: !disabled,
-      [classes.btnSubmit_lg]: lg,
-      [classes.btnSubmit_sm]: !lg,
-      [classes.btnSubmit_secondaryColor]: colorSecondary,
-      [classes.btnSubmit_pulse]: pulse,
+      [classes.btnSubmitLg]: lg,
+      [classes.btnSubmitSm]: !lg,
+      [classes.btnSubmitSecondaryColor]: colorSecondary,
+      [classes.btnSubmitPulse]: pulse,
     },
     className
   );

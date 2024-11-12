@@ -26,7 +26,7 @@ import { Main } from './Main';
 import { Secondary } from './Secondary';
 import { ConnectionSymbol, Separator, Wrapper } from './Wrapper';
 import { useOutsideAlerter, useOnResize } from '@w3ux/hooks';
-import { Side } from 'kits/Structure/Side';
+import { Side } from 'ui-structure';
 
 export const SideMenu = () => {
   const { t } = useTranslation('base');

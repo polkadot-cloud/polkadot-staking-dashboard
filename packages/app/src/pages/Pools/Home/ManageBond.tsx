@@ -16,7 +16,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useSyncing } from 'hooks/useSyncing';
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons';
-import { ButtonRow } from 'kits/Structure/ButtonRow';
+import { ButtonRow } from 'ui-structure';
 import { planckToUnitBn } from 'library/Utils';
 
 export const ManageBond = () => {

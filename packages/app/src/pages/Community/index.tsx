@@ -7,7 +7,7 @@ import { Entity } from './Entity';
 import { List } from './List';
 import { Wrapper } from './Wrappers';
 import { CommunitySectionsProvider, useCommunitySections } from './context';
-import { PageTitle } from 'kits/Structure/PageTitle';
+import { PageTitle } from 'ui-structure';
 
 export const CommunityInner = ({ page }: PageProps) => {
   const { t } = useTranslation('base');

@@ -8,7 +8,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useStaking } from 'contexts/Staking';
 import { MoreWrapper } from './Wrappers';
 import { ButtonPrimaryInvert } from 'ui-buttons';
-import { Separator } from 'kits/Structure/Separator';
+import { Separator } from 'ui-structure';
 
 export const BalanceLinks = () => {
   const { t } = useTranslation('pages');
