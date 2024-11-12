@@ -18,14 +18,14 @@ export const PageTitleTabs = ({
   colorSecondary,
 }: PageTitleProps) => {
   const buttonClasses = classNames(classes.pageTitleTabs, {
-    [classes.pageTitleTabs_inline]: inline,
-    [classes.pageTitleTabs_sticky]: sticky,
+    [classes.pageTitleTabsInline]: inline,
+    [classes.pageTitleTabsSticky]: sticky,
   });
 
   return (
     <section className={buttonClasses}>
-      <div className={classes.pageTitleTabs_scroll}>
-        <div className={classes.pageTitleTabs_inner}>
+      <div className={classes.pageTitleTabsScroll}>
+        <div className={classes.pageTitleTabsInner}>
           {tabs.map(
             (
               { active, onClick, title, badge, disabled }: PageTitleTabProps,

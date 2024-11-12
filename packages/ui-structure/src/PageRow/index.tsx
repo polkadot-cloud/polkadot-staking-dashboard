@@ -12,7 +12,7 @@ import type { RowProps } from '../types';
  */
 export const PageRow = ({ children, style, yMargin }: RowProps) => {
   const buttonClasses = classNames(classes.pageRow, 'page-padding', {
-    [classes.pageRow_yMargin]: yMargin,
+    [classes.pageRowYMargin]: yMargin,
   });
 
   return (

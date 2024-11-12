@@ -35,25 +35,25 @@ export const PageTitle = ({ title, button, tabs = [] }: PageTitleProps) => {
   }, [sticky]);
 
   const buttonClasses = classNames(classes.pageTitle, {
-    [classes.pageTitle_default]: !sticky,
-    [classes.pageTitle_sticky]: sticky,
+    [classes.pageTitleDefault]: !sticky,
+    [classes.pageTitleSticky]: sticky,
   });
 
-  const h1Classes = classNames(classes.pageTitle_h1, {
-    [classes.pageTitle_h1_default]: !sticky,
-    [classes.pageTitle_h1_sticky]: sticky,
+  const h1Classes = classNames(classes.pageTitleH1, {
+    [classes.pageTitleH1Default]: !sticky,
+    [classes.pageTitleH1Sticky]: sticky,
   });
 
   return (
     <>
-      <div className={classes.pageTitle_scrollWrapper} />
+      <div className={classes.pageTitleScrollWrapper} />
       <header className={buttonClasses} ref={ref}>
-        <section className={classes.pageTitle_title}>
+        <section className={classes.pageTitleTitle}>
           <div>
             <h1 className={h1Classes}>{title}</h1>
           </div>
           {button && (
-            <div className={classes.pageTitle_title_right}>
+            <div className={classes.pageTitleTitleRight}>
               <ButtonSecondary
                 text={button.title}
                 onClick={button.onClick}

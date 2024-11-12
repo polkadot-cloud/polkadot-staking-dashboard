@@ -3,7 +3,7 @@
 
 @import 'styles/theme/_variables';
 
-.pageTitle_scrollWrapper {
+.pageTitleScrollWrapper {
   background: var(--background-default);
   display: none;
   position: fixed;
@@ -49,19 +49,19 @@
   }
 }
 
-.pageTitle_default {
+.pageTitleDefault {
   margin-bottom: 0.5rem;
   padding-top: 0.5rem;
   padding-bottom: 0;
 }
 
-.pageTitle_sticky {
+.pageTitleSticky {
   padding-top: 1.5rem;
   padding-bottom: 0.25rem;
   margin-bottom: 0.25rem;
 }
 
-.pageTitle_title {
+.pageTitleTitle {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -69,11 +69,11 @@
   width: 100%;
 }
 
-.pageTitle_title_right{
+.pageTitleTitleRight{
   padding-left: 1rem;
 }
 
-.pageTitle_h1 {
+.pageTitleH1 {
   font-size: 2rem;
   font-family: Poppins700, sans-serif;
   font-weight: 700;
@@ -86,16 +86,16 @@
   transition: all var(--transition-duration);
   margin: 0;
 }
-.pageTitle_h1_default {
+.pageTitleH1Default {
   left: 0;
   transform: scale(1);
 }
 
-.pageTitle_h1_sticky  {
+.pageTitleH1Sticky  {
   left: -0.75rem;
   transform: scale(0.85);
 }
 
-.pageTitle_sticky_title {
+.pageTitleStickyTitle {
   margin-bottom: 0.5rem;
 }

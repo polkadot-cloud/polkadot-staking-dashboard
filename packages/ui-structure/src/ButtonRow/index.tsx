@@ -11,7 +11,7 @@ import type { RowProps } from '../types';
  */
 export const ButtonRow = ({ children, style, yMargin }: RowProps) => {
   const buttonClasses = classNames(classes.buttonRow, {
-    [classes.buttonRow_yMargin]: yMargin,
+    [classes.buttonRowYMargin]: yMargin,
   });
 
   return (
