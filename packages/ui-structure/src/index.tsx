@@ -13,3 +13,4 @@ export * from './PageTitleTabs';
 export * from './RowSection';
 export * from './Side';
 export * from './Separator';
+export * from './StatBoxRow';

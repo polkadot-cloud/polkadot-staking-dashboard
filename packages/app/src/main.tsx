@@ -15,7 +15,6 @@ import 'styles/theme/theme.scss';
 import 'styles/theme/index.scss';
 
 // Library styles.
-import 'kits/Structure/index.scss';
 import 'kits/Overlay/index.scss';
 
 const rootElement = document.getElementById('root');

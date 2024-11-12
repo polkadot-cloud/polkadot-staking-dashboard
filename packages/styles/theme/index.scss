@@ -1,6 +1,8 @@
 /* Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 SPDX-License-Identifier: GPL-3.0-only */
 
+@import '_variables';
+
 html {
   font-size: 10.5px;
   @media (min-width: 600px) {
@@ -115,4 +117,18 @@ textarea:focus {
 path.primary,
 ellipse.primary {
   fill: var(--text-color-primary);
+}
+
+.page-padding {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+
+  @media (min-width: $page-width-small-threshold) {
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
+  }
+
+  @media (min-width: $page-width-small-threshold) {
+    padding: 0 5rem 0 2.5rem;
+  }
 }
