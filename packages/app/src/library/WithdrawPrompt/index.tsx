@@ -11,7 +11,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useSyncing } from 'hooks/useSyncing';
 import { ButtonPrimary } from 'ui-buttons';
-import { timeleftAsString } from 'hooks/useTimeLeft/utils';
+import { timeleftAsString } from 'library/Utils';
 import { getUnixTime } from 'date-fns';
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
 import { useApi } from 'contexts/Api';
