@@ -17,7 +17,7 @@ import { AnalyzedPayouts } from './Stats/AnalyzedPayouts';
 import { AnalyzedDays } from './Stats/AnalyzedDays';
 import { AnalyzedEras } from './Stats/AnalyzedEras';
 
-import { PageRow } from 'kits/Structure/PageRow';
+import { PageRow } from 'ui-structure';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { PluginLabel } from 'library/PluginLabel';
 import { GraphWrapper } from 'library/Graphs/Wrapper';

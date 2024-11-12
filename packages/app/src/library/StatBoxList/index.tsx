@@ -3,7 +3,7 @@
 
 import type { ReactNode } from 'react';
 import { ListWrapper } from './Wrapper';
-import { StatBoxRow } from 'kits/Structure/StatBoxRow';
+import { StatBoxRow } from 'ui-structure';
 
 export const StatBoxList = ({ children }: { children: ReactNode }) => (
   <StatBoxRow>

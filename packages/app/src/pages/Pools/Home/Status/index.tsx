@@ -6,7 +6,7 @@ import { CardWrapper } from 'library/Card/Wrappers';
 import { MembershipStatus } from './MembershipStatus';
 import { PoolStatus } from './PoolStatus';
 import { RewardsStatus } from './RewardsStatus';
-import { Separator } from 'kits/Structure/Separator';
+import { Separator } from 'ui-structure';
 import type { StatusProps } from './types';
 import { NewMember } from './NewMember';
 import { useSyncing } from 'hooks/useSyncing';

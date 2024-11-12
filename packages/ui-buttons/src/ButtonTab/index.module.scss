@@ -26,24 +26,24 @@
   }
 }
 
-.btnTab_inner {
+.btnTabInner {
   display: flex;
   align-items: center;
 }
 
-.btnTab_active {
+.btnTabActive {
   background: var(--button-tab-background);
 }
 
-.btnTab_secondaryColor_active {
+.btnTabSecondaryColorActive {
   background: var(--button-tab-canvas-background);
 }
 
-.btnTab_secondaryColor {
+.btnTabSecondaryColor {
   color: var(--text-color-secondary);
 }
 
-.btnTab_badge {
+.btnTabBadge {
   border: 1px solid var(--border-primary-color);
   color: var(--text-color-tertiary);
   font-size: var(--button-font-size-small);

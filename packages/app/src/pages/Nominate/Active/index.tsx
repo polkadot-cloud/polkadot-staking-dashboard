@@ -22,8 +22,7 @@ import { UnstakePrompts } from './UnstakePrompts';
 import { useSyncing } from 'hooks/useSyncing';
 import { useBalances } from 'contexts/Balances';
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons';
-import { PageRow } from 'kits/Structure/PageRow';
-import { RowSection } from 'kits/Structure/RowSection';
+import { PageRow, RowSection } from 'ui-structure';
 import { WithdrawPrompt } from 'library/WithdrawPrompt';
 
 export const Active = () => {

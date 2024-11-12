@@ -12,7 +12,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Default } from './Default';
 import { ManualSign } from './ManualSign';
 import type { SubmitTxProps } from './types';
-import { Tx } from 'kits/Structure/Tx';
+import { Tx } from 'library/Tx';
 
 export const SubmitTx = ({
   uid,
