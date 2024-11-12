@@ -6,7 +6,7 @@ import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import type { NomninationGeoListProps } from '../types';
 import { useNetwork } from 'contexts/Network';
-import { Separator } from 'kits/Structure/Separator';
+import { Separator } from 'ui-structure';
 import { ButtonPrimaryInvert, ButtonHelp } from 'ui-buttons';
 import { useStaking } from 'contexts/Staking';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';

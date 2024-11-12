@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ComponentBase } from '@w3ux/types';
-import { Wrapper } from './Wrapper';
+import classes from './index.module.scss';
 
 /**
  * @name Separator
- * @summary A horizontal spacer with a bottom border. General spacer for separating content by
- * row.
+ * @summary A horizontal spacer with a bottom border. General spacer for separating content by row.
  */
 export const Separator = ({ children, style }: ComponentBase) => (
-  <Wrapper style={style}>{children}</Wrapper>
+  <div className={classes.separator} style={style}>
+    {children}
+  </div>
 );

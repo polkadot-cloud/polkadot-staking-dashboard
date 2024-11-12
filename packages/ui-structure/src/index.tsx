@@ -12,3 +12,4 @@ export * from './PageTitle';
 export * from './PageTitleTabs';
 export * from './RowSection';
 export * from './Side';
+export * from './Separator';
