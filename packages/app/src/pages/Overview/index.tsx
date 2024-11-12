@@ -14,8 +14,7 @@ import { StakeStatus } from './StakeStatus';
 import { ActiveEraStat } from './Stats/ActiveEraTimeLeft';
 import { AverageRewardRateStat } from './Stats/AveragelRewardRate';
 import { SupplyStakedStat } from './Stats/SupplyStaked';
-import { PageTitle, PageHeading, PageRow } from 'ui-structure';
-import { RowSection } from 'kits/Structure/RowSection';
+import { PageTitle, PageHeading, PageRow, RowSection } from 'ui-structure';
 
 export const Overview = () => {
   const { t } = useTranslation('pages');
