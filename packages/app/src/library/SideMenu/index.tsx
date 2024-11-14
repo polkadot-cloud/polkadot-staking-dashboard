@@ -24,9 +24,10 @@ import { useNetwork } from 'contexts/Network';
 import { Heading } from './Heading/Heading';
 import { Main } from './Main';
 import { Secondary } from './Secondary';
-import { ConnectionSymbol, Separator, Wrapper } from './Wrapper';
+import { ConnectionSymbol, Separator, Wrapper, LogoWrapper } from './Wrapper';
 import { useOutsideAlerter, useOnResize } from '@w3ux/hooks';
 import { Side } from 'ui-structure';
+import LogoSVG from 'img/logo.svg?react';
 
 export const SideMenu = () => {
   const { t } = useTranslation('base');
@@ -71,6 +72,45 @@ export const SideMenu = () => {
     >
       <Wrapper ref={ref} $minimised={sideMenuMinimised}>
         <section>
+          <LogoWrapper $minimised={sideMenuMinimised}>
+            {sideMenuMinimised ? (
+              <networkData.brand.icon
+                style={{ maxHeight: '100%', width: '1.8rem' }}
+              />
+            ) : (
+              <>
+                <networkData.brand.icon
+                  style={{
+                    maxHeight: '100%',
+                    height: '100%',
+                    width: '1.5rem',
+                  }}
+                />
+
+                <span>
+                  <LogoSVG className="logo" />
+                </span>
+              </>
+            )}
+          </LogoWrapper>
+          <Heading title={t('network')} minimised={sideMenuMinimised} />
+          <Secondary
+            classes={[apiStatusClass]}
+            name={capitalizeFirstLetter(network)}
+            onClick={() => openModal({ key: 'Networks' })}
+            icon={{
+              Svg: networkData.brand.inline.svg,
+              size: networkData.brand.inline.size,
+            }}
+            minimised={sideMenuMinimised}
+            action={
+              <ConnectionSymbol
+                className={apiStatusClass}
+                style={{ opacity: 0.7 }}
+              />
+            }
+          />
+          <Separator />
           <Main />
           <div className="inner">
             <Heading title={t('support')} minimised={sideMenuMinimised} />
@@ -93,25 +133,6 @@ export const SideMenu = () => {
                 Svg: ForumSVG,
                 size: sideMenuMinimised ? '1.4em' : '1.2em',
               }}
-            />
-
-            <Separator />
-            <Heading title={t('network')} minimised={sideMenuMinimised} />
-            <Secondary
-              classes={[apiStatusClass]}
-              name={capitalizeFirstLetter(network)}
-              onClick={() => openModal({ key: 'Networks' })}
-              icon={{
-                Svg: networkData.brand.inline.svg,
-                size: networkData.brand.inline.size,
-              }}
-              minimised={sideMenuMinimised}
-              action={
-                <ConnectionSymbol
-                  className={apiStatusClass}
-                  style={{ opacity: 0.7 }}
-                />
-              }
             />
           </div>
         </section>

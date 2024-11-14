@@ -7,7 +7,7 @@ import type { MinimisedProps } from '../types';
 
 export const Wrapper = styled(motion.button)<MinimisedProps>`
   border: 1px solid var(--border-secondary-color);
-  border-radius: 0.7rem;
+  border-radius: 0.8rem;
   height: 3.2rem;
   display: flex;
   flex-flow: row wrap;
