@@ -142,7 +142,7 @@ export const BalanceChart = () => {
             zeroDecimals={2}
           />
           <span className="note">
-            {plugins.includes('binance_spot') ? (
+            {plugins.includes('staking_api') ? (
               <FiatValue totalBalance={totalBalance} />
             ) : null}
           </span>

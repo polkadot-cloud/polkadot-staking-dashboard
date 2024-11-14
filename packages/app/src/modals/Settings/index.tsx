@@ -33,11 +33,6 @@ export const Settings = () => {
             label="Polkawatch API"
             onClick={() => togglePlugin('polkawatch')}
           />
-          <StatusButton
-            checked={plugins.includes('binance_spot')}
-            label={t('binanceApi')}
-            onClick={() => togglePlugin('binance_spot')}
-          />
 
           <h4>{t('toggleFeatures')}</h4>
 
