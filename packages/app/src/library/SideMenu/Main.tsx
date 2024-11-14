@@ -17,11 +17,9 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Heading } from './Heading/Heading';
 import { Primary } from './Primary';
-import { LogoWrapper } from './Wrapper';
 import { useBalances } from 'contexts/Balances';
 import { useSyncing } from 'hooks/useSyncing';
 import type { AnyJson } from '@w3ux/types';
-import LogoSVG from 'img/logo.svg?react';
 
 export const Main = () => {
   const { t, i18n } = useTranslation('base');
@@ -127,28 +125,6 @@ export const Main = () => {
 
   return (
     <>
-      <LogoWrapper $minimised={sideMenuMinimised}>
-        {sideMenuMinimised ? (
-          <networkData.brand.icon
-            style={{ maxHeight: '100%', width: '1.8rem' }}
-          />
-        ) : (
-          <>
-            <networkData.brand.icon
-              style={{
-                maxHeight: '100%',
-                height: '100%',
-                width: '1.5rem',
-              }}
-            />
-
-            <span>
-              <LogoSVG className="logo" />
-            </span>
-          </>
-        )}
-      </LogoWrapper>
-
       {pageConfig.categories.map(
         ({ id: categoryId, key: categoryKey }: PageCategory) => (
           <div className="inner" key={`sidemenu_category_${categoryId}`}>

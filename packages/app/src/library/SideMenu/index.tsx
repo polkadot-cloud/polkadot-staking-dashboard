@@ -13,8 +13,9 @@ import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import type { UIContextInterface } from 'contexts/UI/types';
 import CogOutlineSVG from 'img/cog-outline.svg?react';
-import ForumSVG from 'img/forum.svg?react';
-import InfoSVG from 'img/info.svg?react';
+import EnvelopeSVG from 'img/envelope.svg?react';
+import BookSVG from 'img/book.svg?react';
+import DiscordSVG from 'img/discord.svg?react';
 import LanguageSVG from 'img/language.svg?react';
 import LogoGithubSVG from 'img/logo-github.svg?react';
 import MoonOutlineSVG from 'img/moon-outline.svg?react';
@@ -24,9 +25,10 @@ import { useNetwork } from 'contexts/Network';
 import { Heading } from './Heading/Heading';
 import { Main } from './Main';
 import { Secondary } from './Secondary';
-import { ConnectionSymbol, Separator, Wrapper } from './Wrapper';
+import { ConnectionSymbol, Separator, Wrapper, LogoWrapper } from './Wrapper';
 import { useOutsideAlerter, useOnResize } from '@w3ux/hooks';
 import { Side } from 'ui-structure';
+import LogoSVG from 'img/logo.svg?react';
 
 export const SideMenu = () => {
   const { t } = useTranslation('base');
@@ -71,6 +73,45 @@ export const SideMenu = () => {
     >
       <Wrapper ref={ref} $minimised={sideMenuMinimised}>
         <section>
+          <LogoWrapper $minimised={sideMenuMinimised}>
+            {sideMenuMinimised ? (
+              <networkData.brand.icon
+                style={{ maxHeight: '100%', width: '1.8rem' }}
+              />
+            ) : (
+              <>
+                <networkData.brand.icon
+                  style={{
+                    maxHeight: '100%',
+                    height: '100%',
+                    width: '1.5rem',
+                  }}
+                />
+
+                <span>
+                  <LogoSVG className="logo" />
+                </span>
+              </>
+            )}
+          </LogoWrapper>
+          <Heading title={t('network')} minimised={sideMenuMinimised} />
+          <Secondary
+            classes={[apiStatusClass]}
+            name={capitalizeFirstLetter(network)}
+            onClick={() => openModal({ key: 'Networks' })}
+            icon={{
+              Svg: networkData.brand.inline.svg,
+              size: networkData.brand.inline.size,
+            }}
+            minimised={sideMenuMinimised}
+            action={
+              <ConnectionSymbol
+                className={apiStatusClass}
+                style={{ opacity: 0.7 }}
+              />
+            }
+          />
+          <Separator />
           <Main />
           <div className="inner">
             <Heading title={t('support')} minimised={sideMenuMinimised} />
@@ -81,37 +122,29 @@ export const SideMenu = () => {
               name={t('resources')}
               minimised={sideMenuMinimised}
               icon={{
-                Svg: InfoSVG,
-                size: sideMenuMinimised ? '1.4em' : '1.2em',
-              }}
-            />
-            <Secondary
-              onClick={() => openModal({ key: 'GoToFeedback' })}
-              name={t('support')}
-              minimised={sideMenuMinimised}
-              icon={{
-                Svg: ForumSVG,
-                size: sideMenuMinimised ? '1.4em' : '1.2em',
+                Svg: BookSVG,
+                size: sideMenuMinimised ? '0.95em' : '0.9em',
               }}
             />
 
-            <Separator />
-            <Heading title={t('network')} minimised={sideMenuMinimised} />
             <Secondary
-              classes={[apiStatusClass]}
-              name={capitalizeFirstLetter(network)}
-              onClick={() => openModal({ key: 'Networks' })}
-              icon={{
-                Svg: networkData.brand.inline.svg,
-                size: networkData.brand.inline.size,
-              }}
+              onClick={() => openModal({ key: 'DiscordSupport', size: 'sm' })}
+              name="Discord"
               minimised={sideMenuMinimised}
-              action={
-                <ConnectionSymbol
-                  className={apiStatusClass}
-                  style={{ opacity: 0.7 }}
-                />
-              }
+              icon={{
+                Svg: DiscordSVG,
+                size: sideMenuMinimised ? '1.2em' : '1.2em',
+              }}
+            />
+
+            <Secondary
+              onClick={() => openModal({ key: 'MailSupport', size: 'sm' })}
+              name={t('email', { ns: 'base' })}
+              minimised={sideMenuMinimised}
+              icon={{
+                Svg: EnvelopeSVG,
+                size: sideMenuMinimised ? '1.05em' : '1em',
+              }}
             />
           </div>
         </section>
