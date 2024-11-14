@@ -292,6 +292,9 @@
     "withdrawSubtitle": "资金将在取款后立即转作可用余额",
     "withdrawUnlocked": "取出己解锁",
     "years": "年",
-    "youHaveActiveUnlocks": "您有资金在解锁中,   {{bondDurationFormatted}} 的解锁期过后，可取出资金"
+    "youHaveActiveUnlocks": "您有资金在解锁中,   {{bondDurationFormatted}} 的解锁期过后，可取出资金",
+    "supportDiscord": "加入 Staking Dashboard Discord 频道，获得我们团队的专门支持并与 Polkadot 社区建立联系.",
+    "supportEmail": "我们为 Staking Dashboard 用户提供专用电子邮件支持。联系我们，我们的团队将尽力及时回复并为您提供帮助.",
+    "goToDiscord": "前往 Discord"
   }
 }

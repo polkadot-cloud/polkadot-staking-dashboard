@@ -139,7 +139,7 @@ export const SideMenu = () => {
 
             <Secondary
               onClick={() => openModal({ key: 'MailSupport', size: 'sm' })}
-              name={'Email'}
+              name={t('email', { ns: 'base' })}
               minimised={sideMenuMinimised}
               icon={{
                 Svg: EnvelopeSVG,

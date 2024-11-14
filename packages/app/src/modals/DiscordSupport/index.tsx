@@ -8,24 +8,25 @@ import { SupportWrapper } from './Wrapper';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DiscordSupportUrl } from 'consts';
+import { useTranslation } from 'react-i18next';
 
-export const DiscordSupport = () => (
-  <>
-    <Title />
-    <ModalPadding verticalOnly>
-      <SupportWrapper>
-        <DiscordOutlineSvg />
-        <h4>
-          Join the Staking Dashboard Discord channel to receive dedicated
-          support from our team and connect with the Polkadot community.
-        </h4>
-        <h1>
-          <a href={DiscordSupportUrl} target="_blank" rel="noreferrer">
-            Go to Discord&nbsp;
-            <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-4" />
-          </a>
-        </h1>
-      </SupportWrapper>
-    </ModalPadding>
-  </>
-);
+export const DiscordSupport = () => {
+  const { t } = useTranslation('modals');
+  return (
+    <>
+      <Title />
+      <ModalPadding verticalOnly>
+        <SupportWrapper>
+          <DiscordOutlineSvg />
+          <h4>{t('supportDiscord')}</h4>
+          <h1>
+            <a href={DiscordSupportUrl} target="_blank" rel="noreferrer">
+              {t('goToDiscord')}&nbsp;
+              <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-4" />
+            </a>
+          </h1>
+        </SupportWrapper>
+      </ModalPadding>
+    </>
+  );
+};
