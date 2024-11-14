@@ -1,4 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
+import type { UseTokenPriceResult } from './types';
 
 const TOKEN_PRICE_QUERY = gql`
   query TokenPrice($ticker: String!) {
@@ -9,7 +10,11 @@ const TOKEN_PRICE_QUERY = gql`
   }
 `;
 
-export const useTokenPrice = ({ ticker }: { ticker: string }) => {
+export const useTokenPrice = ({
+  ticker,
+}: {
+  ticker: string;
+}): UseTokenPriceResult => {
   const { loading, error, data } = useQuery(TOKEN_PRICE_QUERY, {
     variables: { ticker },
   });

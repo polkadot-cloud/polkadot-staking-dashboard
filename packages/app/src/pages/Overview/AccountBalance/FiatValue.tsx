@@ -3,7 +3,12 @@
 
 import BigNumber from 'bignumber.js';
 import { useNetwork } from 'contexts/Network';
-import { ApolloProvider, client, useTokenPrice } from 'plugin-staking-api';
+import {
+  ApolloProvider,
+  client,
+  formatResult,
+  useTokenPrice,
+} from 'plugin-staking-api';
 
 interface FiatValueProps {
   totalBalance: BigNumber;
@@ -16,8 +21,7 @@ export const FiatValueInner = ({ totalBalance }: FiatValueProps) => {
     },
   } = useNetwork();
   const { loading, error, data } = useTokenPrice({ ticker: `${unit}USDT` });
-
-  const price = loading || error ? 0 : data?.tokenPrice?.price || 0;
+  const { price } = formatResult(loading, error, data);
 
   // Convert balance to fiat value.
   const freeFiat = totalBalance.multipliedBy(
