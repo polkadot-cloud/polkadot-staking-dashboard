@@ -6,7 +6,6 @@ import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { usePlugins } from 'contexts/Plugins';
-import { usePrices } from 'hooks/usePrices';
 import { useNetwork } from 'contexts/Network';
 import { Status } from './Status';
 import { Summary, Wrapper } from './Wrappers';
@@ -17,13 +16,13 @@ import BigNumber from 'bignumber.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHive } from '@fortawesome/free-brands-svg-icons';
 import { Odometer } from '@w3ux/react-odometer';
+import { TokenPrice } from './TokenPrice';
 
 export const NetworkBar = () => {
   const { t } = useTranslation('library');
   const { plugins } = usePlugins();
   const { connectionType } = useApi();
   const { networkData, network } = useNetwork();
-  const prices = usePrices();
 
   const PRIVACY_URL = import.meta.env.VITE_PRIVACY_URL;
   const DISCLAIMER_URL = import.meta.env.VITE_DISCLAIMER_URL;
@@ -85,26 +84,8 @@ export const NetworkBar = () => {
         </section>
         <section>
           <div className="hide-small">
-            {plugins.includes('binance_spot') && (
-              <>
-                <div className="stat">
-                  <span
-                    className={`change${
-                      prices.change < 0
-                        ? ' neg'
-                        : prices.change > 0
-                          ? ' pos'
-                          : ''
-                    }`}
-                  >
-                    {prices.change < 0 ? '' : prices.change > 0 ? '+' : ''}
-                    {prices.change}%
-                  </span>
-                </div>
-                <div className="stat">
-                  1 {networkData.api.unit} / {prices.lastPrice} USD
-                </div>
-              </>
+            {plugins.includes('staking_api') && network !== 'westend' && (
+              <TokenPrice />
             )}
 
             <div className="stat last">

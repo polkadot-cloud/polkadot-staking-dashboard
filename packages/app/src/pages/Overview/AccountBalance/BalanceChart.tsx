@@ -13,7 +13,6 @@ import { BarSegment } from 'library/BarChart/BarSegment';
 import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
-import { usePrices } from 'hooks/usePrices';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -21,6 +20,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useSyncing } from 'hooks/useSyncing';
 import { ButtonTertiary } from 'ui-buttons';
 import { planckToUnitBn } from 'library/Utils';
+import { FiatValue } from './FiatValue';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
@@ -31,7 +31,6 @@ export const BalanceChart = () => {
       brand: { token: Token },
     },
   } = useNetwork();
-  const prices = usePrices();
   const { plugins } = usePlugins();
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
@@ -53,10 +52,6 @@ export const BalanceChart = () => {
   const totalBalance = planckToUnitBn(
     free.plus(poolBondOpions.active).plus(unlockingPools),
     units
-  );
-  // Convert balance to fiat value.
-  const freeFiat = totalBalance.multipliedBy(
-    new BigNumber(prices.lastPrice).decimalPlaces(2)
   );
 
   // Total funds nominating.
@@ -130,12 +125,6 @@ export const BalanceChart = () => {
     fundsReserved = graphAvailable;
   }
 
-  // Formatter for price feed.
-  const usdFormatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  });
-
   const isNominating = nominating.isGreaterThan(0);
   const isInPool = poolBondOpions.active
     .plus(poolBondOpions.totalUnlocked)
@@ -153,8 +142,8 @@ export const BalanceChart = () => {
             zeroDecimals={2}
           />
           <span className="note">
-            {plugins.includes('binance_spot') ? (
-              <>&nbsp;{usdFormatter.format(freeFiat.toNumber())}</>
+            {plugins.includes('staking_api') ? (
+              <FiatValue totalBalance={totalBalance} />
             ) : null}
           </span>
         </h2>
