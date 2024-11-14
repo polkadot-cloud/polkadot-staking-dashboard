@@ -16,7 +16,7 @@ import { SubscriptionsController } from 'controllers/Subscriptions';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import { WellKnownChain } from '@substrate/connect';
 import * as Sc from '@substrate/connect';
-import type { PolkadotClient } from 'polkadot-api';
+import type { PolkadotClient, UnsafeApi } from 'polkadot-api';
 import { createClient } from 'polkadot-api';
 import { getWsProvider } from 'polkadot-api/ws-provider/web';
 import { getSmProvider } from 'polkadot-api/sm-provider';
@@ -37,6 +37,9 @@ export class Api {
   // PAPI Instance.
   #papiClient: PolkadotClient;
 
+  // PAPI API.
+  #papiApi: UnsafeApi<unknown>;
+
   // PAPI Chain Spec.
   #papiChainSpec: PapiChainSpec;
 
@@ -55,6 +58,10 @@ export class Api {
 
   get papiClient() {
     return this.#papiClient;
+  }
+
+  get papiApi() {
+    return this.#papiApi;
   }
 
   get papiChainSpec() {
@@ -103,6 +110,9 @@ export class Api {
 
       // Wait for api to be ready.
       await this.#api.isReady;
+
+      // Initialise PAPI API.
+      this.#papiApi = this.#papiClient.getUnsafeApi();
 
       // Fetch chain spec and metadata from PAPI client.
       await this.fetchChainSpec();

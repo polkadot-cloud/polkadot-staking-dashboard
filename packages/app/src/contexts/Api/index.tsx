@@ -226,7 +226,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     SubscriptionsController.set(network, 'activeEra', new ActiveEra(network));
   };
 
-  const handlePapiReady = (e: Event) => {
+  const handlePapiReady = async (e: Event) => {
     if (isCustomEvent(e)) {
       const { chainType, genesisHash, ss58Format, tokenDecimals, tokenSymbol } =
         e.detail;
@@ -241,7 +241,14 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         };
         setChainSpecs({ ...newChainSpecs, received: true });
 
+        const apiInstance = ApiController.get(network);
+        const pApi = apiInstance.papiApi;
+
         // TODO: set consts from here.
+        console.log(
+          'bonding duration: ',
+          await pApi.constants.Staking.BondingDuration()
+        );
       }
     }
   };
