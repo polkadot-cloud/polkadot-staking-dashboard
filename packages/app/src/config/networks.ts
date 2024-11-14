@@ -17,7 +17,8 @@ export const NetworkList: Networks = {
   polkadot: {
     name: 'polkadot',
     endpoints: {
-      lightClient: 'polkadot',
+      lightClientKey: 'polkadot',
+      lightClient: async () => await import('polkadot-api/chains/polkadot'),
       defaultRpcEndpoint: 'Automata 1RPC',
       rpcEndpoints: {
         'Automata 1RPC': 'wss://1rpc.io/dot',
@@ -72,7 +73,8 @@ export const NetworkList: Networks = {
   kusama: {
     name: 'kusama',
     endpoints: {
-      lightClient: 'ksmcc3',
+      lightClientKey: 'ksmcc3',
+      lightClient: async () => await import('polkadot-api/chains/ksmcc3'),
       defaultRpcEndpoint: 'Automata 1RPC',
       rpcEndpoints: {
         'Automata 1RPC': 'wss://1rpc.io/ksm',
@@ -127,7 +129,8 @@ export const NetworkList: Networks = {
   westend: {
     name: 'westend',
     endpoints: {
-      lightClient: 'westend2',
+      lightClientKey: 'westend2',
+      lightClient: async () => await import('polkadot-api/chains/westend2'),
       defaultRpcEndpoint: 'Automata 1RPC',
       rpcEndpoints: {
         Dwellir: 'wss://westend-rpc.dwellir.com',
@@ -187,11 +190,14 @@ export const SystemChainList: Record<string, SystemChain> = {
     units: 10,
     unit: 'DOT',
     endpoints: {
-      lightClient: 'polkadot_people',
+      lightClientKey: 'polkadot_people',
+      lightClient: async () =>
+        await import('polkadot-api/chains/polkadot_people'),
       rpcEndpoints: {
         Parity: 'wss://polkadot-people-rpc.polkadot.io',
       },
     },
+    relayChain: 'polkadot',
   },
   'people-kusama': {
     name: 'people-kusama',
@@ -199,11 +205,14 @@ export const SystemChainList: Record<string, SystemChain> = {
     units: 12,
     unit: 'KSM',
     endpoints: {
-      lightClient: 'kusama_people',
+      lightClientKey: 'ksmcc3_people',
+      lightClient: async () =>
+        await import('polkadot-api/chains/ksmcc3_people'),
       rpcEndpoints: {
         Parity: 'wss://kusama-people-rpc.polkadot.io',
       },
     },
+    relayChain: 'kusama',
   },
   'people-westend': {
     name: 'people-westend',
@@ -211,10 +220,13 @@ export const SystemChainList: Record<string, SystemChain> = {
     units: 12,
     unit: 'WND',
     endpoints: {
-      lightClient: 'westend_people',
+      lightClientKey: 'westend2_people',
+      lightClient: async () =>
+        await import('polkadot-api/chains/westend2_people'),
       rpcEndpoints: {
         Parity: 'wss://westend-people-rpc.polkadot.io',
       },
     },
+    relayChain: 'westend',
   },
 };

@@ -12,6 +12,7 @@ import type {
   APINetworkMetrics,
   APIPoolsConfig,
   APIStakingMetrics,
+  PapiChainSpecContext,
 } from 'contexts/Api/types';
 
 export const defaultChainState: APIChainState = {
@@ -41,6 +42,14 @@ export const defaultNetworkMetrics: APINetworkMetrics = {
   earliestStoredSession: new BigNumber(0),
   fastUnstakeErasToCheckPerBlock: 0,
   minimumActiveStake: new BigNumber(0),
+};
+
+export const defaultChainSpecs: PapiChainSpecContext = {
+  genesisHash: '',
+  ss58Format: 0,
+  tokenDecimals: 0,
+  tokenSymbol: '',
+  received: false,
 };
 
 export const defaultActiveEra: APIActiveEra = {
@@ -77,6 +86,7 @@ export const defaultApiContext: APIContextInterface = {
   api: null,
   peopleApi: null,
   chainState: defaultChainState,
+  chainSpecs: defaultChainSpecs,
   isReady: false,
   apiStatus: 'disconnected',
   peopleApiStatus: 'disconnected',

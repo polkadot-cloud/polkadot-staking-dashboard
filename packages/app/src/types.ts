@@ -16,7 +16,7 @@ import type {
 } from 'contexts/Api/types';
 import type { SyncEvent } from 'controllers/Sync/types';
 import type { DetailActivePool } from 'controllers/ActivePools/types';
-import type { APIEventDetail } from 'model/Api/types';
+import type { APIEventDetail, PapiReadyEvent } from 'model/Api/types';
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types';
 import type { AnyJson } from '@w3ux/types';
 import type { BlockNumberEventDetail } from 'model/Subscribe/BlockNumber/types';
@@ -30,6 +30,7 @@ declare global {
   interface DocumentEventMap {
     notification: CustomEvent<NotificationItem>;
     'api-status': CustomEvent<APIEventDetail>;
+    'papi-ready': CustomEvent<PapiReadyEvent>;
     'online-status': CustomEvent<OnlineStatusEvent>;
     'new-block-number': CustomEvent<BlockNumberEventDetail>;
     'new-network-metrics': CustomEvent<{
@@ -66,7 +67,8 @@ type NetworkColor =
 export interface Network {
   name: NetworkName;
   endpoints: {
-    lightClient: string;
+    lightClientKey: string;
+    lightClient: () => Promise<AnyApi>;
     defaultRpcEndpoint: string;
     rpcEndpoints: Record<string, string>;
   };
@@ -102,9 +104,11 @@ export interface SystemChain {
   units: number;
   unit: string;
   endpoints: {
-    lightClient: string;
+    lightClientKey: string;
+    lightClient: () => Promise<AnyApi>;
     rpcEndpoints: Record<string, string>;
   };
+  relayChain: NetworkName;
 }
 
 export interface PageCategory {

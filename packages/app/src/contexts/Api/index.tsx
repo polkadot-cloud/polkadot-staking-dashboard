@@ -14,6 +14,7 @@ import type {
   APIPoolsConfig,
   APIProviderProps,
   APIStakingMetrics,
+  PapiChainSpecContext,
 } from './types';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import {
@@ -24,6 +25,7 @@ import {
   defaultPoolsConfig,
   defaultNetworkMetrics,
   defaultStakingMetrics,
+  defaultChainSpecs,
 } from './defaults';
 import { isCustomEvent } from 'controllers/utils';
 import { useEventListener } from 'usehooks-ts';
@@ -133,6 +135,10 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   );
   const stakingMetricsRef = useRef(stakingMetrics);
 
+  // Store chain specs from PAPI.
+  const [chainSpecs, setChainSpecs] =
+    useState<PapiChainSpecContext>(defaultChainSpecs);
+
   // Fetch chain state. Called once `provider` has been initialised.
   const onApiReady = async () => {
     const { api } = ApiController.get(network);
@@ -218,6 +224,26 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     // Initialise active era subscription. Also handles (re)subscribing to subscriptions that depend
     // on active era.
     SubscriptionsController.set(network, 'activeEra', new ActiveEra(network));
+  };
+
+  const handlePapiReady = (e: Event) => {
+    if (isCustomEvent(e)) {
+      const { chainType, genesisHash, ss58Format, tokenDecimals, tokenSymbol } =
+        e.detail;
+
+      if (chainType === 'relay') {
+        const newChainSpecs: PapiChainSpecContext = {
+          genesisHash,
+          ss58Format,
+          tokenDecimals,
+          tokenSymbol,
+          received: true,
+        };
+        setChainSpecs({ ...newChainSpecs, received: true });
+
+        // TODO: set consts from here.
+      }
+    }
   };
 
   // Handle `polkadot-api` events.
@@ -434,6 +460,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     setRpcEndpoint(initialRpcEndpoint());
 
     // Reset consts and chain state.
+    setChainSpecs(defaultChainSpecs);
     setConsts(defaultConsts);
     setChainState(defaultChainState);
     setStateWithRef(
@@ -464,6 +491,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Add event listener for api events and subscription updates.
   const documentRef = useRef<Document>(document);
   useEventListener('api-status', handleNewApiStatus, documentRef);
+  useEventListener('papi-ready', handlePapiReady, documentRef);
   useEventListener(
     'new-network-metrics',
     handleNetworkMetricsUpdate,
@@ -483,13 +511,14 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
         api: ApiController.get(network)?.api || null,
         peopleApi: ApiController.get(`people-${network}`)?.api || null,
         chainState,
+        chainSpecs,
         apiStatus,
         peopleApiStatus,
         connectionType,
         setConnectionType,
         rpcEndpoint,
         setRpcEndpoint,
-        isReady: apiStatus === 'ready',
+        isReady: apiStatus === 'ready' && chainSpecs.received === true,
         consts,
         networkMetrics,
         activeEra,

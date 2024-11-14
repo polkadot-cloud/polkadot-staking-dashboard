@@ -17,6 +17,17 @@ export interface APIEventDetail {
   err?: string;
 }
 
+export interface PapiChainSpec {
+  genesisHash: string;
+  ss58Format: number;
+  tokenDecimals: number;
+  tokenSymbol: string;
+}
+export type PapiReadyEvent = PapiChainSpec & {
+  network: NetworkName | SystemChainId;
+  chainType: string;
+};
+
 export type ConnectionType = 'ws' | 'sc';
 
 export type ApiStatus = 'connecting' | 'connected' | 'disconnected' | 'ready';

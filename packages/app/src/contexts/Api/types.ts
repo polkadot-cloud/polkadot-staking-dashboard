@@ -5,7 +5,7 @@ import type { ApiPromise } from '@polkadot/api';
 import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import type { NetworkName } from '../../types';
-import type { ApiStatus, ConnectionType } from 'model/Api/types';
+import type { ApiStatus, ConnectionType, PapiChainSpec } from 'model/Api/types';
 import type { AnyJson } from '@w3ux/types';
 
 export interface APIProviderProps {
@@ -40,6 +40,9 @@ export interface APINetworkMetrics {
   minimumActiveStake: BigNumber;
 }
 
+export type PapiChainSpecContext = PapiChainSpec & {
+  received: boolean;
+};
 export interface APIActiveEra {
   index: BigNumber;
   start: BigNumber;
@@ -74,6 +77,7 @@ export interface APIContextInterface {
   api: ApiPromise | null;
   peopleApi: ApiPromise | null;
   chainState: APIChainState;
+  chainSpecs: PapiChainSpecContext;
   isReady: boolean;
   apiStatus: ApiStatus;
   peopleApiStatus: ApiStatus;

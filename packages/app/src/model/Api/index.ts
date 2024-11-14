@@ -9,17 +9,22 @@ import type {
   APIEventDetail,
   ConnectionType,
   EventApiStatus,
+  PapiChainSpec,
+  PapiReadyEvent,
 } from './types';
 import { SubscriptionsController } from 'controllers/Subscriptions';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import { WellKnownChain } from '@substrate/connect';
 import * as Sc from '@substrate/connect';
+import type { PolkadotClient } from 'polkadot-api';
+import { createClient } from 'polkadot-api';
+import { getWsProvider } from 'polkadot-api/ws-provider/web';
+import { getSmProvider } from 'polkadot-api/sm-provider';
+import { startFromWorker } from 'polkadot-api/smoldot/from-worker';
+import SmWorker from 'polkadot-api/smoldot/worker?worker';
+import { getLightClientMetadata } from 'config/util';
 
 export class Api {
-  // ------------------------------------------------------
-  // Class members.
-  // ------------------------------------------------------
-
   // The network name associated with this Api instance.
   network: NetworkName | SystemChainId;
 
@@ -28,6 +33,12 @@ export class Api {
 
   // API provider.
   #provider: WsProvider | ScProvider;
+
+  // PAPI Instance.
+  #papiClient: PolkadotClient;
+
+  // PAPI Chain Spec.
+  #papiChainSpec: PapiChainSpec;
 
   // API instance.
   #api: ApiPromise;
@@ -38,30 +49,26 @@ export class Api {
   // The current connection type.
   #connectionType: ConnectionType;
 
-  // ------------------------------------------------------
-  // Getters.
-  // ------------------------------------------------------
-
   get api() {
     return this.#api;
+  }
+
+  get papiClient() {
+    return this.#papiClient;
+  }
+
+  get papiChainSpec() {
+    return this.#papiChainSpec;
   }
 
   get connectionType() {
     return this.#connectionType;
   }
 
-  // ------------------------------------------------------
-  // Constructor.
-  // ------------------------------------------------------
-
   constructor(network: NetworkName | SystemChainId, chainType: ApiChainType) {
     this.network = network;
     this.#chainType = chainType;
   }
-
-  // ------------------------------------------------------
-  // Initialization.
-  // ------------------------------------------------------
 
   // Class initialization. Sets the `provider` and `api` class members.
   async initialize(type: ConnectionType, rpcEndpoint: string) {
@@ -86,24 +93,25 @@ export class Api {
       // Tell UI api is connecting.
       this.dispatchEvent(this.ensureEventStatus('connecting'));
 
-      // Initialise api.
+      // Initialise Polkadot JS API.
       this.#api = new ApiPromise({ provider: this.#provider });
 
-      // Initialise api events.
+      // NOTE: Unlike Polkadot JS API, Papi client does not have an asynchronous initialization
+      // stage that leads to `isReady`. If using papi client, we can immediately attempt to fetch
+      // the chainSpec via the client.∑
       this.initApiEvents();
 
       // Wait for api to be ready.
       await this.#api.isReady;
+
+      // Fetch chain spec and metadata from PAPI client.
+      await this.fetchChainSpec();
     } catch (e) {
       // TODO: report a custom api status error that can flag to the UI the rpcEndpoint failed -
       // retry or select another one. Useful for custom endpoint configs.
       // this.dispatchEvent(this.ensureEventStatus('error'));
     }
   }
-
-  // ------------------------------------------------------
-  // Provider initialization.
-  // ------------------------------------------------------
 
   // Initiate Websocket Provider.
   initWsProvider() {
@@ -114,7 +122,11 @@ export class Api {
             this.#rpcEndpoint
           ];
 
+    // Initialize Polkadot JS Provider.
     this.#provider = new WsProvider(endpoint);
+
+    // Initialize PAPI Client.
+    this.#papiClient = createClient(getWsProvider(endpoint));
   }
 
   // Dynamically load and connect to Substrate Connect.
@@ -122,20 +134,67 @@ export class Api {
     // Get light client key from network list.
     const lightClientKey =
       this.#chainType === 'relay'
-        ? NetworkList[this.network].endpoints.lightClient
-        : SystemChainList[this.network].endpoints.lightClient;
+        ? NetworkList[this.network].endpoints.lightClientKey
+        : SystemChainList[this.network].endpoints.lightClientKey;
 
     // Instantiate light client provider.
     this.#provider = new ScProvider(
       Sc as AnyApi,
       WellKnownChain[lightClientKey as keyof typeof WellKnownChain]
     );
+
+    // Initialise PAPI light client.
+    const smoldot = startFromWorker(new SmWorker());
+    const smMetadata = getLightClientMetadata(this.#chainType, this.network);
+
+    const chain = getSmProvider(
+      smoldot.addChain({
+        chainSpec: await smMetadata.chain.fn(),
+        potentialRelayChains: smMetadata?.relay
+          ? [await smoldot.addChain({ chainSpec: await smMetadata.relay.fn() })]
+          : undefined,
+      })
+    );
+    this.#papiClient = createClient(chain);
+
+    // Connect to Polkadot JS API provider.
     await this.#provider.connect();
   }
 
-  // ------------------------------------------------------
-  // Event handling.
-  // ------------------------------------------------------
+  async fetchChainSpec() {
+    try {
+      const chainSpecData = await this.#papiClient.getChainSpecData();
+
+      const { genesisHash, properties } = chainSpecData;
+      const { ss58Format, tokenDecimals, tokenSymbol } = properties;
+
+      this.#papiChainSpec = {
+        genesisHash,
+        ss58Format,
+        tokenDecimals,
+        tokenSymbol,
+      };
+
+      // Dispatch 'papi-ready' event to let contexts populate constants.
+      this.dispatchPapiReadyEvent();
+    } catch (e) {
+      console.debug('PAPI chain spec failed');
+      // TODO: Expand this when PJS API has been removed. Flag an error if there are any issues
+      // bootstrapping chain spec. NOTE: This can happen when PAPI is the standalone connection
+      // method.
+      //this.dispatchEvent(this.ensureEventStatus('error'), { err: 'ChainSpecError' });
+    }
+  }
+
+  // Handler for dispatching `papi-ready` events.
+  dispatchPapiReadyEvent() {
+    const detail: PapiReadyEvent = {
+      network: this.network,
+      chainType: this.#chainType,
+      ...this.#papiChainSpec,
+    };
+    document.dispatchEvent(new CustomEvent('papi-ready', { detail }));
+  }
 
   // Set up API event listeners. Sends information to the UI.
   async initApiEvents() {
@@ -156,7 +215,7 @@ export class Api {
     });
   }
 
-  // Handler for dispatching events.
+  // Handler for dispatching `api-status` events.
   dispatchEvent(
     status: EventApiStatus,
     options?: {
@@ -175,10 +234,6 @@ export class Api {
     }
     document.dispatchEvent(new CustomEvent('api-status', { detail }));
   }
-
-  // ------------------------------------------------------
-  // Class helpers.
-  // ------------------------------------------------------
 
   // Ensures the provided status is a valid `EventStatus` being passed, or falls back to `error`.
   ensureEventStatus = (status: string | EventApiStatus): EventApiStatus => {
@@ -206,10 +261,6 @@ export class Api {
       });
     }
   };
-
-  // ------------------------------------------------------
-  // Disconnect.
-  // ------------------------------------------------------
 
   // Disconnect gracefully from API and provider.
   async disconnect(destroy = false) {
