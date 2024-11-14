@@ -15,8 +15,8 @@ export const useTokenPrice = ({
 }: {
   ticker: string;
 }): UseTokenPriceResult => {
-  const { loading, error, data } = useQuery(TOKEN_PRICE_QUERY, {
+  const { loading, error, data, refetch } = useQuery(TOKEN_PRICE_QUERY, {
     variables: { ticker },
   });
-  return { loading, error, data };
+  return { loading, error, data, refetch };
 };
