@@ -13,8 +13,9 @@ import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import type { UIContextInterface } from 'contexts/UI/types';
 import CogOutlineSVG from 'img/cog-outline.svg?react';
-import ForumSVG from 'img/forum.svg?react';
-import InfoSVG from 'img/info.svg?react';
+import EnvelopeSVG from 'img/envelope.svg?react';
+import BookSVG from 'img/book.svg?react';
+import DiscordSVG from 'img/discord.svg?react';
 import LanguageSVG from 'img/language.svg?react';
 import LogoGithubSVG from 'img/logo-github.svg?react';
 import MoonOutlineSVG from 'img/moon-outline.svg?react';
@@ -121,17 +122,28 @@ export const SideMenu = () => {
               name={t('resources')}
               minimised={sideMenuMinimised}
               icon={{
-                Svg: InfoSVG,
-                size: sideMenuMinimised ? '1.4em' : '1.2em',
+                Svg: BookSVG,
+                size: sideMenuMinimised ? '1em' : '0.95em',
               }}
             />
+
             <Secondary
-              onClick={() => openModal({ key: 'GoToFeedback' })}
-              name={t('support')}
+              onClick={() => openModal({ key: 'DiscordSupport', size: 'sm' })}
+              name="Discord"
               minimised={sideMenuMinimised}
               icon={{
-                Svg: ForumSVG,
-                size: sideMenuMinimised ? '1.4em' : '1.2em',
+                Svg: DiscordSVG,
+                size: sideMenuMinimised ? '1.3em' : '1.2em',
+              }}
+            />
+
+            <Secondary
+              onClick={() => openModal({ key: 'MailSupport', size: 'sm' })}
+              name={'Email'}
+              minimised={sideMenuMinimised}
+              icon={{
+                Svg: EnvelopeSVG,
+                size: sideMenuMinimised ? '1.1em' : '1em',
               }}
             />
           </div>

@@ -8,7 +8,7 @@ import type { MinimisedProps } from '../types';
 export const Wrapper = styled(motion.button)<MinimisedProps>`
   border: 1px solid var(--border-secondary-color);
   border-radius: 0.8rem;
-  height: 3.2rem;
+  height: 3.3rem;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
@@ -52,16 +52,16 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
 `;
 
 export const MinimisedWrapper = styled(motion.button)`
-  border: 1px solid var(--border-primary-color);
-  border-radius: 0.5rem;
+  border: 1px solid var(--border-secondary-color);
+  border-radius: 0.7rem;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
   position: relative;
   padding: 0rem 0rem;
-  margin: 0.6rem 0 0.6rem 0;
-  min-height: 2.8rem;
+  margin: 0.6rem 0 1.25rem 0;
+  min-height: 3.2rem;
   width: 100%;
 
   &.active {
