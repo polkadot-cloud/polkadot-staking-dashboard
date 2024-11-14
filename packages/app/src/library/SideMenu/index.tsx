@@ -123,7 +123,7 @@ export const SideMenu = () => {
               minimised={sideMenuMinimised}
               icon={{
                 Svg: BookSVG,
-                size: sideMenuMinimised ? '1.05em' : '0.95em',
+                size: sideMenuMinimised ? '0.95em' : '0.95em',
               }}
             />
 
@@ -133,7 +133,7 @@ export const SideMenu = () => {
               minimised={sideMenuMinimised}
               icon={{
                 Svg: DiscordSVG,
-                size: sideMenuMinimised ? '1.3em' : '1.2em',
+                size: sideMenuMinimised ? '1.2em' : '1.2em',
               }}
             />
 
@@ -143,7 +143,7 @@ export const SideMenu = () => {
               minimised={sideMenuMinimised}
               icon={{
                 Svg: EnvelopeSVG,
-                size: sideMenuMinimised ? '1.1em' : '1em',
+                size: sideMenuMinimised ? '1em' : '1em',
               }}
             />
           </div>
