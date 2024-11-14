@@ -18,6 +18,11 @@ export const TokenPriceInner = () => {
   const { loading, error, data } = useTokenPrice({ ticker: `${unit}USDT` });
   const { price, change } = formatResult(loading, error, data);
 
+  const usdFormatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+
   return (
     <>
       <div className="stat">
@@ -29,7 +34,7 @@ export const TokenPriceInner = () => {
         </span>
       </div>
       <div className="stat">
-        1 {unit} / {price} USD
+        1 {unit} / {usdFormatter.format(price)}
       </div>
     </>
   );
