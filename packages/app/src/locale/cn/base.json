@@ -3,6 +3,7 @@
     "active": "激活",
     "community": "社区",
     "decentralization": "去中心化",
+    "email": "电子邮件",
     "goTo": "查看",
     "help": "帮助",
     "inactive": "未激活",
@@ -45,7 +46,6 @@
     "title_kusama": "Kusama抵押平台",
     "title_polkadot": "Polkadot抵押平台",
     "title_westend": "Westend抵押平台",
-    "validators": "验证人",
-    "email": "电子邮件"
+    "validators": "验证人"
   }
 }

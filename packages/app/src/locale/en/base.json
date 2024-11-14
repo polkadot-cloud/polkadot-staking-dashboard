@@ -3,6 +3,7 @@
     "active": "Active",
     "community": "Community",
     "decentralization": "Decentralization",
+    "email": "Email",
     "goTo": "Go To",
     "help": "Help",
     "inactive": "Inactive",
@@ -51,7 +52,6 @@
     "title_kusama": "Kusama Staking Dashboard",
     "title_polkadot": "Polkadot Staking Dashboard",
     "title_westend": "Westend Staking Dashboard",
-    "validators": "Validators",
-    "email": "Email"
+    "validators": "Validators"
   }
 }
