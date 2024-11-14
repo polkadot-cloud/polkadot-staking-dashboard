@@ -14,7 +14,7 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
   align-items: center;
   position: relative;
   padding: 0.75rem 0rem 0.75rem 0.5rem;
-  margin: 0.8rem 0.2rem 0.8rem 0;
+  margin: 0.8rem 0.2rem 1rem 0;
   width: 100%;
 
   .name {
@@ -60,7 +60,7 @@ export const MinimisedWrapper = styled(motion.button)`
   align-items: center;
   position: relative;
   padding: 0rem 0rem;
-  margin: 0.6rem 0 1.25rem 0;
+  margin: 0.6rem 0 1.15rem 0;
   min-height: 3.2rem;
   width: 100%;
 
