@@ -22,6 +22,11 @@ export const Settings = () => {
         <ContentWrapper>
           <h4>{t('togglePlugins')}</h4>
           <StatusButton
+            checked={plugins.includes('staking_api')}
+            label="Staking API"
+            onClick={() => togglePlugin('staking_api')}
+          />
+          <StatusButton
             checked={plugins.includes('subscan')}
             label="Subscan API"
             onClick={() => togglePlugin('subscan')}
