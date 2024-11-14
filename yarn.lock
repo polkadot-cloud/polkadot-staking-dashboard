@@ -4548,6 +4548,7 @@ __metadata:
     i18next-browser-languagedetector: "npm:^8.0.0"
     lodash.debounce: "npm:^4.0.8"
     lodash.throttle: "npm:^4.1.1"
+    plugin-staking-api: "workspace:*"
     qrcode-generator: "npm:1.4.4"
     rc-slider: "npm:^11.1.6"
     react: "npm:^18.3.1"
@@ -8913,6 +8914,12 @@ __metadata:
   checksum: 10c0/4aef765c039e3ec3ca55171bb8ad776cf060d894c45ddf92b9d680b3fdb1817c8d1c428f74ea6aae144493fa1d6a97df6b8caec6dc31e418f1ce1f728d38014e
   languageName: node
   linkType: hard
+
+"plugin-staking-api@workspace:*, plugin-staking-api@workspace:packages/plugin-staking-api":
+  version: 0.0.0-use.local
+  resolution: "plugin-staking-api@workspace:packages/plugin-staking-api"
+  languageName: unknown
+  linkType: soft
 
 "pngjs@npm:^5.0.0":
   version: 5.0.0
