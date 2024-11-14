@@ -123,7 +123,7 @@ export const SideMenu = () => {
               minimised={sideMenuMinimised}
               icon={{
                 Svg: BookSVG,
-                size: sideMenuMinimised ? '1em' : '0.95em',
+                size: sideMenuMinimised ? '1.05em' : '0.95em',
               }}
             />
 

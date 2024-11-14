@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import MailSVG from 'img/mail.svg?react';
-import EnvelopeSVG from 'img/envelope.svg?react';
 import { Title } from 'library/Modal/Title';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { MailSupportAddress } from 'consts';
@@ -10,7 +9,7 @@ import { SupportWrapper } from './Wrapper';
 
 export const MailSupport = () => (
   <>
-    <Title title="Email" Svg={EnvelopeSVG} />
+    <Title />
     <ModalPadding verticalOnly>
       <SupportWrapper>
         <MailSVG />

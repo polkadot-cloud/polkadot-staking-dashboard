@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import DiscordSVG from 'img/discord.svg?react';
 import DiscordOutlineSvg from 'img/discord_outline.svg?react';
 import { Title } from 'library/Modal/Title';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
@@ -12,7 +11,7 @@ import { DiscordSupportUrl } from 'consts';
 
 export const DiscordSupport = () => (
   <>
-    <Title title="Discord" Svg={DiscordSVG} />
+    <Title />
     <ModalPadding verticalOnly>
       <SupportWrapper>
         <DiscordOutlineSvg />
