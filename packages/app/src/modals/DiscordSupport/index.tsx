@@ -21,7 +21,7 @@ export const DiscordSupport = () => {
           <h4>{t('supportDiscord')}</h4>
           <h1>
             <a href={DiscordSupportUrl} target="_blank" rel="noreferrer">
-              {t('goToDiscord')}&nbsp;
+              {t('goToDiscord')} &nbsp;
               <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-4" />
             </a>
           </h1>
