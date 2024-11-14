@@ -143,7 +143,7 @@ export const SideMenu = () => {
               minimised={sideMenuMinimised}
               icon={{
                 Svg: EnvelopeSVG,
-                size: sideMenuMinimised ? '1em' : '1em',
+                size: sideMenuMinimised ? '1.05em' : '1em',
               }}
             />
           </div>
