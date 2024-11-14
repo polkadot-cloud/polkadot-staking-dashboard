@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useStaking } from 'contexts/Staking';
-import { MoreWrapper } from './Wrappers';
+import { MoreWrapper } from '../Wrappers';
 import { ButtonPrimaryInvert } from 'ui-buttons';
 import { Separator } from 'ui-structure';
 

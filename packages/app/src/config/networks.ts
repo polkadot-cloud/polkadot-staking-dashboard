@@ -65,7 +65,6 @@ export const NetworkList: Networks = {
     },
     api: {
       unit: 'DOT',
-      priceTicker: 'DOTUSDT',
     },
     defaultFeeReserve: 0.1,
     maxExposurePageSize: new BigNumber(512),
@@ -121,7 +120,6 @@ export const NetworkList: Networks = {
     },
     api: {
       unit: 'KSM',
-      priceTicker: 'KSMUSDT',
     },
     defaultFeeReserve: 0.05,
     maxExposurePageSize: new BigNumber(512),
@@ -176,7 +174,6 @@ export const NetworkList: Networks = {
     },
     api: {
       unit: 'DOT',
-      priceTicker: 'DOTUSDT',
     },
     defaultFeeReserve: 0.1,
     maxExposurePageSize: new BigNumber(64),
