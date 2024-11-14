@@ -13,7 +13,7 @@ import type { CSSProperties } from 'styled-components';
 import { ButtonHelp } from 'ui-buttons';
 
 interface TitleProps {
-  title: string;
+  title?: string;
   icon?: IconProp;
   Svg?: FunctionComponent<SVGProps<AnyJson>>;
   fixed?: boolean;
@@ -42,12 +42,14 @@ export const Title = ({
     <TitleWrapper $fixed={fixed || false} style={{ ...style }}>
       <div>
         {graphic}
-        <h2>
-          {title}
-          {helpKey ? (
-            <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
-          ) : null}
-        </h2>
+        {title && (
+          <h2>
+            {title}
+            {helpKey ? (
+              <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+            ) : null}
+          </h2>
+        )}
       </div>
       <div>
         <button type="button" onClick={() => setModalStatus('closing')}>
