@@ -486,7 +486,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     reInitialiseApi(connectionType);
   }, [network]);
 
-  // Call `unsubscribe` on active instnace on unmount.
+  // Call `unsubscribe` on active instance on unmount.
   useEffect(
     () => () => {
       const instance = ApiController.get(network);

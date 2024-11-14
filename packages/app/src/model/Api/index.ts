@@ -280,6 +280,9 @@ export class Api {
     await this.#provider?.disconnect();
     await this.#api?.disconnect();
 
+    // Disconnect from PAPI Client.
+    this.#papiClient?.destroy();
+
     // Tell UI Api is destroyed.
     if (destroy) {
       // NOTE: destroyed event is not currently in use.
