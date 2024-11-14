@@ -1,0 +1,173 @@
+/* Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+SPDX-License-Identifier: GPL-3.0-only */
+
+/* general styles */
+:root {
+  --button-border-radius-small: 0.75rem;
+  --button-border-radius-large: 1.5rem;
+  --button-padding-small: 0.41rem 1rem;
+  --button-padding-large: 0.53rem 1rem;
+  --button-spacing-small: 0.125rem;
+  --button-spacing-large: 0.625rem;
+  --button-font-size-small: 1rem;
+  --button-font-size-large: 1.15rem;
+
+  --transition-duration: 0.15s;
+
+  --opacity-disabled: 0.3;
+}
+
+/* light theme colors */
+.theme-light {
+  --background-default: #efeeee;
+  --background-primary: #f8f7f7;
+  --background-invert: #333;
+  --background-list-item: rgb(238 238 238 / 100%);
+  --background-modal-card: rgb(237 237 237 / 75%);
+  --background-canvas-card: rgb(245 245 245 / 90%);
+  --background-canvas-card-secondary: rgb(255 255 255 / 35%);
+  --background-floating-card: rgb(255 255 255 / 90%);
+  --background-app-footer: rgb(244 225 225 / 75%);
+  --background-modal: #f9f7f7;
+  --background-modal-footer: #efefef;
+  --background-status-overlay: rgb(255 255 255 / 85%);
+  --background-menu: #eaeaea;
+  --background-input: #fdfdfd;
+  --border-primary-color: #e4e4e4;
+  --border-secondary-color: #cfcccc;
+  --button-primary-background: #efeeee;
+  --button-secondary-background: #e7e5e5;
+  --button-tertiary-background: #ececec;
+  --button-tab-background: #e4e2e2;
+  --button-tab-canvas-background: #d9d9d9;
+  --button-hover-background: #e8e6e6;
+  --card-shadow-color: rgb(158 158 158 / 20%);
+  --card-deep-shadow-color: rgb(158 158 158 / 50%);
+  --card-shadow-color-secondary: #e7e7e7;
+  --accent-color-primary: var(--accent-color-primary-light);
+  --accent-color-secondary: var(--accent-color-secondary-light);
+  --accent-color-tertiary: var(--accent-color-tertiary-light);
+  --accent-color-stroke: var(--accent-color-stroke-light);
+  --accent-color-transparent: var(--accent-color-transparent-light);
+  --accent-color-pending: var(--accent-color-pending-light);
+  --modal-background-color: rgb(224 222 222 / 70%);
+  --overlay-background-color: rgb(214 212 212 / 70%);
+  --shimmer-foreground: #e0e0e0;
+  --shimmer-background: #bbb;
+  --status-success-color: green;
+  --status-success-color-transparent: rgb(0 128 0 / 25%);
+  --status-warning-color: #a78a3a;
+  --status-warning-color-transparent: rgb(236 211 125 / 50%);
+  --status-danger-color: #ae2324;
+  --status-danger-color-transparent: rgb(255 0 0 / 25%);
+  --text-color-primary: #2f2f2f;
+  --text-color-secondary: #585858;
+  --text-color-tertiary: #888;
+  --text-color-invert: #fafafa;
+  --gradient-background: linear-gradient(
+    180deg,
+    #efeeee 0%,
+    #efeeee 100px,
+    #e6e6e6 80%,
+    #fbede8 100%
+  );
+  --gradient-side-menu: linear-gradient(
+    180deg,
+    rgb(244 242 242 / 93%) 0%,
+    rgb(228 225 225 / 93%) 100%
+  );
+  --highlight-primary: rgb(224 222 222 / 75%);
+  --highlight-secondary: linear-gradient(
+    90deg,
+    rgb(0 0 0 / 4%) 0%,
+    rgb(0 0 0 / 1%) 100%
+  );
+  --grid-color-primary: #e3e3e3;
+  --grid-color-secondary: #e8e8e8;
+  --card-shadow: -1px -2px 12px 1px var(--card-shadow-color-secondary),
+    0px 0.5px 1px 0px var(--card-deep-shadow-color),
+    0 3.5px 6px -1px var(--card-shadow-color),
+    0.4px -0.4px 0px 0px var(--card-shadow-color),
+    -0.4px 0px 0px 0px var(--card-shadow-color);
+  --card-shadow-secondary: 0px 1px 1px 0px var(--card-shadow-color-secondary),
+    0 0.5px 1px -1px var(--card-shadow-color-secondary),
+    0.4px -0.4px 0px 0px var(--card-shadow-color-secondary),
+    -0.4px 0px 0px 0px var(--card-shadow-color-secondary);
+}
+
+/* dark theme colors */
+.theme-dark {
+  --background-default: rgb(36 32 36);
+  --background-primary: rgb(45 41 45);
+  --background-invert: #ddd;
+  --background-list-item: rgb(38 33 38 / 100%);
+  --background-modal-card: rgb(32 26 32 / 50%);
+  --background-canvas-card: rgb(44 40 44 / 90%);
+  --background-canvas-card-secondary: rgb(44 40 44 / 35%);
+  --background-floating-card: rgb(43 38 43 / 95%);
+  --background-app-footer: #262327;
+  --background-modal: rgb(43 38 43);
+  --background-modal-footer: rgb(37 32 37);
+  --background-status-overlay: rgb(43 38 43 / 75%);
+  --background-menu: rgb(57 52 58);
+  --background-input: rgb(72 70 72);
+  --border-primary-color: rgb(58 52 58);
+  --border-secondary-color: rgb(95 90 95);
+  --button-primary-background: rgb(58 52 58);
+  --button-secondary-background: rgb(55 50 55);
+  --button-tertiary-background: rgb(54 49 54);
+  --button-tab-background: rgb(56 51 56);
+  --button-tab-canvas-background: rgb(60 59 60);
+  --button-hover-background: rgb(66 61 68);
+  --card-shadow-color: rgb(28 24 28 / 25%);
+  --card-deep-shadow-color: rgb(28 24 28 / 50%);
+  --card-shadow-color-secondary: rgb(28 24 28 / 25%);
+  --accent-color-primary: var(--accent-color-primary-dark);
+  --accent-color-secondary: var(--accent-color-secondary-dark);
+  --accent-color-tertiary: var(--accent-color-tertiary-dark);
+  --accent-color-stroke: var(--accent-color-stroke-dark);
+  --accent-color-transparent: var(--accent-color-transparent-dark);
+  --accent-color-pending: var(--accent-color-pending-dark);
+  --modal-background-color: rgb(22 18 22 / 70%);
+  --overlay-background-color: rgb(18 14 18 / 70%);
+  --shimmer-background: rgb(57 52 58);
+  --shimmer-foreground: rgb(32 29 33);
+  --status-success-color: #74da77;
+  --status-success-color-transparent: rgb(0 128 0 / 25%);
+  --status-warning-color: rgb(219 161 0 / 100%);
+  --status-warning-color-transparent: rgb(255 165 0 / 50%);
+  --status-danger-color: #d14445;
+  --status-danger-color-transparent: rgb(255 0 0 / 25%);
+  --text-color-primary: #b8b3b9;
+  --text-color-secondary: #938e94;
+  --text-color-tertiary: #817d82;
+  --text-color-invert: #0f0e0f;
+  --gradient-background: linear-gradient(
+    180deg,
+    rgb(36 32 36) 0%,
+    rgb(36 32 36) 100px,
+    rgb(32 28 32) 100%
+  );
+  --gradient-side-menu: linear-gradient(
+    180deg,
+    rgb(48 41 48) 0%,
+    rgb(30 27 30) 100%
+  );
+  --highlight-primary: rgb(255 255 255 / 8%);
+  --highlight-secondary: linear-gradient(
+    90deg,
+    rgb(255 255 255 / 3%) 0%,
+    rgb(255 255 255 / 1%) 100%
+  );
+  --grid-color-primary: rgb(51 43 51);
+  --grid-color-secondary: rgb(53 45 53);
+  --card-shadow: -1px -2px 12px 1px var(--card-shadow-color-secondary),
+    0px 0.75px 1px 0px var(--card-deep-shadow-color),
+    0 3.5px 6px -1px var(--card-shadow-color),
+    0.4px -0.4px 0px 0px var(--card-shadow-color),
+    -0.4px 0px 0px 0px var(--card-shadow-color);
+  --card-shadow-secondary: 0px 1px 1px 0px var(--card-shadow-color-secondary),
+    0 0.5px 1px -1px var(--card-shadow-color-secondary),
+    0.4px -0.4px 0px 0px var(--card-shadow-color-secondary),
+    -0.4px 0px 0px 0px var(--card-shadow-color-secondary);
+}

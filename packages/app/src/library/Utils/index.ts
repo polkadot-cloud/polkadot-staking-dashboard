@@ -3,7 +3,9 @@
 
 import { planckToUnit, rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
-import type { TimeLeftFormatted, TimeLeftRaw } from 'hooks/useTimeLeft/types';
+import { fromUnixTime } from 'date-fns';
+import type { TimeLeftFormatted, TimeLeftRaw } from '@w3ux/types';
+import { getDurationFromNow } from '@w3ux/hooks/util';
 import type { TFunction } from 'i18next';
 
 // Return `planckToUnit` as a `BigNumber`.
@@ -36,4 +38,43 @@ export const formatTimeleft = (
     return formatted;
   }
   return formatted;
+};
+
+// format the duration (from seconds) as a string.
+export const timeleftAsString = (
+  t: TFunction,
+  start: number,
+  duration: number,
+  full?: boolean
+) => {
+  const { days, hours, minutes, seconds } = getDurationFromNow(
+    fromUnixTime(start + duration) || null
+  );
+
+  const tHour = `time.${full ? `hour` : `hr`}`;
+  const tMinute = `time.${full ? `minute` : `min`}`;
+
+  let str = '';
+  if (days > 0) {
+    str += `${days} ${t('time.day', { count: days, ns: 'base' })}`;
+  }
+  if (hours > 0) {
+    if (str) {
+      str += ', ';
+    }
+    str += ` ${hours} ${t(tHour, { count: hours, ns: 'base' })}`;
+  }
+  if (minutes > 0) {
+    if (str) {
+      str += ', ';
+    }
+    str += ` ${minutes} ${t(tMinute, { count: minutes, ns: 'base' })}`;
+  }
+  if (!days && !hours) {
+    if (str) {
+      str += ', ';
+    }
+    str += ` ${seconds}`;
+  }
+  return str;
 };

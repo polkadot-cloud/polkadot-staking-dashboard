@@ -6,18 +6,15 @@ import { CardWrapper } from 'library/Card/Wrappers';
 import { StatBoxList } from 'library/StatBoxList';
 import { PluginLabel } from 'library/PluginLabel';
 import { AccountControls } from './AccountControls';
-import { BalanceChart } from './BalanceChart';
-import { BalanceLinks } from './BalanceLinks';
+import { BalanceChart } from './AccountBalance/BalanceChart';
+import { BalanceLinks } from './AccountBalance/BalanceLinks';
 import { NetworkStats } from './NetworkSats';
 import { Payouts } from './Payouts';
 import { StakeStatus } from './StakeStatus';
 import { ActiveEraStat } from './Stats/ActiveEraTimeLeft';
 import { AverageRewardRateStat } from './Stats/AveragelRewardRate';
 import { SupplyStakedStat } from './Stats/SupplyStaked';
-import { PageTitle } from 'kits/Structure/PageTitle';
-import { PageHeadingWrapper } from 'kits/Structure/PageHeading/Wrapper';
-import { PageRow } from 'kits/Structure/PageRow';
-import { RowSection } from 'kits/Structure/RowSection';
+import { PageTitle, PageHeading, PageRow, RowSection } from 'ui-structure';
 
 export const Overview = () => {
   const { t } = useTranslation('pages');
@@ -28,9 +25,9 @@ export const Overview = () => {
     <>
       <PageTitle title={t('overview.overview')} />
       <PageRow>
-        <PageHeadingWrapper>
+        <PageHeading>
           <AccountControls />
-        </PageHeadingWrapper>
+        </PageHeading>
       </PageRow>
       <StatBoxList>
         <AverageRewardRateStat />

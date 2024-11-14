@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Countdown } from 'library/Countdown';
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
-import { useTimeLeft } from 'hooks/useTimeLeft';
+import { useTimeLeft } from '@w3ux/hooks';
 import { useUnstaking } from 'hooks/useUnstaking';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';

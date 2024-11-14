@@ -48,12 +48,12 @@ export const ButtonOption = (props: ButtonOptionProps): JSX.Element => {
       disabled={disabled}
       {...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
     >
-      <div className={classes.btnContent_details}>{children}</div>
+      <div className={classes.btnContentDetails}>{children}</div>
       <div>
         <FontAwesomeIcon
           transform="shrink-2"
           icon={faChevronRight}
-          className={classes.btnContent_icon}
+          className={classes.btnContentIcon}
         />
       </div>
     </button>

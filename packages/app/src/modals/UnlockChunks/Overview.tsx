@@ -10,7 +10,7 @@ import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
-import { timeleftAsString } from 'hooks/useTimeLeft/utils';
+import { timeleftAsString, planckToUnitBn } from 'library/Utils';
 import { useUnstaking } from 'hooks/useUnstaking';
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { StaticNote } from 'modals/Utils/StaticNote';
@@ -22,7 +22,6 @@ import type { UnlockChunk } from 'contexts/Balances/types';
 import { ButtonSubmit } from 'ui-buttons';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
-import { planckToUnitBn } from 'library/Utils';
 
 interface OverviewProps {
   unlocking: UnlockChunk[];

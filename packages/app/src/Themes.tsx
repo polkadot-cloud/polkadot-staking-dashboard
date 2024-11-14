@@ -6,7 +6,7 @@ import { Router } from 'Router';
 import { useTheme } from 'contexts/Themes';
 import { useNetwork } from 'contexts/Network';
 import { useEffect } from 'react';
-import { Entry } from 'kits/Structure/Entry';
+import { Entry } from 'ui-structure';
 
 // light / dark `mode` added to styled-components provider
 export const ThemedRouter = () => {

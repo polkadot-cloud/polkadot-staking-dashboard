@@ -5,7 +5,7 @@ import { CardWrapper } from 'library/Card/Wrappers';
 import { UnclaimedPayoutsStatus } from './UnclaimedPayoutsStatus';
 import { NominationStatus } from './NominationStatus';
 import { PayoutDestinationStatus } from './PayoutDestinationStatus';
-import { Separator } from 'kits/Structure/Separator';
+import { Separator } from 'ui-structure';
 import { useSyncing } from 'hooks/useSyncing';
 import { useStaking } from 'contexts/Staking';
 import { NewNominator } from './NewNominator';

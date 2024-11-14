@@ -17,7 +17,7 @@ import { GraphWrapper, HeadingWrapper } from '../Wrappers';
 import { Line } from 'react-chartjs-2';
 import BigNumber from 'bignumber.js';
 import type { AnyJson } from '@w3ux/types';
-import { graphColors } from 'theme/graphs';
+import graphColors from 'styles/graphs/index.json';
 import { useTheme } from 'contexts/Themes';
 import { ButtonHelp } from 'ui-buttons';
 import { useHelp } from 'contexts/Help';

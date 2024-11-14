@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { PageRow } from 'kits/Structure/PageRow';
+import { PageRow, ButtonRow } from 'ui-structure';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { CardWrapper } from 'library/Card/Wrappers';
@@ -11,8 +11,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useSyncing } from 'hooks/useSyncing';
 import { ButtonPrimary } from 'ui-buttons';
-import { ButtonRow } from 'kits/Structure/ButtonRow';
-import { timeleftAsString } from 'hooks/useTimeLeft/utils';
+import { timeleftAsString } from 'library/Utils';
 import { getUnixTime } from 'date-fns';
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
 import { useApi } from 'contexts/Api';

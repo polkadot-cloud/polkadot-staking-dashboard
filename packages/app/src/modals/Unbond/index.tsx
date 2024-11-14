@@ -16,7 +16,7 @@ import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
-import { timeleftAsString } from 'hooks/useTimeLeft/utils';
+import { timeleftAsString, planckToUnitBn } from 'library/Utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
@@ -26,7 +26,6 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
-import { planckToUnitBn } from 'library/Utils';
 
 export const Unbond = () => {
   const { t } = useTranslation('modals');

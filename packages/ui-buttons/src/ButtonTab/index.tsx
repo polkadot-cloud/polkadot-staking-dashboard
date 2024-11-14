@@ -32,8 +32,8 @@ export const ButtonTab = (props: ButtonTabProps): JSX.Element => {
   } = props;
 
   const activeClass = colorSecondary
-    ? classes.btnTab_secondaryColor_active
-    : classes.btnTab_active;
+    ? classes.btnTabSecondaryColorActive
+    : classes.btnTabActive;
 
   const buttonClasses = classNames(
     commonClasses.btnCore,
@@ -41,7 +41,7 @@ export const ButtonTab = (props: ButtonTabProps): JSX.Element => {
     {
       [commonClasses.btnDisabled]: disabled,
       [activeClass]: active,
-      [classes.btnTab_secondaryColor]: colorSecondary,
+      [classes.btnTabSecondaryColor]: colorSecondary,
     },
     className
   );
@@ -54,9 +54,9 @@ export const ButtonTab = (props: ButtonTabProps): JSX.Element => {
       disabled={disabled}
       {...onMouseHandlers({ onClick, onMouseOver, onMouseMove, onMouseOut })}
     >
-      <span className={classes.btnTab_inner}>
+      <span className={classes.btnTabInner}>
         {title}
-        {badge && <span className={classes.btnTab_badge}>{badge}</span>}
+        {badge && <span className={classes.btnTabBadge}>{badge}</span>}
       </span>
     </button>
   );

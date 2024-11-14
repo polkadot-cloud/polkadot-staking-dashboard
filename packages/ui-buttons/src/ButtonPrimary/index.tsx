@@ -49,7 +49,7 @@ export const ButtonPrimary = (props: ButtonPrimaryProps): JSX.Element => {
       [commonClasses.btnMarginX]: marginX,
       [commonClasses.btnDisabled]: disabled,
       [commonClasses.btnActiveTransforms]: !disabled,
-      [classes.btnPrimary_secondaryColor]: colorSecondary,
+      [classes.btnPrimarySecondaryColor]: colorSecondary,
     },
     className
   );

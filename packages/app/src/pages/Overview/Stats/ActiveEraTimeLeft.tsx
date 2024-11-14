@@ -6,8 +6,8 @@ import { fromUnixTime, getUnixTime } from 'date-fns';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useEraTimeLeft } from 'hooks/useEraTimeLeft';
-import { useTimeLeft } from 'hooks/useTimeLeft';
-import { fromNow } from 'hooks/useTimeLeft/utils';
+import { useTimeLeft } from '@w3ux/hooks';
+import { secondsFromNow } from '@w3ux/hooks/util';
 import { Timeleft } from 'library/StatBoxList/Timeleft';
 import { useApi } from 'contexts/Api';
 import { formatTimeleft } from 'library/Utils';
@@ -29,7 +29,7 @@ export const ActiveEraStat = () => {
   const timeleftResult = getEraTimeleft();
   const dateFrom = fromUnixTime(Date.now() / 1000);
   const formatted = formatTimeleft(t, timeleft.raw);
-  const dateTo = fromNow(timeleftResult.timeleft.toNumber());
+  const dateTo = secondsFromNow(timeleftResult.timeleft.toNumber());
   const dateToUnix = getUnixTime(dateTo);
 
   // re-set timer on era change (also covers network change).

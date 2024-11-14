@@ -48,8 +48,8 @@ export const ButtonSubmitInvert = (
       [commonClasses.btnMarginX]: marginX,
       [commonClasses.btnDisabled]: disabled,
       [commonClasses.btnActiveTransforms]: !disabled,
-      [classes.btnSubmitInvert_lg]: lg,
-      [classes.btnSubmitInvert_sm]: !lg,
+      [classes.btnSubmitInvertLg]: lg,
+      [classes.btnSubmitInvertSm]: !lg,
     },
     className
   );

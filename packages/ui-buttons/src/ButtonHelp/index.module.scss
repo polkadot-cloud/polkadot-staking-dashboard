@@ -11,15 +11,15 @@
   height: 1.35rem;
 }
 
-.btnHelp_secondaryBackground {
+.btnHelpSecondaryBackground {
   background: var(--button-primary-background);
 }
 
-.btnHelp_noBackground {
+.btnHelpNoBackground {
   background: none;
 }
 
-.btnHelp_outline {
+.btnHelpOutline {
   border: 1px solid var(--text-color-tertiary);
   color: var(--text-color-tertiary);
   fill: var(--text-color-tertiary);
@@ -30,7 +30,7 @@
   }
 }
 
-.btnHelp_icon {
+.btnHelpIcon {
   &:hover {
     fill: var(--accent-color-primary);
   }

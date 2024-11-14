@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { PageRow } from 'kits/Structure/PageRow';
+import { PageRow, PageHeading } from 'ui-structure';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -15,7 +15,6 @@ import { ItemsWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
 import type { Validator } from 'contexts/Validators/types';
 import { ButtonSecondary } from 'ui-buttons';
-import { PageHeadingWrapper } from 'kits/Structure/PageHeading/Wrapper';
 
 export const Entity = () => {
   const { t } = useTranslation('pages');
@@ -56,14 +55,14 @@ export const Entity = () => {
 
   return (
     <PageRow>
-      <PageHeadingWrapper>
+      <PageHeading>
         <ButtonSecondary
           text={t('community.goBack')}
           iconLeft={faChevronLeft}
           iconTransform="shrink-3"
           onClick={() => setActiveSection(0)}
         />
-      </PageHeadingWrapper>
+      </PageHeading>
       <ItemsWrapper variants={container} initial="hidden" animate="show">
         <Item item={activeItem} actionable={false} />
       </ItemsWrapper>

@@ -1,0 +1,101 @@
+// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+@import 'styles/theme/_variables';
+
+.pageTitleScrollWrapper {
+  background: var(--background-default);
+  display: none;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 4rem;
+  z-index: 4;
+
+  @media (max-width: $page-width-medium-threshold) {
+    display: block;
+  }
+}
+
+.pageTitle {
+  background: var(--background-default);
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: flex-end;
+  position: sticky;
+  margin-top: 5rem;
+  top: 0;
+  transition: padding 0.3s ease-out;
+  width: 100%;
+  z-index: 5;
+
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+
+  @media (min-width: $page-width-small-threshold) {
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
+  }
+  @media (min-width: $page-width-small-threshold) {
+    padding-right: 5rem;
+    padding-left: 2.5rem;
+  }
+
+  @media (max-width: $page-width-medium-threshold) {
+    top: 4rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
+}
+
+.pageTitleDefault {
+  margin-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0;
+}
+
+.pageTitleSticky {
+  padding-top: 1.5rem;
+  padding-bottom: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.pageTitleTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+
+.pageTitleTitleRight {
+  padding-left: 1rem;
+}
+
+.pageTitleH1 {
+  font-size: 2rem;
+  font-family: Poppins700, sans-serif;
+  font-weight: 700;
+  position: relative;
+
+  @media (max-width: $page-width-medium-threshold) {
+    left: 0rem;
+    transform: scale(0.9);
+  }
+  transition: all var(--transition-duration);
+  margin: 0;
+}
+.pageTitleH1Default {
+  left: 0;
+  transform: scale(1);
+}
+
+.pageTitleH1Sticky {
+  left: -0.75rem;
+  transform: scale(0.85);
+}
+
+.pageTitleStickyTitle {
+  margin-bottom: 0.5rem;
+}

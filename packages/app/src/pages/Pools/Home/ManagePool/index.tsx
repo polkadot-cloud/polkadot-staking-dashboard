@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
-import { PageRow } from 'kits/Structure/PageRow';
+import { PageRow } from 'ui-structure';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { useActivePool } from 'contexts/Pools/ActivePool';

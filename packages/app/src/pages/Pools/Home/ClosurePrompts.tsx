@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { PageRow } from 'kits/Structure/PageRow';
+import { PageRow, ButtonRow } from 'ui-structure';
 import { useTranslation } from 'react-i18next';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTheme } from 'contexts/Themes';
@@ -13,7 +13,6 @@ import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useSyncing } from 'hooks/useSyncing';
 import { ButtonPrimary } from 'ui-buttons';
-import { ButtonRow } from 'kits/Structure/ButtonRow';
 
 export const ClosurePrompts = () => {
   const { t } = useTranslation('pages');

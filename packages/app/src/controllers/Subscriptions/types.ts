@@ -1,11 +1,19 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types';
+import type { ActiveEra } from 'model/Subscribe/ActiveEra';
+import type { BlockNumber } from 'model/Subscribe/BlockNumber';
+import type { NetworkMetrics } from 'model/Subscribe/NetworkMetrics';
+import type { PoolsConfig } from 'model/Subscribe/PoolsConfig';
+import type { StakingMetrics } from 'model/Subscribe/StakingMetrics';
 
 // Define all possible subscription classes.
-// TODO: Add subscription classes here.
-export type Subscription = AnyJson;
+export type Subscription =
+  | ActiveEra
+  | BlockNumber
+  | NetworkMetrics
+  | PoolsConfig
+  | StakingMetrics;
 
 // the record of subscriptions, keyed by tabId.
 export type ChainSubscriptions = Record<string, Subscription>;
