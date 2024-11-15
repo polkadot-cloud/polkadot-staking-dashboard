@@ -6,7 +6,6 @@ import { stringToU8a } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
 import type {
   APIActiveEra,
-  APIChainState,
   APIConstants,
   APIContextInterface,
   APINetworkMetrics,
@@ -14,14 +13,6 @@ import type {
   APIStakingMetrics,
   PapiChainSpecContext,
 } from 'contexts/Api/types';
-
-export const defaultChainState: APIChainState = {
-  chain: null,
-  version: {
-    specVersion: 0,
-  },
-  ss58Prefix: 0,
-};
 
 export const defaultConsts: APIConstants = {
   bondDuration: new BigNumber(0),
@@ -50,6 +41,13 @@ export const defaultChainSpecs: PapiChainSpecContext = {
   tokenDecimals: 0,
   tokenSymbol: '',
   received: false,
+  authoringVersion: 0,
+  implName: '',
+  implVersion: 0,
+  specName: '',
+  specVersion: 0,
+  stateVersion: 0,
+  transactionVersion: 0,
 };
 
 export const defaultActiveEra: APIActiveEra = {
@@ -84,7 +82,6 @@ export const defaultStakingMetrics: APIStakingMetrics = {
 export const defaultApiContext: APIContextInterface = {
   api: null,
   peopleApi: null,
-  chainState: defaultChainState,
   chainSpecs: defaultChainSpecs,
   isReady: false,
   apiStatus: 'disconnected',

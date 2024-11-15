@@ -7,7 +7,6 @@ import { NetworkList } from 'config/networks';
 
 import type {
   APIActiveEra,
-  APIChainState,
   APIConstants,
   APIContextInterface,
   APINetworkMetrics,
@@ -21,7 +20,6 @@ import {
   defaultConsts,
   defaultActiveEra,
   defaultApiContext,
-  defaultChainState,
   defaultPoolsConfig,
   defaultNetworkMetrics,
   defaultStakingMetrics,
@@ -106,10 +104,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     setRpcEndpointState(key);
   };
 
-  // Store chain state.
-  const [chainState, setChainState] =
-    useState<APIChainState>(defaultChainState);
-
   // Store network constants.
   const [consts, setConsts] = useState<APIConstants>(defaultConsts);
 
@@ -140,23 +134,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Fetch chain state. Called once `provider` has been initialised.
   const onApiReady = async () => {
-    const { api } = ApiController.get(network);
-
-    const newChainState = await Promise.all([
-      api.rpc.system.chain(),
-      api.consts.system.version,
-      api.consts.system.ss58Prefix,
-    ]);
-
-    // Check that chain values have been fetched before committing to state. Could be expanded to
-    // check supported chains.
-    if (newChainState.every((c) => !!c?.toHuman())) {
-      const chain = newChainState[0]?.toString();
-      const version = newChainState[1]?.toJSON();
-      const ss58Prefix = Number(newChainState[2]?.toString());
-      setChainState({ chain, version, ss58Prefix });
-    }
-
     // Assume chain state is correct and bootstrap network consts.
     bootstrapNetworkConfig();
   };
@@ -225,8 +202,20 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   const handlePapiReady = async (e: Event) => {
     if (isCustomEvent(e)) {
-      const { chainType, genesisHash, ss58Format, tokenDecimals, tokenSymbol } =
-        e.detail;
+      const {
+        chainType,
+        genesisHash,
+        ss58Format,
+        tokenDecimals,
+        tokenSymbol,
+        authoringVersion,
+        implName,
+        implVersion,
+        specName,
+        specVersion,
+        stateVersion,
+        transactionVersion,
+      } = e.detail;
 
       if (chainType === 'relay') {
         const newChainSpecs: PapiChainSpecContext = {
@@ -234,6 +223,13 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
           ss58Format,
           tokenDecimals,
           tokenSymbol,
+          authoringVersion,
+          implName,
+          implVersion,
+          specName,
+          specVersion,
+          stateVersion,
+          transactionVersion,
           received: true,
         };
 
@@ -515,7 +511,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     // Reset consts and chain state.
     setChainSpecs(defaultChainSpecs);
     setConsts(defaultConsts);
-    setChainState(defaultChainState);
     setStateWithRef(
       defaultNetworkMetrics,
       setNetworkMetrics,
@@ -563,7 +558,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       value={{
         api: ApiController.get(network)?.api || null,
         peopleApi: ApiController.get(`people-${network}`)?.api || null,
-        chainState,
         chainSpecs,
         apiStatus,
         peopleApiStatus,

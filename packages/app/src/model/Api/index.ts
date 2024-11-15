@@ -175,15 +175,32 @@ export class Api {
   async fetchChainSpec() {
     try {
       const chainSpecData = await this.#papiClient.getChainSpecData();
+      const version = await this.#pApi.constants.System.Version();
 
       const { genesisHash, properties } = chainSpecData;
       const { ss58Format, tokenDecimals, tokenSymbol } = properties;
+      const {
+        authoring_version: authoringVersion,
+        impl_name: implName,
+        impl_version: implVersion,
+        spec_name: specName,
+        spec_version: specVersion,
+        state_version: stateVersion,
+        transaction_version: transactionVersion,
+      } = version;
 
       this.#papiChainSpec = {
         genesisHash,
         ss58Format,
         tokenDecimals,
         tokenSymbol,
+        authoringVersion,
+        implName,
+        implVersion,
+        specName,
+        specVersion,
+        stateVersion,
+        transactionVersion,
       };
 
       // Dispatch 'papi-ready' event to let contexts populate constants.

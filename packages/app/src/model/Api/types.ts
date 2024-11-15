@@ -23,7 +23,15 @@ export interface PapiChainSpec {
   ss58Format: number;
   tokenDecimals: number;
   tokenSymbol: string;
+  authoringVersion: number;
+  implName: string;
+  implVersion: number;
+  specName: string;
+  specVersion: number;
+  stateVersion: number;
+  transactionVersion: number;
 }
+
 export type PapiReadyEvent = PapiChainSpec & {
   network: NetworkName | SystemChainId;
   chainType: string;
