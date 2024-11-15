@@ -6,10 +6,10 @@ import type { PapiApi } from 'model/Api/types';
 
 export class Era {
   // Fetch network constants.
-  async fetch(api: PapiApi) {
+  async fetch(pApi: PapiApi) {
     let result;
     try {
-      const { index, start } = await api.query.Staking.ActiveEra.getValue();
+      const { index, start } = await pApi.query.Staking.ActiveEra.getValue();
       result = {
         start,
         index,
