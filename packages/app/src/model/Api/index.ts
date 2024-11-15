@@ -9,6 +9,7 @@ import type {
   APIEventDetail,
   ConnectionType,
   EventApiStatus,
+  PapiApi,
   PapiChainSpec,
   PapiReadyEvent,
 } from './types';
@@ -16,7 +17,7 @@ import { SubscriptionsController } from 'controllers/Subscriptions';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import { WellKnownChain } from '@substrate/connect';
 import * as Sc from '@substrate/connect';
-import type { PolkadotClient, UnsafeApi } from 'polkadot-api';
+import type { PolkadotClient } from 'polkadot-api';
 import { createClient } from 'polkadot-api';
 import { getWsProvider } from 'polkadot-api/ws-provider/web';
 import { getSmProvider } from 'polkadot-api/sm-provider';
@@ -38,7 +39,7 @@ export class Api {
   #papiClient: PolkadotClient;
 
   // PAPI API.
-  #papiApi: UnsafeApi<unknown>;
+  #papiApi: PapiApi;
 
   // PAPI Chain Spec.
   #papiChainSpec: PapiChainSpec;

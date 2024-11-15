@@ -1,21 +1,27 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ApiPromise } from '@polkadot/api';
 import BigNumber from 'bignumber.js';
-import type { AnyApi } from 'types';
+import type { PapiApi } from 'model/Api/types';
 
 export class Era {
   // Fetch network constants.
-  async fetch(api: ApiPromise) {
-    // Fetch the active era.
-    const result = JSON.parse(
-      ((await api.query.staking.activeEra()) as AnyApi)
-        .unwrapOrDefault()
-        .toString()
-    );
+  async fetch(api: PapiApi) {
+    let result;
+    try {
+      const { index, start } = await api.query.Staking.ActiveEra.getValue();
+      result = {
+        start,
+        index,
+      };
+    } catch (e) {
+      result = {
+        start: 0,
+        index: 0,
+      };
+    }
 
-    // Store active era.
+    // Store active era as BigNumbers.
     const activeEra = {
       index: new BigNumber(result.index),
       start: new BigNumber(result.start),
