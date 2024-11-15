@@ -33,6 +33,9 @@ import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
 import { useErasPerDay } from 'hooks/useErasPerDay';
 import { IdentitiesController } from 'controllers/Identities';
 import type { AnyJson, Sync } from '@w3ux/types';
+import { ValidatorEntries } from 'model/Query/ValidatorEntries';
+import { ApiController } from 'controllers/Api';
+import { perbillToPercent } from 'library/Utils';
 
 export const ValidatorsContext = createContext<ValidatorsContextInterface>(
   defaultValidatorsContext
@@ -240,34 +243,38 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch validator entries and format the returning data.
   const getValidatorEntries = async () => {
-    if (!isReady || !api) {
+    if (!isReady) {
       return defaultValidatorsData;
     }
 
-    const result = await api.query.staking.validators.entries();
+    const { pApi } = ApiController.get(network);
+    const result = await new ValidatorEntries(pApi).fetch();
 
     const entries: Validator[] = [];
     let notFullCommissionCount = 0;
     let totalNonAllCommission = new BigNumber(0);
-    result.forEach(([a, p]: AnyApi) => {
-      const address = a.toHuman().pop();
-      const prefs = p.toHuman();
-      const commission = new BigNumber(prefs.commission.replace(/%/g, ''));
+    result.forEach(
+      ({ keyArgs: [address], value: { commission, blocked } }: AnyApi) => {
+        const commissionAsPercent = new BigNumber(
+          perbillToPercent(new BigNumber(commission)).toString()
+        );
 
-      if (!commission.isEqualTo(100)) {
-        totalNonAllCommission = totalNonAllCommission.plus(commission);
-      } else {
-        notFullCommissionCount++;
+        if (!commissionAsPercent.isEqualTo(100)) {
+          totalNonAllCommission =
+            totalNonAllCommission.plus(commissionAsPercent);
+        } else {
+          notFullCommissionCount++;
+        }
+
+        entries.push({
+          address,
+          prefs: {
+            commission: Number(commissionAsPercent.toFixed(2)),
+            blocked,
+          },
+        });
       }
-
-      entries.push({
-        address,
-        prefs: {
-          commission: Number(commission.toFixed(2)),
-          blocked: prefs.blocked,
-        },
-      });
-    });
+    );
 
     return { entries, notFullCommissionCount, totalNonAllCommission };
   };

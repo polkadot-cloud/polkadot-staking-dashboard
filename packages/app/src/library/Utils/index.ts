@@ -78,3 +78,7 @@ export const timeleftAsString = (
   }
   return str;
 };
+
+// Convert a perbill BigNumber value into a percentage.
+export const perbillToPercent = (value: BigNumber): BigNumber =>
+  value.dividedBy('10000000');
