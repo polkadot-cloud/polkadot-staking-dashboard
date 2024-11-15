@@ -297,7 +297,6 @@ export const GenerateNominations = ({
             onClick={() => clearNominations()}
             marginRight
           />
-
           {['Active Low Commission', 'Optimal Selection'].includes(
             method || ''
           ) && (
