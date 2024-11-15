@@ -71,7 +71,6 @@ export const defaultPoolsConfig: APIPoolsConfig = {
 };
 
 export const defaultStakingMetrics: APIStakingMetrics = {
-  totalNominators: new BigNumber(0),
   totalValidators: new BigNumber(0),
   lastReward: new BigNumber(0),
   lastTotalStake: new BigNumber(0),

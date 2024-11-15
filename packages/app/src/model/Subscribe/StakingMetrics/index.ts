@@ -52,7 +52,6 @@ export class StakingMetrics implements Unsubscribable {
       if (api && this.#unsub === undefined) {
         const unsub = await api.queryMulti(
           [
-            api.query.staking.counterForNominators,
             api.query.staking.counterForValidators,
             api.query.staking.maxValidatorsCount,
             api.query.staking.validatorCount,
@@ -70,15 +69,14 @@ export class StakingMetrics implements Unsubscribable {
           ],
           (result) => {
             const stakingMetrics = {
-              totalNominators: stringToBn(result[0].toString()),
-              totalValidators: stringToBn(result[1].toString()),
-              maxValidatorsCount: stringToBn(result[2].toString()),
-              validatorCount: stringToBn(result[3].toString()),
-              lastReward: stringToBn(result[4].toString()),
-              lastTotalStake: stringToBn(result[5].toString()),
-              minNominatorBond: stringToBn(result[6].toString()),
-              totalStaked: stringToBn(result[7].toString()),
-              counterForNominators: stringToBn(result[8].toString()),
+              totalValidators: stringToBn(result[0].toString()),
+              maxValidatorsCount: stringToBn(result[1].toString()),
+              validatorCount: stringToBn(result[2].toString()),
+              lastReward: stringToBn(result[3].toString()),
+              lastTotalStake: stringToBn(result[4].toString()),
+              minNominatorBond: stringToBn(result[5].toString()),
+              totalStaked: stringToBn(result[6].toString()),
+              counterForNominators: stringToBn(result[7].toString()),
             };
 
             document.dispatchEvent(

@@ -15,7 +15,7 @@ export const NetworkStats = () => {
   const { t } = useTranslation('pages');
   const { bondedPools } = useBondedPools();
   const { getAverageRewardRate } = useAverageRewardRate();
-  const { totalNominators, totalValidators } = useApi().stakingMetrics;
+  const { counterForNominators, totalValidators } = useApi().stakingMetrics;
 
   const { inflationToStakers } = getAverageRewardRate(false);
 
@@ -27,7 +27,7 @@ export const NetworkStats = () => {
     },
     {
       label: t('overview.totalNominators'),
-      value: totalNominators.toFormat(0),
+      value: counterForNominators.toFormat(0),
       helpKey: 'Total Nominators',
     },
     {

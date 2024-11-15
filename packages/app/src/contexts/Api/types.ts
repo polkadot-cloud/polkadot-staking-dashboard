@@ -62,7 +62,6 @@ export interface APIPoolsConfig {
 }
 
 export interface APIStakingMetrics {
-  totalNominators: BigNumber;
   totalValidators: BigNumber;
   lastReward: BigNumber;
   lastTotalStake: BigNumber;

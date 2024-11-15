@@ -1,97 +1,109 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ApiPromise } from '@polkadot/api';
-import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { APIActiveEra } from 'contexts/Api/types';
 import { stringToBn } from 'library/Utils';
+import type { PapiApi } from 'model/Api/types';
 
 export class NetworkMeta {
   // Fetch network constants.
-  async fetch(
-    api: ApiPromise,
-    activeEra: APIActiveEra,
-    previousEra: BigNumber
-  ) {
-    // Fetch network configuration.
-    const networkMeta = await api.queryMulti([
-      // Network metrics.
-      api.query.balances.totalIssuance,
-      api.query.auctions.auctionCounter,
-      api.query.paraSessionInfo.earliestStoredSession,
-      api.query.fastUnstake.erasToCheckPerBlock,
-      api.query.staking.minimumActiveStake,
-      // Nomination pool configs.
-      api.query.nominationPools.counterForPoolMembers,
-      api.query.nominationPools.counterForBondedPools,
-      api.query.nominationPools.counterForRewardPools,
-      api.query.nominationPools.lastPoolId,
-      api.query.nominationPools.maxPoolMembers,
-      api.query.nominationPools.maxPoolMembersPerPool,
-      api.query.nominationPools.maxPools,
-      api.query.nominationPools.minCreateBond,
-      api.query.nominationPools.minJoinBond,
-      api.query.nominationPools.globalMaxCommission,
-      // Staking metrics.
-      api.query.staking.counterForNominators,
-      api.query.staking.counterForValidators,
-      api.query.staking.maxValidatorsCount,
-      api.query.staking.validatorCount,
-      [api.query.staking.erasValidatorReward, previousEra.toString()],
-      [api.query.staking.erasTotalStake, previousEra.toString()],
-      api.query.staking.minNominatorBond,
-      [api.query.staking.erasTotalStake, activeEra.index.toString()],
-      api.query.staking.counterForNominators,
+  async fetch(pApi: PapiApi, activeEra: APIActiveEra, previousEra: BigNumber) {
+    const totalIssuance = await pApi.query.Balances.TotalIssuance.getValue();
+
+    const [
+      auctionCounter,
+      earliestStoredSession,
+      erasToCheckPerBlock,
+      minimumActiveStake,
+      counterForPoolMembers,
+      counterForBondedPools,
+      counterForRewardPools,
+      lastPoolId,
+      maxPoolMembersRaw,
+      maxPoolMembersPerPoolRaw,
+      maxPoolsRaw,
+      minCreateBond,
+      minJoinBond,
+      globalMaxCommission,
+      counterForNominators,
+      counterForValidators,
+      maxValidatorsCount,
+      validatorCount,
+      prevErasValidatorReward,
+      prevEraErasTotalStake,
+      minNominatorBond,
+      activeEraErasTotalStake,
+    ] = await Promise.all([
+      pApi.query.Auctions.AuctionCounter.getValue(),
+      pApi.query.ParaSessionInfo.EarliestStoredSession.getValue(),
+      pApi.query.FastUnstake.ErasToCheckPerBlock.getValue(),
+      pApi.query.Staking.MinimumActiveStake.getValue(),
+      pApi.query.NominationPools.CounterForPoolMembers.getValue(),
+      pApi.query.NominationPools.CounterForBondedPools.getValue(),
+      pApi.query.NominationPools.CounterForRewardPools.getValue(),
+      pApi.query.NominationPools.LastPoolId.getValue(),
+      pApi.query.NominationPools.MaxPoolMembers.getValue(),
+      pApi.query.NominationPools.MaxPoolMembersPerPool.getValue(),
+      pApi.query.NominationPools.MaxPools.getValue(),
+      pApi.query.NominationPools.MinCreateBond.getValue(),
+      pApi.query.NominationPools.MinJoinBond.getValue(),
+      pApi.query.NominationPools.GlobalMaxCommission.getValue(),
+      pApi.query.Staking.CounterForNominators.getValue(),
+      pApi.query.Staking.CounterForValidators.getValue(),
+      pApi.query.Staking.MaxValidatorsCount.getValue(),
+      pApi.query.Staking.ValidatorCount.getValue(),
+      pApi.query.Staking.ErasValidatorReward.getValue(previousEra.toString()),
+      pApi.query.Staking.ErasTotalStake.getValue(previousEra.toString()),
+      pApi.query.Staking.MinNominatorBond.getValue(),
+      pApi.query.Staking.ErasTotalStake.getValue(activeEra.index.toString()),
     ]);
 
-    // format optional configs to BigNumber or null.
-    const maxPoolMembers = networkMeta[9].toHuman()
-      ? new BigNumber(rmCommas(networkMeta[9].toString()))
+    // Format globalMaxCommission from a perbill to a percent.
+    const globalMaxCommissionAsPercent = BigInt(globalMaxCommission) / 1000000n;
+
+    // Format max pool members to be a BigNumber, or null if it's not set.
+    const maxPoolMembers = maxPoolMembersRaw
+      ? new BigNumber(maxPoolMembersRaw.toString())
       : null;
 
-    const maxPoolMembersPerPool = networkMeta[10].toHuman()
-      ? new BigNumber(rmCommas(networkMeta[10].toString()))
+    // Format max pool members per pool to be a BigNumber, or null if it's not set.
+    const maxPoolMembersPerPool = maxPoolMembersPerPoolRaw
+      ? new BigNumber(maxPoolMembersPerPoolRaw.toString())
       : null;
 
-    const maxPools = networkMeta[11].toHuman()
-      ? new BigNumber(rmCommas(networkMeta[11].toString()))
-      : null;
+    // Format max pools to be a BigNumber, or null if it's not set.
+    const maxPools = maxPoolsRaw ? new BigNumber(maxPoolsRaw.toString()) : null;
 
     return {
       networkMetrics: {
-        totalIssuance: new BigNumber(networkMeta[0].toString()),
-        auctionCounter: new BigNumber(networkMeta[1].toString()),
-        earliestStoredSession: new BigNumber(networkMeta[2].toString()),
-        fastUnstakeErasToCheckPerBlock: Number(
-          rmCommas(networkMeta[3].toString())
-        ),
-        minimumActiveStake: new BigNumber(networkMeta[4].toString()),
+        totalIssuance: new BigNumber(totalIssuance.toString()),
+        auctionCounter: new BigNumber(auctionCounter.toString()),
+        earliestStoredSession: new BigNumber(earliestStoredSession.toString()),
+        fastUnstakeErasToCheckPerBlock: Number(erasToCheckPerBlock.toString()),
+        minimumActiveStake: new BigNumber(minimumActiveStake.toString()),
       },
       poolsConfig: {
-        counterForPoolMembers: stringToBn(networkMeta[5].toString()),
-        counterForBondedPools: stringToBn(networkMeta[6].toString()),
-        counterForRewardPools: stringToBn(networkMeta[7].toString()),
-        lastPoolId: stringToBn(networkMeta[8].toString()),
+        counterForPoolMembers: stringToBn(counterForPoolMembers.toString()),
+        counterForBondedPools: stringToBn(counterForBondedPools.toString()),
+        counterForRewardPools: stringToBn(counterForRewardPools.toString()),
+        lastPoolId: stringToBn(lastPoolId.toString()),
         maxPoolMembers,
         maxPoolMembersPerPool,
         maxPools,
-        minCreateBond: stringToBn(networkMeta[12].toString()),
-        minJoinBond: stringToBn(networkMeta[13].toString()),
-        globalMaxCommission: Number(
-          String(networkMeta[14]?.toHuman() || '100%').slice(0, -1)
-        ),
+        minCreateBond: stringToBn(minCreateBond.toString()),
+        minJoinBond: stringToBn(minJoinBond.toString()),
+        globalMaxCommission: Number(globalMaxCommissionAsPercent.toString()),
       },
       stakingMetrics: {
-        totalNominators: stringToBn(networkMeta[15].toString()),
-        totalValidators: stringToBn(networkMeta[16].toString()),
-        maxValidatorsCount: stringToBn(networkMeta[17].toString()),
-        validatorCount: stringToBn(networkMeta[18].toString()),
-        lastReward: stringToBn(networkMeta[19].toString()),
-        lastTotalStake: stringToBn(networkMeta[20].toString()),
-        minNominatorBond: stringToBn(networkMeta[21].toString()),
-        totalStaked: stringToBn(networkMeta[22].toString()),
-        counterForNominators: stringToBn(networkMeta[23].toString()),
+        totalValidators: stringToBn(counterForValidators.toString()),
+        maxValidatorsCount: stringToBn(maxValidatorsCount.toString()),
+        validatorCount: stringToBn(validatorCount.toString()),
+        lastReward: stringToBn(prevErasValidatorReward.toString()),
+        lastTotalStake: stringToBn(prevEraErasTotalStake.toString()),
+        minNominatorBond: stringToBn(minNominatorBond.toString()),
+        totalStaked: stringToBn(activeEraErasTotalStake.toString()),
+        counterForNominators: stringToBn(counterForNominators.toString()),
       },
     };
   }
