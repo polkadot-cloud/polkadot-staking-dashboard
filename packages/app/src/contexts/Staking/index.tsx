@@ -25,6 +25,9 @@ import { defaultEraStakers, defaultStakingContext } from './defaults';
 import { setLocalEraExposures, getLocalEraExposures } from './Utils';
 import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
 import { SyncController } from 'controllers/Sync';
+import { ErasStakersOverview } from 'model/Query/ErasStakersOverview';
+import { ApiController } from 'controllers/Api';
+import type { AnyJson } from '@w3ux/types';
 
 const worker = new Worker();
 
@@ -38,9 +41,9 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const { getBondedAccount } = useBonded();
   const { networkData, network } = useNetwork();
   const { getLedger, getNominations } = useBalances();
+  const { isReady, api, activeEra, apiStatus } = useApi();
   const { accounts: connectAccounts } = useImportedAccounts();
   const { activeAccount, getActiveAccount } = useActiveAccounts();
-  const { isReady, api, apiStatus, activeEra } = useApi();
 
   // Store eras stakers in state.
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers);
@@ -225,15 +228,14 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       return [];
     }
 
-    const overview: AnyApi =
-      await api.query.staking.erasStakersOverview.entries(era);
+    const { pApi } = ApiController.get(network);
+    const overviewNew = await new ErasStakersOverview(pApi).fetch(era);
 
-    const validators = overview.reduce(
-      (prev: Record<string, Exposure>, [keys, value]: AnyApi) => {
-        const validator = keys.toHuman()[1];
-        const { own, total } = value.toHuman();
-        return { ...prev, [validator]: { own, total } };
-      },
+    const validators: Record<string, AnyJson> = overviewNew.reduce(
+      (
+        prev: Record<string, Exposure>,
+        { keyArgs: [, validator], value: { own, total } }: AnyApi
+      ) => ({ ...prev, [validator]: { own, total } }),
       {}
     );
     const validatorKeys = Object.keys(validators);
@@ -263,8 +265,8 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       result.push({
         keys: [rmCommas(era), validator],
         val: {
-          total: rmCommas(total),
-          own: rmCommas(own),
+          total: total.toString(),
+          own: own.toString(),
           others: others.map(({ who, value }) => ({
             who,
             value: rmCommas(value),
