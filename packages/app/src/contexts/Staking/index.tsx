@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { rmCommas, setStateWithRef } from '@w3ux/utils';
+import { setStateWithRef } from '@w3ux/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import { useBalances } from 'contexts/Balances';
@@ -9,7 +9,6 @@ import type { ExternalAccount } from '@w3ux/react-connect-kit/types';
 import type {
   EraStakers,
   Exposure,
-  ExposureOther,
   StakingContextInterface,
 } from 'contexts/Staking/types';
 import type { AnyApi, MaybeAddress } from 'types';
@@ -28,6 +27,7 @@ import { SyncController } from 'controllers/Sync';
 import { ErasStakersOverview } from 'model/Query/ErasStakersOverview';
 import { ApiController } from 'controllers/Api';
 import type { AnyJson } from '@w3ux/types';
+import { ErasStakersPaged } from 'model/ErasStakersPaged';
 
 const worker = new Worker();
 
@@ -229,9 +229,8 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const { pApi } = ApiController.get(network);
-    const overviewNew = await new ErasStakersOverview(pApi).fetch(era);
-
-    const validators: Record<string, AnyJson> = overviewNew.reduce(
+    const overview = await new ErasStakersOverview(pApi).fetch(era);
+    const validators: Record<string, AnyJson> = overview.reduce(
       (
         prev: Record<string, Exposure>,
         { keyArgs: [, validator], value: { own, total } }: AnyApi
@@ -241,36 +240,31 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     const validatorKeys = Object.keys(validators);
 
     const pagedResults = await Promise.all(
-      validatorKeys.map((v) =>
-        api.query.staking.erasStakersPaged.entries(era, v)
-      )
+      validatorKeys.map((v) => new ErasStakersPaged(pApi).fetch(era, v))
     );
 
     const result: Exposure[] = [];
     let i = 0;
-    for (const pagedResult of pagedResults) {
+    for (const [
+      {
+        keyArgs,
+        value: { others },
+      },
+    ] of pagedResults) {
       const validator = validatorKeys[i];
       const { own, total } = validators[validator];
-      const others = pagedResult.reduce(
-        (prev: ExposureOther[], [, v]: AnyApi) => {
-          const o = v.toHuman()?.others || [];
-          if (!o.length) {
-            return prev;
-          }
-          return prev.concat(o);
-        },
-        []
-      );
 
       result.push({
-        keys: [rmCommas(era), validator],
+        keys: [keyArgs[0].toString(), validator],
         val: {
           total: total.toString(),
           own: own.toString(),
-          others: others.map(({ who, value }) => ({
-            who,
-            value: rmCommas(value),
-          })),
+          others: others.map(
+            ({ who, value }: { who: string; value: bigint }) => ({
+              who,
+              value: value.toString(),
+            })
+          ),
         },
       });
       i++;
