@@ -27,7 +27,7 @@ export const Selectable = ({
     displayFor === 'canvas' ? ButtonMonoInvert : ButtonMonoInvert;
 
   return (
-    <SelectableWrapper>
+    <SelectableWrapper className="list">
       {selectToggleable === true ? (
         <ButtonType
           text={selectActive ? t('cancel') : t('select')}
