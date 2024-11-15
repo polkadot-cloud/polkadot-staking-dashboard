@@ -19,7 +19,7 @@ export const NetworkList: Networks = {
     endpoints: {
       lightClientKey: 'polkadot',
       lightClient: async () => await import('polkadot-api/chains/polkadot'),
-      defaultRpcEndpoint: 'Automata 1RPC',
+      defaultRpcEndpoint: 'IBP-GeoDNS1',
       rpcEndpoints: {
         'Automata 1RPC': 'wss://1rpc.io/dot',
         Dwellir: 'wss://polkadot-rpc.dwellir.com',
@@ -75,7 +75,7 @@ export const NetworkList: Networks = {
     endpoints: {
       lightClientKey: 'ksmcc3',
       lightClient: async () => await import('polkadot-api/chains/ksmcc3'),
-      defaultRpcEndpoint: 'Automata 1RPC',
+      defaultRpcEndpoint: 'IBP-GeoDNS1',
       rpcEndpoints: {
         'Automata 1RPC': 'wss://1rpc.io/ksm',
         Dwellir: 'wss://kusama-rpc.dwellir.com',
@@ -131,7 +131,7 @@ export const NetworkList: Networks = {
     endpoints: {
       lightClientKey: 'westend2',
       lightClient: async () => await import('polkadot-api/chains/westend2'),
-      defaultRpcEndpoint: 'Automata 1RPC',
+      defaultRpcEndpoint: 'IBP-GeoDNS1',
       rpcEndpoints: {
         Dwellir: 'wss://westend-rpc.dwellir.com',
         'Dwellir Tunisia': 'wss://westend-rpc-tn.dwellir.com',

@@ -8,7 +8,7 @@ import { stringToU8a } from '@polkadot/util';
  */
 export const DappName = 'Polkadot Staking Dashboard';
 export const ManualSigners = ['ledger', 'vault', 'wallet_connect'];
-export const DiscordSupportUrl = 'https://discord.gg/EJWK4NA4';
+export const DiscordSupportUrl = 'https://discord.gg/QY7CSSJm3D';
 export const MailSupportAddress = 'staking@polkadot.cloud';
 
 /*
