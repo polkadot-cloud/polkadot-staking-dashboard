@@ -1,28 +1,20 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { VoidFn } from '@polkadot/api/types';
-import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { ApiController } from 'controllers/Api';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { NetworkName } from 'types';
 import { stringToBn } from 'library/Utils';
+import type { Subscription } from 'rxjs';
+import { combineLatest } from 'rxjs';
 
 export class PoolsConfig implements Unsubscribable {
-  // ------------------------------------------------------
-  // Class members.
-  // ------------------------------------------------------
-
   // The associated network for this instance.
   #network: NetworkName;
 
-  // Unsubscribe object.
-  #unsub: VoidFn;
-
-  // ------------------------------------------------------
-  // Constructor.
-  // ------------------------------------------------------
+  // Active subscription.
+  #sub: Subscription;
 
   constructor(network: NetworkName) {
     this.#network = network;
@@ -31,54 +23,72 @@ export class PoolsConfig implements Unsubscribable {
     this.subscribe();
   }
 
-  // ------------------------------------------------------
-  // Subscription.
-  // ------------------------------------------------------
-
   subscribe = async (): Promise<void> => {
     try {
-      const { api } = ApiController.get(this.#network);
+      const { pApi } = ApiController.get(this.#network);
 
-      if (api && this.#unsub === undefined) {
-        const unsub = await api.queryMulti(
-          [
-            api.query.nominationPools.counterForPoolMembers,
-            api.query.nominationPools.counterForBondedPools,
-            api.query.nominationPools.counterForRewardPools,
-            api.query.nominationPools.lastPoolId,
-            api.query.nominationPools.maxPoolMembers,
-            api.query.nominationPools.maxPoolMembersPerPool,
-            api.query.nominationPools.maxPools,
-            api.query.nominationPools.minCreateBond,
-            api.query.nominationPools.minJoinBond,
-            api.query.nominationPools.globalMaxCommission,
-          ],
-          (result) => {
-            // format optional configs to BigNumber or null.
-            const maxPoolMembers = result[4].toHuman()
-              ? new BigNumber(rmCommas(result[4].toString()))
+      if (pApi && this.#sub === undefined) {
+        const sub = combineLatest([
+          pApi.query.NominationPools.CounterForPoolMembers.watchValue(),
+          pApi.query.NominationPools.CounterForBondedPools.watchValue(),
+          pApi.query.NominationPools.CounterForRewardPools.watchValue(),
+          pApi.query.NominationPools.LastPoolId.watchValue(),
+          pApi.query.NominationPools.MaxPoolMembers.watchValue(),
+          pApi.query.NominationPools.MaxPoolMembersPerPool.watchValue(),
+          pApi.query.NominationPools.MaxPools.watchValue(),
+          pApi.query.NominationPools.MinCreateBond.watchValue(),
+          pApi.query.NominationPools.MinJoinBond.watchValue(),
+          pApi.query.NominationPools.GlobalMaxCommission.watchValue(),
+        ]).subscribe(
+          ([
+            counterForPoolMembers,
+            counterForBondedPools,
+            counterForRewardPools,
+            lastPoolId,
+            maxPoolMembersRaw,
+            maxPoolMembersPerPoolRaw,
+            maxPoolsRaw,
+            minCreateBond,
+            minJoinBond,
+            globalMaxCommission,
+          ]) => {
+            // Format globalMaxCommission from a perbill to a percent.
+            const globalMaxCommissionAsPercent =
+              BigInt(globalMaxCommission) / 1000000n;
+
+            // Format max pool members to be a BigNumber, or null if it's not set.
+            const maxPoolMembers = maxPoolMembersRaw
+              ? new BigNumber(maxPoolMembersRaw.toString())
               : null;
 
-            const maxPoolMembersPerPool = result[5].toHuman()
-              ? new BigNumber(rmCommas(result[5].toString()))
+            // Format max pool members per pool to be a BigNumber, or null if it's not set.
+            const maxPoolMembersPerPool = maxPoolMembersPerPoolRaw
+              ? new BigNumber(maxPoolMembersPerPoolRaw.toString())
               : null;
 
-            const maxPools = result[6].toHuman()
-              ? new BigNumber(rmCommas(result[6].toString()))
+            // Format max pools to be a BigNumber, or null if it's not set.
+            const maxPools = maxPoolsRaw
+              ? new BigNumber(maxPoolsRaw.toString())
               : null;
 
             const poolsConfig = {
-              counterForPoolMembers: stringToBn(result[0].toString()),
-              counterForBondedPools: stringToBn(result[1].toString()),
-              counterForRewardPools: stringToBn(result[2].toString()),
-              lastPoolId: stringToBn(result[3].toString()),
+              counterForPoolMembers: stringToBn(
+                counterForPoolMembers.toString()
+              ),
+              counterForBondedPools: stringToBn(
+                counterForBondedPools.toString()
+              ),
+              counterForRewardPools: stringToBn(
+                counterForRewardPools.toString()
+              ),
+              lastPoolId: stringToBn(lastPoolId.toString()),
               maxPoolMembers,
               maxPoolMembersPerPool,
               maxPools,
-              minCreateBond: stringToBn(result[7].toString()),
-              minJoinBond: stringToBn(result[8].toString()),
+              minCreateBond: stringToBn(minCreateBond.toString()),
+              minJoinBond: stringToBn(minJoinBond.toString()),
               globalMaxCommission: Number(
-                String(result[9]?.toHuman() || '100%').slice(0, -1)
+                globalMaxCommissionAsPercent.toString()
               ),
             };
 
@@ -89,23 +99,17 @@ export class PoolsConfig implements Unsubscribable {
             );
           }
         );
-
-        // Subscription now initialised. Store unsub.
-        this.#unsub = unsub as unknown as VoidFn;
+        this.#sub = sub;
       }
     } catch (e) {
       // Subscription failed.
     }
   };
 
-  // ------------------------------------------------------
-  // Unsubscribe handler.
-  // ------------------------------------------------------
-
   // Unsubscribe from class subscription.
   unsubscribe = (): void => {
-    if (typeof this.#unsub === 'function') {
-      this.#unsub();
+    if (typeof this.#sub?.unsubscribe === 'function') {
+      this.#sub.unsubscribe();
     }
   };
 }
