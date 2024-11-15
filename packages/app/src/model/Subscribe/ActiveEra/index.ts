@@ -15,16 +15,14 @@ export class ActiveEra implements Unsubscribable {
   // The associated network for this instance.
   #network: NetworkName;
 
-  // Unsubscribe object.
-  #unsub: Subscription;
+  // Active subscription.
+  #sub: Subscription;
 
   // Store the active era.
   activeEra: APIActiveEra = defaultActiveEra;
 
   constructor(network: NetworkName) {
     this.#network = network;
-
-    // Subscribe immediately.
     this.subscribe();
   }
 
@@ -32,9 +30,9 @@ export class ActiveEra implements Unsubscribable {
     try {
       const { pApi } = ApiController.get(this.#network);
 
-      if (pApi && this.#unsub === undefined) {
+      if (pApi && this.#sub === undefined) {
         // Testing the active era subscription.
-        const unsub = pApi.query.Staking.ActiveEra.watchValue().subscribe(
+        const sub = pApi.query.Staking.ActiveEra.watchValue().subscribe(
           (activeEra) => {
             // Store active era.
             this.activeEra = {
@@ -71,19 +69,17 @@ export class ActiveEra implements Unsubscribable {
             );
           }
         );
-
-        // Subscription now initialised. Store unsub.
-        this.#unsub = unsub;
+        this.#sub = sub;
       }
     } catch (e) {
-      // Block number subscription failed.
+      // Subscription failed.
     }
   };
 
   // Unsubscribe from class subscription.
   unsubscribe = (): void => {
-    if (typeof this.#unsub?.unsubscribe === 'function') {
-      this.#unsub.unsubscribe();
+    if (typeof this.#sub?.unsubscribe === 'function') {
+      this.#sub.unsubscribe();
     }
   };
 }
