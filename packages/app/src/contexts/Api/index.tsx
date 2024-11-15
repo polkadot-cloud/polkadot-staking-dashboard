@@ -37,7 +37,6 @@ import type {
   ApiStatus,
   ConnectionType,
 } from 'model/Api/types';
-import { StakingConstants } from 'model/Query/StakingConstants';
 import { Era } from 'model/Query/Era';
 import { NetworkMeta } from 'model/Query/NetworkMeta';
 import { SubscriptionsController } from 'controllers/Subscriptions';
@@ -169,9 +168,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
     // 1. Fetch network data for bootstrapping app state:
 
-    // Get general network constants for staking UI.
-    const newConsts = await new StakingConstants().fetch(api, network);
-
     // Get active and previous era.
     const { activeEra: newActiveEra, previousEra } = await new Era().fetch(api);
 
@@ -184,7 +180,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
     // 2. Populate all config state:
 
-    setConsts(newConsts);
     setStateWithRef(newNetworkMetrics, setNetworkMetrics, networkMetricsRef);
     const { index, start } = newActiveEra;
     setStateWithRef({ index, start }, setActiveEra, activeEraRef);
@@ -239,16 +234,65 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
           tokenSymbol,
           received: true,
         };
+
+        const api = ApiController.get(network);
+        const bondingDuration = await api.getConstant(
+          'Staking',
+          'BondingDuration',
+          0
+        );
+        const sessionsPerEra = await api.getConstant(
+          'Staking',
+          'SessionsPerEra',
+          0
+        );
+        const maxExposurePageSize = await api.getConstant(
+          'Staking',
+          'MaxExposurePageSize',
+          0
+        );
+        const historyDepth = await api.getConstant(
+          'Staking',
+          'HistoryDepth',
+          0
+        );
+        const expectedBlockTime = await api.getConstant(
+          'Babe',
+          'ExpectedBlockTime',
+          0
+        );
+        const epochDuration = await api.getConstant('Babe', 'EpochDuration', 0);
+        const existentialDeposit = await api.getConstant(
+          'Balances',
+          'ExistentialDeposit',
+          0
+        );
+        const fastUnstakeDeposit = await api.getConstant(
+          'FastUnstake',
+          'Deposit',
+          0
+        );
+        const poolsPalletId = await api.getConstant(
+          'NominationPools',
+          'PalletId',
+          new Uint8Array(0),
+          'asBytes'
+        );
+
         setChainSpecs({ ...newChainSpecs, received: true });
 
-        const apiInstance = ApiController.get(network);
-        const pApi = apiInstance.papiApi;
-
-        // TODO: set consts from here.
-        console.log(
-          'bonding duration: ',
-          await pApi.constants.Staking.BondingDuration()
-        );
+        setConsts({
+          maxNominations: new BigNumber(16),
+          bondDuration: new BigNumber(bondingDuration),
+          sessionsPerEra: new BigNumber(sessionsPerEra),
+          maxExposurePageSize: new BigNumber(maxExposurePageSize),
+          historyDepth: new BigNumber(historyDepth),
+          expectedBlockTime: new BigNumber(expectedBlockTime.toString()),
+          epochDuration: new BigNumber(epochDuration.toString()),
+          existentialDeposit: new BigNumber(existentialDeposit.toString()),
+          fastUnstakeDeposit: new BigNumber(fastUnstakeDeposit.toString()),
+          poolsPalletId,
+        });
       }
     }
   };

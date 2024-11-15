@@ -196,6 +196,27 @@ export class Api {
     }
   }
 
+  // Get a pallet constant, with a fallback value.
+  getConstant = async <T>(
+    pallet: string,
+    key: string,
+    fallback: T,
+    formatter?: 'asBytes'
+  ): Promise<T> => {
+    try {
+      const result = await this.#papiApi.constants[pallet][key]();
+
+      switch (formatter) {
+        case 'asBytes':
+          return result.asBytes();
+        default:
+          return result;
+      }
+    } catch (e) {
+      return fallback;
+    }
+  };
+
   // Handler for dispatching `papi-ready` events.
   dispatchPapiReadyEvent() {
     const detail: PapiReadyEvent = {
