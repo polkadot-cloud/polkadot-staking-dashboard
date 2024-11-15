@@ -1,19 +1,16 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { VoidFn } from '@polkadot/api/types';
 import type BigNumber from 'bignumber.js';
 import type { APIActiveEra } from 'contexts/Api/types';
 import { ApiController } from 'controllers/Api';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { NetworkName } from 'types';
 import { stringToBn } from 'library/Utils';
+import type { Subscription } from 'rxjs';
+import { combineLatest } from 'rxjs';
 
 export class StakingMetrics implements Unsubscribable {
-  // ------------------------------------------------------
-  // Class members.
-  // ------------------------------------------------------
-
   // The associated network for this instance.
   #network: NetworkName;
 
@@ -21,12 +18,8 @@ export class StakingMetrics implements Unsubscribable {
 
   #previousEra: BigNumber;
 
-  // Unsubscribe object.
-  #unsub: VoidFn;
-
-  // ------------------------------------------------------
-  // Constructor.
-  // ------------------------------------------------------
+  // Active subscription.
+  #sub: Subscription;
 
   constructor(
     network: NetworkName,
@@ -41,42 +34,46 @@ export class StakingMetrics implements Unsubscribable {
     this.subscribe();
   }
 
-  // ------------------------------------------------------
-  // Subscription.
-  // ------------------------------------------------------
-
   subscribe = async (): Promise<void> => {
     try {
-      const { api } = ApiController.get(this.#network);
+      const { pApi } = ApiController.get(this.#network);
 
-      if (api && this.#unsub === undefined) {
-        const unsub = await api.queryMulti(
-          [
-            api.query.staking.counterForValidators,
-            api.query.staking.maxValidatorsCount,
-            api.query.staking.validatorCount,
-            [
-              api.query.staking.erasValidatorReward,
-              this.#previousEra.toString(),
-            ],
-            [api.query.staking.erasTotalStake, this.#previousEra.toString()],
-            api.query.staking.minNominatorBond,
-            [
-              api.query.staking.erasTotalStake,
-              this.#activeEra.index.toString(),
-            ],
-            api.query.staking.counterForNominators,
-          ],
-          (result) => {
+      if (pApi && this.#sub === undefined) {
+        const sub = combineLatest([
+          pApi.query.Staking.CounterForValidators.watchValue(),
+          pApi.query.Staking.MaxValidatorsCount.watchValue(),
+          pApi.query.Staking.ValidatorCount.watchValue(),
+          pApi.query.Staking.ErasValidatorReward.watchValue(
+            this.#previousEra.toString()
+          ),
+          pApi.query.Staking.ErasTotalStake.watchValue(
+            this.#previousEra.toString()
+          ),
+          pApi.query.Staking.MinNominatorBond.watchValue(),
+          pApi.query.Staking.ErasTotalStake.watchValue(
+            this.#activeEra.index.toString()
+          ),
+          pApi.query.Staking.CounterForNominators.watchValue(),
+        ]).subscribe(
+          ([
+            counterForValidators,
+            maxValidatorsCount,
+            validatorCount,
+            erasValidatorReward,
+            lastTotalStake,
+            minNominatorBond,
+            totalStaked,
+            counterForNominators,
+          ]) => {
             const stakingMetrics = {
-              totalValidators: stringToBn(result[0].toString()),
-              maxValidatorsCount: stringToBn(result[1].toString()),
-              validatorCount: stringToBn(result[2].toString()),
-              lastReward: stringToBn(result[3].toString()),
-              lastTotalStake: stringToBn(result[4].toString()),
-              minNominatorBond: stringToBn(result[5].toString()),
-              totalStaked: stringToBn(result[6].toString()),
-              counterForNominators: stringToBn(result[7].toString()),
+              totalValidators: stringToBn(counterForValidators.toString()),
+              maxValidatorsCount: stringToBn(maxValidatorsCount.toString()),
+              validatorCount: stringToBn(validatorCount.toString()),
+              lastReward: stringToBn(erasValidatorReward.toString()),
+              lastTotalStake: stringToBn(lastTotalStake.toString()),
+              minNominatorBond: stringToBn(minNominatorBond.toString()),
+              totalStaked: stringToBn(totalStaked.toString()),
+              counterForNominators: stringToBn(counterForNominators.toString()),
             };
 
             document.dispatchEvent(
@@ -86,22 +83,17 @@ export class StakingMetrics implements Unsubscribable {
             );
           }
         );
-        // Subscription now initialised. Store unsub.
-        this.#unsub = unsub as unknown as VoidFn;
+        this.#sub = sub;
       }
     } catch (e) {
-      // Block number subscription failed.
+      // Subscription failed.
     }
   };
 
-  // ------------------------------------------------------
-  // Unsubscribe handler.
-  // ------------------------------------------------------
-
   // Unsubscribe from class subscription.
   unsubscribe = (): void => {
-    if (typeof this.#unsub === 'function') {
-      this.#unsub();
+    if (typeof this.#sub?.unsubscribe === 'function') {
+      this.#sub.unsubscribe();
     }
   };
 }
