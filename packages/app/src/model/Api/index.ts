@@ -39,7 +39,7 @@ export class Api {
   #papiClient: PolkadotClient;
 
   // PAPI API.
-  #papiApi: PapiApi;
+  #pApi: PapiApi;
 
   // PAPI Chain Spec.
   #papiChainSpec: PapiChainSpec;
@@ -61,8 +61,8 @@ export class Api {
     return this.#papiClient;
   }
 
-  get papiApi() {
-    return this.#papiApi;
+  get pApi() {
+    return this.#pApi;
   }
 
   get papiChainSpec() {
@@ -113,7 +113,7 @@ export class Api {
       await this.#api.isReady;
 
       // Initialise PAPI API.
-      this.#papiApi = this.#papiClient.getUnsafeApi();
+      this.#pApi = this.#papiClient.getUnsafeApi();
 
       // Fetch chain spec and metadata from PAPI client.
       await this.fetchChainSpec();
@@ -205,7 +205,7 @@ export class Api {
     formatter?: 'asBytes'
   ): Promise<T> => {
     try {
-      const result = await this.#papiApi.constants[pallet][key]();
+      const result = await this.#pApi.constants[pallet][key]();
 
       switch (formatter) {
         case 'asBytes':

@@ -30,11 +30,11 @@ export class ActiveEra implements Unsubscribable {
 
   subscribe = async (): Promise<void> => {
     try {
-      const { api, papiApi } = ApiController.get(this.#network);
+      const { pApi } = ApiController.get(this.#network);
 
-      if (api && this.#unsub === undefined) {
+      if (pApi && this.#unsub === undefined) {
         // Testing the active era subscription.
-        const unsub = papiApi.query.Staking.ActiveEra.watchValue().subscribe(
+        const unsub = pApi.query.Staking.ActiveEra.watchValue().subscribe(
           (activeEra) => {
             // Store active era.
             this.activeEra = {
