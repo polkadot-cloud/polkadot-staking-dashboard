@@ -132,12 +132,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   const [chainSpecs, setChainSpecs] =
     useState<PapiChainSpecContext>(defaultChainSpecs);
 
-  // Fetch chain state. Called once `provider` has been initialised.
-  const onApiReady = async () => {
-    // Assume chain state is correct and bootstrap network consts.
-    bootstrapNetworkConfig();
-  };
-
   // Bootstrap app-wide chain state.
   const bootstrapNetworkConfig = async () => {
     const apiInstance = ApiController.get(network);
@@ -146,16 +140,16 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     // 1. Fetch network data for bootstrapping app state:
 
     // Get active and previous era.
-    const { activeEra: newActiveEra, previousEra } = await new Era().fetch(
+    const { activeEra: newActiveEra, previousEra } = await new Era(
       pApi
-    );
+    ).fetch();
 
     // Get network meta data related to staking and pools.
     const {
       networkMetrics: newNetworkMetrics,
       poolsConfig: newPoolsConfig,
       stakingMetrics: newStakingMetrics,
-    } = await new NetworkMeta().fetch(pApi, newActiveEra, previousEra);
+    } = await new NetworkMeta(pApi).fetch(newActiveEra, previousEra);
 
     // 2. Populate all config state:
 
@@ -291,6 +285,8 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
           fastUnstakeDeposit: new BigNumber(fastUnstakeDeposit.toString()),
           poolsPalletId,
         });
+
+        bootstrapNetworkConfig();
       }
     }
   };
@@ -326,9 +322,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
       return;
     }
     switch (status) {
-      case 'ready':
-        onApiReady();
-        break;
       case 'connecting':
         setApiStatus('connecting');
         break;

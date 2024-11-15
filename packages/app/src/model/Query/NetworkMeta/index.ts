@@ -3,13 +3,20 @@
 
 import BigNumber from 'bignumber.js';
 import type { APIActiveEra } from 'contexts/Api/types';
-import { stringToBn } from 'library/Utils';
+import { perbillToPercent, stringToBn } from 'library/Utils';
 import type { PapiApi } from 'model/Api/types';
 
 export class NetworkMeta {
+  #pApi: PapiApi;
+
+  constructor(pApi: PapiApi) {
+    this.#pApi = pApi;
+  }
+
   // Fetch network constants.
-  async fetch(pApi: PapiApi, activeEra: APIActiveEra, previousEra: BigNumber) {
-    const totalIssuance = await pApi.query.Balances.TotalIssuance.getValue();
+  async fetch(activeEra: APIActiveEra, previousEra: BigNumber) {
+    const totalIssuance =
+      await this.#pApi.query.Balances.TotalIssuance.getValue();
 
     const [
       auctionCounter,
@@ -35,32 +42,38 @@ export class NetworkMeta {
       minNominatorBond,
       activeEraErasTotalStake,
     ] = await Promise.all([
-      pApi.query.Auctions.AuctionCounter.getValue(),
-      pApi.query.ParaSessionInfo.EarliestStoredSession.getValue(),
-      pApi.query.FastUnstake.ErasToCheckPerBlock.getValue(),
-      pApi.query.Staking.MinimumActiveStake.getValue(),
-      pApi.query.NominationPools.CounterForPoolMembers.getValue(),
-      pApi.query.NominationPools.CounterForBondedPools.getValue(),
-      pApi.query.NominationPools.CounterForRewardPools.getValue(),
-      pApi.query.NominationPools.LastPoolId.getValue(),
-      pApi.query.NominationPools.MaxPoolMembers.getValue(),
-      pApi.query.NominationPools.MaxPoolMembersPerPool.getValue(),
-      pApi.query.NominationPools.MaxPools.getValue(),
-      pApi.query.NominationPools.MinCreateBond.getValue(),
-      pApi.query.NominationPools.MinJoinBond.getValue(),
-      pApi.query.NominationPools.GlobalMaxCommission.getValue(),
-      pApi.query.Staking.CounterForNominators.getValue(),
-      pApi.query.Staking.CounterForValidators.getValue(),
-      pApi.query.Staking.MaxValidatorsCount.getValue(),
-      pApi.query.Staking.ValidatorCount.getValue(),
-      pApi.query.Staking.ErasValidatorReward.getValue(previousEra.toString()),
-      pApi.query.Staking.ErasTotalStake.getValue(previousEra.toString()),
-      pApi.query.Staking.MinNominatorBond.getValue(),
-      pApi.query.Staking.ErasTotalStake.getValue(activeEra.index.toString()),
+      this.#pApi.query.Auctions.AuctionCounter.getValue(),
+      this.#pApi.query.ParaSessionInfo.EarliestStoredSession.getValue(),
+      this.#pApi.query.FastUnstake.ErasToCheckPerBlock.getValue(),
+      this.#pApi.query.Staking.MinimumActiveStake.getValue(),
+      this.#pApi.query.NominationPools.CounterForPoolMembers.getValue(),
+      this.#pApi.query.NominationPools.CounterForBondedPools.getValue(),
+      this.#pApi.query.NominationPools.CounterForRewardPools.getValue(),
+      this.#pApi.query.NominationPools.LastPoolId.getValue(),
+      this.#pApi.query.NominationPools.MaxPoolMembers.getValue(),
+      this.#pApi.query.NominationPools.MaxPoolMembersPerPool.getValue(),
+      this.#pApi.query.NominationPools.MaxPools.getValue(),
+      this.#pApi.query.NominationPools.MinCreateBond.getValue(),
+      this.#pApi.query.NominationPools.MinJoinBond.getValue(),
+      this.#pApi.query.NominationPools.GlobalMaxCommission.getValue(),
+      this.#pApi.query.Staking.CounterForNominators.getValue(),
+      this.#pApi.query.Staking.CounterForValidators.getValue(),
+      this.#pApi.query.Staking.MaxValidatorsCount.getValue(),
+      this.#pApi.query.Staking.ValidatorCount.getValue(),
+      this.#pApi.query.Staking.ErasValidatorReward.getValue(
+        previousEra.toString()
+      ),
+      this.#pApi.query.Staking.ErasTotalStake.getValue(previousEra.toString()),
+      this.#pApi.query.Staking.MinNominatorBond.getValue(),
+      this.#pApi.query.Staking.ErasTotalStake.getValue(
+        activeEra.index.toString()
+      ),
     ]);
 
     // Format globalMaxCommission from a perbill to a percent.
-    const globalMaxCommissionAsPercent = BigInt(globalMaxCommission) / 1000000n;
+    const globalMaxCommissionAsPercent = perbillToPercent(
+      new BigNumber(globalMaxCommission)
+    );
 
     // Format max pool members to be a BigNumber, or null if it's not set.
     const maxPoolMembers = maxPoolMembersRaw

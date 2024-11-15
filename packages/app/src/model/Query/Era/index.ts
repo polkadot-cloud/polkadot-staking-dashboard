@@ -5,11 +5,19 @@ import BigNumber from 'bignumber.js';
 import type { PapiApi } from 'model/Api/types';
 
 export class Era {
+  #pApi: PapiApi;
+
+  constructor(pApi: PapiApi) {
+    this.#pApi = pApi;
+  }
+
   // Fetch network constants.
-  async fetch(pApi: PapiApi) {
+  async fetch() {
     let result;
     try {
-      const { index, start } = await pApi.query.Staking.ActiveEra.getValue();
+      const { index, start } =
+        await this.#pApi.query.Staking.ActiveEra.getValue();
+
       result = {
         start,
         index,
