@@ -245,12 +245,15 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
     const result: Exposure[] = [];
     let i = 0;
-    for (const [
-      {
+    // NOTE: Only one page is fetched for each validator for now.
+    for (const pages of pagedResults) {
+      const page = pages[0];
+
+      const {
         keyArgs,
         value: { others },
-      },
-    ] of pagedResults) {
+      } = page;
+
       const validator = validatorKeys[i];
       const { own, total } = validators[validator];
 
