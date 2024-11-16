@@ -23,7 +23,7 @@ import { useApi } from '../../Api';
 import { defaultBondedPoolsContext } from './defaults';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import { SyncController } from 'controllers/Sync';
-import { BondedPoolsEntries } from 'model/Query/BondedPoolsEntries';
+import { BondedPools } from 'model/Entries/BondedPools';
 import { ApiController } from 'controllers/Api';
 
 export const BondedPoolsContext = createContext<BondedPoolsContextState>(
@@ -75,9 +75,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     const ids: number[] = [];
 
     // Get and format bonded pool entries.
-    const bondedPoolsEntries = (
-      await new BondedPoolsEntries(pApi).fetch()
-    ).format();
+    const bondedPoolsEntries = (await new BondedPools(pApi).fetch()).format();
 
     let exposures = Object.entries(bondedPoolsEntries).map(
       ([id, pool]: AnyApi) => {

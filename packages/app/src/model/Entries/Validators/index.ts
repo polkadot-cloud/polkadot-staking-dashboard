@@ -3,7 +3,7 @@
 
 import type { PapiApi } from 'model/Api/types';
 
-export class ValidatorEntries {
+export class Validators {
   #pApi: PapiApi;
 
   constructor(pApi: PapiApi) {

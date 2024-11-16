@@ -33,7 +33,7 @@ import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
 import { useErasPerDay } from 'hooks/useErasPerDay';
 import { IdentitiesController } from 'controllers/Identities';
 import type { AnyJson, Sync } from '@w3ux/types';
-import { ValidatorEntries } from 'model/Query/ValidatorEntries';
+import { Validators } from 'model/Entries/Validators';
 import { ApiController } from 'controllers/Api';
 import { perbillToPercent } from 'library/Utils';
 
@@ -248,7 +248,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const { pApi } = ApiController.get(network);
-    const result = await new ValidatorEntries(pApi).fetch();
+    const result = await new Validators(pApi).fetch();
 
     const entries: Validator[] = [];
     let notFullCommissionCount = 0;

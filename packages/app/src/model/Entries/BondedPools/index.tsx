@@ -6,7 +6,7 @@ import { perbillToPercent } from 'library/Utils';
 import type { PapiApi } from 'model/Api/types';
 import type { AnyApi } from 'types';
 
-export class BondedPoolsEntries {
+export class BondedPools {
   #pApi: PapiApi;
 
   bondedPools: AnyApi = {};
