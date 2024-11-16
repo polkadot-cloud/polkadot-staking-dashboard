@@ -13,7 +13,6 @@ export const ActiveAccounsWrapper = styled.div`
     padding: 0.5rem 0;
 
     &:first-child {
-      border: 1px solid;
       padding-top: 0;
     }
 
