@@ -23,6 +23,8 @@ import { useApi } from '../../Api';
 import { defaultBondedPoolsContext } from './defaults';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import { SyncController } from 'controllers/Sync';
+import { BondedPoolsEntries } from 'model/Query/BondedPoolsEntries';
+import { ApiController } from 'controllers/Api';
 
 export const BondedPoolsContext = createContext<BondedPoolsContextState>(
   defaultBondedPoolsContext
@@ -63,21 +65,26 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch all bonded pool entries and their metadata.
   const fetchBondedPools = async () => {
-    if (!api || bondedPoolsSynced.current !== 'unsynced') {
+    const { pApi } = ApiController.get(network);
+
+    if (!api || !pApi || bondedPoolsSynced.current !== 'unsynced') {
       return;
     }
     bondedPoolsSynced.current = 'syncing';
 
     const ids: number[] = [];
 
-    // Fetch bonded pools entries.
-    const bondedPoolsMulti =
-      await api.query.nominationPools.bondedPools.entries();
-    let exposures = bondedPoolsMulti.map(([keys, val]: AnyApi) => {
-      const id = keys.toHuman()[0];
-      ids.push(id);
-      return getPoolWithAddresses(id, val.toHuman());
-    });
+    // Get and format bonded pool entries.
+    const bondedPoolsEntries = (
+      await new BondedPoolsEntries(pApi).fetch()
+    ).format();
+
+    let exposures = Object.entries(bondedPoolsEntries).map(
+      ([id, pool]: AnyApi) => {
+        ids.push(id);
+        return getPoolWithAddresses(id, pool);
+      }
+    );
 
     exposures = shuffle(exposures);
     setStateWithRef(exposures, setBondedPools, bondedPoolsRef);

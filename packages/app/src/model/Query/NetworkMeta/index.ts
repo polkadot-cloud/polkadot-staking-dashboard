@@ -71,9 +71,9 @@ export class NetworkMeta {
     ]);
 
     // Format globalMaxCommission from a perbill to a percent.
-    const globalMaxCommissionAsPercent = perbillToPercent(
-      new BigNumber(globalMaxCommission)
-    );
+    const globalMaxCommissionAsPercent = !globalMaxCommission
+      ? new BigNumber(0)
+      : perbillToPercent(globalMaxCommission);
 
     // Format max pool members to be a BigNumber, or null if it's not set.
     const maxPoolMembers = maxPoolMembersRaw

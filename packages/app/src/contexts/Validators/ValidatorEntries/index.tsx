@@ -255,9 +255,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     let totalNonAllCommission = new BigNumber(0);
     result.forEach(
       ({ keyArgs: [address], value: { commission, blocked } }: AnyApi) => {
-        const commissionAsPercent = new BigNumber(
-          perbillToPercent(new BigNumber(commission)).toString()
-        );
+        const commissionAsPercent = perbillToPercent(commission);
 
         if (!commissionAsPercent.isEqualTo(100)) {
           totalNonAllCommission =
