@@ -20,6 +20,7 @@ import type { APIEventDetail, PapiReadyEvent } from 'model/Api/types';
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types';
 import type { AnyJson } from '@w3ux/types';
 import type { BlockNumberEventDetail } from 'model/Subscribe/BlockNumber/types';
+import type { BondedAccount } from 'contexts/Bonded/types';
 
 declare global {
   interface Window {
@@ -42,6 +43,7 @@ declare global {
       stakingMetrics: APIStakingMetrics;
     }>;
     'new-active-pool': CustomEvent<DetailActivePool>;
+    'new-bonded-account': CustomEvent<BondedAccount>;
     'new-sync-status': CustomEvent<SyncEvent>;
     'new-external-account': CustomEvent<{ address: string }>;
     'new-account-balance': CustomEvent<ActiveBalance & { address: string }>;

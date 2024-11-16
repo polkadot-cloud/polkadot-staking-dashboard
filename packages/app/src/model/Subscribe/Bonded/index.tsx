@@ -1,0 +1,64 @@
+// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+import type { BondedAccount } from 'contexts/Bonded/types';
+import { ApiController } from 'controllers/Api';
+import type { Unsubscribable } from 'controllers/Subscriptions/types';
+import type { Subscription } from 'rxjs';
+import type { NetworkName } from 'types';
+
+export class Bonded implements Unsubscribable {
+  // The associated network for this instance.
+  #network: NetworkName;
+
+  // The stash address.
+  #address: string;
+
+  // The bonded address.
+  bonded: string;
+
+  // Active subscription.
+  #sub: Subscription;
+
+  constructor(network: NetworkName, address: string) {
+    this.#network = network;
+    this.#address = address;
+    this.subscribe();
+  }
+
+  subscribe = async (): Promise<void> => {
+    try {
+      const { pApi } = ApiController.get(this.#network);
+
+      if (pApi && this.#sub === undefined) {
+        const unsub = pApi.query.Staking.Bonded.watchValue(
+          this.#address
+        ).subscribe((controller) => {
+          const account: BondedAccount = {
+            address: this.#address,
+            bonded: controller || null,
+          };
+
+          // Send bonded account to UI.
+          document.dispatchEvent(
+            new CustomEvent('new-bonded-account', {
+              detail: {
+                account,
+              },
+            })
+          );
+        });
+        this.#sub = unsub;
+      }
+    } catch (e) {
+      // Subscription failed.
+    }
+  };
+
+  // Unsubscribe from class subscription.
+  unsubscribe = (): void => {
+    if (typeof this.#sub?.unsubscribe === 'function') {
+      this.#sub.unsubscribe();
+    }
+  };
+}

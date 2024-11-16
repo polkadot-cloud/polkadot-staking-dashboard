@@ -245,8 +245,8 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
     const result: Exposure[] = [];
     let i = 0;
-    // NOTE: Only one page is fetched for each validator for now.
     for (const pages of pagedResults) {
+      // NOTE: Only one page is fetched for each validator for now.
       const page = pages[0];
 
       const {
