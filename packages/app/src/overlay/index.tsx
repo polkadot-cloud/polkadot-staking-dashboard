@@ -13,7 +13,8 @@ import { ChangePoolRoles } from '../modals/ChangePoolRoles';
 import { ChooseLanguage } from '../modals/ChooseLanguage';
 import { ClaimReward } from '../modals/ClaimReward';
 import { Connect } from '../modals/Connect';
-import { GoToFeedback } from '../modals/GoToFeedback';
+import { MailSupport } from '../modals/MailSupport';
+import { DiscordSupport } from '../modals/DiscordSupport';
 import { ImportLedger } from '../modals/ImportLedger';
 import { ImportVault } from '../modals/ImportVault';
 import { ManageFastUnstake } from '../modals/ManageFastUnstake';
@@ -52,7 +53,8 @@ export const Overlays = () => {
         ClaimReward,
         Connect,
         Accounts,
-        GoToFeedback,
+        DiscordSupport,
+        MailSupport,
         ImportLedger,
         ImportVault,
         ImportWalletConnect,

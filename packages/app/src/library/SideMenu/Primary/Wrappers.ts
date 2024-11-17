@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled(motion.div)`
   border: none;
-  border-radius: 0.7rem;
+  border-radius: 0.8rem;
   height: 3.2rem;
   display: flex;
   flex-flow: row wrap;

@@ -7,14 +7,14 @@ import type { MinimisedProps } from '../types';
 
 export const Wrapper = styled(motion.button)<MinimisedProps>`
   border: 1px solid var(--border-secondary-color);
-  border-radius: 0.7rem;
-  height: 3.2rem;
+  border-radius: 0.8rem;
+  height: 3.3rem;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
   position: relative;
   padding: 0.75rem 0rem 0.75rem 0.5rem;
-  margin: 0.8rem 0.2rem 0.8rem 0;
+  margin: 0.8rem 0.2rem 1rem 0;
   width: 100%;
 
   .name {
@@ -52,16 +52,16 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
 `;
 
 export const MinimisedWrapper = styled(motion.button)`
-  border: 1px solid var(--border-primary-color);
-  border-radius: 0.5rem;
+  border: 1px solid var(--border-secondary-color);
+  border-radius: 0.7rem;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
   position: relative;
   padding: 0rem 0rem;
-  margin: 0.6rem 0 0.6rem 0;
-  min-height: 2.8rem;
+  margin: 0.6rem 0 1.15rem 0;
+  min-height: 3.2rem;
   width: 100%;
 
   &.active {

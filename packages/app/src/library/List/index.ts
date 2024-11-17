@@ -106,6 +106,12 @@ export const SelectableWrapper = styled.div`
   > button {
     margin-bottom: 0.75rem;
   }
+
+  &.list {
+    button {
+      color: var(--text-color-primary);
+    }
+  }
 `;
 
 export const ListStatusHeader = styled.h4`

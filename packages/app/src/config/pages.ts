@@ -27,7 +27,7 @@ export const PageCategories: PageCategoryItems = [
 
 export const PagesConfig: PagesConfigItems = [
   {
-    category: 1,
+    category: 2,
     key: 'overview',
     uri: `${BASE_URL}`,
     hash: '/overview',
