@@ -271,6 +271,8 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
     if (!api) {
       return;
     }
+
+    // TODO: Make a `combineLatest` subscription with new event ----------------------
     const subscribeQueue = async (a: MaybeAddress) => {
       const u = await api.query.fastUnstake.queue(a, (q: AnyApi) =>
         setStateWithRef(
@@ -297,6 +299,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
       );
       return u;
     };
+    // --------------------------------------------------------------------------------
 
     // Subscribe to queue + head.
 
