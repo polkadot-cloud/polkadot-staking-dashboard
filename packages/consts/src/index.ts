@@ -1,8 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { stringToU8a } from '@polkadot/util';
-
 /*
  * Global Constants
  */
@@ -10,13 +8,6 @@ export const DappName = 'Polkadot Staking Dashboard';
 export const ManualSigners = ['ledger', 'vault', 'wallet_connect'];
 export const DiscordSupportUrl = 'https://discord.gg/QY7CSSJm3D';
 export const MailSupportAddress = 'staking@polkadot.cloud';
-
-/*
- * Byte Helpers
- */
-export const EmptyH256 = new Uint8Array(32);
-export const ModPrefix = stringToU8a('modl');
-export const U32Opts = { bitLength: 32, isLe: true };
 
 /*
  * Element Thresholds

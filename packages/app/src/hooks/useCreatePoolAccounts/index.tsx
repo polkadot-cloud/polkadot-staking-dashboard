@@ -1,14 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { bnToU8a, u8aConcat } from '@polkadot/util';
+import { bnToU8a, stringToU8a, u8aConcat } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
 import { BN } from 'bn.js';
-import { EmptyH256, ModPrefix, U32Opts } from 'consts';
 import { useApi } from 'contexts/Api';
+import { AccountId } from '@polkadot-api/substrate-bindings';
 
 export const useCreatePoolAccounts = () => {
-  const { api, consts } = useApi();
+  const {
+    consts,
+    chainSpecs: { ss58Format },
+  } = useApi();
   const { poolsPalletId } = consts;
 
   // Generates pool stash and reward accounts. Assumes `poolsPalletId` is synced.
@@ -21,21 +24,16 @@ export const useCreatePoolAccounts = () => {
   };
 
   const createAccount = (poolId: BigNumber, index: number): string => {
-    if (!api) {
-      return '';
-    }
-    return api.registry
-      .createType(
-        'AccountId32',
-        u8aConcat(
-          ModPrefix,
-          poolsPalletId,
-          new Uint8Array([index]),
-          bnToU8a(new BN(poolId.toString()), U32Opts),
-          EmptyH256
-        )
-      )
-      .toString();
+    const key = u8aConcat(
+      stringToU8a('modl'),
+      poolsPalletId,
+      new Uint8Array([index]),
+      bnToU8a(new BN(poolId.toString()), { bitLength: 32, isLe: true }),
+      new Uint8Array(32)
+    );
+
+    const codec = AccountId(ss58Format);
+    return codec.dec(key);
   };
 
   return createPoolAccounts;
