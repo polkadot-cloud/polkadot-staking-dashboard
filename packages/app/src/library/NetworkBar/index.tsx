@@ -5,7 +5,7 @@ import { capitalizeFirstLetter } from '@w3ux/utils';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-// import { usePlugins } from 'contexts/Plugins';
+import { usePlugins } from 'contexts/Plugins';
 import { useNetwork } from 'contexts/Network';
 import { Status } from './Status';
 import { Summary, Wrapper } from './Wrappers';
@@ -16,10 +16,11 @@ import BigNumber from 'bignumber.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHive } from '@fortawesome/free-brands-svg-icons';
 import { Odometer } from '@w3ux/react-odometer';
+import { TokenPrice } from './TokenPrice';
 
 export const NetworkBar = () => {
   const { t } = useTranslation('library');
-  // const { plugins } = usePlugins();
+  const { plugins } = usePlugins();
   const { connectionType } = useApi();
   const { networkData, network } = useNetwork();
 
@@ -83,10 +84,9 @@ export const NetworkBar = () => {
         </section>
         <section>
           <div className="hide-small">
-            {/* Temporarily disabled */}
-            {/* {plugins.includes('staking_api') && network !== 'westend' && (
+            {plugins.includes('staking_api') && network !== 'westend' && (
               <TokenPrice />
-            )} */}
+            )}
 
             <div className="stat last">
               <FontAwesomeIcon icon={faHive} />
