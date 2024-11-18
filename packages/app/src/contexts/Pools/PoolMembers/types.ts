@@ -6,7 +6,6 @@ import type { AnyMetaBatch, MaybeAddress } from 'types';
 
 export interface PoolMemberContext {
   fetchPoolMembersMetaBatch: (k: string, v: AnyMetaBatch[], r: boolean) => void;
-  queryPoolMember: (who: MaybeAddress) => Promise<PoolMember | null>;
   removePoolMember: (w: MaybeAddress) => void;
   meta: AnyMetaBatch;
   poolMembersApi: PoolMember[];

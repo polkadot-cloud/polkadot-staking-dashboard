@@ -78,26 +78,6 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
     setStateWithRef({}, setPoolMembersMetaBatch, poolMembersMetaBatchesRef);
   };
 
-  // queries a  pool member and formats to `PoolMember`.
-  const queryPoolMember = async (who: MaybeAddress) => {
-    if (!api) {
-      return null;
-    }
-
-    const poolMember: AnyApi = (
-      await api.query.nominationPools.poolMembers(who)
-    ).toHuman();
-
-    if (!poolMember) {
-      return null;
-    }
-
-    return {
-      who,
-      poolId: poolMember.poolId,
-    } as PoolMember;
-  };
-
   /*
     Fetches a new batch of pool member metadata.
     structure:
@@ -213,7 +193,6 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
     <PoolMembersContext.Provider
       value={{
         fetchPoolMembersMetaBatch,
-        queryPoolMember,
         removePoolMember,
         poolMembersApi,
         setPoolMembersApi,
