@@ -206,7 +206,6 @@ export class Api {
       // Dispatch 'papi-ready' event to let contexts populate constants.
       this.dispatchPapiReadyEvent();
     } catch (e) {
-      console.debug('PAPI chain spec failed');
       // TODO: Expand this when PJS API has been removed. Flag an error if there are any issues
       // bootstrapping chain spec. NOTE: This can happen when PAPI is the standalone connection
       // method.
