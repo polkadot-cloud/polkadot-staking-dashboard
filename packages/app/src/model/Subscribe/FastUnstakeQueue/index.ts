@@ -30,8 +30,10 @@ export class FastUnstakeQueue implements Unsubscribable {
       const { pApi } = ApiController.get(this.#network);
 
       if (pApi && this.#sub === undefined) {
+        const bestOrFinalized = 'best';
         const unsub = pApi.query.FastUnstake.Queue.watchValue(
-          this.#address
+          this.#address,
+          bestOrFinalized
         ).subscribe((queue) => {
           this.queue = queue;
 

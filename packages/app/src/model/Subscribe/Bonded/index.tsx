@@ -31,8 +31,10 @@ export class Bonded implements Unsubscribable {
       const { pApi } = ApiController.get(this.#network);
 
       if (pApi && this.#sub === undefined) {
+        const bestOrFinalized = 'best';
         const unsub = pApi.query.Staking.Bonded.watchValue(
-          this.#address
+          this.#address,
+          bestOrFinalized
         ).subscribe((controller) => {
           const account: BondedAccount = {
             address: this.#address,

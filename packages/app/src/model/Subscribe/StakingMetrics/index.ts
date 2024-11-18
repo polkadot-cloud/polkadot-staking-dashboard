@@ -39,21 +39,25 @@ export class StakingMetrics implements Unsubscribable {
       const { pApi } = ApiController.get(this.#network);
 
       if (pApi && this.#sub === undefined) {
+        const bestOrFinalized = 'best';
         const sub = combineLatest([
-          pApi.query.Staking.CounterForValidators.watchValue(),
-          pApi.query.Staking.MaxValidatorsCount.watchValue(),
-          pApi.query.Staking.ValidatorCount.watchValue(),
+          pApi.query.Staking.CounterForValidators.watchValue(bestOrFinalized),
+          pApi.query.Staking.MaxValidatorsCount.watchValue(bestOrFinalized),
+          pApi.query.Staking.ValidatorCount.watchValue(bestOrFinalized),
           pApi.query.Staking.ErasValidatorReward.watchValue(
-            this.#previousEra.toString()
+            this.#previousEra.toString(),
+            bestOrFinalized
           ),
           pApi.query.Staking.ErasTotalStake.watchValue(
-            this.#previousEra.toString()
+            this.#previousEra.toString(),
+            bestOrFinalized
           ),
-          pApi.query.Staking.MinNominatorBond.watchValue(),
+          pApi.query.Staking.MinNominatorBond.watchValue(bestOrFinalized),
           pApi.query.Staking.ErasTotalStake.watchValue(
-            this.#activeEra.index.toString()
+            this.#activeEra.index.toString(),
+            bestOrFinalized
           ),
-          pApi.query.Staking.CounterForNominators.watchValue(),
+          pApi.query.Staking.CounterForNominators.watchValue(bestOrFinalized),
         ]).subscribe(
           ([
             counterForValidators,

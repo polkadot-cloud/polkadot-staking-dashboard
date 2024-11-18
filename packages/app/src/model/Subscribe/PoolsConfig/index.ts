@@ -28,17 +28,28 @@ export class PoolsConfig implements Unsubscribable {
       const { pApi } = ApiController.get(this.#network);
 
       if (pApi && this.#sub === undefined) {
+        const bestOrFinalized = 'best';
         const sub = combineLatest([
-          pApi.query.NominationPools.CounterForPoolMembers.watchValue(),
-          pApi.query.NominationPools.CounterForBondedPools.watchValue(),
-          pApi.query.NominationPools.CounterForRewardPools.watchValue(),
-          pApi.query.NominationPools.LastPoolId.watchValue(),
-          pApi.query.NominationPools.MaxPoolMembers.watchValue(),
-          pApi.query.NominationPools.MaxPoolMembersPerPool.watchValue(),
-          pApi.query.NominationPools.MaxPools.watchValue(),
-          pApi.query.NominationPools.MinCreateBond.watchValue(),
-          pApi.query.NominationPools.MinJoinBond.watchValue(),
-          pApi.query.NominationPools.GlobalMaxCommission.watchValue(),
+          pApi.query.NominationPools.CounterForPoolMembers.watchValue(
+            bestOrFinalized
+          ),
+          pApi.query.NominationPools.CounterForBondedPools.watchValue(
+            bestOrFinalized
+          ),
+          pApi.query.NominationPools.CounterForRewardPools.watchValue(
+            bestOrFinalized
+          ),
+          pApi.query.NominationPools.LastPoolId.watchValue(bestOrFinalized),
+          pApi.query.NominationPools.MaxPoolMembers.watchValue(bestOrFinalized),
+          pApi.query.NominationPools.MaxPoolMembersPerPool.watchValue(
+            bestOrFinalized
+          ),
+          pApi.query.NominationPools.MaxPools.watchValue(bestOrFinalized),
+          pApi.query.NominationPools.MinCreateBond.watchValue(bestOrFinalized),
+          pApi.query.NominationPools.MinJoinBond.watchValue(bestOrFinalized),
+          pApi.query.NominationPools.GlobalMaxCommission.watchValue(
+            bestOrFinalized
+          ),
         ]).subscribe(
           ([
             counterForPoolMembers,

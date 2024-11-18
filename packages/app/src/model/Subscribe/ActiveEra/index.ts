@@ -32,43 +32,44 @@ export class ActiveEra implements Unsubscribable {
 
       if (pApi && this.#sub === undefined) {
         // Testing the active era subscription.
-        const sub = pApi.query.Staking.ActiveEra.watchValue().subscribe(
-          (activeEra) => {
-            // Store active era.
-            this.activeEra = {
-              index: new BigNumber(activeEra.index.toString()),
-              start: new BigNumber(activeEra.start.toString()),
-            };
+        const bestOrFinalized = 'best';
+        const sub = pApi.query.Staking.ActiveEra.watchValue(
+          bestOrFinalized
+        ).subscribe((activeEra) => {
+          // Store active era.
+          this.activeEra = {
+            index: new BigNumber(activeEra.index.toString()),
+            start: new BigNumber(activeEra.start.toString()),
+          };
 
-            // Unsubscribe to staking metrics if it exists.
-            const subStakingMetrics = SubscriptionsController.get(
-              this.#network,
-              'stakingMetrics'
-            );
+          // Unsubscribe to staking metrics if it exists.
+          const subStakingMetrics = SubscriptionsController.get(
+            this.#network,
+            'stakingMetrics'
+          );
 
-            if (subStakingMetrics) {
-              subStakingMetrics.subscribe();
-              SubscriptionsController.remove(this.#network, 'stakingMetrics');
-            }
-
-            // Subscribe to staking metrics with new active era.
-            SubscriptionsController.set(
-              this.#network,
-              'stakingMetrics',
-              new StakingMetrics(
-                this.#network,
-                this.activeEra,
-                BigNumber.max(0, this.activeEra.index.minus(1))
-              )
-            );
-
-            document.dispatchEvent(
-              new CustomEvent('new-active-era', {
-                detail: { activeEra },
-              })
-            );
+          if (subStakingMetrics) {
+            subStakingMetrics.subscribe();
+            SubscriptionsController.remove(this.#network, 'stakingMetrics');
           }
-        );
+
+          // Subscribe to staking metrics with new active era.
+          SubscriptionsController.set(
+            this.#network,
+            'stakingMetrics',
+            new StakingMetrics(
+              this.#network,
+              this.activeEra,
+              BigNumber.max(0, this.activeEra.index.minus(1))
+            )
+          );
+
+          document.dispatchEvent(
+            new CustomEvent('new-active-era', {
+              detail: { activeEra },
+            })
+          );
+        });
         this.#sub = sub;
       }
     } catch (e) {

@@ -26,7 +26,10 @@ export class BlockNumber implements Unsubscribable {
       const { pApi } = ApiController.get(this.#network);
 
       if (pApi && this.#sub === undefined) {
-        const unsub = pApi.query.System.Number.watchValue().subscribe((num) => {
+        const bestOrFinalized = 'best';
+        const unsub = pApi.query.System.Number.watchValue(
+          bestOrFinalized
+        ).subscribe((num) => {
           // Update class block number.
           this.blockNumber = num.toString();
 

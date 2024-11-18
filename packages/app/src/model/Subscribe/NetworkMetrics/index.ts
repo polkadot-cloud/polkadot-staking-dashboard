@@ -25,12 +25,17 @@ export class NetworkMetrics implements Unsubscribable {
       const { pApi } = ApiController.get(this.#network);
 
       if (pApi && this.#sub === undefined) {
+        const bestOrFinalized = 'best';
         const sub = combineLatest([
-          pApi.query.Balances.TotalIssuance.watchValue(),
-          pApi.query.Auctions.AuctionCounter.watchValue(),
-          pApi.query.ParaSessionInfo.EarliestStoredSession.watchValue(),
-          pApi.query.FastUnstake.ErasToCheckPerBlock.watchValue(),
-          pApi.query.Staking.MinimumActiveStake.watchValue(),
+          pApi.query.Balances.TotalIssuance.watchValue(bestOrFinalized),
+          pApi.query.Auctions.AuctionCounter.watchValue(bestOrFinalized),
+          pApi.query.ParaSessionInfo.EarliestStoredSession.watchValue(
+            bestOrFinalized
+          ),
+          pApi.query.FastUnstake.ErasToCheckPerBlock.watchValue(
+            bestOrFinalized
+          ),
+          pApi.query.Staking.MinimumActiveStake.watchValue(bestOrFinalized),
         ]).subscribe(
           ([
             totalIssuance,

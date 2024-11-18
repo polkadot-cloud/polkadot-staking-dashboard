@@ -30,8 +30,10 @@ export class AccountProxies implements Unsubscribable {
       const { pApi } = ApiController.get(this.#network);
 
       if (pApi && this.#sub === undefined) {
+        const bestOrFinalized = 'best';
         const unsub = pApi.query.Proxy.Proxies.watchValue(
-          this.#address
+          this.#address,
+          bestOrFinalized
         ).subscribe((proxies) => {
           document.dispatchEvent(
             new CustomEvent('new-account-proxies', {
