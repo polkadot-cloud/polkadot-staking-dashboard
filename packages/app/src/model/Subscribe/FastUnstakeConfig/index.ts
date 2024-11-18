@@ -35,7 +35,7 @@ export class FastUnstakeConfig implements Unsubscribable {
           };
 
           document.dispatchEvent(
-            new CustomEvent('new-fast-unstake-data', {
+            new CustomEvent('new-fast-unstake-config', {
               detail: { data },
             })
           );

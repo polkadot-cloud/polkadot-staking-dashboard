@@ -44,7 +44,7 @@ declare global {
       stakingMetrics: APIStakingMetrics;
     }>;
     'new-active-pool': CustomEvent<DetailActivePool>;
-    'new-fast-unstake-data': CustomEvent<FastUnstakeConfigResult>;
+    'new-fast-unstake-config': CustomEvent<FastUnstakeConfigResult>;
     'new-bonded-account': CustomEvent<BondedAccount>;
     'new-sync-status': CustomEvent<SyncEvent>;
     'new-external-account': CustomEvent<{ address: string }>;

@@ -340,7 +340,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
 
   const documentRef = useRef<Document>(document);
   useEventListener(
-    'new-fast-unstake-data',
+    'new-fast-unstake-config',
     handleNewFastUnstakeData,
     documentRef
   );
