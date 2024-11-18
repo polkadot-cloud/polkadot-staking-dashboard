@@ -204,9 +204,10 @@ export class AccountBalances implements Unsubscribable {
     this.poolMembership = {
       address: this.#address,
       poolId: poolMembers.pool_id,
-      points: poolMembers.points,
+      points: poolMembers.points.toString(),
       balance,
-      lastRecordedRewardCounter: poolMembers.last_recorded_reward_counter,
+      lastRecordedRewardCounter:
+        poolMembers.last_recorded_reward_counter.toString(),
       unbondingEras: unlocking, // NOTE: This is a duplicate of `unlocking`.
       claimPermission,
       unlocking,
