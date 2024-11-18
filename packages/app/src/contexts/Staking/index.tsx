@@ -249,6 +249,11 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       // NOTE: Only one page is fetched for each validator for now.
       const page = pages[0];
 
+      // NOTE: Some pages turn up as undefined - might be worth exploring further.
+      if (!page) {
+        continue;
+      }
+
       const {
         keyArgs,
         value: { others },

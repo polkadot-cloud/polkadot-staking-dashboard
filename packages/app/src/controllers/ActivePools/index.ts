@@ -1,49 +1,28 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { VoidFn } from '@polkadot/api/types';
-import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
-import type { ActivePool, PoolRoles } from 'contexts/Pools/ActivePool/types';
-import { IdentitiesController } from 'controllers/Identities';
-import type { AnyApi, MaybeAddress } from 'types';
+import type { MaybeAddress, NetworkName, SystemChainId } from 'types';
 import type {
   AccountActivePools,
   AccountPoolNominations,
-  AccountUnsubs,
   ActivePoolItem,
   DetailActivePool,
 } from './types';
 import { SyncController } from 'controllers/Sync';
-import type { Nominations } from 'contexts/Balances/types';
-import type { ApiPromise } from '@polkadot/api';
+import { SubscriptionsController } from 'controllers/Subscriptions';
+import { ActivePoolAccount } from 'model/Subscribe/ActivePoolAccount';
+import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
 
 export class ActivePoolsController {
-  // ------------------------------------------------------
-  // Class members.
-  // ------------------------------------------------------
-
   // Pool ids that are being subscribed to. Keyed by address.
   static pools: Record<string, ActivePoolItem[]> = {};
 
-  // Active pools that are being returned from subscriptions, keyed by account address, then pool
-  // id.
-  static activePools: Record<string, AccountActivePools> = {};
+  // Map from an address to its associated pool ids
+  static addressToPool: Record<string, string> = {};
 
-  // Active pool nominations, keyed by account address, then pool id.
-  static poolNominations: Record<string, AccountPoolNominations> = {};
-
-  // Unsubscribe objects, keyed by account address, then pool id.
-  static #unsubs: Record<string, AccountUnsubs> = {};
-
-  // ------------------------------------------------------
-  // Pool membership syncing.
-  // ------------------------------------------------------
-
-  // Subscribes to pools and unsubscribes from removed pools.
+  // Subscribes to new pools and unsubscribes from removed pools.
   static syncPools = async (
-    api: ApiPromise,
-    peopleApi: ApiPromise,
-    peopleApiStatus: string,
+    network: NetworkName,
     address: MaybeAddress,
     newPools: ActivePoolItem[]
   ): Promise<void> => {
@@ -52,260 +31,125 @@ export class ActivePoolsController {
     }
 
     // Handle pools that have been removed.
-    this.handleRemovedPools(address, newPools);
+    this.handleRemovedPools(network, address);
 
-    const currentPools = this.getPools(address);
+    const currentPool = this.addressToPool[address];
 
     // Determine new pools that need to be subscribed to.
-    const poolsAdded = newPools.filter(
-      (newPool) => !currentPools.find(({ id }) => id === newPool.id)
-    );
+    const updatedPool = newPools.find((newPool) => currentPool === newPool.id)
+      ? false
+      : newPools[0];
 
-    if (poolsAdded.length) {
+    if (updatedPool) {
+      this.pools[address] = newPools;
+
       // Subscribe to and add new pool data.
-      poolsAdded.forEach(async (pool) => {
-        this.pools[address] = currentPools.concat(pool);
+      SubscriptionsController.set(
+        network,
+        `activePool-${address}-${updatedPool.id}`,
+        new ActivePoolAccount(network, address, updatedPool)
+      );
 
-        const unsub = await api.queryMulti<AnyApi>(
-          [
-            [api.query.nominationPools.bondedPools, pool.id],
-            [api.query.nominationPools.rewardPools, pool.id],
-            [api.query.system.account, pool.addresses.reward],
-            [api.query.staking.nominators, pool.addresses.stash],
-          ],
-          async ([
-            bondedPool,
-            rewardPool,
-            accountData,
-            nominators,
-          ]): Promise<void> => {
-            // NOTE: async: fetches identity data for roles.
-            await this.handleActivePoolCallback(
-              peopleApi,
-              peopleApiStatus,
-              address,
-              pool,
-              bondedPool,
-              rewardPool,
-              accountData
-            );
-            this.handleNominatorsCallback(address, pool, nominators);
-
-            if (
-              this.activePools?.[address]?.[pool.id] &&
-              this.poolNominations?.[address]?.[pool.id]
-            ) {
-              document.dispatchEvent(
-                new CustomEvent('new-active-pool', {
-                  detail: {
-                    address,
-                    pool: this.activePools[address][pool.id],
-                    nominations: this.poolNominations[address][pool.id],
-                  },
-                })
-              );
-            }
-          }
-        );
-        this.setUnsub(address, pool.id, unsub);
-      });
+      // Add pool id to address mapping.
+      this.addressToPool[address] = updatedPool.id;
     } else {
       // Status: Pools Synced Completed.
       SyncController.dispatch('active-pools', 'complete');
     }
   };
 
-  // Handle active pool callback.
-  static handleActivePoolCallback = async (
-    peopleApi: ApiPromise,
-    peopleApiStatus: string,
-    address: string,
-    pool: ActivePoolItem,
-    bondedPoolResult: AnyApi,
-    rewardPoolResult: AnyApi,
-    accountDataResult: AnyApi
-  ): Promise<void> => {
-    const bondedPool = bondedPoolResult?.unwrapOr(undefined)?.toHuman();
-    const rewardPool = rewardPoolResult?.unwrapOr(undefined)?.toHuman();
-    const balance = accountDataResult.data;
-    const rewardAccountBalance = balance?.free.toString();
-
-    if (peopleApi && peopleApiStatus === 'ready') {
-      // Fetch identities for roles and expand `bondedPool` state to store them.
-      bondedPool.roleIdentities = await IdentitiesController.fetch(
-        peopleApi,
-        this.getUniqueRoleAddresses(bondedPool.roles)
-      );
-    }
-
-    // Only persist the active pool to class state (and therefore dispatch an event) if both the
-    // bonded pool and reward pool are returned.
-    if (bondedPool && rewardPool) {
-      const newPool = {
-        id: Number(pool.id),
-        addresses: pool.addresses,
-        bondedPool,
-        rewardPool,
-        rewardAccountBalance,
-      };
-
-      this.setActivePool(address, pool.id, newPool);
-    } else {
-      // Invalid pools were returned. To signal pool was synced, set active pool to `null`.
-      this.setActivePool(address, pool.id, null);
-    }
-  };
-
-  // Handle nominators callback.
-  static handleNominatorsCallback = (
-    address: string,
-    pool: ActivePoolItem,
-    nominatorsResult: AnyApi
-  ): void => {
-    const maybeNewNominations = nominatorsResult.unwrapOr(null);
-
-    const newNominations: Nominations =
-      maybeNewNominations === null
-        ? defaultPoolNominations
-        : {
-            targets: maybeNewNominations.targets.toHuman(),
-            submittedIn: maybeNewNominations.submittedIn.toHuman(),
-          };
-
-    this.setPoolNominations(address, pool.id, newNominations);
-  };
-
   // Remove pools that no longer exist.
   static handleRemovedPools = (
-    address: string,
-    newPools: ActivePoolItem[]
+    network: NetworkName | SystemChainId,
+    address: string
   ): void => {
-    const currentPools = this.getPools(address);
+    const currentPool = this.addressToPool[address];
 
-    // Determine removed pools - current ones that no longer exist in `newPools`.
-    const poolsRemoved = currentPools.filter(
-      (pool) => !newPools.find((newPool) => newPool.id === pool.id)
-    );
+    if (currentPool) {
+      // Unsubscribe from removed pool subscription.
+      SubscriptionsController.remove(
+        network,
+        `activePool-${address}-${currentPool}`
+      );
 
-    // Unsubscribe from removed pool subscriptions.
-    poolsRemoved.forEach((pool) => {
-      if (this.#unsubs?.[address]?.[pool.id]) {
-        this.#unsubs[address][pool.id]();
-      }
-      delete this.activePools[address][pool.id];
-      delete this.poolNominations[address][pool.id];
-    });
-
-    // Remove removed pools from class.
-    this.pools[address] = currentPools.filter(
-      (pool) => !poolsRemoved.includes(pool)
-    );
-
-    // Tidy up empty class state.
-    if (!this.pools[address].length) {
+      // Remove pool from class.
+      delete this.addressToPool[address];
       delete this.pools[address];
     }
-
-    if (!this.activePools[address]) {
-      delete this.activePools[address];
-    }
-
-    if (!this.poolNominations[address]) {
-      delete this.poolNominations[address];
-    }
-    if (!this.#unsubs[address]) {
-      delete this.#unsubs[address];
-    }
-  };
-
-  // ------------------------------------------------------
-  // Subscription handling.
-  // ------------------------------------------------------
-
-  // Unsubscribe from all subscriptions and reset class members.
-  static unsubscribe = (): void => {
-    Object.values(this.#unsubs).forEach((accountUnsubs) => {
-      Object.values(accountUnsubs).forEach((unsub) => {
-        unsub();
-      });
-    });
-
-    this.#unsubs = {};
   };
 
   // ------------------------------------------------------
   // Getters.
   // ------------------------------------------------------
 
-  // Gets pools for a provided address.
-  static getPools = (address: MaybeAddress): ActivePoolItem[] => {
+  // Gets pool for a provided address.
+  static getPool = (
+    network: NetworkName,
+    address: MaybeAddress
+  ): ActivePoolItem | undefined => {
     if (!address) {
-      return [];
+      return undefined;
     }
-    return this.pools?.[address] || [];
+    const activePoolAccount = SubscriptionsController.get(
+      network,
+      `activePool-${address}-${this.addressToPool[address]}`
+    ) as ActivePoolAccount;
+
+    return activePoolAccount?.pool || undefined;
   };
 
-  // Gets active pools for a provided address.
-  static getActivePools = (address: MaybeAddress): AccountActivePools => {
+  // Gets active pool for a provided address.
+  static getActivePool = (
+    network: NetworkName,
+    address: MaybeAddress
+  ): AccountActivePools => {
     if (!address) {
       return {};
     }
-    return this.activePools?.[address] || {};
+    const poolId = this.addressToPool[address];
+    const activePool = SubscriptionsController.get(
+      network,
+      `activePool-${address}-${poolId}`
+    ) as ActivePoolAccount;
+
+    if (!activePool) {
+      return {};
+    }
+
+    return { [poolId]: activePool?.activePool || null };
   };
 
   // Gets active pool nominations for a provided address.
   static getPoolNominations = (
+    network: NetworkName,
     address: MaybeAddress
   ): AccountPoolNominations => {
     if (!address) {
       return {};
     }
-    return this.poolNominations?.[address] || {};
+    const poolId = this.addressToPool[address];
+    const activePool = SubscriptionsController.get(
+      network,
+      `activePool-${address}-${poolId}`
+    ) as ActivePoolAccount;
+
+    return {
+      poolId: activePool?.poolNominations || defaultPoolNominations,
+    };
   };
 
-  // Gets unique role addresses from a bonded pool's `roles` record.
-  static getUniqueRoleAddresses = (roles: PoolRoles): string[] => {
-    const roleAddresses: string[] = [
-      ...new Set(Object.values(roles).filter((role) => role !== undefined)),
-    ];
-    return roleAddresses;
-  };
+  // Gets all active pools for a provided network.
+  static getAllActivePools = (network: NetworkName) =>
+    Object.fromEntries(
+      Object.entries(this.addressToPool).map(([addr, poolId]) => {
+        const activePoolAccount = SubscriptionsController.get(
+          network,
+          `activePool-${addr}-${poolId}`
+        ) as ActivePoolAccount;
 
-  // ------------------------------------------------------
-  // Setters.
-  // ------------------------------------------------------
-
-  // Set an active pool for an address.
-  static setActivePool = (
-    address: string,
-    poolId: string,
-    activePool: ActivePool | null
-  ): void => {
-    if (!this.activePools[address]) {
-      this.activePools[address] = {};
-    }
-    this.activePools[address][poolId] = activePool;
-  };
-
-  // Set pool nominations for an address.
-  static setPoolNominations = (
-    address: string,
-    poolId: string,
-    nominations: Nominations
-  ): void => {
-    if (!this.poolNominations[address]) {
-      this.poolNominations[address] = {};
-    }
-    this.poolNominations[address][poolId] = nominations;
-  };
-
-  // Set unsub for an address and pool id.
-  static setUnsub = (address: string, poolId: string, unsub: VoidFn): void => {
-    if (!this.#unsubs[address]) {
-      this.#unsubs[address] = {};
-    }
-    this.#unsubs[address][poolId] = unsub;
-  };
+        return [poolId, activePoolAccount?.activePool || null];
+      })
+    );
 
   // ------------------------------------------------------
   // Class helpers.

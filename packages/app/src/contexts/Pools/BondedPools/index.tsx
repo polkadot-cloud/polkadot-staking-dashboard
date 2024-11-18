@@ -6,7 +6,6 @@ import { setStateWithRef, shuffle } from '@w3ux/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import type {
-  AccountPoolRoles,
   BondedPool,
   BondedPoolsContextState,
   MaybePool,
@@ -284,68 +283,6 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Gets all pools that the account has a role in. Returns an object with each pool role as keys,
-  // and array of pool ids as their values.
-  const accumulateAccountPoolRoles = (who: MaybeAddress): AccountPoolRoles => {
-    if (!who) {
-      return {
-        root: [],
-        depositor: [],
-        nominator: [],
-        bouncer: [],
-      };
-    }
-
-    const depositor = bondedPoolsRef.current
-      .filter((b) => b.roles.depositor === who)
-      .map((b) => b.id);
-
-    const root = bondedPoolsRef.current
-      .filter((b: BondedPool) => b.roles.root === who)
-      .map((b) => b.id);
-
-    const nominator = bondedPoolsRef.current
-      .filter((b) => b.roles.nominator === who)
-      .map((b) => b.id);
-
-    const bouncer = bondedPoolsRef.current
-      .filter((b) => b.roles.bouncer === who)
-      .map((b) => b.id);
-
-    const result = {
-      root,
-      depositor,
-      nominator,
-      bouncer,
-    };
-
-    return result;
-  };
-
-  // Gets a list of roles for all the pools the provided account has one or more roles in.
-  const getAccountPoolRoles = (who: MaybeAddress) => {
-    const allAccountRoles = accumulateAccountPoolRoles(who);
-
-    // Reformat all roles object, keyed by pool id.
-    const pools: Record<number, AnyJson> = {};
-
-    if (allAccountRoles) {
-      Object.entries(allAccountRoles).forEach(([role, poolIds]) => {
-        poolIds.forEach((poolId) => {
-          const exists = Object.keys(pools).find(
-            (k) => String(k) === String(poolId)
-          );
-          if (!exists) {
-            pools[poolId] = [role];
-          } else {
-            pools[poolId].push(role);
-          }
-        });
-      });
-    }
-    return pools;
-  };
-
   // Determine roles to replace from roleEdits
   const toReplace = (roleEdits: AnyJson) => {
     const root = roleEdits?.root?.newAddress ?? '';
@@ -415,7 +352,6 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
         removeFromBondedPools,
         getPoolNominationStatus,
         getPoolNominationStatusCode,
-        getAccountPoolRoles,
         replacePoolRoles,
         poolSearchFilter,
         bondedPools,
