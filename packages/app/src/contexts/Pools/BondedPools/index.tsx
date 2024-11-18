@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { u8aUnwrapBytes, u8aToString } from '@polkadot/util';
-import { rmCommas, setStateWithRef, shuffle } from '@w3ux/utils';
+import { setStateWithRef, shuffle } from '@w3ux/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import type {
@@ -25,6 +25,8 @@ import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import { SyncController } from 'controllers/Sync';
 import { BondedPools } from 'model/Entries/BondedPools';
 import { ApiController } from 'controllers/Api';
+import { NominatorsMulti } from 'model/Query/NominatorsMulti';
+import { PoolMetadataMulti } from 'model/Query/PoolMetadataMulti';
 
 export const BondedPoolsContext = createContext<BondedPoolsContextState>(
   defaultBondedPoolsContext
@@ -35,7 +37,6 @@ export const useBondedPools = () => useContext(BondedPoolsContext);
 export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
   const {
-    api,
     isReady,
     activeEra,
     poolsConfig: { lastPoolId },
@@ -67,32 +68,30 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const fetchBondedPools = async () => {
     const { pApi } = ApiController.get(network);
 
-    if (!api || !pApi || bondedPoolsSynced.current !== 'unsynced') {
+    if (!pApi || bondedPoolsSynced.current !== 'unsynced') {
       return;
     }
     bondedPoolsSynced.current = 'syncing';
 
-    const ids: number[] = [];
-
     // Get and format bonded pool entries.
+    const ids: number[] = [];
+    const idsMulti: [number][] = [];
     const bondedPoolsEntries = (await new BondedPools(pApi).fetch()).format();
 
-    let exposures = Object.entries(bondedPoolsEntries).map(
-      ([id, pool]: AnyApi) => {
+    const exposures = shuffle(
+      Object.entries(bondedPoolsEntries).map(([id, pool]: AnyApi) => {
         ids.push(id);
+        idsMulti.push([id]);
         return getPoolWithAddresses(id, pool);
-      }
+      })
     );
 
-    exposures = shuffle(exposures);
     setStateWithRef(exposures, setBondedPools, bondedPoolsRef);
 
     // Fetch pools metadata.
-    const metadataMulti = await api.query.nominationPools.metadata.multi(ids);
+    const metadataQuery = await new PoolMetadataMulti(pApi, idsMulti).fetch();
     setPoolsMetadata(
-      Object.fromEntries(
-        metadataMulti.map((m, i) => [ids[i], String(m.toHuman())])
-      )
+      Object.fromEntries(metadataQuery.map((m, i) => [ids[i], m]))
     );
 
     bondedPoolsSynced.current = 'synced';
@@ -101,35 +100,28 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetches pool nominations and updates state.
   const fetchPoolsNominations = async () => {
-    if (!api) {
+    const { pApi } = ApiController.get(network);
+    if (!pApi) {
       return;
     }
 
     const ids: number[] = [];
-    const nominationsMulti = await api.query.staking.nominators.multi(
-      bondedPools.map(({ addresses, id }) => {
-        ids.push(id);
-        return addresses.stash;
-      })
-    );
+    const stashes: [string][] = bondedPools.map(({ addresses, id }) => {
+      ids.push(id);
+      return [addresses.stash];
+    });
+    const nominationsMulti = await new NominatorsMulti(pApi, stashes).fetch();
     setPoolsNominations(formatPoolsNominations(nominationsMulti, ids));
   };
 
   // Format raw pool nominations data.
   const formatPoolsNominations = (raw: AnyJson, ids: number[]) =>
     Object.fromEntries(
-      raw.map((n: AnyJson, i: number) => {
-        const human = n.toHuman() as PoolNominations;
-        if (!human) {
+      raw.map((nominator: AnyJson, i: number) => {
+        if (!nominator) {
           return [ids[i], null];
         }
-        return [
-          ids[i],
-          {
-            ...human,
-            submittedIn: rmCommas(human.submittedIn),
-          },
-        ];
+        return [ids[i], { ...nominator }];
       })
     );
 
