@@ -40,7 +40,6 @@ export const ImportedAccountsProvider = ({
   const { otherAccounts } = useOtherAccounts();
   const { getExtensionAccounts } = useExtensionAccounts();
   const { setActiveAccount, setActiveProxy } = useActiveAccounts();
-
   // Get the imported extension accounts formatted with the current network's ss58 prefix.
   const extensionAccounts = getExtensionAccounts(ss58);
 
@@ -118,7 +117,7 @@ export const ImportedAccountsProvider = ({
   useEffectIgnoreInitial(() => {
     if (api && isReady) {
       BalancesController.syncAccounts(
-        api,
+        network,
         allAccounts.map((a) => a.address)
       );
     }

@@ -170,7 +170,10 @@ export const useActiveBalances = ({
     for (const account of uniqueAccounts) {
       // Adds an active balance record if it exists in `BalancesController`.
       if (account) {
-        const accountBalances = BalancesController.getAccountBalances(account);
+        const accountBalances = BalancesController.getAccountBalances(
+          network,
+          account
+        );
         if (accountBalances) {
           newActiveBalances[account] = accountBalances;
         }

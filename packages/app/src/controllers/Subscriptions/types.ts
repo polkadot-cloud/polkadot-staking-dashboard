@@ -1,6 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { AccountBalances } from 'model/Subscribe/AccountBalances';
 import type { ActiveEra } from 'model/Subscribe/ActiveEra';
 import type { BlockNumber } from 'model/Subscribe/BlockNumber';
 import type { Bonded } from 'model/Subscribe/Bonded';
@@ -12,6 +13,7 @@ import type { StakingMetrics } from 'model/Subscribe/StakingMetrics';
 
 // Define all possible subscription classes.
 export type Subscription =
+  | AccountBalances
   | ActiveEra
   | BlockNumber
   | Bonded

@@ -17,6 +17,7 @@ import { SyncController } from 'controllers/Sync';
 import { useApi } from 'contexts/Api';
 import { ActivePoolsController } from 'controllers/ActivePools';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
+import { useNetwork } from 'contexts/Network';
 
 export const BalancesContext = createContext<BalancesContextInterface>(
   defaults.defaultBalancesContext
@@ -25,6 +26,7 @@ export const BalancesContext = createContext<BalancesContextInterface>(
 export const useBalances = () => useContext(BalancesContext);
 
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
+  const { network } = useNetwork();
   const { getBondedAccount } = useBonded();
   const { accounts } = useImportedAccounts();
   const createPoolAccounts = useCreatePoolAccounts();
@@ -82,7 +84,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
 
   // Check whether all accounts have been synced and update state accordingly.
   const checkBalancesSynced = () => {
-    if (Object.keys(BalancesController.balances).length === accounts.length) {
+    if (Object.keys(BalancesController.accounts).length === accounts.length) {
       SyncController.dispatch('balances', 'complete');
     }
   };
@@ -91,7 +93,11 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   // payload.
   const getNonce = (address: MaybeAddress) => {
     if (address) {
-      const maybeNonce = BalancesController.balances[address]?.nonce;
+      const accountBalances = BalancesController.getAccountBalances(
+        network,
+        address
+      );
+      const maybeNonce = accountBalances?.balances?.nonce;
       if (maybeNonce) {
         return maybeNonce;
       }

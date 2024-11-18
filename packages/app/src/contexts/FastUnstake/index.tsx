@@ -265,7 +265,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
 
   // subscribe to fastUnstake queue
   const subscribeToFastUnstakeMeta = async () => {
-    const { pApi } = await ApiController.get(network);
+    const { pApi } = ApiController.get(network);
     if (!pApi) {
       return;
     }

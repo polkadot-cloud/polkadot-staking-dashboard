@@ -20,10 +20,10 @@ export interface BalancesContextInterface {
 export type ActiveBalancesState = Record<string, ActiveBalance>;
 
 export interface ActiveBalance {
-  ledger: Ledger;
+  ledger: Ledger | undefined;
   balances: Balances;
-  payee: PayeeConfig;
-  poolMembership: PoolMembership;
+  payee: PayeeConfig | undefined;
+  poolMembership: PoolMembership | undefined;
   nominations: Nominations;
 }
 
