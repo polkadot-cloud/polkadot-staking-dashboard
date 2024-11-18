@@ -140,7 +140,6 @@
       "addressCopied": "Address Copied to Clipboard",
       "addressInvalid": "Address Invalid",
       "allPools": "All Pools",
-      "allRoles": "All Roles",
       "assigned": "Assigned",
       "assignedToAnyAccount": " Your <b>Root</b>, <b>Nominator</b> and <b>Bouncer</b> roles can be assigned to any account.",
       "availableToClaim": "The outstanding amount of {{unit}} available to claim by pool members.",
