@@ -4,8 +4,8 @@
 import { rmCommas, shuffle } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import type { AnyApi, Fn, SystemChainId } from 'types';
+import { createContext, useContext, useEffect, useState } from 'react';
+import type { AnyApi, SystemChainId } from 'types';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
@@ -38,6 +38,7 @@ import { ApiController } from 'controllers/Api';
 import { perbillToPercent } from 'library/Utils';
 import { SessionValidators } from 'model/Query/SessionValidators';
 import { ValidatorsMulti } from 'model/Query/ValidatorsMulti';
+import { ParaSessionAccounts } from 'model/Query/ParaSessionAccounts';
 
 export const ValidatorsContext = createContext<ValidatorsContextInterface>(
   defaultValidatorsContext
@@ -82,9 +83,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const [sessionParaValidators, setSessionParaValidators] = useState<string[]>(
     []
   );
-
-  // Stores unsub object for para session.
-  const sessionParaUnsub = useRef<Fn>();
 
   // Stores the average network commission rate.
   const [avgCommission, setAvgCommission] = useState<number>(0);
@@ -350,16 +348,13 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // Subscribe to active parachain validators.
-  const subscribeParachainValidators = async () => {
-    if (!api || !isReady) {
-      return;
-    }
-    const unsub: AnyApi = await api.query.paraSessionInfo.accountKeys(
-      earliestStoredSession.toString(),
-      (v: AnyApi) => {
-        setSessionParaValidators(v.toHuman());
-        sessionParaUnsub.current = unsub;
-      }
+  const getParachainValidators = async () => {
+    const { pApi } = ApiController.get(network);
+    setSessionParaValidators(
+      await new ParaSessionAccounts(
+        pApi,
+        earliestStoredSession.toString()
+      ).fetch()
     );
   };
 
@@ -591,17 +586,9 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   // Fetch parachain session validators when `earliestStoredSession` ready.
   useEffectIgnoreInitial(() => {
     if (isReady && earliestStoredSession.isGreaterThan(0)) {
-      subscribeParachainValidators();
+      getParachainValidators();
     }
   }, [isReady, earliestStoredSession]);
-
-  // Unsubscribe on network change and component unmount.
-  useEffect(() => {
-    sessionParaUnsub.current?.();
-    return () => {
-      sessionParaUnsub.current?.();
-    };
-  }, [network]);
 
   return (
     <ValidatorsContext.Provider

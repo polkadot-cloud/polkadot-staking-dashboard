@@ -11,7 +11,6 @@ export class Era {
     this.#pApi = pApi;
   }
 
-  // Fetch network constants.
   async fetch() {
     let result;
     try {
