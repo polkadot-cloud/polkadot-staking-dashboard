@@ -7,7 +7,6 @@ import { unitToPlanck } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useSetup } from 'contexts/Setup';
 import { Warning } from 'library/Form/Warning';
 import { useBatchCall } from 'hooks/useBatchCall';
@@ -37,7 +36,6 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { accountHasSigner } = useImportedAccounts();
   const { getPoolSetup, removeSetupProgress } = useSetup();
   const { activeAccount, activeProxy } = useActiveAccounts();
-  const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { queryBondedPool, addToBondedPools } = useBondedPools();
 
   const poolId = lastPoolId.plus(1);
@@ -81,12 +79,6 @@ export const Summary = ({ section }: SetupStepProps) => {
       // Query and add created pool to bondedPools list.
       const pool = await queryBondedPool(poolId.toNumber());
       addToBondedPools(pool);
-
-      // Query and add account to poolMembers list.
-      const member = await queryPoolMember(activeAccount);
-      if (member) {
-        addToPoolMembers(member);
-      }
 
       // Reset setup progress.
       removeSetupProgress('pool', activeAccount);

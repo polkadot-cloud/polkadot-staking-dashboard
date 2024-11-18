@@ -14,6 +14,7 @@ import type { PoolStatLabel } from 'library/Announcements/types';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { Wrapper } from 'library/Announcements/Wrappers';
 import { planckToUnitBn } from 'library/Utils';
+import { usePlugins } from 'contexts/Plugins';
 
 export const PoolStats = () => {
   const { t } = useTranslation('pages');
@@ -21,6 +22,7 @@ export const PoolStats = () => {
   const {
     networkData: { units, unit },
   } = useNetwork();
+  const { pluginEnabled } = usePlugins();
   const { activePool } = useActivePool();
   const { getCurrentCommission } = usePoolCommission();
 
@@ -67,13 +69,15 @@ export const PoolStats = () => {
     {
       label: t('pools.poolMembers'),
       value: `${memberCounter}`,
-      button: {
-        text: t('pools.browseMembers'),
-        onClick: () => {
-          openCanvas({ key: 'PoolMembers', size: 'xl' });
-        },
-        disabled: memberCounter === '0',
-      },
+      button: pluginEnabled('subscan')
+        ? {
+            text: t('pools.browseMembers'),
+            onClick: () => {
+              openCanvas({ key: 'PoolMembers', size: 'xl' });
+            },
+            disabled: memberCounter === '0',
+          }
+        : undefined,
     },
     {
       label: t('pools.totalBonded'),

@@ -17,7 +17,6 @@ import { useBatchCall } from 'hooks/useBatchCall';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useSetup } from 'contexts/Setup';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { defaultPoolProgress } from 'contexts/Setup/defaults';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { SubmitTx } from 'library/SubmitTx';
@@ -42,7 +41,6 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' });
-  const { queryPoolMember, addToPoolMembers } = usePoolMembers();
 
   const {
     pool: { totalPossibleBond },
@@ -112,12 +110,6 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
       }
     },
     callbackInBlock: async () => {
-      // Query and add account to poolMembers list
-      const member = await queryPoolMember(activeAccount);
-      if (member) {
-        addToPoolMembers(member);
-      }
-
       // Reset local storage setup progress
       setActiveAccountSetup('pool', defaultPoolProgress);
     },

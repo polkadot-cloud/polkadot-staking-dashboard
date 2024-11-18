@@ -25,9 +25,6 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
   const { pluginEnabled } = usePlugins();
   const { activeAccount } = useActiveAccounts();
 
-  // Store pool members from node.
-  const [poolMembersNode, setPoolMembersNode] = useState<PoolMember[]>([]);
-
   // Store pool members from api.
   const [poolMembersApi, setPoolMembersApi] = useState<PoolMember[]>([]);
 
@@ -49,7 +46,6 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
 
   // Clear existing state for network refresh
   useEffectIgnoreInitial(() => {
-    setPoolMembersNode([]);
     setPoolMembersApi([]);
     unsubscribeAndResetMeta();
   }, [network]);
@@ -62,12 +58,7 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
   // Initial setup for fetching members if Subscan is not enabled. Ensure poolMembers are reset if
   // subscan is disabled.
   useEffectIgnoreInitial(() => {
-    if (!pluginEnabled('subscan')) {
-      if (isReady) {
-        fetchPoolMembersNode();
-      }
-    } else {
-      setPoolMembersNode([]);
+    if (pluginEnabled('subscan')) {
       setPoolMembersApi([]);
     }
     return () => {
@@ -77,7 +68,6 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
 
   const unsubscribe = () => {
     unsubscribeAndResetMeta();
-    setPoolMembersNode([]);
     setPoolMembersApi([]);
   };
 
@@ -87,26 +77,6 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
     );
     setStateWithRef({}, setPoolMembersMetaBatch, poolMembersMetaBatchesRef);
   };
-
-  // Fetch all pool members entries from node.
-  const fetchPoolMembersNode = async () => {
-    if (!api) {
-      return;
-    }
-    const result = await api.query.nominationPools.poolMembers.entries();
-    const newMembers = result.map(([keys, val]: AnyApi) => {
-      const who = keys.toHuman()[0];
-      const { poolId } = val.toHuman();
-      return {
-        who,
-        poolId,
-      };
-    });
-    setPoolMembersNode(newMembers);
-  };
-
-  const getMembersOfPoolFromNode = (poolId: number) =>
-    poolMembersNode.filter((p) => String(p.poolId) === String(poolId)) ?? null;
 
   // queries a  pool member and formats to `PoolMember`.
   const queryPoolMember = async (who: MaybeAddress) => {
@@ -221,26 +191,10 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
-  // Removes a member from the member list and updates state.
+  // Removes a member from the member list and updates state. Requires subscan to be enabled.
   const removePoolMember = (who: MaybeAddress) => {
-    // If Subscan is enabled, update API state, otherwise, update node state.
     if (pluginEnabled('subscan')) {
       setPoolMembersApi(poolMembersApi.filter((p) => p.who !== who) ?? []);
-    } else {
-      setPoolMembersNode(poolMembersNode.filter((p) => p.who !== who) ?? []);
-    }
-  };
-
-  // Adds a record to poolMembers.
-  // Currently only used when an account joins or creates a pool.
-  const addToPoolMembers = (member: { who: string; poolId: number }) => {
-    if (!member || pluginEnabled('subscan')) {
-      return;
-    }
-
-    const exists = poolMembersNode.find((m) => m.who === member.who);
-    if (!exists) {
-      setPoolMembersNode(poolMembersNode.concat(member));
     }
   };
 
@@ -260,10 +214,7 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
       value={{
         fetchPoolMembersMetaBatch,
         queryPoolMember,
-        getMembersOfPoolFromNode,
-        addToPoolMembers,
         removePoolMember,
-        poolMembersNode,
         poolMembersApi,
         setPoolMembersApi,
         fetchedPoolMembersApi: fetchedPoolMembersApi.current,
