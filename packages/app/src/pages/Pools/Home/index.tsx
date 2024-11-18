@@ -9,8 +9,6 @@ import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList';
 import { StatBoxList } from 'library/StatBoxList';
 import { useFavoritePools } from 'contexts/Pools/FavoritePools';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { PoolListProvider } from 'library/PoolList/context';
 import { Roles } from '../Roles';
 import { ClosurePrompts } from './ClosurePrompts';
@@ -23,34 +21,17 @@ import { MinCreateBondStat } from './Stats/MinCreateBond';
 import { MinJoinBondStat } from './Stats/MinJoinBond';
 import { Status } from './Status';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
-import { useActivePools } from 'hooks/useActivePools';
-import { useBalances } from 'contexts/Balances';
 import { PageTitle, PageRow, RowSection } from 'ui-structure';
 import { WithdrawPrompt } from 'library/WithdrawPrompt';
-import { useSyncing } from 'hooks/useSyncing';
 import { useNetwork } from 'contexts/Network';
 
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
   const { network } = useNetwork();
   const { favorites } = useFavoritePools();
-  const { openModal } = useOverlay().modal;
   const { bondedPools } = useBondedPools();
-  const { getPoolMembership } = useBalances();
-  const { poolMembersipSyncing } = useSyncing();
-  const { activeAccount } = useActiveAccounts();
   const { activeTab, setActiveTab } = usePoolsTabs();
   const { getPoolRoles, activePool } = useActivePool();
-  const membership = getPoolMembership(activeAccount);
-
-  const { activePools } = useActivePools({
-    who: activeAccount,
-  });
-
-  // Calculate the number of _other_ pools the user has a role in.
-  const poolRoleCount = Object.keys(activePools).filter(
-    (poolId) => poolId !== String(membership?.poolId)
-  ).length;
 
   const ROW_HEIGHT = 220;
 
@@ -81,18 +62,6 @@ export const HomeInner = () => {
             badge: String(favorites.length),
           },
         ]}
-        button={
-          !poolMembersipSyncing() && poolRoleCount > 0
-            ? {
-                title: t('pools.allRoles'),
-                onClick: () =>
-                  openModal({
-                    key: 'AccountPoolRoles',
-                    options: { who: activeAccount, activePools },
-                  }),
-              }
-            : undefined
-        }
       />
       {activeTab === 0 && (
         <>
