@@ -15,6 +15,8 @@ export class FastUnstakeConfig implements Unsubscribable {
   // Active subscription.
   #sub: Subscription;
 
+  config: FastUnstakeConfigResult;
+
   constructor(network: NetworkName) {
     this.#network = network;
     this.subscribe();
@@ -29,14 +31,16 @@ export class FastUnstakeConfig implements Unsubscribable {
           pApi.query.FastUnstake.Head.watchValue(),
           pApi.query.FastUnstake.CounterForQueue.watchValue(),
         ]).subscribe(([head, counterForQueue]) => {
-          const data: FastUnstakeConfigResult = {
+          const config: FastUnstakeConfigResult = {
             head,
             counterForQueue,
           };
 
+          this.config = config;
+
           document.dispatchEvent(
             new CustomEvent('new-fast-unstake-config', {
-              detail: { data },
+              detail: { ...config },
             })
           );
         });
