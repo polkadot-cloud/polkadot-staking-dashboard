@@ -20,6 +20,11 @@ import type {
   MetaInterface,
 } from './types';
 import type { AnyJson } from '@w3ux/types';
+import { SubscriptionsController } from 'controllers/Subscriptions';
+import { FastUnstakeConfig } from 'model/Subscribe/FastUnstakeConfig';
+import { useEventListener } from 'usehooks-ts';
+import { isCustomEvent } from 'controllers/utils';
+import type { FastUnstakeHead } from 'model/Subscribe/FastUnstakeConfig/types';
 
 const worker = new Worker();
 
@@ -61,12 +66,10 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   const queueDepositRef = useRef(queueDeposit);
 
   // store fastUnstake head.
-  const [head, setHead] = useState<AnyApi>(null);
-  const headRef = useRef(head);
+  const [head, setHead] = useState<FastUnstakeHead | undefined>();
 
   // store fastUnstake counter for queue.
-  const [counterForQueue, setCounterForQueue] = useState<number | null>(null);
-  const counterForQueueRef = useRef(counterForQueue);
+  const [counterForQueue, setCounterForQueue] = useState<number | undefined>();
 
   // store fastUnstake subscription unsub.
   const unsubs = useRef<AnyApi[]>([]);
@@ -77,11 +80,10 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   // check until bond duration eras surpasssed.
   const checkToEra = activeEra.index.minus(bondDuration);
 
-  // Reset state on network or active account change.
+  // Reset state on active account change.
   useEffect(() => {
     setStateWithRef(false, setChecking, checkingRef);
     setStateWithRef(null, setqueueDeposit, queueDepositRef);
-    setStateWithRef(null, setCounterForQueue, counterForQueueRef);
     setStateWithRef(null, setIsExposed, isExposedRef);
     setStateWithRef(defaultMeta, setMeta, metaRef);
     unsubs.current = [];
@@ -90,9 +92,14 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
     for (const unsub of unsubs.current) {
       unsub();
     }
+  }, [activeAccount]);
 
-    // Resubscribe to fast unstake queue.
-  }, [activeAccount, network]);
+  // Reset state on network change.
+  useEffect(() => {
+    setHead(undefined);
+    setCounterForQueue(undefined);
+    unsubs.current = [];
+  }, [network]);
 
   // Subscribe to fast unstake queue as soon as api is ready.
   useEffect(() => {
@@ -272,7 +279,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
 
-    // TODO: Make a `combineLatest` subscription with new event ----------------------
+    // TODO: Make a subscription with new event ----------------------
     const subscribeQueue = async (a: MaybeAddress) => {
       const u = await api.query.fastUnstake.queue(a, (q: AnyApi) =>
         setStateWithRef(
@@ -283,32 +290,16 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
       );
       return u;
     };
-    const subscribeHead = async () => {
-      const u = await api.query.fastUnstake.head((result: AnyApi) => {
-        const h = result.unwrapOrDefault(null).toHuman();
-        setStateWithRef(h, setHead, headRef);
-      });
-      return u;
-    };
-    const subscribeCounterForQueue = async () => {
-      const u = await api.query.fastUnstake.counterForQueue(
-        (result: AnyApi) => {
-          const c = result.toHuman();
-          setStateWithRef(c, setCounterForQueue, counterForQueueRef);
-        }
-      );
-      return u;
-    };
-    // --------------------------------------------------------------------------------
+    // ----------------------------------------------------------------
 
-    // Subscribe to queue + head.
+    SubscriptionsController.set(
+      network,
+      'fastUnstakeMeta',
+      new FastUnstakeConfig(network)
+    );
 
     // initiate subscription, add to unsubs.
-    await Promise.all([
-      subscribeQueue(activeAccount),
-      subscribeHead(),
-      subscribeCounterForQueue(),
-    ]).then((u) => {
+    await Promise.all([subscribeQueue(activeAccount)]).then((u) => {
       unsubs.current = u;
     });
   };
@@ -336,6 +327,19 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
     );
     return localMetaValidated;
   };
+
+  // Handle fast unstake meta events.
+  const handleNewFastUnstakeData = (e: Event) => {
+    if (isCustomEvent(e)) {
+      const { head: eventHead, counterForQueue: eventCounterForQueue } =
+        e.detail;
+      setHead(eventHead);
+      setCounterForQueue(eventCounterForQueue);
+    }
+  };
+
+  const documentRef = useRef<Document>(document);
+  useEventListener('api-status', handleNewFastUnstakeData, documentRef);
 
   return (
     <FastUnstakeContext.Provider

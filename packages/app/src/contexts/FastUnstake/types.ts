@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
-import type { AnyApi, MaybeAddress } from 'types';
+import type { FastUnstakeHead } from 'model/Subscribe/FastUnstakeConfig/types';
+import type { MaybeAddress } from 'types';
 
 export interface LocalMeta {
   isExposed: boolean;
@@ -18,6 +19,6 @@ export interface FastUnstakeContextInterface {
   meta: MetaInterface;
   isExposed: boolean | null;
   queueDeposit: BigNumber | null;
-  head: AnyApi;
-  counterForQueue: number | null;
+  head: FastUnstakeHead | undefined;
+  counterForQueue: number | undefined;
 }

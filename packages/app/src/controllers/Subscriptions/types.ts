@@ -4,6 +4,7 @@
 import type { ActiveEra } from 'model/Subscribe/ActiveEra';
 import type { BlockNumber } from 'model/Subscribe/BlockNumber';
 import type { Bonded } from 'model/Subscribe/Bonded';
+import type { FastUnstakeConfig } from 'model/Subscribe/FastUnstakeConfig';
 import type { NetworkMetrics } from 'model/Subscribe/NetworkMetrics';
 import type { PoolsConfig } from 'model/Subscribe/PoolsConfig';
 import type { StakingMetrics } from 'model/Subscribe/StakingMetrics';
@@ -13,6 +14,7 @@ export type Subscription =
   | ActiveEra
   | BlockNumber
   | Bonded
+  | FastUnstakeConfig
   | NetworkMetrics
   | PoolsConfig
   | StakingMetrics;

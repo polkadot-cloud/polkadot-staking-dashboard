@@ -179,7 +179,7 @@ export const ManageFastUnstake = () => {
                 {t('fastUnstakeOnceRegistered')}
               </p>
               <p>
-                {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
+                {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue || 0}</b>
               </p>
             </ModalNotes>
           </>
@@ -188,7 +188,7 @@ export const ManageFastUnstake = () => {
             <ActionItem text={t('fastUnstakeRegistered')} />
             <ModalNotes>
               <p>
-                {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
+                {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue || 0}</b>
               </p>
               <p>{t('fastUnstakeUnorderedNote')}</p>
             </ModalNotes>
