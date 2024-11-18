@@ -21,46 +21,60 @@ export class BondedPools {
     return this;
   }
 
-  format() {
+  async fetchOne(id: number) {
+    const result =
+      await this.#pApi.query.NominationPools.BondedPools.getValue(id);
+
+    if (!result) {
+      return null;
+    }
+    return this.formatPool(result);
+  }
+
+  format(entry?: AnyApi) {
     return Object.fromEntries(
-      this.bondedPools.map(
+      (entry ? [entry] : this.bondedPools).map(
         ({ keyArgs, value }: { keyArgs: [number]; value: AnyApi }) => {
           const id = keyArgs[0];
-
-          const maybeCommissionCurrent = value.commission.current;
-          const commissionCurrent = !maybeCommissionCurrent
-            ? null
-            : [
-                perbillToPercent(maybeCommissionCurrent[0]).toString(),
-                maybeCommissionCurrent[1],
-              ];
-
-          const commissionMax = value.commission.max;
-          const commissionMaxPercent = !commissionMax
-            ? null
-            : perbillToPercent(new BigNumber(value.commission.max));
-
-          const commissionChangeRate = value.commission.change_rate;
-
-          const commission = {
-            current: commissionCurrent,
-            claimPermission: value.commission.claim_permission?.type || null,
-            max: commissionMaxPercent,
-            changeRate: commissionChangeRate || null,
-            throttleFrom: value.commission.throttle_from || null,
-          };
-
-          const pool = {
-            commission,
-            points: value.points.toString(),
-            memberCounter: value.member_counter.toString(),
-            roles: value.roles,
-            state: value.state.type,
-          };
-
+          const pool = this.formatPool(value);
           return [id, pool];
         }
       )
     );
+  }
+
+  formatPool(value: AnyApi) {
+    const maybeCommissionCurrent = value.commission.current;
+    const commissionCurrent = !maybeCommissionCurrent
+      ? null
+      : [
+          perbillToPercent(maybeCommissionCurrent[0]).toString(),
+          maybeCommissionCurrent[1],
+        ];
+
+    const commissionMax = value.commission.max;
+    const commissionMaxPercent = !commissionMax
+      ? null
+      : perbillToPercent(new BigNumber(value.commission.max));
+
+    const commissionChangeRate = value.commission.change_rate;
+
+    const commission = {
+      current: commissionCurrent,
+      claimPermission: value.commission.claim_permission?.type || null,
+      max: commissionMaxPercent,
+      changeRate: commissionChangeRate || null,
+      throttleFrom: value.commission.throttle_from || null,
+    };
+
+    const pool = {
+      commission,
+      points: value.points.toString(),
+      memberCounter: value.member_counter.toString(),
+      roles: value.roles,
+      state: value.state.type,
+    };
+
+    return pool;
   }
 }

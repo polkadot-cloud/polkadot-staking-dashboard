@@ -135,13 +135,8 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Queries a bonded pool and injects ID and addresses to a result.
   const queryBondedPool = async (id: number) => {
-    if (!api) {
-      return null;
-    }
-
-    const bondedPool: AnyApi = (
-      await api.query.nominationPools.bondedPools(id)
-    ).toHuman();
+    const { pApi } = ApiController.get(network);
+    const bondedPool = new BondedPools(pApi).fetchOne(id);
 
     if (!bondedPool) {
       return null;
