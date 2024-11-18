@@ -2,21 +2,23 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyApi } from 'types';
-import type { ApiPromise } from '@polkadot/api';
 import type { AnyJson } from '@w3ux/types';
+import type { PapiApi } from 'model/Api/types';
+import { IdentityOfMulti } from 'model/Query/IdentityOfMulti';
+import { SuperOfMulti } from 'model/Query/SuperOfMulti';
 
 export class IdentitiesController {
-  static fetch = async (api: ApiPromise, addresses: string[]) => {
+  static fetch = async (pApi: PapiApi, addresses: string[]) => {
     // Fetches identities for addresses.
     const fetchBase = async () => {
-      const result = (await api.query.identity.identityOf.multi(addresses)).map(
-        (identity) => identity.toHuman()
-      );
+      const addressesMulti: [string][] = addresses.map((address) => [address]);
+      const result = await new IdentityOfMulti(pApi, addressesMulti).fetch();
 
       // Take identity data (first index) of results.
-      const data = result.map(
-        (resultArray: AnyJson | null) => resultArray?.[0] || null
-      );
+      const data =
+        result?.map(
+          (resultArray: AnyJson | null) => resultArray?.[0] || null
+        ) || [];
 
       return Object.fromEntries(
         data
@@ -27,26 +29,28 @@ export class IdentitiesController {
 
     // Fetch an array of super accounts and their identities.
     const fetchSupers = async () => {
-      const supersRaw = (await api.query.identity.superOf.multi(addresses)).map(
-        (superOf) => superOf.toHuman()
-      );
+      const addressesMulti: [string][] = addresses.map((address) => [address]);
+      const supersRawMulti = await new SuperOfMulti(
+        pApi,
+        addressesMulti
+      ).fetch();
 
       const supers = Object.fromEntries(
-        supersRaw
+        (supersRawMulti || [])
           .map((k, i) => [
             addresses[i],
             {
               superOf: k,
             },
           ])
-          .filter(([, { superOf }]: AnyApi) => superOf !== null)
+          .filter(([, { superOf }]: AnyApi) => superOf !== undefined)
       );
 
-      const superIdentities = (
-        await api.query.identity.identityOf.multi(
-          Object.values(supers).map(({ superOf }: AnyApi) => superOf[0])
-        )
-      ).map((superIdentity) => superIdentity.toHuman());
+      const superOfMulti: [string][] = Object.values(supers).map(
+        ({ superOf }: AnyApi) => [superOf[0]]
+      );
+      const superIdentities =
+        (await new IdentityOfMulti(pApi, superOfMulti).fetch()) || [];
 
       // Take identity data (first index) of results.
       const data = superIdentities.map(

@@ -5,7 +5,7 @@ import { rmCommas, shuffle } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import type { AnyApi, Fn } from 'types';
+import type { AnyApi, Fn, SystemChainId } from 'types';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
@@ -322,11 +322,13 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     setAvgCommission(avg);
     // NOTE: validators are shuffled before committed to state.
     setValidators(shuffle(validatorEntries));
-
+    const { pApi: peoplePapiApi } = ApiController.get(
+      `people-${network}` as SystemChainId
+    );
     if (peopleApi && peopleApiStatus === 'ready') {
       const addresses = validatorEntries.map(({ address }) => address);
       const { identities, supers } = await IdentitiesController.fetch(
-        peopleApi,
+        peoplePapiApi,
         addresses
       );
       setValidatorIdentities(identities);

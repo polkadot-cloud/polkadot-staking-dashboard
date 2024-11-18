@@ -3,7 +3,7 @@
 
 import type { PapiApi } from 'model/Api/types';
 
-export class IdentityOfMulti {
+export class SuperOfMulti {
   #pApi: PapiApi;
 
   #addresses: [string][];
@@ -15,7 +15,7 @@ export class IdentityOfMulti {
 
   async fetch() {
     try {
-      const result = await this.#pApi.query.Identity.IdentityOf.getValues(
+      const result = await this.#pApi.query.Identity.SuperOf.getValues(
         this.#addresses
       );
       return result;
