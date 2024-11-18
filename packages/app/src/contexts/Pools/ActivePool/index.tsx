@@ -101,6 +101,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
       SyncController.dispatch('active-pools', 'syncing');
       if (peopleApi) {
         ActivePoolsController.syncPools(
+          network,
           api,
           peopleApi,
           peopleApiStatus,

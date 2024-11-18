@@ -71,6 +71,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
         });
         if (peopleApi) {
           ActivePoolsController.syncPools(
+            network,
             api,
             peopleApi,
             peopleApiStatus,

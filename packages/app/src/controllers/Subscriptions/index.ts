@@ -45,7 +45,7 @@ export class SubscriptionsController {
 
   // Sets a new subscription for a network.
   static set(
-    network: NetworkName,
+    network: NetworkName | SystemChainId,
     subscriptionId: string,
     subscription: Subscription
   ): void {
