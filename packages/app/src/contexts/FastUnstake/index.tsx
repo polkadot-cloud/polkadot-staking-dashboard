@@ -339,7 +339,11 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const documentRef = useRef<Document>(document);
-  useEventListener('api-status', handleNewFastUnstakeData, documentRef);
+  useEventListener(
+    'new-fast-unstake-data',
+    handleNewFastUnstakeData,
+    documentRef
+  );
 
   return (
     <FastUnstakeContext.Provider
