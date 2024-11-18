@@ -35,6 +35,8 @@ import { SubscriptionsController } from 'controllers/Subscriptions';
 import { AccountProxies } from 'model/Subscribe/AccountProxies';
 import { useEventListener } from 'usehooks-ts';
 import { isCustomEvent } from 'controllers/utils';
+import { ProxiesQuery } from 'model/Query/ProxiesQuery';
+import { ApiController } from 'controllers/Api';
 
 export const ProxiesContext = createContext<ProxiesContextInterface>(
   defaults.defaultProxiesContext
@@ -43,8 +45,8 @@ export const ProxiesContext = createContext<ProxiesContextInterface>(
 export const useProxies = () => useContext(ProxiesContext);
 
 export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
+  const { isReady } = useApi();
   const { network } = useNetwork();
-  const { api, isReady } = useApi();
   const { accounts } = useImportedAccounts();
   const { addExternalAccount } = useExternalAccounts();
   const { addOrReplaceOtherAccount } = useOtherAccounts();
@@ -139,9 +141,6 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const subscribeToProxies = async (address: string) => {
-    if (!api) {
-      return undefined;
-    }
     SubscriptionsController.set(
       network,
       `accountProxies-${address}`,
@@ -172,15 +171,16 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   // Queries the chain to check if the given delegator & delegate pair is valid proxy. Used when a
   // proxy account is being manually declared.
   const handleDeclareDelegate = async (delegator: string) => {
-    if (!api) {
+    const { pApi } = ApiController.get(network);
+    if (!pApi) {
       return [];
     }
 
-    // TODO: Migrate to query class.
-    const result: AnyApi = (await api.query.proxy.proxies(delegator)).toHuman();
+    const result = await new ProxiesQuery(pApi, delegator).fetch();
+    const proxy = result[0] || [];
 
     let addDelegatorAsExternal = false;
-    for (const { delegate: newDelegate } of result[0] || []) {
+    for (const { delegate: newDelegate } of proxy) {
       if (
         accounts.find(({ address }) => address === newDelegate) &&
         !delegates[newDelegate]
