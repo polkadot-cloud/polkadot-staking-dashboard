@@ -28,7 +28,7 @@ export const useUnstaking = () => {
   // determine if user is fast unstaking.
   const inHead =
     head?.stashes.find((s: AnyJson) => s[0] === activeAccount) ?? undefined;
-  const inQueue = queueDeposit?.isGreaterThan(0) ?? false;
+  const inQueue = queueDeposit?.deposit?.isGreaterThan(0) ?? false;
 
   const registered = inHead || inQueue;
 

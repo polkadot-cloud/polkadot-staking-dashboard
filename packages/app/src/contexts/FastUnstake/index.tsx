@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { rmCommas, setStateWithRef } from '@w3ux/utils';
+import { setStateWithRef } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
-import type { AnyApi, MaybeAddress } from 'types';
+import type { MaybeAddress } from 'types';
 import Worker from 'workers/stakers?worker';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { validateLocalExposure } from 'contexts/Validators/Utils';
@@ -16,6 +16,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { defaultFastUnstakeContext, defaultMeta } from './defaults';
 import type {
   FastUnstakeContextInterface,
+  FastUnstakeQueueDeposit,
   LocalMeta,
   MetaInterface,
 } from './types';
@@ -25,6 +26,8 @@ import { FastUnstakeConfig } from 'model/Subscribe/FastUnstakeConfig';
 import { useEventListener } from 'usehooks-ts';
 import { isCustomEvent } from 'controllers/utils';
 import type { FastUnstakeHead } from 'model/Subscribe/FastUnstakeConfig/types';
+import { FastUnstakeQueue } from 'model/Subscribe/FastUnstakeQueue';
+import { ApiController } from 'controllers/Api';
 
 const worker = new Worker();
 
@@ -39,7 +42,6 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   const { activeAccount } = useActiveAccounts();
   const { inSetup, fetchEraStakers, isBonding } = useStaking();
   const {
-    api,
     consts,
     isReady,
     activeEra,
@@ -62,17 +64,13 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   const metaRef = useRef(meta);
 
   // store fastUnstake queue deposit for user.
-  const [queueDeposit, setqueueDeposit] = useState<AnyApi>(null);
-  const queueDepositRef = useRef(queueDeposit);
+  const [queueDeposit, setQueueDeposit] = useState<FastUnstakeQueueDeposit>();
 
   // store fastUnstake head.
   const [head, setHead] = useState<FastUnstakeHead | undefined>();
 
   // store fastUnstake counter for queue.
   const [counterForQueue, setCounterForQueue] = useState<number | undefined>();
-
-  // store fastUnstake subscription unsub.
-  const unsubs = useRef<AnyApi[]>([]);
 
   // localStorage key to fetch local metadata.
   const getLocalkey = (a: MaybeAddress) => `${network}_fast_unstake_${a}`;
@@ -82,15 +80,21 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
 
   // Reset state on active account change.
   useEffect(() => {
+    // Reset fast unstake managment state.
+    setQueueDeposit(undefined);
     setStateWithRef(false, setChecking, checkingRef);
-    setStateWithRef(null, setqueueDeposit, queueDepositRef);
     setStateWithRef(null, setIsExposed, isExposedRef);
     setStateWithRef(defaultMeta, setMeta, metaRef);
-    unsubs.current = [];
 
-    // cancel fast unstake check on network change or account change.
-    for (const unsub of unsubs.current) {
-      unsub();
+    // Re-subscribe to fast unstake queue.
+    SubscriptionsController.remove(network, 'fastUnstakeQueue');
+
+    if (activeAccount) {
+      SubscriptionsController.set(
+        network,
+        'fastUnstakeQueue',
+        new FastUnstakeQueue(network, activeAccount)
+      );
     }
   }, [activeAccount]);
 
@@ -98,13 +102,12 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     setHead(undefined);
     setCounterForQueue(undefined);
-    unsubs.current = [];
   }, [network]);
 
   // Subscribe to fast unstake queue as soon as api is ready.
   useEffect(() => {
     if (isReady) {
-      subscribeToFastUnstakeQueue();
+      subscribeToFastUnstakeMeta();
     }
   }, [isReady]);
 
@@ -159,12 +162,6 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
         processEligibility(activeAccount, maybeNextEra);
       }
     }
-
-    return () => {
-      for (const unsub of unsubs.current) {
-        unsub();
-      }
-    };
   }, [
     inSetup(),
     isReady,
@@ -218,7 +215,6 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
 
       if (exposed) {
         // Account is exposed - stop checking.
-
         // cancel checking and update exposed state.
         setStateWithRef(false, setChecking, checkingRef);
         setStateWithRef(true, setIsExposed, isExposedRef);
@@ -226,9 +222,8 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
         // successfully checked current era - bondDuration eras.
         setStateWithRef(false, setChecking, checkingRef);
         setStateWithRef(false, setIsExposed, isExposedRef);
-
-        // Finished, not exposed.
       } else {
+        // Finished, not exposed.
         // continue checking the next era.
         checkEra(new BigNumber(era).minus(1));
       }
@@ -241,7 +236,6 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
     if (
       era.isLessThan(0) ||
       !bondDuration.isGreaterThan(0) ||
-      !api ||
       !a ||
       checkingRef.current ||
       !activeAccount ||
@@ -256,10 +250,6 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
 
   // calls service worker to check exppsures for given era.
   const checkEra = async (era: BigNumber) => {
-    if (!api) {
-      return;
-    }
-
     const exposures = await fetchEraStakers(era.toString());
 
     worker.postMessage({
@@ -274,34 +264,16 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // subscribe to fastUnstake queue
-  const subscribeToFastUnstakeQueue = async () => {
-    if (!api) {
+  const subscribeToFastUnstakeMeta = async () => {
+    const { pApi } = await ApiController.get(network);
+    if (!pApi) {
       return;
     }
-
-    // TODO: Make a subscription with new event ----------------------
-    const subscribeQueue = async (a: MaybeAddress) => {
-      const u = await api.query.fastUnstake.queue(a, (q: AnyApi) =>
-        setStateWithRef(
-          new BigNumber(rmCommas(q.unwrapOrDefault(0).toString())),
-          setqueueDeposit,
-          queueDepositRef
-        )
-      );
-      return u;
-    };
-    // ----------------------------------------------------------------
-
     SubscriptionsController.set(
       network,
       'fastUnstakeMeta',
       new FastUnstakeConfig(network)
     );
-
-    // initiate subscription, add to unsubs.
-    await Promise.all([subscribeQueue(activeAccount)]).then((u) => {
-      unsubs.current = u;
-    });
   };
 
   // gets any existing fast unstake metadata for an account.
@@ -329,7 +301,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // Handle fast unstake meta events.
-  const handleNewFastUnstakeData = (e: Event) => {
+  const handleNewFastUnstakeConfig = (e: Event) => {
     if (isCustomEvent(e)) {
       const { head: eventHead, counterForQueue: eventCounterForQueue } =
         e.detail;
@@ -338,10 +310,23 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // Handle fast unstake deposit events.
+  const handleNewFastUnstakeDeposit = (e: Event) => {
+    if (isCustomEvent(e)) {
+      const { address, deposit } = e.detail;
+      setQueueDeposit({ address, deposit: new BigNumber(deposit.toString()) });
+    }
+  };
+
   const documentRef = useRef<Document>(document);
   useEventListener(
     'new-fast-unstake-config',
-    handleNewFastUnstakeData,
+    handleNewFastUnstakeConfig,
+    documentRef
+  );
+  useEventListener(
+    'new-fast-unstake-deposit',
+    handleNewFastUnstakeDeposit,
     documentRef
   );
 

@@ -18,7 +18,17 @@ export interface FastUnstakeContextInterface {
   checking: boolean;
   meta: MetaInterface;
   isExposed: boolean | null;
-  queueDeposit: BigNumber | null;
+  queueDeposit: FastUnstakeQueueDeposit | undefined;
   head: FastUnstakeHead | undefined;
   counterForQueue: number | undefined;
+}
+
+export interface FastUnstakeQueueDeposit {
+  address: string;
+  deposit: BigNumber;
+}
+
+export interface FastUnstakeQueueResult {
+  address: string;
+  deposit: bigint;
 }
