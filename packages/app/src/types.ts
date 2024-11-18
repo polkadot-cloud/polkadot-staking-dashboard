@@ -23,6 +23,7 @@ import type { BlockNumberEventDetail } from 'model/Subscribe/BlockNumber/types';
 import type { BondedAccount } from 'contexts/Bonded/types';
 import type { FastUnstakeConfigResult } from 'model/Subscribe/FastUnstakeConfig/types';
 import type { FastUnstakeQueueResult } from 'contexts/FastUnstake/types';
+import type { AccountProxiesEvent } from 'model/Subscribe/AccountProxies/types';
 
 declare global {
   interface Window {
@@ -47,6 +48,7 @@ declare global {
     'new-active-pool': CustomEvent<DetailActivePool>;
     'new-fast-unstake-config': CustomEvent<FastUnstakeConfigResult>;
     'new-fast-unstake-deposit': CustomEvent<FastUnstakeQueueResult>;
+    'new-account-proxies': CustomEvent<AccountProxiesEvent>;
     'new-bonded-account': CustomEvent<BondedAccount>;
     'new-sync-status': CustomEvent<SyncEvent>;
     'new-external-account': CustomEvent<{ address: string }>;
