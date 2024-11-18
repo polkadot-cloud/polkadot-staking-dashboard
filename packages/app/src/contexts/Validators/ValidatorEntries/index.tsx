@@ -36,6 +36,8 @@ import type { AnyJson, Sync } from '@w3ux/types';
 import { Validators } from 'model/Entries/Validators';
 import { ApiController } from 'controllers/Api';
 import { perbillToPercent } from 'library/Utils';
+import { SessionValidators } from 'model/Query/SessionValidators';
+import { ValidatorsMulti } from 'model/Query/ValidatorsMulti';
 
 export const ValidatorsContext = createContext<ValidatorsContextInterface>(
   defaultValidatorsContext
@@ -340,11 +342,11 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Subscribe to active session validators.
   const fetchSessionValidators = async () => {
-    if (!api || !isReady) {
+    if (!isReady) {
       return;
     }
-    const sessionValidatorsRaw: AnyApi = await api.query.session.validators();
-    setSessionValidators(sessionValidatorsRaw.toHuman());
+    const { pApi } = ApiController.get(network);
+    setSessionValidators(await new SessionValidators(pApi).fetch());
   };
 
   // Subscribe to active parachain validators.
@@ -368,21 +370,29 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const v: string[] = [];
+    const vMulti: [string][] = [];
     for (const { address } of addresses) {
       v.push(address);
+      vMulti.push([address]);
     }
-    const results = await api.query.staking.validators.multi(v);
+
+    const { pApi } = ApiController.get(network);
+    const resultsMulti =
+      (await new ValidatorsMulti(pApi, vMulti).fetch()) || [];
 
     const formatted: Validator[] = [];
-    for (let i = 0; i < results.length; i++) {
-      const prefs: AnyApi = results[i].toHuman();
-      formatted.push({
-        address: v[i],
-        prefs: {
-          commission: prefs?.commission.replace(/%/g, '') ?? '0',
-          blocked: prefs.blocked,
-        },
-      });
+    for (let i = 0; i < resultsMulti.length; i++) {
+      const prefs: AnyApi = resultsMulti[i];
+
+      if (prefs) {
+        formatted.push({
+          address: v[i],
+          prefs: {
+            commission: Number(perbillToPercent(prefs.commission).toString()),
+            blocked: prefs.blocked,
+          },
+        });
+      }
     }
     return formatted;
   };
