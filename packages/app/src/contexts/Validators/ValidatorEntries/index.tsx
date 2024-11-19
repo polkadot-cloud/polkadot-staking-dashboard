@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { rmCommas, shuffle } from '@w3ux/utils';
+import { shuffle } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
@@ -39,6 +39,8 @@ import { perbillToPercent } from 'library/Utils';
 import { SessionValidators } from 'model/Query/SessionValidators';
 import { ValidatorsMulti } from 'model/Query/ValidatorsMulti';
 import { ParaSessionAccounts } from 'model/Query/ParaSessionAccounts';
+import { ErasRewardPointsMulti } from 'model/Query/ErasRewardPointsMulti';
+import { ErasValidatorReward } from 'model/Query/ErasValidatorRewardMulti';
 
 export const ValidatorsContext = createContext<ValidatorsContextInterface>(
   defaultValidatorsContext
@@ -50,7 +52,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
   const {
     isReady,
-    api,
     peopleApi,
     peopleApiStatus,
     consts: { historyDepth },
@@ -118,11 +119,11 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     }
 
     return {
-      total: rmCommas(result.total),
+      total: result.total.toString(),
       individual: Object.fromEntries(
-        Object.entries(result.individual).map(([key, value]) => [
+        result.individual.map(([key, value]: [number, string]) => [
           key,
-          rmCommas(value as string),
+          (value as string).toString(),
         ])
       ),
     };
@@ -148,9 +149,10 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetches era reward points for eligible eras.
   const fetchErasRewardPoints = async () => {
+    const { pApi } = ApiController.get(network);
     if (
       activeEra.index.isZero() ||
-      !api ||
+      !pApi ||
       erasRewardPointsFetched !== 'unsynced'
     ) {
       return;
@@ -170,12 +172,9 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     let erasProcessed = new BigNumber(0);
 
     // Iterate eras and process reward points.
-    const calls = [];
     const eras = [];
     do {
-      calls.push(api.query.staking.erasRewardPoints(currentEra.toString()));
       eras.push(currentEra);
-
       currentEra = currentEra.minus(1);
       erasProcessed = erasProcessed.plus(1);
     } while (
@@ -183,11 +182,14 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       erasProcessed.isLessThan(totalEras)
     );
 
+    const erasMulti: [string][] = eras.map((e) => [e.toString()]);
+    const results = await new ErasRewardPointsMulti(pApi, erasMulti).fetch();
+
     // Make calls and format reward point results.
     const newErasRewardPoints: ErasRewardPoints = {};
     let i = 0;
-    for (const result of await Promise.all(calls)) {
-      const formatted = processEraRewardPoints(result.toHuman(), eras[i]);
+    for (const result of results) {
+      const formatted = processEraRewardPoints(result, eras[i]);
       if (formatted) {
         newErasRewardPoints[eras[i].toString()] = formatted;
       }
@@ -279,7 +281,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetches and formats the active validator set, and derives metrics from the result.
   const fetchValidators = async () => {
-    if (!isReady || !api || validatorsFetched !== 'unsynced') {
+    if (!isReady || validatorsFetched !== 'unsynced') {
       return;
     }
     setValidatorsFetched('syncing');
@@ -360,7 +362,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetches prefs for a list of validators.
   const fetchValidatorPrefs = async (addresses: ValidatorAddresses) => {
-    if (!addresses.length || !api) {
+    if (!addresses.length) {
       return null;
     }
 
@@ -485,7 +487,9 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Gets average validator reward for provided number of days.
   const getAverageEraValidatorReward = async () => {
-    if (!api || !isReady || activeEra.index.isZero()) {
+    const { pApi } = ApiController.get(network);
+
+    if (!pApi || !isReady || activeEra.index.isZero()) {
       setAverageEraValidatorReward({
         days: 0,
         reward: new BigNumber(0),
@@ -510,12 +514,12 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       thisEra = thisEra.minus(1);
     } while (thisEra.gte(endEra));
 
-    const validatorEraRewards =
-      await api.query.staking.erasValidatorReward.multi(eras);
+    const erasMulti: [string][] = eras.map((e) => [e.toString()]);
+    const results = await new ErasValidatorReward(pApi, erasMulti).fetch();
 
-    const reward = validatorEraRewards
+    const reward = results
       .map((v) => {
-        const value = new BigNumber(v.toString() === '' ? 0 : v.toString());
+        const value = new BigNumber(!v ? 0 : v.toString());
         if (value.isNaN()) {
           return new BigNumber(0);
         }
