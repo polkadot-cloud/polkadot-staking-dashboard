@@ -42,7 +42,7 @@ export const usePayouts = () => useContext(PayoutsContext);
 
 export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
-  const { api, consts, activeEra } = useApi();
+  const { consts, activeEra } = useApi();
   const { activeAccount } = useActiveAccounts();
   const { isNominating, fetchEraStakers } = useStaking();
   const { maxExposurePageSize } = consts;
@@ -144,7 +144,7 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
   // Start pending payout process once exposure data is fetched.
   const getUnclaimedPayouts = async () => {
     const { pApi } = ApiController.get(network);
-    if (!api || !activeAccount) {
+    if (!pApi || !activeAccount) {
       return;
     }
 
@@ -301,7 +301,7 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
           .multipliedBy(validatorRewardPoints)
           .dividedBy(totalRewardPoints);
 
-        const valCut = commission.multipliedBy(avail);
+        const valCut = commission.multipliedBy(0.01).multipliedBy(avail);
 
         const unclaimedPayout = total.isZero()
           ? new BigNumber(0)
@@ -309,7 +309,8 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
               .minus(valCut)
               .multipliedBy(staked)
               .dividedBy(total)
-              .plus(isValidator ? valCut : 0);
+              .plus(isValidator ? valCut : 0)
+              .integerValue(BigNumber.ROUND_DOWN);
 
         if (!unclaimedPayout.isZero()) {
           unclaimed[era] = {
