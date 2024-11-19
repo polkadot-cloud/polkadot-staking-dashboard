@@ -24,6 +24,9 @@ import {
   setLocalEraExposure,
   setLocalUnclaimedPayouts,
 } from './Utils';
+import { BondedMulti } from 'model/Query/BondedMulti';
+import { ApiController } from 'controllers/Api';
+import { ClaimedRewards } from 'model/Query/ClaimedRewards';
 
 const worker = new Worker();
 
@@ -136,6 +139,7 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
 
   // Start pending payout process once exposure data is fetched.
   const getUnclaimedPayouts = async () => {
+    const { pApi } = ApiController.get(network);
     if (!api || !activeAccount) {
       return;
     }
@@ -163,11 +167,15 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
     );
 
     // Fetch controllers in order to query ledgers.
-    const bondedResults =
-      await api.query.staking.bonded.multi<AnyApi>(uniqueValidators);
+    const uniqueValidatorsMulti: [string][] = uniqueValidators.map((v) => [v]);
+    const bondedResultsMulti = await new BondedMulti(
+      pApi,
+      uniqueValidatorsMulti
+    ).fetch();
+
     const validatorControllers: Record<string, string> = {};
-    for (let i = 0; i < bondedResults.length; i++) {
-      const ctlr = bondedResults[i].unwrapOr(null);
+    for (let i = 0; i < bondedResultsMulti.length; i++) {
+      const ctlr = bondedResultsMulti[i] || null;
       if (ctlr) {
         validatorControllers[uniqueValidators[i]] = ctlr;
       }
@@ -186,18 +194,18 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
 
     const results = await Promise.all(
       unclaimedRewardsEntries.map(([era, v]) =>
-        api.query.staking.claimedRewards<AnyApi>(era, v)
+        new ClaimedRewards(pApi, era, v).fetch()
       )
     );
 
     for (let i = 0; i < results.length; i++) {
-      const pages = results[i].toHuman() || [];
+      const pages = results[i] || [];
       const era = unclaimedRewardsEntries[i][0];
       const validator = unclaimedRewardsEntries[i][1];
       const exposure = getLocalEraExposure(network, era, activeAccount);
       const exposedPage =
         exposure?.[validator]?.exposedPage !== undefined
-          ? String(exposure[validator].exposedPage)
+          ? Number(exposure[validator].exposedPage)
           : undefined;
 
       // Add to `unclaimedRewards` if payout page has not yet been claimed.
