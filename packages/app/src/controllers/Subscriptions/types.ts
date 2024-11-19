@@ -10,6 +10,7 @@ import type { Bonded } from 'model/Subscribe/Bonded';
 import type { FastUnstakeConfig } from 'model/Subscribe/FastUnstakeConfig';
 import type { FastUnstakeQueue } from 'model/Subscribe/FastUnstakeQueue';
 import type { NetworkMetrics } from 'model/Subscribe/NetworkMetrics';
+import type { PoolMembersMulti } from 'model/Subscribe/PoolMembersMulti';
 import type { PoolsConfig } from 'model/Subscribe/PoolsConfig';
 import type { StakingMetrics } from 'model/Subscribe/StakingMetrics';
 
@@ -25,6 +26,7 @@ export type Subscription =
   | FastUnstakeQueue
   | NetworkMetrics
   | PoolsConfig
+  | PoolMembersMulti
   | StakingMetrics;
 
 // the record of subscriptions, keyed by tabId.

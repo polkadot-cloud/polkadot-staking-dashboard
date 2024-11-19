@@ -24,6 +24,7 @@ import type { BondedAccount } from 'contexts/Bonded/types';
 import type { FastUnstakeConfigResult } from 'model/Subscribe/FastUnstakeConfig/types';
 import type { FastUnstakeQueueResult } from 'contexts/FastUnstake/types';
 import type { AccountProxiesEvent } from 'model/Subscribe/AccountProxies/types';
+import type { PoolMemberBatchEvent } from 'model/Subscribe/PoolMembersMulti/types';
 
 declare global {
   interface Window {
@@ -46,6 +47,7 @@ declare global {
       stakingMetrics: APIStakingMetrics;
     }>;
     'new-active-pool': CustomEvent<DetailActivePool>;
+    'new-pool-members-batch': CustomEvent<PoolMemberBatchEvent>;
     'new-fast-unstake-config': CustomEvent<FastUnstakeConfigResult>;
     'new-fast-unstake-deposit': CustomEvent<FastUnstakeQueueResult>;
     'new-account-proxies': CustomEvent<AccountProxiesEvent>;
