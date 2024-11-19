@@ -8,7 +8,7 @@ import { useApi } from 'contexts/Api';
 import type { AnyApi } from 'types';
 import type { AnyJson, Sync } from '@w3ux/types';
 import Worker from 'workers/stakers?worker';
-import { rmCommas, setStateWithRef } from '@w3ux/utils';
+import { setStateWithRef } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -27,6 +27,10 @@ import {
 import { BondedMulti } from 'model/Query/BondedMulti';
 import { ApiController } from 'controllers/Api';
 import { ClaimedRewards } from 'model/Query/ClaimedRewards';
+import { ErasValidatorReward } from 'model/Query/ErasValidatorReward';
+import { ErasRewardPoints } from 'model/Query/ErasRewardPoints';
+import { ValidatorPrefs } from 'model/Query/ValidatorPrefs';
+import { perbillToPercent } from 'library/Utils';
 
 const worker = new Worker();
 
@@ -238,10 +242,10 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
       if (validators.length > 0) {
         calls.push(
           Promise.all([
-            api.query.staking.erasValidatorReward<AnyApi>(era),
-            api.query.staking.erasRewardPoints<AnyApi>(era),
+            new ErasValidatorReward(pApi, era).fetch(),
+            new ErasRewardPoints(pApi, era).fetch(),
             ...validators.map((validator: AnyJson) =>
-              api.query.staking.erasValidatorPrefs<AnyApi>(era, validator)
+              new ValidatorPrefs(pApi, era, validator).fetch()
             ),
           ])
         );
@@ -252,18 +256,22 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
     // `unclaimed`: Record<era, Record<validator, unclaimedPayout>>.
     const unclaimed: UnclaimedPayouts = {};
     let i = 0;
-    for (const [reward, points, ...prefs] of await Promise.all(calls)) {
+    for (const [reward, eraRewardPoints, ...prefs] of await Promise.all(
+      calls
+    )) {
       const era = Object.keys(unclaimedByEra)[i];
-      const eraTotalPayout = new BigNumber(rmCommas(reward.toHuman()));
-      const eraRewardPoints = points.toHuman();
+      const eraTotalPayout = new BigNumber(reward.toString());
       const unclaimedValidators = unclaimedByEra[era];
 
       let j = 0;
       for (const pref of prefs) {
-        const eraValidatorPrefs = pref.toHuman();
+        const eraValidatorPrefs = {
+          commission: pref.commission,
+          blocked: pref.blocked,
+        };
         const commission = new BigNumber(
-          eraValidatorPrefs.commission.replace(/%/g, '')
-        ).multipliedBy(0.01);
+          perbillToPercent(eraValidatorPrefs.commission)
+        );
 
         // Get validator from era exposure data. Falls back no null if it cannot be found.
         const validator = unclaimedValidators?.[j] || '';
@@ -281,11 +289,14 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
 
         // Calculate the validator's share of total era payout.
         const totalRewardPoints = new BigNumber(
-          rmCommas(eraRewardPoints.total)
+          eraRewardPoints.total.toString()
         );
         const validatorRewardPoints = new BigNumber(
-          rmCommas(eraRewardPoints.individual?.[validator] || '0')
+          eraRewardPoints.individual.find(
+            ([v]: [string]) => v === validator
+          )?.[1] || '0'
         );
+
         const avail = eraTotalPayout
           .multipliedBy(validatorRewardPoints)
           .dividedBy(totalRewardPoints);
