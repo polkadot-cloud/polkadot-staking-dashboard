@@ -290,7 +290,8 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
               .minus(valCut)
               .multipliedBy(staked)
               .dividedBy(total)
-              .plus(isValidator ? valCut : 0);
+              .plus(isValidator ? valCut : 0)
+              .integerValue(BigNumber.ROUND_DOWN);
 
         if (!unclaimedPayout.isZero()) {
           unclaimed[era] = {
