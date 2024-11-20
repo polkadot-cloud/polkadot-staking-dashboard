@@ -62,7 +62,7 @@ export const useActiveBalances = ({
   // Gets an active balance's locks.
   const getLocks = (address: MaybeAddress): BalanceLocks => {
     if (address) {
-      const maybeLocks = activeBalances[address]?.balances.locks;
+      const maybeLocks = activeBalances[address]?.balances?.locks;
       if (maybeLocks) {
         return { locks: maybeLocks, maxLock: getMaxLock(maybeLocks) };
       }
