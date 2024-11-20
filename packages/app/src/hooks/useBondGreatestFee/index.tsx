@@ -3,17 +3,14 @@
 
 import BigNumber from 'bignumber.js';
 import { useEffect, useMemo, useState } from 'react';
-import { useApi } from 'contexts/Api';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import type { BondFor } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { ApiController } from 'controllers/Api';
+import { useNetwork } from 'contexts/Network';
 
-interface Props {
-  bondFor: BondFor;
-}
-
-export const useBondGreatestFee = ({ bondFor }: Props) => {
-  const { api } = useApi();
+export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
+  const { network } = useNetwork();
   const { activeAccount } = useActiveAccounts();
   const { feeReserve, getTransferOptions } = useTransferOptions();
   const transferOptions = useMemo(
@@ -38,26 +35,29 @@ export const useBondGreatestFee = ({ bondFor }: Props) => {
 
   // estimate the largest possible tx fee based on users free balance.
   const txLargestFee = async () => {
+    const { pApi } = ApiController.get(network);
+
     const bond = BigNumber.max(
       transferrableBalance.minus(feeReserve),
       0
     ).toString();
 
     let tx = null;
-    if (!api) {
+    if (!pApi) {
       return new BigNumber(0);
     }
     if (bondFor === 'pool') {
-      tx = api.tx.nominationPools.bondExtra({
-        FreeBalance: bond,
+      tx = pApi.tx.NominationPools.bond_extra({
+        type: 'FreeBalance',
+        value: BigInt(bond),
       });
     } else if (bondFor === 'nominator') {
-      tx = api.tx.staking.bondExtra(bond);
+      tx = pApi.tx.Staking.bond_extra({ bond });
     }
 
     if (tx) {
-      const { partialFee } = await tx.paymentInfo(activeAccount || '');
-      return new BigNumber(partialFee.toString());
+      const { partial_fee } = await tx.getPaymentInfo(activeAccount || '');
+      return new BigNumber(partial_fee.toString());
     }
     return new BigNumber(0);
   };
