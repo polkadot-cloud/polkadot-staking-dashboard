@@ -43,7 +43,7 @@ export const useActiveBalances = ({
   // Gets an active balance's balance.
   const getBalance = (address: MaybeAddress) => {
     if (address) {
-      const maybeBalance = activeBalances[address]?.balances.balance;
+      const maybeBalance = activeBalances[address]?.balances?.balance;
       if (maybeBalance) {
         return maybeBalance;
       }
