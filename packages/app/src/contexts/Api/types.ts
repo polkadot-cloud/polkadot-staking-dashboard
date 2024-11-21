@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ApiPromise } from '@polkadot/api';
 import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
 import type { NetworkName } from '../../types';
@@ -66,7 +65,6 @@ export interface APIStakingMetrics {
 }
 
 export interface APIContextInterface {
-  peopleApi: ApiPromise | null;
   chainSpecs: PapiChainSpecContext;
   isReady: boolean;
   apiStatus: ApiStatus;

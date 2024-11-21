@@ -291,7 +291,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     }
   };
 
-  // Handle `polkadot-api` events.
+  // Handle api status events.
   const handleNewApiStatus = (e: Event) => {
     if (isCustomEvent(e)) {
       const { chainType } = e.detail;
@@ -549,7 +549,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   return (
     <APIContext.Provider
       value={{
-        peopleApi: ApiController.get(`people-${network}`)?.api || null,
         chainSpecs,
         apiStatus,
         peopleApiStatus,

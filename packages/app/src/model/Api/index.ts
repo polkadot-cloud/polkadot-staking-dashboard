@@ -104,11 +104,6 @@ export class Api {
       // Initialise Polkadot JS API.
       this.#api = new ApiPromise({ provider: this.#provider });
 
-      // NOTE: Unlike Polkadot JS API, Papi client does not have an asynchronous initialization
-      // stage that leads to `isReady`. If using papi client, we can immediately attempt to fetch
-      // the chainSpec via the client.∑
-      this.initApiEvents();
-
       // Wait for api to be ready.
       await this.#api.isReady;
 
@@ -203,8 +198,8 @@ export class Api {
         transactionVersion,
       };
 
-      // Dispatch 'papi-ready' event to let contexts populate constants.
-      this.dispatchPapiReadyEvent();
+      // Dispatch ready eventd to let contexts populate constants.
+      this.dispatchReadyEvent();
     } catch (e) {
       // TODO: Expand this when PJS API has been removed. Flag an error if there are any issues
       // bootstrapping chain spec. NOTE: This can happen when PAPI is the standalone connection
@@ -234,33 +229,15 @@ export class Api {
     }
   };
 
-  // Handler for dispatching `papi-ready` events.
-  dispatchPapiReadyEvent() {
+  // Handler for dispatching ready events.
+  dispatchReadyEvent() {
     const detail: PapiReadyEvent = {
       network: this.network,
       chainType: this.#chainType,
       ...this.#papiChainSpec,
     };
+    this.dispatchEvent(this.ensureEventStatus('ready'));
     document.dispatchEvent(new CustomEvent('papi-ready', { detail }));
-  }
-
-  // Set up API event listeners. Sends information to the UI.
-  async initApiEvents() {
-    this.#api.on('ready', async () => {
-      this.dispatchEvent(this.ensureEventStatus('ready'));
-    });
-
-    this.#api.on('connected', () => {
-      this.dispatchEvent(this.ensureEventStatus('connected'));
-    });
-
-    this.#api.on('disconnected', () => {
-      this.dispatchEvent(this.ensureEventStatus('disconnected'));
-    });
-
-    this.#api.on('error', () => {
-      this.dispatchEvent(this.ensureEventStatus('error'));
-    });
   }
 
   // Handler for dispatching `api-status` events.

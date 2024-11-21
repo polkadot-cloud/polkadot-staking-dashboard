@@ -3,7 +3,7 @@
 
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef } from 'react';
-import type { MaybeAddress } from 'types';
+import type { MaybeAddress, SystemChainId } from 'types';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import * as defaults from './defaults';
 import type { BalancesContextInterface } from './types';
@@ -18,6 +18,7 @@ import { useApi } from 'contexts/Api';
 import { ActivePoolsController } from 'controllers/ActivePools';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import { useNetwork } from 'contexts/Network';
+import { ApiController } from 'controllers/Api';
 
 export const BalancesContext = createContext<BalancesContextInterface>(
   defaults.defaultBalancesContext
@@ -26,8 +27,8 @@ export const BalancesContext = createContext<BalancesContextInterface>(
 export const useBalances = () => useContext(BalancesContext);
 
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
+  const { isReady } = useApi();
   const { network } = useNetwork();
-  const { peopleApi, isReady } = useApi();
   const { getBondedAccount } = useBonded();
   const { accounts } = useImportedAccounts();
   const createPoolAccounts = useCreatePoolAccounts();
@@ -69,6 +70,10 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
           id: String(poolId),
           addresses: { ...createPoolAccounts(Number(poolId)) },
         });
+
+        const { pApi: peopleApi } = ApiController.get(
+          `people-${network}` as SystemChainId
+        );
         if (peopleApi) {
           ActivePoolsController.syncPools(network, address, newPools);
         }

@@ -17,6 +17,7 @@ import { SyncController } from 'controllers/Sync';
 import { useActivePools } from 'hooks/useActivePools';
 import BigNumber from 'bignumber.js';
 import { ApiController } from 'controllers/Api';
+import type { SystemChainId } from 'types';
 
 export const ActivePoolContext = createContext<ActivePoolContextState>(
   defaultActivePoolContext
@@ -25,9 +26,9 @@ export const ActivePoolContext = createContext<ActivePoolContextState>(
 export const useActivePool = () => useContext(ActivePoolContext);
 
 export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
+  const { isReady } = useApi();
   const { network } = useNetwork();
   const { getPoolMembership } = useBalances();
-  const { isReady, peopleApi } = useApi();
   const { activeAccount } = useActiveAccounts();
   const createPoolAccounts = useCreatePoolAccounts();
 
@@ -80,6 +81,10 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
       ];
 
       SyncController.dispatch('active-pools', 'syncing');
+      const { pApi: peopleApi } = ApiController.get(
+        `people-${network}` as SystemChainId
+      );
+
       if (peopleApi) {
         ActivePoolsController.syncPools(network, activeAccount, newActivePool);
       }

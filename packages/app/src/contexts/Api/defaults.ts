@@ -80,7 +80,6 @@ export const defaultStakingMetrics: APIStakingMetrics = {
 };
 
 export const defaultApiContext: APIContextInterface = {
-  peopleApi: null,
   chainSpecs: defaultChainSpecs,
   isReady: false,
   apiStatus: 'disconnected',

@@ -52,7 +52,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
   const {
     isReady,
-    peopleApi,
     peopleApiStatus,
     consts: { historyDepth },
     networkMetrics: { earliestStoredSession },
@@ -324,13 +323,13 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     setAvgCommission(avg);
     // NOTE: validators are shuffled before committed to state.
     setValidators(shuffle(validatorEntries));
-    const { pApi: peoplePapiApi } = ApiController.get(
+    const { pApi: peopleApi } = ApiController.get(
       `people-${network}` as SystemChainId
     );
     if (peopleApi && peopleApiStatus === 'ready') {
       const addresses = validatorEntries.map(({ address }) => address);
       const { identities, supers } = await IdentitiesController.fetch(
-        peoplePapiApi,
+        peopleApi,
         addresses
       );
       setValidatorIdentities(identities);
