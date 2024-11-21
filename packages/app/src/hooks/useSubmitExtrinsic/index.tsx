@@ -27,6 +27,9 @@ import { formatAccountSs58 } from '@w3ux/utils';
 import { LedgerSigner } from 'library/Signers/LedgerSigner';
 import { getLedgerApp } from 'contexts/LedgerHardware/Utils';
 import type { LedgerAccount } from '@w3ux/react-connect-kit/types';
+import { VaultSigner } from 'library/Signers/VaultSigner';
+import { usePrompt } from 'contexts/Prompt';
+import { SignPrompt } from 'library/SubmitTx/ManualSign/Vault/SignPrompt';
 
 export const useSubmitExtrinsic = ({
   tx,
@@ -44,6 +47,7 @@ export const useSubmitExtrinsic = ({
   const { activeProxy } = useActiveAccounts();
   const { extensionsStatus } = useExtensions();
   const { isProxySupported } = useProxySupported();
+  const { openPromptWith, closePrompt } = usePrompt();
   const { handleResetLedgerTask } = useLedgerHardware();
   const { addPendingNonce, removePendingNonce } = useTxMeta();
   const { getAccount, requiresManualSign } = useImportedAccounts();
@@ -227,21 +231,43 @@ export const useSubmitExtrinsic = ({
     // handle signed transaction.
     let signer: PolkadotSigner | undefined;
     if (requiresManualSign(fromRef.current)) {
-      if (source === 'ledger') {
-        // Ledger signer.
-        signer = await new LedgerSigner(
-          AccountId().enc(fromRef.current),
-          getLedgerApp(network).txMetadataChainId
-        ).getPolkadotSigner(
-          {
-            decimals: units,
-            tokenSymbol: unit,
-          },
-          (account as LedgerAccount).index
-        );
-      }
+      const pubKey = AccountId().enc(fromRef.current);
+      const networkInfo = {
+        decimals: units,
+        tokenSymbol: unit,
+      };
 
-      // TODO: Get Vault & Wallet Connect signers.
+      switch (source) {
+        case 'ledger':
+          signer = await new LedgerSigner(
+            pubKey,
+            getLedgerApp(network).txMetadataChainId
+          ).getPolkadotSigner(networkInfo, (account as LedgerAccount).index);
+          break;
+
+        case 'vault':
+          signer = await new VaultSigner(pubKey, {
+            openPrompt: (
+              onComplete: (result: Uint8Array) => void,
+              toSign: Uint8Array
+            ) => {
+              openPromptWith(
+                <SignPrompt
+                  submitAddress={fromRef.current}
+                  onComplete={onComplete}
+                  toSign={toSign}
+                />,
+                'small'
+              );
+            },
+            closePrompt: () => closePrompt(),
+          }).getPolkadotSigner(networkInfo);
+          break;
+
+        case 'wallet_connect':
+          // TODO: Implement
+          break;
+      }
     } else {
       // Get the polkadot signer for this account.
       signer = (await connectInjectedExtension(source))

@@ -8,22 +8,25 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { usePrompt } from 'contexts/Prompt';
-import { useTxMeta } from 'contexts/TxMeta';
 import { QRViewerWrapper } from 'library/Import/Wrappers';
 import { QrDisplayPayload } from 'library/QRCode/DisplayPayload';
 import { QrScanSignature } from 'library/QRCode/ScanSignature';
 import type { SignerPromptProps } from 'library/SubmitTx/types';
 import type { AnyJson } from '@w3ux/types';
 import { ButtonPrimary, ButtonSecondary } from 'ui-buttons';
+import { Bytes } from '@polkadot-api/substrate-bindings';
+import { useApi } from 'contexts/Api';
 
-export const SignPrompt = ({ submitAddress }: SignerPromptProps) => {
+export const SignPrompt = ({
+  submitAddress,
+  toSign,
+  onComplete,
+}: SignerPromptProps) => {
+  const {
+    chainSpecs: { genesisHash },
+  } = useApi();
+
   const { t } = useTranslation('library');
-  const { getTxPayload, setTxSignature } = useTxMeta();
-
-  const payload = getTxPayload();
-  const payloadU8a = payload?.toU8a();
-  const { closePrompt } = usePrompt();
 
   // Whether user is on sign or submit stage.
   const [stage, setStage] = useState<number>(1);
@@ -47,8 +50,8 @@ export const SignPrompt = ({ submitAddress }: SignerPromptProps) => {
           <QrDisplayPayload
             address={submitAddress || ''}
             cmd={2}
-            genesisHash={payload?.genesisHash}
-            payload={payloadU8a}
+            genesisHash={Bytes(32).dec(genesisHash)}
+            payload={toSign}
             style={{ width: '100%', maxWidth: 250 }}
           />
         </div>
@@ -58,8 +61,8 @@ export const SignPrompt = ({ submitAddress }: SignerPromptProps) => {
           <QrScanSignature
             size={279}
             onScan={({ signature }: AnyJson) => {
-              closePrompt();
-              setTxSignature(signature);
+              // TODO: Expand with result `status` of cancelled or complete.
+              onComplete(signature);
             }}
           />
         </div>
@@ -90,7 +93,10 @@ export const SignPrompt = ({ submitAddress }: SignerPromptProps) => {
             text={t('cancel')}
             lg
             marginLeft
-            onClick={() => closePrompt()}
+            onClick={() => {
+              // TODO: Expand with result `status` of cancelled or complete.
+              onComplete(new Uint8Array(0));
+            }}
           />
         </div>
       </div>

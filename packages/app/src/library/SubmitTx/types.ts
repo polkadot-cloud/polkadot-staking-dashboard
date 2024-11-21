@@ -26,6 +26,8 @@ export interface SubmitProps {
 
 export interface SignerPromptProps {
   submitAddress: MaybeAddress;
+  toSign: Uint8Array;
+  onComplete: (result: Uint8Array) => void;
 }
 
 export interface LedgerSubmitProps {

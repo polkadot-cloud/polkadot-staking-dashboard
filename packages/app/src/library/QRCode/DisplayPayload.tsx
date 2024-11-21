@@ -5,27 +5,23 @@ import type { ReactElement } from 'react';
 import { memo, useMemo } from 'react';
 import { QrDisplay } from './Display.js';
 import type { DisplayPayloadProps } from './types.js';
-import { u8aConcat } from '@polkadot/util';
-import { decodeAddress } from '@polkadot/util-crypto';
+import { AccountId } from 'polkadot-api';
+import { mergeUint8 } from 'polkadot-api/utils';
 
 const createSignPayload = (
   address: string,
   cmd: number,
   payload: Uint8Array,
   genesisHash: Uint8Array
-): Uint8Array => {
-  const SUBSTRATE_ID = new Uint8Array([0x53]);
-  const CRYPTO_SR25519 = new Uint8Array([0x01]);
-
-  return u8aConcat(
-    SUBSTRATE_ID,
-    CRYPTO_SR25519,
+): Uint8Array =>
+  mergeUint8(
+    new Uint8Array([0x53]), // SUBSTRATE_ID
+    new Uint8Array([0x01]), // CRYPTO_SR25519
     new Uint8Array([cmd]),
-    decodeAddress(address),
+    AccountId().enc(address),
     payload,
     genesisHash
   );
-};
 
 const DisplayPayload = ({
   address,

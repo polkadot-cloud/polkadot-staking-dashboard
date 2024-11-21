@@ -8,8 +8,7 @@ import type { V15 } from '@polkadot-api/substrate-bindings';
 import { decAnyMetadata } from '@polkadot-api/substrate-bindings';
 import { Ledger } from '../../contexts/LedgerHardware/static/ledger';
 import { createV4Tx, getSignBytes } from '@polkadot-api/signers-common';
-
-const CheckMetadataHash = 'CheckMetadataHash';
+import { getExtraSignedExtensions } from './util';
 
 export class LedgerSigner {
   #publicKey: Uint8Array;
@@ -33,27 +32,13 @@ export class LedgerSigner {
     ) => {
       const merkleizer = merkleizeMetadata(metadata, networkInfo);
       const digest = merkleizer.digest();
-
-      // NOTE: Assuming metadata is version 15. Could introduce error here for `useSubmitExtrinsic`
-      // to handle.
       const v15 = decAnyMetadata(metadata).metadata.value as unknown as V15;
-
-      // NOTE: Assuming `CheckMetadataHash` signed extension exists in metadata. Could introduce
-      // error here for `useSubmitExtrinsic` to handle.
-      const extra: Uint8Array[] = [];
-      const additionalSigned: Uint8Array[] = [];
-      v15.extrinsic.signedExtensions.map(({ identifier }) => {
-        if (identifier === CheckMetadataHash) {
-          extra.push(Uint8Array.from([1]));
-          additionalSigned.push(mergeUint8(Uint8Array.from([1]), digest));
-          return;
-        }
-        const signedExtension = signedExtensions[identifier];
-        if (signedExtension) {
-          extra.push(signedExtension.value);
-          additionalSigned.push(signedExtension.additionalSigned);
-        }
-      });
+      const { extra, additionalSigned } = getExtraSignedExtensions(
+        v15,
+        digest,
+        signedExtensions,
+        true
+      );
 
       const toSign = mergeUint8(callData, ...extra, ...additionalSigned);
       const { signature } = await Ledger.signPayload(
