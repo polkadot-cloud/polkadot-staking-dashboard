@@ -1,8 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ApiPromise, WsProvider } from '@polkadot/api';
-import type { AnyApi, NetworkName, SystemChainId } from 'types';
+import type { NetworkName, SystemChainId } from 'types';
 import { NetworkList, SystemChainList } from 'config/networks';
 import type {
   ApiChainType,
@@ -14,9 +13,6 @@ import type {
   PapiReadyEvent,
 } from './types';
 import { SubscriptionsController } from 'controllers/Subscriptions';
-import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
-import { WellKnownChain } from '@substrate/connect';
-import * as Sc from '@substrate/connect';
 import type { PolkadotClient } from 'polkadot-api';
 import { createClient } from 'polkadot-api';
 import { getWsProvider } from 'polkadot-api/ws-provider/web';
@@ -32,9 +28,6 @@ export class Api {
   // The type of chain being connected to.
   #chainType: ApiChainType;
 
-  // API provider.
-  #provider: WsProvider | ScProvider;
-
   // PAPI Instance.
   #papiClient: PolkadotClient;
 
@@ -44,18 +37,11 @@ export class Api {
   // PAPI Chain Spec.
   #papiChainSpec: PapiChainSpec;
 
-  // API instance.
-  #api: ApiPromise;
-
   // The current RPC endpoint.
   #rpcEndpoint: string;
 
   // The current connection type.
   #connectionType: ConnectionType;
-
-  get api() {
-    return this.#api;
-  }
 
   get papiClient() {
     return this.#papiClient;
@@ -101,12 +87,6 @@ export class Api {
       // Tell UI api is connecting.
       this.dispatchEvent(this.ensureEventStatus('connecting'));
 
-      // Initialise Polkadot JS API.
-      this.#api = new ApiPromise({ provider: this.#provider });
-
-      // Wait for api to be ready.
-      await this.#api.isReady;
-
       // Initialise PAPI API.
       this.#pApi = this.#papiClient.getUnsafeApi();
 
@@ -128,27 +108,12 @@ export class Api {
             this.#rpcEndpoint
           ];
 
-    // Initialize Polkadot JS Provider.
-    this.#provider = new WsProvider(endpoint);
-
-    // Initialize PAPI Client.
+    // Initialize Polkadot API Client.
     this.#papiClient = createClient(getWsProvider(endpoint));
   }
 
   // Dynamically load and connect to Substrate Connect.
   async initScProvider() {
-    // Get light client key from network list.
-    const lightClientKey =
-      this.#chainType === 'relay'
-        ? NetworkList[this.network].endpoints.lightClientKey
-        : SystemChainList[this.network].endpoints.lightClientKey;
-
-    // Instantiate light client provider.
-    this.#provider = new ScProvider(
-      Sc as AnyApi,
-      WellKnownChain[lightClientKey as keyof typeof WellKnownChain]
-    );
-
     // Initialise PAPI light client.
     const smoldot = startFromWorker(new SmWorker());
     const smMetadata = getLightClientMetadata(this.#chainType, this.network);
@@ -162,9 +127,6 @@ export class Api {
       })
     );
     this.#papiClient = createClient(chain);
-
-    // Connect to Polkadot JS API provider.
-    await this.#provider.connect();
   }
 
   async fetchChainSpec() {
@@ -290,10 +252,6 @@ export class Api {
   // Disconnect gracefully from API and provider.
   async disconnect(destroy = false) {
     this.unsubscribe();
-
-    // Disconnect provider and api.
-    await this.#provider?.disconnect();
-    await this.#api?.disconnect();
 
     // Disconnect from PAPI Client.
     this.#papiClient?.destroy();
