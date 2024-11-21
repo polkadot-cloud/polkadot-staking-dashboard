@@ -2,51 +2,54 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { unitToPlanck } from '@w3ux/utils';
-import { useApi } from 'contexts/Api';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useBatchCall } from 'hooks/useBatchCall';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
-import { SubmitTx } from 'library/SubmitTx';
 import { useEffect } from 'react';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ApiController } from 'controllers/Api';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
+import { SubmitTx } from 'library/SubmitTx';
 
 export const BalanceTest = () => {
-  const { api } = useApi();
   const {
+    network,
     networkData: { units },
   } = useNetwork();
-  const { activeAccount } = useActiveAccounts();
   const { notEnoughFunds } = useTxMeta();
   const { newBatchCall } = useBatchCall();
-  const { setModalStatus, setModalResize } = useOverlay().modal;
+  const { activeAccount } = useActiveAccounts();
+  const { setModalResize, setModalStatus } = useOverlay().modal;
 
   // tx to submit
   const getTx = () => {
+    const { pApi } = ApiController.get(network);
+
     const tx = null;
-    if (!api || !activeAccount) {
+    if (!pApi || !activeAccount) {
       return tx;
     }
 
     const txs = [
-      api.tx.balances.transfer(
-        {
-          id: '1554u1a67ApEt5xmjbZwjgDNaVckbzB6cjRHWAQ1SpNkNxTd',
+      pApi.tx.Balances.transfer_keep_alive({
+        dest: {
+          type: 'Id',
+          value: '1554u1a67ApEt5xmjbZwjgDNaVckbzB6cjRHWAQ1SpNkNxTd',
         },
-        unitToPlanck('0.1', units).toString()
-      ),
-      api.tx.balances.transfer(
-        {
-          id: '1554u1a67ApEt5xmjbZwjgDNaVckbzB6cjRHWAQ1SpNkNxTd',
+        value: unitToPlanck('0.1', units).toString(),
+      }),
+      pApi.tx.Balances.transfer_keep_alive({
+        dest: {
+          type: 'Id',
+          value: '1554u1a67ApEt5xmjbZwjgDNaVckbzB6cjRHWAQ1SpNkNxTd',
         },
-        unitToPlanck('0.05', units).toString()
-      ),
+        value: unitToPlanck('0.1', units).toString(),
+      }),
     ];
     const batch = newBatchCall(txs, activeAccount);
-
     return batch;
   };
 
