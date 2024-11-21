@@ -81,7 +81,7 @@ export const Summary = ({ section }: SetupStepProps) => {
       }),
       pApi.tx.NominationPools.set_metadata({
         pool_id: poolId.toNumber(),
-        metadata: Binary.fromHex(metadata),
+        metadata: Binary.fromText(metadata),
       }),
     ];
     return newBatchCall(txs, activeAccount);

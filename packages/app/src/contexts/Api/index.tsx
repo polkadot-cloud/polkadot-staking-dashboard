@@ -549,7 +549,6 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   return (
     <APIContext.Provider
       value={{
-        api: ApiController.get(network)?.api || null,
         peopleApi: ApiController.get(`people-${network}`)?.api || null,
         chainSpecs,
         apiStatus,

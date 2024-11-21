@@ -41,7 +41,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const { getBondedAccount } = useBonded();
   const { networkData, network } = useNetwork();
   const { getLedger, getNominations } = useBalances();
-  const { isReady, api, activeEra, apiStatus } = useApi();
+  const { isReady, activeEra, apiStatus } = useApi();
   const { accounts: connectAccounts } = useImportedAccounts();
   const { activeAccount, getActiveAccount } = useActiveAccounts();
 
@@ -93,7 +93,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetches erasStakers exposures for an era, and saves to `localStorage`.
   const fetchEraStakers = async (era: string) => {
-    if (!isReady || activeEra.index.isZero() || !api) {
+    if (!isReady || activeEra.index.isZero()) {
       return [];
     }
 
@@ -120,7 +120,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetches the active nominator set and metadata around it.
   const fetchActiveEraStakers = async () => {
-    if (!isReady || activeEra.index.isZero() || !api) {
+    if (!isReady || activeEra.index.isZero()) {
       return;
     }
 
@@ -224,11 +224,11 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch eras stakers from storage.
   const getPagedErasStakers = async (era: string) => {
-    if (!api) {
+    const { pApi } = ApiController.get(network);
+    if (!pApi) {
       return [];
     }
 
-    const { pApi } = ApiController.get(network);
     const overview = await new ErasStakersOverview(pApi).fetch(era);
     const validators: Record<string, AnyJson> = overview.reduce(
       (

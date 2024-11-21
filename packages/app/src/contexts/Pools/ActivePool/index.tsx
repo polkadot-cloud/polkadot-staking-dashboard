@@ -27,7 +27,7 @@ export const useActivePool = () => useContext(ActivePoolContext);
 export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
   const { getPoolMembership } = useBalances();
-  const { isReady, api, peopleApi } = useApi();
+  const { isReady, peopleApi } = useApi();
   const { activeAccount } = useActiveAccounts();
   const createPoolAccounts = useCreatePoolAccounts();
 
@@ -71,7 +71,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
 
   // Sync active pool subscriptions.
   const syncActivePoolSubscriptions = async () => {
-    if (api && accountPoolId) {
+    if (isReady && accountPoolId) {
       const newActivePool = [
         {
           id: accountPoolId,

@@ -2,9 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
@@ -14,13 +12,16 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { RoleChange } from './RoleChange';
 import { Wrapper } from './Wrapper';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ApiController } from 'controllers/Api';
+import { useNetwork } from 'contexts/Network';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 
 export const ChangePoolRoles = () => {
   const { t } = useTranslation('modals');
-  const { api } = useApi();
-  const { activeAccount } = useActiveAccounts();
+  const { network } = useNetwork();
   const { notEnoughFunds } = useTxMeta();
   const { replacePoolRoles } = useBondedPools();
+  const { activeAccount } = useActiveAccounts();
   const {
     setModalStatus,
     config: { options },
@@ -30,18 +31,29 @@ export const ChangePoolRoles = () => {
 
   // tx to submit
   const getTx = () => {
+    const { pApi } = ApiController.get(network);
     let tx = null;
-    const root = roleEdits?.root?.newAddress
-      ? { Set: roleEdits?.root?.newAddress }
-      : 'Remove';
-    const nominator = roleEdits?.nominator?.newAddress
-      ? { Set: roleEdits?.nominator?.newAddress }
-      : 'Remove';
-    const bouncer = roleEdits?.bouncer?.newAddress
-      ? { Set: roleEdits?.bouncer?.newAddress }
-      : 'Remove';
+    if (!pApi) {
+      return tx;
+    }
 
-    tx = api?.tx.nominationPools?.updateRoles(poolId, root, nominator, bouncer);
+    const removeOp = { type: 'Remove' };
+    const root = roleEdits?.root?.newAddress
+      ? { type: 'Set', value: roleEdits.root.newAddress }
+      : removeOp;
+    const nominator = roleEdits?.nominator?.newAddress
+      ? { type: 'Set', value: roleEdits.nominator.newAddress }
+      : removeOp;
+    const bouncer = roleEdits?.bouncer?.newAddress
+      ? { type: 'Set', value: roleEdits.bouncer.newAddress }
+      : removeOp;
+
+    tx = pApi.tx.NominationPools.update_roles({
+      pool_id: poolId,
+      new_root: root,
+      new_nominator: nominator,
+      new_bouncer: bouncer,
+    });
     return tx;
   };
 

@@ -66,7 +66,6 @@ export interface APIStakingMetrics {
 }
 
 export interface APIContextInterface {
-  api: ApiPromise | null;
   peopleApi: ApiPromise | null;
   chainSpecs: PapiChainSpecContext;
   isReady: boolean;
