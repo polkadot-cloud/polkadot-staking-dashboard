@@ -20,9 +20,13 @@ import { useProxySupported } from 'hooks/useProxySupported';
 import { ApiController } from 'controllers/Api';
 import { useNetwork } from 'contexts/Network';
 import { useBalances } from 'contexts/Balances';
-import { InvalidTxError } from 'polkadot-api';
+import type { PolkadotSigner } from 'polkadot-api';
+import { AccountId, InvalidTxError } from 'polkadot-api';
 import { connectInjectedExtension } from 'polkadot-api/pjs-signer';
 import { formatAccountSs58 } from '@w3ux/utils';
+import { LedgerSigner } from 'library/Signers/LedgerSigner';
+import { getLedgerApp } from 'contexts/LedgerHardware/Utils';
+import type { LedgerAccount } from '@w3ux/react-connect-kit/types';
 
 export const useSubmitExtrinsic = ({
   tx,
@@ -32,7 +36,10 @@ export const useSubmitExtrinsic = ({
   callbackInBlock,
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('library');
-  const { network } = useNetwork();
+  const {
+    network,
+    networkData: { units, unit },
+  } = useNetwork();
   const { getNonce } = useBalances();
   const { activeProxy } = useActiveAccounts();
   const { extensionsStatus } = useExtensions();
@@ -218,9 +225,23 @@ export const useSubmitExtrinsic = ({
     setSubmitting(true);
 
     // handle signed transaction.
-    let signer;
+    let signer: PolkadotSigner | undefined;
     if (requiresManualSign(fromRef.current)) {
-      // TODO: Get custom signer here.
+      if (source === 'ledger') {
+        // Ledger signer.
+        signer = await new LedgerSigner(
+          AccountId().enc(fromRef.current),
+          getLedgerApp(network).txMetadataChainId
+        ).getPolkadotSigner(
+          {
+            decimals: units,
+            tokenSymbol: unit,
+          },
+          (account as LedgerAccount).index
+        );
+      }
+
+      // TODO: Get Vault & Wallet Connect signers.
     } else {
       // Get the polkadot signer for this account.
       signer = (await connectInjectedExtension(source))

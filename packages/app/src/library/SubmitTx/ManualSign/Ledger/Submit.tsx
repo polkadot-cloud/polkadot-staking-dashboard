@@ -3,9 +3,6 @@
 
 import { faUsb } from '@fortawesome/free-brands-svg-icons';
 import { faSquarePen } from '@fortawesome/free-solid-svg-icons';
-import type { LedgerAccount } from '@w3ux/react-connect-kit/types';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useLedgerHardware } from 'contexts/LedgerHardware';
 import { getLedgerApp } from 'contexts/LedgerHardware/Utils';
 import { useNetwork } from 'contexts/Network';
@@ -23,37 +20,11 @@ export const Submit = ({
   disabled,
 }: LedgerSubmitProps) => {
   const { t } = useTranslation('library');
-  const {
-    handleSignTx,
-    getIsExecuting,
-    integrityChecked,
-    checkRuntimeVersion,
-  } = useLedgerHardware();
   const { network } = useNetwork();
   const { getTxSignature } = useTxMeta();
-  const { getAccount } = useImportedAccounts();
-  const { activeAccount } = useActiveAccounts();
-  const { getTxMetadata, getTxPayload, getPayloadUid } = useTxMeta();
   const { txMetadataChainId } = getLedgerApp(network);
-
-  const getAddressIndex = () =>
-    (getAccount(activeAccount) as LedgerAccount)?.index || 0;
-
-  // Handle transaction submission
-  const handleTxSubmit = async () => {
-    const uid = getPayloadUid();
-    const accountIndex = getAddressIndex();
-    const txMetadata = await getTxMetadata();
-    const payload = await getTxPayload();
-
-    await handleSignTx(
-      txMetadataChainId,
-      uid,
-      accountIndex,
-      payload,
-      txMetadata
-    );
-  };
+  const { getIsExecuting, integrityChecked, checkRuntimeVersion } =
+    useLedgerHardware();
 
   // Check device runtime version.
   const handleCheckRuntimeVersion = async () => {
@@ -66,9 +37,7 @@ export const Submit = ({
   // Button `onClick` handler depends whether integrityChecked and whether tx has been submitted.
   const handleOnClick = !integrityChecked
     ? handleCheckRuntimeVersion
-    : txReady
-      ? onSubmit
-      : handleTxSubmit;
+    : onSubmit;
 
   // Determine button text.
   const text = !integrityChecked
