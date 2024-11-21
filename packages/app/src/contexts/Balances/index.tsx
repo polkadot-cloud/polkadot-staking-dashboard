@@ -27,7 +27,7 @@ export const useBalances = () => useContext(BalancesContext);
 
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork();
-  const { api, peopleApi } = useApi();
+  const { peopleApi, isReady } = useApi();
   const { getBondedAccount } = useBonded();
   const { accounts } = useImportedAccounts();
   const createPoolAccounts = useCreatePoolAccounts();
@@ -61,7 +61,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
 
       // If a pool membership exists, let `ActivePools` know of pool membership to re-sync pool
       // details and nominations.
-      if (api && poolMembership) {
+      if (isReady && poolMembership) {
         const { poolId } = poolMembership;
         const newPools = ActivePoolsController.getformattedPoolItems(
           address

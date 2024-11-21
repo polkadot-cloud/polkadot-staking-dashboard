@@ -32,7 +32,7 @@ export const ImportedAccountsProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const { isReady, api } = useApi();
+  const { isReady } = useApi();
   const {
     network,
     networkData: { ss58 },
@@ -115,7 +115,7 @@ export const ImportedAccountsProvider = ({
 
   // Keep accounts in sync with `BalancesController`.
   useEffectIgnoreInitial(() => {
-    if (api && isReady) {
+    if (isReady) {
       BalancesController.syncAccounts(
         network,
         allAccounts.map((a) => a.address)

@@ -39,7 +39,7 @@ export const WithdrawMember = ({
     networkData: { units, unit },
   } = useNetwork();
   const { closePrompt } = usePrompt();
-  const { api, consts, activeEra } = useApi();
+  const { consts, activeEra } = useApi();
   const { activeAccount } = useActiveAccounts();
   const { removePoolMember } = usePoolMembers();
   const { getSignerWarnings } = useSignerWarnings();
@@ -69,7 +69,7 @@ export const WithdrawMember = ({
   const getTx = () => {
     const { pApi } = ApiController.get(network);
     let tx = null;
-    if (!valid || !api) {
+    if (!valid || !pApi) {
       return tx;
     }
     tx = pApi.tx.NominationPools.withdraw_unbonded({
