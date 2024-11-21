@@ -16,7 +16,10 @@ export class ErasRewardPointsMulti {
   async fetch() {
     try {
       const results = await this.#pApi.query.Staking.ErasRewardPoints.getValues(
-        this.#eras
+        this.#eras,
+        {
+          at: 'best',
+        }
       );
       return results;
     } catch (e) {

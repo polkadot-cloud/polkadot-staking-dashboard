@@ -16,7 +16,10 @@ export class IdentityOfMulti {
   async fetch() {
     try {
       const result = await this.#pApi.query.Identity.IdentityOf.getValues(
-        this.#addresses
+        this.#addresses,
+        {
+          at: 'best',
+        }
       );
       return result;
     } catch (e) {

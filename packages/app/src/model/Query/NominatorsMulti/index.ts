@@ -17,7 +17,8 @@ export class NominatorsMulti {
     let result;
     try {
       result = await this.#pApi.query.Staking.Nominators.getValues(
-        this.#addresses
+        this.#addresses,
+        { at: 'best' }
       );
 
       return result.map((nominator) => {

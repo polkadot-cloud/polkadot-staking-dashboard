@@ -20,7 +20,10 @@ export class ClaimedRewards {
     try {
       const result = await this.#pApi.query.Staking.ClaimedRewards.getValue(
         this.#era,
-        this.#address
+        this.#address,
+        {
+          at: 'best',
+        }
       );
       return result;
     } catch (e) {

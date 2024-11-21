@@ -20,7 +20,8 @@ export class ValidatorPrefs {
     try {
       const result = await this.#pApi.query.Staking.ErasValidatorPrefs.getValue(
         this.#era,
-        this.#address
+        this.#address,
+        { at: 'best' }
       );
       return result;
     } catch (e) {

@@ -17,7 +17,10 @@ export class ErasValidatorReward {
     try {
       const results =
         await this.#pApi.query.Staking.ErasValidatorReward.getValues(
-          this.#eras
+          this.#eras,
+          {
+            at: 'best',
+          }
         );
       return results;
     } catch (e) {

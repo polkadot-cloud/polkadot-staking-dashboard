@@ -16,7 +16,9 @@ export class ErasValidatorReward {
   async fetch() {
     try {
       const result =
-        await this.#pApi.query.Staking.ErasValidatorReward.getValue(this.#era);
+        await this.#pApi.query.Staking.ErasValidatorReward.getValue(this.#era, {
+          at: 'best',
+        });
       return result;
     } catch (e) {
       // Silently fail.

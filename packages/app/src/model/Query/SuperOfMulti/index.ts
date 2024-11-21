@@ -16,7 +16,8 @@ export class SuperOfMulti {
   async fetch() {
     try {
       const result = await this.#pApi.query.Identity.SuperOf.getValues(
-        this.#addresses
+        this.#addresses,
+        { at: 'best' }
       );
       return result;
     } catch (e) {

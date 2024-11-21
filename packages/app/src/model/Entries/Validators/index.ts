@@ -11,6 +11,6 @@ export class Validators {
   }
 
   async fetch() {
-    return await this.#pApi.query.Staking.Validators.getEntries();
+    return await this.#pApi.query.Staking.Validators.getEntries({ at: 'best' });
   }
 }

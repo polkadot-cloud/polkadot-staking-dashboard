@@ -11,6 +11,8 @@ export class ErasStakersOverview {
   }
 
   async fetch(era: string) {
-    return await this.#pApi.query.Staking.ErasStakersOverview.getEntries(era);
+    return await this.#pApi.query.Staking.ErasStakersOverview.getEntries(era, {
+      at: 'best',
+    });
   }
 }

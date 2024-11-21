@@ -16,7 +16,10 @@ export class BondedMulti {
   async fetch() {
     try {
       const results = await this.#pApi.query.Staking.Bonded.getValues(
-        this.#addresses
+        this.#addresses,
+        {
+          at: 'best',
+        }
       );
       return results;
     } catch (e) {

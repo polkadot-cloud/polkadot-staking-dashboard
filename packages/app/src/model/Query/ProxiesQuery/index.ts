@@ -16,7 +16,8 @@ export class ProxiesQuery {
   async fetch() {
     try {
       const result = await this.#pApi.query.Proxy.Proxies.getValue(
-        this.#address
+        this.#address,
+        { at: 'best' }
       );
       return result;
     } catch (e) {

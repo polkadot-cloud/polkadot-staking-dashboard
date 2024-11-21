@@ -16,7 +16,8 @@ export class ValidatorsMulti {
   async fetch() {
     try {
       const result = await this.#pApi.query.Staking.Validators.getValues(
-        this.#addresses
+        this.#addresses,
+        { at: 'best' }
       );
       return result;
     } catch (e) {

@@ -15,7 +15,9 @@ export class Era {
     let result;
     try {
       const { index, start } =
-        await this.#pApi.query.Staking.ActiveEra.getValue();
+        await this.#pApi.query.Staking.ActiveEra.getValue({
+          at: 'best',
+        });
 
       result = {
         start,

@@ -13,7 +13,9 @@ export class SessionValidators {
   // Fetch network constants.
   async fetch() {
     try {
-      const result = await this.#pApi.query.Session.Validators.getValue();
+      const result = await this.#pApi.query.Session.Validators.getValue({
+        at: 'best',
+      });
       return result;
     } catch (e) {
       // Silently fail.

@@ -195,8 +195,10 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const fetchPendingRewards = async (address: string | undefined) => {
     const { pApi } = ApiController.get(network);
     if (pApi && address) {
-      const apiResult =
-        await pApi.apis.NominationPoolsApi.pending_rewards(address);
+      const apiResult = await pApi.apis.NominationPoolsApi.pending_rewards(
+        address,
+        { at: 'best' }
+      );
       return new BigNumber(apiResult?.toString() || 0);
     }
     return new BigNumber(0);

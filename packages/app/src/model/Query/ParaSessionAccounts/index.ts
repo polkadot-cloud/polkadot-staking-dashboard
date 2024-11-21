@@ -17,7 +17,8 @@ export class ParaSessionAccounts {
     try {
       const result =
         await this.#pApi.query.ParaSessionInfo.AccountKeys.getValue(
-          this.#session
+          this.#session,
+          { at: 'best' }
         );
       return result;
     } catch (e) {

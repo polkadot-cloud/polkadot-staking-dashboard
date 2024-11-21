@@ -16,7 +16,8 @@ export class PoolMetadataMulti {
   async fetch() {
     try {
       const result = await this.#pApi.query.NominationPools.Metadata.getValues(
-        this.#ids
+        this.#ids,
+        { at: 'best' }
       );
       return result.map((metadata) => metadata.asText());
     } catch (e) {

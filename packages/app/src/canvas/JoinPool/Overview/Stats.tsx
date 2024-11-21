@@ -50,7 +50,8 @@ export const Stats = ({
 
     const apiResult = await pApi.apis.NominationPoolsApi.points_to_balance(
       bondedPool.id,
-      BigInt(rmCommas(bondedPool.points))
+      BigInt(rmCommas(bondedPool.points)),
+      { at: 'best' }
     );
     const balance = new BigNumber(apiResult?.toString() || 0);
 

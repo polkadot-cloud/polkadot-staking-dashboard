@@ -15,8 +15,9 @@ export class NetworkMeta {
 
   // Fetch network constants.
   async fetch(activeEra: APIActiveEra, previousEra: BigNumber) {
+    const at = { at: 'best' };
     const totalIssuance =
-      await this.#pApi.query.Balances.TotalIssuance.getValue();
+      await this.#pApi.query.Balances.TotalIssuance.getValue(at);
 
     const [
       auctionCounter,
@@ -42,31 +43,36 @@ export class NetworkMeta {
       minNominatorBond,
       activeEraErasTotalStake,
     ] = await Promise.all([
-      this.#pApi.query.Auctions.AuctionCounter.getValue(),
-      this.#pApi.query.ParaSessionInfo.EarliestStoredSession.getValue(),
-      this.#pApi.query.FastUnstake.ErasToCheckPerBlock.getValue(),
-      this.#pApi.query.Staking.MinimumActiveStake.getValue(),
-      this.#pApi.query.NominationPools.CounterForPoolMembers.getValue(),
-      this.#pApi.query.NominationPools.CounterForBondedPools.getValue(),
-      this.#pApi.query.NominationPools.CounterForRewardPools.getValue(),
-      this.#pApi.query.NominationPools.LastPoolId.getValue(),
-      this.#pApi.query.NominationPools.MaxPoolMembers.getValue(),
-      this.#pApi.query.NominationPools.MaxPoolMembersPerPool.getValue(),
-      this.#pApi.query.NominationPools.MaxPools.getValue(),
-      this.#pApi.query.NominationPools.MinCreateBond.getValue(),
-      this.#pApi.query.NominationPools.MinJoinBond.getValue(),
-      this.#pApi.query.NominationPools.GlobalMaxCommission.getValue(),
-      this.#pApi.query.Staking.CounterForNominators.getValue(),
-      this.#pApi.query.Staking.CounterForValidators.getValue(),
-      this.#pApi.query.Staking.MaxValidatorsCount.getValue(),
-      this.#pApi.query.Staking.ValidatorCount.getValue(),
+      this.#pApi.query.Auctions.AuctionCounter.getValue(at),
+      this.#pApi.query.ParaSessionInfo.EarliestStoredSession.getValue(at),
+      this.#pApi.query.FastUnstake.ErasToCheckPerBlock.getValue(at),
+      this.#pApi.query.Staking.MinimumActiveStake.getValue(at),
+      this.#pApi.query.NominationPools.CounterForPoolMembers.getValue(at),
+      this.#pApi.query.NominationPools.CounterForBondedPools.getValue(at),
+      this.#pApi.query.NominationPools.CounterForRewardPools.getValue(at),
+      this.#pApi.query.NominationPools.LastPoolId.getValue(at),
+      this.#pApi.query.NominationPools.MaxPoolMembers.getValue(at),
+      this.#pApi.query.NominationPools.MaxPoolMembersPerPool.getValue(at),
+      this.#pApi.query.NominationPools.MaxPools.getValue(at),
+      this.#pApi.query.NominationPools.MinCreateBond.getValue(at),
+      this.#pApi.query.NominationPools.MinJoinBond.getValue(at),
+      this.#pApi.query.NominationPools.GlobalMaxCommission.getValue(at),
+      this.#pApi.query.Staking.CounterForNominators.getValue(at),
+      this.#pApi.query.Staking.CounterForValidators.getValue(at),
+      this.#pApi.query.Staking.MaxValidatorsCount.getValue(at),
+      this.#pApi.query.Staking.ValidatorCount.getValue(at),
       this.#pApi.query.Staking.ErasValidatorReward.getValue(
-        previousEra.toString()
+        previousEra.toString(),
+        at
       ),
-      this.#pApi.query.Staking.ErasTotalStake.getValue(previousEra.toString()),
-      this.#pApi.query.Staking.MinNominatorBond.getValue(),
       this.#pApi.query.Staking.ErasTotalStake.getValue(
-        activeEra.index.toString()
+        previousEra.toString(),
+        at
+      ),
+      this.#pApi.query.Staking.MinNominatorBond.getValue(at),
+      this.#pApi.query.Staking.ErasTotalStake.getValue(
+        activeEra.index.toString(),
+        at
       ),
     ]);
 

@@ -17,13 +17,17 @@ export class BondedPools {
 
   async fetch() {
     this.bondedPools =
-      await this.#pApi.query.NominationPools.BondedPools.getEntries();
+      await this.#pApi.query.NominationPools.BondedPools.getEntries({
+        at: 'best',
+      });
     return this;
   }
 
   async fetchOne(id: number) {
-    const result =
-      await this.#pApi.query.NominationPools.BondedPools.getValue(id);
+    const result = await this.#pApi.query.NominationPools.BondedPools.getValue(
+      id,
+      { at: 'best' }
+    );
 
     if (!result) {
       return null;
