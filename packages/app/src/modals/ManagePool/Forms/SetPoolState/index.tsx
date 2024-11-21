@@ -5,12 +5,10 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -18,6 +16,9 @@ import { ButtonSubmitInvert } from 'ui-buttons';
 import { ActionItem } from 'library/ActionItem';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
+import { ApiController } from 'controllers/Api';
+import { useNetwork } from 'contexts/Network';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 
 export const SetPoolState = ({
   setSection,
@@ -27,7 +28,7 @@ export const SetPoolState = ({
   task?: string;
 }) => {
   const { t } = useTranslation('modals');
-  const { api } = useApi();
+  const { network } = useNetwork();
   const { setModalStatus } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
   const { getSignerWarnings } = useSignerWarnings();
@@ -80,20 +81,30 @@ export const SetPoolState = ({
 
   // tx to submit
   const getTx = () => {
-    if (!valid || !api) {
+    const { pApi } = ApiController.get(network);
+    if (!valid || !pApi || poolId === undefined) {
       return null;
     }
 
     let tx;
     switch (task) {
       case 'destroy_pool':
-        tx = api.tx.nominationPools.setState(poolId, 'Destroying');
+        tx = pApi.tx.NominationPools.set_state({
+          pool_id: poolId,
+          state: { type: 'Destroying' },
+        });
         break;
       case 'unlock_pool':
-        tx = api.tx.nominationPools.setState(poolId, 'Open');
+        tx = pApi.tx.NominationPools.set_state({
+          pool_id: poolId,
+          state: { type: 'Open' },
+        });
         break;
       case 'lock_pool':
-        tx = api.tx.nominationPools.setState(poolId, 'Blocked');
+        tx = pApi.tx.NominationPools.set_state({
+          pool_id: poolId,
+          state: { type: 'Blocked' },
+        });
         break;
       default:
         tx = null;

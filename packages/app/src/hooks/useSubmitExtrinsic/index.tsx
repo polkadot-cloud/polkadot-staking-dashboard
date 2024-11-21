@@ -5,17 +5,24 @@ import BigNumber from 'bignumber.js';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DappName, ManualSigners } from 'consts';
-import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/LedgerHardware';
 import { useTxMeta } from 'contexts/TxMeta';
-import type { AnyApi } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useBuildPayload } from '../useBuildPayload';
-import { useProxySupported } from '../useProxySupported';
-import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
+import type {
+  UnsafeTx,
+  UseSubmitExtrinsic,
+  UseSubmitExtrinsicProps,
+} from './types';
 import { NotificationsController } from 'controllers/Notifications';
 import { useExtensions } from '@w3ux/react-connect-kit';
+import { useProxySupported } from 'hooks/useProxySupported';
+import { ApiController } from 'controllers/Api';
+import { useNetwork } from 'contexts/Network';
+import { useBalances } from 'contexts/Balances';
+import { InvalidTxError } from 'polkadot-api';
+import { connectInjectedExtension } from 'polkadot-api/pjs-signer';
+import { formatAccountSs58 } from '@w3ux/utils';
 
 export const useSubmitExtrinsic = ({
   tx,
@@ -25,27 +32,18 @@ export const useSubmitExtrinsic = ({
   callbackInBlock,
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('library');
-  const { api } = useApi();
-  const { buildPayload } = useBuildPayload();
+  const { network } = useNetwork();
+  const { getNonce } = useBalances();
   const { activeProxy } = useActiveAccounts();
   const { extensionsStatus } = useExtensions();
   const { isProxySupported } = useProxySupported();
   const { handleResetLedgerTask } = useLedgerHardware();
   const { addPendingNonce, removePendingNonce } = useTxMeta();
   const { getAccount, requiresManualSign } = useImportedAccounts();
-  const {
-    txFees,
-    setTxFees,
-    setSender,
-    getTxPayload,
-    getTxSignature,
-    setTxSignature,
-    resetTxPayload,
-    incrementPayloadUid,
-  } = useTxMeta();
+  const { txFees, setTxFees, setSender, incrementPayloadUid } = useTxMeta();
 
   // Store given tx as a ref.
-  const txRef = useRef<AnyApi>(tx);
+  const txRef = useRef<UnsafeTx>(tx);
 
   // Store given submit address as a ref.
   const fromRef = useRef<string>(from || '');
@@ -61,10 +59,12 @@ export const useSubmitExtrinsic = ({
 
   // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account.
   const wrapTxIfActiveProxy = () => {
+    const { pApi } = ApiController.get(network);
+
     // if already wrapped, update fromRef and return.
     if (
-      txRef.current?.method.toHuman().section === 'proxy' &&
-      txRef.current?.method.toHuman().method === 'proxy'
+      txRef.current?.decodedCall.type === 'Proxy' &&
+      txRef.current?.decodedCall.value.type === 'proxy'
     ) {
       if (activeProxy) {
         fromRef.current = activeProxy;
@@ -73,7 +73,7 @@ export const useSubmitExtrinsic = ({
     }
 
     if (
-      api &&
+      pApi &&
       activeProxy &&
       txRef.current &&
       isProxySupported(txRef.current, fromRef.current)
@@ -84,20 +84,21 @@ export const useSubmitExtrinsic = ({
       // Do not wrap batch transactions. Proxy calls should already be wrapping each tx within the
       // batch via `useBatchCall`.
       if (
-        txRef.current?.method.toHuman().section === 'utility' &&
-        txRef.current?.method.toHuman().method === 'batch'
+        txRef.current?.decodedCall.type === 'Utility' &&
+        txRef.current?.decodedCall.value.type === 'batch'
       ) {
         return;
       }
 
       // Not a batch transaction: wrap tx in proxy call.
-      txRef.current = api.tx.proxy.proxy(
-        {
-          id: from,
+      txRef.current = pApi.tx.Proxy.proxy({
+        real: {
+          type: 'Id',
+          value: from,
         },
-        null,
-        txRef.current
-      );
+        forceProxyType: null,
+        call: txRef.current.decodedCall,
+      });
     }
   };
 
@@ -106,8 +107,10 @@ export const useSubmitExtrinsic = ({
     if (txRef.current === null) {
       return;
     }
+
     // get payment info
-    const { partialFee } = await txRef.current.paymentInfo(fromRef.current);
+    const partialFee = (await txRef.current.getPaymentInfo(fromRef.current))
+      .partial_fee;
     const partialFeeBn = new BigNumber(partialFee.toString());
 
     // give tx fees to global useTxMeta context
@@ -119,24 +122,16 @@ export const useSubmitExtrinsic = ({
   // Extrinsic submission handler.
   const onSubmit = async () => {
     const account = getAccount(fromRef.current);
-    if (
-      account === null ||
-      submitting ||
-      !shouldSubmit ||
-      !api ||
-      (requiresManualSign(fromRef.current) && !getTxSignature())
-    ) {
+    if (account === null || submitting || !shouldSubmit) {
       return;
     }
 
-    const nonce = (
-      await api.rpc.system.accountNextIndex(fromRef.current)
-    ).toHuman();
-
+    const nonce = String(getNonce(fromRef.current));
     const { source } = account;
+    const isManualSigner = ManualSigners.includes(source);
 
     // if `activeAccount` is imported from an extension, ensure it is enabled.
-    if (!ManualSigners.includes(source)) {
+    if (!isManualSigner) {
       const isInstalled = Object.entries(extensionsStatus).find(
         ([id, status]) => id === source && status === 'connected'
       );
@@ -176,31 +171,26 @@ export const useSubmitExtrinsic = ({
       }
     };
 
-    const onFinalizedEvent = (method: string) => {
-      if (method === 'ExtrinsicSuccess') {
-        NotificationsController.emit({
-          title: t('finalized'),
-          subtitle: t('transactionSuccessful'),
-        });
-      } else if (method === 'ExtrinsicFailed') {
-        NotificationsController.emit({
-          title: t('failed'),
-          subtitle: t('errorWithTransaction'),
-        });
-        setSubmitting(false);
-        removePendingNonce(nonce);
-      }
+    const onFinalizedEvent = () => {
+      NotificationsController.emit({
+        title: t('finalized'),
+        subtitle: t('transactionSuccessful'),
+      });
+      setSubmitting(false);
+      removePendingNonce(nonce);
+    };
+
+    const onFailedTx = () => {
+      NotificationsController.emit({
+        title: t('failed'),
+        subtitle: t('errorWithTransaction'),
+      });
+      setSubmitting(false);
+      removePendingNonce(nonce);
     };
 
     const resetTx = () => {
-      resetTxPayload();
-      setTxSignature(null);
       setSubmitting(false);
-    };
-
-    const resetManualTx = () => {
-      resetTx();
-      handleResetLedgerTask();
     };
 
     const onError = (type?: string) => {
@@ -215,80 +205,55 @@ export const useSubmitExtrinsic = ({
       });
     };
 
-    const handleStatus = (status: AnyApi) => {
-      if (status.isReady) {
+    const handleStatus = (status: string) => {
+      if (status === 'broadcasted') {
         onReady();
       }
-      if (status.isInBlock) {
+      if (status === 'txBestBlocksState') {
         onInBlock();
       }
     };
 
-    const unsubEvents = ['ExtrinsicSuccess', 'ExtrinsicFailed'];
-
     // pre-submission state update
     setSubmitting(true);
 
-    const txPayloadValue = getTxPayload();
-    const txSignature = getTxSignature();
-
     // handle signed transaction.
-    if (getTxSignature()) {
-      try {
-        txRef.current.addSignature(
-          fromRef.current,
-          txSignature,
-          txPayloadValue.toHex()
-        );
-
-        const unsub = await txRef.current.send(
-          ({ status, events = [] }: AnyApi) => {
-            if (!didTxReset.current) {
-              didTxReset.current = true;
-              resetManualTx();
-            }
-
-            handleStatus(status);
-            if (status.isFinalized) {
-              events.forEach(({ event: { method } }: AnyApi) => {
-                onFinalizedEvent(method);
-                if (unsubEvents?.includes(method)) {
-                  unsub();
-                }
-              });
-            }
-          }
-        );
-      } catch (e) {
-        onError(ManualSigners.includes(source) ? source : 'default');
-      }
+    let signer;
+    if (requiresManualSign(fromRef.current)) {
+      // TODO: Get custom signer here.
     } else {
-      // handle unsigned transaction.
-      const { signer } = account;
-      try {
-        const unsub = await txRef.current.signAndSend(
-          fromRef.current,
-          { signer, withSignedTransaction: true },
-          ({ status, events = [] }: AnyApi) => {
-            if (!didTxReset.current) {
-              didTxReset.current = true;
-              resetTx();
-            }
+      // Get the polkadot signer for this account.
+      signer = (await connectInjectedExtension(source))
+        .getAccounts()
+        .find(
+          (a) => a.address === formatAccountSs58(fromRef.current, 42)
+        )?.polkadotSigner;
+    }
 
-            handleStatus(status);
-            if (status.isFinalized) {
-              events.forEach(({ event: { method } }: AnyApi) => {
-                onFinalizedEvent(method);
-                if (unsubEvents?.includes(method)) {
-                  unsub();
-                }
-              });
-            }
+    try {
+      const sub = tx.signSubmitAndWatch(signer).subscribe({
+        next: (result: { type: string }) => {
+          const eventType = result?.type;
+
+          if (!didTxReset.current) {
+            didTxReset.current = true;
+            resetTx();
           }
-        );
-      } catch (e) {
-        onError('default');
-      }
+          handleStatus(eventType);
+          if (eventType === 'finalized') {
+            onFinalizedEvent();
+            sub?.unsubscribe();
+          }
+        },
+        error: (err: Error) => {
+          if (err instanceof InvalidTxError) {
+            onFailedTx();
+          }
+          sub?.unsubscribe();
+        },
+      });
+    } catch (e) {
+      onError('default');
     }
   };
 
@@ -304,8 +269,6 @@ export const useSubmitExtrinsic = ({
     setSender(fromRef.current);
     // re-calculate estimated tx fee.
     calculateEstimatedFee();
-    // rebuild tx payload.
-    buildPayload(txRef.current, fromRef.current, uid);
   }, [tx?.toString(), tx?.method?.args?.calls?.toString(), from]);
 
   return {

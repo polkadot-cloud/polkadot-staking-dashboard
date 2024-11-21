@@ -4,13 +4,11 @@
 import { isValidAddress } from '@w3ux/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { Warning } from 'library/Form/Warning';
 import { usePayeeConfig } from 'hooks/usePayeeConfig';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { PayeeInput } from 'library/PayeeInput';
 import { SelectItems } from 'library/SelectItems';
@@ -23,10 +21,13 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
+import { ApiController } from 'controllers/Api';
+import { useNetwork } from 'contexts/Network';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 
 export const UpdatePayee = () => {
   const { t } = useTranslation('modals');
-  const { api } = useApi();
+  const { network } = useNetwork();
   const { getPayee } = useBalances();
   const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
@@ -72,20 +73,21 @@ export const UpdatePayee = () => {
 
   // Tx to submit.
   const getTx = () => {
+    const { pApi } = ApiController.get(network);
     let tx = null;
-
-    if (!api) {
+    if (!pApi) {
       return tx;
     }
     const payeeToSubmit = !isComplete()
-      ? 'Staked'
+      ? { type: 'Staked' }
       : selected.destination === 'Account'
         ? {
-            Account: selected.account,
+            type: 'Account',
+            value: selected.account,
           }
-        : selected.destination;
+        : { type: selected.destination };
 
-    tx = api.tx.staking.setPayee(payeeToSubmit);
+    tx = pApi.tx.Staking.set_payee({ payee: payeeToSubmit });
     return tx;
   };
 

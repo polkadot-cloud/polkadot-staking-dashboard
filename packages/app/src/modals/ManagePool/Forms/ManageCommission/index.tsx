@@ -11,9 +11,7 @@ import { useHelp } from 'contexts/Help';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Warning } from 'library/Form/Warning';
-import { useBatchCall } from 'hooks/useBatchCall';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import 'rc-slider/assets/index.css';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -26,6 +24,10 @@ import { ButtonHelp, ButtonSubmitInvert } from 'ui-buttons';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
+import { ApiController } from 'controllers/Api';
+import { useNetwork } from 'contexts/Network';
+import { useBatchCall } from 'hooks/useBatchCall';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 
 export const ManageCommission = ({
   setSection,
@@ -37,15 +39,8 @@ export const ManageCommission = ({
   const { t } = useTranslation('modals');
   const { openHelp } = useHelp();
   const {
-    api,
     poolsConfig: { globalMaxCommission },
   } = useApi();
-  const { newBatchCall } = useBatchCall();
-  const { activeAccount } = useActiveAccounts();
-  const { setModalStatus } = useOverlay().modal;
-  const { isOwner, activePool } = useActivePool();
-  const { getSignerWarnings } = useSignerWarnings();
-  const { getBondedPool, updateBondedPools } = useBondedPools();
   const {
     getInitial,
     getCurrent,
@@ -55,6 +50,13 @@ export const ManageCommission = ({
     resetAll,
     isUpdated,
   } = usePoolCommission();
+  const { network } = useNetwork();
+  const { newBatchCall } = useBatchCall();
+  const { activeAccount } = useActiveAccounts();
+  const { setModalStatus } = useOverlay().modal;
+  const { isOwner, activePool } = useActivePool();
+  const { getSignerWarnings } = useSignerWarnings();
+  const { getBondedPool, updateBondedPools } = useBondedPools();
 
   const poolId = activePool?.id || 0;
   const bondedPool = getBondedPool(poolId);
@@ -125,39 +127,45 @@ export const ManageCommission = ({
 
   // tx to submit.
   const getTx = () => {
-    if (!valid || !api) {
+    const { pApi } = ApiController.get(network);
+    if (!valid || !pApi) {
       return null;
     }
 
     const txs = [];
     if (commissionUpdated) {
       txs.push(
-        api.tx.nominationPools.setCommission(
-          poolId,
-          currentCommissionSet
+        pApi.tx.NominationPools.set_commission({
+          pool_id: poolId,
+          new_commission: currentCommissionSet
             ? [
-                new BigNumber(commission).multipliedBy(10000000).toString(),
+                new BigNumber(commission).multipliedBy(10000000).toNumber(),
                 payee,
               ]
-            : null
-        )
+            : undefined,
+        })
       );
     }
     if (isUpdated('max_commission') && getEnabled('max_commission')) {
       txs.push(
-        api.tx.nominationPools.setCommissionMax(
-          poolId,
-          new BigNumber(maxCommission).multipliedBy(10000000).toString()
-        )
+        pApi.tx.NominationPools.set_commission_max({
+          pool_id: poolId,
+          max_commission: new BigNumber(maxCommission)
+            .multipliedBy(10000000)
+            .toNumber(),
+        })
       );
     }
     if (isUpdated('change_rate') && getEnabled('change_rate')) {
       txs.push(
-        api.tx.nominationPools.setCommissionChangeRate(poolId, {
-          maxIncrease: new BigNumber(changeRate.maxIncrease)
-            .multipliedBy(10000000)
-            .toString(),
-          minDelay: changeRate.minDelay.toString(),
+        pApi.tx.NominationPools.set_commission_change_rate({
+          pool_id: poolId,
+          change_rate: {
+            max_increase: new BigNumber(changeRate.maxIncrease)
+              .multipliedBy(10000000)
+              .toNumber(),
+            min_delay: changeRate.minDelay.toNumber(),
+          },
         })
       );
     }

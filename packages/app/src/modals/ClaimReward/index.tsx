@@ -3,11 +3,9 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
@@ -18,23 +16,24 @@ import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
 import { planckToUnit } from '@w3ux/utils';
+import { ApiController } from 'controllers/Api';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 
 export const ClaimReward = () => {
   const { t } = useTranslation('modals');
-  const { api } = useApi();
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
-  const { notEnoughFunds } = useTxMeta();
-  const { activeAccount } = useActiveAccounts();
-  const { getSignerWarnings } = useSignerWarnings();
-  const { activePool, pendingPoolRewards } = useActivePool();
   const {
     setModalStatus,
     config: { options },
     setModalResize,
   } = useOverlay().modal;
-
+  const { notEnoughFunds } = useTxMeta();
+  const { activeAccount } = useActiveAccounts();
+  const { getSignerWarnings } = useSignerWarnings();
+  const { activePool, pendingPoolRewards } = useActivePool();
   const { claimType } = options;
 
   // ensure selected payout is valid
@@ -51,15 +50,16 @@ export const ClaimReward = () => {
 
   // tx to submit
   const getTx = () => {
+    const { pApi } = ApiController.get(network);
     let tx = null;
-    if (!api) {
+    if (!pApi) {
       return tx;
     }
 
     if (claimType === 'bond') {
-      tx = api.tx.nominationPools.bondExtra('Rewards');
+      tx = pApi.tx.NominationPools.bond_extra({ extra: { type: 'Rewards' } });
     } else {
-      tx = api.tx.nominationPools.claimPayout();
+      tx = pApi.tx.NominationPools.claim_payout();
     }
     return tx;
   };

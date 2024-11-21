@@ -15,7 +15,6 @@ import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { timeleftAsString, planckToUnitBn } from 'library/Utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
@@ -26,6 +25,8 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
+import { ApiController } from 'controllers/Api';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 
 export const Unbond = () => {
   const { t } = useTranslation('modals');
@@ -34,6 +35,7 @@ export const Unbond = () => {
   const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
   const { erasToSeconds } = useErasToTimeLeft();
@@ -47,7 +49,6 @@ export const Unbond = () => {
     config: { options },
   } = useOverlay().modal;
   const {
-    api,
     consts,
     poolsConfig: { minJoinBond: minJoinBondBn, minCreateBond: minCreateBondBn },
   } = useApi();
@@ -104,8 +105,9 @@ export const Unbond = () => {
 
   // tx to submit
   const getTx = () => {
+    const { pApi } = ApiController.get(network);
     let tx = null;
-    if (!api || !activeAccount) {
+    if (!pApi || !activeAccount) {
       return tx;
     }
 
@@ -116,9 +118,12 @@ export const Unbond = () => {
 
     // determine tx
     if (isPooling) {
-      tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);
+      tx = pApi.tx.NominationPools.unbond({
+        member_account: { type: 'Id', value: activeAccount },
+        unbonding_points: BigInt(bondToSubmit),
+      });
     } else if (isStaking) {
-      tx = api.tx.staking.unbond(bondToSubmit);
+      tx = pApi.tx.Staking.unbond({ value: BigInt(bondToSubmit) });
     }
     return tx;
   };

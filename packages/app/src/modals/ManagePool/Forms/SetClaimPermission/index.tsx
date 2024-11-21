@@ -5,12 +5,10 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -20,6 +18,9 @@ import { ButtonSubmitInvert } from 'ui-buttons';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { defaultClaimPermission } from 'controllers/ActivePools/defaults';
+import { ApiController } from 'controllers/Api';
+import { useNetwork } from 'contexts/Network';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 
 export const SetClaimPermission = ({
   setSection,
@@ -29,7 +30,7 @@ export const SetClaimPermission = ({
   setSection: Dispatch<SetStateAction<number>>;
 }) => {
   const { t } = useTranslation('modals');
-  const { api } = useApi();
+  const { network } = useNetwork();
   const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
   const { setModalStatus } = useOverlay().modal;
@@ -60,10 +61,15 @@ export const SetClaimPermission = ({
 
   // tx to submit.
   const getTx = () => {
-    if (!valid || !api) {
+    const { pApi } = ApiController.get(network);
+    if (!valid || !pApi) {
       return null;
     }
-    return api.tx.nominationPools.setClaimPermission(claimPermission);
+    return pApi.tx.NominationPools.set_claim_permission({
+      permission: {
+        type: claimPermission,
+      },
+    });
   };
 
   const submitExtrinsic = useSubmitExtrinsic({

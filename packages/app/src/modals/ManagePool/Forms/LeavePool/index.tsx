@@ -13,7 +13,6 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { timeleftAsString, planckToUnitBn } from 'library/Utils';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
@@ -24,6 +23,8 @@ import { ButtonSubmitInvert } from 'ui-buttons';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
+import { ApiController } from 'controllers/Api';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 
 export const LeavePool = ({
   setSection,
@@ -31,8 +32,9 @@ export const LeavePool = ({
   setSection: Dispatch<SetStateAction<number>>;
 }) => {
   const { t } = useTranslation('modals');
-  const { api, consts } = useApi();
+  const { consts } = useApi();
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
   const { erasToSeconds } = useErasToTimeLeft();
@@ -80,8 +82,9 @@ export const LeavePool = ({
 
   // tx to submit
   const getTx = () => {
+    const { pApi } = ApiController.get(network);
     let tx = null;
-    if (!api || !activeAccount) {
+    if (!pApi || !activeAccount) {
       return tx;
     }
 
@@ -90,7 +93,13 @@ export const LeavePool = ({
       units
     ).toString();
 
-    tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);
+    tx = pApi.tx.NominationPools.unbond({
+      member_account: {
+        type: 'Id',
+        value: activeAccount,
+      },
+      unbonding_points: BigInt(bondToSubmit),
+    });
     return tx;
   };
 

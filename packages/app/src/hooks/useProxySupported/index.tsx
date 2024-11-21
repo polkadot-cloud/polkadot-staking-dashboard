@@ -8,8 +8,9 @@ import {
 import { useBonded } from 'contexts/Bonded';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useProxies } from 'contexts/Proxies';
-import type { AnyApi, MaybeAddress } from 'types';
+import type { MaybeAddress } from 'types';
 import type { AnyJson } from '@w3ux/types';
+import type { UnsafeTx } from 'hooks/useSubmitExtrinsic/types';
 
 export const useProxySupported = () => {
   const { getBondedAccount } = useBonded();
@@ -22,32 +23,32 @@ export const useProxySupported = () => {
     UnsupportedIfUniqueController.includes(c) && getBondedAccount(f) !== f;
 
   // Determine whether the provided tx is proxy supported.
-  const isProxySupported = (tx: AnyApi, delegator: MaybeAddress) => {
+  const isProxySupported = (tx: UnsafeTx, delegator: MaybeAddress) => {
     // if already wrapped, return.
     if (
-      tx?.method.toHuman().section === 'proxy' &&
-      tx?.method.toHuman().method === 'proxy'
+      tx?.decodedCall.type === 'Proxy' &&
+      tx?.decodedCall.value.type === 'proxy'
     ) {
       return true;
     }
 
     const proxyDelegate = getProxyDelegate(delegator, activeProxy);
     const proxyType = proxyDelegate?.proxyType || '';
-    const pallet = tx?.method.toHuman().section;
-    const method = tx?.method.toHuman().method;
+    const pallet: string = (tx?.decodedCall.type || '').toLowerCase();
+    const method: string = (tx?.decodedCall.value.type || '').toLowerCase();
     const call = `${pallet}.${method}`;
 
     // If a batch call, test if every inner call is a supported proxy call.
     if (call === 'utility.batch') {
-      return (tx?.method?.toHuman()?.args?.calls || [])
+      return (tx?.decodedCall.value?.value?.calls || [])
         .map((c: AnyJson) => ({
-          pallet: c.section,
-          method: c.method,
+          pallet: c.type,
+          method: c.value.type,
         }))
         .every(
           (c: AnyJson) =>
             (isSupportedProxyCall(proxyType, c.pallet, c.method) ||
-              (c.pallet === 'proxy' && c.method === 'proxy')) &&
+              (c.pallet === 'Proxy' && c.method === 'proxy')) &&
             !controllerNotSupported(`${pallet}.${method}`, delegator)
         );
     }

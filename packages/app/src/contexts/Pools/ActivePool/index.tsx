@@ -16,6 +16,7 @@ import { defaultActivePoolContext, defaultPoolRoles } from './defaults';
 import { SyncController } from 'controllers/Sync';
 import { useActivePools } from 'hooks/useActivePools';
 import BigNumber from 'bignumber.js';
+import { ApiController } from 'controllers/Api';
 
 export const ActivePoolContext = createContext<ActivePoolContextState>(
   defaultActivePoolContext
@@ -187,10 +188,11 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch and update unclaimed pool rewards for an address from runtime call.
   const fetchPendingRewards = async (address: string | undefined) => {
-    if (api && address) {
-      const pendingRewards =
-        await api.call.nominationPoolsApi.pendingRewards(address);
-      return new BigNumber(pendingRewards?.toString() || 0);
+    const { pApi } = ApiController.get(network);
+    if (pApi && address) {
+      const apiResult =
+        await pApi.apis.NominationPoolsApi.pending_rewards(address);
+      return new BigNumber(apiResult?.toString() || 0);
     }
     return new BigNumber(0);
   };

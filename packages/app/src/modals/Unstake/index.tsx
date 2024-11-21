@@ -9,10 +9,8 @@ import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
-import { useBatchCall } from 'hooks/useBatchCall';
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { timeleftAsString, planckToUnitBn } from 'library/Utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
@@ -25,13 +23,17 @@ import { useBalances } from 'contexts/Balances';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
+import { ApiController } from 'controllers/Api';
+import { useBatchCall } from 'hooks/useBatchCall';
 
 export const Unstake = () => {
   const { t } = useTranslation('modals');
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
-  const { api, consts } = useApi();
+  const { consts } = useApi();
   const { notEnoughFunds } = useTxMeta();
   const { newBatchCall } = useBatchCall();
   const { getBondedAccount } = useBonded();
@@ -80,8 +82,9 @@ export const Unstake = () => {
 
   // tx to submit
   const getTx = () => {
+    const { pApi } = ApiController.get(network);
     const tx = null;
-    if (!api || !activeAccount) {
+    if (!pApi || !activeAccount) {
       return tx;
     }
     // remove decimal errors
@@ -91,11 +94,11 @@ export const Unstake = () => {
     );
 
     if (bondToSubmit == 0n) {
-      return api.tx.staking.chill();
+      return pApi.tx.Staking.chill();
     }
     const txs = [
-      api.tx.staking.chill(),
-      api.tx.staking.unbond(bondToSubmit.toString()),
+      pApi.tx.Staking.chill(),
+      pApi.tx.Staking.unbond({ value: BigInt(bondToSubmit.toString()) }),
     ];
     return newBatchCall(txs, controller);
   };

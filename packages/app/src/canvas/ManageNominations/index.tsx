@@ -10,7 +10,6 @@ import { useApi } from 'contexts/Api';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { usePrompt } from 'contexts/Prompt';
 import { useHelp } from 'contexts/Help';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBonded } from 'contexts/Bonded';
 import { useActivePool } from 'contexts/Pools/ActivePool';
@@ -24,6 +23,9 @@ import { RevertPrompt } from './Prompts/RevertPrompt';
 import { CanvasSubmitTxFooter, CanvasFullScreenWrapper } from '../Wrappers';
 import { NotificationsController } from 'controllers/Notifications';
 import { ButtonHelp, ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons';
+import { ApiController } from 'controllers/Api';
+import { useNetwork } from 'contexts/Network';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 
 export const ManageNominations = () => {
   const { t } = useTranslation('library');
@@ -32,8 +34,9 @@ export const ManageNominations = () => {
     setCanvasStatus,
     config: { options },
   } = useOverlay().canvas;
+  const { consts } = useApi();
   const { openHelp } = useHelp();
-  const { consts, api } = useApi();
+  const { network } = useNetwork();
   const { activePool } = useActivePool();
   const { getBondedAccount } = useBonded();
   const { activeAccount } = useActiveAccounts();
@@ -90,8 +93,9 @@ export const ManageNominations = () => {
 
   // Tx to submit.
   const getTx = () => {
+    const { pApi } = ApiController.get(network);
     let tx = null;
-    if (!valid || !api) {
+    if (!valid || !pApi) {
       return tx;
     }
 
@@ -100,16 +104,22 @@ export const ManageNominations = () => {
       isPool
         ? nominee.address
         : {
-            Id: nominee.address,
+            type: 'Id',
+            value: nominee.address,
           }
     );
 
     if (isPool) {
       if (activePool) {
-        tx = api.tx.nominationPools.nominate(activePool.id, targetsToSubmit);
+        tx = pApi.tx.NominationPools.nominate({
+          pool_id: activePool.id,
+          validators: targetsToSubmit,
+        });
       }
     } else {
-      tx = api.tx.staking.nominate(targetsToSubmit);
+      tx = pApi.tx.Staking.nominate({
+        targets: targetsToSubmit,
+      });
     }
     return tx;
   };

@@ -10,7 +10,6 @@ import { useFastUnstake } from 'contexts/FastUnstake';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useUnstaking } from 'hooks/useUnstaking';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
@@ -23,22 +22,24 @@ import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
 import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
 import { planckToUnitBn } from 'library/Utils';
+import { ApiController } from 'controllers/Api';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
   const {
-    api,
     consts: { bondDuration, fastUnstakeDeposit },
     networkMetrics: { fastUnstakeErasToCheckPerBlock },
     activeEra,
   } = useApi();
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
-  const { activeAccount } = useActiveAccounts();
   const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
   const { isFastUnstaking } = useUnstaking();
+  const { activeAccount } = useActiveAccounts();
   const { setModalResize, setModalStatus } = useOverlay().modal;
   const { getSignerWarnings } = useSignerWarnings();
   const { feeReserve, getTransferOptions } = useTransferOptions();
@@ -82,14 +83,15 @@ export const ManageFastUnstake = () => {
 
   // tx to submit
   const getTx = () => {
+    const { pApi } = ApiController.get(network);
     let tx = null;
-    if (!valid || !api) {
+    if (!valid || !pApi) {
       return tx;
     }
     if (!isFastUnstaking) {
-      tx = api.tx.fastUnstake.registerFastUnstake();
+      tx = pApi.tx.FastUnstake.register_fast_unstake();
     } else {
-      tx = api.tx.fastUnstake.deregister();
+      tx = pApi.tx.FastUnstake.deregister();
     }
     return tx;
   };

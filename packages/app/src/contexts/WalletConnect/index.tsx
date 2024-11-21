@@ -12,6 +12,7 @@ import { getSdkError } from '@walletconnect/utils';
 import { getUnixTime } from 'date-fns';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
+import { ApiController } from 'controllers/Api';
 
 export const WalletConnectContext =
   createContext<WalletConnectContextInterface>(defaults.defaultWalletConnect);
@@ -27,10 +28,13 @@ export const WalletConnectProvider = ({
   children: ReactNode;
 }) => {
   const { network } = useNetwork();
-  const { isReady, api } = useApi();
+  const {
+    isReady,
+    chainSpecs: { genesisHash },
+  } = useApi();
 
   // Check if the API is present.
-  const apiPresent = api !== null;
+  const apiPresent = !!ApiController.get(network);
 
   // The WalletConnect provider.
   const wcProvider = useRef<UniversalProvider | null>(null);
@@ -87,7 +91,7 @@ export const WalletConnectProvider = ({
 
   // Connect WalletConnect provider and retrieve metadata.
   const connectProvider = async () => {
-    if (!wcInitialized || !api) {
+    if (!wcInitialized) {
       return;
     }
 
@@ -99,9 +103,7 @@ export const WalletConnectProvider = ({
     // Update most recent connected chain.
     sessionChain.current = network;
 
-    const caips = [
-      `polkadot:${api.genesisHash.toHex().substring(2).substring(0, 32)}`,
-    ];
+    const caips = [`polkadot:${genesisHash.substring(2).substring(0, 32)}`];
 
     // If there are no chains connected, return early.
     if (!caips.length) {
@@ -159,15 +161,12 @@ export const WalletConnectProvider = ({
   // Update session namespaces. NOTE: This method is currently not in use due to a
   // default chain error upon reconnecting to the session.
   const updateWcSession = async () => {
-    if (!wcInitialized || !api) {
+    if (!wcInitialized) {
       return;
     }
     // Update most recent connected chains.
     sessionChain.current = network;
-
-    const caips = [
-      `polkadot:${api.genesisHash.toHex().substring(2).substring(0, 32)}`,
-    ];
+    const caips = [`polkadot:${genesisHash.substring(2).substring(0, 32)}`];
 
     // If there are no chains connected, return early.
     if (!caips.length) {
@@ -279,9 +278,6 @@ export const WalletConnectProvider = ({
   };
 
   const fetchAddresses = async (): Promise<string[]> => {
-    if (!api) {
-      return [];
-    }
     // Retrieve a new session or get current one.
     const wcSession = await initializeWcSession();
     if (wcSession === null) {
@@ -293,7 +289,7 @@ export const WalletConnectProvider = ({
       .map((namespace: AnyJson) => namespace.accounts)
       .flat();
 
-    const caip = api.genesisHash.toHex().substring(2).substring(0, 32);
+    const caip = genesisHash.substring(2).substring(0, 32);
 
     // Only get accounts for the currently selected `caip`.
     let filteredAccounts = walletConnectAccounts.filter((wcAccount) => {

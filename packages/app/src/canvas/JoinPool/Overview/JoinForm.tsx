@@ -12,9 +12,6 @@ import { JoinFormWrapper } from '../Wrappers';
 import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee';
-import { useApi } from 'contexts/Api';
-import { useBatchCall } from 'hooks/useBatchCall';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useSetup } from 'contexts/Setup';
 import { defaultPoolProgress } from 'contexts/Setup/defaults';
@@ -24,11 +21,14 @@ import type { OverviewSectionProps } from '../types';
 import { defaultClaimPermission } from 'controllers/ActivePools/defaults';
 import { useTranslation } from 'react-i18next';
 import { planckToUnitBn } from 'library/Utils';
+import { ApiController } from 'controllers/Api';
+import { useBatchCall } from 'hooks/useBatchCall';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 
 export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   const { t } = useTranslation();
-  const { api } = useApi();
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
   const {
@@ -72,8 +72,9 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
 
   // Get transaction for submission.
   const getTx = () => {
+    const { pApi } = ApiController.get(network);
     const tx = null;
-    if (!api || !claimPermission || !formValid) {
+    if (!pApi || !claimPermission || !formValid) {
       return tx;
     }
 
@@ -81,11 +82,18 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
       !bondValid ? '0' : bond.bond,
       units
     ).toString();
-    const txs = [api.tx.nominationPools.join(bondToSubmit, bondedPool.id)];
+    const txs = [
+      pApi.tx.NominationPools.join({
+        amount: BigInt(bondToSubmit),
+        pool_id: bondedPool.id,
+      }),
+    ];
 
     // If claim permission is not the default, add it to tx.
     if (claimPermission !== defaultClaimPermission) {
-      txs.push(api.tx.nominationPools.setClaimPermission(claimPermission));
+      txs.push(
+        pApi.tx.NominationPools.set_claim_permission({ type: claimPermission })
+      );
     }
 
     if (txs.length === 1) {

@@ -15,7 +15,6 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useFavoritePools } from 'contexts/Pools/FavoritePools';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
@@ -28,6 +27,8 @@ import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
 import { planckToUnitBn } from 'library/Utils';
+import { ApiController } from 'controllers/Api';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 
 export const Forms = forwardRef(
   (
@@ -35,8 +36,9 @@ export const Forms = forwardRef(
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const { t } = useTranslation('modals');
-    const { api, consts } = useApi();
+    const { consts } = useApi();
     const {
+      network,
       networkData: { units, unit },
     } = useNetwork();
     const { activePool } = useActivePool();
@@ -67,20 +69,28 @@ export const Forms = forwardRef(
 
     // tx to submit
     const getTx = () => {
+      const { pApi } = ApiController.get(network);
       let tx = null;
-      if (!valid || !api || !unlock) {
+      if (!valid || !pApi || !unlock) {
         return tx;
       }
       // rebond is only available when staking directly.
       if (task === 'rebond' && isStaking) {
-        tx = api.tx.staking.rebond(unlock.value.toNumber() || 0);
+        tx = pApi.tx.Staking.rebond({
+          value: BigInt(unlock.value.toNumber() || 0),
+        });
       } else if (task === 'withdraw' && isStaking) {
-        tx = api.tx.staking.withdrawUnbonded(historyDepth.toString());
+        tx = pApi.tx.Staking.withdraw_unbonded({
+          num_slashing_spans: historyDepth.toNumber(),
+        });
       } else if (task === 'withdraw' && isPooling && activePool) {
-        tx = api.tx.nominationPools.withdrawUnbonded(
-          activeAccount,
-          historyDepth.toString()
-        );
+        tx = pApi.tx.NominationPools.withdraw_unbonded({
+          member_account: {
+            type: 'Id',
+            value: activeAccount,
+          },
+          num_slashing_spans: historyDepth.toNumber(),
+        });
       }
       return tx;
     };

@@ -7,11 +7,9 @@ import BigNumber from 'bignumber.js';
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
@@ -22,6 +20,8 @@ import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
 import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
 import { planckToUnitBn } from 'library/Utils';
+import { ApiController } from 'controllers/Api';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 
 export const ClaimCommission = ({
   setSection,
@@ -29,8 +29,8 @@ export const ClaimCommission = ({
   setSection: Dispatch<SetStateAction<number>>;
 }) => {
   const { t } = useTranslation('modals');
-  const { api } = useApi();
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
   const { setModalStatus } = useOverlay().modal;
@@ -52,10 +52,11 @@ export const ClaimCommission = ({
 
   // tx to submit
   const getTx = () => {
-    if (!valid || !api) {
+    const { pApi } = ApiController.get(network);
+    if (!valid || !pApi || poolId === undefined) {
       return null;
     }
-    return api.tx.nominationPools.claimCommission(poolId);
+    return pApi.tx.NominationPools.claim_commission({ pool_id: poolId });
   };
 
   const submitExtrinsic = useSubmitExtrinsic({

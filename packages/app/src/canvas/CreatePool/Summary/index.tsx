@@ -10,7 +10,6 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useSetup } from 'contexts/Setup';
 import { Warning } from 'library/Form/Warning';
 import { useBatchCall } from 'hooks/useBatchCall';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
@@ -21,14 +20,17 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { SummaryWrapper } from './Wrapper';
 import { useOverlay } from 'kits/Overlay/Provider';
+import { ApiController } from 'controllers/Api';
+import { Binary } from 'polkadot-api';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const {
-    api,
     poolsConfig: { lastPoolId },
   } = useApi();
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
   const { newBatchCall } = useBatchCall();
@@ -45,7 +47,8 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { metadata, bond, roles, nominations } = progress;
 
   const getTxs = () => {
-    if (!activeAccount || !api) {
+    const { pApi } = ApiController.get(network);
+    if (!activeAccount || !pApi) {
       return null;
     }
 
@@ -56,14 +59,30 @@ export const Summary = ({ section }: SetupStepProps) => {
     const bondToSubmit = unitToPlanck(bond, units).toString();
 
     const txs = [
-      api.tx.nominationPools.create(
-        bondToSubmit,
-        roles?.root || activeAccount,
-        roles?.nominator || activeAccount,
-        roles?.bouncer || activeAccount
-      ),
-      api.tx.nominationPools.nominate(poolId.toString(), targetsToSubmit),
-      api.tx.nominationPools.setMetadata(poolId.toString(), metadata),
+      pApi.tx.NominationPools.create({
+        amount: BigInt(bondToSubmit.toString()),
+        root: {
+          type: 'Id',
+          value: roles?.root || activeAccount,
+        },
+        nominator: {
+          type: 'Id',
+          value: roles?.nominator || activeAccount,
+        },
+        bouncer: {
+          type: 'Id',
+          value: roles?.bouncer || activeAccount,
+        },
+      }),
+
+      pApi.tx.NominationPools.nominate({
+        pool_id: poolId.toNumber(),
+        validators: targetsToSubmit,
+      }),
+      pApi.tx.NominationPools.set_metadata({
+        pool_id: poolId.toNumber(),
+        metadata: Binary.fromHex(metadata),
+      }),
     ];
     return newBatchCall(txs, activeAccount);
   };

@@ -5,14 +5,12 @@ import { unitToPlanck } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
@@ -22,11 +20,13 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { planckToUnitBn } from 'library/Utils';
+import { ApiController } from 'controllers/Api';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 
 export const Bond = () => {
   const { t } = useTranslation('modals');
-  const { api } = useApi();
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
   const { notEnoughFunds } = useTxMeta();
@@ -95,8 +95,9 @@ export const Bond = () => {
 
   // determine whether this is a pool or staking transaction.
   const determineTx = (bondToSubmit: BigNumber) => {
+    const { pApi } = ApiController.get(network);
     let tx = null;
-    if (!api) {
+    if (!pApi) {
       return tx;
     }
 
@@ -107,18 +108,21 @@ export const Bond = () => {
         : bondToSubmit.toString();
 
     if (isPooling) {
-      tx = api.tx.nominationPools.bondExtra({
-        FreeBalance: bondAsString,
+      tx = pApi.tx.NominationPools.bond_extra({
+        extra: {
+          type: 'FreeBalance',
+          value: bondAsString,
+        },
       });
     } else if (isStaking) {
-      tx = api.tx.staking.bondExtra(bondAsString);
+      tx = pApi.tx.Staking.bond_extra({ max_additional: BigInt(bondAsString) });
     }
     return tx;
   };
 
   // the actual bond tx to submit
   const getTx = (bondToSubmit: BigNumber) => {
-    if (!api || !activeAccount) {
+    if (!activeAccount) {
       return null;
     }
     return determineTx(bondToSubmit);

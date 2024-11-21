@@ -7,13 +7,10 @@ import BigNumber from 'bignumber.js';
 import type { ForwardedRef } from 'react';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useOverlay } from 'kits/Overlay/Provider';
-import { useBatchCall } from 'hooks/useBatchCall';
 import type { AnyApi } from 'types';
 import { usePayouts } from 'contexts/Payouts';
 import { useNetwork } from 'contexts/Network';
@@ -25,6 +22,9 @@ import { ButtonSubmitInvert } from 'ui-buttons';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
+import { ApiController } from 'controllers/Api';
+import { useBatchCall } from 'hooks/useBatchCall';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 
 export const Forms = forwardRef(
   (
@@ -32,8 +32,8 @@ export const Forms = forwardRef(
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const { t } = useTranslation('modals');
-    const { api } = useApi();
     const {
+      network,
       networkData: { units, unit },
     } = useNetwork();
     const { newBatchCall } = useBatchCall();
@@ -59,7 +59,8 @@ export const Forms = forwardRef(
       ) || 0;
 
     const getCalls = () => {
-      if (!api) {
+      const { pApi } = ApiController.get(network);
+      if (!pApi) {
         return [];
       }
 
@@ -69,7 +70,13 @@ export const Forms = forwardRef(
           return [];
         }
         return paginatedValidators.forEach(([page, v]) =>
-          calls.push(api.tx.staking.payoutStakersByPage(v, era, page))
+          calls.push(
+            pApi.tx.Staking.payout_stakers_by_page({
+              validator_stash: v,
+              era: Number(era),
+              page,
+            })
+          )
         );
       });
       return calls;
@@ -89,7 +96,7 @@ export const Forms = forwardRef(
     const getTx = () => {
       const tx = null;
       const calls = getCalls();
-      if (!valid || !api || !calls.length) {
+      if (!valid || !calls.length) {
         return tx;
       }
 

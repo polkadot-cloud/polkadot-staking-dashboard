@@ -8,24 +8,24 @@ import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useSetup } from 'contexts/Setup';
 import { Warning } from 'library/Form/Warning';
-import { useBatchCall } from 'hooks/useBatchCall';
 import { usePayeeConfig } from 'hooks/usePayeeConfig';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
 import { SubmitTx } from 'library/SubmitTx';
 import { useNetwork } from 'contexts/Network';
-import { useApi } from 'contexts/Api';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { SummaryWrapper } from './Wrapper';
 import { useOverlay } from 'kits/Overlay/Provider';
+import { useBatchCall } from 'hooks/useBatchCall';
+import { ApiController } from 'controllers/Api';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
-  const { api } = useApi();
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
   const { newBatchCall } = useBatchCall();
@@ -40,28 +40,36 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { bond, nominations, payee } = progress;
 
   const getTxs = () => {
-    if (!activeAccount || !api) {
+    const { pApi } = ApiController.get(network);
+    if (!activeAccount || !pApi) {
       return null;
     }
 
     const targetsToSubmit = nominations.map(
       ({ address }: { address: string }) => ({
-        Id: address,
+        type: 'Id',
+        value: address,
       })
     );
 
     const payeeToSubmit =
       payee.destination === 'Account'
         ? {
-            Account: payee.account,
+            type: 'Account',
+            value: payee.account,
           }
-        : payee.destination;
+        : {
+            type: payee.destination,
+          };
 
     const bondToSubmit = unitToPlanck(bond || '0', units).toString();
 
     const txs = [
-      api.tx.staking.bond(bondToSubmit, payeeToSubmit),
-      api.tx.staking.nominate(targetsToSubmit),
+      pApi.tx.Staking.bond({
+        value: BigInt(bondToSubmit),
+        payee: payeeToSubmit,
+      }),
+      pApi.tx.Staking.nominate({ targets: targetsToSubmit }),
     ];
     return newBatchCall(txs, activeAccount);
   };

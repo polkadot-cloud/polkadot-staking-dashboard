@@ -24,7 +24,9 @@ export const WalletConnect = ({
   displayFor,
 }: SubmitProps & { buttons?: ReactNode[] }) => {
   const { t } = useTranslation('library');
-  const { api } = useApi();
+  const {
+    chainSpecs: { genesisHash },
+  } = useApi();
   const { accountHasSigner } = useImportedAccounts();
   const { wcSessionActive, connectProvider, fetchAddresses, signWcTx } =
     useWalletConnect();
@@ -49,10 +51,6 @@ export const WalletConnect = ({
     buttonPulse = valid;
   } else {
     buttonOnClick = async () => {
-      if (!api) {
-        return;
-      }
-
       // If Wallet Connect session is not active, re-connect.
       if (!wcSessionActive) {
         await connectProvider();
@@ -68,7 +66,7 @@ export const WalletConnect = ({
 
       setIsSigning(true);
 
-      const caip = `polkadot:${api.genesisHash.toHex().substring(2).substring(0, 32)}`;
+      const caip = `polkadot:${genesisHash.substring(2).substring(0, 32)}`;
 
       try {
         const signature = await signWcTx(caip, payload, sender);

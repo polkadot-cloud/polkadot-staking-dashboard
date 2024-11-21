@@ -48,11 +48,13 @@ export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
     }
     if (bondFor === 'pool') {
       tx = pApi.tx.NominationPools.bond_extra({
-        type: 'FreeBalance',
-        value: BigInt(bond),
+        extra: {
+          type: 'FreeBalance',
+          value: BigInt(bond),
+        },
       });
     } else if (bondFor === 'nominator') {
-      tx = pApi.tx.Staking.bond_extra({ bond });
+      tx = pApi.tx.Staking.bond_extra({ max_additional: BigInt(bond) });
     }
 
     if (tx) {

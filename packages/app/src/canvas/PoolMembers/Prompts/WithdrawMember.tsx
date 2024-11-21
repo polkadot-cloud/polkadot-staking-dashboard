@@ -10,7 +10,6 @@ import { useApi } from 'contexts/Api';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -22,6 +21,8 @@ import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
 import { planckToUnitBn } from 'library/Utils';
+import { ApiController } from 'controllers/Api';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 
 export const WithdrawMember = ({
   who,
@@ -34,6 +35,7 @@ export const WithdrawMember = ({
 }) => {
   const { t } = useTranslation('modals');
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
   const { closePrompt } = usePrompt();
@@ -65,11 +67,18 @@ export const WithdrawMember = ({
 
   // tx to submit
   const getTx = () => {
+    const { pApi } = ApiController.get(network);
     let tx = null;
     if (!valid || !api) {
       return tx;
     }
-    tx = api.tx.nominationPools.withdrawUnbonded(who, historyDepth.toString());
+    tx = pApi.tx.NominationPools.withdraw_unbonded({
+      member_account: {
+        type: 'Id',
+        value: who,
+      },
+      num_slashing_spans: historyDepth.toNumber(),
+    });
     return tx;
   };
   const submitExtrinsic = useSubmitExtrinsic({

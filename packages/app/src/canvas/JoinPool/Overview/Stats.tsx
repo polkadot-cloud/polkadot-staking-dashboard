@@ -15,6 +15,7 @@ import { StyledLoader } from 'library/PoolSync/Loader';
 import type { CSSProperties } from 'styled-components';
 import { PoolSync } from 'library/PoolSync';
 import { planckToUnitBn } from 'library/Utils';
+import { ApiController } from 'controllers/Api';
 
 export const Stats = ({
   bondedPool,
@@ -23,13 +24,14 @@ export const Stats = ({
 }: OverviewSectionProps) => {
   const { t } = useTranslation('library');
   const {
+    network,
     networkData: {
       units,
       unit,
       brand: { token: Token },
     },
   } = useNetwork();
-  const { isReady, api } = useApi();
+  const { isReady } = useApi();
   const { getPoolRewardPoints } = usePoolPerformance();
   const poolRewardPoints = getPoolRewardPoints(performanceKey);
   const rawEraRewardPoints = Object.values(
@@ -41,16 +43,16 @@ export const Stats = ({
 
   // Fetches the balance of the bonded pool.
   const getPoolBalance = async () => {
-    if (!api) {
+    const { pApi } = ApiController.get(network);
+    if (!pApi) {
       return;
     }
 
-    const balance = (
-      await api.call.nominationPoolsApi.pointsToBalance(
-        bondedPool.id,
-        rmCommas(bondedPool.points)
-      )
-    ).toString();
+    const apiResult = await pApi.apis.NominationPoolsApi.points_to_balance(
+      bondedPool.id,
+      BigInt(rmCommas(bondedPool.points))
+    );
+    const balance = new BigNumber(apiResult?.toString() || 0);
 
     if (balance) {
       setPoolBalance(new BigNumber(balance));

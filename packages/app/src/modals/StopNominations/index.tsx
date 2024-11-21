@@ -3,12 +3,10 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
@@ -18,10 +16,13 @@ import { useBalances } from 'contexts/Balances';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ModalSeparator } from 'kits/Overlay/structure/ModalSeparator';
+import { ApiController } from 'controllers/Api';
+import { useNetwork } from 'contexts/Network';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 
 export const StopNominations = () => {
   const { t } = useTranslation('modals');
-  const { api } = useApi();
+  const { network } = useNetwork();
   const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
   const { getNominations } = useBalances();
@@ -62,16 +63,17 @@ export const StopNominations = () => {
 
   // tx to submit
   const getTx = () => {
+    const { pApi } = ApiController.get(network);
     let tx = null;
-    if (!valid || !api) {
+    if (!valid || !pApi) {
       return tx;
     }
 
     if (isPool) {
       // wishing to stop all nominations, call chill
-      tx = api.tx.nominationPools.chill(activePool?.id || 0);
+      tx = pApi.tx.NominationPools.chill({ pool_id: activePool?.id || 0 });
     } else if (isStaking) {
-      tx = api.tx.staking.chill();
+      tx = pApi.tx.Staking.chill();
     }
     return tx;
   };
