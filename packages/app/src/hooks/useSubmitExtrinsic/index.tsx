@@ -34,6 +34,9 @@ import type {
   VaultSignatureResult,
   VaultSignStatus,
 } from 'library/Signers/VaultSigner/types';
+import { WallectConnectSigner } from 'library/Signers/WallectConnectSigner';
+import { useApi } from 'contexts/Api';
+import { useWalletConnect } from 'contexts/WalletConnect';
 
 export const useSubmitExtrinsic = ({
   tx,
@@ -47,7 +50,9 @@ export const useSubmitExtrinsic = ({
     network,
     networkData: { units, unit },
   } = useNetwork();
+  const { chainSpecs } = useApi();
   const { getNonce } = useBalances();
+  const { signWcTx } = useWalletConnect();
   const { activeProxy } = useActiveAccounts();
   const { extensionsStatus } = useExtensions();
   const { isProxySupported } = useProxySupported();
@@ -136,6 +141,8 @@ export const useSubmitExtrinsic = ({
 
   // Extrinsic submission handler.
   const onSubmit = async () => {
+    const { pApi } = ApiController.get(network);
+
     const account = getAccount(fromRef.current);
     if (account === null || submitting || !shouldSubmit) {
       return;
@@ -240,6 +247,10 @@ export const useSubmitExtrinsic = ({
         decimals: units,
         tokenSymbol: unit,
       };
+      const blockNumber = await pApi.query.System.Number.getValue();
+      const blockHash = await pApi.query.System.BlockHash.getValue(
+        blockNumber - 1
+      );
 
       switch (source) {
         case 'ledger':
@@ -274,7 +285,16 @@ export const useSubmitExtrinsic = ({
           break;
 
         case 'wallet_connect':
-          // TODO: Implement
+          signer = await new WallectConnectSigner(
+            pubKey,
+            `polkadot:${chainSpecs.genesisHash.substring(2).substring(0, 32)}`,
+            signWcTx,
+            chainSpecs,
+            Number(nonce),
+            fromRef.current,
+            blockNumber,
+            blockHash.asHex()
+          ).getPolkadotSigner();
           break;
       }
     } else {
@@ -302,6 +322,7 @@ export const useSubmitExtrinsic = ({
           }
         },
         error: (err: Error) => {
+          console.log(err);
           if (err instanceof InvalidTxError) {
             onFailedTx();
           }
@@ -309,6 +330,7 @@ export const useSubmitExtrinsic = ({
         },
       });
     } catch (e) {
+      console.log(e);
       onError('default');
     }
   };
