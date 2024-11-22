@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faSquarePen } from '@fortawesome/free-solid-svg-icons';
-import { useState, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
@@ -12,7 +12,6 @@ import { ButtonSubmit } from 'ui-buttons';
 import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge';
 import { appendOrEmpty } from '@w3ux/utils';
 import { useWalletConnect } from 'contexts/WalletConnect';
-import { useApi } from 'contexts/Api';
 
 export const WalletConnect = ({
   onSubmit,
@@ -24,70 +23,43 @@ export const WalletConnect = ({
   displayFor,
 }: SubmitProps & { buttons?: ReactNode[] }) => {
   const { t } = useTranslation('library');
-  const {
-    chainSpecs: { genesisHash },
-  } = useApi();
+  const { txFeesValid, sender } = useTxMeta();
   const { accountHasSigner } = useImportedAccounts();
-  const { wcSessionActive, connectProvider, fetchAddresses, signWcTx } =
+  const { wcSessionActive, connectProvider, fetchAddresses } =
     useWalletConnect();
-  const { txFeesValid, sender, getTxPayloadJson, setTxSignature } = useTxMeta();
-
-  // Store whether the user is currently signing a transaction.
-  const [isSgning, setIsSigning] = useState<boolean>(false);
 
   // The state under which submission is disabled.
-  const disabled =
-    submitting || !valid || !accountHasSigner(submitAddress) || !txFeesValid;
-  const alreadySubmitted = submitting;
+  const disabled = !valid || !accountHasSigner(submitAddress) || !txFeesValid;
 
   // Format submit button based on whether signature currently exists or submission is ongoing.
   let buttonOnClick: () => void;
   let buttonDisabled: boolean;
   let buttonPulse: boolean;
 
-  if (alreadySubmitted) {
-    buttonOnClick = onSubmit;
+  const connectAndSubmit = async () => {
+    // If Wallet Connect session is not active, re-connect.
+    if (!wcSessionActive) {
+      await connectProvider();
+    }
+    const wcAccounts = await fetchAddresses();
+    const accountExists = sender && wcAccounts.includes(sender);
+    if (!sender || !accountExists) {
+      return;
+    }
+    onSubmit();
+  };
+
+  if (submitting) {
+    buttonOnClick = connectAndSubmit;
     buttonDisabled = disabled;
-    buttonPulse = valid;
+    buttonPulse = false;
   } else {
-    buttonOnClick = async () => {
-      // If Wallet Connect session is not active, re-connect.
-      if (!wcSessionActive) {
-        await connectProvider();
-      }
-
-      const wcAccounts = await fetchAddresses();
-      const accountExists = sender && wcAccounts.includes(sender);
-
-      const payload = getTxPayloadJson();
-      if (!sender || !payload || !accountExists) {
-        return;
-      }
-
-      setIsSigning(true);
-
-      const caip = `polkadot:${genesisHash.substring(2).substring(0, 32)}`;
-
-      try {
-        const signature = await signWcTx(caip, payload, sender);
-        if (signature) {
-          setTxSignature(signature);
-        }
-      } catch (e) {
-        setIsSigning(false);
-      }
-      setIsSigning(false);
-    };
-
+    buttonOnClick = connectAndSubmit;
     buttonDisabled = disabled;
     buttonPulse = !disabled;
   }
 
-  const buttonText = alreadySubmitted
-    ? submitText || ''
-    : isSgning
-      ? t('signing')
-      : t('sign');
+  const buttonText = submitting ? submitText || '' : t('sign');
 
   return (
     <div className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}>
