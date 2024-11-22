@@ -92,7 +92,7 @@ export const SignPrompt = ({
             lg
             marginLeft
             onClick={() => {
-              onComplete('cancelled', new Uint8Array(0));
+              onComplete('cancelled', null);
             }}
           />
         </div>

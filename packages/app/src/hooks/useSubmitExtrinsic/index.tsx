@@ -30,7 +30,10 @@ import type { LedgerAccount } from '@w3ux/react-connect-kit/types';
 import { VaultSigner } from 'library/Signers/VaultSigner';
 import { usePrompt } from 'contexts/Prompt';
 import { SignPrompt } from 'library/SubmitTx/ManualSign/Vault/SignPrompt';
-import type { VaultSignStatus } from 'library/Signers/VaultSigner/types';
+import type {
+  VaultSignatureResult,
+  VaultSignStatus,
+} from 'library/Signers/VaultSigner/types';
 
 export const useSubmitExtrinsic = ({
   tx,
@@ -249,7 +252,10 @@ export const useSubmitExtrinsic = ({
         case 'vault':
           signer = await new VaultSigner(pubKey, {
             openPrompt: (
-              onComplete: (status: VaultSignStatus, result: Uint8Array) => void,
+              onComplete: (
+                status: VaultSignStatus,
+                result: VaultSignatureResult
+              ) => void,
               toSign: Uint8Array
             ) => {
               openPromptWith(
@@ -264,7 +270,7 @@ export const useSubmitExtrinsic = ({
             },
             closePrompt: () => closePrompt(),
             setSubmitting,
-          }).getPolkadotSigner(networkInfo);
+          }).getPolkadotSigner();
           break;
 
         case 'wallet_connect':

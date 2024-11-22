@@ -3,10 +3,14 @@
 
 import { createV4Tx, getSignBytes } from '@polkadot-api/signers-common';
 import type { V15 } from '@polkadot-api/substrate-bindings';
-import { decAnyMetadata } from '@polkadot-api/substrate-bindings';
+import { Binary, decAnyMetadata } from '@polkadot-api/substrate-bindings';
 import type { PolkadotSigner } from 'polkadot-api';
 import { mergeUint8 } from 'polkadot-api/utils';
-import type { VaultPromptHandlers, VaultSignStatus } from './types';
+import type {
+  VaultPromptHandlers,
+  VaultSignatureResult,
+  VaultSignStatus,
+} from './types';
 
 export class VaultSigner {
   #publicKey: Uint8Array;
@@ -17,9 +21,12 @@ export class VaultSigner {
     this.#promptHandlers = promptHandlers;
   }
 
-  #showPrompt = (toSign: Uint8Array) =>
+  #showPrompt = (toSign: Uint8Array): Promise<VaultSignatureResult> =>
     new Promise((resolve) => {
-      const handleComplete = (status: VaultSignStatus, result: Uint8Array) => {
+      const handleComplete = (
+        status: VaultSignStatus,
+        result: VaultSignatureResult
+      ) => {
         this.#promptHandlers.closePrompt();
         if (status === 'cancelled') {
           this.#promptHandlers.setSubmitting(false);
@@ -28,28 +35,18 @@ export class VaultSigner {
           resolve(result);
         }
       };
-
-      // Show prompt, passing completion handler to call once user has completed signing. This will
-      // resolve the promise and continue with signing.
       this.#promptHandlers.openPrompt((status, signature) => {
         handleComplete(status, signature);
       }, toSign);
     });
 
-  async getPolkadotSigner(networkInfo: {
-    decimals: number;
-    tokenSymbol: string;
-  }): Promise<PolkadotSigner> {
+  async getPolkadotSigner(): Promise<PolkadotSigner> {
     const signTx: PolkadotSigner['signTx'] = async (
       callData,
       signedExtensions,
       metadata
     ) => {
-      console.debug(networkInfo);
-      // const merkleizer = merkleizeMetadata(metadata, networkInfo);
-      // const digest = merkleizer.digest();
       const v15 = decAnyMetadata(metadata).metadata.value as unknown as V15;
-
       const extra: Uint8Array[] = [];
       const additionalSigned: Uint8Array[] = [];
       v15.extrinsic.signedExtensions.map(({ identifier }) => {
@@ -70,27 +67,32 @@ export class VaultSigner {
         ...additionalSigned
       );
 
-      console.log(toSign);
-
       // Start flow to sign QR Code here.
-      const userResponse = await this.#showPrompt(toSign);
+      const signature = await this.#showPrompt(toSign);
 
-      console.log('user response: ', userResponse);
-      // NOTE: Placeholder.
-      const signature = Buffer.from(new Uint8Array(0));
-      return createV4Tx(v15, this.#publicKey, signature, extra, callData);
+      if (signature === null) {
+        throw 'Invalid signature';
+      }
+      return createV4Tx(
+        v15,
+        this.#publicKey,
+        Binary.fromHex(signature).asBytes(),
+        extra,
+        callData
+      );
     };
 
     return {
       publicKey: this.#publicKey,
       signTx,
       signBytes: getSignBytes(async (x) => {
-        const signature = Buffer.from(x);
-        // TODO: Replace with vault signature.
-        // const { signature } = await Ledger.signPayload(app, index, x);
+        const signatureHex = await this.#showPrompt(x);
+        if (!signatureHex) {
+          throw 'Invalid signature';
+        }
         // NOTE: the signature includes a "0x00" at the beginning, indicating a ed25519 signature.
         // this is not needed for non-extrinsic signatures.
-        return signature.subarray(1);
+        return Binary.fromHex(signatureHex).asBytes().subarray(1);
       }),
     };
   }

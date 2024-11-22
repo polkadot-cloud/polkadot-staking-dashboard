@@ -3,7 +3,10 @@
 
 export interface VaultPromptHandlers {
   openPrompt: (
-    onComplete: (status: 'complete' | 'cancelled', result: Uint8Array) => void,
+    onComplete: (
+      status: 'complete' | 'cancelled',
+      result: `0x${string}` | null
+    ) => void,
     toSign: Uint8Array
   ) => void;
   closePrompt: () => void;
@@ -11,3 +14,5 @@ export interface VaultPromptHandlers {
 }
 
 export type VaultSignStatus = 'complete' | 'cancelled';
+
+export type VaultSignatureResult = `0x${string}` | null;

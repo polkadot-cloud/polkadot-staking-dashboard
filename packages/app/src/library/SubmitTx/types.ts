@@ -3,6 +3,7 @@
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import type { DisplayFor } from '@w3ux/types';
+import type { VaultSignatureResult } from 'library/Signers/VaultSigner/types';
 import type { ReactNode } from 'react';
 import type { MaybeAddress } from 'types';
 
@@ -27,7 +28,10 @@ export interface SubmitProps {
 export interface SignerPromptProps {
   submitAddress: MaybeAddress;
   toSign: Uint8Array;
-  onComplete: (status: 'complete' | 'cancelled', signature: Uint8Array) => void;
+  onComplete: (
+    status: 'complete' | 'cancelled',
+    signature: VaultSignatureResult
+  ) => void;
 }
 
 export interface LedgerSubmitProps {
