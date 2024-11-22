@@ -12,7 +12,7 @@ import {
 import type { WalletConnectSignTx } from 'contexts/WalletConnect/types';
 import type { PapiChainSpec } from 'model/Api/types';
 import type { PolkadotSigner } from 'polkadot-api';
-import { toHex } from 'polkadot-api/utils';
+import { fromHex, toHex } from 'polkadot-api/utils';
 
 export class WallectConnectSigner {
   #publicKey: Uint8Array;
@@ -105,10 +105,11 @@ export class WallectConnectSigner {
       if (signature === null) {
         throw 'Invalid signature';
       }
+
       return createV4Tx(
         v15,
         this.#publicKey,
-        Binary.fromHex(signature).asBytes(),
+        fromHex(signature),
         extra,
         callData
       );
