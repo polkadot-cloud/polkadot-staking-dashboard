@@ -257,7 +257,7 @@ export const WalletConnectProvider = ({
     }
     const topic = wcProvider.current.session.topic;
     const caip = `polkadot:${genesisHash.substring(2).substring(0, 32)}`;
-    const request = {
+    return await wcProvider.current.client.request({
       chainId: caip,
       topic,
       request: {
@@ -267,11 +267,7 @@ export const WalletConnectProvider = ({
           transactionPayload: payload,
         },
       },
-    };
-    const result: { signature: string } =
-      await wcProvider.current.client.request(request);
-
-    return { signature: result?.signature || '0x' };
+    });
   };
 
   const fetchAddresses = async (): Promise<string[]> => {
