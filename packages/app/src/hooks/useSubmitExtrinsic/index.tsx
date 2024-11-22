@@ -22,7 +22,10 @@ import { useNetwork } from 'contexts/Network';
 import { useBalances } from 'contexts/Balances';
 import type { PolkadotSigner } from 'polkadot-api';
 import { AccountId, InvalidTxError } from 'polkadot-api';
-import { connectInjectedExtension } from 'polkadot-api/pjs-signer';
+import {
+  connectInjectedExtension,
+  getPolkadotSignerFromPjs,
+} from 'polkadot-api/pjs-signer';
 import { formatAccountSs58 } from '@w3ux/utils';
 import { LedgerSigner } from 'library/Signers/LedgerSigner';
 import { getLedgerApp } from 'contexts/LedgerHardware/Utils';
@@ -34,8 +37,6 @@ import type {
   VaultSignatureResult,
   VaultSignStatus,
 } from 'library/Signers/VaultSigner/types';
-import { WallectConnectSigner } from 'library/Signers/WalletConnectSigner';
-import { useApi } from 'contexts/Api';
 import { useWalletConnect } from 'contexts/WalletConnect';
 
 export const useSubmitExtrinsic = ({
@@ -50,7 +51,6 @@ export const useSubmitExtrinsic = ({
     network,
     networkData: { units, unit },
   } = useNetwork();
-  const { chainSpecs } = useApi();
   const { getNonce } = useBalances();
   const { signWcTx } = useWalletConnect();
   const { activeProxy } = useActiveAccounts();
@@ -141,8 +141,6 @@ export const useSubmitExtrinsic = ({
 
   // Extrinsic submission handler.
   const onSubmit = async () => {
-    const { papiClient } = ApiController.get(network);
-
     const account = getAccount(fromRef.current);
     if (account === null || submitting || !shouldSubmit) {
       return;
@@ -247,7 +245,6 @@ export const useSubmitExtrinsic = ({
         decimals: units,
         tokenSymbol: unit,
       };
-      const { number, hash } = await papiClient.getFinalizedBlock();
 
       switch (source) {
         case 'ledger':
@@ -282,16 +279,15 @@ export const useSubmitExtrinsic = ({
           break;
 
         case 'wallet_connect':
-          signer = await new WallectConnectSigner(
-            pubKey,
-            `polkadot:${chainSpecs.genesisHash.substring(2).substring(0, 32)}`,
-            signWcTx,
-            chainSpecs,
-            Number(nonce),
+          signer = getPolkadotSignerFromPjs(
             fromRef.current,
-            number,
-            hash
-          ).getPolkadotSigner();
+            signWcTx,
+            // Signing bytes not currently being used.
+            async () => ({
+              id: 0,
+              signature: '0x',
+            })
+          );
           break;
       }
     } else {

@@ -251,23 +251,19 @@ export const WalletConnectProvider = ({
   };
 
   // Attempt to sign a transaction and receive a signature.
-  const signWcTx = async (
-    caip: string,
-    payload: AnyJson,
-    from: string
-  ): Promise<string | null> => {
+  const signWcTx = async (payload: AnyJson): Promise<{ signature: string }> => {
     if (!wcProvider.current || !wcProvider.current.session?.topic) {
-      return null;
+      return { signature: '0x' };
     }
     const topic = wcProvider.current.session.topic;
-
+    const caip = `polkadot:${genesisHash.substring(2).substring(0, 32)}`;
     const request = {
       chainId: caip,
       topic,
       request: {
         method: 'polkadot_signTransaction',
         params: {
-          address: from,
+          address: payload.address,
           transactionPayload: payload,
         },
       },
@@ -275,7 +271,7 @@ export const WalletConnectProvider = ({
     const result: { signature: string } =
       await wcProvider.current.client.request(request);
 
-    return result?.signature || null;
+    return { signature: result?.signature || '0x' };
   };
 
   const fetchAddresses = async (): Promise<string[]> => {

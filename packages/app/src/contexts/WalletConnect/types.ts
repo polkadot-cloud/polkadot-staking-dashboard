@@ -20,7 +20,5 @@ export interface WalletConnectConnectedMeta {
 }
 
 export type WalletConnectSignTx = (
-  caip: string,
-  payload: AnyJson,
-  from: string
-) => Promise<string | null>;
+  payload: AnyJson
+) => Promise<{ signature: string }>;
