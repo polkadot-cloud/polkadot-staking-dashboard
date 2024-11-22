@@ -60,14 +60,6 @@ export class WallectConnectSigner {
       const v15 = decAnyMetadata(metadata).metadata.value as unknown as V15;
       const identifiers: string[] = [];
 
-      v15.extrinsic.signedExtensions.map(({ identifier }) => {
-        const signedExtension = signedExtensions[identifier];
-        if (!signedExtension) {
-          throw new Error(`Missing ${identifier} signed extension`);
-        }
-        identifiers.push(identifier);
-      });
-
       const extra: Uint8Array[] = [];
       const additionalSigned: Uint8Array[] = [];
       v15.extrinsic.signedExtensions.map(({ identifier }) => {
@@ -81,6 +73,7 @@ export class WallectConnectSigner {
       });
 
       const { version } = v15.extrinsic;
+
       const unsignedTransaction = {
         specVersion: this.#toPjsHex(
           u32.dec(u32.enc(this.#chainSpecs.specVersion)),
@@ -90,6 +83,7 @@ export class WallectConnectSigner {
           u32.dec(u32.enc(this.#chainSpecs.transactionVersion)),
           4
         ),
+        version,
         address: this.#who,
         blockHash: this.#blockHash,
         blockNumber: this.#toPjsHex(u32.dec(u32.enc(this.#blockNumber)), 4),
@@ -99,7 +93,6 @@ export class WallectConnectSigner {
         nonce: this.#toPjsHex(compact.dec(compact.enc(this.#nonce)), 4),
         signedExtensions: identifiers,
         tip: this.#toPjsHex(u32.dec(u32.enc(0)), 16),
-        version,
       };
 
       // Await signature from Wallet Connect.
