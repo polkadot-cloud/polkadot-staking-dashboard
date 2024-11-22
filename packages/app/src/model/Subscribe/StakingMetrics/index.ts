@@ -45,16 +45,16 @@ export class StakingMetrics implements Unsubscribable {
           pApi.query.Staking.MaxValidatorsCount.watchValue(bestOrFinalized),
           pApi.query.Staking.ValidatorCount.watchValue(bestOrFinalized),
           pApi.query.Staking.ErasValidatorReward.watchValue(
-            this.#previousEra.toString(),
+            this.#previousEra.toNumber(),
             bestOrFinalized
           ),
           pApi.query.Staking.ErasTotalStake.watchValue(
-            this.#previousEra.toString(),
+            this.#previousEra.toNumber(),
             bestOrFinalized
           ),
           pApi.query.Staking.MinNominatorBond.watchValue(bestOrFinalized),
           pApi.query.Staking.ErasTotalStake.watchValue(
-            this.#activeEra.index.toString(),
+            this.#activeEra.index.toNumber(),
             bestOrFinalized
           ),
           pApi.query.Staking.CounterForNominators.watchValue(bestOrFinalized),
@@ -71,9 +71,11 @@ export class StakingMetrics implements Unsubscribable {
           ]) => {
             const stakingMetrics = {
               totalValidators: stringToBn(counterForValidators.toString()),
-              maxValidatorsCount: stringToBn(maxValidatorsCount.toString()),
+              maxValidatorsCount: stringToBn(
+                maxValidatorsCount?.toString() || '0'
+              ),
               validatorCount: stringToBn(validatorCount.toString()),
-              lastReward: stringToBn(erasValidatorReward.toString()),
+              lastReward: stringToBn(erasValidatorReward?.toString() || '0'),
               lastTotalStake: stringToBn(lastTotalStake.toString()),
               minNominatorBond: stringToBn(minNominatorBond.toString()),
               totalStaked: stringToBn(totalStaked.toString()),

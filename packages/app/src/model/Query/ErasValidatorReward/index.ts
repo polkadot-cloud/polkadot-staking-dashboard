@@ -5,10 +5,9 @@ import type { PapiApi } from 'model/Api/types';
 
 export class ErasValidatorReward {
   #pApi: PapiApi;
+  #era: number;
 
-  #era: string;
-
-  constructor(pApi: PapiApi, era: string) {
+  constructor(pApi: PapiApi, era: number) {
     this.#pApi = pApi;
     this.#era = era;
   }

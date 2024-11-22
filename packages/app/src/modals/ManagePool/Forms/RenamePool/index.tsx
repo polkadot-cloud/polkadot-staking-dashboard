@@ -61,7 +61,7 @@ export const RenamePool = ({
   // tx to submit
   const getTx = () => {
     const { pApi } = ApiController.get(network);
-    if (!valid || !pApi) {
+    if (!valid || !pApi || !poolId) {
       return null;
     }
     return pApi.tx.NominationPools.set_metadata({

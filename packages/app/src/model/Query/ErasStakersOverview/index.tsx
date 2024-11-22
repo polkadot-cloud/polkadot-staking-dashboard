@@ -10,7 +10,7 @@ export class ErasStakersOverview {
     this.#pApi = pApi;
   }
 
-  async fetch(era: string) {
+  async fetch(era: number) {
     return await this.#pApi.query.Staking.ErasStakersOverview.getEntries(era, {
       at: 'best',
     });

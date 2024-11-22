@@ -64,8 +64,9 @@ export class PoolsConfig implements Unsubscribable {
             globalMaxCommission,
           ]) => {
             // Format globalMaxCommission from a perbill to a percent.
-            const globalMaxCommissionAsPercent =
-              BigInt(globalMaxCommission) / 1000000n;
+            const globalMaxCommissionAsPercent = globalMaxCommission
+              ? BigInt(globalMaxCommission) / 1000000n
+              : 100n;
 
             // Format max pool members to be a BigNumber, or null if it's not set.
             const maxPoolMembers = maxPoolMembersRaw

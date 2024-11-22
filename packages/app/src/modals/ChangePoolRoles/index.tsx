@@ -37,22 +37,19 @@ export const ChangePoolRoles = () => {
       return tx;
     }
 
-    const removeOp = { type: 'Remove' };
-    const root = roleEdits?.root?.newAddress
-      ? { type: 'Set', value: roleEdits.root.newAddress }
-      : removeOp;
-    const nominator = roleEdits?.nominator?.newAddress
-      ? { type: 'Set', value: roleEdits.nominator.newAddress }
-      : removeOp;
-    const bouncer = roleEdits?.bouncer?.newAddress
-      ? { type: 'Set', value: roleEdits.bouncer.newAddress }
-      : removeOp;
-
     tx = pApi.tx.NominationPools.update_roles({
       pool_id: poolId,
-      new_root: root,
-      new_nominator: nominator,
-      new_bouncer: bouncer,
+      new_root: roleEdits?.root?.newAddress
+        ? { type: 'Set', value: roleEdits.root.newAddress }
+        : { type: 'Remove', value: undefined },
+
+      new_nominator: roleEdits?.nominator?.newAddress
+        ? { type: 'Set', value: roleEdits.nominator.newAddress }
+        : { type: 'Remove', value: undefined },
+
+      new_bouncer: roleEdits?.bouncer?.newAddress
+        ? { type: 'Set', value: roleEdits.bouncer.newAddress }
+        : { type: 'Remove', value: undefined },
     });
     return tx;
   };

@@ -34,7 +34,7 @@ export const useBatchCall = () => {
                 type: 'Id',
                 value: from,
               },
-              force_proxy_type: null,
+              force_proxy_type: undefined,
               call: tx.decodedCall,
             }).decodedCall
         ),

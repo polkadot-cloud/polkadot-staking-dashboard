@@ -34,7 +34,10 @@ export class FastUnstakeConfig implements Unsubscribable {
           pApi.query.FastUnstake.CounterForQueue.watchValue(bestOrFinalized),
         ]).subscribe(([head, counterForQueue]) => {
           const config: FastUnstakeConfigResult = {
-            head,
+            head: head || {
+              stashes: [],
+              checked: [],
+            },
             counterForQueue,
           };
 

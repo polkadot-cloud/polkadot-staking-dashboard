@@ -40,18 +40,28 @@ export class PoolMembersMulti implements Unsubscribable {
             )
           )
         ).subscribe((results) => {
-          const formatted = results.map((result) => ({
-            lastRecordedRewardCounter:
-              result.last_recorded_reward_counter.toString(),
-            points: result.points.toString(),
-            poolId: result.pool_id.toString(),
-            unbondingEras: Object.fromEntries(
-              result.unbonding_eras.map(([key, value]: [number, bigint]) => [
-                key.toString(),
-                value.toString(),
-              ])
-            ),
-          }));
+          const formatted = results
+            .map((result) => {
+              if (!result) {
+                return undefined;
+              }
+
+              return {
+                lastRecordedRewardCounter:
+                  result.last_recorded_reward_counter.toString(),
+                points: result.points.toString(),
+                poolId: result.pool_id.toString(),
+                unbondingEras: Object.fromEntries(
+                  result.unbonding_eras.map(
+                    ([key, value]: [number, bigint]) => [
+                      key.toString(),
+                      value.toString(),
+                    ]
+                  )
+                ),
+              };
+            })
+            .filter((result) => result !== undefined);
 
           const detail: PoolMemberBatchEvent = {
             key: this.#key,

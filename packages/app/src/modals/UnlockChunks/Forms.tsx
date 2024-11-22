@@ -84,13 +84,15 @@ export const Forms = forwardRef(
           num_slashing_spans: historyDepth.toNumber(),
         });
       } else if (task === 'withdraw' && isPooling && activePool) {
-        tx = pApi.tx.NominationPools.withdraw_unbonded({
-          member_account: {
-            type: 'Id',
-            value: activeAccount,
-          },
-          num_slashing_spans: historyDepth.toNumber(),
-        });
+        if (activeAccount) {
+          tx = pApi.tx.NominationPools.withdraw_unbonded({
+            member_account: {
+              type: 'Id',
+              value: activeAccount,
+            },
+            num_slashing_spans: historyDepth.toNumber(),
+          });
+        }
       }
       return tx;
     };

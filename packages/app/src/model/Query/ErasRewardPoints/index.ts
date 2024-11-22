@@ -6,9 +6,9 @@ import type { PapiApi } from 'model/Api/types';
 export class ErasRewardPoints {
   #pApi: PapiApi;
 
-  #era: string;
+  #era: number;
 
-  constructor(pApi: PapiApi, era: string) {
+  constructor(pApi: PapiApi, era: number) {
     this.#pApi = pApi;
     this.#era = era;
   }

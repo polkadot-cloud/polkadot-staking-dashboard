@@ -5,10 +5,9 @@ import type { PapiApi } from 'model/Api/types';
 
 export class ParaSessionAccounts {
   #pApi: PapiApi;
+  #session: number;
 
-  #session: string;
-
-  constructor(pApi: PapiApi, session: string) {
+  constructor(pApi: PapiApi, session: number) {
     this.#pApi = pApi;
     this.#session = session;
   }
@@ -20,7 +19,10 @@ export class ParaSessionAccounts {
           this.#session,
           { at: 'best' }
         );
-      return result;
+
+      if (result) {
+        return result;
+      }
     } catch (e) {
       // Silent fail
     }

@@ -114,9 +114,9 @@ export const useSubmitExtrinsic = ({
       txRef.current = pApi.tx.Proxy.proxy({
         real: {
           type: 'Id',
-          value: from,
+          value: from || '',
         },
-        forceProxyType: null,
+        force_proxy_type: undefined,
         call: txRef.current.decodedCall,
       });
     }

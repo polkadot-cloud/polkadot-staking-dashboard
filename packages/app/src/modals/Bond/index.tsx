@@ -111,7 +111,7 @@ export const Bond = () => {
       tx = pApi.tx.NominationPools.bond_extra({
         extra: {
           type: 'FreeBalance',
-          value: bondAsString,
+          value: BigInt(bondAsString),
         },
       });
     } else if (isStaking) {

@@ -24,6 +24,7 @@ import { planckToUnitBn } from 'library/Utils';
 import { ApiController } from 'controllers/Api';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
+import type { AnyApi } from 'types';
 
 export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   const { t } = useTranslation();
@@ -82,7 +83,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
       !bondValid ? '0' : bond.bond,
       units
     ).toString();
-    const txs = [
+    const txs: AnyApi[] = [
       pApi.tx.NominationPools.join({
         amount: BigInt(bondToSubmit),
         pool_id: bondedPool.id,
@@ -92,7 +93,9 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
     // If claim permission is not the default, add it to tx.
     if (claimPermission !== defaultClaimPermission) {
       txs.push(
-        pApi.tx.NominationPools.set_claim_permission({ type: claimPermission })
+        pApi.tx.NominationPools.set_claim_permission({
+          permission: { type: claimPermission, value: undefined },
+        })
       );
     }
 

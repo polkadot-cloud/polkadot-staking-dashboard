@@ -52,11 +52,11 @@ export class ActivePoolAccount implements Unsubscribable {
 
       const sub = combineLatest([
         pApi.query.NominationPools.BondedPools.watchValue(
-          this.pool.id,
+          Number(this.pool.id),
           bestOrFinalized
         ),
         pApi.query.NominationPools.RewardPools.watchValue(
-          this.pool.id,
+          Number(this.pool.id),
           bestOrFinalized
         ),
         pApi.query.System.Account.watchValue(

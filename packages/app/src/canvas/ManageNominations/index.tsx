@@ -99,26 +99,21 @@ export const ManageNominations = () => {
       return tx;
     }
 
-    // Note: `targets` structure differs between staking and pools.
-    const targetsToSubmit = newNominations.nominations.map((nominee) =>
-      isPool
-        ? nominee.address
-        : {
-            type: 'Id',
-            value: nominee.address,
-          }
-    );
-
     if (isPool) {
       if (activePool) {
         tx = pApi.tx.NominationPools.nominate({
           pool_id: activePool.id,
-          validators: targetsToSubmit,
+          validators: newNominations.nominations.map(
+            (nominee) => nominee.address
+          ),
         });
       }
     } else {
       tx = pApi.tx.Staking.nominate({
-        targets: targetsToSubmit,
+        targets: newNominations.nominations.map((nominee) => ({
+          type: 'Id',
+          value: nominee.address,
+        })),
       });
     }
     return tx;

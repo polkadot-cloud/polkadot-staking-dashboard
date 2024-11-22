@@ -181,7 +181,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       erasProcessed.isLessThan(totalEras)
     );
 
-    const erasMulti: [string][] = eras.map((e) => [e.toString()]);
+    const erasMulti: [number][] = eras.map((e) => [e.toNumber()]);
     const results = await new ErasRewardPointsMulti(pApi, erasMulti).fetch();
 
     // Make calls and format reward point results.
@@ -354,7 +354,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     setSessionParaValidators(
       await new ParaSessionAccounts(
         pApi,
-        earliestStoredSession.toString()
+        earliestStoredSession.toNumber()
       ).fetch()
     );
   };
@@ -513,7 +513,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       thisEra = thisEra.minus(1);
     } while (thisEra.gte(endEra));
 
-    const erasMulti: [string][] = eras.map((e) => [e.toString()]);
+    const erasMulti: [number][] = eras.map((e) => [Number(e)]);
     const results = await new ErasValidatorReward(pApi, erasMulti).fetch();
 
     const reward = results

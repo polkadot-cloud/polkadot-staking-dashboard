@@ -10,7 +10,7 @@ export class ErasStakersPaged {
     this.#pApi = pApi;
   }
 
-  async fetch(era: string, validator: string) {
+  async fetch(era: number, validator: string) {
     return await this.#pApi.query.Staking.ErasStakersPaged.getEntries(
       era,
       validator,

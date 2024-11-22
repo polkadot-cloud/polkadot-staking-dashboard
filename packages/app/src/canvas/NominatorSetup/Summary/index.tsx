@@ -45,18 +45,19 @@ export const Summary = ({ section }: SetupStepProps) => {
       return null;
     }
 
-    const targetsToSubmit = nominations.map(
-      ({ address }: { address: string }) => ({
-        type: 'Id',
-        value: address,
-      })
-    );
+    if (payee.destination === 'Account' && !payee.account) {
+      return null;
+    }
+
+    if (payee.destination !== 'Account' && !payee.destination) {
+      return null;
+    }
 
     const payeeToSubmit =
       payee.destination === 'Account'
         ? {
-            type: 'Account',
-            value: payee.account,
+            type: 'Account' as const,
+            value: payee.account as string,
           }
         : {
             type: payee.destination,
@@ -69,7 +70,12 @@ export const Summary = ({ section }: SetupStepProps) => {
         value: BigInt(bondToSubmit),
         payee: payeeToSubmit,
       }),
-      pApi.tx.Staking.nominate({ targets: targetsToSubmit }),
+      pApi.tx.Staking.nominate({
+        targets: nominations.map(({ address }: { address: string }) => ({
+          type: 'Id',
+          value: address,
+        })),
+      }),
     ];
     return newBatchCall(txs, activeAccount);
   };

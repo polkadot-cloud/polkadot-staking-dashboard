@@ -38,8 +38,8 @@ export class ActiveEra implements Unsubscribable {
         ).subscribe((activeEra) => {
           // Store active era.
           this.activeEra = {
-            index: new BigNumber(activeEra.index.toString()),
-            start: new BigNumber(activeEra.start.toString()),
+            index: new BigNumber(activeEra?.index.toString() || 0),
+            start: new BigNumber(activeEra?.start?.toString() || 0),
           };
 
           // Unsubscribe to staking metrics if it exists.

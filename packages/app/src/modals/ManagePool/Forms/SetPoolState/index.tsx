@@ -91,19 +91,19 @@ export const SetPoolState = ({
       case 'destroy_pool':
         tx = pApi.tx.NominationPools.set_state({
           pool_id: poolId,
-          state: { type: 'Destroying' },
+          state: { type: 'Destroying', value: undefined },
         });
         break;
       case 'unlock_pool':
         tx = pApi.tx.NominationPools.set_state({
           pool_id: poolId,
-          state: { type: 'Open' },
+          state: { type: 'Open', value: undefined },
         });
         break;
       case 'lock_pool':
         tx = pApi.tx.NominationPools.set_state({
           pool_id: poolId,
-          state: { type: 'Blocked' },
+          state: { type: 'Blocked', value: undefined },
         });
         break;
       default:

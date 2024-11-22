@@ -62,16 +62,16 @@ export class NetworkMeta {
       this.#pApi.query.Staking.MaxValidatorsCount.getValue(at),
       this.#pApi.query.Staking.ValidatorCount.getValue(at),
       this.#pApi.query.Staking.ErasValidatorReward.getValue(
-        previousEra.toString(),
+        previousEra.toNumber(),
         at
       ),
       this.#pApi.query.Staking.ErasTotalStake.getValue(
-        previousEra.toString(),
+        previousEra.toNumber(),
         at
       ),
       this.#pApi.query.Staking.MinNominatorBond.getValue(at),
       this.#pApi.query.Staking.ErasTotalStake.getValue(
-        activeEra.index.toString(),
+        activeEra.index.toNumber(),
         at
       ),
     ]);
@@ -116,9 +116,9 @@ export class NetworkMeta {
       },
       stakingMetrics: {
         totalValidators: stringToBn(counterForValidators.toString()),
-        maxValidatorsCount: stringToBn(maxValidatorsCount.toString()),
+        maxValidatorsCount: stringToBn(maxValidatorsCount?.toString() || '0'),
         validatorCount: stringToBn(validatorCount.toString()),
-        lastReward: stringToBn(prevErasValidatorReward.toString()),
+        lastReward: stringToBn(prevErasValidatorReward?.toString() || '0'),
         lastTotalStake: stringToBn(prevEraErasTotalStake.toString()),
         minNominatorBond: stringToBn(minNominatorBond.toString()),
         totalStaked: stringToBn(activeEraErasTotalStake.toString()),

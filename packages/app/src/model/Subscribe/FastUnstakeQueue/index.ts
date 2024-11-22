@@ -35,7 +35,7 @@ export class FastUnstakeQueue implements Unsubscribable {
           this.#address,
           bestOrFinalized
         ).subscribe((queue) => {
-          this.queue = queue;
+          this.queue = queue || 0n;
 
           document.dispatchEvent(
             new CustomEvent('new-fast-unstake-deposit', {

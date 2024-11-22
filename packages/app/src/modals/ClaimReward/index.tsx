@@ -57,7 +57,9 @@ export const ClaimReward = () => {
     }
 
     if (claimType === 'bond') {
-      tx = pApi.tx.NominationPools.bond_extra({ extra: { type: 'Rewards' } });
+      tx = pApi.tx.NominationPools.bond_extra({
+        extra: { type: 'Rewards', value: undefined },
+      });
     } else {
       tx = pApi.tx.NominationPools.claim_payout();
     }

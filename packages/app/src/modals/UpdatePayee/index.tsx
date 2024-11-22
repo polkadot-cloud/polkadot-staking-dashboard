@@ -75,19 +75,24 @@ export const UpdatePayee = () => {
   const getTx = () => {
     const { pApi } = ApiController.get(network);
     let tx = null;
-    if (!pApi) {
+    if (!pApi || !selected.destination) {
       return tx;
     }
-    const payeeToSubmit = !isComplete()
-      ? { type: 'Staked' }
-      : selected.destination === 'Account'
-        ? {
-            type: 'Account',
-            value: selected.account,
-          }
-        : { type: selected.destination };
 
-    tx = pApi.tx.Staking.set_payee({ payee: payeeToSubmit });
+    if (selected.destination === 'Account' && !selected.account) {
+      return tx;
+    }
+
+    tx = pApi.tx.Staking.set_payee({
+      payee: !isComplete()
+        ? { type: 'Staked', value: undefined }
+        : selected.destination === 'Account'
+          ? {
+              type: 'Account',
+              value: selected.account as string,
+            }
+          : { type: selected.destination, value: undefined },
+    });
     return tx;
   };
 

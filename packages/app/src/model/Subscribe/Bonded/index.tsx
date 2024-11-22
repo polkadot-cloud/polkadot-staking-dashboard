@@ -38,7 +38,7 @@ export class Bonded implements Unsubscribable {
         ).subscribe((controller) => {
           const account: BondedAccount = {
             address: this.#address,
-            bonded: controller || null,
+            bonded: controller || undefined,
           };
 
           // Send bonded account to UI.

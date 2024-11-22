@@ -229,7 +229,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       return [];
     }
 
-    const overview = await new ErasStakersOverview(pApi).fetch(era);
+    const overview = await new ErasStakersOverview(pApi).fetch(Number(era));
     const validators: Record<string, AnyJson> = overview.reduce(
       (
         prev: Record<string, Exposure>,
@@ -240,7 +240,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     const validatorKeys = Object.keys(validators);
 
     const pagedResults = await Promise.all(
-      validatorKeys.map((v) => new ErasStakersPaged(pApi).fetch(era, v))
+      validatorKeys.map((v) => new ErasStakersPaged(pApi).fetch(Number(era), v))
     );
 
     const result: Exposure[] = [];

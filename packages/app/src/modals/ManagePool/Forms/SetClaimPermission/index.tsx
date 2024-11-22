@@ -62,12 +62,13 @@ export const SetClaimPermission = ({
   // tx to submit.
   const getTx = () => {
     const { pApi } = ApiController.get(network);
-    if (!valid || !pApi) {
+    if (!valid || !pApi || !claimPermission) {
       return null;
     }
     return pApi.tx.NominationPools.set_claim_permission({
       permission: {
         type: claimPermission,
+        value: undefined,
       },
     });
   };

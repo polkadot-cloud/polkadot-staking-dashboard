@@ -12,28 +12,30 @@ export class Era {
   }
 
   async fetch() {
-    let result;
-    try {
-      const { index, start } =
-        await this.#pApi.query.Staking.ActiveEra.getValue({
-          at: 'best',
-        });
+    let era = {
+      start: 0n,
+      index: 0,
+    };
 
-      result = {
-        start,
-        index,
-      };
+    try {
+      const result = await this.#pApi.query.Staking.ActiveEra.getValue({
+        at: 'best',
+      });
+
+      if (result) {
+        era = {
+          start: result?.start || 0n,
+          index: result.index,
+        };
+      }
     } catch (e) {
-      result = {
-        start: 0,
-        index: 0,
-      };
+      // Silent fail.
     }
 
     // Store active era as BigNumbers.
     const activeEra = {
-      index: new BigNumber(result.index),
-      start: new BigNumber(result.start),
+      start: new BigNumber(era.start.toString()),
+      index: new BigNumber(era.index),
     };
 
     // Get previous era.

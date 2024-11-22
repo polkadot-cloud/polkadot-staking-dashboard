@@ -198,7 +198,7 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
 
     const results = await Promise.all(
       unclaimedRewardsEntries.map(([era, v]) =>
-        new ClaimedRewards(pApi, era, v).fetch()
+        new ClaimedRewards(pApi, Number(era), v).fetch()
       )
     );
 
@@ -213,11 +213,13 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
           : undefined;
 
       // Add to `unclaimedRewards` if payout page has not yet been claimed.
-      if (!pages.includes(exposedPage)) {
-        if (unclaimedRewards?.[validator]) {
-          unclaimedRewards[validator].push(era);
-        } else {
-          unclaimedRewards[validator] = [era];
+      if (exposedPage) {
+        if (!pages.includes(exposedPage)) {
+          if (unclaimedRewards?.[validator]) {
+            unclaimedRewards[validator].push(era);
+          } else {
+            unclaimedRewards[validator] = [era];
+          }
         }
       }
     }
@@ -242,10 +244,10 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
       if (validators.length > 0) {
         calls.push(
           Promise.all([
-            new ErasValidatorReward(pApi, era).fetch(),
-            new ErasRewardPoints(pApi, era).fetch(),
+            new ErasValidatorReward(pApi, Number(era)).fetch(),
+            new ErasRewardPoints(pApi, Number(era)).fetch(),
             ...validators.map((validator: AnyJson) =>
-              new ValidatorPrefs(pApi, era, validator).fetch()
+              new ValidatorPrefs(pApi, Number(era), validator).fetch()
             ),
           ])
         );

@@ -39,14 +39,14 @@ export const BalanceTest = () => {
           type: 'Id',
           value: '1554u1a67ApEt5xmjbZwjgDNaVckbzB6cjRHWAQ1SpNkNxTd',
         },
-        value: unitToPlanck('0.1', units).toString(),
+        value: BigInt(unitToPlanck('0.1', units).toString()),
       }),
       pApi.tx.Balances.transfer_keep_alive({
         dest: {
           type: 'Id',
           value: '1554u1a67ApEt5xmjbZwjgDNaVckbzB6cjRHWAQ1SpNkNxTd',
         },
-        value: unitToPlanck('0.1', units).toString(),
+        value: BigInt(unitToPlanck('0.1', units).toString()),
       }),
     ];
     const batch = newBatchCall(txs, activeAccount);

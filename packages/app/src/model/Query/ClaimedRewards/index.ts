@@ -5,12 +5,10 @@ import type { PapiApi } from 'model/Api/types';
 
 export class ClaimedRewards {
   #pApi: PapiApi;
-
-  #era: string;
-
+  #era: number;
   #address: string;
 
-  constructor(pApi: PapiApi, era: string, address: string) {
+  constructor(pApi: PapiApi, era: number, address: string) {
     this.#pApi = pApi;
     this.#era = era;
     this.#address = address;
