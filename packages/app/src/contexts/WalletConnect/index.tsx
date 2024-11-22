@@ -261,18 +261,19 @@ export const WalletConnectProvider = ({
     }
     const topic = wcProvider.current.session.topic;
 
-    const result: { signature: string } =
-      await wcProvider.current.client.request({
-        chainId: caip,
-        topic,
-        request: {
-          method: 'polkadot_signTransaction',
-          params: {
-            address: from,
-            transactionPayload: payload,
-          },
+    const request = {
+      chainId: caip,
+      topic,
+      request: {
+        method: 'polkadot_signTransaction',
+        params: {
+          address: from,
+          transactionPayload: payload,
         },
-      });
+      },
+    };
+    const result: { signature: string } =
+      await wcProvider.current.client.request(request);
 
     return result?.signature || null;
   };

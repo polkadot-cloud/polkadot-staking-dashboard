@@ -72,10 +72,9 @@ export class WallectConnectSigner {
       });
 
       const { version } = v15.extrinsic;
-      const lastBlock = this.#blockNumber - 1;
-      // const phase = lastBlock % 64;
-      // const period = 6;
-      // const era = toHex(new Uint8Array([phase, period]));
+      const phase = this.#blockNumber % 64;
+      const period = 6;
+      const era = toHex(new Uint8Array([phase, period]));
 
       const unsignedTransaction = {
         specVersion: this.#toPjsHex(
@@ -83,14 +82,15 @@ export class WallectConnectSigner {
           4
         ),
         transactionVersion: this.#toPjsHex(
-          u32.dec(u32.enc(this.#chainSpecs.transactionVersion))
+          u32.dec(u32.enc(this.#chainSpecs.transactionVersion)),
+          4
         ),
         version,
         address: this.#who,
         blockHash: this.#blockHash,
-        blockNumber: this.#toPjsHex(u32.dec(u32.enc(lastBlock)), 4),
-        era: '0x00',
+        blockNumber: this.#toPjsHex(u32.dec(u32.enc(this.#blockNumber)), 4),
         genesisHash: this.#chainSpecs.genesisHash,
+        era,
         method: toHex(callData),
         nonce: this.#toPjsHex(compact.dec(compact.enc(this.#nonce)), 4),
         signedExtensions: identifiers,

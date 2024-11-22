@@ -141,7 +141,7 @@ export const useSubmitExtrinsic = ({
 
   // Extrinsic submission handler.
   const onSubmit = async () => {
-    const { pApi } = ApiController.get(network);
+    const { papiClient } = ApiController.get(network);
 
     const account = getAccount(fromRef.current);
     if (account === null || submitting || !shouldSubmit) {
@@ -247,10 +247,7 @@ export const useSubmitExtrinsic = ({
         decimals: units,
         tokenSymbol: unit,
       };
-      const blockNumber = await pApi.query.System.Number.getValue();
-      const blockHash = await pApi.query.System.BlockHash.getValue(
-        blockNumber - 1
-      );
+      const { number, hash } = await papiClient.getFinalizedBlock();
 
       switch (source) {
         case 'ledger':
@@ -292,8 +289,8 @@ export const useSubmitExtrinsic = ({
             chainSpecs,
             Number(nonce),
             fromRef.current,
-            blockNumber,
-            blockHash.asHex()
+            number,
+            hash
           ).getPolkadotSigner();
           break;
       }
