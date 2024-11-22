@@ -34,7 +34,7 @@ import type {
   VaultSignatureResult,
   VaultSignStatus,
 } from 'library/Signers/VaultSigner/types';
-import { WallectConnectSigner } from 'library/Signers/WallectConnectSigner';
+import { WallectConnectSigner } from 'library/Signers/WalletConnectSigner';
 import { useApi } from 'contexts/Api';
 import { useWalletConnect } from 'contexts/WalletConnect';
 
