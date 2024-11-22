@@ -283,6 +283,7 @@ export const useSubmitExtrinsic = ({
             fromRef.current,
             signWcTx,
             // Signing bytes not currently being used.
+            // FIXME: Can implement, albeit won't be used.
             async () => ({
               id: 0,
               signature: '0x',
