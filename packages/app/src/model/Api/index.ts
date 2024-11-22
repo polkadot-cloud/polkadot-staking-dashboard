@@ -20,7 +20,6 @@ import { getSmProvider } from 'polkadot-api/sm-provider';
 import { startFromWorker } from 'polkadot-api/smoldot/from-worker';
 import SmWorker from 'polkadot-api/smoldot/worker?worker';
 import { getLightClientMetadata } from 'config/util';
-import { dot } from '@polkadot-api/descriptors';
 
 export class Api {
   // The network name associated with this Api instance.
@@ -89,7 +88,7 @@ export class Api {
       this.dispatchEvent(this.ensureEventStatus('connecting'));
 
       // Initialise PAPI API.
-      this.#pApi = this.#papiClient.getTypedApi(dot);
+      this.#pApi = this.#papiClient.getUnsafeApi();
 
       // Fetch chain spec and metadata from PAPI client.
       await this.fetchChainSpec();

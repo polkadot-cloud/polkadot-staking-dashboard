@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { NetworkName, SystemChainId } from 'types';
-import type { IDescriptors } from '@polkadot-api/descriptors';
-import type { TypedApi } from 'polkadot-api';
+import type { UnsafeApi } from 'polkadot-api';
 
 export interface APIConfig {
   type: ConnectionType;
@@ -38,7 +37,7 @@ export type PapiReadyEvent = PapiChainSpec & {
   chainType: string;
 };
 
-export type PapiApi = TypedApi<IDescriptors>;
+export type PapiApi = UnsafeApi<unknown>;
 
 export type ConnectionType = 'ws' | 'sc';
 
