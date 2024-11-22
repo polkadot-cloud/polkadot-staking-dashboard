@@ -11,14 +11,16 @@ export interface WalletConnectContextInterface {
   updateWcSession: () => Promise<void>;
   disconnectWcSession: () => Promise<void>;
   fetchAddresses: () => Promise<string[]>;
-  signWcTx: (
-    caip: string,
-    payload: AnyJson,
-    from: string
-  ) => Promise<string | null>;
+  signWcTx: WalletConnectSignTx;
 }
 
 export interface WalletConnectConnectedMeta {
   uri: string | undefined;
   approval: AnyFunction;
 }
+
+export type WalletConnectSignTx = (
+  caip: string,
+  payload: AnyJson,
+  from: string
+) => Promise<string | null>;
