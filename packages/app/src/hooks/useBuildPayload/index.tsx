@@ -84,6 +84,8 @@ export const useBuildPayload = () => {
         tip: api.registry.createType('Compact<Balance>', 0).toHex(),
       };
 
+      console.log(payloadJson);
+
       let payload;
       let txMetadata = null;
 
