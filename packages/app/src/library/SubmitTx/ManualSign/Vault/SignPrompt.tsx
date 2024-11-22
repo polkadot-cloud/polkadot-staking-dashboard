@@ -25,7 +25,6 @@ export const SignPrompt = ({
   const {
     chainSpecs: { genesisHash },
   } = useApi();
-
   const { t } = useTranslation('library');
 
   // Whether user is on sign or submit stage.
@@ -61,8 +60,7 @@ export const SignPrompt = ({
           <QrScanSignature
             size={279}
             onScan={({ signature }: AnyJson) => {
-              // TODO: Expand with result `status` of cancelled or complete.
-              onComplete(signature);
+              onComplete('complete', signature);
             }}
           />
         </div>
@@ -94,8 +92,7 @@ export const SignPrompt = ({
             lg
             marginLeft
             onClick={() => {
-              // TODO: Expand with result `status` of cancelled or complete.
-              onComplete(new Uint8Array(0));
+              onComplete('cancelled', new Uint8Array(0));
             }}
           />
         </div>
