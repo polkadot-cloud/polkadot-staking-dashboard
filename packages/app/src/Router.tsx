@@ -29,7 +29,7 @@ import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Notifications } from 'library/Notifications';
 import { NotificationsController } from 'controllers/Notifications';
-import { PageWithTitle } from 'PageWithTitle';
+import { PageWithTitle } from 'library/PageWithTitle';
 import { Body, Main } from 'ui-structure';
 import { Offline } from 'library/Offline';
 
