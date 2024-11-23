@@ -4,12 +4,12 @@
 import { enGB, zhCN } from 'date-fns/locale';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import baseEn from './en/base.json';
-import helpEn from './en/help.json';
-import libEn from './en/library.json';
-import modalsEn from './en/modals.json';
-import pagesEn from './en/pages.json';
-import tipsEn from './en/tips.json';
+import baseEn from './resources/en/base.json';
+import helpEn from './resources/en/help.json';
+import libEn from './resources/en/library.json';
+import modalsEn from './resources/en/modals.json';
+import pagesEn from './resources/en/pages.json';
+import tipsEn from './resources/en/tips.json';
 import { doDynamicImport, getInitialLanguage, getResources } from './util';
 import type { LocaleEntry } from './types';
 
