@@ -203,7 +203,7 @@ export const PayoutListInner = ({
                                 locale:
                                   locales[
                                     i18n.resolvedLanguage ?? DefaultLocale
-                                  ],
+                                  ].dateFormat,
                               }
                             )}
                           </h5>

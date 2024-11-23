@@ -57,12 +57,12 @@ export const Payouts = ({ page: { key } }: PageProps) => {
 
   const payoutsFromDate = SubscanController.payoutsFromDate(
     (data?.payouts || []).concat(data?.poolClaims || []),
-    locales[i18n.resolvedLanguage ?? DefaultLocale]
+    locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
   );
 
   const payoutsToDate = SubscanController.payoutsToDate(
     (data?.payouts || []).concat(data?.poolClaims || []),
-    locales[i18n.resolvedLanguage ?? DefaultLocale]
+    locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
   );
 
   useEffect(() => {

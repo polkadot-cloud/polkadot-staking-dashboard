@@ -5,7 +5,6 @@ import { enGB, zhCN } from 'date-fns/locale';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { version } from '../../package.json';
-import type { AnyJson } from '@w3ux/types';
 import baseEn from './en/base.json';
 import helpEn from './en/help.json';
 import libEn from './en/library.json';
@@ -13,24 +12,19 @@ import modalsEn from './en/modals.json';
 import pagesEn from './en/pages.json';
 import tipsEn from './en/tips.json';
 import { doDynamicImport, getInitialLanguage, getResources } from './utils';
+import type { LocaleEntry } from './types';
 
 // The default locale.
 export const DefaultLocale = 'en';
 
-// Available locales as key value pairs
-export const locales: Record<string, AnyJson> = {
-  en: enGB,
-  cn: zhCN,
+// Available locales as key value pairs.
+export const locales: Record<string, LocaleEntry> = {
+  en: { dateFormat: enGB, label: 'English' },
+  cn: { dateFormat: zhCN, label: '中文' },
 };
 
-// Available languages as an array of strings.
-export const availableLanguages: string[][] = [
-  ['en', 'English'],
-  ['cn', '中文'],
-];
-
 // Supported namespaces.
-export const lngNamespaces = [
+export const lngNamespaces: string[] = [
   'base',
   'help',
   'library',
@@ -79,15 +73,5 @@ i18next.use(initReactI18next).init({
 if (dynamicLoad) {
   doDynamicImport(lng, i18next);
 }
-
-// Map i18n to BCP 47 keys, with any custom amendments.
-const i18ToLocaleMap: Record<string, string> = {
-  ...Object.fromEntries(availableLanguages.map((a) => [a[0], a[0]])),
-  en: 'en-gb',
-  cn: 'zh-cn',
-};
-
-// Convert i18n locale key to BCP 47 key if needed.
-export const i18ToLocale = (l: string) => i18ToLocaleMap[l] || DefaultLocale;
 
 export { i18next };

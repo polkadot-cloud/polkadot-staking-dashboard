@@ -76,7 +76,7 @@ export const Payouts = () => {
     formatTo = new Date();
     formatOpts = {
       addSuffix: true,
-      locale: locales[i18n.resolvedLanguage ?? DefaultLocale],
+      locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
     };
   }
 

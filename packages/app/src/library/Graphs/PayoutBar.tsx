@@ -94,7 +94,7 @@ export const PayoutBar = ({
   const data = {
     labels: graphPayouts.map((item: AnySubscan) => {
       const dateObj = format(fromUnixTime(item.block_timestamp), 'do MMM', {
-        locale: locales[i18n.resolvedLanguage ?? DefaultLocale],
+        locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
       });
       return `${dateObj}`;
     }),
