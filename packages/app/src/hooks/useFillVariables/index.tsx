@@ -52,11 +52,13 @@ export const useFillVariables = () => {
           ],
         ];
 
-        for (const varToVal of varsToValues) {
-          if (val.constructor === Array) {
-            val = val.map((_d) => _d.replaceAll(varToVal[0], varToVal[1]));
-          } else {
-            val = val.replaceAll(varToVal[0], varToVal[1]);
+        if (val) {
+          for (const varToVal of varsToValues) {
+            if (val?.constructor === Array) {
+              val = val.map((_d) => _d.replaceAll(varToVal[0], varToVal[1]));
+            } else {
+              val = val.replaceAll(varToVal[0], varToVal[1]);
+            }
           }
         }
         return [key, val];
