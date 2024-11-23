@@ -8,7 +8,6 @@
     "clear": "rm -rf build dist tsconfig.tsbuildinfo",
     "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn",
     "dev": "vite",
-    "lint": "npx prettier --write ./.scripts & node ./.scripts/localeOrderKeys.cjs",
     "preview": "vite preview",
     "test": "vitest",
     "visualizer": "vite-bundle-visualizer"
