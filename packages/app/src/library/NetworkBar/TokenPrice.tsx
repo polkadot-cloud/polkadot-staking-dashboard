@@ -3,12 +3,15 @@
 
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { useNetwork } from 'contexts/Network';
+import { isCustomEvent } from 'controllers/utils';
 import {
   ApolloProvider,
   client,
   useTokenPrice,
-  formatResult,
+  formatTokenPrice,
 } from 'plugin-staking-api';
+import { useRef } from 'react';
+import { useEventListener } from 'usehooks-ts';
 
 export const TokenPriceInner = () => {
   const {
@@ -16,15 +19,20 @@ export const TokenPriceInner = () => {
       api: { unit },
     },
   } = useNetwork();
+
   const { loading, error, data, refetch } = useTokenPrice({
     ticker: `${unit}USDT`,
   });
-  const { price, change } = formatResult(loading, error, data);
+  const { price, change } = formatTokenPrice(loading, error, data);
 
-  const usdFormatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  });
+  //  Refetch token price if online status changes to online.
+  const handleOnlineStatus = (e: Event): void => {
+    if (isCustomEvent(e)) {
+      if (e.detail.online) {
+        refetch();
+      }
+    }
+  };
 
   // Initiate interval to refetch token price every 30 seconds.
   useEffectIgnoreInitial(() => {
@@ -33,6 +41,12 @@ export const TokenPriceInner = () => {
     }, 30 * 1000);
     return () => clearInterval(interval);
   }, [refetch]);
+
+  useEventListener(
+    'online-status',
+    handleOnlineStatus,
+    useRef<Document>(document)
+  );
 
   return (
     <>
@@ -45,7 +59,11 @@ export const TokenPriceInner = () => {
         </span>
       </div>
       <div className="stat">
-        1 {unit} / {usdFormatter.format(price)}
+        1 {unit} /{' '}
+        {new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        }).format(price)}
       </div>
     </>
   );
