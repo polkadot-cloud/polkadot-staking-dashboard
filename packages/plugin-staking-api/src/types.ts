@@ -7,11 +7,13 @@ import type {
   OperationVariables,
 } from '@apollo/client';
 
+export interface TokenPrice {
+  price: number;
+  change: number;
+}
+
 export type TokenPriceResult = {
-  tokenPrice: {
-    price: number;
-    change: number;
-  };
+  tokenPrice: TokenPrice;
 } | null;
 
 export interface UseTokenPriceResult {
