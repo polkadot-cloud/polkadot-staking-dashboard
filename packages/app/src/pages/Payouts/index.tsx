@@ -22,7 +22,7 @@ import { PayoutList } from './PayoutList';
 import { LastEraPayoutStat } from './Stats/LastEraPayout';
 import { useSubscanData } from 'hooks/useSubscanData';
 import { SubscanController } from 'controllers/Subscan';
-import { DefaultLocale, locales } from 'locale';
+import { DefaultLocale, locales } from 'locales';
 import { useSyncing } from 'hooks/useSyncing';
 import { ButtonHelp } from 'ui-buttons';
 import { useUi } from 'contexts/UI';
@@ -57,12 +57,12 @@ export const Payouts = ({ page: { key } }: PageProps) => {
 
   const payoutsFromDate = SubscanController.payoutsFromDate(
     (data?.payouts || []).concat(data?.poolClaims || []),
-    locales[i18n.resolvedLanguage ?? DefaultLocale]
+    locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
   );
 
   const payoutsToDate = SubscanController.payoutsToDate(
     (data?.payouts || []).concat(data?.poolClaims || []),
-    locales[i18n.resolvedLanguage ?? DefaultLocale]
+    locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
   );
 
   useEffect(() => {

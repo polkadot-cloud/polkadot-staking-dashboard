@@ -5,6 +5,5 @@ import { ApolloProvider } from '@apollo/client';
 
 export * from './Client';
 export * from './useTokenPrice';
-export * from './util';
 
 export { ApolloProvider };

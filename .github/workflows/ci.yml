@@ -54,8 +54,8 @@ jobs:
         with:
           node-version: 18.x
       - run: yarn install
-      - run: yarn run locale:validate
-        working-directory: packages/app
+      - run: yarn run validate
+        working-directory: packages/locales
 
   all:
     needs: [check-license, markdown-link-check, build, validate-locales]
