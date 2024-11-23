@@ -3,7 +3,7 @@
 
 import { I18nextProvider } from 'react-i18next';
 import { ThemesProvider } from 'contexts/Themes';
-import { i18next } from 'locale';
+import { i18next } from 'locales';
 import { Providers } from 'Providers';
 import { NetworkProvider } from 'contexts/Network';
 import { ActiveAccountsProvider } from 'contexts/ActiveAccounts';

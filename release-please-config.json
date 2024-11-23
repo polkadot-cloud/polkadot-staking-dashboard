@@ -4,6 +4,7 @@
   "packages": {
     "packages/app": {},
     "packages/consts": {},
+    "packages/locales": {},
     "packages/styles": {},
     "packages/plugin-staking-api": {},
     "packages/ui-buttons": {},

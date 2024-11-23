@@ -3823,15 +3823,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/utils@npm:1.1.1-beta.9, @w3ux/utils@npm:^1.1.1-beta.9":
-  version: 1.1.1-beta.9
-  resolution: "@w3ux/utils@npm:1.1.1-beta.9"
-  dependencies:
-    "@polkadot-api/substrate-bindings": "npm:^0.9.3"
-  checksum: 10c0/b18cf8274d43cf3419e8b47fc822164653da7a48a83a6eb84820b9fe14386e5f167ad1f634bfddac938f472839bc605e9bb04e8a88cfd12223b5b40b24730934
-  languageName: node
-  linkType: hard
-
 "@w3ux/utils@npm:^0.9.0":
   version: 0.9.1
   resolution: "@w3ux/utils@npm:0.9.1"
@@ -3840,6 +3831,24 @@ __metadata:
     "@polkadot/util-crypto": "npm:^13.1.1"
     bignumber.js: "npm:^9.1.1"
   checksum: 10c0/624ca3fd80cd5a0ed16b28342b41d643cc1aac7dbe68e00f3c4a9e460da21ac28d09e86582aad7c642e5907069c4544705c3bc638d836625916694e21774861c
+  languageName: node
+  linkType: hard
+
+"@w3ux/utils@npm:^1.1.1-beta.11":
+  version: 1.1.1-beta.11
+  resolution: "@w3ux/utils@npm:1.1.1-beta.11"
+  dependencies:
+    "@polkadot-api/substrate-bindings": "npm:^0.9.3"
+  checksum: 10c0/13ea09ce3d7651f13abad790dde802b16f681a17f8a1a2a65962592753660dd0d9f86212f80a1e5979e4a70321bac4e2ddbaf2a8192324f1175320c79a0d0634
+  languageName: node
+  linkType: hard
+
+"@w3ux/utils@npm:^1.1.1-beta.9":
+  version: 1.1.1-beta.9
+  resolution: "@w3ux/utils@npm:1.1.1-beta.9"
+  dependencies:
+    "@polkadot-api/substrate-bindings": "npm:^0.9.3"
+  checksum: 10c0/b18cf8274d43cf3419e8b47fc822164653da7a48a83a6eb84820b9fe14386e5f167ad1f634bfddac938f472839bc605e9bb04e8a88cfd12223b5b40b24730934
   languageName: node
   linkType: hard
 
@@ -4442,7 +4451,7 @@ __metadata:
     "@w3ux/react-connect-kit": "npm:^1.8.0"
     "@w3ux/react-odometer": "npm:^1.1.0"
     "@w3ux/react-polkicon": "npm:^2.0.1-alpha.0"
-    "@w3ux/utils": "npm:1.1.1-beta.9"
+    "@w3ux/utils": "npm:^1.1.1-beta.11"
     "@w3ux/validator-assets": "npm:^0.2.0"
     "@zondax/ledger-substrate": "npm:^1.0.0"
     bignumber.js: "npm:^9.1.2"
@@ -4452,11 +4461,10 @@ __metadata:
     chroma-js: "npm:^3.1.1"
     compare-versions: "npm:^6.1.1"
     consts: "workspace:*"
-    date-fns: "npm:^4.1.0"
     framer-motion: "npm:^11.11.1"
     html5-qrcode: "npm:^2.3.8"
-    i18next: "npm:^23.11.5"
     i18next-browser-languagedetector: "npm:^8.0.0"
+    locales: "workspace:*"
     lodash.debounce: "npm:^4.0.8"
     lodash.throttle: "npm:^4.1.1"
     plugin-staking-api: "workspace:*"
@@ -4467,7 +4475,6 @@ __metadata:
     react-dom: "npm:^18.2.0"
     react-error-boundary: "npm:^4.0.13"
     react-helmet: "npm:^6.1.0"
-    react-i18next: "npm:^15.0.2"
     react-router-dom: "npm:^6.23.1"
     react-scroll: "npm:^1.9.0"
     styled-components: "npm:^6.1.13"
@@ -6991,12 +6998,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:^23.11.5":
-  version: 23.16.5
-  resolution: "i18next@npm:23.16.5"
+"i18next@npm:^24.0.0":
+  version: 24.0.0
+  resolution: "i18next@npm:24.0.0"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-  checksum: 10c0/4f926c09dc1087041084dbbfb8307bf2fdba1981069dece1c563577ca8a38a23ebfadf4d1c50c4091b640a8c8bf81d9cd008bd3e587bd452a6b9c728d5065346
+  peerDependencies:
+    typescript: ^5
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/675e87241883dffb18f7bea6d996475777f14406e55c2915ecafb6e4ec28c3e921b675f194e99c3de0f9f234a4a2e204f8c53cfc4fd34a1db89f98c191713034
   languageName: node
   linkType: hard
 
@@ -7804,6 +7816,12 @@ __metadata:
   checksum: 10c0/f61cbd00d7689f275558b1a45c7ff2a3ddf8472654123ed880215677b9adfa729f1081e50c27ffb415cdb9fa706fb755fec5e23cdd965be375c8059e87ff1cc9
   languageName: node
   linkType: hard
+
+"locales@workspace:*, locales@workspace:packages/locales":
+  version: 0.0.0-use.local
+  resolution: "locales@workspace:packages/locales"
+  languageName: unknown
+  linkType: soft
 
 "locate-path@npm:^5.0.0":
   version: 5.0.0
@@ -8843,6 +8861,7 @@ __metadata:
     "@vitejs/plugin-react-swc": "npm:^3.7.0"
     "@w3ux/types": "npm:0.2.1-beta.1"
     classnames: "npm:^2.5.1"
+    date-fns: "npm:^4.1.0"
     eslint: "npm:8.57.0"
     eslint-config-prettier: "npm:^9.1.0"
     eslint-import-resolver-typescript: "npm:^3.6.3"
@@ -8853,8 +8872,10 @@ __metadata:
     eslint-plugin-react: "npm:^7.34.2"
     eslint-plugin-react-hooks: "npm:^4.6.2"
     eslint-plugin-unused-imports: "npm:3.2.0"
+    i18next: "npm:^24.0.0"
     prettier: "npm:^3.3.1"
     prettier-plugin-organize-imports: "npm:^4.0.0"
+    react-i18next: "npm:^15.1.1"
     sass: "npm:1.77.6"
     typescript: "npm:^5.4.3"
   languageName: unknown
@@ -9200,7 +9221,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:^15.0.2":
+"react-i18next@npm:^15.1.1":
   version: 15.1.1
   resolution: "react-i18next@npm:15.1.1"
   dependencies:

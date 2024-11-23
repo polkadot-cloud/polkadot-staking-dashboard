@@ -21,7 +21,7 @@ import type { TipDisplay } from './types';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useSyncing } from 'hooks/useSyncing';
-import { DefaultLocale } from 'locale';
+import { DefaultLocale } from 'locales';
 import { useOnResize } from '@w3ux/hooks';
 
 export const Tips = () => {

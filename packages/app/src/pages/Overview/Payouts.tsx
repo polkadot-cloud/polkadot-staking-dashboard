@@ -14,7 +14,7 @@ import { StatusLabel } from 'library/StatusLabel';
 import { useSubscanData } from 'hooks/useSubscanData';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { Odometer } from '@w3ux/react-odometer';
-import { locales, DefaultLocale } from 'locale';
+import { locales, DefaultLocale } from 'locales';
 import BigNumber from 'bignumber.js';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { minDecimalPlaces } from '@w3ux/utils';
@@ -76,7 +76,7 @@ export const Payouts = () => {
     formatTo = new Date();
     formatOpts = {
       addSuffix: true,
-      locale: locales[i18n.resolvedLanguage ?? DefaultLocale],
+      locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
     };
   }
 
