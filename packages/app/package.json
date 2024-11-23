@@ -9,8 +9,6 @@
     "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn",
     "dev": "vite",
     "lint": "npx prettier --write ./.scripts & node ./.scripts/localeOrderKeys.cjs",
-    "locale:order": "node ./.scripts/localeOrderKeys.cjs",
-    "locale:validate": "node ./.scripts/localeValidate.cjs",
     "preview": "vite preview",
     "test": "vitest",
     "visualizer": "vite-bundle-visualizer"

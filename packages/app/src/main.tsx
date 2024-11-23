@@ -23,7 +23,8 @@ if (!rootElement) {
   throw new Error('Failed to find the root element');
 }
 
-// Refresh local storage resources if in development, or if new app version is present.
+// Refresh local storage language resources if in development, or if new app version is present.
+// This ensures all language keys are up to date.
 if (
   localStorage.getItem('app_version') !== version ||
   import.meta.env.MODE === 'development'

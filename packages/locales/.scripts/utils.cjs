@@ -5,7 +5,7 @@ const fs = require('fs');
 const { join } = require('path');
 
 // Project locale directory.
-const localeDir = join(__dirname, '..', 'src', 'locale');
+const localeDir = join(__dirname, '..', 'src');
 
 // The suffixes of keys related to i18n functionality that should be ignored.
 const ignoreSuffixes = ['_one', '_two', '_few', '_many', '_other'];
