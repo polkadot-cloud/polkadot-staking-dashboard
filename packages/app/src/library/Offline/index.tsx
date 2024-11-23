@@ -27,8 +27,11 @@ export const Offline = () => {
     OnlineStatusController.initOnlineEvents();
   }, []);
 
-  const documentRef = useRef<Document>(document);
-  useEventListener('online-status', handleOnlineStatus, documentRef);
+  useEventListener(
+    'online-status',
+    handleOnlineStatus,
+    useRef<Document>(document)
+  );
 
   if (!offline) {
     return null;

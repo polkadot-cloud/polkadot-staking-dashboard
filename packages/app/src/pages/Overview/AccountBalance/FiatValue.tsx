@@ -7,7 +7,7 @@ import { useNetwork } from 'contexts/Network';
 import {
   ApolloProvider,
   client,
-  formatResult,
+  formatTokenPrice,
   useTokenPrice,
 } from 'plugin-staking-api';
 
@@ -24,7 +24,7 @@ export const FiatValueInner = ({ totalBalance }: FiatValueProps) => {
   const { loading, error, data, refetch } = useTokenPrice({
     ticker: `${unit}USDT`,
   });
-  const { price } = formatResult(loading, error, data);
+  const { price } = formatTokenPrice(loading, error, data);
 
   // Convert balance to fiat value.
   const freeFiat = totalBalance.multipliedBy(
