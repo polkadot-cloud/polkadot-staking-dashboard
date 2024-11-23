@@ -3,7 +3,7 @@
 
 import type { ApolloError } from '@apollo/client';
 import { gql, useQuery } from '@apollo/client';
-import type { TokenPriceResult, UseTokenPriceResult } from './types';
+import type { TokenPriceResult, UseTokenPriceResult } from '../types';
 
 const TOKEN_PRICE_QUERY = gql`
   query TokenPrice($ticker: String!) {
