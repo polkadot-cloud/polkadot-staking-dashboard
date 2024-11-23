@@ -43,7 +43,10 @@
     "typescript": "^5.4.3"
   },
   "dependencies": {
-    "classnames": "^2.5.1"
+    "classnames": "^2.5.1",
+    "date-fns": "^4.1.0",
+    "i18next": "^24.0.0",
+    "react-i18next": "^15.1.1"
   },
   "packageManager": "yarn@4.1.1"
 }

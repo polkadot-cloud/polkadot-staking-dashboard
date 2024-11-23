@@ -19,7 +19,7 @@ import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { Identity } from 'library/ListItem/Labels/Identity';
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
-import { DefaultLocale, locales } from 'locale';
+import { DefaultLocale, locales } from 'locales';
 import type { AnySubscan } from 'types';
 import { useNetwork } from 'contexts/Network';
 import { ItemWrapper } from '../Wrappers';

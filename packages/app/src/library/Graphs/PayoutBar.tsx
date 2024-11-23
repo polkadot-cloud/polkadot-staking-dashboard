@@ -18,7 +18,7 @@ import { Bar } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import { useStaking } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
-import { DefaultLocale, locales } from 'locale';
+import { DefaultLocale, locales } from 'locales';
 import graphColors from 'styles/graphs/index.json';
 import type { AnySubscan } from 'types';
 import { useNetwork } from 'contexts/Network';

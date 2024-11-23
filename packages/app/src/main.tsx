@@ -3,6 +3,7 @@
 
 import { createRoot } from 'react-dom/client';
 import { App } from 'App';
+import { version } from '../package.json';
 
 // Network styles.
 import 'styles/accents/polkadot-relay.css';
@@ -21,6 +22,15 @@ const rootElement = document.getElementById('root');
 if (!rootElement) {
   throw new Error('Failed to find the root element');
 }
+
+// Refresh local storage resources if in development, or if new app version is present.
+if (
+  localStorage.getItem('app_version') !== version ||
+  import.meta.env.MODE === 'development'
+) {
+  localStorage.removeItem('lng_resources');
+}
+
 const root = createRoot(rootElement);
 
 root.render(<App />);

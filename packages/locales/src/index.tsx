@@ -4,14 +4,13 @@
 import { enGB, zhCN } from 'date-fns/locale';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { version } from '../../package.json';
 import baseEn from './en/base.json';
 import helpEn from './en/help.json';
 import libEn from './en/library.json';
 import modalsEn from './en/modals.json';
 import pagesEn from './en/pages.json';
 import tipsEn from './en/tips.json';
-import { doDynamicImport, getInitialLanguage, getResources } from './utils';
+import { doDynamicImport, getInitialLanguage, getResources } from './util';
 import type { LocaleEntry } from './types';
 
 // The default locale.
@@ -43,14 +42,6 @@ export const fallbackResources = {
   ...tipsEn,
 };
 
-// Refresh local storage resources if in development, or if new app version is present.
-if (
-  localStorage.getItem('app_version') !== version ||
-  import.meta.env.MODE === 'development'
-) {
-  localStorage.removeItem('lng_resources');
-}
-
 // Get initial language.
 const lng: string = getInitialLanguage();
 
@@ -62,12 +53,15 @@ const { resources, dynamicLoad } = getResources(lng);
 const defaultLng = dynamicLoad ? DefaultLocale : lng;
 
 // Configure i18n object.
-i18next.use(initReactI18next).init({
-  debug: import.meta.env.VITE_DEBUG_I18N === '1',
-  fallbackLng: DefaultLocale,
-  lng: defaultLng,
-  resources,
-});
+i18next
+  // .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    debug: import.meta.env.VITE_DEBUG_I18N === '1',
+    fallbackLng: DefaultLocale,
+    lng: defaultLng,
+    resources,
+  });
 
 // Dynamically load default language resources if needed.
 if (dynamicLoad) {
@@ -75,3 +69,4 @@ if (dynamicLoad) {
 }
 
 export { i18next };
+export * from './util';

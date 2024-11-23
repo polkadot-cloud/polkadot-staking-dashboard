@@ -4,12 +4,7 @@
 import { extractUrlValue, varToUrlHash } from '@w3ux/utils';
 import type { i18n } from 'i18next';
 import type { LocaleJson, LocaleJsonValue } from './types';
-import {
-  DefaultLocale,
-  locales,
-  fallbackResources,
-  lngNamespaces,
-} from 'locale';
+import { DefaultLocale, locales, fallbackResources, lngNamespaces } from '.';
 
 // Gets the active language
 //
@@ -40,19 +35,23 @@ export const getInitialLanguage = () => {
 //
 // If selected language is DefaultLocale, then we fall back to
 // the default language resources that have already been imported.
-export const getResources = (lng: string) => {
+export const getResources = (lng: string, i18n?: i18n) => {
   let dynamicLoad = false;
 
-  let resources = {};
+  let resources: Record<string, LocaleJson> = {};
   if (lng === DefaultLocale) {
     // determine resources exist without dynamically importing them.
     resources = {
-      en: fallbackResources,
+      [lng]: fallbackResources,
     };
     localStorage.setItem(
       'lng_resources',
-      JSON.stringify({ l: DefaultLocale, r: fallbackResources })
+      JSON.stringify({ l: lng, r: fallbackResources })
     );
+    // Add language to i18n if it does not exist.
+    if (i18n && !i18n.hasResourceBundle(lng, 'base')) {
+      addI18nresources(i18n, lng, fallbackResources);
+    }
   } else {
     // not the default locale, check if local resources exist
     let localValid = false;
@@ -89,17 +88,16 @@ export const getResources = (lng: string) => {
 // On click handler for changing language in-app.
 export const changeLanguage = async (lng: string, i18next: i18n) => {
   // check whether resources exist and need to by dynamically loaded.
-  const { resources, dynamicLoad } = getResources(lng);
+  const { resources, dynamicLoad } = getResources(lng, i18next);
+
+  const r = resources?.[lng] || {};
 
   localStorage.setItem('lng', lng);
   // dynamically load default language resources if needed.
   if (dynamicLoad) {
     await doDynamicImport(lng, i18next);
   } else {
-    localStorage.setItem(
-      'lng_resources',
-      JSON.stringify({ l: lng, r: resources })
-    );
+    localStorage.setItem('lng_resources', JSON.stringify({ l: lng, r }));
     i18next.changeLanguage(lng);
   }
   // update url `l` if needed.
@@ -134,10 +132,18 @@ export const loadLngAsync = async (lng: string) => {
 // Finally, the active language is changed to the imported language.
 export const doDynamicImport = async (lng: string, i18next: i18n) => {
   const { l, r } = await loadLngAsync(lng);
+
   localStorage.setItem('lng_resources', JSON.stringify({ l: lng, r }));
 
   Object.entries(r).forEach(([ns, inner]: [string, LocaleJsonValue]) => {
     i18next.addResourceBundle(l, ns, inner);
   });
   i18next.changeLanguage(l);
+};
+
+// Adds resources to i18next.
+const addI18nresources = (i18n: i18n, lng: string, r: LocaleJson) => {
+  Object.entries(r).forEach(([ns, inner]: [string, LocaleJsonValue]) => {
+    i18n.addResourceBundle(lng, ns, inner);
+  });
 };

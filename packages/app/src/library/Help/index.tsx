@@ -7,7 +7,7 @@ import { useAnimation } from 'framer-motion';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { HelpConfig } from 'config/help';
-import { DefaultLocale } from 'locale';
+import { DefaultLocale } from 'locales';
 import { useHelp } from 'contexts/Help';
 import type {
   DefinitionWithKeys,

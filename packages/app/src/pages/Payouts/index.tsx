@@ -22,7 +22,7 @@ import { PayoutList } from './PayoutList';
 import { LastEraPayoutStat } from './Stats/LastEraPayout';
 import { useSubscanData } from 'hooks/useSubscanData';
 import { SubscanController } from 'controllers/Subscan';
-import { DefaultLocale, locales } from 'locale';
+import { DefaultLocale, locales } from 'locales';
 import { useSyncing } from 'hooks/useSyncing';
 import { ButtonHelp } from 'ui-buttons';
 import { useUi } from 'contexts/UI';
