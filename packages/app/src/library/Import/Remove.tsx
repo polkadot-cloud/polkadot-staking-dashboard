@@ -1,17 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { registerSaEvent } from 'Utils';
 import { Polkicon } from '@w3ux/react-polkicon';
-import { useTranslation } from 'react-i18next';
-import { usePrompt } from 'contexts/Prompt';
-import { ConfirmWrapper } from 'library/Import/Wrappers';
+import { ellipsisFn } from '@w3ux/utils';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useNetwork } from 'contexts/Network';
-import type { RemoveProps } from './types';
-import { ellipsisFn } from '@w3ux/utils';
+import { usePrompt } from 'contexts/Prompt';
 import { NotificationsController } from 'controllers/Notifications';
-import { ButtonMonoInvert, ButtonMono } from 'ui-buttons';
+import { ConfirmWrapper } from 'library/Import/Wrappers';
+import { useTranslation } from 'react-i18next';
+import { ButtonMono, ButtonMonoInvert } from 'ui-buttons';
+import { registerSaEvent } from 'Utils';
+import type { RemoveProps } from './types';
 
 export const Remove = ({
   address,

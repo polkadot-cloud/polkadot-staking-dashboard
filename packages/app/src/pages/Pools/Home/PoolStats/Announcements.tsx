@@ -5,14 +5,14 @@ import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
-import { motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
 import { useNetwork } from 'contexts/Network';
+import { useActivePool } from 'contexts/Pools/ActivePool';
+import { motion } from 'framer-motion';
 import { Item } from 'library/Announcements/Wrappers';
+import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
 import { planckToUnitBn } from 'library/Utils';
+import { useTranslation } from 'react-i18next';
 
 export const Announcements = () => {
   const { t } = useTranslation('pages');

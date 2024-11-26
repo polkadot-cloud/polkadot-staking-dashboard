@@ -4,10 +4,10 @@
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { registerSaEvent } from 'Utils';
-import { Link } from 'react-router-dom';
+import { useNetwork } from 'contexts/Network';
 import { useUi } from 'contexts/UI';
 import { useDotLottieButton } from 'hooks/useDotLottieButton';
-import { useNetwork } from 'contexts/Network';
+import { Link } from 'react-router-dom';
 import type { PrimaryProps } from '../types';
 import { Wrapper } from './Wrappers';
 

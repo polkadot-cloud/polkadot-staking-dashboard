@@ -5,6 +5,25 @@ import { registerLastVisited, registerSaEvent } from 'Utils';
 import { usePrompt } from 'contexts/Prompt';
 import { Disclaimer } from 'library/NetworkBar/Disclaimer';
 import { extractUrlValue } from '@w3ux/utils';
+import { PagesConfig } from 'config/pages';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { useNetwork } from 'contexts/Network';
+import { useUi } from 'contexts/UI';
+import { NotificationsController } from 'controllers/Notifications';
+import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
+import { Headers } from 'library/Headers';
+import { Help } from 'library/Help';
+import { Menu } from 'library/Menu';
+import { NetworkBar } from 'library/NetworkBar';
+import { Notifications } from 'library/Notifications';
+import { Offline } from 'library/Offline';
+import { PageWithTitle } from 'library/PageWithTitle';
+import { Prompt } from 'library/Prompt';
+import { SideMenu } from 'library/SideMenu';
+import { Tooltip } from 'library/Tooltip';
+import { Overlays } from 'overlay';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useTranslation } from 'react-i18next';
@@ -15,26 +34,7 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
-import { Prompt } from 'library/Prompt';
-import { PagesConfig } from 'config/pages';
-import { useUi } from 'contexts/UI';
-import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
-import { Headers } from 'library/Headers';
-import { Help } from 'library/Help';
-import { Menu } from 'library/Menu';
-import { NetworkBar } from 'library/NetworkBar';
-import { SideMenu } from 'library/SideMenu';
-import { Tooltip } from 'library/Tooltip';
-import { Overlays } from 'overlay';
-import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { Notifications } from 'library/Notifications';
-import { NotificationsController } from 'controllers/Notifications';
-import { PageWithTitle } from 'PageWithTitle';
 import { Body, Main } from 'ui-structure';
-import { Offline } from 'library/Offline';
 
 const RouterInner = () => {
   const { t } = useTranslation();

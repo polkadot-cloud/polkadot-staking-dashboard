@@ -1,6 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { AnyJson } from '@w3ux/types';
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -11,13 +12,12 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
+import { useNetwork } from 'contexts/Network';
+import { useTheme } from 'contexts/Themes';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
-import { useTheme } from 'contexts/Themes';
 import graphColors from 'styles/graphs/index.json';
-import { useNetwork } from 'contexts/Network';
 import type { EraPointsProps } from './types';
-import type { AnyJson } from '@w3ux/types';
 
 ChartJS.register(
   CategoryScale,

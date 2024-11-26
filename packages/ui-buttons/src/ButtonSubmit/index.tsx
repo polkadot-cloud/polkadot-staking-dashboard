@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { onMouseHandlers } from '../util';
-import type { ButtonSubmitProps } from './types';
-import commonClasses from '../common.module.scss';
-import classes from './index.module.scss';
 import classNames from 'classnames';
+import commonClasses from '../common.module.scss';
+import { onMouseHandlers } from '../util';
+import classes from './index.module.scss';
+import type { ButtonSubmitProps } from './types';
 
 /**
  * @name ButtonSubmit

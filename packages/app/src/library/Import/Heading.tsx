@@ -7,9 +7,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
+import { ButtonText } from 'ui-buttons';
 import { HeadingWrapper } from './Wrappers';
 import type { HeadingProps } from './types';
-import { ButtonText } from 'ui-buttons';
 
 export const Heading = ({
   connectTo,

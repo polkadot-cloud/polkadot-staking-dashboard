@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import { useTranslation } from 'react-i18next';
+import { useNetwork } from 'contexts/Network';
 import { BarSegment } from 'library/BarChart/BarSegment';
 import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
-import { useNetwork } from 'contexts/Network';
+import { useTranslation } from 'react-i18next';
 import type { BondedChartProps } from '../../pages/Nominate/Active/types';
 
 export const BondedChart = ({

@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
+import { PageTitle } from 'ui-structure';
 import { AllValidators } from './AllValidators';
 import { ValidatorFavorites } from './Favorites';
 import { ValidatorsTabsProvider, useValidatorsTabs } from './context';
-import { PageTitle } from 'ui-structure';
 
 export const ValidatorsInner = () => {
   const { t } = useTranslation('pages');

@@ -2,21 +2,21 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { useLedgerAccounts } from '@w3ux/react-connect-kit';
 import { Polkicon } from '@w3ux/react-polkicon';
+import type { AnyJson } from '@w3ux/types';
 import { ellipsisFn, unescape } from '@w3ux/utils';
-import { useTranslation } from 'react-i18next';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useLedgerHardware } from 'contexts/LedgerHardware';
 import { getLocalLedgerAddresses } from 'contexts/LedgerHardware/Utils';
+import { useNetwork } from 'contexts/Network';
 import { usePrompt } from 'contexts/Prompt';
+import { HardwareAddress } from 'library/Hardware/HardwareAddress';
 import { Confirm } from 'library/Import/Confirm';
 import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
-import type { AnyJson } from '@w3ux/types';
-import { useNetwork } from 'contexts/Network';
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { useTranslation } from 'react-i18next';
 import { ButtonText } from 'ui-buttons';
-import { HardwareAddress } from 'library/Hardware/HardwareAddress';
-import { useLedgerAccounts } from '@w3ux/react-connect-kit';
 
 export const Addresess = ({ addresses, onGetAddress }: AnyJson) => {
   const { t } = useTranslation('modals');

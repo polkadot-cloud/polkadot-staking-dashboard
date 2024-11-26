@@ -1,33 +1,33 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useTranslation } from 'react-i18next';
-import { StatBoxList } from 'library/StatBoxList';
 import { useNetwork } from 'contexts/Network';
+import { StatBoxList } from 'library/StatBoxList';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { usePlugins } from 'contexts/Plugins';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { usePlugins } from 'contexts/Plugins';
 
-import type { NominatorDetail, ChainMetadata } from './types';
 import { PolkawatchApi } from '@polkawatch/ddp-client';
 import { PolkaWatchController } from 'controllers/PolkaWatch';
+import type { ChainMetadata, NominatorDetail } from './types';
 
-import { AnalyzedPayouts } from './Stats/AnalyzedPayouts';
 import { AnalyzedDays } from './Stats/AnalyzedDays';
 import { AnalyzedEras } from './Stats/AnalyzedEras';
+import { AnalyzedPayouts } from './Stats/AnalyzedPayouts';
 
-import { PageRow } from 'ui-structure';
-import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
-import { PluginLabel } from 'library/PluginLabel';
-import { GraphWrapper } from 'library/Graphs/Wrapper';
-import { GeoDonut } from 'library/Graphs/GeoDonut';
-import { ButtonHelp } from 'ui-buttons';
 import { useHelp } from 'contexts/Help';
-import { NominationGeoList } from './NominationGeoList';
-import { StatusLabel } from 'library/StatusLabel';
-import { GraphsWrapper } from './Wrappers';
 import { useStaking } from 'contexts/Staking';
+import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
+import { GeoDonut } from 'library/Graphs/GeoDonut';
+import { GraphWrapper } from 'library/Graphs/Wrapper';
+import { PluginLabel } from 'library/PluginLabel';
+import { StatusLabel } from 'library/StatusLabel';
+import { ButtonHelp } from 'ui-buttons';
+import { PageRow } from 'ui-structure';
+import { NominationGeoList } from './NominationGeoList';
+import { GraphsWrapper } from './Wrappers';
 
 export const NominationGeo = () => {
   const { t } = useTranslation();

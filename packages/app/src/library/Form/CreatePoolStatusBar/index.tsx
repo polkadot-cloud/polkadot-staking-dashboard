@@ -3,13 +3,13 @@
 
 import { faFlag } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useTranslation } from 'react-i18next';
-import { useNetwork } from 'contexts/Network';
-import type { NominateStatusBarProps } from '../types';
-import { Wrapper } from './Wrapper';
 import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
 import { useSyncing } from 'hooks/useSyncing';
 import { planckToUnitBn } from 'library/Utils';
+import { useTranslation } from 'react-i18next';
+import type { NominateStatusBarProps } from '../types';
+import { Wrapper } from './Wrapper';
 
 export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
   const { t } = useTranslation('library');

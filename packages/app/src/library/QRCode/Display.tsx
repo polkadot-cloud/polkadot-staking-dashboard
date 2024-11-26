@@ -3,11 +3,11 @@
 
 import type { ReactElement } from 'react';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import xxhash from 'xxhash-wasm';
 import { DisplayWrapper } from './Wrappers.js';
 import { qrcode } from './qrcode';
 import type { DisplayProps, FrameState, TimerState } from './types.js';
 import { createFrames, createImgSize } from './util.js';
-import xxhash from 'xxhash-wasm';
 
 const DEFAULT_FRAME_DELAY = 2750;
 const TIMER_INC = 500;

@@ -2,17 +2,17 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
-import { Header, List, Wrapper as ListWrapper } from 'library/List';
-import { MotionContainer } from 'library/List/MotionContainer';
-import type { NomninationGeoListProps } from '../types';
-import { useNetwork } from 'contexts/Network';
-import { Separator } from 'ui-structure';
-import { ButtonPrimaryInvert, ButtonHelp } from 'ui-buttons';
-import { useStaking } from 'contexts/Staking';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useHelp } from 'contexts/Help';
-import { Node } from './Node';
+import { useNetwork } from 'contexts/Network';
+import { useStaking } from 'contexts/Staking';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
+import { Header, List, Wrapper as ListWrapper } from 'library/List';
+import { MotionContainer } from 'library/List/MotionContainer';
+import { ButtonHelp, ButtonPrimaryInvert } from 'ui-buttons';
+import { Separator } from 'ui-structure';
+import type { NomninationGeoListProps } from '../types';
+import { Node } from './Node';
 
 export const NominationGeoList = ({ title, data }: NomninationGeoListProps) => {
   const { network } = useNetwork();

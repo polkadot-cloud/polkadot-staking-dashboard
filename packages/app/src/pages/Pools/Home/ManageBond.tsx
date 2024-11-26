@@ -4,20 +4,20 @@
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { Odometer } from '@w3ux/react-odometer';
 import { minDecimalPlaces } from '@w3ux/utils';
-import { useTranslation } from 'react-i18next';
-import { useHelp } from 'contexts/Help';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useTransferOptions } from 'contexts/TransferOptions';
-import { BondedChart } from 'library/BarChart/BondedChart';
-import { CardHeaderWrapper } from 'library/Card/Wrappers';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useHelp } from 'contexts/Help';
+import { useNetwork } from 'contexts/Network';
+import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useTransferOptions } from 'contexts/TransferOptions';
 import { useSyncing } from 'hooks/useSyncing';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { BondedChart } from 'library/BarChart/BondedChart';
+import { CardHeaderWrapper } from 'library/Card/Wrappers';
+import { planckToUnitBn } from 'library/Utils';
+import { useTranslation } from 'react-i18next';
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons';
 import { ButtonRow } from 'ui-structure';
-import { planckToUnitBn } from 'library/Utils';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');

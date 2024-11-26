@@ -6,15 +6,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import type { Validator } from 'contexts/Validators/types';
+import { NotificationsController } from 'controllers/Notifications';
 import { Identity } from 'library/ListItem/Labels/Identity';
 import { SelectWrapper } from 'library/ListItem/Wrappers';
 import { Title } from 'library/Prompt/Title';
+import { FooterWrapper, PromptListItem } from 'library/Prompt/Wrappers';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FooterWrapper, PromptListItem } from 'library/Prompt/Wrappers';
-import type { FavoritesPromptProps } from '../types';
-import { NotificationsController } from 'controllers/Notifications';
 import { ButtonPrimary } from 'ui-buttons';
+import type { FavoritesPromptProps } from '../types';
 
 export const FavoritesPrompt = ({
   callback,

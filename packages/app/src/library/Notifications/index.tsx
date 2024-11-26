@@ -3,15 +3,15 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 // import { useNotifications } from 'contexts/Notifications';
+import { setStateWithRef } from '@w3ux/utils';
 import type {
   NotificationInterface,
   NotificationItem,
 } from 'controllers/Notifications/types';
-import { Wrapper } from './Wrapper';
-import { useRef, useState } from 'react';
-import { setStateWithRef } from '@w3ux/utils';
 import { isCustomEvent } from 'controllers/utils';
+import { useRef, useState } from 'react';
 import { useEventListener } from 'usehooks-ts';
+import { Wrapper } from './Wrapper';
 
 export const Notifications = () => {
   // Store the notifications currently being displayed.

@@ -1,17 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useTranslation } from 'react-i18next';
+import type { AnyJson } from '@w3ux/types';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useSetup } from 'contexts/Setup';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Subheading } from 'pages/Nominate/Wrappers';
+import { useTranslation } from 'react-i18next';
 import { GenerateNominations } from '../GenerateNominations';
 import type { NominationsProps } from './types';
-import type { AnyJson } from '@w3ux/types';
 
 export const Nominate = ({ bondFor, section }: NominationsProps) => {
   const { t } = useTranslation('library');

@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useNetwork } from 'contexts/Network';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
-import type { FavoritePoolsContextState } from './types';
-import { useNetwork } from 'contexts/Network';
 import { defaultFavoritePoolsContext } from './defaults';
+import type { FavoritePoolsContextState } from './types';
 
 export const FavoritePoolsContext = createContext<FavoritePoolsContextState>(
   defaultFavoritePoolsContext

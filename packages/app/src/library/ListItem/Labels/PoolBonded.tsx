@@ -4,11 +4,11 @@
 import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { useNetwork } from 'contexts/Network';
-import type { Pool } from 'library/Pool/types';
-import { TooltipTrigger } from '../Wrappers';
-import { useTranslation } from 'react-i18next';
 import { useTooltip } from 'contexts/Tooltip';
+import type { Pool } from 'library/Pool/types';
 import { planckToUnitBn } from 'library/Utils';
+import { useTranslation } from 'react-i18next';
+import { TooltipTrigger } from '../Wrappers';
 
 export const PoolBonded = ({ pool }: { pool: Pool }) => {
   const { t } = useTranslation('library');

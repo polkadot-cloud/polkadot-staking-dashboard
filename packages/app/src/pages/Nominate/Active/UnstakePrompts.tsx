@@ -2,17 +2,17 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faBolt, faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { PageRow, ButtonRow } from 'ui-structure';
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useNetwork } from 'contexts/Network';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { CardWrapper } from 'library/Card/Wrappers';
+import { useSyncing } from 'hooks/useSyncing';
 import { useUnstaking } from 'hooks/useUnstaking';
 import { useOverlay } from 'kits/Overlay/Provider';
-import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useSyncing } from 'hooks/useSyncing';
+import { CardWrapper } from 'library/Card/Wrappers';
+import { useTranslation } from 'react-i18next';
 import { ButtonPrimary } from 'ui-buttons';
+import { ButtonRow, PageRow } from 'ui-structure';
 
 export const UnstakePrompts = () => {
   const { t } = useTranslation('pages');

@@ -5,9 +5,9 @@ import { usePlugins } from 'contexts/Plugins';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { NominationStatus } from 'pages/Nominate/Active/Status/NominationStatus';
 import { MembershipStatus } from 'pages/Pools/Home/Status/MembershipStatus';
+import { RowSection } from 'ui-structure';
 import { Tips } from './Tips';
 import { StatusWrapper } from './Wrappers';
-import { RowSection } from 'ui-structure';
 
 export const StakeStatus = () => {
   const { plugins } = usePlugins();

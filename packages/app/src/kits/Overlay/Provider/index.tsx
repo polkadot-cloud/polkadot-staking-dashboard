@@ -1,24 +1,24 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { RefObject, ReactNode } from 'react';
-import { useRef, useState, createContext, useContext } from 'react';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { setStateWithRef } from '@w3ux/utils';
-import type {
-  ModalConfig,
-  CanvasConfig,
-  ModalStatus,
-  OverlayContextInterface,
-  CanvasStatus,
-  ActiveOverlayInstance,
-  OverlayInstanceDirection,
-} from './types';
+import type { ReactNode, RefObject } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import {
   defaultCanvasConfig,
   defaultModalConfig,
   defaultOverlayContext,
 } from './defaults';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import type {
+  ActiveOverlayInstance,
+  CanvasConfig,
+  CanvasStatus,
+  ModalConfig,
+  ModalStatus,
+  OverlayContextInterface,
+  OverlayInstanceDirection,
+} from './types';
 
 export const OverlayContext = createContext<OverlayContextInterface>(
   defaultOverlayContext

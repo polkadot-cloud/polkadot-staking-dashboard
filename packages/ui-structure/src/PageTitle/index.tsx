@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffect, useRef, useState } from 'react';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { PageTitleTabs } from 'ui-structure';
+import classNames from 'classnames';
+import { useEffect, useRef, useState } from 'react';
 import { ButtonSecondary } from 'ui-buttons';
+import { PageTitleTabs } from 'ui-structure';
 import type { PageTitleProps } from '../types';
 import classes from './index.module.scss';
-import classNames from 'classnames';
 
 /**
  * @name PageTitle

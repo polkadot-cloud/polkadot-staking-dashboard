@@ -1,10 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useTxMeta } from 'contexts/TxMeta';
 import type { ReactNode } from 'react';
 import { useEffect } from 'react';
-import { useTxMeta } from 'contexts/TxMeta';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import type { SubmitProps } from '../types';
 import { Ledger } from './Ledger';
 import { Vault } from './Vault';

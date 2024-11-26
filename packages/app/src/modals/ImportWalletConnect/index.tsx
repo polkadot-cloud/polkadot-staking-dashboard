@@ -2,24 +2,24 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
-import { Polkicon } from '@w3ux/react-polkicon';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { usePrompt } from 'contexts/Prompt';
 import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react';
+import { useWcAccounts } from '@w3ux/react-connect-kit';
+import { Polkicon } from '@w3ux/react-polkicon';
+import type { AnyJson } from '@w3ux/types';
+import { useApi } from 'contexts/Api';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { useNetwork } from 'contexts/Network';
+import { usePrompt } from 'contexts/Prompt';
+import { useWalletConnect } from 'contexts/WalletConnect';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { HardwareAddress } from 'library/Hardware/HardwareAddress';
+import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar';
 import { Heading } from 'library/Import/Heading';
 import { NoAccounts } from 'library/Import/NoAccounts';
 import { AddressesWrapper } from 'library/Import/Wrappers';
-import type { AnyJson } from '@w3ux/types';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ButtonPrimary, ButtonText } from 'ui-buttons';
-import { HardwareAddress } from 'library/Hardware/HardwareAddress';
-import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar';
-import { useWcAccounts } from '@w3ux/react-connect-kit';
-import { useNetwork } from 'contexts/Network';
-import { useWalletConnect } from 'contexts/WalletConnect';
-import { useApi } from 'contexts/Api';
 
 export const ImportWalletConnect = () => {
   const { t } = useTranslation();

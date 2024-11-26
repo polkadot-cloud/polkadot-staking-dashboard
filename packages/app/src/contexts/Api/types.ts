@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ApiPromise } from '@polkadot/api';
+import type { AnyJson } from '@w3ux/types';
 import type BigNumber from 'bignumber.js';
+import type { ApiStatus, ConnectionType } from 'model/Api/types';
 import type { ReactNode } from 'react';
 import type { NetworkName } from '../../types';
-import type { ApiStatus, ConnectionType } from 'model/Api/types';
-import type { AnyJson } from '@w3ux/types';
 
 export interface APIProviderProps {
   children: ReactNode;

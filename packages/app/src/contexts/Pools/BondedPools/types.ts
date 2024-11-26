@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyApi, MaybeAddress } from 'types';
-import type { ActiveBondedPool } from '../ActivePool/types';
+import type { AnyJson } from '@w3ux/types';
 import type { AnyFilter } from 'library/Filter/types';
 import type { Dispatch, SetStateAction } from 'react';
-import type { AnyJson } from '@w3ux/types';
+import type { AnyApi, MaybeAddress } from 'types';
+import type { ActiveBondedPool } from '../ActivePool/types';
 
 export interface BondedPoolsContextState {
   queryBondedPool: (poolId: number) => AnyApi;

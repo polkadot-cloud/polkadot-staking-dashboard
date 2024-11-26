@@ -2,15 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { pageFromUri } from '@w3ux/utils';
-import { useLocation } from 'react-router-dom';
+import { usePayouts } from 'contexts/Payouts';
 import { usePlugins } from 'contexts/Plugins';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { usePayouts } from 'contexts/Payouts';
-import { Spinner } from './Spinner';
 import { useTxMeta } from 'contexts/TxMeta';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { useSyncing } from 'hooks/useSyncing';
+import { useLocation } from 'react-router-dom';
+import { Spinner } from './Spinner';
 
 export const Sync = () => {
   const { syncing } = useSyncing();

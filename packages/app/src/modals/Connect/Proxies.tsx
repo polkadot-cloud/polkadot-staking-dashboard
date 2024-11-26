@@ -8,19 +8,19 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Polkicon } from '@w3ux/react-polkicon';
-import { Fragment } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useHelp } from 'contexts/Help';
 import { useProxies } from 'contexts/Proxies';
 import { AccountInput } from 'library/AccountInput';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { Fragment } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ButtonHelp, ButtonMonoInvert, ButtonSecondary } from 'ui-buttons';
 import {
   ActionWithButton,
   ManualAccount,
   ManualAccountsWrapper,
 } from './Wrappers';
 import type { ListWithInputProps } from './types';
-import { ButtonHelp, ButtonMonoInvert, ButtonSecondary } from 'ui-buttons';
 
 export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');

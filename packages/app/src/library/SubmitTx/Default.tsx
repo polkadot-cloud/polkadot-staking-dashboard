@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import type { ReactNode } from 'react';
+import { appendOrEmpty } from '@w3ux/utils';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import type { SubmitProps } from './types';
+import type { ReactNode } from 'react';
 import { ButtonSubmit } from 'ui-buttons';
 import { ButtonSubmitLarge } from './ButtonSubmitLarge';
-import { appendOrEmpty } from '@w3ux/utils';
+import type { SubmitProps } from './types';
 
 export const Default = ({
   onSubmit,

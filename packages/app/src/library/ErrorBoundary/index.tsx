@@ -3,8 +3,8 @@
 
 import { faBug } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useTranslation } from 'react-i18next';
 import type { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Wrapper } from './Wrapper';
 
 export const ErrorFallbackApp = ({

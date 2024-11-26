@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useSetup } from 'contexts/Setup';
 import { useTxMeta } from 'contexts/TxMeta';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
@@ -12,7 +11,8 @@ import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Bond = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');

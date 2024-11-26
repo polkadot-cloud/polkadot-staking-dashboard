@@ -10,10 +10,10 @@ import { useLedgerHardware } from 'contexts/LedgerHardware';
 import { getLedgerApp } from 'contexts/LedgerHardware/Utils';
 import { useNetwork } from 'contexts/Network';
 import { useTxMeta } from 'contexts/TxMeta';
-import { ButtonSubmit } from 'ui-buttons';
 import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge';
 import type { LedgerSubmitProps } from 'library/SubmitTx/types';
 import { useTranslation } from 'react-i18next';
+import { ButtonSubmit } from 'ui-buttons';
 
 export const Submit = ({
   displayFor,

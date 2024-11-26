@@ -1,21 +1,21 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import type { AnyJson } from '@w3ux/types';
 import { setStateWithRef } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useApi } from 'contexts/Api';
+import { useBonded } from 'contexts/Bonded';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useStaking } from 'contexts/Staking';
+import { useActiveBalances } from 'hooks/useActiveBalances';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
-import { useBonded } from 'contexts/Bonded';
-import { useStaking } from 'contexts/Staking';
 import type { MaybeAddress } from 'types';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import * as defaults from './defaults';
 import type { TxMetaContextInterface } from './types';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { useActiveBalances } from 'hooks/useActiveBalances';
-import { useApi } from 'contexts/Api';
-import type { AnyJson } from '@w3ux/types';
 
 export const TxMetaContext = createContext<TxMetaContextInterface>(
   defaults.defaultTxMeta

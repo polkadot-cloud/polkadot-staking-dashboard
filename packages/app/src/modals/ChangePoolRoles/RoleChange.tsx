@@ -3,8 +3,8 @@
 
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ellipsisFn } from '@w3ux/utils';
 import { Polkicon } from '@w3ux/react-polkicon';
+import { ellipsisFn } from '@w3ux/utils';
 import { RoleChangeWrapper } from './Wrapper';
 import type { RoleChangeProps } from './types';
 

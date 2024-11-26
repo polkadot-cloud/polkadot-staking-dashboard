@@ -3,9 +3,9 @@
 
 import { useAnimation } from 'framer-motion';
 import { useEffect } from 'react';
+import { useOverlay } from './Provider';
 import type { CanvasStatus } from './Provider/types';
 import { ModalOverlay } from './structure/ModalOverlay';
-import { useOverlay } from './Provider';
 
 export const Background = ({
   externalOverlayStatus,

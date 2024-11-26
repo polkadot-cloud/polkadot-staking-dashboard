@@ -4,7 +4,7 @@
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
 import { defaultPromptContext } from './defaults';
-import type { PromptState, Prompt, PromptContextInterface } from './types';
+import type { Prompt, PromptContextInterface, PromptState } from './types';
 
 export const PromptContext =
   createContext<PromptContextInterface>(defaultPromptContext);

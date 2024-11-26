@@ -1,10 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useApi } from 'contexts/Api';
-import type { AnyApi, MaybeAddress } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useApi } from 'contexts/Api';
 import { useProxySupported } from 'hooks/useProxySupported';
+import type { AnyApi, MaybeAddress } from 'types';
 
 export const useBatchCall = () => {
   const { api } = useApi();

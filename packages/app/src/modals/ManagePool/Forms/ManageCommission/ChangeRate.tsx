@@ -1,16 +1,16 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import BigNumber from 'bignumber.js';
+import { useApi } from 'contexts/Api';
+import { intervalToDuration } from 'date-fns';
 import { MinDelayInput } from 'library/Form/MinDelayInput';
 import { StyledSlider } from 'library/StyledSlider';
 import { SliderWrapper } from 'modals/ManagePool/Wrappers';
-import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
-import { intervalToDuration } from 'date-fns';
-import BigNumber from 'bignumber.js';
-import { useApi } from 'contexts/Api';
-import { usePoolCommission } from './provider';
+import { useTranslation } from 'react-i18next';
 import type { ChangeRateInput } from '../types';
+import { usePoolCommission } from './provider';
 
 export const ChangeRate = ({
   invalidMaxIncrease,

@@ -1,23 +1,23 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { planckToUnit } from '@w3ux/utils';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { Warning } from 'library/Form/Warning';
+import { useTxMeta } from 'contexts/TxMeta';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
-import { Close } from 'library/Modal/Close';
-import { SubmitTx } from 'library/SubmitTx';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from 'kits/Overlay/Provider';
-import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
-import { planckToUnit } from '@w3ux/utils';
+import { Warning } from 'library/Form/Warning';
+import { Close } from 'library/Modal/Close';
+import { SubmitTx } from 'library/SubmitTx';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const ClaimReward = () => {
   const { t } = useTranslation('modals');

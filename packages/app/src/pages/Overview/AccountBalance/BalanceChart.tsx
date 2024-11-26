@@ -5,21 +5,21 @@ import { faCheck, faCheckDouble } from '@fortawesome/free-solid-svg-icons';
 import { Odometer } from '@w3ux/react-odometer';
 import { minDecimalPlaces } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useNetwork } from 'contexts/Network';
 import { usePlugins } from 'contexts/Plugins';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useSyncing } from 'hooks/useSyncing';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { BarSegment } from 'library/BarChart/BarSegment';
 import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useSyncing } from 'hooks/useSyncing';
-import { ButtonTertiary } from 'ui-buttons';
 import { planckToUnitBn } from 'library/Utils';
+import { useTranslation } from 'react-i18next';
+import { ButtonTertiary } from 'ui-buttons';
 import { FiatValue } from './FiatValue';
 
 export const BalanceChart = () => {

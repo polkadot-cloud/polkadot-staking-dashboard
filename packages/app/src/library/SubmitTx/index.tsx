@@ -1,18 +1,18 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBonded } from 'contexts/Bonded';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useNetwork } from 'contexts/Network';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from 'kits/Overlay/Provider';
-import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { Tx } from 'library/Tx';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Default } from './Default';
 import { ManualSign } from './ManualSign';
 import type { SubmitTxProps } from './types';
-import { Tx } from 'library/Tx';
 
 export const SubmitTx = ({
   uid,

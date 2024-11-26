@@ -7,15 +7,16 @@ import {
   faGlobe,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useTranslation } from 'react-i18next';
+import type { AnyJson } from '@w3ux/types';
 import { useMenu } from 'contexts/Menu';
+import { usePlugins } from 'contexts/Plugins';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator';
-import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { usePlugins } from 'contexts/Plugins';
-import type { AnyJson } from '@w3ux/types';
 import { Quartile } from 'library/ListItem/Labels/Quartile';
+import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
+import { MenuList } from 'library/Menu/List';
+import { useTranslation } from 'react-i18next';
 import { useValidators } from '../../../contexts/Validators/ValidatorEntries';
 import { useList } from '../../List/context';
 import { Blocked } from '../../ListItem/Labels/Blocked';
@@ -24,10 +25,9 @@ import { EraStatus } from '../../ListItem/Labels/EraStatus';
 import { FavoriteValidator } from '../../ListItem/Labels/FavoriteValidator';
 import { Identity } from '../../ListItem/Labels/Identity';
 import { Select } from '../../ListItem/Labels/Select';
+import { Pulse } from './Pulse';
 import { getIdentityDisplay } from './Utils';
 import type { ValidatorItemProps } from './types';
-import { Pulse } from './Pulse';
-import { MenuList } from 'library/Menu/List';
 
 export const Default = ({
   validator,

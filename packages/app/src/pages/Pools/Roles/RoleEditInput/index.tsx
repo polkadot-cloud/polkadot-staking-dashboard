@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { isValidAddress, formatAccountSs58 } from '@w3ux/utils';
+import { formatAccountSs58, isValidAddress } from '@w3ux/utils';
+import { useNetwork } from 'contexts/Network';
 import type { FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNetwork } from 'contexts/Network';
-import { Wrapper } from './Wrapper';
 import type { RoleEditInputProps } from '../types';
+import { Wrapper } from './Wrapper';
 
 export const RoleEditInput = ({
   setRoleEdit,

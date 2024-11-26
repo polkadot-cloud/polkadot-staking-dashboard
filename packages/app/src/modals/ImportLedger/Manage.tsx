@@ -1,20 +1,20 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useTranslation } from 'react-i18next';
+import LedgerSVG from '@w3ux/extension-assets/LedgerSquare.svg?react';
+import type { AnyJson } from '@w3ux/types';
+import { capitalizeFirstLetter } from '@w3ux/utils';
+import { useHelp } from 'contexts/Help';
 import { useLedgerHardware } from 'contexts/LedgerHardware';
 import { getLedgerApp } from 'contexts/LedgerHardware/Utils';
-import { useHelp } from 'contexts/Help';
-import { usePrompt } from 'contexts/Prompt';
-import LedgerSVG from '@w3ux/extension-assets/LedgerSquare.svg?react';
-import { Heading } from 'library/Import/Heading';
-import type { AnyJson } from '@w3ux/types';
-import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
+import { usePrompt } from 'contexts/Prompt';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar';
+import { Heading } from 'library/Import/Heading';
+import { useTranslation } from 'react-i18next';
 import { Addresess } from './Addresses';
 import { Reset } from './Reset';
-import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar';
-import { capitalizeFirstLetter } from '@w3ux/utils';
 
 export const Manage = ({
   addresses,

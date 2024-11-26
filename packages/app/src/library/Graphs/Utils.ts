@@ -1,7 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { AnyJson } from '@w3ux/types';
 import BigNumber from 'bignumber.js';
+import { MaxPayoutDays } from 'consts';
 import {
   addDays,
   differenceInDays,
@@ -11,11 +13,9 @@ import {
   startOfDay,
   subDays,
 } from 'date-fns';
-import { MaxPayoutDays } from 'consts';
+import { planckToUnitBn } from 'library/Utils';
 import type { AnyApi, AnySubscan } from 'types';
 import type { PayoutDayCursor } from './types';
-import type { AnyJson } from '@w3ux/types';
-import { planckToUnitBn } from 'library/Utils';
 
 // Given payouts, calculate daily income and fill missing days with zero amounts.
 export const calculateDailyPayouts = (

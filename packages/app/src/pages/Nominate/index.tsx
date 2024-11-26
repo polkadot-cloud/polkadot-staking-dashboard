@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { usePlugins } from 'contexts/Plugins';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { PageTitle } from 'ui-structure';
 import { Active } from './Active';
 import { NominationGeo } from './NominationGeo';
 import { Wrapper } from './Wrappers';
-import { PageTitle } from 'ui-structure';
-import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
-import { usePlugins } from 'contexts/Plugins';
 
 export const Nominate = () => {
   const { t } = useTranslation();

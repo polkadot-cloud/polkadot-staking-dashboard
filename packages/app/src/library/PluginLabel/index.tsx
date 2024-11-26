@@ -3,8 +3,8 @@
 
 import { faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { usePlugins } from 'contexts/Plugins';
 import { capitalizeFirstLetter } from '@w3ux/utils';
+import { usePlugins } from 'contexts/Plugins';
 import { Wrapper } from './Wrapper';
 import type { PluginLabelProps } from './types';
 

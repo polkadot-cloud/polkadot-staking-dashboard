@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type BigNumber from 'bignumber.js';
 import type { Sync } from '@w3ux/types';
+import type BigNumber from 'bignumber.js';
 
 export interface PoolPerformanceContextInterface {
   getPoolRewardPoints: (key: PoolRewardPointsKey) => PoolRewardPoints;

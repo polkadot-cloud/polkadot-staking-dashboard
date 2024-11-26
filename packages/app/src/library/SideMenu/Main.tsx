@@ -1,25 +1,25 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Fragment, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
+import type { AnyJson } from '@w3ux/types';
 import { PageCategories, PagesConfig } from 'config/pages';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useNetwork } from 'contexts/Network';
 import { useSetup } from 'contexts/Setup';
 import type { SetupContextInterface } from 'contexts/Setup/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import type { UIContextInterface } from 'contexts/UI/types';
+import { useSyncing } from 'hooks/useSyncing';
+import { Fragment, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import type { PageCategory, PageItem, PagesConfigItems } from 'types';
-import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { Heading } from './Heading/Heading';
 import { Primary } from './Primary';
-import { useBalances } from 'contexts/Balances';
-import { useSyncing } from 'hooks/useSyncing';
-import type { AnyJson } from '@w3ux/types';
 
 export const Main = () => {
   const { t, i18n } = useTranslation('base');

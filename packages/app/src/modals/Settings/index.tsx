@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useTranslation } from 'react-i18next';
 import { usePlugins } from 'contexts/Plugins';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { Title } from 'library/Modal/Title';
 import { StatusButton } from 'library/StatusButton';
+import { useTranslation } from 'react-i18next';
 import { ContentWrapper } from '../Networks/Wrapper';
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 
 export const Settings = () => {
   const { plugins, togglePlugin } = usePlugins();

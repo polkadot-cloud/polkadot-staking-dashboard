@@ -2,18 +2,18 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@w3ux/utils';
-import { useEffect, useRef, useState } from 'react';
-import { Title } from 'library/Modal/Title';
+import { usePayouts } from 'contexts/Payouts';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from 'kits/Overlay/Provider';
-import { usePayouts } from 'contexts/Payouts';
+import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle';
+import { ModalMotionTwoSection } from 'kits/Overlay/structure/ModalMotionTwoSection';
+import { ModalSection } from 'kits/Overlay/structure/ModalSection';
+import { Title } from 'library/Modal/Title';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Forms } from './Forms';
 import { Overview } from './Overview';
 import type { ActivePayout } from './types';
-import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle';
-import { ModalMotionTwoSection } from 'kits/Overlay/structure/ModalMotionTwoSection';
-import { ModalSection } from 'kits/Overlay/structure/ModalSection';
 
 export const ClaimPayouts = () => {
   const { t } = useTranslation('modals');

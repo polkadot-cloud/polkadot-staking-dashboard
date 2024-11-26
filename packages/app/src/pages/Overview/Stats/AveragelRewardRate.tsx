@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Text } from 'library/StatBoxList/Text';
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate';
+import { Text } from 'library/StatBoxList/Text';
 import { useTranslation } from 'react-i18next';
 
 export const AverageRewardRateStat = () => {

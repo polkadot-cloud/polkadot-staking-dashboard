@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Odometer } from '@w3ux/react-odometer';
-import { useEffect, useState } from 'react';
-import { useHelp } from 'contexts/Help';
+import type { AnyJson } from '@w3ux/types';
 import BigNumber from 'bignumber.js';
+import { useHelp } from 'contexts/Help';
+import { SimplePie } from 'library/SimplePie';
+import { useEffect, useState } from 'react';
+import { ButtonHelp } from 'ui-buttons';
 import { StatBox } from './Item';
 import type { PieProps } from './types';
-import { ButtonHelp } from 'ui-buttons';
-import { SimplePie } from 'library/SimplePie';
-import type { AnyJson } from '@w3ux/types';
 
 export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
   const help = helpKey !== undefined;

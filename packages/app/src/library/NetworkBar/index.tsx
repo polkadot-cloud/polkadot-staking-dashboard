@@ -1,30 +1,30 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faHive } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import { Odometer } from '@w3ux/react-odometer';
 import { capitalizeFirstLetter } from '@w3ux/utils';
+import BigNumber from 'bignumber.js';
+import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
+import { usePlugins } from 'contexts/Plugins';
+import { usePrompt } from 'contexts/Prompt';
+import { isCustomEvent } from 'controllers/utils';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
-import { usePrompt } from 'contexts/Prompt';
-import { usePlugins } from 'contexts/Plugins';
-import { useNetwork } from 'contexts/Network';
+import { useEventListener } from 'usehooks-ts';
 import { Disclaimer } from './Disclaimer';
 import { Status } from './Status';
-import { Summary, Wrapper } from './Wrappers';
-import { isCustomEvent } from 'controllers/utils';
-import { useEventListener } from 'usehooks-ts';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import BigNumber from 'bignumber.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHive } from '@fortawesome/free-brands-svg-icons';
-import { Odometer } from '@w3ux/react-odometer';
 import { TokenPrice } from './TokenPrice';
+import { Summary, Wrapper } from './Wrappers';
 
 export const NetworkBar = () => {
   const { t } = useTranslation('library');
   const { plugins } = usePlugins();
-  const { openPromptWith } = usePrompt();
   const { connectionType } = useApi();
+  const { openPromptWith } = usePrompt();
   const { networkData, network } = useNetwork();
 
   const PRIVACY_URL = import.meta.env.VITE_PRIVACY_URL;

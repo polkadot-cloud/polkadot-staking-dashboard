@@ -7,8 +7,8 @@ import { isCustomEvent } from 'controllers/utils';
 import {
   ApolloProvider,
   client,
-  useTokenPrice,
   formatTokenPrice,
+  useTokenPrice,
 } from 'plugin-staking-api';
 import { useRef } from 'react';
 import { useEventListener } from 'usehooks-ts';

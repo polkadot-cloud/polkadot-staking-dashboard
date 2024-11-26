@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Title } from 'library/Prompt/Title';
-import { useTranslation } from 'react-i18next';
 import { FooterWrapper } from 'library/Prompt/Wrappers';
-import type { RevertPromptProps } from '../types';
+import { useTranslation } from 'react-i18next';
 import { ButtonPrimary } from 'ui-buttons';
+import type { RevertPromptProps } from '../types';
 
 export const RevertPrompt = ({ onRevert }: RevertPromptProps) => {
   const { t } = useTranslation('modals');
