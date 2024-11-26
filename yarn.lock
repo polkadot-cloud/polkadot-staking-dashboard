@@ -3440,31 +3440,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash.debounce@npm:^4.0.9":
-  version: 4.0.9
-  resolution: "@types/lodash.debounce@npm:4.0.9"
-  dependencies:
-    "@types/lodash": "npm:*"
-  checksum: 10c0/9fbb24e5e52616faf60ba5c82d8c6517f4b86fc6e9ab353b4c56c0760f63d9bf53af3f2d8f6c37efa48090359fb96dba1087d497758511f6c40677002191d042
-  languageName: node
-  linkType: hard
-
-"@types/lodash.throttle@npm:^4":
-  version: 4.1.9
-  resolution: "@types/lodash.throttle@npm:4.1.9"
-  dependencies:
-    "@types/lodash": "npm:*"
-  checksum: 10c0/93f7096dcaea8f54a4f52d5175d97a471f155f5bae4649c967cc29bcae506a456476d13b4392361799b31c3b96659560e1bbfddf00f550a50c685f6c037411a6
-  languageName: node
-  linkType: hard
-
-"@types/lodash@npm:*":
-  version: 4.17.13
-  resolution: "@types/lodash@npm:4.17.13"
-  checksum: 10c0/c3d0b7efe7933ac0369b99f2f7bff9240d960680fdb74b41ed4bd1b3ca60cca1e31fe4046d9abbde778f941a41bc2a75eb629abf8659fa6c27b66efbbb0802a9
-  languageName: node
-  linkType: hard
-
 "@types/ms@npm:*":
   version: 0.7.34
   resolution: "@types/ms@npm:0.7.34"
@@ -4465,8 +4440,6 @@ __metadata:
     html5-qrcode: "npm:^2.3.8"
     i18next-browser-languagedetector: "npm:^8.0.0"
     locales: "workspace:*"
-    lodash.debounce: "npm:^4.0.8"
-    lodash.throttle: "npm:^4.1.1"
     plugin-staking-api: "workspace:*"
     qrcode-generator: "npm:1.4.4"
     rc-slider: "npm:^11.1.6"
@@ -8841,8 +8814,6 @@ __metadata:
   dependencies:
     "@ledgerhq/logs": "npm:^6.12.0"
     "@types/chroma-js": "npm:^2.4.4"
-    "@types/lodash.debounce": "npm:^4.0.9"
-    "@types/lodash.throttle": "npm:^4"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.2.25"
     "@types/react-helmet": "npm:^6.1.11"
