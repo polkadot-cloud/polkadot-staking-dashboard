@@ -44,6 +44,7 @@ export default [
       '**/.licenserc.json',
       '**/lottie/',
       '**/vite.config.ts',
+      '**/_redirects',
     ],
   },
   pluginJs.configs.recommended,
