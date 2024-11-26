@@ -16,7 +16,9 @@ const validateMissingKeys = () => {
   const languages = getDirectories(localeDir, ['en']);
 
   fs.readdir(defaultPath, (error, files) => {
-    if (error) console.log(error);
+    if (error) {
+      console.log(error);
+    }
 
     files.forEach((file) => {
       const defaultJson = JSON.parse(
@@ -54,7 +56,9 @@ const validateKeyOrder = () => {
     const pathToLanguage = join(localeDir, `/${lng}`);
 
     fs.readdir(pathToLanguage, (error, files) => {
-      if (error) return;
+      if (error) {
+        return;
+      }
 
       files.forEach((file) => {
         const pathToFile = join(pathToLanguage, file);
