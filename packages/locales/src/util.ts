@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { registerSaEvent } from 'app/src/Utils';
 import { extractUrlValue, varToUrlHash } from '@w3ux/utils';
+import { registerSaEvent } from 'app/src/Utils';
 import type { i18n } from 'i18next';
 import { DefaultLocale, fallbackResources, lngNamespaces, locales } from '.';
 import type { LocaleJson, LocaleJsonValue } from './types';

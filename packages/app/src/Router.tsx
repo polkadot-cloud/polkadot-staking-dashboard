@@ -1,15 +1,14 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { registerLastVisited, registerSaEvent } from 'Utils';
-import { usePrompt } from 'contexts/Prompt';
-import { Disclaimer } from 'library/NetworkBar/Disclaimer';
 import { extractUrlValue } from '@w3ux/utils';
+import { registerLastVisited, registerSaEvent } from 'Utils';
 import { PagesConfig } from 'config/pages';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useNetwork } from 'contexts/Network';
+import { usePrompt } from 'contexts/Prompt';
 import { useUi } from 'contexts/UI';
 import { NotificationsController } from 'controllers/Notifications';
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
@@ -17,6 +16,7 @@ import { Headers } from 'library/Headers';
 import { Help } from 'library/Help';
 import { Menu } from 'library/Menu';
 import { NetworkBar } from 'library/NetworkBar';
+import { Disclaimer } from 'library/NetworkBar/Disclaimer';
 import { Notifications } from 'library/Notifications';
 import { Offline } from 'library/Offline';
 import { PageWithTitle } from 'library/PageWithTitle';
