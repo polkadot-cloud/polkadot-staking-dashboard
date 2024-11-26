@@ -3,10 +3,10 @@
 
 import { isSupportedProxy } from 'config/proxies';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { AccountButton } from '../Account';
-import { DelegatesWrapper } from './Wrapper';
-import type { DelegatesProps } from '../types';
 import type { ProxyDelegateWithBalance } from 'contexts/Proxies/types';
+import { AccountButton } from '../Account';
+import type { DelegatesProps } from '../types';
+import { DelegatesWrapper } from './Wrapper';
 
 export const Delegates = ({ delegates, delegator }: DelegatesProps) => {
   const { accounts } = useImportedAccounts();

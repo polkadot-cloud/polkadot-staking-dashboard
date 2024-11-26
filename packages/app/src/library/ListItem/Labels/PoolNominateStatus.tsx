@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { capitalizeFirstLetter } from '@w3ux/utils';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { PoolStatusWrapper } from 'library/ListItem/Wrappers';
 import type { Pool } from 'library/Pool/types';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const PoolNominateStatus = ({ pool }: { pool: Pool }) => {
   const { t } = useTranslation('library');

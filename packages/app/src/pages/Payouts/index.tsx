@@ -1,31 +1,31 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PageRow, PageTitle } from 'ui-structure';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useSize } from '@w3ux/hooks';
 import { MaxPayoutDays } from 'consts';
 import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
+import { useUi } from 'contexts/UI';
+import { SubscanController } from 'controllers/Subscan';
+import { useSubscanData } from 'hooks/useSubscanData';
+import { useSyncing } from 'hooks/useSyncing';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
 import { formatSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
-import { useSize } from '@w3ux/hooks';
+import { PluginLabel } from 'library/PluginLabel';
 import { StatBoxList } from 'library/StatBoxList';
 import { StatusLabel } from 'library/StatusLabel';
+import { DefaultLocale, locales } from 'locales';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { AnySubscan, PageProps } from 'types';
-import { PluginLabel } from 'library/PluginLabel';
+import { ButtonHelp } from 'ui-buttons';
+import { PageRow, PageTitle } from 'ui-structure';
 import { PayoutList } from './PayoutList';
 import { LastEraPayoutStat } from './Stats/LastEraPayout';
-import { useSubscanData } from 'hooks/useSubscanData';
-import { SubscanController } from 'controllers/Subscan';
-import { DefaultLocale, locales } from 'locales';
-import { useSyncing } from 'hooks/useSyncing';
-import { ButtonHelp } from 'ui-buttons';
-import { useUi } from 'contexts/UI';
 
 export const Payouts = ({ page: { key } }: PageProps) => {
   const { i18n, t } = useTranslation();

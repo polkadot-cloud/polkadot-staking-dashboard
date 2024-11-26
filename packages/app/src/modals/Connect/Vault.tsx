@@ -3,14 +3,14 @@
 
 import { faExternalLinkAlt, faQrcode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react';
+import { useHelp } from 'contexts/Help';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { ModalConnectItem } from 'kits/Overlay/structure/ModalConnectItem';
+import { ModalHardwareItem } from 'kits/Overlay/structure/ModalHardwareItem';
 import type { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHelp } from 'contexts/Help';
-import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react';
-import { useOverlay } from 'kits/Overlay/Provider';
 import { ButtonHelp, ButtonPrimaryInvert, ButtonText } from 'ui-buttons';
-import { ModalHardwareItem } from 'kits/Overlay/structure/ModalHardwareItem';
-import { ModalConnectItem } from 'kits/Overlay/structure/ModalConnectItem';
 
 export const Vault = (): ReactElement => {
   const { t } = useTranslation('modals');

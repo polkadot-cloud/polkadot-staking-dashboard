@@ -3,8 +3,8 @@
 
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator';
-import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
 import { Quartile } from 'library/ListItem/Labels/Quartile';
+import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
 import { useList } from '../../List/context';
 import { Blocked } from '../../ListItem/Labels/Blocked';
 import { Commission } from '../../ListItem/Labels/Commission';
@@ -14,9 +14,9 @@ import { Identity } from '../../ListItem/Labels/Identity';
 import { Metrics } from '../../ListItem/Labels/Metrics';
 import { NominationStatus } from '../../ListItem/Labels/NominationStatus';
 import { Select } from '../../ListItem/Labels/Select';
+import { Pulse } from './Pulse';
 import { getIdentityDisplay } from './Utils';
 import type { ValidatorItemProps } from './types';
-import { Pulse } from './Pulse';
 
 export const Nomination = ({
   validator,

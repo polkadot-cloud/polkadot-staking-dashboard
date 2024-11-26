@@ -3,11 +3,11 @@
 
 import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
-import { useTranslation } from 'react-i18next';
-import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useNetwork } from 'contexts/Network';
-import type { AnyMetaBatch } from 'types';
+import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { planckToUnitBn } from 'library/Utils';
+import { useTranslation } from 'react-i18next';
+import type { AnyMetaBatch } from 'types';
 
 export const PoolMemberBonded = ({
   meta,

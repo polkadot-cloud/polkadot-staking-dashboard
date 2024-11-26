@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { Polkicon } from '@w3ux/react-polkicon';
 import { ellipsisFn } from '@w3ux/utils';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
+import { IdentityWrapper } from 'library/ListItem/Wrappers';
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { Polkicon } from '@w3ux/react-polkicon';
-import { IdentityWrapper } from 'library/ListItem/Wrappers';
 import { getIdentityDisplay } from '../../ValidatorList/ValidatorItem/Utils';
 import type { IdentityProps } from '../types';
 

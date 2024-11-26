@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Odometer } from '@w3ux/react-odometer';
-import { useHelp } from 'contexts/Help';
 import BigNumber from 'bignumber.js';
+import { useHelp } from 'contexts/Help';
+import { ButtonHelp } from 'ui-buttons';
 import { StatBox } from './Item';
 import type { NumberProps } from './types';
-import { ButtonHelp } from 'ui-buttons';
 
 export const Number = ({
   label,

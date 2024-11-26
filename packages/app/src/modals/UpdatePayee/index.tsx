@@ -2,27 +2,27 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { isValidAddress } from '@w3ux/utils';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
-import { Warning } from 'library/Form/Warning';
+import { useTxMeta } from 'contexts/TxMeta';
 import { usePayeeConfig } from 'hooks/usePayeeConfig';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
+import { Warning } from 'library/Form/Warning';
 import { Title } from 'library/Modal/Title';
 import { PayeeInput } from 'library/PayeeInput';
 import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
 import { SubmitTx } from 'library/SubmitTx';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { MaybeAddress } from 'types';
-import { useTxMeta } from 'contexts/TxMeta';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useBalances } from 'contexts/Balances';
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
-import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 
 export const UpdatePayee = () => {
   const { t } = useTranslation('modals');

@@ -2,16 +2,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faGear, faWallet } from '@fortawesome/free-solid-svg-icons';
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useBalances } from 'contexts/Balances';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useStaking } from 'contexts/Staking';
 import { usePayeeConfig } from 'hooks/usePayeeConfig';
-import { useUnstaking } from 'hooks/useUnstaking';
-import { Stat } from 'library/Stat';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useBalances } from 'contexts/Balances';
 import { useSyncing } from 'hooks/useSyncing';
+import { useUnstaking } from 'hooks/useUnstaking';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { Stat } from 'library/Stat';
+import { useTranslation } from 'react-i18next';
 
 export const PayoutDestinationStatus = () => {
   const { t } = useTranslation('pages');

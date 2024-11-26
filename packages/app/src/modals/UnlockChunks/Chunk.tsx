@@ -1,21 +1,21 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useTimeLeft } from '@w3ux/hooks';
 import BigNumber from 'bignumber.js';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
 import { fromUnixTime } from 'date-fns';
+import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
+import { useUnstaking } from 'hooks/useUnstaking';
+import { Countdown } from 'library/Countdown';
+import { formatTimeleft, planckToUnitBn } from 'library/Utils';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Countdown } from 'library/Countdown';
-import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
-import { useTimeLeft } from '@w3ux/hooks';
-import { useUnstaking } from 'hooks/useUnstaking';
-import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { ButtonSubmit } from 'ui-buttons';
 import { ChunkWrapper } from './Wrappers';
 import type { ChunkProps } from './types';
-import { useApi } from 'contexts/Api';
-import { ButtonSubmit } from 'ui-buttons';
-import { formatTimeleft, planckToUnitBn } from 'library/Utils';
 
 export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
   const { t, i18n } = useTranslation('modals');

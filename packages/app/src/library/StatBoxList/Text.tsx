@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useHelp } from 'contexts/Help';
+import { ButtonHelp } from 'ui-buttons';
 import { StatBox } from './Item';
 import { TextTitleWrapper } from './Wrapper';
 import type { TextProps } from './types';
-import { ButtonHelp } from 'ui-buttons';
 
 export const Text = ({
   label,

@@ -4,14 +4,14 @@
 import { faChrome, faUsb } from '@fortawesome/free-brands-svg-icons';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import LedgerLogoSVG from '@w3ux/extension-assets/Ledger.svg?react';
 import { inChrome } from '@w3ux/utils';
 import { useHelp } from 'contexts/Help';
-import LedgerLogoSVG from '@w3ux/extension-assets/Ledger.svg?react';
-import { useOverlay } from 'kits/Overlay/Provider';
 import { useNetwork } from 'contexts/Network';
-import { ButtonHelp, ButtonPrimaryInvert, ButtonText } from 'ui-buttons';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { ModalConnectItem } from 'kits/Overlay/structure/ModalConnectItem';
 import { ModalHardwareItem } from 'kits/Overlay/structure/ModalHardwareItem';
+import { ButtonHelp, ButtonPrimaryInvert, ButtonText } from 'ui-buttons';
 
 export const Ledger = () => {
   const { openHelp } = useHelp();

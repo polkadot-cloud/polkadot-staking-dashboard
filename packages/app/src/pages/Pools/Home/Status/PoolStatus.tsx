@@ -5,11 +5,11 @@ import {
   faExclamationTriangle,
   faLock,
 } from '@fortawesome/free-solid-svg-icons';
-import { useTranslation } from 'react-i18next';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useNominationStatus } from 'hooks/useNominationStatus';
-import { Stat } from 'library/Stat';
 import { useSyncing } from 'hooks/useSyncing';
+import { Stat } from 'library/Stat';
+import { useTranslation } from 'react-i18next';
 
 export const PoolStatus = () => {
   const { t } = useTranslation('pages');

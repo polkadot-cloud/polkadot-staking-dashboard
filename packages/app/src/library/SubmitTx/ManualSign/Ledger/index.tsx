@@ -1,23 +1,23 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import { appendOrEmpty } from '@w3ux/utils';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useHelp } from 'contexts/Help';
+import { useLedgerHardware } from 'contexts/LedgerHardware';
+import type { LedgerResponse } from 'contexts/LedgerHardware/types';
+import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import type { ReactNode } from 'react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLedgerHardware } from 'contexts/LedgerHardware';
-import type { LedgerResponse } from 'contexts/LedgerHardware/types';
-import { useHelp } from 'contexts/Help';
-import { useTxMeta } from 'contexts/TxMeta';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { ButtonHelp } from 'ui-buttons';
 import type { SubmitProps } from '../../types';
 import { Submit } from './Submit';
-import { ButtonHelp } from 'ui-buttons';
-import { appendOrEmpty } from '@w3ux/utils';
 
 export const Ledger = ({
   uid,

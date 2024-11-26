@@ -6,22 +6,22 @@ import {
   faEdit,
   faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useApi } from 'contexts/Api';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useHelp } from 'contexts/Help';
+import { useNetwork } from 'contexts/Network';
+import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useSyncing } from 'hooks/useSyncing';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
-import { useHelp } from 'contexts/Help';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { CardHeaderWrapper } from 'library/Card/Wrappers';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { ButtonHelp, ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons';
 import { RolesWrapper } from '../Home/ManagePool/Wrappers';
 import { PoolAccount } from '../PoolAccount';
 import { RoleEditInput } from './RoleEditInput';
 import type { RoleEditEntry, RolesProps } from './types';
-import { useSyncing } from 'hooks/useSyncing';
-import { ButtonHelp, ButtonPrimaryInvert, ButtonPrimary } from 'ui-buttons';
 
 export const Roles = ({
   defaultRoles,

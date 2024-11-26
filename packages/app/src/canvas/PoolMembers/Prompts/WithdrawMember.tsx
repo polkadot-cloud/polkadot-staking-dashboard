@@ -4,24 +4,24 @@
 import { Polkicon } from '@w3ux/react-polkicon';
 import { ellipsisFn, rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
-import type { RefObject } from 'react';
-import { useState } from 'react';
-import { useApi } from 'contexts/Api';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { Warning } from 'library/Form/Warning';
-import { useSignerWarnings } from 'hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
-import { SubmitTx } from 'library/SubmitTx';
-import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import type { PoolMembership } from 'contexts/Pools/types';
 import { usePrompt } from 'contexts/Prompt';
-import { Title } from 'library/Prompt/Title';
-import { useTranslation } from 'react-i18next';
+import { useSignerWarnings } from 'hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
+import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
-import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
+import { Warning } from 'library/Form/Warning';
+import { Title } from 'library/Prompt/Title';
+import { SubmitTx } from 'library/SubmitTx';
 import { planckToUnitBn } from 'library/Utils';
+import type { RefObject } from 'react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const WithdrawMember = ({
   who,

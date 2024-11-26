@@ -3,10 +3,10 @@
 
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useTranslation } from 'react-i18next';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 import type { BondedPool } from 'contexts/Pools/BondedPools/types';
+import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { useTranslation } from 'react-i18next';
 
 export const More = ({
   pool,

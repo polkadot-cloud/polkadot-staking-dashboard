@@ -1,32 +1,32 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useSize } from '@w3ux/hooks';
 import { Polkicon } from '@w3ux/react-polkicon';
+import type { AnyJson } from '@w3ux/types';
 import { ellipsisFn } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
-import { useEffect, useState, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
+import { useNetwork } from 'contexts/Network';
+import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
+import { useUi } from 'contexts/UI';
+import { SubscanController } from 'controllers/Subscan';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { EraPoints as EraPointsGraph } from 'library/Graphs/EraPoints';
 import { formatSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
-import { useSize } from '@w3ux/hooks';
 import { Title } from 'library/Modal/Title';
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
-import { StatusLabel } from 'library/StatusLabel';
-import { useOverlay } from 'kits/Overlay/Provider';
 import { PluginLabel } from 'library/PluginLabel';
-import { useNetwork } from 'contexts/Network';
-import type { AnyJson } from '@w3ux/types';
-import { SubscanController } from 'controllers/Subscan';
-import { usePlugins } from 'contexts/Plugins';
-import { useApi } from 'contexts/Api';
-import { ButtonHelp } from 'ui-buttons';
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { StatusLabel } from 'library/StatusLabel';
 import { planckToUnitBn } from 'library/Utils';
-import { useUi } from 'contexts/UI';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ButtonHelp } from 'ui-buttons';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');

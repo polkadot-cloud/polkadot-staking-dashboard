@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Number } from 'library/StatBoxList/Number';
 import { useNetwork } from 'contexts/Network';
+import { Number } from 'library/StatBoxList/Number';
 import { useTranslation } from 'react-i18next';
 
 import type { AnalyzedPayoutsProps } from '../types';

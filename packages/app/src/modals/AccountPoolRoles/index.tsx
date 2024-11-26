@@ -3,17 +3,17 @@
 
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { Polkicon } from '@w3ux/react-polkicon';
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useBalances } from 'contexts/Balances';
 import { useActivePool } from 'contexts/Pools/ActivePool';
+import type { ActivePool } from 'contexts/Pools/ActivePool/types';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { Title } from 'library/Modal/Title';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { ContentWrapper } from './Wrappers';
-import { useBalances } from 'contexts/Balances';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import type { ActivePool } from 'contexts/Pools/ActivePool/types';
+import { useTranslation } from 'react-i18next';
 import { ButtonOption } from 'ui-buttons';
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ContentWrapper } from './Wrappers';
 
 // TODO: Deprecate this feature and revisit in the future where global admin features are more
 // developed.

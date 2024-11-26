@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyApi, NetworkName } from 'types';
 import { rmCommas } from '@w3ux/utils';
+import type { AnyApi, NetworkName } from 'types';
 import type { Exposure, LocalExposure, LocalExposuresData } from './types';
 
 // Get local `erasStakers` entries for an era.

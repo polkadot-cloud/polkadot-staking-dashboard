@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components';
 import { PageWidthMediumThreshold } from 'consts';
+import styled from 'styled-components';
 
 export const StatusWrapper = styled.div<{ $borderBottom: boolean }>`
   display: flex;

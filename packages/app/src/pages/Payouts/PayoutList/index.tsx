@@ -5,28 +5,28 @@ import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
-import { formatDistance, fromUnixTime } from 'date-fns';
-import { motion } from 'framer-motion';
-import { Component, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
+import { formatDistance, fromUnixTime } from 'date-fns';
+import { motion } from 'framer-motion';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
+import { payoutsPerPage } from 'library/List/defaults';
 import { Identity } from 'library/ListItem/Labels/Identity';
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
+import { planckToUnitBn } from 'library/Utils';
 import { DefaultLocale, locales } from 'locales';
+import { Component, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { AnySubscan } from 'types';
-import { useNetwork } from 'contexts/Network';
 import { ItemWrapper } from '../Wrappers';
 import type { PayoutListProps } from '../types';
 import { PayoutListProvider, usePayoutList } from './context';
-import { payoutsPerPage } from 'library/List/defaults';
-import { planckToUnitBn } from 'library/Utils';
 
 export const PayoutListInner = ({
   allowMoreCols,

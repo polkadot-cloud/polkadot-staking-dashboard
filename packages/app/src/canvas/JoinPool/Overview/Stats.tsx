@@ -1,20 +1,20 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useNetwork } from 'contexts/Network';
-import { HeadingWrapper } from '../Wrappers';
 import { rmCommas } from '@w3ux/utils';
-import { useApi } from 'contexts/Api';
 import BigNumber from 'bignumber.js';
-import { useEffect, useState } from 'react';
-import type { OverviewSectionProps } from '../types';
-import { useTranslation } from 'react-i18next';
-import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 import { MaxEraRewardPointsEras } from 'consts';
-import { StyledLoader } from 'library/PoolSync/Loader';
-import type { CSSProperties } from 'styled-components';
+import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
+import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 import { PoolSync } from 'library/PoolSync';
+import { StyledLoader } from 'library/PoolSync/Loader';
 import { planckToUnitBn } from 'library/Utils';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import type { CSSProperties } from 'styled-components';
+import type { OverviewSectionProps } from '../types';
+import { HeadingWrapper } from '../Wrappers';
 
 export const Stats = ({
   bondedPool,

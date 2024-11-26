@@ -3,15 +3,15 @@
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ellipsisFn } from '@w3ux/utils';
-import { motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
-import type { NotificationText } from 'controllers/Notifications/types';
 import { Polkicon } from '@w3ux/react-polkicon';
+import { ellipsisFn } from '@w3ux/utils';
+import { NotificationsController } from 'controllers/Notifications';
+import type { NotificationText } from 'controllers/Notifications/types';
+import { motion } from 'framer-motion';
 import { getIdentityDisplay } from 'library/ValidatorList/ValidatorItem/Utils';
+import { useTranslation } from 'react-i18next';
 import type { PoolAccountProps } from '../types';
 import { Wrapper } from './Wrapper';
-import { NotificationsController } from 'controllers/Notifications';
 
 export const PoolAccount = ({ address, pool }: PoolAccountProps) => {
   const { t } = useTranslation('pages');

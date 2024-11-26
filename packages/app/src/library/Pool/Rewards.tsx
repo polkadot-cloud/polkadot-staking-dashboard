@@ -1,23 +1,23 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { AnyJson } from '@w3ux/types';
 import BigNumber from 'bignumber.js';
+import { MaxEraRewardPointsEras } from 'consts';
+import { useApi } from 'contexts/Api';
+import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
+import { useTooltip } from 'contexts/Tooltip';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import {
   TooltipTrigger,
   ValidatorPulseWrapper,
 } from 'library/ListItem/Wrappers';
-import { useTooltip } from 'contexts/Tooltip';
-import { MaxEraRewardPointsEras } from 'consts';
-import { useApi } from 'contexts/Api';
 import {
   normaliseEraPoints,
   prefillEraPoints,
 } from 'library/ValidatorList/ValidatorItem/Utils';
-import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 import { useTranslation } from 'react-i18next';
 import type { RewardProps, RewardsGraphProps } from './types';
-import type { AnyJson } from '@w3ux/types';
 
 export const Rewards = ({ address, displayFor = 'default' }: RewardProps) => {
   const { t } = useTranslation('library');

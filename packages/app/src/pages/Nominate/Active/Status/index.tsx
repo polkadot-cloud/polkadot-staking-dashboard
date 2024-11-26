@@ -1,16 +1,16 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { CardWrapper } from 'library/Card/Wrappers';
-import { UnclaimedPayoutsStatus } from './UnclaimedPayoutsStatus';
-import { NominationStatus } from './NominationStatus';
-import { PayoutDestinationStatus } from './PayoutDestinationStatus';
-import { Separator } from 'ui-structure';
-import { useSyncing } from 'hooks/useSyncing';
-import { useStaking } from 'contexts/Staking';
-import { NewNominator } from './NewNominator';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useStaking } from 'contexts/Staking';
+import { useSyncing } from 'hooks/useSyncing';
+import { CardWrapper } from 'library/Card/Wrappers';
+import { Separator } from 'ui-structure';
+import { NewNominator } from './NewNominator';
+import { NominationStatus } from './NominationStatus';
+import { PayoutDestinationStatus } from './PayoutDestinationStatus';
+import { UnclaimedPayoutsStatus } from './UnclaimedPayoutsStatus';
 
 export const Status = ({ height }: { height: number }) => {
   const { syncing } = useSyncing();

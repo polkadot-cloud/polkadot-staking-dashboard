@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { VoidFn } from '@polkadot/api/types';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import {
   addedTo,
   ellipsisFn,
@@ -12,17 +13,17 @@ import {
   setStateWithRef,
 } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
-import type { ReactNode } from 'react';
-import { createContext, useContext, useRef, useState } from 'react';
 import { isSupportedProxy } from 'config/proxies';
-import { useApi } from 'contexts/Api';
-import type { AnyApi, MaybeAddress, NetworkName } from 'types';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useApi } from 'contexts/Api';
+import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
+import { useNetwork } from 'contexts/Network';
+import { defaultNetwork } from 'contexts/Network/defaults';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
+import type { AnyApi, MaybeAddress, NetworkName } from 'types';
 import * as defaults from './defaults';
 import type {
   Delegates,
@@ -32,7 +33,6 @@ import type {
   Proxy,
   ProxyDelegate,
 } from './types';
-import { defaultNetwork } from 'contexts/Network/defaults';
 
 export const ProxiesContext = createContext<ProxiesContextInterface>(
   defaults.defaultProxiesContext

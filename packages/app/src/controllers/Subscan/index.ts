@@ -1,18 +1,18 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type {
-  SubscanPoolClaim,
-  SubscanData,
-  SubscanPayout,
-  SubscanPoolMember,
-  SubscanRequestBody,
-  SubscanEraPoints,
-} from './types';
+import type { PoolMember } from 'contexts/Pools/PoolMembers/types';
 import type { Locale } from 'date-fns';
 import { format, fromUnixTime, getUnixTime, subDays } from 'date-fns';
-import type { PoolMember } from 'contexts/Pools/PoolMembers/types';
 import { poolMembersPerPage } from 'library/List/defaults';
+import type {
+  SubscanData,
+  SubscanEraPoints,
+  SubscanPayout,
+  SubscanPoolClaim,
+  SubscanPoolMember,
+  SubscanRequestBody,
+} from './types';
 
 export class SubscanController {
   // ------------------------------------------------------

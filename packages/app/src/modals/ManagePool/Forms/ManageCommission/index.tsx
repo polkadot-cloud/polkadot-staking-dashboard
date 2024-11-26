@@ -3,29 +3,29 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import BigNumber from 'bignumber.js';
-import type { Dispatch, SetStateAction } from 'react';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { Warning } from 'library/Form/Warning';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
-import { SubmitTx } from 'library/SubmitTx';
-import 'rc-slider/assets/index.css';
 import { useOverlay } from 'kits/Overlay/Provider';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { usePoolCommission } from './provider';
-import { CommissionCurrent } from './CommissionCurrent';
-import { MaxCommission } from './MaxCommission';
-import { ChangeRate } from './ChangeRate';
-import { ButtonHelp, ButtonSubmitInvert } from 'ui-buttons';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
+import { Warning } from 'library/Form/Warning';
+import { SubmitTx } from 'library/SubmitTx';
+import 'rc-slider/assets/index.css';
+import type { Dispatch, SetStateAction } from 'react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ButtonHelp, ButtonSubmitInvert } from 'ui-buttons';
+import { ChangeRate } from './ChangeRate';
+import { CommissionCurrent } from './CommissionCurrent';
+import { MaxCommission } from './MaxCommission';
+import { usePoolCommission } from './provider';
 
 export const ManageCommission = ({
   setSection,

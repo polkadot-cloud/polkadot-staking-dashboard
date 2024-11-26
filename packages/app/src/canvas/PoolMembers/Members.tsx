@@ -3,13 +3,13 @@
 
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useTranslation } from 'react-i18next';
+import { useNetwork } from 'contexts/Network';
 import { usePlugins } from 'contexts/Plugins';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useTheme } from 'contexts/Themes';
 import { CardWrapper } from 'library/Card/Wrappers';
-import { useNetwork } from 'contexts/Network';
+import { useTranslation } from 'react-i18next';
 import { MembersList as DefaultMemberList } from './Lists/Default';
 import { MembersList as FetchPageMemberList } from './Lists/FetchPage';
 

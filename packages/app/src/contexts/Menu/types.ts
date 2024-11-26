@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type {
+  MouseEvent as ReactMouseEvent,
   ReactNode,
   RefObject,
-  MouseEvent as ReactMouseEvent,
 } from 'react';
 
 export interface MenuContextInterface {

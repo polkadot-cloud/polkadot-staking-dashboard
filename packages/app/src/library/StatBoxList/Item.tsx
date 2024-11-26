@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { AnyJson } from '@w3ux/types';
 import type { ReactNode } from 'react';
 import { Number } from './Number';
 import { Pie } from './Pie';
 import { Text } from './Text';
 import { StatBoxWrapper } from './Wrapper';
-import type { AnyJson } from '@w3ux/types';
 
 export const StatBox = ({ children }: { children: ReactNode }) => (
   <StatBoxWrapper

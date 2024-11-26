@@ -2,18 +2,18 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import type { AnyApi, NetworkName, SystemChainId } from 'types';
+import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
+import * as Sc from '@substrate/connect';
+import { WellKnownChain } from '@substrate/connect';
 import { NetworkList, SystemChainList } from 'config/networks';
+import { SubscriptionsController } from 'controllers/Subscriptions';
+import type { AnyApi, NetworkName, SystemChainId } from 'types';
 import type {
   ApiChainType,
   APIEventDetail,
   ConnectionType,
   EventApiStatus,
 } from './types';
-import { SubscriptionsController } from 'controllers/Subscriptions';
-import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
-import { WellKnownChain } from '@substrate/connect';
-import * as Sc from '@substrate/connect';
 
 export class Api {
   // ------------------------------------------------------

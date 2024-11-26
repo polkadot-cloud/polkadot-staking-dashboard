@@ -2,21 +2,21 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { VoidFn } from '@polkadot/api/types';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import {
   addedTo,
   matchedProperties,
   removedFrom,
   setStateWithRef,
 } from '@w3ux/utils';
-import type { ReactNode } from 'react';
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
-import type { AnyApi, MaybeAddress } from 'types';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { useNetwork } from 'contexts/Network';
+import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
+import { useNetwork } from 'contexts/Network';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import type { AnyApi, MaybeAddress } from 'types';
 import * as defaults from './defaults';
 import type { BondedAccount, BondedContextInterface } from './types';
 

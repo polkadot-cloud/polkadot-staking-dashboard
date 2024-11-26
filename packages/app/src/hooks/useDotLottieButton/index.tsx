@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ReactNode } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import type { AnyJson } from '@w3ux/types';
 import { useTheme } from 'contexts/Themes';
 import type { Theme } from 'contexts/Themes/types';
-import type { AnyJson } from '@w3ux/types';
+import type { ReactNode } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
   const { mode } = useTheme();

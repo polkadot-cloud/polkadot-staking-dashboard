@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useTranslation } from 'react-i18next';
-import { SliderWrapper } from 'modals/ManagePool/Wrappers';
 import { StyledSlider } from 'library/StyledSlider';
+import { SliderWrapper } from 'modals/ManagePool/Wrappers';
+import { useTranslation } from 'react-i18next';
 import { usePoolCommission } from './provider';
 
 export const MaxCommission = ({

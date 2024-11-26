@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { Polkicon } from '@w3ux/react-polkicon';
 import { ellipsisFn } from '@w3ux/utils';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { Polkicon } from '@w3ux/react-polkicon';
+import { determinePoolDisplay } from 'contexts/Pools/util';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';
 import type { PoolIdentityProps } from '../types';
-import { determinePoolDisplay } from 'contexts/Pools/util';
 
 export const PoolIdentity = ({
   pool: { addresses, id },

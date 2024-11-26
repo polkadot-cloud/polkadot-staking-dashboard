@@ -1,15 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useNetwork } from 'contexts/Network';
+import { TxMetaContext, useTxMeta } from 'contexts/TxMeta';
+import type { TxMetaContextInterface } from 'contexts/TxMeta/types';
+import { planckToUnitBn } from 'library/Utils';
 import type { Context } from 'react';
 import { Component, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TxMetaContext, useTxMeta } from 'contexts/TxMeta';
-import type { TxMetaContextInterface } from 'contexts/TxMeta/types';
-import { useNetwork } from 'contexts/Network';
 import { Wrapper } from './Wrapper';
 import type { EstimatedTxFeeProps } from './types';
-import { planckToUnitBn } from 'library/Utils';
 
 export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
   const { t } = useTranslation('library');

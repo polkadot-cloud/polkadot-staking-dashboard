@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type BigNumber from 'bignumber.js';
-import type { PoolAddresses } from '../BondedPools/types';
 import type { MaybeAddress } from '@w3ux/react-connect-kit/types';
-import type { Identity, SuperIdentity } from 'contexts/Validators/types';
+import type BigNumber from 'bignumber.js';
 import type { Nominations } from 'contexts/Balances/types';
+import type { Identity, SuperIdentity } from 'contexts/Validators/types';
+import type { PoolAddresses } from '../BondedPools/types';
 
 export interface ActivePoolContextState {
   isBonding: () => boolean;

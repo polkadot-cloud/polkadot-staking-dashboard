@@ -1,14 +1,14 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PageRow } from 'ui-structure';
-import { useEffect, useState } from 'react';
+import type { ValidatorEntry } from '@w3ux/validator-assets';
+import { useCommunity } from 'contexts/Community';
 import { useNetwork } from 'contexts/Network';
+import { useEffect, useState } from 'react';
+import { PageRow } from 'ui-structure';
 import { Item } from './Item';
 import { ItemsWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
-import type { ValidatorEntry } from '@w3ux/validator-assets';
-import { useCommunity } from 'contexts/Community';
 
 export const List = () => {
   const { network } = useNetwork();

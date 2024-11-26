@@ -1,19 +1,19 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useLedgerHardware } from 'contexts/LedgerHardware';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { Title } from 'library/Modal/Title';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from 'kits/Overlay/Provider';
-import { useLedgerHardware } from 'contexts/LedgerHardware';
-import { Forms } from './Forms';
-import { Tasks } from './Tasks';
-import { ModalSection } from 'kits/Overlay/structure/ModalSection';
 import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle';
 import { ModalMotionTwoSection } from 'kits/Overlay/structure/ModalMotionTwoSection';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalSection } from 'kits/Overlay/structure/ModalSection';
+import { Title } from 'library/Modal/Title';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Forms } from './Forms';
+import { Tasks } from './Tasks';
 
 export const ManagePool = () => {
   const { t } = useTranslation('modals');

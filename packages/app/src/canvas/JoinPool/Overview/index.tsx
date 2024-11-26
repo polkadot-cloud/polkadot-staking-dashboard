@@ -3,14 +3,14 @@
 
 import { JoinForm } from './JoinForm';
 
-import { PerformanceGraph } from './PerformanceGraph';
-import { Stats } from './Stats';
-import { Addresses } from './Addresses';
-import { Roles } from './Roles';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useBalances } from 'contexts/Balances';
 import { GraphLayoutWrapper } from '../Wrappers';
 import type { OverviewSectionProps } from '../types';
-import { useBalances } from 'contexts/Balances';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { Addresses } from './Addresses';
+import { PerformanceGraph } from './PerformanceGraph';
+import { Roles } from './Roles';
+import { Stats } from './Stats';
 
 export const Overview = (props: OverviewSectionProps) => {
   const { getPoolMembership } = useBalances();

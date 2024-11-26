@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { usePrompt } from 'contexts/Prompt';
+import { Html5Qrcode } from 'html5-qrcode';
 import type { ReactElement } from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ScanWrapper } from './Wrappers.js';
 import type { ScanProps } from './types.js';
 import { createImgSize } from './util.js';
-import { Html5Qrcode } from 'html5-qrcode';
-import { usePrompt } from 'contexts/Prompt';
 
 const DEFAULT_ERROR = (error: string): void => {
   throw new Error(error);

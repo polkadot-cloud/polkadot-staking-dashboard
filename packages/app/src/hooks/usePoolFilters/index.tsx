@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useTranslation } from 'react-i18next';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useStaking } from 'contexts/Staking';
 import type { AnyFunction, AnyJson } from '@w3ux/types';
-import type { AnyFilter } from 'library/Filter/types';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
 import type { BondedPool } from 'contexts/Pools/BondedPools/types';
+import { useStaking } from 'contexts/Staking';
+import type { AnyFilter } from 'library/Filter/types';
+import { useTranslation } from 'react-i18next';
 
 export const usePoolFilters = () => {
   const { t } = useTranslation('library');

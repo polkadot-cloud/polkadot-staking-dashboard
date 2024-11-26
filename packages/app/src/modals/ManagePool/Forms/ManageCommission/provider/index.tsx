@@ -1,11 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { createContext, useContext, useEffect, useState } from 'react';
-import type { MaybeAddress } from 'types';
+import { rmCommas } from '@w3ux/utils';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { rmCommas } from '@w3ux/utils';
+import { createContext, useContext, useEffect, useState } from 'react';
+import type { MaybeAddress } from 'types';
+import { defaultPoolCommissionContext } from './defaults';
 import type {
   ChangeRateInput,
   CommissionFeature,
@@ -13,7 +14,6 @@ import type {
   PoolCommissionContextInterface,
   PoolCommissionProviderProps,
 } from './types';
-import { defaultPoolCommissionContext } from './defaults';
 
 export const PoolCommissionContext =
   createContext<PoolCommissionContextInterface>(defaultPoolCommissionContext);

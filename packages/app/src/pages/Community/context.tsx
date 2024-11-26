@@ -1,10 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useNetwork } from 'contexts/Network';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { useNetwork } from 'contexts/Network';
-import { defaultContext, communityItem } from './defaults';
+import { communityItem, defaultContext } from './defaults';
 import type { CommunitySectionsContextInterface, Item } from './types';
 
 export const CommunitySectionsContext =

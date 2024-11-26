@@ -2,27 +2,27 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useFastUnstake } from 'contexts/FastUnstake';
+import { useNetwork } from 'contexts/Network';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { Warning } from 'library/Form/Warning';
+import { useTxMeta } from 'contexts/TxMeta';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useUnstaking } from 'hooks/useUnstaking';
-import { Close } from 'library/Modal/Close';
-import { SubmitTx } from 'library/SubmitTx';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from 'kits/Overlay/Provider';
-import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
-import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
+import { Warning } from 'library/Form/Warning';
+import { Close } from 'library/Modal/Close';
+import { SubmitTx } from 'library/SubmitTx';
 import { planckToUnitBn } from 'library/Utils';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');

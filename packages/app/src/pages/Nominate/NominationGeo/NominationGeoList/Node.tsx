@@ -3,9 +3,9 @@
 
 import type { RewardsByValidationNode } from '@polkawatch/ddp-client';
 import { motion } from 'framer-motion';
-import { Labels, Wrapper, Separator } from 'library/ListItem/Wrappers';
 import { Identity } from 'library/ListItem/Labels/Identity';
 import { RewardShare } from 'library/ListItem/Labels/RewardShare';
+import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
 
 export const Node = ({
   node,

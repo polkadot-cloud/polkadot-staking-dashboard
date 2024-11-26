@@ -2,20 +2,20 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary } from 'ui-buttons';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useTranslation } from 'react-i18next';
-import { JoinPoolInterfaceWrapper } from './Wrappers';
-import { CanvasTitleWrapper } from 'canvas/Wrappers';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import BigNumber from 'bignumber.js';
-import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import { capitalizeFirstLetter, rmCommas } from '@w3ux/utils';
-import { useNetwork } from 'contexts/Network';
+import BigNumber from 'bignumber.js';
+import { CanvasTitleWrapper } from 'canvas/Wrappers';
 import { useApi } from 'contexts/Api';
-import { PoolSyncBar } from 'library/PoolSync/Bar';
+import { useNetwork } from 'contexts/Network';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import type { PoolRewardPointsKey } from 'contexts/Pools/PoolPerformance/types';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { PoolSyncBar } from 'library/PoolSync/Bar';
 import { planckToUnitBn } from 'library/Utils';
+import { useTranslation } from 'react-i18next';
+import { ButtonPrimary } from 'ui-buttons';
+import { JoinPoolInterfaceWrapper } from './Wrappers';
 
 export const Preloader = ({
   performanceKey,

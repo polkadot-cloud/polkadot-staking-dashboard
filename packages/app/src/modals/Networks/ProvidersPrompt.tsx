@@ -1,14 +1,14 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useApi } from 'contexts/Api';
-import { Title } from 'library/Prompt/Title';
-import { useTranslation } from 'react-i18next';
-import { PromptSelectItem } from 'library/Prompt/Wrappers';
-import { useNetwork } from 'contexts/Network';
-import { NetworkList } from 'config/networks';
-import { usePrompt } from 'contexts/Prompt';
 import { capitalizeFirstLetter } from '@w3ux/utils';
+import { NetworkList } from 'config/networks';
+import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
+import { usePrompt } from 'contexts/Prompt';
+import { Title } from 'library/Prompt/Title';
+import { PromptSelectItem } from 'library/Prompt/Wrappers';
+import { useTranslation } from 'react-i18next';
 
 export const ProvidersPrompt = () => {
   const { t } = useTranslation();

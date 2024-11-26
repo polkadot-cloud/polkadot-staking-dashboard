@@ -1,18 +1,18 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useTranslation } from 'react-i18next';
-import { Stat } from 'library/Stat';
-import { usePayouts } from 'contexts/Payouts';
-import BigNumber from 'bignumber.js';
-import { useApi } from 'contexts/Api';
-import { minDecimalPlaces } from '@w3ux/utils';
 import { faCircleDown } from '@fortawesome/free-solid-svg-icons';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useNetwork } from 'contexts/Network';
+import { minDecimalPlaces } from '@w3ux/utils';
+import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useApi } from 'contexts/Api';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useNetwork } from 'contexts/Network';
+import { usePayouts } from 'contexts/Payouts';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { Stat } from 'library/Stat';
 import { planckToUnitBn } from 'library/Utils';
+import { useTranslation } from 'react-i18next';
 
 export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
   const { t } = useTranslation();

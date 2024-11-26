@@ -3,32 +3,32 @@
 
 import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useOnResize, useOutsideAlerter } from '@w3ux/hooks';
 import { capitalizeFirstLetter } from '@w3ux/utils';
-import { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
-import { SideMenuMaximisedWidth, PageWidthMediumThreshold } from 'consts';
+import { PageWidthMediumThreshold, SideMenuMaximisedWidth } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
+import { useNetwork } from 'contexts/Network';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import type { UIContextInterface } from 'contexts/UI/types';
-import CogOutlineSVG from 'img/cog-outline.svg?react';
-import EnvelopeSVG from 'img/envelope.svg?react';
 import BookSVG from 'img/book.svg?react';
+import CogOutlineSVG from 'img/cog-outline.svg?react';
 import DiscordSVG from 'img/discord.svg?react';
+import EnvelopeSVG from 'img/envelope.svg?react';
 import LanguageSVG from 'img/language.svg?react';
 import LogoGithubSVG from 'img/logo-github.svg?react';
+import LogoSVG from 'img/logo.svg?react';
 import MoonOutlineSVG from 'img/moon-outline.svg?react';
 import SunnyOutlineSVG from 'img/sunny-outline.svg?react';
 import { useOverlay } from 'kits/Overlay/Provider';
-import { useNetwork } from 'contexts/Network';
+import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Side } from 'ui-structure';
 import { Heading } from './Heading/Heading';
 import { Main } from './Main';
 import { Secondary } from './Secondary';
-import { ConnectionSymbol, Separator, Wrapper, LogoWrapper } from './Wrapper';
-import { useOutsideAlerter, useOnResize } from '@w3ux/hooks';
-import { Side } from 'ui-structure';
-import LogoSVG from 'img/logo.svg?react';
+import { ConnectionSymbol, LogoWrapper, Separator, Wrapper } from './Wrapper';
 
 export const SideMenu = () => {
   const { t } = useTranslation('base');

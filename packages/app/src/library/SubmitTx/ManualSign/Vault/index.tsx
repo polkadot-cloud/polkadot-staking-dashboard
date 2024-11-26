@@ -2,17 +2,17 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faSquarePen } from '@fortawesome/free-solid-svg-icons';
-import type { ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
+import { appendOrEmpty } from '@w3ux/utils';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { usePrompt } from 'contexts/Prompt';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge';
+import type { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ButtonSubmit } from 'ui-buttons';
 import type { SubmitProps } from '../../types';
 import { SignPrompt } from './SignPrompt';
-import { ButtonSubmit } from 'ui-buttons';
-import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge';
-import { appendOrEmpty } from '@w3ux/utils';
 
 export const Vault = ({
   onSubmit,

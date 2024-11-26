@@ -2,25 +2,25 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faQrcode } from '@fortawesome/free-solid-svg-icons';
-import { Polkicon } from '@w3ux/react-polkicon';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { usePrompt } from 'contexts/Prompt';
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react';
+import { useVaultAccounts } from '@w3ux/react-connect-kit';
+import { Polkicon } from '@w3ux/react-polkicon';
+import type { AnyJson } from '@w3ux/types';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { useNetwork } from 'contexts/Network';
+import { usePrompt } from 'contexts/Prompt';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { HardwareAddress } from 'library/Hardware/HardwareAddress';
+import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar';
 import { Confirm } from 'library/Import/Confirm';
 import { Heading } from 'library/Import/Heading';
 import { NoAccounts } from 'library/Import/NoAccounts';
 import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
-import type { AnyJson } from '@w3ux/types';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import { Reader } from './Reader';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ButtonPrimary, ButtonText } from 'ui-buttons';
-import { HardwareAddress } from 'library/Hardware/HardwareAddress';
-import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar';
-import { useVaultAccounts } from '@w3ux/react-connect-kit';
-import { useNetwork } from 'contexts/Network';
+import { Reader } from './Reader';
 
 export const ImportVault = () => {
   const { t } = useTranslation();

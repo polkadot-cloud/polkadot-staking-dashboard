@@ -4,6 +4,7 @@
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import type { MaybeAddress } from '@w3ux/react-connect-kit/types';
 import { setStateWithRef } from '@w3ux/utils';
+import BigNumber from 'bignumber.js';
 import type {
   ActiveBalancesState,
   ActiveLedgerSource,
@@ -13,18 +14,17 @@ import type {
   Targets,
 } from 'contexts/Balances/types';
 import { useNetwork } from 'contexts/Network';
-import { useEffect, useRef, useState } from 'react';
+import type { PoolMembership } from 'contexts/Pools/types';
+import type { PayeeConfig } from 'contexts/Setup/types';
 import { BalancesController } from 'controllers/Balances';
-import { isCustomEvent } from 'controllers/utils';
-import { useEventListener } from 'usehooks-ts';
-import BigNumber from 'bignumber.js';
 import {
   defaultBalance,
   defaultLedger,
   defaultPayee,
 } from 'controllers/Balances/defaults';
-import type { PayeeConfig } from 'contexts/Setup/types';
-import type { PoolMembership } from 'contexts/Pools/types';
+import { isCustomEvent } from 'controllers/utils';
+import { useEffect, useRef, useState } from 'react';
+import { useEventListener } from 'usehooks-ts';
 
 export const useActiveBalances = ({
   accounts,

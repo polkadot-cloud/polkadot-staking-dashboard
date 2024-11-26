@@ -6,10 +6,10 @@ import {
   faChevronCircleRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSyncing } from 'hooks/useSyncing';
 import { useTranslation } from 'react-i18next';
 import { PageToggleWrapper } from './Wrappers';
 import type { PageToggleProps } from './types';
-import { useSyncing } from 'hooks/useSyncing';
 
 export const PageToggle = ({
   start,

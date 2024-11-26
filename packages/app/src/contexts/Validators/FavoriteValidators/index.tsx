@@ -1,15 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { useNetwork } from 'contexts/Network';
-import { useApi } from 'contexts/Api';
-import type { Validator, FavoriteValidatorsContextInterface } from '../types';
+import type { FavoriteValidatorsContextInterface, Validator } from '../types';
 import { getLocalFavorites } from '../Utils';
-import { defaultFavoriteValidatorsContext } from './defaults';
 import { useValidators } from '../ValidatorEntries';
+import { defaultFavoriteValidatorsContext } from './defaults';
 
 export const FavoriteValidatorsContext =
   createContext<FavoriteValidatorsContextInterface>(

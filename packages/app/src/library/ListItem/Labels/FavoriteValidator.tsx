@@ -4,12 +4,12 @@
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useTranslation } from 'react-i18next';
 import { useTooltip } from 'contexts/Tooltip';
-import { TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
-import type { FavoriteProps } from '../types';
 import { NotificationsController } from 'controllers/Notifications';
+import { TooltipTrigger } from 'library/ListItem/Wrappers';
+import { useTranslation } from 'react-i18next';
+import type { FavoriteProps } from '../types';
 
 export const FavoriteValidator = ({ address }: FavoriteProps) => {
   const { t } = useTranslation('library');

@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useTranslation } from 'react-i18next';
-import { useSetup } from 'contexts/Setup';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useHelp } from 'contexts/Help';
+import { useSetup } from 'contexts/Setup';
+import { useTranslation } from 'react-i18next';
+import { ButtonHelp, ButtonSecondary } from 'ui-buttons';
 import type { HeaderProps } from '../types';
 import { Wrapper } from './Wrapper';
-import { useHelp } from 'contexts/Help';
-import { ButtonHelp, ButtonSecondary } from 'ui-buttons';
 
 export const Header = ({
   title,

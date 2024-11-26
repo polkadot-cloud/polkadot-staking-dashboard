@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import type { ButtonSecondaryProps } from './types';
 import classNames from 'classnames';
 import commonClasses from '../common.module.scss';
-import classes from './index.module.scss';
 import { onMouseHandlers } from '../util';
+import classes from './index.module.scss';
+import type { ButtonSecondaryProps } from './types';
 
 /**
  * @name ButtonSecondary

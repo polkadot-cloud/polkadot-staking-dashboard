@@ -2,19 +2,19 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Polkicon } from '@w3ux/react-polkicon';
-import type { ForwardedRef } from 'react';
-import { forwardRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { ellipsisFn } from '@w3ux/utils';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useApi } from 'contexts/Api';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';
+import type { ForwardedRef } from 'react';
+import { forwardRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ButtonOption } from 'ui-buttons';
 import { ButtonRowWrapper, ContentWrapper, TaskInnerWrapper } from './Wrappers';
 import type { TasksProps } from './types';
-import { useApi } from 'contexts/Api';
-import { ellipsisFn } from '@w3ux/utils';
-import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';
-import { ButtonOption } from 'ui-buttons';
 
 export const Tasks = forwardRef(
   ({ setSection, setTask }: TasksProps, ref: ForwardedRef<HTMLDivElement>) => {

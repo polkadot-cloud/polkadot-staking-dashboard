@@ -1,9 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { ApiPromise } from '@polkadot/api';
+import type { VoidFn } from '@polkadot/api/types';
 import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
-import type { AnyApi, MaybeAddress } from 'types';
 import type {
   ActiveBalance,
   Balances,
@@ -11,13 +12,12 @@ import type {
   Nominations,
   UnlockChunkRaw,
 } from 'contexts/Balances/types';
-import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type { PoolMembership } from 'contexts/Pools/types';
+import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { SyncController } from 'controllers/Sync';
-import { defaultNominations } from './defaults';
-import type { VoidFn } from '@polkadot/api/types';
-import type { ApiPromise } from '@polkadot/api';
 import { stringToBn } from 'library/Utils';
+import type { AnyApi, MaybeAddress } from 'types';
+import { defaultNominations } from './defaults';
 
 export class BalancesController {
   // ------------------------------------------------------

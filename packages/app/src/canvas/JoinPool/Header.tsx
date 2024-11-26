@@ -6,15 +6,15 @@ import {
   faHashtag,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons';
-import { Polkicon } from '@w3ux/react-polkicon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { PageTitleTabs } from 'ui-structure';
-import { useTranslation } from 'react-i18next';
-import { useOverlay } from 'kits/Overlay/Provider';
-import type { JoinPoolHeaderProps } from './types';
+import { Polkicon } from '@w3ux/react-polkicon';
 import { CanvasTitleWrapper } from 'canvas/Wrappers';
 import { determinePoolDisplay } from 'contexts/Pools/util';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { useTranslation } from 'react-i18next';
+import { ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons';
+import { PageTitleTabs } from 'ui-structure';
+import type { JoinPoolHeaderProps } from './types';
 
 export const Header = ({
   activeTab,

@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { FunctionComponent, ReactNode, SVGProps } from 'react';
 import type { AnyJson } from '@w3ux/types';
+import type { FunctionComponent, ReactNode, SVGProps } from 'react';
 
 export interface MinimisedProps {
   $minimised?: boolean;
