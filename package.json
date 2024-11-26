@@ -11,20 +11,6 @@
     "reset": "npm run clear && rm -rf node_modules yarn.lock && yarn",
     "test": "npm run test --workspaces --if-present"
   },
-  "workspaces": [
-    "packages/*"
-  ],
-  "prettier": {
-    "arrowParens": "always",
-    "trailingComma": "es5",
-    "tabWidth": 2,
-    "semi": true,
-    "singleQuote": true,
-    "endOfLine": "auto",
-    "plugins": [
-      "prettier-plugin-organize-imports"
-    ]
-  },
   "devDependencies": {
     "@ledgerhq/logs": "^6.12.0",
     "@types/chroma-js": "^2.4.4",
@@ -58,5 +44,19 @@
     "i18next": "^24.0.0",
     "react-i18next": "^15.1.1"
   },
-  "packageManager": "yarn@4.1.1"
+  "packageManager": "yarn@4.1.1",
+  "prettier": {
+    "arrowParens": "always",
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "endOfLine": "auto",
+    "plugins": [
+      "prettier-plugin-organize-imports"
+    ]
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
