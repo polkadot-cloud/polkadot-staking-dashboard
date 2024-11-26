@@ -6,7 +6,6 @@ import { u8aConcat } from '@polkadot/util';
 const MULTIPART = new Uint8Array([0]);
 
 export const encodeNumber = (value: number): Uint8Array =>
-  // eslint-disable-next-line no-bitwise
   new Uint8Array([value >> 8, value & 0xff]);
 
 export const encodeString = (value: string): Uint8Array => {
