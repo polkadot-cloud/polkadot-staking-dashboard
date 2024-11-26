@@ -2,16 +2,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { useTranslation } from 'react-i18next';
-import { Element } from 'react-scroll';
-import { CardWrapper } from 'library/Card/Wrappers';
-import { Nominate } from 'library/SetupSteps/Nominate';
-import { Payee } from 'canvas/NominatorSetup/Payee';
 import { Bond } from 'canvas/NominatorSetup/Bond';
+import { Payee } from 'canvas/NominatorSetup/Payee';
 import { Summary } from 'canvas/NominatorSetup/Summary';
 import { CanvasFullScreenWrapper, CanvasTitleWrapper } from 'canvas/Wrappers';
-import { ButtonPrimary } from 'ui-buttons';
 import { useOverlay } from 'kits/Overlay/Provider';
+import { CardWrapper } from 'library/Card/Wrappers';
+import { Nominate } from 'library/SetupSteps/Nominate';
+import { useTranslation } from 'react-i18next';
+import { Element } from 'react-scroll';
+import { ButtonPrimary } from 'ui-buttons';
 
 export const NominatorSetup = () => {
   const { t } = useTranslation('pages');

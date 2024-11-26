@@ -1,6 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useSize } from '@w3ux/hooks';
+import type { AnyJson } from '@w3ux/types';
+import BigNumber from 'bignumber.js';
 import {
   BarElement,
   CategoryScale,
@@ -12,22 +15,19 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
-import { useNetwork } from 'contexts/Network';
-import { GraphWrapper, HeadingWrapper } from '../Wrappers';
-import { Line } from 'react-chartjs-2';
-import BigNumber from 'bignumber.js';
-import type { AnyJson } from '@w3ux/types';
-import graphColors from 'styles/graphs/index.json';
-import { useTheme } from 'contexts/Themes';
-import { ButtonHelp } from 'ui-buttons';
 import { useHelp } from 'contexts/Help';
+import { useNetwork } from 'contexts/Network';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
-import { useRef } from 'react';
-import { formatSize } from 'library/Graphs/Utils';
-import { useSize } from '@w3ux/hooks';
-import type { OverviewSectionProps } from '../types';
-import { useTranslation } from 'react-i18next';
+import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
+import { formatSize } from 'library/Graphs/Utils';
+import { useRef } from 'react';
+import { Line } from 'react-chartjs-2';
+import { useTranslation } from 'react-i18next';
+import graphColors from 'styles/graphs/index.json';
+import { ButtonHelp } from 'ui-buttons';
+import type { OverviewSectionProps } from '../types';
+import { GraphWrapper, HeadingWrapper } from '../Wrappers';
 
 ChartJS.register(
   CategoryScale,

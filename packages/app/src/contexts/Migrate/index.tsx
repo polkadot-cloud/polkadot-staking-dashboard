@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import { useApi } from 'contexts/Api';
+import { useSyncing } from 'hooks/useSyncing';
 import type { ReactNode } from 'react';
 import { createContext, useState } from 'react';
-import { useApi } from 'contexts/Api';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { useSyncing } from 'hooks/useSyncing';
 import { version } from '../../../package.json';
 
 export const MigrateContext = createContext<null>(null);

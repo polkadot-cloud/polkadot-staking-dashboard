@@ -2,18 +2,18 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { CanvasFullScreenWrapper } from 'canvas/Wrappers';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { JoinPoolInterfaceWrapper } from './Wrappers';
+import { MaxEraRewardPointsEras } from 'consts';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { useJoinPools } from 'contexts/Pools/JoinPools';
+import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
+import { useStaking } from 'contexts/Staking';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { useEffect, useMemo, useState } from 'react';
 import { Header } from './Header';
-import { Overview } from './Overview';
 import { Nominations } from './Nominations';
-import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
-import { MaxEraRewardPointsEras } from 'consts';
-import { useStaking } from 'contexts/Staking';
-import { useJoinPools } from 'contexts/Pools/JoinPools';
+import { Overview } from './Overview';
 import { Preloader } from './Preloader';
+import { JoinPoolInterfaceWrapper } from './Wrappers';
 
 export const JoinPool = () => {
   const {

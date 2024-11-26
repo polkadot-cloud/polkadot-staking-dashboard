@@ -1,15 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
-import { useTheme } from 'contexts/Themes';
-import graphColors from 'styles/graphs/index.json';
-import chroma from 'chroma-js';
-import { ellipsisFn } from '@w3ux/utils';
-import { useNetwork } from 'contexts/Network';
-import type { GeoDonutProps } from './types';
 import type { AnyJson } from '@w3ux/types';
+import { ellipsisFn } from '@w3ux/utils';
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
+import chroma from 'chroma-js';
+import { useNetwork } from 'contexts/Network';
+import { useTheme } from 'contexts/Themes';
+import { Doughnut } from 'react-chartjs-2';
+import graphColors from 'styles/graphs/index.json';
+import type { GeoDonutProps } from './types';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import { useTranslation } from 'react-i18next';
-import { Pie } from 'library/StatBoxList/Pie';
 import { useApi } from 'contexts/Api';
+import { Pie } from 'library/StatBoxList/Pie';
+import { useTranslation } from 'react-i18next';
 
 export const TotalValidatorsStat = () => {
   const { t } = useTranslation('pages');

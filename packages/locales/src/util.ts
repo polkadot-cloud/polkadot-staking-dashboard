@@ -3,8 +3,8 @@
 
 import { extractUrlValue, varToUrlHash } from '@w3ux/utils';
 import type { i18n } from 'i18next';
+import { DefaultLocale, fallbackResources, lngNamespaces, locales } from '.';
 import type { LocaleJson, LocaleJsonValue } from './types';
-import { DefaultLocale, locales, fallbackResources, lngNamespaces } from '.';
 
 // Gets the active language
 //

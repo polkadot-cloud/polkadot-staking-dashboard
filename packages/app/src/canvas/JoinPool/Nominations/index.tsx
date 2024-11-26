@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { ValidatorList } from 'library/ValidatorList';
 import { useTranslation } from 'react-i18next';
 import { HeadingWrapper, NominationsWrapper } from '../Wrappers';
 import type { NominationsProps } from '../types';
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
 
 export const Nominations = ({ stash, poolId }: NominationsProps) => {
   const { t } = useTranslation();

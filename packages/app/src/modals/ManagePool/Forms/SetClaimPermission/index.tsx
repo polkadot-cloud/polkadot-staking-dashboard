@@ -2,24 +2,24 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
+import { useActivePool } from 'contexts/Pools/ActivePool';
+import type { ClaimPermission } from 'contexts/Pools/types';
+import { defaultClaimPermission } from 'controllers/ActivePools/defaults';
+import { useSignerWarnings } from 'hooks/useSignerWarnings';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
+import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput';
+import { Warning } from 'library/Form/Warning';
+import { SubmitTx } from 'library/SubmitTx';
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput';
-import { Warning } from 'library/Form/Warning';
-import { useSignerWarnings } from 'hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
-import { SubmitTx } from 'library/SubmitTx';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import type { ClaimPermission } from 'contexts/Pools/types';
-import { useBalances } from 'contexts/Balances';
 import { ButtonSubmitInvert } from 'ui-buttons';
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
-import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
-import { defaultClaimPermission } from 'controllers/ActivePools/defaults';
 
 export const SetClaimPermission = ({
   setSection,

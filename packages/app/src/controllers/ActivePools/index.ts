@@ -1,10 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { ApiPromise } from '@polkadot/api';
 import type { VoidFn } from '@polkadot/api/types';
+import type { Nominations } from 'contexts/Balances/types';
 import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
 import type { ActivePool, PoolRoles } from 'contexts/Pools/ActivePool/types';
 import { IdentitiesController } from 'controllers/Identities';
+import { SyncController } from 'controllers/Sync';
 import type { AnyApi, MaybeAddress } from 'types';
 import type {
   AccountActivePools,
@@ -13,9 +16,6 @@ import type {
   ActivePoolItem,
   DetailActivePool,
 } from './types';
-import { SyncController } from 'controllers/Sync';
-import type { Nominations } from 'contexts/Balances/types';
-import type { ApiPromise } from '@polkadot/api';
 
 export class ActivePoolsController {
   // ------------------------------------------------------

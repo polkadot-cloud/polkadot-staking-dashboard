@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useSetup } from 'contexts/Setup';
 import type { PayeeOptions } from 'contexts/Setup/types';
-import { Spacer } from 'library/Form/Wrappers';
+import { defaultPayee } from 'controllers/Balances/defaults';
 import { usePayeeConfig } from 'hooks/usePayeeConfig';
+import { Spacer } from 'library/Form/Wrappers';
 import { PayeeInput } from 'library/PayeeInput';
 import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
@@ -14,10 +14,10 @@ import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
-import type { MaybeAddress } from 'types';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Subheading } from 'pages/Nominate/Wrappers';
-import { defaultPayee } from 'controllers/Balances/defaults';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import type { MaybeAddress } from 'types';
 
 export const Payee = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');

@@ -1,26 +1,26 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { PolkawatchApi, type ValidatorDetail } from '@polkawatch/ddp-client';
+import { useSize } from '@w3ux/hooks';
 import { Polkicon } from '@w3ux/react-polkicon';
 import { ellipsisFn } from '@w3ux/utils';
-import { useEffect, useState, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
+import { useNetwork } from 'contexts/Network';
+import { usePlugins } from 'contexts/Plugins';
+import { useUi } from 'contexts/UI';
+import { PolkaWatchController } from 'controllers/PolkaWatch';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { GeoDonut } from 'library/Graphs/GeoDonut';
 import { formatSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
-import { useSize } from '@w3ux/hooks';
 import { Title } from 'library/Modal/Title';
-import { StatusLabel } from 'library/StatusLabel';
-import { PolkawatchApi, type ValidatorDetail } from '@polkawatch/ddp-client';
-import { useOverlay } from 'kits/Overlay/Provider';
 import { PluginLabel } from 'library/PluginLabel';
-import { usePlugins } from 'contexts/Plugins';
-import { useNetwork } from 'contexts/Network';
-import { PolkaWatchController } from 'controllers/PolkaWatch';
+import { StatusLabel } from 'library/StatusLabel';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ButtonHelp } from 'ui-buttons';
-import { useUi } from 'contexts/UI';
 
 export const ValidatorGeo = () => {
   const { t } = useTranslation('modals');

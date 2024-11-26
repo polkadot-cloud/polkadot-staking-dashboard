@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Wrapper } from './Wrapper';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWarning } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { OnlineStatusController } from 'controllers/OnlineStatus';
+import { isCustomEvent } from 'controllers/utils';
 import { useEffect, useRef, useState } from 'react';
 import { useEventListener } from 'usehooks-ts';
-import { isCustomEvent } from 'controllers/utils';
-import { OnlineStatusController } from 'controllers/OnlineStatus';
+import { Wrapper } from './Wrapper';
 
 export const Offline = () => {
   // Whether the app is offline.

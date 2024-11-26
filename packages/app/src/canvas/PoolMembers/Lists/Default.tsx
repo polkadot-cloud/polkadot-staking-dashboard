@@ -1,19 +1,19 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { poolMembersPerPage } from 'library/List/defaults';
+import type { Sync } from '@w3ux/types';
 import { useApi } from 'contexts/Api';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import type { PoolMember } from 'contexts/Pools/PoolMembers/types';
 import { List, ListStatusHeader, Wrapper as ListWrapper } from 'library/List';
+import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { ListProvider } from 'library/List/context';
-import type { Sync } from '@w3ux/types';
+import { poolMembersPerPage } from 'library/List/defaults';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Member } from './Member';
 import type { DefaultMembersListProps } from './types';
-import type { PoolMember } from 'contexts/Pools/PoolMembers/types';
-import { MotionContainer } from 'library/List/MotionContainer';
 
 export const MembersListInner = ({
   pagination,

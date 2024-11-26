@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyApi } from 'types';
 import type { ApiPromise } from '@polkadot/api';
 import type { AnyJson } from '@w3ux/types';
+import type { AnyApi } from 'types';
 
 export class IdentitiesController {
   static fetch = async (api: ApiPromise, addresses: string[]) => {

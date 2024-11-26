@@ -1,17 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { isValidAddress, formatAccountSs58 } from '@w3ux/utils';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useVaultAccounts } from '@w3ux/react-connect-kit';
+import type { AnyJson } from '@w3ux/types';
+import { formatAccountSs58, isValidAddress } from '@w3ux/utils';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { useNetwork } from 'contexts/Network';
 import { usePrompt } from 'contexts/Prompt';
 import { QRViewerWrapper } from 'library/Import/Wrappers';
 import { QrScanSignature } from 'library/QRCode/ScanSignature';
-import { useNetwork } from 'contexts/Network';
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import type { AnyJson } from '@w3ux/types';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ButtonSecondary } from 'ui-buttons';
-import { useVaultAccounts } from '@w3ux/react-connect-kit';
 
 export const Reader = () => {
   const { t } = useTranslation('modals');

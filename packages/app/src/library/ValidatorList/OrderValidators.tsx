@@ -3,10 +3,10 @@
 
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useTranslation } from 'react-i18next';
+import { useFilters } from 'contexts/Filters';
 import { Title } from 'library/Prompt/Title';
 import { FilterListButton, FilterListWrapper } from 'library/Prompt/Wrappers';
-import { useFilters } from 'contexts/Filters';
+import { useTranslation } from 'react-i18next';
 import { useValidatorFilters } from '../../hooks/useValidatorFilters';
 
 export const OrderValidators = () => {

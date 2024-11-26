@@ -6,15 +6,15 @@ import {
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import type { AnyJson } from '@w3ux/types';
 import { usePrompt } from 'contexts/Prompt';
 import { useTxMeta } from 'contexts/TxMeta';
 import { QRViewerWrapper } from 'library/Import/Wrappers';
 import { QrDisplayPayload } from 'library/QRCode/DisplayPayload';
 import { QrScanSignature } from 'library/QRCode/ScanSignature';
 import type { SignerPromptProps } from 'library/SubmitTx/types';
-import type { AnyJson } from '@w3ux/types';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ButtonPrimary, ButtonSecondary } from 'ui-buttons';
 
 export const SignPrompt = ({ submitAddress }: SignerPromptProps) => {

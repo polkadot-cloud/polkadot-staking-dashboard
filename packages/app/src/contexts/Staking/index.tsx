@@ -1,30 +1,30 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { rmCommas, setStateWithRef } from '@w3ux/utils';
-import type { ReactNode } from 'react';
-import { createContext, useContext, useRef, useState } from 'react';
-import { useBalances } from 'contexts/Balances';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import type { ExternalAccount } from '@w3ux/react-connect-kit/types';
+import { rmCommas, setStateWithRef } from '@w3ux/utils';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useBalances } from 'contexts/Balances';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useNetwork } from 'contexts/Network';
 import type {
   EraStakers,
   Exposure,
   ExposureOther,
   StakingContextInterface,
 } from 'contexts/Staking/types';
+import { SyncController } from 'controllers/Sync';
+import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import type { AnyApi, MaybeAddress } from 'types';
 import Worker from 'workers/stakers?worker';
 import type { ProcessExposuresResponse } from 'workers/types';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useApi } from '../Api';
 import { useBonded } from '../Bonded';
 import { defaultEraStakers, defaultStakingContext } from './defaults';
-import { setLocalEraExposures, getLocalEraExposures } from './Utils';
-import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
-import { SyncController } from 'controllers/Sync';
+import { getLocalEraExposures, setLocalEraExposures } from './Utils';
 
 const worker = new Worker();
 

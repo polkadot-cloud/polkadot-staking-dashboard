@@ -1,38 +1,38 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import type { AnyJson, Sync } from '@w3ux/types';
 import { rmCommas, shuffle } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
+import { MaxEraRewardPointsEras } from 'consts';
+import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
+import { useStaking } from 'contexts/Staking';
+import { IdentitiesController } from 'controllers/Identities';
+import { useErasPerDay } from 'hooks/useErasPerDay';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import type { AnyApi, Fn } from 'types';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { useNetwork } from 'contexts/Network';
-import { useApi } from 'contexts/Api';
-import { MaxEraRewardPointsEras } from 'consts';
-import { useStaking } from 'contexts/Staking';
 import type {
   EraPointsBoundaries,
   ErasRewardPoints,
   Identity,
+  SuperIdentity,
   Validator,
   ValidatorAddresses,
-  SuperIdentity,
+  ValidatorEraPointHistory,
   ValidatorListEntry,
   ValidatorsContextInterface,
-  ValidatorEraPointHistory,
   ValidatorStatus,
 } from '../types';
+import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
 import {
   defaultAverageEraValidatorReward,
-  defaultValidatorsData,
-  defaultValidatorsContext,
   defaultEraPointsBoundaries,
+  defaultValidatorsContext,
+  defaultValidatorsData,
 } from './defaults';
-import { getLocalEraValidators, setLocalEraValidators } from '../Utils';
-import { useErasPerDay } from 'hooks/useErasPerDay';
-import { IdentitiesController } from 'controllers/Identities';
-import type { AnyJson, Sync } from '@w3ux/types';
 
 export const ValidatorsContext = createContext<ValidatorsContextInterface>(
   defaultValidatorsContext

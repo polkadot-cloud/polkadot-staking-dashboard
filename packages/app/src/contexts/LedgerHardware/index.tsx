@@ -1,14 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { AnyJson } from '@w3ux/types';
 import { setStateWithRef } from '@w3ux/utils';
+import { compare } from 'compare-versions';
+import { useApi } from 'contexts/Api';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { MaybeString } from 'types';
-import { useApi } from 'contexts/Api';
 import { getLedgerErrorType } from './Utils';
 import { defaultFeedback, defaultLedgerHardwareContext } from './defaults';
+import { Ledger } from './static/ledger';
 import type {
   FeedbackMessage,
   HandleErrorFeedback,
@@ -16,9 +19,6 @@ import type {
   LedgerResponse,
   LedgerStatusCode,
 } from './types';
-import { Ledger } from './static/ledger';
-import type { AnyJson } from '@w3ux/types';
-import { compare } from 'compare-versions';
 
 export const LedgerHardwareContext =
   createContext<LedgerHardwareContextInterface>(defaultLedgerHardwareContext);

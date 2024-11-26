@@ -3,25 +3,25 @@
 
 import { unitToPlanck } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { BondFeedback } from 'library/Form/Bond/BondFeedback';
-import { Warning } from 'library/Form/Warning';
+import { useTxMeta } from 'contexts/TxMeta';
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
-import { Close } from 'library/Modal/Close';
-import { SubmitTx } from 'library/SubmitTx';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from 'kits/Overlay/Provider';
-import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
+import { BondFeedback } from 'library/Form/Bond/BondFeedback';
+import { Warning } from 'library/Form/Warning';
+import { Close } from 'library/Modal/Close';
+import { SubmitTx } from 'library/SubmitTx';
 import { planckToUnitBn } from 'library/Utils';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Bond = () => {
   const { t } = useTranslation('modals');

@@ -1,17 +1,23 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useBalances } from 'contexts/Balances';
+import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { useFavoritePools } from 'contexts/Pools/FavoritePools';
+import { useActivePools } from 'hooks/useActivePools';
+import { useSyncing } from 'hooks/useSyncing';
+import { useOverlay } from 'kits/Overlay/Provider';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList';
-import { StatBoxList } from 'library/StatBoxList';
-import { useFavoritePools } from 'contexts/Pools/FavoritePools';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { PoolListProvider } from 'library/PoolList/context';
+import { StatBoxList } from 'library/StatBoxList';
+import { WithdrawPrompt } from 'library/WithdrawPrompt';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { PageRow, PageTitle, RowSection } from 'ui-structure';
 import { Roles } from '../Roles';
 import { ClosurePrompts } from './ClosurePrompts';
 import { PoolFavorites } from './Favorites';
@@ -23,12 +29,6 @@ import { MinCreateBondStat } from './Stats/MinCreateBond';
 import { MinJoinBondStat } from './Stats/MinJoinBond';
 import { Status } from './Status';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
-import { useActivePools } from 'hooks/useActivePools';
-import { useBalances } from 'contexts/Balances';
-import { PageTitle, PageRow, RowSection } from 'ui-structure';
-import { WithdrawPrompt } from 'library/WithdrawPrompt';
-import { useSyncing } from 'hooks/useSyncing';
-import { useNetwork } from 'contexts/Network';
 
 export const HomeInner = () => {
   const { t } = useTranslation('pages');

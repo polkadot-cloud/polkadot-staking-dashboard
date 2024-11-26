@@ -3,12 +3,12 @@
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import type { FunctionComponent, SVGProps } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { usePrompt } from 'contexts/Prompt';
-import { TitleWrapper } from './Wrappers';
+import type { FunctionComponent, SVGProps } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ButtonHelp, ButtonSecondary } from 'ui-buttons';
+import { TitleWrapper } from './Wrappers';
 
 interface TitleProps {
   title: string;

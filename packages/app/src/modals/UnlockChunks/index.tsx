@@ -2,21 +2,21 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@w3ux/utils';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
+import type { UnlockChunk } from 'contexts/Balances/types';
+import { useLedgerHardware } from 'contexts/LedgerHardware';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { Title } from 'library/Modal/Title';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from 'kits/Overlay/Provider';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useLedgerHardware } from 'contexts/LedgerHardware';
-import { Forms } from './Forms';
-import { Overview } from './Overview';
-import type { UnlockChunk } from 'contexts/Balances/types';
-import { ModalSection } from 'kits/Overlay/structure/ModalSection';
 import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle';
 import { ModalMotionTwoSection } from 'kits/Overlay/structure/ModalMotionTwoSection';
+import { ModalSection } from 'kits/Overlay/structure/ModalSection';
+import { Title } from 'library/Modal/Title';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Forms } from './Forms';
+import { Overview } from './Overview';
 
 export const UnlockChunks = () => {
   const { t } = useTranslation('modals');

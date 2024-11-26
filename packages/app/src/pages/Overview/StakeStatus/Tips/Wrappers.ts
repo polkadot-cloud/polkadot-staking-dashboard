@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { PageWidthMediumThreshold, SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { PageWidthMediumThreshold, SmallFontSizeMaxWidth } from 'consts';
 
 export const TipsWrapper = styled.div`
   width: 100%;

@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { extractUrlValue, varToUrlHash } from '@w3ux/utils';
+import { NetworkList } from 'config/networks';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
-import { NetworkList } from 'config/networks';
 import type { NetworkName } from 'types';
-import type { NetworkState, NetworkContextInterface } from './types';
 import { defaultNetwork, defaultNetworkContext } from './defaults';
+import type { NetworkContextInterface, NetworkState } from './types';
 
 export const NetworkContext = createContext<NetworkContextInterface>(
   defaultNetworkContext

@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useHelp } from 'contexts/Help';
-import type { LegendItemProps } from './types';
 import { ButtonHelp } from 'ui-buttons';
+import type { LegendItemProps } from './types';
 
 export const LegendItem = ({
   dataClass,

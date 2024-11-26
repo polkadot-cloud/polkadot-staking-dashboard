@@ -1,14 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { localStorageOrDefault, unitToPlanck } from '@w3ux/utils';
+import BigNumber from 'bignumber.js';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useNetwork } from 'contexts/Network';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
 import type { BondFor, MaybeAddress } from 'types';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import {
   defaultNominatorProgress,
   defaultPoolProgress,
@@ -23,7 +24,6 @@ import type {
   PoolSetups,
   SetupContextInterface,
 } from './types';
-import BigNumber from 'bignumber.js';
 
 export const SetupContext =
   createContext<SetupContextInterface>(defaultSetupContext);

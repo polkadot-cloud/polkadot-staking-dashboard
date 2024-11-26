@@ -3,11 +3,11 @@
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { onMouseHandlers } from '../util';
-import type { ButtonOptionProps } from './types';
 import classNames from 'classnames';
-import classes from './index.module.scss';
 import commonClasses from '../common.module.scss';
+import { onMouseHandlers } from '../util';
+import classes from './index.module.scss';
+import type { ButtonOptionProps } from './types';
 
 /**
  * @name ButtonOption

@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { AnyFunction, AnyJson } from '@w3ux/types';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
-import type { AnyFunction, AnyJson } from '@w3ux/types';
 import {
   defaultExcludes,
   defaultFiltersInterface,

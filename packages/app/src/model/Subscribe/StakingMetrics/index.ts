@@ -6,8 +6,8 @@ import type BigNumber from 'bignumber.js';
 import type { APIActiveEra } from 'contexts/Api/types';
 import { ApiController } from 'controllers/Api';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
-import type { NetworkName } from 'types';
 import { stringToBn } from 'library/Utils';
+import type { NetworkName } from 'types';
 
 export class StakingMetrics implements Unsubscribable {
   // ------------------------------------------------------

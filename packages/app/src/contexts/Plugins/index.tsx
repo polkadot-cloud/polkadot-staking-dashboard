@@ -1,17 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { setStateWithRef } from '@w3ux/utils';
-import type { ReactNode } from 'react';
-import { createContext, useContext, useRef, useState } from 'react';
-import type { Plugin } from 'config/plugins';
-import * as defaults from './defaults';
-import type { PluginsContextInterface } from './types';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import { setStateWithRef } from '@w3ux/utils';
+import type { Plugin } from 'config/plugins';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { SubscanController } from 'controllers/Subscan';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
+import * as defaults from './defaults';
+import type { PluginsContextInterface } from './types';
 import { getAvailablePlugins } from './Utils';
 
 export const PluginsContext = createContext<PluginsContextInterface>(

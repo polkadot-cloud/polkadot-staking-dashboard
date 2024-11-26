@@ -1,6 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { AnyJson } from '@w3ux/types';
 import type { MutableRefObject, ReactElement, ReactNode } from 'react';
 import {
   Fragment,
@@ -9,7 +10,6 @@ import {
   useLayoutEffect,
   useRef,
 } from 'react';
-import type { AnyJson } from '@w3ux/types';
 import { SelectItemsWrapper, TwoThreshold } from './Wrapper';
 import type { SelectItemsProps } from './types';
 

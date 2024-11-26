@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { localStorageOrDefault, setStateWithRef } from '@w3ux/utils';
-import type { MutableRefObject, ReactNode } from 'react';
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { PageWidthMediumThreshold } from 'consts';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import type { AnyJson } from '@w3ux/types';
+import { localStorageOrDefault, setStateWithRef } from '@w3ux/utils';
+import { PageWidthMediumThreshold } from 'consts';
+import type { MutableRefObject, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import * as defaults from './defaults';
 import type { UIContextInterface } from './types';
 

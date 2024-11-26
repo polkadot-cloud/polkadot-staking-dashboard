@@ -3,9 +3,9 @@
 
 import { useNetwork } from 'contexts/Network';
 import { Helmet } from 'react-helmet';
+import { useTranslation } from 'react-i18next';
 import type { PageItem } from 'types';
 import { Page } from 'ui-structure';
-import { useTranslation } from 'react-i18next';
 
 export const PageWithTitle = ({ page }: { page: PageItem }) => {
   const { t } = useTranslation();

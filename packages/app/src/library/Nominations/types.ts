@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ListFormat } from 'library/PoolList/types';
-import type { Validator } from 'contexts/Validators/types';
 import type { AnyJson } from '@w3ux/types';
+import type { Validator } from 'contexts/Validators/types';
+import type { ListFormat } from 'library/PoolList/types';
 
 export interface ManageNominationsInterface {
   addToSelected: (item: AnyJson) => void;

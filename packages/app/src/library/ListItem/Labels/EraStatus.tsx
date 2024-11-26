@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { capitalizeFirstLetter } from '@w3ux/utils';
-import { useTranslation } from 'react-i18next';
-import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useNetwork } from 'contexts/Network';
-import type { EraStatusProps } from '../types';
 import { useSyncing } from 'hooks/useSyncing';
+import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { planckToUnitBn } from 'library/Utils';
+import { useTranslation } from 'react-i18next';
+import type { EraStatusProps } from '../types';
 
 export const EraStatus = ({ noMargin, status, totalStake }: EraStatusProps) => {
   const { t } = useTranslation('library');

@@ -1,27 +1,27 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useSize } from '@w3ux/hooks';
+import { Odometer } from '@w3ux/react-odometer';
+import { minDecimalPlaces } from '@w3ux/utils';
+import BigNumber from 'bignumber.js';
+import { useNetwork } from 'contexts/Network';
 import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
+import { useUi } from 'contexts/UI';
+import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
+import { useSubscanData } from 'hooks/useSubscanData';
+import { useSyncing } from 'hooks/useSyncing';
+import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
 import { formatRewardsForGraphs, formatSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
-import { useSize } from '@w3ux/hooks';
 import { StatusLabel } from 'library/StatusLabel';
-import { useSubscanData } from 'hooks/useSubscanData';
-import { CardHeaderWrapper } from 'library/Card/Wrappers';
-import { Odometer } from '@w3ux/react-odometer';
-import { locales, DefaultLocale } from 'locales';
-import BigNumber from 'bignumber.js';
-import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
-import { minDecimalPlaces } from '@w3ux/utils';
-import { useNetwork } from 'contexts/Network';
-import { useSyncing } from 'hooks/useSyncing';
 import { planckToUnitBn } from 'library/Utils';
-import { useUi } from 'contexts/UI';
+import { DefaultLocale, locales } from 'locales';
+import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Payouts = () => {
   const { i18n, t } = useTranslation('pages');

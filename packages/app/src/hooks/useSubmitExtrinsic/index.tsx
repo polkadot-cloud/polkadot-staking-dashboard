@@ -1,21 +1,21 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useExtensions } from '@w3ux/react-connect-kit';
 import BigNumber from 'bignumber.js';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { DappName, ManualSigners } from 'consts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useLedgerHardware } from 'contexts/LedgerHardware';
 import { useTxMeta } from 'contexts/TxMeta';
+import { NotificationsController } from 'controllers/Notifications';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { AnyApi } from 'types';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useBuildPayload } from '../useBuildPayload';
 import { useProxySupported } from '../useProxySupported';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
-import { NotificationsController } from 'controllers/Notifications';
-import { useExtensions } from '@w3ux/react-connect-kit';
 
 export const useSubmitExtrinsic = ({
   tx,

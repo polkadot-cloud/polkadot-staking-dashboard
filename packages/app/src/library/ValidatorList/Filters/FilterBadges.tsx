@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faBan, faCheck } from '@fortawesome/free-solid-svg-icons';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useFilters } from 'contexts/Filters';
+import { useValidatorFilters } from 'hooks/useValidatorFilters';
 import { Container } from 'library/Filter/Container';
 import { Item } from 'library/Filter/Item';
-import { useValidatorFilters } from 'hooks/useValidatorFilters';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const FilterBadges = () => {
   const { t } = useTranslation('library');

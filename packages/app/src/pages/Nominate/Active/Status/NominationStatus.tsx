@@ -2,18 +2,18 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faBolt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useFastUnstake } from 'contexts/FastUnstake';
 import { useStaking } from 'contexts/Staking';
 import { useNominationStatus } from 'hooks/useNominationStatus';
-import { useUnstaking } from 'hooks/useUnstaking';
-import { Stat } from 'library/Stat';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useSyncing } from 'hooks/useSyncing';
+import { useUnstaking } from 'hooks/useUnstaking';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { Stat } from 'library/Stat';
+import { useTranslation } from 'react-i18next';
 
 export const NominationStatus = ({
   showButtons = true,

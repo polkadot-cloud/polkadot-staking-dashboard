@@ -1,24 +1,24 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ReactNode } from 'react';
-import { createContext, useCallback, useContext } from 'react';
-import type { MaybeAddress } from 'types';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import { useExtensionAccounts } from '@w3ux/react-connect-kit';
 import type {
   ExternalAccount,
   ImportedAccount,
 } from '@w3ux/react-connect-kit/types';
 import { ManualSigners } from 'consts';
-import { useExtensionAccounts } from '@w3ux/react-connect-kit';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { defaultImportedAccountsContext } from './defaults';
-import type { ImportedAccountsContextInterface } from './types';
-import { useOtherAccounts } from '../OtherAccounts';
-import { BalancesController } from 'controllers/Balances';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
+import { BalancesController } from 'controllers/Balances';
+import type { ReactNode } from 'react';
+import { createContext, useCallback, useContext } from 'react';
+import type { MaybeAddress } from 'types';
+import { useOtherAccounts } from '../OtherAccounts';
 import { getActiveAccountLocal, getActiveProxyLocal } from '../Utils';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { defaultImportedAccountsContext } from './defaults';
+import type { ImportedAccountsContextInterface } from './types';
 
 export const ImportedAccountsContext =
   createContext<ImportedAccountsContextInterface>(

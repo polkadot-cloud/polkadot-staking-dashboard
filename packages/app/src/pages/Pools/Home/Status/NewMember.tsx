@@ -1,19 +1,19 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CallToActionWrapper } from 'library/CallToAction';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { useStatusButtons } from './useStatusButtons';
-import { useTranslation } from 'react-i18next';
-import { useOverlay } from 'kits/Overlay/Provider';
-import type { NewMemberProps } from './types';
-import { CallToActionLoader } from 'library/Loader/CallToAction';
-import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
-import { PoolSync } from 'library/PoolSync';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useJoinPools } from 'contexts/Pools/JoinPools';
+import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { CallToActionWrapper } from 'library/CallToAction';
+import { CallToActionLoader } from 'library/Loader/CallToAction';
+import { PoolSync } from 'library/PoolSync';
 import { StyledLoader } from 'library/PoolSync/Loader';
+import { useTranslation } from 'react-i18next';
 import { usePoolsTabs } from '../context';
+import type { NewMemberProps } from './types';
+import { useStatusButtons } from './useStatusButtons';
 
 export const NewMember = ({ syncing }: NewMemberProps) => {
   const { t } = useTranslation();

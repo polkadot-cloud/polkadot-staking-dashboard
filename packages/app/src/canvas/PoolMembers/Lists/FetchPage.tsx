@@ -1,22 +1,22 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { poolMembersPerPage } from 'library/List/defaults';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useNetwork } from 'contexts/Network';
 import { usePlugins } from 'contexts/Plugins';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import type { PoolMember } from 'contexts/Pools/PoolMembers/types';
+import { SubscanController } from 'controllers/Subscan';
 import { List, ListStatusHeader, Wrapper as ListWrapper } from 'library/List';
+import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { ListProvider } from 'library/List/context';
-import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { poolMembersPerPage } from 'library/List/defaults';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Member } from './Member';
 import type { FetchpageMembersListProps } from './types';
-import type { PoolMember } from 'contexts/Pools/PoolMembers/types';
-import { MotionContainer } from 'library/List/MotionContainer';
-import { SubscanController } from 'controllers/Subscan';
 
 export const MembersListInner = ({
   pagination,

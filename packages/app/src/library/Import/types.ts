@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ImportedAccount } from '@w3ux/react-connect-kit/types';
-import type { FunctionComponent, SVGProps } from 'react';
 import type { AnyFunction } from '@w3ux/types';
+import type { FunctionComponent, SVGProps } from 'react';
 
 export interface HeadingProps {
   connectTo?: string;

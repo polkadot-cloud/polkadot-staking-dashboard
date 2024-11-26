@@ -3,38 +3,38 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { motion } from 'framer-motion';
-import type { FormEvent } from 'react';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useFilters } from 'contexts/Filters';
+import { useNetwork } from 'contexts/Network';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTheme } from 'contexts/Themes';
+import type { Validator, ValidatorListEntry } from 'contexts/Validators/types';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
+import { motion } from 'framer-motion';
+import { useNominationStatus } from 'hooks/useNominationStatus';
+import { useSyncing } from 'hooks/useSyncing';
+import { useOverlay } from 'kits/Overlay/Provider';
 import {
   FilterHeaderWrapper,
   List,
   Wrapper as ListWrapper,
 } from 'library/List';
+import { validatorsPerPage } from 'library/List/defaults';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { SearchInput } from 'library/List/SearchInput';
 import { Selectable } from 'library/List/Selectable';
 import { ValidatorItem } from 'library/ValidatorList/ValidatorItem';
-import type { Validator, ValidatorListEntry } from 'contexts/Validators/types';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { useNominationStatus } from 'hooks/useNominationStatus';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
+import type { FormEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useValidatorFilters } from '../../hooks/useValidatorFilters';
 import { ListProvider, useList } from '../List/context';
-import type { ValidatorListProps } from './types';
-import { FilterHeaders } from './Filters/FilterHeaders';
 import { FilterBadges } from './Filters/FilterBadges';
+import { FilterHeaders } from './Filters/FilterHeaders';
+import type { ValidatorListProps } from './types';
 import type { NominationStatus } from './ValidatorItem/types';
-import { useSyncing } from 'hooks/useSyncing';
-import { validatorsPerPage } from 'library/List/defaults';
 
 export const ValidatorListInner = ({
   // Default list values.

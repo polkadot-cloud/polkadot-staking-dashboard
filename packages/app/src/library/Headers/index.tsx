@@ -4,8 +4,8 @@
 import { Connect } from './Connect';
 import { Connected } from './Connected';
 import { SideMenuToggle } from './SideMenuToggle';
-import { LargeScreensOnly, Wrapper } from './Wrappers';
 import { Sync } from './Sync';
+import { LargeScreensOnly, Wrapper } from './Wrappers';
 
 export const Headers = () => (
   <Wrapper>

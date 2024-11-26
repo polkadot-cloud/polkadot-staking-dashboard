@@ -1,20 +1,20 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useContext, type ReactNode, createContext } from 'react';
-import { useNetwork } from 'contexts/Network';
-import { ellipsisFn, formatAccountSs58 } from '@w3ux/utils';
 import type {
   ExternalAccount,
   ExternalAccountAddedBy,
 } from '@w3ux/react-connect-kit/types';
+import { ellipsisFn, formatAccountSs58 } from '@w3ux/utils';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useNetwork } from 'contexts/Network';
+import { createContext, useContext, type ReactNode } from 'react';
+import { defaultExternalAccountsContext } from './defaults';
 import type {
   AddExternalAccountResult,
   ExternalAccountImportType,
   ExternalAccountsContextInterface,
 } from './types';
-import { defaultExternalAccountsContext } from './defaults';
 import {
   addLocalExternalAccount,
   externalAccountExistsLocal,

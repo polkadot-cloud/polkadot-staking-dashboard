@@ -1,25 +1,25 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { FC, FunctionComponent, SVGProps } from 'react';
-import type { Theme } from 'contexts/Themes/types';
 import type { ExtensionInjected } from '@w3ux/react-connect-kit/types';
+import type { AnyJson } from '@w3ux/types';
 import type BigNumber from 'bignumber.js';
-import type { NotificationItem } from 'controllers/Notifications/types';
-import type { ActiveBalance } from 'contexts/Balances/types';
-import type { PayoutType } from 'controllers/Subscan/types';
 import type {
   APIActiveEra,
   APINetworkMetrics,
   APIPoolsConfig,
   APIStakingMetrics,
 } from 'contexts/Api/types';
-import type { SyncEvent } from 'controllers/Sync/types';
+import type { ActiveBalance } from 'contexts/Balances/types';
+import type { Theme } from 'contexts/Themes/types';
 import type { DetailActivePool } from 'controllers/ActivePools/types';
-import type { APIEventDetail } from 'model/Api/types';
+import type { NotificationItem } from 'controllers/Notifications/types';
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types';
-import type { AnyJson } from '@w3ux/types';
+import type { PayoutType } from 'controllers/Subscan/types';
+import type { SyncEvent } from 'controllers/Sync/types';
+import type { APIEventDetail } from 'model/Api/types';
 import type { BlockNumberEventDetail } from 'model/Subscribe/BlockNumber/types';
+import type { FC, FunctionComponent, SVGProps } from 'react';
 
 declare global {
   interface Window {

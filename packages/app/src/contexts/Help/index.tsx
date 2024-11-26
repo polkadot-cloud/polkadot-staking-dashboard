@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { createContext, useContext, useState } from 'react';
 import type { MaybeString } from 'types';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import * as defaults from './defaults';
 import type {
   HelpContextInterface,

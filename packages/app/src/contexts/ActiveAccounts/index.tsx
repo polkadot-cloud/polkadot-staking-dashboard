@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { setStateWithRef } from '@w3ux/utils';
+import { useNetwork } from 'contexts/Network';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import type { MaybeAddress } from 'types';
-import { setStateWithRef } from '@w3ux/utils';
-import { useNetwork } from 'contexts/Network';
-import type { ActiveAccountsContextInterface, ActiveProxy } from './types';
 import { defaultActiveAccountsContext } from './defaults';
+import type { ActiveAccountsContextInterface, ActiveProxy } from './types';
 
 export const ActiveAccountsContext =
   createContext<ActiveAccountsContextInterface>(defaultActiveAccountsContext);

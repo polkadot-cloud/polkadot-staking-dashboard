@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import { useTranslation } from 'react-i18next';
-import { Pie } from 'library/StatBoxList/Pie';
-import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
+import { Pie } from 'library/StatBoxList/Pie';
 import { planckToUnitBn } from 'library/Utils';
+import { useTranslation } from 'react-i18next';
 
 export const SupplyStakedStat = () => {
   const { t } = useTranslation('pages');

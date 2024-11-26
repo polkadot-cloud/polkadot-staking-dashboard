@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { u8aConcat } from '@polkadot/util';
+import { decodeAddress } from '@polkadot/util-crypto';
 import type { ReactElement } from 'react';
 import { memo, useMemo } from 'react';
 import { QrDisplay } from './Display.js';
 import type { DisplayPayloadProps } from './types.js';
-import { u8aConcat } from '@polkadot/util';
-import { decodeAddress } from '@polkadot/util-crypto';
 
 const createSignPayload = (
   address: string,

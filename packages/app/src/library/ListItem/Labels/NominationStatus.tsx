@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import { useTranslation } from 'react-i18next';
-import { useStaking } from 'contexts/Staking';
-import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useNetwork } from 'contexts/Network';
-import type { NominationStatusProps } from '../types';
+import { useStaking } from 'contexts/Staking';
 import { useSyncing } from 'hooks/useSyncing';
+import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { planckToUnitBn } from 'library/Utils';
+import { useTranslation } from 'react-i18next';
+import type { NominationStatusProps } from '../types';
 
 export const NominationStatus = ({
   address,

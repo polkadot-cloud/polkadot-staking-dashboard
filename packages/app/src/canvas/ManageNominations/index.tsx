@@ -1,29 +1,29 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useApi } from 'contexts/Api';
+import { useBonded } from 'contexts/Bonded';
+import { useHelp } from 'contexts/Help';
+import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { usePrompt } from 'contexts/Prompt';
+import { NotificationsController } from 'controllers/Notifications';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { GenerateNominations } from 'library/GenerateNominations';
-import { useEffect, useState } from 'react';
-import { Subheading } from 'pages/Nominate/Wrappers';
-import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { usePrompt } from 'contexts/Prompt';
-import { useHelp } from 'contexts/Help';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useBonded } from 'contexts/Bonded';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { SubmitTx } from 'library/SubmitTx';
 import type {
   NominationSelection,
   NominationSelectionWithResetCounter,
 } from 'library/GenerateNominations/types';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { RevertPrompt } from './Prompts/RevertPrompt';
-import { CanvasSubmitTxFooter, CanvasFullScreenWrapper } from '../Wrappers';
-import { NotificationsController } from 'controllers/Notifications';
+import { SubmitTx } from 'library/SubmitTx';
+import { Subheading } from 'pages/Nominate/Wrappers';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ButtonHelp, ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons';
+import { CanvasFullScreenWrapper, CanvasSubmitTxFooter } from '../Wrappers';
+import { RevertPrompt } from './Prompts/RevertPrompt';
 
 export const ManageNominations = () => {
   const { t } = useTranslation('library');

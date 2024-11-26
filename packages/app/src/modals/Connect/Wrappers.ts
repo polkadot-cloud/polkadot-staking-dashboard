@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components';
 import { TwoThreshold } from 'library/SelectItems/Wrapper';
+import styled from 'styled-components';
 
 // Wraps a list of extensions. `SelectItems` typically follows this wrapper, with the items embedded
 // within it.

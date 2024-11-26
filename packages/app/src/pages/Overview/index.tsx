@@ -1,20 +1,20 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useTranslation } from 'react-i18next';
 import { CardWrapper } from 'library/Card/Wrappers';
-import { StatBoxList } from 'library/StatBoxList';
 import { PluginLabel } from 'library/PluginLabel';
-import { AccountControls } from './AccountControls';
+import { StatBoxList } from 'library/StatBoxList';
+import { useTranslation } from 'react-i18next';
+import { PageHeading, PageRow, PageTitle, RowSection } from 'ui-structure';
 import { BalanceChart } from './AccountBalance/BalanceChart';
 import { BalanceLinks } from './AccountBalance/BalanceLinks';
+import { AccountControls } from './AccountControls';
 import { NetworkStats } from './NetworkSats';
 import { Payouts } from './Payouts';
 import { StakeStatus } from './StakeStatus';
 import { ActiveEraStat } from './Stats/ActiveEraTimeLeft';
 import { AverageRewardRateStat } from './Stats/AveragelRewardRate';
 import { SupplyStakedStat } from './Stats/SupplyStaked';
-import { PageTitle, PageHeading, PageRow, RowSection } from 'ui-structure';
 
 export const Overview = () => {
   const { t } = useTranslation('pages');

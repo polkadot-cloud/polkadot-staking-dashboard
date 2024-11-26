@@ -10,15 +10,8 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "strictPropertyInitialization": false,
-    "noUnusedLocals": true,    
+    "noUnusedLocals": true
   },
-  "include": [
-    "packages/**/*",
-    "env.d.ts"
-  ],
-  "exclude": [
-    "**/*/node_modules",
-    "**/*/dist",
-    "**/*/lottie"
-  ],
+  "include": ["packages/**/*", "env.d.ts"],
+  "exclude": ["**/*/node_modules", "**/*/dist", "**/*/lottie"]
 }

@@ -4,10 +4,11 @@
 **/yarn.lock
 **/package-lock.json
 **/.eslintrc.js
-**/tsconfig.json
-dist
-src/img/**/*
-public/lottie/player.js
-CHANGELOG.md
+**/dist
+
 .yarn
 .licenserc.json
+CHANGELOG.md
+
+packages/app/src/img/**/*
+packages/app/public/lottie/player.js

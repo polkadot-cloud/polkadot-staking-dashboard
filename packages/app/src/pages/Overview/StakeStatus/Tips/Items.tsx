@@ -3,10 +3,10 @@
 
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useAnimationControls } from 'framer-motion';
-import { useEffect, useState } from 'react';
 import { usePrompt } from 'contexts/Prompt';
+import { useAnimationControls } from 'framer-motion';
 import { Tip } from 'library/Tips/Tip';
+import { useEffect, useState } from 'react';
 import { ItemInnerWrapper, ItemWrapper, ItemsWrapper } from './Wrappers';
 import type { TipDisplayWithControls, TipItemsProps } from './types';
 
