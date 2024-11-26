@@ -2,15 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Polkicon } from '@w3ux/react-polkicon';
-import { useTranslation } from 'react-i18next';
-import { usePrompt } from 'contexts/Prompt';
-import { ConfirmWrapper } from 'library/Import/Wrappers';
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import type { RemoveProps } from './types';
 import { ellipsisFn } from '@w3ux/utils';
-import { NotificationsController } from 'controllers/Notifications';
-import { ButtonMonoInvert, ButtonMono } from 'ui-buttons';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useNetwork } from 'contexts/Network';
+import { usePrompt } from 'contexts/Prompt';
+import { NotificationsController } from 'controllers/Notifications';
+import { ConfirmWrapper } from 'library/Import/Wrappers';
+import { useTranslation } from 'react-i18next';
+import { ButtonMono, ButtonMonoInvert } from 'ui-buttons';
+import type { RemoveProps } from './types';
 
 export const Remove = ({ address, getHandler, removeHandler }: RemoveProps) => {
   const { t } = useTranslation('modals');

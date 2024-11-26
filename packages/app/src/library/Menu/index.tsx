@@ -1,10 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffect, useRef } from 'react';
-import { useMenu } from 'contexts/Menu';
-import { Wrapper } from './Wrappers';
 import { useOutsideAlerter } from '@w3ux/hooks';
+import { useMenu } from 'contexts/Menu';
+import { useEffect, useRef } from 'react';
+import { Wrapper } from './Wrappers';
 
 export const Menu = () => {
   const {

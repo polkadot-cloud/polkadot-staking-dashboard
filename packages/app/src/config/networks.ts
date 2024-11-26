@@ -1,17 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import BigNumber from 'bignumber.js';
+import PolkadotTokenSVG from 'config/tokens/svg/DOT.svg?react';
+import KusamaTokenSVG from 'config/tokens/svg/KSM.svg?react';
+import WestendTokenSVG from 'config/tokens/svg/WND.svg?react';
 import KusamaIconSVG from 'img/kusama_icon.svg?react';
 import KusamaInlineSVG from 'img/kusama_inline.svg?react';
 import PolkadotIconSVG from 'img/polkadot_icon.svg?react';
 import PolkadotInlineSVG from 'img/polkadot_inline.svg?react';
 import WestendIconSVG from 'img/westend_icon.svg?react';
 import WestendInlineSVG from 'img/westend_inline.svg?react';
-import PolkadotTokenSVG from 'config/tokens/svg/DOT.svg?react';
-import KusamaTokenSVG from 'config/tokens/svg/KSM.svg?react';
-import WestendTokenSVG from 'config/tokens/svg/WND.svg?react';
 import type { Networks, SystemChain } from 'types';
-import BigNumber from 'bignumber.js';
 
 export const NetworkList: Networks = {
   polkadot: {

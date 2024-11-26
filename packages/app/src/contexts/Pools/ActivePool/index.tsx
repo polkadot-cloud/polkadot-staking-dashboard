@@ -1,23 +1,23 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { setStateWithRef } from '@w3ux/utils';
-import type { ReactNode } from 'react';
-import { createContext, useContext, useRef, useState } from 'react';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { useNetwork } from 'contexts/Network';
+import { setStateWithRef } from '@w3ux/utils';
+import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from '../../Api';
-import type { ActivePoolContextState } from './types';
-import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import { useBalances } from 'contexts/Balances';
+import { useNetwork } from 'contexts/Network';
 import { ActivePoolsController } from 'controllers/ActivePools';
-import { defaultActivePoolContext, defaultPoolRoles } from './defaults';
+import { ApiController } from 'controllers/Api';
 import { SyncController } from 'controllers/Sync';
 import { useActivePools } from 'hooks/useActivePools';
-import BigNumber from 'bignumber.js';
-import { ApiController } from 'controllers/Api';
+import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import type { SystemChainId } from 'types';
+import { useApi } from '../../Api';
+import { defaultActivePoolContext, defaultPoolRoles } from './defaults';
+import type { ActivePoolContextState } from './types';
 
 export const ActivePoolContext = createContext<ActivePoolContextState>(
   defaultActivePoolContext

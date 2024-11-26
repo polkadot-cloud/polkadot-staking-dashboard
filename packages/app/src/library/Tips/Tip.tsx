@@ -2,18 +2,18 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { usePlugins } from 'contexts/Plugins';
+import { usePrompt } from 'contexts/Prompt';
+import { Title } from 'library/Prompt/Title';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { Title } from 'library/Prompt/Title';
-import { usePrompt } from 'contexts/Prompt';
-import { usePlugins } from 'contexts/Plugins';
-import type { TipProps } from './types';
 import {
   ButtonPrimary,
   ButtonPrimaryInvert,
   ButtonSecondary,
 } from 'ui-buttons';
+import type { TipProps } from './types';
 
 export const Tip = ({ title, description, page }: TipProps) => {
   const { t } = useTranslation();

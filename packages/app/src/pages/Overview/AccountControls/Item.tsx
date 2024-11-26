@@ -4,15 +4,15 @@
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ellipsisFn } from '@w3ux/utils';
-import { useTranslation } from 'react-i18next';
-import type { NotificationText } from 'controllers/Notifications/types';
-import { useProxies } from 'contexts/Proxies';
 import { Polkicon } from '@w3ux/react-polkicon';
+import { ellipsisFn } from '@w3ux/utils';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useProxies } from 'contexts/Proxies';
+import { NotificationsController } from 'controllers/Notifications';
+import type { NotificationText } from 'controllers/Notifications/types';
+import { useTranslation } from 'react-i18next';
 import { ItemWrapper } from './Wrappers';
 import type { ActiveAccountProps } from './types';
-import { NotificationsController } from 'controllers/Notifications';
 
 export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
   const { t } = useTranslation('pages');

@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { getDurationFromNow } from '@w3ux/hooks/util';
+import type { TimeLeftFormatted, TimeLeftRaw } from '@w3ux/types';
 import { planckToUnit, rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
 import { fromUnixTime } from 'date-fns';
-import type { TimeLeftFormatted, TimeLeftRaw } from '@w3ux/types';
-import { getDurationFromNow } from '@w3ux/hooks/util';
 import type { TFunction } from 'i18next';
 
 // Return `planckToUnit` as a `BigNumber`.

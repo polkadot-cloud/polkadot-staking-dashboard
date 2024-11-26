@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Wrapper } from './Wrapper';
 import { ButtonHelp, ButtonMonoInvert, ButtonPrimaryInvert } from 'ui-buttons';
 import type { HardwareStatusBarProps } from './types';
+import { Wrapper } from './Wrapper';
 
 export const HardwareStatusBar = ({
   handleCancel,

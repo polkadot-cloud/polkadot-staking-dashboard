@@ -3,11 +3,11 @@
 
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useTranslation } from 'react-i18next';
+import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTheme } from 'contexts/Themes';
 import { CardWrapper } from 'library/Card/Wrappers';
-import { useNetwork } from 'contexts/Network';
+import { useTranslation } from 'react-i18next';
 import { MembersList as FetchPageMemberList } from './Lists/FetchPage';
 
 export const Members = () => {

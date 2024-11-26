@@ -1,18 +1,18 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ReactNode } from 'react';
-import { createContext, useContext, useState } from 'react';
-import type { JoinPoolsContextInterface } from './types';
-import { MaxPoolsForJoin, defaultJoinPoolsContext } from './defaults';
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { useBondedPools } from '../BondedPools';
-import { useApi } from 'contexts/Api';
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { usePoolPerformance } from '../PoolPerformance';
-import type { BondedPool } from '../BondedPools/types';
 import { rmCommas, shuffle } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
+import { useApi } from 'contexts/Api';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useState } from 'react';
+import { useBondedPools } from '../BondedPools';
+import type { BondedPool } from '../BondedPools/types';
+import { usePoolPerformance } from '../PoolPerformance';
+import { MaxPoolsForJoin, defaultJoinPoolsContext } from './defaults';
+import type { JoinPoolsContextInterface } from './types';
 
 export const JoinPoolsContext = createContext<JoinPoolsContextInterface>(
   defaultJoinPoolsContext

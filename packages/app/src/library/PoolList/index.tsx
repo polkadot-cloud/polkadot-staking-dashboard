@@ -3,33 +3,33 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { motion } from 'framer-motion';
-import type { FormEvent } from 'react';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { poolsPerPage } from 'library/List/defaults';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import { useApi } from 'contexts/Api';
 import { useFilters } from 'contexts/Filters';
+import { useNetwork } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import { useTheme } from 'contexts/Themes';
-import { Tabs } from 'library/Filter/Tabs';
+import { motion } from 'framer-motion';
 import { usePoolFilters } from 'hooks/usePoolFilters';
+import { useSyncing } from 'hooks/useSyncing';
+import { Tabs } from 'library/Filter/Tabs';
 import {
   FilterHeaderWrapper,
   List,
   ListStatusHeader,
   Wrapper as ListWrapper,
 } from 'library/List';
+import { poolsPerPage } from 'library/List/defaults';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { SearchInput } from 'library/List/SearchInput';
 import { Pool } from 'library/Pool';
-import { useNetwork } from 'contexts/Network';
+import type { FormEvent } from 'react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { usePoolList } from './context';
 import type { PoolListProps } from './types';
-import type { BondedPool } from 'contexts/Pools/BondedPools/types';
-import { useSyncing } from 'hooks/useSyncing';
-import { useApi } from 'contexts/Api';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
 
 export const PoolList = ({
   allowMoreCols,

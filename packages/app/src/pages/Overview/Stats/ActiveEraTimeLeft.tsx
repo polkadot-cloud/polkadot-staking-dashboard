@@ -1,17 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import BigNumber from 'bignumber.js';
-import { fromUnixTime, getUnixTime } from 'date-fns';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useEraTimeLeft } from 'hooks/useEraTimeLeft';
 import { useTimeLeft } from '@w3ux/hooks';
 import { secondsFromNow } from '@w3ux/hooks/util';
-import { Timeleft } from 'library/StatBoxList/Timeleft';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
-import { formatTimeleft } from 'library/Utils';
 import { useNetwork } from 'contexts/Network';
+import { fromUnixTime, getUnixTime } from 'date-fns';
+import { useEraTimeLeft } from 'hooks/useEraTimeLeft';
+import { Timeleft } from 'library/StatBoxList/Timeleft';
+import { formatTimeleft } from 'library/Utils';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const ActiveEraStat = () => {
   const { t, i18n } = useTranslation('pages');

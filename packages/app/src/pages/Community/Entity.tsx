@@ -2,19 +2,19 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { PageRow, PageHeading } from 'ui-structure';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
+import type { Validator } from 'contexts/Validators/types';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { ValidatorList } from 'library/ValidatorList';
-import { useNetwork } from 'contexts/Network';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ButtonSecondary } from 'ui-buttons';
+import { PageHeading, PageRow } from 'ui-structure';
 import { Item } from './Item';
 import { ItemsWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
-import type { Validator } from 'contexts/Validators/types';
-import { ButtonSecondary } from 'ui-buttons';
 
 export const Entity = () => {
   const { t } = useTranslation('pages');

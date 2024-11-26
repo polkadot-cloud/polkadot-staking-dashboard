@@ -1,24 +1,24 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useApi } from 'contexts/Api';
+import { useBonded } from 'contexts/Bonded';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useNetwork } from 'contexts/Network';
+import { ActivePoolsController } from 'controllers/ActivePools';
+import { ApiController } from 'controllers/Api';
+import { BalancesController } from 'controllers/Balances';
+import { SyncController } from 'controllers/Sync';
+import { isCustomEvent } from 'controllers/utils';
+import { useActiveBalances } from 'hooks/useActiveBalances';
+import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef } from 'react';
 import type { MaybeAddress, SystemChainId } from 'types';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useEventListener } from 'usehooks-ts';
 import * as defaults from './defaults';
 import type { BalancesContextInterface } from './types';
-import { useEventListener } from 'usehooks-ts';
-import { isCustomEvent } from 'controllers/utils';
-import { BalancesController } from 'controllers/Balances';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useActiveBalances } from 'hooks/useActiveBalances';
-import { useBonded } from 'contexts/Bonded';
-import { SyncController } from 'controllers/Sync';
-import { useApi } from 'contexts/Api';
-import { ActivePoolsController } from 'controllers/ActivePools';
-import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
-import { useNetwork } from 'contexts/Network';
-import { ApiController } from 'controllers/Api';
 
 export const BalancesContext = createContext<BalancesContextInterface>(
   defaults.defaultBalancesContext

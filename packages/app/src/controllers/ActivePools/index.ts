@@ -1,6 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
+import { SubscriptionsController } from 'controllers/Subscriptions';
+import { SyncController } from 'controllers/Sync';
+import { ActivePoolAccount } from 'model/Subscribe/ActivePoolAccount';
 import type { MaybeAddress, NetworkName, SystemChainId } from 'types';
 import type {
   AccountActivePools,
@@ -8,10 +12,6 @@ import type {
   ActivePoolItem,
   DetailActivePool,
 } from './types';
-import { SyncController } from 'controllers/Sync';
-import { SubscriptionsController } from 'controllers/Subscriptions';
-import { ActivePoolAccount } from 'model/Subscribe/ActivePoolAccount';
-import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
 
 export class ActivePoolsController {
   // Pool ids that are being subscribed to. Keyed by address.

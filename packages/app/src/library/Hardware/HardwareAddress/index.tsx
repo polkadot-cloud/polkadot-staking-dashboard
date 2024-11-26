@@ -8,12 +8,12 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ellipsisFn, unescape } from '@w3ux/utils';
 import type { FormEvent } from 'react';
 import { useState } from 'react';
-import { ellipsisFn, unescape } from '@w3ux/utils';
-import { Wrapper } from './Wrapper';
 import { ButtonText } from 'ui-buttons';
 import type { HardwareAddressProps } from './types';
+import { Wrapper } from './Wrapper';
 
 export const HardwareAddress = ({
   network,

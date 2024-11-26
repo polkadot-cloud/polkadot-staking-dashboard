@@ -4,24 +4,24 @@
 import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
+import { useApi } from 'contexts/Api';
+import type { UnlockChunk } from 'contexts/Balances/types';
+import { useNetwork } from 'contexts/Network';
 import { getUnixTime } from 'date-fns';
+import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
+import { useUnstaking } from 'hooks/useUnstaking';
+import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
+import { planckToUnitBn, timeleftAsString } from 'library/Utils';
+import { StaticNote } from 'modals/Utils/StaticNote';
 import type { Dispatch, ForwardedRef, SetStateAction } from 'react';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
-import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
-import { timeleftAsString, planckToUnitBn } from 'library/Utils';
-import { useUnstaking } from 'hooks/useUnstaking';
-import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
-import { StaticNote } from 'modals/Utils/StaticNote';
 import type { BondFor } from 'types';
-import { useNetwork } from 'contexts/Network';
+import { ButtonSubmit } from 'ui-buttons';
 import { Chunk } from './Chunk';
 import { ContentWrapper } from './Wrappers';
-import type { UnlockChunk } from 'contexts/Balances/types';
-import { ButtonSubmit } from 'ui-buttons';
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
-import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
 
 interface OverviewProps {
   unlocking: UnlockChunk[];

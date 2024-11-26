@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useTranslation } from 'react-i18next';
-import { useTxMeta } from 'contexts/TxMeta';
-import type { MaybeAddress } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useTxMeta } from 'contexts/TxMeta';
+import { useTranslation } from 'react-i18next';
+import type { MaybeAddress } from 'types';
 
 export const useSignerWarnings = () => {
   const { t } = useTranslation('modals');

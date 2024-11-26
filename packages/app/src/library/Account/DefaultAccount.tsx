@@ -3,11 +3,11 @@
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ellipsisFn } from '@w3ux/utils';
-import { useTranslation } from 'react-i18next';
 import { Polkicon } from '@w3ux/react-polkicon';
+import { ellipsisFn } from '@w3ux/utils';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Wrapper } from './Wrapper';
 import type { AccountProps } from './types';
 

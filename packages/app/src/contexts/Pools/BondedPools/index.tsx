@@ -1,10 +1,23 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { u8aUnwrapBytes, u8aToString } from '@polkadot/util';
+import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import type { AnyJson, Sync } from '@w3ux/types';
 import { setStateWithRef, shuffle } from '@w3ux/utils';
+import { useNetwork } from 'contexts/Network';
+import { useStaking } from 'contexts/Staking';
+import { ApiController } from 'controllers/Api';
+import { SyncController } from 'controllers/Sync';
+import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
+import { BondedPools } from 'model/Entries/BondedPools';
+import { NominatorsMulti } from 'model/Query/NominatorsMulti';
+import { PoolMetadataMulti } from 'model/Query/PoolMetadataMulti';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
+import type { AnyApi, MaybeAddress } from 'types';
+import { useApi } from '../../Api';
+import { defaultBondedPoolsContext } from './defaults';
 import type {
   BondedPool,
   BondedPoolsContextState,
@@ -13,19 +26,6 @@ import type {
   PoolNominations,
   PoolTab,
 } from './types';
-import { useStaking } from 'contexts/Staking';
-import type { AnyApi, MaybeAddress } from 'types';
-import type { AnyJson, Sync } from '@w3ux/types';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { useNetwork } from 'contexts/Network';
-import { useApi } from '../../Api';
-import { defaultBondedPoolsContext } from './defaults';
-import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
-import { SyncController } from 'controllers/Sync';
-import { BondedPools } from 'model/Entries/BondedPools';
-import { ApiController } from 'controllers/Api';
-import { NominatorsMulti } from 'model/Query/NominatorsMulti';
-import { PoolMetadataMulti } from 'model/Query/PoolMetadataMulti';
 
 export const BondedPoolsContext = createContext<BondedPoolsContextState>(
   defaultBondedPoolsContext

@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import { getUnixTime } from 'date-fns';
 import { useApi } from 'contexts/Api';
+import { getUnixTime } from 'date-fns';
 
 export const useEraTimeLeft = () => {
   const { consts, activeEra } = useApi();

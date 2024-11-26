@@ -1,43 +1,43 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import BigNumber from 'bignumber.js';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { DappName, ManualSigners } from 'consts';
-import { useLedgerHardware } from 'contexts/LedgerHardware';
-import { useTxMeta } from 'contexts/TxMeta';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import type {
-  UnsafeTx,
-  UseSubmitExtrinsic,
-  UseSubmitExtrinsicProps,
-} from './types';
-import { NotificationsController } from 'controllers/Notifications';
 import { useExtensions } from '@w3ux/react-connect-kit';
-import { useProxySupported } from 'hooks/useProxySupported';
-import { ApiController } from 'controllers/Api';
-import { useNetwork } from 'contexts/Network';
+import type { LedgerAccount } from '@w3ux/react-connect-kit/types';
+import { formatAccountSs58 } from '@w3ux/utils';
+import BigNumber from 'bignumber.js';
+import { DappName, ManualSigners } from 'consts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useLedgerHardware } from 'contexts/LedgerHardware';
+import { getLedgerApp } from 'contexts/LedgerHardware/Utils';
+import { useNetwork } from 'contexts/Network';
+import { usePrompt } from 'contexts/Prompt';
+import { useTxMeta } from 'contexts/TxMeta';
+import { useWalletConnect } from 'contexts/WalletConnect';
+import { ApiController } from 'controllers/Api';
+import { NotificationsController } from 'controllers/Notifications';
+import { useProxySupported } from 'hooks/useProxySupported';
+import { LedgerSigner } from 'library/Signers/LedgerSigner';
+import { VaultSigner } from 'library/Signers/VaultSigner';
+import type {
+  VaultSignatureResult,
+  VaultSignStatus,
+} from 'library/Signers/VaultSigner/types';
+import { SignPrompt } from 'library/SubmitTx/ManualSign/Vault/SignPrompt';
 import type { PolkadotSigner } from 'polkadot-api';
 import { AccountId, InvalidTxError } from 'polkadot-api';
 import {
   connectInjectedExtension,
   getPolkadotSignerFromPjs,
 } from 'polkadot-api/pjs-signer';
-import { formatAccountSs58 } from '@w3ux/utils';
-import { LedgerSigner } from 'library/Signers/LedgerSigner';
-import { getLedgerApp } from 'contexts/LedgerHardware/Utils';
-import type { LedgerAccount } from '@w3ux/react-connect-kit/types';
-import { VaultSigner } from 'library/Signers/VaultSigner';
-import { usePrompt } from 'contexts/Prompt';
-import { SignPrompt } from 'library/SubmitTx/ManualSign/Vault/SignPrompt';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type {
-  VaultSignatureResult,
-  VaultSignStatus,
-} from 'library/Signers/VaultSigner/types';
-import { useWalletConnect } from 'contexts/WalletConnect';
+  UnsafeTx,
+  UseSubmitExtrinsic,
+  UseSubmitExtrinsicProps,
+} from './types';
 
 export const useSubmitExtrinsic = ({
   tx,

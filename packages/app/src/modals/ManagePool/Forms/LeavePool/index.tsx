@@ -3,28 +3,27 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { unitToPlanck } from '@w3ux/utils';
-import { getUnixTime } from 'date-fns';
-import type { Dispatch, SetStateAction } from 'react';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { Warning } from 'library/Form/Warning';
+import { ApiController } from 'controllers/Api';
+import { getUnixTime } from 'date-fns';
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
-import { timeleftAsString, planckToUnitBn } from 'library/Utils';
-import { SubmitTx } from 'library/SubmitTx';
-import { StaticNote } from 'modals/Utils/StaticNote';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
-import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { ButtonSubmitInvert } from 'ui-buttons';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
-import { ApiController } from 'controllers/Api';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
+import { Warning } from 'library/Form/Warning';
+import { SubmitTx } from 'library/SubmitTx';
+import { planckToUnitBn, timeleftAsString } from 'library/Utils';
+import { StaticNote } from 'modals/Utils/StaticNote';
+import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ButtonSubmitInvert } from 'ui-buttons';
 
 export const LeavePool = ({
   setSection,

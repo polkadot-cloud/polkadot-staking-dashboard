@@ -1,17 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffect, useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import type { PoolRoles as PoolRolesInterface } from 'contexts/Pools/ActivePool/types';
 import { useSetup } from 'contexts/Setup';
+import type { PoolProgress } from 'contexts/Setup/types';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { Roles } from 'pages/Pools/Roles';
-import type { PoolProgress } from 'contexts/Setup/types';
-import type { PoolRoles as PoolRolesInterface } from 'contexts/Pools/ActivePool/types';
+import { useEffect, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 export const PoolRoles = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');

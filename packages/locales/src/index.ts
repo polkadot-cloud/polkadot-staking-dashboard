@@ -10,8 +10,8 @@ import libEn from './resources/en/library.json';
 import modalsEn from './resources/en/modals.json';
 import pagesEn from './resources/en/pages.json';
 import tipsEn from './resources/en/tips.json';
-import { doDynamicImport, getInitialLanguage, getResources } from './util';
 import type { LocaleEntry } from './types';
+import { doDynamicImport, getInitialLanguage, getResources } from './util';
 
 // The default locale.
 export const DefaultLocale = 'en';
@@ -68,5 +68,5 @@ if (dynamicLoad) {
   doDynamicImport(lng, i18next);
 }
 
-export { i18next };
 export * from './util';
+export { i18next };

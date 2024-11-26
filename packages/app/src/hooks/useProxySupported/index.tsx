@@ -1,16 +1,16 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { AnyJson } from '@w3ux/types';
 import {
   UnsupportedIfUniqueController,
   isSupportedProxyCall,
 } from 'config/proxies';
-import { useBonded } from 'contexts/Bonded';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useBonded } from 'contexts/Bonded';
 import { useProxies } from 'contexts/Proxies';
-import type { MaybeAddress } from 'types';
-import type { AnyJson } from '@w3ux/types';
 import type { UnsafeTx } from 'hooks/useSubmitExtrinsic/types';
+import type { MaybeAddress } from 'types';
 
 export const useProxySupported = () => {
   const { getBondedAccount } = useBonded();

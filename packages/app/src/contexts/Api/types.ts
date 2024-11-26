@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
+import type { ApiStatus, ConnectionType, PapiChainSpec } from 'model/Api/types';
 import type { ReactNode } from 'react';
 import type { NetworkName } from '../../types';
-import type { ApiStatus, ConnectionType, PapiChainSpec } from 'model/Api/types';
 
 export interface APIProviderProps {
   children: ReactNode;

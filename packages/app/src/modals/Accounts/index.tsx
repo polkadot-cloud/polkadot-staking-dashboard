@@ -2,11 +2,21 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
+import BigNumber from 'bignumber.js';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useApi } from 'contexts/Api';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useProxies } from 'contexts/Proxies';
+import { useTransferOptions } from 'contexts/TransferOptions';
+import { useActiveBalances } from 'hooks/useActiveBalances';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { ModalCustomHeader } from 'kits/Overlay/structure/ModalCustomHeader';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
+import { ActionItem } from 'library/ActionItem';
 import { Fragment, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useProxies } from 'contexts/Proxies';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import type { MaybeAddress } from 'types';
+import { ButtonPrimaryInvert, ButtonText } from 'ui-buttons';
 import { AccountButton } from './Account';
 import { Delegates } from './Delegates';
 import { AccountSeparator, AccountWrapper } from './Wrappers';
@@ -16,16 +26,6 @@ import type {
   AccountNominatingAndInPool,
   AccountNotStaking,
 } from './types';
-import { useActiveBalances } from 'hooks/useActiveBalances';
-import type { MaybeAddress } from 'types';
-import { useTransferOptions } from 'contexts/TransferOptions';
-import BigNumber from 'bignumber.js';
-import { useApi } from 'contexts/Api';
-import { ButtonPrimaryInvert, ButtonText } from 'ui-buttons';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
-import { ModalCustomHeader } from 'kits/Overlay/structure/ModalCustomHeader';
-import { ActionItem } from 'library/ActionItem';
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');

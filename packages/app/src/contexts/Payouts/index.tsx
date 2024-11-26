@@ -1,17 +1,24 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ReactNode } from 'react';
-import { useState, useEffect, useRef, useContext, createContext } from 'react';
-import { useStaking } from 'contexts/Staking';
-import { useApi } from 'contexts/Api';
-import type { AnyApi } from 'types';
 import type { AnyJson, Sync } from '@w3ux/types';
-import Worker from 'workers/stakers?worker';
 import { setStateWithRef } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
-import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
+import { useStaking } from 'contexts/Staking';
+import { ApiController } from 'controllers/Api';
+import { perbillToPercent } from 'library/Utils';
+import { BondedMulti } from 'model/Query/BondedMulti';
+import { ClaimedRewards } from 'model/Query/ClaimedRewards';
+import { ErasRewardPoints } from 'model/Query/ErasRewardPoints';
+import { ErasValidatorReward } from 'model/Query/ErasValidatorReward';
+import { ValidatorPrefs } from 'model/Query/ValidatorPrefs';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import type { AnyApi } from 'types';
+import Worker from 'workers/stakers?worker';
 import { MaxSupportedPayoutEras, defaultPayoutsContext } from './defaults';
 import type {
   LocalValidatorExposure,
@@ -24,13 +31,6 @@ import {
   setLocalEraExposure,
   setLocalUnclaimedPayouts,
 } from './Utils';
-import { BondedMulti } from 'model/Query/BondedMulti';
-import { ApiController } from 'controllers/Api';
-import { ClaimedRewards } from 'model/Query/ClaimedRewards';
-import { ErasValidatorReward } from 'model/Query/ErasValidatorReward';
-import { ErasRewardPoints } from 'model/Query/ErasRewardPoints';
-import { ValidatorPrefs } from 'model/Query/ValidatorPrefs';
-import { perbillToPercent } from 'library/Utils';
 
 const worker = new Worker();
 

@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useTranslation } from 'react-i18next';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { Text } from 'library/StatBoxList/Text';
+import { useTranslation } from 'react-i18next';
 
 export const AverageCommissionStat = () => {
   const { t } = useTranslation('pages');

@@ -3,15 +3,15 @@
 
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useBalances } from 'contexts/Balances';
 import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
-import { Wrapper } from './Wrapper';
-import type { StatusLabelProps } from './types';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useBalances } from 'contexts/Balances';
 import { useSyncing } from 'hooks/useSyncing';
 import { ButtonHelp } from 'ui-buttons';
+import { Wrapper } from './Wrapper';
+import type { StatusLabelProps } from './types';
 
 export const StatusLabel = ({
   title,

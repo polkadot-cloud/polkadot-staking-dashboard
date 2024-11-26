@@ -3,18 +3,18 @@
 
 import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
-import { useTranslation } from 'react-i18next';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
-import { usePoolCommission } from 'hooks/usePoolCommission';
-import { Header } from 'library/Announcements/Header';
 import { useNetwork } from 'contexts/Network';
-import { Announcements } from './Announcements';
-import type { PoolStatLabel } from 'library/Announcements/types';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { Wrapper } from 'library/Announcements/Wrappers';
-import { planckToUnitBn } from 'library/Utils';
 import { usePlugins } from 'contexts/Plugins';
+import { useActivePool } from 'contexts/Pools/ActivePool';
+import { usePoolCommission } from 'hooks/usePoolCommission';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { Header } from 'library/Announcements/Header';
+import type { PoolStatLabel } from 'library/Announcements/types';
+import { Wrapper } from 'library/Announcements/Wrappers';
+import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
+import { planckToUnitBn } from 'library/Utils';
+import { useTranslation } from 'react-i18next';
+import { Announcements } from './Announcements';
 
 export const PoolStats = () => {
   const { t } = useTranslation('pages');

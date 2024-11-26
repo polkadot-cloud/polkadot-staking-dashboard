@@ -45,8 +45,6 @@
     "html5-qrcode": "^2.3.8",
     "i18next-browser-languagedetector": "^8.0.0",
     "locales": "workspace:*",
-    "lodash.debounce": "^4.0.8",
-    "lodash.throttle": "^4.1.1",
     "plugin-staking-api": "workspace:*",
     "polkadot-api": "^1.7.3",
     "qrcode-generator": "1.4.4",

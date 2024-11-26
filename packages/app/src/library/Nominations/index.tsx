@@ -2,23 +2,23 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCog, faStopCircle } from '@fortawesome/free-solid-svg-icons';
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useBalances } from 'contexts/Balances';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useHelp } from 'contexts/Help';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useStaking } from 'contexts/Staking';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { CardHeaderWrapper } from 'library/Card/Wrappers';
-import { useUnstaking } from 'hooks/useUnstaking';
-import { ValidatorList } from 'library/ValidatorList';
-import type { MaybeAddress } from 'types';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { ListStatusHeader } from 'library/List';
-import { Wrapper } from './Wrapper';
 import { useSyncing } from 'hooks/useSyncing';
-import { useBalances } from 'contexts/Balances';
-import { ButtonPrimary, ButtonHelp } from 'ui-buttons';
+import { useUnstaking } from 'hooks/useUnstaking';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { CardHeaderWrapper } from 'library/Card/Wrappers';
+import { ListStatusHeader } from 'library/List';
+import { ValidatorList } from 'library/ValidatorList';
+import { useTranslation } from 'react-i18next';
+import type { MaybeAddress } from 'types';
+import { ButtonHelp, ButtonPrimary } from 'ui-buttons';
+import { Wrapper } from './Wrapper';
 
 export const Nominations = ({
   bondFor,

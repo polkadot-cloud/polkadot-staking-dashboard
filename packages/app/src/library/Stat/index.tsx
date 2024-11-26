@@ -3,17 +3,17 @@
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Odometer } from '@w3ux/react-odometer';
 import { Polkicon } from '@w3ux/react-polkicon';
+import type { AnyJson } from '@w3ux/types';
 import { applyWidthAsPadding, minDecimalPlaces } from '@w3ux/utils';
-import { Fragment, useEffect, useLayoutEffect, useRef } from 'react';
 import { useHelp } from 'contexts/Help';
 import { useNetwork } from 'contexts/Network';
+import { NotificationsController } from 'controllers/Notifications';
+import { Fragment, useEffect, useLayoutEffect, useRef } from 'react';
+import { ButtonHelp, ButtonPrimary, ButtonSecondary } from 'ui-buttons';
 import { Wrapper } from './Wrapper';
 import type { StatAddress, StatProps } from './types';
-import { NotificationsController } from 'controllers/Notifications';
-import type { AnyJson } from '@w3ux/types';
-import { ButtonPrimary, ButtonHelp, ButtonSecondary } from 'ui-buttons';
-import { Odometer } from '@w3ux/react-odometer';
 
 export const Stat = ({
   label,

@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import { useErasPerDay } from '../useErasPerDay';
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import type { AverageRewardRate, UseAverageRewardRate } from './types';
-import { defaultAverageRewardRate } from './defaults';
-import { useNetwork } from 'contexts/Network';
 import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { planckToUnitBn } from 'library/Utils';
+import { useErasPerDay } from '../useErasPerDay';
+import { defaultAverageRewardRate } from './defaults';
+import type { AverageRewardRate, UseAverageRewardRate } from './types';
 
 export const useAverageRewardRate = (): UseAverageRewardRate => {
   const { erasPerDay } = useErasPerDay();

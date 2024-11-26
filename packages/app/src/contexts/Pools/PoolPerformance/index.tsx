@@ -1,29 +1,29 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import type { Sync } from '@w3ux/types';
+import { mergeDeep, setStateWithRef } from '@w3ux/utils';
+import BigNumber from 'bignumber.js';
+import { MaxEraRewardPointsEras } from 'consts';
+import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
+import { useStaking } from 'contexts/Staking';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
-import { MaxEraRewardPointsEras } from 'consts';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import Worker from 'workers/poolPerformance?worker';
-import { useNetwork } from 'contexts/Network';
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { useApi } from 'contexts/Api';
-import BigNumber from 'bignumber.js';
-import { mergeDeep, setStateWithRef } from '@w3ux/utils';
-import { useStaking } from 'contexts/Staking';
+import {
+  defaultPoolPerformanceContext,
+  defaultPoolPerformanceTask,
+} from './defaults';
 import type {
   PoolPerformanceContextInterface,
   PoolPerformanceTasks,
   PoolRewardPoints,
-  PoolRewardPointsMap,
   PoolRewardPointsKey,
+  PoolRewardPointsMap,
 } from './types';
-import {
-  defaultPoolPerformanceTask,
-  defaultPoolPerformanceContext,
-} from './defaults';
-import type { Sync } from '@w3ux/types';
 
 const worker = new Worker();
 

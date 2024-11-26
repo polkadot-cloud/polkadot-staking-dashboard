@@ -1,18 +1,26 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import type { AnyJson } from '@w3ux/types';
 import { setStateWithRef } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
+import { useStaking } from 'contexts/Staking';
+import { validateLocalExposure } from 'contexts/Validators/Utils';
+import { ApiController } from 'controllers/Api';
+import { SubscriptionsController } from 'controllers/Subscriptions';
+import { isCustomEvent } from 'controllers/utils';
+import { FastUnstakeConfig } from 'model/Subscribe/FastUnstakeConfig';
+import type { FastUnstakeHead } from 'model/Subscribe/FastUnstakeConfig/types';
+import { FastUnstakeQueue } from 'model/Subscribe/FastUnstakeQueue';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { useApi } from 'contexts/Api';
-import { useStaking } from 'contexts/Staking';
 import type { MaybeAddress } from 'types';
+import { useEventListener } from 'usehooks-ts';
 import Worker from 'workers/stakers?worker';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { validateLocalExposure } from 'contexts/Validators/Utils';
-import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { defaultFastUnstakeContext, defaultMeta } from './defaults';
 import type {
   FastUnstakeContextInterface,
@@ -20,14 +28,6 @@ import type {
   LocalMeta,
   MetaInterface,
 } from './types';
-import type { AnyJson } from '@w3ux/types';
-import { SubscriptionsController } from 'controllers/Subscriptions';
-import { FastUnstakeConfig } from 'model/Subscribe/FastUnstakeConfig';
-import { useEventListener } from 'usehooks-ts';
-import { isCustomEvent } from 'controllers/utils';
-import type { FastUnstakeHead } from 'model/Subscribe/FastUnstakeConfig/types';
-import { FastUnstakeQueue } from 'model/Subscribe/FastUnstakeQueue';
-import { ApiController } from 'controllers/Api';
 
 const worker = new Worker();
 

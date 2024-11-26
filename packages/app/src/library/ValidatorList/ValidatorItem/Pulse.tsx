@@ -2,16 +2,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
+import { MaxEraRewardPointsEras } from 'consts';
+import { useApi } from 'contexts/Api';
+import { useTooltip } from 'contexts/Tooltip';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { Fragment } from 'react';
 import {
   TooltipTrigger,
   ValidatorPulseWrapper,
 } from 'library/ListItem/Wrappers';
-import { useTooltip } from 'contexts/Tooltip';
+import { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MaxEraRewardPointsEras } from 'consts';
-import { useApi } from 'contexts/Api';
 import { normaliseEraPoints, prefillEraPoints } from './Utils';
 import type { PulseGraphProps, PulseProps } from './types';
 

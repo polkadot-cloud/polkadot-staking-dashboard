@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { AnyJson } from '@w3ux/types';
+import type { ListFormat } from 'library/PoolList/types';
 import { createContext, useContext, useState } from 'react';
 import { defaultContext } from './defaults';
-import type { AnyJson } from '@w3ux/types';
 import type { ListContextInterface, ListProviderProps } from './types';
-import type { ListFormat } from 'library/PoolList/types';
 
 export const ListContext = createContext<ListContextInterface>(defaultContext);
 

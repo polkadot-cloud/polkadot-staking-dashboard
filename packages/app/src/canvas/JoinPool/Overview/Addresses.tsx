@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { CardWrapper } from 'library/Card/Wrappers';
+import { useTranslation } from 'react-i18next';
+import type { OverviewSectionProps } from '../types';
 import { AddressesWrapper, HeadingWrapper } from '../Wrappers';
 import { AddressSection } from './AddressSection';
-import type { OverviewSectionProps } from '../types';
-import { useTranslation } from 'react-i18next';
 
 export const Addresses = ({
   bondedPool: { addresses },

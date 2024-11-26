@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useFilters } from 'contexts/Filters';
-import { TabsWrapper, TabWrapper } from './Wrappers';
-import type { FilterTabsProps } from './types';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import type { PoolTab } from 'contexts/Pools/BondedPools/types';
+import { TabsWrapper, TabWrapper } from './Wrappers';
+import type { FilterTabsProps } from './types';
 
 export const Tabs = ({ config }: FilterTabsProps) => {
   const { resetFilters, setMultiFilters } = useFilters();

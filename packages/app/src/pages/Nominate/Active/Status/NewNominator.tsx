@@ -1,17 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CallToActionWrapper } from 'library/CallToAction';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { useTranslation } from 'react-i18next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useNavigate } from 'react-router-dom';
 import { useApi } from 'contexts/Api';
-import type { NewNominatorProps } from '../types';
-import { CallToActionLoader } from 'library/Loader/CallToAction';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOverlay } from 'kits/Overlay/Provider';
+import { CallToActionWrapper } from 'library/CallToAction';
+import { CallToActionLoader } from 'library/Loader/CallToAction';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import type { NewNominatorProps } from '../types';
 
 export const NewNominator = ({ syncing }: NewNominatorProps) => {
   const { t } = useTranslation();

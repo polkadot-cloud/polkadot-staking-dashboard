@@ -1,28 +1,28 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useOnResize } from '@w3ux/hooks';
+import type { AnyJson } from '@w3ux/types';
 import { setStateWithRef } from '@w3ux/utils';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { TipsConfig } from 'config/tips';
 import { TipsThresholdMedium, TipsThresholdSmall } from 'consts';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
+import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useFillVariables } from 'hooks/useFillVariables';
-import type { AnyJson } from '@w3ux/types';
-import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useSyncing } from 'hooks/useSyncing';
+import { DefaultLocale } from 'locales';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Items } from './Items';
 import { PageToggle } from './PageToggle';
 import { Syncing } from './Syncing';
 import { TipsWrapper } from './Wrappers';
 import type { TipDisplay } from './types';
-import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
-import { useSyncing } from 'hooks/useSyncing';
-import { DefaultLocale } from 'locales';
-import { useOnResize } from '@w3ux/hooks';
 
 export const Tips = () => {
   const { i18n, t } = useTranslation();

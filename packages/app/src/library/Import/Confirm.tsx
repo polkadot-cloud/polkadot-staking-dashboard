@@ -2,16 +2,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Polkicon } from '@w3ux/react-polkicon';
-import { useTranslation } from 'react-i18next';
 import { usePrompt } from 'contexts/Prompt';
+import { useTranslation } from 'react-i18next';
 
-import { ConfirmWrapper } from 'library/Import/Wrappers';
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import type { ConfirmProps } from './types';
-import { NotificationsController } from 'controllers/Notifications';
 import { ellipsisFn } from '@w3ux/utils';
-import { ButtonMonoInvert, ButtonMono } from 'ui-buttons';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useNetwork } from 'contexts/Network';
+import { NotificationsController } from 'controllers/Notifications';
+import { ConfirmWrapper } from 'library/Import/Wrappers';
+import { ButtonMono, ButtonMonoInvert } from 'ui-buttons';
+import type { ConfirmProps } from './types';
 
 export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
   const { t } = useTranslation('modals');

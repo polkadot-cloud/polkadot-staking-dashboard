@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyApi } from 'types';
 import type { AnyJson } from '@w3ux/types';
 import type { PapiApi } from 'model/Api/types';
 import { IdentityOfMulti } from 'model/Query/IdentityOfMulti';
 import { SuperOfMulti } from 'model/Query/SuperOfMulti';
+import type { AnyApi } from 'types';
 
 export class IdentitiesController {
   static fetch = async (pApi: PapiApi, addresses: string[]) => {

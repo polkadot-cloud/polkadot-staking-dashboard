@@ -1,33 +1,33 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { setStateWithRef } from '@w3ux/utils';
-import type { ReactNode } from 'react';
-import { createContext, useContext, useRef, useState } from 'react';
-import { useBalances } from 'contexts/Balances';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import type { ExternalAccount } from '@w3ux/react-connect-kit/types';
+import type { AnyJson } from '@w3ux/types';
+import { setStateWithRef } from '@w3ux/utils';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useBalances } from 'contexts/Balances';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useNetwork } from 'contexts/Network';
 import type {
   EraStakers,
   Exposure,
   StakingContextInterface,
 } from 'contexts/Staking/types';
+import { ApiController } from 'controllers/Api';
+import { SyncController } from 'controllers/Sync';
+import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
+import { ErasStakersPaged } from 'model/ErasStakersPaged';
+import { ErasStakersOverview } from 'model/Query/ErasStakersOverview';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import type { AnyApi, MaybeAddress } from 'types';
 import Worker from 'workers/stakers?worker';
 import type { ProcessExposuresResponse } from 'workers/types';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useApi } from '../Api';
 import { useBonded } from '../Bonded';
 import { defaultEraStakers, defaultStakingContext } from './defaults';
-import { setLocalEraExposures, getLocalEraExposures } from './Utils';
-import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
-import { SyncController } from 'controllers/Sync';
-import { ErasStakersOverview } from 'model/Query/ErasStakersOverview';
-import { ApiController } from 'controllers/Api';
-import type { AnyJson } from '@w3ux/types';
-import { ErasStakersPaged } from 'model/ErasStakersPaged';
+import { getLocalEraExposures, setLocalEraExposures } from './Utils';
 
 const worker = new Worker();
 

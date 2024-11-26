@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import { useEffect, useMemo, useState } from 'react';
-import { useTransferOptions } from 'contexts/TransferOptions';
-import type { BondFor } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { ApiController } from 'controllers/Api';
 import { useNetwork } from 'contexts/Network';
+import { useTransferOptions } from 'contexts/TransferOptions';
+import { ApiController } from 'controllers/Api';
+import { useEffect, useMemo, useState } from 'react';
+import type { BondFor } from 'types';
 
 export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
   const { network } = useNetwork();

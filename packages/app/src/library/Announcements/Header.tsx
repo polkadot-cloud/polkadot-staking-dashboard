@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useHelp } from 'contexts/Help';
+import { ButtonHelp, ButtonTertiary } from 'ui-buttons';
 import { HeaderWrapper } from './Wrappers';
 import type { HeaderProps } from './types';
-import { ButtonHelp, ButtonTertiary } from 'ui-buttons';
 
 export const Header = ({ items }: HeaderProps) => {
   const { openHelp } = useHelp();

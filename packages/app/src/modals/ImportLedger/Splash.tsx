@@ -2,16 +2,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useLedgerHardware } from 'contexts/LedgerHardware';
-import { useHelp } from 'contexts/Help';
-import { useTheme } from 'contexts/Themes';
 import LedgerLogoSvg from '@w3ux/extension-assets/Ledger.svg?react';
 import type { AnyFunction } from '@w3ux/types';
+import { useHelp } from 'contexts/Help';
+import { useLedgerHardware } from 'contexts/LedgerHardware';
+import { useTheme } from 'contexts/Themes';
 import { useOverlay } from 'kits/Overlay/Provider';
-import { SplashWrapper } from './Wrappers';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ButtonHelp, ButtonSecondary } from 'ui-buttons';
+import { SplashWrapper } from './Wrappers';
 
 export const Splash = ({ onGetAddress }: AnyFunction) => {
   const { t } = useTranslation('modals');

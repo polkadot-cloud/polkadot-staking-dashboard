@@ -2,16 +2,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faSquarePen } from '@fortawesome/free-solid-svg-icons';
+import { appendOrEmpty } from '@w3ux/utils';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useTxMeta } from 'contexts/TxMeta';
+import { useWalletConnect } from 'contexts/WalletConnect';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge';
+import type { SubmitProps } from 'library/SubmitTx/types';
 import { type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useTxMeta } from 'contexts/TxMeta';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import type { SubmitProps } from '../../types';
 import { ButtonSubmit } from 'ui-buttons';
-import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge';
-import { appendOrEmpty } from '@w3ux/utils';
-import { useWalletConnect } from 'contexts/WalletConnect';
 
 export const WalletConnect = ({
   onSubmit,

@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { RowSectionProps } from './types';
-import classes from './index.module.scss';
 import classNames from 'classnames';
+import classes from './index.module.scss';
+import type { RowSectionProps } from './types';
 
 /**
  * @name RowSection

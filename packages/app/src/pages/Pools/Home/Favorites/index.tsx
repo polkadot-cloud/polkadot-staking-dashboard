@@ -1,18 +1,18 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PageRow } from 'ui-structure';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useFavoritePools } from 'contexts/Pools/FavoritePools';
-import { CardWrapper } from 'library/Card/Wrappers';
-import { PoolList } from 'library/PoolList';
-import { ListStatusHeader } from 'library/List';
-import { PoolListProvider } from 'library/PoolList/context';
 import type { BondedPool } from 'contexts/Pools/BondedPools/types';
+import { useFavoritePools } from 'contexts/Pools/FavoritePools';
 import { useSyncing } from 'hooks/useSyncing';
+import { CardWrapper } from 'library/Card/Wrappers';
+import { ListStatusHeader } from 'library/List';
+import { PoolList } from 'library/PoolList';
+import { PoolListProvider } from 'library/PoolList/context';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { PageRow } from 'ui-structure';
 
 export const PoolFavorites = () => {
   const { t } = useTranslation('pages');

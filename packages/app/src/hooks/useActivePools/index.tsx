@@ -2,16 +2,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@w3ux/utils';
-import { useEffect, useRef, useState } from 'react';
+import { useNetwork } from 'contexts/Network';
 import { ActivePoolsController } from 'controllers/ActivePools';
 import { isCustomEvent } from 'controllers/utils';
+import { useEffect, useRef, useState } from 'react';
 import { useEventListener } from 'usehooks-ts';
 import type {
   ActiveNominationsState,
   ActivePoolsProps,
   ActivePoolsState,
 } from './types';
-import { useNetwork } from 'contexts/Network';
 
 export const useActivePools = ({ onCallback, who }: ActivePoolsProps) => {
   const { network } = useNetwork();

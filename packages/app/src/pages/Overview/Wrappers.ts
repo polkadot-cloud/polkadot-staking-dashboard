@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components';
 import { SectionFullWidthThreshold } from 'consts';
+import styled from 'styled-components';
 
 export const Separator = styled.div`
   border-bottom: 1px solid var(--border-primary-color);

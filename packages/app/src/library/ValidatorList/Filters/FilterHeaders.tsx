@@ -5,12 +5,12 @@ import {
   faArrowDownWideShort,
   faFilterCircleXmark,
 } from '@fortawesome/free-solid-svg-icons';
-import { useTranslation } from 'react-i18next';
 import { useFilters } from 'contexts/Filters';
 import { usePrompt } from 'contexts/Prompt';
-import { OrderValidators } from '../OrderValidators';
-import { FilterValidators } from '../FilterValidators';
+import { useTranslation } from 'react-i18next';
 import { ButtonPrimaryInvert, ButtonSecondary } from 'ui-buttons';
+import { FilterValidators } from '../FilterValidators';
+import { OrderValidators } from '../OrderValidators';
 
 export const FilterHeaders = () => {
   const { t } = useTranslation('library');

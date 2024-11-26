@@ -1,20 +1,20 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useNetwork } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { useTxMeta } from 'contexts/TxMeta';
+import { ApiController } from 'controllers/Api';
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect } from 'react';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useTranslation } from 'react-i18next';
 import { RoleChange } from './RoleChange';
 import { Wrapper } from './Wrapper';
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
-import { ApiController } from 'controllers/Api';
-import { useNetwork } from 'contexts/Network';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 
 export const ChangePoolRoles = () => {
   const { t } = useTranslation('modals');

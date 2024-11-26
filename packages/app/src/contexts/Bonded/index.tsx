@@ -1,27 +1,27 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import {
   addedTo,
   matchedProperties,
   removedFrom,
   setStateWithRef,
 } from '@w3ux/utils';
-import type { ReactNode } from 'react';
-import { createContext, useContext, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
-import type { MaybeAddress } from 'types';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { useNetwork } from 'contexts/Network';
+import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
+import { useNetwork } from 'contexts/Network';
+import { SubscriptionsController } from 'controllers/Subscriptions';
+import { isCustomEvent } from 'controllers/utils';
+import { Bonded } from 'model/Subscribe/Bonded';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
+import type { MaybeAddress } from 'types';
+import { useEventListener } from 'usehooks-ts';
 import * as defaults from './defaults';
 import type { BondedAccount, BondedContextInterface } from './types';
-import { useEventListener } from 'usehooks-ts';
-import { isCustomEvent } from 'controllers/utils';
-import { SubscriptionsController } from 'controllers/Subscriptions';
-import { Bonded } from 'model/Subscribe/Bonded';
 
 export const BondedContext = createContext<BondedContextInterface>(
   defaults.defaultBondedContext

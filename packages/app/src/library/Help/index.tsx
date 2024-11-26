@@ -3,25 +3,25 @@
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { camelize } from '@w3ux/utils';
-import { useAnimation } from 'framer-motion';
-import { useCallback, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { HelpConfig } from 'config/help';
-import { DefaultLocale } from 'locales';
 import { useHelp } from 'contexts/Help';
 import type {
   DefinitionWithKeys,
   ExternalItems,
   HelpItem,
 } from 'contexts/Help/types';
+import { useAnimation } from 'framer-motion';
 import { useFillVariables } from 'hooks/useFillVariables';
-import { Definition } from './Items/Definition';
-import { External } from './Items/External';
-import { ActiveDefinition } from './Items/ActiveDefinition';
-import { ButtonPrimaryInvert } from 'ui-buttons';
 import { CanvasContainer } from 'kits/Overlay/structure/CanvasContainer';
 import { CanvasScroll } from 'kits/Overlay/structure/CanvasScroll';
 import { ModalContent } from 'kits/Overlay/structure/ModalContent';
+import { DefaultLocale } from 'locales';
+import { useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ButtonPrimaryInvert } from 'ui-buttons';
+import { ActiveDefinition } from './Items/ActiveDefinition';
+import { Definition } from './Items/Definition';
+import { External } from './Items/External';
 
 export const Help = () => {
   const { t, i18n } = useTranslation('help');

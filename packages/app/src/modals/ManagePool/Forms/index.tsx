@@ -5,12 +5,12 @@ import type { ForwardedRef } from 'react';
 import { forwardRef } from 'react';
 import { ContentWrapper } from '../Wrappers';
 import { ClaimCommission } from './ClaimCommission';
-import { ManageCommission } from './ManageCommission';
 import { LeavePool } from './LeavePool';
-import { SetClaimPermission } from './SetClaimPermission';
-import { RenamePool } from './RenamePool';
-import { SetPoolState } from './SetPoolState';
+import { ManageCommission } from './ManageCommission';
 import { PoolCommissionProvider } from './ManageCommission/provider';
+import { RenamePool } from './RenamePool';
+import { SetClaimPermission } from './SetClaimPermission';
+import { SetPoolState } from './SetPoolState';
 import type { FormsProps } from './types';
 
 export const Forms = forwardRef(

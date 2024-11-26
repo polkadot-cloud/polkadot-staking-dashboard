@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { u8aUnwrapBytes, u8aToString } from '@polkadot/util';
-import { useTranslation } from 'react-i18next';
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
+import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import type { AnyFunction, AnyJson } from '@w3ux/types';
 import { MaxEraRewardPointsEras } from 'consts';
+import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { AnyFilter } from 'library/Filter/types';
+import { useTranslation } from 'react-i18next';
 
 export const useValidatorFilters = () => {
   const { t } = useTranslation('library');

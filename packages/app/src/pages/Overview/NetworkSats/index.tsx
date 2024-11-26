@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import { useTranslation } from 'react-i18next';
+import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
+import { useAverageRewardRate } from 'hooks/useAverageRewardRate';
 import { Header } from 'library/Announcements/Header';
 import { Wrapper } from 'library/Announcements/Wrappers';
+import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
+import { useTranslation } from 'react-i18next';
 import { Announcements } from './Announcements';
-import { useAverageRewardRate } from 'hooks/useAverageRewardRate';
-import { useApi } from 'contexts/Api';
 
 export const NetworkStats = () => {
   const { t } = useTranslation('pages');

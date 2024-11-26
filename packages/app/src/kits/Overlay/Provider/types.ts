@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { RefObject, FC } from 'react';
 import type { AnyJson } from '@w3ux/types';
+import type { FC, RefObject } from 'react';
 
 export interface OverlayContextInterface {
   openOverlayInstances: number;

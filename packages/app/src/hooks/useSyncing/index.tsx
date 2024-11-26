@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@w3ux/utils';
-import { useEffect, useRef, useState } from 'react';
 import { SyncController } from 'controllers/Sync';
 import type { SyncID, SyncIDConfig } from 'controllers/Sync/types';
 import { isCustomEvent } from 'controllers/utils';
+import { useEffect, useRef, useState } from 'react';
 import { useEventListener } from 'usehooks-ts';
 
 export const useSyncing = (config: SyncIDConfig = '*') => {

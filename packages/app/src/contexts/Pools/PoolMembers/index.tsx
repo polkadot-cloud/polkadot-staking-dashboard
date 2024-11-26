@@ -1,22 +1,22 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import type { Sync } from '@w3ux/types';
 import { setStateWithRef } from '@w3ux/utils';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useNetwork } from 'contexts/Network';
+import { usePlugins } from 'contexts/Plugins';
+import { SubscriptionsController } from 'controllers/Subscriptions';
+import { isCustomEvent } from 'controllers/utils';
+import { PoolMembersMulti } from 'model/Subscribe/PoolMembersMulti';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
-import { usePlugins } from 'contexts/Plugins';
 import type { AnyMetaBatch, MaybeAddress } from 'types';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { useNetwork } from 'contexts/Network';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useEventListener } from 'usehooks-ts';
 import { useApi } from '../../Api';
 import { defaultPoolMembers } from './defaults';
 import type { PoolMember, PoolMemberContext } from './types';
-import type { Sync } from '@w3ux/types';
-import { PoolMembersMulti } from 'model/Subscribe/PoolMembersMulti';
-import { SubscriptionsController } from 'controllers/Subscriptions';
-import { useEventListener } from 'usehooks-ts';
-import { isCustomEvent } from 'controllers/utils';
 
 export const PoolMembersContext =
   createContext<PoolMemberContext>(defaultPoolMembers);

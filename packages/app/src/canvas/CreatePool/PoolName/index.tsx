@@ -1,16 +1,16 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useSetup } from 'contexts/Setup';
+import type { PoolProgress } from 'contexts/Setup/types';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Input } from './Input';
-import type { PoolProgress } from 'contexts/Setup/types';
 
 export const PoolName = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');

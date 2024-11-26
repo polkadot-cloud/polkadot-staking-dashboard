@@ -1,16 +1,16 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { AnyJson } from '@w3ux/types';
 import { planckToUnit, rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
+import type { LocalValidatorExposure } from 'contexts/Payouts/types';
 import type {
   ActiveAccountStaker,
   ExposureOther,
   Staker,
 } from 'contexts/Staking/types';
-import type { AnyJson } from '@w3ux/types';
-import type { LocalValidatorExposure } from 'contexts/Payouts/types';
-import type { ProcessExposuresArgs, ProcessEraForExposureArgs } from './types';
+import type { ProcessEraForExposureArgs, ProcessExposuresArgs } from './types';
 
 // eslint-disable-next-line no-restricted-globals, @typescript-eslint/no-explicit-any
 export const ctx: Worker = self as any;

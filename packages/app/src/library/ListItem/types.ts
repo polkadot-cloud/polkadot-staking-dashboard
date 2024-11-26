@@ -1,15 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { BondFor, MaybeAddress } from 'types';
+import type BigNumber from 'bignumber.js';
+import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import type {
   ValidatorPrefs,
   ValidatorStatus,
 } from 'contexts/Validators/types';
-import type BigNumber from 'bignumber.js';
 import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
-import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import type { ReactNode } from 'react';
+import type { BondFor, MaybeAddress } from 'types';
 
 export interface BlockedProps {
   prefs: ValidatorPrefs;

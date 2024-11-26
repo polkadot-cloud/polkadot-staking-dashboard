@@ -7,22 +7,22 @@ import {
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import type { ExternalAccount } from '@w3ux/react-connect-kit/types';
 import { Polkicon } from '@w3ux/react-polkicon';
-import { useTranslation } from 'react-i18next';
-import { useHelp } from 'contexts/Help';
-import { AccountInput } from 'library/AccountInput';
-import { useOverlay } from 'kits/Overlay/Provider';
+import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import type { ExternalAccount } from '@w3ux/react-connect-kit/types';
-import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
+import { useHelp } from 'contexts/Help';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { AccountInput } from 'library/AccountInput';
+import { useTranslation } from 'react-i18next';
+import { ButtonHelp, ButtonMonoInvert, ButtonSecondary } from 'ui-buttons';
 import {
   ActionWithButton,
   ManualAccount,
   ManualAccountsWrapper,
 } from './Wrappers';
 import type { ListWithInputProps } from './types';
-import { ButtonHelp, ButtonMonoInvert, ButtonSecondary } from 'ui-buttons';
 
 export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');

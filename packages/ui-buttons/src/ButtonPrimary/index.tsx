@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { onMouseHandlers } from '../util';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classes from './index.module.scss';
-import commonClasses from '../common.module.scss';
 import classNames from 'classnames';
+import commonClasses from '../common.module.scss';
+import { onMouseHandlers } from '../util';
+import classes from './index.module.scss';
 import type { ButtonPrimaryProps } from './types';
 
 /**

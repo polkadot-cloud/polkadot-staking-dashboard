@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@w3ux/utils';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useApi } from 'contexts/Api';
 import { usePlugins } from 'contexts/Plugins';
-import { useEffect, useRef, useState } from 'react';
 import { SubscanController } from 'controllers/Subscan';
 import type {
   PayoutType,
@@ -12,10 +13,9 @@ import type {
   SubscanPayoutData,
 } from 'controllers/Subscan/types';
 import { isCustomEvent } from 'controllers/utils';
+import { useEffect, useRef, useState } from 'react';
 import { useEventListener } from 'usehooks-ts';
 import { useErasToTimeLeft } from '../useErasToTimeLeft';
-import { useApi } from 'contexts/Api';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
 
 export const useSubscanData = (keys: PayoutType[]) => {
   const { activeEra } = useApi();

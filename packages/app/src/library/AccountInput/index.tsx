@@ -4,16 +4,16 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Polkicon } from '@w3ux/react-polkicon';
-import { isValidAddress, formatAccountSs58 } from '@w3ux/utils';
+import { formatAccountSs58, isValidAddress } from '@w3ux/utils';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useNetwork } from 'contexts/Network';
+import { useOverlay } from 'kits/Overlay/Provider';
 import type { FormEvent } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useNetwork } from 'contexts/Network';
+import { ButtonSecondary } from 'ui-buttons';
 import { AccountInputWrapper } from './Wrapper';
 import type { AccountInputProps } from './types';
-import { ButtonSecondary } from 'ui-buttons';
 
 export const AccountInput = ({
   successCallback,

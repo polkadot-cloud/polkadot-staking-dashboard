@@ -1,6 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { AnyJson } from '@w3ux/types';
 import BigNumber from 'bignumber.js';
 import {
   CategoryScale,
@@ -12,23 +13,22 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
-import { useTranslation } from 'react-i18next';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useBalances } from 'contexts/Balances';
+import { useNetwork } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
+import { useSyncing } from 'hooks/useSyncing';
+import { Line } from 'react-chartjs-2';
+import { useTranslation } from 'react-i18next';
 import graphColors from 'styles/graphs/index.json';
 import type { AnySubscan } from 'types';
-import { useNetwork } from 'contexts/Network';
 import type { PayoutLineProps } from './types';
 import {
   calculatePayoutAverages,
   combineRewards,
   formatRewardsForGraphs,
 } from './Utils';
-import { useBalances } from 'contexts/Balances';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useSyncing } from 'hooks/useSyncing';
-import type { AnyJson } from '@w3ux/types';
 
 ChartJS.register(
   CategoryScale,

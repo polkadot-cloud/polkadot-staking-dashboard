@@ -1,18 +1,18 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { AnyFunction, AnyJson } from '@w3ux/types';
+import { WalletConnectModal } from '@walletconnect/modal';
+import UniversalProvider from '@walletconnect/universal-provider';
+import { getSdkError } from '@walletconnect/utils';
+import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
+import { ApiController } from 'controllers/Api';
+import { getUnixTime } from 'date-fns';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import * as defaults from './defaults';
 import type { WalletConnectContextInterface } from './types';
-import UniversalProvider from '@walletconnect/universal-provider';
-import { WalletConnectModal } from '@walletconnect/modal';
-import type { AnyFunction, AnyJson } from '@w3ux/types';
-import { getSdkError } from '@walletconnect/utils';
-import { getUnixTime } from 'date-fns';
-import { useApi } from 'contexts/Api';
-import { useNetwork } from 'contexts/Network';
-import { ApiController } from 'controllers/Api';
 
 export const WalletConnectContext =
   createContext<WalletConnectContextInterface>(defaults.defaultWalletConnect);

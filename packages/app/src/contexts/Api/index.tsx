@@ -2,9 +2,36 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@w3ux/utils';
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { NetworkList } from 'config/networks';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import BigNumber from 'bignumber.js';
+import { ApiController } from 'controllers/Api';
+import { SubscriptionsController } from 'controllers/Subscriptions';
+import { SyncController } from 'controllers/Sync';
+import { isCustomEvent } from 'controllers/utils';
+import type {
+  APIEventDetail,
+  ApiStatus,
+  ConnectionType,
+} from 'model/Api/types';
+import { Era } from 'model/Query/Era';
+import { NetworkMeta } from 'model/Query/NetworkMeta';
+import { ActiveEra } from 'model/Subscribe/ActiveEra';
+import { BlockNumber } from 'model/Subscribe/BlockNumber';
+import { NetworkMetrics } from 'model/Subscribe/NetworkMetrics';
+import { PoolsConfig } from 'model/Subscribe/PoolsConfig';
+import { useEventListener } from 'usehooks-ts';
+import {
+  defaultActiveEra,
+  defaultApiContext,
+  defaultChainSpecs,
+  defaultConsts,
+  defaultNetworkMetrics,
+  defaultPoolsConfig,
+  defaultStakingMetrics,
+} from './defaults';
 import type {
   APIActiveEra,
   APIConstants,
@@ -15,33 +42,6 @@ import type {
   APIStakingMetrics,
   PapiChainSpecContext,
 } from './types';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import {
-  defaultConsts,
-  defaultActiveEra,
-  defaultApiContext,
-  defaultPoolsConfig,
-  defaultNetworkMetrics,
-  defaultStakingMetrics,
-  defaultChainSpecs,
-} from './defaults';
-import { isCustomEvent } from 'controllers/utils';
-import { useEventListener } from 'usehooks-ts';
-import BigNumber from 'bignumber.js';
-import { SyncController } from 'controllers/Sync';
-import { ApiController } from 'controllers/Api';
-import type {
-  APIEventDetail,
-  ApiStatus,
-  ConnectionType,
-} from 'model/Api/types';
-import { Era } from 'model/Query/Era';
-import { NetworkMeta } from 'model/Query/NetworkMeta';
-import { SubscriptionsController } from 'controllers/Subscriptions';
-import { BlockNumber } from 'model/Subscribe/BlockNumber';
-import { NetworkMetrics } from 'model/Subscribe/NetworkMetrics';
-import { ActiveEra } from 'model/Subscribe/ActiveEra';
-import { PoolsConfig } from 'model/Subscribe/PoolsConfig';
 
 export const APIContext = createContext<APIContextInterface>(defaultApiContext);
 

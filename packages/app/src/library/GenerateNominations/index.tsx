@@ -9,28 +9,28 @@ import {
   faPlus,
   faUserEdit,
 } from '@fortawesome/free-solid-svg-icons';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import type { AnyFunction, AnyJson } from '@w3ux/types';
+import { FavoritesPrompt } from 'canvas/ManageNominations/Prompts/FavoritesPrompt';
+import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { usePrompt } from 'contexts/Prompt';
+import { useStaking } from 'contexts/Staking';
+import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
+import type { Validator } from 'contexts/Validators/types';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { useUnstaking } from 'hooks/useUnstaking';
 import { SelectableWrapper } from 'library/List';
 import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
 import { ValidatorList } from 'library/ValidatorList';
-import { Wrapper } from './Wrapper';
-import { useStaking } from 'contexts/Staking';
-import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import type { Validator } from 'contexts/Validators/types';
 import { Subheading } from 'pages/Nominate/Wrappers';
-import { FavoritesPrompt } from 'canvas/ManageNominations/Prompts/FavoritesPrompt';
-import { usePrompt } from 'contexts/Prompt';
-import { useFetchMehods } from './useFetchMethods';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ButtonMonoInvert, ButtonPrimaryInvert } from 'ui-buttons';
 import type { AddNominationsType, GenerateNominationsProps } from './types';
-import type { AnyJson, AnyFunction } from '@w3ux/types';
-import { ButtonPrimaryInvert, ButtonMonoInvert } from 'ui-buttons';
+import { useFetchMehods } from './useFetchMethods';
+import { Wrapper } from './Wrapper';
 
 export const GenerateNominations = ({
   setters = [],

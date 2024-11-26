@@ -1,6 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import {
   addedTo,
   ellipsisFn,
@@ -10,17 +11,23 @@ import {
   setStateWithRef,
 } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
-import type { ReactNode } from 'react';
-import { createContext, useContext, useRef, useState } from 'react';
 import { isSupportedProxy } from 'config/proxies';
-import { useApi } from 'contexts/Api';
-import type { AnyApi, MaybeAddress, NetworkName } from 'types';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { useNetwork } from 'contexts/Network';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useApi } from 'contexts/Api';
+import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
+import { useNetwork } from 'contexts/Network';
+import { defaultNetwork } from 'contexts/Network/defaults';
+import { ApiController } from 'controllers/Api';
+import { SubscriptionsController } from 'controllers/Subscriptions';
+import { isCustomEvent } from 'controllers/utils';
+import { ProxiesQuery } from 'model/Query/ProxiesQuery';
+import { AccountProxies } from 'model/Subscribe/AccountProxies';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
+import type { AnyApi, MaybeAddress, NetworkName } from 'types';
+import { useEventListener } from 'usehooks-ts';
 import * as defaults from './defaults';
 import type {
   Delegates,
@@ -30,13 +37,6 @@ import type {
   Proxy,
   ProxyDelegate,
 } from './types';
-import { defaultNetwork } from 'contexts/Network/defaults';
-import { SubscriptionsController } from 'controllers/Subscriptions';
-import { AccountProxies } from 'model/Subscribe/AccountProxies';
-import { useEventListener } from 'usehooks-ts';
-import { isCustomEvent } from 'controllers/utils';
-import { ProxiesQuery } from 'model/Query/ProxiesQuery';
-import { ApiController } from 'controllers/Api';
 
 export const ProxiesContext = createContext<ProxiesContextInterface>(
   defaults.defaultProxiesContext
