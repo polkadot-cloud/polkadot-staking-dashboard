@@ -14,7 +14,9 @@ for (const lng of languages) {
   const pathToLanguage = path.join(localeDir, `/${lng}`);
 
   fs.readdir(pathToLanguage, (error, files) => {
-    if (error) return;
+    if (error) {
+      return;
+    }
 
     files.forEach(async (file) => {
       const pathToFile = path.join(pathToLanguage, file);

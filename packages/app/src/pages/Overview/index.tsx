@@ -18,7 +18,6 @@ import { SupplyStakedStat } from './Stats/SupplyStaked';
 
 export const Overview = () => {
   const { t } = useTranslation('pages');
-
   const PAYOUTS_HEIGHT = 380;
 
   return (

@@ -70,7 +70,7 @@ export interface Network {
     defaultRpcEndpoint: string;
     rpcEndpoints: Record<string, string>;
   };
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   colors: Record<NetworkColor, { [key in Theme]: string }>;
   unit: string;
   units: number;
