@@ -8,6 +8,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useLedgerHardware } from 'contexts/LedgerHardware';
+import { useNetwork } from 'contexts/Network';
 import { useTxMeta } from 'contexts/TxMeta';
 import { NotificationsController } from 'controllers/Notifications';
 import { useEffect, useRef, useState } from 'react';
