@@ -44,8 +44,7 @@ export const SimplePie = ({
   const [rad] = useState(diameter / 2);
 
   const segments = useMemo(() => {
-    // eslint-disable-next-line @typescript-eslint/no-shadow
-    const sum = items.reduce((sum, item) => sum + item.value, 0);
+    const sum = items.reduce((s, item) => s + item.value, 0);
 
     if (sum === 0) {
       // Hardcoded "inactive" radius - "dead state" - where all values sum to 0;
