@@ -1,3 +1,6 @@
+// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
 import pluginJs from '@eslint/js';
 import importPlugin from 'eslint-plugin-import';
 import preferArrowFunctions from 'eslint-plugin-prefer-arrow-functions';
