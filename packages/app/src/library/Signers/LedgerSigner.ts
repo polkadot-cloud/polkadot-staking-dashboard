@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { merkleizeMetadata } from '@polkadot-api/merkleize-metadata';
-import type { PolkadotSigner } from 'polkadot-api';
-import { mergeUint8 } from 'polkadot-api/utils';
+import { createV4Tx, getSignBytes } from '@polkadot-api/signers-common';
 import type { V15 } from '@polkadot-api/substrate-bindings';
 import { decAnyMetadata } from '@polkadot-api/substrate-bindings';
+import type { PolkadotSigner } from 'polkadot-api';
+import { mergeUint8 } from 'polkadot-api/utils';
 import { Ledger } from '../../contexts/LedgerHardware/static/ledger';
-import { createV4Tx, getSignBytes } from '@polkadot-api/signers-common';
 import { getExtraSignedExtensions } from './util';
 
 export class LedgerSigner {

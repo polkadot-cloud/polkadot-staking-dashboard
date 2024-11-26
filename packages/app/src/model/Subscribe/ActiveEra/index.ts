@@ -7,9 +7,9 @@ import type { APIActiveEra } from 'contexts/Api/types';
 import { ApiController } from 'controllers/Api';
 import { SubscriptionsController } from 'controllers/Subscriptions';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
+import type { Subscription } from 'rxjs';
 import type { NetworkName } from 'types';
 import { StakingMetrics } from '../StakingMetrics';
-import type { Subscription } from 'rxjs';
 
 export class ActiveEra implements Unsubscribable {
   // The associated network for this instance.

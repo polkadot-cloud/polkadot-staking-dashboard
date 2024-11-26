@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { AccountId } from '@polkadot-api/substrate-bindings';
 import { bnToU8a, stringToU8a, u8aConcat } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
 import { BN } from 'bn.js';
 import { useApi } from 'contexts/Api';
-import { AccountId } from '@polkadot-api/substrate-bindings';
 
 export const useCreatePoolAccounts = () => {
   const {
