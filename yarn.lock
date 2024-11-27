@@ -1880,6 +1880,14 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@polkadot-api/descriptors@portal:.papi/descriptors::locator=polkadot-staking-dashboard%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@polkadot-api/descriptors@portal:.papi/descriptors::locator=polkadot-staking-dashboard%40workspace%3A."
+  peerDependencies:
+    polkadot-api: "*"
+  languageName: node
+  linkType: soft
+
 "@polkadot-api/ink-contracts@npm:0.2.2":
   version: 0.2.2
   resolution: "@polkadot-api/ink-contracts@npm:0.2.2"
@@ -9387,6 +9395,7 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:^9.15.0"
     "@ledgerhq/logs": "npm:^6.12.0"
+    "@polkadot-api/descriptors": "portal:.papi/descriptors"
     "@types/chroma-js": "npm:^2.4.4"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.2.25"
