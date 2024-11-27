@@ -95,7 +95,7 @@ export const Bond = () => {
 
   // determine whether this is a pool or staking transaction.
   const determineTx = (bondToSubmit: BigNumber) => {
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
     let tx = null;
     if (!pApi) {
       return tx;

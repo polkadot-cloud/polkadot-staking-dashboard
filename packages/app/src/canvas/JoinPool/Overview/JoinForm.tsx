@@ -73,7 +73,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
 
   // Get transaction for submission.
   const getTx = () => {
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
     const tx = null;
     if (!pApi || !claimPermission || !formValid) {
       return tx;

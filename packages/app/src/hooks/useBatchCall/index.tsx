@@ -14,7 +14,7 @@ export const useBatchCall = () => {
   const { isProxySupported } = useProxySupported();
 
   const newBatchCall = (txs: UnsafeTx[], from: MaybeAddress): AnyApi => {
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
 
     if (!pApi) {
       return undefined;

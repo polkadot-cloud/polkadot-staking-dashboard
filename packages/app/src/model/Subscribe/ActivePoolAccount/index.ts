@@ -44,8 +44,8 @@ export class ActivePoolAccount implements Unsubscribable {
 
   subscribe = async (): Promise<void> => {
     try {
-      const { pApi } = ApiController.get(this.#network);
-      const { pApi: peopleApi } = ApiController.get(
+      const pApi = ApiController.getApi(this.#network);
+      const peopleApi = ApiController.getApi(
         `people-${this.#network}` as SystemChainId
       );
       const bestOrFinalized = 'best';

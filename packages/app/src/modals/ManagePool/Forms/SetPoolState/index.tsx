@@ -81,7 +81,7 @@ export const SetPoolState = ({
 
   // tx to submit
   const getTx = () => {
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
     if (!valid || !pApi || poolId === undefined) {
       return null;
     }

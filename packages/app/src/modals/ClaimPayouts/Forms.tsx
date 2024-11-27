@@ -59,7 +59,7 @@ export const Forms = forwardRef(
       ) || 0;
 
     const getCalls = () => {
-      const { pApi } = ApiController.get(network);
+      const pApi = ApiController.getApi(network);
       if (!pApi) {
         return [];
       }

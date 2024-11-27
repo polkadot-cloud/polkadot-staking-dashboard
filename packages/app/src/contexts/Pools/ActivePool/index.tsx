@@ -81,7 +81,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
       ];
 
       SyncController.dispatch('active-pools', 'syncing');
-      const { pApi: peopleApi } = ApiController.get(
+      const peopleApi = ApiController.getApi(
         `people-${network}` as SystemChainId
       );
 
@@ -193,7 +193,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch and update unclaimed pool rewards for an address from runtime call.
   const fetchPendingRewards = async (address: string | undefined) => {
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
     if (pApi && address) {
       const apiResult = await pApi.apis.NominationPoolsApi.pending_rewards(
         address,

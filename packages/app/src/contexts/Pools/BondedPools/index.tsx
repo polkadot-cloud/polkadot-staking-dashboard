@@ -65,7 +65,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch all bonded pool entries and their metadata.
   const fetchBondedPools = async () => {
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
 
     if (!pApi || bondedPoolsSynced.current !== 'unsynced') {
       return;
@@ -99,7 +99,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetches pool nominations and updates state.
   const fetchPoolsNominations = async () => {
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
     if (!pApi) {
       return;
     }
@@ -126,7 +126,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Queries a bonded pool and injects ID and addresses to a result.
   const queryBondedPool = async (id: number) => {
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
     const bondedPool = new BondedPools(pApi).fetchOne(id);
 
     if (!bondedPool) {

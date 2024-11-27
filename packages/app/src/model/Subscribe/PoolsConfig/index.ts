@@ -25,7 +25,7 @@ export class PoolsConfig implements Unsubscribable {
 
   subscribe = async (): Promise<void> => {
     try {
-      const { pApi } = ApiController.get(this.#network);
+      const pApi = ApiController.getApi(this.#network);
 
       if (pApi && this.#sub === undefined) {
         const bestOrFinalized = 'best';

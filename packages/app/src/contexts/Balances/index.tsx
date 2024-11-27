@@ -71,7 +71,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
           addresses: { ...createPoolAccounts(Number(poolId)) },
         });
 
-        const { pApi: peopleApi } = ApiController.get(
+        const peopleApi = ApiController.getApi(
           `people-${network}` as SystemChainId
         );
         if (peopleApi) {

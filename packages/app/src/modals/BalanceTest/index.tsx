@@ -26,7 +26,7 @@ export const BalanceTest = () => {
 
   // tx to submit
   const getTx = () => {
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
 
     const tx = null;
     if (!pApi || !activeAccount) {

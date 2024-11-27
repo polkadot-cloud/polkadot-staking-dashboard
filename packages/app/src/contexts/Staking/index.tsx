@@ -224,7 +224,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch eras stakers from storage.
   const getPagedErasStakers = async (era: string) => {
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
     if (!pApi) {
       return [];
     }

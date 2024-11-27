@@ -68,7 +68,7 @@ export const Forms = forwardRef(
 
     // tx to submit
     const getTx = () => {
-      const { pApi } = ApiController.get(network);
+      const pApi = ApiController.getApi(network);
       let tx = null;
       if (!valid || !pApi || !unlock) {
         return tx;

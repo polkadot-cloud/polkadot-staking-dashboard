@@ -43,7 +43,7 @@ export const Stats = ({
 
   // Fetches the balance of the bonded pool.
   const getPoolBalance = async () => {
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
     if (!pApi) {
       return;
     }

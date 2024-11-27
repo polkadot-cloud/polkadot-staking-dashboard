@@ -60,7 +60,7 @@ export const RenamePool = ({
 
   // tx to submit
   const getTx = () => {
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
     if (!valid || !pApi || !poolId) {
       return null;
     }

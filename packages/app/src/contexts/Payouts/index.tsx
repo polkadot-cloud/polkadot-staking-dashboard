@@ -143,7 +143,7 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
 
   // Start pending payout process once exposure data is fetched.
   const getUnclaimedPayouts = async () => {
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
     if (!pApi || !activeAccount) {
       return;
     }

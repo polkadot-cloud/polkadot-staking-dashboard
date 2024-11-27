@@ -50,7 +50,7 @@ export const ClaimReward = () => {
 
   // tx to submit
   const getTx = () => {
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
     let tx = null;
     if (!pApi) {
       return tx;

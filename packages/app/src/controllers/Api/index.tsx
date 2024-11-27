@@ -18,9 +18,14 @@ export class ApiController {
   // Getters.
   // ------------------------------------------------------
 
-  // Get an Api instance.
+  // Get an Api.
   static get(network: NetworkName | SystemChainId) {
     return this.#instances[network];
+  }
+
+  // Get the api instance.
+  static getApi(network: NetworkName | SystemChainId) {
+    return this.#instances[network].unsafeApi;
   }
 
   static get instances() {

@@ -35,7 +35,7 @@ export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
 
   // estimate the largest possible tx fee based on users free balance.
   const txLargestFee = async () => {
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
 
     const bond = BigNumber.max(
       transferrableBalance.minus(feeReserve),

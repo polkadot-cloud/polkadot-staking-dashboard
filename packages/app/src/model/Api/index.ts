@@ -16,7 +16,6 @@ import type {
   APIEventDetail,
   ConnectionType,
   EventApiStatus,
-  PapiApi,
   PapiChainSpec,
   PapiReadyEvent,
 } from './types';
@@ -31,9 +30,6 @@ export class Api {
   // PAPI Instance.
   #papiClient: PolkadotClient;
 
-  // PAPI API.
-  #pApi: PapiApi;
-
   // PAPI Chain Spec.
   #papiChainSpec: PapiChainSpec;
 
@@ -47,8 +43,8 @@ export class Api {
     return this.#papiClient;
   }
 
-  get pApi() {
-    return this.#pApi;
+  get unsafeApi() {
+    return this.#papiClient.getUnsafeApi();
   }
 
   get papiChainSpec() {
@@ -86,9 +82,6 @@ export class Api {
 
       // Tell UI api is connecting.
       this.dispatchEvent(this.ensureEventStatus('connecting'));
-
-      // Initialise PAPI API.
-      this.#pApi = this.#papiClient.getUnsafeApi();
 
       // Fetch chain spec and metadata from PAPI client.
       await this.fetchChainSpec();
@@ -132,7 +125,7 @@ export class Api {
   async fetchChainSpec() {
     try {
       const chainSpecData = await this.#papiClient.getChainSpecData();
-      const version = await this.#pApi.constants.System.Version();
+      const version = await this.unsafeApi.constants.System.Version();
 
       const { genesisHash, properties } = chainSpecData;
       const { ss58Format, tokenDecimals, tokenSymbol } = properties;
@@ -178,7 +171,7 @@ export class Api {
     formatter?: 'asBytes'
   ): Promise<T> => {
     try {
-      const result = await this.#pApi.constants[pallet][key]();
+      const result = await this.unsafeApi.constants[pallet][key]();
 
       switch (formatter) {
         case 'asBytes':

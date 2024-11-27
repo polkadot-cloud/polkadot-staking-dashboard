@@ -40,7 +40,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { bond, nominations, payee } = progress;
 
   const getTxs = () => {
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
     if (!activeAccount || !pApi) {
       return null;
     }

@@ -47,7 +47,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { metadata, bond, roles, nominations } = progress;
 
   const getTxs = () => {
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
     if (!activeAccount || !pApi) {
       return null;
     }

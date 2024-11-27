@@ -148,7 +148,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetches era reward points for eligible eras.
   const fetchErasRewardPoints = async () => {
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
     if (
       activeEra.index.isZero() ||
       !pApi ||
@@ -248,7 +248,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       return defaultValidatorsData;
     }
 
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
     const result = await new Validators(pApi).fetch();
 
     const entries: Validator[] = [];
@@ -323,7 +323,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     setAvgCommission(avg);
     // NOTE: validators are shuffled before committed to state.
     setValidators(shuffle(validatorEntries));
-    const { pApi: peopleApi } = ApiController.get(
+    const peopleApi = ApiController.getApi(
       `people-${network}` as SystemChainId
     );
     if (peopleApi && peopleApiStatus === 'ready') {
@@ -344,13 +344,13 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     if (!isReady) {
       return;
     }
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
     setSessionValidators(await new SessionValidators(pApi).fetch());
   };
 
   // Subscribe to active parachain validators.
   const getParachainValidators = async () => {
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
     setSessionParaValidators(
       await new ParaSessionAccounts(
         pApi,
@@ -372,7 +372,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       vMulti.push([address]);
     }
 
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
     const resultsMulti =
       (await new ValidatorsMulti(pApi, vMulti).fetch()) || [];
 
@@ -486,7 +486,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Gets average validator reward for provided number of days.
   const getAverageEraValidatorReward = async () => {
-    const { pApi } = ApiController.get(network);
+    const pApi = ApiController.getApi(network);
 
     if (!pApi || !isReady || activeEra.index.isZero()) {
       setAverageEraValidatorReward({
