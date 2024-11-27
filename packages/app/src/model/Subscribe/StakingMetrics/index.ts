@@ -36,28 +36,28 @@ export class StakingMetrics implements Unsubscribable {
 
   subscribe = async (): Promise<void> => {
     try {
-      const pApi = ApiController.getApi(this.#network);
+      const api = ApiController.getApi(this.#network);
 
-      if (pApi && this.#sub === undefined) {
+      if (api && this.#sub === undefined) {
         const bestOrFinalized = 'best';
         const sub = combineLatest([
-          pApi.query.Staking.CounterForValidators.watchValue(bestOrFinalized),
-          pApi.query.Staking.MaxValidatorsCount.watchValue(bestOrFinalized),
-          pApi.query.Staking.ValidatorCount.watchValue(bestOrFinalized),
-          pApi.query.Staking.ErasValidatorReward.watchValue(
+          api.query.Staking.CounterForValidators.watchValue(bestOrFinalized),
+          api.query.Staking.MaxValidatorsCount.watchValue(bestOrFinalized),
+          api.query.Staking.ValidatorCount.watchValue(bestOrFinalized),
+          api.query.Staking.ErasValidatorReward.watchValue(
             this.#previousEra.toNumber(),
             bestOrFinalized
           ),
-          pApi.query.Staking.ErasTotalStake.watchValue(
+          api.query.Staking.ErasTotalStake.watchValue(
             this.#previousEra.toNumber(),
             bestOrFinalized
           ),
-          pApi.query.Staking.MinNominatorBond.watchValue(bestOrFinalized),
-          pApi.query.Staking.ErasTotalStake.watchValue(
+          api.query.Staking.MinNominatorBond.watchValue(bestOrFinalized),
+          api.query.Staking.ErasTotalStake.watchValue(
             this.#activeEra.index.toNumber(),
             bestOrFinalized
           ),
-          pApi.query.Staking.CounterForNominators.watchValue(bestOrFinalized),
+          api.query.Staking.CounterForNominators.watchValue(bestOrFinalized),
         ]).subscribe(
           ([
             counterForValidators,

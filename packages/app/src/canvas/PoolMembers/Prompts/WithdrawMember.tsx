@@ -67,12 +67,12 @@ export const WithdrawMember = ({
 
   // tx to submit
   const getTx = () => {
-    const pApi = ApiController.getApi(network);
+    const api = ApiController.getApi(network);
     let tx = null;
-    if (!valid || !pApi) {
+    if (!valid || !api) {
       return tx;
     }
-    tx = pApi.tx.NominationPools.withdraw_unbonded({
+    tx = api.tx.NominationPools.withdraw_unbonded({
       member_account: {
         type: 'Id',
         value: who,

@@ -59,8 +59,8 @@ export const Forms = forwardRef(
       ) || 0;
 
     const getCalls = () => {
-      const pApi = ApiController.getApi(network);
-      if (!pApi) {
+      const api = ApiController.getApi(network);
+      if (!api) {
         return [];
       }
 
@@ -71,7 +71,7 @@ export const Forms = forwardRef(
         }
         return paginatedValidators.forEach(([page, v]) =>
           calls.push(
-            pApi.tx.Staking.payout_stakers_by_page({
+            api.tx.Staking.payout_stakers_by_page({
               validator_stash: v,
               era: Number(era),
               page,

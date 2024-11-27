@@ -4,18 +4,18 @@
 import type { PapiApi } from 'model/Api/types';
 
 export class ErasRewardPoints {
-  #pApi: PapiApi;
+  #api: PapiApi;
 
   #era: number;
 
-  constructor(pApi: PapiApi, era: number) {
-    this.#pApi = pApi;
+  constructor(api: PapiApi, era: number) {
+    this.#api = api;
     this.#era = era;
   }
 
   async fetch() {
     try {
-      const result = await this.#pApi.query.Staking.ErasRewardPoints.getValue(
+      const result = await this.#api.query.Staking.ErasRewardPoints.getValue(
         this.#era,
         {
           at: 'best',

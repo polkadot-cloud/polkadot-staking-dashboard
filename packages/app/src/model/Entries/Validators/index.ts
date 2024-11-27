@@ -4,13 +4,13 @@
 import type { PapiApi } from 'model/Api/types';
 
 export class Validators {
-  #pApi: PapiApi;
+  #api: PapiApi;
 
-  constructor(pApi: PapiApi) {
-    this.#pApi = pApi;
+  constructor(api: PapiApi) {
+    this.#api = api;
   }
 
   async fetch() {
-    return await this.#pApi.query.Staking.Validators.getEntries({ at: 'best' });
+    return await this.#api.query.Staking.Validators.getEntries({ at: 'best' });
   }
 }

@@ -148,10 +148,10 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetches era reward points for eligible eras.
   const fetchErasRewardPoints = async () => {
-    const pApi = ApiController.getApi(network);
+    const api = ApiController.getApi(network);
     if (
       activeEra.index.isZero() ||
-      !pApi ||
+      !api ||
       erasRewardPointsFetched !== 'unsynced'
     ) {
       return;
@@ -182,7 +182,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     );
 
     const erasMulti: [number][] = eras.map((e) => [e.toNumber()]);
-    const results = await new ErasRewardPointsMulti(pApi, erasMulti).fetch();
+    const results = await new ErasRewardPointsMulti(api, erasMulti).fetch();
 
     // Make calls and format reward point results.
     const newErasRewardPoints: ErasRewardPoints = {};
@@ -248,8 +248,8 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       return defaultValidatorsData;
     }
 
-    const pApi = ApiController.getApi(network);
-    const result = await new Validators(pApi).fetch();
+    const api = ApiController.getApi(network);
+    const result = await new Validators(api).fetch();
 
     const entries: Validator[] = [];
     let notFullCommissionCount = 0;
@@ -344,16 +344,16 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     if (!isReady) {
       return;
     }
-    const pApi = ApiController.getApi(network);
-    setSessionValidators(await new SessionValidators(pApi).fetch());
+    const api = ApiController.getApi(network);
+    setSessionValidators(await new SessionValidators(api).fetch());
   };
 
   // Subscribe to active parachain validators.
   const getParachainValidators = async () => {
-    const pApi = ApiController.getApi(network);
+    const api = ApiController.getApi(network);
     setSessionParaValidators(
       await new ParaSessionAccounts(
-        pApi,
+        api,
         earliestStoredSession.toNumber()
       ).fetch()
     );
@@ -372,9 +372,8 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       vMulti.push([address]);
     }
 
-    const pApi = ApiController.getApi(network);
-    const resultsMulti =
-      (await new ValidatorsMulti(pApi, vMulti).fetch()) || [];
+    const api = ApiController.getApi(network);
+    const resultsMulti = (await new ValidatorsMulti(api, vMulti).fetch()) || [];
 
     const formatted: Validator[] = [];
     for (let i = 0; i < resultsMulti.length; i++) {
@@ -486,9 +485,9 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Gets average validator reward for provided number of days.
   const getAverageEraValidatorReward = async () => {
-    const pApi = ApiController.getApi(network);
+    const api = ApiController.getApi(network);
 
-    if (!pApi || !isReady || activeEra.index.isZero()) {
+    if (!api || !isReady || activeEra.index.isZero()) {
       setAverageEraValidatorReward({
         days: 0,
         reward: new BigNumber(0),
@@ -514,7 +513,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     } while (thisEra.gte(endEra));
 
     const erasMulti: [number][] = eras.map((e) => [Number(e)]);
-    const results = await new ErasValidatorReward(pApi, erasMulti).fetch();
+    const results = await new ErasValidatorReward(api, erasMulti).fetch();
 
     const reward = results
       .map((v) => {

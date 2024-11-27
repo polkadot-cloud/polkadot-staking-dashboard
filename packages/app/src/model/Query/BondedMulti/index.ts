@@ -4,18 +4,18 @@
 import type { PapiApi } from 'model/Api/types';
 
 export class BondedMulti {
-  #pApi: PapiApi;
+  #api: PapiApi;
 
   #addresses: [string][];
 
-  constructor(pApi: PapiApi, eras: [string][]) {
-    this.#pApi = pApi;
+  constructor(api: PapiApi, eras: [string][]) {
+    this.#api = api;
     this.#addresses = eras;
   }
 
   async fetch() {
     try {
-      const results = await this.#pApi.query.Staking.Bonded.getValues(
+      const results = await this.#api.query.Staking.Bonded.getValues(
         this.#addresses,
         {
           at: 'best',

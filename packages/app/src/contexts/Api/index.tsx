@@ -134,21 +134,19 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Bootstrap app-wide chain state.
   const bootstrapNetworkConfig = async () => {
-    const pApi = ApiController.getApi(network);
+    const api = ApiController.getApi(network);
 
     // 1. Fetch network data for bootstrapping app state:
 
     // Get active and previous era.
-    const { activeEra: newActiveEra, previousEra } = await new Era(
-      pApi
-    ).fetch();
+    const { activeEra: newActiveEra, previousEra } = await new Era(api).fetch();
 
     // Get network meta data related to staking and pools.
     const {
       networkMetrics: newNetworkMetrics,
       poolsConfig: newPoolsConfig,
       stakingMetrics: newStakingMetrics,
-    } = await new NetworkMeta(pApi).fetch(newActiveEra, previousEra);
+    } = await new NetworkMeta(api).fetch(newActiveEra, previousEra);
 
     // 2. Populate all config state:
 

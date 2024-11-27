@@ -47,8 +47,8 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { metadata, bond, roles, nominations } = progress;
 
   const getTxs = () => {
-    const pApi = ApiController.getApi(network);
-    if (!activeAccount || !pApi) {
+    const api = ApiController.getApi(network);
+    if (!activeAccount || !api) {
       return null;
     }
 
@@ -59,7 +59,7 @@ export const Summary = ({ section }: SetupStepProps) => {
     const bondToSubmit = unitToPlanck(bond, units).toString();
 
     const txs = [
-      pApi.tx.NominationPools.create({
+      api.tx.NominationPools.create({
         amount: BigInt(bondToSubmit.toString()),
         root: {
           type: 'Id',
@@ -75,11 +75,11 @@ export const Summary = ({ section }: SetupStepProps) => {
         },
       }),
 
-      pApi.tx.NominationPools.nominate({
+      api.tx.NominationPools.nominate({
         pool_id: poolId.toNumber(),
         validators: targetsToSubmit,
       }),
-      pApi.tx.NominationPools.set_metadata({
+      api.tx.NominationPools.set_metadata({
         pool_id: poolId.toNumber(),
         metadata: Binary.fromText(metadata),
       }),

@@ -4,19 +4,19 @@
 import type { PapiApi } from 'model/Api/types';
 
 export class NominatorsMulti {
-  #pApi: PapiApi;
+  #api: PapiApi;
 
   #addresses: [string][];
 
-  constructor(pApi: PapiApi, addresses: [string][]) {
-    this.#pApi = pApi;
+  constructor(api: PapiApi, addresses: [string][]) {
+    this.#api = api;
     this.#addresses = addresses;
   }
 
   async fetch() {
     let result;
     try {
-      result = await this.#pApi.query.Staking.Nominators.getValues(
+      result = await this.#api.query.Staking.Nominators.getValues(
         this.#addresses,
         { at: 'best' }
       );

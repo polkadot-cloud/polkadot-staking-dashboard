@@ -65,9 +65,9 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch all bonded pool entries and their metadata.
   const fetchBondedPools = async () => {
-    const pApi = ApiController.getApi(network);
+    const api = ApiController.getApi(network);
 
-    if (!pApi || bondedPoolsSynced.current !== 'unsynced') {
+    if (!api || bondedPoolsSynced.current !== 'unsynced') {
       return;
     }
     bondedPoolsSynced.current = 'syncing';
@@ -75,7 +75,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     // Get and format bonded pool entries.
     const ids: number[] = [];
     const idsMulti: [number][] = [];
-    const bondedPoolsEntries = (await new BondedPools(pApi).fetch()).format();
+    const bondedPoolsEntries = (await new BondedPools(api).fetch()).format();
 
     const exposures = shuffle(
       Object.entries(bondedPoolsEntries).map(([id, pool]: AnyApi) => {
@@ -88,7 +88,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     setStateWithRef(exposures, setBondedPools, bondedPoolsRef);
 
     // Fetch pools metadata.
-    const metadataQuery = await new PoolMetadataMulti(pApi, idsMulti).fetch();
+    const metadataQuery = await new PoolMetadataMulti(api, idsMulti).fetch();
     setPoolsMetadata(
       Object.fromEntries(metadataQuery.map((m, i) => [ids[i], m]))
     );
@@ -99,8 +99,8 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetches pool nominations and updates state.
   const fetchPoolsNominations = async () => {
-    const pApi = ApiController.getApi(network);
-    if (!pApi) {
+    const api = ApiController.getApi(network);
+    if (!api) {
       return;
     }
 
@@ -109,7 +109,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
       ids.push(id);
       return [addresses.stash];
     });
-    const nominationsMulti = await new NominatorsMulti(pApi, stashes).fetch();
+    const nominationsMulti = await new NominatorsMulti(api, stashes).fetch();
     setPoolsNominations(formatPoolsNominations(nominationsMulti, ids));
   };
 
@@ -126,8 +126,8 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Queries a bonded pool and injects ID and addresses to a result.
   const queryBondedPool = async (id: number) => {
-    const pApi = ApiController.getApi(network);
-    const bondedPool = new BondedPools(pApi).fetchOne(id);
+    const api = ApiController.getApi(network);
+    const bondedPool = new BondedPools(api).fetchOne(id);
 
     if (!bondedPool) {
       return null;

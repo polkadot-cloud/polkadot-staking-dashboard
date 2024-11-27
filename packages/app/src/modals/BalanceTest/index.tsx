@@ -26,22 +26,22 @@ export const BalanceTest = () => {
 
   // tx to submit
   const getTx = () => {
-    const pApi = ApiController.getApi(network);
+    const api = ApiController.getApi(network);
 
     const tx = null;
-    if (!pApi || !activeAccount) {
+    if (!api || !activeAccount) {
       return tx;
     }
 
     const txs = [
-      pApi.tx.Balances.transfer_keep_alive({
+      api.tx.Balances.transfer_keep_alive({
         dest: {
           type: 'Id',
           value: '1554u1a67ApEt5xmjbZwjgDNaVckbzB6cjRHWAQ1SpNkNxTd',
         },
         value: BigInt(unitToPlanck('0.1', units).toString()),
       }),
-      pApi.tx.Balances.transfer_keep_alive({
+      api.tx.Balances.transfer_keep_alive({
         dest: {
           type: 'Id',
           value: '1554u1a67ApEt5xmjbZwjgDNaVckbzB6cjRHWAQ1SpNkNxTd',

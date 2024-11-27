@@ -83,15 +83,15 @@ export const ManageFastUnstake = () => {
 
   // tx to submit
   const getTx = () => {
-    const pApi = ApiController.getApi(network);
+    const api = ApiController.getApi(network);
     let tx = null;
-    if (!valid || !pApi) {
+    if (!valid || !api) {
       return tx;
     }
     if (!isFastUnstaking) {
-      tx = pApi.tx.FastUnstake.register_fast_unstake();
+      tx = api.tx.FastUnstake.register_fast_unstake();
     } else {
-      tx = pApi.tx.FastUnstake.deregister();
+      tx = api.tx.FastUnstake.deregister();
     }
     return tx;
   };

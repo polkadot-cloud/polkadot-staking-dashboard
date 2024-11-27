@@ -7,24 +7,24 @@ import type { PapiApi } from 'model/Api/types';
 import type { AnyApi } from 'types';
 
 export class BondedPools {
-  #pApi: PapiApi;
+  #api: PapiApi;
 
   bondedPools: AnyApi = {};
 
-  constructor(pApi: PapiApi) {
-    this.#pApi = pApi;
+  constructor(api: PapiApi) {
+    this.#api = api;
   }
 
   async fetch() {
     this.bondedPools =
-      await this.#pApi.query.NominationPools.BondedPools.getEntries({
+      await this.#api.query.NominationPools.BondedPools.getEntries({
         at: 'best',
       });
     return this;
   }
 
   async fetchOne(id: number) {
-    const result = await this.#pApi.query.NominationPools.BondedPools.getValue(
+    const result = await this.#api.query.NominationPools.BondedPools.getValue(
       id,
       { at: 'best' }
     );

@@ -4,18 +4,18 @@
 import type { PapiApi } from 'model/Api/types';
 
 export class IdentityOfMulti {
-  #pApi: PapiApi;
+  #api: PapiApi;
 
   #addresses: [string][];
 
-  constructor(pApi: PapiApi, addresses: [string][]) {
-    this.#pApi = pApi;
+  constructor(api: PapiApi, addresses: [string][]) {
+    this.#api = api;
     this.#addresses = addresses;
   }
 
   async fetch() {
     try {
-      const result = await this.#pApi.query.Identity.IdentityOf.getValues(
+      const result = await this.#api.query.Identity.IdentityOf.getValues(
         this.#addresses,
         {
           at: 'best',

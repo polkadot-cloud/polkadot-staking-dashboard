@@ -4,18 +4,18 @@
 import type { PapiApi } from 'model/Api/types';
 
 export class ProxiesQuery {
-  #pApi: PapiApi;
+  #api: PapiApi;
 
   #address: string;
 
-  constructor(pApi: PapiApi, address: string) {
-    this.#pApi = pApi;
+  constructor(api: PapiApi, address: string) {
+    this.#api = api;
     this.#address = address;
   }
 
   async fetch() {
     try {
-      const result = await this.#pApi.query.Proxy.Proxies.getValue(
+      const result = await this.#api.query.Proxy.Proxies.getValue(
         this.#address,
         { at: 'best' }
       );

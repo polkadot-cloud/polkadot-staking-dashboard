@@ -81,27 +81,27 @@ export const SetPoolState = ({
 
   // tx to submit
   const getTx = () => {
-    const pApi = ApiController.getApi(network);
-    if (!valid || !pApi || poolId === undefined) {
+    const api = ApiController.getApi(network);
+    if (!valid || !api || poolId === undefined) {
       return null;
     }
 
     let tx;
     switch (task) {
       case 'destroy_pool':
-        tx = pApi.tx.NominationPools.set_state({
+        tx = api.tx.NominationPools.set_state({
           pool_id: poolId,
           state: { type: 'Destroying', value: undefined },
         });
         break;
       case 'unlock_pool':
-        tx = pApi.tx.NominationPools.set_state({
+        tx = api.tx.NominationPools.set_state({
           pool_id: poolId,
           state: { type: 'Open', value: undefined },
         });
         break;
       case 'lock_pool':
-        tx = pApi.tx.NominationPools.set_state({
+        tx = api.tx.NominationPools.set_state({
           pool_id: poolId,
           state: { type: 'Blocked', value: undefined },
         });

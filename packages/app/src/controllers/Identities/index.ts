@@ -8,11 +8,11 @@ import { SuperOfMulti } from 'model/Query/SuperOfMulti';
 import type { AnyApi } from 'types';
 
 export class IdentitiesController {
-  static fetch = async (pApi: PapiApi, addresses: string[]) => {
+  static fetch = async (api: PapiApi, addresses: string[]) => {
     // Fetches identities for addresses.
     const fetchBase = async () => {
       const addressesMulti: [string][] = addresses.map((address) => [address]);
-      const result = await new IdentityOfMulti(pApi, addressesMulti).fetch();
+      const result = await new IdentityOfMulti(api, addressesMulti).fetch();
 
       // Take identity data (first index) of results.
       const data =
@@ -31,7 +31,7 @@ export class IdentitiesController {
     const fetchSupers = async () => {
       const addressesMulti: [string][] = addresses.map((address) => [address]);
       const supersRawMulti = await new SuperOfMulti(
-        pApi,
+        api,
         addressesMulti
       ).fetch();
 
@@ -50,7 +50,7 @@ export class IdentitiesController {
         ({ superOf }: AnyApi) => [superOf[0]]
       );
       const superIdentities =
-        (await new IdentityOfMulti(pApi, superOfMulti).fetch()) || [];
+        (await new IdentityOfMulti(api, superOfMulti).fetch()) || [];
 
       // Take identity data (first index) of results.
       const data = superIdentities.map(

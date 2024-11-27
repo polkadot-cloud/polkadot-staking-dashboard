@@ -7,17 +7,17 @@ import { perbillToPercent, stringToBn } from 'library/Utils';
 import type { PapiApi } from 'model/Api/types';
 
 export class NetworkMeta {
-  #pApi: PapiApi;
+  #api: PapiApi;
 
-  constructor(pApi: PapiApi) {
-    this.#pApi = pApi;
+  constructor(api: PapiApi) {
+    this.#api = api;
   }
 
   // Fetch network constants.
   async fetch(activeEra: APIActiveEra, previousEra: BigNumber) {
     const at = { at: 'best' };
     const totalIssuance =
-      await this.#pApi.query.Balances.TotalIssuance.getValue(at);
+      await this.#api.query.Balances.TotalIssuance.getValue(at);
 
     const [
       auctionCounter,
@@ -43,34 +43,34 @@ export class NetworkMeta {
       minNominatorBond,
       activeEraErasTotalStake,
     ] = await Promise.all([
-      this.#pApi.query.Auctions.AuctionCounter.getValue(at),
-      this.#pApi.query.ParaSessionInfo.EarliestStoredSession.getValue(at),
-      this.#pApi.query.FastUnstake.ErasToCheckPerBlock.getValue(at),
-      this.#pApi.query.Staking.MinimumActiveStake.getValue(at),
-      this.#pApi.query.NominationPools.CounterForPoolMembers.getValue(at),
-      this.#pApi.query.NominationPools.CounterForBondedPools.getValue(at),
-      this.#pApi.query.NominationPools.CounterForRewardPools.getValue(at),
-      this.#pApi.query.NominationPools.LastPoolId.getValue(at),
-      this.#pApi.query.NominationPools.MaxPoolMembers.getValue(at),
-      this.#pApi.query.NominationPools.MaxPoolMembersPerPool.getValue(at),
-      this.#pApi.query.NominationPools.MaxPools.getValue(at),
-      this.#pApi.query.NominationPools.MinCreateBond.getValue(at),
-      this.#pApi.query.NominationPools.MinJoinBond.getValue(at),
-      this.#pApi.query.NominationPools.GlobalMaxCommission.getValue(at),
-      this.#pApi.query.Staking.CounterForNominators.getValue(at),
-      this.#pApi.query.Staking.CounterForValidators.getValue(at),
-      this.#pApi.query.Staking.MaxValidatorsCount.getValue(at),
-      this.#pApi.query.Staking.ValidatorCount.getValue(at),
-      this.#pApi.query.Staking.ErasValidatorReward.getValue(
+      this.#api.query.Auctions.AuctionCounter.getValue(at),
+      this.#api.query.ParaSessionInfo.EarliestStoredSession.getValue(at),
+      this.#api.query.FastUnstake.ErasToCheckPerBlock.getValue(at),
+      this.#api.query.Staking.MinimumActiveStake.getValue(at),
+      this.#api.query.NominationPools.CounterForPoolMembers.getValue(at),
+      this.#api.query.NominationPools.CounterForBondedPools.getValue(at),
+      this.#api.query.NominationPools.CounterForRewardPools.getValue(at),
+      this.#api.query.NominationPools.LastPoolId.getValue(at),
+      this.#api.query.NominationPools.MaxPoolMembers.getValue(at),
+      this.#api.query.NominationPools.MaxPoolMembersPerPool.getValue(at),
+      this.#api.query.NominationPools.MaxPools.getValue(at),
+      this.#api.query.NominationPools.MinCreateBond.getValue(at),
+      this.#api.query.NominationPools.MinJoinBond.getValue(at),
+      this.#api.query.NominationPools.GlobalMaxCommission.getValue(at),
+      this.#api.query.Staking.CounterForNominators.getValue(at),
+      this.#api.query.Staking.CounterForValidators.getValue(at),
+      this.#api.query.Staking.MaxValidatorsCount.getValue(at),
+      this.#api.query.Staking.ValidatorCount.getValue(at),
+      this.#api.query.Staking.ErasValidatorReward.getValue(
         previousEra.toNumber(),
         at
       ),
-      this.#pApi.query.Staking.ErasTotalStake.getValue(
+      this.#api.query.Staking.ErasTotalStake.getValue(
         previousEra.toNumber(),
         at
       ),
-      this.#pApi.query.Staking.MinNominatorBond.getValue(at),
-      this.#pApi.query.Staking.ErasTotalStake.getValue(
+      this.#api.query.Staking.MinNominatorBond.getValue(at),
+      this.#api.query.Staking.ErasTotalStake.getValue(
         activeEra.index.toNumber(),
         at
       ),

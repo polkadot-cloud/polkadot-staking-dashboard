@@ -48,24 +48,24 @@ export class AccountBalances implements Unsubscribable {
 
   subscribe = async (): Promise<void> => {
     try {
-      const pApi = ApiController.getApi(this.#network);
+      const api = ApiController.getApi(this.#network);
       const bestOrFinalized = 'best';
 
-      if (pApi && this.#sub === undefined) {
+      if (api && this.#sub === undefined) {
         const sub = combineLatest([
-          pApi.query.Staking.Ledger.watchValue(this.#address, bestOrFinalized),
-          pApi.query.System.Account.watchValue(this.#address, bestOrFinalized),
-          pApi.query.Balances.Locks.watchValue(this.#address, bestOrFinalized),
-          pApi.query.Staking.Payee.watchValue(this.#address, bestOrFinalized),
-          pApi.query.NominationPools.PoolMembers.watchValue(
+          api.query.Staking.Ledger.watchValue(this.#address, bestOrFinalized),
+          api.query.System.Account.watchValue(this.#address, bestOrFinalized),
+          api.query.Balances.Locks.watchValue(this.#address, bestOrFinalized),
+          api.query.Staking.Payee.watchValue(this.#address, bestOrFinalized),
+          api.query.NominationPools.PoolMembers.watchValue(
             this.#address,
             bestOrFinalized
           ),
-          pApi.query.NominationPools.ClaimPermissions.watchValue(
+          api.query.NominationPools.ClaimPermissions.watchValue(
             this.#address,
             bestOrFinalized
           ),
-          pApi.query.Staking.Nominators.watchValue(
+          api.query.Staking.Nominators.watchValue(
             this.#address,
             bestOrFinalized
           ),
@@ -83,11 +83,7 @@ export class AccountBalances implements Unsubscribable {
             this.handleAccount(account, locks);
             this.handlePayee(payee);
 
-            await this.handlePoolMembership(
-              pApi,
-              poolMembers,
-              claimPermissions
-            );
+            await this.handlePoolMembership(api, poolMembers, claimPermissions);
             this.handleNominations(nominators);
 
             // Send updated account state back to UI.
@@ -177,7 +173,7 @@ export class AccountBalances implements Unsubscribable {
 
   // Handle pool membership and claim commission callback.
   handlePoolMembership = async (
-    pApi: PapiApi,
+    api: PapiApi,
     poolMembers: AnyApi,
     claimPermissionResult: AnyApi
   ): Promise<void> => {
@@ -194,7 +190,7 @@ export class AccountBalances implements Unsubscribable {
       value: new BigNumber((v as bigint).toString()),
     }));
 
-    const apiResult = await pApi.apis.NominationPoolsApi.points_to_balance(
+    const apiResult = await api.apis.NominationPoolsApi.points_to_balance(
       poolMembers.pool_id,
       poolMembers.points,
       { at: 'best' }

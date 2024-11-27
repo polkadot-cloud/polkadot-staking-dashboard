@@ -4,14 +4,14 @@
 import type { PapiApi } from 'model/Api/types';
 
 export class ErasStakersPaged {
-  #pApi: PapiApi;
+  #api: PapiApi;
 
-  constructor(pApi: PapiApi) {
-    this.#pApi = pApi;
+  constructor(api: PapiApi) {
+    this.#api = api;
   }
 
   async fetch(era: number, validator: string) {
-    return await this.#pApi.query.Staking.ErasStakersPaged.getEntries(
+    return await this.#api.query.Staking.ErasStakersPaged.getEntries(
       era,
       validator,
       { at: 'best' }

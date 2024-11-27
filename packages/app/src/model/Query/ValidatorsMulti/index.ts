@@ -4,18 +4,18 @@
 import type { PapiApi } from 'model/Api/types';
 
 export class ValidatorsMulti {
-  #pApi: PapiApi;
+  #api: PapiApi;
 
   #addresses: [string][];
 
-  constructor(pApi: PapiApi, addresses: [string][]) {
-    this.#pApi = pApi;
+  constructor(api: PapiApi, addresses: [string][]) {
+    this.#api = api;
     this.#addresses = addresses;
   }
 
   async fetch() {
     try {
-      const result = await this.#pApi.query.Staking.Validators.getValues(
+      const result = await this.#api.query.Staking.Validators.getValues(
         this.#addresses,
         { at: 'best' }
       );

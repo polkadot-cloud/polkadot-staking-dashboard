@@ -73,9 +73,9 @@ export const UpdatePayee = () => {
 
   // Tx to submit.
   const getTx = () => {
-    const pApi = ApiController.getApi(network);
+    const api = ApiController.getApi(network);
     let tx = null;
-    if (!pApi || !selected.destination) {
+    if (!api || !selected.destination) {
       return tx;
     }
 
@@ -83,7 +83,7 @@ export const UpdatePayee = () => {
       return tx;
     }
 
-    tx = pApi.tx.Staking.set_payee({
+    tx = api.tx.Staking.set_payee({
       payee: !isComplete()
         ? { type: 'Staked', value: undefined }
         : selected.destination === 'Account'

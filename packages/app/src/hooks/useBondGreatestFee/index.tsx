@@ -35,7 +35,7 @@ export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
 
   // estimate the largest possible tx fee based on users free balance.
   const txLargestFee = async () => {
-    const pApi = ApiController.getApi(network);
+    const api = ApiController.getApi(network);
 
     const bond = BigNumber.max(
       transferrableBalance.minus(feeReserve),
@@ -43,18 +43,18 @@ export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
     ).toString();
 
     let tx = null;
-    if (!pApi) {
+    if (!api) {
       return new BigNumber(0);
     }
     if (bondFor === 'pool') {
-      tx = pApi.tx.NominationPools.bond_extra({
+      tx = api.tx.NominationPools.bond_extra({
         extra: {
           type: 'FreeBalance',
           value: BigInt(bond),
         },
       });
     } else if (bondFor === 'nominator') {
-      tx = pApi.tx.Staking.bond_extra({ max_additional: BigInt(bond) });
+      tx = api.tx.Staking.bond_extra({ max_additional: BigInt(bond) });
     }
 
     if (tx) {

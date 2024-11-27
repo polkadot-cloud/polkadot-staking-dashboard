@@ -4,19 +4,19 @@
 import type { PapiApi } from 'model/Api/types';
 
 export class ClaimedRewards {
-  #pApi: PapiApi;
+  #api: PapiApi;
   #era: number;
   #address: string;
 
-  constructor(pApi: PapiApi, era: number, address: string) {
-    this.#pApi = pApi;
+  constructor(api: PapiApi, era: number, address: string) {
+    this.#api = api;
     this.#era = era;
     this.#address = address;
   }
 
   async fetch() {
     try {
-      const result = await this.#pApi.query.Staking.ClaimedRewards.getValue(
+      const result = await this.#api.query.Staking.ClaimedRewards.getValue(
         this.#era,
         this.#address,
         {

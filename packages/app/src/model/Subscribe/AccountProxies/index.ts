@@ -27,11 +27,11 @@ export class AccountProxies implements Unsubscribable {
 
   subscribe = async (): Promise<void> => {
     try {
-      const pApi = ApiController.getApi(this.#network);
+      const api = ApiController.getApi(this.#network);
 
-      if (pApi && this.#sub === undefined) {
+      if (api && this.#sub === undefined) {
         const bestOrFinalized = 'best';
-        const unsub = pApi.query.Proxy.Proxies.watchValue(
+        const unsub = api.query.Proxy.Proxies.watchValue(
           this.#address,
           bestOrFinalized
         ).subscribe((proxies) => {

@@ -4,20 +4,22 @@
 import type { PapiApi } from 'model/Api/types';
 
 export class ErasValidatorReward {
-  #pApi: PapiApi;
+  #api: PapiApi;
   #era: number;
 
-  constructor(pApi: PapiApi, era: number) {
-    this.#pApi = pApi;
+  constructor(api: PapiApi, era: number) {
+    this.#api = api;
     this.#era = era;
   }
 
   async fetch() {
     try {
-      const result =
-        await this.#pApi.query.Staking.ErasValidatorReward.getValue(this.#era, {
+      const result = await this.#api.query.Staking.ErasValidatorReward.getValue(
+        this.#era,
+        {
           at: 'best',
-        });
+        }
+      );
       return result;
     } catch (e) {
       // Silently fail.

@@ -24,14 +24,14 @@ export class FastUnstakeConfig implements Unsubscribable {
 
   subscribe = async (): Promise<void> => {
     try {
-      const pApi = ApiController.getApi(this.#network);
+      const api = ApiController.getApi(this.#network);
 
-      if (pApi && this.#sub === undefined) {
+      if (api && this.#sub === undefined) {
         const bestOrFinalized = 'best';
 
         const sub = combineLatest([
-          pApi.query.FastUnstake.Head.watchValue(bestOrFinalized),
-          pApi.query.FastUnstake.CounterForQueue.watchValue(bestOrFinalized),
+          api.query.FastUnstake.Head.watchValue(bestOrFinalized),
+          api.query.FastUnstake.CounterForQueue.watchValue(bestOrFinalized),
         ]).subscribe(([head, counterForQueue]) => {
           const config: FastUnstakeConfigResult = {
             head: head || {

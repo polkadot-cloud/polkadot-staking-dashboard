@@ -126,15 +126,15 @@ export const ManageCommission = ({
 
   // tx to submit.
   const getTx = () => {
-    const pApi = ApiController.getApi(network);
-    if (!valid || !pApi) {
+    const api = ApiController.getApi(network);
+    if (!valid || !api) {
       return null;
     }
 
     const txs = [];
     if (commissionUpdated) {
       txs.push(
-        pApi.tx.NominationPools.set_commission({
+        api.tx.NominationPools.set_commission({
           pool_id: poolId,
           new_commission: currentCommissionSet
             ? [
@@ -147,7 +147,7 @@ export const ManageCommission = ({
     }
     if (isUpdated('max_commission') && getEnabled('max_commission')) {
       txs.push(
-        pApi.tx.NominationPools.set_commission_max({
+        api.tx.NominationPools.set_commission_max({
           pool_id: poolId,
           max_commission: new BigNumber(maxCommission)
             .multipliedBy(10000000)
@@ -157,7 +157,7 @@ export const ManageCommission = ({
     }
     if (isUpdated('change_rate') && getEnabled('change_rate')) {
       txs.push(
-        pApi.tx.NominationPools.set_commission_change_rate({
+        api.tx.NominationPools.set_commission_change_rate({
           pool_id: poolId,
           change_rate: {
             max_increase: new BigNumber(changeRate.maxIncrease)

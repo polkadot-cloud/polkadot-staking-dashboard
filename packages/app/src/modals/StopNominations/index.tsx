@@ -63,17 +63,17 @@ export const StopNominations = () => {
 
   // tx to submit
   const getTx = () => {
-    const pApi = ApiController.getApi(network);
+    const api = ApiController.getApi(network);
     let tx = null;
-    if (!valid || !pApi) {
+    if (!valid || !api) {
       return tx;
     }
 
     if (isPool) {
       // wishing to stop all nominations, call chill
-      tx = pApi.tx.NominationPools.chill({ pool_id: activePool?.id || 0 });
+      tx = api.tx.NominationPools.chill({ pool_id: activePool?.id || 0 });
     } else if (isStaking) {
-      tx = pApi.tx.Staking.chill();
+      tx = api.tx.Staking.chill();
     }
     return tx;
   };

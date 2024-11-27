@@ -14,22 +14,22 @@ export const useBatchCall = () => {
   const { isProxySupported } = useProxySupported();
 
   const newBatchCall = (txs: UnsafeTx[], from: MaybeAddress): AnyApi => {
-    const pApi = ApiController.getApi(network);
+    const api = ApiController.getApi(network);
 
-    if (!pApi) {
+    if (!api) {
       return undefined;
     }
 
     from = from || '';
-    const batchTx = pApi.tx.Utility.batch({
+    const batchTx = api.tx.Utility.batch({
       calls: txs.map((tx) => tx.decodedCall),
     });
 
     if (activeProxy && isProxySupported(batchTx, from)) {
-      return pApi.tx.Utility.batch({
+      return api.tx.Utility.batch({
         calls: txs.map(
           (tx) =>
-            pApi.tx.Proxy.proxy({
+            api.tx.Proxy.proxy({
               real: {
                 type: 'Id',
                 value: from,

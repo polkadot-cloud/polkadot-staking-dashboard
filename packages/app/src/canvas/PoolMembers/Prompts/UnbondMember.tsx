@@ -73,9 +73,9 @@ export const UnbondMember = ({
 
   // tx to submit
   const getTx = () => {
-    const pApi = ApiController.getApi(network);
+    const api = ApiController.getApi(network);
     let tx = null;
-    if (!pApi || !activeAccount) {
+    if (!api || !activeAccount) {
       return tx;
     }
     // remove decimal errors
@@ -84,7 +84,7 @@ export const UnbondMember = ({
       units
     ).toString();
 
-    tx = pApi.tx.NominationPools.unbond({
+    tx = api.tx.NominationPools.unbond({
       member_account: {
         type: 'Id',
         value: who,

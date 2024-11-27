@@ -79,7 +79,7 @@ export const useSubmitExtrinsic = ({
 
   // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account.
   const wrapTxIfActiveProxy = () => {
-    const pApi = ApiController.getApi(network);
+    const api = ApiController.getApi(network);
 
     // if already wrapped, update fromRef and return.
     if (
@@ -93,7 +93,7 @@ export const useSubmitExtrinsic = ({
     }
 
     if (
-      pApi &&
+      api &&
       activeProxy &&
       txRef.current &&
       isProxySupported(txRef.current, fromRef.current)
@@ -111,7 +111,7 @@ export const useSubmitExtrinsic = ({
       }
 
       // Not a batch transaction: wrap tx in proxy call.
-      txRef.current = pApi.tx.Proxy.proxy({
+      txRef.current = api.tx.Proxy.proxy({
         real: {
           type: 'Id',
           value: from || '',

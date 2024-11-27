@@ -95,9 +95,9 @@ export const Bond = () => {
 
   // determine whether this is a pool or staking transaction.
   const determineTx = (bondToSubmit: BigNumber) => {
-    const pApi = ApiController.getApi(network);
+    const api = ApiController.getApi(network);
     let tx = null;
-    if (!pApi) {
+    if (!api) {
       return tx;
     }
 
@@ -108,14 +108,14 @@ export const Bond = () => {
         : bondToSubmit.toString();
 
     if (isPooling) {
-      tx = pApi.tx.NominationPools.bond_extra({
+      tx = api.tx.NominationPools.bond_extra({
         extra: {
           type: 'FreeBalance',
           value: BigInt(bondAsString),
         },
       });
     } else if (isStaking) {
-      tx = pApi.tx.Staking.bond_extra({ max_additional: BigInt(bondAsString) });
+      tx = api.tx.Staking.bond_extra({ max_additional: BigInt(bondAsString) });
     }
     return tx;
   };

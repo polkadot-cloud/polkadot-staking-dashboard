@@ -4,21 +4,20 @@
 import type { PapiApi } from 'model/Api/types';
 
 export class ParaSessionAccounts {
-  #pApi: PapiApi;
+  #api: PapiApi;
   #session: number;
 
-  constructor(pApi: PapiApi, session: number) {
-    this.#pApi = pApi;
+  constructor(api: PapiApi, session: number) {
+    this.#api = api;
     this.#session = session;
   }
 
   async fetch() {
     try {
-      const result =
-        await this.#pApi.query.ParaSessionInfo.AccountKeys.getValue(
-          this.#session,
-          { at: 'best' }
-        );
+      const result = await this.#api.query.ParaSessionInfo.AccountKeys.getValue(
+        this.#session,
+        { at: 'best' }
+      );
 
       if (result) {
         return result;

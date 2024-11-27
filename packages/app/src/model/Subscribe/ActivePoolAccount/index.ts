@@ -44,26 +44,26 @@ export class ActivePoolAccount implements Unsubscribable {
 
   subscribe = async (): Promise<void> => {
     try {
-      const pApi = ApiController.getApi(this.#network);
+      const api = ApiController.getApi(this.#network);
       const peopleApi = ApiController.getApi(
         `people-${this.#network}` as SystemChainId
       );
       const bestOrFinalized = 'best';
 
       const sub = combineLatest([
-        pApi.query.NominationPools.BondedPools.watchValue(
+        api.query.NominationPools.BondedPools.watchValue(
           Number(this.pool.id),
           bestOrFinalized
         ),
-        pApi.query.NominationPools.RewardPools.watchValue(
+        api.query.NominationPools.RewardPools.watchValue(
           Number(this.pool.id),
           bestOrFinalized
         ),
-        pApi.query.System.Account.watchValue(
+        api.query.System.Account.watchValue(
           this.pool.addresses.reward,
           bestOrFinalized
         ),
-        pApi.query.Staking.Nominators.watchValue(
+        api.query.Staking.Nominators.watchValue(
           this.pool.addresses.stash,
           bestOrFinalized
         ),

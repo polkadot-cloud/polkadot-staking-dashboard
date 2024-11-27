@@ -28,11 +28,11 @@ export class Bonded implements Unsubscribable {
 
   subscribe = async (): Promise<void> => {
     try {
-      const pApi = ApiController.getApi(this.#network);
+      const api = ApiController.getApi(this.#network);
 
-      if (pApi && this.#sub === undefined) {
+      if (api && this.#sub === undefined) {
         const bestOrFinalized = 'best';
-        const unsub = pApi.query.Staking.Bonded.watchValue(
+        const unsub = api.query.Staking.Bonded.watchValue(
           this.#address,
           bestOrFinalized
         ).subscribe((controller) => {

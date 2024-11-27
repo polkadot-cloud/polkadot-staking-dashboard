@@ -93,15 +93,15 @@ export const ManageNominations = () => {
 
   // Tx to submit.
   const getTx = () => {
-    const pApi = ApiController.getApi(network);
+    const api = ApiController.getApi(network);
     let tx = null;
-    if (!valid || !pApi) {
+    if (!valid || !api) {
       return tx;
     }
 
     if (isPool) {
       if (activePool) {
-        tx = pApi.tx.NominationPools.nominate({
+        tx = api.tx.NominationPools.nominate({
           pool_id: activePool.id,
           validators: newNominations.nominations.map(
             (nominee) => nominee.address
@@ -109,7 +109,7 @@ export const ManageNominations = () => {
         });
       }
     } else {
-      tx = pApi.tx.Staking.nominate({
+      tx = api.tx.Staking.nominate({
         targets: newNominations.nominations.map((nominee) => ({
           type: 'Id',
           value: nominee.address,

@@ -7,16 +7,8 @@ import type { ConnectionType } from 'model/Api/types';
 import type { NetworkName, SystemChainId } from 'types';
 
 export class ApiController {
-  // ------------------------------------------------------
-  // Class members.
-  // ------------------------------------------------------
-
   // The currently instantiated API instances, keyed by tab id.
   static #instances: Record<string, Api> = {};
-
-  // ------------------------------------------------------
-  // Getters.
-  // ------------------------------------------------------
 
   // Get an Api.
   static get(network: NetworkName | SystemChainId) {
@@ -31,10 +23,6 @@ export class ApiController {
   static get instances() {
     return this.#instances;
   }
-
-  // ------------------------------------------------------
-  // Api instance methods.
-  // ------------------------------------------------------
 
   // Instantiate a new `Api` instance with the supplied chain id and endpoint.
   static async instantiate(

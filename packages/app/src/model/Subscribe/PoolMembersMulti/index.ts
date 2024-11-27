@@ -28,13 +28,13 @@ export class PoolMembersMulti implements Unsubscribable {
 
   subscribe = async (): Promise<void> => {
     try {
-      const pApi = ApiController.getApi(this.#network);
-      if (pApi && this.#sub === undefined) {
+      const api = ApiController.getApi(this.#network);
+      if (api && this.#sub === undefined) {
         const bestOrFinalized = 'best';
 
         const sub = combineLatest(
           this.#addresses.map((address) =>
-            pApi.query.NominationPools.PoolMembers.watchValue(
+            api.query.NominationPools.PoolMembers.watchValue(
               address,
               bestOrFinalized
             )

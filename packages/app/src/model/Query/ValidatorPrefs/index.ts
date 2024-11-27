@@ -4,19 +4,19 @@
 import type { PapiApi } from 'model/Api/types';
 
 export class ValidatorPrefs {
-  #pApi: PapiApi;
+  #api: PapiApi;
   #era: number;
   #address: string;
 
-  constructor(pApi: PapiApi, era: number, address: string) {
-    this.#pApi = pApi;
+  constructor(api: PapiApi, era: number, address: string) {
+    this.#api = api;
     this.#era = era;
     this.#address = address;
   }
 
   async fetch() {
     try {
-      const result = await this.#pApi.query.Staking.ErasValidatorPrefs.getValue(
+      const result = await this.#api.query.Staking.ErasValidatorPrefs.getValue(
         this.#era,
         this.#address,
         { at: 'best' }

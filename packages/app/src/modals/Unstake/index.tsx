@@ -82,9 +82,9 @@ export const Unstake = () => {
 
   // tx to submit
   const getTx = () => {
-    const pApi = ApiController.getApi(network);
+    const api = ApiController.getApi(network);
     const tx = null;
-    if (!pApi || !activeAccount) {
+    if (!api || !activeAccount) {
       return tx;
     }
     // remove decimal errors
@@ -94,11 +94,11 @@ export const Unstake = () => {
     );
 
     if (bondToSubmit == 0n) {
-      return pApi.tx.Staking.chill();
+      return api.tx.Staking.chill();
     }
     const txs = [
-      pApi.tx.Staking.chill(),
-      pApi.tx.Staking.unbond({ value: BigInt(bondToSubmit.toString()) }),
+      api.tx.Staking.chill(),
+      api.tx.Staking.unbond({ value: BigInt(bondToSubmit.toString()) }),
     ];
     return newBatchCall(txs, controller);
   };

@@ -4,18 +4,18 @@
 import type { PapiApi } from 'model/Api/types';
 
 export class PoolMetadataMulti {
-  #pApi: PapiApi;
+  #api: PapiApi;
 
   #ids: [number][];
 
-  constructor(pApi: PapiApi, ids: [number][]) {
-    this.#pApi = pApi;
+  constructor(api: PapiApi, ids: [number][]) {
+    this.#api = api;
     this.#ids = ids;
   }
 
   async fetch() {
     try {
-      const result = await this.#pApi.query.NominationPools.Metadata.getValues(
+      const result = await this.#api.query.NominationPools.Metadata.getValues(
         this.#ids,
         { at: 'best' }
       );

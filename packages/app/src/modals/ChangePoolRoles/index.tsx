@@ -31,13 +31,13 @@ export const ChangePoolRoles = () => {
 
   // tx to submit
   const getTx = () => {
-    const pApi = ApiController.getApi(network);
+    const api = ApiController.getApi(network);
     let tx = null;
-    if (!pApi) {
+    if (!api) {
       return tx;
     }
 
-    tx = pApi.tx.NominationPools.update_roles({
+    tx = api.tx.NominationPools.update_roles({
       pool_id: poolId,
       new_root: roleEdits?.root?.newAddress
         ? { type: 'Set', value: roleEdits.root.newAddress }

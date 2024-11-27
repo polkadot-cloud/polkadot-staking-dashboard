@@ -52,11 +52,11 @@ export const ClaimCommission = ({
 
   // tx to submit
   const getTx = () => {
-    const pApi = ApiController.getApi(network);
-    if (!valid || !pApi || poolId === undefined) {
+    const api = ApiController.getApi(network);
+    if (!valid || !api || poolId === undefined) {
       return null;
     }
-    return pApi.tx.NominationPools.claim_commission({ pool_id: poolId });
+    return api.tx.NominationPools.claim_commission({ pool_id: poolId });
   };
 
   const submitExtrinsic = useSubmitExtrinsic({

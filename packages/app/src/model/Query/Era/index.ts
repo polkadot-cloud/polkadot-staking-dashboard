@@ -5,10 +5,10 @@ import BigNumber from 'bignumber.js';
 import type { PapiApi } from 'model/Api/types';
 
 export class Era {
-  #pApi: PapiApi;
+  #api: PapiApi;
 
-  constructor(pApi: PapiApi) {
-    this.#pApi = pApi;
+  constructor(api: PapiApi) {
+    this.#api = api;
   }
 
   async fetch() {
@@ -18,7 +18,7 @@ export class Era {
     };
 
     try {
-      const result = await this.#pApi.query.Staking.ActiveEra.getValue({
+      const result = await this.#api.query.Staking.ActiveEra.getValue({
         at: 'best',
       });
 

@@ -4,16 +4,16 @@
 import type { PapiApi } from 'model/Api/types';
 
 export class SessionValidators {
-  #pApi: PapiApi;
+  #api: PapiApi;
 
-  constructor(pApi: PapiApi) {
-    this.#pApi = pApi;
+  constructor(api: PapiApi) {
+    this.#api = api;
   }
 
   // Fetch network constants.
   async fetch() {
     try {
-      const result = await this.#pApi.query.Session.Validators.getValue({
+      const result = await this.#api.query.Session.Validators.getValue({
         at: 'best',
       });
       return result;

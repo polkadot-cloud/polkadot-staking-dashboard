@@ -40,8 +40,8 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { bond, nominations, payee } = progress;
 
   const getTxs = () => {
-    const pApi = ApiController.getApi(network);
-    if (!activeAccount || !pApi) {
+    const api = ApiController.getApi(network);
+    if (!activeAccount || !api) {
       return null;
     }
 
@@ -66,11 +66,11 @@ export const Summary = ({ section }: SetupStepProps) => {
     const bondToSubmit = unitToPlanck(bond || '0', units).toString();
 
     const txs = [
-      pApi.tx.Staking.bond({
+      api.tx.Staking.bond({
         value: BigInt(bondToSubmit),
         payee: payeeToSubmit,
       }),
-      pApi.tx.Staking.nominate({
+      api.tx.Staking.nominate({
         targets: nominations.map(({ address }: { address: string }) => ({
           type: 'Id',
           value: address,

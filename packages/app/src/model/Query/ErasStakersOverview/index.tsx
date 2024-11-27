@@ -4,14 +4,14 @@
 import type { PapiApi } from 'model/Api/types';
 
 export class ErasStakersOverview {
-  #pApi: PapiApi;
+  #api: PapiApi;
 
-  constructor(pApi: PapiApi) {
-    this.#pApi = pApi;
+  constructor(api: PapiApi) {
+    this.#api = api;
   }
 
   async fetch(era: number) {
-    return await this.#pApi.query.Staking.ErasStakersOverview.getEntries(era, {
+    return await this.#api.query.Staking.ErasStakersOverview.getEntries(era, {
       at: 'best',
     });
   }

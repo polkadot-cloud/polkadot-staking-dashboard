@@ -43,12 +43,12 @@ export const Stats = ({
 
   // Fetches the balance of the bonded pool.
   const getPoolBalance = async () => {
-    const pApi = ApiController.getApi(network);
-    if (!pApi) {
+    const api = ApiController.getApi(network);
+    if (!api) {
       return;
     }
 
-    const apiResult = await pApi.apis.NominationPoolsApi.points_to_balance(
+    const apiResult = await api.apis.NominationPoolsApi.points_to_balance(
       bondedPool.id,
       BigInt(rmCommas(bondedPool.points)),
       { at: 'best' }

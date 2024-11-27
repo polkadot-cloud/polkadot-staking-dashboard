@@ -73,9 +73,9 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
 
   // Get transaction for submission.
   const getTx = () => {
-    const pApi = ApiController.getApi(network);
+    const api = ApiController.getApi(network);
     const tx = null;
-    if (!pApi || !claimPermission || !formValid) {
+    if (!api || !claimPermission || !formValid) {
       return tx;
     }
 
@@ -84,7 +84,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
       units
     ).toString();
     const txs: AnyApi[] = [
-      pApi.tx.NominationPools.join({
+      api.tx.NominationPools.join({
         amount: BigInt(bondToSubmit),
         pool_id: bondedPool.id,
       }),
@@ -93,7 +93,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
     // If claim permission is not the default, add it to tx.
     if (claimPermission !== defaultClaimPermission) {
       txs.push(
-        pApi.tx.NominationPools.set_claim_permission({
+        api.tx.NominationPools.set_claim_permission({
           permission: { type: claimPermission, value: undefined },
         })
       );

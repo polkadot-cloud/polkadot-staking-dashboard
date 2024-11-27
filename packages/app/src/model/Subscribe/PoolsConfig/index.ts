@@ -25,29 +25,29 @@ export class PoolsConfig implements Unsubscribable {
 
   subscribe = async (): Promise<void> => {
     try {
-      const pApi = ApiController.getApi(this.#network);
+      const api = ApiController.getApi(this.#network);
 
-      if (pApi && this.#sub === undefined) {
+      if (api && this.#sub === undefined) {
         const bestOrFinalized = 'best';
         const sub = combineLatest([
-          pApi.query.NominationPools.CounterForPoolMembers.watchValue(
+          api.query.NominationPools.CounterForPoolMembers.watchValue(
             bestOrFinalized
           ),
-          pApi.query.NominationPools.CounterForBondedPools.watchValue(
+          api.query.NominationPools.CounterForBondedPools.watchValue(
             bestOrFinalized
           ),
-          pApi.query.NominationPools.CounterForRewardPools.watchValue(
+          api.query.NominationPools.CounterForRewardPools.watchValue(
             bestOrFinalized
           ),
-          pApi.query.NominationPools.LastPoolId.watchValue(bestOrFinalized),
-          pApi.query.NominationPools.MaxPoolMembers.watchValue(bestOrFinalized),
-          pApi.query.NominationPools.MaxPoolMembersPerPool.watchValue(
+          api.query.NominationPools.LastPoolId.watchValue(bestOrFinalized),
+          api.query.NominationPools.MaxPoolMembers.watchValue(bestOrFinalized),
+          api.query.NominationPools.MaxPoolMembersPerPool.watchValue(
             bestOrFinalized
           ),
-          pApi.query.NominationPools.MaxPools.watchValue(bestOrFinalized),
-          pApi.query.NominationPools.MinCreateBond.watchValue(bestOrFinalized),
-          pApi.query.NominationPools.MinJoinBond.watchValue(bestOrFinalized),
-          pApi.query.NominationPools.GlobalMaxCommission.watchValue(
+          api.query.NominationPools.MaxPools.watchValue(bestOrFinalized),
+          api.query.NominationPools.MinCreateBond.watchValue(bestOrFinalized),
+          api.query.NominationPools.MinJoinBond.watchValue(bestOrFinalized),
+          api.query.NominationPools.GlobalMaxCommission.watchValue(
             bestOrFinalized
           ),
         ]).subscribe(

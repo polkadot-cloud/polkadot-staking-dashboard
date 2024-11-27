@@ -23,11 +23,11 @@ export class BlockNumber implements Unsubscribable {
 
   subscribe = async (): Promise<void> => {
     try {
-      const pApi = ApiController.getApi(this.#network);
+      const api = ApiController.getApi(this.#network);
 
-      if (pApi && this.#sub === undefined) {
+      if (api && this.#sub === undefined) {
         const bestOrFinalized = 'best';
-        const unsub = pApi.query.System.Number.watchValue(
+        const unsub = api.query.System.Number.watchValue(
           bestOrFinalized
         ).subscribe((num) => {
           // Update class block number.

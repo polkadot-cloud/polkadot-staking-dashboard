@@ -193,9 +193,9 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch and update unclaimed pool rewards for an address from runtime call.
   const fetchPendingRewards = async (address: string | undefined) => {
-    const pApi = ApiController.getApi(network);
-    if (pApi && address) {
-      const apiResult = await pApi.apis.NominationPoolsApi.pending_rewards(
+    const api = ApiController.getApi(network);
+    if (api && address) {
+      const apiResult = await api.apis.NominationPoolsApi.pending_rewards(
         address,
         { at: 'best' }
       );
