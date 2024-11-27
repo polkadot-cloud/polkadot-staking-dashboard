@@ -1,15 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type {
-  dot,
-  dotPeople,
-  ksm,
-  ksmPeople,
-  westend,
-  westendPeople,
-} from '@polkadot-api/descriptors';
-import type { TypedApi, UnsafeApi } from 'polkadot-api';
+import type { UnsafeApi } from 'polkadot-api';
 import type { NetworkName, SystemChainId } from 'types';
 
 export interface APIConfig {
@@ -44,16 +36,6 @@ export type PapiReadyEvent = PapiChainSpec & {
   network: NetworkName | SystemChainId;
   chainType: string;
 };
-
-export type TypedApiInner =
-  | typeof dot
-  | typeof dotPeople
-  | typeof ksm
-  | typeof ksmPeople
-  | typeof westend
-  | typeof westendPeople;
-
-export type TypedPapiApi = TypedApi<TypedApiInner>;
 
 export type PapiApi = UnsafeApi<unknown>;
 

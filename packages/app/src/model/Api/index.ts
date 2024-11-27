@@ -1,18 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  dot,
-  dotPeople,
-  ksm,
-  ksmPeople,
-  westend,
-  westendPeople,
-} from '@polkadot-api/descriptors';
 import { NetworkList, SystemChainList } from 'config/networks';
 import { getLightClientMetadata } from 'config/util';
 import { SubscriptionsController } from 'controllers/Subscriptions';
-import type { PolkadotClient, TypedApi } from 'polkadot-api';
+import type { PolkadotClient } from 'polkadot-api';
 import { createClient } from 'polkadot-api';
 import { getSmProvider } from 'polkadot-api/sm-provider';
 import { startFromWorker } from 'polkadot-api/smoldot/from-worker';
@@ -27,8 +19,6 @@ import type {
   PapiApi,
   PapiChainSpec,
   PapiReadyEvent,
-  TypedApiInner,
-  TypedPapiApi,
 } from './types';
 
 export class Api {
@@ -41,12 +31,8 @@ export class Api {
   // PAPI Instance.
   #papiClient: PolkadotClient;
 
-  #pApiTyped: TypedPapiApi;
-
   // PAPI API.
   #pApi: PapiApi;
-
-  #papiApiType: TypedApiInner;
 
   // PAPI Chain Spec.
   #papiChainSpec: PapiChainSpec;
@@ -59,10 +45,6 @@ export class Api {
 
   get papiClient() {
     return this.#papiClient;
-  }
-
-  get pApiTyped() {
-    return this.#pApiTyped;
   }
 
   get pApi() {
@@ -105,13 +87,7 @@ export class Api {
       // Tell UI api is connecting.
       this.dispatchEvent(this.ensureEventStatus('connecting'));
 
-      // Assign typed api from network key.
-      this.assignApiTypeFromNetworkKey();
-
-      // Initialise PAPI Typed API.
-      this.#pApiTyped = this.#papiClient.getTypedApi(this.#papiApiType);
-
-      // Initialise PAPI Unsafe API.
+      // Initialise PAPI API.
       this.#pApi = this.#papiClient.getUnsafeApi();
 
       // Fetch chain spec and metadata from PAPI client.
@@ -286,33 +262,4 @@ export class Api {
       this.dispatchEvent(this.ensureEventStatus('destroyed'));
     }
   }
-
-  // Get typed API.
-  getTypedApi = () => this.#pApiTyped as unknown as TypedApi<typeof dot>;
-
-  // API from network key.
-  assignApiTypeFromNetworkKey = (): void => {
-    switch (this.network) {
-      case 'polkadot':
-        this.#papiApiType = dot;
-        break;
-      case 'kusama':
-        this.#papiApiType = ksm;
-        break;
-      case 'westend':
-        this.#papiApiType = westend;
-        break;
-      case 'people-polkadot':
-        this.#papiApiType = dotPeople;
-        break;
-      case 'people-kusama':
-        this.#papiApiType = ksmPeople;
-        break;
-      case 'people-westend':
-        this.#papiApiType = westendPeople;
-        break;
-      default:
-        this.#papiApiType = dot;
-    }
-  };
 }
