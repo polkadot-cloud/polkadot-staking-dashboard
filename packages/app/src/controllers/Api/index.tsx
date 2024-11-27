@@ -7,7 +7,7 @@ import type { ConnectionType } from 'model/Api/types';
 import type { NetworkName, SystemChainId } from 'types';
 
 export class ApiController {
-  // The currently instantiated API instances, keyed by tab id.
+  // The currently instantiated API instances, keyed by network.
   static #instances: Record<string, Api> = {};
 
   // Get an Api.
