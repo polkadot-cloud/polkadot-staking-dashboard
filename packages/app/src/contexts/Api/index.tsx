@@ -514,7 +514,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Add event listener for api events and subscription updates.
   const documentRef = useRef<Document>(document);
   useEventListener('api-status', handleNewApiStatus, documentRef);
-  useEventListener('papi-ready', handlePapiReady, documentRef);
+  useEventListener('api-ready', handlePapiReady, documentRef);
   useEventListener(
     'new-network-metrics',
     handleNetworkMetricsUpdate,

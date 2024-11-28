@@ -17,7 +17,7 @@ export class Apis {
 
   // Get the api client.
   static getClient(network: NetworkName | SystemChainId) {
-    return this.#instances[network].papiClient;
+    return this.#instances[network].apiClient;
   }
 
   // Get the api instance.

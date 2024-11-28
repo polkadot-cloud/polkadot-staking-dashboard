@@ -35,7 +35,7 @@ declare global {
   interface DocumentEventMap {
     notification: CustomEvent<NotificationItem>;
     'api-status': CustomEvent<APIEventDetail>;
-    'papi-ready': CustomEvent<PapiReadyEvent>;
+    'api-ready': CustomEvent<PapiReadyEvent>;
     'online-status': CustomEvent<OnlineStatusEvent>;
     'new-block-number': CustomEvent<BlockNumberEventDetail>;
     'new-network-metrics': CustomEvent<{

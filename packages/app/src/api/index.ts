@@ -27,11 +27,11 @@ export class Api {
   // The type of chain being connected to.
   #chainType: ApiChainType;
 
-  // PAPI Instance.
-  #papiClient: PolkadotClient;
+  // API client.
+  #apiClient: PolkadotClient;
 
-  // PAPI Chain Spec.
-  #papiChainSpec: PapiChainSpec;
+  // The fetched chain spec.
+  #chainSpec: PapiChainSpec;
 
   // The current RPC endpoint.
   #rpcEndpoint: string;
@@ -39,16 +39,16 @@ export class Api {
   // The current connection type.
   #connectionType: ConnectionType;
 
-  get papiClient() {
-    return this.#papiClient;
+  get apiClient() {
+    return this.#apiClient;
   }
 
   get unsafeApi() {
-    return this.#papiClient.getUnsafeApi();
+    return this.#apiClient.getUnsafeApi();
   }
 
-  get papiChainSpec() {
-    return this.#papiChainSpec;
+  get chainSpec() {
+    return this.#chainSpec;
   }
 
   get connectionType() {
@@ -102,12 +102,12 @@ export class Api {
           ];
 
     // Initialize Polkadot API Client.
-    this.#papiClient = createClient(getWsProvider(endpoint));
+    this.#apiClient = createClient(getWsProvider(endpoint));
   }
 
   // Dynamically load and connect to Substrate Connect.
   async initScProvider() {
-    // Initialise PAPI light client.
+    // Initialise light client.
     const smoldot = startFromWorker(new SmWorker());
     const smMetadata = getLightClientMetadata(this.#chainType, this.network);
 
@@ -119,12 +119,12 @@ export class Api {
           : undefined,
       })
     );
-    this.#papiClient = createClient(chain);
+    this.#apiClient = createClient(chain);
   }
 
   async fetchChainSpec() {
     try {
-      const chainSpecData = await this.#papiClient.getChainSpecData();
+      const chainSpecData = await this.#apiClient.getChainSpecData();
       const version = await this.unsafeApi.constants.System.Version();
 
       const { genesisHash, properties } = chainSpecData;
@@ -139,7 +139,7 @@ export class Api {
         transaction_version: transactionVersion,
       } = version;
 
-      this.#papiChainSpec = {
+      this.#chainSpec = {
         genesisHash,
         ss58Format,
         tokenDecimals,
@@ -189,10 +189,10 @@ export class Api {
     const detail: PapiReadyEvent = {
       network: this.network,
       chainType: this.#chainType,
-      ...this.#papiChainSpec,
+      ...this.#chainSpec,
     };
     this.dispatchEvent(this.ensureEventStatus('ready'));
-    document.dispatchEvent(new CustomEvent('papi-ready', { detail }));
+    document.dispatchEvent(new CustomEvent('api-ready', { detail }));
   }
 
   // Handler for dispatching `api-status` events.
@@ -247,7 +247,7 @@ export class Api {
     this.unsubscribe();
 
     // Disconnect from PAPI Client.
-    this.#papiClient?.destroy();
+    this.#apiClient?.destroy();
 
     // Tell UI Api is destroyed.
     if (destroy) {
