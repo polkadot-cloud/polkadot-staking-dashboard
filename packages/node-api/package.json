@@ -9,6 +9,7 @@
     "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
   },
   "exports": {
+    "./entries": "./src/entries/index.ts",
     "./query": "./src/query/index.ts",
     "./queryMulti": "./src/queryMulti/index.ts"
   }

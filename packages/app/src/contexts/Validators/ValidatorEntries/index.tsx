@@ -12,7 +12,7 @@ import { useStaking } from 'contexts/Staking';
 import { ApiController } from 'controllers/Api';
 import { IdentitiesController } from 'controllers/Identities';
 import { useErasPerDay } from 'hooks/useErasPerDay';
-import { Validators } from 'model/Entries/Validators';
+import { ValidatorsEntries } from 'node-api/entries';
 import { ParaSessionAccounts, SessionValidators } from 'node-api/query';
 import {
   ErasRewardPointsMulti,
@@ -250,7 +250,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const api = ApiController.getApi(network);
-    const result = await new Validators(api).fetch();
+    const result = await new ValidatorsEntries(api).fetch();
 
     const entries: Validator[] = [];
     let notFullCommissionCount = 0;

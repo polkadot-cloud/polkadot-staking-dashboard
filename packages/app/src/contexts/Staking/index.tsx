@@ -17,7 +17,7 @@ import type {
 import { ApiController } from 'controllers/Api';
 import { SyncController } from 'controllers/Sync';
 import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
-import { ErasStakersPaged } from 'model/ErasStakersPaged';
+import { ErasStakersPagedEntries } from 'node-api/entries';
 import { ErasStakersOverview } from 'node-api/query';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
@@ -240,7 +240,9 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     const validatorKeys = Object.keys(validators);
 
     const pagedResults = await Promise.all(
-      validatorKeys.map((v) => new ErasStakersPaged(api).fetch(Number(era), v))
+      validatorKeys.map((v) =>
+        new ErasStakersPagedEntries(api).fetch(Number(era), v)
+      )
     );
 
     const result: Exposure[] = [];

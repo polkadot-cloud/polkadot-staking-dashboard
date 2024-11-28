@@ -4,3 +4,6 @@
 import type { UnsafeApi } from 'polkadot-api';
 
 export type PapiApi = UnsafeApi<unknown>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type AnyApi = any;

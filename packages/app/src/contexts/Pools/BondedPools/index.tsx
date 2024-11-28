@@ -10,7 +10,7 @@ import { useStaking } from 'contexts/Staking';
 import { ApiController } from 'controllers/Api';
 import { SyncController } from 'controllers/Sync';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
-import { BondedPools } from 'model/Entries/BondedPools';
+import { BondedPoolsEntries } from 'node-api/entries';
 import { NominatorsMulti, PoolMetadataMulti } from 'node-api/queryMulti';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
@@ -74,7 +74,9 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     // Get and format bonded pool entries.
     const ids: number[] = [];
     const idsMulti: [number][] = [];
-    const bondedPoolsEntries = (await new BondedPools(api).fetch()).format();
+    const bondedPoolsEntries = (
+      await new BondedPoolsEntries(api).fetch()
+    ).format();
 
     const exposures = shuffle(
       Object.entries(bondedPoolsEntries).map(([id, pool]: AnyApi) => {
@@ -126,7 +128,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   // Queries a bonded pool and injects ID and addresses to a result.
   const queryBondedPool = async (id: number) => {
     const api = ApiController.getApi(network);
-    const bondedPool = new BondedPools(api).fetchOne(id);
+    const bondedPool = new BondedPoolsEntries(api).fetchOne(id);
 
     if (!bondedPool) {
       return null;
