@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Base } from 'api/base';
-import type { PolkadotClient } from 'polkadot-api';
+import type { ChainId } from 'types';
 
 export class PoolMetadataMulti extends Base {
   #ids: [number][];
 
-  constructor(client: PolkadotClient, ids: [number][]) {
-    super(client);
+  constructor(network: ChainId, ids: [number][]) {
+    super(network);
     this.#ids = ids;
   }
 

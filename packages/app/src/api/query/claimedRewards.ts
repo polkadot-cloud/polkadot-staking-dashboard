@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Base } from 'api/base';
-import type { PolkadotClient } from 'polkadot-api';
+import type { ChainId } from 'types';
 
 export class ClaimedRewards extends Base {
   #era: number;
   #address: string;
 
-  constructor(client: PolkadotClient, era: number, address: string) {
-    super(client);
+  constructor(network: ChainId, era: number, address: string) {
+    super(network);
     this.#era = era;
     this.#address = address;
   }

@@ -3,15 +3,14 @@
 
 import type { AnyJson } from '@w3ux/types';
 import { IdentityOfMulti, SuperOfMulti } from 'api/queryMulti';
-import type { PolkadotClient } from 'polkadot-api';
-import type { AnyApi } from 'types';
+import type { AnyApi, ChainId } from 'types';
 
 export class Identities {
-  static fetch = async (client: PolkadotClient, addresses: string[]) => {
+  static fetch = async (network: ChainId, addresses: string[]) => {
     // Fetches identities for addresses.
     const fetchBase = async () => {
       const addressesMulti: [string][] = addresses.map((address) => [address]);
-      const result = await new IdentityOfMulti(client, addressesMulti).fetch();
+      const result = await new IdentityOfMulti(network, addressesMulti).fetch();
 
       // Take identity data (first index) of results.
       const data =
@@ -30,7 +29,7 @@ export class Identities {
     const fetchSupers = async () => {
       const addressesMulti: [string][] = addresses.map((address) => [address]);
       const supersRawMulti = await new SuperOfMulti(
-        client,
+        network,
         addressesMulti
       ).fetch();
 
@@ -49,7 +48,7 @@ export class Identities {
         ({ superOf }: AnyApi) => [superOf[0]]
       );
       const superIdentities =
-        (await new IdentityOfMulti(client, superOfMulti).fetch()) || [];
+        (await new IdentityOfMulti(network, superOfMulti).fetch()) || [];
 
       // Take identity data (first index) of results.
       const data = superIdentities.map(

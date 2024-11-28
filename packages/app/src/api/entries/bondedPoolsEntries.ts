@@ -3,15 +3,14 @@
 
 import { Base } from 'api/base';
 import BigNumber from 'bignumber.js';
-import type { PolkadotClient } from 'polkadot-api';
-import type { AnyApi } from 'types';
+import type { AnyApi, ChainId } from 'types';
 import { perbillToPercent } from 'utils';
 
 export class BondedPoolsEntries extends Base {
   bondedPools: AnyApi = {};
 
-  constructor(client: PolkadotClient) {
-    super(client);
+  constructor(network: ChainId) {
+    super(network);
   }
 
   async fetch() {

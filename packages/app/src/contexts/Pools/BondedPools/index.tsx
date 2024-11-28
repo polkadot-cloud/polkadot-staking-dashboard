@@ -9,7 +9,6 @@ import { BondedPoolsEntries } from 'api/entries';
 import { NominatorsMulti, PoolMetadataMulti } from 'api/queryMulti';
 import { useNetwork } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
-import { Apis } from 'controllers/Apis';
 import { Syncs } from 'controllers/Syncs';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import type { ReactNode } from 'react';
@@ -73,7 +72,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     const ids: number[] = [];
     const idsMulti: [number][] = [];
     const bondedPoolsEntries = (
-      await new BondedPoolsEntries(Apis.getClient(network)).fetch()
+      await new BondedPoolsEntries(network).fetch()
     ).format();
 
     const exposures = shuffle(
@@ -88,7 +87,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
     // Fetch pools metadata.
     const metadataQuery = await new PoolMetadataMulti(
-      Apis.getClient(network),
+      network,
       idsMulti
     ).fetch();
     setPoolsMetadata(
@@ -107,7 +106,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
       return [addresses.stash];
     });
     const nominationsMulti = await new NominatorsMulti(
-      Apis.getClient(network),
+      network,
       stashes
     ).fetch();
     setPoolsNominations(formatPoolsNominations(nominationsMulti, ids));
@@ -126,9 +125,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Queries a bonded pool and injects ID and addresses to a result.
   const queryBondedPool = async (id: number) => {
-    const bondedPool = new BondedPoolsEntries(Apis.getClient(network)).fetchOne(
-      id
-    );
+    const bondedPool = new BondedPoolsEntries(network).fetchOne(id);
 
     if (!bondedPool) {
       return null;

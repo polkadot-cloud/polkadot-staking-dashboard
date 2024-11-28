@@ -15,7 +15,6 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
-import { Apis } from 'controllers/Apis';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import type { AnyApi } from 'types';
@@ -145,7 +144,6 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
 
   // Start pending payout process once exposure data is fetched.
   const getUnclaimedPayouts = async () => {
-    const apiClient = Apis.getClient(network);
     if (!activeAccount) {
       return;
     }
@@ -175,7 +173,7 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
     // Fetch controllers in order to query ledgers.
     const uniqueValidatorsMulti: [string][] = uniqueValidators.map((v) => [v]);
     const bondedResultsMulti = await new BondedMulti(
-      apiClient,
+      network,
       uniqueValidatorsMulti
     ).fetch();
 
@@ -200,7 +198,7 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
 
     const results = await Promise.all(
       unclaimedRewardsEntries.map(([era, v]) =>
-        new ClaimedRewards(apiClient, Number(era), v).fetch()
+        new ClaimedRewards(network, Number(era), v).fetch()
       )
     );
 
@@ -246,10 +244,10 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
       if (validators.length > 0) {
         calls.push(
           Promise.all([
-            new ErasValidatorReward(apiClient, Number(era)).fetch(),
-            new ErasRewardPoints(apiClient, Number(era)).fetch(),
+            new ErasValidatorReward(network, Number(era)).fetch(),
+            new ErasRewardPoints(network, Number(era)).fetch(),
             ...validators.map((validator: AnyJson) =>
-              new ValidatorPrefs(apiClient, Number(era), validator).fetch()
+              new ValidatorPrefs(network, Number(era), validator).fetch()
             ),
           ])
         );

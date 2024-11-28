@@ -21,7 +21,6 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useNetwork } from 'contexts/Network';
 import { defaultNetwork } from 'contexts/Network/defaults';
-import { Apis } from 'controllers/Apis';
 import { Subscriptions } from 'controllers/Subscriptions';
 import { isCustomEvent } from 'controllers/utils';
 import type { ReactNode } from 'react';
@@ -171,10 +170,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   // Queries the chain to check if the given delegator & delegate pair is valid proxy. Used when a
   // proxy account is being manually declared.
   const handleDeclareDelegate = async (delegator: string) => {
-    const result = await new ProxiesQuery(
-      Apis.getClient(network),
-      delegator
-    ).fetch();
+    const result = await new ProxiesQuery(network, delegator).fetch();
     const proxy = result[0] || [];
 
     let addDelegatorAsExternal = false;

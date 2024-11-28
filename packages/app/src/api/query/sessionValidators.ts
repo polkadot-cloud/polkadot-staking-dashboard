@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Base } from 'api/base';
-import type { PolkadotClient } from 'polkadot-api';
+import type { ChainId } from 'types';
 
 export class SessionValidators extends Base {
-  constructor(client: PolkadotClient) {
-    super(client);
+  constructor(network: ChainId) {
+    super(network);
   }
 
   // Fetch network constants.

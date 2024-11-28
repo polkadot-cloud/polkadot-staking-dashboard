@@ -1,15 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Apis } from 'controllers/Apis';
+import { Base } from 'api/base';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { Subscription } from 'rxjs';
 import type { NetworkId } from 'types';
 
-export class BlockNumber implements Unsubscribable {
-  // The associated network for this instance.
-  #network: NetworkId;
-
+export class BlockNumber extends Base implements Unsubscribable {
   // The current block number.
   blockNumber = '0';
 
@@ -17,17 +14,15 @@ export class BlockNumber implements Unsubscribable {
   #sub: Subscription;
 
   constructor(network: NetworkId) {
-    this.#network = network;
+    super(network);
     this.subscribe();
   }
 
   subscribe = async (): Promise<void> => {
     try {
-      const api = Apis.getApi(this.#network);
-
-      if (api && this.#sub === undefined) {
+      if (this.#sub === undefined) {
         const bestOrFinalized = 'best';
-        const unsub = api.query.System.Number.watchValue(
+        const unsub = this.unsafeApi.query.System.Number.watchValue(
           bestOrFinalized
         ).subscribe((num) => {
           // Update class block number.

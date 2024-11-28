@@ -20,6 +20,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@ledgerhq/hw-transport-webhid": "^6.29.2",
+    "@polkadot/util": "^13.2.3",
     "@polkawatch/ddp-client": "^2.0.20",
     "@substrate/connect": "^2.0.1",
     "@w3ux/extension-assets": "^1.0.0-beta.1",

@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Base } from 'api/base';
-import type { PolkadotClient } from 'polkadot-api';
+import type { ChainId } from 'types';
 
 export class ErasValidatorReward extends Base {
   #era: number;
 
-  constructor(client: PolkadotClient, era: number) {
-    super(client);
+  constructor(network: ChainId, era: number) {
+    super(network);
     this.#era = era;
   }
 

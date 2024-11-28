@@ -8,7 +8,6 @@ import type { ActivePoolItem } from 'controllers/ActivePools/types';
 import { Apis } from 'controllers/Apis';
 import { Identities } from 'controllers/Identities';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
-import type { PolkadotClient } from 'polkadot-api';
 import { combineLatest, type Subscription } from 'rxjs';
 import type { AnyApi, ChainId, SystemChainId } from 'types';
 
@@ -41,9 +40,7 @@ export class ActivePoolAccount implements Unsubscribable {
   subscribe = async (): Promise<void> => {
     try {
       const api = Apis.getApi(this.#network);
-      const peopleApiClient = Apis.getClient(
-        `people-${this.#network}` as SystemChainId
-      );
+      const peopleApiId = `people-${this.#network}` as SystemChainId;
       const bestOrFinalized = 'best';
 
       const sub = combineLatest([
@@ -65,7 +62,7 @@ export class ActivePoolAccount implements Unsubscribable {
         ),
       ]).subscribe(async ([bondedPool, rewardPool, account, nominators]) => {
         await this.handleActivePoolCallback(
-          peopleApiClient,
+          peopleApiId,
           bondedPool,
           rewardPool,
           account
@@ -93,7 +90,7 @@ export class ActivePoolAccount implements Unsubscribable {
 
   // Handle active pool callback.
   handleActivePoolCallback = async (
-    peopleApiClient: PolkadotClient,
+    peopleApiId: SystemChainId,
     bondedPool: AnyApi,
     rewardPool: AnyApi,
     account: AnyApi
@@ -101,10 +98,10 @@ export class ActivePoolAccount implements Unsubscribable {
     const balance = account.data;
     const rewardAccountBalance = balance?.free.toString();
 
-    if (peopleApiClient) {
+    if (Apis.getClient(peopleApiId)) {
       // Fetch identities for roles and expand `bondedPool` state to store them.
       bondedPool.roleIdentities = await Identities.fetch(
-        peopleApiClient,
+        peopleApiId,
         this.getUniqueRoleAddresses(bondedPool.roles)
       );
     }

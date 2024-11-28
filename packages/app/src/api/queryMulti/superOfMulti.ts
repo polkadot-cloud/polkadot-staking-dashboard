@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Base } from 'api/base';
-import type { PolkadotClient } from 'polkadot-api';
+import type { ChainId } from 'types';
 
 export class SuperOfMulti extends Base {
   #addresses: [string][];
 
-  constructor(client: PolkadotClient, addresses: [string][]) {
-    super(client);
+  constructor(network: ChainId, addresses: [string][]) {
+    super(network);
     this.#addresses = addresses;
   }
 

@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Base } from 'api/base';
-import type { PolkadotClient } from 'polkadot-api';
+import type { ChainId } from 'types';
 
 export class ProxiesQuery extends Base {
   #address: string;
 
-  constructor(client: PolkadotClient, address: string) {
-    super(client);
+  constructor(network: ChainId, address: string) {
+    super(network);
     this.#address = address;
   }
 

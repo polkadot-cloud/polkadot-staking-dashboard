@@ -3,11 +3,11 @@
 
 import { Base } from 'api/base';
 import BigNumber from 'bignumber.js';
-import type { PolkadotClient } from 'polkadot-api';
+import type { ChainId } from 'types';
 
 export class Era extends Base {
-  constructor(client: PolkadotClient) {
-    super(client);
+  constructor(network: ChainId) {
+    super(network);
   }
 
   async fetch() {

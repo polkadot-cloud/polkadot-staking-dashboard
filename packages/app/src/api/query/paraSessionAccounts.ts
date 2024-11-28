@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Base } from 'api/base';
-import type { PolkadotClient } from 'polkadot-api';
+import type { ChainId } from 'types';
 
 export class ParaSessionAccounts extends Base {
   #session: number;
 
-  constructor(client: PolkadotClient, session: number) {
-    super(client);
+  constructor(network: ChainId, session: number) {
+    super(network);
     this.#session = session;
   }
 

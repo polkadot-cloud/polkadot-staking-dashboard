@@ -4,12 +4,12 @@
 import { Base } from 'api/base';
 import BigNumber from 'bignumber.js';
 import type { APIActiveEra } from 'contexts/Api/types';
-import type { PolkadotClient } from 'polkadot-api';
+import type { ChainId } from 'types';
 import { perbillToPercent, stringToBn } from 'utils';
 
 export class NetworkMeta extends Base {
-  constructor(client: PolkadotClient) {
-    super(client);
+  constructor(network: ChainId) {
+    super(network);
   }
 
   // Fetch network constants.

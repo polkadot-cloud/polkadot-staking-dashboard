@@ -4610,6 +4610,7 @@ __metadata:
     "@fortawesome/free-solid-svg-icons": "npm:^6.5.2"
     "@fortawesome/react-fontawesome": "npm:^0.2.2"
     "@ledgerhq/hw-transport-webhid": "npm:^6.29.2"
+    "@polkadot/util": "npm:^13.2.3"
     "@polkawatch/ddp-client": "npm:^2.0.20"
     "@substrate/connect": "npm:^2.0.1"
     "@w3ux/extension-assets": "npm:^1.0.0-beta.1"

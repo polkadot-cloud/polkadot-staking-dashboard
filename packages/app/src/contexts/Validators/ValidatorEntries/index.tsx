@@ -21,7 +21,7 @@ import { Identities } from 'controllers/Identities';
 import { useErasPerDay } from 'hooks/useErasPerDay';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
-import type { AnyApi, SystemChainId } from 'types';
+import type { AnyApi, ChainId, SystemChainId } from 'types';
 import { perbillToPercent } from 'utils';
 import type {
   EraPointsBoundaries,
@@ -182,10 +182,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     );
 
     const erasMulti: [number][] = eras.map((e) => [e.toNumber()]);
-    const results = await new ErasRewardPointsMulti(
-      Apis.getClient(network),
-      erasMulti
-    ).fetch();
+    const results = await new ErasRewardPointsMulti(network, erasMulti).fetch();
 
     // Make calls and format reward point results.
     const newErasRewardPoints: ErasRewardPoints = {};
@@ -251,7 +248,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       return defaultValidatorsData;
     }
 
-    const result = await new ValidatorsEntries(Apis.getClient(network)).fetch();
+    const result = await new ValidatorsEntries(network).fetch();
     const entries: Validator[] = [];
     let notFullCommissionCount = 0;
     let totalNonAllCommission = new BigNumber(0);
@@ -324,13 +321,14 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     setAvgCommission(avg);
     // NOTE: validators are shuffled before committed to state.
     setValidators(shuffle(validatorEntries));
+    const peopleApiId: ChainId = `people-${network}`;
     const peopleApiClient = Apis.getClient(
       `people-${network}` as SystemChainId
     );
     if (peopleApiClient && peopleApiStatus === 'ready') {
       const addresses = validatorEntries.map(({ address }) => address);
       const { identities, supers } = await Identities.fetch(
-        peopleApiClient,
+        peopleApiId,
         addresses
       );
       setValidatorIdentities(identities);
@@ -345,16 +343,14 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     if (!isReady) {
       return;
     }
-    setSessionValidators(
-      await new SessionValidators(Apis.getClient(network)).fetch()
-    );
+    setSessionValidators(await new SessionValidators(network).fetch());
   };
 
   // Subscribe to active parachain validators.
   const getParachainValidators = async () => {
     setSessionParaValidators(
       await new ParaSessionAccounts(
-        Apis.getClient(network),
+        network,
         earliestStoredSession.toNumber()
       ).fetch()
     );
@@ -374,8 +370,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const resultsMulti =
-      (await new ValidatorsMulti(Apis.getClient(network), vMulti).fetch()) ||
-      [];
+      (await new ValidatorsMulti(network, vMulti).fetch()) || [];
 
     const formatted: Validator[] = [];
     for (let i = 0; i < resultsMulti.length; i++) {
@@ -514,7 +509,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
     const erasMulti: [number][] = eras.map((e) => [Number(e)]);
     const results = await new ErasValidatorRewardMulti(
-      Apis.getClient(network),
+      network,
       erasMulti
     ).fetch();
 

@@ -16,7 +16,6 @@ import type {
   Exposure,
   StakingContextInterface,
 } from 'contexts/Staking/types';
-import { Apis } from 'controllers/Apis';
 import { Syncs } from 'controllers/Syncs';
 import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
 import type { ReactNode } from 'react';
@@ -224,9 +223,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch eras stakers from storage.
   const getPagedErasStakers = async (era: string) => {
-    const overview = await new ErasStakersOverview(
-      Apis.getClient(network)
-    ).fetch(Number(era));
+    const overview = await new ErasStakersOverview(network).fetch(Number(era));
     const validators: Record<string, AnyJson> = overview.reduce(
       (
         prev: Record<string, Exposure>,
@@ -238,10 +235,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
     const pagedResults = await Promise.all(
       validatorKeys.map((v) =>
-        new ErasStakersPagedEntries(Apis.getClient(network)).fetch(
-          Number(era),
-          v
-        )
+        new ErasStakersPagedEntries(network).fetch(Number(era), v)
       )
     );
 
