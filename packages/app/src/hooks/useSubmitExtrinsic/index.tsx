@@ -200,11 +200,13 @@ export const useSubmitExtrinsic = ({
       removePendingNonce(nonce);
     };
 
-    const onFailedTx = () => {
-      Notifications.emit({
-        title: t('failed'),
-        subtitle: t('errorWithTransaction'),
-      });
+    const onFailedTx = (err: Error) => {
+      if (err instanceof InvalidTxError) {
+        Notifications.emit({
+          title: t('failed'),
+          subtitle: t('errorWithTransaction'),
+        });
+      }
       setSubmitting(false);
       removePendingNonce(nonce);
     };
@@ -293,11 +295,10 @@ export const useSubmitExtrinsic = ({
       }
     } else {
       // Get the polkadot signer for this account.
-      signer = (await connectInjectedExtension(source))
+      const signerAccount = (await connectInjectedExtension(source))
         .getAccounts()
-        .find(
-          (a) => a.address === formatAccountSs58(fromRef.current, 42)
-        )?.polkadotSigner;
+        .find((a) => a.address === formatAccountSs58(fromRef.current, 42));
+      signer = signerAccount?.polkadotSigner;
     }
 
     try {
@@ -316,15 +317,11 @@ export const useSubmitExtrinsic = ({
           }
         },
         error: (err: Error) => {
-          console.log(err);
-          if (err instanceof InvalidTxError) {
-            onFailedTx();
-          }
+          onFailedTx(err);
           sub?.unsubscribe();
         },
       });
     } catch (e) {
-      console.log(e);
       onError('default');
     }
   };
