@@ -4,7 +4,7 @@
 import { Configuration } from '@polkawatch/ddp-client';
 import type { NetworkName } from 'types';
 
-export class PolkaWatchController {
+export class PolkaWatch {
   // ------------------------------------------------------
   // Class members.
   // ------------------------------------------------------

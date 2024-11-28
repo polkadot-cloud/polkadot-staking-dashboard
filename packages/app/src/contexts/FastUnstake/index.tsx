@@ -10,8 +10,8 @@ import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { validateLocalExposure } from 'contexts/Validators/Utils';
-import { ApiController } from 'controllers/Api';
-import { SubscriptionsController } from 'controllers/Subscriptions';
+import { Apis } from 'controllers/Apis';
+import { Subscriptions } from 'controllers/Subscriptions';
 import { isCustomEvent } from 'controllers/utils';
 import { FastUnstakeConfig } from 'model/Subscribe/FastUnstakeConfig';
 import type { FastUnstakeHead } from 'model/Subscribe/FastUnstakeConfig/types';
@@ -87,10 +87,10 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
     setStateWithRef(defaultMeta, setMeta, metaRef);
 
     // Re-subscribe to fast unstake queue.
-    SubscriptionsController.remove(network, 'fastUnstakeQueue');
+    Subscriptions.remove(network, 'fastUnstakeQueue');
 
     if (activeAccount) {
-      SubscriptionsController.set(
+      Subscriptions.set(
         network,
         'fastUnstakeQueue',
         new FastUnstakeQueue(network, activeAccount)
@@ -265,11 +265,11 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
 
   // subscribe to fastUnstake queue
   const subscribeToFastUnstakeMeta = async () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     if (!api) {
       return;
     }
-    SubscriptionsController.set(
+    Subscriptions.set(
       network,
       'fastUnstakeMeta',
       new FastUnstakeConfig(network)

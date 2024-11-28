@@ -7,8 +7,8 @@ import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import { usePayouts } from 'contexts/Payouts';
-import { ApiController } from 'controllers/Api';
-import { SubscanController } from 'controllers/Subscan';
+import { Apis } from 'controllers/Apis';
+import { Subscan } from 'controllers/Subscan';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
@@ -59,7 +59,7 @@ export const Forms = forwardRef(
       ) || 0;
 
     const getCalls = () => {
-      const api = ApiController.getApi(network);
+      const api = Apis.getApi(network);
       if (!api) {
         return [];
       }
@@ -119,7 +119,7 @@ export const Forms = forwardRef(
           payouts.forEach(({ era }) => {
             eraPayouts.push(String(era));
           });
-          SubscanController.removeUnclaimedPayouts(activeAccount, eraPayouts);
+          Subscan.removeUnclaimedPayouts(activeAccount, eraPayouts);
 
           // Deduct from `unclaimedPayouts` in Payouts context.
           payouts.forEach(({ era, paginatedValidators }) => {

@@ -10,8 +10,8 @@ import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePrompt } from 'contexts/Prompt';
-import { ApiController } from 'controllers/Api';
-import { NotificationsController } from 'controllers/Notifications';
+import { Apis } from 'controllers/Apis';
+import { Notifications } from 'controllers/Notifications';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { GenerateNominations } from 'library/GenerateNominations';
@@ -76,7 +76,7 @@ export const ManageNominations = () => {
       nominations: defaultNominations.nominations,
       reset: defaultNominations.reset + 1,
     });
-    NotificationsController.emit({
+    Notifications.emit({
       title: t('nominationsReverted'),
       subtitle: t('revertedToActiveSelection'),
     });
@@ -93,7 +93,7 @@ export const ManageNominations = () => {
 
   // Tx to submit.
   const getTx = () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     let tx = null;
     if (!valid || !api) {
       return tx;

@@ -5,8 +5,8 @@ import type { Nominations } from 'contexts/Balances/types';
 import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
 import type { ActivePool, PoolRoles } from 'contexts/Pools/ActivePool/types';
 import type { ActivePoolItem } from 'controllers/ActivePools/types';
-import { ApiController } from 'controllers/Api';
-import { IdentitiesController } from 'controllers/Identities';
+import { Apis } from 'controllers/Apis';
+import { Identities } from 'controllers/Identities';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { PapiApi } from 'model/Api/types';
 import { combineLatest, type Subscription } from 'rxjs';
@@ -44,10 +44,8 @@ export class ActivePoolAccount implements Unsubscribable {
 
   subscribe = async (): Promise<void> => {
     try {
-      const api = ApiController.getApi(this.#network);
-      const peopleApi = ApiController.getApi(
-        `people-${this.#network}` as SystemChainId
-      );
+      const api = Apis.getApi(this.#network);
+      const peopleApi = Apis.getApi(`people-${this.#network}` as SystemChainId);
       const bestOrFinalized = 'best';
 
       const sub = combineLatest([
@@ -107,7 +105,7 @@ export class ActivePoolAccount implements Unsubscribable {
 
     if (peopleApi) {
       // Fetch identities for roles and expand `bondedPool` state to store them.
-      bondedPool.roleIdentities = await IdentitiesController.fetch(
+      bondedPool.roleIdentities = await Identities.fetch(
         peopleApi,
         this.getUniqueRoleAddresses(bondedPool.roles)
       );

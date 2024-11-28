@@ -5,7 +5,7 @@ import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Polkicon } from '@w3ux/react-polkicon';
 import { ellipsisFn } from '@w3ux/utils';
-import { NotificationsController } from 'controllers/Notifications';
+import { Notifications } from 'controllers/Notifications';
 import type { NotificationText } from 'controllers/Notifications/types';
 import { motion } from 'framer-motion';
 import { getIdentityDisplay } from 'library/ValidatorList/ValidatorItem/Utils';
@@ -70,7 +70,7 @@ export const PoolAccount = ({ address, pool }: PoolAccountProps) => {
                 onClick={() => {
                   navigator.clipboard.writeText(address);
                   if (notification) {
-                    NotificationsController.emit(notification);
+                    Notifications.emit(notification);
                   }
                 }}
               >

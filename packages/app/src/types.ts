@@ -18,7 +18,7 @@ import type { DetailActivePool } from 'controllers/ActivePools/types';
 import type { NotificationItem } from 'controllers/Notifications/types';
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types';
 import type { PayoutType } from 'controllers/Subscan/types';
-import type { SyncEvent } from 'controllers/Sync/types';
+import type { SyncEvent } from 'controllers/Syncs/types';
 import type { APIEventDetail, PapiReadyEvent } from 'model/Api/types';
 import type { AccountProxiesEvent } from 'model/Subscribe/AccountProxies/types';
 import type { BlockNumberEventDetail } from 'model/Subscribe/BlockNumber/types';

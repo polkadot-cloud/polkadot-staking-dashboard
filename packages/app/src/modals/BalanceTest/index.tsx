@@ -5,7 +5,7 @@ import { unitToPlanck } from '@w3ux/utils';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import { useTxMeta } from 'contexts/TxMeta';
-import { ApiController } from 'controllers/Api';
+import { Apis } from 'controllers/Apis';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -26,7 +26,7 @@ export const BalanceTest = () => {
 
   // tx to submit
   const getTx = () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
 
     const tx = null;
     if (!api || !activeAccount) {

@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { ApiController } from 'controllers/Api';
+import { Apis } from 'controllers/Apis';
 import { useEffect, useMemo, useState } from 'react';
 import type { BondFor } from 'types';
 
@@ -35,7 +35,7 @@ export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
 
   // estimate the largest possible tx fee based on users free balance.
   const txLargestFee = async () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
 
     const bond = BigNumber.max(
       transferrableBalance.minus(feeReserve),

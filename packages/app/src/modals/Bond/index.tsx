@@ -8,7 +8,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxMeta } from 'contexts/TxMeta';
-import { ApiController } from 'controllers/Api';
+import { Apis } from 'controllers/Apis';
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
@@ -95,7 +95,7 @@ export const Bond = () => {
 
   // determine whether this is a pool or staking transaction.
   const determineTx = (bondToSubmit: BigNumber) => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     let tx = null;
     if (!api) {
       return tx;

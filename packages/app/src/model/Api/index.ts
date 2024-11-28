@@ -3,7 +3,7 @@
 
 import { NetworkList, SystemChainList } from 'config/networks';
 import { getLightClientMetadata } from 'config/util';
-import { SubscriptionsController } from 'controllers/Subscriptions';
+import { Subscriptions } from 'controllers/Subscriptions';
 import type { PolkadotClient } from 'polkadot-api';
 import { createClient } from 'polkadot-api';
 import { getSmProvider } from 'polkadot-api/sm-provider';
@@ -233,11 +233,11 @@ export class Api {
 
   // Unsubscribe from all active subscriptions and remove them from subscriptions controller.
   unsubscribe = () => {
-    const subs = SubscriptionsController.getAll(this.network);
+    const subs = Subscriptions.getAll(this.network);
     if (subs) {
       Object.entries(subs).forEach(([subscriptionId, subscription]) => {
         subscription.unsubscribe();
-        SubscriptionsController.remove(this.network, subscriptionId);
+        Subscriptions.remove(this.network, subscriptionId);
       });
     }
   };

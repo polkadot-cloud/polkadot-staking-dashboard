@@ -19,8 +19,8 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useNetwork } from 'contexts/Network';
 import { defaultNetwork } from 'contexts/Network/defaults';
-import { ApiController } from 'controllers/Api';
-import { SubscriptionsController } from 'controllers/Subscriptions';
+import { Apis } from 'controllers/Apis';
+import { Subscriptions } from 'controllers/Subscriptions';
 import { isCustomEvent } from 'controllers/utils';
 import { AccountProxies } from 'model/Subscribe/AccountProxies';
 import { ProxiesQuery } from 'node-api/query';
@@ -109,7 +109,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
             addOrReplaceOtherAccount(importResult.account, importResult.type);
           }
         } else {
-          SubscriptionsController.remove(network, `accountProxies-${address}`);
+          Subscriptions.remove(network, `accountProxies-${address}`);
         }
       });
     };
@@ -141,7 +141,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const subscribeToProxies = async (address: string) => {
-    SubscriptionsController.set(
+    Subscriptions.set(
       network,
       `accountProxies-${address}`,
       new AccountProxies(network, address)
@@ -171,7 +171,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   // Queries the chain to check if the given delegator & delegate pair is valid proxy. Used when a
   // proxy account is being manually declared.
   const handleDeclareDelegate = async (delegator: string) => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     if (!api) {
       return [];
     }

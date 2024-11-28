@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ActiveBalance } from 'contexts/Balances/types';
-import { SubscriptionsController } from 'controllers/Subscriptions';
-import { SyncController } from 'controllers/Sync';
+import { Subscriptions } from 'controllers/Subscriptions';
+import { Syncs } from 'controllers/Syncs';
 import { AccountBalances } from 'model/Subscribe/AccountBalances';
 import type { NetworkName } from 'types';
 
-export class BalancesController {
+export class Balances {
   // Accounts that are being subscribed to.
   static accounts: string[] = [];
 
@@ -30,13 +30,13 @@ export class BalancesController {
     }
 
     // Strart syncing if new accounts added.
-    SyncController.dispatch('balances', 'syncing');
+    Syncs.dispatch('balances', 'syncing');
 
     // Subscribe to and add new accounts data.
     accountsAdded.forEach(async (address) => {
       this.accounts.push(address);
 
-      SubscriptionsController.set(
+      Subscriptions.set(
         network,
         `accountBalances-${address}`,
         new AccountBalances(network, address)
@@ -55,7 +55,7 @@ export class BalancesController {
     );
     // Unsubscribe from removed account subscriptions.
     accountsRemoved.forEach((account) => {
-      SubscriptionsController.remove(network, `accountBalances-${account}`);
+      Subscriptions.remove(network, `accountBalances-${account}`);
     });
 
     // Remove removed accounts from class.
@@ -69,7 +69,7 @@ export class BalancesController {
     network: NetworkName,
     address: string
   ): ActiveBalance | undefined => {
-    const accountBalances = SubscriptionsController.get(
+    const accountBalances = Subscriptions.get(
       network,
       `accountBalances-${address}`
     ) as AccountBalances;

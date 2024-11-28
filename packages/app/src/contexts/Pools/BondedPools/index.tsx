@@ -7,8 +7,8 @@ import type { AnyJson, Sync } from '@w3ux/types';
 import { setStateWithRef, shuffle } from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
-import { ApiController } from 'controllers/Api';
-import { SyncController } from 'controllers/Sync';
+import { Apis } from 'controllers/Apis';
+import { Syncs } from 'controllers/Syncs';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import { BondedPoolsEntries } from 'node-api/entries';
 import { NominatorsMulti, PoolMetadataMulti } from 'node-api/queryMulti';
@@ -64,7 +64,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch all bonded pool entries and their metadata.
   const fetchBondedPools = async () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
 
     if (!api || bondedPoolsSynced.current !== 'unsynced') {
       return;
@@ -95,12 +95,12 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     );
 
     bondedPoolsSynced.current = 'synced';
-    SyncController.dispatch('bonded-pools', 'complete');
+    Syncs.dispatch('bonded-pools', 'complete');
   };
 
   // Fetches pool nominations and updates state.
   const fetchPoolsNominations = async () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     if (!api) {
       return;
     }
@@ -127,7 +127,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
   // Queries a bonded pool and injects ID and addresses to a result.
   const queryBondedPool = async (id: number) => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     const bondedPool = new BondedPoolsEntries(api).fetchOne(id);
 
     if (!bondedPool) {
@@ -323,7 +323,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   // Clear existing state for network refresh.
   useEffectIgnoreInitial(() => {
     bondedPoolsSynced.current = 'unsynced';
-    SyncController.dispatch('bonded-pools', 'syncing');
+    Syncs.dispatch('bonded-pools', 'syncing');
     setStateWithRef([], setBondedPools, bondedPoolsRef);
     setPoolsMetadata({});
     setPoolsNominations({});

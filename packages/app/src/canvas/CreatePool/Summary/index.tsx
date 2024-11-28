@@ -11,7 +11,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useNetwork } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useSetup } from 'contexts/Setup';
-import { ApiController } from 'controllers/Api';
+import { Apis } from 'controllers/Apis';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -47,7 +47,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { metadata, bond, roles, nominations } = progress;
 
   const getTxs = () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     if (!activeAccount || !api) {
       return null;
     }

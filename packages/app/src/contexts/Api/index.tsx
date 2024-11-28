@@ -7,9 +7,9 @@ import { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import BigNumber from 'bignumber.js';
-import { ApiController } from 'controllers/Api';
-import { SubscriptionsController } from 'controllers/Subscriptions';
-import { SyncController } from 'controllers/Sync';
+import { Apis } from 'controllers/Apis';
+import { Subscriptions } from 'controllers/Subscriptions';
+import { Syncs } from 'controllers/Syncs';
 import { isCustomEvent } from 'controllers/utils';
 import type {
   APIEventDetail,
@@ -133,7 +133,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Bootstrap app-wide chain state.
   const bootstrapNetworkConfig = async () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
 
     // 1. Fetch network data for bootstrapping app state:
 
@@ -160,34 +160,22 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
     // Set `initialization` syncing to complete. NOTE: This synchonisation is only considering the
     // relay chain sync state, and not system/para chains.
-    SyncController.dispatch('initialization', 'complete');
+    Syncs.dispatch('initialization', 'complete');
 
     // 3. Initialise subscriptions:
 
     // Initialise block number subscription.
-    SubscriptionsController.set(
-      network,
-      'blockNumber',
-      new BlockNumber(network)
-    );
+    Subscriptions.set(network, 'blockNumber', new BlockNumber(network));
 
     // Initialise network metrics subscription.
-    SubscriptionsController.set(
-      network,
-      'networkMetrics',
-      new NetworkMetrics(network)
-    );
+    Subscriptions.set(network, 'networkMetrics', new NetworkMetrics(network));
 
     // Initialise pool config subscription.
-    SubscriptionsController.set(
-      network,
-      'poolsConfig',
-      new PoolsConfig(network)
-    );
+    Subscriptions.set(network, 'poolsConfig', new PoolsConfig(network));
 
     // Initialise active era subscription. Also handles (re)subscribing to subscriptions that depend
     // on active era.
-    SubscriptionsController.set(network, 'activeEra', new ActiveEra(network));
+    Subscriptions.set(network, 'activeEra', new ActiveEra(network));
   };
 
   const handlePapiReady = async (e: Event) => {
@@ -223,7 +211,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
           received: true,
         };
 
-        const api = ApiController.get(network);
+        const api = Apis.get(network);
         const bondingDuration = await api.getConstant(
           'Staking',
           'BondingDuration',
@@ -466,10 +454,10 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     setApiStatus('disconnected');
 
     // Dispatch all default syncIds as syncing.
-    SyncController.dispatchAllDefault();
+    Syncs.dispatchAllDefault();
 
     // Instanaite new API instance.
-    await ApiController.instantiate(network, type, rpcEndpoint);
+    await Apis.instantiate(network, type, rpcEndpoint);
   };
 
   // Handle initial api connection.
@@ -519,7 +507,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
   // Call `unsubscribe` on active instance on unmount.
   useEffect(
     () => () => {
-      const instance = ApiController.get(network);
+      const instance = Apis.get(network);
       instance?.unsubscribe();
     },
     []

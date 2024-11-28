@@ -10,7 +10,7 @@ import { useSetup } from 'contexts/Setup';
 import { defaultPoolProgress } from 'contexts/Setup/defaults';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { defaultClaimPermission } from 'controllers/ActivePools/defaults';
-import { ApiController } from 'controllers/Api';
+import { Apis } from 'controllers/Apis';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
@@ -73,7 +73,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
 
   // Get transaction for submission.
   const getTx = () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     const tx = null;
     if (!api || !claimPermission || !formValid) {
       return tx;

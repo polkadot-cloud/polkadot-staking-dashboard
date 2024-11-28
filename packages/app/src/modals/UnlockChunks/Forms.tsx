@@ -13,7 +13,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useFavoritePools } from 'contexts/Pools/FavoritePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { ApiController } from 'controllers/Api';
+import { Apis } from 'controllers/Apis';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -68,7 +68,7 @@ export const Forms = forwardRef(
 
     // tx to submit
     const getTx = () => {
-      const api = ApiController.getApi(network);
+      const api = Apis.getApi(network);
       let tx = null;
       if (!valid || !api || !unlock) {
         return tx;

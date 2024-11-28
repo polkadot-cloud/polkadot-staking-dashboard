@@ -8,13 +8,13 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useNetwork } from 'contexts/Network';
 import { useUi } from 'contexts/UI';
-import { NotificationsController } from 'controllers/Notifications';
+import { Notifications } from 'controllers/Notifications';
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
 import { Headers } from 'library/Headers';
 import { Help } from 'library/Help';
 import { Menu } from 'library/Menu';
 import { NetworkBar } from 'library/NetworkBar';
-import { Notifications } from 'library/Notifications';
+import { NotificationPrompts } from 'library/NotificationPrompts';
 import { Offline } from 'library/Offline';
 import { PageWithTitle } from 'library/PageWithTitle';
 import { Prompt } from 'library/Prompt';
@@ -66,7 +66,7 @@ const RouterInner = () => {
         if (account && aUrl !== activeAccount) {
           setActiveAccount(account.address || null);
 
-          NotificationsController.emit({
+          Notifications.emit({
             title: t('accountConnected', { ns: 'library' }),
             subtitle: `${t('connectedTo', { ns: 'library' })} ${
               account.name || aUrl
@@ -79,8 +79,8 @@ const RouterInner = () => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
-      {/* Notification popups */}
-      <Notifications />
+      {/* Notification prompts */}
+      <NotificationPrompts />
 
       <Body>
         {/* Help: closed by default */}

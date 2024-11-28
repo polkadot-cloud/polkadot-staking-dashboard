@@ -9,7 +9,7 @@ import { useHelp } from 'contexts/Help';
 import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { ApiController } from 'controllers/Api';
+import { Apis } from 'controllers/Apis';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
@@ -126,7 +126,7 @@ export const ManageCommission = ({
 
   // tx to submit.
   const getTx = () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     if (!valid || !api) {
       return null;
     }

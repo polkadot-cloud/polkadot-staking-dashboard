@@ -14,8 +14,8 @@ import type {
   Exposure,
   StakingContextInterface,
 } from 'contexts/Staking/types';
-import { ApiController } from 'controllers/Api';
-import { SyncController } from 'controllers/Sync';
+import { Apis } from 'controllers/Apis';
+import { Syncs } from 'controllers/Syncs';
 import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
 import { ErasStakersPagedEntries } from 'node-api/entries';
 import { ErasStakersOverview } from 'node-api/query';
@@ -74,7 +74,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       // check if account hasn't changed since worker started
       if (getActiveAccount() === who) {
         // Syncing current eraStakers is now complete.
-        SyncController.dispatch('era-stakers', 'complete');
+        Syncs.dispatch('era-stakers', 'complete');
 
         setStateWithRef(
           {
@@ -124,7 +124,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
 
-    SyncController.dispatch('era-stakers', 'syncing');
+    Syncs.dispatch('era-stakers', 'syncing');
 
     const exposures = await fetchEraStakers(activeEra.index.toString());
 
@@ -224,7 +224,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch eras stakers from storage.
   const getPagedErasStakers = async (era: string) => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     if (!api) {
       return [];
     }

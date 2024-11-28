@@ -11,7 +11,7 @@ import { ManualSigners } from 'consts';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
-import { BalancesController } from 'controllers/Balances';
+import { Balances } from 'controllers/Balances';
 import type { ReactNode } from 'react';
 import { createContext, useCallback, useContext } from 'react';
 import type { MaybeAddress } from 'types';
@@ -113,10 +113,10 @@ export const ImportedAccountsProvider = ({
     [allAccountsStringified]
   );
 
-  // Keep accounts in sync with `BalancesController`.
+  // Keep accounts in sync with `Balances`.
   useEffectIgnoreInitial(() => {
     if (isReady) {
-      BalancesController.syncAccounts(
+      Balances.syncAccounts(
         network,
         allAccounts.map((a) => a.address)
       );

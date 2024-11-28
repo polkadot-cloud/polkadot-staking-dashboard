@@ -7,7 +7,7 @@ import { setStateWithRef } from '@w3ux/utils';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import { usePlugins } from 'contexts/Plugins';
-import { SubscriptionsController } from 'controllers/Subscriptions';
+import { Subscriptions } from 'controllers/Subscriptions';
 import { isCustomEvent } from 'controllers/utils';
 import { PoolMembersMulti } from 'model/Subscribe/PoolMembersMulti';
 import type { ReactNode } from 'react';
@@ -77,7 +77,7 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
 
   const unsubscribeAndResetMeta = () => {
     Object.values(poolMembersSubs.current).map((key: string) =>
-      SubscriptionsController.remove(network, `poolMembersBatch-${key}`)
+      Subscriptions.remove(network, `poolMembersBatch-${key}`)
     );
     setStateWithRef({}, setPoolMembersMetaBatch, poolMembersMetaBatchesRef);
   };
@@ -111,7 +111,7 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
       );
 
       if (key in poolMembersSubs.current) {
-        SubscriptionsController.remove(network, `poolMembersBatch-${key}`);
+        Subscriptions.remove(network, `poolMembersBatch-${key}`);
         poolMembersSubs.current = poolMembersSubs.current.filter(
           (item) => item !== key
         );
@@ -135,7 +135,7 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
     );
 
     // initialise subscription
-    SubscriptionsController.set(
+    Subscriptions.set(
       network,
       `poolMembersBatch-${key}`,
       new PoolMembersMulti(network, key, addresses)

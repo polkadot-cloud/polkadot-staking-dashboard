@@ -7,7 +7,7 @@ import { MaxEraRewardPointsEras } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
-import { ApiController } from 'controllers/Api';
+import { Apis } from 'controllers/Apis';
 import { PoolSync } from 'library/PoolSync';
 import { StyledLoader } from 'library/PoolSync/Loader';
 import { useEffect, useState } from 'react';
@@ -43,7 +43,7 @@ export const Stats = ({
 
   // Fetches the balance of the bonded pool.
   const getPoolBalance = async () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     if (!api) {
       return;
     }

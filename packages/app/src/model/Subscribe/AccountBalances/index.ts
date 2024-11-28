@@ -2,11 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import type { Balances, Ledger, Nominations } from 'contexts/Balances/types';
+import type {
+  Balances as IBalances,
+  Ledger,
+  Nominations,
+} from 'contexts/Balances/types';
 import type { PoolMembership } from 'contexts/Pools/types';
 import type { PayeeConfig } from 'contexts/Setup/types';
-import { ApiController } from 'controllers/Api';
-import { BalancesController } from 'controllers/Balances';
+import { Apis } from 'controllers/Apis';
+import { Balances } from 'controllers/Balances';
 import { defaultNominations } from 'controllers/Balances/defaults';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { PapiApi } from 'model/Api/types';
@@ -29,7 +33,7 @@ export class AccountBalances implements Unsubscribable {
   ledger: Ledger | undefined;
 
   // Account balances.
-  balance: Balances;
+  balance: IBalances;
 
   // Payee config.
   payee: PayeeConfig | undefined;
@@ -48,7 +52,7 @@ export class AccountBalances implements Unsubscribable {
 
   subscribe = async (): Promise<void> => {
     try {
-      const api = ApiController.getApi(this.#network);
+      const api = Apis.getApi(this.#network);
       const bestOrFinalized = 'best';
 
       if (api && this.#sub === undefined) {
@@ -118,7 +122,7 @@ export class AccountBalances implements Unsubscribable {
       const { stash, total, active, unlocking } = ledger;
 
       // Send stash address to UI as event if not presently imported.
-      if (!BalancesController.accounts.includes(stash.toString())) {
+      if (!Balances.accounts.includes(stash.toString())) {
         document.dispatchEvent(
           new CustomEvent('new-external-account', {
             detail: { address: stash.toString() },

@@ -6,7 +6,7 @@ import type { ChainSubscriptions, Subscription } from './types';
 
 // A class to manage subscriptions.
 
-export class SubscriptionsController {
+export class Subscriptions {
   // ------------------------------------------------------
   // Class members.
   // ------------------------------------------------------

@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
-import { SubscriptionsController } from 'controllers/Subscriptions';
-import { SyncController } from 'controllers/Sync';
+import { Subscriptions } from 'controllers/Subscriptions';
+import { Syncs } from 'controllers/Syncs';
 import { ActivePoolAccount } from 'model/Subscribe/ActivePoolAccount';
 import type { MaybeAddress, NetworkName, SystemChainId } from 'types';
 import type {
@@ -13,7 +13,7 @@ import type {
   DetailActivePool,
 } from './types';
 
-export class ActivePoolsController {
+export class ActivePools {
   // Pool ids that are being subscribed to. Keyed by address.
   static pools: Record<string, ActivePoolItem[]> = {};
 
@@ -44,7 +44,7 @@ export class ActivePoolsController {
       this.pools[address] = newPools;
 
       // Subscribe to and add new pool data.
-      SubscriptionsController.set(
+      Subscriptions.set(
         network,
         `activePool-${address}-${updatedPool.id}`,
         new ActivePoolAccount(network, address, updatedPool)
@@ -54,7 +54,7 @@ export class ActivePoolsController {
       this.addressToPool[address] = updatedPool.id;
     } else {
       // Status: Pools Synced Completed.
-      SyncController.dispatch('active-pools', 'complete');
+      Syncs.dispatch('active-pools', 'complete');
     }
   };
 
@@ -67,10 +67,7 @@ export class ActivePoolsController {
 
     if (currentPool) {
       // Unsubscribe from removed pool subscription.
-      SubscriptionsController.remove(
-        network,
-        `activePool-${address}-${currentPool}`
-      );
+      Subscriptions.remove(network, `activePool-${address}-${currentPool}`);
 
       // Remove pool from class.
       delete this.addressToPool[address];
@@ -90,7 +87,7 @@ export class ActivePoolsController {
     if (!address) {
       return undefined;
     }
-    const activePoolAccount = SubscriptionsController.get(
+    const activePoolAccount = Subscriptions.get(
       network,
       `activePool-${address}-${this.addressToPool[address]}`
     ) as ActivePoolAccount;
@@ -107,7 +104,7 @@ export class ActivePoolsController {
       return {};
     }
     const poolId = this.addressToPool[address];
-    const activePool = SubscriptionsController.get(
+    const activePool = Subscriptions.get(
       network,
       `activePool-${address}-${poolId}`
     ) as ActivePoolAccount;
@@ -128,7 +125,7 @@ export class ActivePoolsController {
       return {};
     }
     const poolId = this.addressToPool[address];
-    const activePool = SubscriptionsController.get(
+    const activePool = Subscriptions.get(
       network,
       `activePool-${address}-${poolId}`
     ) as ActivePoolAccount;
@@ -142,7 +139,7 @@ export class ActivePoolsController {
   static getAllActivePools = (network: NetworkName) =>
     Object.fromEntries(
       Object.entries(this.addressToPool).map(([addr, poolId]) => {
-        const activePoolAccount = SubscriptionsController.get(
+        const activePoolAccount = Subscriptions.get(
           network,
           `activePool-${addr}-${poolId}`
         ) as ActivePoolAccount;

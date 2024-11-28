@@ -9,7 +9,7 @@ import { useBonded } from 'contexts/Bonded';
 import { useNetwork } from 'contexts/Network';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxMeta } from 'contexts/TxMeta';
-import { ApiController } from 'controllers/Api';
+import { Apis } from 'controllers/Apis';
 import { getUnixTime } from 'date-fns';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
@@ -82,7 +82,7 @@ export const Unstake = () => {
 
   // tx to submit
   const getTx = () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     const tx = null;
     if (!api || !activeAccount) {
       return tx;

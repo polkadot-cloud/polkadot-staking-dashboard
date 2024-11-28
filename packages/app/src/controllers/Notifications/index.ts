@@ -10,7 +10,7 @@ import type {
 // A class to manage notifications.
 //
 // Designed to emit notifications to subscribers to the `notification` event.
-export class NotificationsController {
+export class Notifications {
   // Store how long a notification should remain displayed for.
   private static displayDuration = 3000;
 

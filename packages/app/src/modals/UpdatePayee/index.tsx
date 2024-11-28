@@ -8,7 +8,7 @@ import { useBonded } from 'contexts/Bonded';
 import { useNetwork } from 'contexts/Network';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { useTxMeta } from 'contexts/TxMeta';
-import { ApiController } from 'controllers/Api';
+import { Apis } from 'controllers/Apis';
 import { usePayeeConfig } from 'hooks/usePayeeConfig';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
@@ -73,7 +73,7 @@ export const UpdatePayee = () => {
 
   // Tx to submit.
   const getTx = () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     let tx = null;
     if (!api || !selected.destination) {
       return tx;

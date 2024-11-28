@@ -9,7 +9,7 @@ import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import type { PoolMembership } from 'contexts/Pools/types';
 import { usePrompt } from 'contexts/Prompt';
-import { ApiController } from 'controllers/Api';
+import { Apis } from 'controllers/Apis';
 import { getUnixTime } from 'date-fns';
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
@@ -73,7 +73,7 @@ export const UnbondMember = ({
 
   // tx to submit
   const getTx = () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     let tx = null;
     if (!api || !activeAccount) {
       return tx;

@@ -2,23 +2,23 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@w3ux/utils';
-import { SyncController } from 'controllers/Sync';
-import type { SyncID, SyncIDConfig } from 'controllers/Sync/types';
+import { Syncs } from 'controllers/Syncs';
+import type { SyncID, SyncIDConfig } from 'controllers/Syncs/types';
 import { isCustomEvent } from 'controllers/utils';
 import { useEffect, useRef, useState } from 'react';
 import { useEventListener } from 'usehooks-ts';
 
 export const useSyncing = (config: SyncIDConfig = '*') => {
   // Retrieve the ids from the config provided.
-  const ids = SyncController.getIdsFromSyncConfig(config);
+  const ids = Syncs.getIdsFromSyncConfig(config);
 
   // Keep a record of active sync statuses.
-  const [syncIds, setSyncIds] = useState<SyncID[]>(SyncController.syncIds);
+  const [syncIds, setSyncIds] = useState<SyncID[]>(Syncs.syncIds);
   const syncIdsRef = useRef(syncIds);
 
   // Handle new syncing status events.
   const newSyncStatusCallback = async (e: Event) => {
-    if (isCustomEvent(e) && SyncController.isValidSyncStatus(e)) {
+    if (isCustomEvent(e) && Syncs.isValidSyncStatus(e)) {
       const { id, status } = e.detail;
       const ignoreEvent = ids !== '*' && !ids.includes(id);
 
@@ -54,9 +54,7 @@ export const useSyncing = (config: SyncIDConfig = '*') => {
   // Bootstrap existing sync statuses of interest when hook is mounted.
   useEffect(() => {
     setStateWithRef(
-      SyncController.syncIds.filter(
-        (syncId) => ids === '*' || ids.includes(syncId)
-      ),
+      Syncs.syncIds.filter((syncId) => ids === '*' || ids.includes(syncId)),
       setSyncIds,
       syncIdsRef
     );

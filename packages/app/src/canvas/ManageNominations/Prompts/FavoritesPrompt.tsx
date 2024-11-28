@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
 import type { Validator } from 'contexts/Validators/types';
-import { NotificationsController } from 'controllers/Notifications';
+import { Notifications } from 'controllers/Notifications';
 import { Identity } from 'library/ListItem/Labels/Identity';
 import { SelectWrapper } from 'library/ListItem/Wrappers';
 import { Title } from 'library/Prompt/Title';
@@ -92,7 +92,7 @@ export const FavoritesPrompt = ({
             text={t('addToNominations')}
             onClick={() => {
               callback(nominations.concat(selected));
-              NotificationsController.emit({
+              Notifications.emit({
                 title: t('favoritesAddedTitle', { count: selected.length }),
                 subtitle: t('favoritesAddedSubtitle', {
                   count: selected.length,

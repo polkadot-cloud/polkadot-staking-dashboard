@@ -15,8 +15,8 @@ import { useNetwork } from 'contexts/Network';
 import { usePrompt } from 'contexts/Prompt';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useWalletConnect } from 'contexts/WalletConnect';
-import { ApiController } from 'controllers/Api';
-import { NotificationsController } from 'controllers/Notifications';
+import { Apis } from 'controllers/Apis';
+import { Notifications } from 'controllers/Notifications';
 import { useProxySupported } from 'hooks/useProxySupported';
 import { LedgerSigner } from 'library/Signers/LedgerSigner';
 import { VaultSigner } from 'library/Signers/VaultSigner';
@@ -79,7 +79,7 @@ export const useSubmitExtrinsic = ({
 
   // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account.
   const wrapTxIfActiveProxy = () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
 
     // if already wrapped, update fromRef and return.
     if (
@@ -170,7 +170,7 @@ export const useSubmitExtrinsic = ({
 
     const onReady = () => {
       addPendingNonce(nonce);
-      NotificationsController.emit({
+      Notifications.emit({
         title: t('pending'),
         subtitle: t('transactionInitiated'),
       });
@@ -182,7 +182,7 @@ export const useSubmitExtrinsic = ({
     const onInBlock = () => {
       setSubmitting(false);
       removePendingNonce(nonce);
-      NotificationsController.emit({
+      Notifications.emit({
         title: t('inBlock'),
         subtitle: t('transactionInBlock'),
       });
@@ -192,7 +192,7 @@ export const useSubmitExtrinsic = ({
     };
 
     const onFinalizedEvent = () => {
-      NotificationsController.emit({
+      Notifications.emit({
         title: t('finalized'),
         subtitle: t('transactionSuccessful'),
       });
@@ -201,7 +201,7 @@ export const useSubmitExtrinsic = ({
     };
 
     const onFailedTx = () => {
-      NotificationsController.emit({
+      Notifications.emit({
         title: t('failed'),
         subtitle: t('errorWithTransaction'),
       });
@@ -219,7 +219,7 @@ export const useSubmitExtrinsic = ({
         handleResetLedgerTask();
       }
       removePendingNonce(nonce);
-      NotificationsController.emit({
+      Notifications.emit({
         title: t('cancelled'),
         subtitle: t('transactionCancelled'),
       });

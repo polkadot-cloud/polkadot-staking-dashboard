@@ -7,7 +7,7 @@ import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { ApiController } from 'controllers/Api';
+import { Apis } from 'controllers/Apis';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -52,7 +52,7 @@ export const ClaimCommission = ({
 
   // tx to submit
   const getTx = () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     if (!valid || !api || poolId === undefined) {
       return null;
     }

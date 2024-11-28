@@ -10,7 +10,7 @@ import { useNetwork } from 'contexts/Network';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import type { PoolMembership } from 'contexts/Pools/types';
 import { usePrompt } from 'contexts/Prompt';
-import { ApiController } from 'controllers/Api';
+import { Apis } from 'controllers/Apis';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
@@ -67,7 +67,7 @@ export const WithdrawMember = ({
 
   // tx to submit
   const getTx = () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     let tx = null;
     if (!valid || !api) {
       return tx;

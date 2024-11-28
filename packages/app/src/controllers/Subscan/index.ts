@@ -14,7 +14,7 @@ import type {
   SubscanRequestBody,
 } from './types';
 
-export class SubscanController {
+export class Subscan {
   // ------------------------------------------------------
   // Class members.
   // ------------------------------------------------------
@@ -53,7 +53,7 @@ export class SubscanController {
   //
   // Effects the endpoint being used. Should be updated on network change in the UI.
   set network(network: string) {
-    SubscanController.network = network;
+    Subscan.network = network;
   }
 
   // ------------------------------------------------------

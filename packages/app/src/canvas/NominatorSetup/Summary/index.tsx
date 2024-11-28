@@ -9,7 +9,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useNetwork } from 'contexts/Network';
 import { useSetup } from 'contexts/Setup';
-import { ApiController } from 'controllers/Api';
+import { Apis } from 'controllers/Apis';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { usePayeeConfig } from 'hooks/usePayeeConfig';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
@@ -40,7 +40,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { bond, nominations, payee } = progress;
 
   const getTxs = () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     if (!activeAccount || !api) {
       return null;
     }

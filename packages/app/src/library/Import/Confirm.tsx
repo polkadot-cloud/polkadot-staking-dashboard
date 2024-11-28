@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { ellipsisFn } from '@w3ux/utils';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useNetwork } from 'contexts/Network';
-import { NotificationsController } from 'controllers/Notifications';
+import { Notifications } from 'controllers/Notifications';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
 import { ButtonMono, ButtonMonoInvert } from 'ui-buttons';
 import type { ConfirmProps } from './types';
@@ -20,7 +20,7 @@ export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
   const { addOtherAccounts } = useOtherAccounts();
 
   const addAccountCallback = () => {
-    NotificationsController.emit({
+    Notifications.emit({
       title: t('ledgerAccountImported'),
       subtitle: t('ledgerImportedAccount', {
         account: ellipsisFn(address),

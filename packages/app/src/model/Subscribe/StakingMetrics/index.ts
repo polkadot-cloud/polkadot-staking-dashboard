@@ -3,7 +3,7 @@
 
 import type BigNumber from 'bignumber.js';
 import type { APIActiveEra } from 'contexts/Api/types';
-import { ApiController } from 'controllers/Api';
+import { Apis } from 'controllers/Apis';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { Subscription } from 'rxjs';
 import { combineLatest } from 'rxjs';
@@ -36,7 +36,7 @@ export class StakingMetrics implements Unsubscribable {
 
   subscribe = async (): Promise<void> => {
     try {
-      const api = ApiController.getApi(this.#network);
+      const api = Apis.getApi(this.#network);
 
       if (api && this.#sub === undefined) {
         const bestOrFinalized = 'best';

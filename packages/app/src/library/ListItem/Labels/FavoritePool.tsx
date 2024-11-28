@@ -6,7 +6,7 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useFavoritePools } from 'contexts/Pools/FavoritePools';
 import { useTooltip } from 'contexts/Tooltip';
-import { NotificationsController } from 'controllers/Notifications';
+import { Notifications } from 'controllers/Notifications';
 import { TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useTranslation } from 'react-i18next';
 import type { FavoriteProps } from '../types';
@@ -44,7 +44,7 @@ export const FavoritePool = ({ address }: FavoriteProps) => {
           } else {
             addFavorite(address);
           }
-          NotificationsController.emit(notificationFavorite);
+          Notifications.emit(notificationFavorite);
         }}
       />
       <button type="button" className={isFavorite ? 'active' : undefined}>

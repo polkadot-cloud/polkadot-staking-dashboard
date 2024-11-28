@@ -7,7 +7,7 @@ import UniversalProvider from '@walletconnect/universal-provider';
 import { getSdkError } from '@walletconnect/utils';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
-import { ApiController } from 'controllers/Api';
+import { Apis } from 'controllers/Apis';
 import { getUnixTime } from 'date-fns';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
@@ -34,7 +34,7 @@ export const WalletConnectProvider = ({
   } = useApi();
 
   // Check if the API is present.
-  const apiPresent = !!ApiController.get(network);
+  const apiPresent = !!Apis.get(network);
 
   // The WalletConnect provider.
   const wcProvider = useRef<UniversalProvider | null>(null);

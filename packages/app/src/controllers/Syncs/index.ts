@@ -4,7 +4,7 @@
 import { defaultSyncIds } from './defaults';
 import type { SyncEvent, SyncID, SyncIDConfig, SyncStatus } from './types';
 
-export class SyncController {
+export class Syncs {
   // ------------------------------------------------------
   // Class members
   // ------------------------------------------------------

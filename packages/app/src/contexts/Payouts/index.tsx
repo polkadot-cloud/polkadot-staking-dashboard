@@ -8,7 +8,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
-import { ApiController } from 'controllers/Api';
+import { Apis } from 'controllers/Apis';
 import {
   ClaimedRewards,
   ErasRewardPoints,
@@ -145,7 +145,7 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
 
   // Start pending payout process once exposure data is fetched.
   const getUnclaimedPayouts = async () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     if (!api || !activeAccount) {
       return;
     }

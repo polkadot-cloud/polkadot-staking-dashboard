@@ -42,7 +42,7 @@ export const TransferOptionsProvider = ({
 
   // Calculates various balances for an account pertaining to free balance, nominating and pools.
   // Gets balance numbers from `useBalances` state, which only takes the active accounts from
-  // `BalancesController`.
+  // `Balances`.
   const getTransferOptions = (address: MaybeAddress): TransferOptions => {
     const { maxLock } = getLocks(address);
     const { free, frozen } = getBalance(address);

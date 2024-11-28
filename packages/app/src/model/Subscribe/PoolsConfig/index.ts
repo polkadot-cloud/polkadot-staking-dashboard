@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import { ApiController } from 'controllers/Api';
+import { Apis } from 'controllers/Apis';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { Subscription } from 'rxjs';
 import { combineLatest } from 'rxjs';
@@ -25,7 +25,7 @@ export class PoolsConfig implements Unsubscribable {
 
   subscribe = async (): Promise<void> => {
     try {
-      const api = ApiController.getApi(this.#network);
+      const api = Apis.getApi(this.#network);
 
       if (api && this.#sub === undefined) {
         const bestOrFinalized = 'best';

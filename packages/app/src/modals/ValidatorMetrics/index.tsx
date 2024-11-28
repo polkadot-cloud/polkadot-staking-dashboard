@@ -12,7 +12,7 @@ import { useNetwork } from 'contexts/Network';
 import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
-import { SubscanController } from 'controllers/Subscan';
+import { Subscan } from 'controllers/Subscan';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
@@ -71,10 +71,7 @@ export const ValidatorMetrics = () => {
       return;
     }
     setList(
-      await SubscanController.handleFetchEraPoints(
-        address,
-        activeEra.index.toNumber()
-      )
+      await Subscan.handleFetchEraPoints(address, activeEra.index.toNumber())
     );
   };
 

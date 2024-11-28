@@ -13,7 +13,7 @@ import { useRef, useState } from 'react';
 import { useEventListener } from 'usehooks-ts';
 import { Wrapper } from './Wrapper';
 
-export const Notifications = () => {
+export const NotificationPrompts = () => {
   // Store the notifications currently being displayed.
   const [notifications, setNotifications] = useState<NotificationInterface[]>(
     []

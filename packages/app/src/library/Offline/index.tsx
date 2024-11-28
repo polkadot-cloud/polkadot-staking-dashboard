@@ -3,7 +3,7 @@
 
 import { faWarning } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { OnlineStatusController } from 'controllers/OnlineStatus';
+import { OnlineStatus } from 'controllers/OnlineStatus';
 import { isCustomEvent } from 'controllers/utils';
 import { useEffect, useRef, useState } from 'react';
 import { useEventListener } from 'usehooks-ts';
@@ -24,7 +24,7 @@ export const Offline = () => {
   // Listen for online status updates.
   useEffect(() => {
     // Start listening for online / offline events.
-    OnlineStatusController.initOnlineEvents();
+    OnlineStatus.initOnlineEvents();
   }, []);
 
   useEventListener(

@@ -3,7 +3,7 @@
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
-import { ApiController } from 'controllers/Api';
+import { Apis } from 'controllers/Apis';
 import { useProxySupported } from 'hooks/useProxySupported';
 import type { UnsafeTx } from 'hooks/useSubmitExtrinsic/types';
 import type { AnyApi, MaybeAddress } from 'types';
@@ -14,7 +14,7 @@ export const useBatchCall = () => {
   const { isProxySupported } = useProxySupported();
 
   const newBatchCall = (txs: UnsafeTx[], from: MaybeAddress): AnyApi => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
 
     if (!api) {
       return undefined;

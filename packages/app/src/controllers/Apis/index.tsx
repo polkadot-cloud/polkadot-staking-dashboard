@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { SyncController } from 'controllers/Sync';
+import { Syncs } from 'controllers/Syncs';
 import { Api } from 'model/Api';
 import type { ConnectionType } from 'model/Api/types';
 import type { NetworkName, SystemChainId } from 'types';
 
-export class ApiController {
+export class Apis {
   // The currently instantiated API instances, keyed by network.
   static #instances: Record<string, Api> = {};
 
@@ -45,7 +45,7 @@ export class ApiController {
 
     // Set app initializing. Even though `initialization` is added by default, it is called again
     // here in case the user switches networks.
-    SyncController.dispatch('initialization', 'syncing');
+    Syncs.dispatch('initialization', 'syncing');
 
     // 2. Instantiate chain Api instances.
 

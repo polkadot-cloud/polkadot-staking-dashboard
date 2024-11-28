@@ -6,7 +6,7 @@ import type { PapiApi } from 'model/Api/types';
 import { IdentityOfMulti, SuperOfMulti } from 'node-api/queryMulti';
 import type { AnyApi } from 'types';
 
-export class IdentitiesController {
+export class Identities {
   static fetch = async (api: PapiApi, addresses: string[]) => {
     // Fetches identities for addresses.
     const fetchBase = async () => {

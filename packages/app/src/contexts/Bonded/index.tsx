@@ -13,7 +13,7 @@ import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useNetwork } from 'contexts/Network';
-import { SubscriptionsController } from 'controllers/Subscriptions';
+import { Subscriptions } from 'controllers/Subscriptions';
 import { isCustomEvent } from 'controllers/utils';
 import { Bonded } from 'model/Subscribe/Bonded';
 import type { ReactNode } from 'react';
@@ -49,7 +49,7 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
       ]).map(({ address }) => address);
 
       removed?.forEach((address) => {
-        SubscriptionsController.remove(network, `bonded-${address}`);
+        Subscriptions.remove(network, `bonded-${address}`);
       });
     };
     // Sync added accounts.
@@ -58,7 +58,7 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
 
       if (added.length) {
         added.forEach(({ address }) =>
-          SubscriptionsController.set(
+          Subscriptions.set(
             network,
             `bonded-${address}`,
             new Bonded(network, address)

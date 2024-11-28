@@ -10,7 +10,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxMeta } from 'contexts/TxMeta';
-import { ApiController } from 'controllers/Api';
+import { Apis } from 'controllers/Apis';
 import { getUnixTime } from 'date-fns';
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
@@ -105,7 +105,7 @@ export const Unbond = () => {
 
   // tx to submit
   const getTx = () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     let tx = null;
     if (!api || !activeAccount) {
       return tx;

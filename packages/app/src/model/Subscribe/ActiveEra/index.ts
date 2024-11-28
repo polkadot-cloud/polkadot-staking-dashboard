@@ -4,8 +4,8 @@
 import BigNumber from 'bignumber.js';
 import { defaultActiveEra } from 'contexts/Api/defaults';
 import type { APIActiveEra } from 'contexts/Api/types';
-import { ApiController } from 'controllers/Api';
-import { SubscriptionsController } from 'controllers/Subscriptions';
+import { Apis } from 'controllers/Apis';
+import { Subscriptions } from 'controllers/Subscriptions';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { Subscription } from 'rxjs';
 import type { NetworkName } from 'types';
@@ -28,7 +28,7 @@ export class ActiveEra implements Unsubscribable {
 
   subscribe = async (): Promise<void> => {
     try {
-      const api = ApiController.getApi(this.#network);
+      const api = Apis.getApi(this.#network);
 
       if (api && this.#sub === undefined) {
         // Testing the active era subscription.
@@ -43,18 +43,18 @@ export class ActiveEra implements Unsubscribable {
           };
 
           // Unsubscribe to staking metrics if it exists.
-          const subStakingMetrics = SubscriptionsController.get(
+          const subStakingMetrics = Subscriptions.get(
             this.#network,
             'stakingMetrics'
           );
 
           if (subStakingMetrics) {
             subStakingMetrics.subscribe();
-            SubscriptionsController.remove(this.#network, 'stakingMetrics');
+            Subscriptions.remove(this.#network, 'stakingMetrics');
           }
 
           // Subscribe to staking metrics with new active era.
-          SubscriptionsController.set(
+          Subscriptions.set(
             this.#network,
             'stakingMetrics',
             new StakingMetrics(

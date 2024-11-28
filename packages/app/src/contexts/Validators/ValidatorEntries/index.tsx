@@ -9,8 +9,8 @@ import { MaxEraRewardPointsEras } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
-import { ApiController } from 'controllers/Api';
-import { IdentitiesController } from 'controllers/Identities';
+import { Apis } from 'controllers/Apis';
+import { Identities } from 'controllers/Identities';
 import { useErasPerDay } from 'hooks/useErasPerDay';
 import { ValidatorsEntries } from 'node-api/entries';
 import { ParaSessionAccounts, SessionValidators } from 'node-api/query';
@@ -149,7 +149,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetches era reward points for eligible eras.
   const fetchErasRewardPoints = async () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     if (
       activeEra.index.isZero() ||
       !api ||
@@ -249,7 +249,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       return defaultValidatorsData;
     }
 
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     const result = await new ValidatorsEntries(api).fetch();
 
     const entries: Validator[] = [];
@@ -324,12 +324,10 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     setAvgCommission(avg);
     // NOTE: validators are shuffled before committed to state.
     setValidators(shuffle(validatorEntries));
-    const peopleApi = ApiController.getApi(
-      `people-${network}` as SystemChainId
-    );
+    const peopleApi = Apis.getApi(`people-${network}` as SystemChainId);
     if (peopleApi && peopleApiStatus === 'ready') {
       const addresses = validatorEntries.map(({ address }) => address);
-      const { identities, supers } = await IdentitiesController.fetch(
+      const { identities, supers } = await Identities.fetch(
         peopleApi,
         addresses
       );
@@ -345,13 +343,13 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     if (!isReady) {
       return;
     }
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     setSessionValidators(await new SessionValidators(api).fetch());
   };
 
   // Subscribe to active parachain validators.
   const getParachainValidators = async () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     setSessionParaValidators(
       await new ParaSessionAccounts(
         api,
@@ -373,7 +371,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       vMulti.push([address]);
     }
 
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     const resultsMulti = (await new ValidatorsMulti(api, vMulti).fetch()) || [];
 
     const formatted: Validator[] = [];
@@ -486,7 +484,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Gets average validator reward for provided number of days.
   const getAverageEraValidatorReward = async () => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
 
     if (!api || !isReady || activeEra.index.isZero()) {
       setAverageEraValidatorReward({

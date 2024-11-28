@@ -7,9 +7,9 @@ import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
 import { useNetwork } from 'contexts/Network';
-import { ActivePoolsController } from 'controllers/ActivePools';
-import { ApiController } from 'controllers/Api';
-import { SyncController } from 'controllers/Sync';
+import { ActivePools } from 'controllers/ActivePools';
+import { Apis } from 'controllers/Apis';
+import { Syncs } from 'controllers/Syncs';
 import { useActivePools } from 'hooks/useActivePools';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import type { ReactNode } from 'react';
@@ -53,8 +53,8 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const { getActivePool, activePoolsRef, getPoolNominations } = useActivePools({
     who: activeAccount,
     onCallback: async () => {
-      if (ActivePoolsController.getPool(network, activeAccount)) {
-        SyncController.dispatch('active-pools', 'complete');
+      if (ActivePools.getPool(network, activeAccount)) {
+        Syncs.dispatch('active-pools', 'complete');
       }
     },
   });
@@ -80,17 +80,15 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
         },
       ];
 
-      SyncController.dispatch('active-pools', 'syncing');
-      const peopleApi = ApiController.getApi(
-        `people-${network}` as SystemChainId
-      );
+      Syncs.dispatch('active-pools', 'syncing');
+      const peopleApi = Apis.getApi(`people-${network}` as SystemChainId);
 
       if (peopleApi) {
-        ActivePoolsController.syncPools(network, activeAccount, newActivePool);
+        ActivePools.syncPools(network, activeAccount, newActivePool);
       }
     } else {
       // No active pools to sync. Mark as complete.
-      SyncController.dispatch('active-pools', 'complete');
+      Syncs.dispatch('active-pools', 'complete');
     }
   };
 
@@ -193,7 +191,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch and update unclaimed pool rewards for an address from runtime call.
   const fetchPendingRewards = async (address: string | undefined) => {
-    const api = ApiController.getApi(network);
+    const api = Apis.getApi(network);
     if (api && address) {
       const apiResult = await api.apis.NominationPoolsApi.pending_rewards(
         address,
@@ -219,7 +217,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [network, isReady, membership]);
 
-  // Reset on network change and component unmount. NOTE: ActivePoolsController also unsubscribes on
+  // Reset on network change and component unmount. NOTE: ActivePools also unsubscribes on
   // network change; this is handled by the Api instance.
   useEffectIgnoreInitial(() => {
     resetActivePoolId();
