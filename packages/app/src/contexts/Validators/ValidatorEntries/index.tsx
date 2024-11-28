@@ -4,13 +4,12 @@
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import type { AnyJson, Sync } from '@w3ux/types';
 import { shuffle } from '@w3ux/utils';
-import { ValidatorsEntries } from 'api/entries';
-import { ParaSessionAccounts, SessionValidators } from 'api/query';
-import {
-  ErasRewardPointsMulti,
-  ErasValidatorRewardMulti,
-  ValidatorsMulti,
-} from 'api/queryMulti';
+import { ValidatorsEntries } from 'api/entries/validatorsEntries';
+import { ParaSessionAccounts } from 'api/query/paraSessionAccounts';
+import { SessionValidators } from 'api/query/sessionValidators';
+import { ErasRewardPointsMulti } from 'api/queryMulti/erasRewardPointsMulti';
+import { ErasValidatorRewardMulti } from 'api/queryMulti/erasValidatorRewardMulti';
+import { ValidatorsMulti } from 'api/queryMulti/validatorsMulti';
 import BigNumber from 'bignumber.js';
 import { MaxEraRewardPointsEras } from 'consts';
 import { useApi } from 'contexts/Api';

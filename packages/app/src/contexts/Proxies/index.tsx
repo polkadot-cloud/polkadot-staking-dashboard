@@ -10,7 +10,7 @@ import {
   removedFrom,
   setStateWithRef,
 } from '@w3ux/utils';
-import { ProxiesQuery } from 'api/query';
+import { ProxiesQuery } from 'api/query/proxiesQuery';
 import { AccountProxies } from 'api/subscribe/accountProxies';
 import BigNumber from 'bignumber.js';
 import { isSupportedProxy } from 'config/proxies';

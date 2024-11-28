@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyJson } from '@w3ux/types';
-import { IdentityOfMulti, SuperOfMulti } from 'api/queryMulti';
+import { IdentityOfMulti } from 'api/queryMulti/identityOfMulti';
+import { SuperOfMulti } from 'api/queryMulti/superOfMulti';
 import type { AnyApi, ChainId } from 'types';
 
 export class Identities {

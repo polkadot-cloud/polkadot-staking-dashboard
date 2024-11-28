@@ -6,7 +6,8 @@ import { NetworkList } from 'config/networks';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { Era, NetworkMeta } from 'api/query';
+import { Era } from 'api/query/era';
+import { NetworkMeta } from 'api/query/networkMeta';
 import { ActiveEra } from 'api/subscribe/activeEra';
 import { BlockNumber } from 'api/subscribe/blockNumber';
 import { NetworkMetrics } from 'api/subscribe/networkMetrics';

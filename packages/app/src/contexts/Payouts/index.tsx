@@ -3,13 +3,11 @@
 
 import type { AnyJson, Sync } from '@w3ux/types';
 import { setStateWithRef } from '@w3ux/utils';
-import {
-  ClaimedRewards,
-  ErasRewardPoints,
-  ErasValidatorReward,
-  ValidatorPrefs,
-} from 'api/query';
-import { BondedMulti } from 'api/queryMulti';
+import { ClaimedRewards } from 'api/query/claimedRewards';
+import { ErasRewardPoints } from 'api/query/erasRewardPoints';
+import { ErasValidatorReward } from 'api/query/erasValidatorReward';
+import { ValidatorPrefs } from 'api/query/validatorPrefs';
+import { BondedMulti } from 'api/queryMulti/bondedMulti';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
