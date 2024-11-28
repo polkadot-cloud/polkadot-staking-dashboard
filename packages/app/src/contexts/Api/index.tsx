@@ -6,20 +6,16 @@ import { NetworkList } from 'config/networks';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import { ActiveEra } from 'api/subscribe/activeEra';
+import { BlockNumber } from 'api/subscribe/blockNumber';
+import { NetworkMetrics } from 'api/subscribe/networkMetrics';
+import { PoolsConfig } from 'api/subscribe/poolsConfig';
+import type { APIEventDetail, ApiStatus, ConnectionType } from 'api/types';
 import BigNumber from 'bignumber.js';
 import { Apis } from 'controllers/Apis';
 import { Subscriptions } from 'controllers/Subscriptions';
 import { Syncs } from 'controllers/Syncs';
 import { isCustomEvent } from 'controllers/utils';
-import type {
-  APIEventDetail,
-  ApiStatus,
-  ConnectionType,
-} from 'model/Api/types';
-import { ActiveEra } from 'model/Subscribe/ActiveEra';
-import { BlockNumber } from 'model/Subscribe/BlockNumber';
-import { NetworkMetrics } from 'model/Subscribe/NetworkMetrics';
-import { PoolsConfig } from 'model/Subscribe/PoolsConfig';
 import { Era, NetworkMeta } from 'node-api/query';
 import { useEventListener } from 'usehooks-ts';
 import {

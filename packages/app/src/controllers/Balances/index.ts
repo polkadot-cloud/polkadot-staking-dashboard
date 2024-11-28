@@ -1,10 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { AccountBalances } from 'api/subscribe/accountBalances';
 import type { ActiveBalance } from 'contexts/Balances/types';
 import { Subscriptions } from 'controllers/Subscriptions';
 import { Syncs } from 'controllers/Syncs';
-import { AccountBalances } from 'model/Subscribe/AccountBalances';
 import type { NetworkName } from 'types';
 
 export class Balances {

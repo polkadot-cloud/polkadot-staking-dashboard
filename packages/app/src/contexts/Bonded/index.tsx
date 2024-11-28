@@ -8,6 +8,7 @@ import {
   removedFrom,
   setStateWithRef,
 } from '@w3ux/utils';
+import { Bonded } from 'api/subscribe/bonded';
 import { useApi } from 'contexts/Api';
 import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -15,7 +16,6 @@ import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useNetwork } from 'contexts/Network';
 import { Subscriptions } from 'controllers/Subscriptions';
 import { isCustomEvent } from 'controllers/utils';
-import { Bonded } from 'model/Subscribe/Bonded';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import type { MaybeAddress } from 'types';

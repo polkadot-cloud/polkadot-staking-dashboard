@@ -4,12 +4,12 @@
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import type { Sync } from '@w3ux/types';
 import { setStateWithRef } from '@w3ux/utils';
+import { PoolMembers } from 'api/subscribe/poolMembers';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import { usePlugins } from 'contexts/Plugins';
 import { Subscriptions } from 'controllers/Subscriptions';
 import { isCustomEvent } from 'controllers/utils';
-import { PoolMembersMulti } from 'model/Subscribe/PoolMembersMulti';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import type { AnyMetaBatch, MaybeAddress } from 'types';
@@ -138,7 +138,7 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
     Subscriptions.set(
       network,
       `poolMembersBatch-${key}`,
-      new PoolMembersMulti(network, key, addresses)
+      new PoolMembers(network, key, addresses)
     );
 
     // Record key.

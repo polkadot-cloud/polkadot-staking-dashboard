@@ -1,10 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { ActivePoolAccount } from 'api/subscribe/activePoolAccount';
 import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
 import { Subscriptions } from 'controllers/Subscriptions';
 import { Syncs } from 'controllers/Syncs';
-import { ActivePoolAccount } from 'model/Subscribe/ActivePoolAccount';
 import type { MaybeAddress, NetworkName, SystemChainId } from 'types';
 import type {
   AccountActivePools,

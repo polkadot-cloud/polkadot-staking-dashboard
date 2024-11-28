@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { FastUnstakeHead } from 'api/subscribe/fastUnstakeConfig/types';
 import type BigNumber from 'bignumber.js';
-import type { FastUnstakeHead } from 'model/Subscribe/FastUnstakeConfig/types';
 import type { MaybeAddress } from 'types';
 
 export interface LocalMeta {

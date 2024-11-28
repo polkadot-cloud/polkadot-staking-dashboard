@@ -10,6 +10,7 @@ import {
   removedFrom,
   setStateWithRef,
 } from '@w3ux/utils';
+import { AccountProxies } from 'api/subscribe/accountProxies';
 import BigNumber from 'bignumber.js';
 import { isSupportedProxy } from 'config/proxies';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
@@ -22,7 +23,6 @@ import { defaultNetwork } from 'contexts/Network/defaults';
 import { Apis } from 'controllers/Apis';
 import { Subscriptions } from 'controllers/Subscriptions';
 import { isCustomEvent } from 'controllers/utils';
-import { AccountProxies } from 'model/Subscribe/AccountProxies';
 import { ProxiesQuery } from 'node-api/query';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';

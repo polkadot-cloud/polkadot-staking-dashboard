@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { ApiStatus, ConnectionType, PapiChainSpec } from 'api/types';
 import type BigNumber from 'bignumber.js';
-import type { ApiStatus, ConnectionType, PapiChainSpec } from 'model/Api/types';
 import type { ReactNode } from 'react';
 import type { NetworkName } from '../../types';
 

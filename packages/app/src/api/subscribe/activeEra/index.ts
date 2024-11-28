@@ -9,7 +9,7 @@ import { Subscriptions } from 'controllers/Subscriptions';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { Subscription } from 'rxjs';
 import type { NetworkName } from 'types';
-import { StakingMetrics } from '../StakingMetrics';
+import { StakingMetrics } from '../stakingMetrics';
 
 export class ActiveEra implements Unsubscribable {
   // The associated network for this instance.

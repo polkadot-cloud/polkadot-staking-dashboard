@@ -3,6 +3,11 @@
 
 import type { ExtensionInjected } from '@w3ux/react-connect-kit/types';
 import type { AnyJson } from '@w3ux/types';
+import type { AccountProxiesEvent } from 'api/subscribe/accountProxies/types';
+import type { BlockNumberEventDetail } from 'api/subscribe/blockNumber/types';
+import type { FastUnstakeConfigResult } from 'api/subscribe/fastUnstakeConfig/types';
+import type { PoolMemberBatchEvent } from 'api/subscribe/poolMembers/types';
+import type { APIEventDetail, PapiReadyEvent } from 'api/types';
 import type BigNumber from 'bignumber.js';
 import type {
   APIActiveEra,
@@ -19,11 +24,6 @@ import type { NotificationItem } from 'controllers/Notifications/types';
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types';
 import type { PayoutType } from 'controllers/Subscan/types';
 import type { SyncEvent } from 'controllers/Syncs/types';
-import type { APIEventDetail, PapiReadyEvent } from 'model/Api/types';
-import type { AccountProxiesEvent } from 'model/Subscribe/AccountProxies/types';
-import type { BlockNumberEventDetail } from 'model/Subscribe/BlockNumber/types';
-import type { FastUnstakeConfigResult } from 'model/Subscribe/FastUnstakeConfig/types';
-import type { PoolMemberBatchEvent } from 'model/Subscribe/PoolMembersMulti/types';
 import type { FC, FunctionComponent, SVGProps } from 'react';
 
 declare global {

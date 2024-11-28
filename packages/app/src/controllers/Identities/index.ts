@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyJson } from '@w3ux/types';
-import type { PapiApi } from 'model/Api/types';
+import type { PapiApi } from 'api/types';
 import { IdentityOfMulti, SuperOfMulti } from 'node-api/queryMulti';
 import type { AnyApi } from 'types';
 

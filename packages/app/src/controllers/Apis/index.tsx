@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { Api } from 'api';
+import type { ConnectionType } from 'api/types';
 import { Syncs } from 'controllers/Syncs';
-import { Api } from 'model/Api';
-import type { ConnectionType } from 'model/Api/types';
 import type { NetworkName, SystemChainId } from 'types';
 
 export class Apis {

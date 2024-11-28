@@ -1,6 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { PapiApi } from 'api/types';
 import type { Nominations } from 'contexts/Balances/types';
 import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
 import type { ActivePool, PoolRoles } from 'contexts/Pools/ActivePool/types';
@@ -8,7 +9,6 @@ import type { ActivePoolItem } from 'controllers/ActivePools/types';
 import { Apis } from 'controllers/Apis';
 import { Identities } from 'controllers/Identities';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
-import type { PapiApi } from 'model/Api/types';
 import { combineLatest, type Subscription } from 'rxjs';
 import type { AnyApi, NetworkName, SystemChainId } from 'types';
 

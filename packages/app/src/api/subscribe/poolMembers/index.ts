@@ -7,7 +7,7 @@ import { combineLatest, type Subscription } from 'rxjs';
 import type { AnyApi, NetworkName } from 'types';
 import type { PoolMemberBatchEvent } from './types';
 
-export class PoolMembersMulti implements Unsubscribable {
+export class PoolMembers implements Unsubscribable {
   // The associated network for this instance.
   #network: NetworkName;
 
