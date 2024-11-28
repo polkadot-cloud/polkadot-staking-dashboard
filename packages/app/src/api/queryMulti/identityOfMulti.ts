@@ -1,21 +1,20 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PapiApi } from '../types';
+import { Base } from 'api/base';
+import type { PolkadotClient } from 'polkadot-api';
 
-export class IdentityOfMulti {
-  #api: PapiApi;
-
+export class IdentityOfMulti extends Base {
   #addresses: [string][];
 
-  constructor(api: PapiApi, addresses: [string][]) {
-    this.#api = api;
+  constructor(client: PolkadotClient, addresses: [string][]) {
+    super(client);
     this.#addresses = addresses;
   }
 
   async fetch() {
     try {
-      const result = await this.#api.query.Identity.IdentityOf.getValues(
+      const result = await this.unsafeApi.query.Identity.IdentityOf.getValues(
         this.#addresses,
         {
           at: 'best',

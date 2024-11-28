@@ -1,23 +1,22 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { Base } from 'api/base';
 import BigNumber from 'bignumber.js';
 import type { APIActiveEra } from 'contexts/Api/types';
+import type { PolkadotClient } from 'polkadot-api';
 import { perbillToPercent, stringToBn } from 'utils';
-import type { PapiApi } from '../types';
 
-export class NetworkMeta {
-  #api: PapiApi;
-
-  constructor(api: PapiApi) {
-    this.#api = api;
+export class NetworkMeta extends Base {
+  constructor(client: PolkadotClient) {
+    super(client);
   }
 
   // Fetch network constants.
   async fetch(activeEra: APIActiveEra, previousEra: BigNumber) {
     const at = { at: 'best' };
     const totalIssuance =
-      await this.#api.query.Balances.TotalIssuance.getValue(at);
+      await this.unsafeApi.query.Balances.TotalIssuance.getValue(at);
 
     const [
       auctionCounter,
@@ -43,34 +42,34 @@ export class NetworkMeta {
       minNominatorBond,
       activeEraErasTotalStake,
     ] = await Promise.all([
-      this.#api.query.Auctions.AuctionCounter.getValue(at),
-      this.#api.query.ParaSessionInfo.EarliestStoredSession.getValue(at),
-      this.#api.query.FastUnstake.ErasToCheckPerBlock.getValue(at),
-      this.#api.query.Staking.MinimumActiveStake.getValue(at),
-      this.#api.query.NominationPools.CounterForPoolMembers.getValue(at),
-      this.#api.query.NominationPools.CounterForBondedPools.getValue(at),
-      this.#api.query.NominationPools.CounterForRewardPools.getValue(at),
-      this.#api.query.NominationPools.LastPoolId.getValue(at),
-      this.#api.query.NominationPools.MaxPoolMembers.getValue(at),
-      this.#api.query.NominationPools.MaxPoolMembersPerPool.getValue(at),
-      this.#api.query.NominationPools.MaxPools.getValue(at),
-      this.#api.query.NominationPools.MinCreateBond.getValue(at),
-      this.#api.query.NominationPools.MinJoinBond.getValue(at),
-      this.#api.query.NominationPools.GlobalMaxCommission.getValue(at),
-      this.#api.query.Staking.CounterForNominators.getValue(at),
-      this.#api.query.Staking.CounterForValidators.getValue(at),
-      this.#api.query.Staking.MaxValidatorsCount.getValue(at),
-      this.#api.query.Staking.ValidatorCount.getValue(at),
-      this.#api.query.Staking.ErasValidatorReward.getValue(
+      this.unsafeApi.query.Auctions.AuctionCounter.getValue(at),
+      this.unsafeApi.query.ParaSessionInfo.EarliestStoredSession.getValue(at),
+      this.unsafeApi.query.FastUnstake.ErasToCheckPerBlock.getValue(at),
+      this.unsafeApi.query.Staking.MinimumActiveStake.getValue(at),
+      this.unsafeApi.query.NominationPools.CounterForPoolMembers.getValue(at),
+      this.unsafeApi.query.NominationPools.CounterForBondedPools.getValue(at),
+      this.unsafeApi.query.NominationPools.CounterForRewardPools.getValue(at),
+      this.unsafeApi.query.NominationPools.LastPoolId.getValue(at),
+      this.unsafeApi.query.NominationPools.MaxPoolMembers.getValue(at),
+      this.unsafeApi.query.NominationPools.MaxPoolMembersPerPool.getValue(at),
+      this.unsafeApi.query.NominationPools.MaxPools.getValue(at),
+      this.unsafeApi.query.NominationPools.MinCreateBond.getValue(at),
+      this.unsafeApi.query.NominationPools.MinJoinBond.getValue(at),
+      this.unsafeApi.query.NominationPools.GlobalMaxCommission.getValue(at),
+      this.unsafeApi.query.Staking.CounterForNominators.getValue(at),
+      this.unsafeApi.query.Staking.CounterForValidators.getValue(at),
+      this.unsafeApi.query.Staking.MaxValidatorsCount.getValue(at),
+      this.unsafeApi.query.Staking.ValidatorCount.getValue(at),
+      this.unsafeApi.query.Staking.ErasValidatorReward.getValue(
         previousEra.toNumber(),
         at
       ),
-      this.#api.query.Staking.ErasTotalStake.getValue(
+      this.unsafeApi.query.Staking.ErasTotalStake.getValue(
         previousEra.toNumber(),
         at
       ),
-      this.#api.query.Staking.MinNominatorBond.getValue(at),
-      this.#api.query.Staking.ErasTotalStake.getValue(
+      this.unsafeApi.query.Staking.MinNominatorBond.getValue(at),
+      this.unsafeApi.query.Staking.ErasTotalStake.getValue(
         activeEra.index.toNumber(),
         at
       ),

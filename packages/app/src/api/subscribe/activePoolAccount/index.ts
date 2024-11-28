@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PapiApi } from 'api/types';
 import type { Nominations } from 'contexts/Balances/types';
 import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
 import type { ActivePool, PoolRoles } from 'contexts/Pools/ActivePool/types';
@@ -9,6 +8,7 @@ import type { ActivePoolItem } from 'controllers/ActivePools/types';
 import { Apis } from 'controllers/Apis';
 import { Identities } from 'controllers/Identities';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
+import type { PolkadotClient } from 'polkadot-api';
 import { combineLatest, type Subscription } from 'rxjs';
 import type { AnyApi, NetworkName, SystemChainId } from 'types';
 
@@ -45,7 +45,9 @@ export class ActivePoolAccount implements Unsubscribable {
   subscribe = async (): Promise<void> => {
     try {
       const api = Apis.getApi(this.#network);
-      const peopleApi = Apis.getApi(`people-${this.#network}` as SystemChainId);
+      const peopleApiClient = Apis.getClient(
+        `people-${this.#network}` as SystemChainId
+      );
       const bestOrFinalized = 'best';
 
       const sub = combineLatest([
@@ -67,7 +69,7 @@ export class ActivePoolAccount implements Unsubscribable {
         ),
       ]).subscribe(async ([bondedPool, rewardPool, account, nominators]) => {
         await this.handleActivePoolCallback(
-          peopleApi,
+          peopleApiClient,
           bondedPool,
           rewardPool,
           account
@@ -95,7 +97,7 @@ export class ActivePoolAccount implements Unsubscribable {
 
   // Handle active pool callback.
   handleActivePoolCallback = async (
-    peopleApi: PapiApi,
+    peopleApiClient: PolkadotClient,
     bondedPool: AnyApi,
     rewardPool: AnyApi,
     account: AnyApi
@@ -103,10 +105,10 @@ export class ActivePoolAccount implements Unsubscribable {
     const balance = account.data;
     const rewardAccountBalance = balance?.free.toString();
 
-    if (peopleApi) {
+    if (peopleApiClient) {
       // Fetch identities for roles and expand `bondedPool` state to store them.
       bondedPool.roleIdentities = await Identities.fetch(
-        peopleApi,
+        peopleApiClient,
         this.getUniqueRoleAddresses(bondedPool.roles)
       );
     }

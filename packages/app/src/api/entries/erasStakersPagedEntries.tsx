@@ -1,17 +1,16 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PapiApi } from '../types';
+import { Base } from 'api/base';
+import type { PolkadotClient } from 'polkadot-api';
 
-export class ErasStakersPagedEntries {
-  #api: PapiApi;
-
-  constructor(api: PapiApi) {
-    this.#api = api;
+export class ErasStakersPagedEntries extends Base {
+  constructor(client: PolkadotClient) {
+    super(client);
   }
 
   async fetch(era: number, validator: string) {
-    return await this.#api.query.Staking.ErasStakersPaged.getEntries(
+    return await this.unsafeApi.query.Staking.ErasStakersPaged.getEntries(
       era,
       validator,
       { at: 'best' }

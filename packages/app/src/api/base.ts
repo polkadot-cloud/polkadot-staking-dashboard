@@ -1,17 +1,16 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Base } from 'api/base';
 import type { PolkadotClient } from 'polkadot-api';
 
-export class ValidatorsEntries extends Base {
+export class Base {
+  #client: PolkadotClient;
+
   constructor(client: PolkadotClient) {
-    super(client);
+    this.#client = client;
   }
 
-  async fetch() {
-    return await this.unsafeApi.query.Staking.Validators.getEntries({
-      at: 'best',
-    });
+  get unsafeApi() {
+    return this.#client.getUnsafeApi();
   }
 }

@@ -1,33 +1,32 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PapiApi } from 'api/types';
+import { Base } from 'api/base';
 import BigNumber from 'bignumber.js';
+import type { PolkadotClient } from 'polkadot-api';
 import type { AnyApi } from 'types';
 import { perbillToPercent } from 'utils';
 
-export class BondedPoolsEntries {
-  #api: PapiApi;
-
+export class BondedPoolsEntries extends Base {
   bondedPools: AnyApi = {};
 
-  constructor(api: PapiApi) {
-    this.#api = api;
+  constructor(client: PolkadotClient) {
+    super(client);
   }
 
   async fetch() {
     this.bondedPools =
-      await this.#api.query.NominationPools.BondedPools.getEntries({
+      await this.unsafeApi.query.NominationPools.BondedPools.getEntries({
         at: 'best',
       });
     return this;
   }
 
   async fetchOne(id: number) {
-    const result = await this.#api.query.NominationPools.BondedPools.getValue(
-      id,
-      { at: 'best' }
-    );
+    const result =
+      await this.unsafeApi.query.NominationPools.BondedPools.getValue(id, {
+        at: 'best',
+      });
 
     if (!result) {
       return null;

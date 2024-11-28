@@ -149,10 +149,9 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetches era reward points for eligible eras.
   const fetchErasRewardPoints = async () => {
-    const api = Apis.getApi(network);
     if (
+      !isReady ||
       activeEra.index.isZero() ||
-      !api ||
       erasRewardPointsFetched !== 'unsynced'
     ) {
       return;
@@ -183,7 +182,10 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     );
 
     const erasMulti: [number][] = eras.map((e) => [e.toNumber()]);
-    const results = await new ErasRewardPointsMulti(api, erasMulti).fetch();
+    const results = await new ErasRewardPointsMulti(
+      Apis.getClient(network),
+      erasMulti
+    ).fetch();
 
     // Make calls and format reward point results.
     const newErasRewardPoints: ErasRewardPoints = {};
@@ -249,9 +251,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       return defaultValidatorsData;
     }
 
-    const api = Apis.getApi(network);
-    const result = await new ValidatorsEntries(api).fetch();
-
+    const result = await new ValidatorsEntries(Apis.getClient(network)).fetch();
     const entries: Validator[] = [];
     let notFullCommissionCount = 0;
     let totalNonAllCommission = new BigNumber(0);
@@ -324,11 +324,13 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     setAvgCommission(avg);
     // NOTE: validators are shuffled before committed to state.
     setValidators(shuffle(validatorEntries));
-    const peopleApi = Apis.getApi(`people-${network}` as SystemChainId);
-    if (peopleApi && peopleApiStatus === 'ready') {
+    const peopleApiClient = Apis.getClient(
+      `people-${network}` as SystemChainId
+    );
+    if (peopleApiClient && peopleApiStatus === 'ready') {
       const addresses = validatorEntries.map(({ address }) => address);
       const { identities, supers } = await Identities.fetch(
-        peopleApi,
+        peopleApiClient,
         addresses
       );
       setValidatorIdentities(identities);
@@ -343,16 +345,16 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     if (!isReady) {
       return;
     }
-    const api = Apis.getApi(network);
-    setSessionValidators(await new SessionValidators(api).fetch());
+    setSessionValidators(
+      await new SessionValidators(Apis.getClient(network)).fetch()
+    );
   };
 
   // Subscribe to active parachain validators.
   const getParachainValidators = async () => {
-    const api = Apis.getApi(network);
     setSessionParaValidators(
       await new ParaSessionAccounts(
-        api,
+        Apis.getClient(network),
         earliestStoredSession.toNumber()
       ).fetch()
     );
@@ -371,8 +373,9 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
       vMulti.push([address]);
     }
 
-    const api = Apis.getApi(network);
-    const resultsMulti = (await new ValidatorsMulti(api, vMulti).fetch()) || [];
+    const resultsMulti =
+      (await new ValidatorsMulti(Apis.getClient(network), vMulti).fetch()) ||
+      [];
 
     const formatted: Validator[] = [];
     for (let i = 0; i < resultsMulti.length; i++) {
@@ -484,9 +487,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Gets average validator reward for provided number of days.
   const getAverageEraValidatorReward = async () => {
-    const api = Apis.getApi(network);
-
-    if (!api || !isReady || activeEra.index.isZero()) {
+    if (!isReady || activeEra.index.isZero()) {
       setAverageEraValidatorReward({
         days: 0,
         reward: new BigNumber(0),
@@ -512,7 +513,10 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     } while (thisEra.gte(endEra));
 
     const erasMulti: [number][] = eras.map((e) => [Number(e)]);
-    const results = await new ErasValidatorRewardMulti(api, erasMulti).fetch();
+    const results = await new ErasValidatorRewardMulti(
+      Apis.getClient(network),
+      erasMulti
+    ).fetch();
 
     const reward = results
       .map((v) => {

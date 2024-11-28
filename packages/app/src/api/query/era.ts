@@ -1,14 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { Base } from 'api/base';
 import BigNumber from 'bignumber.js';
-import type { PapiApi } from '../types';
+import type { PolkadotClient } from 'polkadot-api';
 
-export class Era {
-  #api: PapiApi;
-
-  constructor(api: PapiApi) {
-    this.#api = api;
+export class Era extends Base {
+  constructor(client: PolkadotClient) {
+    super(client);
   }
 
   async fetch() {
@@ -18,7 +17,7 @@ export class Era {
     };
 
     try {
-      const result = await this.#api.query.Staking.ActiveEra.getValue({
+      const result = await this.unsafeApi.query.Staking.ActiveEra.getValue({
         at: 'best',
       });
 

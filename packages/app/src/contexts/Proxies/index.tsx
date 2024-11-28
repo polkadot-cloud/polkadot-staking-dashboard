@@ -171,12 +171,10 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   // Queries the chain to check if the given delegator & delegate pair is valid proxy. Used when a
   // proxy account is being manually declared.
   const handleDeclareDelegate = async (delegator: string) => {
-    const api = Apis.getApi(network);
-    if (!api) {
-      return [];
-    }
-
-    const result = await new ProxiesQuery(api, delegator).fetch();
+    const result = await new ProxiesQuery(
+      Apis.getClient(network),
+      delegator
+    ).fetch();
     const proxy = result[0] || [];
 
     let addDelegatorAsExternal = false;

@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PapiApi } from 'api/types';
 import BigNumber from 'bignumber.js';
 import type {
   Balances as IBalances,
@@ -14,6 +13,7 @@ import { Apis } from 'controllers/Apis';
 import { Balances } from 'controllers/Balances';
 import { defaultNominations } from 'controllers/Balances/defaults';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
+import type { UnsafeApi } from 'polkadot-api';
 import type { Subscription } from 'rxjs';
 import { combineLatest } from 'rxjs';
 import type { AnyApi, NetworkName } from 'types';
@@ -177,7 +177,7 @@ export class AccountBalances implements Unsubscribable {
 
   // Handle pool membership and claim commission callback.
   handlePoolMembership = async (
-    api: PapiApi,
+    api: UnsafeApi<unknown>,
     poolMembers: AnyApi,
     claimPermissionResult: AnyApi
   ): Promise<void> => {

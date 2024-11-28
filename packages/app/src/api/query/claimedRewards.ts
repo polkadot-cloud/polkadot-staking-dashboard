@@ -1,22 +1,22 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PapiApi } from '../types';
+import { Base } from 'api/base';
+import type { PolkadotClient } from 'polkadot-api';
 
-export class ClaimedRewards {
-  #api: PapiApi;
+export class ClaimedRewards extends Base {
   #era: number;
   #address: string;
 
-  constructor(api: PapiApi, era: number, address: string) {
-    this.#api = api;
+  constructor(client: PolkadotClient, era: number, address: string) {
+    super(client);
     this.#era = era;
     this.#address = address;
   }
 
   async fetch() {
     try {
-      const result = await this.#api.query.Staking.ClaimedRewards.getValue(
+      const result = await this.unsafeApi.query.Staking.ClaimedRewards.getValue(
         this.#era,
         this.#address,
         {

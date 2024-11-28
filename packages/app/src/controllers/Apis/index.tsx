@@ -15,6 +15,11 @@ export class Apis {
     return this.#instances[network];
   }
 
+  // Get the api client.
+  static getClient(network: NetworkName | SystemChainId) {
+    return this.#instances[network].papiClient;
+  }
+
   // Get the api instance.
   static getApi(network: NetworkName | SystemChainId) {
     return this.#instances[network].unsafeApi;

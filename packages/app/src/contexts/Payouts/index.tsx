@@ -145,8 +145,8 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
 
   // Start pending payout process once exposure data is fetched.
   const getUnclaimedPayouts = async () => {
-    const api = Apis.getApi(network);
-    if (!api || !activeAccount) {
+    const apiClient = Apis.getClient(network);
+    if (!activeAccount) {
       return;
     }
 
@@ -175,7 +175,7 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
     // Fetch controllers in order to query ledgers.
     const uniqueValidatorsMulti: [string][] = uniqueValidators.map((v) => [v]);
     const bondedResultsMulti = await new BondedMulti(
-      api,
+      apiClient,
       uniqueValidatorsMulti
     ).fetch();
 
@@ -200,7 +200,7 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
 
     const results = await Promise.all(
       unclaimedRewardsEntries.map(([era, v]) =>
-        new ClaimedRewards(api, Number(era), v).fetch()
+        new ClaimedRewards(apiClient, Number(era), v).fetch()
       )
     );
 
@@ -246,10 +246,10 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
       if (validators.length > 0) {
         calls.push(
           Promise.all([
-            new ErasValidatorReward(api, Number(era)).fetch(),
-            new ErasRewardPoints(api, Number(era)).fetch(),
+            new ErasValidatorReward(apiClient, Number(era)).fetch(),
+            new ErasRewardPoints(apiClient, Number(era)).fetch(),
             ...validators.map((validator: AnyJson) =>
-              new ValidatorPrefs(api, Number(era), validator).fetch()
+              new ValidatorPrefs(apiClient, Number(era), validator).fetch()
             ),
           ])
         );

@@ -1,22 +1,21 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PapiApi } from '../types';
+import { Base } from 'api/base';
+import type { PolkadotClient } from 'polkadot-api';
 
-export class NominatorsMulti {
-  #api: PapiApi;
-
+export class NominatorsMulti extends Base {
   #addresses: [string][];
 
-  constructor(api: PapiApi, addresses: [string][]) {
-    this.#api = api;
+  constructor(client: PolkadotClient, addresses: [string][]) {
+    super(client);
     this.#addresses = addresses;
   }
 
   async fetch() {
     let result;
     try {
-      result = await this.#api.query.Staking.Nominators.getValues(
+      result = await this.unsafeApi.query.Staking.Nominators.getValues(
         this.#addresses,
         { at: 'best' }
       );

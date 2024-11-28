@@ -1,23 +1,24 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PapiApi } from '../types';
+import { Base } from 'api/base';
+import type { PolkadotClient } from 'polkadot-api';
 
-export class ParaSessionAccounts {
-  #api: PapiApi;
+export class ParaSessionAccounts extends Base {
   #session: number;
 
-  constructor(api: PapiApi, session: number) {
-    this.#api = api;
+  constructor(client: PolkadotClient, session: number) {
+    super(client);
     this.#session = session;
   }
 
   async fetch() {
     try {
-      const result = await this.#api.query.ParaSessionInfo.AccountKeys.getValue(
-        this.#session,
-        { at: 'best' }
-      );
+      const result =
+        await this.unsafeApi.query.ParaSessionInfo.AccountKeys.getValue(
+          this.#session,
+          { at: 'best' }
+        );
 
       if (result) {
         return result;
