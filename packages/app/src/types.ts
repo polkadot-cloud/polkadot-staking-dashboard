@@ -59,7 +59,9 @@ declare global {
   }
 }
 
-export type NetworkName = 'polkadot' | 'kusama' | 'westend';
+export type ChainId = NetworkId | SystemChainId;
+
+export type NetworkId = 'polkadot' | 'kusama' | 'westend';
 
 export type SystemChainId =
   | 'people-polkadot'
@@ -75,7 +77,7 @@ type NetworkColor =
   | 'transparent'
   | 'pending';
 export interface Network {
-  name: NetworkName;
+  name: NetworkId;
   endpoints: {
     lightClientKey: string;
     lightClient: () => Promise<AnyApi>;
@@ -118,7 +120,7 @@ export interface SystemChain {
     lightClient: () => Promise<AnyApi>;
     rpcEndpoints: Record<string, string>;
   };
-  relayChain: NetworkName;
+  relayChain: NetworkId;
 }
 
 export interface PageCategory {

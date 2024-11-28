@@ -4,11 +4,11 @@
 import { Apis } from 'controllers/Apis';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { Subscription } from 'rxjs';
-import type { NetworkName } from 'types';
+import type { NetworkId } from 'types';
 
 export class BlockNumber implements Unsubscribable {
   // The associated network for this instance.
-  #network: NetworkName;
+  #network: NetworkId;
 
   // The current block number.
   blockNumber = '0';
@@ -16,7 +16,7 @@ export class BlockNumber implements Unsubscribable {
   // Active subscription.
   #sub: Subscription;
 
-  constructor(network: NetworkName) {
+  constructor(network: NetworkId) {
     this.#network = network;
     this.subscribe();
   }

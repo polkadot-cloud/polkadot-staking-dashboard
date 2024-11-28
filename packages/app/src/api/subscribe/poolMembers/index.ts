@@ -4,12 +4,12 @@
 import { Apis } from 'controllers/Apis';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import { combineLatest, type Subscription } from 'rxjs';
-import type { AnyApi, NetworkName } from 'types';
+import type { AnyApi, NetworkId } from 'types';
 import type { PoolMemberBatchEvent } from './types';
 
 export class PoolMembers implements Unsubscribable {
   // The associated network for this instance.
-  #network: NetworkName;
+  #network: NetworkId;
 
   // The batch key.
   #key: string;
@@ -19,7 +19,7 @@ export class PoolMembers implements Unsubscribable {
   // Active subscription.
   #sub: Subscription;
 
-  constructor(network: NetworkName, key: string, addresses: string[]) {
+  constructor(network: NetworkId, key: string, addresses: string[]) {
     this.#network = network;
     this.#key = key;
     this.#addresses = addresses;

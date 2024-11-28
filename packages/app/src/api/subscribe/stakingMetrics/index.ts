@@ -7,12 +7,12 @@ import { Apis } from 'controllers/Apis';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { Subscription } from 'rxjs';
 import { combineLatest } from 'rxjs';
-import type { NetworkName } from 'types';
+import type { NetworkId } from 'types';
 import { stringToBn } from 'utils';
 
 export class StakingMetrics implements Unsubscribable {
   // The associated network for this instance.
-  #network: NetworkName;
+  #network: NetworkId;
 
   #activeEra: APIActiveEra;
 
@@ -22,7 +22,7 @@ export class StakingMetrics implements Unsubscribable {
   #sub: Subscription;
 
   constructor(
-    network: NetworkName,
+    network: NetworkId,
     activeEra: APIActiveEra,
     previousEra: BigNumber
   ) {

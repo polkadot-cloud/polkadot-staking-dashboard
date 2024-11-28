@@ -16,12 +16,12 @@ import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { UnsafeApi } from 'polkadot-api';
 import type { Subscription } from 'rxjs';
 import { combineLatest } from 'rxjs';
-import type { AnyApi, NetworkName } from 'types';
+import type { AnyApi, NetworkId } from 'types';
 import { stringToBn } from 'utils';
 
 export class AccountBalances implements Unsubscribable {
   // The associated network for this instance.
-  #network: NetworkName;
+  #network: NetworkId;
 
   // Active subscription.
   #sub: Subscription;
@@ -44,7 +44,7 @@ export class AccountBalances implements Unsubscribable {
   // Account nominations.
   nominations: Nominations;
 
-  constructor(network: NetworkName, address: string) {
+  constructor(network: NetworkId, address: string) {
     this.#network = network;
     this.#address = address;
     this.subscribe();

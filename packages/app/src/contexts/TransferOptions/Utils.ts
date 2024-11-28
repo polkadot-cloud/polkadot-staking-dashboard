@@ -4,13 +4,13 @@
 import type { MaybeAddress } from '@w3ux/react-connect-kit/types';
 import { unitToPlanck } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
-import type { NetworkName } from 'types';
+import type { NetworkId } from 'types';
 
 // Get the local storage record for an account reserve balance.
 export const getLocalFeeReserve = (
   address: MaybeAddress,
   defaultReserve: number,
-  { network, units }: { network: NetworkName; units: number }
+  { network, units }: { network: NetworkId; units: number }
 ): BigNumber => {
   const reserves = JSON.parse(localStorage.getItem('reserve_balances') ?? '{}');
   return new BigNumber(
@@ -23,7 +23,7 @@ export const getLocalFeeReserve = (
 export const setLocalFeeReserve = (
   address: MaybeAddress,
   amount: BigNumber,
-  network: NetworkName
+  network: NetworkId
 ): void => {
   if (!address) {
     return;

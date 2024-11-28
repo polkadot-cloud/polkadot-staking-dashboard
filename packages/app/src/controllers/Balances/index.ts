@@ -5,7 +5,7 @@ import { AccountBalances } from 'api/subscribe/accountBalances';
 import type { ActiveBalance } from 'contexts/Balances/types';
 import { Subscriptions } from 'controllers/Subscriptions';
 import { Syncs } from 'controllers/Syncs';
-import type { NetworkName } from 'types';
+import type { NetworkId } from 'types';
 
 export class Balances {
   // Accounts that are being subscribed to.
@@ -13,7 +13,7 @@ export class Balances {
 
   // Subscribes new accounts and unsubscribes & removes removed accounts.
   static syncAccounts = async (
-    network: NetworkName,
+    network: NetworkId,
     newAccounts: string[]
   ): Promise<void> => {
     // Handle accounts that have been removed.
@@ -46,7 +46,7 @@ export class Balances {
 
   // Remove accounts that no longer exist.
   static handleRemovedAccounts = (
-    network: NetworkName,
+    network: NetworkId,
     newAccounts: string[]
   ): void => {
     // Determine removed accounts.
@@ -66,7 +66,7 @@ export class Balances {
 
   // Gets an `AccountBalances` subscription from class members for the given address if it exists.
   static getAccountBalances = (
-    network: NetworkName,
+    network: NetworkId,
     address: string
   ): ActiveBalance | undefined => {
     const accountBalances = Subscriptions.get(

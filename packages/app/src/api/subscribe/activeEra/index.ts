@@ -8,12 +8,12 @@ import { Apis } from 'controllers/Apis';
 import { Subscriptions } from 'controllers/Subscriptions';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { Subscription } from 'rxjs';
-import type { NetworkName } from 'types';
+import type { NetworkId } from 'types';
 import { StakingMetrics } from '../stakingMetrics';
 
 export class ActiveEra implements Unsubscribable {
   // The associated network for this instance.
-  #network: NetworkName;
+  #network: NetworkId;
 
   // Active subscription.
   #sub: Subscription;
@@ -21,7 +21,7 @@ export class ActiveEra implements Unsubscribable {
   // Store the active era.
   activeEra: APIActiveEra = defaultActiveEra;
 
-  constructor(network: NetworkName) {
+  constructor(network: NetworkId) {
     this.#network = network;
     this.subscribe();
   }

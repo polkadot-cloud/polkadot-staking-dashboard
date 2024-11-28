@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ImportedAccount } from '@w3ux/react-connect-kit/types';
-import type { MaybeAddress, NetworkName } from 'types';
+import type { MaybeAddress, NetworkId } from 'types';
 import type { ExternalAccountImportType } from '../ExternalAccounts/types';
 
 export interface OtherAccountsContextInterface {
@@ -13,7 +13,7 @@ export interface OtherAccountsContextInterface {
   ) => void;
   renameOtherAccount: (address: MaybeAddress, newName: string) => void;
   importLocalOtherAccounts: (
-    g: (network: NetworkName) => ImportedAccount[]
+    g: (network: NetworkId) => ImportedAccount[]
   ) => void;
   forgetOtherAccounts: (accounts: ImportedAccount[]) => void;
   accountsInitialised: boolean;

@@ -5,11 +5,11 @@ import type { BondedAccount } from 'contexts/Bonded/types';
 import { Apis } from 'controllers/Apis';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { Subscription } from 'rxjs';
-import type { NetworkName } from 'types';
+import type { NetworkId } from 'types';
 
 export class Bonded implements Unsubscribable {
   // The associated network for this instance.
-  #network: NetworkName;
+  #network: NetworkId;
 
   // The stash address.
   #address: string;
@@ -20,7 +20,7 @@ export class Bonded implements Unsubscribable {
   // Active subscription.
   #sub: Subscription;
 
-  constructor(network: NetworkName, address: string) {
+  constructor(network: NetworkId, address: string) {
     this.#network = network;
     this.#address = address;
     this.subscribe();

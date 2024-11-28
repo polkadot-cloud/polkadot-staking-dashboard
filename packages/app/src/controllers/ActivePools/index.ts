@@ -5,7 +5,7 @@ import { ActivePoolAccount } from 'api/subscribe/activePoolAccount';
 import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
 import { Subscriptions } from 'controllers/Subscriptions';
 import { Syncs } from 'controllers/Syncs';
-import type { MaybeAddress, NetworkName, SystemChainId } from 'types';
+import type { ChainId, MaybeAddress, NetworkId } from 'types';
 import type {
   AccountActivePools,
   AccountPoolNominations,
@@ -22,7 +22,7 @@ export class ActivePools {
 
   // Subscribes to new pools and unsubscribes from removed pools.
   static syncPools = async (
-    network: NetworkName,
+    network: NetworkId,
     address: MaybeAddress,
     newPools: ActivePoolItem[]
   ): Promise<void> => {
@@ -59,10 +59,7 @@ export class ActivePools {
   };
 
   // Remove pools that no longer exist.
-  static handleRemovedPools = (
-    network: NetworkName | SystemChainId,
-    address: string
-  ): void => {
+  static handleRemovedPools = (network: ChainId, address: string): void => {
     const currentPool = this.addressToPool[address];
 
     if (currentPool) {
@@ -75,13 +72,9 @@ export class ActivePools {
     }
   };
 
-  // ------------------------------------------------------
-  // Getters.
-  // ------------------------------------------------------
-
   // Gets pool for a provided address.
   static getPool = (
-    network: NetworkName,
+    network: NetworkId,
     address: MaybeAddress
   ): ActivePoolItem | undefined => {
     if (!address) {
@@ -97,7 +90,7 @@ export class ActivePools {
 
   // Gets active pool for a provided address.
   static getActivePool = (
-    network: NetworkName,
+    network: NetworkId,
     address: MaybeAddress
   ): AccountActivePools => {
     if (!address) {
@@ -118,7 +111,7 @@ export class ActivePools {
 
   // Gets active pool nominations for a provided address.
   static getPoolNominations = (
-    network: NetworkName,
+    network: NetworkId,
     address: MaybeAddress
   ): AccountPoolNominations => {
     if (!address) {
@@ -136,7 +129,7 @@ export class ActivePools {
   };
 
   // Gets all active pools for a provided network.
-  static getAllActivePools = (network: NetworkName) =>
+  static getAllActivePools = (network: NetworkId) =>
     Object.fromEntries(
       Object.entries(this.addressToPool).map(([addr, poolId]) => {
         const activePoolAccount = Subscriptions.get(
@@ -147,10 +140,6 @@ export class ActivePools {
         return [poolId, activePoolAccount?.activePool || null];
       })
     );
-
-  // ------------------------------------------------------
-  // Class helpers.
-  // ------------------------------------------------------
 
   // Format pools into active pool items (id and addresses only).
   static getformattedPoolItems = (address: MaybeAddress): ActivePoolItem[] => {

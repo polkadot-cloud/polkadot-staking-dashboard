@@ -4,11 +4,11 @@
 import { Apis } from 'controllers/Apis';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { Subscription } from 'rxjs';
-import type { AnyApi, NetworkName } from 'types';
+import type { AnyApi, NetworkId } from 'types';
 
 export class AccountProxies implements Unsubscribable {
   // The associated network for this instance.
-  #network: NetworkName;
+  #network: NetworkId;
 
   // The proxy delegator address.
   #address: string;
@@ -19,7 +19,7 @@ export class AccountProxies implements Unsubscribable {
   // Active subscription.
   #sub: Subscription;
 
-  constructor(network: NetworkName, address: string) {
+  constructor(network: NetworkId, address: string) {
     this.#network = network;
     this.#address = address;
     this.subscribe();

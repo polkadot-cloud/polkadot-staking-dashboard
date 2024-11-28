@@ -15,10 +15,6 @@ import type {
 } from './types';
 
 export class Subscan {
-  // ------------------------------------------------------
-  // Class members.
-  // ------------------------------------------------------
-
   // List of endpoints to be used for Subscan API calls.
   static ENDPOINTS = {
     eraStat: '/api/scan/staking/era_stat',
@@ -45,20 +41,12 @@ export class Subscan {
   // Subscan era points data, keyed by `<network>-<address>-<era>`.
   static eraPointsData: Record<string, SubscanEraPoints[]> = {};
 
-  // ------------------------------------------------------
-  // Setters.
-  // ------------------------------------------------------
-
   // Set the network to use for Subscan API calls.
   //
   // Effects the endpoint being used. Should be updated on network change in the UI.
   set network(network: string) {
     Subscan.network = network;
   }
-
-  // ------------------------------------------------------
-  // Handling multiple requests.
-  // ------------------------------------------------------
 
   // Handle fetching the various types of payout and set state in one render.
   static handleFetchPayouts = async (address: string): Promise<void> => {
@@ -90,10 +78,6 @@ export class Subscan {
       // Silently fail request.
     }
   };
-
-  // ------------------------------------------------------
-  // Handling requests.
-  // ------------------------------------------------------
 
   // Fetch nominator payouts from Subscan. NOTE: Payouts with a `block_timestamp` of 0 are
   // unclaimed.
@@ -246,10 +230,6 @@ export class Subscan {
     }
   };
 
-  // ------------------------------------------------------
-  // Class utilities.
-  // ------------------------------------------------------
-
   // Resets all received data from class.
   static resetData = () => {
     this.payoutData = {};
@@ -322,10 +302,6 @@ export class Subscan {
       locale,
     });
   };
-
-  // ------------------------------------------------------
-  // Helpers for making requests.
-  // ------------------------------------------------------
 
   // Get the public Subscan endpoint.
   static getEndpoint = () => `https://${this.network}.api.subscan.io`;

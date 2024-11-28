@@ -4,24 +4,24 @@
 import { Api } from 'api';
 import type { ConnectionType } from 'api/types';
 import { Syncs } from 'controllers/Syncs';
-import type { NetworkName, SystemChainId } from 'types';
+import type { ChainId, NetworkId } from 'types';
 
 export class Apis {
   // The currently instantiated API instances, keyed by network.
   static #instances: Record<string, Api> = {};
 
   // Get an Api.
-  static get(network: NetworkName | SystemChainId) {
+  static get(network: ChainId) {
     return this.#instances[network];
   }
 
   // Get the api client.
-  static getClient(network: NetworkName | SystemChainId) {
+  static getClient(network: ChainId) {
     return this.#instances[network].apiClient;
   }
 
   // Get the api instance.
-  static getApi(network: NetworkName | SystemChainId) {
+  static getApi(network: ChainId) {
     return this.#instances[network].unsafeApi;
   }
 
@@ -31,7 +31,7 @@ export class Apis {
 
   // Instantiate a new `Api` instance with the supplied chain id and endpoint.
   static async instantiate(
-    network: NetworkName,
+    network: NetworkId,
     type: ConnectionType,
     rpcEndpoint: string
   ) {
@@ -39,7 +39,7 @@ export class Apis {
     // want to disconnect from all other existing instances for the previous network.
     await Promise.all(
       Object.entries(this.#instances).map(async ([key]) => {
-        await this.destroy(key as NetworkName);
+        await this.destroy(key as NetworkId);
       })
     );
 
@@ -72,7 +72,7 @@ export class Apis {
   }
 
   // Gracefully disconnect and then destroy an Api instance.
-  static async destroy(network: NetworkName) {
+  static async destroy(network: NetworkId) {
     // Disconnect from relay chain Api instance.
     const api = this.instances[network];
     if (api) {

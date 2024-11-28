@@ -10,11 +10,11 @@ import { Identities } from 'controllers/Identities';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { PolkadotClient } from 'polkadot-api';
 import { combineLatest, type Subscription } from 'rxjs';
-import type { AnyApi, NetworkName, SystemChainId } from 'types';
+import type { AnyApi, ChainId, SystemChainId } from 'types';
 
 export class ActivePoolAccount implements Unsubscribable {
   // The associated network for this instance.
-  #network: NetworkName | SystemChainId;
+  #network: ChainId;
 
   // Active subscription.
   #sub: Subscription;
@@ -31,11 +31,7 @@ export class ActivePoolAccount implements Unsubscribable {
   // Active pool nominations.
   poolNominations: Nominations;
 
-  constructor(
-    network: NetworkName | SystemChainId,
-    address: string,
-    pool: ActivePoolItem
-  ) {
+  constructor(network: ChainId, address: string, pool: ActivePoolItem) {
     this.#network = network;
     this.pool = pool;
     this.address = address;

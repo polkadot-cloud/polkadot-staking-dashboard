@@ -3,10 +3,10 @@
 
 import { formatAccountSs58, localStorageOrDefault } from '@w3ux/utils';
 import type { ActiveProxy } from 'contexts/ActiveAccounts/types';
-import type { NetworkName } from 'types';
+import type { NetworkId } from 'types';
 
 // Gets local `activeAccount` for a network.
-export const getActiveAccountLocal = (network: NetworkName, ss58: number) => {
+export const getActiveAccountLocal = (network: NetworkId, ss58: number) => {
   const address = localStorageOrDefault(`${network}_active_account`, null);
   if (address) {
     const formattedAddress = formatAccountSs58(address, ss58);
@@ -20,7 +20,7 @@ export const getActiveAccountLocal = (network: NetworkName, ss58: number) => {
 
 // Gets local `activeProxy` for a network.
 export const getActiveProxyLocal = (
-  network: NetworkName,
+  network: NetworkId,
   ss58: number
 ): ActiveProxy | null => {
   const localActiveProxy = localStorageOrDefault(

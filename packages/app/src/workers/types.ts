@@ -6,11 +6,11 @@ import type {
   Exposure,
   Staker,
 } from 'contexts/Staking/types';
-import type { MaybeAddress, NetworkName } from 'types';
+import type { MaybeAddress, NetworkId } from 'types';
 
 export interface ProcessExposuresArgs {
   task: string;
-  networkName: NetworkName;
+  networkName: NetworkId;
   era: string;
   activeAccount: MaybeAddress;
   units: number;
@@ -19,7 +19,7 @@ export interface ProcessExposuresArgs {
 
 export interface ProcessExposuresResponse {
   task: string;
-  networkName: NetworkName;
+  networkName: NetworkId;
   era: string;
   stakers: Staker[];
   totalActiveNominators: number;
@@ -34,6 +34,6 @@ export interface ProcessEraForExposureArgs {
   exposures: Exposure[];
   exitOnExposed: boolean;
   task: string;
-  networkName: NetworkName;
+  networkName: NetworkId;
   who: MaybeAddress;
 }

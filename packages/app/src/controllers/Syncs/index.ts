@@ -5,17 +5,9 @@ import { defaultSyncIds } from './defaults';
 import type { SyncEvent, SyncID, SyncIDConfig, SyncStatus } from './types';
 
 export class Syncs {
-  // ------------------------------------------------------
-  // Class members
-  // ------------------------------------------------------
-
   // List of all syncIds currently syncing. NOTE: `initialization` is added by default as the
   // network always initializes from initial state.
   static syncIds: SyncID[] = defaultSyncIds;
-
-  // ------------------------------------------------------
-  // Dispatch sync events
-  // ------------------------------------------------------
 
   // Dispatch all default syncId events as syncing.
   static dispatchAllDefault = () => {

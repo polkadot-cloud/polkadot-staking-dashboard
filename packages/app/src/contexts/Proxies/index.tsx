@@ -26,7 +26,7 @@ import { Subscriptions } from 'controllers/Subscriptions';
 import { isCustomEvent } from 'controllers/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
-import type { AnyApi, MaybeAddress, NetworkName } from 'types';
+import type { AnyApi, MaybeAddress, NetworkId } from 'types';
 import { useEventListener } from 'usehooks-ts';
 import * as defaults from './defaults';
 import type {
@@ -58,7 +58,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 
   // Store the last network proxies were synced on.
   const [lastSyncedNetwork, setLastSyncedNetwork] =
-    useState<NetworkName>(defaultNetwork);
+    useState<NetworkId>(defaultNetwork);
 
   // Reformats proxies into a list of delegates.
   const formatProxiesToDelegates = () => {

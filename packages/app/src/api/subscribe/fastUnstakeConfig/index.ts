@@ -5,19 +5,19 @@ import { Apis } from 'controllers/Apis';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { Subscription } from 'rxjs';
 import { combineLatest } from 'rxjs';
-import type { NetworkName } from 'types';
+import type { NetworkId } from 'types';
 import type { FastUnstakeConfigResult } from './types';
 
 export class FastUnstakeConfig implements Unsubscribable {
   // The associated network for this instance.
-  #network: NetworkName;
+  #network: NetworkId;
 
   // Active subscription.
   #sub: Subscription;
 
   config: FastUnstakeConfigResult;
 
-  constructor(network: NetworkName) {
+  constructor(network: NetworkId) {
     this.#network = network;
     this.subscribe();
   }

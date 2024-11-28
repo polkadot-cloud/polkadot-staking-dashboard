@@ -6,17 +6,17 @@ import { Apis } from 'controllers/Apis';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { Subscription } from 'rxjs';
 import { combineLatest } from 'rxjs';
-import type { NetworkName } from 'types';
+import type { NetworkId } from 'types';
 import { stringToBn } from 'utils';
 
 export class PoolsConfig implements Unsubscribable {
   // The associated network for this instance.
-  #network: NetworkName;
+  #network: NetworkId;
 
   // Active subscription.
   #sub: Subscription;
 
-  constructor(network: NetworkName) {
+  constructor(network: NetworkId) {
     this.#network = network;
 
     // Subscribe immediately.

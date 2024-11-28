@@ -10,7 +10,7 @@ import { getSmProvider } from 'polkadot-api/sm-provider';
 import { startFromWorker } from 'polkadot-api/smoldot/from-worker';
 import SmWorker from 'polkadot-api/smoldot/worker?worker';
 import { getWsProvider } from 'polkadot-api/ws-provider/web';
-import type { NetworkName, SystemChainId } from 'types';
+import type { ChainId } from 'types';
 import type {
   ApiChainType,
   APIEventDetail,
@@ -22,7 +22,7 @@ import type {
 
 export class Api {
   // The network name associated with this Api instance.
-  network: NetworkName | SystemChainId;
+  network: ChainId;
 
   // The type of chain being connected to.
   #chainType: ApiChainType;
@@ -55,7 +55,7 @@ export class Api {
     return this.#connectionType;
   }
 
-  constructor(network: NetworkName | SystemChainId, chainType: ApiChainType) {
+  constructor(network: ChainId, chainType: ApiChainType) {
     this.network = network;
     this.#chainType = chainType;
   }
