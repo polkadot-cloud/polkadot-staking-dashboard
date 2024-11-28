@@ -19,10 +19,10 @@ import { useOverlay } from 'kits/Overlay/Provider';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput';
 import { SubmitTx } from 'library/SubmitTx';
-import { planckToUnitBn } from 'library/Utils';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyApi } from 'types';
+import { planckToUnitBn } from 'utils';
 import type { OverviewSectionProps } from '../types';
 import { JoinFormWrapper } from '../Wrappers';
 

@@ -16,12 +16,11 @@ import type {
   ApiStatus,
   ConnectionType,
 } from 'model/Api/types';
-import { Era } from 'model/Query/Era';
-import { NetworkMeta } from 'model/Query/NetworkMeta';
 import { ActiveEra } from 'model/Subscribe/ActiveEra';
 import { BlockNumber } from 'model/Subscribe/BlockNumber';
 import { NetworkMetrics } from 'model/Subscribe/NetworkMetrics';
 import { PoolsConfig } from 'model/Subscribe/PoolsConfig';
+import { Era, NetworkMeta } from 'node-api/query';
 import { useEventListener } from 'usehooks-ts';
 import {
   defaultActiveEra,

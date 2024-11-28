@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PapiApi } from 'model/Api/types';
+import type { PapiApi } from '../types';
 
-export class ErasValidatorReward {
+export class ErasValidatorRewardMulti {
   #api: PapiApi;
   #eras: [number][];
 

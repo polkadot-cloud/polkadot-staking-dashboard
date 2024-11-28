@@ -1,27 +1,31 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PapiApi } from 'model/Api/types';
+import type { PapiApi } from '../types';
 
-export class ProxiesQuery {
+export class ClaimedRewards {
   #api: PapiApi;
-
+  #era: number;
   #address: string;
 
-  constructor(api: PapiApi, address: string) {
+  constructor(api: PapiApi, era: number, address: string) {
     this.#api = api;
+    this.#era = era;
     this.#address = address;
   }
 
   async fetch() {
     try {
-      const result = await this.#api.query.Proxy.Proxies.getValue(
+      const result = await this.#api.query.Staking.ClaimedRewards.getValue(
+        this.#era,
         this.#address,
-        { at: 'best' }
+        {
+          at: 'best',
+        }
       );
       return result;
     } catch (e) {
-      // Subscription failed.
+      // Silently fail.
     }
 
     return undefined;

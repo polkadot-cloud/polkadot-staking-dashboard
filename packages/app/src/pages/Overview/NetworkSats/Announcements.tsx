@@ -12,8 +12,8 @@ import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import { motion } from 'framer-motion';
 import { Item } from 'library/Announcements/Wrappers';
 import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
-import { planckToUnitBn } from 'library/Utils';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn } from 'utils';
 
 export const Announcements = () => {
   const { t } = useTranslation('pages');

@@ -22,10 +22,10 @@ import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
 import { Warning } from 'library/Form/Warning';
 import { SubmitTx } from 'library/SubmitTx';
-import { planckToUnitBn } from 'library/Utils';
 import { forwardRef, useEffect, useState, type ForwardedRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ButtonSubmitInvert } from 'ui-buttons';
+import { planckToUnitBn } from 'utils';
 import type { FormsProps } from './types';
 import { ContentWrapper } from './Wrappers';
 

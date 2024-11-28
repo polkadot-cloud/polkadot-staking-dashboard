@@ -12,8 +12,8 @@ import { Header } from 'library/Announcements/Header';
 import type { PoolStatLabel } from 'library/Announcements/types';
 import { Wrapper } from 'library/Announcements/Wrappers';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
-import { planckToUnitBn } from 'library/Utils';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn } from 'utils';
 import { Announcements } from './Announcements';
 
 export const PoolStats = () => {

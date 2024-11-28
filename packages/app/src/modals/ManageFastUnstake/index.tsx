@@ -21,9 +21,9 @@ import { ActionItem } from 'library/ActionItem';
 import { Warning } from 'library/Form/Warning';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { planckToUnitBn } from 'library/Utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn } from 'utils';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');

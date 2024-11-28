@@ -12,16 +12,17 @@ import { useStaking } from 'contexts/Staking';
 import { ApiController } from 'controllers/Api';
 import { IdentitiesController } from 'controllers/Identities';
 import { useErasPerDay } from 'hooks/useErasPerDay';
-import { perbillToPercent } from 'library/Utils';
 import { Validators } from 'model/Entries/Validators';
-import { ErasRewardPointsMulti } from 'model/Query/ErasRewardPointsMulti';
-import { ErasValidatorReward } from 'model/Query/ErasValidatorRewardMulti';
-import { ParaSessionAccounts } from 'model/Query/ParaSessionAccounts';
-import { SessionValidators } from 'model/Query/SessionValidators';
-import { ValidatorsMulti } from 'model/Query/ValidatorsMulti';
+import { ParaSessionAccounts, SessionValidators } from 'node-api/query';
+import {
+  ErasRewardPointsMulti,
+  ErasValidatorRewardMulti,
+  ValidatorsMulti,
+} from 'node-api/queryMulti';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
 import type { AnyApi, SystemChainId } from 'types';
+import { perbillToPercent } from 'utils';
 import type {
   EraPointsBoundaries,
   ErasRewardPoints,
@@ -513,7 +514,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     } while (thisEra.gte(endEra));
 
     const erasMulti: [number][] = eras.map((e) => [Number(e)]);
-    const results = await new ErasValidatorReward(api, erasMulti).fetch();
+    const results = await new ErasValidatorRewardMulti(api, erasMulti).fetch();
 
     const reward = results
       .map((v) => {

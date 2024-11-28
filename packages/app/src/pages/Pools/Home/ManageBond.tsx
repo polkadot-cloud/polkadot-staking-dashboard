@@ -14,10 +14,10 @@ import { useSyncing } from 'hooks/useSyncing';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { BondedChart } from 'library/BarChart/BondedChart';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
-import { planckToUnitBn } from 'library/Utils';
 import { useTranslation } from 'react-i18next';
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons';
 import { ButtonRow } from 'ui-structure';
+import { planckToUnitBn } from 'utils';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');

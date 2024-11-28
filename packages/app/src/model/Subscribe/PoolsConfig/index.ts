@@ -4,10 +4,10 @@
 import BigNumber from 'bignumber.js';
 import { ApiController } from 'controllers/Api';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
-import { stringToBn } from 'library/Utils';
 import type { Subscription } from 'rxjs';
 import { combineLatest } from 'rxjs';
 import type { NetworkName } from 'types';
+import { stringToBn } from 'utils';
 
 export class PoolsConfig implements Unsubscribable {
   // The associated network for this instance.

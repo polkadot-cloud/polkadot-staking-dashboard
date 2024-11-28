@@ -19,11 +19,11 @@ import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
 import { Warning } from 'library/Form/Warning';
 import { SubmitTx } from 'library/SubmitTx';
-import { planckToUnitBn, timeleftAsString } from 'library/Utils';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ButtonSubmitInvert } from 'ui-buttons';
+import { planckToUnitBn, timeleftAsString } from 'utils';
 
 export const LeavePool = ({
   setSection,

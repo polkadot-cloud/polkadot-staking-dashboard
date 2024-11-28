@@ -12,9 +12,9 @@ import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import type { PoolRewardPointsKey } from 'contexts/Pools/PoolPerformance/types';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { PoolSyncBar } from 'library/PoolSync/Bar';
-import { planckToUnitBn } from 'library/Utils';
 import { useTranslation } from 'react-i18next';
 import { ButtonPrimary } from 'ui-buttons';
+import { planckToUnitBn } from 'utils';
 import { JoinPoolInterfaceWrapper } from './Wrappers';
 
 export const Preloader = ({

@@ -3,8 +3,8 @@
 
 import BigNumber from 'bignumber.js';
 import type { APIActiveEra } from 'contexts/Api/types';
-import { perbillToPercent, stringToBn } from 'library/Utils';
-import type { PapiApi } from 'model/Api/types';
+import { perbillToPercent, stringToBn } from 'utils';
+import type { PapiApi } from '../types';
 
 export class NetworkMeta {
   #api: PapiApi;

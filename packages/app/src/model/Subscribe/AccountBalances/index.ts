@@ -9,11 +9,11 @@ import { ApiController } from 'controllers/Api';
 import { BalancesController } from 'controllers/Balances';
 import { defaultNominations } from 'controllers/Balances/defaults';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
-import { stringToBn } from 'library/Utils';
 import type { PapiApi } from 'model/Api/types';
 import type { Subscription } from 'rxjs';
 import { combineLatest } from 'rxjs';
 import type { AnyApi, NetworkName } from 'types';
+import { stringToBn } from 'utils';
 
 export class AccountBalances implements Unsubscribable {
   // The associated network for this instance.

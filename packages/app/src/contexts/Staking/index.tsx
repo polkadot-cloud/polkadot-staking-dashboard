@@ -18,7 +18,7 @@ import { ApiController } from 'controllers/Api';
 import { SyncController } from 'controllers/Sync';
 import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
 import { ErasStakersPaged } from 'model/ErasStakersPaged';
-import { ErasStakersOverview } from 'model/Query/ErasStakersOverview';
+import { ErasStakersOverview } from 'node-api/query';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import type { AnyApi, MaybeAddress } from 'types';

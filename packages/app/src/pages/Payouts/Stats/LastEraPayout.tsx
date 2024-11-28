@@ -4,8 +4,8 @@
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { Number } from 'library/StatBoxList/Number';
-import { planckToUnitBn } from 'library/Utils';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn } from 'utils';
 
 export const LastEraPayoutStat = () => {
   const { t } = useTranslation('pages');

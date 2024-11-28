@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import { perbillToPercent } from 'library/Utils';
 import type { PapiApi } from 'model/Api/types';
 import type { AnyApi } from 'types';
+import { perbillToPercent } from 'utils';
 
 export class BondedPools {
   #api: PapiApi;

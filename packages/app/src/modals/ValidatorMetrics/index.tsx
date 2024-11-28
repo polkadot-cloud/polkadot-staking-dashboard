@@ -23,10 +23,10 @@ import { Title } from 'library/Modal/Title';
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { PluginLabel } from 'library/PluginLabel';
 import { StatusLabel } from 'library/StatusLabel';
-import { planckToUnitBn } from 'library/Utils';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ButtonHelp } from 'ui-buttons';
+import { planckToUnitBn } from 'utils';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');

@@ -9,15 +9,17 @@ import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { ApiController } from 'controllers/Api';
-import { perbillToPercent } from 'library/Utils';
-import { BondedMulti } from 'model/Query/BondedMulti';
-import { ClaimedRewards } from 'model/Query/ClaimedRewards';
-import { ErasRewardPoints } from 'model/Query/ErasRewardPoints';
-import { ErasValidatorReward } from 'model/Query/ErasValidatorReward';
-import { ValidatorPrefs } from 'model/Query/ValidatorPrefs';
+import {
+  ClaimedRewards,
+  ErasRewardPoints,
+  ErasValidatorReward,
+  ValidatorPrefs,
+} from 'node-api/query';
+import { BondedMulti } from 'node-api/queryMulti';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import type { AnyApi } from 'types';
+import { perbillToPercent } from 'utils';
 import Worker from 'workers/stakers?worker';
 import { MaxSupportedPayoutEras, defaultPayoutsContext } from './defaults';
 import type {

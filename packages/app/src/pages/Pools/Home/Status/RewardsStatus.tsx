@@ -11,8 +11,8 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useSyncing } from 'hooks/useSyncing';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { Stat } from 'library/Stat';
-import { planckToUnitBn } from 'library/Utils';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn } from 'utils';
 
 export const RewardsStatus = ({ dimmed }: { dimmed: boolean }) => {
   const { t } = useTranslation('pages');

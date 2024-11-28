@@ -1,0 +1,15 @@
+{
+  "name": "node-api",
+  "version": "1.0.0",
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "main": "src/index.tsx",
+  "scripts": {
+    "clear": "rm -rf build tsconfig.tsbuildinfo dist",
+    "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
+  },
+  "exports": {
+    "./query": "./src/query/index.ts",
+    "./queryMulti": "./src/queryMulti/index.ts"
+  }
+}

@@ -14,8 +14,8 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useNetwork } from 'contexts/Network';
 import { useOverlay } from 'kits/Overlay/Provider';
-import { planckToUnitBn } from 'library/Utils';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn } from 'utils';
 import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
 

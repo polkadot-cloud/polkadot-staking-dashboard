@@ -23,10 +23,10 @@ import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { planckToUnitBn, timeleftAsString } from 'library/Utils';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn, timeleftAsString } from 'utils';
 
 export const Unbond = () => {
   const { t } = useTranslation('modals');

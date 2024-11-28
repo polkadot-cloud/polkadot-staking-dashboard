@@ -1,22 +1,21 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PapiApi } from 'model/Api/types';
+import type { PapiApi } from '../types';
 
-export class IdentityOfMulti {
+export class ErasValidatorReward {
   #api: PapiApi;
+  #era: number;
 
-  #addresses: [string][];
-
-  constructor(api: PapiApi, addresses: [string][]) {
+  constructor(api: PapiApi, era: number) {
     this.#api = api;
-    this.#addresses = addresses;
+    this.#era = era;
   }
 
   async fetch() {
     try {
-      const result = await this.#api.query.Identity.IdentityOf.getValues(
-        this.#addresses,
+      const result = await this.#api.query.Staking.ErasValidatorReward.getValue(
+        this.#era,
         {
           at: 'best',
         }
@@ -26,6 +25,6 @@ export class IdentityOfMulti {
       // Silently fail.
     }
 
-    return null;
+    return [];
   }
 }

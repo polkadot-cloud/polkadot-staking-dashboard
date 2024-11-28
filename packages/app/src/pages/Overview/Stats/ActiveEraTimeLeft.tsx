@@ -9,9 +9,9 @@ import { useNetwork } from 'contexts/Network';
 import { fromUnixTime, getUnixTime } from 'date-fns';
 import { useEraTimeLeft } from 'hooks/useEraTimeLeft';
 import { Timeleft } from 'library/StatBoxList/Timeleft';
-import { formatTimeleft } from 'library/Utils';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { formatTimeleft } from 'utils';
 
 export const ActiveEraStat = () => {
   const { t, i18n } = useTranslation('pages');

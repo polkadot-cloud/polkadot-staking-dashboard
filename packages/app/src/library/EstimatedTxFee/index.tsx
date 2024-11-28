@@ -4,10 +4,10 @@
 import { useNetwork } from 'contexts/Network';
 import { TxMetaContext, useTxMeta } from 'contexts/TxMeta';
 import type { TxMetaContextInterface } from 'contexts/TxMeta/types';
-import { planckToUnitBn } from 'library/Utils';
 import type { Context } from 'react';
 import { Component, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn } from 'utils';
 import { Wrapper } from './Wrapper';
 import type { EstimatedTxFeeProps } from './types';
 

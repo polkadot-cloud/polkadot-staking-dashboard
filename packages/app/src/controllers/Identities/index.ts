@@ -3,8 +3,7 @@
 
 import type { AnyJson } from '@w3ux/types';
 import type { PapiApi } from 'model/Api/types';
-import { IdentityOfMulti } from 'model/Query/IdentityOfMulti';
-import { SuperOfMulti } from 'model/Query/SuperOfMulti';
+import { IdentityOfMulti, SuperOfMulti } from 'node-api/queryMulti';
 import type { AnyApi } from 'types';
 
 export class IdentitiesController {

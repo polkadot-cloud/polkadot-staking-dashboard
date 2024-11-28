@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PapiApi } from 'model/Api/types';
+import type { PapiApi } from '../types';
 
-export class ValidatorsMulti {
+export class IdentityOfMulti {
   #api: PapiApi;
 
   #addresses: [string][];
@@ -15,9 +15,11 @@ export class ValidatorsMulti {
 
   async fetch() {
     try {
-      const result = await this.#api.query.Staking.Validators.getValues(
+      const result = await this.#api.query.Identity.IdentityOf.getValues(
         this.#addresses,
-        { at: 'best' }
+        {
+          at: 'best',
+        }
       );
       return result;
     } catch (e) {

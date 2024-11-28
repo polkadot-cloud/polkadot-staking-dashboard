@@ -10,10 +10,10 @@ import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
 import { ApiController } from 'controllers/Api';
 import { PoolSync } from 'library/PoolSync';
 import { StyledLoader } from 'library/PoolSync/Loader';
-import { planckToUnitBn } from 'library/Utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { CSSProperties } from 'styled-components';
+import { planckToUnitBn } from 'utils';
 import type { OverviewSectionProps } from '../types';
 import { HeadingWrapper } from '../Wrappers';
 

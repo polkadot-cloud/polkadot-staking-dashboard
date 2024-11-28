@@ -16,12 +16,12 @@ import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { Close } from 'library/Modal/Close';
 import { Title } from 'library/Modal/Title';
 import { StyledSlider } from 'library/StyledSlider';
-import { planckToUnitBn } from 'library/Utils';
 import { SliderWrapper } from 'modals/ManagePool/Wrappers';
 import 'rc-slider/assets/index.css';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ButtonHelp, ButtonPrimaryInvert } from 'ui-buttons';
+import { planckToUnitBn } from 'utils';
 
 export const UpdateReserve = () => {
   const { t } = useTranslation('modals');

@@ -19,10 +19,10 @@ import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { Warning } from 'library/Form/Warning';
 import { Title } from 'library/Prompt/Title';
 import { SubmitTx } from 'library/SubmitTx';
-import { planckToUnitBn } from 'library/Utils';
 import type { RefObject } from 'react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn } from 'utils';
 
 export const WithdrawMember = ({
   who,

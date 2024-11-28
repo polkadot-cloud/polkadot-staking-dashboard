@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import type { PapiApi } from 'model/Api/types';
+import type { PapiApi } from '../types';
 
 export class Era {
   #api: PapiApi;
