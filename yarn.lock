@@ -4629,7 +4629,6 @@ __metadata:
     html5-qrcode: "npm:^2.3.8"
     i18next-browser-languagedetector: "npm:^8.0.0"
     locales: "workspace:*"
-    node-api: "workspace:*"
     plugin-staking-api: "workspace:*"
     qrcode-generator: "npm:1.4.4"
     rc-slider: "npm:^11.1.6"
@@ -8660,12 +8659,6 @@ __metadata:
   checksum: 10c0/fb32a206276d608037fa1bcd7e9921e177fe992fc610d098aa3128baca3c0050fc1e014fa007e9b3874cf865ddb4f5bd9f43ccb7cbbbe4efaff6a83e920b17e9
   languageName: node
   linkType: hard
-
-"node-api@workspace:*, node-api@workspace:packages/node-api":
-  version: 0.0.0-use.local
-  resolution: "node-api@workspace:packages/node-api"
-  languageName: unknown
-  linkType: soft
 
 "node-domexception@npm:^1.0.0":
   version: 1.0.0
