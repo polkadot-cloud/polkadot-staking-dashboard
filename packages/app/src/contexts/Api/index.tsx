@@ -6,6 +6,7 @@ import { NetworkList } from 'config/networks';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import { Era, NetworkMeta } from 'api/query';
 import { ActiveEra } from 'api/subscribe/activeEra';
 import { BlockNumber } from 'api/subscribe/blockNumber';
 import { NetworkMetrics } from 'api/subscribe/networkMetrics';
@@ -16,7 +17,6 @@ import { Apis } from 'controllers/Apis';
 import { Subscriptions } from 'controllers/Subscriptions';
 import { Syncs } from 'controllers/Syncs';
 import { isCustomEvent } from 'controllers/utils';
-import { Era, NetworkMeta } from 'node-api/query';
 import { useEventListener } from 'usehooks-ts';
 import {
   defaultActiveEra,

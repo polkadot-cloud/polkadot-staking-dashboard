@@ -5,6 +5,8 @@ import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import type { ExternalAccount } from '@w3ux/react-connect-kit/types';
 import type { AnyJson } from '@w3ux/types';
 import { setStateWithRef } from '@w3ux/utils';
+import { ErasStakersPagedEntries } from 'api/entries';
+import { ErasStakersOverview } from 'api/query';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -17,8 +19,6 @@ import type {
 import { Apis } from 'controllers/Apis';
 import { Syncs } from 'controllers/Syncs';
 import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
-import { ErasStakersPagedEntries } from 'node-api/entries';
-import { ErasStakersOverview } from 'node-api/query';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import type { AnyApi, MaybeAddress } from 'types';

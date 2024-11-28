@@ -3,19 +3,19 @@
 
 import type { AnyJson, Sync } from '@w3ux/types';
 import { setStateWithRef } from '@w3ux/utils';
+import {
+  ClaimedRewards,
+  ErasRewardPoints,
+  ErasValidatorReward,
+  ValidatorPrefs,
+} from 'api/query';
+import { BondedMulti } from 'api/queryMulti';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { Apis } from 'controllers/Apis';
-import {
-  ClaimedRewards,
-  ErasRewardPoints,
-  ErasValidatorReward,
-  ValidatorPrefs,
-} from 'node-api/query';
-import { BondedMulti } from 'node-api/queryMulti';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import type { AnyApi } from 'types';

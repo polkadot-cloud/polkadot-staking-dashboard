@@ -39,7 +39,6 @@
     "html5-qrcode": "^2.3.8",
     "i18next-browser-languagedetector": "^8.0.0",
     "locales": "workspace:*",
-    "node-api": "workspace:*",
     "plugin-staking-api": "workspace:*",
     "qrcode-generator": "1.4.4",
     "rc-slider": "^11.1.6",
