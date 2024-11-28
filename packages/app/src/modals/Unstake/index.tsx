@@ -89,7 +89,7 @@ export const Unstake = () => {
     }
     // remove decimal errors
     const bondToSubmit = unitToPlanck(
-      String(!bondValid ? '0' : bond.bond),
+      String(!bondValid ? 0 : bond.bond),
       units
     );
 

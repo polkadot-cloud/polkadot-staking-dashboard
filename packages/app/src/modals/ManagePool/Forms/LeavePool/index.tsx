@@ -88,7 +88,7 @@ export const LeavePool = ({
     }
 
     const bondToSubmit = unitToPlanck(
-      !bondValid ? '0' : bond.bond,
+      !bondValid ? 0 : bond.bond,
       units
     ).toString();
 

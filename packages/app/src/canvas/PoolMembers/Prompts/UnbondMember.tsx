@@ -3,13 +3,13 @@
 
 import { Polkicon } from '@w3ux/react-polkicon';
 import { ellipsisFn, rmCommas, unitToPlanck } from '@w3ux/utils';
+import { PoolUnbond } from 'api/tx/poolUnbond';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import type { PoolMembership } from 'contexts/Pools/types';
 import { usePrompt } from 'contexts/Prompt';
-import { Apis } from 'controllers/Apis';
 import { getUnixTime } from 'date-fns';
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
@@ -71,26 +71,16 @@ export const UnbondMember = ({
     setBondValid(isValid);
   }, [freeToUnbond.toString(), isValid]);
 
-  // tx to submit
   const getTx = () => {
-    const api = Apis.getApi(network);
     let tx = null;
-    if (!api || !activeAccount) {
+    if (!activeAccount) {
       return tx;
     }
-    // remove decimal errors
-    const bondToSubmit = unitToPlanck(
-      !bondValid ? '0' : bond.bond,
-      units
-    ).toString();
-
-    tx = api.tx.NominationPools.unbond({
-      member_account: {
-        type: 'Id',
-        value: who,
-      },
-      unbonding_points: BigInt(bondToSubmit),
-    });
+    tx = new PoolUnbond(
+      network,
+      who,
+      unitToPlanck(!bondValid ? 0 : bond.bond, units)
+    );
     return tx;
   };
 
@@ -124,7 +114,6 @@ export const UnbondMember = ({
           <Polkicon address={who} transform="grow-3" />
           &nbsp; {ellipsisFn(who, 7)}
         </h3>
-
         <ModalNotes>
           <p>{t('amountWillBeUnbonded', { bond: bond.bond, unit })}</p>
           <StaticNote

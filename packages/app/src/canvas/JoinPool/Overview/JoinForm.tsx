@@ -78,7 +78,7 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
     const tx = new JoinPool(
       network,
       bondedPool.id,
-      unitToPlanck(!bondValid ? '0' : bond.bond, units),
+      unitToPlanck(!bondValid ? 0 : bond.bond, units),
       claimPermission
     ).tx();
 
