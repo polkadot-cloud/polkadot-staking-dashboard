@@ -4,12 +4,12 @@
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn, unitToPlanck } from '@w3ux/utils';
+import { NewNominator } from 'api/tx/newNominator';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useNetwork } from 'contexts/Network';
 import { useSetup } from 'contexts/Setup';
-import { Apis } from 'controllers/Apis';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { usePayeeConfig } from 'hooks/usePayeeConfig';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
@@ -40,20 +40,19 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { bond, nominations, payee } = progress;
 
   const getTxs = () => {
-    const api = Apis.getApi(network);
-    if (!activeAccount || !api) {
+    if (!activeAccount) {
       return null;
     }
-
     if (payee.destination === 'Account' && !payee.account) {
       return null;
     }
-
     if (payee.destination !== 'Account' && !payee.destination) {
       return null;
     }
 
-    const payeeToSubmit =
+    const tx = new NewNominator(
+      network,
+      unitToPlanck(bond || '0', units),
       payee.destination === 'Account'
         ? {
             type: 'Account' as const,
@@ -61,23 +60,17 @@ export const Summary = ({ section }: SetupStepProps) => {
           }
         : {
             type: payee.destination,
-          };
+          },
+      nominations.map(({ address }: { address: string }) => ({
+        type: 'Id',
+        value: address,
+      }))
+    ).tx();
 
-    const bondToSubmit = unitToPlanck(bond || '0', units).toString();
-
-    const txs = [
-      api.tx.Staking.bond({
-        value: BigInt(bondToSubmit),
-        payee: payeeToSubmit,
-      }),
-      api.tx.Staking.nominate({
-        targets: nominations.map(({ address }: { address: string }) => ({
-          type: 'Id',
-          value: address,
-        })),
-      }),
-    ];
-    return newBatchCall(txs, activeAccount);
+    if (!tx) {
+      return null;
+    }
+    return newBatchCall(tx, activeAccount);
   };
 
   const submitExtrinsic = useSubmitExtrinsic({

@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { PoolNominate } from 'api/tx/poolNominate';
+import { StakingNominate } from 'api/tx/stakingNominate';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
@@ -10,7 +12,6 @@ import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePrompt } from 'contexts/Prompt';
-import { Apis } from 'controllers/Apis';
 import { Notifications } from 'controllers/Notifications';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -91,30 +92,26 @@ export const ManageNominations = () => {
     newNominations.nominations.length > 0 &&
     newNominations.nominations.length === defaultNominations.nominations.length;
 
-  // Tx to submit.
   const getTx = () => {
-    const api = Apis.getApi(network);
-    let tx = null;
-    if (!valid || !api) {
+    const tx = null;
+    if (!valid) {
       return tx;
     }
-
-    if (isPool) {
-      if (activePool) {
-        tx = api.tx.NominationPools.nominate({
-          pool_id: activePool.id,
-          validators: newNominations.nominations.map(
-            (nominee) => nominee.address
-          ),
-        });
-      }
-    } else {
-      tx = api.tx.Staking.nominate({
-        targets: newNominations.nominations.map((nominee) => ({
+    if (!isPool) {
+      return new StakingNominate(
+        network,
+        newNominations.nominations.map((nominee) => ({
           type: 'Id',
           value: nominee.address,
-        })),
-      });
+        }))
+      ).tx();
+    }
+    if (isPool && activePool) {
+      return new PoolNominate(
+        network,
+        activePool.id,
+        newNominations.nominations.map((nominee) => nominee.address)
+      ).tx();
     }
     return tx;
   };
@@ -171,7 +168,6 @@ export const ManageNominations = () => {
           />
         </div>
         <h1>{t('manageNominations', { ns: 'modals' })}</h1>
-
         <Subheading>
           <h3 style={{ marginBottom: '1.5rem' }}>
             {t('chooseValidators', {
@@ -185,7 +181,6 @@ export const ManageNominations = () => {
             />
           </h3>
         </Subheading>
-
         <GenerateNominations
           displayFor="canvas"
           setters={[

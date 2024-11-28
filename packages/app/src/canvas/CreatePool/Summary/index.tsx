@@ -4,6 +4,7 @@
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { unitToPlanck } from '@w3ux/utils';
+import { CreatePool } from 'api/tx/createPool';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
@@ -11,7 +12,6 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useNetwork } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useSetup } from 'contexts/Setup';
-import { Apis } from 'controllers/Apis';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -20,7 +20,6 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
 import { SubmitTx } from 'library/SubmitTx';
-import { Binary } from 'polkadot-api';
 import { useTranslation } from 'react-i18next';
 import { SummaryWrapper } from './Wrapper';
 
@@ -46,49 +45,28 @@ export const Summary = ({ section }: SetupStepProps) => {
 
   const { metadata, bond, roles, nominations } = progress;
 
-  const getTxs = () => {
-    const api = Apis.getApi(network);
-    if (!activeAccount || !api) {
+  const getTx = () => {
+    if (!activeAccount) {
       return null;
     }
 
-    const targetsToSubmit = nominations.map(
-      ({ address }: { address: string }) => address
-    );
+    const tx = new CreatePool(
+      network,
+      activeAccount,
+      poolId.toNumber(),
+      unitToPlanck(bond, units),
+      metadata,
+      nominations.map(({ address }) => address),
+      roles
+    ).tx();
 
-    const bondToSubmit = unitToPlanck(bond, units).toString();
-
-    const txs = [
-      api.tx.NominationPools.create({
-        amount: BigInt(bondToSubmit.toString()),
-        root: {
-          type: 'Id',
-          value: roles?.root || activeAccount,
-        },
-        nominator: {
-          type: 'Id',
-          value: roles?.nominator || activeAccount,
-        },
-        bouncer: {
-          type: 'Id',
-          value: roles?.bouncer || activeAccount,
-        },
-      }),
-
-      api.tx.NominationPools.nominate({
-        pool_id: poolId.toNumber(),
-        validators: targetsToSubmit,
-      }),
-      api.tx.NominationPools.set_metadata({
-        pool_id: poolId.toNumber(),
-        metadata: Binary.fromText(metadata),
-      }),
-    ];
-    return newBatchCall(txs, activeAccount);
+    if (!tx) {
+      return null;
+    }
+    return newBatchCall(tx, activeAccount);
   };
-
   const submitExtrinsic = useSubmitExtrinsic({
-    tx: getTxs(),
+    tx: getTx(),
     from: activeAccount,
     shouldSubmit: true,
     callbackInBlock: async () => {

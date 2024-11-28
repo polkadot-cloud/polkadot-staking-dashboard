@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { unitToPlanck } from '@w3ux/utils';
+import { JoinPool } from 'api/tx/joinPool';
 import type BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
@@ -10,7 +11,6 @@ import { useSetup } from 'contexts/Setup';
 import { defaultPoolProgress } from 'contexts/Setup/defaults';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { defaultClaimPermission } from 'controllers/ActivePools/defaults';
-import { Apis } from 'controllers/Apis';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
@@ -21,7 +21,6 @@ import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput';
 import { SubmitTx } from 'library/SubmitTx';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AnyApi } from 'types';
 import { planckToUnitBn } from 'utils';
 import type { OverviewSectionProps } from '../types';
 import { JoinFormWrapper } from '../Wrappers';
@@ -71,39 +70,25 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   // Whether the form is ready to submit.
   const formValid = bondValid && feedbackErrors.length === 0;
 
-  // Get transaction for submission.
   const getTx = () => {
-    const api = Apis.getApi(network);
-    const tx = null;
-    if (!api || !claimPermission || !formValid) {
+    if (!claimPermission || !formValid) {
+      return null;
+    }
+
+    const tx = new JoinPool(
+      network,
+      bondedPool.id,
+      unitToPlanck(!bondValid ? '0' : bond.bond, units),
+      claimPermission
+    ).tx();
+
+    if (!tx) {
+      return null;
+    }
+    if (!Array.isArray(tx)) {
       return tx;
     }
-
-    const bondToSubmit = unitToPlanck(
-      !bondValid ? '0' : bond.bond,
-      units
-    ).toString();
-    const txs: AnyApi[] = [
-      api.tx.NominationPools.join({
-        amount: BigInt(bondToSubmit),
-        pool_id: bondedPool.id,
-      }),
-    ];
-
-    // If claim permission is not the default, add it to tx.
-    if (claimPermission !== defaultClaimPermission) {
-      txs.push(
-        api.tx.NominationPools.set_claim_permission({
-          permission: { type: claimPermission, value: undefined },
-        })
-      );
-    }
-
-    if (txs.length === 1) {
-      return txs[0];
-    }
-
-    return newBatchCall(txs, activeAccount);
+    return newBatchCall(tx, activeAccount);
   };
 
   const submitExtrinsic = useSubmitExtrinsic({
@@ -112,10 +97,8 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       closeCanvas();
-
       // Optional callback function on join success.
       const onJoinCallback = options?.onJoinCallback;
-
       if (typeof onJoinCallback === 'function') {
         onJoinCallback();
       }
@@ -138,7 +121,6 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
       <h4>
         {t('bond', { ns: 'library' })} {unit}
       </h4>
-
       <div className="input">
         <div>
           <BondFeedback
@@ -157,16 +139,13 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
           />
         </div>
       </div>
-
       <h4 className="underline">{t('claimSetting', { ns: 'library' })}</h4>
-
       <ClaimPermissionInput
         current={claimPermission}
         onChange={(val: ClaimPermission) => {
           setClaimPermission(val);
         }}
       />
-
       <div className="submit">
         <SubmitTx
           displayFor="card"
