@@ -246,13 +246,12 @@ export class Api {
   async disconnect(destroy = false) {
     this.unsubscribe();
 
-    // Disconnect from PAPI Client.
+    // Disconnect client.
     this.#apiClient?.destroy();
 
-    // Tell UI Api is destroyed.
+    // Tell UI Api has been disconnected.
     if (destroy) {
-      // NOTE: destroyed event is not currently in use.
-      this.dispatchEvent(this.ensureEventStatus('destroyed'));
+      this.dispatchEvent(this.ensureEventStatus('disconnected'));
     }
   }
 }
