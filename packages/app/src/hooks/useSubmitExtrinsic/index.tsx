@@ -264,7 +264,8 @@ export const useSubmitExtrinsic = ({
 
     try {
       // TODO: Move this subscription to TxSubmission and move event handlers to `TxMeta`.
-      const sub = tx.signSubmitAndWatch(signer).subscribe({
+      const sub = tx.signSubmitAndWatch(signer);
+      sub.subscribe({
         next: (result: { type: string }) => {
           const eventType = result?.type;
 

@@ -1,6 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { Proxy } from 'api/tx/proxy';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import { Apis } from 'controllers/Apis';
@@ -16,10 +17,6 @@ export const useBatchCall = () => {
   const newBatchCall = (txs: UnsafeTx[], from: MaybeAddress): AnyApi => {
     const api = Apis.getApi(network);
 
-    if (!api) {
-      return undefined;
-    }
-
     from = from || '';
     const batchTx = api.tx.Utility.batch({
       calls: txs.map((tx) => tx.decodedCall),
@@ -27,17 +24,9 @@ export const useBatchCall = () => {
 
     if (activeProxy && isProxySupported(batchTx, from)) {
       return api.tx.Utility.batch({
-        calls: txs.map(
-          (tx) =>
-            api.tx.Proxy.proxy({
-              real: {
-                type: 'Id',
-                value: from,
-              },
-              force_proxy_type: undefined,
-              call: tx.decodedCall,
-            }).decodedCall
-        ),
+        calls: txs
+          .map((tx) => new Proxy(network, from, tx).tx()?.decodedCall)
+          .filter((tx) => tx !== null),
       });
     }
     return batchTx;
