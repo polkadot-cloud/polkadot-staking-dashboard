@@ -14,5 +14,4 @@ export const defaultTxMeta: TxMetaContextInterface = {
   setTxFees: (f) => {},
   resetTxFees: () => {},
   notEnoughFunds: false,
-  controllerSignerAvailable: (a, b) => 'ok',
 };

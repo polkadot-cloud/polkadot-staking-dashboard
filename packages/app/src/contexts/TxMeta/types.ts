@@ -13,8 +13,4 @@ export interface TxMetaContextInterface {
   setTxFees: (f: BigNumber) => void;
   resetTxFees: () => void;
   notEnoughFunds: boolean;
-  controllerSignerAvailable: (
-    a: MaybeAddress,
-    b: boolean
-  ) => 'controller_not_imported' | 'read_only' | 'ok';
 }
