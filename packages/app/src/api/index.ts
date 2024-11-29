@@ -110,16 +110,22 @@ export class Api {
     // Initialise light client.
     const smoldot = startFromWorker(new SmWorker());
     const smMetadata = getLightClientMetadata(this.#chainType, this.network);
+    const { chainSpec: relayChainSpec } = await smMetadata.relay.fn();
 
-    const chain = getSmProvider(
-      smoldot.addChain({
-        chainSpec: await smMetadata.chain.fn(),
-        potentialRelayChains: smMetadata?.relay
-          ? [await smoldot.addChain({ chainSpec: await smMetadata.relay.fn() })]
-          : undefined,
-      })
-    );
-    this.#apiClient = createClient(chain);
+    let chain;
+    if (this.#chainType === 'relay') {
+      chain = smoldot.addChain({ chainSpec: relayChainSpec });
+      this.#apiClient = createClient(getSmProvider(chain));
+    } else {
+      const { chainSpec: paraChainSpec } = await smMetadata!.para!.fn();
+      chain = smoldot.addChain({
+        chainSpec: paraChainSpec,
+        potentialRelayChains: [
+          await smoldot.addChain({ chainSpec: relayChainSpec }),
+        ],
+      });
+      this.#apiClient = createClient(getSmProvider(chain));
+    }
   }
 
   async fetchChainSpec() {
@@ -156,9 +162,7 @@ export class Api {
       // Dispatch ready eventd to let contexts populate constants.
       this.dispatchReadyEvent();
     } catch (e) {
-      // TODO: Expand this when PJS API has been removed. Flag an error if there are any issues
-      // bootstrapping chain spec. NOTE: This can happen when PAPI is the standalone connection
-      // method.
+      // TODO: Handle unsupported chains in UI.
       //this.dispatchEvent(this.ensureEventStatus('error'), { err: 'ChainSpecError' });
     }
   }
@@ -247,7 +251,11 @@ export class Api {
     this.unsubscribe();
 
     // Disconnect client.
-    this.#apiClient?.destroy();
+    try {
+      this.#apiClient?.destroy();
+    } catch (e) {
+      // Suppress subscription errors.
+    }
 
     // Tell UI Api has been disconnected.
     if (destroy) {

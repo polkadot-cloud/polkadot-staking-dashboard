@@ -11,5 +11,5 @@ export interface NetworkState {
 export interface NetworkContextInterface {
   network: NetworkId;
   networkData: Network;
-  switchNetwork: (network: NetworkId) => void;
+  switchNetwork: (network: NetworkId) => Promise<void>;
 }

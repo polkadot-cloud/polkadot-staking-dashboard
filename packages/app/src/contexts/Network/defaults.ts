@@ -2,11 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { NetworkList } from 'config/networks';
+import type { NetworkContextInterface } from './types';
 
-export const defaultNetworkContext = {
+export const defaultNetworkContext: NetworkContextInterface = {
   network: NetworkList.polkadot.name,
   networkData: NetworkList.polkadot,
-  switchNetwork: () => {},
+  switchNetwork: async () => new Promise((resolve) => resolve(undefined)),
 };
 
 export const defaultNetwork = 'polkadot';

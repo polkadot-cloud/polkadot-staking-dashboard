@@ -10,18 +10,18 @@ export const getLightClientMetadata = (
   chainType: ApiChainType,
   network: ChainId
 ): {
-  chain: {
+  relay: {
     key: string;
     fn: () => Promise<AnyApi>;
   };
-  relay?: {
+  para?: {
     key: string;
     fn: () => Promise<AnyApi>;
   };
 } => {
   if (chainType === 'relay') {
     return {
-      chain: {
+      relay: {
         key: NetworkList[network].endpoints.lightClientKey,
         fn: NetworkList[network].endpoints.lightClient,
       },
@@ -30,16 +30,16 @@ export const getLightClientMetadata = (
 
   const { relayChain } = SystemChainList[network];
   const relay = NetworkList[relayChain];
-  const system = SystemChainList[network];
+  const para = SystemChainList[network];
 
   return {
     relay: {
       key: relay.endpoints.lightClientKey,
       fn: relay.endpoints.lightClient,
     },
-    chain: {
-      key: system.endpoints.lightClientKey,
-      fn: system.endpoints.lightClient,
+    para: {
+      key: para.endpoints.lightClientKey,
+      fn: para.endpoints.lightClient,
     },
   };
 };

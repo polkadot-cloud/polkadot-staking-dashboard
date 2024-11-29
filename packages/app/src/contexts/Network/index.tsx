@@ -3,6 +3,7 @@
 
 import { extractUrlValue, varToUrlHash } from '@w3ux/utils';
 import { NetworkList } from 'config/networks';
+import { Apis } from 'controllers/Apis';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
 import type { NetworkId } from 'types';
@@ -49,8 +50,14 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
     return initialNetwork;
   };
 
-  // handle network switching
-  const switchNetwork = (name: NetworkId) => {
+  // handle network switching.
+  const switchNetwork = async (name: NetworkId): Promise<void> => {
+    // Disconnect from current APIs before switching network.
+    await Promise.all([
+      await Apis.destroy(network.name),
+      await Apis.destroy(`people-${network.name}`),
+    ]);
+
     setNetwork({
       name,
       meta: NetworkList[name],

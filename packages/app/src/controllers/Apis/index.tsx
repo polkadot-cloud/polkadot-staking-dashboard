@@ -67,12 +67,13 @@ export class Apis {
 
     await Promise.all([
       this.instances[network].initialize(type, rpcEndpoint),
+      // NOTE: Currently defaulting to websocket connection for system chains:
       this.instances[`people-${network}`].initialize('ws', 'Parity'),
     ]);
   }
 
   // Gracefully disconnect and then destroy an Api instance.
-  static async destroy(network: NetworkId) {
+  static async destroy(network: ChainId) {
     // Disconnect from relay chain Api instance.
     const api = this.instances[network];
     if (api) {
