@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { unitToPlanck } from '@w3ux/utils';
+import { PoolUnbond } from 'api/tx/poolUnbond';
+import { StakingUnbond } from 'api/tx/stakingUnbond';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
@@ -103,7 +105,6 @@ export const Unbond = () => {
       : BigNumber.max(freeToUnbond.minus(minJoinBond), 0)
     : BigNumber.max(freeToUnbond.minus(minNominatorBond), 0);
 
-  // tx to submit
   const getTx = () => {
     const api = Apis.getApi(network);
     let tx = null;
@@ -111,19 +112,11 @@ export const Unbond = () => {
       return tx;
     }
 
-    const bondToSubmit = unitToPlanck(
-      !bondValid ? 0 : bond.bond,
-      units
-    ).toString();
-
-    // determine tx
+    const bondToSubmit = unitToPlanck(!bondValid ? 0 : bond.bond, units);
     if (isPooling) {
-      tx = api.tx.NominationPools.unbond({
-        member_account: { type: 'Id', value: activeAccount },
-        unbonding_points: BigInt(bondToSubmit),
-      });
+      tx = new PoolUnbond(network, activeAccount, bondToSubmit).tx();
     } else if (isStaking) {
-      tx = api.tx.Staking.unbond({ value: BigInt(bondToSubmit) });
+      tx = new StakingUnbond(network, bondToSubmit).tx();
     }
     return tx;
   };

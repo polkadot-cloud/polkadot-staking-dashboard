@@ -125,7 +125,6 @@ export const ManageCommission = ({
     (isUpdated('max_commission') && getEnabled('max_commission')) ||
     (isUpdated('change_rate') && getEnabled('change_rate'));
 
-  // tx to submit.
   const getTx = () => {
     if (!valid) {
       return null;

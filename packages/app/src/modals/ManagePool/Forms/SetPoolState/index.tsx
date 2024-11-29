@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { PoolSetState } from 'api/tx/poolSetState';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { Apis } from 'controllers/Apis';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -79,32 +79,21 @@ export const SetPoolState = ({
     }
   };
 
-  // tx to submit
   const getTx = () => {
-    const api = Apis.getApi(network);
-    if (!valid || !api || poolId === undefined) {
+    if (!valid || poolId === undefined) {
       return null;
     }
-
     let tx;
     switch (task) {
       case 'destroy_pool':
-        tx = api.tx.NominationPools.set_state({
-          pool_id: poolId,
-          state: { type: 'Destroying', value: undefined },
-        });
+        tx = new PoolSetState(network, poolId, 'Destroying').tx();
         break;
       case 'unlock_pool':
-        tx = api.tx.NominationPools.set_state({
-          pool_id: poolId,
-          state: { type: 'Open', value: undefined },
-        });
+        tx = new PoolSetState(network, poolId, 'Open').tx();
+
         break;
       case 'lock_pool':
-        tx = api.tx.NominationPools.set_state({
-          pool_id: poolId,
-          state: { type: 'Blocked', value: undefined },
-        });
+        tx = new PoolSetState(network, poolId, 'Blocked').tx();
         break;
       default:
         tx = null;

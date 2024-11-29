@@ -49,7 +49,6 @@ export const ClaimReward = () => {
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
 
-  // tx to submit
   const getTx = () => {
     let tx = null;
 

@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { PoolSetClaimPermission } from 'api/tx/poolSetClaimPermission';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
 import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import type { ClaimPermission } from 'contexts/Pools/types';
 import { defaultClaimPermission } from 'controllers/ActivePools/defaults';
-import { Apis } from 'controllers/Apis';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -59,18 +59,11 @@ export const SetClaimPermission = ({
     setValid(isOwner() || (isMember() && claimPermission !== undefined));
   }, [isOwner(), isMember()]);
 
-  // tx to submit.
   const getTx = () => {
-    const api = Apis.getApi(network);
-    if (!valid || !api || !claimPermission) {
+    if (!valid || !claimPermission) {
       return null;
     }
-    return api.tx.NominationPools.set_claim_permission({
-      permission: {
-        type: claimPermission,
-        value: undefined,
-      },
-    });
+    return new PoolSetClaimPermission(network, claimPermission).tx();
   };
 
   const submitExtrinsic = useSubmitExtrinsic({

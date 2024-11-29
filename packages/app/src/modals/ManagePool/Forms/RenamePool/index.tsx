@@ -3,11 +3,11 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
+import { PoolSetMetadata } from 'api/tx/poolSetMetadata';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { Apis } from 'controllers/Apis';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -58,16 +58,11 @@ export const RenamePool = ({
     setValid(isOwner());
   }, [isOwner()]);
 
-  // tx to submit
   const getTx = () => {
-    const api = Apis.getApi(network);
-    if (!valid || !api || !poolId) {
+    if (!valid || !poolId) {
       return null;
     }
-    return api.tx.NominationPools.set_metadata({
-      pool_id: poolId,
-      metadata: Binary.fromText(metadata),
-    });
+    return new PoolSetMetadata(network, poolId, Binary.fromText(metadata)).tx();
   };
 
   const submitExtrinsic = useSubmitExtrinsic({

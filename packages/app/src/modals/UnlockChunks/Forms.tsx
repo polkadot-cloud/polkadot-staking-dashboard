@@ -66,7 +66,6 @@ export const Forms = forwardRef(
       (unlock?.value?.toNumber() || 0) > 0 || false
     );
 
-    // tx to submit
     const getTx = () => {
       const api = Apis.getApi(network);
       let tx = null;

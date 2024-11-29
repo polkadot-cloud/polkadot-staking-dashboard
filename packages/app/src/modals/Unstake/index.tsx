@@ -80,7 +80,6 @@ export const Unstake = () => {
   // modal resize on form update
   useEffect(() => setModalResize(), [bond, notEnoughFunds]);
 
-  // tx to submit
   const getTx = () => {
     const api = Apis.getApi(network);
     const tx = null;

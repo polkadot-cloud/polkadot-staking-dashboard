@@ -1,13 +1,14 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { PoolChill } from 'api/tx/poolChill';
+import { StakingChill } from 'api/tx/stakingChill';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTxMeta } from 'contexts/TxMeta';
-import { Apis } from 'controllers/Apis';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -61,19 +62,15 @@ export const StopNominations = () => {
     isValid = (isNominator() || isOwner()) ?? false;
   }
 
-  // tx to submit
   const getTx = () => {
-    const api = Apis.getApi(network);
     let tx = null;
-    if (!valid || !api) {
+    if (!valid) {
       return tx;
     }
-
     if (isPool) {
-      // wishing to stop all nominations, call chill
-      tx = api.tx.NominationPools.chill({ pool_id: activePool?.id || 0 });
+      tx = new PoolChill(network, activePool?.id || 0).tx();
     } else if (isStaking) {
-      tx = api.tx.Staking.chill();
+      tx = new StakingChill(network).tx();
     }
     return tx;
   };

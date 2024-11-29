@@ -50,7 +50,6 @@ export const ClaimCommission = ({
     setValid(isOwner() && pendingCommission.isGreaterThan(0));
   }, [activePool, pendingCommission]);
 
-  // tx to submit
   const getTx = () => {
     if (!valid || poolId === undefined) {
       return null;

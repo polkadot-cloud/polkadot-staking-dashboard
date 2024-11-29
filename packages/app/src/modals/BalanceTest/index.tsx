@@ -24,7 +24,6 @@ export const BalanceTest = () => {
   const { activeAccount } = useActiveAccounts();
   const { setModalResize, setModalStatus } = useOverlay().modal;
 
-  // tx to submit
   const getTx = () => {
     const tx = null;
     if (!activeAccount) {
