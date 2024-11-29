@@ -36,7 +36,6 @@ export const ChangePoolRoles = () => {
       bouncer: roleEdits?.bouncer?.newAddress || undefined,
     }).tx();
 
-  // handle extrinsic
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
