@@ -104,7 +104,7 @@ export const Bond = () => {
         : bondToSubmit.toString();
 
     if (isPooling) {
-      tx = new PoolBondExtra(network, BigInt(bondAsString)).tx();
+      tx = new PoolBondExtra(network, 'FreeBalance', BigInt(bondAsString)).tx();
     } else if (isStaking) {
       tx = new StakingBondExtra(network, BigInt(bondAsString)).tx();
     }

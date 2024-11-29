@@ -5,20 +5,31 @@ import { Base } from 'api/base';
 import type { ChainId } from 'types';
 
 export class PoolBondExtra extends Base {
+  #type: 'FreeBalance' | 'Rewards';
   #bond: bigint;
 
-  constructor(network: ChainId, bond: bigint) {
+  constructor(
+    network: ChainId,
+    type: 'FreeBalance' | 'Rewards',
+    bond?: bigint
+  ) {
     super(network);
-    this.#bond = bond;
+    this.#type = type;
+    this.#bond = bond || 0n;
   }
 
   tx() {
     try {
+      const extra =
+        this.#type === 'FreeBalance'
+          ? {
+              type: this.#type,
+              value: this.#bond,
+            }
+          : { type: 'Rewards', value: undefined };
+
       return this.unsafeApi.tx.NominationPools.bond_extra({
-        extra: {
-          type: 'FreeBalance',
-          value: this.#bond,
-        },
+        extra,
       });
     } catch (e) {
       return null;

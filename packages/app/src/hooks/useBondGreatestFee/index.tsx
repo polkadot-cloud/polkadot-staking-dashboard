@@ -43,7 +43,7 @@ export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
 
     let tx = null;
     if (bondFor === 'pool') {
-      tx = new PoolBondExtra(network, BigInt(bond)).tx();
+      tx = new PoolBondExtra(network, 'FreeBalance', BigInt(bond)).tx();
     } else if (bondFor === 'nominator') {
       tx = new StakingBondExtra(network, BigInt(bond)).tx();
     }

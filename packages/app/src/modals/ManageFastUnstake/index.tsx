@@ -1,6 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { FastUnstakeDeregister } from 'api/tx/fastUnstakeDeregister';
+import { FastUnstakeRegister } from 'api/tx/fastUnstakeRegister';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
@@ -9,7 +11,6 @@ import { useFastUnstake } from 'contexts/FastUnstake';
 import { useNetwork } from 'contexts/Network';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxMeta } from 'contexts/TxMeta';
-import { Apis } from 'controllers/Apis';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useUnstaking } from 'hooks/useUnstaking';
@@ -81,17 +82,15 @@ export const ManageFastUnstake = () => {
     [notEnoughFunds, isExposed, queueDeposit, isFastUnstaking]
   );
 
-  // tx to submit
   const getTx = () => {
-    const api = Apis.getApi(network);
     let tx = null;
-    if (!valid || !api) {
+    if (!valid) {
       return tx;
     }
     if (!isFastUnstaking) {
-      tx = api.tx.FastUnstake.register_fast_unstake();
+      tx = new FastUnstakeRegister(network).tx();
     } else {
-      tx = api.tx.FastUnstake.deregister();
+      tx = new FastUnstakeDeregister(network).tx();
     }
     return tx;
   };

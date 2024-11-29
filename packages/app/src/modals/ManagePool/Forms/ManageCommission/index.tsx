@@ -2,14 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import BigNumber from 'bignumber.js';
+import { PoolSetCommission } from 'api/tx/poolSetCommission';
+import { PoolSetCommissionChangeRate } from 'api/tx/poolSetCommissionChangeRate';
+import { PoolSetCommissionMax } from 'api/tx/poolSetCommissionMax';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
 import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { Apis } from 'controllers/Apis';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
@@ -126,46 +127,33 @@ export const ManageCommission = ({
 
   // tx to submit.
   const getTx = () => {
-    const api = Apis.getApi(network);
-    if (!valid || !api) {
+    if (!valid) {
       return null;
     }
-
     const txs = [];
     if (commissionUpdated) {
+      const commissionPerbill = commission * 10000000;
       txs.push(
-        api.tx.NominationPools.set_commission({
-          pool_id: poolId,
-          new_commission: currentCommissionSet
-            ? [
-                new BigNumber(commission).multipliedBy(10000000).toNumber(),
-                payee,
-              ]
-            : undefined,
-        })
+        new PoolSetCommission(
+          network,
+          poolId,
+          currentCommissionSet ? [commissionPerbill, payee] : undefined
+        ).tx()
       );
     }
     if (isUpdated('max_commission') && getEnabled('max_commission')) {
-      txs.push(
-        api.tx.NominationPools.set_commission_max({
-          pool_id: poolId,
-          max_commission: new BigNumber(maxCommission)
-            .multipliedBy(10000000)
-            .toNumber(),
-        })
-      );
+      const maxPerbill = maxCommission * 10000000;
+      txs.push(new PoolSetCommissionMax(network, poolId, maxPerbill).tx());
     }
     if (isUpdated('change_rate') && getEnabled('change_rate')) {
+      const maxIncreasePerbill = changeRate.maxIncrease * 10000000;
       txs.push(
-        api.tx.NominationPools.set_commission_change_rate({
-          pool_id: poolId,
-          change_rate: {
-            max_increase: new BigNumber(changeRate.maxIncrease)
-              .multipliedBy(10000000)
-              .toNumber(),
-            min_delay: changeRate.minDelay.toNumber(),
-          },
-        })
+        new PoolSetCommissionChangeRate(
+          network,
+          poolId,
+          maxIncreasePerbill,
+          changeRate.minDelay
+        ).tx()
       );
     }
 

@@ -3,12 +3,12 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { unitToPlanck } from '@w3ux/utils';
+import { PoolUnbond } from 'api/tx/poolUnbond';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { Apis } from 'controllers/Apis';
 import { getUnixTime } from 'date-fns';
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
@@ -79,26 +79,16 @@ export const LeavePool = ({
   // modal resize on form update
   useEffect(() => setModalResize(), [bond]);
 
-  // tx to submit
   const getTx = () => {
-    const api = Apis.getApi(network);
     let tx = null;
-    if (!api || !activeAccount) {
+    if (!activeAccount) {
       return tx;
     }
-
-    const bondToSubmit = unitToPlanck(
-      !bondValid ? 0 : bond.bond,
-      units
-    ).toString();
-
-    tx = api.tx.NominationPools.unbond({
-      member_account: {
-        type: 'Id',
-        value: activeAccount,
-      },
-      unbonding_points: BigInt(bondToSubmit),
-    });
+    tx = new PoolUnbond(
+      network,
+      activeAccount,
+      unitToPlanck(!bondValid ? 0 : bond.bond, units)
+    ).tx();
     return tx;
   };
 
