@@ -1,11 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { PoolBondExtra } from 'api/tx/poolBondExtra';
+import { StakingBondExtra } from 'api/tx/stakingBondExtra';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { Apis } from 'controllers/Apis';
 import { useEffect, useMemo, useState } from 'react';
 import type { BondFor } from 'types';
 
@@ -35,26 +36,16 @@ export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
 
   // estimate the largest possible tx fee based on users free balance.
   const txLargestFee = async () => {
-    const api = Apis.getApi(network);
-
     const bond = BigNumber.max(
       transferrableBalance.minus(feeReserve),
       0
     ).toString();
 
     let tx = null;
-    if (!api) {
-      return new BigNumber(0);
-    }
     if (bondFor === 'pool') {
-      tx = api.tx.NominationPools.bond_extra({
-        extra: {
-          type: 'FreeBalance',
-          value: BigInt(bond),
-        },
-      });
+      tx = new PoolBondExtra(network, BigInt(bond)).tx();
     } else if (bondFor === 'nominator') {
-      tx = api.tx.Staking.bond_extra({ max_additional: BigInt(bond) });
+      tx = new StakingBondExtra(network, BigInt(bond)).tx();
     }
 
     if (tx) {

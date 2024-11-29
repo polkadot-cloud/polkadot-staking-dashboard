@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { unitToPlanck } from '@w3ux/utils';
+import { PoolBondExtra } from 'api/tx/poolBondExtra';
+import { StakingBondExtra } from 'api/tx/stakingBondExtra';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxMeta } from 'contexts/TxMeta';
-import { Apis } from 'controllers/Apis';
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
@@ -95,12 +96,7 @@ export const Bond = () => {
 
   // determine whether this is a pool or staking transaction.
   const determineTx = (bondToSubmit: BigNumber) => {
-    const api = Apis.getApi(network);
     let tx = null;
-    if (!api) {
-      return tx;
-    }
-
     const bondAsString = !bondValid
       ? '0'
       : bondToSubmit.isNaN()
@@ -108,14 +104,9 @@ export const Bond = () => {
         : bondToSubmit.toString();
 
     if (isPooling) {
-      tx = api.tx.NominationPools.bond_extra({
-        extra: {
-          type: 'FreeBalance',
-          value: BigInt(bondAsString),
-        },
-      });
+      tx = new PoolBondExtra(network, BigInt(bondAsString)).tx();
     } else if (isStaking) {
-      tx = api.tx.Staking.bond_extra({ max_additional: BigInt(bondAsString) });
+      tx = new StakingBondExtra(network, BigInt(bondAsString)).tx();
     }
     return tx;
   };

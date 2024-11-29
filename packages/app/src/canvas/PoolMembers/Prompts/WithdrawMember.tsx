@@ -3,6 +3,7 @@
 
 import { Polkicon } from '@w3ux/react-polkicon';
 import { ellipsisFn, rmCommas } from '@w3ux/utils';
+import { PoolWithdraw } from 'api/tx/poolWithdraw';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
@@ -10,7 +11,6 @@ import { useNetwork } from 'contexts/Network';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import type { PoolMembership } from 'contexts/Pools/types';
 import { usePrompt } from 'contexts/Prompt';
-import { Apis } from 'controllers/Apis';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
@@ -65,21 +65,11 @@ export const WithdrawMember = ({
   // valid to submit transaction
   const [valid] = useState<boolean>(!totalWithdraw.isZero());
 
-  // tx to submit
   const getTx = () => {
-    const api = Apis.getApi(network);
-    let tx = null;
-    if (!valid || !api) {
-      return tx;
+    if (!valid) {
+      return null;
     }
-    tx = api.tx.NominationPools.withdraw_unbonded({
-      member_account: {
-        type: 'Id',
-        value: who,
-      },
-      num_slashing_spans: historyDepth.toNumber(),
-    });
-    return tx;
+    return new PoolWithdraw(network, who, historyDepth.toNumber()).tx();
   };
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),

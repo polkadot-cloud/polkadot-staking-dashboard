@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { PoolUpdateRoles } from 'api/tx/poolUpdateRoles';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTxMeta } from 'contexts/TxMeta';
-import { Apis } from 'controllers/Apis';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
@@ -29,30 +29,12 @@ export const ChangePoolRoles = () => {
   } = useOverlay().modal;
   const { id: poolId, roleEdits } = options;
 
-  // tx to submit
-  const getTx = () => {
-    const api = Apis.getApi(network);
-    let tx = null;
-    if (!api) {
-      return tx;
-    }
-
-    tx = api.tx.NominationPools.update_roles({
-      pool_id: poolId,
-      new_root: roleEdits?.root?.newAddress
-        ? { type: 'Set', value: roleEdits.root.newAddress }
-        : { type: 'Remove', value: undefined },
-
-      new_nominator: roleEdits?.nominator?.newAddress
-        ? { type: 'Set', value: roleEdits.nominator.newAddress }
-        : { type: 'Remove', value: undefined },
-
-      new_bouncer: roleEdits?.bouncer?.newAddress
-        ? { type: 'Set', value: roleEdits.bouncer.newAddress }
-        : { type: 'Remove', value: undefined },
-    });
-    return tx;
-  };
+  const getTx = () =>
+    new PoolUpdateRoles(network, poolId, {
+      root: roleEdits?.root?.newAddress || undefined,
+      nominator: roleEdits?.nominator?.newAddress || undefined,
+      bouncer: roleEdits?.bouncer?.newAddress || undefined,
+    }).tx();
 
   // handle extrinsic
   const submitExtrinsic = useSubmitExtrinsic({

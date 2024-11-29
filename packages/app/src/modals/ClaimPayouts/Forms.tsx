@@ -3,11 +3,11 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { planckToUnit } from '@w3ux/utils';
+import { PayoutStakersByPage } from 'api/tx/payoutStakersByPage';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import { usePayouts } from 'contexts/Payouts';
-import { Apis } from 'controllers/Apis';
 import { Subscan } from 'controllers/Subscan';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
@@ -21,7 +21,6 @@ import { SubmitTx } from 'library/SubmitTx';
 import type { ForwardedRef } from 'react';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AnyApi } from 'types';
 import { ButtonSubmitInvert } from 'ui-buttons';
 import type { ActivePayout, FormProps } from './types';
 import { ContentWrapper } from './Wrappers';
@@ -59,27 +58,25 @@ export const Forms = forwardRef(
       ) || 0;
 
     const getCalls = () => {
-      const api = Apis.getApi(network);
-      if (!api) {
-        return [];
-      }
-
-      const calls: AnyApi[] = [];
-      payouts?.forEach(({ era, paginatedValidators }) => {
+      const calls = payouts?.reduce((acc, { era, paginatedValidators }) => {
         if (!paginatedValidators) {
-          return [];
+          return acc;
         }
-        return paginatedValidators.forEach(([page, v]) =>
-          calls.push(
-            api.tx.Staking.payout_stakers_by_page({
-              validator_stash: v,
-              era: Number(era),
-              page,
-            })
-          )
-        );
-      });
-      return calls;
+        paginatedValidators.forEach(([page, v]) => {
+          const tx = new PayoutStakersByPage(
+            network,
+            v,
+            Number(era),
+            page
+          ).tx();
+
+          if (tx) {
+            acc.push();
+          }
+        });
+        return acc;
+      }, []);
+      return calls || [];
     };
 
     // Store whether form is valid to submit transaction.
