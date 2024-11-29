@@ -3,6 +3,7 @@
 
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { setStateWithRef } from '@w3ux/utils';
+import { PoolPendingRewards } from 'api/runtimeApi/poolPendingRewards';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
@@ -193,10 +194,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const fetchPendingRewards = async (address: string | undefined) => {
     const api = Apis.getApi(network);
     if (api && address) {
-      const apiResult = await api.apis.NominationPoolsApi.pending_rewards(
-        address,
-        { at: 'best' }
-      );
+      const apiResult = await new PoolPendingRewards(network, address).fetch();
       return new BigNumber(apiResult?.toString() || 0);
     }
     return new BigNumber(0);

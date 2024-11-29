@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { unitToPlanck } from '@w3ux/utils';
+import { StakingChill } from 'api/tx/stakingChill';
+import { StakingUnbond } from 'api/tx/stakingUnbond';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -9,7 +11,6 @@ import { useBonded } from 'contexts/Bonded';
 import { useNetwork } from 'contexts/Network';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxMeta } from 'contexts/TxMeta';
-import { Apis } from 'controllers/Apis';
 import { getUnixTime } from 'date-fns';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
@@ -81,23 +82,20 @@ export const Unstake = () => {
   useEffect(() => setModalResize(), [bond, notEnoughFunds]);
 
   const getTx = () => {
-    const api = Apis.getApi(network);
     const tx = null;
-    if (!api || !activeAccount) {
+    if (!activeAccount) {
       return tx;
     }
-    // remove decimal errors
     const bondToSubmit = unitToPlanck(
       String(!bondValid ? 0 : bond.bond),
       units
     );
-
     if (bondToSubmit == 0n) {
-      return api.tx.Staking.chill();
+      return new StakingChill(network).tx();
     }
     const txs = [
-      api.tx.Staking.chill(),
-      api.tx.Staking.unbond({ value: BigInt(bondToSubmit.toString()) }),
+      new StakingChill(network).tx(),
+      new StakingUnbond(network, bondToSubmit).tx(),
     ];
     return newBatchCall(txs, controller);
   };

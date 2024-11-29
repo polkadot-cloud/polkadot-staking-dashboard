@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { rmCommas } from '@w3ux/utils';
+import { PoolPointsToBalance } from 'api/runtimeApi/poolPointsToBalance';
 import BigNumber from 'bignumber.js';
 import { MaxEraRewardPointsEras } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -48,11 +48,11 @@ export const Stats = ({
       return;
     }
 
-    const apiResult = await api.apis.NominationPoolsApi.points_to_balance(
+    const apiResult = await new PoolPointsToBalance(
+      network,
       bondedPool.id,
-      BigInt(rmCommas(bondedPool.points)),
-      { at: 'best' }
-    );
+      BigInt(bondedPool.points)
+    ).fetch();
     const balance = new BigNumber(apiResult?.toString() || 0);
 
     if (balance) {

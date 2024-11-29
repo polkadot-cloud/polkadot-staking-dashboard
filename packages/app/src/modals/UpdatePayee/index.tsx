@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { isValidAddress } from '@w3ux/utils';
+import { StakingSetPayee } from 'api/tx/stakingSetPayee';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useNetwork } from 'contexts/Network';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { useTxMeta } from 'contexts/TxMeta';
-import { Apis } from 'controllers/Apis';
 import { usePayeeConfig } from 'hooks/usePayeeConfig';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
@@ -71,29 +71,24 @@ export const UpdatePayee = () => {
     selected.destination !== null &&
     !(selected.destination === 'Account' && selected.account === null);
 
-  // Tx to submit.
   const getTx = () => {
-    const api = Apis.getApi(network);
-    let tx = null;
-    if (!api || !selected.destination) {
-      return tx;
+    if (!selected.destination) {
+      return null;
     }
-
     if (selected.destination === 'Account' && !selected.account) {
-      return tx;
+      return null;
     }
-
-    tx = api.tx.Staking.set_payee({
-      payee: !isComplete()
+    return new StakingSetPayee(
+      network,
+      !isComplete()
         ? { type: 'Staked', value: undefined }
         : selected.destination === 'Account'
           ? {
               type: 'Account',
               value: selected.account as string,
             }
-          : { type: selected.destination, value: undefined },
-    });
-    return tx;
+          : { type: selected.destination, value: undefined }
+    );
   };
 
   const submitExtrinsic = useSubmitExtrinsic({

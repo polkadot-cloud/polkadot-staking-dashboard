@@ -29,7 +29,7 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
   const { pluginEnabled } = usePlugins();
   const { activeAccount } = useActiveAccounts();
 
-  // Store pool members from api.
+  // Store pool members from Subscan api.
   const [poolMembersApi, setPoolMembersApi] = useState<PoolMember[]>([]);
 
   // Store whether pool members from api have been fetched.

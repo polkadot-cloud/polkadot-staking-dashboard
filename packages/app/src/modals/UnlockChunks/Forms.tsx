@@ -3,6 +3,9 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { rmCommas } from '@w3ux/utils';
+import { PoolWithdraw } from 'api/tx/poolWithdraw';
+import { StakingRebond } from 'api/tx/stakingRebond';
+import { StakingWithdraw } from 'api/tx/stakingWithdraw';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
@@ -13,7 +16,6 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useFavoritePools } from 'contexts/Pools/FavoritePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { Apis } from 'controllers/Apis';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -67,32 +69,28 @@ export const Forms = forwardRef(
     );
 
     const getTx = () => {
-      const api = Apis.getApi(network);
-      let tx = null;
-      if (!valid || !api || !unlock) {
-        return tx;
+      if (!valid || !unlock) {
+        return null;
       }
-      // rebond is only available when staking directly.
       if (task === 'rebond' && isStaking) {
-        tx = api.tx.Staking.rebond({
-          value: BigInt(unlock.value.toNumber() || 0),
-        });
-      } else if (task === 'withdraw' && isStaking) {
-        tx = api.tx.Staking.withdraw_unbonded({
-          num_slashing_spans: historyDepth.toNumber(),
-        });
-      } else if (task === 'withdraw' && isPooling && activePool) {
+        return new StakingRebond(
+          network,
+          BigInt(unlock.value.toNumber() || 0)
+        ).tx();
+      }
+      if (task === 'withdraw' && isStaking) {
+        return new StakingWithdraw(network, historyDepth.toNumber()).tx();
+      }
+      if (task === 'withdraw' && isPooling && activePool) {
         if (activeAccount) {
-          tx = api.tx.NominationPools.withdraw_unbonded({
-            member_account: {
-              type: 'Id',
-              value: activeAccount,
-            },
-            num_slashing_spans: historyDepth.toNumber(),
-          });
+          return new PoolWithdraw(
+            network,
+            activeAccount,
+            historyDepth.toNumber()
+          ).tx();
         }
       }
-      return tx;
+      return null;
     };
     const signingAccount = isStaking ? controller : activeAccount;
     const submitExtrinsic = useSubmitExtrinsic({
