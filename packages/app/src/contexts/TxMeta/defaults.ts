@@ -6,6 +6,7 @@ import BigNumber from 'bignumber.js';
 import type { TxMetaContextInterface } from './types';
 
 export const defaultTxMeta: TxMetaContextInterface = {
+  uids: [],
   sender: null,
   setSender: (s) => {},
   txFees: new BigNumber(0),
@@ -13,17 +14,5 @@ export const defaultTxMeta: TxMetaContextInterface = {
   setTxFees: (f) => {},
   resetTxFees: () => {},
   notEnoughFunds: false,
-  getPayloadUid: () => 0,
-  getTxMetadata: () => {},
-  getTxPayload: () => {},
-  setTxPayload: (payload, payloadValue, payloadJson, uid) => {},
-  getTxPayloadJson: () => {},
-  incrementPayloadUid: () => 0,
-  resetTxPayload: () => {},
-  getTxSignature: () => null,
-  setTxSignature: (s) => {},
-  pendingNonces: [],
-  addPendingNonce: (nonce) => {},
-  removePendingNonce: (nonce) => {},
   controllerSignerAvailable: (a, b) => 'ok',
 };

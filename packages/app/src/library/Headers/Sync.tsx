@@ -11,9 +11,9 @@ import { useLocation } from 'react-router-dom';
 import { Spinner } from './Spinner';
 
 export const Sync = () => {
+  const { uids } = useTxMeta();
   const { syncing } = useSyncing();
   const { pathname } = useLocation();
-  const { pendingNonces } = useTxMeta();
   const { payoutsSynced } = usePayouts();
   const { validators } = useValidators();
   const { bondedPools } = useBondedPools();
@@ -56,7 +56,7 @@ export const Sync = () => {
     onPoolsSyncing() ||
     onNominateSyncing() ||
     onValidatorsSyncing() ||
-    pendingNonces.length > 0;
+    uids.filter(([, processing]) => processing === true).length > 0;
 
   return isSyncing ? <Spinner /> : null;
 };

@@ -6,7 +6,6 @@ import { faSquarePen } from '@fortawesome/free-solid-svg-icons';
 import { useLedgerHardware } from 'contexts/LedgerHardware';
 import { getLedgerApp } from 'contexts/LedgerHardware/Utils';
 import { useNetwork } from 'contexts/Network';
-import { useTxMeta } from 'contexts/TxMeta';
 import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge';
 import type { LedgerSubmitProps } from 'library/SubmitTx/types';
 import { useTranslation } from 'react-i18next';
@@ -21,7 +20,6 @@ export const Submit = ({
 }: LedgerSubmitProps) => {
   const { t } = useTranslation('library');
   const { network } = useNetwork();
-  const { getTxSignature } = useTxMeta();
   const { txMetadataChainId } = getLedgerApp(network);
   const { getIsExecuting, integrityChecked, checkRuntimeVersion } =
     useLedgerHardware();
@@ -32,7 +30,7 @@ export const Submit = ({
   };
 
   // Is the transaction ready to be submitted?
-  const txReady = (getTxSignature() !== null && integrityChecked) || submitting;
+  const txReady = integrityChecked || submitting;
 
   // Button `onClick` handler depends whether integrityChecked and whether tx has been submitted.
   const handleOnClick = !integrityChecked

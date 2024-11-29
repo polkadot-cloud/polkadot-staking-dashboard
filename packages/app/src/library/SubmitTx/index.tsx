@@ -31,8 +31,8 @@ export const SubmitTx = ({
   const { getBondedAccount } = useBonded();
   const { unit } = useNetwork().networkData;
   const { setModalResize } = useOverlay().modal;
+  const { notEnoughFunds, sender } = useTxMeta();
   const { activeAccount, activeProxy } = useActiveAccounts();
-  const { notEnoughFunds, sender, setTxSignature } = useTxMeta();
   const { getAccount, requiresManualSign } = useImportedAccounts();
   const controller = getBondedAccount(activeAccount);
 
@@ -66,14 +66,6 @@ export const SubmitTx = ({
   useEffect(() => {
     setModalResize();
   }, [notEnoughFunds, fromController]);
-
-  // Reset tx metadata on unmount.
-  useEffect(
-    () => () => {
-      setTxSignature(null);
-    },
-    []
-  );
 
   return (
     <Tx

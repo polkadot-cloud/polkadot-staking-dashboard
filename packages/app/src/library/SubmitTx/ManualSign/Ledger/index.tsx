@@ -44,7 +44,6 @@ export const Ledger = ({
   } = useLedgerHardware();
   const { openHelp } = useHelp();
   const { txFeesValid } = useTxMeta();
-  const { setTxSignature } = useTxMeta();
   const { setModalResize } = useOverlay().modal;
   const { accountHasSigner } = useImportedAccounts();
 
@@ -59,12 +58,8 @@ export const Ledger = ({
       if (uid !== body.uid) {
         // UIDs do not match, so this is not the transaction we are waiting for.
         setFeedback(t('wrongTransaction'), 'Wrong Transaction');
-        setTxSignature(null);
       } else {
-        // Important: only set the signature (and therefore trigger the transaction submission) if
-        // UIDs match.
         setStatusCode(ack, statusCode);
-        setTxSignature(body.sig);
       }
       // Reset state pertaining to this transaction.
       resetStatusCode();
@@ -114,7 +109,6 @@ export const Ledger = ({
       <div>
         <EstimatedTxFee />
       </div>
-
       {runtimesInconsistent && (
         <div className="inner warning">
           <div>
@@ -129,7 +123,6 @@ export const Ledger = ({
           </div>
         </div>
       )}
-
       <div
         className={`inner msg${appendOrEmpty(displayFor === 'card', 'col')}`}
       >

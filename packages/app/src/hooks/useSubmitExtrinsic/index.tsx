@@ -4,10 +4,10 @@
 import { useExtensions } from '@w3ux/react-connect-kit';
 import type { LedgerAccount } from '@w3ux/react-connect-kit/types';
 import { formatAccountSs58 } from '@w3ux/utils';
+import { TxSubmission } from 'api/txSubmission';
 import BigNumber from 'bignumber.js';
 import { DappName, ManualSigners } from 'consts';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useBalances } from 'contexts/Balances';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useLedgerHardware } from 'contexts/LedgerHardware';
 import { getLedgerApp } from 'contexts/LedgerHardware/Utils';
@@ -33,12 +33,7 @@ import {
 } from 'polkadot-api/pjs-signer';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type {
-  UnsafeTx,
-  UseSubmitExtrinsic,
-  UseSubmitExtrinsicProps,
-} from './types';
-
+import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 export const useSubmitExtrinsic = ({
   tx,
   from,
@@ -51,31 +46,23 @@ export const useSubmitExtrinsic = ({
     network,
     networkData: { units, unit },
   } = useNetwork();
-  const { getNonce } = useBalances();
   const { signWcTx } = useWalletConnect();
   const { activeProxy } = useActiveAccounts();
   const { extensionsStatus } = useExtensions();
   const { isProxySupported } = useProxySupported();
   const { openPromptWith, closePrompt } = usePrompt();
+  const { txFees, setTxFees, setSender } = useTxMeta();
   const { handleResetLedgerTask } = useLedgerHardware();
-  const { addPendingNonce, removePendingNonce } = useTxMeta();
   const { getAccount, requiresManualSign } = useImportedAccounts();
-  const { txFees, setTxFees, setSender, incrementPayloadUid } = useTxMeta();
-
-  // Store given tx as a ref.
-  const txRef = useRef<UnsafeTx>(tx);
-
-  // Store given submit address as a ref.
-  const fromRef = useRef<string>(from || '');
 
   // Store whether the transaction is in progress.
   const [submitting, setSubmitting] = useState<boolean>(false);
 
-  // Store the uid of the extrinsic.
-  const [uid] = useState<number>(incrementPayloadUid());
-
   // Track for one-shot transaction reset after submission.
-  const didTxReset = useRef<boolean>(false);
+  const txSubmitted = useRef<boolean>(false);
+
+  // Generate a UID for this transaction.
+  const uid = TxSubmission.addUid();
 
   // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account.
   const wrapTxIfActiveProxy = () => {
@@ -83,54 +70,48 @@ export const useSubmitExtrinsic = ({
 
     // if already wrapped, update fromRef and return.
     if (
-      txRef.current?.decodedCall.type === 'Proxy' &&
-      txRef.current?.decodedCall.value.type === 'proxy'
+      tx?.decodedCall.type === 'Proxy' &&
+      tx?.decodedCall.value.type === 'proxy'
     ) {
       if (activeProxy) {
-        fromRef.current = activeProxy;
+        from = activeProxy;
       }
       return;
     }
 
-    if (
-      api &&
-      activeProxy &&
-      txRef.current &&
-      isProxySupported(txRef.current, fromRef.current)
-    ) {
+    if (activeProxy && tx && isProxySupported(tx, from)) {
       // update submit address to active proxy account.
-      fromRef.current = activeProxy;
+      from = activeProxy;
 
       // Do not wrap batch transactions. Proxy calls should already be wrapping each tx within the
       // batch via `useBatchCall`.
       if (
-        txRef.current?.decodedCall.type === 'Utility' &&
-        txRef.current?.decodedCall.value.type === 'batch'
+        tx?.decodedCall.type === 'Utility' &&
+        tx?.decodedCall.value.type === 'batch'
       ) {
         return;
       }
 
       // Not a batch transaction: wrap tx in proxy call.
-      txRef.current = api.tx.Proxy.proxy({
+      tx = api.tx.Proxy.proxy({
         real: {
           type: 'Id',
           value: from || '',
         },
         force_proxy_type: undefined,
-        call: txRef.current.decodedCall,
+        call: tx.decodedCall,
       });
     }
   };
 
   // Calculate the estimated tx fee of the transaction.
   const calculateEstimatedFee = async () => {
-    if (txRef.current === null) {
+    if (tx === null) {
       return;
     }
 
     // get payment info
-    const partialFee = (await txRef.current.getPaymentInfo(fromRef.current))
-      .partial_fee;
+    const partialFee = (await tx.getPaymentInfo(from)).partial_fee;
     const partialFeeBn = new BigNumber(partialFee.toString());
 
     // give tx fees to global useTxMeta context
@@ -141,12 +122,14 @@ export const useSubmitExtrinsic = ({
 
   // Extrinsic submission handler.
   const onSubmit = async () => {
-    const account = getAccount(fromRef.current);
+    if (from === null) {
+      return;
+    }
+    const account = getAccount(from);
     if (account === null || submitting || !shouldSubmit) {
       return;
     }
 
-    const nonce = String(getNonce(fromRef.current));
     const { source } = account;
     const isManualSigner = ManualSigners.includes(source);
 
@@ -169,7 +152,6 @@ export const useSubmitExtrinsic = ({
     }
 
     const onReady = () => {
-      addPendingNonce(nonce);
       Notifications.emit({
         title: t('pending'),
         subtitle: t('transactionInitiated'),
@@ -180,8 +162,8 @@ export const useSubmitExtrinsic = ({
     };
 
     const onInBlock = () => {
+      TxSubmission.removeUid(uid);
       setSubmitting(false);
-      removePendingNonce(nonce);
       Notifications.emit({
         title: t('inBlock'),
         subtitle: t('transactionInBlock'),
@@ -197,10 +179,10 @@ export const useSubmitExtrinsic = ({
         subtitle: t('transactionSuccessful'),
       });
       setSubmitting(false);
-      removePendingNonce(nonce);
     };
 
     const onFailedTx = (err: Error) => {
+      TxSubmission.removeUid(uid);
       if (err instanceof InvalidTxError) {
         Notifications.emit({
           title: t('failed'),
@@ -208,19 +190,14 @@ export const useSubmitExtrinsic = ({
         });
       }
       setSubmitting(false);
-      removePendingNonce(nonce);
-    };
-
-    const resetTx = () => {
-      setSubmitting(false);
     };
 
     const onError = (type?: string) => {
-      resetTx();
+      TxSubmission.removeUid(uid);
+      setSubmitting(false);
       if (type === 'ledger') {
         handleResetLedgerTask();
       }
-      removePendingNonce(nonce);
       Notifications.emit({
         title: t('cancelled'),
         subtitle: t('transactionCancelled'),
@@ -236,13 +213,14 @@ export const useSubmitExtrinsic = ({
       }
     };
 
-    // pre-submission state update
+    // Pre-submission state updates
     setSubmitting(true);
+    TxSubmission.setUidProcessing(uid, true);
 
     // handle signed transaction.
     let signer: PolkadotSigner | undefined;
-    if (requiresManualSign(fromRef.current)) {
-      const pubKey = AccountId().enc(fromRef.current);
+    if (requiresManualSign(from)) {
+      const pubKey = AccountId().enc(from);
       const networkInfo = {
         decimals: units,
         tokenSymbol: unit,
@@ -267,7 +245,7 @@ export const useSubmitExtrinsic = ({
             ) => {
               openPromptWith(
                 <SignPrompt
-                  submitAddress={fromRef.current}
+                  submitAddress={from}
                   onComplete={onComplete}
                   toSign={toSign}
                 />,
@@ -282,7 +260,7 @@ export const useSubmitExtrinsic = ({
 
         case 'wallet_connect':
           signer = getPolkadotSignerFromPjs(
-            fromRef.current,
+            from,
             signWcTx,
             // Signing bytes not currently being used.
             // FIXME: Can implement, albeit won't be used.
@@ -297,7 +275,7 @@ export const useSubmitExtrinsic = ({
       // Get the polkadot signer for this account.
       const signerAccount = (await connectInjectedExtension(source))
         .getAccounts()
-        .find((a) => a.address === formatAccountSs58(fromRef.current, 42));
+        .find((a) => from && a.address === formatAccountSs58(from, 42));
       signer = signerAccount?.polkadotSigner;
     }
 
@@ -306,9 +284,9 @@ export const useSubmitExtrinsic = ({
         next: (result: { type: string }) => {
           const eventType = result?.type;
 
-          if (!didTxReset.current) {
-            didTxReset.current = true;
-            resetTx();
+          if (!txSubmitted.current) {
+            txSubmitted.current = true;
+            setSubmitting(false);
           }
           handleStatus(eventType);
           if (eventType === 'finalized') {
@@ -328,23 +306,19 @@ export const useSubmitExtrinsic = ({
 
   // Refresh state upon `tx` updates.
   useEffect(() => {
-    // update txRef to latest tx.
-    txRef.current = tx;
-    // update submit address to latest from.
-    fromRef.current = from || '';
     // wrap tx in proxy call if active proxy & proxy supported.
     wrapTxIfActiveProxy();
     // ensure sender is up to date.
-    setSender(fromRef.current);
+    setSender(from);
     // re-calculate estimated tx fee.
     calculateEstimatedFee();
-  }, [tx?.toString(), tx?.method?.args?.calls?.toString(), from]);
+  }, [tx?.decodedCall?.toString(), from]);
 
   return {
     uid,
     onSubmit,
     submitting,
-    submitAddress: fromRef.current,
-    proxySupported: isProxySupported(txRef.current, fromRef.current),
+    submitAddress: from,
+    proxySupported: isProxySupported(tx, from),
   };
 };

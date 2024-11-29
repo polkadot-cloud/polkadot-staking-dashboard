@@ -56,6 +56,7 @@ declare global {
     'new-external-account': CustomEvent<{ address: string }>;
     'new-account-balance': CustomEvent<ActiveBalance & { address: string }>;
     'subscan-data-updated': CustomEvent<{ keys: PayoutType[] }>;
+    'new-tx-uid-status': CustomEvent<{ uids: [number, boolean][] }>;
   }
 }
 
