@@ -4,6 +4,7 @@
 import { useExtensions } from '@w3ux/react-connect-kit';
 import type { LedgerAccount } from '@w3ux/react-connect-kit/types';
 import { formatAccountSs58 } from '@w3ux/utils';
+import { Proxy } from 'api/tx/proxy';
 import { TxSubmission } from 'api/txSubmission';
 import BigNumber from 'bignumber.js';
 import { DappName, ManualSigners } from 'consts';
@@ -15,7 +16,6 @@ import { useNetwork } from 'contexts/Network';
 import { usePrompt } from 'contexts/Prompt';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useWalletConnect } from 'contexts/WalletConnect';
-import { Apis } from 'controllers/Apis';
 import { Notifications } from 'controllers/Notifications';
 import { useProxySupported } from 'hooks/useProxySupported';
 import { LedgerSigner } from 'library/Signers/LedgerSigner';
@@ -64,45 +64,33 @@ export const useSubmitExtrinsic = ({
   // Generate a UID for this transaction.
   const uid = TxSubmission.addUid();
 
-  // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account.
-  const wrapTxIfActiveProxy = () => {
-    const api = Apis.getApi(network);
-
-    // if already wrapped, update fromRef and return.
-    if (
-      tx?.decodedCall.type === 'Proxy' &&
-      tx?.decodedCall.value.type === 'proxy'
-    ) {
-      if (activeProxy) {
-        from = activeProxy;
-      }
-      return;
+  // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account. If
+  // already wrapped, update `from` address and return.
+  if (
+    tx?.decodedCall.type === 'Proxy' &&
+    tx?.decodedCall.value.type === 'proxy'
+  ) {
+    if (activeProxy) {
+      from = activeProxy;
     }
-
+  } else {
     if (activeProxy && tx && isProxySupported(tx, from)) {
-      // update submit address to active proxy account.
+      // Update submit address to active proxy account.
       from = activeProxy;
 
-      // Do not wrap batch transactions. Proxy calls should already be wrapping each tx within the
-      // batch via `useBatchCall`.
+      // Check not a batch transactions.
       if (
-        tx?.decodedCall.type === 'Utility' &&
-        tx?.decodedCall.value.type === 'batch'
+        !(
+          tx?.decodedCall.type === 'Utility' &&
+          tx?.decodedCall.value.type === 'batch'
+        )
       ) {
-        return;
+        // Not a batch transaction: wrap tx in proxy call. Proxy calls should already be wrapping
+        // each tx within the batch via `useBatchCall`.
+        tx = new Proxy(network, from, tx).tx();
       }
-
-      // Not a batch transaction: wrap tx in proxy call.
-      tx = api.tx.Proxy.proxy({
-        real: {
-          type: 'Id',
-          value: from || '',
-        },
-        force_proxy_type: undefined,
-        call: tx.decodedCall,
-      });
     }
-  };
+  }
 
   // Calculate the estimated tx fee of the transaction.
   const calculateEstimatedFee = async () => {
@@ -111,6 +99,7 @@ export const useSubmitExtrinsic = ({
     }
 
     // get payment info
+    // TODO: Send to `uid` info.
     const partialFee = (await tx.getPaymentInfo(from)).partial_fee;
     const partialFeeBn = new BigNumber(partialFee.toString());
 
@@ -138,15 +127,9 @@ export const useSubmitExtrinsic = ({
       const isInstalled = Object.entries(extensionsStatus).find(
         ([id, status]) => id === source && status === 'connected'
       );
-
-      if (!isInstalled) {
+      if (!isInstalled || !window?.injectedWeb3?.[source]) {
         throw new Error(`${t('walletNotFound')}`);
       }
-
-      if (!window?.injectedWeb3?.[source]) {
-        throw new Error(`${t('walletNotFound')}`);
-      }
-
       // summons extension popup if not already connected.
       window.injectedWeb3[source].enable(DappName);
     }
@@ -280,6 +263,7 @@ export const useSubmitExtrinsic = ({
     }
 
     try {
+      // TODO: Move this subscription to TxSubmission and move event handlers to `TxMeta`.
       const sub = tx.signSubmitAndWatch(signer).subscribe({
         next: (result: { type: string }) => {
           const eventType = result?.type;
@@ -306,8 +290,6 @@ export const useSubmitExtrinsic = ({
 
   // Refresh state upon `tx` updates.
   useEffect(() => {
-    // wrap tx in proxy call if active proxy & proxy supported.
-    wrapTxIfActiveProxy();
     // ensure sender is up to date.
     setSender(from);
     // re-calculate estimated tx fee.
