@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export class TxSubmission {
-  // UID and whether the tx is processing.
+  // Unique tx identifier along with whether it is processing.
   static uids: [number, boolean][] = [];
 
   static addUid() {
