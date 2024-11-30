@@ -86,8 +86,7 @@ export class Api {
       // Fetch chain spec and metadata from PAPI client.
       await this.fetchChainSpec();
     } catch (e) {
-      // TODO: report a custom api status error that can flag to the UI the rpcEndpoint failed -
-      // retry or select another one. Useful for custom endpoint configs.
+      // TODO: Handle unsupported chains in UI.
       // this.dispatchEvent(this.ensureEventStatus('error'));
     }
   }
