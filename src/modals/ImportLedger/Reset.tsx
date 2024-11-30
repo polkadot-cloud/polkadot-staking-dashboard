@@ -1,20 +1,19 @@
-// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { registerSaEvent } from 'Utils';
-import { useTranslation } from 'react-i18next';
-import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
-import type { LedgerAddress } from 'contexts/Hardware/Ledger/types';
-import { usePrompt } from 'contexts/Prompt';
-import { ConfirmWrapper } from 'library/Import/Wrappers';
-import type { AnyJson } from 'types';
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import { useNetwork } from 'contexts/Network';
-import type { LedgerAccount } from '@w3ux/react-connect-kit/types';
-import { ButtonMono } from 'kits/Buttons/ButtonMono';
-import { ButtonMonoInvert } from 'kits/Buttons/ButtonMonoInvert';
-import { useOverlay } from 'kits/Overlay/Provider';
 import { useLedgerAccounts } from '@w3ux/react-connect-kit';
+import type { LedgerAccount } from '@w3ux/react-connect-kit/types';
+import type { AnyJson } from '@w3ux/types';
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
+import { getLocalLedgerAddresses } from 'contexts/LedgerHardware/Utils';
+import type { LedgerAddress } from 'contexts/LedgerHardware/types';
+import { useNetwork } from 'contexts/Network';
+import { usePrompt } from 'contexts/Prompt';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { ConfirmWrapper } from 'library/Import/Wrappers';
+import { useTranslation } from 'react-i18next';
+import { ButtonMono, ButtonMonoInvert } from 'ui-buttons';
+import { registerSaEvent } from 'utils';
 
 export const Reset = ({ removeLedgerAddress }: AnyJson) => {
   const { t } = useTranslation('modals');
@@ -27,7 +26,7 @@ export const Reset = ({ removeLedgerAddress }: AnyJson) => {
   const removeAccounts = () => {
     // Remove imported Ledger accounts.
     ledgerAccounts.forEach((account: LedgerAccount) => {
-      removeLedgerAccount(account.address);
+      removeLedgerAccount(network, account.address);
     });
     forgetOtherAccounts(ledgerAccounts);
 

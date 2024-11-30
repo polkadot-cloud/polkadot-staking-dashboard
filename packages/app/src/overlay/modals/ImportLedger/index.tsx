@@ -1,28 +1,34 @@
-// Copyright 2022 @paritytech/polkadot-native authors & contributors
+// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { registerSaEvent } from 'Utils';
+import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import type { AnyJson } from '@w3ux/types';
 import { ellipsisFn, setStateWithRef } from '@w3ux/utils';
-import type { FC } from 'react';
-import { useEffect, useRef, useState } from 'react';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger/LedgerHardware';
-import { getLedgerApp, getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
+import { useLedgerHardware } from 'contexts/LedgerHardware';
+import {
+  getLedgerApp,
+  getLocalLedgerAddresses,
+} from 'contexts/LedgerHardware/Utils';
 import type {
   LedgerAddress,
   LedgerResponse,
-} from 'contexts/Hardware/Ledger/types';
-import type { AnyJson } from 'types';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
+} from 'contexts/LedgerHardware/types';
 import { useNetwork } from 'contexts/Network';
+import { Notifications } from 'controllers/Notifications';
+import { useOverlay } from 'kits/Overlay/Provider';
+import type { FC } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { registerSaEvent } from 'utils';
 import { Manage } from './Manage';
 import { Splash } from './Splash';
-import { NotificationsController } from 'static/NotificationsController';
-import { useOverlay } from 'kits/Overlay/Provider';
 
 export const ImportLedger: FC = () => {
   const { t } = useTranslation('modals');
-  const { network } = useNetwork();
+  const {
+    network,
+    networkData: { ss58 },
+  } = useNetwork();
   const { setModalResize } = useOverlay().modal;
   const {
     transportResponse,
@@ -32,7 +38,7 @@ export const ImportLedger: FC = () => {
     handleUnmount,
     handleGetAddress,
   } = useLedgerHardware();
-  const { appName } = getLedgerApp(network);
+  const { txMetadataChainId } = getLedgerApp(network);
 
   // Store addresses retreived from Ledger device. Defaults to local addresses.
   const [addresses, setAddresses] = useState<LedgerAddress[]>(
@@ -49,7 +55,7 @@ export const ImportLedger: FC = () => {
   };
 
   const onGetAddress = async () => {
-    await handleGetAddress(appName, getNextAddressIndex());
+    await handleGetAddress(txMetadataChainId, getNextAddressIndex(), ss58);
   };
 
   const removeLedgerAddress = (address: string) => {
@@ -130,7 +136,7 @@ export const ImportLedger: FC = () => {
       registerSaEvent(`${network.toLowerCase()}_ledger_account_fetched`);
 
       // trigger notification.
-      NotificationsController.emit({
+      Notifications.emit({
         title: t('ledgerAccountFetched'),
         subtitle: t('ledgerFetchedAccount', {
           account: ellipsisFn(newAddress[0].address),

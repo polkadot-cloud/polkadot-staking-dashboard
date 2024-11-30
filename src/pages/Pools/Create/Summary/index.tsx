@@ -145,7 +145,6 @@ export const Summary = ({ section }: SetupStepProps) => {
           <SubmitTx
             submitText={t('pools.createPool')}
             valid
-            customEvent={`${network.toLowerCase()}_user_created_pool`}
             {...submitExtrinsic}
             displayFor="canvas" /* Edge case: not canvas, but the larger button sizes suit this UI more. */
           />

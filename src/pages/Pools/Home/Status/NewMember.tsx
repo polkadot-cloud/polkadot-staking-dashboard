@@ -1,25 +1,27 @@
-// Copyright 2024 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CallToActionWrapper } from 'library/CallToAction';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { useStatusButtons } from './useStatusButtons';
-import { useTranslation } from 'react-i18next';
-import { useOverlay } from 'kits/Overlay/Provider';
-import type { NewMemberProps } from './types';
-import { CallToActionLoader } from 'library/Loader/CallToAction';
-import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
-import { PoolSync } from 'library/PoolSync';
-import { useJoinPools } from 'contexts/Pools/JoinPools';
-import { StyledLoader } from 'library/PoolSync/Loader';
-import { registerSaEvent } from 'Utils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNetwork } from 'contexts/Network';
+import { useJoinPools } from 'contexts/Pools/JoinPools';
+import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
+import { useOverlay } from 'kits/Overlay/Provider';
+import { CallToActionWrapper } from 'library/CallToAction';
+import { CallToActionLoader } from 'library/Loader/CallToAction';
+import { PoolSync } from 'library/PoolSync';
+import { StyledLoader } from 'library/PoolSync/Loader';
+import { useTranslation } from 'react-i18next';
+import { registerSaEvent } from 'utils';
+import { usePoolsTabs } from '../context';
+import type { NewMemberProps } from './types';
+import { useStatusButtons } from './useStatusButtons';
 
 export const NewMember = ({ syncing }: NewMemberProps) => {
   const { t } = useTranslation();
   const { network } = useNetwork();
   const { poolsForJoin } = useJoinPools();
+  const { setActiveTab } = usePoolsTabs();
   const { openCanvas } = useOverlay().canvas;
   const { startJoinPoolFetch } = useJoinPools();
   const { getPoolPerformanceTask } = usePoolPerformance();
@@ -84,7 +86,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                         <FontAwesomeIcon icon={faUserPlus} />
                       </>
                     )}
-                    <PoolSync />
+                    <PoolSync performanceKey="pool_join" />
                   </button>
                 </div>
               </div>
@@ -92,7 +94,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
             <section>
               <div className="buttons">
                 <div
-                  className={`button secondary standalone${createDisabled ? ` disabled` : ``}`}
+                  className={`button standalone secondary ${createDisabled ? ` disabled` : ``}`}
                 >
                   <button
                     onClick={() => {
@@ -109,6 +111,11 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                     disabled={createDisabled}
                   >
                     {t('pools.createPool', { ns: 'pages' })}
+                  </button>
+                </div>
+                <div className={`button standalone secondary`}>
+                  <button onClick={() => setActiveTab(1)}>
+                    {t('pools.browsePools', { ns: 'pages' })}
                   </button>
                 </div>
               </div>

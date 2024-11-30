@@ -1,19 +1,19 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons'
-import { appendOrEmpty } from '@w3ux/utils'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { EstimatedTxFee } from 'library/EstimatedTxFee'
-import type { ReactNode } from 'react'
-import { ButtonSubmit } from 'ui-buttons'
-import { ButtonSubmitLarge } from './ButtonSubmitLarge'
-import type { SubmitProps } from './types'
+import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
+import { appendOrEmpty } from '@w3ux/utils';
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import type { ReactNode } from 'react';
+import { ButtonSubmit } from 'ui-buttons';
+import { ButtonSubmitLarge } from './ButtonSubmitLarge';
+import type { SubmitProps } from './types';
 
 export const Default = ({
   uid,
   onSubmit,
-  submitted,
+  processing,
   valid,
   submitText,
   buttons,
@@ -21,14 +21,14 @@ export const Default = ({
   displayFor,
   notEnoughFunds,
 }: SubmitProps & {
-  buttons?: ReactNode[]
-  notEnoughFunds: boolean
-  submitted: boolean
+  buttons?: ReactNode[];
+  notEnoughFunds: boolean;
+  processing: boolean;
 }) => {
-  const { accountHasSigner } = useImportedAccounts()
+  const { accountHasSigner } = useImportedAccounts();
 
   const disabled =
-    submitted || !valid || !accountHasSigner(submitAddress) || notEnoughFunds
+    processing || !valid || !accountHasSigner(submitAddress) || notEnoughFunds;
 
   return (
     <>
@@ -54,12 +54,12 @@ export const Default = ({
       {displayFor === 'card' && (
         <ButtonSubmitLarge
           disabled={disabled}
-          onSubmit={onSubmit}
+          onSubmit={() => onSubmit()}
           submitText={submitText || ''}
           icon={faArrowAltCircleUp}
           pulse={!disabled}
         />
       )}
     </>
-  )
-}
+  );
+};
