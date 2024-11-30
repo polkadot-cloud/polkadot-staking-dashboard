@@ -66,6 +66,7 @@ export const Summary = ({ section }: SetupStepProps) => {
     return newBatchCall(tx, activeAccount);
   };
   const submitExtrinsic = useSubmitExtrinsic({
+    tag: 'createPool',
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: true,

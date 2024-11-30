@@ -13,10 +13,11 @@ export type SubmitTxProps = SubmitProps & {
   proxySupported: boolean;
   submitAddress?: MaybeAddress;
   noMargin?: boolean;
+  onResize?: () => void;
 };
 
 export interface SubmitProps {
-  uid?: number;
+  uid: number;
   onSubmit: () => void;
   submitting: boolean;
   valid: boolean;

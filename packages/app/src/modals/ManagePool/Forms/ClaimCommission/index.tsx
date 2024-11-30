@@ -25,8 +25,10 @@ import { planckToUnitBn } from 'utils';
 
 export const ClaimCommission = ({
   setSection,
+  onResize,
 }: {
   setSection: Dispatch<SetStateAction<number>>;
+  onResize: () => void;
 }) => {
   const { t } = useTranslation('modals');
   const {
@@ -103,6 +105,7 @@ export const ClaimCommission = ({
             onClick={() => setSection(0)}
           />,
         ]}
+        onResize={onResize}
         {...submitExtrinsic}
       />
     </>

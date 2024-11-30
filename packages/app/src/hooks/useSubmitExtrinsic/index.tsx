@@ -13,7 +13,6 @@ import { useLedgerHardware } from 'contexts/LedgerHardware';
 import { getLedgerApp } from 'contexts/LedgerHardware/Utils';
 import { useNetwork } from 'contexts/Network';
 import { usePrompt } from 'contexts/Prompt';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useWalletConnect } from 'contexts/WalletConnect';
 import { Notifications } from 'controllers/Notifications';
 import { useProxySupported } from 'hooks/useProxySupported';
@@ -35,6 +34,7 @@ import { useTranslation } from 'react-i18next';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 export const useSubmitExtrinsic = ({
   tx,
+  tag,
   from,
   shouldSubmit,
   callbackSubmit,
@@ -50,18 +50,17 @@ export const useSubmitExtrinsic = ({
   const { extensionsStatus } = useExtensions();
   const { isProxySupported } = useProxySupported();
   const { openPromptWith, closePrompt } = usePrompt();
-  const { txFees, setTxFees, setSender } = useTxMeta();
   const { handleResetLedgerTask } = useLedgerHardware();
   const { getAccount, requiresManualSign } = useImportedAccounts();
+
+  // Store the uid for this transaction.
+  const [uid, setUid] = useState<number>(0);
 
   // Store whether the transaction is in progress.
   const [submitting, setSubmitting] = useState<boolean>(false);
 
   // Track for one-shot transaction reset after submission.
   const txSubmitted = useRef<boolean>(false);
-
-  // Generate a UID for this transaction.
-  const uid = TxSubmission.addUid({ from });
 
   // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account. If
   // already wrapped, update `from` address and return.
@@ -90,20 +89,6 @@ export const useSubmitExtrinsic = ({
       }
     }
   }
-
-  // Calculate the estimated tx fee of the transaction.
-  const calculateEstimatedFee = async () => {
-    if (tx === null) {
-      return;
-    }
-
-    // get payment info
-    // TODO: Send to `uid` info.
-    const partialFee = (await tx.getPaymentInfo(from)).partial_fee;
-    if (partialFee !== txFees) {
-      setTxFees(partialFee);
-    }
-  };
 
   // Extrinsic submission handler.
   const onSubmit = async () => {
@@ -289,13 +274,33 @@ export const useSubmitExtrinsic = ({
     }
   };
 
-  // Refresh state upon `tx` updates.
+  // Initialise tx submission.
   useEffect(() => {
-    // ensure sender is up to date.
-    setSender(from);
-    // re-calculate estimated tx fee.
-    calculateEstimatedFee();
-  }, [tx?.decodedCall?.toString(), from]);
+    // Add a new uid for this transaction.
+    if (uid === 0) {
+      const newUid = TxSubmission.addUid({ from, tag });
+      setUid(newUid);
+    }
+  }, []);
+
+  // Re-fetch tx fee if tx changes.
+  useEffect(() => {
+    const fetchTxFee = async () => {
+      if (!tx) {
+        return;
+      }
+      const fee = (await tx.getPaymentInfo(from)).partial_fee;
+      TxSubmission.updateFee(uid, fee);
+    };
+    if (uid > 0) {
+      fetchTxFee();
+    }
+  }, [
+    uid,
+    JSON.stringify(tx?.decodedCall, (_, value) =>
+      typeof value === 'bigint' ? value.toString() : value
+    ),
+  ]);
 
   return {
     uid,

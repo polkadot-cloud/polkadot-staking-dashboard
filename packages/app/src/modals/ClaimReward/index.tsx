@@ -7,7 +7,6 @@ import { PoolClaimPayout } from 'api/tx/poolClaimPayout';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -31,7 +30,6 @@ export const ClaimReward = () => {
     config: { options },
     setModalResize,
   } = useOverlay().modal;
-  const { notEnoughFunds } = useTxMeta();
   const { activeAccount } = useActiveAccounts();
   const { getSignerWarnings } = useSignerWarnings();
   const { activePool, pendingPoolRewards } = useActivePool();
@@ -79,7 +77,7 @@ export const ClaimReward = () => {
     warnings.push(`${t('noRewards')}`);
   }
 
-  useEffect(() => setModalResize(), [notEnoughFunds, warnings.length]);
+  useEffect(() => setModalResize(), [warnings.length]);
 
   return (
     <>

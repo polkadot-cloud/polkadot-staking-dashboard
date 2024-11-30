@@ -10,7 +10,6 @@ import { useBonded } from 'contexts/Bonded';
 import { useFastUnstake } from 'contexts/FastUnstake';
 import { useNetwork } from 'contexts/Network';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useUnstaking } from 'hooks/useUnstaking';
@@ -37,7 +36,6 @@ export const ManageFastUnstake = () => {
     network,
     networkData: { units, unit },
   } = useNetwork();
-  const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
   const { isFastUnstaking } = useUnstaking();
   const { activeAccount } = useActiveAccounts();
@@ -77,10 +75,7 @@ export const ManageFastUnstake = () => {
     feeReserve,
   ]);
 
-  useEffect(
-    () => setModalResize(),
-    [notEnoughFunds, isExposed, queueDeposit, isFastUnstaking]
-  );
+  useEffect(() => setModalResize(), [isExposed, queueDeposit, isFastUnstaking]);
 
   const getTx = () => {
     let tx = null;

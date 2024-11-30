@@ -3,51 +3,36 @@
 
 import BigNumber from 'bignumber.js';
 import { useNetwork } from 'contexts/Network';
-import { TxMetaContext, useTxMeta } from 'contexts/TxMeta';
-import type { TxMetaContextInterface } from 'contexts/TxMeta/types';
-import type { Context } from 'react';
-import { Component, useEffect } from 'react';
+import { useTxMeta } from 'contexts/TxMeta';
 import { useTranslation } from 'react-i18next';
 import { planckToUnitBn } from 'utils';
 import { Wrapper } from './Wrapper';
 import type { EstimatedTxFeeProps } from './types';
 
-export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
+export const EstimatedTxFee = ({ uid, format }: EstimatedTxFeeProps) => {
   const { t } = useTranslation('library');
+  const { getTxSubmission } = useTxMeta();
   const { unit, units } = useNetwork().networkData;
-  const { txFees, resetTxFees } = useTxMeta();
 
-  useEffect(() => () => resetTxFees(), []);
+  const txSubmission = getTxSubmission(uid);
+  const fee = txSubmission?.fee || 0n;
 
   const txFeesUnit = planckToUnitBn(
-    new BigNumber(txFees.toString()),
+    new BigNumber(fee.toString()),
     units
   ).toFormat();
 
   return format === 'table' ? (
     <>
       <div>{t('estimatedFee')}:</div>
-      <div>{txFees === 0n ? `...` : `${txFeesUnit} ${unit}`}</div>
+      <div>{fee === 0n ? `...` : `${txFeesUnit} ${unit}`}</div>
     </>
   ) : (
     <Wrapper>
       <p>
         <span>{t('estimatedFee')}:</span>
-        {txFees === 0n ? `...` : `${txFeesUnit} ${unit}`}
+        {fee === 0n ? `...` : `${txFeesUnit} ${unit}`}
       </p>
     </Wrapper>
   );
 };
-
-export class EstimatedTxFee extends Component<EstimatedTxFeeProps> {
-  static contextType: Context<TxMetaContextInterface> = TxMetaContext;
-
-  componentWillUnmount(): void {
-    const { resetTxFees } = this.context as TxMetaContextInterface;
-    resetTxFees();
-  }
-
-  render() {
-    return <EstimatedTxFeeInner {...this.props} />;
-  }
-}

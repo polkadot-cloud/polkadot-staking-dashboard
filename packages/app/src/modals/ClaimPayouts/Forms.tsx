@@ -27,7 +27,7 @@ import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef(
   (
-    { setSection, payouts, setPayouts }: FormProps,
+    { setSection, payouts, setPayouts, onResize }: FormProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const { t } = useTranslation('modals');
@@ -158,6 +158,7 @@ export const Forms = forwardRef(
             </div>
           </ModalPadding>
           <SubmitTx
+            onResize={onResize}
             fromController={false}
             valid={valid}
             buttons={[

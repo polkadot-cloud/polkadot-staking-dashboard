@@ -24,9 +24,11 @@ import { ButtonSubmitInvert } from 'ui-buttons';
 export const RenamePool = ({
   setSection,
   section,
+  onResize,
 }: {
   setSection: Dispatch<SetStateAction<number>>;
   section: number;
+  onResize: () => void;
 }) => {
   const { t } = useTranslation('modals');
   const { network } = useNetwork();
@@ -116,6 +118,7 @@ export const RenamePool = ({
             onClick={() => setSection(0)}
           />,
         ]}
+        onResize={onResize}
         {...submitExtrinsic}
       />
     </>

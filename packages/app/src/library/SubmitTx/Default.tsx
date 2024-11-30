@@ -4,7 +4,6 @@
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { appendOrEmpty } from '@w3ux/utils';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import type { ReactNode } from 'react';
 import { ButtonSubmit } from 'ui-buttons';
@@ -12,6 +11,7 @@ import { ButtonSubmitLarge } from './ButtonSubmitLarge';
 import type { SubmitProps } from './types';
 
 export const Default = ({
+  uid,
   onSubmit,
   submitting,
   valid,
@@ -19,18 +19,18 @@ export const Default = ({
   buttons,
   submitAddress,
   displayFor,
-}: SubmitProps & { buttons?: ReactNode[] }) => {
-  const { txFeesValid } = useTxMeta();
+  notEnoughFunds,
+}: SubmitProps & { buttons?: ReactNode[]; notEnoughFunds: boolean }) => {
   const { accountHasSigner } = useImportedAccounts();
 
   const disabled =
-    submitting || !valid || !accountHasSigner(submitAddress) || !txFeesValid;
+    submitting || !valid || !accountHasSigner(submitAddress) || notEnoughFunds;
 
   return (
     <>
       <div className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}>
         <div>
-          <EstimatedTxFee />
+          <EstimatedTxFee uid={uid} />
         </div>
         <div>
           {buttons}

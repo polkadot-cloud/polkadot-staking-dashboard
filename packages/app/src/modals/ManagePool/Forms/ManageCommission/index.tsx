@@ -32,9 +32,11 @@ import { usePoolCommission } from './provider';
 export const ManageCommission = ({
   setSection,
   incrementCalculateHeight,
+  onResize,
 }: {
   setSection: Dispatch<SetStateAction<number>>;
   incrementCalculateHeight: () => void;
+  onResize: () => void;
 }) => {
   const { t } = useTranslation('modals');
   const { openHelp } = useHelp();
@@ -316,6 +318,7 @@ export const ManageCommission = ({
             }}
           />,
         ]}
+        onResize={onResize}
         {...submitExtrinsic}
       />
     </>

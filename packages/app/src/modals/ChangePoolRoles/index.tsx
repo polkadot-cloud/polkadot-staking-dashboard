@@ -5,13 +5,11 @@ import { PoolUpdateRoles } from 'api/tx/poolUpdateRoles';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RoleChange } from './RoleChange';
 import { Wrapper } from './Wrapper';
@@ -19,13 +17,11 @@ import { Wrapper } from './Wrapper';
 export const ChangePoolRoles = () => {
   const { t } = useTranslation('modals');
   const { network } = useNetwork();
-  const { notEnoughFunds } = useTxMeta();
   const { replacePoolRoles } = useBondedPools();
   const { activeAccount } = useActiveAccounts();
   const {
     setModalStatus,
     config: { options },
-    setModalResize,
   } = useOverlay().modal;
   const { id: poolId, roleEdits } = options;
 
@@ -48,8 +44,6 @@ export const ChangePoolRoles = () => {
       replacePoolRoles(poolId, roleEdits);
     },
   });
-
-  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   return (
     <>

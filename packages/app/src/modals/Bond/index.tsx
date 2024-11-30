@@ -9,7 +9,6 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
@@ -30,7 +29,6 @@ export const Bond = () => {
     network,
     networkData: { units, unit },
   } = useNetwork();
-  const { notEnoughFunds } = useTxMeta();
   const { activeAccount } = useActiveAccounts();
   const { pendingPoolRewards } = useActivePool();
   const { getSignerWarnings } = useSignerWarnings();
@@ -142,7 +140,7 @@ export const Bond = () => {
   // modal resize on form update
   useEffect(
     () => setModalResize(),
-    [bond, bondValid, notEnoughFunds, feedbackErrors.length, warnings.length]
+    [bond, bondValid, feedbackErrors.length, warnings.length]
   );
 
   return (

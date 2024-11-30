@@ -108,6 +108,17 @@ export const BondFeedback = ({
       newErrors.push(`${t('noFree', { unit })}`);
     }
 
+    if (inSetup || joiningPool) {
+      if (freeToBond.isLessThan(minBondBn)) {
+        disabled = true;
+        newErrors.push(`${t('notMeet')} ${minBondUnit} ${unit}.`);
+      }
+      // bond amount must be more than minimum required bond
+      if (bond.bond !== '' && bondBn.isLessThan(minBondBn)) {
+        newErrors.push(`${t('atLeast')} ${minBondUnit} ${unit}.`);
+      }
+    }
+
     // bond amount must not surpass freeBalalance
     if (bondBn.isGreaterThan(freeToBond)) {
       newErrors.push(t('moreThanBalance'));
@@ -123,20 +134,9 @@ export const BondFeedback = ({
       newErrors.push(`${t('notEnoughAfter', { unit })}`);
     }
 
-    // cbond amount must not surpass network supported units
+    // bond amount must not surpass network supported units
     if (decimals > units) {
       newErrors.push(`${t('bondDecimalsError', { units })}`);
-    }
-
-    if (inSetup || joiningPool) {
-      if (freeToBond.isLessThan(minBondBn)) {
-        disabled = true;
-        newErrors.push(`${t('notMeet')} ${minBondUnit} ${unit}.`);
-      }
-      // bond amount must be more than minimum required bond
-      if (bond.bond !== '' && bondBn.isLessThan(minBondBn)) {
-        newErrors.push(`${t('atLeast')} ${minBondUnit} ${unit}.`);
-      }
     }
 
     const bondValid = !newErrors.length && bond.bond !== '';

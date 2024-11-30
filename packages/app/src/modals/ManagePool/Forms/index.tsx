@@ -15,32 +15,46 @@ import type { FormsProps } from './types';
 
 export const Forms = forwardRef(
   (
-    { setSection, task, section, incrementCalculateHeight }: FormsProps,
+    {
+      setSection,
+      task,
+      section,
+      incrementCalculateHeight,
+      onResize,
+    }: FormsProps,
     ref: ForwardedRef<HTMLDivElement>
-  ) => (
-    <PoolCommissionProvider>
-      <ContentWrapper>
-        <div className="items" ref={ref}>
-          {task === 'set_pool_metadata' ? (
-            <RenamePool setSection={setSection} section={section} />
-          ) : task === 'manage_commission' ? (
-            <ManageCommission
-              setSection={setSection}
-              incrementCalculateHeight={incrementCalculateHeight}
-            />
-          ) : task === 'set_claim_permission' ? (
-            <SetClaimPermission setSection={setSection} section={section} />
-          ) : task === 'leave_pool' ? (
-            <LeavePool setSection={setSection} />
-          ) : task === 'claim_commission' ? (
-            <ClaimCommission setSection={setSection} />
-          ) : (
-            <SetPoolState setSection={setSection} task={task} />
-          )}
-        </div>
-      </ContentWrapper>
-    </PoolCommissionProvider>
-  )
+  ) => {
+    const commonFormProps = {
+      task,
+      section,
+      setSection,
+      onResize,
+    };
+    return (
+      <PoolCommissionProvider>
+        <ContentWrapper>
+          <div className="items" ref={ref}>
+            {task === 'set_pool_metadata' ? (
+              <RenamePool {...commonFormProps} />
+            ) : task === 'manage_commission' ? (
+              <ManageCommission
+                {...commonFormProps}
+                incrementCalculateHeight={incrementCalculateHeight}
+              />
+            ) : task === 'set_claim_permission' ? (
+              <SetClaimPermission {...commonFormProps} />
+            ) : task === 'leave_pool' ? (
+              <LeavePool {...commonFormProps} />
+            ) : task === 'claim_commission' ? (
+              <ClaimCommission {...commonFormProps} />
+            ) : (
+              <SetPoolState {...commonFormProps} />
+            )}
+          </div>
+        </ContentWrapper>
+      </PoolCommissionProvider>
+    );
+  }
 );
 
 Forms.displayName = 'Forms';

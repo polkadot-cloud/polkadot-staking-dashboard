@@ -15,6 +15,10 @@ export interface BalancesContextInterface {
   getPayee: (address: MaybeAddress) => PayeeConfig;
   getPoolMembership: (address: MaybeAddress) => PoolMembership | null;
   getNominations: (address: MaybeAddress) => Targets;
+  getEdReserved: (
+    address: MaybeAddress,
+    existentialDeposit: BigNumber
+  ) => BigNumber;
 }
 
 export type ActiveBalancesState = Record<string, ActiveBalance>;

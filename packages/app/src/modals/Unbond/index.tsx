@@ -32,13 +32,13 @@ import { planckToUnitBn, timeleftAsString } from 'utils';
 
 export const Unbond = () => {
   const { t } = useTranslation('modals');
-  const { getBondedAccount } = useBonded();
-  const { activeAccount } = useActiveAccounts();
-  const { txFees, notEnoughFunds } = useTxMeta();
   const {
     network,
     networkData: { units, unit },
   } = useNetwork();
+  const { getTxSubmission } = useTxMeta();
+  const { getBondedAccount } = useBonded();
+  const { activeAccount } = useActiveAccounts();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
@@ -131,6 +131,8 @@ export const Unbond = () => {
     },
   });
 
+  const fee = getTxSubmission(submitExtrinsic.uid)?.fee || 0n;
+
   const nominatorActiveBelowMin =
     bondFor === 'nominator' &&
     !activeBn.isZero() &&
@@ -178,7 +180,7 @@ export const Unbond = () => {
   // Modal resize on form update.
   useEffect(
     () => setModalResize(),
-    [bond, notEnoughFunds, feedbackErrors.length, warnings.length]
+    [bond, feedbackErrors.length, warnings.length]
   );
 
   return (
@@ -200,7 +202,7 @@ export const Unbond = () => {
             setFeedbackErrors(errors);
           }}
           setters={[handleSetBond]}
-          txFees={txFees}
+          txFees={fee}
         />
         <ModalNotes withPadding>
           {bondFor === 'pool' ? (

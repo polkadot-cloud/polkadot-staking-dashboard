@@ -46,6 +46,8 @@ export type ApiChainType = 'relay' | 'system';
 
 export type TxSubmissionItem = {
   uid: number;
+  tag?: string;
+  fee: bigint;
   from: MaybeAddress;
   processing: boolean;
 };

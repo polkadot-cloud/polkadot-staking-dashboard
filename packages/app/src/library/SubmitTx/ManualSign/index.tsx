@@ -9,7 +9,9 @@ import { Ledger } from './Ledger';
 import { Vault } from './Vault';
 import { WalletConnect } from './WalletConnect';
 
-export const ManualSign = (props: SubmitProps & { buttons?: ReactNode[] }) => {
+export const ManualSign = (
+  props: SubmitProps & { buttons?: ReactNode[]; notEnoughFunds: boolean }
+) => {
   const { getTxSubmission } = useTxMeta();
   const { getAccount } = useImportedAccounts();
   const from = getTxSubmission(props.uid)?.from || null;

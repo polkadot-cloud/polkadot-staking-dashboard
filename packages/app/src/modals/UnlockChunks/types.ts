@@ -9,6 +9,7 @@ export interface FormsProps {
   unlock: UnlockChunk | null;
   task: string | null;
   incrementCalculateHeight: () => void;
+  onResize: () => void;
 }
 
 export interface ChunkProps {

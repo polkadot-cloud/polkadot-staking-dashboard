@@ -5,24 +5,21 @@ import { unitToPlanck } from '@w3ux/utils';
 import { TransferKeepAlive } from 'api/tx/transferKeepAlive';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { useEffect } from 'react';
 
 export const BalanceTest = () => {
   const {
     network,
     networkData: { units },
   } = useNetwork();
-  const { notEnoughFunds } = useTxMeta();
   const { newBatchCall } = useBatchCall();
   const { activeAccount } = useActiveAccounts();
-  const { setModalResize, setModalStatus } = useOverlay().modal;
+  const { setModalStatus } = useOverlay().modal;
 
   const getTx = () => {
     const tx = null;
@@ -54,8 +51,6 @@ export const BalanceTest = () => {
       setModalStatus('closing');
     },
   });
-
-  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   return (
     <>

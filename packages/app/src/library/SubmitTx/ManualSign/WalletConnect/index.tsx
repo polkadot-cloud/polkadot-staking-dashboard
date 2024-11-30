@@ -22,10 +22,11 @@ export const WalletConnect = ({
   buttons,
   submitAddress,
   displayFor,
-}: SubmitProps & { buttons?: ReactNode[] }) => {
+  notEnoughFunds,
+}: SubmitProps & { buttons?: ReactNode[]; notEnoughFunds: boolean }) => {
   const { t } = useTranslation('library');
+  const { getTxSubmission } = useTxMeta();
   const { accountHasSigner } = useImportedAccounts();
-  const { txFeesValid, getTxSubmission } = useTxMeta();
   const { wcSessionActive, connectProvider, fetchAddresses } =
     useWalletConnect();
 
@@ -33,7 +34,7 @@ export const WalletConnect = ({
   const from = txSubmission?.from || null;
 
   // The state under which submission is disabled.
-  const disabled = !valid || !accountHasSigner(submitAddress) || !txFeesValid;
+  const disabled = !valid || !accountHasSigner(submitAddress) || notEnoughFunds;
 
   // Format submit button based on whether signature currently exists or submission is ongoing.
   let buttonOnClick: () => void;
@@ -68,7 +69,7 @@ export const WalletConnect = ({
   return (
     <div className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}>
       <div>
-        <EstimatedTxFee />
+        <EstimatedTxFee uid={uid} />
         {valid ? <p>{t('submitTransaction')}</p> : <p>...</p>}
       </div>
       <div>

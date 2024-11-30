@@ -25,9 +25,11 @@ import { ButtonSubmitInvert } from 'ui-buttons';
 export const SetClaimPermission = ({
   setSection,
   section,
+  onResize,
 }: {
   section: number;
   setSection: Dispatch<SetStateAction<number>>;
+  onResize: () => void;
 }) => {
   const { t } = useTranslation('modals');
   const { network } = useNetwork();
@@ -110,6 +112,7 @@ export const SetClaimPermission = ({
             onClick={() => setSection(0)}
           />,
         ]}
+        onResize={onResize}
         {...submitExtrinsic}
       />
     </>

@@ -27,8 +27,10 @@ import { planckToUnitBn, timeleftAsString } from 'utils';
 
 export const LeavePool = ({
   setSection,
+  onResize,
 }: {
   setSection: Dispatch<SetStateAction<number>>;
+  onResize: () => void;
 }) => {
   const { t } = useTranslation('modals');
   const { consts } = useApi();
@@ -142,6 +144,7 @@ export const LeavePool = ({
             onClick={() => setSection(0)}
           />,
         ]}
+        onResize={onResize}
         {...submitExtrinsic}
       />
     </>

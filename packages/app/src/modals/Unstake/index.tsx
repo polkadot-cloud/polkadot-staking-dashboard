@@ -10,7 +10,6 @@ import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useNetwork } from 'contexts/Network';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTxMeta } from 'contexts/TxMeta';
 import { getUnixTime } from 'date-fns';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
@@ -35,7 +34,6 @@ export const Unstake = () => {
     networkData: { units, unit },
   } = useNetwork();
   const { consts } = useApi();
-  const { notEnoughFunds } = useTxMeta();
   const { newBatchCall } = useBatchCall();
   const { getBondedAccount } = useBonded();
   const { getNominations } = useBalances();
@@ -79,7 +77,7 @@ export const Unstake = () => {
   }, [freeToUnbond.toString(), isValid]);
 
   // modal resize on form update
-  useEffect(() => setModalResize(), [bond, notEnoughFunds]);
+  useEffect(() => setModalResize(), [bond]);
 
   const getTx = () => {
     const tx = null;

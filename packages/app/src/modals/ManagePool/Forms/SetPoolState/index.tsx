@@ -23,9 +23,11 @@ import { ButtonSubmitInvert } from 'ui-buttons';
 export const SetPoolState = ({
   setSection,
   task = '',
+  onResize,
 }: {
   setSection: Dispatch<SetStateAction<number>>;
   task?: string;
+  onResize: () => void;
 }) => {
   const { t } = useTranslation('modals');
   const { network } = useNetwork();
@@ -157,6 +159,7 @@ export const SetPoolState = ({
             onClick={() => setSection(0)}
           />,
         ]}
+        onResize={onResize}
         {...submitExtrinsic}
       />
     </>

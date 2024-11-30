@@ -9,7 +9,6 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useHelp } from 'contexts/Help';
 import { useLedgerHardware } from 'contexts/LedgerHardware';
 import type { LedgerResponse } from 'contexts/LedgerHardware/types';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import type { ReactNode } from 'react';
@@ -28,7 +27,8 @@ export const Ledger = ({
   buttons,
   submitAddress,
   displayFor,
-}: SubmitProps & { buttons?: ReactNode[] }) => {
+  notEnoughFunds,
+}: SubmitProps & { buttons?: ReactNode[]; notEnoughFunds: boolean }) => {
   const { t } = useTranslation('library');
   const {
     setFeedback,
@@ -43,7 +43,6 @@ export const Ledger = ({
     setStatusCode,
   } = useLedgerHardware();
   const { openHelp } = useHelp();
-  const { txFeesValid } = useTxMeta();
   const { setModalResize } = useOverlay().modal;
   const { accountHasSigner } = useImportedAccounts();
 
@@ -76,7 +75,7 @@ export const Ledger = ({
     !accountHasSigner(submitAddress) ||
     !valid ||
     submitting ||
-    !txFeesValid ||
+    notEnoughFunds ||
     getIsExecuting();
 
   // Resize modal on content change.
@@ -86,7 +85,7 @@ export const Ledger = ({
     integrityChecked,
     valid,
     submitting,
-    txFeesValid,
+    notEnoughFunds,
     getStatusCode(),
     getIsExecuting(),
   ]);
@@ -107,7 +106,7 @@ export const Ledger = ({
   return (
     <>
       <div>
-        <EstimatedTxFee />
+        <EstimatedTxFee uid={uid} />
       </div>
       {runtimesInconsistent && (
         <div className="inner warning">

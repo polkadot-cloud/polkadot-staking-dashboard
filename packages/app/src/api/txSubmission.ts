@@ -7,11 +7,22 @@ import type { TxSubmissionItem } from './types';
 export class TxSubmission {
   static uids: TxSubmissionItem[] = [];
 
-  static addUid({ from }: { from: MaybeAddress }) {
+  static addUid({ from, tag }: { from: MaybeAddress; tag?: string }) {
+    // If tag already exists, delete the entry.
+    if (tag) {
+      this.uids = this.uids.filter((item) => item.tag !== tag);
+    }
     const newUid = this.uids.length + 1;
-    this.uids.push({ uid: newUid, processing: false, from });
+    this.uids.push({ uid: newUid, processing: false, from, fee: 0n, tag });
     this.dispatchEvent();
     return newUid;
+  }
+
+  static updateFee(uid: number, fee: bigint) {
+    this.uids = this.uids.map((item) =>
+      item.uid === uid ? { ...item, fee } : item
+    );
+    this.dispatchEvent();
   }
 
   static removeUid(id: number) {

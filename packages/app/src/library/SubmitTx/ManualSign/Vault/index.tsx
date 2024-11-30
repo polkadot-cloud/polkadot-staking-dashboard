@@ -5,7 +5,6 @@ import { faSquarePen } from '@fortawesome/free-solid-svg-icons';
 import { appendOrEmpty } from '@w3ux/utils';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { usePrompt } from 'contexts/Prompt';
-import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge';
 import type { ReactNode } from 'react';
@@ -14,6 +13,7 @@ import { ButtonSubmit } from 'ui-buttons';
 import type { SubmitProps } from '../../types';
 
 export const Vault = ({
+  uid,
   onSubmit,
   submitting,
   valid,
@@ -21,15 +21,15 @@ export const Vault = ({
   buttons,
   submitAddress,
   displayFor,
-}: SubmitProps & { buttons?: ReactNode[] }) => {
+  notEnoughFunds,
+}: SubmitProps & { buttons?: ReactNode[]; notEnoughFunds: boolean }) => {
   const { t } = useTranslation('library');
-  const { txFeesValid } = useTxMeta();
   const { status: promptStatus } = usePrompt();
   const { accountHasSigner } = useImportedAccounts();
 
   // The state under which submission is disabled.
   const disabled =
-    submitting || !valid || !accountHasSigner(submitAddress) || !txFeesValid;
+    submitting || !valid || !accountHasSigner(submitAddress) || notEnoughFunds;
 
   // Format submit button based on whether signature currently exists or submission is ongoing.
   let buttonText: string;
@@ -49,7 +49,7 @@ export const Vault = ({
   return (
     <div className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}>
       <div>
-        <EstimatedTxFee />
+        <EstimatedTxFee uid={uid} />
         {valid ? <p>{t('submitTransaction')}</p> : <p>...</p>}
       </div>
       <div>

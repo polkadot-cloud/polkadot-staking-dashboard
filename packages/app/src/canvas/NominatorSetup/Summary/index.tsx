@@ -74,6 +74,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   };
 
   const submitExtrinsic = useSubmitExtrinsic({
+    tag: 'nominatorSetup',
     tx: getTxs(),
     from: activeAccount,
     shouldSubmit: true,

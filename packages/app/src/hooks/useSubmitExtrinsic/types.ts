@@ -5,6 +5,7 @@ import type { AnyApi, MaybeAddress } from 'types';
 
 export interface UseSubmitExtrinsicProps {
   tx: AnyApi;
+  tag?: string;
   from: MaybeAddress;
   shouldSubmit: boolean;
   callbackSubmit?: () => void;

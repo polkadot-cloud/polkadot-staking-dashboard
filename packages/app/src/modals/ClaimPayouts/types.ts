@@ -22,6 +22,7 @@ export interface OverviewProps {
 }
 
 export interface FormProps {
+  onResize: () => void;
   setSection: (s: number) => void;
   payouts: ActivePayout[] | null;
   setPayouts: (p: ActivePayout[] | null) => void;

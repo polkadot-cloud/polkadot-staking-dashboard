@@ -33,7 +33,13 @@ import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef(
   (
-    { setSection, unlock, task, incrementCalculateHeight }: FormsProps,
+    {
+      setSection,
+      unlock,
+      task,
+      incrementCalculateHeight,
+      onResize,
+    }: FormsProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const { t } = useTranslation('modals');
@@ -185,6 +191,7 @@ export const Forms = forwardRef(
               />,
             ]}
             {...submitExtrinsic}
+            onResize={onResize}
           />
         </div>
       </ContentWrapper>

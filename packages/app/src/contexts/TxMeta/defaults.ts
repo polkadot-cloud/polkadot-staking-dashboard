@@ -7,10 +7,5 @@ import type { TxMetaContextInterface } from './types';
 export const defaultTxMeta: TxMetaContextInterface = {
   uids: [],
   getTxSubmission: (uid) => undefined,
-  setSender: (s) => {},
-  txFees: 0n,
-  txFeesValid: false,
-  setTxFees: (f) => {},
-  resetTxFees: () => {},
-  notEnoughFunds: false,
+  getTxSubmissionByTag: (tag) => undefined,
 };

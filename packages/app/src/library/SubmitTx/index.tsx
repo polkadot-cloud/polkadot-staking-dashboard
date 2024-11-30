@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useNetwork } from 'contexts/Network';
@@ -26,18 +28,30 @@ export const SubmitTx = ({
   proxySupported,
   displayFor = 'default',
   fromController = false,
+  onResize,
 }: SubmitTxProps) => {
   const { t } = useTranslation();
   const { getBondedAccount } = useBonded();
+  const {
+    consts: { existentialDeposit },
+  } = useApi();
+  const { getTxSubmission } = useTxMeta();
   const { unit } = useNetwork().networkData;
   const { setModalResize } = useOverlay().modal;
-  const { notEnoughFunds, getTxSubmission } = useTxMeta();
+  const { getBalance, getEdReserved } = useBalances();
   const { activeAccount, activeProxy } = useActiveAccounts();
   const { getAccount, requiresManualSign } = useImportedAccounts();
-  const controller = getBondedAccount(activeAccount);
 
+  const controller = getBondedAccount(activeAccount);
   const txSubmission = getTxSubmission(uid);
   const from = txSubmission?.from || null;
+  const fee = txSubmission?.fee || 0n;
+
+  const edReserved = getEdReserved(from, existentialDeposit);
+  const { free, frozen } = getBalance(from);
+  const balanceforTxFees = free.minus(edReserved).minus(frozen);
+  const notEnoughFunds =
+    balanceforTxFees.minus(fee.toString()).isLessThan(0) && fee > 0n;
 
   // Default to active account
   let signingOpts = {
@@ -65,9 +79,12 @@ export const SubmitTx = ({
         : t('submit', { ns: 'modals' })
     }`;
 
-  // Set resize on not enough funds.
+  // Set resize on submit footer UI height changes.
   useEffect(() => {
     setModalResize();
+    if (onResize) {
+      onResize();
+    }
   }, [notEnoughFunds, fromController]);
 
   return (
@@ -89,9 +106,11 @@ export const SubmitTx = ({
             buttons={buttons}
             submitAddress={submitAddress}
             displayFor={displayFor}
+            notEnoughFunds={notEnoughFunds}
           />
         ) : (
           <Default
+            uid={uid}
             onSubmit={onSubmit}
             submitting={submitting}
             valid={valid}
@@ -99,6 +118,7 @@ export const SubmitTx = ({
             buttons={buttons}
             submitAddress={submitAddress}
             displayFor={displayFor}
+            notEnoughFunds={notEnoughFunds}
           />
         )
       }

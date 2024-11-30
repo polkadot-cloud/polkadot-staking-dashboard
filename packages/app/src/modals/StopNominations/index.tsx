@@ -8,7 +8,6 @@ import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -24,7 +23,6 @@ import { useTranslation } from 'react-i18next';
 export const StopNominations = () => {
   const { t } = useTranslation('modals');
   const { network } = useNetwork();
-  const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
   const { getNominations } = useBalances();
   const { activeAccount } = useActiveAccounts();
@@ -32,7 +30,6 @@ export const StopNominations = () => {
   const {
     setModalStatus,
     config: { options },
-    setModalResize,
   } = useOverlay().modal;
   const { activePoolNominations, isNominator, isOwner, activePool } =
     useActivePool();
@@ -93,8 +90,6 @@ export const StopNominations = () => {
   if (!nominations.length) {
     warnings.push(`${t('noNominationsSet')}`);
   }
-
-  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   useEffect(() => setValid(isValid), [isValid]);
 

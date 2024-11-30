@@ -8,7 +8,6 @@ import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useNetwork } from 'contexts/Network';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
-import { useTxMeta } from 'contexts/TxMeta';
 import { usePayeeConfig } from 'hooks/usePayeeConfig';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
@@ -29,12 +28,11 @@ export const UpdatePayee = () => {
   const { t } = useTranslation('modals');
   const { network } = useNetwork();
   const { getPayee } = useBalances();
-  const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
   const { getPayeeItems } = usePayeeConfig();
   const { activeAccount } = useActiveAccounts();
+  const { setModalStatus } = useOverlay().modal;
   const { getSignerWarnings } = useSignerWarnings();
-  const { setModalStatus, setModalResize } = useOverlay().modal;
 
   const controller = getBondedAccount(activeAccount);
   const payee = getPayee(activeAccount);
@@ -119,8 +117,6 @@ export const UpdatePayee = () => {
         : DefaultSelected
     );
   }, []);
-
-  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   const warnings = getSignerWarnings(
     activeAccount,
