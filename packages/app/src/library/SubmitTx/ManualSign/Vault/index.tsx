@@ -15,28 +15,32 @@ import type { SubmitProps } from '../../types';
 export const Vault = ({
   uid,
   onSubmit,
-  submitting,
+  processing,
   valid,
   submitText,
   buttons,
   submitAddress,
   displayFor,
   notEnoughFunds,
-}: SubmitProps & { buttons?: ReactNode[]; notEnoughFunds: boolean }) => {
+}: SubmitProps & {
+  buttons?: ReactNode[];
+  notEnoughFunds: boolean;
+  processing: boolean;
+}) => {
   const { t } = useTranslation('library');
   const { status: promptStatus } = usePrompt();
   const { accountHasSigner } = useImportedAccounts();
 
   // The state under which submission is disabled.
   const disabled =
-    submitting || !valid || !accountHasSigner(submitAddress) || notEnoughFunds;
+    processing || !valid || !accountHasSigner(submitAddress) || notEnoughFunds;
 
   // Format submit button based on whether signature currently exists or submission is ongoing.
   let buttonText: string;
   let buttonDisabled: boolean;
   let buttonPulse: boolean;
 
-  if (submitting) {
+  if (processing) {
     buttonText = submitText || '';
     buttonDisabled = disabled;
     buttonPulse = !(!valid || promptStatus !== 0);

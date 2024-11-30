@@ -16,14 +16,18 @@ import { ButtonSubmit } from 'ui-buttons';
 export const WalletConnect = ({
   uid,
   onSubmit,
-  submitting,
+  processing,
   valid,
   submitText,
   buttons,
   submitAddress,
   displayFor,
   notEnoughFunds,
-}: SubmitProps & { buttons?: ReactNode[]; notEnoughFunds: boolean }) => {
+}: SubmitProps & {
+  buttons?: ReactNode[];
+  notEnoughFunds: boolean;
+  processing: boolean;
+}) => {
   const { t } = useTranslation('library');
   const { getTxSubmission } = useTxMeta();
   const { accountHasSigner } = useImportedAccounts();
@@ -54,7 +58,7 @@ export const WalletConnect = ({
     onSubmit();
   };
 
-  if (submitting) {
+  if (processing) {
     buttonOnClick = connectAndSubmit;
     buttonDisabled = disabled;
     buttonPulse = false;
@@ -64,7 +68,7 @@ export const WalletConnect = ({
     buttonPulse = !disabled;
   }
 
-  const buttonText = submitting ? submitText || '' : t('sign');
+  const buttonText = processing ? submitText || '' : t('sign');
 
   return (
     <div className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}>

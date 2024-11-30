@@ -29,7 +29,7 @@ import {
   connectInjectedExtension,
   getPolkadotSignerFromPjs,
 } from 'polkadot-api/pjs-signer';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 export const useSubmitExtrinsic = ({
@@ -55,12 +55,6 @@ export const useSubmitExtrinsic = ({
 
   // Store the uid for this transaction.
   const [uid, setUid] = useState<number>(0);
-
-  // Store whether the transaction is in progress.
-  const [submitting, setSubmitting] = useState<boolean>(false);
-
-  // Track for one-shot transaction reset after submission.
-  const txSubmitted = useRef<boolean>(false);
 
   // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account. If
   // already wrapped, update `from` address and return.
@@ -96,7 +90,7 @@ export const useSubmitExtrinsic = ({
       return;
     }
     const account = getAccount(from);
-    if (account === null || submitting || !shouldSubmit) {
+    if (account === null || !shouldSubmit) {
       return;
     }
 
@@ -126,8 +120,7 @@ export const useSubmitExtrinsic = ({
     };
 
     const onInBlock = () => {
-      TxSubmission.removeUid(uid);
-      setSubmitting(false);
+      TxSubmission.setUidProcessing(uid, false);
       Notifications.emit({
         title: t('inBlock'),
         subtitle: t('transactionInBlock'),
@@ -138,11 +131,11 @@ export const useSubmitExtrinsic = ({
     };
 
     const onFinalizedEvent = () => {
+      TxSubmission.removeUid(uid);
       Notifications.emit({
         title: t('finalized'),
         subtitle: t('transactionSuccessful'),
       });
-      setSubmitting(false);
     };
 
     const onFailedTx = (err: Error) => {
@@ -153,12 +146,10 @@ export const useSubmitExtrinsic = ({
           subtitle: t('errorWithTransaction'),
         });
       }
-      setSubmitting(false);
     };
 
     const onError = (type?: string) => {
       TxSubmission.removeUid(uid);
-      setSubmitting(false);
       if (type === 'ledger') {
         handleResetLedgerTask();
       }
@@ -178,7 +169,6 @@ export const useSubmitExtrinsic = ({
     };
 
     // Pre-submission state updates
-    setSubmitting(true);
     TxSubmission.setUidProcessing(uid, true);
 
     // handle signed transaction.
@@ -218,7 +208,8 @@ export const useSubmitExtrinsic = ({
               );
             },
             closePrompt: () => closePrompt(),
-            setSubmitting,
+            setSubmitting: (val: boolean) =>
+              TxSubmission.setUidProcessing(uid, val),
           }).getPolkadotSigner();
           break;
 
@@ -244,16 +235,11 @@ export const useSubmitExtrinsic = ({
     }
 
     try {
-      // TODO: Move this subscription to TxSubmission and move event handlers to `TxMeta`.
       const sub = tx.signSubmitAndWatch(signer);
       sub.subscribe({
         next: (result: { type: string }) => {
           const eventType = result?.type;
 
-          if (!txSubmitted.current) {
-            txSubmitted.current = true;
-            setSubmitting(false);
-          }
           handleStatus(eventType);
           if (eventType === 'finalized') {
             onFinalizedEvent();
@@ -305,7 +291,6 @@ export const useSubmitExtrinsic = ({
   return {
     uid,
     onSubmit,
-    submitting,
     submitAddress: from,
     proxySupported: isProxySupported(tx, from),
   };

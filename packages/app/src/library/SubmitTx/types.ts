@@ -19,7 +19,6 @@ export type SubmitTxProps = SubmitProps & {
 export interface SubmitProps {
   uid: number;
   onSubmit: () => void;
-  submitting: boolean;
   valid: boolean;
   submitText?: string;
   submitAddress: MaybeAddress;
@@ -37,7 +36,7 @@ export interface SignerPromptProps {
 
 export interface LedgerSubmitProps {
   onSubmit: () => void;
-  submitting: boolean;
+  processing: boolean;
   displayFor?: DisplayFor;
   disabled: boolean;
   submitText?: string;

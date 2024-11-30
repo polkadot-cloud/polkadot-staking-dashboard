@@ -10,6 +10,7 @@ import { useBonded } from 'contexts/Bonded';
 import { useFastUnstake } from 'contexts/FastUnstake';
 import { useNetwork } from 'contexts/Network';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useTxMeta } from 'contexts/TxMeta';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useUnstaking } from 'hooks/useUnstaking';
@@ -36,11 +37,12 @@ export const ManageFastUnstake = () => {
     network,
     networkData: { units, unit },
   } = useNetwork();
+  const { getTxSubmission } = useTxMeta();
   const { getBondedAccount } = useBonded();
   const { isFastUnstaking } = useUnstaking();
   const { activeAccount } = useActiveAccounts();
-  const { setModalResize, setModalStatus } = useOverlay().modal;
   const { getSignerWarnings } = useSignerWarnings();
+  const { setModalResize, setModalStatus } = useOverlay().modal;
   const { feeReserve, getTransferOptions } = useTransferOptions();
   const { isExposed, counterForQueue, queueDeposit, meta } = useFastUnstake();
 
@@ -98,6 +100,8 @@ export const ManageFastUnstake = () => {
       setModalStatus('closing');
     },
   });
+
+  const processing = getTxSubmission(submitExtrinsic.uid)?.processing || false;
 
   // warnings
   const warnings = getSignerWarnings(
@@ -196,7 +200,7 @@ export const ManageFastUnstake = () => {
           fromController
           valid={valid}
           submitText={
-            submitExtrinsic.submitting
+            processing
               ? t('submitting')
               : t('fastUnstakeSubmit', {
                   context: isFastUnstaking ? 'cancel' : 'register',

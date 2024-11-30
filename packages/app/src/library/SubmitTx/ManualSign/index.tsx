@@ -10,7 +10,11 @@ import { Vault } from './Vault';
 import { WalletConnect } from './WalletConnect';
 
 export const ManualSign = (
-  props: SubmitProps & { buttons?: ReactNode[]; notEnoughFunds: boolean }
+  props: SubmitProps & {
+    buttons?: ReactNode[];
+    processing: boolean;
+    notEnoughFunds: boolean;
+  }
 ) => {
   const { getTxSubmission } = useTxMeta();
   const { getAccount } = useImportedAccounts();
