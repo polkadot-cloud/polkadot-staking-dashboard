@@ -4,7 +4,6 @@
 import { useLedgerAccounts } from '@w3ux/react-connect-kit';
 import type { LedgerAccount } from '@w3ux/react-connect-kit/types';
 import type { AnyJson } from '@w3ux/types';
-import { registerSaEvent } from 'Utils';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { getLocalLedgerAddresses } from 'contexts/LedgerHardware/Utils';
 import type { LedgerAddress } from 'contexts/LedgerHardware/types';
@@ -14,6 +13,7 @@ import { useOverlay } from 'kits/Overlay/Provider';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
 import { useTranslation } from 'react-i18next';
 import { ButtonMono, ButtonMonoInvert } from 'ui-buttons';
+import { registerSaEvent } from 'utils';
 
 export const Reset = ({ removeLedgerAddress }: AnyJson) => {
   const { t } = useTranslation('modals');

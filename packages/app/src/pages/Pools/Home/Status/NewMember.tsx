@@ -3,7 +3,6 @@
 
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { registerSaEvent } from 'Utils';
 import { useNetwork } from 'contexts/Network';
 import { useJoinPools } from 'contexts/Pools/JoinPools';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
@@ -13,6 +12,7 @@ import { CallToActionLoader } from 'library/Loader/CallToAction';
 import { PoolSync } from 'library/PoolSync';
 import { StyledLoader } from 'library/PoolSync/Loader';
 import { useTranslation } from 'react-i18next';
+import { registerSaEvent } from 'utils';
 import { usePoolsTabs } from '../context';
 import type { NewMemberProps } from './types';
 import { useStatusButtons } from './useStatusButtons';

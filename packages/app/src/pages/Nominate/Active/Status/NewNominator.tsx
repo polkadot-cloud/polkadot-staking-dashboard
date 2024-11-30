@@ -12,7 +12,7 @@ import { CallToActionWrapper } from 'library/CallToAction';
 import { CallToActionLoader } from 'library/Loader/CallToAction';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { registerSaEvent } from 'Utils';
+import { registerSaEvent } from 'utils';
 import type { NewNominatorProps } from '../types';
 
 export const NewNominator = ({ syncing }: NewNominatorProps) => {

@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { extractUrlValue, varToUrlHash } from '@w3ux/utils';
-import { registerSaEvent } from 'app/src/Utils';
 import type { i18n } from 'i18next';
+import { registerSaEvent } from 'utils';
 import { DefaultLocale, fallbackResources, lngNamespaces, locales } from '.';
 import type { LocaleJson, LocaleJsonValue } from './types';
 

@@ -3,11 +3,11 @@
 
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { registerSaEvent } from 'Utils';
 import { useNetwork } from 'contexts/Network';
 import { useUi } from 'contexts/UI';
 import { useDotLottieButton } from 'hooks/useDotLottieButton';
 import { Link } from 'react-router-dom';
+import { registerSaEvent } from 'utils';
 import type { PrimaryProps } from '../types';
 import { Wrapper } from './Wrappers';
 

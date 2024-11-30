@@ -4,7 +4,6 @@
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import type { AnyJson } from '@w3ux/types';
 import { ellipsisFn, setStateWithRef } from '@w3ux/utils';
-import { registerSaEvent } from 'Utils';
 import { useLedgerHardware } from 'contexts/LedgerHardware';
 import {
   getLedgerApp,
@@ -20,6 +19,7 @@ import { useOverlay } from 'kits/Overlay/Provider';
 import type { FC } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { registerSaEvent } from 'utils';
 import { Manage } from './Manage';
 import { Splash } from './Splash';
 

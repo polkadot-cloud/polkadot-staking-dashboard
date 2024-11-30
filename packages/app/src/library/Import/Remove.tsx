@@ -10,7 +10,7 @@ import { Notifications } from 'controllers/Notifications';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
 import { useTranslation } from 'react-i18next';
 import { ButtonMono, ButtonMonoInvert } from 'ui-buttons';
-import { registerSaEvent } from 'Utils';
+import { registerSaEvent } from 'utils';
 import type { RemoveProps } from './types';
 
 export const Remove = ({

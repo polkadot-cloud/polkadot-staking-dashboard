@@ -12,7 +12,7 @@ import { QrScanSignature } from 'library/QRCode/ScanSignature';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ButtonSecondary } from 'ui-buttons';
-import { registerSaEvent } from 'Utils';
+import { registerSaEvent } from 'utils';
 
 export const Reader = () => {
   const { t } = useTranslation('modals');

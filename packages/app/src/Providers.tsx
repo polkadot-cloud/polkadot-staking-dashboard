@@ -46,7 +46,7 @@ import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries';
 import { WalletConnectProvider } from 'contexts/WalletConnect';
 import { OverlayProvider } from 'kits/Overlay/Provider';
 import { ThemedRouter } from 'Themes';
-import { registerSaEvent } from 'Utils';
+import { registerSaEvent } from 'utils';
 
 export const Providers = () => {
   const { network } = useNetwork();

@@ -21,7 +21,6 @@ export interface SubmitProps {
   onSubmit: () => void;
   valid: boolean;
   submitText?: string;
-  customEvent?: string;
   submitAddress: MaybeAddress;
   displayFor?: DisplayFor;
 }

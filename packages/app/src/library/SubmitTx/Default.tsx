@@ -17,7 +17,6 @@ export const Default = ({
   valid,
   submitText,
   buttons,
-  customEvent,
   submitAddress,
   displayFor,
   notEnoughFunds,
@@ -45,7 +44,7 @@ export const Default = ({
               text={submitText || ''}
               iconLeft={faArrowAltCircleUp}
               iconTransform="grow-2"
-              onClick={() => onSubmit(customEvent)}
+              onClick={() => onSubmit()}
               disabled={disabled}
               pulse={!disabled}
             />
@@ -55,7 +54,7 @@ export const Default = ({
       {displayFor === 'card' && (
         <ButtonSubmitLarge
           disabled={disabled}
-          onSubmit={() => onSubmit(customEvent)}
+          onSubmit={() => onSubmit()}
           submitText={submitText || ''}
           icon={faArrowAltCircleUp}
           pulse={!disabled}

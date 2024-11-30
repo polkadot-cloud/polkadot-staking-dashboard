@@ -27,7 +27,6 @@ export const SubmitTx = ({
   proxySupported,
   displayFor = 'default',
   fromController = false,
-  customEvent,
   onResize,
 }: SubmitTxProps) => {
   const { t } = useTranslation();
@@ -106,7 +105,6 @@ export const SubmitTx = ({
             submitText={submitText}
             buttons={buttons}
             submitAddress={submitAddress}
-            customEvent={customEvent}
             displayFor={displayFor}
             notEnoughFunds={notEnoughFunds}
           />
@@ -119,7 +117,6 @@ export const SubmitTx = ({
             submitText={submitText}
             buttons={buttons}
             submitAddress={submitAddress}
-            customEvent={customEvent}
             displayFor={displayFor}
             notEnoughFunds={notEnoughFunds}
           />
