@@ -3,7 +3,6 @@
 
 import { useLedgerHardware } from 'contexts/LedgerHardware';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle';
 import { ModalMotionTwoSection } from 'kits/Overlay/structure/ModalMotionTwoSection';
@@ -17,7 +16,6 @@ import { Tasks } from './Tasks';
 
 export const ManagePool = () => {
   const { t } = useTranslation('modals');
-  const { notEnoughFunds } = useTxMeta();
   const { activePool } = useActivePool();
   const { integrityChecked } = useLedgerHardware();
   const { setModalHeight, modalMaxHeight } = useOverlay().modal;
@@ -38,7 +36,7 @@ export const ManagePool = () => {
   const tasksRef = useRef<HTMLDivElement>(null);
   const formsRef = useRef<HTMLDivElement>(null);
 
-  const refreshModalHeight = () => {
+  const onResize = () => {
     let height = headerRef.current?.clientHeight || 0;
     if (section === 0) {
       height += tasksRef.current?.clientHeight || 0;
@@ -50,20 +48,19 @@ export const ManagePool = () => {
 
   // Resize modal on state change.
   useEffect(() => {
-    refreshModalHeight();
+    onResize();
   }, [
     integrityChecked,
     section,
     task,
-    notEnoughFunds,
     calculateHeight,
     activePool?.bondedPool?.state,
   ]);
 
   useEffect(() => {
-    window.addEventListener('resize', refreshModalHeight);
+    window.addEventListener('resize', onResize);
     return () => {
-      window.removeEventListener('resize', refreshModalHeight);
+      window.removeEventListener('resize', onResize);
     };
   }, []);
 
@@ -99,6 +96,7 @@ export const ManagePool = () => {
 
         <div className="section">
           <Forms
+            onResize={onResize}
             setSection={setSection}
             task={task}
             section={section}

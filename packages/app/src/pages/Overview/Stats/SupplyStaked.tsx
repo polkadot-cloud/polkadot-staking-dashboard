@@ -5,8 +5,8 @@ import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { Pie } from 'library/StatBoxList/Pie';
-import { planckToUnitBn } from 'library/Utils';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn } from 'utils';
 
 export const SupplyStakedStat = () => {
   const { t } = useTranslation('pages');

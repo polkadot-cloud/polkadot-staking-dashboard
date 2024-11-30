@@ -3,6 +3,9 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { rmCommas } from '@w3ux/utils';
+import { PoolWithdraw } from 'api/tx/poolWithdraw';
+import { StakingRebond } from 'api/tx/stakingRebond';
+import { StakingWithdraw } from 'api/tx/stakingWithdraw';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
@@ -21,22 +24,28 @@ import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
 import { Warning } from 'library/Form/Warning';
 import { SubmitTx } from 'library/SubmitTx';
-import { planckToUnitBn } from 'library/Utils';
-import type { ForwardedRef } from 'react';
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState, type ForwardedRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ButtonSubmitInvert } from 'ui-buttons';
-import { ContentWrapper } from './Wrappers';
+import { planckToUnitBn } from 'utils';
 import type { FormsProps } from './types';
+import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef(
   (
-    { setSection, unlock, task, incrementCalculateHeight }: FormsProps,
+    {
+      setSection,
+      unlock,
+      task,
+      incrementCalculateHeight,
+      onResize,
+    }: FormsProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const { t } = useTranslation('modals');
-    const { api, consts } = useApi();
+    const { consts } = useApi();
     const {
+      network,
       networkData: { units, unit },
     } = useNetwork();
     const { activePool } = useActivePool();
@@ -65,24 +74,29 @@ export const Forms = forwardRef(
       (unlock?.value?.toNumber() || 0) > 0 || false
     );
 
-    // tx to submit
     const getTx = () => {
-      let tx = null;
-      if (!valid || !api || !unlock) {
-        return tx;
+      if (!valid || !unlock) {
+        return null;
       }
-      // rebond is only available when staking directly.
       if (task === 'rebond' && isStaking) {
-        tx = api.tx.staking.rebond(unlock.value.toNumber() || 0);
-      } else if (task === 'withdraw' && isStaking) {
-        tx = api.tx.staking.withdrawUnbonded(historyDepth.toString());
-      } else if (task === 'withdraw' && isPooling && activePool) {
-        tx = api.tx.nominationPools.withdrawUnbonded(
-          activeAccount,
-          historyDepth.toString()
-        );
+        return new StakingRebond(
+          network,
+          BigInt(unlock.value.toNumber() || 0)
+        ).tx();
       }
-      return tx;
+      if (task === 'withdraw' && isStaking) {
+        return new StakingWithdraw(network, historyDepth.toNumber()).tx();
+      }
+      if (task === 'withdraw' && isPooling && activePool) {
+        if (activeAccount) {
+          return new PoolWithdraw(
+            network,
+            activeAccount,
+            historyDepth.toNumber()
+          ).tx();
+        }
+      }
+      return null;
     };
     const signingAccount = isStaking ? controller : activeAccount;
     const submitExtrinsic = useSubmitExtrinsic({
@@ -177,6 +191,7 @@ export const Forms = forwardRef(
               />,
             ]}
             {...submitExtrinsic}
+            onResize={onResize}
           />
         </div>
       </ContentWrapper>

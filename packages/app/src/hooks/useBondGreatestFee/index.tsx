@@ -1,19 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { PoolBondExtra } from 'api/tx/poolBondExtra';
+import { StakingBondExtra } from 'api/tx/stakingBondExtra';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useEffect, useMemo, useState } from 'react';
 import type { BondFor } from 'types';
 
-interface Props {
-  bondFor: BondFor;
-}
-
-export const useBondGreatestFee = ({ bondFor }: Props) => {
-  const { api } = useApi();
+export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
+  const { network } = useNetwork();
   const { activeAccount } = useActiveAccounts();
   const { feeReserve, getTransferOptions } = useTransferOptions();
   const transferOptions = useMemo(
@@ -44,20 +42,15 @@ export const useBondGreatestFee = ({ bondFor }: Props) => {
     ).toString();
 
     let tx = null;
-    if (!api) {
-      return new BigNumber(0);
-    }
     if (bondFor === 'pool') {
-      tx = api.tx.nominationPools.bondExtra({
-        FreeBalance: bond,
-      });
+      tx = new PoolBondExtra(network, 'FreeBalance', BigInt(bond)).tx();
     } else if (bondFor === 'nominator') {
-      tx = api.tx.staking.bondExtra(bond);
+      tx = new StakingBondExtra(network, BigInt(bond)).tx();
     }
 
     if (tx) {
-      const { partialFee } = await tx.paymentInfo(activeAccount || '');
-      return new BigNumber(partialFee.toString());
+      const { partial_fee } = await tx.getPaymentInfo(activeAccount || '');
+      return new BigNumber(partial_fee.toString());
     }
     return new BigNumber(0);
   };

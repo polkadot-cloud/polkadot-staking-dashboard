@@ -5,6 +5,7 @@ import type { AnyApi, MaybeAddress } from 'types';
 
 export interface UseSubmitExtrinsicProps {
   tx: AnyApi;
+  tag?: string;
   from: MaybeAddress;
   shouldSubmit: boolean;
   callbackSubmit?: () => void;
@@ -14,7 +15,8 @@ export interface UseSubmitExtrinsicProps {
 export interface UseSubmitExtrinsic {
   uid: number;
   onSubmit: () => void;
-  submitting: boolean;
   proxySupported: boolean;
   submitAddress: MaybeAddress;
 }
+
+export type UnsafeTx = AnyApi;

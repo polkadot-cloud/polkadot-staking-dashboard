@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { unitToPlanck } from '@w3ux/utils';
+import { StakingChill } from 'api/tx/stakingChill';
+import { StakingUnbond } from 'api/tx/stakingUnbond';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useNetwork } from 'contexts/Network';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTxMeta } from 'contexts/TxMeta';
 import { getUnixTime } from 'date-fns';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
@@ -21,18 +22,18 @@ import { ActionItem } from 'library/ActionItem';
 import { Warning } from 'library/Form/Warning';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { planckToUnitBn, timeleftAsString } from 'library/Utils';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn, timeleftAsString } from 'utils';
 
 export const Unstake = () => {
   const { t } = useTranslation('modals');
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
-  const { api, consts } = useApi();
-  const { notEnoughFunds } = useTxMeta();
+  const { consts } = useApi();
   const { newBatchCall } = useBatchCall();
   const { getBondedAccount } = useBonded();
   const { getNominations } = useBalances();
@@ -76,26 +77,23 @@ export const Unstake = () => {
   }, [freeToUnbond.toString(), isValid]);
 
   // modal resize on form update
-  useEffect(() => setModalResize(), [bond, notEnoughFunds]);
+  useEffect(() => setModalResize(), [bond]);
 
-  // tx to submit
   const getTx = () => {
     const tx = null;
-    if (!api || !activeAccount) {
+    if (!activeAccount) {
       return tx;
     }
-    // remove decimal errors
     const bondToSubmit = unitToPlanck(
-      String(!bondValid ? '0' : bond.bond),
+      String(!bondValid ? 0 : bond.bond),
       units
     );
-
     if (bondToSubmit == 0n) {
-      return api.tx.staking.chill();
+      return new StakingChill(network).tx();
     }
     const txs = [
-      api.tx.staking.chill(),
-      api.tx.staking.unbond(bondToSubmit.toString()),
+      new StakingChill(network).tx(),
+      new StakingUnbond(network, bondToSubmit).tx(),
     ];
     return newBatchCall(txs, controller);
   };

@@ -19,4 +19,5 @@ export const defaultBalancesContext: BalancesContextInterface = {
   getPayee: (address) => defaultPayee,
   getPoolMembership: (address) => null,
   getNominations: (address) => [],
+  getEdReserved: (address, existentialDeposit) => new BigNumber(0),
 };

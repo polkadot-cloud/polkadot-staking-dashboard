@@ -1,22 +1,14 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ApiPromise } from '@polkadot/api';
-import type { AnyJson } from '@w3ux/types';
+import type { ApiStatus, ConnectionType, PapiChainSpec } from 'api/types';
 import type BigNumber from 'bignumber.js';
-import type { ApiStatus, ConnectionType } from 'model/Api/types';
 import type { ReactNode } from 'react';
-import type { NetworkName } from '../../types';
+import type { NetworkId } from '../../types';
 
 export interface APIProviderProps {
   children: ReactNode;
-  network: NetworkName;
-}
-
-export interface APIChainState {
-  chain: string | null;
-  version: AnyJson;
-  ss58Prefix: number;
+  network: NetworkId;
 }
 
 export interface APIConstants {
@@ -40,6 +32,9 @@ export interface APINetworkMetrics {
   minimumActiveStake: BigNumber;
 }
 
+export type PapiChainSpecContext = PapiChainSpec & {
+  received: boolean;
+};
 export interface APIActiveEra {
   index: BigNumber;
   start: BigNumber;
@@ -59,7 +54,6 @@ export interface APIPoolsConfig {
 }
 
 export interface APIStakingMetrics {
-  totalNominators: BigNumber;
   totalValidators: BigNumber;
   lastReward: BigNumber;
   lastTotalStake: BigNumber;
@@ -71,9 +65,7 @@ export interface APIStakingMetrics {
 }
 
 export interface APIContextInterface {
-  api: ApiPromise | null;
-  peopleApi: ApiPromise | null;
-  chainState: APIChainState;
+  chainSpecs: PapiChainSpecContext;
   isReady: boolean;
   apiStatus: ApiStatus;
   peopleApiStatus: ApiStatus;

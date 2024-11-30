@@ -2,10 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import BigNumber from 'bignumber.js';
+import { PoolSetCommission } from 'api/tx/poolSetCommission';
+import { PoolSetCommissionChangeRate } from 'api/tx/poolSetCommissionChangeRate';
+import { PoolSetCommissionMax } from 'api/tx/poolSetCommissionMax';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
+import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useBatchCall } from 'hooks/useBatchCall';
@@ -18,8 +21,7 @@ import { ActionItem } from 'library/ActionItem';
 import { Warning } from 'library/Form/Warning';
 import { SubmitTx } from 'library/SubmitTx';
 import 'rc-slider/assets/index.css';
-import type { Dispatch, SetStateAction } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ButtonHelp, ButtonSubmitInvert } from 'ui-buttons';
 import { ChangeRate } from './ChangeRate';
@@ -30,22 +32,17 @@ import { usePoolCommission } from './provider';
 export const ManageCommission = ({
   setSection,
   incrementCalculateHeight,
+  onResize,
 }: {
   setSection: Dispatch<SetStateAction<number>>;
   incrementCalculateHeight: () => void;
+  onResize: () => void;
 }) => {
   const { t } = useTranslation('modals');
   const { openHelp } = useHelp();
   const {
-    api,
     poolsConfig: { globalMaxCommission },
   } = useApi();
-  const { newBatchCall } = useBatchCall();
-  const { activeAccount } = useActiveAccounts();
-  const { setModalStatus } = useOverlay().modal;
-  const { isOwner, activePool } = useActivePool();
-  const { getSignerWarnings } = useSignerWarnings();
-  const { getBondedPool, updateBondedPools } = useBondedPools();
   const {
     getInitial,
     getCurrent,
@@ -55,6 +52,13 @@ export const ManageCommission = ({
     resetAll,
     isUpdated,
   } = usePoolCommission();
+  const { network } = useNetwork();
+  const { newBatchCall } = useBatchCall();
+  const { activeAccount } = useActiveAccounts();
+  const { setModalStatus } = useOverlay().modal;
+  const { isOwner, activePool } = useActivePool();
+  const { getSignerWarnings } = useSignerWarnings();
+  const { getBondedPool, updateBondedPools } = useBondedPools();
 
   const poolId = activePool?.id || 0;
   const bondedPool = getBondedPool(poolId);
@@ -123,42 +127,34 @@ export const ManageCommission = ({
     (isUpdated('max_commission') && getEnabled('max_commission')) ||
     (isUpdated('change_rate') && getEnabled('change_rate'));
 
-  // tx to submit.
   const getTx = () => {
-    if (!valid || !api) {
+    if (!valid) {
       return null;
     }
-
     const txs = [];
     if (commissionUpdated) {
+      const commissionPerbill = commission * 10000000;
       txs.push(
-        api.tx.nominationPools.setCommission(
+        new PoolSetCommission(
+          network,
           poolId,
-          currentCommissionSet
-            ? [
-                new BigNumber(commission).multipliedBy(10000000).toString(),
-                payee,
-              ]
-            : null
-        )
+          currentCommissionSet ? [commissionPerbill, payee] : undefined
+        ).tx()
       );
     }
     if (isUpdated('max_commission') && getEnabled('max_commission')) {
-      txs.push(
-        api.tx.nominationPools.setCommissionMax(
-          poolId,
-          new BigNumber(maxCommission).multipliedBy(10000000).toString()
-        )
-      );
+      const maxPerbill = maxCommission * 10000000;
+      txs.push(new PoolSetCommissionMax(network, poolId, maxPerbill).tx());
     }
     if (isUpdated('change_rate') && getEnabled('change_rate')) {
+      const maxIncreasePerbill = changeRate.maxIncrease * 10000000;
       txs.push(
-        api.tx.nominationPools.setCommissionChangeRate(poolId, {
-          maxIncrease: new BigNumber(changeRate.maxIncrease)
-            .multipliedBy(10000000)
-            .toString(),
-          minDelay: changeRate.minDelay.toString(),
-        })
+        new PoolSetCommissionChangeRate(
+          network,
+          poolId,
+          maxIncreasePerbill,
+          changeRate.minDelay
+        ).tx()
       );
     }
 
@@ -322,6 +318,7 @@ export const ManageCommission = ({
             }}
           />,
         ]}
+        onResize={onResize}
         {...submitExtrinsic}
       />
     </>

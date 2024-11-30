@@ -5,7 +5,13 @@ import { usePrompt } from 'contexts/Prompt';
 import { ContentWrapper, HeightWrapper, PromptWrapper } from './Wrappers';
 
 export const Prompt = () => {
-  const { closePrompt, size, status, Prompt: PromptInner } = usePrompt();
+  const {
+    size,
+    status,
+    closePrompt,
+    Prompt: PromptInner,
+    closeOnOutsideClick,
+  } = usePrompt();
 
   if (status === 0) {
     return null;
@@ -17,7 +23,15 @@ export const Prompt = () => {
         <HeightWrapper size={size}>
           <ContentWrapper>{PromptInner}</ContentWrapper>
         </HeightWrapper>
-        <button type="button" className="close" onClick={() => closePrompt()}>
+        <button
+          type="button"
+          className="close"
+          onClick={() => {
+            if (closeOnOutsideClick) {
+              closePrompt();
+            }
+          }}
+        >
           &nbsp;
         </button>
       </div>

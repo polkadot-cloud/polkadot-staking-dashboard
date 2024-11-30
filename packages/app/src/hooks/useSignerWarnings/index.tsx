@@ -3,7 +3,7 @@
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useTxMeta } from 'contexts/TxMeta';
+import { useControllerSignerAvailable } from 'hooks/useControllerSignerAvailable';
 import { useTranslation } from 'react-i18next';
 import type { MaybeAddress } from 'types';
 
@@ -11,7 +11,7 @@ export const useSignerWarnings = () => {
   const { t } = useTranslation('modals');
   const { activeProxy } = useActiveAccounts();
   const { accountHasSigner } = useImportedAccounts();
-  const { controllerSignerAvailable } = useTxMeta();
+  const { controllerSignerAvailable } = useControllerSignerAvailable();
 
   const getSignerWarnings = (
     account: MaybeAddress,

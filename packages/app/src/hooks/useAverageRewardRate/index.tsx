@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { planckToUnitBn } from 'library/Utils';
+import { planckToUnitBn } from 'utils';
 import { useErasPerDay } from '../useErasPerDay';
 import { defaultAverageRewardRate } from './defaults';
 import type { AverageRewardRate, UseAverageRewardRate } from './types';

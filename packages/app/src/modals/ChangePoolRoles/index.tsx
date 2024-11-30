@@ -1,51 +1,37 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { PoolUpdateRoles } from 'api/tx/poolUpdateRoles';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RoleChange } from './RoleChange';
 import { Wrapper } from './Wrapper';
 
 export const ChangePoolRoles = () => {
   const { t } = useTranslation('modals');
-  const { api } = useApi();
-  const { activeAccount } = useActiveAccounts();
-  const { notEnoughFunds } = useTxMeta();
+  const { network } = useNetwork();
   const { replacePoolRoles } = useBondedPools();
+  const { activeAccount } = useActiveAccounts();
   const {
     setModalStatus,
     config: { options },
-    setModalResize,
   } = useOverlay().modal;
   const { id: poolId, roleEdits } = options;
 
-  // tx to submit
-  const getTx = () => {
-    let tx = null;
-    const root = roleEdits?.root?.newAddress
-      ? { Set: roleEdits?.root?.newAddress }
-      : 'Remove';
-    const nominator = roleEdits?.nominator?.newAddress
-      ? { Set: roleEdits?.nominator?.newAddress }
-      : 'Remove';
-    const bouncer = roleEdits?.bouncer?.newAddress
-      ? { Set: roleEdits?.bouncer?.newAddress }
-      : 'Remove';
+  const getTx = () =>
+    new PoolUpdateRoles(network, poolId, {
+      root: roleEdits?.root?.newAddress || undefined,
+      nominator: roleEdits?.nominator?.newAddress || undefined,
+      bouncer: roleEdits?.bouncer?.newAddress || undefined,
+    }).tx();
 
-    tx = api?.tx.nominationPools?.updateRoles(poolId, root, nominator, bouncer);
-    return tx;
-  };
-
-  // handle extrinsic
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
@@ -58,8 +44,6 @@ export const ChangePoolRoles = () => {
       replacePoolRoles(poolId, roleEdits);
     },
   });
-
-  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   return (
     <>

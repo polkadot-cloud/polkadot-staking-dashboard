@@ -2,9 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { PoolSetClaimPermission } from 'api/tx/poolSetClaimPermission';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
+import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import type { ClaimPermission } from 'contexts/Pools/types';
 import { defaultClaimPermission } from 'controllers/ActivePools/defaults';
@@ -24,12 +25,14 @@ import { ButtonSubmitInvert } from 'ui-buttons';
 export const SetClaimPermission = ({
   setSection,
   section,
+  onResize,
 }: {
   section: number;
   setSection: Dispatch<SetStateAction<number>>;
+  onResize: () => void;
 }) => {
   const { t } = useTranslation('modals');
-  const { api } = useApi();
+  const { network } = useNetwork();
   const { getPoolMembership } = useBalances();
   const { activeAccount } = useActiveAccounts();
   const { setModalStatus } = useOverlay().modal;
@@ -58,12 +61,11 @@ export const SetClaimPermission = ({
     setValid(isOwner() || (isMember() && claimPermission !== undefined));
   }, [isOwner(), isMember()]);
 
-  // tx to submit.
   const getTx = () => {
-    if (!valid || !api) {
+    if (!valid || !claimPermission) {
       return null;
     }
-    return api.tx.nominationPools.setClaimPermission(claimPermission);
+    return new PoolSetClaimPermission(network, claimPermission).tx();
   };
 
   const submitExtrinsic = useSubmitExtrinsic({
@@ -110,6 +112,7 @@ export const SetClaimPermission = ({
             onClick={() => setSection(0)}
           />,
         ]}
+        onResize={onResize}
         {...submitExtrinsic}
       />
     </>

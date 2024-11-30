@@ -13,13 +13,13 @@ import { useUnstaking } from 'hooks/useUnstaking';
 import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
-import { planckToUnitBn, timeleftAsString } from 'library/Utils';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import type { Dispatch, ForwardedRef, SetStateAction } from 'react';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { BondFor } from 'types';
 import { ButtonSubmit } from 'ui-buttons';
+import { planckToUnitBn, timeleftAsString } from 'utils';
 import { Chunk } from './Chunk';
 import { ContentWrapper } from './Wrappers';
 

@@ -5,7 +5,7 @@ import { setStateWithRef } from '@w3ux/utils';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { usePlugins } from 'contexts/Plugins';
-import { SubscanController } from 'controllers/Subscan';
+import { Subscan } from 'controllers/Subscan';
 import type {
   PayoutType,
   SubscanData,
@@ -28,7 +28,7 @@ export const useSubscanData = (keys: PayoutType[]) => {
   const dataRef = useRef(data);
 
   // Listen for updated data callback. When there are new data, fetch the updated values directly
-  // from `SubscanController` and commit to component state.
+  // from `Subscan` and commit to component state.
   const subscanPayoutsUpdatedCallback = (e: Event) => {
     // NOTE: Subscan has to be enabled to continue.
     if (isCustomEvent(e) && pluginEnabled('subscan')) {
@@ -40,8 +40,7 @@ export const useSubscanData = (keys: PayoutType[]) => {
         receivedKeys
           .filter((key) => keys.includes(key))
           .forEach((key) => {
-            newData[key] =
-              SubscanController.payoutData[activeAccount]?.[key] || [];
+            newData[key] = Subscan.payoutData[activeAccount]?.[key] || [];
           });
 
         setStateWithRef({ ...dataRef.current, ...newData }, setData, dataRef);
@@ -88,7 +87,7 @@ export const useSubscanData = (keys: PayoutType[]) => {
     if (activeAccount) {
       const newData: SubscanData = {};
       keys.forEach((key: PayoutType) => {
-        newData[key] = SubscanController.payoutData[activeAccount]?.[key] || [];
+        newData[key] = Subscan.payoutData[activeAccount]?.[key] || [];
       });
       setStateWithRef({ ...dataRef.current, ...newData }, setData, dataRef);
     }

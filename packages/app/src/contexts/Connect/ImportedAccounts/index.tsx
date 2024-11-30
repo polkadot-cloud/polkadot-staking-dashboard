@@ -11,7 +11,7 @@ import { ManualSigners } from 'consts';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
-import { BalancesController } from 'controllers/Balances';
+import { Balances } from 'controllers/Balances';
 import type { ReactNode } from 'react';
 import { createContext, useCallback, useContext } from 'react';
 import type { MaybeAddress } from 'types';
@@ -32,7 +32,7 @@ export const ImportedAccountsProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const { isReady, api } = useApi();
+  const { isReady } = useApi();
   const {
     network,
     networkData: { ss58 },
@@ -40,7 +40,6 @@ export const ImportedAccountsProvider = ({
   const { otherAccounts } = useOtherAccounts();
   const { getExtensionAccounts } = useExtensionAccounts();
   const { setActiveAccount, setActiveProxy } = useActiveAccounts();
-
   // Get the imported extension accounts formatted with the current network's ss58 prefix.
   const extensionAccounts = getExtensionAccounts(ss58);
 
@@ -114,11 +113,11 @@ export const ImportedAccountsProvider = ({
     [allAccountsStringified]
   );
 
-  // Keep accounts in sync with `BalancesController`.
+  // Keep accounts in sync with `Balances`.
   useEffectIgnoreInitial(() => {
-    if (api && isReady) {
-      BalancesController.syncAccounts(
-        api,
+    if (isReady) {
+      Balances.syncAccounts(
+        network,
         allAccounts.map((a) => a.address)
       );
     }

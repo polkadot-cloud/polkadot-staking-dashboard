@@ -10,10 +10,10 @@ import { fromUnixTime } from 'date-fns';
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
 import { useUnstaking } from 'hooks/useUnstaking';
 import { Countdown } from 'library/Countdown';
-import { formatTimeleft, planckToUnitBn } from 'library/Utils';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ButtonSubmit } from 'ui-buttons';
+import { formatTimeleft, planckToUnitBn } from 'utils';
 import { ChunkWrapper } from './Wrappers';
 import type { ChunkProps } from './types';
 

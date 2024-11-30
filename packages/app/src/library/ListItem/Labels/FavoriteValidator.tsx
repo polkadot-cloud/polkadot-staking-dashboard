@@ -6,7 +6,7 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTooltip } from 'contexts/Tooltip';
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
-import { NotificationsController } from 'controllers/Notifications';
+import { Notifications } from 'controllers/Notifications';
 import { TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useTranslation } from 'react-i18next';
 import type { FavoriteProps } from '../types';
@@ -44,7 +44,7 @@ export const FavoriteValidator = ({ address }: FavoriteProps) => {
           } else {
             addFavorite(address);
           }
-          NotificationsController.emit(notificationFavorite);
+          Notifications.emit(notificationFavorite);
         }}
       />
       <button type="button" className={isFavorite ? 'active' : undefined}>

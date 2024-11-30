@@ -3,98 +3,77 @@
 
 import { faSquarePen } from '@fortawesome/free-solid-svg-icons';
 import { appendOrEmpty } from '@w3ux/utils';
-import { useApi } from 'contexts/Api';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useWalletConnect } from 'contexts/WalletConnect';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge';
-import { useState, type ReactNode } from 'react';
+import type { SubmitProps } from 'library/SubmitTx/types';
+import { type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ButtonSubmit } from 'ui-buttons';
-import type { SubmitProps } from '../../types';
 
 export const WalletConnect = ({
+  uid,
   onSubmit,
-  submitting,
+  processing,
   valid,
   submitText,
   buttons,
   submitAddress,
   displayFor,
-}: SubmitProps & { buttons?: ReactNode[] }) => {
+  notEnoughFunds,
+}: SubmitProps & {
+  buttons?: ReactNode[];
+  notEnoughFunds: boolean;
+  processing: boolean;
+}) => {
   const { t } = useTranslation('library');
-  const { api } = useApi();
+  const { getTxSubmission } = useTxMeta();
   const { accountHasSigner } = useImportedAccounts();
-  const { wcSessionActive, connectProvider, fetchAddresses, signWcTx } =
+  const { wcSessionActive, connectProvider, fetchAddresses } =
     useWalletConnect();
-  const { txFeesValid, sender, getTxPayloadJson, setTxSignature } = useTxMeta();
 
-  // Store whether the user is currently signing a transaction.
-  const [isSgning, setIsSigning] = useState<boolean>(false);
+  const txSubmission = getTxSubmission(uid);
+  const from = txSubmission?.from || null;
 
   // The state under which submission is disabled.
-  const disabled =
-    submitting || !valid || !accountHasSigner(submitAddress) || !txFeesValid;
-  const alreadySubmitted = submitting;
+  const disabled = !valid || !accountHasSigner(submitAddress) || notEnoughFunds;
 
   // Format submit button based on whether signature currently exists or submission is ongoing.
   let buttonOnClick: () => void;
   let buttonDisabled: boolean;
   let buttonPulse: boolean;
 
-  if (alreadySubmitted) {
-    buttonOnClick = onSubmit;
+  const connectAndSubmit = async () => {
+    // If Wallet Connect session is not active, re-connect.
+    if (!wcSessionActive) {
+      await connectProvider();
+    }
+    const wcAccounts = await fetchAddresses();
+    const accountExists = from && wcAccounts.includes(from);
+    if (!from || !accountExists) {
+      return;
+    }
+    onSubmit();
+  };
+
+  if (processing) {
+    buttonOnClick = connectAndSubmit;
     buttonDisabled = disabled;
-    buttonPulse = valid;
+    buttonPulse = false;
   } else {
-    buttonOnClick = async () => {
-      if (!api) {
-        return;
-      }
-
-      // If Wallet Connect session is not active, re-connect.
-      if (!wcSessionActive) {
-        await connectProvider();
-      }
-
-      const wcAccounts = await fetchAddresses();
-      const accountExists = sender && wcAccounts.includes(sender);
-
-      const payload = getTxPayloadJson();
-      if (!sender || !payload || !accountExists) {
-        return;
-      }
-
-      setIsSigning(true);
-
-      const caip = `polkadot:${api.genesisHash.toHex().substring(2).substring(0, 32)}`;
-
-      try {
-        const signature = await signWcTx(caip, payload, sender);
-        if (signature) {
-          setTxSignature(signature);
-        }
-      } catch (e) {
-        setIsSigning(false);
-      }
-      setIsSigning(false);
-    };
-
+    buttonOnClick = connectAndSubmit;
     buttonDisabled = disabled;
     buttonPulse = !disabled;
   }
 
-  const buttonText = alreadySubmitted
-    ? submitText || ''
-    : isSgning
-      ? t('signing')
-      : t('sign');
+  const buttonText = processing ? submitText || '' : t('sign');
 
   return (
     <div className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}>
       <div>
-        <EstimatedTxFee />
+        <EstimatedTxFee uid={uid} />
         {valid ? <p>{t('submitTransaction')}</p> : <p>...</p>}
       </div>
       <div>

@@ -5,8 +5,8 @@ import { capitalizeFirstLetter } from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
 import { useSyncing } from 'hooks/useSyncing';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
-import { planckToUnitBn } from 'library/Utils';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn } from 'utils';
 import type { EraStatusProps } from '../types';
 
 export const EraStatus = ({ noMargin, status, totalStake }: EraStatusProps) => {

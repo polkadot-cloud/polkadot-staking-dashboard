@@ -1,18 +1,19 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { rmCommas } from '@w3ux/utils';
+import { PoolPointsToBalance } from 'api/runtimeApi/poolPointsToBalance';
 import BigNumber from 'bignumber.js';
 import { MaxEraRewardPointsEras } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
+import { Apis } from 'controllers/Apis';
 import { PoolSync } from 'library/PoolSync';
 import { StyledLoader } from 'library/PoolSync/Loader';
-import { planckToUnitBn } from 'library/Utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { CSSProperties } from 'styled-components';
+import { planckToUnitBn } from 'utils';
 import type { OverviewSectionProps } from '../types';
 import { HeadingWrapper } from '../Wrappers';
 
@@ -23,13 +24,14 @@ export const Stats = ({
 }: OverviewSectionProps) => {
   const { t } = useTranslation('library');
   const {
+    network,
     networkData: {
       units,
       unit,
       brand: { token: Token },
     },
   } = useNetwork();
-  const { isReady, api } = useApi();
+  const { isReady } = useApi();
   const { getPoolRewardPoints } = usePoolPerformance();
   const poolRewardPoints = getPoolRewardPoints(performanceKey);
   const rawEraRewardPoints = Object.values(
@@ -41,16 +43,17 @@ export const Stats = ({
 
   // Fetches the balance of the bonded pool.
   const getPoolBalance = async () => {
+    const api = Apis.getApi(network);
     if (!api) {
       return;
     }
 
-    const balance = (
-      await api.call.nominationPoolsApi.pointsToBalance(
-        bondedPool.id,
-        rmCommas(bondedPool.points)
-      )
-    ).toString();
+    const apiResult = await new PoolPointsToBalance(
+      network,
+      bondedPool.id,
+      BigInt(bondedPool.points)
+    ).fetch();
+    const balance = new BigNumber(apiResult?.toString() || 0);
 
     if (balance) {
       setPoolBalance(new BigNumber(balance));

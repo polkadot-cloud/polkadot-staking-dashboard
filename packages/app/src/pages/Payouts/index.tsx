@@ -7,7 +7,7 @@ import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
-import { SubscanController } from 'controllers/Subscan';
+import { Subscan } from 'controllers/Subscan';
 import { useSubscanData } from 'hooks/useSubscanData';
 import { useSyncing } from 'hooks/useSyncing';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
@@ -55,12 +55,12 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   // Inject `block_timestamp` for unclaimed payouts.
   data['unclaimedPayouts'] = injectBlockTimestamp(data?.unclaimedPayouts || []);
 
-  const payoutsFromDate = SubscanController.payoutsFromDate(
+  const payoutsFromDate = Subscan.payoutsFromDate(
     (data?.payouts || []).concat(data?.poolClaims || []),
     locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
   );
 
-  const payoutsToDate = SubscanController.payoutsToDate(
+  const payoutsToDate = Subscan.payoutsToDate(
     (data?.payouts || []).concat(data?.poolClaims || []),
     locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
   );
@@ -68,7 +68,7 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   useEffect(() => {
     // filter zero rewards and order via block timestamp, most recent first.
     setPayoutLists(
-      SubscanController.removeNonZeroAmountAndSort(
+      Subscan.removeNonZeroAmountAndSort(
         (data?.payouts || []).concat(data?.poolClaims || [])
       )
     );

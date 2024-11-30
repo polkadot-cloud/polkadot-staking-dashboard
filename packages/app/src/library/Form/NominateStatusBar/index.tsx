@@ -7,9 +7,9 @@ import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
 import { useNetwork } from 'contexts/Network';
 import { useSyncing } from 'hooks/useSyncing';
-import { planckToUnitBn } from 'library/Utils';
 import { useTranslation } from 'react-i18next';
 import { ButtonHelp } from 'ui-buttons';
+import { planckToUnitBn } from 'utils';
 import type { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 

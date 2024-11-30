@@ -6,13 +6,19 @@ import type { MaybeString } from 'types';
 
 export interface PromptContextInterface {
   setOnClosePrompt: (onClosePrompt: (() => void) | null) => void;
-  openPromptWith: (o: ReactNode | null, s?: string) => void;
+  openPromptWith: (
+    o: ReactNode | null,
+    s?: string,
+    closeOnOutsideClick?: boolean
+  ) => void;
   closePrompt: () => void;
   setStatus: (s: number) => void;
   setPrompt: (d: MaybeString) => void;
   size: string;
   status: number;
   Prompt: Prompt;
+  closeOnOutsideClick: boolean;
+  setCloseOnOutsideClick: (canClose: boolean) => void;
 }
 
 export interface PromptState {

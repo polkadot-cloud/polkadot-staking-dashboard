@@ -1,8 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { FastUnstakeHead } from 'api/subscribe/fastUnstakeConfig/types';
 import type BigNumber from 'bignumber.js';
-import type { AnyApi, MaybeAddress } from 'types';
+import type { MaybeAddress } from 'types';
 
 export interface LocalMeta {
   isExposed: boolean;
@@ -17,7 +18,17 @@ export interface FastUnstakeContextInterface {
   checking: boolean;
   meta: MetaInterface;
   isExposed: boolean | null;
-  queueDeposit: BigNumber | null;
-  head: AnyApi;
-  counterForQueue: number | null;
+  queueDeposit: FastUnstakeQueueDeposit | undefined;
+  head: FastUnstakeHead | undefined;
+  counterForQueue: number | undefined;
+}
+
+export interface FastUnstakeQueueDeposit {
+  address: string;
+  deposit: BigNumber;
+}
+
+export interface FastUnstakeQueueResult {
+  address: string;
+  deposit: bigint;
 }

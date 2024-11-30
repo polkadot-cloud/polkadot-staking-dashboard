@@ -9,7 +9,6 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useHelp } from 'contexts/Help';
 import { useLedgerHardware } from 'contexts/LedgerHardware';
 import type { LedgerResponse } from 'contexts/LedgerHardware/types';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import type { ReactNode } from 'react';
@@ -22,13 +21,18 @@ import { Submit } from './Submit';
 export const Ledger = ({
   uid,
   onSubmit,
-  submitting,
+  processing,
   valid,
   submitText,
   buttons,
   submitAddress,
   displayFor,
-}: SubmitProps & { buttons?: ReactNode[] }) => {
+  notEnoughFunds,
+}: SubmitProps & {
+  buttons?: ReactNode[];
+  notEnoughFunds: boolean;
+  processing: boolean;
+}) => {
   const { t } = useTranslation('library');
   const {
     setFeedback,
@@ -43,8 +47,6 @@ export const Ledger = ({
     setStatusCode,
   } = useLedgerHardware();
   const { openHelp } = useHelp();
-  const { txFeesValid } = useTxMeta();
-  const { setTxSignature } = useTxMeta();
   const { setModalResize } = useOverlay().modal;
   const { accountHasSigner } = useImportedAccounts();
 
@@ -59,12 +61,8 @@ export const Ledger = ({
       if (uid !== body.uid) {
         // UIDs do not match, so this is not the transaction we are waiting for.
         setFeedback(t('wrongTransaction'), 'Wrong Transaction');
-        setTxSignature(null);
       } else {
-        // Important: only set the signature (and therefore trigger the transaction submission) if
-        // UIDs match.
         setStatusCode(ack, statusCode);
-        setTxSignature(body.sig);
       }
       // Reset state pertaining to this transaction.
       resetStatusCode();
@@ -80,8 +78,8 @@ export const Ledger = ({
   const disabled =
     !accountHasSigner(submitAddress) ||
     !valid ||
-    submitting ||
-    !txFeesValid ||
+    processing ||
+    notEnoughFunds ||
     getIsExecuting();
 
   // Resize modal on content change.
@@ -90,8 +88,8 @@ export const Ledger = ({
   }, [
     integrityChecked,
     valid,
-    submitting,
-    txFeesValid,
+    processing,
+    notEnoughFunds,
     getStatusCode(),
     getIsExecuting(),
   ]);
@@ -112,9 +110,8 @@ export const Ledger = ({
   return (
     <>
       <div>
-        <EstimatedTxFee />
+        <EstimatedTxFee uid={uid} />
       </div>
-
       {runtimesInconsistent && (
         <div className="inner warning">
           <div>
@@ -129,7 +126,6 @@ export const Ledger = ({
           </div>
         </div>
       )}
-
       <div
         className={`inner msg${appendOrEmpty(displayFor === 'card', 'col')}`}
       >
@@ -161,7 +157,7 @@ export const Ledger = ({
           {buttons}
           <Submit
             displayFor={displayFor}
-            submitting={submitting}
+            processing={processing}
             submitText={submitText}
             onSubmit={onSubmit}
             disabled={disabled}

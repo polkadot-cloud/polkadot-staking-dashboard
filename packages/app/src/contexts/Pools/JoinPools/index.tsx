@@ -22,7 +22,7 @@ export const useJoinPools = () => useContext(JoinPoolsContext);
 
 export const JoinPoolsProvider = ({ children }: { children: ReactNode }) => {
   const {
-    api,
+    isReady,
     activeEra,
     networkMetrics: { minimumActiveStake },
   } = useApi();
@@ -45,7 +45,7 @@ export const JoinPoolsProvider = ({ children }: { children: ReactNode }) => {
   // Trigger worker to calculate join pool performance data.
   useEffectIgnoreInitial(() => {
     if (
-      api &&
+      isReady &&
       bondedPools.length &&
       activeEra.index.isGreaterThan(0) &&
       erasRewardPointsFetched === 'synced' &&

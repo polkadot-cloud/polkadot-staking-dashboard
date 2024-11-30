@@ -31,6 +31,16 @@ export interface PayeeConfig {
   account: MaybeAddress;
 }
 
+export type PayeeSubmit =
+  | {
+      type: 'Account';
+      value: string;
+    }
+  | {
+      type: 'Staked' | 'Stash' | 'Controller' | 'None';
+      value?: undefined;
+    };
+
 export type PoolSetups = Record<string, PoolSetup>;
 
 export interface PoolSetup {

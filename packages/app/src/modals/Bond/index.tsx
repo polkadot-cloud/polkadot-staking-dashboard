@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { unitToPlanck } from '@w3ux/utils';
+import { PoolBondExtra } from 'api/tx/poolBondExtra';
+import { StakingBondExtra } from 'api/tx/stakingBondExtra';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
@@ -19,17 +19,16 @@ import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { planckToUnitBn } from 'library/Utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn } from 'utils';
 
 export const Bond = () => {
   const { t } = useTranslation('modals');
-  const { api } = useApi();
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
-  const { notEnoughFunds } = useTxMeta();
   const { activeAccount } = useActiveAccounts();
   const { pendingPoolRewards } = useActivePool();
   const { getSignerWarnings } = useSignerWarnings();
@@ -96,10 +95,6 @@ export const Bond = () => {
   // determine whether this is a pool or staking transaction.
   const determineTx = (bondToSubmit: BigNumber) => {
     let tx = null;
-    if (!api) {
-      return tx;
-    }
-
     const bondAsString = !bondValid
       ? '0'
       : bondToSubmit.isNaN()
@@ -107,18 +102,16 @@ export const Bond = () => {
         : bondToSubmit.toString();
 
     if (isPooling) {
-      tx = api.tx.nominationPools.bondExtra({
-        FreeBalance: bondAsString,
-      });
+      tx = new PoolBondExtra(network, 'FreeBalance', BigInt(bondAsString)).tx();
     } else if (isStaking) {
-      tx = api.tx.staking.bondExtra(bondAsString);
+      tx = new StakingBondExtra(network, BigInt(bondAsString)).tx();
     }
     return tx;
   };
 
   // the actual bond tx to submit
   const getTx = (bondToSubmit: BigNumber) => {
-    if (!api || !activeAccount) {
+    if (!activeAccount) {
       return null;
     }
     return determineTx(bondToSubmit);
@@ -147,7 +140,7 @@ export const Bond = () => {
   // modal resize on form update
   useEffect(
     () => setModalResize(),
-    [bond, bondValid, notEnoughFunds, feedbackErrors.length, warnings.length]
+    [bond, bondValid, feedbackErrors.length, warnings.length]
   );
 
   return (
@@ -172,7 +165,7 @@ export const Bond = () => {
           defaultBond={null}
           setters={[handleSetBond]}
           parentErrors={warnings}
-          txFees={largestTxFee}
+          txFees={BigInt(largestTxFee.toString())}
         />
         <p>{t('newlyBondedFunds')}</p>
       </ModalPadding>

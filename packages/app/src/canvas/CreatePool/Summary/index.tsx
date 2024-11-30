@@ -4,13 +4,13 @@
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { unitToPlanck } from '@w3ux/utils';
+import { CreatePool } from 'api/tx/createPool';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useNetwork } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useSetup } from 'contexts/Setup';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
@@ -26,10 +26,10 @@ import { SummaryWrapper } from './Wrapper';
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const {
-    api,
     poolsConfig: { lastPoolId },
   } = useApi();
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
   const { newBatchCall } = useBatchCall();
@@ -37,7 +37,6 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { accountHasSigner } = useImportedAccounts();
   const { getPoolSetup, removeSetupProgress } = useSetup();
   const { activeAccount, activeProxy } = useActiveAccounts();
-  const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { queryBondedPool, addToBondedPools } = useBondedPools();
 
   const poolId = lastPoolId.plus(1);
@@ -46,32 +45,29 @@ export const Summary = ({ section }: SetupStepProps) => {
 
   const { metadata, bond, roles, nominations } = progress;
 
-  const getTxs = () => {
-    if (!activeAccount || !api) {
+  const getTx = () => {
+    if (!activeAccount) {
       return null;
     }
 
-    const targetsToSubmit = nominations.map(
-      ({ address }: { address: string }) => address
-    );
+    const tx = new CreatePool(
+      network,
+      activeAccount,
+      poolId.toNumber(),
+      unitToPlanck(bond, units),
+      metadata,
+      nominations.map(({ address }) => address),
+      roles
+    ).tx();
 
-    const bondToSubmit = unitToPlanck(bond, units).toString();
-
-    const txs = [
-      api.tx.nominationPools.create(
-        bondToSubmit,
-        roles?.root || activeAccount,
-        roles?.nominator || activeAccount,
-        roles?.bouncer || activeAccount
-      ),
-      api.tx.nominationPools.nominate(poolId.toString(), targetsToSubmit),
-      api.tx.nominationPools.setMetadata(poolId.toString(), metadata),
-    ];
-    return newBatchCall(txs, activeAccount);
+    if (!tx) {
+      return null;
+    }
+    return newBatchCall(tx, activeAccount);
   };
-
   const submitExtrinsic = useSubmitExtrinsic({
-    tx: getTxs(),
+    tag: 'createPool',
+    tx: getTx(),
     from: activeAccount,
     shouldSubmit: true,
     callbackInBlock: async () => {
@@ -81,12 +77,6 @@ export const Summary = ({ section }: SetupStepProps) => {
       // Query and add created pool to bondedPools list.
       const pool = await queryBondedPool(poolId.toNumber());
       addToBondedPools(pool);
-
-      // Query and add account to poolMembers list.
-      const member = await queryPoolMember(activeAccount);
-      if (member) {
-        addToPoolMembers(member);
-      }
 
       // Reset setup progress.
       removeSetupProgress('pool', activeAccount);

@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useNetwork } from 'contexts/Network';
-import { planckToUnitBn } from 'library/Utils';
 import { useTranslation } from 'react-i18next';
 import { ButtonSubmit } from 'ui-buttons';
+import { planckToUnitBn } from 'utils';
 import type { ItemProps } from './types';
 import { getTotalPayout } from './Utils';
 import { ItemWrapper } from './Wrappers';

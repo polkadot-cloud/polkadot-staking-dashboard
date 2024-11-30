@@ -8,9 +8,9 @@ import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { planckToUnitBn } from 'library/Utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn } from 'utils';
 import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
 import type { BondFeedbackProps } from '../types';
@@ -53,7 +53,7 @@ export const BondFeedback = ({
 
   // the default bond balance. If we are bonding, subtract tx fees from bond amount.
   const freeToBond = !disableTxFeeUpdate
-    ? BigNumber.max(availableBalance.minus(txFees), 0)
+    ? BigNumber.max(availableBalance.minus(txFees.toString()), 0)
     : availableBalance;
 
   // store errors
@@ -76,11 +76,13 @@ export const BondFeedback = ({
   const [bondDisabled, setBondDisabled] = useState<boolean>(false);
 
   // bond minus tx fees if too much
-  const enoughToCoverTxFees = freeToBond.minus(bondBn).isGreaterThan(txFees);
+  const enoughToCoverTxFees = freeToBond
+    .minus(bondBn)
+    .isGreaterThan(txFees.toString());
 
   const bondAfterTxFees = enoughToCoverTxFees
     ? bondBn
-    : BigNumber.max(bondBn.minus(txFees), 0);
+    : BigNumber.max(bondBn.minus(txFees.toString()), 0);
 
   // add this component's setBond to setters
   setters.push(handleSetBond);
@@ -106,6 +108,17 @@ export const BondFeedback = ({
       newErrors.push(`${t('noFree', { unit })}`);
     }
 
+    if (inSetup || joiningPool) {
+      if (freeToBond.isLessThan(minBondBn)) {
+        disabled = true;
+        newErrors.push(`${t('notMeet')} ${minBondUnit} ${unit}.`);
+      }
+      // bond amount must be more than minimum required bond
+      if (bond.bond !== '' && bondBn.isLessThan(minBondBn)) {
+        newErrors.push(`${t('atLeast')} ${minBondUnit} ${unit}.`);
+      }
+    }
+
     // bond amount must not surpass freeBalalance
     if (bondBn.isGreaterThan(freeToBond)) {
       newErrors.push(t('moreThanBalance'));
@@ -121,20 +134,9 @@ export const BondFeedback = ({
       newErrors.push(`${t('notEnoughAfter', { unit })}`);
     }
 
-    // cbond amount must not surpass network supported units
+    // bond amount must not surpass network supported units
     if (decimals > units) {
       newErrors.push(`${t('bondDecimalsError', { units })}`);
-    }
-
-    if (inSetup || joiningPool) {
-      if (freeToBond.isLessThan(minBondBn)) {
-        disabled = true;
-        newErrors.push(`${t('notMeet')} ${minBondUnit} ${unit}.`);
-      }
-      // bond amount must be more than minimum required bond
-      if (bond.bond !== '' && bondBn.isLessThan(minBondBn)) {
-        newErrors.push(`${t('atLeast')} ${minBondUnit} ${unit}.`);
-      }
     }
 
     const bondValid = !newErrors.length && bond.bond !== '';

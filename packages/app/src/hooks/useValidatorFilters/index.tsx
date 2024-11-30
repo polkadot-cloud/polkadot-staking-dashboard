@@ -211,7 +211,7 @@ export const useValidatorFilters = () => {
     const filteredList: AnyFilter = [];
     for (const validator of list) {
       const identity = validatorIdentities[validator.address] ?? '';
-      const identityRaw = identity?.info?.display?.Raw ?? '';
+      const identityRaw = identity?.info?.display?.value?.asText() ?? '';
       const identityAsBytes = u8aToString(u8aUnwrapBytes(identityRaw));
       const identitySearch = (
         identityAsBytes === '' ? identityRaw : identityAsBytes
@@ -219,7 +219,7 @@ export const useValidatorFilters = () => {
 
       const superIdentity = validatorSupers[validator.address] ?? null;
       const superIdentityRaw =
-        superIdentity?.identity?.info?.display?.Raw ?? '';
+        superIdentity?.identity?.info?.display?.value?.asText() ?? '';
       const superIdentityAsBytes = u8aToString(
         u8aUnwrapBytes(superIdentityRaw)
       );

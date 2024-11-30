@@ -47,7 +47,7 @@ export interface BondFeedbackProps {
   parentErrors?: string[];
   disableTxFeeUpdate?: boolean;
   setLocalResize?: () => void;
-  txFees: BigNumber;
+  txFees: bigint;
   maxWidth?: boolean;
   displayFirstWarningOnly?: boolean;
 }
@@ -70,7 +70,7 @@ export interface UnbondFeedbackProps {
   listenIsValid?: ((valid: boolean, errors: string[]) => void) | (() => void);
   parentErrors?: string[];
   setLocalResize?: () => void;
-  txFees: BigNumber;
+  txFees: bigint;
   displayFirstWarningOnly?: boolean;
 }
 

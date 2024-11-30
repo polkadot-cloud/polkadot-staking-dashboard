@@ -3,7 +3,7 @@
 
 import type { AnyJson } from '@w3ux/types';
 import type { FunctionComponent, SVGProps } from 'react';
-import type { MaybeString, NetworkName } from 'types';
+import type { MaybeString, NetworkId } from 'types';
 
 export interface LedgerHardwareContextInterface {
   integrityChecked: boolean;
@@ -73,12 +73,12 @@ export interface LedgerAddress {
   address: string;
   index: number;
   name: string;
-  network: NetworkName;
+  network: NetworkId;
   pubKey: string;
 }
 
 export interface LedgerChain {
-  network: NetworkName;
+  network: NetworkId;
   txMetadataChainId: string;
   Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
 }

@@ -2,11 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { unitToPlanck } from '@w3ux/utils';
+import { JoinPool } from 'api/tx/joinPool';
 import type BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import type { ClaimPermission } from 'contexts/Pools/types';
 import { useSetup } from 'contexts/Setup';
 import { defaultPoolProgress } from 'contexts/Setup/defaults';
@@ -20,16 +19,16 @@ import { useOverlay } from 'kits/Overlay/Provider';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput';
 import { SubmitTx } from 'library/SubmitTx';
-import { planckToUnitBn } from 'library/Utils';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn } from 'utils';
 import type { OverviewSectionProps } from '../types';
 import { JoinFormWrapper } from '../Wrappers';
 
 export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   const { t } = useTranslation();
-  const { api } = useApi();
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
   const {
@@ -42,7 +41,6 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' });
-  const { queryPoolMember, addToPoolMembers } = usePoolMembers();
 
   const {
     pool: { totalPossibleBond },
@@ -72,29 +70,25 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
   // Whether the form is ready to submit.
   const formValid = bondValid && feedbackErrors.length === 0;
 
-  // Get transaction for submission.
   const getTx = () => {
-    const tx = null;
-    if (!api || !claimPermission || !formValid) {
+    if (!claimPermission || !formValid) {
+      return null;
+    }
+
+    const tx = new JoinPool(
+      network,
+      bondedPool.id,
+      unitToPlanck(!bondValid ? 0 : bond.bond, units),
+      claimPermission
+    ).tx();
+
+    if (!tx) {
+      return null;
+    }
+    if (!Array.isArray(tx)) {
       return tx;
     }
-
-    const bondToSubmit = unitToPlanck(
-      !bondValid ? '0' : bond.bond,
-      units
-    ).toString();
-    const txs = [api.tx.nominationPools.join(bondToSubmit, bondedPool.id)];
-
-    // If claim permission is not the default, add it to tx.
-    if (claimPermission !== defaultClaimPermission) {
-      txs.push(api.tx.nominationPools.setClaimPermission(claimPermission));
-    }
-
-    if (txs.length === 1) {
-      return txs[0];
-    }
-
-    return newBatchCall(txs, activeAccount);
+    return newBatchCall(tx, activeAccount);
   };
 
   const submitExtrinsic = useSubmitExtrinsic({
@@ -103,21 +97,13 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       closeCanvas();
-
       // Optional callback function on join success.
       const onJoinCallback = options?.onJoinCallback;
-
       if (typeof onJoinCallback === 'function') {
         onJoinCallback();
       }
     },
     callbackInBlock: async () => {
-      // Query and add account to poolMembers list
-      const member = await queryPoolMember(activeAccount);
-      if (member) {
-        addToPoolMembers(member);
-      }
-
       // Reset local storage setup progress
       setActiveAccountSetup('pool', defaultPoolProgress);
     },
@@ -135,7 +121,6 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
       <h4>
         {t('bond', { ns: 'library' })} {unit}
       </h4>
-
       <div className="input">
         <div>
           <BondFeedback
@@ -150,20 +135,17 @@ export const JoinForm = ({ bondedPool }: OverviewSectionProps) => {
             defaultBond={null}
             setters={[handleSetBond]}
             parentErrors={warnings}
-            txFees={largestTxFee}
+            txFees={BigInt(largestTxFee.toString())}
           />
         </div>
       </div>
-
       <h4 className="underline">{t('claimSetting', { ns: 'library' })}</h4>
-
       <ClaimPermissionInput
         current={claimPermission}
         onChange={(val: ClaimPermission) => {
           setClaimPermission(val);
         }}
       />
-
       <div className="submit">
         <SubmitTx
           displayFor="card"

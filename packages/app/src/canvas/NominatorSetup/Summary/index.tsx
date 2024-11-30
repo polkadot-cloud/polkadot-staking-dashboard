@@ -4,9 +4,9 @@
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn, unitToPlanck } from '@w3ux/utils';
+import { NewNominator } from 'api/tx/newNominator';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useNetwork } from 'contexts/Network';
 import { useSetup } from 'contexts/Setup';
@@ -24,8 +24,8 @@ import { SummaryWrapper } from './Wrapper';
 
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
-  const { api } = useApi();
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
   const { newBatchCall } = useBatchCall();
@@ -40,33 +40,41 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { bond, nominations, payee } = progress;
 
   const getTxs = () => {
-    if (!activeAccount || !api) {
+    if (!activeAccount) {
+      return null;
+    }
+    if (payee.destination === 'Account' && !payee.account) {
+      return null;
+    }
+    if (payee.destination !== 'Account' && !payee.destination) {
       return null;
     }
 
-    const targetsToSubmit = nominations.map(
-      ({ address }: { address: string }) => ({
-        Id: address,
-      })
-    );
-
-    const payeeToSubmit =
+    const tx = new NewNominator(
+      network,
+      unitToPlanck(bond || '0', units),
       payee.destination === 'Account'
         ? {
-            Account: payee.account,
+            type: 'Account' as const,
+            value: payee.account as string,
           }
-        : payee.destination;
+        : {
+            type: payee.destination,
+          },
+      nominations.map(({ address }: { address: string }) => ({
+        type: 'Id',
+        value: address,
+      }))
+    ).tx();
 
-    const bondToSubmit = unitToPlanck(bond || '0', units).toString();
-
-    const txs = [
-      api.tx.staking.bond(bondToSubmit, payeeToSubmit),
-      api.tx.staking.nominate(targetsToSubmit),
-    ];
-    return newBatchCall(txs, activeAccount);
+    if (!tx) {
+      return null;
+    }
+    return newBatchCall(tx, activeAccount);
   };
 
   const submitExtrinsic = useSubmitExtrinsic({
+    tag: 'nominatorSetup',
     tx: getTxs(),
     from: activeAccount,
     shouldSubmit: true,

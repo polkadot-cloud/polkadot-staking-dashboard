@@ -3,9 +3,10 @@
 
 import { extractUrlValue, varToUrlHash } from '@w3ux/utils';
 import { NetworkList } from 'config/networks';
+import { Apis } from 'controllers/Apis';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
-import type { NetworkName } from 'types';
+import type { NetworkId } from 'types';
 import { defaultNetwork, defaultNetworkContext } from './defaults';
 import type { NetworkContextInterface, NetworkState } from './types';
 
@@ -26,16 +27,16 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
 
     // use network from url if valid.
     if (urlNetworkValid) {
-      const urlNetwork = urlNetworkRaw as NetworkName;
+      const urlNetwork = urlNetworkRaw as NetworkId;
 
       if (urlNetworkValid) {
         return urlNetwork;
       }
     }
     // fallback to localStorage network if there.
-    const localNetwork: NetworkName = localStorage.getItem(
+    const localNetwork: NetworkId = localStorage.getItem(
       'network'
-    ) as NetworkName;
+    ) as NetworkId;
 
     const localNetworkValid = !!Object.values(NetworkList).find(
       (n) => n.name === localNetwork
@@ -49,8 +50,14 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
     return initialNetwork;
   };
 
-  // handle network switching
-  const switchNetwork = (name: NetworkName) => {
+  // handle network switching.
+  const switchNetwork = async (name: NetworkId): Promise<void> => {
+    // Disconnect from current APIs before switching network.
+    await Promise.all([
+      await Apis.destroy(network.name),
+      await Apis.destroy(`people-${network.name}`),
+    ]);
+
     setNetwork({
       name,
       meta: NetworkList[name],

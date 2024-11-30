@@ -1,0 +1,11 @@
+{
+  "name": "utils",
+  "version": "1.0.0",
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "clear": "rm -rf build tsconfig.tsbuildinfo dist",
+    "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
+  }
+}

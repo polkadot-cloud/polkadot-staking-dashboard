@@ -9,7 +9,7 @@ import type { AnyJson } from '@w3ux/types';
 import { applyWidthAsPadding, minDecimalPlaces } from '@w3ux/utils';
 import { useHelp } from 'contexts/Help';
 import { useNetwork } from 'contexts/Network';
-import { NotificationsController } from 'controllers/Notifications';
+import { Notifications } from 'controllers/Notifications';
 import { Fragment, useEffect, useLayoutEffect, useRef } from 'react';
 import { ButtonHelp, ButtonPrimary, ButtonSecondary } from 'ui-buttons';
 import { Wrapper } from './Wrapper';
@@ -94,7 +94,7 @@ export const Stat = ({
             type="button"
             className="btn"
             onClick={() => {
-              NotificationsController.emit(copy.notification);
+              Notifications.emit(copy.notification);
               navigator.clipboard.writeText(copy.content);
             }}
           >

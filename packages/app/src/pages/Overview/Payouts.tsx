@@ -18,10 +18,10 @@ import { PayoutLine } from 'library/Graphs/PayoutLine';
 import { formatRewardsForGraphs, formatSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrapper';
 import { StatusLabel } from 'library/StatusLabel';
-import { planckToUnitBn } from 'library/Utils';
 import { DefaultLocale, locales } from 'locales';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn } from 'utils';
 
 export const Payouts = () => {
   const { i18n, t } = useTranslation('pages');
