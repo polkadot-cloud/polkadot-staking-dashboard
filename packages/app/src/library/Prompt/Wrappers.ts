@@ -89,10 +89,6 @@ export const TitleWrapper = styled.div`
     align-items: center;
     padding: 0 0.5rem;
 
-    > button {
-      padding: 0;
-    }
-
     path {
       fill: var(--text-color-primary);
     }
