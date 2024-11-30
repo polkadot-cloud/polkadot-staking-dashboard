@@ -65,11 +65,10 @@ export class Apis {
 
     //3. Initialize chain instances.
 
-    await Promise.all([
-      this.instances[network].initialize(type, rpcEndpoint),
-      // NOTE: Currently defaulting to websocket connection for system chains:
-      this.instances[`people-${network}`].initialize('ws', 'IBP1'),
-    ]);
+    this.instances[network].initialize(type, rpcEndpoint);
+
+    // NOTE: Currently defaulting to websocket connection for system chains:
+    this.instances[`people-${network}`].initialize('ws', 'IBP2');
   }
 
   // Gracefully disconnect and then destroy an Api instance.
