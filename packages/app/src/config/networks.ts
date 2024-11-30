@@ -194,7 +194,8 @@ export const SystemChainList: Record<string, SystemChain> = {
       lightClient: async () =>
         await import('polkadot-api/chains/polkadot_people'),
       rpcEndpoints: {
-        Parity: 'wss://polkadot-people-rpc.polkadot.io',
+        IBP1: 'wss://sys.ibp.network/people-polkadot',
+        IBP2: 'wss://people-polkadot.dotters.network',
       },
     },
     relayChain: 'polkadot',
@@ -209,7 +210,8 @@ export const SystemChainList: Record<string, SystemChain> = {
       lightClient: async () =>
         await import('polkadot-api/chains/ksmcc3_people'),
       rpcEndpoints: {
-        Parity: 'wss://kusama-people-rpc.polkadot.io',
+        IBP1: 'wss://sys.ibp.network/people-kusama',
+        IBP2: 'wss://people-kusama.dotters.network',
       },
     },
     relayChain: 'kusama',
@@ -224,7 +226,8 @@ export const SystemChainList: Record<string, SystemChain> = {
       lightClient: async () =>
         await import('polkadot-api/chains/westend2_people'),
       rpcEndpoints: {
-        Parity: 'wss://westend-people-rpc.polkadot.io',
+        IBP1: 'wss://sys.ibp.network/people-westend',
+        IBP2: 'wss://people-westend.dotters.network',
       },
     },
     relayChain: 'westend',
