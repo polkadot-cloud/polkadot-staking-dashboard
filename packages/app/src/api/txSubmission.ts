@@ -1,25 +1,27 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-export class TxSubmission {
-  // Unique tx identifier along with whether it is processing.
-  static uids: [number, boolean][] = [];
+import type { MaybeAddress } from 'types';
+import type { TxSubmissionItem } from './types';
 
-  static addUid() {
+export class TxSubmission {
+  static uids: TxSubmissionItem[] = [];
+
+  static addUid({ from }: { from: MaybeAddress }) {
     const newUid = this.uids.length + 1;
-    this.uids.push([newUid, false]);
+    this.uids.push({ uid: newUid, processing: false, from });
     this.dispatchEvent();
     return newUid;
   }
 
   static removeUid(id: number) {
-    this.uids = this.uids.filter(([uid]) => uid !== id);
+    this.uids = this.uids.filter(({ uid }) => uid !== id);
     this.dispatchEvent();
   }
 
   static setUidProcessing(id: number, newProcessing: boolean) {
-    this.uids = this.uids.map(([uid, processing]) =>
-      uid === id ? [uid, newProcessing] : [uid, processing]
+    this.uids = this.uids.map((item) =>
+      item.uid === id ? { ...item, processing: newProcessing } : item
     );
     this.dispatchEvent();
   }

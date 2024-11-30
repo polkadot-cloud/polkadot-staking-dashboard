@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
+import type { TxSubmissionItem } from 'api/types';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { isCustomEvent } from 'controllers/utils';
@@ -39,7 +40,7 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
   });
 
   // Store uids of transactions, along with their processing status.
-  const [uids, setUids] = useState<[number, boolean][]>([]);
+  const [uids, setUids] = useState<TxSubmissionItem[]>([]);
 
   // Utility to reset transaction fees to zero.
   const resetTxFees = () => {
@@ -55,6 +56,10 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
       setUids(eventUids);
     }
   };
+
+  // Get a tx submission.
+  const getTxSubmission = (uid?: number) =>
+    uids.find((item) => item.uid === uid);
 
   // Refresh not enough funds status when sender, balance or txFees change.
   const senderBalances = getBalance(sender);
@@ -76,12 +81,14 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
     <TxMetaContext.Provider
       value={{
         uids,
-        sender,
+        getTxSubmission,
         setSender,
+        // TODO: add to tx `uid` state.
         txFees,
         txFeesValid,
         setTxFees,
         resetTxFees,
+        // TODO: add to tx `uid` state.
         notEnoughFunds,
       }}
     >

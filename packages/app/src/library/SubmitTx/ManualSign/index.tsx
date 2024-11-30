@@ -10,10 +10,11 @@ import { Vault } from './Vault';
 import { WalletConnect } from './WalletConnect';
 
 export const ManualSign = (props: SubmitProps & { buttons?: ReactNode[] }) => {
-  const { sender } = useTxMeta();
+  const { getTxSubmission } = useTxMeta();
   const { getAccount } = useImportedAccounts();
+  const from = getTxSubmission(props.uid)?.from || null;
 
-  const accountMeta = getAccount(sender);
+  const accountMeta = getAccount(from);
   const source = accountMeta?.source;
 
   // Determine which signing method to use. NOTE: Falls back to `ledger` on all other sources to

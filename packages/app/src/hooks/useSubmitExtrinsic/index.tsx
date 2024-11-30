@@ -62,7 +62,7 @@ export const useSubmitExtrinsic = ({
   const txSubmitted = useRef<boolean>(false);
 
   // Generate a UID for this transaction.
-  const uid = TxSubmission.addUid();
+  const uid = TxSubmission.addUid({ from });
 
   // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account. If
   // already wrapped, update `from` address and return.
@@ -276,12 +276,16 @@ export const useSubmitExtrinsic = ({
           handleStatus(eventType);
           if (eventType === 'finalized') {
             onFinalizedEvent();
-            sub?.unsubscribe();
+            if (typeof sub?.unsubscribe === 'function') {
+              sub?.unsubscribe();
+            }
           }
         },
         error: (err: Error) => {
           onFailedTx(err);
-          sub?.unsubscribe();
+          if (typeof sub?.unsubscribe === 'function') {
+            sub?.unsubscribe();
+          }
         },
       });
     } catch (e) {

@@ -32,10 +32,9 @@ import { planckToUnitBn, timeleftAsString } from 'utils';
 
 export const Unbond = () => {
   const { t } = useTranslation('modals');
-  const { txFees } = useTxMeta();
-  const { activeAccount } = useActiveAccounts();
-  const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
+  const { activeAccount } = useActiveAccounts();
+  const { txFees, notEnoughFunds } = useTxMeta();
   const {
     network,
     networkData: { units, unit },

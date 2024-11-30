@@ -7,7 +7,11 @@ import type { AccountProxiesEvent } from 'api/subscribe/accountProxies/types';
 import type { BlockNumberEventDetail } from 'api/subscribe/blockNumber/types';
 import type { FastUnstakeConfigResult } from 'api/subscribe/fastUnstakeConfig/types';
 import type { PoolMemberBatchEvent } from 'api/subscribe/poolMembers/types';
-import type { APIEventDetail, PapiReadyEvent } from 'api/types';
+import type {
+  APIEventDetail,
+  PapiReadyEvent,
+  TxSubmissionItem,
+} from 'api/types';
 import type BigNumber from 'bignumber.js';
 import type {
   APIActiveEra,
@@ -56,7 +60,7 @@ declare global {
     'new-external-account': CustomEvent<{ address: string }>;
     'new-account-balance': CustomEvent<ActiveBalance & { address: string }>;
     'subscan-data-updated': CustomEvent<{ keys: PayoutType[] }>;
-    'new-tx-uid-status': CustomEvent<{ uids: [number, boolean][] }>;
+    'new-tx-uid-status': CustomEvent<{ uids: TxSubmissionItem[] }>;
   }
 }
 

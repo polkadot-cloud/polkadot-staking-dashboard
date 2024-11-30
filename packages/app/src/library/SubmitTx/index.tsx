@@ -31,10 +31,13 @@ export const SubmitTx = ({
   const { getBondedAccount } = useBonded();
   const { unit } = useNetwork().networkData;
   const { setModalResize } = useOverlay().modal;
-  const { notEnoughFunds, sender } = useTxMeta();
+  const { notEnoughFunds, getTxSubmission } = useTxMeta();
   const { activeAccount, activeProxy } = useActiveAccounts();
   const { getAccount, requiresManualSign } = useImportedAccounts();
   const controller = getBondedAccount(activeAccount);
+
+  const txSubmission = getTxSubmission(uid);
+  const from = txSubmission?.from || null;
 
   // Default to active account
   let signingOpts = {
@@ -76,7 +79,7 @@ export const SubmitTx = ({
       notEnoughFunds={notEnoughFunds}
       dangerMessage={`${t('notEnough', { ns: 'library' })} ${unit}`}
       SignerComponent={
-        requiresManualSign(sender) ? (
+        requiresManualSign(from) ? (
           <ManualSign
             uid={uid}
             onSubmit={onSubmit}

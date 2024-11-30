@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { ButtonSubmit } from 'ui-buttons';
 
 export const WalletConnect = ({
+  uid,
   onSubmit,
   submitting,
   valid,
@@ -23,10 +24,13 @@ export const WalletConnect = ({
   displayFor,
 }: SubmitProps & { buttons?: ReactNode[] }) => {
   const { t } = useTranslation('library');
-  const { txFeesValid, sender } = useTxMeta();
   const { accountHasSigner } = useImportedAccounts();
+  const { txFeesValid, getTxSubmission } = useTxMeta();
   const { wcSessionActive, connectProvider, fetchAddresses } =
     useWalletConnect();
+
+  const txSubmission = getTxSubmission(uid);
+  const from = txSubmission?.from || null;
 
   // The state under which submission is disabled.
   const disabled = !valid || !accountHasSigner(submitAddress) || !txFeesValid;
@@ -42,8 +46,8 @@ export const WalletConnect = ({
       await connectProvider();
     }
     const wcAccounts = await fetchAddresses();
-    const accountExists = sender && wcAccounts.includes(sender);
-    if (!sender || !accountExists) {
+    const accountExists = from && wcAccounts.includes(from);
+    if (!from || !accountExists) {
       return;
     }
     onSubmit();

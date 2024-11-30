@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ChainId } from 'types';
+import type { ChainId, MaybeAddress } from 'types';
 
 export interface APIConfig {
   type: ConnectionType;
@@ -43,3 +43,9 @@ export type ApiStatus = 'connecting' | 'connected' | 'disconnected' | 'ready';
 export type EventApiStatus = ApiStatus | 'error';
 
 export type ApiChainType = 'relay' | 'system';
+
+export type TxSubmissionItem = {
+  uid: number;
+  from: MaybeAddress;
+  processing: boolean;
+};

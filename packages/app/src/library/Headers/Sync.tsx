@@ -56,7 +56,7 @@ export const Sync = () => {
     onPoolsSyncing() ||
     onNominateSyncing() ||
     onValidatorsSyncing() ||
-    uids.filter(([, processing]) => processing === true).length > 0;
+    uids.filter(({ processing }) => processing === true).length > 0;
 
   return isSyncing ? <Spinner /> : null;
 };
