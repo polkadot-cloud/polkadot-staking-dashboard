@@ -3,6 +3,15 @@
 
 import type { ExtensionInjected } from '@w3ux/react-connect-kit/types';
 import type { AnyJson } from '@w3ux/types';
+import type { AccountProxiesEvent } from 'api/subscribe/accountProxies/types';
+import type { BlockNumberEventDetail } from 'api/subscribe/blockNumber/types';
+import type { FastUnstakeConfigResult } from 'api/subscribe/fastUnstakeConfig/types';
+import type { PoolMemberBatchEvent } from 'api/subscribe/poolMembers/types';
+import type {
+  APIEventDetail,
+  PapiReadyEvent,
+  TxSubmissionItem,
+} from 'api/types';
 import type BigNumber from 'bignumber.js';
 import type {
   APIActiveEra,
@@ -11,14 +20,14 @@ import type {
   APIStakingMetrics,
 } from 'contexts/Api/types';
 import type { ActiveBalance } from 'contexts/Balances/types';
+import type { BondedAccount } from 'contexts/Bonded/types';
+import type { FastUnstakeQueueResult } from 'contexts/FastUnstake/types';
 import type { Theme } from 'contexts/Themes/types';
 import type { DetailActivePool } from 'controllers/ActivePools/types';
 import type { NotificationItem } from 'controllers/Notifications/types';
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types';
 import type { PayoutType } from 'controllers/Subscan/types';
-import type { SyncEvent } from 'controllers/Sync/types';
-import type { APIEventDetail } from 'model/Api/types';
-import type { BlockNumberEventDetail } from 'model/Subscribe/BlockNumber/types';
+import type { SyncEvent } from 'controllers/Syncs/types';
 import type { FC, FunctionComponent, SVGProps } from 'react';
 
 declare global {
@@ -30,6 +39,7 @@ declare global {
   interface DocumentEventMap {
     notification: CustomEvent<NotificationItem>;
     'api-status': CustomEvent<APIEventDetail>;
+    'api-ready': CustomEvent<PapiReadyEvent>;
     'online-status': CustomEvent<OnlineStatusEvent>;
     'new-block-number': CustomEvent<BlockNumberEventDetail>;
     'new-network-metrics': CustomEvent<{
@@ -41,14 +51,22 @@ declare global {
       stakingMetrics: APIStakingMetrics;
     }>;
     'new-active-pool': CustomEvent<DetailActivePool>;
+    'new-pool-members-batch': CustomEvent<PoolMemberBatchEvent>;
+    'new-fast-unstake-config': CustomEvent<FastUnstakeConfigResult>;
+    'new-fast-unstake-deposit': CustomEvent<FastUnstakeQueueResult>;
+    'new-account-proxies': CustomEvent<AccountProxiesEvent>;
+    'new-bonded-account': CustomEvent<BondedAccount>;
     'new-sync-status': CustomEvent<SyncEvent>;
     'new-external-account': CustomEvent<{ address: string }>;
     'new-account-balance': CustomEvent<ActiveBalance & { address: string }>;
     'subscan-data-updated': CustomEvent<{ keys: PayoutType[] }>;
+    'new-tx-uid-status': CustomEvent<{ uids: TxSubmissionItem[] }>;
   }
 }
 
-export type NetworkName = 'polkadot' | 'kusama' | 'westend';
+export type ChainId = NetworkId | SystemChainId;
+
+export type NetworkId = 'polkadot' | 'kusama' | 'westend';
 
 export type SystemChainId =
   | 'people-polkadot'
@@ -64,9 +82,10 @@ type NetworkColor =
   | 'transparent'
   | 'pending';
 export interface Network {
-  name: NetworkName;
+  name: NetworkId;
   endpoints: {
-    lightClient: string;
+    lightClientKey: string;
+    lightClient: () => Promise<AnyApi>;
     defaultRpcEndpoint: string;
     rpcEndpoints: Record<string, string>;
   };
@@ -102,9 +121,11 @@ export interface SystemChain {
   units: number;
   unit: string;
   endpoints: {
-    lightClient: string;
+    lightClientKey: string;
+    lightClient: () => Promise<AnyApi>;
     rpcEndpoints: Record<string, string>;
   };
+  relayChain: NetworkId;
 }
 
 export interface PageCategory {

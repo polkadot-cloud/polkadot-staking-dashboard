@@ -15,15 +15,19 @@ export interface BalancesContextInterface {
   getPayee: (address: MaybeAddress) => PayeeConfig;
   getPoolMembership: (address: MaybeAddress) => PoolMembership | null;
   getNominations: (address: MaybeAddress) => Targets;
+  getEdReserved: (
+    address: MaybeAddress,
+    existentialDeposit: BigNumber
+  ) => BigNumber;
 }
 
 export type ActiveBalancesState = Record<string, ActiveBalance>;
 
 export interface ActiveBalance {
-  ledger: Ledger;
+  ledger: Ledger | undefined;
   balances: Balances;
-  payee: PayeeConfig;
-  poolMembership: PoolMembership;
+  payee: PayeeConfig | undefined;
+  poolMembership: PoolMembership | undefined;
   nominations: Nominations;
 }
 

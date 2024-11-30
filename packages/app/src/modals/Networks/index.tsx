@@ -14,7 +14,7 @@ import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { Title } from 'library/Modal/Title';
 import { useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import type { NetworkName } from 'types';
+import type { NetworkId } from 'types';
 import { ButtonTertiary } from 'ui-buttons';
 import BraveIconSVG from '../../img/brave-logo.svg?react';
 import { ProvidersPrompt } from './ProvidersPrompt';
@@ -59,7 +59,7 @@ export const Networks = () => {
                   type="button"
                   onClick={() => {
                     if (networkKey !== key) {
-                      switchNetwork(key as NetworkName);
+                      switchNetwork(key as NetworkId);
                       setModalStatus('closing');
                     }
                   }}
@@ -93,7 +93,7 @@ export const Networks = () => {
                 type="button"
                 onClick={() => {
                   setConnectionType('ws');
-                  switchNetwork(networkKey as NetworkName);
+                  switchNetwork(networkKey as NetworkId);
                   setModalStatus('closing');
                 }}
               >
@@ -118,7 +118,7 @@ export const Networks = () => {
                 type="button"
                 onClick={() => {
                   setConnectionType('sc');
-                  switchNetwork(networkKey as NetworkName);
+                  switchNetwork(networkKey as NetworkId);
                   setModalStatus('closing');
                 }}
               >

@@ -3,12 +3,12 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { planckToUnit } from '@w3ux/utils';
+import { PayoutStakersByPage } from 'api/tx/payoutStakersByPage';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { usePayouts } from 'contexts/Payouts';
-import { SubscanController } from 'controllers/Subscan';
+import { Subscan } from 'controllers/Subscan';
 import { useBatchCall } from 'hooks/useBatchCall';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
@@ -21,19 +21,18 @@ import { SubmitTx } from 'library/SubmitTx';
 import type { ForwardedRef } from 'react';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AnyApi } from 'types';
 import { ButtonSubmitInvert } from 'ui-buttons';
 import type { ActivePayout, FormProps } from './types';
 import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef(
   (
-    { setSection, payouts, setPayouts }: FormProps,
+    { setSection, payouts, setPayouts, onResize }: FormProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const { t } = useTranslation('modals');
-    const { api } = useApi();
     const {
+      network,
       networkData: { units, unit },
     } = useNetwork();
     const { newBatchCall } = useBatchCall();
@@ -59,20 +58,25 @@ export const Forms = forwardRef(
       ) || 0;
 
     const getCalls = () => {
-      if (!api) {
-        return [];
-      }
-
-      const calls: AnyApi[] = [];
-      payouts?.forEach(({ era, paginatedValidators }) => {
+      const calls = payouts?.reduce((acc, { era, paginatedValidators }) => {
         if (!paginatedValidators) {
-          return [];
+          return acc;
         }
-        return paginatedValidators.forEach(([page, v]) =>
-          calls.push(api.tx.staking.payoutStakersByPage(v, era, page))
-        );
-      });
-      return calls;
+        paginatedValidators.forEach(([page, v]) => {
+          const tx = new PayoutStakersByPage(
+            network,
+            v,
+            Number(era),
+            page
+          ).tx();
+
+          if (tx) {
+            acc.push();
+          }
+        });
+        return acc;
+      }, []);
+      return calls || [];
     };
 
     // Store whether form is valid to submit transaction.
@@ -89,7 +93,7 @@ export const Forms = forwardRef(
     const getTx = () => {
       const tx = null;
       const calls = getCalls();
-      if (!valid || !api || !calls.length) {
+      if (!valid || !calls.length) {
         return tx;
       }
 
@@ -112,7 +116,7 @@ export const Forms = forwardRef(
           payouts.forEach(({ era }) => {
             eraPayouts.push(String(era));
           });
-          SubscanController.removeUnclaimedPayouts(activeAccount, eraPayouts);
+          Subscan.removeUnclaimedPayouts(activeAccount, eraPayouts);
 
           // Deduct from `unclaimedPayouts` in Payouts context.
           payouts.forEach(({ era, paginatedValidators }) => {
@@ -154,6 +158,7 @@ export const Forms = forwardRef(
             </div>
           </ModalPadding>
           <SubmitTx
+            onResize={onResize}
             fromController={false}
             valid={valid}
             buttons={[

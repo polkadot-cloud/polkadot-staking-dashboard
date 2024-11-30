@@ -16,7 +16,7 @@ import type {
 import { useNetwork } from 'contexts/Network';
 import type { PoolMembership } from 'contexts/Pools/types';
 import type { PayeeConfig } from 'contexts/Setup/types';
-import { BalancesController } from 'controllers/Balances';
+import { Balances } from 'controllers/Balances';
 import {
   defaultBalance,
   defaultLedger,
@@ -43,7 +43,7 @@ export const useActiveBalances = ({
   // Gets an active balance's balance.
   const getBalance = (address: MaybeAddress) => {
     if (address) {
-      const maybeBalance = activeBalances[address]?.balances.balance;
+      const maybeBalance = activeBalances[address]?.balances?.balance;
       if (maybeBalance) {
         return maybeBalance;
       }
@@ -62,7 +62,7 @@ export const useActiveBalances = ({
   // Gets an active balance's locks.
   const getLocks = (address: MaybeAddress): BalanceLocks => {
     if (address) {
-      const maybeLocks = activeBalances[address]?.balances.locks;
+      const maybeLocks = activeBalances[address]?.balances?.locks;
       if (maybeLocks) {
         return { locks: maybeLocks, maxLock: getMaxLock(maybeLocks) };
       }
@@ -139,12 +139,9 @@ export const useActiveBalances = ({
     return [];
   };
 
-  // Handle new account balance event being reported from `BalancesController`.
+  // Handle new account balance event being reported from `Balances`.
   const newAccountBalancesCallback = (e: Event) => {
-    if (
-      isCustomEvent(e) &&
-      BalancesController.isValidNewAccountBalanceEvent(e)
-    ) {
+    if (isCustomEvent(e) && Balances.isValidNewAccountBalanceEvent(e)) {
       const { address, ...newBalances } = e.detail;
 
       // Only update state of active accounts.
@@ -160,7 +157,7 @@ export const useActiveBalances = ({
 
   // Update account balances states on initial render.
   //
-  // If `BalancesController` does not return an account balances record for an account, the balance
+  // If `Balances` does not return an account balances record for an account, the balance
   // has not yet synced or the provided account is still `null`. In these cases a
   // `new-account-balance` event will be emitted when the balance is ready to be sycned with the UI.
   useEffect(() => {
@@ -168,9 +165,9 @@ export const useActiveBalances = ({
     const newActiveBalances: ActiveBalancesState = {};
 
     for (const account of uniqueAccounts) {
-      // Adds an active balance record if it exists in `BalancesController`.
+      // Adds an active balance record if it exists in `Balances`.
       if (account) {
-        const accountBalances = BalancesController.getAccountBalances(account);
+        const accountBalances = Balances.getAccountBalances(network, account);
         if (accountBalances) {
           newActiveBalances[account] = accountBalances;
         }

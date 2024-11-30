@@ -3,8 +3,9 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
+import { PoolSetMetadata } from 'api/tx/poolSetMetadata';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
@@ -14,6 +15,7 @@ import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { Warning } from 'library/Form/Warning';
 import { SubmitTx } from 'library/SubmitTx';
+import { Binary } from 'polkadot-api';
 import type { Dispatch, FormEvent, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -22,12 +24,14 @@ import { ButtonSubmitInvert } from 'ui-buttons';
 export const RenamePool = ({
   setSection,
   section,
+  onResize,
 }: {
   setSection: Dispatch<SetStateAction<number>>;
   section: number;
+  onResize: () => void;
 }) => {
   const { t } = useTranslation('modals');
-  const { api } = useApi();
+  const { network } = useNetwork();
   const { setModalStatus } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
   const { isOwner, activePool } = useActivePool();
@@ -56,12 +60,11 @@ export const RenamePool = ({
     setValid(isOwner());
   }, [isOwner()]);
 
-  // tx to submit
   const getTx = () => {
-    if (!valid || !api) {
+    if (!valid || !poolId) {
       return null;
     }
-    return api.tx.nominationPools.setMetadata(poolId, metadata);
+    return new PoolSetMetadata(network, poolId, Binary.fromText(metadata)).tx();
   };
 
   const submitExtrinsic = useSubmitExtrinsic({
@@ -115,6 +118,7 @@ export const RenamePool = ({
             onClick={() => setSection(0)}
           />,
         ]}
+        onResize={onResize}
         {...submitExtrinsic}
       />
     </>

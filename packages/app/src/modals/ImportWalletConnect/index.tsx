@@ -25,7 +25,7 @@ export const ImportWalletConnect = () => {
   const { t } = useTranslation();
   const { addWcAccount, getWcAccounts, wcAccountExists, renameWcAccount } =
     useWcAccounts();
-  const { api } = useApi();
+  const { isReady } = useApi();
   const { network } = useNetwork();
   const { status: promptStatus } = usePrompt();
   const { replaceModal, setModalResize } = useOverlay().modal;
@@ -41,7 +41,7 @@ export const ImportWalletConnect = () => {
 
   // Handle wallet account importing.
   const handleImportAddresses = async () => {
-    if (!wcInitialized || !api) {
+    if (!wcInitialized || !isReady) {
       return;
     }
 

@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit } from '@w3ux/utils';
+import { PoolBondExtra } from 'api/tx/poolBondExtra';
+import { PoolClaimPayout } from 'api/tx/poolClaimPayout';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -21,20 +21,18 @@ import { useTranslation } from 'react-i18next';
 
 export const ClaimReward = () => {
   const { t } = useTranslation('modals');
-  const { api } = useApi();
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
-  const { notEnoughFunds } = useTxMeta();
-  const { activeAccount } = useActiveAccounts();
-  const { getSignerWarnings } = useSignerWarnings();
-  const { activePool, pendingPoolRewards } = useActivePool();
   const {
     setModalStatus,
     config: { options },
     setModalResize,
   } = useOverlay().modal;
-
+  const { activeAccount } = useActiveAccounts();
+  const { getSignerWarnings } = useSignerWarnings();
+  const { activePool, pendingPoolRewards } = useActivePool();
   const { claimType } = options;
 
   // ensure selected payout is valid
@@ -49,17 +47,13 @@ export const ClaimReward = () => {
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
 
-  // tx to submit
   const getTx = () => {
     let tx = null;
-    if (!api) {
-      return tx;
-    }
 
     if (claimType === 'bond') {
-      tx = api.tx.nominationPools.bondExtra('Rewards');
+      tx = new PoolBondExtra(network, 'Rewards').tx();
     } else {
-      tx = api.tx.nominationPools.claimPayout();
+      tx = new PoolClaimPayout(network).tx();
     }
     return tx;
   };
@@ -83,7 +77,7 @@ export const ClaimReward = () => {
     warnings.push(`${t('noRewards')}`);
   }
 
-  useEffect(() => setModalResize(), [notEnoughFunds, warnings.length]);
+  useEffect(() => setModalResize(), [warnings.length]);
 
   return (
     <>

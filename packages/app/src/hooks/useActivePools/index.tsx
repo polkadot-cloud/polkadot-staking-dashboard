@@ -3,7 +3,7 @@
 
 import { setStateWithRef } from '@w3ux/utils';
 import { useNetwork } from 'contexts/Network';
-import { ActivePoolsController } from 'controllers/ActivePools';
+import { ActivePools } from 'controllers/ActivePools';
 import { isCustomEvent } from 'controllers/utils';
 import { useEffect, useRef, useState } from 'react';
 import { useEventListener } from 'usehooks-ts';
@@ -18,20 +18,20 @@ export const useActivePools = ({ onCallback, who }: ActivePoolsProps) => {
 
   // Stores active pools.
   const [activePools, setActivePools] = useState<ActivePoolsState>(
-    ActivePoolsController.getActivePools(who)
+    ActivePools.getActivePool(network, who)
   );
   const activePoolsRef = useRef(activePools);
 
   // Store nominations of active pools.
   const [poolNominations, setPoolNominations] =
     useState<ActiveNominationsState>(
-      ActivePoolsController.getPoolNominations(who)
+      ActivePools.getPoolNominations(network, who)
     );
   const poolNominationsRef = useRef(poolNominations);
 
   // Handle report of new active pool data.
   const newActivePoolCallback = async (e: Event) => {
-    if (isCustomEvent(e) && ActivePoolsController.isValidNewActivePool(e)) {
+    if (isCustomEvent(e) && ActivePools.isValidNewActivePool(e)) {
       const { address, pool, nominations } = e.detail;
       const { id } = pool;
 
@@ -58,7 +58,8 @@ export const useActivePools = ({ onCallback, who }: ActivePoolsProps) => {
   };
 
   // Get an active pool.
-  const getActivePools = (poolId: string) => activePools?.[poolId] || null;
+  const getActivePool = (poolId: string) =>
+    activePools?.[Number(poolId)] || null;
 
   // Get an active pool's nominations.
   const getPoolNominations = (poolId: string) =>
@@ -73,12 +74,12 @@ export const useActivePools = ({ onCallback, who }: ActivePoolsProps) => {
   // Update state on account change.
   useEffect(() => {
     setStateWithRef(
-      ActivePoolsController.getActivePools(who),
+      ActivePools.getActivePool(network, who),
       setActivePools,
       activePoolsRef
     );
     setStateWithRef(
-      ActivePoolsController.getPoolNominations(who),
+      ActivePools.getPoolNominations(network, who),
       setPoolNominations,
       poolNominationsRef
     );
@@ -91,7 +92,7 @@ export const useActivePools = ({ onCallback, who }: ActivePoolsProps) => {
   return {
     activePools,
     activePoolsRef,
-    getActivePools,
+    getActivePool,
     getPoolNominations,
   };
 };

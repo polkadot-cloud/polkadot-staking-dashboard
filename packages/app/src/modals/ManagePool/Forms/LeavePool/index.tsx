@@ -3,6 +3,7 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { unitToPlanck } from '@w3ux/utils';
+import { PoolUnbond } from 'api/tx/poolUnbond';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
@@ -18,21 +19,23 @@ import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
 import { Warning } from 'library/Form/Warning';
 import { SubmitTx } from 'library/SubmitTx';
-import { planckToUnitBn, timeleftAsString } from 'library/Utils';
 import { StaticNote } from 'modals/Utils/StaticNote';
-import type { Dispatch, SetStateAction } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ButtonSubmitInvert } from 'ui-buttons';
+import { planckToUnitBn, timeleftAsString } from 'utils';
 
 export const LeavePool = ({
   setSection,
+  onResize,
 }: {
   setSection: Dispatch<SetStateAction<number>>;
+  onResize: () => void;
 }) => {
   const { t } = useTranslation('modals');
-  const { api, consts } = useApi();
+  const { consts } = useApi();
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
   const { erasToSeconds } = useErasToTimeLeft();
@@ -78,19 +81,16 @@ export const LeavePool = ({
   // modal resize on form update
   useEffect(() => setModalResize(), [bond]);
 
-  // tx to submit
   const getTx = () => {
     let tx = null;
-    if (!api || !activeAccount) {
+    if (!activeAccount) {
       return tx;
     }
-
-    const bondToSubmit = unitToPlanck(
-      !bondValid ? '0' : bond.bond,
-      units
-    ).toString();
-
-    tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);
+    tx = new PoolUnbond(
+      network,
+      activeAccount,
+      unitToPlanck(!bondValid ? 0 : bond.bond, units)
+    ).tx();
     return tx;
   };
 
@@ -144,6 +144,7 @@ export const LeavePool = ({
             onClick={() => setSection(0)}
           />,
         ]}
+        onResize={onResize}
         {...submitExtrinsic}
       />
     </>

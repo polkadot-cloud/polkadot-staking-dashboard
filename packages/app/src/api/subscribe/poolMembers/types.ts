@@ -1,0 +1,15 @@
+// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+export interface PoolMemberBatchEvent {
+  key: string;
+  addresses: string[];
+  poolMembers: Record<
+    number,
+    {
+      poolId: string;
+      points: string;
+      unbondingEras: Record<string, string>;
+    }
+  >;
+}

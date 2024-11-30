@@ -3,9 +3,9 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { rmCommas } from '@w3ux/utils';
+import { PoolClaimCommission } from 'api/tx/poolClaimCommission';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
@@ -17,20 +17,22 @@ import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { ActionItem } from 'library/ActionItem';
 import { Warning } from 'library/Form/Warning';
 import { SubmitTx } from 'library/SubmitTx';
-import { planckToUnitBn } from 'library/Utils';
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ButtonSubmitInvert } from 'ui-buttons';
+import { planckToUnitBn } from 'utils';
 
 export const ClaimCommission = ({
   setSection,
+  onResize,
 }: {
   setSection: Dispatch<SetStateAction<number>>;
+  onResize: () => void;
 }) => {
   const { t } = useTranslation('modals');
-  const { api } = useApi();
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
   const { setModalStatus } = useOverlay().modal;
@@ -50,12 +52,11 @@ export const ClaimCommission = ({
     setValid(isOwner() && pendingCommission.isGreaterThan(0));
   }, [activePool, pendingCommission]);
 
-  // tx to submit
   const getTx = () => {
-    if (!valid || !api) {
+    if (!valid || poolId === undefined) {
       return null;
     }
-    return api.tx.nominationPools.claimCommission(poolId);
+    return new PoolClaimCommission(network, poolId).tx();
   };
 
   const submitExtrinsic = useSubmitExtrinsic({
@@ -104,6 +105,7 @@ export const ClaimCommission = ({
             onClick={() => setSection(0)}
           />,
         ]}
+        onResize={onResize}
         {...submitExtrinsic}
       />
     </>

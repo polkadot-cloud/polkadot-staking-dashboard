@@ -3,6 +3,7 @@
 
 import { Polkicon } from '@w3ux/react-polkicon';
 import { ellipsisFn, rmCommas, unitToPlanck } from '@w3ux/utils';
+import { PoolUnbond } from 'api/tx/poolUnbond';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
@@ -19,10 +20,10 @@ import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { Warning } from 'library/Form/Warning';
 import { Title } from 'library/Prompt/Title';
 import { SubmitTx } from 'library/SubmitTx';
-import { planckToUnitBn, timeleftAsString } from 'library/Utils';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn, timeleftAsString } from 'utils';
 
 export const UnbondMember = ({
   who,
@@ -32,8 +33,9 @@ export const UnbondMember = ({
   member: PoolMembership;
 }) => {
   const { t } = useTranslation('modals');
-  const { api, consts } = useApi();
+  const { consts } = useApi();
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
   const { closePrompt } = usePrompt();
@@ -69,18 +71,16 @@ export const UnbondMember = ({
     setBondValid(isValid);
   }, [freeToUnbond.toString(), isValid]);
 
-  // tx to submit
   const getTx = () => {
     let tx = null;
-    if (!api || !activeAccount) {
+    if (!activeAccount) {
       return tx;
     }
-    // remove decimal errors
-    const bondToSubmit = unitToPlanck(
-      !bondValid ? '0' : bond.bond,
-      units
-    ).toString();
-    tx = api.tx.nominationPools.unbond(who, bondToSubmit);
+    tx = new PoolUnbond(
+      network,
+      who,
+      unitToPlanck(!bondValid ? 0 : bond.bond, units)
+    );
     return tx;
   };
 
@@ -114,7 +114,6 @@ export const UnbondMember = ({
           <Polkicon address={who} transform="grow-3" />
           &nbsp; {ellipsisFn(who, 7)}
         </h3>
-
         <ModalNotes>
           <p>{t('amountWillBeUnbonded', { bond: bond.bond, unit })}</p>
           <StaticNote

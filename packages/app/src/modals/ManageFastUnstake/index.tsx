@@ -1,6 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { FastUnstakeDeregister } from 'api/tx/fastUnstakeDeregister';
+import { FastUnstakeRegister } from 'api/tx/fastUnstakeRegister';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
@@ -20,27 +22,27 @@ import { ActionItem } from 'library/ActionItem';
 import { Warning } from 'library/Form/Warning';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { planckToUnitBn } from 'library/Utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn } from 'utils';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
   const {
-    api,
     consts: { bondDuration, fastUnstakeDeposit },
     networkMetrics: { fastUnstakeErasToCheckPerBlock },
     activeEra,
   } = useApi();
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
-  const { activeAccount } = useActiveAccounts();
-  const { notEnoughFunds } = useTxMeta();
+  const { getTxSubmission } = useTxMeta();
   const { getBondedAccount } = useBonded();
   const { isFastUnstaking } = useUnstaking();
-  const { setModalResize, setModalStatus } = useOverlay().modal;
+  const { activeAccount } = useActiveAccounts();
   const { getSignerWarnings } = useSignerWarnings();
+  const { setModalResize, setModalStatus } = useOverlay().modal;
   const { feeReserve, getTransferOptions } = useTransferOptions();
   const { isExposed, counterForQueue, queueDeposit, meta } = useFastUnstake();
 
@@ -75,21 +77,17 @@ export const ManageFastUnstake = () => {
     feeReserve,
   ]);
 
-  useEffect(
-    () => setModalResize(),
-    [notEnoughFunds, isExposed, queueDeposit, isFastUnstaking]
-  );
+  useEffect(() => setModalResize(), [isExposed, queueDeposit, isFastUnstaking]);
 
-  // tx to submit
   const getTx = () => {
     let tx = null;
-    if (!valid || !api) {
+    if (!valid) {
       return tx;
     }
     if (!isFastUnstaking) {
-      tx = api.tx.fastUnstake.registerFastUnstake();
+      tx = new FastUnstakeRegister(network).tx();
     } else {
-      tx = api.tx.fastUnstake.deregister();
+      tx = new FastUnstakeDeregister(network).tx();
     }
     return tx;
   };
@@ -102,6 +100,8 @@ export const ManageFastUnstake = () => {
       setModalStatus('closing');
     },
   });
+
+  const processing = getTxSubmission(submitExtrinsic.uid)?.processing || false;
 
   // warnings
   const warnings = getSignerWarnings(
@@ -179,7 +179,7 @@ export const ManageFastUnstake = () => {
                 {t('fastUnstakeOnceRegistered')}
               </p>
               <p>
-                {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
+                {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue || 0}</b>
               </p>
             </ModalNotes>
           </>
@@ -188,7 +188,7 @@ export const ManageFastUnstake = () => {
             <ActionItem text={t('fastUnstakeRegistered')} />
             <ModalNotes>
               <p>
-                {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
+                {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue || 0}</b>
               </p>
               <p>{t('fastUnstakeUnorderedNote')}</p>
             </ModalNotes>
@@ -200,7 +200,7 @@ export const ManageFastUnstake = () => {
           fromController
           valid={valid}
           submitText={
-            submitExtrinsic.submitting
+            processing
               ? t('submitting')
               : t('fastUnstakeSubmit', {
                   context: isFastUnstaking ? 'cancel' : 'register',

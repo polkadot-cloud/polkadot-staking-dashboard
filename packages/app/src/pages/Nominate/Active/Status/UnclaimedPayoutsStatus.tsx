@@ -11,8 +11,8 @@ import { useNetwork } from 'contexts/Network';
 import { usePayouts } from 'contexts/Payouts';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { Stat } from 'library/Stat';
-import { planckToUnitBn } from 'library/Utils';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn } from 'utils';
 
 export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
   const { t } = useTranslation();

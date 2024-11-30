@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { PoolSetState } from 'api/tx/poolSetState';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
+import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
@@ -22,12 +23,14 @@ import { ButtonSubmitInvert } from 'ui-buttons';
 export const SetPoolState = ({
   setSection,
   task = '',
+  onResize,
 }: {
   setSection: Dispatch<SetStateAction<number>>;
   task?: string;
+  onResize: () => void;
 }) => {
   const { t } = useTranslation('modals');
-  const { api } = useApi();
+  const { network } = useNetwork();
   const { setModalStatus } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
   const { getSignerWarnings } = useSignerWarnings();
@@ -78,22 +81,21 @@ export const SetPoolState = ({
     }
   };
 
-  // tx to submit
   const getTx = () => {
-    if (!valid || !api) {
+    if (!valid || poolId === undefined) {
       return null;
     }
-
     let tx;
     switch (task) {
       case 'destroy_pool':
-        tx = api.tx.nominationPools.setState(poolId, 'Destroying');
+        tx = new PoolSetState(network, poolId, 'Destroying').tx();
         break;
       case 'unlock_pool':
-        tx = api.tx.nominationPools.setState(poolId, 'Open');
+        tx = new PoolSetState(network, poolId, 'Open').tx();
+
         break;
       case 'lock_pool':
-        tx = api.tx.nominationPools.setState(poolId, 'Blocked');
+        tx = new PoolSetState(network, poolId, 'Blocked').tx();
         break;
       default:
         tx = null;
@@ -157,6 +159,7 @@ export const SetPoolState = ({
             onClick={() => setSection(0)}
           />,
         ]}
+        onResize={onResize}
         {...submitExtrinsic}
       />
     </>

@@ -7,7 +7,7 @@ import type { Plugin } from 'config/plugins';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
-import { SubscanController } from 'controllers/Subscan';
+import { Subscan } from 'controllers/Subscan';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
 import * as defaults from './defaults';
@@ -50,11 +50,11 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
   // Reset payouts on Subscan plugin not enabled. Otherwise fetch payouts.
   useEffectIgnoreInitial(() => {
     if (!plugins.includes('subscan')) {
-      SubscanController.resetData();
+      Subscan.resetData();
     } else if (isReady && !activeEra.index.isZero()) {
-      SubscanController.network = network;
+      Subscan.network = network;
       if (activeAccount) {
-        SubscanController.handleFetchPayouts(activeAccount);
+        Subscan.handleFetchPayouts(activeAccount);
       }
     }
   }, [plugins.includes('subscan'), isReady, network, activeAccount, activeEra]);

@@ -9,10 +9,10 @@ import type {
   LocalValidatorEntriesData,
   Validator,
 } from 'contexts/Validators/types';
-import type { NetworkName } from 'types';
+import type { NetworkId } from 'types';
 
 // Get favorite validators from local storage.
-export const getLocalFavorites = (network: NetworkName) => {
+export const getLocalFavorites = (network: NetworkId) => {
   const localFavourites = localStorage.getItem(`${network}_favorites`);
   return localFavourites !== null
     ? (JSON.parse(localFavourites) as string[])
@@ -20,7 +20,7 @@ export const getLocalFavorites = (network: NetworkName) => {
 };
 
 // Get local validator entries data for an era.
-export const getLocalEraValidators = (network: NetworkName, era: string) => {
+export const getLocalEraValidators = (network: NetworkId, era: string) => {
   const data = localStorage.getItem(`${network}_validators`);
   const current = data ? (JSON.parse(data) as LocalValidatorEntriesData) : null;
   const currentEra = current?.era;
@@ -34,7 +34,7 @@ export const getLocalEraValidators = (network: NetworkName, era: string) => {
 
 // Set local validator entries data for an era.
 export const setLocalEraValidators = (
-  network: NetworkName,
+  network: NetworkId,
   era: string,
   entries: Validator[],
   avgCommission: number
@@ -106,7 +106,7 @@ export const validateLocalExposure = (
 };
 
 // Check if era reward points entry exists for an era.
-export const hasLocalEraRewardPoints = (network: NetworkName, era: string) => {
+export const hasLocalEraRewardPoints = (network: NetworkId, era: string) => {
   const current = JSON.parse(
     localStorage.getItem(`${network}_era_reward_points`) || '{}'
   );
@@ -114,7 +114,7 @@ export const hasLocalEraRewardPoints = (network: NetworkName, era: string) => {
 };
 
 // Get local era reward points entry for an era.
-export const getLocalEraRewardPoints = (network: NetworkName, era: string) => {
+export const getLocalEraRewardPoints = (network: NetworkId, era: string) => {
   const current = JSON.parse(
     localStorage.getItem(`${network}_era_reward_points`) || '{}'
   );
@@ -123,7 +123,7 @@ export const getLocalEraRewardPoints = (network: NetworkName, era: string) => {
 
 // Set local era reward points entry for an era.
 export const setLocalEraRewardPoints = (
-  network: NetworkName,
+  network: NetworkId,
   era: string,
   eraRewardPoints: EraRewardPoints | null,
   endEra: string

@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { isValidAddress } from '@w3ux/utils';
+import { StakingSetPayee } from 'api/tx/stakingSetPayee';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
+import { useNetwork } from 'contexts/Network';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
-import { useTxMeta } from 'contexts/TxMeta';
 import { usePayeeConfig } from 'hooks/usePayeeConfig';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
@@ -26,14 +26,13 @@ import type { MaybeAddress } from 'types';
 
 export const UpdatePayee = () => {
   const { t } = useTranslation('modals');
-  const { api } = useApi();
+  const { network } = useNetwork();
   const { getPayee } = useBalances();
-  const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
   const { getPayeeItems } = usePayeeConfig();
   const { activeAccount } = useActiveAccounts();
+  const { setModalStatus } = useOverlay().modal;
   const { getSignerWarnings } = useSignerWarnings();
-  const { setModalStatus, setModalResize } = useOverlay().modal;
 
   const controller = getBondedAccount(activeAccount);
   const payee = getPayee(activeAccount);
@@ -70,23 +69,24 @@ export const UpdatePayee = () => {
     selected.destination !== null &&
     !(selected.destination === 'Account' && selected.account === null);
 
-  // Tx to submit.
   const getTx = () => {
-    let tx = null;
-
-    if (!api) {
-      return tx;
+    if (!selected.destination) {
+      return null;
     }
-    const payeeToSubmit = !isComplete()
-      ? 'Staked'
-      : selected.destination === 'Account'
-        ? {
-            Account: selected.account,
-          }
-        : selected.destination;
-
-    tx = api.tx.staking.setPayee(payeeToSubmit);
-    return tx;
+    if (selected.destination === 'Account' && !selected.account) {
+      return null;
+    }
+    return new StakingSetPayee(
+      network,
+      !isComplete()
+        ? { type: 'Staked', value: undefined }
+        : selected.destination === 'Account'
+          ? {
+              type: 'Account',
+              value: selected.account as string,
+            }
+          : { type: selected.destination, value: undefined }
+    );
   };
 
   const submitExtrinsic = useSubmitExtrinsic({
@@ -117,8 +117,6 @@ export const UpdatePayee = () => {
         : DefaultSelected
     );
   }, []);
-
-  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   const warnings = getSignerWarnings(
     activeAccount,

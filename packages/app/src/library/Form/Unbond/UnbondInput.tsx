@@ -4,11 +4,11 @@
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
-import { planckToUnitBn } from 'library/Utils';
 import type { ChangeEvent } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ButtonSubmitInvert } from 'ui-buttons';
+import { planckToUnitBn } from 'utils';
 import { InputWrapper } from '../Wrappers';
 import type { UnbondInputProps } from '../types';
 

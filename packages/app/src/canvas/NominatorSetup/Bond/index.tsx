@@ -16,11 +16,14 @@ import { useTranslation } from 'react-i18next';
 
 export const Bond = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
+  const { getTxSubmissionByTag } = useTxMeta();
   const { activeAccount } = useActiveAccounts();
-  const { txFees } = useTxMeta();
   const { getNominatorSetup, setActiveAccountSetup } = useSetup();
   const setup = getNominatorSetup(activeAccount);
   const { progress } = setup;
+
+  const txSubmission = getTxSubmissionByTag('nominatorSetup');
+  const fee = txSubmission?.fee || 0n;
 
   // either free to bond or existing setup value
   const initialBondValue = progress.bond || '0';
@@ -75,13 +78,13 @@ export const Bond = ({ section }: SetupStepProps) => {
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <BondFeedback
-          syncing={txFees.isZero()}
+          syncing={fee === 0n}
           bondFor="nominator"
           inSetup
           listenIsValid={(valid) => setBondValid(valid)}
           defaultBond={initialBondValue}
           setters={[handleSetBond]}
-          txFees={txFees}
+          txFees={fee}
           maxWidth
         />
         <NominateStatusBar value={new BigNumber(bond.bond)} />

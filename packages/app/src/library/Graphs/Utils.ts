@@ -13,8 +13,8 @@ import {
   startOfDay,
   subDays,
 } from 'date-fns';
-import { planckToUnitBn } from 'library/Utils';
 import type { AnyApi, AnySubscan } from 'types';
+import { planckToUnitBn } from 'utils';
 import type { PayoutDayCursor } from './types';
 
 // Given payouts, calculate daily income and fill missing days with zero amounts.

@@ -6,7 +6,7 @@ import { ellipsisFn } from '@w3ux/utils';
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useNetwork } from 'contexts/Network';
 import { usePrompt } from 'contexts/Prompt';
-import { NotificationsController } from 'controllers/Notifications';
+import { Notifications } from 'controllers/Notifications';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
 import { useTranslation } from 'react-i18next';
 import { ButtonMono, ButtonMonoInvert } from 'ui-buttons';
@@ -25,7 +25,7 @@ export const Remove = ({
   const { forgetOtherAccounts } = useOtherAccounts();
 
   const removeAccountCallback = () => {
-    NotificationsController.emit({
+    Notifications.emit({
       title: t('ledgerAccountRemoved'),
       subtitle: t('ledgerRemovedAccount', { account: ellipsisFn(address) }),
     });

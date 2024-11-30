@@ -7,7 +7,6 @@ import { useBalances } from 'contexts/Balances';
 import type { UnlockChunk } from 'contexts/Balances/types';
 import { useLedgerHardware } from 'contexts/LedgerHardware';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle';
 import { ModalMotionTwoSection } from 'kits/Overlay/structure/ModalMotionTwoSection';
@@ -26,7 +25,6 @@ export const UnlockChunks = () => {
     modalMaxHeight,
   } = useOverlay().modal;
   const { getLedger } = useBalances();
-  const { notEnoughFunds } = useTxMeta();
   const { getPoolUnlocking } = useActivePool();
   const { activeAccount } = useActiveAccounts();
   const { integrityChecked } = useLedgerHardware();
@@ -84,27 +82,20 @@ export const UnlockChunks = () => {
     return h;
   };
 
-  const resizeCallback = () => {
+  const onResize = () => {
     setModalHeight(getModalHeight());
   };
 
   // resize modal on state change
   useEffect(() => {
-    setModalHeight(getModalHeight());
-  }, [
-    task,
-    calculateHeight,
-    notEnoughFunds,
-    sectionRef.current,
-    unlocking,
-    integrityChecked,
-  ]);
+    onResize();
+  }, [task, calculateHeight, sectionRef.current, unlocking, integrityChecked]);
 
   // resize this modal on window resize
   useEffect(() => {
-    window.addEventListener('resize', resizeCallback);
+    window.addEventListener('resize', onResize);
     return () => {
-      window.removeEventListener('resize', resizeCallback);
+      window.removeEventListener('resize', onResize);
     };
   }, []);
 
@@ -149,6 +140,7 @@ export const UnlockChunks = () => {
             unlock={unlock}
             task={task}
             ref={formsRef}
+            onResize={onResize}
           />
         </div>
       </ModalMotionTwoSection>

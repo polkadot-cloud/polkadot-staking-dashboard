@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ExtensionIcons } from '@w3ux/extension-assets/util';
 import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit';
 import { localStorageOrDefault } from '@w3ux/utils';
-import { NotificationsController } from 'controllers/Notifications';
+import { Notifications } from 'controllers/Notifications';
 import { ModalConnectItem } from 'kits/Overlay/structure/ModalConnectItem';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -40,7 +40,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
         setIncrement(increment + 1);
 
         if (success) {
-          NotificationsController.emit({
+          Notifications.emit({
             title: t('extensionConnected'),
             subtitle: `${t('titleExtensionConnected', { title })}`,
           });

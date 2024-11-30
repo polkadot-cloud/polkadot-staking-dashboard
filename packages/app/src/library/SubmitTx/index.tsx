@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
+import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useNetwork } from 'contexts/Network';
@@ -22,20 +24,35 @@ export const SubmitTx = ({
   submitAddress,
   valid = false,
   noMargin = false,
-  submitting = false,
   proxySupported,
   displayFor = 'default',
   fromController = false,
   customEvent,
+  onResize,
 }: SubmitTxProps) => {
   const { t } = useTranslation();
   const { getBondedAccount } = useBonded();
+  const {
+    consts: { existentialDeposit },
+  } = useApi();
+  const { getTxSubmission } = useTxMeta();
   const { unit } = useNetwork().networkData;
   const { setModalResize } = useOverlay().modal;
+  const { getBalance, getEdReserved } = useBalances();
   const { activeAccount, activeProxy } = useActiveAccounts();
-  const { notEnoughFunds, sender, setTxSignature } = useTxMeta();
   const { getAccount, requiresManualSign } = useImportedAccounts();
+
   const controller = getBondedAccount(activeAccount);
+  const txSubmission = getTxSubmission(uid);
+  const from = txSubmission?.from || null;
+  const fee = txSubmission?.fee || 0n;
+  const processing = txSubmission?.processing || false;
+
+  const edReserved = getEdReserved(from, existentialDeposit);
+  const { free, frozen } = getBalance(from);
+  const balanceforTxFees = free.minus(edReserved).minus(frozen);
+  const notEnoughFunds =
+    balanceforTxFees.minus(fee.toString()).isLessThan(0) && fee > 0n;
 
   // Default to active account
   let signingOpts = {
@@ -58,23 +75,18 @@ export const SubmitTx = ({
   submitText =
     submitText ||
     `${
-      submitting
+      processing
         ? t('submitting', { ns: 'modals' })
         : t('submit', { ns: 'modals' })
     }`;
 
-  // Set resize on not enough funds.
+  // Set resize on submit footer UI height changes.
   useEffect(() => {
     setModalResize();
+    if (onResize) {
+      onResize();
+    }
   }, [notEnoughFunds, fromController]);
-
-  // Reset tx metadata on unmount.
-  useEffect(
-    () => () => {
-      setTxSignature(null);
-    },
-    []
-  );
 
   return (
     <Tx
@@ -85,28 +97,31 @@ export const SubmitTx = ({
       notEnoughFunds={notEnoughFunds}
       dangerMessage={`${t('notEnough', { ns: 'library' })} ${unit}`}
       SignerComponent={
-        requiresManualSign(sender) ? (
+        requiresManualSign(from) ? (
           <ManualSign
             uid={uid}
             onSubmit={onSubmit}
-            submitting={submitting}
+            processing={processing}
             valid={valid}
             submitText={submitText}
             buttons={buttons}
             submitAddress={submitAddress}
             customEvent={customEvent}
             displayFor={displayFor}
+            notEnoughFunds={notEnoughFunds}
           />
         ) : (
           <Default
+            uid={uid}
             onSubmit={onSubmit}
-            submitting={submitting}
+            processing={processing}
             valid={valid}
             submitText={submitText}
             buttons={buttons}
             submitAddress={submitAddress}
             customEvent={customEvent}
             displayFor={displayFor}
+            notEnoughFunds={notEnoughFunds}
           />
         )
       }

@@ -6,21 +6,13 @@ import { stringToU8a } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
 import type {
   APIActiveEra,
-  APIChainState,
   APIConstants,
   APIContextInterface,
   APINetworkMetrics,
   APIPoolsConfig,
   APIStakingMetrics,
+  PapiChainSpecContext,
 } from 'contexts/Api/types';
-
-export const defaultChainState: APIChainState = {
-  chain: null,
-  version: {
-    specVersion: 0,
-  },
-  ss58Prefix: 0,
-};
 
 export const defaultConsts: APIConstants = {
   bondDuration: new BigNumber(0),
@@ -43,6 +35,21 @@ export const defaultNetworkMetrics: APINetworkMetrics = {
   minimumActiveStake: new BigNumber(0),
 };
 
+export const defaultChainSpecs: PapiChainSpecContext = {
+  genesisHash: '',
+  ss58Format: 0,
+  tokenDecimals: 0,
+  tokenSymbol: '',
+  received: false,
+  authoringVersion: 0,
+  implName: '',
+  implVersion: 0,
+  specName: '',
+  specVersion: 0,
+  stateVersion: 0,
+  transactionVersion: 0,
+};
+
 export const defaultActiveEra: APIActiveEra = {
   index: new BigNumber(0),
   start: new BigNumber(0),
@@ -62,7 +69,6 @@ export const defaultPoolsConfig: APIPoolsConfig = {
 };
 
 export const defaultStakingMetrics: APIStakingMetrics = {
-  totalNominators: new BigNumber(0),
   totalValidators: new BigNumber(0),
   lastReward: new BigNumber(0),
   lastTotalStake: new BigNumber(0),
@@ -74,9 +80,7 @@ export const defaultStakingMetrics: APIStakingMetrics = {
 };
 
 export const defaultApiContext: APIContextInterface = {
-  api: null,
-  peopleApi: null,
-  chainState: defaultChainState,
+  chainSpecs: defaultChainSpecs,
   isReady: false,
   apiStatus: 'disconnected',
   peopleApiStatus: 'disconnected',

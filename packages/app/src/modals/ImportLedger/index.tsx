@@ -15,7 +15,7 @@ import type {
   LedgerResponse,
 } from 'contexts/LedgerHardware/types';
 import { useNetwork } from 'contexts/Network';
-import { NotificationsController } from 'controllers/Notifications';
+import { Notifications } from 'controllers/Notifications';
 import { useOverlay } from 'kits/Overlay/Provider';
 import type { FC } from 'react';
 import { useEffect, useRef, useState } from 'react';
@@ -136,7 +136,7 @@ export const ImportLedger: FC = () => {
       registerSaEvent(`${network.toLowerCase()}_ledger_account_fetched`);
 
       // trigger notification.
-      NotificationsController.emit({
+      Notifications.emit({
         title: t('ledgerAccountFetched'),
         subtitle: t('ledgerFetchedAccount', {
           account: ellipsisFn(newAddress[0].address),

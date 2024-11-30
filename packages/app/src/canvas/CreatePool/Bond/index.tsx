@@ -16,9 +16,12 @@ import { useTranslation } from 'react-i18next';
 
 export const Bond = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
-  const { txFees } = useTxMeta();
+  const { getTxSubmissionByTag } = useTxMeta();
   const { activeAccount } = useActiveAccounts();
   const { getPoolSetup, setActiveAccountSetup } = useSetup();
+
+  const txSubmission = getTxSubmissionByTag('createPool');
+  const fee = txSubmission?.fee || 0n;
 
   const setup = getPoolSetup(activeAccount);
   const { progress } = setup;
@@ -76,13 +79,13 @@ export const Bond = ({ section }: SetupStepProps) => {
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <BondFeedback
-          syncing={txFees.isZero()}
+          syncing={fee === 0n}
           bondFor="pool"
           inSetup
           listenIsValid={(valid) => setBondValid(valid)}
           defaultBond={initialBondValue}
           setters={[handleSetBond]}
-          txFees={txFees}
+          txFees={fee}
           maxWidth
         />
         <CreatePoolStatusBar value={new BigNumber(bond.bond)} />

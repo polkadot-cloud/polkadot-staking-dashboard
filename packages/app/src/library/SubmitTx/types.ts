@@ -3,6 +3,7 @@
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import type { DisplayFor } from '@w3ux/types';
+import type { VaultSignatureResult } from 'library/Signers/VaultSigner/types';
 import type { ReactNode } from 'react';
 import type { MaybeAddress } from 'types';
 
@@ -12,12 +13,12 @@ export type SubmitTxProps = SubmitProps & {
   proxySupported: boolean;
   submitAddress?: MaybeAddress;
   noMargin?: boolean;
+  onResize?: () => void;
 };
 
 export interface SubmitProps {
-  uid?: number;
-  onSubmit: (customEvent?: string) => void;
-  submitting: boolean;
+  uid: number;
+  onSubmit: () => void;
   valid: boolean;
   submitText?: string;
   customEvent?: string;
@@ -27,11 +28,16 @@ export interface SubmitProps {
 
 export interface SignerPromptProps {
   submitAddress: MaybeAddress;
+  toSign: Uint8Array;
+  onComplete: (
+    status: 'complete' | 'cancelled',
+    signature: VaultSignatureResult
+  ) => void;
 }
 
 export interface LedgerSubmitProps {
   onSubmit: () => void;
-  submitting: boolean;
+  processing: boolean;
   displayFor?: DisplayFor;
   disabled: boolean;
   submitText?: string;

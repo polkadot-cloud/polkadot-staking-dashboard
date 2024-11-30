@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { unitToPlanck } from '@w3ux/utils';
+import { PoolUnbond } from 'api/tx/poolUnbond';
+import { StakingUnbond } from 'api/tx/stakingUnbond';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
@@ -10,6 +12,7 @@ import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxMeta } from 'contexts/TxMeta';
+import { Apis } from 'controllers/Apis';
 import { getUnixTime } from 'date-fns';
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
@@ -22,20 +25,20 @@ import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { planckToUnitBn, timeleftAsString } from 'library/Utils';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn, timeleftAsString } from 'utils';
 
 export const Unbond = () => {
   const { t } = useTranslation('modals');
-  const { txFees } = useTxMeta();
-  const { activeAccount } = useActiveAccounts();
-  const { notEnoughFunds } = useTxMeta();
-  const { getBondedAccount } = useBonded();
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
+  const { getTxSubmission } = useTxMeta();
+  const { getBondedAccount } = useBonded();
+  const { activeAccount } = useActiveAccounts();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
@@ -47,7 +50,6 @@ export const Unbond = () => {
     config: { options },
   } = useOverlay().modal;
   const {
-    api,
     consts,
     poolsConfig: { minJoinBond: minJoinBondBn, minCreateBond: minCreateBondBn },
   } = useApi();
@@ -102,23 +104,18 @@ export const Unbond = () => {
       : BigNumber.max(freeToUnbond.minus(minJoinBond), 0)
     : BigNumber.max(freeToUnbond.minus(minNominatorBond), 0);
 
-  // tx to submit
   const getTx = () => {
+    const api = Apis.getApi(network);
     let tx = null;
     if (!api || !activeAccount) {
       return tx;
     }
 
-    const bondToSubmit = unitToPlanck(
-      !bondValid ? '0' : bond.bond,
-      units
-    ).toString();
-
-    // determine tx
+    const bondToSubmit = unitToPlanck(!bondValid ? 0 : bond.bond, units);
     if (isPooling) {
-      tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);
+      tx = new PoolUnbond(network, activeAccount, bondToSubmit).tx();
     } else if (isStaking) {
-      tx = api.tx.staking.unbond(bondToSubmit);
+      tx = new StakingUnbond(network, bondToSubmit).tx();
     }
     return tx;
   };
@@ -133,6 +130,8 @@ export const Unbond = () => {
       setModalStatus('closing');
     },
   });
+
+  const fee = getTxSubmission(submitExtrinsic.uid)?.fee || 0n;
 
   const nominatorActiveBelowMin =
     bondFor === 'nominator' &&
@@ -181,7 +180,7 @@ export const Unbond = () => {
   // Modal resize on form update.
   useEffect(
     () => setModalResize(),
-    [bond, notEnoughFunds, feedbackErrors.length, warnings.length]
+    [bond, feedbackErrors.length, warnings.length]
   );
 
   return (
@@ -203,7 +202,7 @@ export const Unbond = () => {
             setFeedbackErrors(errors);
           }}
           setters={[handleSetBond]}
-          txFees={txFees}
+          txFees={fee}
         />
         <ModalNotes withPadding>
           {bondFor === 'pool' ? (

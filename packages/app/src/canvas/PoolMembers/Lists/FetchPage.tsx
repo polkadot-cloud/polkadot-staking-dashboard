@@ -7,7 +7,7 @@ import { usePlugins } from 'contexts/Plugins';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import type { PoolMember } from 'contexts/Pools/PoolMembers/types';
-import { SubscanController } from 'controllers/Subscan';
+import { Subscan } from 'controllers/Subscan';
 import { List, ListStatusHeader, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
@@ -53,7 +53,7 @@ export const MembersListInner = ({
     if (poolId > 0 && !fetchingMemberList.current) {
       fetchingMemberList.current = true;
 
-      const newMembers = (await SubscanController.handleFetchPoolMembers(
+      const newMembers = (await Subscan.handleFetchPoolMembers(
         poolId,
         page
       )) as PoolMember[];

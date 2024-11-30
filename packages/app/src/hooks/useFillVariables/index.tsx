@@ -5,7 +5,7 @@ import type { AnyJson } from '@w3ux/types';
 import { capitalizeFirstLetter } from '@w3ux/utils';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
-import { planckToUnitBn } from 'library/Utils';
+import { planckToUnitBn } from 'utils';
 import { useErasPerDay } from '../useErasPerDay';
 
 export const useFillVariables = () => {

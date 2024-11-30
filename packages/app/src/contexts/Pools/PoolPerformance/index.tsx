@@ -38,7 +38,7 @@ export const PoolPerformanceProvider = ({
   children: ReactNode;
 }) => {
   const { network } = useNetwork();
-  const { api, activeEra } = useApi();
+  const { isReady, activeEra } = useApi();
   const { getPagedErasStakers } = useStaking();
   const { erasRewardPoints } = useValidators();
 
@@ -179,10 +179,9 @@ export const PoolPerformanceProvider = ({
 
   // Get era data and send to worker.
   const processEra = async (key: PoolRewardPointsKey, era: BigNumber) => {
-    if (!api) {
+    if (!isReady) {
       return;
     }
-
     // NOTE: This will not make any difference on the first run.
     updateTaskCurrentEra(key, era);
 

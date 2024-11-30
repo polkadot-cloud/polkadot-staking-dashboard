@@ -3,7 +3,10 @@
 
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import type { ExternalAccount } from '@w3ux/react-connect-kit/types';
-import { rmCommas, setStateWithRef } from '@w3ux/utils';
+import type { AnyJson } from '@w3ux/types';
+import { setStateWithRef } from '@w3ux/utils';
+import { ErasStakersPagedEntries } from 'api/entries/erasStakersPagedEntries';
+import { ErasStakersOverview } from 'api/query/erasStakersOverview';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -11,10 +14,9 @@ import { useNetwork } from 'contexts/Network';
 import type {
   EraStakers,
   Exposure,
-  ExposureOther,
   StakingContextInterface,
 } from 'contexts/Staking/types';
-import { SyncController } from 'controllers/Sync';
+import { Syncs } from 'controllers/Syncs';
 import type { NominationStatus } from 'library/ValidatorList/ValidatorItem/types';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
@@ -38,9 +40,9 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const { getBondedAccount } = useBonded();
   const { networkData, network } = useNetwork();
   const { getLedger, getNominations } = useBalances();
+  const { isReady, activeEra, apiStatus } = useApi();
   const { accounts: connectAccounts } = useImportedAccounts();
   const { activeAccount, getActiveAccount } = useActiveAccounts();
-  const { isReady, api, apiStatus, activeEra } = useApi();
 
   // Store eras stakers in state.
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers);
@@ -71,7 +73,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       // check if account hasn't changed since worker started
       if (getActiveAccount() === who) {
         // Syncing current eraStakers is now complete.
-        SyncController.dispatch('era-stakers', 'complete');
+        Syncs.dispatch('era-stakers', 'complete');
 
         setStateWithRef(
           {
@@ -90,7 +92,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetches erasStakers exposures for an era, and saves to `localStorage`.
   const fetchEraStakers = async (era: string) => {
-    if (!isReady || activeEra.index.isZero() || !api) {
+    if (!isReady || activeEra.index.isZero()) {
       return [];
     }
 
@@ -117,11 +119,11 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetches the active nominator set and metadata around it.
   const fetchActiveEraStakers = async () => {
-    if (!isReady || activeEra.index.isZero() || !api) {
+    if (!isReady || activeEra.index.isZero()) {
       return;
     }
 
-    SyncController.dispatch('era-stakers', 'syncing');
+    Syncs.dispatch('era-stakers', 'syncing');
 
     const exposures = await fetchEraStakers(activeEra.index.toString());
 
@@ -221,54 +223,52 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch eras stakers from storage.
   const getPagedErasStakers = async (era: string) => {
-    if (!api) {
-      return [];
-    }
-
-    const overview: AnyApi =
-      await api.query.staking.erasStakersOverview.entries(era);
-
-    const validators = overview.reduce(
-      (prev: Record<string, Exposure>, [keys, value]: AnyApi) => {
-        const validator = keys.toHuman()[1];
-        const { own, total } = value.toHuman();
-        return { ...prev, [validator]: { own, total } };
-      },
+    const overview = await new ErasStakersOverview(network).fetch(Number(era));
+    const validators: Record<string, AnyJson> = overview.reduce(
+      (
+        prev: Record<string, Exposure>,
+        { keyArgs: [, validator], value: { own, total } }: AnyApi
+      ) => ({ ...prev, [validator]: { own, total } }),
       {}
     );
     const validatorKeys = Object.keys(validators);
 
     const pagedResults = await Promise.all(
       validatorKeys.map((v) =>
-        api.query.staking.erasStakersPaged.entries(era, v)
+        new ErasStakersPagedEntries(network).fetch(Number(era), v)
       )
     );
 
     const result: Exposure[] = [];
     let i = 0;
-    for (const pagedResult of pagedResults) {
+    for (const pages of pagedResults) {
+      // NOTE: Only one page is fetched for each validator for now.
+      const page = pages[0];
+
+      // NOTE: Some pages turn up as undefined - might be worth exploring further.
+      if (!page) {
+        continue;
+      }
+
+      const {
+        keyArgs,
+        value: { others },
+      } = page;
+
       const validator = validatorKeys[i];
       const { own, total } = validators[validator];
-      const others = pagedResult.reduce(
-        (prev: ExposureOther[], [, v]: AnyApi) => {
-          const o = v.toHuman()?.others || [];
-          if (!o.length) {
-            return prev;
-          }
-          return prev.concat(o);
-        },
-        []
-      );
 
       result.push({
-        keys: [rmCommas(era), validator],
+        keys: [keyArgs[0].toString(), validator],
         val: {
-          total: rmCommas(total),
-          own: rmCommas(own),
-          others: others.map(({ who, value }) => ({
-            who,
-            value: rmCommas(value),
-          })),
+          total: total.toString(),
+          own: own.toString(),
+          others: others.map(
+            ({ who, value }: { who: string; value: bigint }) => ({
+              who,
+              value: value.toString(),
+            })
+          ),
         },
       });
       i++;

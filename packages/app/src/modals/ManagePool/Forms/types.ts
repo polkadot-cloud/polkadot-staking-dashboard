@@ -16,4 +16,5 @@ export interface FormsProps {
   task?: string;
   section: number;
   incrementCalculateHeight: () => void;
+  onResize: () => void;
 }

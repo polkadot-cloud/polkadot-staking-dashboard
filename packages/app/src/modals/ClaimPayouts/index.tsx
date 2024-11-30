@@ -3,7 +3,6 @@
 
 import { setStateWithRef } from '@w3ux/utils';
 import { usePayouts } from 'contexts/Payouts';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle';
 import { ModalMotionTwoSection } from 'kits/Overlay/structure/ModalMotionTwoSection';
@@ -17,7 +16,6 @@ import type { ActivePayout } from './types';
 
 export const ClaimPayouts = () => {
   const { t } = useTranslation('modals');
-  const { notEnoughFunds } = useTxMeta();
   const { unclaimedPayouts } = usePayouts();
   const { setModalHeight, modalMaxHeight } = useOverlay().modal;
 
@@ -46,10 +44,14 @@ export const ClaimPayouts = () => {
     return h;
   };
 
+  const onResize = () => {
+    setModalHeight(getModalHeight());
+  };
+
   // Resize modal on state change.
   useEffect(() => {
-    setModalHeight(getModalHeight());
-  }, [unclaimedPayouts, notEnoughFunds, section]);
+    onResize();
+  }, [unclaimedPayouts, section]);
 
   // Resize this modal on window resize.
   useEffect(() => {
@@ -59,7 +61,7 @@ export const ClaimPayouts = () => {
     };
   }, []);
   const resizeCallback = () => {
-    setModalHeight(getModalHeight());
+    onResize();
   };
 
   return (
@@ -99,6 +101,7 @@ export const ClaimPayouts = () => {
             payouts={payouts}
             setPayouts={setPayouts}
             setSection={setSection}
+            onResize={onResize}
           />
         </div>
       </ModalMotionTwoSection>

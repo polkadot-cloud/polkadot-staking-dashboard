@@ -3,12 +3,12 @@
 
 import type { AnyJson } from '@w3ux/types';
 import BigNumber from 'bignumber.js';
-import type { NetworkName } from 'types';
+import type { NetworkId } from 'types';
 import type { LocalValidatorExposure } from './types';
 
 // Check if local exposure entry exists for an era.
 export const hasLocalEraExposure = (
-  network: NetworkName,
+  network: NetworkId,
   era: string,
   who: string
 ) => {
@@ -20,7 +20,7 @@ export const hasLocalEraExposure = (
 
 // Get local exposure entry for an era.
 export const getLocalEraExposure = (
-  network: NetworkName,
+  network: NetworkId,
   era: string,
   who: string
 ) => {
@@ -32,7 +32,7 @@ export const getLocalEraExposure = (
 
 // Set local exposure entry for an era.
 export const setLocalEraExposure = (
-  network: NetworkName,
+  network: NetworkId,
   era: string,
   who: string,
   exposedValidators: Record<string, LocalValidatorExposure> | null,
@@ -61,7 +61,7 @@ export const setLocalEraExposure = (
 };
 
 // Get unclaimed payouts for an account.
-export const getLocalUnclaimedPayouts = (network: NetworkName, who: string) => {
+export const getLocalUnclaimedPayouts = (network: NetworkId, who: string) => {
   const current = JSON.parse(
     localStorage.getItem(`${network}_unclaimed_payouts`) || '{}'
   );
@@ -70,7 +70,7 @@ export const getLocalUnclaimedPayouts = (network: NetworkName, who: string) => {
 
 // Set local unclaimed payouts for an account.
 export const setLocalUnclaimedPayouts = (
-  network: NetworkName,
+  network: NetworkId,
   era: string,
   who: string,
   unclaimdPayouts: Record<string, [number, string]>,

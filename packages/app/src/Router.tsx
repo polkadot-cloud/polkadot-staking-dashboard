@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { extractUrlValue } from '@w3ux/utils';
-import { registerLastVisited, registerSaEvent } from 'Utils';
 import { PagesConfig } from 'config/pages';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -10,14 +9,14 @@ import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
 import { useNetwork } from 'contexts/Network';
 import { usePrompt } from 'contexts/Prompt';
 import { useUi } from 'contexts/UI';
-import { NotificationsController } from 'controllers/Notifications';
+import { Notifications } from 'controllers/Notifications';
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
 import { Headers } from 'library/Headers';
 import { Help } from 'library/Help';
 import { Menu } from 'library/Menu';
 import { NetworkBar } from 'library/NetworkBar';
 import { Disclaimer } from 'library/NetworkBar/Disclaimer';
-import { Notifications } from 'library/Notifications';
+import { NotificationPrompts } from 'library/NotificationPrompts';
 import { Offline } from 'library/Offline';
 import { PageWithTitle } from 'library/PageWithTitle';
 import { Prompt } from 'library/Prompt';
@@ -35,6 +34,7 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { Body, Main } from 'ui-structure';
+import { registerLastVisited, registerSaEvent } from 'utils';
 
 const RouterInner = () => {
   const { t } = useTranslation();
@@ -85,7 +85,7 @@ const RouterInner = () => {
         if (account && aUrl !== activeAccount) {
           setActiveAccount(account.address || null);
 
-          NotificationsController.emit({
+          Notifications.emit({
             title: t('accountConnected', { ns: 'library' }),
             subtitle: `${t('connectedTo', { ns: 'library' })} ${
               account.name || aUrl
@@ -98,37 +98,18 @@ const RouterInner = () => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
-      {/* Notification popups */}
-      <Notifications />
-
+      <NotificationPrompts />
       <Body>
-        {/* Help: closed by default */}
         <Help />
-
-        {/* Overlays: modal and canvas. Closed by default */}
         <Overlays />
-
-        {/* Menu: closed by default */}
         <Menu />
-
-        {/* Tooltip: invisible by default */}
         <Tooltip />
-
-        {/* Prompt: closed by default */}
         <Prompt />
-
-        {/* Left side menu */}
         <SideMenu />
-
-        {/* Main content window */}
         <Main ref={mainInterfaceRef}>
-          {/* Fixed headers */}
           <Headers />
-
-          {/* Isolate route errors to `Main` container */}
           <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
             <Routes>
-              {/* App page routes */}
               {PagesConfig.map((page, i) => (
                 <Route
                   key={`main_interface_page_${i}`}
@@ -136,8 +117,6 @@ const RouterInner = () => {
                   element={<PageWithTitle page={page} />}
                 />
               ))}
-
-              {/* Default route to overview */}
               <Route
                 key="main_interface_navigate"
                 path="*"
@@ -147,11 +126,7 @@ const RouterInner = () => {
           </ErrorBoundary>
         </Main>
       </Body>
-
-      {/* Network status and network details */}
       <NetworkBar />
-
-      {/* Offline status label */}
       <Offline />
     </ErrorBoundary>
   );

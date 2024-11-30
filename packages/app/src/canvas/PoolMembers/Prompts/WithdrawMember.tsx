@@ -3,6 +3,7 @@
 
 import { Polkicon } from '@w3ux/react-polkicon';
 import { ellipsisFn, rmCommas } from '@w3ux/utils';
+import { PoolWithdraw } from 'api/tx/poolWithdraw';
 import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
@@ -18,10 +19,10 @@ import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
 import { Warning } from 'library/Form/Warning';
 import { Title } from 'library/Prompt/Title';
 import { SubmitTx } from 'library/SubmitTx';
-import { planckToUnitBn } from 'library/Utils';
 import type { RefObject } from 'react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { planckToUnitBn } from 'utils';
 
 export const WithdrawMember = ({
   who,
@@ -34,10 +35,11 @@ export const WithdrawMember = ({
 }) => {
   const { t } = useTranslation('modals');
   const {
+    network,
     networkData: { units, unit },
   } = useNetwork();
   const { closePrompt } = usePrompt();
-  const { api, consts, activeEra } = useApi();
+  const { consts, activeEra } = useApi();
   const { activeAccount } = useActiveAccounts();
   const { removePoolMember } = usePoolMembers();
   const { getSignerWarnings } = useSignerWarnings();
@@ -63,14 +65,11 @@ export const WithdrawMember = ({
   // valid to submit transaction
   const [valid] = useState<boolean>(!totalWithdraw.isZero());
 
-  // tx to submit
   const getTx = () => {
-    let tx = null;
-    if (!valid || !api) {
-      return tx;
+    if (!valid) {
+      return null;
     }
-    tx = api.tx.nominationPools.withdrawUnbonded(who, historyDepth.toString());
-    return tx;
+    return new PoolWithdraw(network, who, historyDepth.toNumber()).tx();
   };
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),

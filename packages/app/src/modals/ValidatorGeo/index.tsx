@@ -9,7 +9,7 @@ import { useHelp } from 'contexts/Help';
 import { useNetwork } from 'contexts/Network';
 import { usePlugins } from 'contexts/Plugins';
 import { useUi } from 'contexts/UI';
-import { PolkaWatchController } from 'controllers/PolkaWatch';
+import { PolkaWatch } from 'controllers/PolkaWatch';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { GeoDonut } from 'library/Graphs/GeoDonut';
@@ -46,14 +46,11 @@ export const ValidatorGeo = () => {
   const isSmallScreen = window.innerWidth <= 650;
   const chartWidth = '330px';
 
-  const networkSupported =
-    PolkaWatchController.SUPPORTED_NETWORKS.includes(network);
+  const networkSupported = PolkaWatch.SUPPORTED_NETWORKS.includes(network);
 
   useEffect(() => {
     if (networkSupported && enabled) {
-      const polkaWatchApi = new PolkawatchApi(
-        PolkaWatchController.apiConfig(network)
-      );
+      const polkaWatchApi = new PolkawatchApi(PolkaWatch.apiConfig(network));
       polkaWatchApi
         .ddpIpfsValidatorDetail({
           lastDays: 60,

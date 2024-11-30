@@ -1,15 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useBalances } from 'contexts/Balances';
 import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useFavoritePools } from 'contexts/Pools/FavoritePools';
-import { useActivePools } from 'hooks/useActivePools';
-import { useSyncing } from 'hooks/useSyncing';
-import { useOverlay } from 'kits/Overlay/Provider';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList';
 import { PoolListProvider } from 'library/PoolList/context';
@@ -34,23 +29,9 @@ export const HomeInner = () => {
   const { t } = useTranslation('pages');
   const { network } = useNetwork();
   const { favorites } = useFavoritePools();
-  const { openModal } = useOverlay().modal;
   const { bondedPools } = useBondedPools();
-  const { getPoolMembership } = useBalances();
-  const { poolMembersipSyncing } = useSyncing();
-  const { activeAccount } = useActiveAccounts();
   const { activeTab, setActiveTab } = usePoolsTabs();
   const { getPoolRoles, activePool } = useActivePool();
-  const membership = getPoolMembership(activeAccount);
-
-  const { activePools } = useActivePools({
-    who: activeAccount,
-  });
-
-  // Calculate the number of _other_ pools the user has a role in.
-  const poolRoleCount = Object.keys(activePools).filter(
-    (poolId) => poolId !== String(membership?.poolId)
-  ).length;
 
   const ROW_HEIGHT = 220;
 
@@ -81,18 +62,6 @@ export const HomeInner = () => {
             badge: String(favorites.length),
           },
         ]}
-        button={
-          !poolMembersipSyncing() && poolRoleCount > 0
-            ? {
-                title: t('pools.allRoles'),
-                onClick: () =>
-                  openModal({
-                    key: 'AccountPoolRoles',
-                    options: { who: activeAccount, activePools },
-                  }),
-              }
-            : undefined
-        }
       />
       {activeTab === 0 && (
         <>

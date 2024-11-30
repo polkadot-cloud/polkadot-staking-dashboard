@@ -8,7 +8,7 @@ import { Polkicon } from '@w3ux/react-polkicon';
 import { ellipsisFn } from '@w3ux/utils';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
 import { useProxies } from 'contexts/Proxies';
-import { NotificationsController } from 'controllers/Notifications';
+import { Notifications } from 'controllers/Notifications';
 import type { NotificationText } from 'controllers/Notifications/types';
 import { useTranslation } from 'react-i18next';
 import { ItemWrapper } from './Wrappers';
@@ -61,7 +61,7 @@ export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
                 onClick={() => {
                   navigator.clipboard.writeText(primaryAddress);
                   if (notification) {
-                    NotificationsController.emit(notification);
+                    Notifications.emit(notification);
                   }
                 }}
               >

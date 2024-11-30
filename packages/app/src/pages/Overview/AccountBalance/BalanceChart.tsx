@@ -17,9 +17,9 @@ import { BarSegment } from 'library/BarChart/BarSegment';
 import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
-import { planckToUnitBn } from 'library/Utils';
 import { useTranslation } from 'react-i18next';
 import { ButtonTertiary } from 'ui-buttons';
+import { planckToUnitBn } from 'utils';
 import { FiatValue } from './FiatValue';
 
 export const BalanceChart = () => {

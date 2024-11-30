@@ -19,6 +19,9 @@ export const PromptProvider = ({ children }: { children: ReactNode }) => {
     onClosePrompt: null,
   });
 
+  // Whether prompt can be closed by clicking outside on container.
+  const [closeOnOutsideClick, setCloseOnOutsideClick] = useState(false);
+
   const setPrompt = (Prompt: Prompt) => {
     setState({
       ...state,
@@ -33,13 +36,18 @@ export const PromptProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  const openPromptWith = (Prompt: Prompt, size = 'small') => {
+  const openPromptWith = (
+    Prompt: Prompt,
+    size = 'small',
+    closeOutside = true
+  ) => {
     setState({
       ...state,
       size,
       Prompt,
       status: 1,
     });
+    setCloseOnOutsideClick(closeOutside);
   };
 
   const closePrompt = () => {
@@ -70,9 +78,11 @@ export const PromptProvider = ({ children }: { children: ReactNode }) => {
         closePrompt,
         setStatus,
         setPrompt,
+        setCloseOnOutsideClick,
         size: state.size,
         status: state.status,
         Prompt: state.Prompt,
+        closeOnOutsideClick,
       }}
     >
       {children}

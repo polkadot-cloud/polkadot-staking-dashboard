@@ -1,12 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { PoolChill } from 'api/tx/poolChill';
+import { StakingChill } from 'api/tx/stakingChill';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
+import { useNetwork } from 'contexts/Network';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useSignerWarnings } from 'hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
 import { useOverlay } from 'kits/Overlay/Provider';
@@ -21,8 +22,7 @@ import { useTranslation } from 'react-i18next';
 
 export const StopNominations = () => {
   const { t } = useTranslation('modals');
-  const { api } = useApi();
-  const { notEnoughFunds } = useTxMeta();
+  const { network } = useNetwork();
   const { getBondedAccount } = useBonded();
   const { getNominations } = useBalances();
   const { activeAccount } = useActiveAccounts();
@@ -30,7 +30,6 @@ export const StopNominations = () => {
   const {
     setModalStatus,
     config: { options },
-    setModalResize,
   } = useOverlay().modal;
   const { activePoolNominations, isNominator, isOwner, activePool } =
     useActivePool();
@@ -60,18 +59,15 @@ export const StopNominations = () => {
     isValid = (isNominator() || isOwner()) ?? false;
   }
 
-  // tx to submit
   const getTx = () => {
     let tx = null;
-    if (!valid || !api) {
+    if (!valid) {
       return tx;
     }
-
     if (isPool) {
-      // wishing to stop all nominations, call chill
-      tx = api.tx.nominationPools.chill(activePool?.id || 0);
+      tx = new PoolChill(network, activePool?.id || 0).tx();
     } else if (isStaking) {
-      tx = api.tx.staking.chill();
+      tx = new StakingChill(network).tx();
     }
     return tx;
   };
@@ -94,8 +90,6 @@ export const StopNominations = () => {
   if (!nominations.length) {
     warnings.push(`${t('noNominationsSet')}`);
   }
-
-  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   useEffect(() => setValid(isValid), [isValid]);
 

@@ -13,11 +13,11 @@ import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
 import { useSyncing } from 'hooks/useSyncing';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { CardWrapper } from 'library/Card/Wrappers';
-import { timeleftAsString } from 'library/Utils';
 import { useTranslation } from 'react-i18next';
 import type { BondFor } from 'types';
 import { ButtonPrimary } from 'ui-buttons';
 import { ButtonRow, PageRow } from 'ui-structure';
+import { timeleftAsString } from 'utils';
 
 export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
   const { t } = useTranslation('modals');

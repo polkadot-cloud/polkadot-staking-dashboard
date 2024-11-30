@@ -3,9 +3,7 @@
 
 import { pageFromUri } from '@w3ux/utils';
 import { usePayouts } from 'contexts/Payouts';
-import { usePlugins } from 'contexts/Plugins';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { useSyncing } from 'hooks/useSyncing';
@@ -13,14 +11,12 @@ import { useLocation } from 'react-router-dom';
 import { Spinner } from './Spinner';
 
 export const Sync = () => {
+  const { uids } = useTxMeta();
   const { syncing } = useSyncing();
   const { pathname } = useLocation();
-  const { pendingNonces } = useTxMeta();
   const { payoutsSynced } = usePayouts();
-  const { pluginEnabled } = usePlugins();
   const { validators } = useValidators();
   const { bondedPools } = useBondedPools();
-  const { poolMembersNode } = usePoolMembers();
 
   // Keep syncing if on nominate page and still fetching payouts.
   const onNominateSyncing = () => {
@@ -37,10 +33,7 @@ export const Sync = () => {
   // member sync if Subscan is enabled.
   const onPoolsSyncing = () => {
     if (pageFromUri(pathname, 'overview') === 'pools') {
-      if (
-        !bondedPools.length ||
-        (!poolMembersNode.length && !pluginEnabled('subscan'))
-      ) {
+      if (!bondedPools.length) {
         return true;
       }
     }
@@ -63,7 +56,7 @@ export const Sync = () => {
     onPoolsSyncing() ||
     onNominateSyncing() ||
     onValidatorsSyncing() ||
-    pendingNonces.length > 0;
+    uids.filter(({ processing }) => processing === true).length > 0;
 
   return isSyncing ? <Spinner /> : null;
 };

@@ -13,7 +13,7 @@ import { useNetwork } from 'contexts/Network';
 import { isCustomEvent } from 'controllers/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import type { MaybeAddress, NetworkName } from 'types';
+import type { MaybeAddress, NetworkId } from 'types';
 import { useEventListener } from 'usehooks-ts';
 import { useExternalAccounts } from '../ExternalAccounts';
 import { getLocalExternalAccounts } from '../ExternalAccounts/Utils';
@@ -85,7 +85,7 @@ export const OtherAccountsProvider = ({
   // `accounts` state. if local active account is present, it will also be assigned as active.
   // Accounts are ignored if they are already imported through an extension.
   const importLocalOtherAccounts = (
-    getter: (n: NetworkName) => ImportedAccount[]
+    getter: (n: NetworkId) => ImportedAccount[]
   ) => {
     // Get accounts from provided `getter` function. The resulting array of accounts must contain an
     // `address` field.
