@@ -68,7 +68,7 @@ export class Apis {
     await Promise.all([
       this.instances[network].initialize(type, rpcEndpoint),
       // NOTE: Currently defaulting to websocket connection for system chains:
-      this.instances[`people-${network}`].initialize('ws', 'Parity'),
+      this.instances[`people-${network}`].initialize('ws', 'IBP1'),
     ]);
   }
 
