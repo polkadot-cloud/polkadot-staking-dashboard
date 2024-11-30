@@ -7,6 +7,10 @@ import type { TxSubmissionItem } from './types';
 export class TxSubmission {
   static uids: TxSubmissionItem[] = [];
 
+  static getUid(id: number) {
+    return this.uids.find((item) => item.uid === id);
+  }
+
   static addUid({ from, tag }: { from: MaybeAddress; tag?: string }) {
     // If tag already exists, delete the entry.
     if (tag) {

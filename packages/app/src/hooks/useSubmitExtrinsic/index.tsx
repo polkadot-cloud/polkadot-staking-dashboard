@@ -86,6 +86,9 @@ export const useSubmitExtrinsic = ({
 
   // Extrinsic submission handler.
   const onSubmit = async () => {
+    if (TxSubmission.getUid(uid)?.processing) {
+      return;
+    }
     if (from === null) {
       return;
     }
@@ -157,15 +160,6 @@ export const useSubmitExtrinsic = ({
         title: t('cancelled'),
         subtitle: t('transactionCancelled'),
       });
-    };
-
-    const handleStatus = (status: string) => {
-      if (status === 'broadcasted') {
-        onReady();
-      }
-      if (status === 'txBestBlocksState') {
-        onInBlock();
-      }
     };
 
     // Pre-submission state updates
@@ -240,7 +234,12 @@ export const useSubmitExtrinsic = ({
         next: (result: { type: string }) => {
           const eventType = result?.type;
 
-          handleStatus(eventType);
+          if (eventType === 'broadcasted') {
+            onReady();
+          }
+          if (eventType === 'txBestBlocksState') {
+            onInBlock();
+          }
           if (eventType === 'finalized') {
             onFinalizedEvent();
             if (typeof sub?.unsubscribe === 'function') {
