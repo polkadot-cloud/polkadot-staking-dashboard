@@ -53,7 +53,7 @@ export const BondFeedback = ({
 
   // the default bond balance. If we are bonding, subtract tx fees from bond amount.
   const freeToBond = !disableTxFeeUpdate
-    ? BigNumber.max(availableBalance.minus(txFees), 0)
+    ? BigNumber.max(availableBalance.minus(txFees.toString()), 0)
     : availableBalance;
 
   // store errors
@@ -76,11 +76,13 @@ export const BondFeedback = ({
   const [bondDisabled, setBondDisabled] = useState<boolean>(false);
 
   // bond minus tx fees if too much
-  const enoughToCoverTxFees = freeToBond.minus(bondBn).isGreaterThan(txFees);
+  const enoughToCoverTxFees = freeToBond
+    .minus(bondBn)
+    .isGreaterThan(txFees.toString());
 
   const bondAfterTxFees = enoughToCoverTxFees
     ? bondBn
-    : BigNumber.max(bondBn.minus(txFees), 0);
+    : BigNumber.max(bondBn.minus(txFees.toString()), 0);
 
   // add this component's setBond to setters
   setters.push(handleSetBond);

@@ -1,6 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import BigNumber from 'bignumber.js';
 import { useNetwork } from 'contexts/Network';
 import { TxMetaContext, useTxMeta } from 'contexts/TxMeta';
 import type { TxMetaContextInterface } from 'contexts/TxMeta/types';
@@ -18,18 +19,21 @@ export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
 
   useEffect(() => () => resetTxFees(), []);
 
-  const txFeesUnit = planckToUnitBn(txFees, units).toFormat();
+  const txFeesUnit = planckToUnitBn(
+    new BigNumber(txFees.toString()),
+    units
+  ).toFormat();
 
   return format === 'table' ? (
     <>
       <div>{t('estimatedFee')}:</div>
-      <div>{txFees.isZero() ? `...` : `${txFeesUnit} ${unit}`}</div>
+      <div>{txFees === 0n ? `...` : `${txFeesUnit} ${unit}`}</div>
     </>
   ) : (
     <Wrapper>
       <p>
         <span>{t('estimatedFee')}:</span>
-        {txFees.isZero() ? `...` : `${txFeesUnit} ${unit}`}
+        {txFees === 0n ? `...` : `${txFeesUnit} ${unit}`}
       </p>
     </Wrapper>
   );

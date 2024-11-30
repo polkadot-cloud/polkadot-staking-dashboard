@@ -6,7 +6,6 @@ import type { LedgerAccount } from '@w3ux/react-connect-kit/types';
 import { formatAccountSs58 } from '@w3ux/utils';
 import { Proxy } from 'api/tx/proxy';
 import { TxSubmission } from 'api/txSubmission';
-import BigNumber from 'bignumber.js';
 import { DappName, ManualSigners } from 'consts';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -101,11 +100,8 @@ export const useSubmitExtrinsic = ({
     // get payment info
     // TODO: Send to `uid` info.
     const partialFee = (await tx.getPaymentInfo(from)).partial_fee;
-    const partialFeeBn = new BigNumber(partialFee.toString());
-
-    // give tx fees to global useTxMeta context
-    if (partialFeeBn.toString() !== txFees.toString()) {
-      setTxFees(partialFeeBn);
+    if (partialFee !== txFees) {
+      setTxFees(partialFee);
     }
   };
 

@@ -3,7 +3,6 @@
 
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import type { TxSubmissionItem } from 'api/types';
-import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { isCustomEvent } from 'controllers/utils';
 import { useActiveBalances } from 'hooks/useActiveBalances';
@@ -26,7 +25,7 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
   } = useApi();
 
   // Store the transaction fees for the transaction.
-  const [txFees, setTxFees] = useState<BigNumber>(new BigNumber(0));
+  const [txFees, setTxFees] = useState<bigint>(0n);
 
   // Store the sender of the transaction.
   const [sender, setSender] = useState<MaybeAddress>(null);
@@ -44,11 +43,11 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
 
   // Utility to reset transaction fees to zero.
   const resetTxFees = () => {
-    setTxFees(new BigNumber(0));
+    setTxFees(0n);
   };
 
   // Check if the transaction fees are valid.
-  const txFeesValid = txFees.isZero() || notEnoughFunds ? false : true;
+  const txFeesValid = txFees === 0n || notEnoughFunds ? false : true;
 
   const handleNewUidStatus = (e: Event) => {
     if (isCustomEvent(e)) {
@@ -68,7 +67,7 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
     const { free, frozen } = senderBalances;
     const balanceforTxFees = free.minus(edReserved).minus(frozen);
 
-    setNotEnoughFunds(balanceforTxFees.minus(txFees).isLessThan(0));
+    setNotEnoughFunds(balanceforTxFees.minus(txFees.toString()).isLessThan(0));
   }, [txFees, sender, senderBalances]);
 
   useEventListener(

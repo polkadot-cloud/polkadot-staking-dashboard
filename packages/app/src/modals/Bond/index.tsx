@@ -167,7 +167,7 @@ export const Bond = () => {
           defaultBond={null}
           setters={[handleSetBond]}
           parentErrors={warnings}
-          txFees={largestTxFee}
+          txFees={BigInt(largestTxFee.toString())}
         />
         <p>{t('newlyBondedFunds')}</p>
       </ModalPadding>
