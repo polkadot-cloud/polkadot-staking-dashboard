@@ -324,7 +324,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
     const peopleApiClient = Apis.getClient(
       `people-${network}` as SystemChainId
     );
-    if (peopleApiClient && peopleApiStatus === 'ready') {
+    if (peopleApiClient) {
       const addresses = validatorEntries.map(({ address }) => address);
       const { identities, supers } = await Identities.fetch(
         peopleApiId,
@@ -544,11 +544,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch validators and era reward points when fetched status changes.
   useEffect(() => {
-    if (
-      isReady &&
-      peopleApiStatus === 'ready' &&
-      activeEra.index.isGreaterThan(0)
-    ) {
+    if (isReady && activeEra.index.isGreaterThan(0)) {
       fetchValidators();
       fetchErasRewardPoints();
     }

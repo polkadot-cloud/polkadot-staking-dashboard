@@ -77,12 +77,12 @@ export const ValidatorListInner = ({
   const { mode } = useTheme();
   const listProvider = useList();
   const { syncing } = useSyncing();
-  const { isReady, activeEra } = useApi();
   const { activeAccount } = useActiveAccounts();
   const { setModalResize } = useOverlay().modal;
   const { injectValidatorListData } = useValidators();
   const { getPoolNominationStatus } = useBondedPools();
   const { getNominationSetStatus } = useNominationStatus();
+  const { isReady, activeEra, peopleApiStatus } = useApi();
   const { applyFilter, applyOrder, applySearch } = useValidatorFilters();
 
   const { selected, listFormat, setListFormat } = listProvider;
@@ -292,7 +292,7 @@ export const ValidatorListInner = ({
     if (allowFilters && fetched) {
       handleValidatorsFilterUpdate();
     }
-  }, [order, syncing, includes, excludes]);
+  }, [order, syncing, includes, excludes, peopleApiStatus]);
 
   // Handle modal resize on list format change.
   useEffect(() => {
