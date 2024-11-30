@@ -88,6 +88,21 @@ export const Networks = () => {
           <ConnectionsWrapper>
             <div>
               <ConnectionButton
+                $connected={isLightClient}
+                className="off"
+                type="button"
+                onClick={() => {
+                  setConnectionType('sc');
+                  switchNetwork(networkKey as NetworkId);
+                  setModalStatus('closing');
+                }}
+              >
+                <h3>{t('lightClient')}</h3>
+                {isLightClient && <h4 className="selected">{t('selected')}</h4>}
+              </ConnectionButton>
+            </div>
+            <div>
+              <ConnectionButton
                 $connected={!isLightClient}
                 disabled={!isLightClient}
                 type="button"
@@ -110,21 +125,6 @@ export const Networks = () => {
                   marginLeft
                 />
               </div>
-            </div>
-            <div>
-              <ConnectionButton
-                $connected={isLightClient}
-                className="off"
-                type="button"
-                onClick={() => {
-                  setConnectionType('sc');
-                  switchNetwork(networkKey as NetworkId);
-                  setModalStatus('closing');
-                }}
-              >
-                <h3>{t('lightClient')}</h3>
-                {isLightClient && <h4 className="selected">{t('selected')}</h4>}
-              </ConnectionButton>
             </div>
           </ConnectionsWrapper>
 

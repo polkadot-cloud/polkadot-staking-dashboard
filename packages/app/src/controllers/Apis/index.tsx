@@ -68,7 +68,7 @@ export class Apis {
     this.instances[network].initialize(type, rpcEndpoint);
 
     // NOTE: Currently defaulting to websocket connection for system chains:
-    this.instances[`people-${network}`].initialize('ws', 'IBP2');
+    this.instances[`people-${network}`].initialize(type, 'IBP2');
   }
 
   // Gracefully disconnect and then destroy an Api instance.
