@@ -79,37 +79,18 @@ const RouterInner = () => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
-      {/* Notification prompts */}
       <NotificationPrompts />
-
       <Body>
-        {/* Help: closed by default */}
         <Help />
-
-        {/* Overlays: modal and canvas. Closed by default */}
         <Overlays />
-
-        {/* Menu: closed by default */}
         <Menu />
-
-        {/* Tooltip: invisible by default */}
         <Tooltip />
-
-        {/* Prompt: closed by default */}
         <Prompt />
-
-        {/* Left side menu */}
         <SideMenu />
-
-        {/* Main content window */}
         <Main ref={mainInterfaceRef}>
-          {/* Fixed headers */}
           <Headers />
-
-          {/* Isolate route errors to `Main` container */}
           <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
             <Routes>
-              {/* App page routes */}
               {PagesConfig.map((page, i) => (
                 <Route
                   key={`main_interface_page_${i}`}
@@ -117,8 +98,6 @@ const RouterInner = () => {
                   element={<PageWithTitle page={page} />}
                 />
               ))}
-
-              {/* Default route to overview */}
               <Route
                 key="main_interface_navigate"
                 path="*"
@@ -128,11 +107,7 @@ const RouterInner = () => {
           </ErrorBoundary>
         </Main>
       </Body>
-
-      {/* Network status and network details */}
       <NetworkBar />
-
-      {/* Offline status label */}
       <Offline />
     </ErrorBoundary>
   );
