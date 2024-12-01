@@ -7,8 +7,5 @@
   "scripts": {
     "clear": "rm -rf build tsconfig.tsbuildinfo dist",
     "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
-  },
-  "dependencies": {
-    "@polkadot/util": "^13.2.3"
   }
 }

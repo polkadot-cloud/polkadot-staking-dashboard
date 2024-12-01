@@ -48,7 +48,10 @@ import { OverlayProvider } from 'kits/Overlay/Provider';
 import { ThemedRouter } from 'Themes';
 
 export const Providers = () => {
-  const { network } = useNetwork();
+  const {
+    network,
+    networkData: { ss58 },
+  } = useNetwork();
   const { activeAccount, setActiveAccount } = useActiveAccounts();
 
   return withProviders(
@@ -63,7 +66,7 @@ export const Providers = () => {
       ],
       [
         ExtensionAccountsProvider,
-        { dappName: DappName, network, activeAccount, setActiveAccount },
+        { dappName: DappName, network, ss58, activeAccount, setActiveAccount },
       ],
       WCAccountsProvider,
       VaultAccountsProvider,
