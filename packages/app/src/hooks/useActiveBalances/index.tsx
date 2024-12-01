@@ -11,7 +11,6 @@ import type {
   BalanceLock,
   BalanceLocks,
   Ledger,
-  Targets,
 } from 'contexts/Balances/types';
 import { useNetwork } from 'contexts/Network';
 import type { PoolMembership } from 'contexts/Pools/types';
@@ -24,6 +23,7 @@ import {
 } from 'controllers/Balances/defaults';
 import { isCustomEvent } from 'controllers/utils';
 import { useEffect, useRef, useState } from 'react';
+import type { Targets } from 'types';
 import { useEventListener } from 'usehooks-ts';
 
 export const useActiveBalances = ({

@@ -5,6 +5,7 @@ import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ellipsisFn } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
+import type { AnyApi } from 'common-types';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -22,7 +23,6 @@ import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
 import { DefaultLocale, locales } from 'locales';
 import { Component, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AnySubscan } from 'types';
 import { planckToUnitBn } from 'utils';
 import { ItemWrapper } from '../Wrappers';
 import type { PayoutListProps } from '../types';
@@ -48,7 +48,7 @@ export const PayoutListInner = ({
   const [page, setPage] = useState<number>(1);
 
   // manipulated list (ordering, filtering) of payouts
-  const [payouts, setPayouts] = useState<AnySubscan>(initialPayouts);
+  const [payouts, setPayouts] = useState<AnyApi>(initialPayouts);
 
   // is this the initial fetch
   const [fetched, setFetched] = useState<boolean>(false);
@@ -107,7 +107,7 @@ export const PayoutListInner = ({
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
         <MotionContainer>
-          {listPayouts.map((p: AnySubscan, index: number) => {
+          {listPayouts.map((p: AnyApi, index: number) => {
             const label =
               p.event_id === 'PaidOut'
                 ? t('payouts.poolClaim')

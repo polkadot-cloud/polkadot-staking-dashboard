@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useSize } from '@w3ux/hooks';
+import type { AnyApi, PageProps } from 'common-types';
 import { MaxPayoutDays } from 'consts';
 import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
@@ -21,7 +22,6 @@ import { StatusLabel } from 'library/StatusLabel';
 import { DefaultLocale, locales } from 'locales';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AnySubscan, PageProps } from 'types';
 import { ButtonHelp } from 'ui-buttons';
 import { PageRow, PageTitle } from 'ui-structure';
 import { PayoutList } from './PayoutList';
@@ -41,7 +41,7 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   ]);
   const notStaking = !syncing && inSetup();
 
-  const [payoutsList, setPayoutLists] = useState<AnySubscan>([]);
+  const [payoutsList, setPayoutLists] = useState<AnyApi>([]);
 
   const ref = useRef<HTMLDivElement>(null);
   const size = useSize(ref, {

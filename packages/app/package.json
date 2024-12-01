@@ -57,6 +57,7 @@
     "rxjs": "^7.8.1",
     "styled-components": "^6.1.13",
     "styles": "workspace:*",
+    "types": "workspace:*",
     "ui-buttons": "workspace:*",
     "ui-structure": "workspace:*",
     "usehooks-ts": "^3.0.2",

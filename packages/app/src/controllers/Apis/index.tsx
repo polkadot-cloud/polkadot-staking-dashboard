@@ -3,8 +3,8 @@
 
 import { Api } from 'api';
 import type { ConnectionType } from 'api/types';
+import type { ChainId, NetworkId } from 'common-types';
 import { Syncs } from 'controllers/Syncs';
-import type { ChainId, NetworkId } from 'types';
 
 export class Apis {
   // The currently instantiated API instances, keyed by network.

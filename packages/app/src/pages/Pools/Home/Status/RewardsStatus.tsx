@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCircleDown, faPlus } from '@fortawesome/free-solid-svg-icons';
-import BigNumber from 'bignumber.js';
+import { planckToUnit } from '@w3ux/utils';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
@@ -12,7 +12,6 @@ import { useSyncing } from 'hooks/useSyncing';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';
-import { planckToUnitBn } from 'utils';
 
 export const RewardsStatus = ({ dimmed }: { dimmed: boolean }) => {
   const { t } = useTranslation('pages');
@@ -20,23 +19,24 @@ export const RewardsStatus = ({ dimmed }: { dimmed: boolean }) => {
     networkData: { units },
   } = useNetwork();
   const { isReady } = useApi();
+  const { activePool } = useActivePool();
   const { openModal } = useOverlay().modal;
   const { activeAccount } = useActiveAccounts();
   const { syncing } = useSyncing(['active-pools']);
   const { isReadOnlyAccount } = useImportedAccounts();
-  const { activePool, pendingPoolRewards } = useActivePool();
 
-  // Set the minimum unclaimed planck value to prevent e numbers.
-  const minUnclaimedDisplay = new BigNumber(1_000_000);
+  const pendingRewards = activePool?.pendingRewards || 0n;
+  const minUnclaimedDisplay = 1000000n;
 
-  const labelRewards = pendingPoolRewards.isGreaterThan(minUnclaimedDisplay)
-    ? planckToUnitBn(pendingPoolRewards, units).toString()
-    : '0';
+  const labelRewards =
+    pendingRewards > minUnclaimedDisplay
+      ? planckToUnit(pendingRewards, units).toString()
+      : '0';
 
   // Display Reward buttons if unclaimed rewards is a non-zero value.
   const buttonsRewards = isReadOnlyAccount(activeAccount)
     ? []
-    : pendingPoolRewards.isGreaterThan(minUnclaimedDisplay)
+    : pendingRewards > minUnclaimedDisplay
       ? [
           {
             title: t('pools.withdraw'),

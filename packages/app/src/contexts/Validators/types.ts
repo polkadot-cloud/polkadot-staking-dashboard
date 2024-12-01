@@ -3,6 +3,7 @@
 
 import type { AnyJson, Sync } from '@w3ux/types';
 import type BigNumber from 'bignumber.js';
+import type { Identity } from 'types';
 
 export interface ValidatorsContextInterface {
   fetchValidatorPrefs: (a: ValidatorAddresses) => Promise<Validator[] | null>;
@@ -38,17 +39,6 @@ export interface FavoriteValidatorsContextInterface {
   removeFavorite: (address: string) => void;
   favorites: string[];
   favoritesList: Validator[] | null;
-}
-
-export interface Identity {
-  deposit: string;
-  info: AnyJson;
-  judgements: AnyJson[];
-}
-
-export interface SuperIdentity {
-  identity: Identity;
-  superOf: [string, { Raw: string }];
 }
 
 export type ValidatorAddresses = {

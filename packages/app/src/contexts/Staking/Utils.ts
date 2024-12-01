@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { rmCommas } from '@w3ux/utils';
-import type { AnyApi, NetworkId } from 'types';
+import type { AnyApi, NetworkId } from 'common-types';
 import type { Exposure, LocalExposure, LocalExposuresData } from './types';
 
 // Get local `erasStakers` entries for an era.

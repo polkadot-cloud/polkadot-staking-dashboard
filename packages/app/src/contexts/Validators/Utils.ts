@@ -3,13 +3,13 @@
 
 import type { AnyJson } from '@w3ux/types';
 import BigNumber from 'bignumber.js';
+import type { NetworkId } from 'common-types';
 import type { LocalMeta } from 'contexts/FastUnstake/types';
 import type {
   EraRewardPoints,
   LocalValidatorEntriesData,
   Validator,
 } from 'contexts/Validators/types';
-import type { NetworkId } from 'types';
 
 // Get favorite validators from local storage.
 export const getLocalFavorites = (network: NetworkId) => {

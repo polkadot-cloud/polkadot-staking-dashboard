@@ -3,7 +3,7 @@
 
 import { Base } from 'api/base';
 import BigNumber from 'bignumber.js';
-import type { AnyApi, ChainId } from 'types';
+import type { AnyApi, ChainId } from 'common-types';
 import { perbillToPercent } from 'utils';
 
 export class BondedPoolsEntries extends Base {

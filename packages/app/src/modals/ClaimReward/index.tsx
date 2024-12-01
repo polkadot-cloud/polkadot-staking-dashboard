@@ -30,14 +30,16 @@ export const ClaimReward = () => {
     config: { options },
     setModalResize,
   } = useOverlay().modal;
+  const { activePool } = useActivePool();
   const { activeAccount } = useActiveAccounts();
   const { getSignerWarnings } = useSignerWarnings();
-  const { activePool, pendingPoolRewards } = useActivePool();
+
   const { claimType } = options;
+  const pendingRewards = activePool?.pendingRewards || 0n;
 
   // ensure selected payout is valid
   useEffect(() => {
-    if (pendingPoolRewards?.isGreaterThan(0)) {
+    if (pendingRewards > 0) {
       setValid(true);
     } else {
       setValid(false);
@@ -73,7 +75,7 @@ export const ClaimReward = () => {
     submitExtrinsic.proxySupported
   );
 
-  if (!pendingPoolRewards.isGreaterThan(0)) {
+  if (pendingRewards === 0n) {
     warnings.push(`${t('noRewards')}`);
   }
 
@@ -95,7 +97,7 @@ export const ClaimReward = () => {
         ) : null}
         <ActionItem
           text={`${t('claim')} ${`${planckToUnit(
-            pendingPoolRewards.toString(),
+            pendingRewards.toString(),
             units
           )} ${unit}`}`}
         />

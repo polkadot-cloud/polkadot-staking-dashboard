@@ -1,6 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { SystemChainId } from 'common-types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
@@ -15,7 +16,7 @@ import { useActiveBalances } from 'hooks/useActiveBalances';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef } from 'react';
-import type { MaybeAddress, SystemChainId } from 'types';
+import type { MaybeAddress } from 'types';
 import { useEventListener } from 'usehooks-ts';
 import * as defaults from './defaults';
 import type { BalancesContextInterface } from './types';

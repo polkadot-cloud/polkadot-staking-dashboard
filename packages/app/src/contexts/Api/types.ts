@@ -4,7 +4,7 @@
 import type { ApiStatus, ConnectionType, PapiChainSpec } from 'api/types';
 import type BigNumber from 'bignumber.js';
 import type { ReactNode } from 'react';
-import type { NetworkId } from '../../types';
+import type { NetworkId } from '../../common-types';
 
 export interface APIProviderProps {
   children: ReactNode;

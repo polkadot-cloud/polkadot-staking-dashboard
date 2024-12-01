@@ -11,6 +11,7 @@ import { ErasRewardPointsMulti } from 'api/queryMulti/erasRewardPointsMulti';
 import { ErasValidatorRewardMulti } from 'api/queryMulti/erasValidatorRewardMulti';
 import { ValidatorsMulti } from 'api/queryMulti/validatorsMulti';
 import BigNumber from 'bignumber.js';
+import type { AnyApi, ChainId, SystemChainId } from 'common-types';
 import { MaxEraRewardPointsEras } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
@@ -20,13 +21,11 @@ import { Identities } from 'controllers/Identities';
 import { useErasPerDay } from 'hooks/useErasPerDay';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
-import type { AnyApi, ChainId, SystemChainId } from 'types';
+import type { Identity, SuperIdentity } from 'types';
 import { perbillToPercent } from 'utils';
 import type {
   EraPointsBoundaries,
   ErasRewardPoints,
-  Identity,
-  SuperIdentity,
   Validator,
   ValidatorAddresses,
   ValidatorEraPointHistory,

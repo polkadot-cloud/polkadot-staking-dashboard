@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js';
+import type { AnyApi } from 'common-types';
 import type { SubscanPayoutData } from 'controllers/Subscan/types';
-import type { AnyPolkawatch, AnySubscan } from 'types';
 
 export interface BondedProps {
   active: BigNumber;
@@ -14,7 +14,7 @@ export interface BondedProps {
 }
 
 export interface EraPointsProps {
-  items: AnySubscan;
+  items: AnyApi;
   height: number;
 }
 
@@ -48,7 +48,7 @@ export interface PayoutDayCursor {
 
 export interface GeoDonutProps {
   title: string;
-  series: AnyPolkawatch;
+  series: AnyApi;
   width?: string | number;
   height?: string | number;
   legendHeight?: number;

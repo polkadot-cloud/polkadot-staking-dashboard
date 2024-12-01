@@ -3,9 +3,9 @@
 
 import type { AnyJson } from '@w3ux/types';
 import BigNumber from 'bignumber.js';
-import type { PoolRewardPointsKey } from 'contexts/Pools/PoolPerformance/types';
 import type { Exposure } from 'contexts/Staking/types';
 import type { ErasRewardPoints } from 'contexts/Validators/types';
+import type { PoolRewardPointsKey } from 'types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const ctx: Worker = self as any;
