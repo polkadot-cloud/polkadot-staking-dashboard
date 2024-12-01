@@ -43,7 +43,7 @@ export interface ActivePool {
   addresses: PoolAddresses;
   bondedPool: ActiveBondedPool;
   rewardPool: RewardPool;
-  rewardAccountBalance: BigNumber;
+  rewardAccountBalance: bigint;
   pendingRewards: bigint;
 }
 
