@@ -35,7 +35,7 @@
     "@zondax/ledger-substrate": "^1.0.0",
     "bn.js": "^5.2.1",
     "buffer": "^6.0.3",
-    "chart.js": "^4.4.4",
+    "chart.js": "^4.4.7",
     "chroma-js": "^3.1.1",
     "compare-versions": "^6.1.1",
     "consts": "workspace:*",

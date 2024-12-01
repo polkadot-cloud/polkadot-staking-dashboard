@@ -4625,7 +4625,7 @@ __metadata:
     "@zondax/ledger-substrate": "npm:^1.0.0"
     bn.js: "npm:^5.2.1"
     buffer: "npm:^6.0.3"
-    chart.js: "npm:^4.4.4"
+    chart.js: "npm:^4.4.7"
     chroma-js: "npm:^3.1.1"
     compare-versions: "npm:^6.1.1"
     consts: "workspace:*"
@@ -5107,12 +5107,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chart.js@npm:^4.4.4":
-  version: 4.4.6
-  resolution: "chart.js@npm:4.4.6"
+"chart.js@npm:^4.4.7":
+  version: 4.4.7
+  resolution: "chart.js@npm:4.4.7"
   dependencies:
     "@kurkle/color": "npm:^0.3.0"
-  checksum: 10c0/456d16a030c35fa16182945e91d4fdd89510343454309b783f5e060ea89baaed3bc9b43d2d9b3acadd385e5921718e27ed2fcae8b5efa277d27bc4da4af639f2
+  checksum: 10c0/9db499993c561f11184112003956ba96cf00513e025f58846be36e75ebddc6cbab2f93626c3734c305bc801e9362a9ef193b9591e679c59903b2ecb48cfcb317
   languageName: node
   linkType: hard
 
