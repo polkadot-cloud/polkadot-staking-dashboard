@@ -58,28 +58,30 @@ export const useSubmitExtrinsic = ({
 
   // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account. If
   // already wrapped, update `from` address and return.
-  if (
-    tx?.decodedCall.type === 'Proxy' &&
-    tx?.decodedCall.value.type === 'proxy'
-  ) {
-    if (activeProxy) {
-      from = activeProxy;
-    }
-  } else {
-    if (activeProxy && tx && isProxySupported(tx, from)) {
-      // Update submit address to active proxy account.
-      from = activeProxy;
+  if (tx) {
+    if (
+      tx.decodedCall?.type === 'Proxy' &&
+      tx.decodedCall?.value?.type === 'proxy'
+    ) {
+      if (activeProxy) {
+        from = activeProxy;
+      }
+    } else {
+      if (activeProxy && isProxySupported(tx, from)) {
+        // Update submit address to active proxy account.
+        from = activeProxy;
 
-      // Check not a batch transactions.
-      if (
-        !(
-          tx?.decodedCall.type === 'Utility' &&
-          tx?.decodedCall.value.type === 'batch'
-        )
-      ) {
-        // Not a batch transaction: wrap tx in proxy call. Proxy calls should already be wrapping
-        // each tx within the batch via `useBatchCall`.
-        tx = new Proxy(network, from, tx).tx();
+        // Check not a batch transactions.
+        if (
+          !(
+            tx.decodedCall?.type === 'Utility' &&
+            tx.decodedCall?.value.type === 'batch'
+          )
+        ) {
+          // Not a batch transaction: wrap tx in proxy call. Proxy calls should already be wrapping
+          // each tx within the batch via `useBatchCall`.
+          tx = new Proxy(network, from, tx).tx();
+        }
       }
     }
   }

@@ -86,7 +86,7 @@ export const UpdatePayee = () => {
               value: selected.account as string,
             }
           : { type: selected.destination, value: undefined }
-    );
+    ).tx();
   };
 
   const submitExtrinsic = useSubmitExtrinsic({

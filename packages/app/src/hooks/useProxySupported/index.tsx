@@ -24,23 +24,26 @@ export const useProxySupported = () => {
 
   // Determine whether the provided tx is proxy supported.
   const isProxySupported = (tx: UnsafeTx, delegator: MaybeAddress) => {
+    if (!tx) {
+      return false;
+    }
     // if already wrapped, return.
     if (
-      tx?.decodedCall.type === 'Proxy' &&
-      tx?.decodedCall.value.type === 'proxy'
+      tx?.decodedCall?.type === 'Proxy' &&
+      tx?.decodedCall?.value?.type === 'proxy'
     ) {
       return true;
     }
 
     const proxyDelegate = getProxyDelegate(delegator, activeProxy);
     const proxyType = proxyDelegate?.proxyType || '';
-    const pallet: string = (tx?.decodedCall.type || '').toLowerCase();
-    const method: string = (tx?.decodedCall.value.type || '').toLowerCase();
+    const pallet: string = (tx?.decodedCall?.type || '').toLowerCase();
+    const method: string = (tx?.decodedCall?.value?.type || '').toLowerCase();
     const call = `${pallet}.${method}`;
 
     // If a batch call, test if every inner call is a supported proxy call.
     if (call === 'utility.batch') {
-      return (tx?.decodedCall.value?.value?.calls || [])
+      return (tx?.decodedCall?.value?.value?.calls || [])
         .map((c: AnyJson) => ({
           pallet: c.type,
           method: c.value.type,
