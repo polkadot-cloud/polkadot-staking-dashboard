@@ -9363,7 +9363,7 @@ __metadata:
     i18next: "npm:^24.0.0"
     prettier: "npm:^3.4.1"
     prettier-plugin-organize-imports: "npm:^4.1.0"
-    react-i18next: "npm:^15.1.1"
+    react-i18next: "npm:^15.1.3"
     sass: "npm:1.77.6"
     typescript: "npm:^5.7.2"
     typescript-eslint: "npm:^8.16.0"
@@ -9724,9 +9724,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:^15.1.1":
-  version: 15.1.2
-  resolution: "react-i18next@npm:15.1.2"
+"react-i18next@npm:^15.1.3":
+  version: 15.1.3
+  resolution: "react-i18next@npm:15.1.3"
   dependencies:
     "@babel/runtime": "npm:^7.25.0"
     html-parse-stringify: "npm:^3.0.1"
@@ -9738,7 +9738,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: 10c0/b10052545f0bebcd0b55cf04eb7d58307cdf6645707108bcae28026fe92ce0ef9cf0b35ac9cb940f6fcc22f679c810f2c008e9d8284bd4cfbb26c5649e3885ab
+  checksum: 10c0/2f8de1757f5b4d91e034f621c0bf6422fad3cde0687d11d4fe87822db86f264c6c3512a26fafe03d91ea691b3c441ba5ca490f4e5611e147df985ee133265089
   languageName: node
   linkType: hard
 
