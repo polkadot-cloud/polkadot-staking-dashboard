@@ -2,12 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Proxy } from 'api/tx/proxy';
+import type { AnyApi } from 'common-types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import { Apis } from 'controllers/Apis';
 import { useProxySupported } from 'hooks/useProxySupported';
 import type { UnsafeTx } from 'hooks/useSubmitExtrinsic/types';
-import type { AnyApi, MaybeAddress } from 'types';
+import type { MaybeAddress } from 'types';
 
 export const useBatchCall = () => {
   const { network } = useNetwork();

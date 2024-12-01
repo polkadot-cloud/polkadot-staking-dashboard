@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Base } from 'api/base';
+import type { NetworkId } from 'common-types';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import type { Subscription } from 'rxjs';
-import type { NetworkId } from 'types';
 
 export class BlockNumber extends Base implements Unsubscribable {
   // The current block number.

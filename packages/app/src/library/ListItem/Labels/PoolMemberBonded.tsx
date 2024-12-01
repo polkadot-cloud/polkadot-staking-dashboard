@@ -3,10 +3,10 @@
 
 import { rmCommas } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
+import type { AnyMetaBatch } from 'common-types';
 import { useNetwork } from 'contexts/Network';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useTranslation } from 'react-i18next';
-import type { AnyMetaBatch } from 'types';
 import { planckToUnitBn } from 'utils';
 
 export const PoolMemberBonded = ({

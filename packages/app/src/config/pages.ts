@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { PageCategoryItems, PagesConfigItems } from 'common-types';
 import { Community } from 'pages/Community';
 import { Nominate } from 'pages/Nominate';
 import { Overview } from 'pages/Overview';
 import { Payouts } from 'pages/Payouts';
 import { Pools } from 'pages/Pools';
 import { Validators } from 'pages/Validators';
-import type { PageCategoryItems, PagesConfigItems } from 'types';
 
 const BASE_URL = import.meta.env.BASE_URL;
 export const PageCategories: PageCategoryItems = [

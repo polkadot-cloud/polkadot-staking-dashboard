@@ -23,12 +23,12 @@ import type { ActiveBalance } from 'contexts/Balances/types';
 import type { BondedAccount } from 'contexts/Bonded/types';
 import type { FastUnstakeQueueResult } from 'contexts/FastUnstake/types';
 import type { Theme } from 'contexts/Themes/types';
-import type { DetailActivePool } from 'controllers/ActivePools/types';
 import type { NotificationItem } from 'controllers/Notifications/types';
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types';
 import type { PayoutType } from 'controllers/Subscan/types';
 import type { SyncEvent } from 'controllers/Syncs/types';
 import type { FC, FunctionComponent, SVGProps } from 'react';
+import type { DetailActivePool } from 'types';
 
 declare global {
   interface Window {
@@ -159,22 +159,8 @@ interface PageProp {
   key: string;
 }
 
-export type MaybeAddress = string | null;
-
-export type MaybeString = string | null;
-
-// track whether bonding should be for nominator or nomination pool.
-export type BondFor = 'pool' | 'nominator';
-
-// generic function with no args or return type.
-export type Fn = () => void;
-
-// any types to compress compiler warnings
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyApi = any;
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyMetaBatch = any;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type AnySubscan = any;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type AnyPolkawatch = any;

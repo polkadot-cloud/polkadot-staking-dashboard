@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import type { PoolRoles as PoolRolesInterface } from 'contexts/Pools/ActivePool/types';
 import { useSetup } from 'contexts/Setup';
 import type { PoolProgress } from 'contexts/Setup/types';
 import { Footer } from 'library/SetupSteps/Footer';
@@ -12,6 +11,7 @@ import type { SetupStepProps } from 'library/SetupSteps/types';
 import { Roles } from 'pages/Pools/Roles';
 import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import type { PoolRoles as PoolRolesInterface } from 'types';
 
 export const PoolRoles = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');

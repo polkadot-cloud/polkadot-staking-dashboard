@@ -1,6 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { ChainId } from 'common-types';
 import { NetworkList, SystemChainList } from 'config/networks';
 import { getLightClientMetadata } from 'config/util';
 import { Subscriptions } from 'controllers/Subscriptions';
@@ -10,7 +11,6 @@ import { getSmProvider } from 'polkadot-api/sm-provider';
 import { startFromWorker } from 'polkadot-api/smoldot/from-worker';
 import SmWorker from 'polkadot-api/smoldot/worker?worker';
 import { getWsProvider } from 'polkadot-api/ws-provider/web';
-import type { ChainId } from 'types';
 import type {
   ApiChainType,
   APIEventDetail,

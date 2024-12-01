@@ -8,7 +8,6 @@ import { useApi } from 'contexts/Api';
 import { useFilters } from 'contexts/Filters';
 import { useNetwork } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import { useTheme } from 'contexts/Themes';
 import { motion } from 'framer-motion';
 import { usePoolFilters } from 'hooks/usePoolFilters';
@@ -28,6 +27,7 @@ import { Pool } from 'library/Pool';
 import type { FormEvent } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { BondedPool } from 'types';
 import { usePoolList } from './context';
 import type { PoolListProps } from './types';
 

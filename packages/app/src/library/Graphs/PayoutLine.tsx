@@ -13,6 +13,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
+import type { AnyApi } from 'common-types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
 import { useNetwork } from 'contexts/Network';
@@ -22,7 +23,6 @@ import { useSyncing } from 'hooks/useSyncing';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import graphColors from 'styles/graphs/index.json';
-import type { AnySubscan } from 'types';
 import type { PayoutLineProps } from './types';
 import {
   calculatePayoutAverages,
@@ -155,7 +155,7 @@ export const PayoutLine = ({
     datasets: [
       {
         label: t('payout'),
-        data: combinedPayouts.map((item: AnySubscan) => item?.amount ?? 0),
+        data: combinedPayouts.map((item: AnyApi) => item?.amount ?? 0),
         borderColor: color,
         pointStyle: undefined,
         pointRadius: 0,

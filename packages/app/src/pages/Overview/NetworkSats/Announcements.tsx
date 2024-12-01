@@ -8,11 +8,11 @@ import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import { motion } from 'framer-motion';
 import { Item } from 'library/Announcements/Wrappers';
 import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
 import { useTranslation } from 'react-i18next';
+import type { BondedPool } from 'types';
 import { planckToUnitBn } from 'utils';
 
 export const Announcements = () => {

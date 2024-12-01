@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyFunction } from '@w3ux/types';
-import type { PoolRoles } from 'contexts/Pools/ActivePool/types';
+import type { PoolRoles } from 'types';
 
 export interface RolesProps {
   defaultRoles: PoolRoles;

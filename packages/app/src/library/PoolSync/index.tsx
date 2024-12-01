@@ -3,7 +3,7 @@
 
 import BigNumber from 'bignumber.js';
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
-import type { PoolRewardPointsKey } from 'contexts/Pools/PoolPerformance/types';
+import type { PoolRewardPointsKey } from 'types';
 
 export const PoolSync = ({
   label,

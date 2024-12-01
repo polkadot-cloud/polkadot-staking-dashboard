@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { Sync } from '@w3ux/types';
-import type { AnyMetaBatch, MaybeAddress } from 'types';
+import type { AnyMetaBatch } from 'common-types';
+import type { MaybeAddress, PoolMember } from 'types';
 
 export interface PoolMemberContext {
   fetchPoolMembersMetaBatch: (k: string, v: AnyMetaBatch[], r: boolean) => void;
@@ -12,9 +13,4 @@ export interface PoolMemberContext {
   setPoolMembersApi: (p: PoolMember[]) => void;
   fetchedPoolMembersApi: Sync;
   setFetchedPoolMembersApi: (s: Sync) => void;
-}
-
-export interface PoolMember {
-  poolId: number;
-  who: string;
 }

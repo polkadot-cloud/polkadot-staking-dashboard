@@ -3,7 +3,7 @@
 
 import { useFilters } from 'contexts/Filters';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import type { PoolTab } from 'contexts/Pools/BondedPools/types';
+import type { PoolTab } from 'types';
 import { TabsWrapper, TabWrapper } from './Wrappers';
 import type { FilterTabsProps } from './types';
 

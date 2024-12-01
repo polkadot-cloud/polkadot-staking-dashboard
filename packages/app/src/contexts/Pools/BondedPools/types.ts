@@ -2,10 +2,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyJson } from '@w3ux/types';
+import type { AnyApi } from 'common-types';
 import type { AnyFilter } from 'library/Filter/types';
 import type { Dispatch, SetStateAction } from 'react';
-import type { AnyApi, MaybeAddress } from 'types';
-import type { ActiveBondedPool } from '../ActivePool/types';
+import type {
+  BondedPool,
+  MaybeAddress,
+  NominationStatuses,
+  PoolNominations,
+  PoolTab,
+} from 'types';
 
 export interface BondedPoolsContextState {
   queryBondedPool: (poolId: number) => AnyApi;
@@ -27,41 +33,3 @@ export interface BondedPoolsContextState {
   poolListActiveTab: PoolTab;
   setPoolListActiveTab: Dispatch<SetStateAction<PoolTab>>;
 }
-
-export type BondedPool = ActiveBondedPool & {
-  addresses: PoolAddresses;
-  id: number;
-  commission?: {
-    current?: AnyJson | null;
-    max?: AnyJson | null;
-    changeRate: {
-      maxIncrease: AnyJson;
-      minDelay: AnyJson;
-    } | null;
-    throttleFrom?: AnyJson | null;
-  };
-};
-
-export interface PoolAddresses {
-  stash: string;
-  reward: string;
-}
-
-export type MaybePool = number | null;
-
-export type PoolNominations = {
-  submittedIn: string;
-  suppressed: boolean;
-  targets: string[];
-} | null;
-
-export type NominationStatuses = Record<string, string>;
-
-export type AccountPoolRoles = {
-  root: number[];
-  depositor: number[];
-  nominator: number[];
-  bouncer: number[];
-} | null;
-
-export type PoolTab = 'All' | 'Active' | 'Locked' | 'Destroying';

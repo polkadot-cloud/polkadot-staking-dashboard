@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { unitToPlanck } from '@w3ux/utils';
+import { planckToUnit, unitToPlanck } from '@w3ux/utils';
 import { PoolBondExtra } from 'api/tx/poolBondExtra';
 import { StakingBondExtra } from 'api/tx/stakingBondExtra';
 import BigNumber from 'bignumber.js';
@@ -30,7 +30,7 @@ export const Bond = () => {
     networkData: { units, unit },
   } = useNetwork();
   const { activeAccount } = useActiveAccounts();
-  const { pendingPoolRewards } = useActivePool();
+  const { activePool } = useActivePool();
   const { getSignerWarnings } = useSignerWarnings();
   const { feeReserve, getTransferOptions } = useTransferOptions();
   const {
@@ -55,7 +55,8 @@ export const Bond = () => {
   const largestTxFee = useBondGreatestFee({ bondFor });
 
   // Format unclaimed pool rewards.
-  const pendingRewardsUnit = planckToUnitBn(pendingPoolRewards, units);
+  const pendingRewards = activePool?.pendingRewards || 0;
+  const pendingRewardsUnit = planckToUnit(pendingRewards, units);
 
   // local bond value.
   const [bond, setBond] = useState<{ bond: string }>({
@@ -148,7 +149,7 @@ export const Bond = () => {
       <Close />
       <ModalPadding>
         <h2 className="title unbounded">{t('addToBond')}</h2>
-        {pendingRewardsUnit.isGreaterThan(0) && bondFor === 'pool' ? (
+        {pendingRewards > 0n && bondFor === 'pool' ? (
           <ModalWarnings withMargin>
             <Warning
               text={`${t('bondingWithdraw')} ${pendingRewardsUnit} ${unit}.`}

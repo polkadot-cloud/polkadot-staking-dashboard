@@ -4,7 +4,7 @@
 import type BigNumber from 'bignumber.js';
 import type { PoolMembership } from 'contexts/Pools/types';
 import type { PayeeConfig } from 'contexts/Setup/types';
-import type { MaybeAddress } from 'types';
+import type { MaybeAddress, Nominations, Targets } from 'types';
 
 export interface BalancesContextInterface {
   activeBalances: ActiveBalancesState;
@@ -73,10 +73,3 @@ export interface Ledger {
 export type ActiveLedgerSource = {
   [key in 'stash' | 'key']?: MaybeAddress;
 };
-
-export interface Nominations {
-  targets: Targets;
-  submittedIn: string | number;
-}
-
-export type Targets = string[];
