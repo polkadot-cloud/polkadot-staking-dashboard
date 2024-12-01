@@ -4,6 +4,7 @@
 import { faChevronRight, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { capitalizeFirstLetter } from '@w3ux/utils';
+import type { NetworkId } from 'common-types';
 import { NetworkList } from 'config/networks';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
@@ -14,7 +15,6 @@ import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
 import { Title } from 'library/Modal/Title';
 import { useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import type { NetworkId } from 'types';
 import { ButtonTertiary } from 'ui-buttons';
 import BraveIconSVG from '../../img/brave-logo.svg?react';
 import { ProvidersPrompt } from './ProvidersPrompt';
@@ -88,6 +88,21 @@ export const Networks = () => {
           <ConnectionsWrapper>
             <div>
               <ConnectionButton
+                $connected={isLightClient}
+                className="off"
+                type="button"
+                onClick={() => {
+                  setConnectionType('sc');
+                  switchNetwork(networkKey as NetworkId);
+                  setModalStatus('closing');
+                }}
+              >
+                <h3>{t('lightClient')}</h3>
+                {isLightClient && <h4 className="selected">{t('selected')}</h4>}
+              </ConnectionButton>
+            </div>
+            <div>
+              <ConnectionButton
                 $connected={!isLightClient}
                 disabled={!isLightClient}
                 type="button"
@@ -110,21 +125,6 @@ export const Networks = () => {
                   marginLeft
                 />
               </div>
-            </div>
-            <div>
-              <ConnectionButton
-                $connected={isLightClient}
-                className="off"
-                type="button"
-                onClick={() => {
-                  setConnectionType('sc');
-                  switchNetwork(networkKey as NetworkId);
-                  setModalStatus('closing');
-                }}
-              >
-                <h3>{t('lightClient')}</h3>
-                {isLightClient && <h4 className="selected">{t('selected')}</h4>}
-              </ConnectionButton>
             </div>
           </ConnectionsWrapper>
 

@@ -53,7 +53,7 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
 
   // Store whether light client is active.
   const [connectionType, setConnectionTypeState] = useState<ConnectionType>(
-    localStorage.getItem('light_client') ? 'sc' : 'ws'
+    localStorage.getItem('useWebsocket') ? 'ws' : 'sc'
   );
   const connectionTypeRef = useRef(connectionType);
 
@@ -65,11 +65,11 @@ export const APIProvider = ({ children, network }: APIProviderProps) => {
     connectionTypeRef.current = value;
     setConnectionTypeState(value);
 
-    if (value === 'ws') {
-      localStorage.removeItem('light_client');
+    if (value === 'sc') {
+      localStorage.removeItem('useWebsocket');
       return;
     }
-    localStorage.setItem('light_client', 'true');
+    localStorage.setItem('useWebsocket', 'true');
   };
 
   // Store the active RPC provider.

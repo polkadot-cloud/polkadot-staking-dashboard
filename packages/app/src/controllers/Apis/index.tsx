@@ -3,8 +3,8 @@
 
 import { Api } from 'api';
 import type { ConnectionType } from 'api/types';
+import type { ChainId, NetworkId } from 'common-types';
 import { Syncs } from 'controllers/Syncs';
-import type { ChainId, NetworkId } from 'types';
 
 export class Apis {
   // The currently instantiated API instances, keyed by network.
@@ -65,11 +65,10 @@ export class Apis {
 
     //3. Initialize chain instances.
 
-    await Promise.all([
-      this.instances[network].initialize(type, rpcEndpoint),
-      // NOTE: Currently defaulting to websocket connection for system chains:
-      this.instances[`people-${network}`].initialize('ws', 'Parity'),
-    ]);
+    this.instances[network].initialize(type, rpcEndpoint);
+
+    // NOTE: Currently defaulting to websocket connection for system chains:
+    this.instances[`people-${network}`].initialize(type, 'IBP2');
   }
 
   // Gracefully disconnect and then destroy an Api instance.

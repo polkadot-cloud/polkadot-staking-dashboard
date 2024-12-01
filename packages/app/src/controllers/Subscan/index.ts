@@ -1,10 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { PoolMember } from 'contexts/Pools/PoolMembers/types';
 import type { Locale } from 'date-fns';
 import { format, fromUnixTime, getUnixTime, subDays } from 'date-fns';
 import { poolMembersPerPage } from 'library/List/defaults';
+import type { PoolMember } from 'types';
 import type {
   SubscanData,
   SubscanEraPoints,

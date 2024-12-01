@@ -3,19 +3,15 @@
 
 import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { setStateWithRef } from '@w3ux/utils';
-import { PoolPendingRewards } from 'api/runtimeApi/poolPendingRewards';
-import BigNumber from 'bignumber.js';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
 import { useNetwork } from 'contexts/Network';
 import { ActivePools } from 'controllers/ActivePools';
-import { Apis } from 'controllers/Apis';
 import { Syncs } from 'controllers/Syncs';
 import { useActivePools } from 'hooks/useActivePools';
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
-import type { SystemChainId } from 'types';
 import { useApi } from '../../Api';
 import { defaultActivePoolContext, defaultPoolRoles } from './defaults';
 import type { ActivePoolContextState } from './types';
@@ -48,10 +44,8 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     setStateWithRef(id, setActivePoolIdState, activePoolIdRef);
   };
 
-  // Only listen to the active account's active pools, otherwise return an empty array. NOTE:
-  // `activePoolsRef` is needed to check if the pool has changed after the async call of fetching
-  // pending rewards.
-  const { getActivePool, activePoolsRef, getPoolNominations } = useActivePools({
+  // Only listen to the active account's active pools, otherwise return an empty array.
+  const { getActivePool, getPoolNominations } = useActivePools({
     who: activeAccount,
     onCallback: async () => {
       if (ActivePools.getPool(network, activeAccount)) {
@@ -60,11 +54,6 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     },
   });
 
-  // Store the currently active pool's pending rewards for the active account.
-  const [pendingPoolRewards, setPendingPoolRewards] = useState<BigNumber>(
-    new BigNumber(0)
-  );
-
   const activePool = activePoolId ? getActivePool(activePoolId) : null;
 
   const activePoolNominations = activePoolId
@@ -72,7 +61,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     : null;
 
   // Sync active pool subscriptions.
-  const syncActivePoolSubscriptions = async () => {
+  const syncActivePools = async () => {
     if (isReady && accountPoolId) {
       const newActivePool = [
         {
@@ -82,11 +71,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
       ];
 
       Syncs.dispatch('active-pools', 'syncing');
-      const peopleApi = Apis.getApi(`people-${network}` as SystemChainId);
-
-      if (peopleApi) {
-        ActivePools.syncPools(network, activeAccount, newActivePool);
-      }
+      ActivePools.syncPools(network, activeAccount, newActivePool);
     } else {
       // No active pools to sync. Mark as complete.
       Syncs.dispatch('active-pools', 'complete');
@@ -95,8 +80,6 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
 
   // Attempt to assign the default `activePoolId` if one is not currently active.
   const assignActivePoolId = () => {
-    // Membership takes priority, followed by the first pool the account has a role in. Falls back
-    // to `null` if no active roles are found.
     const initialActivePoolId = membership?.poolId || null;
     if (initialActivePoolId && !activePool) {
       setActivePoolId(String(initialActivePoolId));
@@ -166,51 +149,10 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     return membership?.unlocking || [];
   };
 
-  // Fetch and update pending rewards of the active pool when membership changes.
-  const updatePendingRewards = async () => {
-    if (
-      activePool &&
-      membership?.poolId &&
-      membership?.address &&
-      String(activePool.id) === String(membership.poolId)
-    ) {
-      const pendingRewards = await fetchPendingRewards(membership.address);
-
-      // Check if active pool has changed in the time the pending rewards were being fetched. If it
-      // has, do not update.
-      if (
-        activePoolId &&
-        activePoolsRef.current[activePoolId]?.id ===
-          Number(membership.poolId || -1)
-      ) {
-        setPendingPoolRewards(pendingRewards);
-      }
-    } else {
-      setPendingPoolRewards(new BigNumber(0));
-    }
-  };
-
-  // Fetch and update unclaimed pool rewards for an address from runtime call.
-  const fetchPendingRewards = async (address: string | undefined) => {
-    const api = Apis.getApi(network);
-    if (api && address) {
-      const apiResult = await new PoolPendingRewards(network, address).fetch();
-      return new BigNumber(apiResult?.toString() || 0);
-    }
-    return new BigNumber(0);
-  };
-
-  // Re-calculate pending rewards when membership changes.
-  useEffectIgnoreInitial(() => {
-    if (isReady) {
-      updatePendingRewards();
-    }
-  }, [network, isReady, membership, activePool]);
-
   // Initialise subscriptions to all active pools of imported accounts.
   useEffectIgnoreInitial(() => {
     if (isReady) {
-      syncActivePoolSubscriptions();
+      syncActivePools();
       assignActivePoolId();
     }
   }, [network, isReady, membership]);
@@ -238,7 +180,6 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
         setActivePoolId,
         activePool,
         activePoolNominations,
-        pendingPoolRewards,
       }}
     >
       {children}

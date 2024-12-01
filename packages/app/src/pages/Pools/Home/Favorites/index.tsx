@@ -3,7 +3,6 @@
 
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import { useFavoritePools } from 'contexts/Pools/FavoritePools';
 import { useSyncing } from 'hooks/useSyncing';
 import { CardWrapper } from 'library/Card/Wrappers';
@@ -12,6 +11,7 @@ import { PoolList } from 'library/PoolList';
 import { PoolListProvider } from 'library/PoolList/context';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { BondedPool } from 'types';
 import { PageRow } from 'ui-structure';
 
 export const PoolFavorites = () => {

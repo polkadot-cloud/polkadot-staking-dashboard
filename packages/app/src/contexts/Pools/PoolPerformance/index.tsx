@@ -12,18 +12,18 @@ import { useStaking } from 'contexts/Staking';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
+import type {
+  PoolPerformanceTasks,
+  PoolRewardPoints,
+  PoolRewardPointsKey,
+  PoolRewardPointsMap,
+} from 'types';
 import Worker from 'workers/poolPerformance?worker';
 import {
   defaultPoolPerformanceContext,
   defaultPoolPerformanceTask,
 } from './defaults';
-import type {
-  PoolPerformanceContextInterface,
-  PoolPerformanceTasks,
-  PoolRewardPoints,
-  PoolRewardPointsKey,
-  PoolRewardPointsMap,
-} from './types';
+import type { PoolPerformanceContextInterface } from './types';
 
 const worker = new Worker();
 

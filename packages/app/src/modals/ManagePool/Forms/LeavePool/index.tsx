@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { unitToPlanck } from '@w3ux/utils';
+import { planckToUnit, unitToPlanck } from '@w3ux/utils';
 import { PoolUnbond } from 'api/tx/poolUnbond';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
@@ -38,9 +38,9 @@ export const LeavePool = ({
     network,
     networkData: { units, unit },
   } = useNetwork();
+  const { activePool } = useActivePool();
   const { erasToSeconds } = useErasToTimeLeft();
   const { activeAccount } = useActiveAccounts();
-  const { pendingPoolRewards } = useActivePool();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
   const { setModalStatus, setModalResize } = useOverlay().modal;
@@ -48,6 +48,7 @@ export const LeavePool = ({
   const allTransferOptions = getTransferOptions(activeAccount);
   const { active: activeBn } = allTransferOptions.pool;
   const { bondDuration } = consts;
+  const pendingRewards = activePool?.pendingRewards || 0n;
 
   const bondDurationFormatted = timeleftAsString(
     t,
@@ -56,7 +57,7 @@ export const LeavePool = ({
     true
   );
 
-  const pendingRewardsUnit = planckToUnitBn(pendingPoolRewards, units);
+  const pendingRewardsUnit = planckToUnit(pendingRewards, units);
 
   // convert BigNumber values to number
   const freeToUnbond = planckToUnitBn(activeBn, units);
@@ -109,7 +110,7 @@ export const LeavePool = ({
     submitExtrinsic.proxySupported
   );
 
-  if (pendingRewardsUnit.isGreaterThan(0)) {
+  if (pendingRewards > 0) {
     warnings.push(
       `${t('unbondingWithdraw')} ${pendingRewardsUnit.toString()} ${unit}.`
     );

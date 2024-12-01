@@ -1,7 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyApi, MaybeAddress } from 'types';
+import type { AnyApi } from 'common-types';
+import type { MaybeAddress } from 'types';
 
 export interface UseSubmitExtrinsicProps {
   tx: AnyApi;

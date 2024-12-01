@@ -49,7 +49,10 @@ import { ThemedRouter } from 'Themes';
 import { registerSaEvent } from 'utils';
 
 export const Providers = () => {
-  const { network } = useNetwork();
+  const {
+    network,
+    networkData: { ss58 },
+  } = useNetwork();
   const { activeAccount, setActiveAccount } = useActiveAccounts();
 
   return withProviders(
@@ -64,9 +67,11 @@ export const Providers = () => {
       ],
       [
         ExtensionAccountsProvider,
+
         {
           dappName: DappName,
           network,
+          ss58,
           activeAccount,
           setActiveAccount,
           onExtensionEnabled: (id: string) => {

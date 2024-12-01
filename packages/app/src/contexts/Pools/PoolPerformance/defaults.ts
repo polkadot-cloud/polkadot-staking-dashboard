@@ -3,10 +3,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import BigNumber from 'bignumber.js';
-import type {
-  PoolPerformanceContextInterface,
-  PoolPerformanceTaskStatus,
-} from './types';
+import type { PoolPerformanceTaskStatus } from 'types';
+import type { PoolPerformanceContextInterface } from './types';
 
 export const defaultPoolPerformanceTask: PoolPerformanceTaskStatus = {
   status: 'unsynced',

@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Base } from 'api/base';
-import type { PoolState } from 'contexts/Pools/ActivePool/types';
-import type { ChainId } from 'types';
+import type { ChainId } from 'common-types';
+import type { PoolState } from 'types';
 
 export class PoolSetState extends Base {
   #poolId: number;

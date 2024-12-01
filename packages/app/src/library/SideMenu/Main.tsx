@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyJson } from '@w3ux/types';
+import type { PageCategory, PageItem, PagesConfigItems } from 'common-types';
 import { PageCategories, PagesConfig } from 'config/pages';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
@@ -17,7 +18,6 @@ import { useSyncing } from 'hooks/useSyncing';
 import { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import type { PageCategory, PageItem, PagesConfigItems } from 'types';
 import { Heading } from './Heading/Heading';
 import { Primary } from './Primary';
 

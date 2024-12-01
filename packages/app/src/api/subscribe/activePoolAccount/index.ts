@@ -1,15 +1,14 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { Nominations } from 'contexts/Balances/types';
+import { PoolPendingRewards } from 'api/runtimeApi/poolPendingRewards';
+import type { AnyApi, ChainId, SystemChainId } from 'common-types';
 import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
-import type { ActivePool, PoolRoles } from 'contexts/Pools/ActivePool/types';
-import type { ActivePoolItem } from 'controllers/ActivePools/types';
 import { Apis } from 'controllers/Apis';
 import { Identities } from 'controllers/Identities';
 import type { Unsubscribable } from 'controllers/Subscriptions/types';
 import { combineLatest, type Subscription } from 'rxjs';
-import type { AnyApi, ChainId, SystemChainId } from 'types';
+import type { ActivePool, ActivePoolItem, Nominations, PoolRoles } from 'types';
 
 export class ActivePoolAccount implements Unsubscribable {
   // The associated network for this instance.
@@ -124,6 +123,9 @@ export class ActivePoolAccount implements Unsubscribable {
       totalRewardsClaimed: rewardPool.total_rewards_claimed.toString(),
     };
 
+    const pendingRewards =
+      (await new PoolPendingRewards(this.#network, this.address).fetch()) || 0n;
+
     // Only persist the active pool to class state (and therefore dispatch an event) if both the
     // bonded pool and reward pool are returned.
     if (bondedPool && rewardPool) {
@@ -133,6 +135,7 @@ export class ActivePoolAccount implements Unsubscribable {
         bondedPool: bondedPoolFormatted,
         rewardPool: rewardPoolFormatted,
         rewardAccountBalance,
+        pendingRewards,
       };
 
       this.activePool = newPool;

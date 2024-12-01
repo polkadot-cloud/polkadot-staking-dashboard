@@ -3,8 +3,8 @@
 
 import { Base } from 'api/base';
 import BigNumber from 'bignumber.js';
+import type { ChainId } from 'common-types';
 import type { APIActiveEra } from 'contexts/Api/types';
-import type { ChainId } from 'types';
 import { perbillToPercent, stringToBn } from 'utils';
 
 export class NetworkMeta extends Base {

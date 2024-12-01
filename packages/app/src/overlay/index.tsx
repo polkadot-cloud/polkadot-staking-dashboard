@@ -11,7 +11,6 @@ import { ErrorFallbackModal } from 'library/ErrorBoundary';
 import { ClaimPayouts } from 'modals/ClaimPayouts';
 import { ImportWalletConnect } from 'modals/ImportWalletConnect';
 import { ManageNominations } from '../canvas/ManageNominations';
-import { AccountPoolRoles } from '../modals/AccountPoolRoles';
 import { Accounts } from '../modals/Accounts';
 import { Bio } from '../modals/Bio';
 import { Bond } from '../modals/Bond';
@@ -44,7 +43,6 @@ export const Overlays = () => {
       externalOverlayStatus={status}
       modals={{
         Bio,
-        AccountPoolRoles,
         Bond,
         StopNominations,
         ChangePoolRoles,
