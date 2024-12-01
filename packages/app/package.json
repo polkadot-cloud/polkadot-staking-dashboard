@@ -62,7 +62,7 @@
     "ui-structure": "workspace:*",
     "usehooks-ts": "^3.0.2",
     "utils": "workspace:*",
-    "viem": "^2.21.35",
+    "viem": "^2.21.53",
     "wagmi": "^2.12.25",
     "xxhash-wasm": "^1.0.2"
   },
