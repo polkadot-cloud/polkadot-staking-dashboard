@@ -110,21 +110,21 @@ export class Api {
     const smoldot = startFromWorker(new SmWorker());
     const smMetadata = getLightClientMetadata(this.#chainType, this.network);
     const { chainSpec: relayChainSpec } = await smMetadata.relay.fn();
+    const wssRelayChainSpec = this.wssBootNodesOnly(relayChainSpec);
 
     let chain;
     if (this.#chainType === 'relay') {
       chain = smoldot.addChain({
-        chainSpec: this.wssBootNodesOnly(relayChainSpec),
+        chainSpec: wssRelayChainSpec,
       });
       this.#apiClient = createClient(getSmProvider(chain));
     } else {
       const { chainSpec: paraChainSpec } = await smMetadata!.para!.fn();
-      console.log(this.wssBootNodesOnly(paraChainSpec));
       chain = smoldot.addChain({
         chainSpec: this.wssBootNodesOnly(paraChainSpec),
         potentialRelayChains: [
           await smoldot.addChain({
-            chainSpec: this.wssBootNodesOnly(relayChainSpec),
+            chainSpec: wssRelayChainSpec,
           }),
         ],
       });
