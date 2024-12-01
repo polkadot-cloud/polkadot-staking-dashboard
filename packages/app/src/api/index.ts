@@ -110,7 +110,12 @@ export class Api {
     const smoldot = startFromWorker(new SmWorker());
     const smMetadata = getLightClientMetadata(this.#chainType, this.network);
     const { chainSpec: relayChainSpec } = await smMetadata.relay.fn();
-    const wssRelayChainSpec = this.wssBootNodesOnly(relayChainSpec);
+
+    // Filter non-encrypted boot nodes in production.
+    const wssRelayChainSpec =
+      import.meta.env.MODE === 'development'
+        ? relayChainSpec
+        : this.wssBootNodesOnly(relayChainSpec);
 
     let chain;
     if (this.#chainType === 'relay') {
@@ -120,8 +125,14 @@ export class Api {
       this.#apiClient = createClient(getSmProvider(chain));
     } else {
       const { chainSpec: paraChainSpec } = await smMetadata!.para!.fn();
+      // Filter non-encrypted boot nodes in production.
+      const wssParaChainSpec =
+        import.meta.env.MODE === 'development'
+          ? paraChainSpec
+          : this.wssBootNodesOnly(paraChainSpec);
+
       chain = smoldot.addChain({
-        chainSpec: this.wssBootNodesOnly(paraChainSpec),
+        chainSpec: this.wssBootNodesOnly(wssParaChainSpec),
         potentialRelayChains: [
           await smoldot.addChain({
             chainSpec: wssRelayChainSpec,
