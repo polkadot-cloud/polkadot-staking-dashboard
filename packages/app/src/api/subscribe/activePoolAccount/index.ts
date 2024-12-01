@@ -1,6 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { PoolPendingRewards } from 'api/runtimeApi/poolPendingRewards';
 import type { Nominations } from 'contexts/Balances/types';
 import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
 import type { ActivePool, PoolRoles } from 'contexts/Pools/ActivePool/types';
@@ -124,6 +125,9 @@ export class ActivePoolAccount implements Unsubscribable {
       totalRewardsClaimed: rewardPool.total_rewards_claimed.toString(),
     };
 
+    const pendingRewards =
+      (await new PoolPendingRewards(this.#network, this.address).fetch()) || 0n;
+
     // Only persist the active pool to class state (and therefore dispatch an event) if both the
     // bonded pool and reward pool are returned.
     if (bondedPool && rewardPool) {
@@ -133,6 +137,7 @@ export class ActivePoolAccount implements Unsubscribable {
         bondedPool: bondedPoolFormatted,
         rewardPool: rewardPoolFormatted,
         rewardAccountBalance,
+        pendingRewards,
       };
 
       this.activePool = newPool;

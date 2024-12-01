@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { unitToPlanck } from '@w3ux/utils';
+import { planckToUnit, unitToPlanck } from '@w3ux/utils';
 import { PoolUnbond } from 'api/tx/poolUnbond';
 import { StakingUnbond } from 'api/tx/stakingUnbond';
 import BigNumber from 'bignumber.js';
@@ -42,7 +42,7 @@ export const Unbond = () => {
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
-  const { isDepositor, pendingPoolRewards } = useActivePool();
+  const { isDepositor, activePool } = useActivePool();
   const { minNominatorBond: minNominatorBondBn } = useApi().stakingMetrics;
   const {
     setModalStatus,
@@ -55,6 +55,7 @@ export const Unbond = () => {
   } = useApi();
 
   const { bondFor } = options;
+  const pendingRewards = activePool?.pendingRewards || 0n;
   const controller = getBondedAccount(activeAccount);
   const { bondDuration } = consts;
 
@@ -65,7 +66,7 @@ export const Unbond = () => {
     true
   );
 
-  const pendingRewardsUnit = planckToUnitBn(pendingPoolRewards, units);
+  const pendingRewardsUnit = planckToUnit(pendingRewards, units);
 
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
@@ -149,7 +150,7 @@ export const Unbond = () => {
     submitExtrinsic.proxySupported
   );
 
-  if (pendingRewardsUnit.isGreaterThan(0) && bondFor === 'pool') {
+  if (pendingRewards > 0 && bondFor === 'pool') {
     warnings.push(`${t('unbondingWithdraw')} ${pendingRewardsUnit} ${unit}.`);
   }
   if (nominatorActiveBelowMin) {

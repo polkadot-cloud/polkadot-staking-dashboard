@@ -57,11 +57,4 @@ export type PoolNominations = {
 
 export type NominationStatuses = Record<string, string>;
 
-export type AccountPoolRoles = {
-  root: number[];
-  depositor: number[];
-  nominator: number[];
-  bouncer: number[];
-} | null;
-
 export type PoolTab = 'All' | 'Active' | 'Locked' | 'Destroying';

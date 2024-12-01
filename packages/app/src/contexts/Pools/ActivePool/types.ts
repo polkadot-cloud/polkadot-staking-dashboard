@@ -19,7 +19,6 @@ export interface ActivePoolContextState {
   setActivePoolId: (p: string) => void;
   activePool: ActivePool | null;
   activePoolNominations: Nominations | null;
-  pendingPoolRewards: BigNumber;
 }
 
 export interface ActivePool {
@@ -28,6 +27,7 @@ export interface ActivePool {
   bondedPool: ActiveBondedPool;
   rewardPool: RewardPool;
   rewardAccountBalance: BigNumber;
+  pendingRewards: bigint;
 }
 
 export interface ActiveBondedPool {
