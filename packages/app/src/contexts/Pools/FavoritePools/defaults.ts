@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { PoolAddresses } from '../BondedPools/types';
+import type { PoolAddresses } from 'types';
 import type { FavoritePoolsContextState } from './types';
 
 export const defaultFavoritePoolsContext: FavoritePoolsContextState = {

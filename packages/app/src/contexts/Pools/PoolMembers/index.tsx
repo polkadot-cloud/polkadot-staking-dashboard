@@ -5,6 +5,7 @@ import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import type { Sync } from '@w3ux/types';
 import { setStateWithRef } from '@w3ux/utils';
 import { PoolMembers } from 'api/subscribe/poolMembers';
+import type { AnyMetaBatch } from 'common-types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import { usePlugins } from 'contexts/Plugins';
@@ -12,11 +13,11 @@ import { Subscriptions } from 'controllers/Subscriptions';
 import { isCustomEvent } from 'controllers/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useRef, useState } from 'react';
-import type { AnyMetaBatch, MaybeAddress } from 'types';
+import type { MaybeAddress, PoolMember } from 'types';
 import { useEventListener } from 'usehooks-ts';
 import { useApi } from '../../Api';
 import { defaultPoolMembers } from './defaults';
-import type { PoolMember, PoolMemberContext } from './types';
+import type { PoolMemberContext } from './types';
 
 export const PoolMembersContext =
   createContext<PoolMemberContext>(defaultPoolMembers);

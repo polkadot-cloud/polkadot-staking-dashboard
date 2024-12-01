@@ -3,8 +3,8 @@
 
 import type { MaybeAddress } from '@w3ux/react-connect-kit/types';
 import type { DisplayFor } from '@w3ux/types';
-import type { ValidatorListEntry } from 'contexts/Validators/types';
 import type { BondFor } from 'types';
+import type { ValidatorListEntry } from 'contexts/Validators/types';
 
 export interface ValidatorItemProps {
   validator: ValidatorListEntry;

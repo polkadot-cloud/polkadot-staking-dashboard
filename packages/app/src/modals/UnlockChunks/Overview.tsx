@@ -4,6 +4,7 @@
 import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
+import type { BondFor } from 'types';
 import { useApi } from 'contexts/Api';
 import type { UnlockChunk } from 'contexts/Balances/types';
 import { useNetwork } from 'contexts/Network';
@@ -17,7 +18,6 @@ import { StaticNote } from 'modals/Utils/StaticNote';
 import type { Dispatch, ForwardedRef, SetStateAction } from 'react';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { BondFor } from 'types';
 import { ButtonSubmit } from 'ui-buttons';
 import { planckToUnitBn, timeleftAsString } from 'utils';
 import { Chunk } from './Chunk';

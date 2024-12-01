@@ -8,12 +8,13 @@ import { getLocalVaultAccounts } from '@w3ux/react-connect-kit/VaultAccountsProv
 import { getLocalWcAccounts } from '@w3ux/react-connect-kit/WCAccountsProvider/utils';
 import type { ImportedAccount } from '@w3ux/react-connect-kit/types';
 import { setStateWithRef } from '@w3ux/utils';
+import type { NetworkId } from 'common-types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import { isCustomEvent } from 'controllers/utils';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import type { MaybeAddress, NetworkId } from 'types';
+import type { MaybeAddress } from 'types';
 import { useEventListener } from 'usehooks-ts';
 import { useExternalAccounts } from '../ExternalAccounts';
 import { getLocalExternalAccounts } from '../ExternalAccounts/Utils';

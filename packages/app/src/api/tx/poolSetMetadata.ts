@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Base } from 'api/base';
+import type { ChainId } from 'common-types';
 import type { Binary } from 'polkadot-api';
-import type { ChainId } from 'types';
 
 export class PoolSetMetadata extends Base {
   #poolId: number;

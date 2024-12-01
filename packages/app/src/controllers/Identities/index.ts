@@ -4,7 +4,7 @@
 import type { AnyJson } from '@w3ux/types';
 import { IdentityOfMulti } from 'api/queryMulti/identityOfMulti';
 import { SuperOfMulti } from 'api/queryMulti/superOfMulti';
-import type { AnyApi, ChainId } from 'types';
+import type { AnyApi, ChainId } from 'common-types';
 
 export class Identities {
   static fetch = async (network: ChainId, addresses: string[]) => {

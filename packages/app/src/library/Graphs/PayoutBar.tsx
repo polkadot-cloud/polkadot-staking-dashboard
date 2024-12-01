@@ -14,6 +14,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
+import type { AnyApi } from 'common-types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useBalances } from 'contexts/Balances';
 import { useNetwork } from 'contexts/Network';
@@ -25,7 +26,6 @@ import { DefaultLocale, locales } from 'locales';
 import { Bar } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import graphColors from 'styles/graphs/index.json';
-import type { AnySubscan } from 'types';
 import type { PayoutBarProps } from './types';
 import { formatRewardsForGraphs } from './Utils';
 
@@ -92,7 +92,7 @@ export const PayoutBar = ({
   const borderRadius = 4;
 
   const data = {
-    labels: graphPayouts.map((item: AnySubscan) => {
+    labels: graphPayouts.map((item: AnyApi) => {
       const dateObj = format(fromUnixTime(item.block_timestamp), 'do MMM', {
         locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
       });
@@ -103,7 +103,7 @@ export const PayoutBar = ({
       {
         order: 1,
         label: t('payout'),
-        data: graphPayouts.map((item: AnySubscan) => item.amount),
+        data: graphPayouts.map((item: AnyApi) => item.amount),
         borderColor: colorPayouts,
         backgroundColor: colorPayouts,
         pointRadius: 0,
@@ -112,7 +112,7 @@ export const PayoutBar = ({
       {
         order: 2,
         label: t('poolClaim'),
-        data: graphPoolClaims.map((item: AnySubscan) => item.amount),
+        data: graphPoolClaims.map((item: AnyApi) => item.amount),
         borderColor: colorPoolClaims,
         backgroundColor: colorPoolClaims,
         pointRadius: 0,
@@ -120,7 +120,7 @@ export const PayoutBar = ({
       },
       {
         order: 3,
-        data: graphUnclaimedPayouts.map((item: AnySubscan) => item.amount),
+        data: graphUnclaimedPayouts.map((item: AnyApi) => item.amount),
         label: t('unclaimedPayouts'),
         borderColor: colorPayouts,
         backgroundColor: colors.pending[mode],

@@ -3,7 +3,7 @@
 
 import type { AnyJson } from '@w3ux/types';
 import BigNumber from 'bignumber.js';
-import type { NetworkId } from 'types';
+import type { NetworkId } from 'common-types';
 import type { LocalValidatorExposure } from './types';
 
 // Check if local exposure entry exists for an era.

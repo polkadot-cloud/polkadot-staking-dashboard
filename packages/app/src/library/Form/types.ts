@@ -6,9 +6,10 @@ import type {
   ExternalAccount,
 } from '@w3ux/react-connect-kit/types';
 import type BigNumber from 'bignumber.js';
+import type { BondFor } from 'types';
 import type { Balance } from 'contexts/Balances/types';
 import type { ClaimPermission } from 'contexts/Pools/types';
-import type { BondFor, MaybeAddress } from 'types';
+import type { MaybeAddress } from 'types';
 
 export interface ExtensionAccountItem extends ExtensionAccount {
   active?: boolean;

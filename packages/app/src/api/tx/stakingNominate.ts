@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Base } from 'api/base';
-import type { ChainId } from 'types';
+import type { ChainId } from 'common-types';
 
 export class StakingNominate extends Base {
   #nominees: { type: string; value: string }[];

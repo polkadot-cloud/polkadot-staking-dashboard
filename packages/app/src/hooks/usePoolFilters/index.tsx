@@ -3,10 +3,10 @@
 
 import type { AnyFunction, AnyJson } from '@w3ux/types';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import type { BondedPool } from 'contexts/Pools/BondedPools/types';
 import { useStaking } from 'contexts/Staking';
 import type { AnyFilter } from 'library/Filter/types';
 import { useTranslation } from 'react-i18next';
+import type { BondedPool } from 'types';
 
 export const usePoolFilters = () => {
   const { t } = useTranslation('library');

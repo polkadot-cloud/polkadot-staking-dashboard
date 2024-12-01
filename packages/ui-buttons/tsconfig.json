@@ -16,5 +16,5 @@
     "jsx": "react-jsx",
     "noEmit": true
   },
-  "include": ["../../env.d.ts", "src"]
+  "include": ["src"]
 }

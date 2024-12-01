@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Configuration } from '@polkawatch/ddp-client';
-import type { NetworkId } from 'types';
+import type { NetworkId } from 'common-types';
 
 export class PolkaWatch {
   // Polkawatch API version.

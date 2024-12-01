@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
+import type { BondFor } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
@@ -14,7 +15,6 @@ import { useSyncing } from 'hooks/useSyncing';
 import { useOverlay } from 'kits/Overlay/Provider';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { useTranslation } from 'react-i18next';
-import type { BondFor } from 'types';
 import { ButtonPrimary } from 'ui-buttons';
 import { ButtonRow, PageRow } from 'ui-structure';
 import { timeleftAsString } from 'utils';

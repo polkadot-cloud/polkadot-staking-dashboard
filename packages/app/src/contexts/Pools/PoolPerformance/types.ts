@@ -3,6 +3,11 @@
 
 import type { Sync } from '@w3ux/types';
 import type BigNumber from 'bignumber.js';
+import type {
+  PoolPerformanceTaskStatus,
+  PoolRewardPoints,
+  PoolRewardPointsKey,
+} from 'types';
 
 export interface PoolPerformanceContextInterface {
   getPoolRewardPoints: (key: PoolRewardPointsKey) => PoolRewardPoints;
@@ -22,42 +27,3 @@ export interface PoolPerformanceContextInterface {
     addresses: string[]
   ) => void;
 }
-
-// Fetching status for keys.
-export type PoolPerformanceTasks = Record<
-  PoolRewardPointsKey,
-  PoolPerformanceTaskStatus
->;
-
-// Performance fetching status.
-export interface PoolPerformanceTaskStatus {
-  status: Sync;
-  addresses: string[];
-  startEra: BigNumber;
-  currentEra: BigNumber;
-  endEra: BigNumber;
-}
-
-/*
- * Batch Key -> Pool Address -> Era -> Points.
- */
-
-// Supported reward points batch keys.
-export type PoolRewardPointsKey = string;
-
-// Pool reward batches, keyed by batch key.
-export type PoolRewardPointsMap = Record<PoolRewardPointsKey, PoolRewardPoints>;
-
-// Pool reward points are keyed by era, then by pool address.
-
-export type PoolRewardPoints = Record<PoolAddress, PointsByEra>;
-
-export type PointsByEra = Record<EraKey, EraPoints>;
-
-// Type aliases to better understand pool reward records.
-
-export type PoolAddress = string;
-
-export type EraKey = number;
-
-export type EraPoints = string;

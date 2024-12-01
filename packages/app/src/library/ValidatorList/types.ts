@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyFunction, AnyJson, DisplayFor } from '@w3ux/types';
+import type { BondFor } from 'types';
 import type { Validator } from 'contexts/Validators/types';
-import type { BondFor, MaybeAddress } from 'types';
+import type { MaybeAddress } from 'types';
 
 export interface ValidatorListProps {
   validators: Validator[];

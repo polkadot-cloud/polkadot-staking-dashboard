@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
+import type { Networks, SystemChain } from 'common-types';
 import PolkadotTokenSVG from 'config/tokens/svg/DOT.svg?react';
 import KusamaTokenSVG from 'config/tokens/svg/KSM.svg?react';
 import WestendTokenSVG from 'config/tokens/svg/WND.svg?react';
@@ -11,7 +12,6 @@ import PolkadotIconSVG from 'img/polkadot_icon.svg?react';
 import PolkadotInlineSVG from 'img/polkadot_inline.svg?react';
 import WestendIconSVG from 'img/westend_icon.svg?react';
 import WestendInlineSVG from 'img/westend_inline.svg?react';
-import type { Networks, SystemChain } from 'types';
 
 export const NetworkList: Networks = {
   polkadot: {

@@ -4,11 +4,11 @@
 import { PoolBondExtra } from 'api/tx/poolBondExtra';
 import { StakingBondExtra } from 'api/tx/stakingBondExtra';
 import BigNumber from 'bignumber.js';
+import type { BondFor } from 'types';
 import { useActiveAccounts } from 'contexts/ActiveAccounts';
 import { useNetwork } from 'contexts/Network';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useEffect, useMemo, useState } from 'react';
-import type { BondFor } from 'types';
 
 export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
   const { network } = useNetwork();

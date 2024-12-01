@@ -6,7 +6,6 @@ import { useNetwork } from 'contexts/Network';
 import { usePlugins } from 'contexts/Plugins';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import type { PoolMember } from 'contexts/Pools/PoolMembers/types';
 import { Subscan } from 'controllers/Subscan';
 import { List, ListStatusHeader, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
@@ -15,6 +14,7 @@ import { ListProvider } from 'library/List/context';
 import { poolMembersPerPage } from 'library/List/defaults';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { PoolMember } from 'types';
 import { Member } from './Member';
 import type { FetchpageMembersListProps } from './types';
 

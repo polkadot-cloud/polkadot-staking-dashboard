@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
-import type { Balance, Ledger, Nominations } from 'contexts/Balances/types';
+import type { Balance, Ledger } from 'contexts/Balances/types';
 import type { PayeeConfig } from 'contexts/Setup/types';
+import type { Nominations } from 'types';
 
 export const defaultBalance: Balance = {
   free: new BigNumber(0),

@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { AnyJson } from '@w3ux/types';
+import type { BondFor } from 'types';
 import { useBalances } from 'contexts/Balances';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useStaking } from 'contexts/Staking';
 import { useValidators } from 'contexts/Validators/ValidatorEntries';
 import { useSyncing } from 'hooks/useSyncing';
 import { useTranslation } from 'react-i18next';
-import type { BondFor, MaybeAddress } from 'types';
+import type { MaybeAddress } from 'types';
 
 export const useNominationStatus = () => {
   const { t } = useTranslation();
