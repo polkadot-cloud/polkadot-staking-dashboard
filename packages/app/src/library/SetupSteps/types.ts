@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { BondFor } from 'types';
 import type { ReactNode } from 'react';
+import type { BondFor } from 'types';
 
 export interface NominationsProps {
   bondFor: BondFor;
