@@ -5343,8 +5343,6 @@ __metadata:
 "consts@workspace:*, consts@workspace:packages/consts":
   version: 0.0.0-use.local
   resolution: "consts@workspace:packages/consts"
-  dependencies:
-    "@polkadot/util": "npm:^13.2.3"
   languageName: unknown
   linkType: soft
 
@@ -10918,8 +10916,6 @@ __metadata:
 "styles@workspace:*, styles@workspace:packages/styles":
   version: 0.0.0-use.local
   resolution: "styles@workspace:packages/styles"
-  dependencies:
-    "@polkadot/util": "npm:^13.2.3"
   languageName: unknown
   linkType: soft
 
@@ -11395,8 +11391,6 @@ __metadata:
   resolution: "ui-buttons@workspace:packages/ui-buttons"
   dependencies:
     "@fortawesome/react-fontawesome": "npm:^0.2.2"
-    "@w3ux/types": "npm:^1.0.0"
-    "@w3ux/utils": "npm:^1.2.0"
   languageName: unknown
   linkType: soft
 
@@ -11405,8 +11399,6 @@ __metadata:
   resolution: "ui-structure@workspace:packages/ui-structure"
   dependencies:
     "@fortawesome/react-fontawesome": "npm:^0.2.2"
-    "@w3ux/types": "npm:^1.0.0"
-    "@w3ux/utils": "npm:^1.2.0"
   languageName: unknown
   linkType: soft
 
