@@ -113,14 +113,19 @@ export class Api {
 
     let chain;
     if (this.#chainType === 'relay') {
-      chain = smoldot.addChain({ chainSpec: relayChainSpec });
+      chain = smoldot.addChain({
+        chainSpec: this.wssBootNodesOnly(relayChainSpec),
+      });
       this.#apiClient = createClient(getSmProvider(chain));
     } else {
       const { chainSpec: paraChainSpec } = await smMetadata!.para!.fn();
+      console.log(this.wssBootNodesOnly(paraChainSpec));
       chain = smoldot.addChain({
-        chainSpec: paraChainSpec,
+        chainSpec: this.wssBootNodesOnly(paraChainSpec),
         potentialRelayChains: [
-          await smoldot.addChain({ chainSpec: relayChainSpec }),
+          await smoldot.addChain({
+            chainSpec: this.wssBootNodesOnly(relayChainSpec),
+          }),
         ],
       });
       this.#apiClient = createClient(getSmProvider(chain));
@@ -260,5 +265,13 @@ export class Api {
     if (destroy) {
       this.dispatchEvent(this.ensureEventStatus('disconnected'));
     }
+  }
+
+  wssBootNodesOnly(spec: string) {
+    const filtered = Object.assign({}, JSON.parse(spec));
+    filtered.bootNodes = filtered.bootNodes.filter((node: string) =>
+      /\/wss\//.test(node)
+    );
+    return JSON.stringify(filtered);
   }
 }
