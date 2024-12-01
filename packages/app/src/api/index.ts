@@ -111,16 +111,32 @@ export class Api {
     const smMetadata = getLightClientMetadata(this.#chainType, this.network);
     const { chainSpec: relayChainSpec } = await smMetadata.relay.fn();
 
+    // Filter non-encrypted boot nodes in production.
+    const wssRelayChainSpec =
+      import.meta.env.MODE === 'development'
+        ? relayChainSpec
+        : this.wssBootNodesOnly(relayChainSpec);
+
     let chain;
     if (this.#chainType === 'relay') {
-      chain = smoldot.addChain({ chainSpec: relayChainSpec });
+      chain = smoldot.addChain({
+        chainSpec: wssRelayChainSpec,
+      });
       this.#apiClient = createClient(getSmProvider(chain));
     } else {
       const { chainSpec: paraChainSpec } = await smMetadata!.para!.fn();
+      // Filter non-encrypted boot nodes in production.
+      const wssParaChainSpec =
+        import.meta.env.MODE === 'development'
+          ? paraChainSpec
+          : this.wssBootNodesOnly(paraChainSpec);
+
       chain = smoldot.addChain({
-        chainSpec: paraChainSpec,
+        chainSpec: this.wssBootNodesOnly(wssParaChainSpec),
         potentialRelayChains: [
-          await smoldot.addChain({ chainSpec: relayChainSpec }),
+          await smoldot.addChain({
+            chainSpec: wssRelayChainSpec,
+          }),
         ],
       });
       this.#apiClient = createClient(getSmProvider(chain));
@@ -260,5 +276,13 @@ export class Api {
     if (destroy) {
       this.dispatchEvent(this.ensureEventStatus('disconnected'));
     }
+  }
+
+  wssBootNodesOnly(spec: string) {
+    const filtered = Object.assign({}, JSON.parse(spec));
+    filtered.bootNodes = filtered.bootNodes.filter((node: string) =>
+      /\/wss\//.test(node)
+    );
+    return JSON.stringify(filtered);
   }
 }
