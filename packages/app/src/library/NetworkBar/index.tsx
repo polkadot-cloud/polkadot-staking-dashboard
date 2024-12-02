@@ -7,7 +7,6 @@ import { useEffectIgnoreInitial } from '@w3ux/hooks';
 import { Odometer } from '@w3ux/react-odometer';
 import { capitalizeFirstLetter } from '@w3ux/utils';
 import BigNumber from 'bignumber.js';
-import { useApi } from 'contexts/Api';
 import { useNetwork } from 'contexts/Network';
 import { usePlugins } from 'contexts/Plugins';
 import { usePrompt } from 'contexts/Prompt';
@@ -23,7 +22,6 @@ import { Summary, Wrapper } from './Wrappers';
 export const NetworkBar = () => {
   const { t } = useTranslation('library');
   const { plugins } = usePlugins();
-  const { connectionType } = useApi();
   const { openPromptWith } = usePrompt();
   const { networkData, network } = useNetwork();
 
@@ -56,19 +54,16 @@ export const NetworkBar = () => {
         <section>
           <p>
             {ORGANISATION === undefined
-              ? `${capitalizeFirstLetter(network)}${
-                  connectionType === 'sc' ? ` Light` : ``
-                }`
+              ? capitalizeFirstLetter(network)
               : ORGANISATION}
           </p>
-          {PRIVACY_URL !== undefined ? (
+          <Status />
+          {PRIVACY_URL !== undefined && (
             <p>
               <a href={PRIVACY_URL} target="_blank" rel="noreferrer">
                 {t('privacy')}
               </a>
             </p>
-          ) : (
-            <Status />
           )}
           {DISCLAIMER_URL !== undefined && (
             <p>
@@ -100,7 +95,6 @@ export const NetworkBar = () => {
             {plugins.includes('staking_api') && network !== 'westend' && (
               <TokenPrice />
             )}
-
             <div className="stat last">
               <FontAwesomeIcon icon={faHive} />
               <Odometer
