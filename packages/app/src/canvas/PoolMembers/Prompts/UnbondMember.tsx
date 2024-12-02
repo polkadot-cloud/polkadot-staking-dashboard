@@ -80,7 +80,7 @@ export const UnbondMember = ({
       network,
       who,
       unitToPlanck(!bondValid ? 0 : bond.bond, units)
-    );
+    ).tx();
     return tx;
   };
 
