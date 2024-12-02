@@ -276,8 +276,8 @@ export const useSubmitExtrinsic = ({
       if (!tx) {
         return;
       }
-      const fee = (await tx.getPaymentInfo(from)).partial_fee;
-      TxSubmission.updateFee(uid, fee);
+      const partial_fee = (await tx?.getPaymentInfo(from)?.partial_fee) || 0n;
+      TxSubmission.updateFee(uid, partial_fee);
     };
     if (uid > 0) {
       fetchTxFee();

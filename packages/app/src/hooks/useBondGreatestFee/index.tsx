@@ -48,8 +48,10 @@ export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
       tx = new StakingBondExtra(network, BigInt(bond)).tx();
     }
 
-    if (tx) {
-      const { partial_fee } = await tx.getPaymentInfo(activeAccount || '');
+    if (tx && activeAccount) {
+      const partial_fee =
+        (await tx?.getPaymentInfo(activeAccount))?.partial_fee || 0n;
+
       return new BigNumber(partial_fee.toString());
     }
     return new BigNumber(0);
