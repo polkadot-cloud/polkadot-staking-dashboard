@@ -15,7 +15,7 @@ export class StakingNominate extends Base {
   tx() {
     try {
       return this.unsafeApi.tx.Staking.nominate({
-        validators: this.#nominees,
+        targets: this.#nominees,
       });
     } catch (e) {
       return null;
