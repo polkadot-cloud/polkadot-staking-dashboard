@@ -21,22 +21,22 @@ import type {
 } from './types'
 
 export class Api {
-  // The network name associated with this Api instance.
+  // The network name associated with this Api instance
   network: ChainId
 
-  // The type of chain being connected to.
+  // The type of chain being connected to
   #chainType: ApiChainType
 
   // API client.
   #apiClient: PolkadotClient
 
-  // The fetched chain spec.
+  // The fetched chain spec
   #chainSpec: PapiChainSpec
 
-  // The current RPC endpoint.
+  // The current RPC endpoint
   #rpcEndpoint: string
 
-  // The current connection type.
+  // The current connection type
   #connectionType: ConnectionType
 
   get apiClient() {
@@ -60,7 +60,7 @@ export class Api {
     this.#chainType = chainType
   }
 
-  // Class initialization. Sets the `provider` and `api` class members.
+  // Class initialization. Sets the `provider` and `api` class members
   async initialize(type: ConnectionType, rpcEndpoint: string) {
     // Set connection metadata.
     this.#rpcEndpoint = rpcEndpoint
@@ -70,28 +70,28 @@ export class Api {
     await this.connect()
   }
 
-  // Connect to Api instance.
+  // Connect to Api instance
   async connect() {
     try {
-      // Initiate provider based on connection type.
+      // Initiate provider based on connection type
       if (this.#connectionType === 'ws') {
         this.initWsProvider()
       } else {
         await this.initScProvider()
       }
 
-      // Tell UI api is connecting.
+      // Tell UI api is connecting
       this.dispatchEvent(this.ensureEventStatus('connecting'))
 
-      // Fetch chain spec and metadata from PAPI client.
+      // Fetch chain spec and metadata from api client
       await this.fetchChainSpec()
     } catch (e) {
-      // TODO: Handle unsupported chains in UI.
+      // TODO: Handle unsupported chains in UI
       // this.dispatchEvent(this.ensureEventStatus('error'));
     }
   }
 
-  // Initiate Websocket Provider.
+  // Initiate Websocket Provider
   initWsProvider() {
     const endpoint =
       this.#chainType === 'relay'
@@ -100,13 +100,13 @@ export class Api {
             this.#rpcEndpoint
           ]
 
-    // Initialize Polkadot API Client.
+    // Initialize Polkadot API Client
     this.#apiClient = createClient(getWsProvider(endpoint))
   }
 
-  // Dynamically load and connect to Substrate Connect.
+  // Dynamically load and connect to Substrate Connect
   async initScProvider() {
-    // Initialise light client.
+    // Initialise light client
     const smoldot = startFromWorker(new SmWorker())
     const smMetadata = getLightClientMetadata(this.#chainType, this.network)
     const { chainSpec: relayChainSpec } = await smMetadata.relay.fn()
@@ -158,15 +158,15 @@ export class Api {
         transactionVersion,
       }
 
-      // Dispatch ready eventd to let contexts populate constants.
+      // Dispatch ready eventd to let contexts populate constants
       this.dispatchReadyEvent()
     } catch (e) {
-      // TODO: Handle unsupported chains in UI.
+      // TODO: Handle unsupported chains in UI
       //this.dispatchEvent(this.ensureEventStatus('error'), { err: 'ChainSpecError' });
     }
   }
 
-  // Get a pallet constant, with a fallback value.
+  // Get a pallet constant, with a fallback value
   getConstant = async <T>(
     pallet: string,
     key: string,
@@ -187,7 +187,7 @@ export class Api {
     }
   }
 
-  // Handler for dispatching ready events.
+  // Handler for dispatching ready events
   dispatchReadyEvent() {
     const detail: PapiReadyEvent = {
       network: this.network,
@@ -198,7 +198,7 @@ export class Api {
     document.dispatchEvent(new CustomEvent('api-ready', { detail }))
   }
 
-  // Handler for dispatching `api-status` events.
+  // Handler for dispatching `api-status` events
   dispatchEvent(
     status: EventApiStatus,
     options?: {
@@ -218,7 +218,7 @@ export class Api {
     document.dispatchEvent(new CustomEvent('api-status', { detail }))
   }
 
-  // Ensures the provided status is a valid `EventStatus` being passed, or falls back to `error`.
+  // Ensures the provided status is a valid `EventStatus` being passed, or falls back to `error`
   ensureEventStatus = (status: string | EventApiStatus): EventApiStatus => {
     const eventStatus: string[] = [
       'connecting',
@@ -234,7 +234,7 @@ export class Api {
     return 'error' as EventApiStatus
   }
 
-  // Unsubscribe from all active subscriptions and remove them from subscriptions controller.
+  // Unsubscribe from all active subscriptions and remove them from subscriptions controller
   unsubscribe = () => {
     const subs = Subscriptions.getAll(this.network)
     if (subs) {
@@ -245,7 +245,7 @@ export class Api {
     }
   }
 
-  // Disconnect gracefully from API and provider.
+  // Disconnect gracefully from API and provider
   async disconnect(destroy = false) {
     this.unsubscribe()
 
@@ -253,10 +253,10 @@ export class Api {
     try {
       this.#apiClient?.destroy()
     } catch (e) {
-      // Suppress subscription errors.
+      // Suppress subscription errors
     }
 
-    // Tell UI Api has been disconnected.
+    // Tell UI Api has been disconnected
     if (destroy) {
       this.dispatchEvent(this.ensureEventStatus('disconnected'))
     }
