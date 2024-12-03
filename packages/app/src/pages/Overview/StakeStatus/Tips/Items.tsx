@@ -1,34 +1,34 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { usePrompt } from 'contexts/Prompt';
-import { useAnimationControls } from 'framer-motion';
-import { Tip } from 'library/Tips/Tip';
-import { useEffect, useState } from 'react';
-import { ItemInnerWrapper, ItemWrapper, ItemsWrapper } from './Wrappers';
-import type { TipDisplayWithControls, TipItemsProps } from './types';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { usePrompt } from 'contexts/Prompt'
+import { useAnimationControls } from 'framer-motion'
+import { Tip } from 'library/Tips/Tip'
+import { useEffect, useState } from 'react'
+import { ItemInnerWrapper, ItemWrapper, ItemsWrapper } from './Wrappers'
+import type { TipDisplayWithControls, TipItemsProps } from './types'
 
 export const Items = ({ items, page }: TipItemsProps) => {
-  const controls = useAnimationControls();
+  const controls = useAnimationControls()
 
   // stores whether this is the initial display of tips
-  const [initial, setInitial] = useState<boolean>(true);
+  const [initial, setInitial] = useState<boolean>(true)
 
   useEffect(() => {
-    doControls(true);
-    setInitial(false);
-  }, [page]);
+    doControls(true)
+    setInitial(false)
+  }, [page])
 
   const doControls = async (transition: boolean) => {
     if (transition) {
-      controls.set('hidden');
-      controls.start('show');
+      controls.set('hidden')
+      controls.start('show')
     } else {
-      controls.set('show');
+      controls.set('show')
     }
-  };
+  }
 
   return (
     <ItemsWrapper
@@ -51,8 +51,8 @@ export const Items = ({ items, page }: TipItemsProps) => {
         />
       ))}
     </ItemsWrapper>
-  );
-};
+  )
+}
 
 const Item = ({
   title,
@@ -63,20 +63,20 @@ const Item = ({
   initial,
   page,
 }: TipDisplayWithControls) => {
-  const { openPromptWith } = usePrompt();
-  const [isStopped, setIsStopped] = useState<boolean>(true);
+  const { openPromptWith } = usePrompt()
+  const [isStopped, setIsStopped] = useState<boolean>(true)
 
   useEffect(() => {
-    const delay = index * 75;
+    const delay = index * 75
 
     if (initial) {
       setTimeout(() => {
         if (isStopped) {
-          setIsStopped(false);
+          setIsStopped(false)
         }
-      }, delay);
+      }, delay)
     }
-  }, []);
+  }, [])
 
   return (
     <ItemWrapper
@@ -122,5 +122,5 @@ const Item = ({
         </section>
       </ItemInnerWrapper>
     </ItemWrapper>
-  );
-};
+  )
+}

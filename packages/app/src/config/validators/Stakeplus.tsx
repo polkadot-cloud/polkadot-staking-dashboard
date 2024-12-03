@@ -26,6 +26,6 @@ const Stakeplus = () => (
       fillRule="evenodd"
     />
   </svg>
-);
+)
 
-export default Stakeplus;
+export default Stakeplus

@@ -30,6 +30,6 @@ const HighStake = () => (
       fill="#33502e"
     />
   </svg>
-);
+)
 
-export default HighStake;
+export default HighStake

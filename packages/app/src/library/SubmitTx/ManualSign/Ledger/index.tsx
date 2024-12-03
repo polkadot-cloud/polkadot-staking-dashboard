@@ -1,22 +1,22 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { appendOrEmpty } from '@w3ux/utils';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useHelp } from 'contexts/Help';
-import { useLedgerHardware } from 'contexts/LedgerHardware';
-import type { LedgerResponse } from 'contexts/LedgerHardware/types';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import type { ReactNode } from 'react';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ButtonHelp } from 'ui-buttons';
-import type { SubmitProps } from '../../types';
-import { Submit } from './Submit';
+import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { appendOrEmpty } from '@w3ux/utils'
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useHelp } from 'contexts/Help'
+import { useLedgerHardware } from 'contexts/LedgerHardware'
+import type { LedgerResponse } from 'contexts/LedgerHardware/types'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { EstimatedTxFee } from 'library/EstimatedTxFee'
+import type { ReactNode } from 'react'
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ButtonHelp } from 'ui-buttons'
+import type { SubmitProps } from '../../types'
+import { Submit } from './Submit'
 
 export const Ledger = ({
   uid,
@@ -29,11 +29,11 @@ export const Ledger = ({
   displayFor,
   notEnoughFunds,
 }: SubmitProps & {
-  buttons?: ReactNode[];
-  notEnoughFunds: boolean;
-  processing: boolean;
+  buttons?: ReactNode[]
+  notEnoughFunds: boolean
+  processing: boolean
 }) => {
-  const { t } = useTranslation('library');
+  const { t } = useTranslation('library')
   const {
     setFeedback,
     getFeedback,
@@ -45,34 +45,34 @@ export const Ledger = ({
     runtimesInconsistent,
     transportResponse,
     setStatusCode,
-  } = useLedgerHardware();
-  const { openHelp } = useHelp();
-  const { setModalResize } = useOverlay().modal;
-  const { accountHasSigner } = useImportedAccounts();
+  } = useLedgerHardware()
+  const { openHelp } = useHelp()
+  const { setModalResize } = useOverlay().modal
+  const { accountHasSigner } = useImportedAccounts()
 
   // Handle new Ledger status report.
   const handleLedgerStatusResponse = (response: LedgerResponse) => {
     if (!response) {
-      return;
+      return
     }
-    const { ack, statusCode, body } = response;
+    const { ack, statusCode, body } = response
 
     if (statusCode === 'SignedPayload') {
       if (uid !== body.uid) {
         // UIDs do not match, so this is not the transaction we are waiting for.
-        setFeedback(t('wrongTransaction'), 'Wrong Transaction');
+        setFeedback(t('wrongTransaction'), 'Wrong Transaction')
       } else {
-        setStatusCode(ack, statusCode);
+        setStatusCode(ack, statusCode)
       }
       // Reset state pertaining to this transaction.
-      resetStatusCode();
+      resetStatusCode()
     } else {
-      setStatusCode(ack, statusCode);
+      setStatusCode(ack, statusCode)
     }
-  };
+  }
 
   // Get the latest Ledger loop feedback.
-  const feedback = getFeedback();
+  const feedback = getFeedback()
 
   // The state under which submission is disabled.
   const disabled =
@@ -80,11 +80,11 @@ export const Ledger = ({
     !valid ||
     processing ||
     notEnoughFunds ||
-    getIsExecuting();
+    getIsExecuting()
 
   // Resize modal on content change.
   useEffect(() => {
-    setModalResize();
+    setModalResize()
   }, [
     integrityChecked,
     valid,
@@ -92,20 +92,20 @@ export const Ledger = ({
     notEnoughFunds,
     getStatusCode(),
     getIsExecuting(),
-  ]);
+  ])
 
   // Listen for new Ledger status reports.
   useEffectIgnoreInitial(() => {
-    handleLedgerStatusResponse(transportResponse);
-  }, [transportResponse]);
+    handleLedgerStatusResponse(transportResponse)
+  }, [transportResponse])
 
   // Tidy up context state when this component is no longer mounted.
   useEffect(
     () => () => {
-      handleUnmount();
+      handleUnmount()
     },
     []
-  );
+  )
 
   return (
     <>
@@ -143,7 +143,7 @@ export const Ledger = ({
                   marginLeft
                   onClick={() => {
                     if (feedback?.helpKey) {
-                      openHelp(feedback.helpKey);
+                      openHelp(feedback.helpKey)
                     }
                   }}
                 />
@@ -165,5 +165,5 @@ export const Ledger = ({
         </div>
       </div>
     </>
-  );
-};
+  )
+}

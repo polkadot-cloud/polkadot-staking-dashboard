@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const Wrapper = styled.div<{ $active: boolean }>`
   position: absolute;
@@ -20,4 +20,4 @@ export const Wrapper = styled.div<{ $active: boolean }>`
   > svg {
     margin-right: 0.3rem;
   }
-`;
+`

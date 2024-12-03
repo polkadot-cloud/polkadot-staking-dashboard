@@ -3,17 +3,17 @@
 
 export type AccountProxy = [
   {
-    delay: number;
-    delegate: string;
+    delay: number
+    delegate: string
     proxy_type: {
-      type: string;
-      value: undefined;
-    };
+      type: string
+      value: undefined
+    }
   }[],
   bigint,
-];
+]
 
 export interface AccountProxiesEvent {
-  address: string;
-  proxies: AccountProxy;
+  address: string
+  proxies: AccountProxy
 }

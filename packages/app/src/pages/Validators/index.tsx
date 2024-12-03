@@ -1,25 +1,25 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { PageTitle } from 'ui-structure';
-import { AllValidators } from './AllValidators';
-import { ValidatorFavorites } from './Favorites';
-import { ValidatorsTabsProvider, useValidatorsTabs } from './context';
+import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { PageTitle } from 'ui-structure'
+import { AllValidators } from './AllValidators'
+import { ValidatorFavorites } from './Favorites'
+import { ValidatorsTabsProvider, useValidatorsTabs } from './context'
 
 export const ValidatorsInner = () => {
-  const { t } = useTranslation('pages');
-  const { favorites } = useFavoriteValidators();
-  const { activeTab, setActiveTab } = useValidatorsTabs();
+  const { t } = useTranslation('pages')
+  const { favorites } = useFavoriteValidators()
+  const { activeTab, setActiveTab } = useValidatorsTabs()
 
   // back to tab 0 if not in the first tab
   useEffect(() => {
     if (![0].includes(activeTab)) {
-      setActiveTab(0);
+      setActiveTab(0)
     }
-  }, []);
+  }, [])
 
   return (
     <>
@@ -42,11 +42,11 @@ export const ValidatorsInner = () => {
       {activeTab === 0 && <AllValidators />}
       {activeTab === 1 && <ValidatorFavorites />}
     </>
-  );
-};
+  )
+}
 
 export const Validators = () => (
   <ValidatorsTabsProvider>
     <ValidatorsInner />
   </ValidatorsTabsProvider>
-);
+)

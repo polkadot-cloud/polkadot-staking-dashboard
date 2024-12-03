@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { UIContextInterface } from './types';
+import type { UIContextInterface } from './types'
 
 export const defaultUIContext: UIContextInterface = {
   setSideMenu: (v) => {},
@@ -13,4 +13,4 @@ export const defaultUIContext: UIContextInterface = {
   sideMenuMinimised: false,
   containerRefs: {},
   isBraveBrowser: false,
-};
+}

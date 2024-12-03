@@ -1,32 +1,32 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ellipsisFn } from '@w3ux/utils';
-import BigNumber from 'bignumber.js';
-import type { AnyApi } from 'common-types';
-import { useApi } from 'contexts/Api';
-import { useNetwork } from 'contexts/Network';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { StakingContext } from 'contexts/Staking';
-import { useTheme } from 'contexts/Themes';
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { formatDistance, fromUnixTime } from 'date-fns';
-import { motion } from 'framer-motion';
-import { Header, List, Wrapper as ListWrapper } from 'library/List';
-import { MotionContainer } from 'library/List/MotionContainer';
-import { Pagination } from 'library/List/Pagination';
-import { payoutsPerPage } from 'library/List/defaults';
-import { Identity } from 'library/ListItem/Labels/Identity';
-import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
-import { DefaultLocale, locales } from 'locales';
-import { Component, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { planckToUnitBn } from 'utils';
-import { ItemWrapper } from '../Wrappers';
-import type { PayoutListProps } from '../types';
-import { PayoutListProvider, usePayoutList } from './context';
+import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { ellipsisFn } from '@w3ux/utils'
+import BigNumber from 'bignumber.js'
+import type { AnyApi } from 'common-types'
+import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
+import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { StakingContext } from 'contexts/Staking'
+import { useTheme } from 'contexts/Themes'
+import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { formatDistance, fromUnixTime } from 'date-fns'
+import { motion } from 'framer-motion'
+import { Header, List, Wrapper as ListWrapper } from 'library/List'
+import { MotionContainer } from 'library/List/MotionContainer'
+import { Pagination } from 'library/List/Pagination'
+import { payoutsPerPage } from 'library/List/defaults'
+import { Identity } from 'library/ListItem/Labels/Identity'
+import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity'
+import { DefaultLocale, locales } from 'locales'
+import { Component, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { planckToUnitBn } from 'utils'
+import { ItemWrapper } from '../Wrappers'
+import type { PayoutListProps } from '../types'
+import { PayoutListProvider, usePayoutList } from './context'
 
 export const PayoutListInner = ({
   allowMoreCols,
@@ -34,51 +34,51 @@ export const PayoutListInner = ({
   title,
   payouts: initialPayouts,
 }: PayoutListProps) => {
-  const { i18n, t } = useTranslation('pages');
-  const { mode } = useTheme();
-  const { isReady, activeEra } = useApi();
+  const { i18n, t } = useTranslation('pages')
+  const { mode } = useTheme()
+  const { isReady, activeEra } = useApi()
   const {
     networkData: { units, unit, colors },
-  } = useNetwork();
-  const { listFormat, setListFormat } = usePayoutList();
-  const { validators } = useValidators();
-  const { bondedPools } = useBondedPools();
+  } = useNetwork()
+  const { listFormat, setListFormat } = usePayoutList()
+  const { validators } = useValidators()
+  const { bondedPools } = useBondedPools()
 
   // current page
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(1)
 
   // manipulated list (ordering, filtering) of payouts
-  const [payouts, setPayouts] = useState<AnyApi>(initialPayouts);
+  const [payouts, setPayouts] = useState<AnyApi>(initialPayouts)
 
   // is this the initial fetch
-  const [fetched, setFetched] = useState<boolean>(false);
+  const [fetched, setFetched] = useState<boolean>(false)
 
   // pagination
-  const totalPages = Math.ceil(payouts.length / payoutsPerPage);
-  const pageEnd = page * payoutsPerPage - 1;
-  const pageStart = pageEnd - (payoutsPerPage - 1);
+  const totalPages = Math.ceil(payouts.length / payoutsPerPage)
+  const pageEnd = page * payoutsPerPage - 1
+  const pageStart = pageEnd - (payoutsPerPage - 1)
 
   // refetch list when list changes
   useEffect(() => {
-    setFetched(false);
-  }, [initialPayouts]);
+    setFetched(false)
+  }, [initialPayouts])
 
   // configure list when network is ready to fetch
   useEffect(() => {
     if (isReady && !activeEra.index.isZero() && !fetched) {
-      setPayouts(initialPayouts);
-      setFetched(true);
+      setPayouts(initialPayouts)
+      setFetched(true)
     }
-  }, [isReady, fetched, activeEra.index]);
+  }, [isReady, fetched, activeEra.index])
 
   // get list items to render
-  let listPayouts = [];
+  let listPayouts = []
 
   // get throttled subset or entire list
-  listPayouts = payouts.slice(pageStart).slice(0, payoutsPerPage);
+  listPayouts = payouts.slice(pageStart).slice(0, payoutsPerPage)
 
   if (!payouts.length) {
-    return null;
+    return null
   }
 
   return (
@@ -113,28 +113,28 @@ export const PayoutListInner = ({
                 ? t('payouts.poolClaim')
                 : p.event_id === 'Rewarded'
                   ? t('payouts.payout')
-                  : p.event_id;
+                  : p.event_id
 
             const labelClass =
               p.event_id === 'PaidOut'
                 ? 'claim'
                 : p.event_id === 'Rewarded'
                   ? 'reward'
-                  : undefined;
+                  : undefined
 
             // get validator if it exists
             const validator = validators.find(
               (v) => v.address === p.validator_stash
-            );
+            )
 
             // get pool if it exists
-            const pool = bondedPools.find(({ id }) => id === p.pool_id);
+            const pool = bondedPools.find(({ id }) => id === p.pool_id)
 
             const batchIndex = validator
               ? validators.indexOf(validator)
               : pool
                 ? bondedPools.indexOf(pool)
-                : 0;
+                : 0
 
             return (
               <motion.div
@@ -213,24 +213,24 @@ export const PayoutListInner = ({
                   </div>
                 </ItemWrapper>
               </motion.div>
-            );
+            )
           })}
         </MotionContainer>
       </List>
     </ListWrapper>
-  );
-};
+  )
+}
 
 export const PayoutList = (props: PayoutListProps) => (
   <PayoutListProvider>
     <PayoutListShouldUpdate {...props} />
   </PayoutListProvider>
-);
+)
 
 export class PayoutListShouldUpdate extends Component {
-  static contextType = StakingContext;
+  static contextType = StakingContext
 
   render() {
-    return <PayoutListInner {...this.props} />;
+    return <PayoutListInner {...this.props} />
   }
 }

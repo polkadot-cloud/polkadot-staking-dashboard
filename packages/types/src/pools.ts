@@ -1,109 +1,109 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson, Sync } from '@w3ux/types';
-import type BigNumber from 'bignumber.js';
-import type { MaybeAddress } from './accounts';
-import type { Identity, SuperIdentity } from './identity';
-import type { Nominations } from './nominate';
+import type { AnyJson, Sync } from '@w3ux/types'
+import type BigNumber from 'bignumber.js'
+import type { MaybeAddress } from './accounts'
+import type { Identity, SuperIdentity } from './identity'
+import type { Nominations } from './nominate'
 
 export type BondedPool = ActiveBondedPool & {
-  addresses: PoolAddresses;
-  id: number;
+  addresses: PoolAddresses
+  id: number
   commission?: {
-    current?: AnyJson | null;
-    max?: AnyJson | null;
+    current?: AnyJson | null
+    max?: AnyJson | null
     changeRate: {
-      maxIncrease: AnyJson;
-      minDelay: AnyJson;
-    } | null;
-    throttleFrom?: AnyJson | null;
-  };
-};
-
-export interface PoolAddresses {
-  stash: string;
-  reward: string;
+      maxIncrease: AnyJson
+      minDelay: AnyJson
+    } | null
+    throttleFrom?: AnyJson | null
+  }
 }
 
-export type MaybePool = number | null;
+export interface PoolAddresses {
+  stash: string
+  reward: string
+}
+
+export type MaybePool = number | null
 
 export type PoolNominations = {
-  submittedIn: string;
-  suppressed: boolean;
-  targets: string[];
-} | null;
+  submittedIn: string
+  suppressed: boolean
+  targets: string[]
+} | null
 
-export type NominationStatuses = Record<string, string>;
+export type NominationStatuses = Record<string, string>
 
-export type PoolTab = 'All' | 'Active' | 'Locked' | 'Destroying';
+export type PoolTab = 'All' | 'Active' | 'Locked' | 'Destroying'
 
 export interface ActivePool {
-  id: number;
-  addresses: PoolAddresses;
-  bondedPool: ActiveBondedPool;
-  rewardPool: RewardPool;
-  rewardAccountBalance: bigint;
-  pendingRewards: bigint;
+  id: number
+  addresses: PoolAddresses
+  bondedPool: ActiveBondedPool
+  rewardPool: RewardPool
+  rewardAccountBalance: bigint
+  pendingRewards: bigint
 }
 
 export interface ActiveBondedPool {
-  points: string;
-  memberCounter: string;
-  roles: PoolRoles;
+  points: string
+  memberCounter: string
+  roles: PoolRoles
   roleIdentities: {
-    identities: Record<string, Identity>;
-    supers: Record<string, SuperIdentity>;
-  };
-  state: PoolState;
+    identities: Record<string, Identity>
+    supers: Record<string, SuperIdentity>
+  }
+  state: PoolState
 }
 
 export interface RewardPool {
-  lastRecordedRewardCounter: string;
-  lastRecordedTotalPayouts: string;
-  totalCommissionClaimed: string;
-  totalCommissionPending: string;
-  totalRewardsClaimed: string;
+  lastRecordedRewardCounter: string
+  lastRecordedTotalPayouts: string
+  totalCommissionClaimed: string
+  totalCommissionPending: string
+  totalRewardsClaimed: string
 }
 
-export type PoolState = 'Open' | 'Blocked' | 'Destroying';
+export type PoolState = 'Open' | 'Blocked' | 'Destroying'
 
 export interface PoolUnlocking {
-  era: number;
-  value: BigNumber;
+  era: number
+  value: BigNumber
 }
 
-export type PoolRole = 'depositor' | 'nominator' | 'root' | 'bouncer';
+export type PoolRole = 'depositor' | 'nominator' | 'root' | 'bouncer'
 
 export interface PoolRoles {
-  depositor?: MaybeAddress;
-  nominator?: MaybeAddress;
-  root?: MaybeAddress;
-  bouncer?: MaybeAddress;
+  depositor?: MaybeAddress
+  nominator?: MaybeAddress
+  root?: MaybeAddress
+  bouncer?: MaybeAddress
 }
 
 export interface PoolMember {
-  poolId: number;
-  who: string;
+  poolId: number
+  who: string
 }
 
 export interface DetailActivePool {
-  address: string;
-  pool: ActivePool;
-  nominations: Nominations;
+  address: string
+  pool: ActivePool
+  nominations: Nominations
 }
 
 export interface ActivePoolItem {
-  id: string;
+  id: string
   addresses: {
-    stash: string;
-    reward: string;
-  };
+    stash: string
+    reward: string
+  }
 }
 
-export type AccountActivePools = Record<string, ActivePool | null>;
+export type AccountActivePools = Record<string, ActivePool | null>
 
-export type AccountPoolNominations = Record<string, Nominations>;
+export type AccountPoolNominations = Record<string, Nominations>
 
 // Pool performance:
 
@@ -111,26 +111,26 @@ export type AccountPoolNominations = Record<string, Nominations>;
 export type PoolPerformanceTasks = Record<
   PoolRewardPointsKey,
   PoolPerformanceTaskStatus
->;
+>
 
 // Performance fetching status.
 export interface PoolPerformanceTaskStatus {
-  status: Sync;
-  addresses: string[];
-  startEra: BigNumber;
-  currentEra: BigNumber;
-  endEra: BigNumber;
+  status: Sync
+  addresses: string[]
+  startEra: BigNumber
+  currentEra: BigNumber
+  endEra: BigNumber
 }
 
 /*
  * Batch Key -> Pool Address -> Era -> Points.
  */
 // Supported reward points batch keys.
-export type PoolRewardPointsKey = string;
+export type PoolRewardPointsKey = string
 // Pool reward batches, keyed by batch key.
-export type PoolRewardPointsMap = Record<PoolRewardPointsKey, PoolRewardPoints>;
-export type PoolRewardPoints = Record<PoolAddress, PointsByEra>;
-export type PointsByEra = Record<EraKey, EraPoints>;
-export type PoolAddress = string;
-export type EraKey = number;
-export type EraPoints = string;
+export type PoolRewardPointsMap = Record<PoolRewardPointsKey, PoolRewardPoints>
+export type PoolRewardPoints = Record<PoolAddress, PointsByEra>
+export type PointsByEra = Record<EraKey, EraPoints>
+export type PoolAddress = string
+export type EraKey = number
+export type EraPoints = string

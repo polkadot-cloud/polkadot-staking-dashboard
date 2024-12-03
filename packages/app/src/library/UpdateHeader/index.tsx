@@ -1,24 +1,24 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { usePayeeConfig } from 'hooks/usePayeeConfig';
-import { Wrapper } from './Wrapper';
+import { faAnglesRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { usePayeeConfig } from 'hooks/usePayeeConfig'
+import { Wrapper } from './Wrapper'
 
 interface UpdateHeaderProps {
-  current: string | null;
-  selected: string | null;
+  current: string | null
+  selected: string | null
 }
 
 export const UpdateHeader = ({ current, selected }: UpdateHeaderProps) => {
-  const { getPayeeItems } = usePayeeConfig();
+  const { getPayeeItems } = usePayeeConfig()
 
   const currentTitle =
-    getPayeeItems(true).find((p) => p.value === current)?.title || '';
+    getPayeeItems(true).find((p) => p.value === current)?.title || ''
 
   const selectedTitle =
-    getPayeeItems(true).find((p) => p.value === selected)?.title || '';
+    getPayeeItems(true).find((p) => p.value === selected)?.title || ''
 
   return (
     <Wrapper>
@@ -32,5 +32,5 @@ export const UpdateHeader = ({ current, selected }: UpdateHeaderProps) => {
         <h4>{selectedTitle}</h4>
       </div>
     </Wrapper>
-  );
-};
+  )
+}

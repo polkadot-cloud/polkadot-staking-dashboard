@@ -1,17 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { usePlugins } from 'contexts/Plugins';
-import { CardWrapper } from 'library/Card/Wrappers';
-import { NominationStatus } from 'pages/Nominate/Active/Status/NominationStatus';
-import { MembershipStatus } from 'pages/Pools/Home/Status/MembershipStatus';
-import { RowSection } from 'ui-structure';
-import { Tips } from './Tips';
-import { StatusWrapper } from './Wrappers';
+import { usePlugins } from 'contexts/Plugins'
+import { CardWrapper } from 'library/Card/Wrappers'
+import { NominationStatus } from 'pages/Nominate/Active/Status/NominationStatus'
+import { MembershipStatus } from 'pages/Pools/Home/Status/MembershipStatus'
+import { RowSection } from 'ui-structure'
+import { Tips } from './Tips'
+import { StatusWrapper } from './Wrappers'
 
 export const StakeStatus = () => {
-  const { plugins } = usePlugins();
-  const showTips = plugins.includes('tips');
+  const { plugins } = usePlugins()
+  const showTips = plugins.includes('tips')
 
   return (
     <CardWrapper style={{ padding: 0 }}>
@@ -30,5 +30,5 @@ export const StakeStatus = () => {
 
       {showTips ? <Tips /> : null}
     </CardWrapper>
-  );
-};
+  )
+}

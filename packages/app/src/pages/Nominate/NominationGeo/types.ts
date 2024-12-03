@@ -1,26 +1,26 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ChainMetadata, NominatorDetail } from '@polkawatch/ddp-client';
-export type { NominatorDetail } from '@polkawatch/ddp-client';
+import type { ChainMetadata, NominatorDetail } from '@polkawatch/ddp-client'
+export type { NominatorDetail } from '@polkawatch/ddp-client'
 
-export type { ChainMetadata } from '@polkawatch/ddp-client';
+export type { ChainMetadata } from '@polkawatch/ddp-client'
 
 export interface AnalyzedPayoutsProps {
-  data?: NominatorDetail;
+  data?: NominatorDetail
 }
 
 export interface AnalyzedErasProps {
-  meta?: ChainMetadata;
+  meta?: ChainMetadata
 }
 
 export interface NomninationGeoListProps {
-  title: string;
-  data?: NominatorDetail;
+  title: string
+  data?: NominatorDetail
 }
 
-import type { ListFormat } from 'library/PoolList/types';
+import type { ListFormat } from 'library/PoolList/types'
 export interface NominationGeoListContextInterface {
-  setListFormat: (v: ListFormat) => void;
-  listFormat: ListFormat;
+  setListFormat: (v: ListFormat) => void
+  listFormat: ListFormat
 }

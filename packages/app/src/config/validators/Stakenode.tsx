@@ -24,6 +24,6 @@ const Stakenode = () => (
       fill="#2f3b96"
     />
   </svg>
-);
+)
 
-export default Stakenode;
+export default Stakenode

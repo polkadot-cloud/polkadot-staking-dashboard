@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js'
 import {
   defaultBalance,
   defaultLedger,
   defaultPayee,
-} from 'controllers/Balances/defaults';
-import type { BalancesContextInterface } from './types';
+} from 'controllers/Balances/defaults'
+import type { BalancesContextInterface } from './types'
 
 export const defaultBalancesContext: BalancesContextInterface = {
   activeBalances: {},
@@ -20,4 +20,4 @@ export const defaultBalancesContext: BalancesContextInterface = {
   getPoolMembership: (address) => null,
   getNominations: (address) => [],
   getEdReserved: (address, existentialDeposit) => new BigNumber(0),
-};
+}

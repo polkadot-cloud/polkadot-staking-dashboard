@@ -1,22 +1,22 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useHelp } from 'contexts/Help';
-import { usePrompt } from 'contexts/Prompt';
-import type { FunctionComponent, SVGProps } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ButtonHelp, ButtonSecondary } from 'ui-buttons';
-import { TitleWrapper } from './Wrappers';
+import type { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useHelp } from 'contexts/Help'
+import { usePrompt } from 'contexts/Prompt'
+import type { FunctionComponent, SVGProps } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ButtonHelp, ButtonSecondary } from 'ui-buttons'
+import { TitleWrapper } from './Wrappers'
 
 interface TitleProps {
-  title: string;
-  icon?: IconProp;
-  Svg?: FunctionComponent<SVGProps<SVGElement>>;
-  helpKey?: string;
-  hideDone?: boolean;
-  closeText?: string;
+  title: string
+  icon?: IconProp
+  Svg?: FunctionComponent<SVGProps<SVGElement>>
+  helpKey?: string
+  hideDone?: boolean
+  closeText?: string
 }
 
 export const Title = ({
@@ -27,15 +27,15 @@ export const Title = ({
   hideDone,
   closeText,
 }: TitleProps) => {
-  const { t } = useTranslation('library');
-  const { closePrompt } = usePrompt();
-  const { openHelp } = useHelp();
+  const { t } = useTranslation('library')
+  const { closePrompt } = usePrompt()
+  const { openHelp } = useHelp()
 
   const graphic = Svg ? (
     <Svg style={{ width: '1.5rem', height: '1.5rem' }} />
   ) : icon ? (
     <FontAwesomeIcon transform="grow-3" icon={icon} />
-  ) : null;
+  ) : null
 
   return (
     <TitleWrapper>
@@ -55,5 +55,5 @@ export const Title = ({
         </div>
       ) : null}
     </TitleWrapper>
-  );
-};
+  )
+}

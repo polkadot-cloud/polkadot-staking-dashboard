@@ -1,35 +1,35 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { useApi } from 'contexts/Api';
-import { useFilters } from 'contexts/Filters';
-import { useNetwork } from 'contexts/Network';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useTheme } from 'contexts/Themes';
-import { motion } from 'framer-motion';
-import { usePoolFilters } from 'hooks/usePoolFilters';
-import { useSyncing } from 'hooks/useSyncing';
-import { Tabs } from 'library/Filter/Tabs';
+import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { useApi } from 'contexts/Api'
+import { useFilters } from 'contexts/Filters'
+import { useNetwork } from 'contexts/Network'
+import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { useTheme } from 'contexts/Themes'
+import { motion } from 'framer-motion'
+import { usePoolFilters } from 'hooks/usePoolFilters'
+import { useSyncing } from 'hooks/useSyncing'
+import { Tabs } from 'library/Filter/Tabs'
 import {
   FilterHeaderWrapper,
   List,
   ListStatusHeader,
   Wrapper as ListWrapper,
-} from 'library/List';
-import { poolsPerPage } from 'library/List/defaults';
-import { MotionContainer } from 'library/List/MotionContainer';
-import { Pagination } from 'library/List/Pagination';
-import { SearchInput } from 'library/List/SearchInput';
-import { Pool } from 'library/Pool';
-import type { FormEvent } from 'react';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import type { BondedPool } from 'types';
-import { usePoolList } from './context';
-import type { PoolListProps } from './types';
+} from 'library/List'
+import { poolsPerPage } from 'library/List/defaults'
+import { MotionContainer } from 'library/List/MotionContainer'
+import { Pagination } from 'library/List/Pagination'
+import { SearchInput } from 'library/List/SearchInput'
+import { Pool } from 'library/Pool'
+import type { FormEvent } from 'react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import type { BondedPool } from 'types'
+import { usePoolList } from './context'
+import type { PoolListProps } from './types'
 
 export const PoolList = ({
   allowMoreCols,
@@ -38,108 +38,108 @@ export const PoolList = ({
   pools,
   allowListFormat = true,
 }: PoolListProps) => {
-  const { t } = useTranslation('library');
+  const { t } = useTranslation('library')
   const {
     network,
     networkData: { colors },
-  } = useNetwork();
-  const { mode } = useTheme();
-  const { activeEra } = useApi();
-  const { syncing } = useSyncing();
-  const { applyFilter } = usePoolFilters();
-  const { listFormat, setListFormat } = usePoolList();
-  const { poolSearchFilter, poolsNominations } = useBondedPools();
-  const { getFilters, getSearchTerm, setSearchTerm } = useFilters();
+  } = useNetwork()
+  const { mode } = useTheme()
+  const { activeEra } = useApi()
+  const { syncing } = useSyncing()
+  const { applyFilter } = usePoolFilters()
+  const { listFormat, setListFormat } = usePoolList()
+  const { poolSearchFilter, poolsNominations } = useBondedPools()
+  const { getFilters, getSearchTerm, setSearchTerm } = useFilters()
 
-  const includes = getFilters('include', 'pools');
-  const excludes = getFilters('exclude', 'pools');
-  const searchTerm = getSearchTerm('pools');
+  const includes = getFilters('include', 'pools')
+  const excludes = getFilters('exclude', 'pools')
+  const searchTerm = getSearchTerm('pools')
 
   // Carry out filter of pool list.
   const filterPoolList = () => {
-    let filteredPools = Object.assign(poolsDefault);
-    filteredPools = applyFilter(includes, excludes, filteredPools);
+    let filteredPools = Object.assign(poolsDefault)
+    filteredPools = applyFilter(includes, excludes, filteredPools)
     if (searchTerm) {
-      filteredPools = poolSearchFilter(filteredPools, searchTerm);
+      filteredPools = poolSearchFilter(filteredPools, searchTerm)
     }
-    return filteredPools;
-  };
+    return filteredPools
+  }
 
   // The current page of pool list.
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(1)
 
   // Default pool list items before filtering.
-  const [poolsDefault, setPoolsDefault] = useState<BondedPool[]>(pools || []);
+  const [poolsDefault, setPoolsDefault] = useState<BondedPool[]>(pools || [])
 
   // Manipulated pool list items after filtering.
-  const [listPools, setListPools] = useState<BondedPool[]>(filterPoolList());
+  const [listPools, setListPools] = useState<BondedPool[]>(filterPoolList())
 
   // Whether this the initial render.
-  const [synced, setSynced] = useState<boolean>(false);
+  const [synced, setSynced] = useState<boolean>(false)
 
   // Handle Pagination.
-  const totalPages = Math.ceil(listPools.length / poolsPerPage);
-  const pageEnd = page * poolsPerPage - 1;
-  const pageStart = pageEnd - (poolsPerPage - 1);
+  const totalPages = Math.ceil(listPools.length / poolsPerPage)
+  const pageEnd = page * poolsPerPage - 1
+  const pageStart = pageEnd - (poolsPerPage - 1)
 
   // Get paged subset of list items.
-  const poolsToDisplay = listPools.slice(pageStart).slice(0, poolsPerPage);
+  const poolsToDisplay = listPools.slice(pageStart).slice(0, poolsPerPage)
 
   // Handle resetting of pool list when provided pools change.
   const resetPoolList = () => {
-    setPoolsDefault(pools || []);
-    setListPools(pools || []);
-    setSynced(true);
-  };
+    setPoolsDefault(pools || [])
+    setListPools(pools || [])
+    setSynced(true)
+  }
 
   // Handle filter / order update
   const handlePoolsFilterUpdate = () => {
-    const filteredPools = filterPoolList();
-    setListPools(filteredPools);
-    setPage(1);
-  };
+    const filteredPools = filterPoolList()
+    setListPools(filteredPools)
+    setPage(1)
+  }
 
   const handleSearchChange = (e: FormEvent<HTMLInputElement>) => {
-    const newValue = e.currentTarget.value;
+    const newValue = e.currentTarget.value
 
-    let filteredPools: BondedPool[] = Object.assign(poolsDefault);
-    filteredPools = applyFilter(includes, excludes, filteredPools);
-    filteredPools = poolSearchFilter(filteredPools, newValue);
+    let filteredPools: BondedPool[] = Object.assign(poolsDefault)
+    filteredPools = applyFilter(includes, excludes, filteredPools)
+    filteredPools = poolSearchFilter(filteredPools, newValue)
 
     // ensure no duplicates
     filteredPools = filteredPools.filter(
       (value, index: number, self) =>
         index === self.findIndex((i) => i.id === value.id)
-    );
-    setPage(1);
-    setListPools(filteredPools);
-    setSearchTerm('pools', newValue);
-  };
+    )
+    setPage(1)
+    setListPools(filteredPools)
+    setSearchTerm('pools', newValue)
+  }
 
   // Refetch list when pool list changes.
   useEffect(() => {
     if (JSON.stringify(pools) !== JSON.stringify(poolsDefault) && synced) {
-      resetPoolList();
+      resetPoolList()
     }
-  }, [JSON.stringify(pools)]);
+  }, [JSON.stringify(pools)])
 
   // List ui changes / validator changes trigger re-render of list.
   useEffect(() => {
     // only filter when pool nominations have been synced.
     if (!syncing && Object.keys(poolsNominations).length) {
-      handlePoolsFilterUpdate();
+      handlePoolsFilterUpdate()
     }
-  }, [syncing, includes, excludes, Object.keys(poolsNominations).length]);
+  }, [syncing, includes, excludes, Object.keys(poolsNominations).length])
 
   // Scroll to top of the window on every filter.
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [includes, excludes]);
+    window.scrollTo(0, 0)
+  }, [includes, excludes])
 
   // Reset list on network change or active era change.
   useEffectIgnoreInitial(() => {
-    resetPoolList();
-  }, [network, activeEra.index.toString()]);
+    resetPoolList()
+  }, [network, activeEra.index.toString()])
 
   return (
     <ListWrapper>
@@ -235,5 +235,5 @@ export const PoolList = ({
         </MotionContainer>
       </List>
     </ListWrapper>
-  );
-};
+  )
+}

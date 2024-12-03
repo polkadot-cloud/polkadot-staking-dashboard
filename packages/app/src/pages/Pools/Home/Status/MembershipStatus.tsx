@@ -1,46 +1,46 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCog } from '@fortawesome/free-solid-svg-icons';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { determinePoolDisplay } from 'contexts/Pools/util';
-import { useTransferOptions } from 'contexts/TransferOptions';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { Stat } from 'library/Stat';
-import { useTranslation } from 'react-i18next';
-import type { MembershipStatusProps } from './types';
-import { useStatusButtons } from './useStatusButtons';
+import { faCog } from '@fortawesome/free-solid-svg-icons'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { determinePoolDisplay } from 'contexts/Pools/util'
+import { useTransferOptions } from 'contexts/TransferOptions'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { Stat } from 'library/Stat'
+import { useTranslation } from 'react-i18next'
+import type { MembershipStatusProps } from './types'
+import { useStatusButtons } from './useStatusButtons'
 
 export const MembershipStatus = ({
   showButtons = true,
   buttonType = 'primary',
 }: MembershipStatusProps) => {
-  const { t } = useTranslation('pages');
-  const { isReady } = useApi();
-  const { openModal } = useOverlay().modal;
-  const { poolsMetaData } = useBondedPools();
-  const { activeAccount } = useActiveAccounts();
-  const { label } = useStatusButtons();
-  const { isReadOnlyAccount } = useImportedAccounts();
-  const { getTransferOptions } = useTransferOptions();
-  const { activePool, isOwner, isBouncer, isMember } = useActivePool();
+  const { t } = useTranslation('pages')
+  const { isReady } = useApi()
+  const { openModal } = useOverlay().modal
+  const { poolsMetaData } = useBondedPools()
+  const { activeAccount } = useActiveAccounts()
+  const { label } = useStatusButtons()
+  const { isReadOnlyAccount } = useImportedAccounts()
+  const { getTransferOptions } = useTransferOptions()
+  const { activePool, isOwner, isBouncer, isMember } = useActivePool()
 
-  const { active } = getTransferOptions(activeAccount).pool;
-  const poolState = activePool?.bondedPool?.state ?? null;
+  const { active } = getTransferOptions(activeAccount).pool
+  const poolState = activePool?.bondedPool?.state ?? null
 
-  const membershipButtons = [];
-  let membershipDisplay = t('pools.notInPool');
+  const membershipButtons = []
+  let membershipDisplay = t('pools.notInPool')
 
   if (activePool) {
     // Determine pool membership display.
     membershipDisplay = determinePoolDisplay(
       activePool.addresses.stash,
       poolsMetaData[Number(activePool.id)]
-    );
+    )
 
     // Display manage button if active account is pool owner or bouncer.
     // Or display manage button if active account is a pool member.
@@ -61,7 +61,7 @@ export const MembershipStatus = ({
               options: { disableWindowResize: true, disableScroll: true },
               size: 'sm',
             }),
-        });
+        })
       }
     }
   }
@@ -84,5 +84,5 @@ export const MembershipStatus = ({
       stat={t('pools.notInPool')}
       buttonType={buttonType}
     />
-  );
-};
+  )
+}

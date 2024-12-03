@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const PromptWrapper = styled.div`
   background: var(--overlay-background-color);
@@ -38,7 +38,7 @@ export const PromptWrapper = styled.div`
       padding: 1rem 1.5rem;
     }
   }
-`;
+`
 
 export const HeightWrapper = styled.div<{ size: string }>`
   transition: height 0.5s cubic-bezier(0.1, 1, 0.2, 1);
@@ -49,7 +49,7 @@ export const HeightWrapper = styled.div<{ size: string }>`
   z-index: 9;
   position: relative;
   overflow: auto;
-`;
+`
 
 export const ContentWrapper = styled.div`
   background: var(--background-default);
@@ -74,7 +74,7 @@ export const ContentWrapper = styled.div`
       margin: 1rem 0;
     }
   }
-`;
+`
 
 export const TitleWrapper = styled.div`
   padding: 1.5rem 1rem 0 1rem;
@@ -111,7 +111,7 @@ export const TitleWrapper = styled.div`
       }
     }
   }
-`;
+`
 
 export const FilterListWrapper = styled.div`
   padding-bottom: 0.5rem;
@@ -121,7 +121,7 @@ export const FilterListWrapper = styled.div`
       margin-bottom: 0;
     }
   }
-`;
+`
 
 export const FilterListButton = styled.button<{ $active: boolean }>`
   border: 1px solid
@@ -157,11 +157,11 @@ export const FilterListButton = styled.button<{ $active: boolean }>`
     margin-left: 0.2rem;
     margin-right: 0.9rem;
   }
-`;
+`
 
 export const FooterWrapper = styled.div`
   margin: 1.5rem 0 0.5rem 0;
-`;
+`
 
 export const PromptListItem = styled.div`
   display: flex;
@@ -171,7 +171,7 @@ export const PromptListItem = styled.div`
   &.inactive {
     opacity: var(--opacity-disabled);
   }
-`;
+`
 
 export const PromptSelectItem = styled.button`
   border-bottom: 1px solid var(--border-primary-color);
@@ -194,4 +194,4 @@ export const PromptSelectItem = styled.button`
       color: var(--accent-color-primary);
     }
   }
-`;
+`

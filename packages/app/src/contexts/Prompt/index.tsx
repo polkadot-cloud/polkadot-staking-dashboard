@@ -1,15 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ReactNode } from 'react';
-import { createContext, useContext, useState } from 'react';
-import { defaultPromptContext } from './defaults';
-import type { Prompt, PromptContextInterface, PromptState } from './types';
+import type { ReactNode } from 'react'
+import { createContext, useContext, useState } from 'react'
+import { defaultPromptContext } from './defaults'
+import type { Prompt, PromptContextInterface, PromptState } from './types'
 
 export const PromptContext =
-  createContext<PromptContextInterface>(defaultPromptContext);
+  createContext<PromptContextInterface>(defaultPromptContext)
 
-export const usePrompt = () => useContext(PromptContext);
+export const usePrompt = () => useContext(PromptContext)
 
 export const PromptProvider = ({ children }: { children: ReactNode }) => {
   const [state, setState] = useState<PromptState>({
@@ -17,24 +17,24 @@ export const PromptProvider = ({ children }: { children: ReactNode }) => {
     status: 0,
     Prompt: null,
     onClosePrompt: null,
-  });
+  })
 
   // Whether prompt can be closed by clicking outside on container.
-  const [closeOnOutsideClick, setCloseOnOutsideClick] = useState(false);
+  const [closeOnOutsideClick, setCloseOnOutsideClick] = useState(false)
 
   const setPrompt = (Prompt: Prompt) => {
     setState({
       ...state,
       Prompt,
-    });
-  };
+    })
+  }
 
   const setStatus = (status: number) => {
     setState({
       ...state,
       status,
-    });
-  };
+    })
+  }
 
   const openPromptWith = (
     Prompt: Prompt,
@@ -46,13 +46,13 @@ export const PromptProvider = ({ children }: { children: ReactNode }) => {
       size,
       Prompt,
       status: 1,
-    });
-    setCloseOnOutsideClick(closeOutside);
-  };
+    })
+    setCloseOnOutsideClick(closeOutside)
+  }
 
   const closePrompt = () => {
     if (state.onClosePrompt) {
-      state.onClosePrompt();
+      state.onClosePrompt()
     }
 
     setState({
@@ -60,15 +60,15 @@ export const PromptProvider = ({ children }: { children: ReactNode }) => {
       status: 0,
       Prompt: null,
       onClosePrompt: null,
-    });
-  };
+    })
+  }
 
   const setOnClosePrompt = (onClosePrompt: (() => void) | null) => {
     setState({
       ...state,
       onClosePrompt,
-    });
-  };
+    })
+  }
 
   return (
     <PromptContext.Provider
@@ -87,5 +87,5 @@ export const PromptProvider = ({ children }: { children: ReactNode }) => {
     >
       {children}
     </PromptContext.Provider>
-  );
-};
+  )
+}

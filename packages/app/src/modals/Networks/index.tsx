@@ -1,44 +1,44 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronRight, faGlobe } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { capitalizeFirstLetter } from '@w3ux/utils';
-import type { NetworkId } from 'common-types';
-import { NetworkList } from 'config/networks';
-import { useApi } from 'contexts/Api';
-import { useNetwork } from 'contexts/Network';
-import { usePrompt } from 'contexts/Prompt';
-import { useUi } from 'contexts/UI';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
-import { Title } from 'library/Modal/Title';
-import { useEffect } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
-import { ButtonTertiary } from 'ui-buttons';
-import BraveIconSVG from '../../img/brave-logo.svg?react';
-import { ProvidersPrompt } from './ProvidersPrompt';
+import { faChevronRight, faGlobe } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { capitalizeFirstLetter } from '@w3ux/utils'
+import type { NetworkId } from 'common-types'
+import { NetworkList } from 'config/networks'
+import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
+import { usePrompt } from 'contexts/Prompt'
+import { useUi } from 'contexts/UI'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
+import { Title } from 'library/Modal/Title'
+import { useEffect } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
+import { ButtonTertiary } from 'ui-buttons'
+import BraveIconSVG from '../../img/brave-logo.svg?react'
+import { ProvidersPrompt } from './ProvidersPrompt'
 import {
   BraveWarning,
   ConnectionButton,
   ConnectionsWrapper,
   ContentWrapper,
   NetworkButton,
-} from './Wrapper';
+} from './Wrapper'
 
 export const Networks = () => {
-  const { t } = useTranslation('modals');
-  const { isBraveBrowser } = useUi();
-  const { openPromptWith } = usePrompt();
-  const { network, switchNetwork } = useNetwork();
-  const { setModalStatus, setModalResize } = useOverlay().modal;
-  const { connectionType, setConnectionType, rpcEndpoint } = useApi();
-  const networkKey = network;
+  const { t } = useTranslation('modals')
+  const { isBraveBrowser } = useUi()
+  const { openPromptWith } = usePrompt()
+  const { network, switchNetwork } = useNetwork()
+  const { setModalStatus, setModalResize } = useOverlay().modal
+  const { connectionType, setConnectionType, rpcEndpoint } = useApi()
+  const networkKey = network
 
-  const isLightClient = connectionType === 'sc';
+  const isLightClient = connectionType === 'sc'
 
   // Likely never going to happen; here just to be safe.
-  useEffect(() => setModalResize(), [isBraveBrowser]);
+  useEffect(() => setModalResize(), [isBraveBrowser])
 
   return (
     <>
@@ -48,8 +48,8 @@ export const Networks = () => {
           <h4>{t('selectNetwork')}</h4>
           <div className="items">
             {Object.entries(NetworkList).map(([key, item], index: number) => {
-              const Svg = item.brand.inline.svg;
-              const rpcDisabled = networkKey === key;
+              const Svg = item.brand.inline.svg
+              const rpcDisabled = networkKey === key
 
               return (
                 <NetworkButton
@@ -59,8 +59,8 @@ export const Networks = () => {
                   type="button"
                   onClick={() => {
                     if (networkKey !== key) {
-                      switchNetwork(key as NetworkId);
-                      setModalStatus('closing');
+                      switchNetwork(key as NetworkId)
+                      setModalStatus('closing')
                     }
                   }}
                 >
@@ -81,7 +81,7 @@ export const Networks = () => {
                     />
                   </div>
                 </NetworkButton>
-              );
+              )
             })}
           </div>
           <h4>{t('connectionType')}</h4>
@@ -92,9 +92,9 @@ export const Networks = () => {
                 className="off"
                 type="button"
                 onClick={() => {
-                  setConnectionType('sc');
-                  switchNetwork(networkKey as NetworkId);
-                  setModalStatus('closing');
+                  setConnectionType('sc')
+                  switchNetwork(networkKey as NetworkId)
+                  setModalStatus('closing')
                 }}
               >
                 <h3>{t('lightClient')}</h3>
@@ -107,9 +107,9 @@ export const Networks = () => {
                 disabled={!isLightClient}
                 type="button"
                 onClick={() => {
-                  setConnectionType('ws');
-                  switchNetwork(networkKey as NetworkId);
-                  setModalStatus('closing');
+                  setConnectionType('ws')
+                  switchNetwork(networkKey as NetworkId)
+                  setModalStatus('closing')
                 }}
               >
                 <h3>RPC</h3>
@@ -142,5 +142,5 @@ export const Networks = () => {
         </ContentWrapper>
       </ModalPadding>
     </>
-  );
-};
+  )
+}

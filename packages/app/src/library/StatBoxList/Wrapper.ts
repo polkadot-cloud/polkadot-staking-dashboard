@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { motion } from 'framer-motion';
-import styled from 'styled-components';
+import { motion } from 'framer-motion'
+import styled from 'styled-components'
 
 export const ListWrapper = styled.div`
   display: flex;
@@ -15,7 +15,7 @@ export const ListWrapper = styled.div`
       margin-right: 0;
     }
   }
-`;
+`
 
 export const StatBoxWrapper = styled(motion.div)`
   display: flex;
@@ -143,7 +143,7 @@ export const StatBoxWrapper = styled(motion.div)`
       }
     }
   }
-`;
+`
 
 export const TextTitleWrapper = styled.div<{ $primary?: boolean }>`
   color: ${(props) =>
@@ -172,7 +172,7 @@ export const TextTitleWrapper = styled.div<{ $primary?: boolean }>`
     margin-left: 0.55rem;
     margin-top: 0.1rem;
   }
-`;
+`
 
 export const TimeLeftWrapper = styled.div<{ primary?: boolean }>`
   color: ${(props) =>
@@ -197,4 +197,4 @@ export const TimeLeftWrapper = styled.div<{ primary?: boolean }>`
     margin-top: 0.1rem;
     margin-right: 0.75rem;
   }
-`;
+`

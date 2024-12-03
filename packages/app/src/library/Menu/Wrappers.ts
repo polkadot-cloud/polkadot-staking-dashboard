@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   background: var(--background-default);
@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
   > button:last-child {
     border: none;
   }
-`;
+`
 
 export const ItemWrapper = styled.button`
   border-bottom: 1px solid var(--border-primary-color);
@@ -36,4 +36,4 @@ export const ItemWrapper = styled.button`
     padding: 0 0 0 0.75rem;
     font-size: 1rem;
   }
-`;
+`

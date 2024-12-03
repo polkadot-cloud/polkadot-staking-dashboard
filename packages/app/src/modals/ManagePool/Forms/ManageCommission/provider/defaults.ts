@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { PoolCommissionContextInterface } from './types';
+import type { PoolCommissionContextInterface } from './types'
 
 export const defaultPoolCommissionContext: PoolCommissionContextInterface = {
   setCommission: (commission) => {},
@@ -16,4 +16,4 @@ export const defaultPoolCommissionContext: PoolCommissionContextInterface = {
   isUpdated: (feature) => false,
   hasValue: (feature) => false,
   resetAll: () => {},
-};
+}

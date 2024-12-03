@@ -1,17 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faExternalLinkAlt as faExt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { motion } from 'framer-motion';
-import { useCallback } from 'react';
-import { ItemWrapper } from '../Wrappers';
-import type { ExternalProps } from './types';
+import { faExternalLinkAlt as faExt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { motion } from 'framer-motion'
+import { useCallback } from 'react'
+import { ItemWrapper } from '../Wrappers'
+import type { ExternalProps } from './types'
 
 export const External = ({ width, title, url, website }: ExternalProps) => {
   const handleClick = useCallback(() => {
-    window.open(url, '_blank');
-  }, [url]);
+    window.open(url, '_blank')
+  }, [url])
 
   return (
     <ItemWrapper width={width}>
@@ -33,5 +33,5 @@ export const External = ({ width, title, url, website }: ExternalProps) => {
         </p>
       </motion.button>
     </ItemWrapper>
-  );
-};
+  )
+}

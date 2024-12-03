@@ -5,16 +5,16 @@ import {
   faArrowsRotate,
   faHashtag,
   faTimes,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Polkicon } from '@w3ux/react-polkicon';
-import { CanvasTitleWrapper } from 'canvas/Wrappers';
-import { determinePoolDisplay } from 'contexts/Pools/util';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useTranslation } from 'react-i18next';
-import { ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons';
-import { PageTitleTabs } from 'ui-structure';
-import type { JoinPoolHeaderProps } from './types';
+} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Polkicon } from '@w3ux/react-polkicon'
+import { CanvasTitleWrapper } from 'canvas/Wrappers'
+import { determinePoolDisplay } from 'contexts/Pools/util'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { useTranslation } from 'react-i18next'
+import { ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
+import { PageTitleTabs } from 'ui-structure'
+import type { JoinPoolHeaderProps } from './types'
 
 export const Header = ({
   activeTab,
@@ -26,20 +26,20 @@ export const Header = ({
   setSelectedPoolId,
   providedPoolId,
 }: JoinPoolHeaderProps) => {
-  const { t } = useTranslation();
-  const { closeCanvas } = useOverlay().canvas;
+  const { t } = useTranslation()
+  const { closeCanvas } = useOverlay().canvas
 
   // Randomly select a new pool to display.
   const handleChooseNewPool = () => {
     // Remove current pool from filtered so it is not selected again.
     const filteredPools = filteredBondedPools.filter(
       (pool) => String(pool.id) !== String(bondedPool.id)
-    );
+    )
 
     // Randomly select a filtered bonded pool and set it as the selected pool.
-    const index = Math.ceil(Math.random() * filteredPools.length - 1);
-    setSelectedPoolId(filteredPools[index].id);
-  };
+    const index = Math.ceil(Math.random() * filteredPools.length - 1)
+    setSelectedPoolId(filteredPools[index].id)
+  }
 
   return (
     <>
@@ -119,5 +119,5 @@ export const Header = ({
         />
       </CanvasTitleWrapper>
     </>
-  );
-};
+  )
+}

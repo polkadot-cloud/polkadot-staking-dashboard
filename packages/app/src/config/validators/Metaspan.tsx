@@ -14,6 +14,6 @@ const Metaspan = () => (
       stroke="#010101"
     />
   </svg>
-);
+)
 
-export default Metaspan;
+export default Metaspan

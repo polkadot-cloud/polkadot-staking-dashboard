@@ -1,28 +1,28 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { SelectWrapper } from 'library/ListItem/Wrappers';
-import { useList } from '../../List/context';
-import type { SelectProps } from '../types';
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { SelectWrapper } from 'library/ListItem/Wrappers'
+import { useList } from '../../List/context'
+import type { SelectProps } from '../types'
 
 export const Select = ({ item }: SelectProps) => {
-  const { addToSelected, removeFromSelected, selected } = useList();
+  const { addToSelected, removeFromSelected, selected } = useList()
 
-  const isSelected = selected.includes(item);
+  const isSelected = selected.includes(item)
 
   return (
     <SelectWrapper
       onClick={() => {
         if (isSelected) {
-          removeFromSelected([item]);
+          removeFromSelected([item])
         } else {
-          addToSelected(item);
+          addToSelected(item)
         }
       }}
     >
       {isSelected && <FontAwesomeIcon icon={faCheck} transform="shrink-2" />}
     </SelectWrapper>
-  );
-};
+  )
+}

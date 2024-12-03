@@ -1,10 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import classNames from 'classnames';
-import type { CSSProperties } from 'react';
-import classes from './index.module.scss';
-import type { SideProps } from './types';
+import classNames from 'classnames'
+import type { CSSProperties } from 'react'
+import classes from './index.module.scss'
+import type { SideProps } from './types'
 
 /**
  * @name Side
@@ -19,16 +19,16 @@ export const Side = ({
   minimised,
   width = '20rem',
 }: SideProps) => {
-  const vars = { '--core-side-width': width } as CSSProperties;
+  const vars = { '--core-side-width': width } as CSSProperties
 
   const classses = classNames(classes.side, {
     [classes.sideHidden]: !open,
     [classes.sideMinimised]: minimised,
-  });
+  })
 
   return (
     <div style={{ ...vars, ...style }} className={classses}>
       {children}
     </div>
-  );
-};
+  )
+}

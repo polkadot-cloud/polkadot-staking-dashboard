@@ -1,51 +1,51 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { Odometer } from '@w3ux/react-odometer';
-import { minDecimalPlaces } from '@w3ux/utils';
-import type BigNumber from 'bignumber.js';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useBalances } from 'contexts/Balances';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useHelp } from 'contexts/Help';
-import { useNetwork } from 'contexts/Network';
-import { useStaking } from 'contexts/Staking';
-import { useTransferOptions } from 'contexts/TransferOptions';
-import { useSyncing } from 'hooks/useSyncing';
-import { useUnstaking } from 'hooks/useUnstaking';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { BondedChart } from 'library/BarChart/BondedChart';
-import { CardHeaderWrapper } from 'library/Card/Wrappers';
-import { useTranslation } from 'react-i18next';
-import { ButtonHelp, ButtonPrimary } from 'ui-buttons';
-import { ButtonRow } from 'ui-structure';
-import { planckToUnitBn } from 'utils';
+import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
+import { Odometer } from '@w3ux/react-odometer'
+import { minDecimalPlaces } from '@w3ux/utils'
+import type BigNumber from 'bignumber.js'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useBalances } from 'contexts/Balances'
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useHelp } from 'contexts/Help'
+import { useNetwork } from 'contexts/Network'
+import { useStaking } from 'contexts/Staking'
+import { useTransferOptions } from 'contexts/TransferOptions'
+import { useSyncing } from 'hooks/useSyncing'
+import { useUnstaking } from 'hooks/useUnstaking'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { BondedChart } from 'library/BarChart/BondedChart'
+import { CardHeaderWrapper } from 'library/Card/Wrappers'
+import { useTranslation } from 'react-i18next'
+import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
+import { ButtonRow } from 'ui-structure'
+import { planckToUnitBn } from 'utils'
 
 export const ManageBond = () => {
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation('pages')
   const {
     networkData: {
       units,
       brand: { token: Token },
     },
-  } = useNetwork();
-  const { openHelp } = useHelp();
-  const { syncing } = useSyncing();
-  const { inSetup } = useStaking();
-  const { getLedger } = useBalances();
-  const { openModal } = useOverlay().modal;
-  const { isFastUnstaking } = useUnstaking();
-  const { isReadOnlyAccount } = useImportedAccounts();
-  const { getTransferOptions } = useTransferOptions();
-  const { activeAccount } = useActiveAccounts();
-  const ledger = getLedger({ stash: activeAccount });
-  const { active }: { active: BigNumber } = ledger;
-  const allTransferOptions = getTransferOptions(activeAccount);
+  } = useNetwork()
+  const { openHelp } = useHelp()
+  const { syncing } = useSyncing()
+  const { inSetup } = useStaking()
+  const { getLedger } = useBalances()
+  const { openModal } = useOverlay().modal
+  const { isFastUnstaking } = useUnstaking()
+  const { isReadOnlyAccount } = useImportedAccounts()
+  const { getTransferOptions } = useTransferOptions()
+  const { activeAccount } = useActiveAccounts()
+  const ledger = getLedger({ stash: activeAccount })
+  const { active }: { active: BigNumber } = ledger
+  const allTransferOptions = getTransferOptions(activeAccount)
 
-  const { freeBalance } = allTransferOptions;
+  const { freeBalance } = allTransferOptions
   const { totalUnlocking, totalUnlocked, totalUnlockChunks } =
-    allTransferOptions.nominate;
+    allTransferOptions.nominate
 
   return (
     <>
@@ -126,5 +126,5 @@ export const ManageBond = () => {
         inactive={active.isZero()}
       />
     </>
-  );
-};
+  )
+}

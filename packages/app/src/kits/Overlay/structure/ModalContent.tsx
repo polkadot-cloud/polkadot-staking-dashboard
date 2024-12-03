@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { appendOrEmpty } from '@w3ux/utils';
-import { motion } from 'framer-motion';
-import type { ModalContentProps } from '../types';
+import { appendOrEmpty } from '@w3ux/utils'
+import { motion } from 'framer-motion'
+import type { ModalContentProps } from '../types'
 
 /**
  * @name ModalContent
@@ -20,4 +20,4 @@ export const ModalContent = ({
   >
     {children}
   </motion.div>
-);
+)

@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types';
+import type { AnyJson } from '@w3ux/types'
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -11,13 +11,13 @@ import {
   PointElement,
   Title,
   Tooltip,
-} from 'chart.js';
-import { useNetwork } from 'contexts/Network';
-import { useTheme } from 'contexts/Themes';
-import { Line } from 'react-chartjs-2';
-import { useTranslation } from 'react-i18next';
-import graphColors from 'styles/graphs/index.json';
-import type { EraPointsProps } from './types';
+} from 'chart.js'
+import { useNetwork } from 'contexts/Network'
+import { useTheme } from 'contexts/Themes'
+import { Line } from 'react-chartjs-2'
+import { useTranslation } from 'react-i18next'
+import graphColors from 'styles/graphs/index.json'
+import type { EraPointsProps } from './types'
 
 ChartJS.register(
   CategoryScale,
@@ -27,12 +27,12 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend
-);
+)
 
 export const EraPoints = ({ items = [], height }: EraPointsProps) => {
-  const { t } = useTranslation('library');
-  const { mode } = useTheme();
-  const { colors } = useNetwork().networkData;
+  const { t } = useTranslation('library')
+  const { mode } = useTheme()
+  const { colors } = useNetwork().networkData
 
   const options = {
     responsive: true,
@@ -97,7 +97,7 @@ export const EraPoints = ({ items = [], height }: EraPointsProps) => {
         },
       },
     },
-  };
+  }
 
   const data = {
     labels: items.map(({ era }: { era: string }) => era),
@@ -114,7 +114,7 @@ export const EraPoints = ({ items = [], height }: EraPointsProps) => {
         borderWidth: 2,
       },
     ],
-  };
+  }
 
   return (
     <div
@@ -124,5 +124,5 @@ export const EraPoints = ({ items = [], height }: EraPointsProps) => {
     >
       <Line options={options} data={data} />
     </div>
-  );
-};
+  )
+}

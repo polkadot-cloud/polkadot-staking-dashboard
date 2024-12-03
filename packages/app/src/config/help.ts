@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { HelpItems } from 'contexts/Help/types';
+import type { HelpItems } from 'contexts/Help/types'
 
 export const HelpConfig: HelpItems = [
   {
@@ -175,4 +175,4 @@ export const HelpConfig: HelpItems = [
     ],
     external: [],
   },
-];
+]

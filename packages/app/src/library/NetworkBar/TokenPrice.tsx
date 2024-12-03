@@ -1,52 +1,52 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { useNetwork } from 'contexts/Network';
-import { isCustomEvent } from 'controllers/utils';
+import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { useNetwork } from 'contexts/Network'
+import { isCustomEvent } from 'controllers/utils'
 import {
   ApolloProvider,
   client,
   formatTokenPrice,
   useTokenPrice,
-} from 'plugin-staking-api';
-import { useRef } from 'react';
-import { useEventListener } from 'usehooks-ts';
+} from 'plugin-staking-api'
+import { useRef } from 'react'
+import { useEventListener } from 'usehooks-ts'
 
 export const TokenPriceInner = () => {
   const {
     networkData: {
       api: { unit },
     },
-  } = useNetwork();
+  } = useNetwork()
 
   const { loading, error, data, refetch } = useTokenPrice({
     ticker: `${unit}USDT`,
-  });
-  const { price, change } = formatTokenPrice(loading, error, data);
+  })
+  const { price, change } = formatTokenPrice(loading, error, data)
 
   //  Refetch token price if online status changes to online.
   const handleOnlineStatus = (e: Event): void => {
     if (isCustomEvent(e)) {
       if (e.detail.online) {
-        refetch();
+        refetch()
       }
     }
-  };
+  }
 
   // Initiate interval to refetch token price every 30 seconds.
   useEffectIgnoreInitial(() => {
     const interval = setInterval(() => {
-      refetch();
-    }, 30 * 1000);
-    return () => clearInterval(interval);
-  }, [refetch]);
+      refetch()
+    }, 30 * 1000)
+    return () => clearInterval(interval)
+  }, [refetch])
 
   useEventListener(
     'online-status',
     handleOnlineStatus,
     useRef<Document>(document)
-  );
+  )
 
   return (
     <>
@@ -66,11 +66,11 @@ export const TokenPriceInner = () => {
         }).format(price)}
       </div>
     </>
-  );
-};
+  )
+}
 
 export const TokenPrice = () => (
   <ApolloProvider client={client}>
     <TokenPriceInner />
   </ApolloProvider>
-);
+)

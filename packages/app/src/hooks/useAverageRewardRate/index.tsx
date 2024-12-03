@@ -1,23 +1,23 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import BigNumber from 'bignumber.js';
-import { useApi } from 'contexts/Api';
-import { useNetwork } from 'contexts/Network';
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { planckToUnitBn } from 'utils';
-import { useErasPerDay } from '../useErasPerDay';
-import { defaultAverageRewardRate } from './defaults';
-import type { AverageRewardRate, UseAverageRewardRate } from './types';
+import BigNumber from 'bignumber.js'
+import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
+import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { planckToUnitBn } from 'utils'
+import { useErasPerDay } from '../useErasPerDay'
+import { defaultAverageRewardRate } from './defaults'
+import type { AverageRewardRate, UseAverageRewardRate } from './types'
 
 export const useAverageRewardRate = (): UseAverageRewardRate => {
-  const { erasPerDay } = useErasPerDay();
-  const { lastTotalStake } = useApi().stakingMetrics;
+  const { erasPerDay } = useErasPerDay()
+  const { lastTotalStake } = useApi().stakingMetrics
   const {
     networkMetrics: { totalIssuance },
-  } = useApi();
-  const { units } = useNetwork().networkData;
-  const { avgCommission, averageEraValidatorReward } = useValidators();
+  } = useApi()
+  const { units } = useNetwork().networkData
+  const { avgCommission, averageEraValidatorReward } = useValidators()
 
   // Get average reward rates.
   const getAverageRewardRate = (compounded: boolean): AverageRewardRate => {
@@ -27,29 +27,29 @@ export const useAverageRewardRate = (): UseAverageRewardRate => {
       avgCommission === 0 ||
       averageEraValidatorReward.reward.isZero()
     ) {
-      return defaultAverageRewardRate;
+      return defaultAverageRewardRate
     }
 
     // total supply as percent.
-    const totalIssuanceUnit = planckToUnitBn(totalIssuance, units);
-    const lastTotalStakeUnit = planckToUnitBn(lastTotalStake, units);
+    const totalIssuanceUnit = planckToUnitBn(totalIssuance, units)
+    const lastTotalStakeUnit = planckToUnitBn(lastTotalStake, units)
     const supplyStaked =
       lastTotalStakeUnit.isZero() || totalIssuanceUnit.isZero()
         ? new BigNumber(0)
-        : lastTotalStakeUnit.dividedBy(totalIssuanceUnit);
+        : lastTotalStakeUnit.dividedBy(totalIssuanceUnit)
 
     // Calculate average daily reward as a percentage of total issuance.
     const averageRewardPerDay =
-      averageEraValidatorReward.reward.multipliedBy(erasPerDay);
+      averageEraValidatorReward.reward.multipliedBy(erasPerDay)
     const dayRewardRate = new BigNumber(averageRewardPerDay).dividedBy(
       totalIssuance.dividedBy(100)
-    );
+    )
 
-    let inflationToStakers: BigNumber = new BigNumber(0);
+    let inflationToStakers: BigNumber = new BigNumber(0)
 
     if (!compounded) {
       // Base rate without compounding.
-      inflationToStakers = dayRewardRate.multipliedBy(365);
+      inflationToStakers = dayRewardRate.multipliedBy(365)
     } else {
       // Daily Compound Interest: A = P[(1+r)^t]
       // Where:
@@ -62,13 +62,13 @@ export const useAverageRewardRate = (): UseAverageRewardRate => {
       const multipilier = dayRewardRate
         .dividedBy(100)
         .plus(1)
-        .exponentiatedBy(365);
+        .exponentiatedBy(365)
       inflationToStakers = new BigNumber(100)
         .multipliedBy(multipilier)
-        .minus(100);
+        .minus(100)
     }
 
-    const averageRewardRate = inflationToStakers.dividedBy(supplyStaked);
+    const averageRewardRate = inflationToStakers.dividedBy(supplyStaked)
 
     return {
       inflationToStakers,
@@ -76,10 +76,10 @@ export const useAverageRewardRate = (): UseAverageRewardRate => {
       avgRateAfterCommission: averageRewardRate.minus(
         averageRewardRate.multipliedBy(avgCommission * 0.01)
       ),
-    };
-  };
+    }
+  }
 
   return {
     getAverageRewardRate,
-  };
-};
+  }
+}

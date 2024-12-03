@@ -2,5 +2,5 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export interface OnlineStatusEvent {
-  online: boolean;
+  online: boolean
 }

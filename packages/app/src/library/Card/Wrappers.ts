@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PageWidthMediumThreshold } from 'consts';
-import styled from 'styled-components';
-import type { CardHeaderWrapperProps, CardWrapperProps } from '../Graphs/types';
+import { PageWidthMediumThreshold } from 'consts'
+import styled from 'styled-components'
+import type { CardHeaderWrapperProps, CardWrapperProps } from '../Graphs/types'
 
 /* CardHeaderWrapper
  *
@@ -65,7 +65,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     display: flex;
     align-items: center;
   }
-`;
+`
 
 /* CardWrapper
  *
@@ -151,4 +151,4 @@ export const CardWrapper = styled.div<CardWrapperProps>`
       margin-bottom: 0;
     }
   }
-`;
+`

@@ -1,15 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faUsb } from '@fortawesome/free-brands-svg-icons';
-import { faSquarePen } from '@fortawesome/free-solid-svg-icons';
-import { useLedgerHardware } from 'contexts/LedgerHardware';
-import { getLedgerApp } from 'contexts/LedgerHardware/Utils';
-import { useNetwork } from 'contexts/Network';
-import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge';
-import type { LedgerSubmitProps } from 'library/SubmitTx/types';
-import { useTranslation } from 'react-i18next';
-import { ButtonSubmit } from 'ui-buttons';
+import { faUsb } from '@fortawesome/free-brands-svg-icons'
+import { faSquarePen } from '@fortawesome/free-solid-svg-icons'
+import { useLedgerHardware } from 'contexts/LedgerHardware'
+import { getLedgerApp } from 'contexts/LedgerHardware/Utils'
+import { useNetwork } from 'contexts/Network'
+import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge'
+import type { LedgerSubmitProps } from 'library/SubmitTx/types'
+import { useTranslation } from 'react-i18next'
+import { ButtonSubmit } from 'ui-buttons'
 
 export const Submit = ({
   displayFor,
@@ -18,24 +18,22 @@ export const Submit = ({
   onSubmit,
   disabled,
 }: LedgerSubmitProps) => {
-  const { t } = useTranslation('library');
-  const { network } = useNetwork();
-  const { txMetadataChainId } = getLedgerApp(network);
+  const { t } = useTranslation('library')
+  const { network } = useNetwork()
+  const { txMetadataChainId } = getLedgerApp(network)
   const { getIsExecuting, integrityChecked, checkRuntimeVersion } =
-    useLedgerHardware();
+    useLedgerHardware()
 
   // Check device runtime version.
   const handleCheckRuntimeVersion = async () => {
-    await checkRuntimeVersion(txMetadataChainId);
-  };
+    await checkRuntimeVersion(txMetadataChainId)
+  }
 
   // Is the transaction ready to be submitted?
-  const txReady = integrityChecked || processing;
+  const txReady = integrityChecked || processing
 
   // Button `onClick` handler depends whether integrityChecked and whether tx has been submitted.
-  const handleOnClick = !integrityChecked
-    ? handleCheckRuntimeVersion
-    : onSubmit;
+  const handleOnClick = !integrityChecked ? handleCheckRuntimeVersion : onSubmit
 
   // Determine button text.
   const text = !integrityChecked
@@ -44,10 +42,10 @@ export const Submit = ({
       ? submitText || ''
       : getIsExecuting()
         ? t('signing')
-        : t('sign');
+        : t('sign')
 
   // Button icon.
-  const icon = !integrityChecked ? faUsb : faSquarePen;
+  const icon = !integrityChecked ? faUsb : faSquarePen
 
   return displayFor !== 'card' ? (
     <ButtonSubmit
@@ -67,5 +65,5 @@ export const Submit = ({
       icon={icon}
       pulse={!disabled}
     />
-  );
-};
+  )
+}

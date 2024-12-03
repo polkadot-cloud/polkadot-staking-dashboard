@@ -1,34 +1,34 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useNetwork } from 'contexts/Network';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useTheme } from 'contexts/Themes';
-import { CardWrapper } from 'library/Card/Wrappers';
-import { useTranslation } from 'react-i18next';
-import { MembersList as FetchPageMemberList } from './Lists/FetchPage';
+import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useNetwork } from 'contexts/Network'
+import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useTheme } from 'contexts/Themes'
+import { CardWrapper } from 'library/Card/Wrappers'
+import { useTranslation } from 'react-i18next'
+import { MembersList as FetchPageMemberList } from './Lists/FetchPage'
 
 export const Members = () => {
-  const { t } = useTranslation('pages');
-  const { mode } = useTheme();
-  const { activePool, isOwner, isBouncer } = useActivePool();
+  const { t } = useTranslation('pages')
+  const { mode } = useTheme()
+  const { activePool, isOwner, isBouncer } = useActivePool()
 
-  const { colors } = useNetwork().networkData;
-  const annuncementBorderColor = colors.secondary[mode];
+  const { colors } = useNetwork().networkData
+  const annuncementBorderColor = colors.secondary[mode]
 
   const showBlockedPrompt =
-    activePool?.bondedPool?.state === 'Blocked' && (isOwner() || isBouncer());
+    activePool?.bondedPool?.state === 'Blocked' && (isOwner() || isBouncer())
 
-  const memberCount = activePool?.bondedPool?.memberCounter ?? '0';
+  const memberCount = activePool?.bondedPool?.memberCounter ?? '0'
 
   const membersListProps = {
     batchKey: 'active_pool_members',
     pagination: true,
     selectToggleable: false,
     allowMoreCols: true,
-  };
+  }
 
   return (
     <>
@@ -76,5 +76,5 @@ export const Members = () => {
         <FetchPageMemberList {...membersListProps} memberCount={memberCount} />
       </CardWrapper>
     </>
-  );
-};
+  )
+}

@@ -1,19 +1,19 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faGlasses } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Polkicon } from '@w3ux/react-polkicon';
-import { ellipsisFn } from '@w3ux/utils';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { memo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Wrapper } from './Wrapper';
-import type { AccountProps } from './types';
+import { faGlasses } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Polkicon } from '@w3ux/react-polkicon'
+import { ellipsisFn } from '@w3ux/utils'
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { memo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Wrapper } from './Wrapper'
+import type { AccountProps } from './types'
 
 const DefaultAccount = ({ value, label, readOnly }: AccountProps) => {
-  const { t } = useTranslation('library');
-  const { getAccount } = useImportedAccounts();
+  const { t } = useTranslation('library')
+  const { getAccount } = useImportedAccounts()
 
   // Determine account display text. Title takes precedence over value.
   const text: string | null =
@@ -21,7 +21,7 @@ const DefaultAccount = ({ value, label, readOnly }: AccountProps) => {
       ? null
       : value !== ''
         ? getAccount(value)?.name || ellipsisFn(value)
-        : ellipsisFn(value);
+        : ellipsisFn(value)
 
   return (
     <Wrapper>
@@ -45,7 +45,7 @@ const DefaultAccount = ({ value, label, readOnly }: AccountProps) => {
         </>
       )}
     </Wrapper>
-  );
-};
+  )
+}
 
-export default memo(DefaultAccount);
+export default memo(DefaultAccount)

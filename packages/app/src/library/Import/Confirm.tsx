@@ -1,23 +1,23 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Polkicon } from '@w3ux/react-polkicon';
-import { usePrompt } from 'contexts/Prompt';
-import { useTranslation } from 'react-i18next';
+import { Polkicon } from '@w3ux/react-polkicon'
+import { usePrompt } from 'contexts/Prompt'
+import { useTranslation } from 'react-i18next'
 
-import { ellipsisFn } from '@w3ux/utils';
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import { useNetwork } from 'contexts/Network';
-import { Notifications } from 'controllers/Notifications';
-import { ConfirmWrapper } from 'library/Import/Wrappers';
-import { ButtonMono, ButtonMonoInvert } from 'ui-buttons';
-import type { ConfirmProps } from './types';
+import { ellipsisFn } from '@w3ux/utils'
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
+import { useNetwork } from 'contexts/Network'
+import { Notifications } from 'controllers/Notifications'
+import { ConfirmWrapper } from 'library/Import/Wrappers'
+import { ButtonMono, ButtonMonoInvert } from 'ui-buttons'
+import type { ConfirmProps } from './types'
 
 export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
-  const { t } = useTranslation('modals');
-  const { network } = useNetwork();
-  const { setStatus } = usePrompt();
-  const { addOtherAccounts } = useOtherAccounts();
+  const { t } = useTranslation('modals')
+  const { network } = useNetwork()
+  const { setStatus } = usePrompt()
+  const { addOtherAccounts } = useOtherAccounts()
 
   const addAccountCallback = () => {
     Notifications.emit({
@@ -25,8 +25,8 @@ export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
       subtitle: t('ledgerImportedAccount', {
         account: ellipsisFn(address),
       }),
-    });
-  };
+    })
+  }
 
   return (
     <ConfirmWrapper>
@@ -45,14 +45,14 @@ export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
               address,
               index,
               addAccountCallback
-            );
+            )
             if (account) {
-              addOtherAccounts([account]);
+              addOtherAccounts([account])
             }
-            setStatus(0);
+            setStatus(0)
           }}
         />
       </div>
     </ConfirmWrapper>
-  );
-};
+  )
+}

@@ -1,41 +1,40 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { useApi } from 'contexts/Api';
-import { useNetwork } from 'contexts/Network';
-import type { ReactNode } from 'react';
-import { createContext, useContext, useState } from 'react';
-import type { FavoriteValidatorsContextInterface, Validator } from '../types';
-import { getLocalFavorites } from '../Utils';
-import { useValidators } from '../ValidatorEntries';
-import { defaultFavoriteValidatorsContext } from './defaults';
+import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
+import type { ReactNode } from 'react'
+import { createContext, useContext, useState } from 'react'
+import type { FavoriteValidatorsContextInterface, Validator } from '../types'
+import { getLocalFavorites } from '../Utils'
+import { useValidators } from '../ValidatorEntries'
+import { defaultFavoriteValidatorsContext } from './defaults'
 
 export const FavoriteValidatorsContext =
   createContext<FavoriteValidatorsContextInterface>(
     defaultFavoriteValidatorsContext
-  );
+  )
 
-export const useFavoriteValidators = () =>
-  useContext(FavoriteValidatorsContext);
+export const useFavoriteValidators = () => useContext(FavoriteValidatorsContext)
 
 export const FavoriteValidatorsProvider = ({
   children,
 }: {
-  children: ReactNode;
+  children: ReactNode
 }) => {
-  const { isReady } = useApi();
+  const { isReady } = useApi()
   const {
     networkData: { name },
     network,
-  } = useNetwork();
-  const { fetchValidatorPrefs } = useValidators();
+  } = useNetwork()
+  const { fetchValidatorPrefs } = useValidators()
 
   // Stores the user's favorite validators.
-  const [favorites, setFavorites] = useState<string[]>(getLocalFavorites(name));
+  const [favorites, setFavorites] = useState<string[]>(getLocalFavorites(name))
 
   // Stores the user's favorites validators as list.
-  const [favoritesList, setFavoritesList] = useState<Validator[] | null>(null);
+  const [favoritesList, setFavoritesList] = useState<Validator[] | null>(null)
 
   const fetchFavoriteList = async () => {
     // fetch preferences
@@ -43,41 +42,41 @@ export const FavoriteValidatorsProvider = ({
       [...favorites].map((address) => ({
         address,
       }))
-    );
-    setFavoritesList(favoritesWithPrefs || []);
-  };
+    )
+    setFavoritesList(favoritesWithPrefs || [])
+  }
 
   // Adds a favorite validator.
   const addFavorite = (address: string) => {
-    const newFavorites = Object.assign(favorites);
+    const newFavorites = Object.assign(favorites)
     if (!newFavorites.includes(address)) {
-      newFavorites.push(address);
+      newFavorites.push(address)
     }
 
-    localStorage.setItem(`${network}_favorites`, JSON.stringify(newFavorites));
-    setFavorites([...newFavorites]);
-  };
+    localStorage.setItem(`${network}_favorites`, JSON.stringify(newFavorites))
+    setFavorites([...newFavorites])
+  }
 
   // Removes a favorite validator if they exist.
   const removeFavorite = (address: string) => {
     const newFavorites = Object.assign(favorites).filter(
       (validator: string) => validator !== address
-    );
-    localStorage.setItem(`${network}_favorites`, JSON.stringify(newFavorites));
-    setFavorites([...newFavorites]);
-  };
+    )
+    localStorage.setItem(`${network}_favorites`, JSON.stringify(newFavorites))
+    setFavorites([...newFavorites])
+  }
 
   // Re-fetch favorites on network change
   useEffectIgnoreInitial(() => {
-    setFavorites(getLocalFavorites(name));
-  }, [network]);
+    setFavorites(getLocalFavorites(name))
+  }, [network])
 
   // Fetch favorites in validator list format
   useEffectIgnoreInitial(() => {
     if (isReady) {
-      fetchFavoriteList();
+      fetchFavoriteList()
     }
-  }, [isReady, favorites]);
+  }, [isReady, favorites])
 
   return (
     <FavoriteValidatorsContext.Provider
@@ -90,5 +89,5 @@ export const FavoriteValidatorsProvider = ({
     >
       {children}
     </FavoriteValidatorsContext.Provider>
-  );
-};
+  )
+}

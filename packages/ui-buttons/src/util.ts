@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { MouseEvent } from 'react';
-import type { OnMouseHandlersProps } from './types';
+import type { MouseEvent } from 'react'
+import type { OnMouseHandlersProps } from './types'
 
 // Formats mouse handlers for buttons given its props.
 export const onMouseHandlers = (props: OnMouseHandlersProps) => {
-  const { onClick, onMouseOver, onMouseMove, onMouseOut } = props;
+  const { onClick, onMouseOver, onMouseMove, onMouseOut } = props
   return {
     onClick:
       typeof onClick == 'function'
@@ -24,5 +24,5 @@ export const onMouseHandlers = (props: OnMouseHandlersProps) => {
       typeof onMouseOut == 'function'
         ? (e: MouseEvent<HTMLButtonElement>) => onMouseOut(e)
         : undefined,
-  };
-};
+  }
+}

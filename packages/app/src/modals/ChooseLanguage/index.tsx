@@ -1,17 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import LanguageSVG from 'img/language.svg?react';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
-import { Title } from 'library/Modal/Title';
-import { changeLanguage, locales } from 'locales';
-import { useTranslation } from 'react-i18next';
-import { ContentWrapper, LocaleButton } from './Wrapper';
+import LanguageSVG from 'img/language.svg?react'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
+import { Title } from 'library/Modal/Title'
+import { changeLanguage, locales } from 'locales'
+import { useTranslation } from 'react-i18next'
+import { ContentWrapper, LocaleButton } from './Wrapper'
 
 export const ChooseLanguage = () => {
-  const { i18n, t } = useTranslation('modals');
-  const { setModalStatus } = useOverlay().modal;
+  const { i18n, t } = useTranslation('modals')
+  const { setModalStatus } = useOverlay().modal
 
   return (
     <>
@@ -25,8 +25,8 @@ export const ChooseLanguage = () => {
                   $connected={i18n.resolvedLanguage === code}
                   type="button"
                   onClick={() => {
-                    changeLanguage(code, i18n);
-                    setModalStatus('closing');
+                    changeLanguage(code, i18n)
+                    setModalStatus('closing')
                   }}
                 >
                   {label}
@@ -40,5 +40,5 @@ export const ChooseLanguage = () => {
         </ContentWrapper>
       </ModalPadding>
     </>
-  );
-};
+  )
+}

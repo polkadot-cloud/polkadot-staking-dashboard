@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import BigNumber from 'bignumber.js';
-import type { EraPointsBoundaries, ValidatorsContextInterface } from '../types';
+import BigNumber from 'bignumber.js'
+import type { EraPointsBoundaries, ValidatorsContextInterface } from '../types'
 
 export const defaultAverageEraValidatorReward = {
   days: 0,
   reward: new BigNumber(0),
-};
+}
 
 export const defaultValidatorsContext: ValidatorsContextInterface = {
   fetchValidatorPrefs: async (a) => new Promise((resolve) => resolve(null)),
@@ -27,12 +27,12 @@ export const defaultValidatorsContext: ValidatorsContextInterface = {
   erasRewardPointsFetched: 'unsynced',
   averageEraValidatorReward: defaultAverageEraValidatorReward,
   formatWithPrefs: (addresses) => [],
-};
+}
 
 export const defaultValidatorsData = {
   entries: [],
   notFullCommissionCount: 0,
   totalNonAllCommission: new BigNumber(0),
-};
+}
 
-export const defaultEraPointsBoundaries: EraPointsBoundaries = null;
+export const defaultEraPointsBoundaries: EraPointsBoundaries = null

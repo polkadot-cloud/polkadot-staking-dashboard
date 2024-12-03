@@ -1,34 +1,34 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import BigNumber from 'bignumber.js';
-import { useApi } from 'contexts/Api';
-import type { UnlockChunk } from 'contexts/Balances/types';
-import { useNetwork } from 'contexts/Network';
-import { getUnixTime } from 'date-fns';
-import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
-import { useUnstaking } from 'hooks/useUnstaking';
-import { ModalNotes } from 'kits/Overlay/structure/ModalNotes';
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
-import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
-import { StaticNote } from 'modals/Utils/StaticNote';
-import type { Dispatch, ForwardedRef, SetStateAction } from 'react';
-import { forwardRef } from 'react';
-import { useTranslation } from 'react-i18next';
-import type { BondFor } from 'types';
-import { ButtonSubmit } from 'ui-buttons';
-import { planckToUnitBn, timeleftAsString } from 'utils';
-import { Chunk } from './Chunk';
-import { ContentWrapper } from './Wrappers';
+import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import BigNumber from 'bignumber.js'
+import { useApi } from 'contexts/Api'
+import type { UnlockChunk } from 'contexts/Balances/types'
+import { useNetwork } from 'contexts/Network'
+import { getUnixTime } from 'date-fns'
+import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
+import { useUnstaking } from 'hooks/useUnstaking'
+import { ModalNotes } from 'kits/Overlay/structure/ModalNotes'
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
+import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers'
+import { StaticNote } from 'modals/Utils/StaticNote'
+import type { Dispatch, ForwardedRef, SetStateAction } from 'react'
+import { forwardRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import type { BondFor } from 'types'
+import { ButtonSubmit } from 'ui-buttons'
+import { planckToUnitBn, timeleftAsString } from 'utils'
+import { Chunk } from './Chunk'
+import { ContentWrapper } from './Wrappers'
 
 interface OverviewProps {
-  unlocking: UnlockChunk[];
-  bondFor: BondFor;
-  setSection: (section: number) => void;
-  setUnlock: Dispatch<SetStateAction<UnlockChunk | null>>;
-  setTask: (task: string) => void;
+  unlocking: UnlockChunk[]
+  bondFor: BondFor
+  setSection: (section: number) => void
+  setUnlock: Dispatch<SetStateAction<UnlockChunk | null>>
+  setTask: (task: string) => void
 }
 
 export const Overview = forwardRef(
@@ -36,41 +36,41 @@ export const Overview = forwardRef(
     { unlocking, bondFor, setSection, setUnlock, setTask }: OverviewProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
-    const { t } = useTranslation('modals');
-    const { consts, activeEra } = useApi();
+    const { t } = useTranslation('modals')
+    const { consts, activeEra } = useApi()
     const {
       networkData: { units, unit },
-    } = useNetwork();
-    const { bondDuration } = consts;
-    const { isFastUnstaking } = useUnstaking();
-    const { erasToSeconds } = useErasToTimeLeft();
+    } = useNetwork()
+    const { bondDuration } = consts
+    const { isFastUnstaking } = useUnstaking()
+    const { erasToSeconds } = useErasToTimeLeft()
 
     const bondDurationFormatted = timeleftAsString(
       t,
       getUnixTime(new Date()) + 1,
       erasToSeconds(bondDuration),
       true
-    );
+    )
 
-    const isStaking = bondFor === 'nominator';
+    const isStaking = bondFor === 'nominator'
 
-    let withdrawAvailable = new BigNumber(0);
-    let totalUnbonding = new BigNumber(0);
+    let withdrawAvailable = new BigNumber(0)
+    let totalUnbonding = new BigNumber(0)
     for (const c of unlocking) {
-      const { era, value } = c;
-      const left = new BigNumber(era).minus(activeEra.index);
+      const { era, value } = c
+      const left = new BigNumber(era).minus(activeEra.index)
 
-      totalUnbonding = totalUnbonding.plus(value);
+      totalUnbonding = totalUnbonding.plus(value)
       if (left.isLessThanOrEqualTo(0)) {
-        withdrawAvailable = withdrawAvailable.plus(value);
+        withdrawAvailable = withdrawAvailable.plus(value)
       }
     }
 
     const onRebondHandler = (chunk: UnlockChunk) => {
-      setTask('rebond');
-      setUnlock(chunk);
-      setSection(1);
-    };
+      setTask('rebond')
+      setUnlock(chunk)
+      setSection(1)
+    }
 
     return (
       <ContentWrapper>
@@ -126,12 +126,12 @@ export const Overview = forwardRef(
                 disabled={isFastUnstaking}
                 text={t('withdrawUnlocked')}
                 onClick={() => {
-                  setTask('withdraw');
+                  setTask('withdraw')
                   setUnlock({
                     era: 0,
                     value: withdrawAvailable,
-                  });
-                  setSection(1);
+                  })
+                  setSection(1)
                 }}
               />
             </div>
@@ -157,8 +157,8 @@ export const Overview = forwardRef(
           </ModalNotes>
         </ModalPadding>
       </ContentWrapper>
-    );
+    )
   }
-);
+)
 
-Overview.displayName = 'Overview';
+Overview.displayName = 'Overview'

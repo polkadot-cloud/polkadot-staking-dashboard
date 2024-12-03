@@ -1,48 +1,48 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types';
-import BigNumber from 'bignumber.js';
-import { MaxEraRewardPointsEras } from 'consts';
-import { useApi } from 'contexts/Api';
-import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
-import { useTooltip } from 'contexts/Tooltip';
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
+import type { AnyJson } from '@w3ux/types'
+import BigNumber from 'bignumber.js'
+import { MaxEraRewardPointsEras } from 'consts'
+import { useApi } from 'contexts/Api'
+import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
+import { useTooltip } from 'contexts/Tooltip'
+import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import {
   TooltipTrigger,
   ValidatorPulseWrapper,
-} from 'library/ListItem/Wrappers';
+} from 'library/ListItem/Wrappers'
 import {
   normaliseEraPoints,
   prefillEraPoints,
-} from 'library/ValidatorList/ValidatorItem/Utils';
-import { useTranslation } from 'react-i18next';
-import type { RewardProps, RewardsGraphProps } from './types';
+} from 'library/ValidatorList/ValidatorItem/Utils'
+import { useTranslation } from 'react-i18next'
+import type { RewardProps, RewardsGraphProps } from './types'
 
 export const Rewards = ({ address, displayFor = 'default' }: RewardProps) => {
-  const { t } = useTranslation('library');
-  const { isReady } = useApi();
-  const { setTooltipTextAndOpen } = useTooltip();
-  const { eraPointsBoundaries } = useValidators();
-  const { getPoolRewardPoints, getPoolPerformanceTask } = usePoolPerformance();
+  const { t } = useTranslation('library')
+  const { isReady } = useApi()
+  const { setTooltipTextAndOpen } = useTooltip()
+  const { eraPointsBoundaries } = useValidators()
+  const { getPoolRewardPoints, getPoolPerformanceTask } = usePoolPerformance()
 
-  const poolRewardPoints = getPoolRewardPoints('pool_page');
+  const poolRewardPoints = getPoolRewardPoints('pool_page')
 
   const eraRewardPoints = Object.fromEntries(
     Object.entries(poolRewardPoints[address] || {}).map(([k, v]: AnyJson) => [
       k,
       new BigNumber(v),
     ])
-  );
+  )
 
-  const high = eraPointsBoundaries?.high || new BigNumber(1);
-  const normalisedPoints = normaliseEraPoints(eraRewardPoints, high);
-  const prefilledPoints = prefillEraPoints(Object.values(normalisedPoints));
+  const high = eraPointsBoundaries?.high || new BigNumber(1)
+  const normalisedPoints = normaliseEraPoints(eraRewardPoints, high)
+  const prefilledPoints = prefillEraPoints(Object.values(normalisedPoints))
 
-  const empty = Object.values(poolRewardPoints).length === 0;
+  const empty = Object.values(poolRewardPoints).length === 0
   const syncing =
-    !isReady || getPoolPerformanceTask('pool_page').status !== 'synced';
-  const tooltipText = `${MaxEraRewardPointsEras} ${t('dayPoolPerformance')}`;
+    !isReady || getPoolPerformanceTask('pool_page').status !== 'synced'
+  const tooltipText = `${MaxEraRewardPointsEras} ${t('dayPoolPerformance')}`
 
   return (
     <ValidatorPulseWrapper className={displayFor}>
@@ -54,34 +54,34 @@ export const Rewards = ({ address, displayFor = 'default' }: RewardProps) => {
       />
       <RewardsGraph points={prefilledPoints} syncing={empty} />
     </ValidatorPulseWrapper>
-  );
-};
+  )
+}
 
 export const RewardsGraph = ({ points = [], syncing }: RewardsGraphProps) => {
-  const totalSegments = points.length - 1;
-  const vbWidth = 512;
-  const vbHeight = 115;
-  const xPadding = 5;
-  const yPadding = 10;
-  const xArea = vbWidth - 2 * xPadding;
-  const yArea = vbHeight - 2 * yPadding;
-  const xSegment = xArea / totalSegments;
-  let xCursor = xPadding;
+  const totalSegments = points.length - 1
+  const vbWidth = 512
+  const vbHeight = 115
+  const xPadding = 5
+  const yPadding = 10
+  const xArea = vbWidth - 2 * xPadding
+  const yArea = vbHeight - 2 * yPadding
+  const xSegment = xArea / totalSegments
+  let xCursor = xPadding
 
   const pointsCoords = points.map((point: number) => {
     const coord = {
       x: xCursor,
       y: vbHeight - yPadding - yArea * point,
       zero: point === 0,
-    };
-    xCursor += xSegment;
-    return coord;
-  });
+    }
+    xCursor += xSegment
+    return coord
+  })
 
-  const lineCoords = [];
+  const lineCoords = []
   for (let i = 0; i <= pointsCoords.length - 1; i++) {
-    const startZero = pointsCoords[i].zero;
-    const endZero = pointsCoords[i + 1]?.zero;
+    const startZero = pointsCoords[i].zero
+    const endZero = pointsCoords[i + 1]?.zero
 
     lineCoords.push({
       x1: pointsCoords[i].x,
@@ -89,17 +89,17 @@ export const RewardsGraph = ({ points = [], syncing }: RewardsGraphProps) => {
       x2: pointsCoords[i + 1]?.x || pointsCoords[i].x,
       y2: pointsCoords[i + 1]?.y || pointsCoords[i].y,
       zero: startZero && endZero,
-    });
+    })
   }
 
-  const barCoords = [];
+  const barCoords = []
   for (let i = 0; i <= pointsCoords.length - 1; i++) {
     barCoords.push({
       x1: pointsCoords[i].x,
       y1: vbHeight - yPadding,
       x2: pointsCoords[i].x,
       y2: pointsCoords[i]?.y,
-    });
+    })
   }
 
   return (
@@ -158,5 +158,5 @@ export const RewardsGraph = ({ points = [], syncing }: RewardsGraphProps) => {
           />
         ))}
     </svg>
-  );
-};
+  )
+}

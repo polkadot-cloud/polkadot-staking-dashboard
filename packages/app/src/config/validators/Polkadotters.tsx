@@ -54,6 +54,6 @@ const Polkadotters = () => (
     </g>
     <circle cx="336.7" cy="405.8" r="20" fill="#ed1e7f" />
   </svg>
-);
+)
 
-export default Polkadotters;
+export default Polkadotters

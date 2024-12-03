@@ -1,14 +1,14 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
   margin-top: 1rem;
   width: 100%;
-`;
+`
 
 export const RoleChangeWrapper = styled.div`
   position: relative;
@@ -57,4 +57,4 @@ export const RoleChangeWrapper = styled.div`
     white-space: nowrap;
     overflow: hidden;
   }
-`;
+`

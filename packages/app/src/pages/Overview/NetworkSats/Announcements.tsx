@@ -1,37 +1,37 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { capitalizeFirstLetter, rmCommas, sortWithNull } from '@w3ux/utils';
-import BigNumber from 'bignumber.js';
-import { useApi } from 'contexts/Api';
-import { useNetwork } from 'contexts/Network';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { motion } from 'framer-motion';
-import { Item } from 'library/Announcements/Wrappers';
-import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
-import { useTranslation } from 'react-i18next';
-import type { BondedPool } from 'types';
-import { planckToUnitBn } from 'utils';
+import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { capitalizeFirstLetter, rmCommas, sortWithNull } from '@w3ux/utils'
+import BigNumber from 'bignumber.js'
+import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
+import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { motion } from 'framer-motion'
+import { Item } from 'library/Announcements/Wrappers'
+import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement'
+import { useTranslation } from 'react-i18next'
+import type { BondedPool } from 'types'
+import { planckToUnitBn } from 'utils'
 
 export const Announcements = () => {
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation('pages')
   const {
     network,
     networkData: { units, unit },
-  } = useNetwork();
-  const { bondedPools } = useBondedPools();
+  } = useNetwork()
+  const { bondedPools } = useBondedPools()
   const {
     poolsConfig: { counterForPoolMembers },
     stakingMetrics: { totalStaked },
-  } = useApi();
+  } = useApi()
 
-  let totalPoolPoints = new BigNumber(0);
+  let totalPoolPoints = new BigNumber(0)
   bondedPools.forEach((b: BondedPool) => {
-    totalPoolPoints = totalPoolPoints.plus(rmCommas(b.points));
-  });
-  const totalPoolPointsUnit = planckToUnitBn(totalPoolPoints, units);
+    totalPoolPoints = totalPoolPoints.plus(rmCommas(b.points))
+  })
+  const totalPoolPointsUnit = planckToUnitBn(totalPoolPoints, units)
 
   const container = {
     hidden: { opacity: 0 },
@@ -41,7 +41,7 @@ export const Announcements = () => {
         staggerChildren: 0.25,
       },
     },
-  };
+  }
 
   const listItem = {
     hidden: {
@@ -50,11 +50,11 @@ export const Announcements = () => {
     show: {
       opacity: 1,
     },
-  };
+  }
 
-  const announcements = [];
+  const announcements = []
 
-  const networkUnit = unit;
+  const networkUnit = unit
 
   // total staked on the network
   if (!totalStaked.isZero()) {
@@ -68,9 +68,9 @@ export const Announcements = () => {
       subtitle: t('overview.networkCurrentlyStakedSubtitle', {
         unit,
       }),
-    });
+    })
   } else {
-    announcements.push(null);
+    announcements.push(null)
   }
 
   // total locked in pools
@@ -81,9 +81,9 @@ export const Announcements = () => {
         'overview.inPools'
       )}`,
       subtitle: `${t('overview.bondedInPools', { networkUnit })}`,
-    });
+    })
   } else {
-    announcements.push(null);
+    announcements.push(null)
   }
 
   if (counterForPoolMembers.isGreaterThan(0)) {
@@ -94,12 +94,12 @@ export const Announcements = () => {
         'overview.poolMembersBonding'
       )}`,
       subtitle: `${t('overview.totalNumAccounts')}`,
-    });
+    })
   } else {
-    announcements.push(null);
+    announcements.push(null)
   }
 
-  announcements.sort(sortWithNull(true));
+  announcements.sort(sortWithNull(true))
 
   return (
     <motion.div
@@ -125,5 +125,5 @@ export const Announcements = () => {
         )
       )}
     </motion.div>
-  );
-};
+  )
+}

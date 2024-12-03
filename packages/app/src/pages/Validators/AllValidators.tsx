@@ -1,21 +1,21 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useApi } from 'contexts/Api';
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { CardWrapper } from 'library/Card/Wrappers';
-import { StatBoxList } from 'library/StatBoxList';
-import { ValidatorList } from 'library/ValidatorList';
-import { useTranslation } from 'react-i18next';
-import { PageRow } from 'ui-structure';
-import { ActiveValidatorsStat } from './Stats/ActiveValidators';
-import { AverageCommissionStat } from './Stats/AverageCommission';
-import { TotalValidatorsStat } from './Stats/TotalValidators';
+import { useApi } from 'contexts/Api'
+import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { CardWrapper } from 'library/Card/Wrappers'
+import { StatBoxList } from 'library/StatBoxList'
+import { ValidatorList } from 'library/ValidatorList'
+import { useTranslation } from 'react-i18next'
+import { PageRow } from 'ui-structure'
+import { ActiveValidatorsStat } from './Stats/ActiveValidators'
+import { AverageCommissionStat } from './Stats/AverageCommission'
+import { TotalValidatorsStat } from './Stats/TotalValidators'
 
 export const AllValidators = () => {
-  const { t } = useTranslation('pages');
-  const { isReady } = useApi();
-  const { validators } = useValidators();
+  const { t } = useTranslation('pages')
+  const { isReady } = useApi()
+  const { validators } = useValidators()
 
   return (
     <>
@@ -66,5 +66,5 @@ export const AllValidators = () => {
         </CardWrapper>
       </PageRow>
     </>
-  );
-};
+  )
+}

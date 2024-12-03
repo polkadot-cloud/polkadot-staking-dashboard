@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import classNames from 'classnames';
-import classes from './index.module.scss';
-import type { RowSectionProps } from './types';
+import classNames from 'classnames'
+import classes from './index.module.scss'
+import type { RowSectionProps } from './types'
 
 /**
  * @name RowSection
@@ -18,26 +18,26 @@ export const RowSection = ({
 }: RowSectionProps) => {
   const mainClass = secondary
     ? classes.rowSecondaryWrapper
-    : classes.rowPrimaryWrapper;
+    : classes.rowPrimaryWrapper
 
-  let hClass;
+  let hClass
   if (secondary) {
     hClass = hLast
       ? classes.rowSecondaryWrapperFirst
-      : classes.rowSecondaryWrapperLast;
+      : classes.rowSecondaryWrapperLast
   } else {
     hClass = hLast
       ? classes.rowPrimaryWrapperFirst
-      : classes.rowPrimaryWrapperLast;
+      : classes.rowPrimaryWrapperLast
   }
 
   const buttonClasses = classNames(mainClass, hClass, {
     [classes.rowSSectionVLast]: vLast,
-  });
+  })
 
   return (
     <div className={buttonClasses} style={style}>
       {children}
     </div>
-  );
-};
+  )
+}

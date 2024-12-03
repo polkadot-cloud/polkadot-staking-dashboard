@@ -1,22 +1,22 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Bond } from 'canvas/CreatePool/Bond';
-import { PoolName } from 'canvas/CreatePool/PoolName';
-import { PoolRoles } from 'canvas/CreatePool/PoolRoles';
-import { Summary } from 'canvas/CreatePool/Summary';
-import { CanvasFullScreenWrapper, CanvasTitleWrapper } from 'canvas/Wrappers';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { CardWrapper } from 'library/Card/Wrappers';
-import { Nominate } from 'library/SetupSteps/Nominate';
-import { useTranslation } from 'react-i18next';
-import { Element } from 'react-scroll';
-import { ButtonPrimary } from 'ui-buttons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { Bond } from 'canvas/CreatePool/Bond'
+import { PoolName } from 'canvas/CreatePool/PoolName'
+import { PoolRoles } from 'canvas/CreatePool/PoolRoles'
+import { Summary } from 'canvas/CreatePool/Summary'
+import { CanvasFullScreenWrapper, CanvasTitleWrapper } from 'canvas/Wrappers'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { CardWrapper } from 'library/Card/Wrappers'
+import { Nominate } from 'library/SetupSteps/Nominate'
+import { useTranslation } from 'react-i18next'
+import { Element } from 'react-scroll'
+import { ButtonPrimary } from 'ui-buttons'
 
 export const CreatePool = () => {
-  const { t } = useTranslation();
-  const { closeCanvas } = useOverlay().canvas;
+  const { t } = useTranslation()
+  const { closeCanvas } = useOverlay().canvas
 
   return (
     <CanvasFullScreenWrapper>
@@ -66,5 +66,5 @@ export const CreatePool = () => {
         <Summary section={5} />
       </CardWrapper>
     </CanvasFullScreenWrapper>
-  );
-};
+  )
+}

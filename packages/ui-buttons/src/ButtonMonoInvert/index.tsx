@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classNames from 'classnames';
-import commonClasses from '../common.module.scss';
-import { onMouseHandlers } from '../util';
-import classes from './index.module.scss';
-import type { ButtonMonoInvertProps } from './types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import classNames from 'classnames'
+import commonClasses from '../common.module.scss'
+import { onMouseHandlers } from '../util'
+import classes from './index.module.scss'
+import type { ButtonMonoInvertProps } from './types'
 
 /**
  * @name ButtonMonoInvert
@@ -34,7 +34,7 @@ export const ButtonMonoInvert = (props: ButtonMonoInvertProps): JSX.Element => {
     onMouseOver,
     onMouseMove,
     onMouseOut,
-  } = props;
+  } = props
 
   const buttonClasses = classNames(
     commonClasses.btnCore,
@@ -50,7 +50,7 @@ export const ButtonMonoInvert = (props: ButtonMonoInvertProps): JSX.Element => {
       [commonClasses.btnActiveTransforms]: !disabled,
     },
     className
-  );
+  )
 
   return (
     <button
@@ -76,5 +76,5 @@ export const ButtonMonoInvert = (props: ButtonMonoInvertProps): JSX.Element => {
         />
       )}
     </button>
-  );
-};
+  )
+}

@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { appendOrEmpty } from '@w3ux/utils';
-import type { ModalSectionProps } from '../types';
+import { appendOrEmpty } from '@w3ux/utils'
+import type { ModalSectionProps } from '../types'
 
 /**
  * @name  ModalSection
@@ -18,4 +18,4 @@ export const ModalSection = ({ children, style, type }: ModalSectionProps) => (
   >
     {children}
   </div>
-);
+)

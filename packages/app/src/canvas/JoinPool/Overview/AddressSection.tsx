@@ -1,20 +1,20 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Polkicon } from '@w3ux/react-polkicon';
-import { ellipsisFn } from '@w3ux/utils';
-import { useHelp } from 'contexts/Help';
-import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';
-import { ButtonHelp } from 'ui-buttons';
-import type { AddressSectionProps } from '../types';
-import { HeadingWrapper } from '../Wrappers';
+import { Polkicon } from '@w3ux/react-polkicon'
+import { ellipsisFn } from '@w3ux/utils'
+import { useHelp } from 'contexts/Help'
+import { CopyAddress } from 'library/ListItem/Labels/CopyAddress'
+import { ButtonHelp } from 'ui-buttons'
+import type { AddressSectionProps } from '../types'
+import { HeadingWrapper } from '../Wrappers'
 
 export const AddressSection = ({
   address,
   label,
   helpKey,
 }: AddressSectionProps) => {
-  const { openHelp } = useHelp();
+  const { openHelp } = useHelp()
 
   return (
     <section>
@@ -39,5 +39,5 @@ export const AddressSection = ({
         </h4>
       </div>
     </section>
-  );
-};
+  )
+}

@@ -1,10 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { motion } from 'framer-motion';
-import { ItemWrapper } from './Wrappers';
-import type { ItemProps } from './types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { motion } from 'framer-motion'
+import { ItemWrapper } from './Wrappers'
+import type { ItemProps } from './types'
 
 export const Item = ({
   disabled = false,
@@ -21,7 +21,7 @@ export const Item = ({
     }}
     onClick={() => {
       if (onClick !== undefined) {
-        onClick();
+        onClick()
       }
     }}
     disabled={disabled}
@@ -35,4 +35,4 @@ export const Item = ({
       <p>{label}</p>
     </ItemWrapper>
   </motion.button>
-);
+)

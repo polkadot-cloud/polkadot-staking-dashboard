@@ -10,6 +10,6 @@ const Blockseeker = () => (
       fill="#fff"
     />
   </svg>
-);
+)
 
-export default Blockseeker;
+export default Blockseeker

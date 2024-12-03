@@ -6,6 +6,6 @@ const Decentradot = () => (
       fill="#ed1382"
     />
   </svg>
-);
+)
 
-export default Decentradot;
+export default Decentradot

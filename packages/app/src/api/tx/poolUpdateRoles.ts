@@ -1,18 +1,18 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Base } from 'api/base';
-import type { ChainId } from 'common-types';
-import type { PoolRoles } from 'types';
+import { Base } from 'api/base'
+import type { ChainId } from 'common-types'
+import type { PoolRoles } from 'types'
 
 export class PoolUpdateRoles extends Base {
-  #poolId: number;
-  #roles: PoolRoles;
+  #poolId: number
+  #roles: PoolRoles
 
   constructor(network: ChainId, poolId: number, roles: PoolRoles) {
-    super(network);
-    this.#poolId = poolId;
-    this.#roles = roles;
+    super(network)
+    this.#poolId = poolId
+    this.#roles = roles
   }
 
   tx() {
@@ -30,9 +30,9 @@ export class PoolUpdateRoles extends Base {
         new_bouncer: this.#roles.bouncer
           ? { type: 'Set', value: this.#roles.bouncer }
           : { type: 'Remove', value: undefined },
-      });
+      })
     } catch (e) {
-      return null;
+      return null
     }
   }
 }

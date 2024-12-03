@@ -1,42 +1,42 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import LedgerLogoSvg from '@w3ux/extension-assets/Ledger.svg?react';
-import type { AnyFunction } from '@w3ux/types';
-import { useHelp } from 'contexts/Help';
-import { useLedgerHardware } from 'contexts/LedgerHardware';
-import { useTheme } from 'contexts/Themes';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ButtonHelp, ButtonSecondary } from 'ui-buttons';
-import { SplashWrapper } from './Wrappers';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import LedgerLogoSvg from '@w3ux/extension-assets/Ledger.svg?react'
+import type { AnyFunction } from '@w3ux/types'
+import { useHelp } from 'contexts/Help'
+import { useLedgerHardware } from 'contexts/LedgerHardware'
+import { useTheme } from 'contexts/Themes'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ButtonHelp, ButtonSecondary } from 'ui-buttons'
+import { SplashWrapper } from './Wrappers'
 
 export const Splash = ({ onGetAddress }: AnyFunction) => {
-  const { t } = useTranslation('modals');
-  const { getStatusCode, getIsExecuting, getFeedback } = useLedgerHardware();
-  const { mode } = useTheme();
-  const { openHelp } = useHelp();
-  const { replaceModal, setModalResize } = useOverlay().modal;
+  const { t } = useTranslation('modals')
+  const { getStatusCode, getIsExecuting, getFeedback } = useLedgerHardware()
+  const { mode } = useTheme()
+  const { openHelp } = useHelp()
+  const { replaceModal, setModalResize } = useOverlay().modal
 
-  const statusCode = getStatusCode();
+  const statusCode = getStatusCode()
 
   const initFetchAddress = async () => {
-    await onGetAddress();
-  };
+    await onGetAddress()
+  }
 
-  const fallbackMessage = t('checking');
-  const feedback = getFeedback();
-  const helpKey = feedback?.helpKey;
+  const fallbackMessage = t('checking')
+  const feedback = getFeedback()
+  const helpKey = feedback?.helpKey
 
   // Automatically fetch first address.
   useEffect(() => {
-    initFetchAddress();
-  }, []);
+    initFetchAddress()
+  }, [])
 
   // Resize modal on new message.
-  useEffect(() => setModalResize(), [statusCode, feedback]);
+  useEffect(() => setModalResize(), [statusCode, feedback])
 
   return (
     <>
@@ -90,5 +90,5 @@ export const Splash = ({ onGetAddress }: AnyFunction) => {
         </div>
       </SplashWrapper>
     </>
-  );
-};
+  )
+}

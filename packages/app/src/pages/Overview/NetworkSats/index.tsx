@@ -1,23 +1,23 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import BigNumber from 'bignumber.js';
-import { useApi } from 'contexts/Api';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useAverageRewardRate } from 'hooks/useAverageRewardRate';
-import { Header } from 'library/Announcements/Header';
-import { Wrapper } from 'library/Announcements/Wrappers';
-import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
-import { useTranslation } from 'react-i18next';
-import { Announcements } from './Announcements';
+import BigNumber from 'bignumber.js'
+import { useApi } from 'contexts/Api'
+import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
+import { Header } from 'library/Announcements/Header'
+import { Wrapper } from 'library/Announcements/Wrappers'
+import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
+import { useTranslation } from 'react-i18next'
+import { Announcements } from './Announcements'
 
 export const NetworkStats = () => {
-  const { t } = useTranslation('pages');
-  const { bondedPools } = useBondedPools();
-  const { getAverageRewardRate } = useAverageRewardRate();
-  const { counterForNominators, totalValidators } = useApi().stakingMetrics;
+  const { t } = useTranslation('pages')
+  const { bondedPools } = useBondedPools()
+  const { getAverageRewardRate } = useAverageRewardRate()
+  const { counterForNominators, totalValidators } = useApi().stakingMetrics
 
-  const { inflationToStakers } = getAverageRewardRate(false);
+  const { inflationToStakers } = getAverageRewardRate(false)
 
   const items = [
     {
@@ -44,7 +44,7 @@ export const NetworkStats = () => {
       }%`,
       helpKey: 'Inflation',
     },
-  ];
+  ]
 
   return (
     <CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
@@ -56,5 +56,5 @@ export const NetworkStats = () => {
         <Announcements />
       </Wrapper>
     </CardWrapper>
-  );
-};
+  )
+}

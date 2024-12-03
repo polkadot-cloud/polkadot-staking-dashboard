@@ -1,17 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useTranslation } from 'react-i18next';
-import type { CountdownProps } from './types';
+import { useTranslation } from 'react-i18next'
+import type { CountdownProps } from './types'
 
 export const Countdown = ({ timeleft, markup = true }: CountdownProps) => {
-  const { t } = useTranslation('base');
-  const { days, hours, minutes, seconds } = timeleft;
+  const { t } = useTranslation('base')
+  const { days, hours, minutes, seconds } = timeleft
 
-  const secondsNumber = seconds ? seconds[0] : 0;
+  const secondsNumber = seconds ? seconds[0] : 0
   const secondsLabel = seconds
     ? seconds[1]
-    : t('second', { count: secondsNumber });
+    : t('second', { count: secondsNumber })
 
   if (markup) {
     return (
@@ -42,7 +42,7 @@ export const Countdown = ({ timeleft, markup = true }: CountdownProps) => {
           </>
         )}
       </>
-    );
+    )
   }
 
   return (
@@ -54,5 +54,5 @@ export const Countdown = ({ timeleft, markup = true }: CountdownProps) => {
         ? `${secondsNumber} ${minutes[0] === 0 ? secondsLabel : ''}`
         : null}
     </>
-  );
-};
+  )
+}

@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classNames from 'classnames';
-import commonClasses from '../common.module.scss';
-import { onMouseHandlers } from '../util';
-import classes from './index.module.scss';
-import type { ButtonMonoProps } from './types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import classNames from 'classnames'
+import commonClasses from '../common.module.scss'
+import { onMouseHandlers } from '../util'
+import classes from './index.module.scss'
+import type { ButtonMonoProps } from './types'
 
 /**
  * @name ButtonMono
@@ -33,7 +33,7 @@ export const ButtonMono = (props: ButtonMonoProps): JSX.Element => {
     onMouseOver,
     onMouseMove,
     onMouseOut,
-  } = props;
+  } = props
 
   const buttonClasses = classNames(
     commonClasses.btnCore,
@@ -49,7 +49,7 @@ export const ButtonMono = (props: ButtonMonoProps): JSX.Element => {
       [commonClasses.btnActiveTransforms]: !disabled,
     },
     className
-  );
+  )
 
   return (
     <button
@@ -75,5 +75,5 @@ export const ButtonMono = (props: ButtonMonoProps): JSX.Element => {
         />
       )}
     </button>
-  );
-};
+  )
+}

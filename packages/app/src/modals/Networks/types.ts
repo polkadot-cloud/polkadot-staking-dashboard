@@ -2,5 +2,5 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export interface NetworkButtonProps {
-  connected?: boolean;
+  connected?: boolean
 }

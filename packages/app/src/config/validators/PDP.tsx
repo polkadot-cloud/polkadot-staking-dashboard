@@ -6,6 +6,6 @@ const PDP = () => (
       fill="#010101"
     />
   </svg>
-);
+)
 
-export default PDP;
+export default PDP

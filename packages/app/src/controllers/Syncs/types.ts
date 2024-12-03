@@ -6,15 +6,15 @@ export type SyncID =
   | 'balances'
   | 'era-stakers'
   | 'bonded-pools'
-  | 'active-pools';
+  | 'active-pools'
 
 export interface SyncEvent {
-  id: SyncID;
-  status: SyncStatus;
+  id: SyncID
+  status: SyncStatus
 }
 
-export type SyncStatus = 'syncing' | 'complete';
+export type SyncStatus = 'syncing' | 'complete'
 
-export type SyncIDConfig = SyncIDWildcard | SyncID[];
+export type SyncIDConfig = SyncIDWildcard | SyncID[]
 
-export type SyncIDWildcard = '*';
+export type SyncIDWildcard = '*'

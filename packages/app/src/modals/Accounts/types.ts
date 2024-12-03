@@ -1,39 +1,39 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type BigNumber from 'bignumber.js';
-import type { PoolMembership } from 'contexts/Pools/types';
-import type { Proxy } from 'contexts/Proxies/types';
-import type { MaybeAddress } from 'types';
+import type BigNumber from 'bignumber.js'
+import type { PoolMembership } from 'contexts/Pools/types'
+import type { Proxy } from 'contexts/Proxies/types'
+import type { MaybeAddress } from 'types'
 
 export interface AccountItemProps {
-  address: MaybeAddress;
-  label?: string[];
-  asElement?: boolean;
-  delegator?: string;
-  noBorder?: boolean;
-  proxyType?: string;
-  transferrableBalance?: BigNumber;
+  address: MaybeAddress
+  label?: string[]
+  asElement?: boolean
+  delegator?: string
+  noBorder?: boolean
+  proxyType?: string
+  transferrableBalance?: BigNumber
 }
 
 export interface DelegatesProps {
-  delegator: string;
-  delegates: Proxy | undefined;
+  delegator: string
+  delegates: Proxy | undefined
 }
 
 export interface AccountInPool extends PoolMembership {
-  delegates?: Proxy;
+  delegates?: Proxy
 }
 
 export interface AccountNominating {
-  address: MaybeAddress;
-  stashImported: boolean;
-  delegates?: Proxy;
+  address: MaybeAddress
+  stashImported: boolean
+  delegates?: Proxy
 }
 
 export interface AccountNotStaking {
-  address: string;
-  delegates?: Proxy;
+  address: string
+  delegates?: Proxy
 }
 
-export type AccountNominatingAndInPool = AccountNominating & AccountInPool;
+export type AccountNominatingAndInPool = AccountNominating & AccountInPool

@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const BarChartWrapper = styled.div<{ $lessPadding?: boolean }>`
   padding: ${(props) => (props.$lessPadding ? '0' : '0 0.5rem')};
@@ -41,7 +41,7 @@ export const BarChartWrapper = styled.div<{ $lessPadding?: boolean }>`
     background: var(--button-tertiary-background);
     color: var(--text-color-secondary);
   }
-`;
+`
 
 export const Legend = styled.div`
   width: 100%;
@@ -77,7 +77,7 @@ export const Legend = styled.div`
       border-radius: 0.25rem;
     }
   }
-`;
+`
 
 export const Bar = styled.div`
   background: var(--button-secondary-background);
@@ -106,4 +106,4 @@ export const Bar = styled.div`
       font-size: 1.05rem;
     }
   }
-`;
+`

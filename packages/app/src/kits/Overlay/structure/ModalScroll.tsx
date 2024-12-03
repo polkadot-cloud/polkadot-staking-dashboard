@@ -1,10 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { appendOrEmpty } from '@w3ux/utils';
-import type { ForwardedRef } from 'react';
-import { forwardRef } from 'react';
-import type { ModalScrollProps } from '../types';
+import { appendOrEmpty } from '@w3ux/utils'
+import type { ForwardedRef } from 'react'
+import { forwardRef } from 'react'
+import type { ModalScrollProps } from '../types'
 
 /**
  * @name ModalScroll
@@ -26,5 +26,5 @@ export const ModalScroll = forwardRef(
       {children}
     </div>
   )
-);
-ModalScroll.displayName = 'ModalScroll';
+)
+ModalScroll.displayName = 'ModalScroll'

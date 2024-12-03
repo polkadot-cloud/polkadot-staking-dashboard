@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Base } from 'api/base';
-import type { ChainId } from 'common-types';
+import { Base } from 'api/base'
+import type { ChainId } from 'common-types'
 
 export class PoolSetCommissionChangeRate extends Base {
-  #poolId: number;
-  #maxIncrease?: number;
-  #minDelay?: number;
+  #poolId: number
+  #maxIncrease?: number
+  #minDelay?: number
 
   constructor(
     network: ChainId,
@@ -15,10 +15,10 @@ export class PoolSetCommissionChangeRate extends Base {
     maxIncrease: number,
     minDelay: number
   ) {
-    super(network);
-    this.#poolId = poolId;
-    this.#maxIncrease = maxIncrease;
-    this.#minDelay = minDelay;
+    super(network)
+    this.#poolId = poolId
+    this.#maxIncrease = maxIncrease
+    this.#minDelay = minDelay
   }
 
   tx() {
@@ -29,9 +29,9 @@ export class PoolSetCommissionChangeRate extends Base {
           max_increase: this.#maxIncrease,
           min_delay: this.#minDelay,
         },
-      });
+      })
     } catch (e) {
-      return null;
+      return null
     }
   }
 }

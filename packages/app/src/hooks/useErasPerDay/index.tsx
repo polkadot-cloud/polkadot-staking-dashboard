@@ -1,15 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import BigNumber from 'bignumber.js';
-import { useApi } from 'contexts/Api';
+import BigNumber from 'bignumber.js'
+import { useApi } from 'contexts/Api'
 
 export const useErasPerDay = () => {
-  const { consts } = useApi();
+  const { consts } = useApi()
   const { epochDuration, expectedBlockTime, sessionsPerEra, historyDepth } =
-    consts;
+    consts
 
-  const DAY_MS = new BigNumber(86400000);
+  const DAY_MS = new BigNumber(86400000)
 
   // Calculates how many eras there are in a 24 hour period.
   const getErasPerDay = (): BigNumber => {
@@ -18,14 +18,14 @@ export const useErasPerDay = () => {
       sessionsPerEra.isZero() ||
       expectedBlockTime.isZero()
     ) {
-      return new BigNumber(0);
+      return new BigNumber(0)
     }
 
-    const blocksPerEra = epochDuration.multipliedBy(sessionsPerEra);
-    const msPerEra = blocksPerEra.multipliedBy(expectedBlockTime);
+    const blocksPerEra = epochDuration.multipliedBy(sessionsPerEra)
+    const msPerEra = blocksPerEra.multipliedBy(expectedBlockTime)
 
-    return DAY_MS.dividedBy(msPerEra);
-  };
+    return DAY_MS.dividedBy(msPerEra)
+  }
 
   return {
     erasPerDay: getErasPerDay(),
@@ -35,5 +35,5 @@ export const useErasPerDay = () => {
           .dividedBy(getErasPerDay())
           .integerValue(BigNumber.ROUND_HALF_DOWN)
           .toNumber(),
-  };
-};
+  }
+}

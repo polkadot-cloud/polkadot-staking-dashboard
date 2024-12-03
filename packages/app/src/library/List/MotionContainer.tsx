@@ -1,15 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { motion } from 'framer-motion';
-import type { ReactNode } from 'react';
+import { motion } from 'framer-motion'
+import type { ReactNode } from 'react'
 
 export const MotionContainer = ({
   children,
   staggerChildren = 0.015,
 }: {
-  staggerChildren?: number;
-  children: ReactNode;
+  staggerChildren?: number
+  children: ReactNode
 }) => (
   <motion.div
     initial="hidden"
@@ -26,4 +26,4 @@ export const MotionContainer = ({
   >
     {children}
   </motion.div>
-);
+)

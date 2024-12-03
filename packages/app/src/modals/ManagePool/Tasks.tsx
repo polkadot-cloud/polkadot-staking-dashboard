@@ -1,37 +1,37 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Polkicon } from '@w3ux/react-polkicon';
-import { ellipsisFn } from '@w3ux/utils';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useTransferOptions } from 'contexts/TransferOptions';
-import { Warning } from 'library/Form/Warning';
-import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';
-import type { ForwardedRef } from 'react';
-import { forwardRef } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ButtonOption } from 'ui-buttons';
-import { ButtonRowWrapper, ContentWrapper, TaskInnerWrapper } from './Wrappers';
-import type { TasksProps } from './types';
+import { Polkicon } from '@w3ux/react-polkicon'
+import { ellipsisFn } from '@w3ux/utils'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
+import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useTransferOptions } from 'contexts/TransferOptions'
+import { Warning } from 'library/Form/Warning'
+import { CopyAddress } from 'library/ListItem/Labels/CopyAddress'
+import type { ForwardedRef } from 'react'
+import { forwardRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ButtonOption } from 'ui-buttons'
+import { ButtonRowWrapper, ContentWrapper, TaskInnerWrapper } from './Wrappers'
+import type { TasksProps } from './types'
 
 export const Tasks = forwardRef(
   ({ setSection, setTask }: TasksProps, ref: ForwardedRef<HTMLDivElement>) => {
-    const { t } = useTranslation('modals');
-    const { activeAccount } = useActiveAccounts();
-    const { getTransferOptions } = useTransferOptions();
-    const { globalMaxCommission } = useApi().poolsConfig;
+    const { t } = useTranslation('modals')
+    const { activeAccount } = useActiveAccounts()
+    const { getTransferOptions } = useTransferOptions()
+    const { globalMaxCommission } = useApi().poolsConfig
     const { activePool, isOwner, isBouncer, isMember, isDepositor } =
-      useActivePool();
+      useActivePool()
 
-    const { active } = getTransferOptions(activeAccount).pool;
+    const { active } = getTransferOptions(activeAccount).pool
 
-    const poolLocked = activePool?.bondedPool?.state === 'Blocked';
-    const poolDestroying = activePool?.bondedPool?.state === 'Destroying';
+    const poolLocked = activePool?.bondedPool?.state === 'Blocked'
+    const poolDestroying = activePool?.bondedPool?.state === 'Destroying'
 
-    const stash = activePool?.addresses.stash || '';
-    const reward = activePool?.addresses.reward || '';
+    const stash = activePool?.addresses.stash || ''
+    const reward = activePool?.addresses.reward || ''
 
     return (
       <ContentWrapper>
@@ -78,8 +78,8 @@ export const Tasks = forwardRef(
               <>
                 <ButtonOption
                   onClick={() => {
-                    setSection(1);
-                    setTask('claim_commission');
+                    setSection(1)
+                    setTask('claim_commission')
                   }}
                 >
                   <TaskInnerWrapper>
@@ -89,8 +89,8 @@ export const Tasks = forwardRef(
                 </ButtonOption>
                 <ButtonOption
                   onClick={() => {
-                    setSection(1);
-                    setTask('manage_commission');
+                    setSection(1)
+                    setTask('manage_commission')
                   }}
                 >
                   <TaskInnerWrapper>
@@ -102,8 +102,8 @@ export const Tasks = forwardRef(
             )}
             <ButtonOption
               onClick={() => {
-                setSection(1);
-                setTask('set_claim_permission');
+                setSection(1)
+                setTask('set_claim_permission')
               }}
             >
               <TaskInnerWrapper>
@@ -116,8 +116,8 @@ export const Tasks = forwardRef(
               <ButtonOption
                 disabled={poolDestroying}
                 onClick={() => {
-                  setSection(1);
-                  setTask('set_pool_metadata');
+                  setSection(1)
+                  setTask('set_pool_metadata')
                 }}
               >
                 <TaskInnerWrapper>
@@ -132,8 +132,8 @@ export const Tasks = forwardRef(
                   <ButtonOption
                     disabled={poolDestroying}
                     onClick={() => {
-                      setSection(1);
-                      setTask('unlock_pool');
+                      setSection(1)
+                      setTask('unlock_pool')
                     }}
                   >
                     <TaskInnerWrapper>
@@ -145,8 +145,8 @@ export const Tasks = forwardRef(
                   <ButtonOption
                     disabled={poolDestroying}
                     onClick={() => {
-                      setSection(1);
-                      setTask('lock_pool');
+                      setSection(1)
+                      setTask('lock_pool')
                     }}
                   >
                     <TaskInnerWrapper>
@@ -158,8 +158,8 @@ export const Tasks = forwardRef(
                 <ButtonOption
                   disabled={poolDestroying}
                   onClick={() => {
-                    setSection(1);
-                    setTask('destroy_pool');
+                    setSection(1)
+                    setTask('destroy_pool')
                   }}
                 >
                   <TaskInnerWrapper>
@@ -172,8 +172,8 @@ export const Tasks = forwardRef(
             {isMember() && !isDepositor() && active?.isGreaterThan(0) && (
               <ButtonOption
                 onClick={() => {
-                  setSection(1);
-                  setTask('leave_pool');
+                  setSection(1)
+                  setTask('leave_pool')
                 }}
               >
                 <TaskInnerWrapper>
@@ -185,8 +185,8 @@ export const Tasks = forwardRef(
           </div>
         </div>
       </ContentWrapper>
-    );
+    )
   }
-);
+)
 
-Tasks.displayName = 'Tasks';
+Tasks.displayName = 'Tasks'

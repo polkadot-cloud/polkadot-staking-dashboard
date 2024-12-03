@@ -1,76 +1,72 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  faBars,
-  faShare,
-  faUnlockAlt,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import type { AnyJson } from '@w3ux/types';
-import { useApi } from 'contexts/Api';
-import { useMenu } from 'contexts/Menu';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { usePrompt } from 'contexts/Prompt';
-import { motion } from 'framer-motion';
-import { useList } from 'library/List/context';
-import { Identity } from 'library/ListItem/Labels/Identity';
-import { PoolMemberBonded } from 'library/ListItem/Labels/PoolMemberBonded';
-import { Select } from 'library/ListItem/Labels/Select';
-import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
-import { MenuList } from 'library/Menu/List';
-import type { MouseEvent as ReactMouseEvent } from 'react';
-import { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
-import { UnbondMember } from '../Prompts/UnbondMember';
-import { WithdrawMember } from '../Prompts/WithdrawMember';
+import { faBars, faShare, faUnlockAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import type { AnyJson } from '@w3ux/types'
+import { useApi } from 'contexts/Api'
+import { useMenu } from 'contexts/Menu'
+import { useActivePool } from 'contexts/Pools/ActivePool'
+import { usePoolMembers } from 'contexts/Pools/PoolMembers'
+import { usePrompt } from 'contexts/Prompt'
+import { motion } from 'framer-motion'
+import { useList } from 'library/List/context'
+import { Identity } from 'library/ListItem/Labels/Identity'
+import { PoolMemberBonded } from 'library/ListItem/Labels/PoolMemberBonded'
+import { Select } from 'library/ListItem/Labels/Select'
+import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers'
+import { MenuList } from 'library/Menu/List'
+import type { MouseEvent as ReactMouseEvent } from 'react'
+import { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { UnbondMember } from '../Prompts/UnbondMember'
+import { WithdrawMember } from '../Prompts/WithdrawMember'
 
 export const Member = ({
   who,
   batchKey,
   batchIndex,
 }: {
-  who: string;
-  batchKey: string;
-  batchIndex: number;
+  who: string
+  batchKey: string
+  batchIndex: number
 }) => {
-  const { t } = useTranslation();
-  const { activeEra } = useApi();
-  const { meta } = usePoolMembers();
-  const { selectActive } = useList();
-  const { openMenu, open } = useMenu();
-  const { openPromptWith } = usePrompt();
-  const { activePool, isOwner, isBouncer } = useActivePool();
+  const { t } = useTranslation()
+  const { activeEra } = useApi()
+  const { meta } = usePoolMembers()
+  const { selectActive } = useList()
+  const { openMenu, open } = useMenu()
+  const { openPromptWith } = usePrompt()
+  const { activePool, isOwner, isBouncer } = useActivePool()
 
   // Ref for the member container.
-  const memberRef = useRef<HTMLDivElement>(null);
+  const memberRef = useRef<HTMLDivElement>(null)
 
-  const { state, roles } = activePool?.bondedPool || {};
-  const { bouncer, root, depositor } = roles || {};
+  const { state, roles } = activePool?.bondedPool || {}
+  const { bouncer, root, depositor } = roles || {}
 
   const canUnbondBlocked =
     state === 'Blocked' &&
     (isOwner() || isBouncer()) &&
-    ![root, bouncer].includes(who);
+    ![root, bouncer].includes(who)
 
-  const canUnbondDestroying = state === 'Destroying' && who !== depositor;
-  const poolMembers = meta[batchKey]?.poolMembers ?? [];
-  const member = poolMembers[batchIndex] ?? null;
+  const canUnbondDestroying = state === 'Destroying' && who !== depositor
+  const poolMembers = meta[batchKey]?.poolMembers ?? []
+  const member = poolMembers[batchIndex] ?? null
 
-  const menuItems: AnyJson[] = [];
+  const menuItems: AnyJson[] = []
 
   menuItems.push({
     icon: <FontAwesomeIcon icon={faUnlockAlt} transform="shrink-3" />,
     wrap: null,
     title: `${t('pools.withdrawFunds', { ns: 'pages' })}`,
     cb: () => {
-      openPromptWith(<UnbondMember who={who} member={member} />);
+      openPromptWith(<UnbondMember who={who} member={member} />)
     },
-  });
+  })
 
   if (member && (canUnbondBlocked || canUnbondDestroying)) {
-    const { points, unbondingEras } = member;
+    const { points, unbondingEras } = member
 
     if (points !== '0') {
       menuItems.push({
@@ -78,16 +74,16 @@ export const Member = ({
         wrap: null,
         title: `${t('pools.unbondFunds', { ns: 'pages' })}`,
         cb: () => {
-          openPromptWith(<UnbondMember who={who} member={member} />);
+          openPromptWith(<UnbondMember who={who} member={member} />)
         },
-      });
+      })
     }
 
     if (Object.values(unbondingEras).length) {
-      let canWithdraw = false;
+      let canWithdraw = false
       for (const k of Object.keys(unbondingEras)) {
         if (activeEra.index.isGreaterThan(Number(k))) {
-          canWithdraw = true;
+          canWithdraw = true
         }
       }
 
@@ -99,9 +95,9 @@ export const Member = ({
           cb: () => {
             openPromptWith(
               <WithdrawMember who={who} member={member} memberRef={memberRef} />
-            );
+            )
           },
-        });
+        })
       }
     }
   }
@@ -109,9 +105,9 @@ export const Member = ({
   // Handler for opening menu.
   const toggleMenu = (ev: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (!open) {
-      openMenu(ev, <MenuList items={menuItems} />);
+      openMenu(ev, <MenuList items={menuItems} />)
     }
-  };
+  }
 
   return (
     <motion.div
@@ -159,5 +155,5 @@ export const Member = ({
         </div>
       </Wrapper>
     </motion.div>
-  );
-};
+  )
+}

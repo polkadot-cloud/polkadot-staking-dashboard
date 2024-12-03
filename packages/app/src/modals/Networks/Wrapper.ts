@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { SectionFullWidthThreshold } from 'consts';
-import styled from 'styled-components';
+import { SectionFullWidthThreshold } from 'consts'
+import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   display: flex;
@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
     margin-top: 0.5rem;
     margin-bottom: 1rem;
   }
-`;
+`
 
 export const ContentWrapper = styled.div`
   width: 100%;
@@ -46,7 +46,7 @@ export const ContentWrapper = styled.div`
       margin: 0.75rem 0;
     }
   }
-`;
+`
 
 export const NetworkButton = styled.button<{ $connected: boolean }>`
   background: var(--button-primary-background);
@@ -109,7 +109,7 @@ export const NetworkButton = styled.button<{ $connected: boolean }>`
       background: var(--button-primary-background);
     }
   }
-`;
+`
 
 export const BraveWarning = styled.div`
   border: 1px solid var(--border-primary-color);
@@ -129,7 +129,7 @@ export const BraveWarning = styled.div`
       text-decoration: underline var(--border-primary-color);
     }
   }
-`;
+`
 
 export const ConnectionsWrapper = styled.div`
   display: flex;
@@ -167,7 +167,7 @@ export const ConnectionsWrapper = styled.div`
       }
     }
   }
-`;
+`
 
 export const ConnectionButton = styled.button<{ $connected: boolean }>`
   background: var(--button-primary-background);
@@ -213,4 +213,4 @@ export const ConnectionButton = styled.button<{ $connected: boolean }>`
       }
     }
   }
-`;
+`

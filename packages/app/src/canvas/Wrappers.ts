@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const CanvasFullScreenWrapper = styled.div`
   padding-top: 3rem;
@@ -19,7 +19,7 @@ export const CanvasFullScreenWrapper = styled.div`
     margin-top: 1.5rem;
     margin-bottom: 1.25rem;
   }
-`;
+`
 
 export const CanvasTitleWrapper = styled.div`
   border-bottom: 1px solid var(--border-secondary-color);
@@ -116,11 +116,11 @@ export const CanvasTitleWrapper = styled.div`
       }
     }
   }
-`;
+`
 
 export const CanvasSubmitTxFooter = styled.div`
   border-radius: 1rem;
   overflow: hidden;
   margin-bottom: 2rem;
   width: 100%;
-`;
+`

@@ -74,6 +74,6 @@ const PionerStake = () => (
       />
     </g>
   </svg>
-);
+)
 
-export default PionerStake;
+export default PionerStake

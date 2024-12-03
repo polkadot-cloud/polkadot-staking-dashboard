@@ -1,20 +1,20 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ComponentBase } from '@w3ux/types';
-import type { ReactNode } from 'react';
+import type { ComponentBase } from '@w3ux/types'
+import type { ReactNode } from 'react'
 
 export type ActionItemProps = ComponentBase & {
   // the title.
-  text: string;
+  text: string
   // the state of the item.
-  toggled?: boolean;
+  toggled?: boolean
   // whether the item is disabled.
-  disabled?: boolean;
+  disabled?: boolean
   // the switch action.
-  onToggle?: (val: boolean) => void;
+  onToggle?: (val: boolean) => void
   // whether the item should be inactive.
-  inactive?: boolean;
+  inactive?: boolean
   // optional inline button.
-  inlineButton?: ReactNode;
-};
+  inlineButton?: ReactNode
+}

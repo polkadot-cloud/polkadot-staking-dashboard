@@ -1,103 +1,102 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { setStateWithRef } from '@w3ux/utils';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useBalances } from 'contexts/Balances';
-import type { UnlockChunk } from 'contexts/Balances/types';
-import { useLedgerHardware } from 'contexts/LedgerHardware';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle';
-import { ModalMotionTwoSection } from 'kits/Overlay/structure/ModalMotionTwoSection';
-import { ModalSection } from 'kits/Overlay/structure/ModalSection';
-import { Title } from 'library/Modal/Title';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Forms } from './Forms';
-import { Overview } from './Overview';
+import { setStateWithRef } from '@w3ux/utils'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useBalances } from 'contexts/Balances'
+import type { UnlockChunk } from 'contexts/Balances/types'
+import { useLedgerHardware } from 'contexts/LedgerHardware'
+import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle'
+import { ModalMotionTwoSection } from 'kits/Overlay/structure/ModalMotionTwoSection'
+import { ModalSection } from 'kits/Overlay/structure/ModalSection'
+import { Title } from 'library/Modal/Title'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Forms } from './Forms'
+import { Overview } from './Overview'
 
 export const UnlockChunks = () => {
-  const { t } = useTranslation('modals');
+  const { t } = useTranslation('modals')
   const {
     config: { options },
     setModalHeight,
     modalMaxHeight,
-  } = useOverlay().modal;
-  const { getLedger } = useBalances();
-  const { getPoolUnlocking } = useActivePool();
-  const { activeAccount } = useActiveAccounts();
-  const { integrityChecked } = useLedgerHardware();
-  const { bondFor } = options || {};
+  } = useOverlay().modal
+  const { getLedger } = useBalances()
+  const { getPoolUnlocking } = useActivePool()
+  const { activeAccount } = useActiveAccounts()
+  const { integrityChecked } = useLedgerHardware()
+  const { bondFor } = options || {}
 
   // get the unlocking per bondFor
   const getUnlocking = () => {
-    let unlocking = [];
-    let ledger;
+    let unlocking = []
+    let ledger
     switch (bondFor) {
       case 'pool':
-        unlocking = getPoolUnlocking();
-        break;
+        unlocking = getPoolUnlocking()
+        break
       default:
-        ledger = getLedger({ stash: activeAccount });
-        unlocking = ledger.unlocking;
+        ledger = getLedger({ stash: activeAccount })
+        unlocking = ledger.unlocking
     }
-    return unlocking;
-  };
+    return unlocking
+  }
 
-  const unlocking = getUnlocking();
+  const unlocking = getUnlocking()
 
   // active modal section
-  const [section, setSectionState] = useState<number>(0);
-  const sectionRef = useRef(section);
+  const [section, setSectionState] = useState<number>(0)
+  const sectionRef = useRef(section)
 
   const setSection = (s: number) => {
-    setStateWithRef(s, setSectionState, sectionRef);
-  };
+    setStateWithRef(s, setSectionState, sectionRef)
+  }
 
   // modal task
-  const [task, setTask] = useState<string | null>(null);
+  const [task, setTask] = useState<string | null>(null)
 
   // unlock value of interest
-  const [unlock, setUnlock] = useState<UnlockChunk | null>(null);
+  const [unlock, setUnlock] = useState<UnlockChunk | null>(null)
 
   // counter to trigger modal height calculation
-  const [calculateHeight, setCalculateHeight] = useState<number>(0);
-  const incrementCalculateHeight = () =>
-    setCalculateHeight(calculateHeight + 1);
+  const [calculateHeight, setCalculateHeight] = useState<number>(0)
+  const incrementCalculateHeight = () => setCalculateHeight(calculateHeight + 1)
 
   // refs for wrappers
-  const headerRef = useRef<HTMLDivElement>(null);
-  const overviewRef = useRef<HTMLDivElement>(null);
-  const formsRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null)
+  const overviewRef = useRef<HTMLDivElement>(null)
+  const formsRef = useRef<HTMLDivElement>(null)
 
   const getModalHeight = () => {
-    let h = headerRef.current?.clientHeight ?? 0;
+    let h = headerRef.current?.clientHeight ?? 0
 
     if (sectionRef.current === 0) {
-      h += overviewRef.current?.clientHeight ?? 0;
+      h += overviewRef.current?.clientHeight ?? 0
     } else {
-      h += formsRef.current?.clientHeight ?? 0;
+      h += formsRef.current?.clientHeight ?? 0
     }
-    return h;
-  };
+    return h
+  }
 
   const onResize = () => {
-    setModalHeight(getModalHeight());
-  };
+    setModalHeight(getModalHeight())
+  }
 
   // resize modal on state change
   useEffect(() => {
-    onResize();
-  }, [task, calculateHeight, sectionRef.current, unlocking, integrityChecked]);
+    onResize()
+  }, [task, calculateHeight, sectionRef.current, unlocking, integrityChecked])
 
   // resize this modal on window resize
   useEffect(() => {
-    window.addEventListener('resize', onResize);
+    window.addEventListener('resize', onResize)
     return () => {
-      window.removeEventListener('resize', onResize);
-    };
-  }, []);
+      window.removeEventListener('resize', onResize)
+    }
+  }, [])
 
   return (
     <ModalSection type="carousel">
@@ -145,5 +144,5 @@ export const UnlockChunks = () => {
         </div>
       </ModalMotionTwoSection>
     </ModalSection>
-  );
-};
+  )
+}

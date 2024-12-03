@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { TwoThreshold } from 'library/SelectItems/Wrapper';
-import styled from 'styled-components';
+import { TwoThreshold } from 'library/SelectItems/Wrapper'
+import styled from 'styled-components'
 
 // Wraps a list of extensions. `SelectItems` typically follows this wrapper, with the items embedded
 // within it.
@@ -14,7 +14,7 @@ export const ExtensionsWrapper = styled.div`
   @media (max-width: ${TwoThreshold}px) {
     padding: 0;
   }
-`;
+`
 
 // Styling for an extension item, which can reflect the status of the extension connection.
 export const ExtensionInner = styled.div`
@@ -119,13 +119,13 @@ export const ExtensionInner = styled.div`
       fill: var(--text-color-secondary);
     }
   }
-`;
+`
 
 // Styling for a separator between ExtensionItems.
 export const Separator = styled.div`
   width: 100%;
   height: 0.25rem;
-`;
+`
 
 export const ActionWithButton = styled.div`
   border-bottom: 1px solid var(--border-primary-color);
@@ -150,7 +150,7 @@ export const ActionWithButton = styled.div`
       font-family: InterSemiBold, sans-serif;
     }
   }
-`;
+`
 
 export const ManualAccountsWrapper = styled.div`
   color: var(--text-color-primary);
@@ -180,7 +180,7 @@ export const ManualAccountsWrapper = styled.div`
     margin-top: 1rem;
     width: 100%;
   }
-`;
+`
 
 export const ManualAccount = styled.div`
   background: var(--button-primary-background);
@@ -242,4 +242,4 @@ export const ManualAccount = styled.div`
   button {
     font-size: 1rem;
   }
-`;
+`

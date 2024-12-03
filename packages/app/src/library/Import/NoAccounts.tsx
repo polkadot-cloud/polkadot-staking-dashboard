@@ -1,24 +1,24 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { useOverlay } from 'kits/Overlay/Provider';
-import type { FunctionComponent, ReactNode, SVGProps } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ButtonSecondary } from 'ui-buttons';
-import { NoAccountsWrapper } from './Wrappers';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { useOverlay } from 'kits/Overlay/Provider'
+import type { FunctionComponent, ReactNode, SVGProps } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ButtonSecondary } from 'ui-buttons'
+import { NoAccountsWrapper } from './Wrappers'
 
 export const NoAccounts = ({
   children,
   text,
   Icon,
 }: {
-  children: ReactNode;
-  text: string;
-  Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
+  children: ReactNode
+  text: string
+  Icon: FunctionComponent<SVGProps<SVGSVGElement>>
 }) => {
-  const { t } = useTranslation('modals');
-  const { replaceModal } = useOverlay().modal;
+  const { t } = useTranslation('modals')
+  const { replaceModal } = useOverlay().modal
 
   return (
     <>
@@ -40,5 +40,5 @@ export const NoAccounts = ({
         {children}
       </NoAccountsWrapper>
     </>
-  );
-};
+  )
+}

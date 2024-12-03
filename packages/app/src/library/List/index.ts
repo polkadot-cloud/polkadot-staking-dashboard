@@ -1,15 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { DisplayFor } from '@w3ux/types';
-import styled from 'styled-components';
-import type { ListProps, PaginationWrapperProps } from './types';
+import type { DisplayFor } from '@w3ux/types'
+import styled from 'styled-components'
+import type { ListProps, PaginationWrapperProps } from './types'
 
 export const Wrapper = styled.div`
   display: flex;
   width: 100%;
   flex-flow: column nowrap;
-`;
+`
 
 // NOTE: used for member lists and payout list only.
 export const Header = styled.div<{ $displayFor?: DisplayFor }>`
@@ -55,7 +55,7 @@ export const Header = styled.div<{ $displayFor?: DisplayFor }>`
       }
     }
   }
-`;
+`
 
 export const PaginationWrapper = styled.div<PaginationWrapperProps>`
   width: 100%;
@@ -94,7 +94,7 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
       }
     }
   }
-`;
+`
 
 export const SelectableWrapper = styled.div`
   width: 100%;
@@ -112,11 +112,11 @@ export const SelectableWrapper = styled.div`
       color: var(--text-color-primary);
     }
   }
-`;
+`
 
 export const ListStatusHeader = styled.h4`
   padding: 0.25rem 0.5rem;
-`;
+`
 
 export const List = styled.div<ListProps>`
   width: 100%;
@@ -148,7 +148,7 @@ export const List = styled.div<ListProps>`
       }
     }
   }
-`;
+`
 
 export const SearchInputWrapper = styled.div`
   display: flex;
@@ -165,7 +165,7 @@ export const SearchInputWrapper = styled.div`
     font-size: 1.15rem;
     width: 100%;
   }
-`;
+`
 
 export const FilterHeaderWrapper = styled.div`
   display: flex;
@@ -196,4 +196,4 @@ export const FilterHeaderWrapper = styled.div`
       }
     }
   }
-`;
+`

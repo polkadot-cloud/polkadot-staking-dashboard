@@ -1,59 +1,59 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useVaultAccounts } from '@w3ux/react-connect-kit';
-import type { AnyJson } from '@w3ux/types';
-import { formatAccountSs58, isValidAddress } from '@w3ux/utils';
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import { useNetwork } from 'contexts/Network';
-import { usePrompt } from 'contexts/Prompt';
-import { QRViewerWrapper } from 'library/Import/Wrappers';
-import { QrScanSignature } from 'library/QRCode/ScanSignature';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ButtonSecondary } from 'ui-buttons';
+import { useVaultAccounts } from '@w3ux/react-connect-kit'
+import type { AnyJson } from '@w3ux/types'
+import { formatAccountSs58, isValidAddress } from '@w3ux/utils'
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
+import { useNetwork } from 'contexts/Network'
+import { usePrompt } from 'contexts/Prompt'
+import { QRViewerWrapper } from 'library/Import/Wrappers'
+import { QrScanSignature } from 'library/QRCode/ScanSignature'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ButtonSecondary } from 'ui-buttons'
 
 export const Reader = () => {
-  const { t } = useTranslation('modals');
+  const { t } = useTranslation('modals')
   const {
     network,
     networkData: { ss58 },
-  } = useNetwork();
-  const { closePrompt } = usePrompt();
-  const { addOtherAccounts } = useOtherAccounts();
+  } = useNetwork()
+  const { closePrompt } = usePrompt()
+  const { addOtherAccounts } = useOtherAccounts()
   const { addVaultAccount, vaultAccountExists, getVaultAccounts } =
-    useVaultAccounts();
+    useVaultAccounts()
 
-  const vaultAccounts = getVaultAccounts(network);
+  const vaultAccounts = getVaultAccounts(network)
 
   // Store data from QR Code scanner.
-  const [qrData, setQrData] = useState<AnyJson>(undefined);
+  const [qrData, setQrData] = useState<AnyJson>(undefined)
 
   // Store QR data feedback.
-  const [feedback, setFeedback] = useState<string>('');
+  const [feedback, setFeedback] = useState<string>('')
 
   const handleQrData = (signature: string) => {
-    setQrData(signature.split(':')?.[1] || '');
-  };
+    setQrData(signature.split(':')?.[1] || '')
+  }
 
   const valid =
     isValidAddress(qrData) &&
     !vaultAccountExists(network, qrData) &&
-    formatAccountSs58(qrData, ss58) === qrData;
+    formatAccountSs58(qrData, ss58) === qrData
 
   // Reset QR data on open.
   useEffect(() => {
-    setQrData(undefined);
-  }, []);
+    setQrData(undefined)
+  }, [])
 
   useEffect(() => {
     // Add account and close overlay if valid.
     if (valid) {
-      const account = addVaultAccount(network, qrData, vaultAccounts.length);
+      const account = addVaultAccount(network, qrData, vaultAccounts.length)
       if (account) {
-        addOtherAccounts([account]);
+        addOtherAccounts([account])
       }
-      closePrompt();
+      closePrompt()
     }
 
     // Display feedback.
@@ -67,8 +67,8 @@ export const Reader = () => {
               ? `${t('accountAlreadyImported')}`
               : `${t('addressReceived')}`
           : `${t('invalidAddress')}`
-    );
-  }, [qrData]);
+    )
+  }, [qrData])
 
   return (
     <QRViewerWrapper>
@@ -77,7 +77,7 @@ export const Reader = () => {
         <QrScanSignature
           size={250}
           onScan={({ signature }) => {
-            handleQrData(signature);
+            handleQrData(signature)
           }}
         />
       </div>
@@ -92,5 +92,5 @@ export const Reader = () => {
         </div>
       </div>
     </QRViewerWrapper>
-  );
-};
+  )
+}

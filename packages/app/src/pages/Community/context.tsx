@@ -1,43 +1,43 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useNetwork } from 'contexts/Network';
-import type { ReactNode } from 'react';
-import { createContext, useContext, useEffect, useState } from 'react';
-import { communityItem, defaultContext } from './defaults';
-import type { CommunitySectionsContextInterface, Item } from './types';
+import { useNetwork } from 'contexts/Network'
+import type { ReactNode } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
+import { communityItem, defaultContext } from './defaults'
+import type { CommunitySectionsContextInterface, Item } from './types'
 
 export const CommunitySectionsContext =
-  createContext<CommunitySectionsContextInterface>(defaultContext);
+  createContext<CommunitySectionsContextInterface>(defaultContext)
 
-export const useCommunitySections = () => useContext(CommunitySectionsContext);
+export const useCommunitySections = () => useContext(CommunitySectionsContext)
 
 export const CommunitySectionsProvider = ({
   children,
 }: {
-  children: ReactNode;
+  children: ReactNode
 }) => {
-  const { network } = useNetwork();
+  const { network } = useNetwork()
 
   // store the active section of the community page
-  const [activeSection, setActiveSectionState] = useState<number>(0);
+  const [activeSection, setActiveSectionState] = useState<number>(0)
 
   // store the active entity item of the community page
-  const [activeItem, setActiveItem] = useState<Item>(communityItem);
+  const [activeItem, setActiveItem] = useState<Item>(communityItem)
 
   // store the Y scroll position when the last entity was visited
   // used to automatically scroll back down upon returning to the entity lsit.
-  const [scrollPos, setScrollPos] = useState<number>(0);
+  const [scrollPos, setScrollPos] = useState<number>(0)
 
   // go back to first section and reset item when network switches
   useEffect(() => {
-    setActiveSectionState(0);
-    setActiveItem(communityItem);
-  }, [network]);
+    setActiveSectionState(0)
+    setActiveItem(communityItem)
+  }, [network])
 
   const setActiveSection = (t: number) => {
-    setActiveSectionState(t);
-  };
+    setActiveSectionState(t)
+  }
 
   return (
     <CommunitySectionsContext.Provider
@@ -52,5 +52,5 @@ export const CommunitySectionsProvider = ({
     >
       {children}
     </CommunitySectionsContext.Provider>
-  );
-};
+  )
+}

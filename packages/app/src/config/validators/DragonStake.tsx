@@ -9,6 +9,6 @@ const DragonStake = () => (
       d="M4.83 124.64h22.05v22.05H4.83zM0 106.97h9.67v9.67H0zm0 58.32h9.67v9.67H0z"
     />
   </svg>
-);
+)
 
-export default DragonStake;
+export default DragonStake

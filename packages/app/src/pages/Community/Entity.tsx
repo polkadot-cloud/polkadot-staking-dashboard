@@ -1,46 +1,46 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { useApi } from 'contexts/Api';
-import { useNetwork } from 'contexts/Network';
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import type { Validator } from 'contexts/Validators/types';
-import { CardWrapper } from 'library/Card/Wrappers';
-import { ValidatorList } from 'library/ValidatorList';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ButtonSecondary } from 'ui-buttons';
-import { PageHeading, PageRow } from 'ui-structure';
-import { Item } from './Item';
-import { ItemsWrapper } from './Wrappers';
-import { useCommunitySections } from './context';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
+import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import type { Validator } from 'contexts/Validators/types'
+import { CardWrapper } from 'library/Card/Wrappers'
+import { ValidatorList } from 'library/ValidatorList'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ButtonSecondary } from 'ui-buttons'
+import { PageHeading, PageRow } from 'ui-structure'
+import { Item } from './Item'
+import { ItemsWrapper } from './Wrappers'
+import { useCommunitySections } from './context'
 
 export const Entity = () => {
-  const { t } = useTranslation('pages');
-  const { isReady } = useApi();
-  const { network } = useNetwork();
-  const { validators: allValidators } = useValidators();
-  const { setActiveSection, activeItem } = useCommunitySections();
+  const { t } = useTranslation('pages')
+  const { isReady } = useApi()
+  const { network } = useNetwork()
+  const { validators: allValidators } = useValidators()
+  const { setActiveSection, activeItem } = useCommunitySections()
 
-  const { name, validators: entityAllValidators } = activeItem;
-  const validators = entityAllValidators[network] ?? [];
+  const { name, validators: entityAllValidators } = activeItem
+  const validators = entityAllValidators[network] ?? []
 
   // include validators that exist in `erasStakers`
   const [activeValidators, setActiveValidators] = useState<Validator[]>(
     allValidators.filter((v) => validators.includes(v.address))
-  );
+  )
 
   useEffect(() => {
     setActiveValidators(
       allValidators.filter((v) => validators.includes(v.address))
-    );
-  }, [allValidators, network]);
+    )
+  }, [allValidators, network])
 
   useEffect(() => {
-    const newValidators = [...activeValidators];
-    setActiveValidators(newValidators);
-  }, [name, activeItem, network]);
+    const newValidators = [...activeValidators]
+    setActiveValidators(newValidators)
+  }, [name, activeItem, network])
 
   const container = {
     hidden: { opacity: 0 },
@@ -51,7 +51,7 @@ export const Entity = () => {
         staggerChildren: 0.05,
       },
     },
-  };
+  }
 
   return (
     <PageRow>
@@ -99,5 +99,5 @@ export const Entity = () => {
         )}
       </CardWrapper>
     </PageRow>
-  );
-};
+  )
+}

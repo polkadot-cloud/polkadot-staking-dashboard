@@ -39,6 +39,6 @@ const StakingFacilities = () => (
       d="M101.84 388.19v21.61l143.28 69.92 253.04-53.39v-24.79l-251.14 41.95-145.18-55.3z"
     />
   </svg>
-);
+)
 
-export default StakingFacilities;
+export default StakingFacilities

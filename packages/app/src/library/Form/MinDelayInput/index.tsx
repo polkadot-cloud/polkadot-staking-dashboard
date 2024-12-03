@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import BigNumber from 'bignumber.js';
-import { useEffect, useState } from 'react';
-import { MinDelayInputWrapper } from './Wrapper';
-import type { MinDelayProps } from './types';
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import BigNumber from 'bignumber.js'
+import { useEffect, useState } from 'react'
+import { MinDelayInputWrapper } from './Wrapper'
+import type { MinDelayProps } from './types'
 
 export const MinDelayInput = ({
   initial,
@@ -14,29 +14,29 @@ export const MinDelayInput = ({
   label,
   handleChange,
 }: MinDelayProps) => {
-  const [current, setCurrent] = useState<number>(initial);
+  const [current, setCurrent] = useState<number>(initial)
 
   useEffect(() => {
-    setCurrent(initial);
-  }, [initial]);
+    setCurrent(initial)
+  }, [initial])
 
   const onChange = (value: string) => {
     if (!new BigNumber(value).isNaN() || value === '') {
-      const newValue = new BigNumber(value || 0).toNumber();
-      setCurrent(newValue);
-      handleChange(field, newValue);
+      const newValue = new BigNumber(value || 0).toNumber()
+      setCurrent(newValue)
+      handleChange(field, newValue)
     }
-  };
+  }
 
   const onIncrement = () => {
-    const newValue = current + 1;
-    onChange(String(newValue));
-  };
+    const newValue = current + 1
+    onChange(String(newValue))
+  }
 
   const onDecrement = () => {
-    const newValue = Math.max(current - 1, 0);
-    onChange(String(newValue));
-  };
+    const newValue = Math.max(current - 1, 0)
+    onChange(String(newValue))
+  }
 
   return (
     <MinDelayInputWrapper>
@@ -58,5 +58,5 @@ export const MinDelayInput = ({
         </button>
       </div>
     </MinDelayInputWrapper>
-  );
-};
+  )
+}

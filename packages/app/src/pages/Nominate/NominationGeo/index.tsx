@@ -1,117 +1,116 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useNetwork } from 'contexts/Network';
-import { StatBoxList } from 'library/StatBoxList';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useNetwork } from 'contexts/Network'
+import { StatBoxList } from 'library/StatBoxList'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { usePlugins } from 'contexts/Plugins';
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { usePlugins } from 'contexts/Plugins'
 
-import { PolkawatchApi } from '@polkawatch/ddp-client';
-import { PolkaWatch } from 'controllers/PolkaWatch';
-import type { ChainMetadata, NominatorDetail } from './types';
+import { PolkawatchApi } from '@polkawatch/ddp-client'
+import { PolkaWatch } from 'controllers/PolkaWatch'
+import type { ChainMetadata, NominatorDetail } from './types'
 
-import { AnalyzedDays } from './Stats/AnalyzedDays';
-import { AnalyzedEras } from './Stats/AnalyzedEras';
-import { AnalyzedPayouts } from './Stats/AnalyzedPayouts';
+import { AnalyzedDays } from './Stats/AnalyzedDays'
+import { AnalyzedEras } from './Stats/AnalyzedEras'
+import { AnalyzedPayouts } from './Stats/AnalyzedPayouts'
 
-import { useHelp } from 'contexts/Help';
-import { useStaking } from 'contexts/Staking';
-import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
-import { GeoDonut } from 'library/Graphs/GeoDonut';
-import { GraphWrapper } from 'library/Graphs/Wrapper';
-import { PluginLabel } from 'library/PluginLabel';
-import { StatusLabel } from 'library/StatusLabel';
-import { ButtonHelp } from 'ui-buttons';
-import { PageRow } from 'ui-structure';
-import { NominationGeoList } from './NominationGeoList';
-import { GraphsWrapper } from './Wrappers';
+import { useHelp } from 'contexts/Help'
+import { useStaking } from 'contexts/Staking'
+import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
+import { GeoDonut } from 'library/Graphs/GeoDonut'
+import { GraphWrapper } from 'library/Graphs/Wrapper'
+import { PluginLabel } from 'library/PluginLabel'
+import { StatusLabel } from 'library/StatusLabel'
+import { ButtonHelp } from 'ui-buttons'
+import { PageRow } from 'ui-structure'
+import { NominationGeoList } from './NominationGeoList'
+import { GraphsWrapper } from './Wrappers'
 
 export const NominationGeo = () => {
-  const { t } = useTranslation();
-  const { openHelp } = useHelp();
-  const { network } = useNetwork();
-  const { isNominating } = useStaking();
-  const { pluginEnabled } = usePlugins();
-  const { activeAccount } = useActiveAccounts();
+  const { t } = useTranslation()
+  const { openHelp } = useHelp()
+  const { network } = useNetwork()
+  const { isNominating } = useStaking()
+  const { pluginEnabled } = usePlugins()
+  const { activeAccount } = useActiveAccounts()
 
-  const enabled = pluginEnabled('polkawatch');
+  const enabled = pluginEnabled('polkawatch')
 
   // Polkawatch Analytics chain metadata, contains information about how the decentralization is 1
   // computed for this particular blockchain
   const [networkMeta, setNetworkMeta] = useState<ChainMetadata>(
     {} as ChainMetadata
-  );
+  )
 
   const [nominationDetail, setNominationDetail] = useState<NominatorDetail>(
     {} as NominatorDetail
-  );
+  )
 
-  const [analyticsAvailable, setAnalyticsAvailable] = useState<boolean>(true);
+  const [analyticsAvailable, setAnalyticsAvailable] = useState<boolean>(true)
 
-  const networkSupported = PolkaWatch.SUPPORTED_NETWORKS.includes(network);
+  const networkSupported = PolkaWatch.SUPPORTED_NETWORKS.includes(network)
 
   // Min height of the graph container.
-  const graphContainerMinHeight = analyticsAvailable ? 320 : 25;
+  const graphContainerMinHeight = analyticsAvailable ? 320 : 25
 
   // Donut size and legend height.
-  const donutSize = '300px';
-  const legendHeight = 50;
-  const maxLabelLen = 10;
+  const donutSize = '300px'
+  const legendHeight = 50
+  const maxLabelLen = 10
 
   // Status label config.
-  const showDisabledLabel = !enabled;
-  const showNotNominatingLabel = enabled && !isNominating();
-  const showNotAvailableLabel =
-    enabled && !analyticsAvailable && isNominating();
+  const showDisabledLabel = !enabled
+  const showNotNominatingLabel = enabled && !isNominating()
+  const showNotAvailableLabel = enabled && !analyticsAvailable && isNominating()
 
   // Whether to interact with Polkawatch API.
-  const callPolkawatchApi = networkSupported && enabled && isNominating();
+  const callPolkawatchApi = networkSupported && enabled && isNominating()
 
   useEffect(() => {
     if (callPolkawatchApi) {
-      const polkaWatchApi = new PolkawatchApi(PolkaWatch.apiConfig(network));
+      const polkaWatchApi = new PolkawatchApi(PolkaWatch.apiConfig(network))
       polkaWatchApi
         .ddpIpfsAboutChain()
         .then((response) => {
-          setAnalyticsAvailable(true);
-          setNetworkMeta(response.data);
+          setAnalyticsAvailable(true)
+          setNetworkMeta(response.data)
         })
         .catch(() => {
-          setNetworkMeta({} as ChainMetadata);
-          setAnalyticsAvailable(false);
-        });
+          setNetworkMeta({} as ChainMetadata)
+          setAnalyticsAvailable(false)
+        })
     } else {
-      setNetworkMeta({} as ChainMetadata);
-      setAnalyticsAvailable(false);
+      setNetworkMeta({} as ChainMetadata)
+      setAnalyticsAvailable(false)
     }
-  }, [activeAccount, network, enabled, isNominating()]);
+  }, [activeAccount, network, enabled, isNominating()])
 
   // NOTE: The list of dependencies assume that changing network
   // triggers a change of account also (i.e. different network prefix).
   useEffect(() => {
     if (callPolkawatchApi) {
-      const polkaWatchApi = new PolkawatchApi(PolkaWatch.apiConfig(network));
+      const polkaWatchApi = new PolkawatchApi(PolkaWatch.apiConfig(network))
       polkaWatchApi
         .ddpIpfsNominatorDetail({
           lastDays: 30,
           nominator: activeAccount,
         })
         .then((response) => {
-          setAnalyticsAvailable(true);
-          setNominationDetail(response.data);
+          setAnalyticsAvailable(true)
+          setNominationDetail(response.data)
         })
         .catch(() => {
-          setNominationDetail({} as NominatorDetail);
-          setAnalyticsAvailable(false);
-        });
+          setNominationDetail({} as NominatorDetail)
+          setAnalyticsAvailable(false)
+        })
     } else {
-      setNominationDetail({} as NominatorDetail);
-      setAnalyticsAvailable(false);
+      setNominationDetail({} as NominatorDetail)
+      setAnalyticsAvailable(false)
     }
-  }, [activeAccount, network, enabled, isNominating()]);
+  }, [activeAccount, network, enabled, isNominating()])
 
   return (
     <>
@@ -218,5 +217,5 @@ export const NominationGeo = () => {
         </PageRow>
       )}
     </>
-  );
-};
+  )
+}

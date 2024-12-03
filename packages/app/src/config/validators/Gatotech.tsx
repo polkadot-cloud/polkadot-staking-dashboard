@@ -54,6 +54,6 @@ const Gatotech = () => (
       <path strokeWidth="15" stroke="#010101" d="M196.66 236.49l61.38 9.82" />
     </g>
   </svg>
-);
+)
 
-export default Gatotech;
+export default Gatotech

@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { AccountId } from 'polkadot-api';
-import { mergeUint8 } from 'polkadot-api/utils';
-import type { ReactElement } from 'react';
-import { memo, useMemo } from 'react';
-import { QrDisplay } from './Display.js';
-import type { DisplayPayloadProps } from './types.js';
+import { AccountId } from 'polkadot-api'
+import { mergeUint8 } from 'polkadot-api/utils'
+import type { ReactElement } from 'react'
+import { memo, useMemo } from 'react'
+import { QrDisplay } from './Display.js'
+import type { DisplayPayloadProps } from './types.js'
 
 const createSignPayload = (
   address: string,
@@ -21,7 +21,7 @@ const createSignPayload = (
     AccountId().enc(address),
     payload,
     genesisHash
-  );
+  )
 
 const DisplayPayload = ({
   address,
@@ -36,10 +36,10 @@ const DisplayPayload = ({
   const data = useMemo(
     () => createSignPayload(address, cmd, payload, genesisHash),
     [address, cmd, payload, genesisHash]
-  );
+  )
 
   if (!data) {
-    return null;
+    return null
   }
 
   return (
@@ -50,7 +50,7 @@ const DisplayPayload = ({
       timerDelay={timerDelay}
       value={data}
     />
-  );
-};
+  )
+}
 
-export const QrDisplayPayload = memo(DisplayPayload);
+export const QrDisplayPayload = memo(DisplayPayload)

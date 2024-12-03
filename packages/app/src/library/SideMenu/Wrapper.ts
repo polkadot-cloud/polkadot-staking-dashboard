@@ -5,9 +5,9 @@ import {
   PageWidthMediumThreshold,
   SideMenuMaximisedWidth,
   SideMenuMinimisedWidth,
-} from 'consts';
-import styled from 'styled-components';
-import type { MinimisedProps } from './types';
+} from 'consts'
+import styled from 'styled-components'
+import type { MinimisedProps } from './types'
 
 export const Wrapper = styled.div<MinimisedProps>`
   border-radius: ${(props) => (props.$minimised ? '0.7rem' : 0)};
@@ -72,7 +72,7 @@ export const Wrapper = styled.div<MinimisedProps>`
       padding-left: ${(props) => (props.$minimised ? '0.1rem' : '0.25rem')};
     }
   }
-`;
+`
 
 export const LogoWrapper = styled.div<MinimisedProps>`
   display: flex;
@@ -107,13 +107,13 @@ export const LogoWrapper = styled.div<MinimisedProps>`
       }
     }
   }
-`;
+`
 
 export const Separator = styled.div`
   border-bottom: 1px solid var(--border-primary-color);
   width: 100%;
   margin: 1rem 1rem 0.5rem 0;
-`;
+`
 
 export const ConnectionSymbol = styled.div`
   width: 0.6rem;
@@ -134,4 +134,4 @@ export const ConnectionSymbol = styled.div`
     background: var(--status-danger-color);
     color: var(--status-danger-color);
   }
-`;
+`

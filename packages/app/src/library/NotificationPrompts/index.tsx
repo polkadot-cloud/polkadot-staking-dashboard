@@ -1,34 +1,34 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion'
 // import { useNotifications } from 'contexts/Notifications';
-import { setStateWithRef } from '@w3ux/utils';
+import { setStateWithRef } from '@w3ux/utils'
 import type {
   NotificationInterface,
   NotificationItem,
-} from 'controllers/Notifications/types';
-import { isCustomEvent } from 'controllers/utils';
-import { useRef, useState } from 'react';
-import { useEventListener } from 'usehooks-ts';
-import { Wrapper } from './Wrapper';
+} from 'controllers/Notifications/types'
+import { isCustomEvent } from 'controllers/utils'
+import { useRef, useState } from 'react'
+import { useEventListener } from 'usehooks-ts'
+import { Wrapper } from './Wrapper'
 
 export const NotificationPrompts = () => {
   // Store the notifications currently being displayed.
   const [notifications, setNotifications] = useState<NotificationInterface[]>(
     []
-  );
+  )
   // A ref is needed to access notifications state in event listener.
-  const notificationsRef = useRef(notifications);
+  const notificationsRef = useRef(notifications)
 
   // Adds a notification to the list of notifications.
   const handleAddNotification = (detail: NotificationItem) => {
     const newNotifications: NotificationInterface[] = [
       ...notificationsRef.current,
-    ];
-    newNotifications.push({ index: detail.index, item: detail });
-    setStateWithRef(newNotifications, setNotifications, notificationsRef);
-  };
+    ]
+    newNotifications.push({ index: detail.index, item: detail })
+    setStateWithRef(newNotifications, setNotifications, notificationsRef)
+  }
 
   // Removes a notification from state if its index exists.
   //
@@ -36,30 +36,30 @@ export const NotificationPrompts = () => {
   const handleDismissNotification = (index: number) => {
     const newNotifications = notificationsRef.current.filter(
       (notification) => notification.index !== index
-    );
-    setStateWithRef(newNotifications, setNotifications, notificationsRef);
-  };
+    )
+    setStateWithRef(newNotifications, setNotifications, notificationsRef)
+  }
 
   // Callback for notifications event listener.
   const notificationCallback = (e: Event) => {
     if (isCustomEvent(e)) {
-      const { task, ...rest } = e.detail;
+      const { task, ...rest } = e.detail
 
       switch (task) {
         case 'add':
-          handleAddNotification(rest);
-          break;
+          handleAddNotification(rest)
+          break
         case 'dismiss':
-          handleDismissNotification(rest.index);
-          break;
+          handleDismissNotification(rest.index)
+          break
         default:
       }
     }
-  };
+  }
 
   // Add event listener for notifications.
-  const ref = useRef<Document>(document);
-  useEventListener('notification', notificationCallback, ref);
+  const ref = useRef<Document>(document)
+  useEventListener('notification', notificationCallback, ref)
 
   return (
     <Wrapper>
@@ -67,7 +67,7 @@ export const NotificationPrompts = () => {
         {notifications.length > 0 &&
           notifications.map(
             (notification: NotificationInterface, i: number) => {
-              const { item, index } = notification;
+              const { item, index } = notification
 
               return (
                 <motion.li
@@ -84,16 +84,16 @@ export const NotificationPrompts = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => {
-                    handleDismissNotification(index);
+                    handleDismissNotification(index)
                   }}
                 >
                   {item.title && <h3>{item.title}</h3>}
                   {item.subtitle && <p>{item.subtitle}</p>}
                 </motion.li>
-              );
+              )
             }
           )}
       </AnimatePresence>
     </Wrapper>
-  );
-};
+  )
+}

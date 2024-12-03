@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { Locale } from 'date-fns';
+import type { Locale } from 'date-fns'
 
 export interface LocaleJson {
   [key: string]:
@@ -10,7 +10,7 @@ export interface LocaleJson {
     | string[][]
     | (string | string[])[]
     | LocaleJson
-    | LocaleJson[];
+    | LocaleJson[]
 }
 
 export type LocaleJsonValue =
@@ -19,9 +19,9 @@ export type LocaleJsonValue =
   | string[][]
   | (string | string[])[]
   | LocaleJson
-  | LocaleJson[];
+  | LocaleJson[]
 
 export interface LocaleEntry {
-  dateFormat: Locale;
-  label: string;
+  dateFormat: Locale
+  label: string
 }

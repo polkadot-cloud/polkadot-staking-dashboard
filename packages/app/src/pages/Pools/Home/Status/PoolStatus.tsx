@@ -4,35 +4,35 @@
 import {
   faExclamationTriangle,
   faLock,
-} from '@fortawesome/free-solid-svg-icons';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useNominationStatus } from 'hooks/useNominationStatus';
-import { useSyncing } from 'hooks/useSyncing';
-import { Stat } from 'library/Stat';
-import { useTranslation } from 'react-i18next';
+} from '@fortawesome/free-solid-svg-icons'
+import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useNominationStatus } from 'hooks/useNominationStatus'
+import { useSyncing } from 'hooks/useSyncing'
+import { Stat } from 'library/Stat'
+import { useTranslation } from 'react-i18next'
 
 export const PoolStatus = () => {
-  const { t } = useTranslation('pages');
-  const { syncing } = useSyncing(['active-pools']);
-  const { getNominationStatus } = useNominationStatus();
-  const { activePool, activePoolNominations } = useActivePool();
+  const { t } = useTranslation('pages')
+  const { syncing } = useSyncing(['active-pools'])
+  const { getNominationStatus } = useNominationStatus()
+  const { activePool, activePoolNominations } = useActivePool()
 
-  const poolStash = activePool?.addresses?.stash || '';
-  const { earningRewards, nominees } = getNominationStatus(poolStash, 'pool');
-  const poolState = activePool?.bondedPool?.state ?? null;
-  const poolNominating = !!activePoolNominations?.targets?.length;
+  const poolStash = activePool?.addresses?.stash || ''
+  const { earningRewards, nominees } = getNominationStatus(poolStash, 'pool')
+  const poolState = activePool?.bondedPool?.state ?? null
+  const poolNominating = !!activePoolNominations?.targets?.length
 
   // Determine pool state icon.
-  let poolStateIcon;
+  let poolStateIcon
   switch (poolState) {
     case 'Blocked':
-      poolStateIcon = faLock;
-      break;
+      poolStateIcon = faLock
+      break
     case 'Destroying':
-      poolStateIcon = faExclamationTriangle;
-      break;
+      poolStateIcon = faExclamationTriangle
+      break
     default:
-      poolStateIcon = undefined;
+      poolStateIcon = undefined
   }
 
   // Determine pool status - left side.
@@ -41,7 +41,7 @@ export const PoolStatus = () => {
       ? `${t('pools.locked')} / `
       : poolState === 'Destroying'
         ? `${t('pools.destroying')} / `
-        : '';
+        : ''
 
   // Determine pool status - right side.
   const poolStatusRight = syncing
@@ -54,7 +54,7 @@ export const PoolStatus = () => {
               ? t('pools.earningRewards')
               : t('pools.notEarningRewards')
           }`
-        : t('pools.waitingForActiveNominations');
+        : t('pools.waitingForActiveNominations')
 
   return (
     <Stat
@@ -63,5 +63,5 @@ export const PoolStatus = () => {
       helpKey="Nomination Status"
       stat={`${poolStatusLeft}${poolStatusRight}`}
     />
-  );
-};
+  )
+}
