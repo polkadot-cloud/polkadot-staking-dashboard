@@ -14,6 +14,7 @@ import type { SetupContextInterface } from 'contexts/Setup/types'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import type { UIContextInterface } from 'contexts/UI/types'
+import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
 import { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -28,8 +29,9 @@ export const Main = () => {
   const { networkData } = useNetwork()
   const { getBondedAccount } = useBonded()
   const { accounts } = useImportedAccounts()
-  const { getPoolMembership } = useBalances()
+  const { formatWithPrefs } = useValidators()
   const { activeAccount } = useActiveAccounts()
+  const { getPoolMembership, getNominations } = useBalances()
   const {
     getPoolSetupPercent,
     getNominatorSetupPercent,
@@ -40,6 +42,11 @@ export const Main = () => {
   const membership = getPoolMembership(activeAccount)
   const controller = getBondedAccount(activeAccount)
   const controllerDifferentToStash = addressDifferentToStash(controller)
+
+  const nominated = formatWithPrefs(getNominations(activeAccount))
+  const fullCommissionNominees = nominated.filter(
+    (nominee) => nominee.prefs.commission === 100
+  )
 
   const [pageConfig, setPageConfig] = useState<AnyJson>({
     categories: Object.assign(PageCategories),
@@ -71,7 +78,9 @@ export const Main = () => {
       if (uri === `${import.meta.env.BASE_URL}nominate`) {
         // configure Stake action
         const staking = !inNominatorSetup()
-        const warning = !syncing && controllerDifferentToStash
+        const warning =
+          (!syncing && controllerDifferentToStash) ||
+          (!inNominatorSetup() && fullCommissionNominees.length > 0)
 
         if (staking) {
           pages[i].action = {
