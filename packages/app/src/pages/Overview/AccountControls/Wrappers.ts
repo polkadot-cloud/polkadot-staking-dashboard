@@ -34,7 +34,7 @@ export const ItemWrapper = styled.div`
     font-size: 1.7rem;
     width: 0.75rem;
     z-index: 0;
-    margin-top: 0.1rem;
+    margin-top: 0;
     margin-right: 0.35rem;
 
     > div {
