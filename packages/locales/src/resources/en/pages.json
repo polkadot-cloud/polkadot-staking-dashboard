@@ -74,7 +74,9 @@
       "update": "Update",
       "validator_one": "{{count}} Validator",
       "validator_other": "{{count}} Validators",
-      "waitingForActiveNominations": "Waiting for Active Nominations"
+      "waitingForActiveNominations": "Waiting for Active Nominations",
+      "fullCommissionValidatorTitle": "You Have a Nomination with 100% Commission",
+      "fullCommissionValidatorSubtitle": "You will not receive staking rewards from validators who charge 100% commission. Consider updating your nominations."
     },
     "overview": {
       "activeEra": "Active Era",

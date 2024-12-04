@@ -4,7 +4,7 @@
 import { extractUrlValue } from '@w3ux/utils'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useState } from 'react'
-import type { PoolsTabsContextInterface } from '../types'
+import type { PoolsTabsContextInterface } from './types'
 
 export const PoolsTabsContext = createContext<PoolsTabsContextInterface>({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

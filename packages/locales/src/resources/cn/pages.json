@@ -72,7 +72,9 @@
       "unstakePromptWaitingForUnlocks": "等待己解锁变为可提取",
       "update": "更改",
       "validator": "{{count}} 提名人",
-      "waitingForActiveNominations": "等待有效提名"
+      "waitingForActiveNominations": "等待有效提名",
+      "fullCommissionValidatorTitle": "您有一个 100% 佣金的提名",
+      "fullCommissionValidatorSubtitle": "您将不会从收取 100% 佣金的验证者那里获得质押奖励。请考虑更新您的提名。"
     },
     "overview": {
       "activeEra": "活跃 Era",
