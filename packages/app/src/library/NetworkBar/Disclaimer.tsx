@@ -1,7 +1,7 @@
 // Copyright 2023 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
-import { Title } from 'library/Prompt/Title';
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
+import { Title } from 'library/Prompt/Title'
 
 export const Disclaimer = () => (
   <>
@@ -74,4 +74,4 @@ export const Disclaimer = () => (
       </p>
     </ModalPadding>
   </>
-);
+)
