@@ -43,7 +43,9 @@ export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
             <>
               {delegatorAddress && (
                 <div className="delegator">
-                  <Polkicon address={delegatorAddress || ''} />
+                  <div>
+                    <Polkicon address={delegatorAddress || ''} />
+                  </div>
                 </div>
               )}
               <div className="icon">
