@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useHelp } from 'contexts/Help';
-import { ButtonHelp, ButtonTertiary } from 'ui-buttons';
-import { HeaderWrapper } from './Wrappers';
-import type { HeaderProps } from './types';
+import { useHelp } from 'contexts/Help'
+import { ButtonHelp, ButtonTertiary } from 'ui-buttons'
+import { HeaderWrapper } from './Wrappers'
+import type { HeaderProps } from './types'
 
 export const Header = ({ items }: HeaderProps) => {
-  const { openHelp } = useHelp();
+  const { openHelp } = useHelp()
 
   return (
     <HeaderWrapper>
@@ -34,5 +34,5 @@ export const Header = ({ items }: HeaderProps) => {
         </div>
       ))}
     </HeaderWrapper>
-  );
-};
+  )
+}

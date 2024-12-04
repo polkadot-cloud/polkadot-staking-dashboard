@@ -1,14 +1,14 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyFunction, AnyJson } from '@w3ux/types';
-import type { ReactNode } from 'react';
-import { createContext, useContext, useState } from 'react';
+import type { AnyFunction, AnyJson } from '@w3ux/types'
+import type { ReactNode } from 'react'
+import { createContext, useContext, useState } from 'react'
 import {
   defaultExcludes,
   defaultFiltersInterface,
   defaultIncludes,
-} from './defaults';
+} from './defaults'
 import type {
   FilterItem,
   FilterItems,
@@ -18,72 +18,72 @@ import type {
   FilterSearches,
   FilterType,
   FiltersContextInterface,
-} from './types';
+} from './types'
 
 export const FiltersContext = createContext<FiltersContextInterface>(
   defaultFiltersInterface
-);
+)
 
-export const useFilters = () => useContext(FiltersContext);
+export const useFilters = () => useContext(FiltersContext)
 
 export const FiltersProvider = ({ children }: { children: ReactNode }) => {
   // groups along with their includes
-  const [includes, setIncludes] = useState<FilterItems>(defaultIncludes);
+  const [includes, setIncludes] = useState<FilterItems>(defaultIncludes)
 
   // groups along with their excludes.
-  const [excludes, setExcludes] = useState<FilterItems>(defaultExcludes);
+  const [excludes, setExcludes] = useState<FilterItems>(defaultExcludes)
 
   // groups along with their order.
-  const [orders, setOrders] = useState<FilterOrders>([]);
+  const [orders, setOrders] = useState<FilterOrders>([])
 
   // groups along with their search terms.
-  const [searchTerms, setSearchTerms] = useState<FilterSearches>([]);
+  const [searchTerms, setSearchTerms] = useState<FilterSearches>([])
 
   // Get stored includes or excludes for a group.
   const getFilters = (type: FilterType, group: string): string[] | null => {
-    const current = type === 'exclude' ? excludes : includes;
-    return current.find((e) => e.key === group)?.filters || null;
-  };
+    const current = type === 'exclude' ? excludes : includes
+    return current.find((e) => e.key === group)?.filters || null
+  }
 
   const setFilters = (t: FilterType, n: FilterItems) => {
     if (t === 'exclude') {
-      setExcludes(n);
+      setExcludes(n)
     } else {
-      setIncludes(n);
+      setIncludes(n)
     }
-  };
+  }
 
   // Toggle a filter for a group.
   // Adds the group to `excludes` or `includes` if it does not already exist.
   const toggleFilter = (t: FilterType, g: string, f: string) => {
-    const current = t === 'exclude' ? excludes : includes;
-    const exists = getFilters(t, g);
+    const current = t === 'exclude' ? excludes : includes
+    const exists = getFilters(t, g)
 
     if (!exists) {
-      const newFilters = [...current, { key: g, filters: [f] }];
-      setFilters(t, newFilters);
-      return;
+      const newFilters = [...current, { key: g, filters: [f] }]
+      setFilters(t, newFilters)
+      return
     }
     const newFilters = [...current]
       .map((e) => {
         if (e.key !== g) {
-          return e;
+          return e
         }
-        let { filters } = e;
+        let { filters } = e
 
         if (filters.includes(f)) {
-          filters.splice(filters.indexOf(f), 1);
+          filters.splice(filters.indexOf(f), 1)
         } else {
-          filters = filters.concat(f);
+          filters = filters.concat(f)
         }
         return {
           key: e.key,
           filters,
-        };
+        }
       })
-      .filter((e) => e.filters.length !== 0);
-    setFilters(t, newFilters);
-  };
+      .filter((e) => e.filters.length !== 0)
+    setFilters(t, newFilters)
+  }
 
   // Sets an array of filters to a group.
   const setMultiFilters = (
@@ -93,102 +93,102 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
     reset: boolean
   ) => {
     // get the current filters from the group.
-    const current = reset ? [] : t === 'exclude' ? excludes : includes;
+    const current = reset ? [] : t === 'exclude' ? excludes : includes
     // check if filters currently exist in the group.
-    const exists = getFilters(t, g);
+    const exists = getFilters(t, g)
 
     if (!exists) {
-      const newFilters = [...current, { key: g, filters: [...fs] }];
-      setFilters(t, newFilters);
-      return;
+      const newFilters = [...current, { key: g, filters: [...fs] }]
+      setFilters(t, newFilters)
+      return
     }
 
-    let newFilters: FilterItems;
+    let newFilters: FilterItems
     if (current.length) {
       newFilters = [...current].map((e) => {
         // return groups we are not manipulating.
         if (e.key !== g) {
-          return e;
+          return e
         }
 
-        let { filters } = e;
-        filters = filters.filter((f: string) => !fs.includes(f)).concat(fs);
+        let { filters } = e
+        filters = filters.filter((f: string) => !fs.includes(f)).concat(fs)
         return {
           key: e.key,
           filters,
-        };
-      });
+        }
+      })
     } else {
-      newFilters = [{ key: g, filters: fs }];
+      newFilters = [{ key: g, filters: fs }]
     }
-    setFilters(t, newFilters);
-  };
+    setFilters(t, newFilters)
+  }
 
   // Get the current order of a list or null.
   const getOrder = (g: string) =>
-    orders.find((o) => o.key === g)?.order || 'default';
+    orders.find((o) => o.key === g)?.order || 'default'
 
   // Sets an order key for a group.
   const setOrder = (g: string, o: string) => {
-    let newOrders = [];
+    let newOrders = []
     if (o === 'default') {
-      newOrders = [...orders].filter((order) => order.key !== g);
+      newOrders = [...orders].filter((order) => order.key !== g)
     } else if (orders.length) {
       // Attempt to replace the order record if it exists.
       newOrders = [...orders].map((order) =>
         order.key !== g ? order : { ...order, order: o }
-      );
+      )
       // If order for this key does not exist, add it.
       if (newOrders.find(({ key }) => key === g) === undefined) {
-        newOrders.push({ key: g, order: o });
+        newOrders.push({ key: g, order: o })
       }
     } else {
-      newOrders = [{ key: g, order: o }];
+      newOrders = [{ key: g, order: o }]
     }
-    setOrders(newOrders);
-  };
+    setOrders(newOrders)
+  }
 
   // Get the current search term of a list or null.
   const getSearchTerm = (g: string) =>
-    searchTerms.find((o) => o.key === g)?.searchTerm || null;
+    searchTerms.find((o) => o.key === g)?.searchTerm || null
 
   // Sets an order key for a group.
   const setSearchTerm = (g: string, t: string) => {
-    let newSearchTerms = [];
+    let newSearchTerms = []
     if (orders.length) {
       // Attempt to replace the search term if it exists.
       newSearchTerms = [...searchTerms].map((term) =>
         term.key !== g ? term : { ...term, searchTerm: t }
-      );
+      )
 
       // If search term for this key does not exist, add it.
       if (newSearchTerms.find(({ key }) => key === g) === undefined) {
-        newSearchTerms.push({ key: g, searchTerm: t });
+        newSearchTerms.push({ key: g, searchTerm: t })
       }
     } else {
-      newSearchTerms = [{ key: g, searchTerm: t }];
+      newSearchTerms = [{ key: g, searchTerm: t }]
     }
-    setSearchTerms(newSearchTerms);
-  };
+    setSearchTerms(newSearchTerms)
+  }
 
   // resets excludes for a given group
   const resetFilters = (t: FilterType, g: string) => {
-    const current = t === 'exclude' ? excludes : includes;
+    const current = t === 'exclude' ? excludes : includes
     setFilters(
       t,
       [...current].filter((e: FilterItem) => e.key !== g)
-    );
-  };
+    )
+  }
 
   // resets order for a given group
   const resetOrder = (g: string) => {
-    setOrders([...orders].filter((e: FilterOrder) => e.key !== g));
-  };
+    setOrders([...orders].filter((e: FilterOrder) => e.key !== g))
+  }
 
   // clear searchTerm from given group
   const clearSearchTerm = (g: string) => {
-    setSearchTerms([...searchTerms].filter((e: FilterSearch) => e.key !== g));
-  };
+    setSearchTerms([...searchTerms].filter((e: FilterSearch) => e.key !== g))
+  }
 
   // apply filters to list
   const applyFilters = (
@@ -197,22 +197,22 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
     list: AnyJson,
     fn: AnyFunction
   ) => {
-    const filtersToApply = getFilters(t, g);
+    const filtersToApply = getFilters(t, g)
 
     if (!filtersToApply) {
-      return list;
+      return list
     }
-    return fn(list, filtersToApply);
-  };
+    return fn(list, filtersToApply)
+  }
 
   // apply order to a list
   const applyOrder = (g: string, list: AnyJson, fn: AnyFunction) => {
-    const orderToApply = getOrder(g);
+    const orderToApply = getOrder(g)
     if (!orderToApply) {
-      return list;
+      return list
     }
-    return fn(list, orderToApply);
-  };
+    return fn(list, orderToApply)
+  }
 
   return (
     <FiltersContext.Provider
@@ -233,5 +233,5 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
     >
       {children}
     </FiltersContext.Provider>
-  );
-};
+  )
+}

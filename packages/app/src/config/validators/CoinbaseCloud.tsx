@@ -6,6 +6,6 @@ const CoinbaseCloud = () => (
       fill="#0a0b0d"
     />
   </svg>
-);
+)
 
-export default CoinbaseCloud;
+export default CoinbaseCloud

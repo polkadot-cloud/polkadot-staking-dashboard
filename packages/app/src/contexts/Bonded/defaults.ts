@@ -2,15 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { BondedContextInterface } from 'contexts/Bonded/types';
-import type { Nominations } from 'types';
+import type { BondedContextInterface } from 'contexts/Bonded/types'
+import type { Nominations } from 'types'
 
 export const nominations: Nominations = {
   targets: [],
   submittedIn: 0,
-};
+}
 
 export const defaultBondedContext: BondedContextInterface = {
   getBondedAccount: (address) => null,
   bondedAccounts: [],
-};
+}

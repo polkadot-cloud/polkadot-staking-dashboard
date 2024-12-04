@@ -1,24 +1,24 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { RefObject } from 'react';
-import { useEffect, useRef, useState } from 'react';
-import { DefinitionWrapper } from '../Wrappers';
-import type { DefinitionProps } from './types';
+import type { RefObject } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { DefinitionWrapper } from '../Wrappers'
+import type { DefinitionProps } from './types'
 
 export const Definition = ({ title, description }: DefinitionProps) => {
   // Store whether the definition is open or not.
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false)
 
   // Store the current height of the definition content.
-  const [height, setHeight] = useState<number>(0);
+  const [height, setHeight] = useState<number>(0)
 
-  const contentRef: RefObject<HTMLDivElement> = useRef(null);
+  const contentRef: RefObject<HTMLDivElement> = useRef(null)
 
   useEffect(() => {
-    const h = contentRef?.current?.clientHeight || 0;
-    setHeight(h);
-  }, [open]);
+    const h = contentRef?.current?.clientHeight || 0
+    setHeight(h)
+  }, [open])
 
   return (
     <DefinitionWrapper>
@@ -43,5 +43,5 @@ export const Definition = ({ title, description }: DefinitionProps) => {
         </div>
       </div>
     </DefinitionWrapper>
-  );
-};
+  )
+}

@@ -1,18 +1,18 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ActivePool, Nominations, PoolRoles, PoolUnlocking } from 'types';
+import type { ActivePool, Nominations, PoolRoles, PoolUnlocking } from 'types'
 
 export interface ActivePoolContextState {
-  isBonding: () => boolean;
-  isNominator: () => boolean;
-  isOwner: () => boolean;
-  isMember: () => boolean;
-  isDepositor: () => boolean;
-  isBouncer: () => boolean;
-  getPoolUnlocking: () => PoolUnlocking[];
-  getPoolRoles: () => PoolRoles;
-  setActivePoolId: (p: string) => void;
-  activePool: ActivePool | null;
-  activePoolNominations: Nominations | null;
+  isBonding: () => boolean
+  isNominator: () => boolean
+  isOwner: () => boolean
+  isMember: () => boolean
+  isDepositor: () => boolean
+  isBouncer: () => boolean
+  getPoolUnlocking: () => PoolUnlocking[]
+  getPoolRoles: () => PoolRoles
+  setActivePoolId: (p: string) => void
+  activePool: ActivePool | null
+  activePoolNominations: Nominations | null
 }

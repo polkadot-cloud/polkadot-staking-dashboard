@@ -1,14 +1,14 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Base } from 'api/base';
-import type { ChainId } from 'common-types';
-import type { PayeeSubmit } from 'contexts/Setup/types';
+import { Base } from 'api/base'
+import type { ChainId } from 'common-types'
+import type { PayeeSubmit } from 'contexts/Setup/types'
 
 export class NewNominator extends Base {
-  #payee: PayeeSubmit;
-  #bond: bigint;
-  #nominees: { type: string; value: string }[];
+  #payee: PayeeSubmit
+  #bond: bigint
+  #nominees: { type: string; value: string }[]
 
   constructor(
     network: ChainId,
@@ -16,10 +16,10 @@ export class NewNominator extends Base {
     payee: PayeeSubmit,
     nominees: { type: string; value: string }[]
   ) {
-    super(network);
-    this.#bond = bond;
-    this.#payee = payee;
-    this.#nominees = nominees;
+    super(network)
+    this.#bond = bond
+    this.#payee = payee
+    this.#nominees = nominees
   }
 
   tx() {
@@ -32,9 +32,9 @@ export class NewNominator extends Base {
         this.unsafeApi.tx.Staking.nominate({
           targets: this.#nominees,
         }),
-      ];
+      ]
     } catch (e) {
-      return null;
+      return null
     }
   }
 }

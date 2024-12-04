@@ -1,60 +1,60 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import BigNumber from 'bignumber.js';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useSetup } from 'contexts/Setup';
-import { useTxMeta } from 'contexts/TxMeta';
-import { BondFeedback } from 'library/Form/Bond/BondFeedback';
-import { NominateStatusBar } from 'library/Form/NominateStatusBar';
-import { Footer } from 'library/SetupSteps/Footer';
-import { Header } from 'library/SetupSteps/Header';
-import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import type { SetupStepProps } from 'library/SetupSteps/types';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import BigNumber from 'bignumber.js'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useSetup } from 'contexts/Setup'
+import { useTxMeta } from 'contexts/TxMeta'
+import { BondFeedback } from 'library/Form/Bond/BondFeedback'
+import { NominateStatusBar } from 'library/Form/NominateStatusBar'
+import { Footer } from 'library/SetupSteps/Footer'
+import { Header } from 'library/SetupSteps/Header'
+import { MotionContainer } from 'library/SetupSteps/MotionContainer'
+import type { SetupStepProps } from 'library/SetupSteps/types'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export const Bond = ({ section }: SetupStepProps) => {
-  const { t } = useTranslation('pages');
-  const { getTxSubmissionByTag } = useTxMeta();
-  const { activeAccount } = useActiveAccounts();
-  const { getNominatorSetup, setActiveAccountSetup } = useSetup();
-  const setup = getNominatorSetup(activeAccount);
-  const { progress } = setup;
+  const { t } = useTranslation('pages')
+  const { getTxSubmissionByTag } = useTxMeta()
+  const { activeAccount } = useActiveAccounts()
+  const { getNominatorSetup, setActiveAccountSetup } = useSetup()
+  const setup = getNominatorSetup(activeAccount)
+  const { progress } = setup
 
-  const txSubmission = getTxSubmissionByTag('nominatorSetup');
-  const fee = txSubmission?.fee || 0n;
+  const txSubmission = getTxSubmissionByTag('nominatorSetup')
+  const fee = txSubmission?.fee || 0n
 
   // either free to bond or existing setup value
-  const initialBondValue = progress.bond || '0';
+  const initialBondValue = progress.bond || '0'
 
   // store local bond amount for form control
   const [bond, setBond] = useState<{ bond: string }>({
     bond: initialBondValue,
-  });
+  })
 
   // bond valid
-  const [bondValid, setBondValid] = useState<boolean>(false);
+  const [bondValid, setBondValid] = useState<boolean>(false)
 
   // handler for updating bond
   const handleSetBond = (value: { bond: BigNumber }) => {
     // set this form's bond value.
     setBond({
       bond: value.bond.toString() || '0',
-    });
+    })
     // set nominator progress bond value.
     setActiveAccountSetup('nominator', {
       ...progress,
       bond: value.bond.toString(),
-    });
-  };
+    })
+  }
 
   // update bond on account change
   useEffect(() => {
     setBond({
       bond: initialBondValue,
-    });
-  }, [activeAccount]);
+    })
+  }, [activeAccount])
 
   // apply initial bond value to setup progress
   useEffect(() => {
@@ -63,9 +63,9 @@ export const Bond = ({ section }: SetupStepProps) => {
       setActiveAccountSetup('nominator', {
         ...progress,
         bond: initialBondValue,
-      });
+      })
     }
-  }, [setup.section]);
+  }, [setup.section])
 
   return (
     <>
@@ -91,5 +91,5 @@ export const Bond = ({ section }: SetupStepProps) => {
         <Footer complete={bondValid} bondFor="nominator" />
       </MotionContainer>
     </>
-  );
-};
+  )
+}

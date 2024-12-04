@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { MenuContextInterface } from './types';
+import type { MenuContextInterface } from './types'
 
 export const defaultMenuContext: MenuContextInterface = {
   open: false,
@@ -13,4 +13,4 @@ export const defaultMenuContext: MenuContextInterface = {
   closeMenu: () => {},
   setMenuInner: (newInner) => {},
   checkMenuPosition: (menuRef) => {},
-};
+}

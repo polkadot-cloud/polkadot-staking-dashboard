@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useSize } from '@w3ux/hooks';
-import type { AnyJson } from '@w3ux/types';
-import BigNumber from 'bignumber.js';
+import { useSize } from '@w3ux/hooks'
+import type { AnyJson } from '@w3ux/types'
+import BigNumber from 'bignumber.js'
 import {
   BarElement,
   CategoryScale,
@@ -14,20 +14,20 @@ import {
   PointElement,
   Title,
   Tooltip,
-} from 'chart.js';
-import { useHelp } from 'contexts/Help';
-import { useNetwork } from 'contexts/Network';
-import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
-import { useTheme } from 'contexts/Themes';
-import { useUi } from 'contexts/UI';
-import { formatSize } from 'library/Graphs/Utils';
-import { useRef } from 'react';
-import { Line } from 'react-chartjs-2';
-import { useTranslation } from 'react-i18next';
-import graphColors from 'styles/graphs/index.json';
-import { ButtonHelp } from 'ui-buttons';
-import type { OverviewSectionProps } from '../types';
-import { GraphWrapper, HeadingWrapper } from '../Wrappers';
+} from 'chart.js'
+import { useHelp } from 'contexts/Help'
+import { useNetwork } from 'contexts/Network'
+import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
+import { useTheme } from 'contexts/Themes'
+import { useUi } from 'contexts/UI'
+import { formatSize } from 'library/Graphs/Utils'
+import { useRef } from 'react'
+import { Line } from 'react-chartjs-2'
+import { useTranslation } from 'react-i18next'
+import graphColors from 'styles/graphs/index.json'
+import { ButtonHelp } from 'ui-buttons'
+import type { OverviewSectionProps } from '../types'
+import { GraphWrapper, HeadingWrapper } from '../Wrappers'
 
 ChartJS.register(
   CategoryScale,
@@ -38,31 +38,31 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend
-);
+)
 
 export const PerformanceGraph = ({
   bondedPool,
   performanceKey,
   graphSyncing,
 }: OverviewSectionProps) => {
-  const { t } = useTranslation();
-  const { mode } = useTheme();
-  const { openHelp } = useHelp();
-  const { containerRefs } = useUi();
-  const { colors } = useNetwork().networkData;
-  const { getPoolRewardPoints } = usePoolPerformance();
+  const { t } = useTranslation()
+  const { mode } = useTheme()
+  const { openHelp } = useHelp()
+  const { containerRefs } = useUi()
+  const { colors } = useNetwork().networkData
+  const { getPoolRewardPoints } = usePoolPerformance()
 
-  const poolRewardPoints = getPoolRewardPoints(performanceKey);
-  const rawEraRewardPoints = poolRewardPoints[bondedPool.addresses.stash] || {};
+  const poolRewardPoints = getPoolRewardPoints(performanceKey)
+  const rawEraRewardPoints = poolRewardPoints[bondedPool.addresses.stash] || {}
 
   // Ref to the graph container.
-  const graphInnerRef = useRef<HTMLDivElement>(null);
+  const graphInnerRef = useRef<HTMLDivElement>(null)
 
   // Get the size of the graph container.
   const size = useSize(graphInnerRef, {
     outerElement: containerRefs?.mainInterface,
-  });
-  const { width, height } = formatSize(size, 150);
+  })
+  const { width, height } = formatSize(size, 150)
 
   // Format reward points as an array of strings, or an empty array if syncing.
   const dataset = graphSyncing
@@ -74,23 +74,23 @@ export const PerformanceGraph = ({
             new BigNumber(v).toString(),
           ])
         )
-      );
+      )
 
   // Format labels, only displaying the first and last era.
-  const labels = Object.keys(rawEraRewardPoints).map(() => '');
+  const labels = Object.keys(rawEraRewardPoints).map(() => '')
 
-  const firstEra = Object.keys(rawEraRewardPoints)[0];
+  const firstEra = Object.keys(rawEraRewardPoints)[0]
   labels[0] = firstEra
     ? `${t('era', { ns: 'library' })} ${Object.keys(rawEraRewardPoints)[0]}`
-    : '';
+    : ''
 
-  const lastEra = Object.keys(rawEraRewardPoints)[labels.length - 1];
+  const lastEra = Object.keys(rawEraRewardPoints)[labels.length - 1]
   labels[labels.length - 1] = lastEra
     ? `${t('era', { ns: 'library' })} ${Object.keys(rawEraRewardPoints)[labels.length - 1]}`
-    : '';
+    : ''
 
   // Use primary color for bars.
-  const color = colors.primary[mode];
+  const color = colors.primary[mode]
 
   const options = {
     responsive: true,
@@ -152,7 +152,7 @@ export const PerformanceGraph = ({
         },
       },
     },
-  };
+  }
 
   const data = {
     labels,
@@ -166,7 +166,7 @@ export const PerformanceGraph = ({
         borderRadius: 3,
       },
     ],
-  };
+  }
 
   return (
     <div>
@@ -193,5 +193,5 @@ export const PerformanceGraph = ({
         </div>
       </GraphWrapper>
     </div>
-  );
-};
+  )
+}

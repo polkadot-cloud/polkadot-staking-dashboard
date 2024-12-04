@@ -1,26 +1,26 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { enGB, zhCN } from 'date-fns/locale';
-import i18next from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import baseEn from './resources/en/base.json';
-import helpEn from './resources/en/help.json';
-import libEn from './resources/en/library.json';
-import modalsEn from './resources/en/modals.json';
-import pagesEn from './resources/en/pages.json';
-import tipsEn from './resources/en/tips.json';
-import type { LocaleEntry } from './types';
-import { doDynamicImport, getInitialLanguage, getResources } from './util';
+import { enGB, zhCN } from 'date-fns/locale'
+import i18next from 'i18next'
+import { initReactI18next } from 'react-i18next'
+import baseEn from './resources/en/base.json'
+import helpEn from './resources/en/help.json'
+import libEn from './resources/en/library.json'
+import modalsEn from './resources/en/modals.json'
+import pagesEn from './resources/en/pages.json'
+import tipsEn from './resources/en/tips.json'
+import type { LocaleEntry } from './types'
+import { doDynamicImport, getInitialLanguage, getResources } from './util'
 
 // The default locale.
-export const DefaultLocale = 'en';
+export const DefaultLocale = 'en'
 
 // Available locales as key value pairs.
 export const locales: Record<string, LocaleEntry> = {
   en: { dateFormat: enGB, label: 'English' },
   cn: { dateFormat: zhCN, label: '中文' },
-};
+}
 
 // Supported namespaces.
 export const lngNamespaces: string[] = [
@@ -30,7 +30,7 @@ export const lngNamespaces: string[] = [
   'modals',
   'pages',
   'tips',
-];
+]
 
 // Default structure of language resources.
 export const fallbackResources = {
@@ -40,17 +40,17 @@ export const fallbackResources = {
   ...modalsEn,
   ...pagesEn,
   ...tipsEn,
-};
+}
 
 // Get initial language.
-const lng: string = getInitialLanguage();
+const lng: string = getInitialLanguage()
 
 // Get default resources and whether a dynamic load is required for
 // the active language.
-const { resources, dynamicLoad } = getResources(lng);
+const { resources, dynamicLoad } = getResources(lng)
 
 // Default language to show before any dynamic load
-const defaultLng = dynamicLoad ? DefaultLocale : lng;
+const defaultLng = dynamicLoad ? DefaultLocale : lng
 
 // Configure i18n object.
 i18next
@@ -61,12 +61,12 @@ i18next
     fallbackLng: DefaultLocale,
     lng: defaultLng,
     resources,
-  });
+  })
 
 // Dynamically load default language resources if needed.
 if (dynamicLoad) {
-  doDynamicImport(lng, i18next);
+  doDynamicImport(lng, i18next)
 }
 
-export * from './util';
-export { i18next };
+export * from './util'
+export { i18next }

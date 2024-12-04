@@ -1,22 +1,22 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useTooltip } from 'contexts/Tooltip';
-import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators';
-import { Notifications } from 'controllers/Notifications';
-import { TooltipTrigger } from 'library/ListItem/Wrappers';
-import { useTranslation } from 'react-i18next';
-import type { FavoriteProps } from '../types';
+import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useTooltip } from 'contexts/Tooltip'
+import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
+import { Notifications } from 'controllers/Notifications'
+import { TooltipTrigger } from 'library/ListItem/Wrappers'
+import { useTranslation } from 'react-i18next'
+import type { FavoriteProps } from '../types'
 
 export const FavoriteValidator = ({ address }: FavoriteProps) => {
-  const { t } = useTranslation('library');
-  const { setTooltipTextAndOpen } = useTooltip();
-  const { favorites, addFavorite, removeFavorite } = useFavoriteValidators();
+  const { t } = useTranslation('library')
+  const { setTooltipTextAndOpen } = useTooltip()
+  const { favorites, addFavorite, removeFavorite } = useFavoriteValidators()
 
-  const isFavorite = favorites.includes(address);
+  const isFavorite = favorites.includes(address)
 
   const notificationFavorite = !isFavorite
     ? {
@@ -26,11 +26,11 @@ export const FavoriteValidator = ({ address }: FavoriteProps) => {
     : {
         title: t('favoriteValidatorRemoved'),
         subtitle: address,
-      };
+      }
 
   const tooltipText = `${isFavorite ? `${t('remove')}` : `${t('add')}`} ${t(
     'favorite'
-  )}`;
+  )}`
 
   return (
     <div className="label">
@@ -40,11 +40,11 @@ export const FavoriteValidator = ({ address }: FavoriteProps) => {
         onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
         onClick={() => {
           if (isFavorite) {
-            removeFavorite(address);
+            removeFavorite(address)
           } else {
-            addFavorite(address);
+            addFavorite(address)
           }
-          Notifications.emit(notificationFavorite);
+          Notifications.emit(notificationFavorite)
         }}
       />
       <button type="button" className={isFavorite ? 'active' : undefined}>
@@ -54,5 +54,5 @@ export const FavoriteValidator = ({ address }: FavoriteProps) => {
         />
       </button>
     </div>
-  );
-};
+  )
+}

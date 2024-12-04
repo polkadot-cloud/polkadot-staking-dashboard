@@ -1,36 +1,36 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyApi, NetworkId } from 'common-types';
-import { Apis } from 'controllers/Apis';
-import type { Unsubscribable } from 'controllers/Subscriptions/types';
-import { combineLatest, type Subscription } from 'rxjs';
-import type { PoolMemberBatchEvent } from './types';
+import type { AnyApi, NetworkId } from 'common-types'
+import { Apis } from 'controllers/Apis'
+import type { Unsubscribable } from 'controllers/Subscriptions/types'
+import { combineLatest, type Subscription } from 'rxjs'
+import type { PoolMemberBatchEvent } from './types'
 
 export class PoolMembers implements Unsubscribable {
   // The associated network for this instance.
-  #network: NetworkId;
+  #network: NetworkId
 
   // The batch key.
-  #key: string;
-  #addresses: string[];
-  result: AnyApi;
+  #key: string
+  #addresses: string[]
+  result: AnyApi
 
   // Active subscription.
-  #sub: Subscription;
+  #sub: Subscription
 
   constructor(network: NetworkId, key: string, addresses: string[]) {
-    this.#network = network;
-    this.#key = key;
-    this.#addresses = addresses;
-    this.subscribe();
+    this.#network = network
+    this.#key = key
+    this.#addresses = addresses
+    this.subscribe()
   }
 
   subscribe = async (): Promise<void> => {
     try {
-      const api = Apis.getApi(this.#network);
+      const api = Apis.getApi(this.#network)
       if (api && this.#sub === undefined) {
-        const bestOrFinalized = 'best';
+        const bestOrFinalized = 'best'
 
         const sub = combineLatest(
           this.#addresses.map((address) =>
@@ -43,7 +43,7 @@ export class PoolMembers implements Unsubscribable {
           const formatted = results
             .map((result) => {
               if (!result) {
-                return undefined;
+                return undefined
               }
 
               return {
@@ -59,34 +59,34 @@ export class PoolMembers implements Unsubscribable {
                     ]
                   )
                 ),
-              };
+              }
             })
-            .filter((result) => result !== undefined);
+            .filter((result) => result !== undefined)
 
           const detail: PoolMemberBatchEvent = {
             key: this.#key,
             addresses: this.#addresses,
             poolMembers: formatted,
-          };
+          }
 
           document.dispatchEvent(
             new CustomEvent('new-pool-members-batch', {
               detail,
             })
-          );
-        });
+          )
+        })
 
-        this.#sub = sub;
+        this.#sub = sub
       }
     } catch (e) {
       // Subscription failed.
     }
-  };
+  }
 
   // Unsubscribe from class subscription.
   unsubscribe = (): void => {
     if (typeof this.#sub?.unsubscribe === 'function') {
-      this.#sub.unsubscribe();
+      this.#sub.unsubscribe()
     }
-  };
+  }
 }

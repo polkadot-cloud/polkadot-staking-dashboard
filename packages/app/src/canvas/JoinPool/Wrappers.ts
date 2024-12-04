@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const JoinPoolInterfaceWrapper = styled.div`
   display: flex;
@@ -89,7 +89,7 @@ export const JoinPoolInterfaceWrapper = styled.div`
       }
     }
   }
-`;
+`
 
 export const PreloaderWrapper = styled.div`
   background-color: var(--background-floating-card);
@@ -97,7 +97,7 @@ export const PreloaderWrapper = styled.div`
   height: 2rem;
   border-radius: 2rem;
   opacity: 0.4;
-`;
+`
 
 export const JoinFormWrapper = styled.div`
   background: var(--background-canvas-card);
@@ -168,7 +168,7 @@ export const JoinFormWrapper = styled.div`
   > .submit {
     margin-top: 2.5rem;
   }
-`;
+`
 
 export const HeadingWrapper = styled.div`
   margin: 0.5rem 0.5rem 0.5rem 0rem;
@@ -242,7 +242,7 @@ export const HeadingWrapper = styled.div`
       }
     }
   }
-`;
+`
 
 export const AddressesWrapper = styled.div`
   flex: 1;
@@ -295,7 +295,7 @@ export const AddressesWrapper = styled.div`
       }
     }
   }
-`;
+`
 
 // Wrapper that houses the chart, allowing it to be responsive.
 export const GraphWrapper = styled.div`
@@ -319,7 +319,7 @@ export const GraphWrapper = styled.div`
       padding-right: 1.5rem;
     }
   }
-`;
+`
 
 // Element used to wrap graph and pool stats, allowing flex ordering on smaller screens.
 export const GraphLayoutWrapper = styled.div`
@@ -345,10 +345,10 @@ export const GraphLayoutWrapper = styled.div`
       }
     }
   }
-`;
+`
 
 export const NominationsWrapper = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-`;
+`

@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useHelp } from 'contexts/Help';
-import { ButtonHelp } from 'ui-buttons';
-import type { LegendItemProps } from './types';
+import { useHelp } from 'contexts/Help'
+import { ButtonHelp } from 'ui-buttons'
+import type { LegendItemProps } from './types'
 
 export const LegendItem = ({
   dataClass,
@@ -11,7 +11,7 @@ export const LegendItem = ({
   helpKey,
   button,
 }: LegendItemProps) => {
-  const { openHelp } = useHelp();
+  const { openHelp } = useHelp()
 
   return (
     <h4>
@@ -21,5 +21,5 @@ export const LegendItem = ({
       ) : null}
       {button && button}
     </h4>
-  );
-};
+  )
+}

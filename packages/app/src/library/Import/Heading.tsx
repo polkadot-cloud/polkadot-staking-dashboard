@@ -4,12 +4,12 @@
 import {
   faChevronRight,
   faCircleMinus,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useTranslation } from 'react-i18next';
-import { ButtonText } from 'ui-buttons';
-import { HeadingWrapper } from './Wrappers';
-import type { HeadingProps } from './types';
+} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useTranslation } from 'react-i18next'
+import { ButtonText } from 'ui-buttons'
+import { HeadingWrapper } from './Wrappers'
+import type { HeadingProps } from './types'
 
 export const Heading = ({
   connectTo,
@@ -18,7 +18,7 @@ export const Heading = ({
   disabled,
   handleReset,
 }: HeadingProps) => {
-  const { t } = useTranslation('library');
+  const { t } = useTranslation('library')
 
   return (
     <HeadingWrapper>
@@ -43,7 +43,7 @@ export const Heading = ({
             iconLeft={faCircleMinus}
             onClick={() => {
               if (typeof handleReset === 'function') {
-                handleReset();
+                handleReset()
               }
             }}
             disabled={disabled || false}
@@ -52,5 +52,5 @@ export const Heading = ({
         )}
       </section>
     </HeadingWrapper>
-  );
-};
+  )
+}

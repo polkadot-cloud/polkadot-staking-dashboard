@@ -1,21 +1,21 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { capitalizeFirstLetter } from '@w3ux/utils';
-import { useNetwork } from 'contexts/Network';
-import { useSyncing } from 'hooks/useSyncing';
-import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
-import { useTranslation } from 'react-i18next';
-import { planckToUnitBn } from 'utils';
-import type { EraStatusProps } from '../types';
+import { capitalizeFirstLetter } from '@w3ux/utils'
+import { useNetwork } from 'contexts/Network'
+import { useSyncing } from 'hooks/useSyncing'
+import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers'
+import { useTranslation } from 'react-i18next'
+import { planckToUnitBn } from 'utils'
+import type { EraStatusProps } from '../types'
 
 export const EraStatus = ({ noMargin, status, totalStake }: EraStatusProps) => {
-  const { t } = useTranslation('library');
-  const { syncing } = useSyncing();
-  const { unit, units } = useNetwork().networkData;
+  const { t } = useTranslation('library')
+  const { syncing } = useSyncing()
+  const { unit, units } = useNetwork().networkData
 
   // Fallback to `waiting` status if still syncing.
-  const validatorStatus = syncing ? 'waiting' : status;
+  const validatorStatus = syncing ? 'waiting' : status
 
   return (
     <ValidatorStatusWrapper $status={validatorStatus} $noMargin={noMargin}>
@@ -29,5 +29,5 @@ export const EraStatus = ({ noMargin, status, totalStake }: EraStatusProps) => {
             : capitalizeFirstLetter(t(`${validatorStatus}`) ?? '')}
       </h5>
     </ValidatorStatusWrapper>
-  );
-};
+  )
+}

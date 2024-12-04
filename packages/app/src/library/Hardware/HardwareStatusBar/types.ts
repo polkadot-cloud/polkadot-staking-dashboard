@@ -1,32 +1,32 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ComponentBase } from '@w3ux/types';
-import type { FunctionComponent, SVGProps } from 'react';
+import type { ComponentBase } from '@w3ux/types'
+import type { FunctionComponent, SVGProps } from 'react'
 
 export type HardwareStatusBarProps = ComponentBase & {
   // whether to animate in the status bar.
-  show?: boolean;
+  show?: boolean
   // help key and handler related to current status.
   help?: {
     // help key to display.
-    helpKey: string;
+    helpKey: string
     // handle help click.
-    handleHelp: (key: string) => void;
-  };
+    handleHelp: (key: string) => void
+  }
   // whether import process is in progress.
-  inProgress: boolean;
+  inProgress: boolean
   // text to display.
-  text: string;
+  text: string
   // icon to display.
-  Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
+  Icon: FunctionComponent<SVGProps<SVGSVGElement>>
   // handle cancel import.
-  handleCancel?: () => void;
+  handleCancel?: () => void
   // handle finish import.
-  handleDone?: () => void;
+  handleDone?: () => void
   // required component translations.
   t: {
-    tDone: string;
-    tCancel: string;
-  };
-};
+    tDone: string
+    tCancel: string
+  }
+}

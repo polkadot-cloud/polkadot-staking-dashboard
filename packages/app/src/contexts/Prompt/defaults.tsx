@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { PromptContextInterface } from './types';
+import type { PromptContextInterface } from './types'
 
 export const defaultPromptContext: PromptContextInterface = {
   setOnClosePrompt: (value) => {},
@@ -15,4 +15,4 @@ export const defaultPromptContext: PromptContextInterface = {
   status: 0,
   Prompt: null,
   setCloseOnOutsideClick: (canClose) => {},
-};
+}

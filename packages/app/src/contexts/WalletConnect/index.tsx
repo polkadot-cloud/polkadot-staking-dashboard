@@ -1,64 +1,64 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyFunction, AnyJson } from '@w3ux/types';
-import { WalletConnectModal } from '@walletconnect/modal';
-import UniversalProvider from '@walletconnect/universal-provider';
-import { getSdkError } from '@walletconnect/utils';
-import { useApi } from 'contexts/Api';
-import { useNetwork } from 'contexts/Network';
-import { Apis } from 'controllers/Apis';
-import { getUnixTime } from 'date-fns';
-import type { ReactNode } from 'react';
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import * as defaults from './defaults';
-import type { WalletConnectContextInterface } from './types';
+import type { AnyFunction, AnyJson } from '@w3ux/types'
+import { WalletConnectModal } from '@walletconnect/modal'
+import UniversalProvider from '@walletconnect/universal-provider'
+import { getSdkError } from '@walletconnect/utils'
+import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
+import { Apis } from 'controllers/Apis'
+import { getUnixTime } from 'date-fns'
+import type { ReactNode } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import * as defaults from './defaults'
+import type { WalletConnectContextInterface } from './types'
 
 export const WalletConnectContext =
-  createContext<WalletConnectContextInterface>(defaults.defaultWalletConnect);
+  createContext<WalletConnectContextInterface>(defaults.defaultWalletConnect)
 
-export const useWalletConnect = () => useContext(WalletConnectContext);
+export const useWalletConnect = () => useContext(WalletConnectContext)
 
 // `projectId` is configured on `https://cloud.walletconnect.com/`.
-const wcProjectId = 'dcb8a7c6d01ace818286c005f75d70b9';
+const wcProjectId = 'dcb8a7c6d01ace818286c005f75d70b9'
 
 export const WalletConnectProvider = ({
   children,
 }: {
-  children: ReactNode;
+  children: ReactNode
 }) => {
-  const { network } = useNetwork();
+  const { network } = useNetwork()
   const {
     isReady,
     chainSpecs: { genesisHash },
-  } = useApi();
+  } = useApi()
 
   // Check if the API is present.
-  const apiPresent = !!Apis.get(network);
+  const apiPresent = !!Apis.get(network)
 
   // The WalletConnect provider.
-  const wcProvider = useRef<UniversalProvider | null>(null);
+  const wcProvider = useRef<UniversalProvider | null>(null)
 
   // The WalletConnect modal handler.
-  const wcModal = useRef<WalletConnectModal | null>(null);
+  const wcModal = useRef<WalletConnectModal | null>(null)
 
   // Track whether pairing has been initiated.
-  const pairingInitiated = useRef<boolean>(false);
+  const pairingInitiated = useRef<boolean>(false)
 
   // Connect metadata for the WalletConnect provider.
   const [wcMeta, setWcMeta] = useState<{
-    uri: string | undefined;
-    approval: AnyFunction;
-  } | null>(null);
+    uri: string | undefined
+    approval: AnyFunction
+  } | null>(null)
 
   // Store whether the provider has been wcInitialized.
-  const [wcInitialized, setWcInitialized] = useState<boolean>(false);
+  const [wcInitialized, setWcInitialized] = useState<boolean>(false)
 
   // Store whether the wallet connect session is active.
-  const [wcSessionActive, setWcSessionActive] = useState<boolean>(false);
+  const [wcSessionActive, setWcSessionActive] = useState<boolean>(false)
 
   // Store the set of chain id the most recent session is connected to.
-  const sessionChain = useRef<string>();
+  const sessionChain = useRef<string>()
 
   // Init WalletConnect provider & modal, and update as wcInitialized.
   const initProvider = async () => {
@@ -72,47 +72,47 @@ export const WalletConnectProvider = ({
         icons: ['https://staking.polkadot.cloud/img/wc-icon.png'],
       },
       relayUrl: 'wss://relay.walletconnect.com',
-    });
+    })
 
     const modal = new WalletConnectModal({
       projectId: wcProjectId,
-    });
+    })
 
-    wcProvider.current = provider;
+    wcProvider.current = provider
 
     // Subscribe to session delete
     wcProvider.current.on('session_delete', () => {
-      disconnectWcSession();
-    });
+      disconnectWcSession()
+    })
 
-    wcModal.current = modal;
-    setWcInitialized(true);
-  };
+    wcModal.current = modal
+    setWcInitialized(true)
+  }
 
   // Connect WalletConnect provider and retrieve metadata.
   const connectProvider = async () => {
     if (!wcInitialized) {
-      return;
+      return
     }
 
     // Disconnect from current session if it exists.
     if (pairingInitiated.current) {
-      await disconnectWcSession();
+      await disconnectWcSession()
     }
 
     // Update most recent connected chain.
-    sessionChain.current = network;
+    sessionChain.current = network
 
-    const caips = [`polkadot:${genesisHash.substring(2).substring(0, 32)}`];
+    const caips = [`polkadot:${genesisHash.substring(2).substring(0, 32)}`]
 
     // If there are no chains connected, return early.
     if (!caips.length) {
-      return;
+      return
     }
 
     // If an existing session exists, get the topic and add to `connect` to restore it. NOTE:
     // Initialisation has already happened, so we know the provider exists.
-    const pairingTopic = wcProvider.current!.session?.pairingTopic;
+    const pairingTopic = wcProvider.current!.session?.pairingTopic
 
     const namespaces = {
       polkadot: {
@@ -120,59 +120,59 @@ export const WalletConnectProvider = ({
         chains: caips,
         events: ['chainChanged", "accountsChanged'],
       },
-    };
+    }
 
     const connectConfig = {
       optionalNamespaces: namespaces,
-    };
+    }
 
     // If no pairing topic or session exists, go ahead and create one, and store meta data for
     // `wcModal` to use.
-    let expiry;
-    let expired = false;
+    let expiry
+    let expired = false
     if (!pairingTopic) {
       const { uri, approval } =
-        await wcProvider.current!.client.connect(connectConfig);
-      setWcMeta({ uri, approval });
+        await wcProvider.current!.client.connect(connectConfig)
+      setWcMeta({ uri, approval })
 
       // Check session expiry and disconnect from session if expired.
-      expiry = wcProvider.current!.session?.expiry;
+      expiry = wcProvider.current!.session?.expiry
     }
 
     // If a session has been connected to, check if it has not expired. If it has, disconnect from
     // the session (user will need to manually connect to a new session in the UI).
     if (expiry) {
-      const nowUnix = getUnixTime(new Date());
+      const nowUnix = getUnixTime(new Date())
       if (nowUnix > expiry) {
-        disconnectWcSession();
-        expired = true;
+        disconnectWcSession()
+        expired = true
       }
     }
 
     // If the session has not expired, flag as an initiated session.
     if (!expired) {
-      pairingInitiated.current = true;
+      pairingInitiated.current = true
       if (pairingTopic) {
-        setWcSessionActive(true);
+        setWcSessionActive(true)
       }
     }
-  };
+  }
 
   // Update session namespaces. NOTE: This method is currently not in use due to a
   // default chain error upon reconnecting to the session.
   const updateWcSession = async () => {
     if (!wcInitialized) {
-      return;
+      return
     }
     // Update most recent connected chains.
-    sessionChain.current = network;
-    const caips = [`polkadot:${genesisHash.substring(2).substring(0, 32)}`];
+    sessionChain.current = network
+    const caips = [`polkadot:${genesisHash.substring(2).substring(0, 32)}`]
 
     // If there are no chains connected, return early.
     if (!caips.length) {
-      return;
+      return
     }
-    const topic = wcProvider.current!.session?.topic;
+    const topic = wcProvider.current!.session?.topic
     if (topic) {
       await wcProvider.current!.client.update({
         topic,
@@ -184,79 +184,79 @@ export const WalletConnectProvider = ({
             events: ['chainChanged", "accountsChanged'],
           },
         },
-      });
+      })
     }
-  };
+  }
 
   // Initiate a new Wallet Connect session, if not already wcInitialized.
   const initializeWcSession = async () => {
     if (wcInitialized) {
-      let wcSession;
+      let wcSession
       if (wcProvider.current?.session) {
-        wcSession = wcProvider.current.session;
+        wcSession = wcProvider.current.session
       } else {
-        wcSession = await initializeNewSession();
+        wcSession = await initializeNewSession()
       }
 
-      setWcSessionActive(true);
-      return wcSession;
+      setWcSessionActive(true)
+      return wcSession
     }
-    return null;
-  };
+    return null
+  }
 
   // Handle `approval()` by summoning a new modal and initiating a new Wallet Connect session.
   const initializeNewSession = async () => {
     if (!wcInitialized) {
-      return;
+      return
     }
 
     // Summon Wallet Connect modal that presents QR Code.
     if (wcMeta?.uri) {
-      wcModal.current!.openModal({ uri: wcMeta.uri });
+      wcModal.current!.openModal({ uri: wcMeta.uri })
     }
 
     // Get session from approval.
-    const newWcSession = await wcMeta?.approval();
+    const newWcSession = await wcMeta?.approval()
 
     // Close modal on approval completion.
-    wcModal.current!.closeModal();
+    wcModal.current!.closeModal()
 
     // Update session data in provider.
     if (wcProvider.current) {
-      wcProvider.current.session = newWcSession;
+      wcProvider.current.session = newWcSession
     }
 
-    return newWcSession;
-  };
+    return newWcSession
+  }
 
   // Disconnect from current session.
   const disconnectWcSession = async () => {
     if (!wcProvider.current) {
-      return;
+      return
     }
 
-    const topic = wcProvider.current.session?.topic;
+    const topic = wcProvider.current.session?.topic
     if (topic) {
       await wcProvider.current.client.disconnect({
         topic,
         reason: getSdkError('USER_DISCONNECTED'),
-      });
-      delete wcProvider.current.session;
+      })
+      delete wcProvider.current.session
     }
 
     // Reset session state data.
-    pairingInitiated.current = false;
-    sessionChain.current = network;
-    setWcSessionActive(false);
-  };
+    pairingInitiated.current = false
+    sessionChain.current = network
+    setWcSessionActive(false)
+  }
 
   // Attempt to sign a transaction and receive a signature.
   const signWcTx = async (payload: AnyJson): Promise<{ signature: string }> => {
     if (!wcProvider.current || !wcProvider.current.session?.topic) {
-      return { signature: '0x' };
+      return { signature: '0x' }
     }
-    const topic = wcProvider.current.session.topic;
-    const caip = `polkadot:${genesisHash.substring(2).substring(0, 32)}`;
+    const topic = wcProvider.current.session.topic
+    const caip = `polkadot:${genesisHash.substring(2).substring(0, 32)}`
     return await wcProvider.current.client.request({
       chainId: caip,
       topic,
@@ -267,52 +267,52 @@ export const WalletConnectProvider = ({
           transactionPayload: payload,
         },
       },
-    });
-  };
+    })
+  }
 
   const fetchAddresses = async (): Promise<string[]> => {
     // Retrieve a new session or get current one.
-    const wcSession = await initializeWcSession();
+    const wcSession = await initializeWcSession()
     if (wcSession === null) {
-      return [];
+      return []
     }
 
     // Get accounts from session.
     const walletConnectAccounts = Object.values(wcSession.namespaces)
       .map((namespace: AnyJson) => namespace.accounts)
-      .flat();
+      .flat()
 
-    const caip = genesisHash.substring(2).substring(0, 32);
+    const caip = genesisHash.substring(2).substring(0, 32)
 
     // Only get accounts for the currently selected `caip`.
     let filteredAccounts = walletConnectAccounts.filter((wcAccount) => {
-      const prefix = wcAccount.split(':')[1];
-      return prefix === caip;
-    });
+      const prefix = wcAccount.split(':')[1]
+      return prefix === caip
+    })
 
     // grab account addresses from CAIP account formatted accounts
     filteredAccounts = filteredAccounts.map((wcAccount) => {
-      const address = wcAccount.split(':')[2];
-      return address;
-    });
+      const address = wcAccount.split(':')[2]
+      return address
+    })
 
-    return filteredAccounts;
-  };
+    return filteredAccounts
+  }
 
   // On initial render, initiate the WalletConnect provider.
   useEffect(() => {
     if (!wcProvider.current) {
-      initProvider();
+      initProvider()
     }
-  }, []);
+  }, [])
 
   // Initially, all active chains (in all tabs) must be connected and ready for the initial provider
   // connection.
   useEffect(() => {
     if (!pairingInitiated.current && wcInitialized && apiPresent && isReady) {
-      connectProvider();
+      connectProvider()
     }
-  }, [wcInitialized, network, apiPresent, isReady]);
+  }, [wcInitialized, network, apiPresent, isReady])
 
   // Reconnect provider to a new session if a new connected chain is added, or when the provider is
   // set. This can only happen once pairing has been initiated. Doing this will require approval
@@ -324,9 +324,9 @@ export const WalletConnectProvider = ({
       isReady &&
       sessionChain.current !== network
     ) {
-      connectProvider();
+      connectProvider()
     }
-  }, [network, apiPresent, isReady]);
+  }, [network, apiPresent, isReady])
 
   return (
     <WalletConnectContext.Provider
@@ -343,5 +343,5 @@ export const WalletConnectProvider = ({
     >
       {children}
     </WalletConnectContext.Provider>
-  );
-};
+  )
+}

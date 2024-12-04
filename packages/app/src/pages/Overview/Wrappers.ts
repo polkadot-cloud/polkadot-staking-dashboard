@@ -1,15 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { SectionFullWidthThreshold } from 'consts';
-import styled from 'styled-components';
+import { SectionFullWidthThreshold } from 'consts'
+import styled from 'styled-components'
 
 export const Separator = styled.div`
   border-bottom: 1px solid var(--border-primary-color);
   margin-top: 0.8rem;
   width: 100%;
   height: 1px;
-`;
+`
 
 export const MoreWrapper = styled.div`
   padding: 0 0.5rem;
@@ -37,7 +37,7 @@ export const MoreWrapper = styled.div`
       margin-left: 0.5rem;
     }
   }
-`;
+`
 
 export const BannerWrapper = styled.div`
   &.light {
@@ -102,4 +102,4 @@ export const BannerWrapper = styled.div`
       }
     }
   }
-`;
+`

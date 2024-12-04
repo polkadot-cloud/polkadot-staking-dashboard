@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classNames from 'classnames';
-import commonClasses from '../common.module.scss';
-import { onMouseHandlers } from '../util';
-import classes from './index.module.scss';
-import type { ButtonPrimaryInvertProps } from './types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import classNames from 'classnames'
+import commonClasses from '../common.module.scss'
+import { onMouseHandlers } from '../util'
+import classes from './index.module.scss'
+import type { ButtonPrimaryInvertProps } from './types'
 
 /**
  * @name ButtonPrimaryInvert
@@ -37,7 +37,7 @@ export const ButtonPrimaryInvert = (
     onMouseOver,
     onMouseMove,
     onMouseOut,
-  } = props;
+  } = props
 
   const buttonClasses = classNames(
     commonClasses.btnCore,
@@ -54,7 +54,7 @@ export const ButtonPrimaryInvert = (
       [classes.btnPrimaryInvertSecondaryColor]: colorSecondary,
     },
     className
-  );
+  )
 
   return (
     <button
@@ -80,5 +80,5 @@ export const ButtonPrimaryInvert = (
         />
       )}
     </button>
-  );
-};
+  )
+}

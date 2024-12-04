@@ -40,6 +40,6 @@ const GenericChain = () => (
       />
     </g>
   </svg>
-);
+)
 
-export default GenericChain;
+export default GenericChain

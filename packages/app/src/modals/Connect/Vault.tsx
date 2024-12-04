@@ -1,22 +1,22 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faExternalLinkAlt, faQrcode } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react';
-import { useHelp } from 'contexts/Help';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { ModalConnectItem } from 'kits/Overlay/structure/ModalConnectItem';
-import { ModalHardwareItem } from 'kits/Overlay/structure/ModalHardwareItem';
-import type { ReactElement } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ButtonHelp, ButtonPrimaryInvert, ButtonText } from 'ui-buttons';
+import { faExternalLinkAlt, faQrcode } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
+import { useHelp } from 'contexts/Help'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { ModalConnectItem } from 'kits/Overlay/structure/ModalConnectItem'
+import { ModalHardwareItem } from 'kits/Overlay/structure/ModalHardwareItem'
+import type { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ButtonHelp, ButtonPrimaryInvert, ButtonText } from 'ui-buttons'
 
 export const Vault = (): ReactElement => {
-  const { t } = useTranslation('modals');
-  const { openHelp } = useHelp();
-  const { replaceModal } = useOverlay().modal;
-  const url = 'signer.parity.io';
+  const { t } = useTranslation('modals')
+  const { openHelp } = useHelp()
+  const { replaceModal } = useOverlay().modal
+  const url = 'signer.parity.io'
 
   return (
     <ModalConnectItem>
@@ -44,7 +44,7 @@ export const Vault = (): ReactElement => {
             <ButtonPrimaryInvert
               text={t('import')}
               onClick={() => {
-                replaceModal({ key: 'ImportVault' });
+                replaceModal({ key: 'ImportVault' })
               }}
               iconLeft={faQrcode}
               iconTransform="shrink-1"
@@ -64,5 +64,5 @@ export const Vault = (): ReactElement => {
         </div>
       </ModalHardwareItem>
     </ModalConnectItem>
-  );
-};
+  )
+}

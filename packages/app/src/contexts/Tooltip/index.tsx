@@ -1,54 +1,54 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { setStateWithRef } from '@w3ux/utils';
-import type { ReactNode } from 'react';
-import { createContext, useContext, useRef, useState } from 'react';
-import { defaultTooltipContext } from './defaults';
-import type { TooltipContextInterface } from './types';
+import { setStateWithRef } from '@w3ux/utils'
+import type { ReactNode } from 'react'
+import { createContext, useContext, useRef, useState } from 'react'
+import { defaultTooltipContext } from './defaults'
+import type { TooltipContextInterface } from './types'
 
 export const TooltipContext = createContext<TooltipContextInterface>(
   defaultTooltipContext
-);
+)
 
-export const useTooltip = () => useContext(TooltipContext);
+export const useTooltip = () => useContext(TooltipContext)
 
 export const TooltipProvider = ({ children }: { children: ReactNode }) => {
-  const [open, setOpen] = useState<number>(0);
-  const [show, setShow] = useState<number>(0);
-  const showRef = useRef(show);
+  const [open, setOpen] = useState<number>(0)
+  const [show, setShow] = useState<number>(0)
+  const showRef = useRef(show)
 
-  const [text, setText] = useState<string>('');
-  const [position, setPosition] = useState<[number, number]>([0, 0]);
+  const [text, setText] = useState<string>('')
+  const [position, setPosition] = useState<[number, number]>([0, 0])
 
   const openTooltip = () => {
     if (open) {
-      return;
+      return
     }
-    setOpen(1);
-  };
+    setOpen(1)
+  }
 
   const closeTooltip = () => {
-    setStateWithRef(0, setShow, showRef);
-    setOpen(0);
-  };
+    setStateWithRef(0, setShow, showRef)
+    setOpen(0)
+  }
 
   const setTooltipPosition = (x: number, y: number) => {
-    setPosition([x, y]);
-    openTooltip();
-  };
+    setPosition([x, y])
+    openTooltip()
+  }
 
   const showTooltip = () => {
-    setStateWithRef(1, setShow, showRef);
-  };
+    setStateWithRef(1, setShow, showRef)
+  }
 
   const setTooltipTextAndOpen = (t: string) => {
     if (open) {
-      return;
+      return
     }
-    setText(t);
-    openTooltip();
-  };
+    setText(t)
+    openTooltip()
+  }
 
   return (
     <TooltipContext.Provider
@@ -66,5 +66,5 @@ export const TooltipProvider = ({ children }: { children: ReactNode }) => {
     >
       {children}
     </TooltipContext.Provider>
-  );
-};
+  )
+}

@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { FastUnstakeContextInterface, MetaInterface } from './types';
+import type { FastUnstakeContextInterface, MetaInterface } from './types'
 
 export const defaultMeta: MetaInterface = {
   checked: [],
-};
+}
 
 export const defaultFastUnstakeContext: FastUnstakeContextInterface = {
   getLocalkey: (address) => '',
@@ -16,4 +16,4 @@ export const defaultFastUnstakeContext: FastUnstakeContextInterface = {
   head: undefined,
   queueDeposit: undefined,
   counterForQueue: undefined,
-};
+}

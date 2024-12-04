@@ -1,19 +1,19 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Polkicon } from '@w3ux/react-polkicon';
-import { formatAccountSs58, isValidAddress, remToUnit } from '@w3ux/utils';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useBonded } from 'contexts/Bonded';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useNetwork } from 'contexts/Network';
-import type { ChangeEvent } from 'react';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Wrapper } from './Wrapper';
-import type { PayeeInputProps } from './types';
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Polkicon } from '@w3ux/react-polkicon'
+import { formatAccountSs58, isValidAddress, remToUnit } from '@w3ux/utils'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useBonded } from 'contexts/Bonded'
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useNetwork } from 'contexts/Network'
+import type { ChangeEvent } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Wrapper } from './Wrapper'
+import type { PayeeInputProps } from './types'
 
 export const PayeeInput = ({
   payee,
@@ -21,68 +21,68 @@ export const PayeeInput = ({
   setAccount,
   handleChange,
 }: PayeeInputProps) => {
-  const { t } = useTranslation('library');
-  const { getBondedAccount } = useBonded();
-  const { accounts } = useImportedAccounts();
+  const { t } = useTranslation('library')
+  const { getBondedAccount } = useBonded()
+  const { accounts } = useImportedAccounts()
   const {
     networkData: { ss58 },
-  } = useNetwork();
-  const { activeAccount } = useActiveAccounts();
-  const controller = getBondedAccount(activeAccount);
+  } = useNetwork()
+  const { activeAccount } = useActiveAccounts()
+  const controller = getBondedAccount(activeAccount)
 
-  const accountMeta = accounts.find((a) => a.address === activeAccount);
+  const accountMeta = accounts.find((a) => a.address === activeAccount)
 
   // store whether account value is valid.
-  const [valid, setValid] = useState<boolean>(isValidAddress(account || ''));
+  const [valid, setValid] = useState<boolean>(isValidAddress(account || ''))
 
   // Store whether input is currently active.
-  const [inputActive, setInputActive] = useState<boolean>(false);
+  const [inputActive, setInputActive] = useState<boolean>(false)
 
-  const hiddenRef = useRef<HTMLInputElement>(null);
-  const showingRef = useRef<HTMLInputElement>(null);
+  const hiddenRef = useRef<HTMLInputElement>(null)
+  const showingRef = useRef<HTMLInputElement>(null)
 
   // Adjust the width of account input based on text length.
   const handleAdjustWidth = () => {
     if (hiddenRef.current && showingRef.current) {
-      const hiddenWidth = hiddenRef.current.offsetWidth;
-      showingRef.current.style.width = `${hiddenWidth + remToUnit('2.5rem')}px`;
+      const hiddenWidth = hiddenRef.current.offsetWidth
+      showingRef.current.style.width = `${hiddenWidth + remToUnit('2.5rem')}px`
     }
-  };
+  }
 
   // Handle change of account value. Updates setup progress if the account is a valid value.
   const handleChangeAccount = (e: ChangeEvent<HTMLInputElement>) => {
-    const newAddress = e.target.value;
+    const newAddress = e.target.value
     const formattedAccount =
-      formatAccountSs58(newAddress, ss58) || newAddress || null;
+      formatAccountSs58(newAddress, ss58) || newAddress || null
     const isValid =
-      formattedAccount !== null && isValidAddress(formattedAccount);
+      formattedAccount !== null && isValidAddress(formattedAccount)
 
-    setValid(isValid);
-    setAccount(formattedAccount);
+    setValid(isValid)
+    setAccount(formattedAccount)
 
     if (isValid) {
-      handleChange(formattedAccount);
+      handleChange(formattedAccount)
     } else {
-      handleChange(null);
+      handleChange(null)
     }
-  };
+  }
 
   // Adjust width as ref values change.
   useEffect(() => {
-    handleAdjustWidth();
-  }, [hiddenRef.current, showingRef.current, payee.destination]);
+    handleAdjustWidth()
+  }, [hiddenRef.current, showingRef.current, payee.destination])
 
   // Adjust width on window resize.
   useEffect(() => {
-    window.addEventListener('resize', handleAdjustWidth);
+    window.addEventListener('resize', handleAdjustWidth)
     return () => {
-      window.removeEventListener('resize', handleAdjustWidth);
-    };
-  }, []);
+      window.removeEventListener('resize', handleAdjustWidth)
+    }
+  }, [])
 
   // Show empty Identicon on `None` and invalid `Account` accounts.
   const showEmpty =
-    payee.destination === 'None' || (payee.destination === 'Account' && !valid);
+    payee.destination === 'None' || (payee.destination === 'Account' && !valid)
 
   const accountDisplay =
     payee.destination === 'Account'
@@ -91,10 +91,10 @@ export const PayeeInput = ({
         ? ''
         : payee.destination === 'Controller'
           ? controller
-          : activeAccount;
+          : activeAccount
 
   const placeholderDisplay =
-    payee.destination === 'None' ? t('noPayoutAddress') : t('payoutAddress');
+    payee.destination === 'None' ? t('noPayoutAddress') : t('payoutAddress')
 
   return (
     <Wrapper $activeInput={inputActive}>
@@ -144,5 +144,5 @@ export const PayeeInput = ({
         </h5>
       </div>
     </Wrapper>
-  );
-};
+  )
+}

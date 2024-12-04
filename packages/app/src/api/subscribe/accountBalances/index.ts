@@ -1,56 +1,56 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import BigNumber from 'bignumber.js';
-import type { AnyApi, NetworkId } from 'common-types';
-import type { Balances as IBalances, Ledger } from 'contexts/Balances/types';
-import type { PoolMembership } from 'contexts/Pools/types';
-import type { PayeeConfig } from 'contexts/Setup/types';
-import { Apis } from 'controllers/Apis';
-import { Balances } from 'controllers/Balances';
-import { defaultNominations } from 'controllers/Balances/defaults';
-import type { Unsubscribable } from 'controllers/Subscriptions/types';
-import type { UnsafeApi } from 'polkadot-api';
-import type { Subscription } from 'rxjs';
-import { combineLatest } from 'rxjs';
-import type { Nominations } from 'types';
-import { stringToBn } from 'utils';
+import BigNumber from 'bignumber.js'
+import type { AnyApi, NetworkId } from 'common-types'
+import type { Balances as IBalances, Ledger } from 'contexts/Balances/types'
+import type { PoolMembership } from 'contexts/Pools/types'
+import type { PayeeConfig } from 'contexts/Setup/types'
+import { Apis } from 'controllers/Apis'
+import { Balances } from 'controllers/Balances'
+import { defaultNominations } from 'controllers/Balances/defaults'
+import type { Unsubscribable } from 'controllers/Subscriptions/types'
+import type { UnsafeApi } from 'polkadot-api'
+import type { Subscription } from 'rxjs'
+import { combineLatest } from 'rxjs'
+import type { Nominations } from 'types'
+import { stringToBn } from 'utils'
 
 export class AccountBalances implements Unsubscribable {
   // The associated network for this instance.
-  #network: NetworkId;
+  #network: NetworkId
 
   // Active subscription.
-  #sub: Subscription;
+  #sub: Subscription
 
   // Account to subscribe to.
-  #address: string;
+  #address: string
 
   // Account ledger.
-  ledger: Ledger | undefined;
+  ledger: Ledger | undefined
 
   // Account balances.
-  balance: IBalances;
+  balance: IBalances
 
   // Payee config.
-  payee: PayeeConfig | undefined;
+  payee: PayeeConfig | undefined
 
   // Pool membership.
-  poolMembership: PoolMembership | undefined;
+  poolMembership: PoolMembership | undefined
 
   // Account nominations.
-  nominations: Nominations;
+  nominations: Nominations
 
   constructor(network: NetworkId, address: string) {
-    this.#network = network;
-    this.#address = address;
-    this.subscribe();
+    this.#network = network
+    this.#address = address
+    this.subscribe()
   }
 
   subscribe = async (): Promise<void> => {
     try {
-      const api = Apis.getApi(this.#network);
-      const bestOrFinalized = 'best';
+      const api = Apis.getApi(this.#network)
+      const bestOrFinalized = 'best'
 
       if (api && this.#sub === undefined) {
         const sub = combineLatest([
@@ -80,12 +80,12 @@ export class AccountBalances implements Unsubscribable {
             claimPermissions,
             nominators,
           ]) => {
-            this.handleLedger(ledger);
-            this.handleAccount(account, locks);
-            this.handlePayee(payee);
+            this.handleLedger(ledger)
+            this.handleAccount(account, locks)
+            this.handlePayee(payee)
 
-            await this.handlePoolMembership(api, poolMembers, claimPermissions);
-            this.handleNominations(nominators);
+            await this.handlePoolMembership(api, poolMembers, claimPermissions)
+            this.handleNominations(nominators)
 
             // Send updated account state back to UI.
             const accountBalance = {
@@ -95,28 +95,28 @@ export class AccountBalances implements Unsubscribable {
               payee: this.payee,
               poolMembership: this.poolMembership,
               nominations: this.nominations,
-            };
+            }
 
             document.dispatchEvent(
               new CustomEvent('new-account-balance', { detail: accountBalance })
-            );
+            )
           }
-        );
+        )
 
-        this.#sub = sub;
+        this.#sub = sub
       }
     } catch (e) {
       // Subscription failed.
     }
-  };
+  }
 
   // Handle ledger result.
   handleLedger = (ledger: AnyApi): void => {
     // If ledger is null, remove from class.
     if (!ledger) {
-      this.ledger = undefined;
+      this.ledger = undefined
     } else {
-      const { stash, total, active, unlocking } = ledger;
+      const { stash, total, active, unlocking } = ledger
 
       // Send stash address to UI as event if not presently imported.
       if (!Balances.accounts.includes(stash.toString())) {
@@ -124,7 +124,7 @@ export class AccountBalances implements Unsubscribable {
           new CustomEvent('new-external-account', {
             detail: { address: stash.toString() },
           })
-        );
+        )
       }
 
       this.ledger = {
@@ -137,9 +137,9 @@ export class AccountBalances implements Unsubscribable {
             value: stringToBn(value.toString()),
           })
         ),
-      };
+      }
     }
-  };
+  }
 
   // Handle account callback.
   handleAccount = (
@@ -157,20 +157,20 @@ export class AccountBalances implements Unsubscribable {
         id: lock.id.asText().trim(),
         amount: stringToBn(lock.amount.toString()),
       })),
-    };
-  };
+    }
+  }
 
   // Handle payee callback.
   handlePayee = (result: AnyApi): void => {
     if (result === undefined) {
-      this.payee = undefined;
+      this.payee = undefined
     } else {
       this.payee = {
         destination: result.type || null,
         account: result.value || undefined,
-      };
+      }
     }
-  };
+  }
 
   // Handle pool membership and claim commission callback.
   handlePoolMembership = async (
@@ -182,22 +182,22 @@ export class AccountBalances implements Unsubscribable {
     // This skips claim permission data as well as user would not have claim permissions if they are
     // not in a pool.
     if (!poolMembers) {
-      this.poolMembership = undefined;
-      return;
+      this.poolMembership = undefined
+      return
     }
 
     const unlocking = poolMembers?.unbonding_eras.map(([e, v]: AnyApi) => ({
       era: e,
       value: new BigNumber((v as bigint).toString()),
-    }));
+    }))
 
     const apiResult = await api.apis.NominationPoolsApi.points_to_balance(
       poolMembers.pool_id,
       poolMembers.points,
       { at: 'best' }
-    );
-    const balance = new BigNumber(apiResult?.toString() || 0);
-    const claimPermission = claimPermissionResult?.type || 'Permissioned';
+    )
+    const balance = new BigNumber(apiResult?.toString() || 0)
+    const claimPermission = claimPermissionResult?.type || 'Permissioned'
 
     this.poolMembership = {
       address: this.#address,
@@ -209,8 +209,8 @@ export class AccountBalances implements Unsubscribable {
       unbondingEras: unlocking, // NOTE: This is a duplicate of `unlocking`.
       claimPermission,
       unlocking,
-    };
-  };
+    }
+  }
 
   // Handle nominations callback.
   handleNominations = (nominators: AnyApi): void => {
@@ -219,13 +219,13 @@ export class AccountBalances implements Unsubscribable {
       : {
           targets: nominators.targets,
           submittedIn: nominators.submitted_in,
-        };
-  };
+        }
+  }
 
   // Unsubscribe from class subscription.
   unsubscribe = (): void => {
     if (typeof this.#sub?.unsubscribe === 'function') {
-      this.#sub.unsubscribe();
+      this.#sub.unsubscribe()
     }
-  };
+  }
 }

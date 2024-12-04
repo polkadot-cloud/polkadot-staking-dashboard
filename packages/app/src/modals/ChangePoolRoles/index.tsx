@@ -1,49 +1,49 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PoolUpdateRoles } from 'api/tx/poolUpdateRoles';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useNetwork } from 'contexts/Network';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
-import { Close } from 'library/Modal/Close';
-import { SubmitTx } from 'library/SubmitTx';
-import { useTranslation } from 'react-i18next';
-import { RoleChange } from './RoleChange';
-import { Wrapper } from './Wrapper';
+import { PoolUpdateRoles } from 'api/tx/poolUpdateRoles'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useNetwork } from 'contexts/Network'
+import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
+import { Close } from 'library/Modal/Close'
+import { SubmitTx } from 'library/SubmitTx'
+import { useTranslation } from 'react-i18next'
+import { RoleChange } from './RoleChange'
+import { Wrapper } from './Wrapper'
 
 export const ChangePoolRoles = () => {
-  const { t } = useTranslation('modals');
-  const { network } = useNetwork();
-  const { replacePoolRoles } = useBondedPools();
-  const { activeAccount } = useActiveAccounts();
+  const { t } = useTranslation('modals')
+  const { network } = useNetwork()
+  const { replacePoolRoles } = useBondedPools()
+  const { activeAccount } = useActiveAccounts()
   const {
     setModalStatus,
     config: { options },
-  } = useOverlay().modal;
-  const { id: poolId, roleEdits } = options;
+  } = useOverlay().modal
+  const { id: poolId, roleEdits } = options
 
   const getTx = () =>
     new PoolUpdateRoles(network, poolId, {
       root: roleEdits?.root?.newAddress || undefined,
       nominator: roleEdits?.nominator?.newAddress || undefined,
       bouncer: roleEdits?.bouncer?.newAddress || undefined,
-    }).tx();
+    }).tx()
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {
-      setModalStatus('closing');
+      setModalStatus('closing')
     },
     callbackInBlock: () => {
       // manually update bondedPools with new pool roles
-      replacePoolRoles(poolId, roleEdits);
+      replacePoolRoles(poolId, roleEdits)
     },
-  });
+  })
 
   return (
     <>
@@ -70,5 +70,5 @@ export const ChangePoolRoles = () => {
       </ModalPadding>
       <SubmitTx {...submitExtrinsic} valid />
     </>
-  );
-};
+  )
+}

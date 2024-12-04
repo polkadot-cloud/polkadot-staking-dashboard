@@ -1,16 +1,16 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Base } from 'api/base';
-import type { ChainId } from 'common-types';
-import type { ClaimPermission } from 'contexts/Pools/types';
+import { Base } from 'api/base'
+import type { ChainId } from 'common-types'
+import type { ClaimPermission } from 'contexts/Pools/types'
 
 export class PoolSetClaimPermission extends Base {
-  #claimPermission: ClaimPermission;
+  #claimPermission: ClaimPermission
 
   constructor(network: ChainId, claimPermission: ClaimPermission) {
-    super(network);
-    this.#claimPermission = claimPermission;
+    super(network)
+    this.#claimPermission = claimPermission
   }
 
   tx() {
@@ -20,9 +20,9 @@ export class PoolSetClaimPermission extends Base {
           type: this.#claimPermission,
           value: undefined,
         },
-      });
+      })
     } catch (e) {
-      return null;
+      return null
     }
   }
 }

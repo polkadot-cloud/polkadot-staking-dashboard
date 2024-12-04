@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classNames from 'classnames';
-import commonClasses from '../common.module.scss';
-import { onMouseHandlers } from '../util';
-import classes from './index.module.scss';
-import type { ButtonSubmitInvertProps } from './types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import classNames from 'classnames'
+import commonClasses from '../common.module.scss'
+import { onMouseHandlers } from '../util'
+import classes from './index.module.scss'
+import type { ButtonSubmitInvertProps } from './types'
 
 /**
  * @name ButtonSubmitInvert
@@ -36,7 +36,7 @@ export const ButtonSubmitInvert = (
     onMouseOver,
     onMouseMove,
     onMouseOut,
-  } = props;
+  } = props
 
   const buttonClasses = classNames(
     commonClasses.btnCore,
@@ -52,7 +52,7 @@ export const ButtonSubmitInvert = (
       [classes.btnSubmitInvertSm]: !lg,
     },
     className
-  );
+  )
 
   return (
     <button
@@ -78,5 +78,5 @@ export const ButtonSubmitInvert = (
         />
       )}
     </button>
-  );
-};
+  )
+}

@@ -1,69 +1,69 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useOnResize, useOutsideAlerter } from '@w3ux/hooks';
-import { capitalizeFirstLetter } from '@w3ux/utils';
-import { PageWidthMediumThreshold, SideMenuMaximisedWidth } from 'consts';
-import { useApi } from 'contexts/Api';
-import { useHelp } from 'contexts/Help';
-import { useNetwork } from 'contexts/Network';
-import { useTheme } from 'contexts/Themes';
-import { useUi } from 'contexts/UI';
-import type { UIContextInterface } from 'contexts/UI/types';
-import BookSVG from 'img/book.svg?react';
-import CogOutlineSVG from 'img/cog-outline.svg?react';
-import DiscordSVG from 'img/discord.svg?react';
-import EnvelopeSVG from 'img/envelope.svg?react';
-import LanguageSVG from 'img/language.svg?react';
-import LogoGithubSVG from 'img/logo-github.svg?react';
-import LogoSVG from 'img/logo.svg?react';
-import MoonOutlineSVG from 'img/moon-outline.svg?react';
-import SunnyOutlineSVG from 'img/sunny-outline.svg?react';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Side } from 'ui-structure';
-import { Heading } from './Heading/Heading';
-import { Main } from './Main';
-import { Secondary } from './Secondary';
-import { ConnectionSymbol, LogoWrapper, Separator, Wrapper } from './Wrapper';
+import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useOnResize, useOutsideAlerter } from '@w3ux/hooks'
+import { capitalizeFirstLetter } from '@w3ux/utils'
+import { PageWidthMediumThreshold, SideMenuMaximisedWidth } from 'consts'
+import { useApi } from 'contexts/Api'
+import { useHelp } from 'contexts/Help'
+import { useNetwork } from 'contexts/Network'
+import { useTheme } from 'contexts/Themes'
+import { useUi } from 'contexts/UI'
+import type { UIContextInterface } from 'contexts/UI/types'
+import BookSVG from 'img/book.svg?react'
+import CogOutlineSVG from 'img/cog-outline.svg?react'
+import DiscordSVG from 'img/discord.svg?react'
+import EnvelopeSVG from 'img/envelope.svg?react'
+import LanguageSVG from 'img/language.svg?react'
+import LogoGithubSVG from 'img/logo-github.svg?react'
+import LogoSVG from 'img/logo.svg?react'
+import MoonOutlineSVG from 'img/moon-outline.svg?react'
+import SunnyOutlineSVG from 'img/sunny-outline.svg?react'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Side } from 'ui-structure'
+import { Heading } from './Heading/Heading'
+import { Main } from './Main'
+import { Secondary } from './Secondary'
+import { ConnectionSymbol, LogoWrapper, Separator, Wrapper } from './Wrapper'
 
 export const SideMenu = () => {
-  const { t } = useTranslation('base');
-  const { openHelp } = useHelp();
-  const { apiStatus } = useApi();
+  const { t } = useTranslation('base')
+  const { openHelp } = useHelp()
+  const { apiStatus } = useApi()
   const {
     setSideMenu,
     sideMenuOpen,
     sideMenuMinimised,
     userSideMenuMinimised,
     setUserSideMenuMinimised,
-  }: UIContextInterface = useUi();
-  const { mode, toggleTheme } = useTheme();
-  const { openModal } = useOverlay().modal;
-  const { networkData, network } = useNetwork();
+  }: UIContextInterface = useUi()
+  const { mode, toggleTheme } = useTheme()
+  const { openModal } = useOverlay().modal
+  const { networkData, network } = useNetwork()
 
   // Listen to window resize to automatically hide the side menu on window resize.
   useOnResize(() => {
     if (window.innerWidth >= PageWidthMediumThreshold) {
-      setSideMenu(false);
+      setSideMenu(false)
     }
-  });
+  })
 
   // Define side menu ref and close the side menu when clicking outside of it.
-  const ref = useRef(null);
+  const ref = useRef(null)
   useOutsideAlerter(ref, () => {
-    setSideMenu(false);
-  });
+    setSideMenu(false)
+  })
 
   const apiStatusClass =
     apiStatus === 'connecting'
       ? 'warning'
       : ['connected', 'ready'].includes(apiStatus)
         ? 'success'
-        : 'danger';
+        : 'danger'
 
   return (
     <Side
@@ -117,7 +117,7 @@ export const SideMenu = () => {
             <Heading title={t('support')} minimised={sideMenuMinimised} />
             <Secondary
               onClick={() => {
-                openHelp(null);
+                openHelp(null)
               }}
               name={t('resources')}
               minimised={sideMenuMinimised}
@@ -204,5 +204,5 @@ export const SideMenu = () => {
         </section>
       </Wrapper>
     </Side>
-  );
-};
+  )
+}

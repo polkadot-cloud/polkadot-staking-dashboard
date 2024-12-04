@@ -1,25 +1,25 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ActivePoolAccount } from 'api/subscribe/activePoolAccount';
-import type { ChainId, NetworkId } from 'common-types';
-import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults';
-import { Subscriptions } from 'controllers/Subscriptions';
-import { Syncs } from 'controllers/Syncs';
+import { ActivePoolAccount } from 'api/subscribe/activePoolAccount'
+import type { ChainId, NetworkId } from 'common-types'
+import { defaultPoolNominations } from 'contexts/Pools/ActivePool/defaults'
+import { Subscriptions } from 'controllers/Subscriptions'
+import { Syncs } from 'controllers/Syncs'
 import type {
   AccountActivePools,
   AccountPoolNominations,
   ActivePoolItem,
   DetailActivePool,
   MaybeAddress,
-} from 'types';
+} from 'types'
 
 export class ActivePools {
   // Pool ids that are being subscribed to. Keyed by address.
-  static pools: Record<string, ActivePoolItem[]> = {};
+  static pools: Record<string, ActivePoolItem[]> = {}
 
   // Map from an address to its associated pool ids
-  static addressToPool: Record<string, string> = {};
+  static addressToPool: Record<string, string> = {}
 
   // Subscribes to new pools and unsubscribes from removed pools.
   static syncPools = async (
@@ -28,50 +28,50 @@ export class ActivePools {
     newPools: ActivePoolItem[]
   ): Promise<void> => {
     if (!address) {
-      return;
+      return
     }
 
     // Handle pools that have been removed.
-    this.handleRemovedPools(network, address);
+    this.handleRemovedPools(network, address)
 
-    const currentPool = this.addressToPool[address];
+    const currentPool = this.addressToPool[address]
 
     // Determine new pools that need to be subscribed to.
     const updatedPool = newPools.find((newPool) => currentPool === newPool.id)
       ? false
-      : newPools[0];
+      : newPools[0]
 
     if (updatedPool) {
-      this.pools[address] = newPools;
+      this.pools[address] = newPools
 
       // Subscribe to and add new pool data.
       Subscriptions.set(
         network,
         `activePool-${address}-${updatedPool.id}`,
         new ActivePoolAccount(network, address, updatedPool)
-      );
+      )
 
       // Add pool id to address mapping.
-      this.addressToPool[address] = updatedPool.id;
+      this.addressToPool[address] = updatedPool.id
     } else {
       // Status: Pools Synced Completed.
-      Syncs.dispatch('active-pools', 'complete');
+      Syncs.dispatch('active-pools', 'complete')
     }
-  };
+  }
 
   // Remove pools that no longer exist.
   static handleRemovedPools = (network: ChainId, address: string): void => {
-    const currentPool = this.addressToPool[address];
+    const currentPool = this.addressToPool[address]
 
     if (currentPool) {
       // Unsubscribe from removed pool subscription.
-      Subscriptions.remove(network, `activePool-${address}-${currentPool}`);
+      Subscriptions.remove(network, `activePool-${address}-${currentPool}`)
 
       // Remove pool from class.
-      delete this.addressToPool[address];
-      delete this.pools[address];
+      delete this.addressToPool[address]
+      delete this.pools[address]
     }
-  };
+  }
 
   // Gets pool for a provided address.
   static getPool = (
@@ -79,15 +79,15 @@ export class ActivePools {
     address: MaybeAddress
   ): ActivePoolItem | undefined => {
     if (!address) {
-      return undefined;
+      return undefined
     }
     const activePoolAccount = Subscriptions.get(
       network,
       `activePool-${address}-${this.addressToPool[address]}`
-    ) as ActivePoolAccount;
+    ) as ActivePoolAccount
 
-    return activePoolAccount?.pool || undefined;
-  };
+    return activePoolAccount?.pool || undefined
+  }
 
   // Gets active pool for a provided address.
   static getActivePool = (
@@ -95,20 +95,20 @@ export class ActivePools {
     address: MaybeAddress
   ): AccountActivePools => {
     if (!address) {
-      return {};
+      return {}
     }
-    const poolId = this.addressToPool[address];
+    const poolId = this.addressToPool[address]
     const activePool = Subscriptions.get(
       network,
       `activePool-${address}-${poolId}`
-    ) as ActivePoolAccount;
+    ) as ActivePoolAccount
 
     if (!activePool) {
-      return {};
+      return {}
     }
 
-    return { [poolId]: activePool?.activePool || null };
-  };
+    return { [poolId]: activePool?.activePool || null }
+  }
 
   // Gets active pool nominations for a provided address.
   static getPoolNominations = (
@@ -116,18 +116,18 @@ export class ActivePools {
     address: MaybeAddress
   ): AccountPoolNominations => {
     if (!address) {
-      return {};
+      return {}
     }
-    const poolId = this.addressToPool[address];
+    const poolId = this.addressToPool[address]
     const activePool = Subscriptions.get(
       network,
       `activePool-${address}-${poolId}`
-    ) as ActivePoolAccount;
+    ) as ActivePoolAccount
 
     return {
       poolId: activePool?.poolNominations || defaultPoolNominations,
-    };
-  };
+    }
+  }
 
   // Gets all active pools for a provided network.
   static getAllActivePools = (network: NetworkId) =>
@@ -136,24 +136,24 @@ export class ActivePools {
         const activePoolAccount = Subscriptions.get(
           network,
           `activePool-${addr}-${poolId}`
-        ) as ActivePoolAccount;
+        ) as ActivePoolAccount
 
-        return [poolId, activePoolAccount?.activePool || null];
+        return [poolId, activePoolAccount?.activePool || null]
       })
-    );
+    )
 
   // Format pools into active pool items (id and addresses only).
   static getformattedPoolItems = (address: MaybeAddress): ActivePoolItem[] => {
     if (!address) {
-      return [];
+      return []
     }
     return (
       this.pools?.[address]?.map(({ id, addresses }) => ({
         id: id.toString(),
         addresses,
       })) || []
-    );
-  };
+    )
+  }
 
   // Checks if event detailis a valid `new-active-pool` event.
   static isValidNewActivePool = (
@@ -162,5 +162,5 @@ export class ActivePools {
     event.detail &&
     event.detail.address &&
     event.detail.pool &&
-    event.detail.nominations;
+    event.detail.nominations
 }

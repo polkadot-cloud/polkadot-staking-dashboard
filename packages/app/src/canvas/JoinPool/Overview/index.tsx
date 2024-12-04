@@ -1,29 +1,29 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { JoinForm } from './JoinForm';
+import { JoinForm } from './JoinForm'
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useBalances } from 'contexts/Balances';
-import { GraphLayoutWrapper } from '../Wrappers';
-import type { OverviewSectionProps } from '../types';
-import { Addresses } from './Addresses';
-import { PerformanceGraph } from './PerformanceGraph';
-import { Roles } from './Roles';
-import { Stats } from './Stats';
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useBalances } from 'contexts/Balances'
+import { GraphLayoutWrapper } from '../Wrappers'
+import type { OverviewSectionProps } from '../types'
+import { Addresses } from './Addresses'
+import { PerformanceGraph } from './PerformanceGraph'
+import { Roles } from './Roles'
+import { Stats } from './Stats'
 
 export const Overview = (props: OverviewSectionProps) => {
-  const { getPoolMembership } = useBalances();
-  const { activeAccount } = useActiveAccounts();
+  const { getPoolMembership } = useBalances()
+  const { activeAccount } = useActiveAccounts()
 
   const {
     bondedPool: { state },
-  } = props;
+  } = props
 
   const showJoinForm =
     activeAccount !== null &&
     state === 'Open' &&
-    getPoolMembership(activeAccount) === null;
+    getPoolMembership(activeAccount) === null
 
   return (
     <>
@@ -43,5 +43,5 @@ export const Overview = (props: OverviewSectionProps) => {
         </div>
       )}
     </>
-  );
-};
+  )
+}

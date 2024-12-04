@@ -8,11 +8,11 @@ export interface VaultPromptHandlers {
       result: `0x${string}` | null
     ) => void,
     toSign: Uint8Array
-  ) => void;
-  closePrompt: () => void;
-  setSubmitting: (submitting: boolean) => void;
+  ) => void
+  closePrompt: () => void
+  setSubmitting: (submitting: boolean) => void
 }
 
-export type VaultSignStatus = 'complete' | 'cancelled';
+export type VaultSignStatus = 'complete' | 'cancelled'
 
-export type VaultSignatureResult = `0x${string}` | null;
+export type VaultSignatureResult = `0x${string}` | null

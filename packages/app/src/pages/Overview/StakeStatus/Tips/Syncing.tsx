@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useDotLottieButton } from 'hooks/useDotLottieButton';
-import { useTranslation } from 'react-i18next';
-import { ItemInnerWrapper, ItemWrapper, ItemsWrapper } from './Wrappers';
+import { useDotLottieButton } from 'hooks/useDotLottieButton'
+import { useTranslation } from 'react-i18next'
+import { ItemInnerWrapper, ItemWrapper, ItemsWrapper } from './Wrappers'
 
 export const Syncing = () => {
-  const { t } = useTranslation('tips');
-  const { icon } = useDotLottieButton('refresh', { autoLoop: true });
+  const { t } = useTranslation('tips')
+  const { icon } = useDotLottieButton('refresh', { autoLoop: true })
 
   return (
     <ItemsWrapper
@@ -41,5 +41,5 @@ export const Syncing = () => {
         </ItemInnerWrapper>
       </ItemWrapper>
     </ItemsWrapper>
-  );
-};
+  )
+}

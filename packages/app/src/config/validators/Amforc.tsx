@@ -47,6 +47,6 @@ const Amforc = () => (
       d="M0 45.46h33.64v4.36H0zM31.26 63.06h41.93v4.33H31.26z"
     />
   </svg>
-);
+)
 
-export default Amforc;
+export default Amforc

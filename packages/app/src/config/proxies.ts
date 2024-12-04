@@ -31,7 +31,7 @@ export const SupportedProxies: Record<string, string[]> = {
     'fastUnstake.registerFastUnstake',
     'fastUnstake.deregister',
   ],
-};
+}
 
 export const UnsupportedIfUniqueController: string[] = [
   'staking.chill',
@@ -40,10 +40,10 @@ export const UnsupportedIfUniqueController: string[] = [
   'staking.unbond',
   'staking.setPayee',
   'staking.withdrawUnbonded',
-];
+]
 
 export const isSupportedProxy = (proxy: string) =>
-  Object.keys(SupportedProxies).includes(proxy) || proxy === 'Any';
+  Object.keys(SupportedProxies).includes(proxy) || proxy === 'Any'
 
 export const isSupportedProxyCall = (
   proxy: string,
@@ -51,10 +51,10 @@ export const isSupportedProxyCall = (
   method: string
 ) => {
   if ([method, pallet].includes('undefined')) {
-    return false;
+    return false
   }
 
-  const call = `${pallet}.${method}`;
-  const calls = SupportedProxies[proxy];
-  return (calls || []).find((c) => ['*', call].includes(c)) !== undefined;
-};
+  const call = `${pallet}.${method}`
+  const calls = SupportedProxies[proxy]
+  return (calls || []).find((c) => ['*', call].includes(c)) !== undefined
+}

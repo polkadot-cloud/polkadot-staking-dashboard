@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { stringToU8a } from '@polkadot/util';
-import BigNumber from 'bignumber.js';
+import { stringToU8a } from '@polkadot/util'
+import BigNumber from 'bignumber.js'
 import type {
   APIActiveEra,
   APIConstants,
@@ -12,7 +12,7 @@ import type {
   APIPoolsConfig,
   APIStakingMetrics,
   PapiChainSpecContext,
-} from 'contexts/Api/types';
+} from 'contexts/Api/types'
 
 export const defaultConsts: APIConstants = {
   bondDuration: new BigNumber(0),
@@ -25,7 +25,7 @@ export const defaultConsts: APIConstants = {
   existentialDeposit: new BigNumber(0),
   fastUnstakeDeposit: new BigNumber(0),
   poolsPalletId: stringToU8a('0'),
-};
+}
 
 export const defaultNetworkMetrics: APINetworkMetrics = {
   totalIssuance: new BigNumber(0),
@@ -33,7 +33,7 @@ export const defaultNetworkMetrics: APINetworkMetrics = {
   earliestStoredSession: new BigNumber(0),
   fastUnstakeErasToCheckPerBlock: 0,
   minimumActiveStake: new BigNumber(0),
-};
+}
 
 export const defaultChainSpecs: PapiChainSpecContext = {
   genesisHash: '',
@@ -48,12 +48,12 @@ export const defaultChainSpecs: PapiChainSpecContext = {
   specVersion: 0,
   stateVersion: 0,
   transactionVersion: 0,
-};
+}
 
 export const defaultActiveEra: APIActiveEra = {
   index: new BigNumber(0),
   start: new BigNumber(0),
-};
+}
 
 export const defaultPoolsConfig: APIPoolsConfig = {
   counterForPoolMembers: new BigNumber(0),
@@ -66,7 +66,7 @@ export const defaultPoolsConfig: APIPoolsConfig = {
   minCreateBond: new BigNumber(0),
   minJoinBond: new BigNumber(0),
   globalMaxCommission: 0,
-};
+}
 
 export const defaultStakingMetrics: APIStakingMetrics = {
   totalValidators: new BigNumber(0),
@@ -77,7 +77,7 @@ export const defaultStakingMetrics: APIStakingMetrics = {
   minNominatorBond: new BigNumber(0),
   totalStaked: new BigNumber(0),
   counterForNominators: new BigNumber(0),
-};
+}
 
 export const defaultApiContext: APIContextInterface = {
   chainSpecs: defaultChainSpecs,
@@ -93,4 +93,4 @@ export const defaultApiContext: APIContextInterface = {
   activeEra: defaultActiveEra,
   poolsConfig: defaultPoolsConfig,
   stakingMetrics: defaultStakingMetrics,
-};
+}

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { ListContextInterface } from './types';
+import type { ListContextInterface } from './types'
 
 export const defaultContext: ListContextInterface = {
   setSelectActive: (selectedActive) => {},
@@ -14,16 +14,16 @@ export const defaultContext: ListContextInterface = {
   selected: [],
   listFormat: 'col',
   selectToggleable: true,
-};
+}
 
 // The amount of pools per page.
-export const poolsPerPage = 30;
+export const poolsPerPage = 30
 
 // The amount of validators per page.
-export const validatorsPerPage = 30;
+export const validatorsPerPage = 30
 
 // The amount of payouts per page.
-export const payoutsPerPage = 50;
+export const payoutsPerPage = 50
 
 // The amount of pool members per page.
-export const poolMembersPerPage = 50;
+export const poolMembersPerPage = 50

@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { motion } from 'framer-motion';
-import styled from 'styled-components';
+import { motion } from 'framer-motion'
+import styled from 'styled-components'
 
 export const Wrapper = styled(motion.div)`
   border: none;
@@ -101,4 +101,4 @@ export const Wrapper = styled(motion.div)`
   &.inactive:hover {
     background: var(--highlight-secondary);
   }
-`;
+`

@@ -1,22 +1,22 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Base } from 'api/base';
-import BigNumber from 'bignumber.js';
-import type { ChainId } from 'common-types';
-import type { APIActiveEra } from 'contexts/Api/types';
-import { perbillToPercent, stringToBn } from 'utils';
+import { Base } from 'api/base'
+import BigNumber from 'bignumber.js'
+import type { ChainId } from 'common-types'
+import type { APIActiveEra } from 'contexts/Api/types'
+import { perbillToPercent, stringToBn } from 'utils'
 
 export class NetworkMeta extends Base {
   constructor(network: ChainId) {
-    super(network);
+    super(network)
   }
 
   // Fetch network constants.
   async fetch(activeEra: APIActiveEra, previousEra: BigNumber) {
-    const at = { at: 'best' };
+    const at = { at: 'best' }
     const totalIssuance =
-      await this.unsafeApi.query.Balances.TotalIssuance.getValue(at);
+      await this.unsafeApi.query.Balances.TotalIssuance.getValue(at)
 
     const [
       auctionCounter,
@@ -73,25 +73,25 @@ export class NetworkMeta extends Base {
         activeEra.index.toNumber(),
         at
       ),
-    ]);
+    ])
 
     // Format globalMaxCommission from a perbill to a percent.
     const globalMaxCommissionAsPercent = !globalMaxCommission
       ? new BigNumber(0)
-      : perbillToPercent(globalMaxCommission);
+      : perbillToPercent(globalMaxCommission)
 
     // Format max pool members to be a BigNumber, or null if it's not set.
     const maxPoolMembers = maxPoolMembersRaw
       ? new BigNumber(maxPoolMembersRaw.toString())
-      : null;
+      : null
 
     // Format max pool members per pool to be a BigNumber, or null if it's not set.
     const maxPoolMembersPerPool = maxPoolMembersPerPoolRaw
       ? new BigNumber(maxPoolMembersPerPoolRaw.toString())
-      : null;
+      : null
 
     // Format max pools to be a BigNumber, or null if it's not set.
-    const maxPools = maxPoolsRaw ? new BigNumber(maxPoolsRaw.toString()) : null;
+    const maxPools = maxPoolsRaw ? new BigNumber(maxPoolsRaw.toString()) : null
 
     return {
       networkMetrics: {
@@ -123,6 +123,6 @@ export class NetworkMeta extends Base {
         totalStaked: stringToBn(activeEraErasTotalStake.toString()),
         counterForNominators: stringToBn(counterForNominators.toString()),
       },
-    };
+    }
   }
 }

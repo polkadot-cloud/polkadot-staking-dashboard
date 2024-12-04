@@ -2,24 +2,24 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { unimplemented } from '@w3ux/utils';
+import { unimplemented } from '@w3ux/utils'
 import type {
   CanvasConfig,
   ModalConfig,
   OverlayContextInterface,
-} from './types';
+} from './types'
 
 export const defaultModalConfig: ModalConfig = {
   key: '',
   size: 'lg',
   options: {},
-};
+}
 
 export const defaultCanvasConfig: CanvasConfig = {
   key: '',
   options: {},
   scroll: true,
-};
+}
 
 export const defaultOverlayContext: OverlayContextInterface = {
   openOverlayInstances: 0,
@@ -47,4 +47,4 @@ export const defaultOverlayContext: OverlayContextInterface = {
     setModalRef: (modalRef) => unimplemented,
     setModalHeightRef: (heightRef) => unimplemented,
   },
-};
+}

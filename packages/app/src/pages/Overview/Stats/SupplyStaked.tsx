@@ -1,30 +1,30 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import BigNumber from 'bignumber.js';
-import { useApi } from 'contexts/Api';
-import { useNetwork } from 'contexts/Network';
-import { Pie } from 'library/StatBoxList/Pie';
-import { useTranslation } from 'react-i18next';
-import { planckToUnitBn } from 'utils';
+import BigNumber from 'bignumber.js'
+import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
+import { Pie } from 'library/StatBoxList/Pie'
+import { useTranslation } from 'react-i18next'
+import { planckToUnitBn } from 'utils'
 
 export const SupplyStakedStat = () => {
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation('pages')
   const {
     networkMetrics,
     stakingMetrics: { lastTotalStake },
-  } = useApi();
-  const { units, unit } = useNetwork().networkData;
+  } = useApi()
+  const { units, unit } = useNetwork().networkData
 
-  const { totalIssuance } = networkMetrics;
+  const { totalIssuance } = networkMetrics
 
   // total supply as percent.
-  const totalIssuanceUnit = planckToUnitBn(totalIssuance, units);
-  const lastTotalStakeUnit = planckToUnitBn(lastTotalStake, units);
+  const totalIssuanceUnit = planckToUnitBn(totalIssuance, units)
+  const lastTotalStakeUnit = planckToUnitBn(lastTotalStake, units)
   const supplyAsPercent =
     lastTotalStakeUnit.isZero() || totalIssuanceUnit.isZero()
       ? new BigNumber(0)
-      : lastTotalStakeUnit.dividedBy(totalIssuanceUnit.multipliedBy(0.01));
+      : lastTotalStakeUnit.dividedBy(totalIssuanceUnit.multipliedBy(0.01))
 
   const params = {
     label: t('overview.unitSupplyStaked', { unit }),
@@ -41,7 +41,7 @@ export const SupplyStakedStat = () => {
     },
     tooltip: `${supplyAsPercent.decimalPlaces(2).toFormat()}%`,
     helpKey: 'Supply Staked',
-  };
+  }
 
-  return <Pie {...params} />;
-};
+  return <Pie {...params} />
+}

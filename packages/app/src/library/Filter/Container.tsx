@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ReactNode } from 'react';
-import { Wrapper } from './Wrappers';
+import type { ReactNode } from 'react'
+import { Wrapper } from './Wrappers'
 
 export const Container = ({ children }: { children: ReactNode }) => (
   <Wrapper>
@@ -10,4 +10,4 @@ export const Container = ({ children }: { children: ReactNode }) => (
       <div>{children}</div>
     </div>
   </Wrapper>
-);
+)

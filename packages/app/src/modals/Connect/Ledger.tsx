@@ -1,27 +1,27 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChrome, faUsb } from '@fortawesome/free-brands-svg-icons';
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import LedgerLogoSVG from '@w3ux/extension-assets/Ledger.svg?react';
-import { inChrome } from '@w3ux/utils';
-import { useHelp } from 'contexts/Help';
-import { useNetwork } from 'contexts/Network';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { ModalConnectItem } from 'kits/Overlay/structure/ModalConnectItem';
-import { ModalHardwareItem } from 'kits/Overlay/structure/ModalHardwareItem';
-import { ButtonHelp, ButtonPrimaryInvert, ButtonText } from 'ui-buttons';
+import { faChrome, faUsb } from '@fortawesome/free-brands-svg-icons'
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import LedgerLogoSVG from '@w3ux/extension-assets/Ledger.svg?react'
+import { inChrome } from '@w3ux/utils'
+import { useHelp } from 'contexts/Help'
+import { useNetwork } from 'contexts/Network'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { ModalConnectItem } from 'kits/Overlay/structure/ModalConnectItem'
+import { ModalHardwareItem } from 'kits/Overlay/structure/ModalHardwareItem'
+import { ButtonHelp, ButtonPrimaryInvert, ButtonText } from 'ui-buttons'
 
 export const Ledger = () => {
-  const { openHelp } = useHelp();
-  const { replaceModal } = useOverlay().modal;
-  const { network } = useNetwork();
-  const url = 'ledger.com';
+  const { openHelp } = useHelp()
+  const { replaceModal } = useOverlay().modal
+  const { network } = useNetwork()
+  const url = 'ledger.com'
 
   // Only render on Polkadot and Kusama networks.
   if (!['polkadot', 'kusama'].includes(network)) {
-    return null;
+    return null
   }
 
   return (
@@ -65,5 +65,5 @@ export const Ledger = () => {
         </div>
       </ModalHardwareItem>
     </ModalConnectItem>
-  );
-};
+  )
+}

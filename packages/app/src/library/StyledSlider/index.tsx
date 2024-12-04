@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import Slider from 'rc-slider';
-import type { StyledSliderProps } from './types';
-import { Wrapper } from './Wrapper';
+import Slider from 'rc-slider'
+import type { StyledSliderProps } from './types'
+import { Wrapper } from './Wrapper'
 
 export const StyledSlider = ({
   value,
@@ -38,4 +38,4 @@ export const StyledSlider = ({
       }}
     />
   </Wrapper>
-);
+)

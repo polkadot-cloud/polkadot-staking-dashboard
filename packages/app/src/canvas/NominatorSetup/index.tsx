@@ -1,21 +1,21 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Bond } from 'canvas/NominatorSetup/Bond';
-import { Payee } from 'canvas/NominatorSetup/Payee';
-import { Summary } from 'canvas/NominatorSetup/Summary';
-import { CanvasFullScreenWrapper, CanvasTitleWrapper } from 'canvas/Wrappers';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { CardWrapper } from 'library/Card/Wrappers';
-import { Nominate } from 'library/SetupSteps/Nominate';
-import { useTranslation } from 'react-i18next';
-import { Element } from 'react-scroll';
-import { ButtonPrimary } from 'ui-buttons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { Bond } from 'canvas/NominatorSetup/Bond'
+import { Payee } from 'canvas/NominatorSetup/Payee'
+import { Summary } from 'canvas/NominatorSetup/Summary'
+import { CanvasFullScreenWrapper, CanvasTitleWrapper } from 'canvas/Wrappers'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { CardWrapper } from 'library/Card/Wrappers'
+import { Nominate } from 'library/SetupSteps/Nominate'
+import { useTranslation } from 'react-i18next'
+import { Element } from 'react-scroll'
+import { ButtonPrimary } from 'ui-buttons'
 
 export const NominatorSetup = () => {
-  const { t } = useTranslation('pages');
-  const { closeCanvas } = useOverlay().canvas;
+  const { t } = useTranslation('pages')
+  const { closeCanvas } = useOverlay().canvas
 
   return (
     <CanvasFullScreenWrapper>
@@ -60,5 +60,5 @@ export const NominatorSetup = () => {
         <Summary section={4} />
       </CardWrapper>
     </CanvasFullScreenWrapper>
-  );
-};
+  )
+}

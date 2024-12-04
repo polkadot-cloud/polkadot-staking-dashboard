@@ -1,34 +1,34 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import BigNumber from 'bignumber.js';
-import type { NetworkId } from 'common-types';
-import { Apis } from 'controllers/Apis';
-import type { Unsubscribable } from 'controllers/Subscriptions/types';
-import type { Subscription } from 'rxjs';
-import { combineLatest } from 'rxjs';
-import { stringToBn } from 'utils';
+import BigNumber from 'bignumber.js'
+import type { NetworkId } from 'common-types'
+import { Apis } from 'controllers/Apis'
+import type { Unsubscribable } from 'controllers/Subscriptions/types'
+import type { Subscription } from 'rxjs'
+import { combineLatest } from 'rxjs'
+import { stringToBn } from 'utils'
 
 export class PoolsConfig implements Unsubscribable {
   // The associated network for this instance.
-  #network: NetworkId;
+  #network: NetworkId
 
   // Active subscription.
-  #sub: Subscription;
+  #sub: Subscription
 
   constructor(network: NetworkId) {
-    this.#network = network;
+    this.#network = network
 
     // Subscribe immediately.
-    this.subscribe();
+    this.subscribe()
   }
 
   subscribe = async (): Promise<void> => {
     try {
-      const api = Apis.getApi(this.#network);
+      const api = Apis.getApi(this.#network)
 
       if (api && this.#sub === undefined) {
-        const bestOrFinalized = 'best';
+        const bestOrFinalized = 'best'
         const sub = combineLatest([
           api.query.NominationPools.CounterForPoolMembers.watchValue(
             bestOrFinalized
@@ -66,22 +66,22 @@ export class PoolsConfig implements Unsubscribable {
             // Format globalMaxCommission from a perbill to a percent.
             const globalMaxCommissionAsPercent = globalMaxCommission
               ? BigInt(globalMaxCommission) / 1000000n
-              : 100n;
+              : 100n
 
             // Format max pool members to be a BigNumber, or null if it's not set.
             const maxPoolMembers = maxPoolMembersRaw
               ? new BigNumber(maxPoolMembersRaw.toString())
-              : null;
+              : null
 
             // Format max pool members per pool to be a BigNumber, or null if it's not set.
             const maxPoolMembersPerPool = maxPoolMembersPerPoolRaw
               ? new BigNumber(maxPoolMembersPerPoolRaw.toString())
-              : null;
+              : null
 
             // Format max pools to be a BigNumber, or null if it's not set.
             const maxPools = maxPoolsRaw
               ? new BigNumber(maxPoolsRaw.toString())
-              : null;
+              : null
 
             const poolsConfig = {
               counterForPoolMembers: stringToBn(
@@ -102,26 +102,26 @@ export class PoolsConfig implements Unsubscribable {
               globalMaxCommission: Number(
                 globalMaxCommissionAsPercent.toString()
               ),
-            };
+            }
 
             document.dispatchEvent(
               new CustomEvent('new-pools-config', {
                 detail: { poolsConfig },
               })
-            );
+            )
           }
-        );
-        this.#sub = sub;
+        )
+        this.#sub = sub
       }
     } catch (e) {
       // Subscription failed.
     }
-  };
+  }
 
   // Unsubscribe from class subscription.
   unsubscribe = (): void => {
     if (typeof this.#sub?.unsubscribe === 'function') {
-      this.#sub.unsubscribe();
+      this.#sub.unsubscribe()
     }
-  };
+  }
 }

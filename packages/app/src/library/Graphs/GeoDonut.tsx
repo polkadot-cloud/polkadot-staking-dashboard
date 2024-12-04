@@ -1,17 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types';
-import { ellipsisFn } from '@w3ux/utils';
-import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
-import chroma from 'chroma-js';
-import { useNetwork } from 'contexts/Network';
-import { useTheme } from 'contexts/Themes';
-import { Doughnut } from 'react-chartjs-2';
-import graphColors from 'styles/graphs/index.json';
-import type { GeoDonutProps } from './types';
+import type { AnyJson } from '@w3ux/types'
+import { ellipsisFn } from '@w3ux/utils'
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
+import chroma from 'chroma-js'
+import { useNetwork } from 'contexts/Network'
+import { useTheme } from 'contexts/Themes'
+import { Doughnut } from 'react-chartjs-2'
+import graphColors from 'styles/graphs/index.json'
+import type { GeoDonutProps } from './types'
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend)
 
 export const GeoDonut = ({
   title,
@@ -21,19 +21,19 @@ export const GeoDonut = ({
   legendHeight = 25,
   maxLabelLen = 3,
 }: GeoDonutProps) => {
-  const { mode } = useTheme();
-  const { colors } = useNetwork().networkData;
+  const { mode } = useTheme()
+  const { colors } = useNetwork().networkData
 
-  const { labels } = series;
-  let { data } = series;
-  const isZero = data.length === 0;
+  const { labels } = series
+  let { data } = series
+  const isZero = data.length === 0
   const backgroundColor = isZero
     ? graphColors.inactive[mode]
-    : colors.primary[mode];
+    : colors.primary[mode]
 
-  const total = data.reduce((acc: number, value: number) => acc + value, 0);
+  const total = data.reduce((acc: number, value: number) => acc + value, 0)
 
-  data = data.map((value: number) => (value / total) * 100);
+  data = data.map((value: number) => (value / total) * 100)
 
   const options = {
     borderColor: graphColors.inactive[mode],
@@ -55,14 +55,14 @@ export const GeoDonut = ({
             const ls =
               ChartJS.overrides.doughnut.plugins.legend.labels.generateLabels(
                 chart
-              );
+              )
             return ls.map((l) => {
               l.text =
                 maxLabelLen && l.text.length > maxLabelLen
                   ? ellipsisFn(l.text, maxLabelLen, 'end')
-                  : l.text;
-              return l;
-            });
+                  : l.text
+              return l
+            })
           },
         },
       },
@@ -73,7 +73,7 @@ export const GeoDonut = ({
         },
       },
     },
-  };
+  }
 
   const chartData = {
     labels,
@@ -89,11 +89,11 @@ export const GeoDonut = ({
         borderWidth: 0.5,
       },
     ],
-  };
+  }
 
   return (
     <div style={{ width, height }}>
       <Doughnut options={options} data={chartData} />
     </div>
-  );
-};
+  )
+}

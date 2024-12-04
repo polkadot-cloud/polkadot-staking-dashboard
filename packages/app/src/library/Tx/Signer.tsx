@@ -1,10 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faPenToSquare, faWarning } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import type { SignerProps } from './types';
-import { SignerWrapper } from './Wrapper';
+import { faPenToSquare, faWarning } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import type { SignerProps } from './types'
+import { SignerWrapper } from './Wrapper'
 
 export const Signer = ({
   dangerMessage,
@@ -30,4 +30,4 @@ export const Signer = ({
       </span>
     )}
   </SignerWrapper>
-);
+)

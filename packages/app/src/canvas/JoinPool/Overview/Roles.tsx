@@ -1,17 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useHelp } from 'contexts/Help';
-import { CardWrapper } from 'library/Card/Wrappers';
-import { useTranslation } from 'react-i18next';
-import { ButtonHelp } from 'ui-buttons';
-import type { OverviewSectionProps } from '../types';
-import { AddressesWrapper, HeadingWrapper } from '../Wrappers';
-import { AddressSection } from './AddressSection';
+import { useHelp } from 'contexts/Help'
+import { CardWrapper } from 'library/Card/Wrappers'
+import { useTranslation } from 'react-i18next'
+import { ButtonHelp } from 'ui-buttons'
+import type { OverviewSectionProps } from '../types'
+import { AddressesWrapper, HeadingWrapper } from '../Wrappers'
+import { AddressSection } from './AddressSection'
 
 export const Roles = ({ bondedPool }: OverviewSectionProps) => {
-  const { t } = useTranslation('pages');
-  const { openHelp } = useHelp();
+  const { t } = useTranslation('pages')
+  const { openHelp } = useHelp()
 
   return (
     <div>
@@ -51,5 +51,5 @@ export const Roles = ({ bondedPool }: OverviewSectionProps) => {
         </AddressesWrapper>
       </CardWrapper>
     </div>
-  );
-};
+  )
+}

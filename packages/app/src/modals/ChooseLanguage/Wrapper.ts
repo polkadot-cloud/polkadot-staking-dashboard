@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const ContentWrapper = styled.div`
   box-sizing: border-box;
@@ -20,7 +20,7 @@ export const ContentWrapper = styled.div`
     width: 100%;
     margin: 1rem 0 1.5rem 0;
   }
-`;
+`
 
 export const LocaleButton = styled.button<{ $connected: boolean }>`
   color: var(--text-color-primary);
@@ -52,4 +52,4 @@ export const LocaleButton = styled.button<{ $connected: boolean }>`
   &:hover {
     background: var(--button-hover-background);
   }
-`;
+`

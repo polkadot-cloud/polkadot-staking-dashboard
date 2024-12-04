@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Base } from 'api/base';
-import type { ChainId } from 'common-types';
+import { Base } from 'api/base'
+import type { ChainId } from 'common-types'
 
 export class SessionValidators extends Base {
   constructor(network: ChainId) {
-    super(network);
+    super(network)
   }
 
   // Fetch network constants.
@@ -14,11 +14,11 @@ export class SessionValidators extends Base {
     try {
       const result = await this.unsafeApi.query.Session.Validators.getValue({
         at: 'best',
-      });
-      return result;
+      })
+      return result
     } catch (e) {
       // Silently fail.
     }
-    return [];
+    return []
   }
 }

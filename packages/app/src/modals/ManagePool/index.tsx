@@ -1,68 +1,67 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useLedgerHardware } from 'contexts/LedgerHardware';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle';
-import { ModalMotionTwoSection } from 'kits/Overlay/structure/ModalMotionTwoSection';
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
-import { ModalSection } from 'kits/Overlay/structure/ModalSection';
-import { Title } from 'library/Modal/Title';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Forms } from './Forms';
-import { Tasks } from './Tasks';
+import { useLedgerHardware } from 'contexts/LedgerHardware'
+import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle'
+import { ModalMotionTwoSection } from 'kits/Overlay/structure/ModalMotionTwoSection'
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
+import { ModalSection } from 'kits/Overlay/structure/ModalSection'
+import { Title } from 'library/Modal/Title'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Forms } from './Forms'
+import { Tasks } from './Tasks'
 
 export const ManagePool = () => {
-  const { t } = useTranslation('modals');
-  const { activePool } = useActivePool();
-  const { integrityChecked } = useLedgerHardware();
-  const { setModalHeight, modalMaxHeight } = useOverlay().modal;
+  const { t } = useTranslation('modals')
+  const { activePool } = useActivePool()
+  const { integrityChecked } = useLedgerHardware()
+  const { setModalHeight, modalMaxHeight } = useOverlay().modal
 
   // modal task
-  const [task, setTask] = useState<string>();
+  const [task, setTask] = useState<string>()
 
   // active modal section
-  const [section, setSection] = useState<number>(0);
+  const [section, setSection] = useState<number>(0)
 
   // counter to trigger modal height calculation
-  const [calculateHeight, setCalculateHeight] = useState<number>(0);
-  const incrementCalculateHeight = () =>
-    setCalculateHeight(calculateHeight + 1);
+  const [calculateHeight, setCalculateHeight] = useState<number>(0)
+  const incrementCalculateHeight = () => setCalculateHeight(calculateHeight + 1)
 
   // refs for wrappers
-  const headerRef = useRef<HTMLDivElement>(null);
-  const tasksRef = useRef<HTMLDivElement>(null);
-  const formsRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null)
+  const tasksRef = useRef<HTMLDivElement>(null)
+  const formsRef = useRef<HTMLDivElement>(null)
 
   const onResize = () => {
-    let height = headerRef.current?.clientHeight || 0;
+    let height = headerRef.current?.clientHeight || 0
     if (section === 0) {
-      height += tasksRef.current?.clientHeight || 0;
+      height += tasksRef.current?.clientHeight || 0
     } else {
-      height += formsRef.current?.clientHeight || 0;
+      height += formsRef.current?.clientHeight || 0
     }
-    setModalHeight(height);
-  };
+    setModalHeight(height)
+  }
 
   // Resize modal on state change.
   useEffect(() => {
-    onResize();
+    onResize()
   }, [
     integrityChecked,
     section,
     task,
     calculateHeight,
     activePool?.bondedPool?.state,
-  ]);
+  ])
 
   useEffect(() => {
-    window.addEventListener('resize', onResize);
+    window.addEventListener('resize', onResize)
     return () => {
-      window.removeEventListener('resize', onResize);
-    };
-  }, []);
+      window.removeEventListener('resize', onResize)
+    }
+  }, [])
 
   return (
     <ModalSection type="carousel">
@@ -106,5 +105,5 @@ export const ManagePool = () => {
         </div>
       </ModalMotionTwoSection>
     </ModalSection>
-  );
-};
+  )
+}

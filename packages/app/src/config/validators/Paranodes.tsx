@@ -6,6 +6,6 @@ const Paranodes = () => (
       fill="#231f20"
     />
   </svg>
-);
+)
 
-export default Paranodes;
+export default Paranodes

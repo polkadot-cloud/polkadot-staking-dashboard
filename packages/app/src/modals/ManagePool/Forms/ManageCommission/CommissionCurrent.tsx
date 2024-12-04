@@ -1,22 +1,22 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { AccountInput } from 'library/AccountInput';
-import { StyledSlider } from 'library/StyledSlider';
-import { SliderWrapper } from 'modals/ManagePool/Wrappers';
-import { useTranslation } from 'react-i18next';
-import { usePoolCommission } from './provider';
+import { AccountInput } from 'library/AccountInput'
+import { StyledSlider } from 'library/StyledSlider'
+import { SliderWrapper } from 'modals/ManagePool/Wrappers'
+import { useTranslation } from 'react-i18next'
+import { usePoolCommission } from './provider'
 
 export const CommissionCurrent = ({
   commissionAboveMax,
   commissionAboveGlobal,
   commissionAboveMaxIncrease,
 }: {
-  commissionAboveMax: boolean;
-  commissionAboveGlobal: boolean;
-  commissionAboveMaxIncrease: boolean;
+  commissionAboveMax: boolean
+  commissionAboveGlobal: boolean
+  commissionAboveMaxIncrease: boolean
 }) => {
-  const { t } = useTranslation('modals');
+  const { t } = useTranslation('modals')
   const {
     getEnabled,
     getInitial,
@@ -25,41 +25,41 @@ export const CommissionCurrent = ({
     setCommission,
     setMaxCommission,
     isUpdated,
-  } = usePoolCommission();
+  } = usePoolCommission()
 
   // Get the current commission, payee and max commission values.
-  const commission = getCurrent('commission');
-  const payee = getCurrent('payee');
-  const maxCommission = getCurrent('max_commission');
+  const commission = getCurrent('commission')
+  const payee = getCurrent('payee')
+  const maxCommission = getCurrent('max_commission')
 
   // Determine the commission feedback to display.
   const commissionFeedback = (() => {
     if (!isUpdated('commission')) {
-      return undefined;
+      return undefined
     }
     if (commissionAboveMaxIncrease) {
       return {
         text: t('beyondMaxIncrease'),
         label: 'danger',
-      };
+      }
     }
     if (commissionAboveGlobal) {
       return {
         text: t('aboveGlobalMax'),
         label: 'danger',
-      };
+      }
     }
     if (commissionAboveMax) {
       return {
         text: t('aboveMax'),
         label: 'danger',
-      };
+      }
     }
     return {
       text: t('updated'),
       label: 'neutral',
-    };
-  })();
+    }
+  })()
 
   return (
     <>
@@ -76,9 +76,9 @@ export const CommissionCurrent = ({
           step={0.1}
           onChange={(val) => {
             if (typeof val === 'number') {
-              setCommission(val);
+              setCommission(val)
               if (val > maxCommission && getEnabled('max_commission')) {
-                setMaxCommission(Math.min(getInitial('max_commission'), val));
+                setMaxCommission(Math.min(getInitial('max_commission'), val))
               }
             }
           }}
@@ -90,10 +90,10 @@ export const CommissionCurrent = ({
         successLabel={t('payeeAdded')}
         locked={payee !== null}
         successCallback={async (input) => {
-          setPayee(input);
+          setPayee(input)
         }}
         resetCallback={() => {
-          setPayee(null);
+          setPayee(null)
         }}
         disallowAlreadyImported={false}
         initialValue={payee}
@@ -101,5 +101,5 @@ export const CommissionCurrent = ({
         border={payee === null}
       />
     </>
-  );
-};
+  )
+}

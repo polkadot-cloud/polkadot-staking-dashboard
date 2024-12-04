@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classNames from 'classnames';
-import commonClasses from '../common.module.scss';
-import { onMouseHandlers } from '../util';
-import classes from './index.module.scss';
-import type { ButtonPrimaryProps } from './types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import classNames from 'classnames'
+import commonClasses from '../common.module.scss'
+import { onMouseHandlers } from '../util'
+import classes from './index.module.scss'
+import type { ButtonPrimaryProps } from './types'
 
 /**
  * @name ButtonPrimary
@@ -35,7 +35,7 @@ export const ButtonPrimary = (props: ButtonPrimaryProps): JSX.Element => {
     onMouseOver,
     style,
     text,
-  } = props;
+  } = props
 
   const buttonClasses = classNames(
     commonClasses.btnCore,
@@ -52,7 +52,7 @@ export const ButtonPrimary = (props: ButtonPrimaryProps): JSX.Element => {
       [classes.btnPrimarySecondaryColor]: colorSecondary,
     },
     className
-  );
+  )
 
   return (
     <button
@@ -78,5 +78,5 @@ export const ButtonPrimary = (props: ButtonPrimaryProps): JSX.Element => {
         />
       )}
     </button>
-  );
-};
+  )
+}

@@ -1,10 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { motion } from 'framer-motion';
-import { LargeItemWrapper } from './Wrappers';
-import type { LargerFilterItemProps } from './types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { motion } from 'framer-motion'
+import { LargeItemWrapper } from './Wrappers'
+import type { LargerFilterItemProps } from './types'
 
 export const LargeItem = ({
   disabled = false,
@@ -45,4 +45,4 @@ export const LargeItem = ({
       </div>
     </LargeItemWrapper>
   </motion.button>
-);
+)

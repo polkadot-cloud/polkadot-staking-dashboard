@@ -1,25 +1,25 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useStaking } from 'contexts/Staking';
-import { useSyncing } from 'hooks/useSyncing';
-import { useTranslation } from 'react-i18next';
-import DefaultAccount from '../Account/DefaultAccount';
-import PoolAccount from '../Account/PoolAccount';
-import { HeadingWrapper } from './Wrappers';
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { useStaking } from 'contexts/Staking'
+import { useSyncing } from 'hooks/useSyncing'
+import { useTranslation } from 'react-i18next'
+import DefaultAccount from '../Account/DefaultAccount'
+import PoolAccount from '../Account/PoolAccount'
+import { HeadingWrapper } from './Wrappers'
 
 export const Connected = () => {
-  const { t } = useTranslation('library');
-  const { isNominating } = useStaking();
-  const { activePool } = useActivePool();
-  const { poolsMetaData } = useBondedPools();
-  const { syncing } = useSyncing(['initialization']);
-  const { accountHasSigner } = useImportedAccounts();
-  const { activeAccount, activeProxy } = useActiveAccounts();
+  const { t } = useTranslation('library')
+  const { isNominating } = useStaking()
+  const { activePool } = useActivePool()
+  const { poolsMetaData } = useBondedPools()
+  const { syncing } = useSyncing(['initialization'])
+  const { accountHasSigner } = useImportedAccounts()
+  const { activeAccount, activeProxy } = useActiveAccounts()
 
   return (
     activeAccount && (
@@ -58,5 +58,5 @@ export const Connected = () => {
         )}
       </>
     )
-  );
-};
+  )
+}

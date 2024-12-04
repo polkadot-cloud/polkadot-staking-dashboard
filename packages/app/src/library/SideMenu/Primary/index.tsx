@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useUi } from 'contexts/UI';
-import { useDotLottieButton } from 'hooks/useDotLottieButton';
-import { Link } from 'react-router-dom';
-import type { PrimaryProps } from '../types';
-import { Wrapper } from './Wrappers';
+import { faCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useUi } from 'contexts/UI'
+import { useDotLottieButton } from 'hooks/useDotLottieButton'
+import { Link } from 'react-router-dom'
+import type { PrimaryProps } from '../types'
+import { Wrapper } from './Wrappers'
 
 export const Primary = ({
   name,
@@ -17,12 +17,12 @@ export const Primary = ({
   minimised,
   lottie,
 }: PrimaryProps) => {
-  const { setSideMenu } = useUi();
+  const { setSideMenu } = useUi()
 
-  const { icon, play } = useDotLottieButton(lottie);
+  const { icon, play } = useDotLottieButton(lottie)
 
-  let Action = null;
-  const actionStatus = action?.status ?? null;
+  let Action = null
+  const actionStatus = action?.status ?? null
 
   switch (action?.type) {
     case 'text':
@@ -32,17 +32,17 @@ export const Primary = ({
             {action?.text ?? ''}
           </span>
         </div>
-      );
-      break;
+      )
+      break
     case 'bullet':
       Action = (
         <div className={`action ${actionStatus}`}>
           <FontAwesomeIcon icon={faCircle} transform="shrink-4" />
         </div>
-      );
-      break;
+      )
+      break
     default:
-      Action = null;
+      Action = null
   }
 
   return (
@@ -50,8 +50,8 @@ export const Primary = ({
       to={to}
       onClick={() => {
         if (!active) {
-          play();
-          setSideMenu(false);
+          play()
+          setSideMenu(false)
         }
       }}
     >
@@ -75,5 +75,5 @@ export const Primary = ({
         )}
       </Wrapper>
     </Link>
-  );
-};
+  )
+}

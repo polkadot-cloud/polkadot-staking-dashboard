@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { rmCommas } from '@w3ux/utils';
-import type { AnyApi, NetworkId } from 'common-types';
-import type { Exposure, LocalExposure, LocalExposuresData } from './types';
+import { rmCommas } from '@w3ux/utils'
+import type { AnyApi, NetworkId } from 'common-types'
+import type { Exposure, LocalExposure, LocalExposuresData } from './types'
 
 // Get local `erasStakers` entries for an era.
 export const getLocalEraExposures = (
@@ -11,20 +11,20 @@ export const getLocalEraExposures = (
   era: string,
   activeEra: string
 ) => {
-  const data = localStorage.getItem(`${network}_exposures`);
-  const current = data ? (JSON.parse(data) as LocalExposuresData) : null;
-  const currentEra = current?.era;
+  const data = localStorage.getItem(`${network}_exposures`)
+  const current = data ? (JSON.parse(data) as LocalExposuresData) : null
+  const currentEra = current?.era
 
   if (currentEra && currentEra !== activeEra) {
-    localStorage.removeItem(`${network}_exposures`);
+    localStorage.removeItem(`${network}_exposures`)
   }
 
   if (currentEra === era && current?.exposures) {
-    return maxifyExposures(current.exposures) as Exposure[];
+    return maxifyExposures(current.exposures) as Exposure[]
   }
 
-  return null;
-};
+  return null
+}
 
 // Set local stakers entries data for an era.
 export const setLocalEraExposures = (
@@ -38,14 +38,14 @@ export const setLocalEraExposures = (
       era,
       exposures: minifyExposures(exposures),
     })
-  );
-};
+  )
+}
 
 // Humanise and remove commas from fetched exposures.
 export const formatRawExposures = (exposures: AnyApi) =>
   exposures.map(([k, v]: AnyApi) => {
-    const keys = k.toHuman();
-    const { own, total, others } = v.toHuman();
+    const keys = k.toHuman()
+    const { own, total, others } = v.toHuman()
 
     return {
       keys: [rmCommas(keys[0]), keys[1]],
@@ -57,8 +57,8 @@ export const formatRawExposures = (exposures: AnyApi) =>
         own: rmCommas(own),
         total: rmCommas(total),
       },
-    };
-  });
+    }
+  })
 
 // Minify exposures data structure for local storage.
 const minifyExposures = (exposures: Exposure[]) =>
@@ -69,7 +69,7 @@ const minifyExposures = (exposures: Exposure[]) =>
       w: own,
       t: total,
     },
-  }));
+  }))
 
 // Expand local exposure data into JSON format.
 const maxifyExposures = (exposures: LocalExposure[]) =>
@@ -83,4 +83,4 @@ const maxifyExposures = (exposures: LocalExposure[]) =>
       own: v.w,
       total: v.t,
     },
-  }));
+  }))

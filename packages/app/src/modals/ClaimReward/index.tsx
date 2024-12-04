@@ -1,85 +1,85 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit } from '@w3ux/utils';
-import { PoolBondExtra } from 'api/tx/poolBondExtra';
-import { PoolClaimPayout } from 'api/tx/poolClaimPayout';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useNetwork } from 'contexts/Network';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useSignerWarnings } from 'hooks/useSignerWarnings';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
-import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings';
-import { ActionItem } from 'library/ActionItem';
-import { Warning } from 'library/Form/Warning';
-import { Close } from 'library/Modal/Close';
-import { SubmitTx } from 'library/SubmitTx';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { planckToUnit } from '@w3ux/utils'
+import { PoolBondExtra } from 'api/tx/poolBondExtra'
+import { PoolClaimPayout } from 'api/tx/poolClaimPayout'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useNetwork } from 'contexts/Network'
+import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useSignerWarnings } from 'hooks/useSignerWarnings'
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
+import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings'
+import { ActionItem } from 'library/ActionItem'
+import { Warning } from 'library/Form/Warning'
+import { Close } from 'library/Modal/Close'
+import { SubmitTx } from 'library/SubmitTx'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export const ClaimReward = () => {
-  const { t } = useTranslation('modals');
+  const { t } = useTranslation('modals')
   const {
     network,
     networkData: { units, unit },
-  } = useNetwork();
+  } = useNetwork()
   const {
     setModalStatus,
     config: { options },
     setModalResize,
-  } = useOverlay().modal;
-  const { activePool } = useActivePool();
-  const { activeAccount } = useActiveAccounts();
-  const { getSignerWarnings } = useSignerWarnings();
+  } = useOverlay().modal
+  const { activePool } = useActivePool()
+  const { activeAccount } = useActiveAccounts()
+  const { getSignerWarnings } = useSignerWarnings()
 
-  const { claimType } = options;
-  const pendingRewards = activePool?.pendingRewards || 0n;
+  const { claimType } = options
+  const pendingRewards = activePool?.pendingRewards || 0n
 
   // ensure selected payout is valid
   useEffect(() => {
     if (pendingRewards > 0) {
-      setValid(true);
+      setValid(true)
     } else {
-      setValid(false);
+      setValid(false)
     }
-  }, [activePool]);
+  }, [activePool])
 
   // valid to submit transaction
-  const [valid, setValid] = useState<boolean>(false);
+  const [valid, setValid] = useState<boolean>(false)
 
   const getTx = () => {
-    let tx = null;
+    let tx = null
 
     if (claimType === 'bond') {
-      tx = new PoolBondExtra(network, 'Rewards').tx();
+      tx = new PoolBondExtra(network, 'Rewards').tx()
     } else {
-      tx = new PoolClaimPayout(network).tx();
+      tx = new PoolClaimPayout(network).tx()
     }
-    return tx;
-  };
+    return tx
+  }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: valid,
     callbackSubmit: () => {
-      setModalStatus('closing');
+      setModalStatus('closing')
     },
-  });
+  })
 
   const warnings = getSignerWarnings(
     activeAccount,
     false,
     submitExtrinsic.proxySupported
-  );
+  )
 
   if (pendingRewards === 0n) {
-    warnings.push(`${t('noRewards')}`);
+    warnings.push(`${t('noRewards')}`)
   }
 
-  useEffect(() => setModalResize(), [warnings.length]);
+  useEffect(() => setModalResize(), [warnings.length])
 
   return (
     <>
@@ -109,5 +109,5 @@ export const ClaimReward = () => {
       </ModalPadding>
       <SubmitTx valid={valid} {...submitExtrinsic} />
     </>
-  );
-};
+  )
+}

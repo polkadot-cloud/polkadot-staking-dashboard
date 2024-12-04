@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { DefinitionWrapper } from '../Wrappers';
+import { DefinitionWrapper } from '../Wrappers'
 
 export const ActiveDefinition = ({
   description,
 }: {
-  description: string[];
+  description: string[]
 }) => (
   <DefinitionWrapper>
     <div>
@@ -17,4 +17,4 @@ export const ActiveDefinition = ({
       ))}
     </div>
   </DefinitionWrapper>
-);
+)

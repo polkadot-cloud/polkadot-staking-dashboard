@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { motion } from 'framer-motion';
-import styled from 'styled-components';
+import { motion } from 'framer-motion'
+import styled from 'styled-components'
 
 export const TipWrapper = styled(motion.div)`
   width: 100%;
@@ -48,4 +48,4 @@ export const TipWrapper = styled(motion.div)`
       margin-right: 1rem;
     }
   }
-`;
+`

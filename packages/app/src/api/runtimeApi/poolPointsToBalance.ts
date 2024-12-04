@@ -1,17 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Base } from 'api/base';
-import type { ChainId } from 'common-types';
+import { Base } from 'api/base'
+import type { ChainId } from 'common-types'
 
 export class PoolPointsToBalance extends Base {
-  #poolId: number;
-  #points: bigint;
+  #poolId: number
+  #points: bigint
 
   constructor(network: ChainId, poolId: number, points: bigint) {
-    super(network);
-    this.#poolId = poolId;
-    this.#points = points;
+    super(network)
+    this.#poolId = poolId
+    this.#points = points
   }
 
   async fetch() {
@@ -21,11 +21,11 @@ export class PoolPointsToBalance extends Base {
           this.#poolId,
           this.#points,
           { at: 'best' }
-        );
-      return result;
+        )
+      return result
     } catch (e) {
       // Silently fail.
     }
-    return undefined;
+    return undefined
   }
 }

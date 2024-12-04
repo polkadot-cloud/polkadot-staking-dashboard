@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PageWidthMediumThreshold, SmallFontSizeMaxWidth } from 'consts';
-import { motion } from 'framer-motion';
-import styled from 'styled-components';
+import { PageWidthMediumThreshold, SmallFontSizeMaxWidth } from 'consts'
+import { motion } from 'framer-motion'
+import styled from 'styled-components'
 
 export const TipsWrapper = styled.div`
   width: 100%;
@@ -16,21 +16,21 @@ export const TipsWrapper = styled.div`
   @media (max-width: ${PageWidthMediumThreshold}px) {
     padding: 0.5rem 1rem;
   }
-`;
+`
 
 export const ItemsWrapper = styled(motion.div)`
   width: 100%;
   display: flex;
   justify-items: center;
   margin: 0.25rem 0 0rem 0;
-`;
+`
 export const ItemWrapper = styled(motion.div)`
   padding: 0 0.25rem;
   flex-basis: 100%;
   &:last-child {
     margin-right: 0.25rem;
   }
-`;
+`
 
 export const ItemInnerWrapper = styled.div`
   display: flex;
@@ -111,7 +111,7 @@ export const ItemInnerWrapper = styled.div`
       }
     }
   }
-`;
+`
 
 export const PageToggleWrapper = styled.div`
   color: var(--text-color-secondary);
@@ -152,4 +152,4 @@ export const PageToggleWrapper = styled.div`
       opacity: var(--opacity-disabled);
     }
   }
-`;
+`

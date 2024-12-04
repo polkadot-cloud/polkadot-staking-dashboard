@@ -1,53 +1,53 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ellipsisFn, unitToPlanck } from '@w3ux/utils';
-import { NewNominator } from 'api/tx/newNominator';
-import BigNumber from 'bignumber.js';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useNetwork } from 'contexts/Network';
-import { useSetup } from 'contexts/Setup';
-import { useBatchCall } from 'hooks/useBatchCall';
-import { usePayeeConfig } from 'hooks/usePayeeConfig';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { Warning } from 'library/Form/Warning';
-import { Header } from 'library/SetupSteps/Header';
-import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import type { SetupStepProps } from 'library/SetupSteps/types';
-import { SubmitTx } from 'library/SubmitTx';
-import { useTranslation } from 'react-i18next';
-import { SummaryWrapper } from './Wrapper';
+import { faCheckCircle } from '@fortawesome/free-regular-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { ellipsisFn, unitToPlanck } from '@w3ux/utils'
+import { NewNominator } from 'api/tx/newNominator'
+import BigNumber from 'bignumber.js'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useNetwork } from 'contexts/Network'
+import { useSetup } from 'contexts/Setup'
+import { useBatchCall } from 'hooks/useBatchCall'
+import { usePayeeConfig } from 'hooks/usePayeeConfig'
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { Warning } from 'library/Form/Warning'
+import { Header } from 'library/SetupSteps/Header'
+import { MotionContainer } from 'library/SetupSteps/MotionContainer'
+import type { SetupStepProps } from 'library/SetupSteps/types'
+import { SubmitTx } from 'library/SubmitTx'
+import { useTranslation } from 'react-i18next'
+import { SummaryWrapper } from './Wrapper'
 
 export const Summary = ({ section }: SetupStepProps) => {
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation('pages')
   const {
     network,
     networkData: { units, unit },
-  } = useNetwork();
-  const { newBatchCall } = useBatchCall();
-  const { getPayeeItems } = usePayeeConfig();
-  const { closeCanvas } = useOverlay().canvas;
-  const { accountHasSigner } = useImportedAccounts();
-  const { activeAccount, activeProxy } = useActiveAccounts();
-  const { getNominatorSetup, removeSetupProgress } = useSetup();
+  } = useNetwork()
+  const { newBatchCall } = useBatchCall()
+  const { getPayeeItems } = usePayeeConfig()
+  const { closeCanvas } = useOverlay().canvas
+  const { accountHasSigner } = useImportedAccounts()
+  const { activeAccount, activeProxy } = useActiveAccounts()
+  const { getNominatorSetup, removeSetupProgress } = useSetup()
 
-  const setup = getNominatorSetup(activeAccount);
-  const { progress } = setup;
-  const { bond, nominations, payee } = progress;
+  const setup = getNominatorSetup(activeAccount)
+  const { progress } = setup
+  const { bond, nominations, payee } = progress
 
   const getTxs = () => {
     if (!activeAccount) {
-      return null;
+      return null
     }
     if (payee.destination === 'Account' && !payee.account) {
-      return null;
+      return null
     }
     if (payee.destination !== 'Account' && !payee.destination) {
-      return null;
+      return null
     }
 
     const tx = new NewNominator(
@@ -65,13 +65,13 @@ export const Summary = ({ section }: SetupStepProps) => {
         type: 'Id',
         value: address,
       }))
-    ).tx();
+    ).tx()
 
     if (!tx) {
-      return null;
+      return null
     }
-    return newBatchCall(tx, activeAccount);
-  };
+    return newBatchCall(tx, activeAccount)
+  }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tag: 'nominatorSetup',
@@ -80,16 +80,16 @@ export const Summary = ({ section }: SetupStepProps) => {
     shouldSubmit: true,
     callbackInBlock: () => {
       // Close the canvas after the extrinsic is included in a block.
-      closeCanvas();
+      closeCanvas()
 
       // Reset setup progress.
-      removeSetupProgress('nominator', activeAccount);
+      removeSetupProgress('nominator', activeAccount)
     },
-  });
+  })
 
   const payeeDisplay =
     getPayeeItems().find(({ value }) => value === payee.destination)?.title ||
-    payee.destination;
+    payee.destination
 
   return (
     <>
@@ -149,5 +149,5 @@ export const Summary = ({ section }: SetupStepProps) => {
         </div>
       </MotionContainer>
     </>
-  );
-};
+  )
+}

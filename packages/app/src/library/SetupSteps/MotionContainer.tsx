@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { motion } from 'framer-motion';
-import type { MotionContainerProps } from './types';
+import { motion } from 'framer-motion'
+import type { MotionContainerProps } from './types'
 
 export const MotionContainer = ({
   thisSection,
@@ -17,10 +17,10 @@ export const MotionContainer = ({
     visible: {
       height: 'auto',
     },
-  };
+  }
 
   // animate container default
-  const animate = thisSection === activeSection ? 'visible' : 'hidden';
+  const animate = thisSection === activeSection ? 'visible' : 'hidden'
 
   return (
     <motion.div
@@ -36,5 +36,5 @@ export const MotionContainer = ({
     >
       {children}
     </motion.div>
-  );
-};
+  )
+}

@@ -1,15 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useAnimation } from 'framer-motion';
-import type { FC } from 'react';
-import { useEffect, useRef } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
-import { useOverlay } from './Provider';
-import type { ModalProps } from './Provider/types';
-import { ModalCard } from './structure/ModalCard';
-import { ModalContainer } from './structure/ModalContainer';
-import { ModalScroll } from './structure/ModalScroll';
+import { useAnimation } from 'framer-motion'
+import type { FC } from 'react'
+import { useEffect, useRef } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
+import { useOverlay } from './Provider'
+import type { ModalProps } from './Provider/types'
+import { ModalCard } from './structure/ModalCard'
+import { ModalContainer } from './structure/ModalContainer'
+import { ModalScroll } from './structure/ModalScroll'
 
 export const Modal = ({
   modals,
@@ -31,92 +31,92 @@ export const Modal = ({
       setModalStatus,
       setModalHeightRef,
     },
-  } = useOverlay();
-  const controls = useAnimation();
-  const { status: canvasStatus } = useOverlay().canvas;
-  const modalRef = useRef<HTMLDivElement>(null);
-  const heightRef = useRef<HTMLDivElement>(null);
+  } = useOverlay()
+  const controls = useAnimation()
+  const { status: canvasStatus } = useOverlay().canvas
+  const modalRef = useRef<HTMLDivElement>(null)
+  const heightRef = useRef<HTMLDivElement>(null)
 
   const onOutClose = async () => {
-    setOpenOverlayInstances('dec', 'modal');
-    setActiveOverlayInstance(null);
-    await controls.start('out');
-    setModalStatus('closed');
-  };
-  const onIn = async () => await controls.start('in');
+    setOpenOverlayInstances('dec', 'modal')
+    setActiveOverlayInstance(null)
+    await controls.start('out')
+    setModalStatus('closed')
+  }
+  const onIn = async () => await controls.start('in')
 
-  const onOut = async () => await controls.start('out');
+  const onOut = async () => await controls.start('out')
 
   const windowResize = () => {
     if (!options?.disableWindowResize) {
-      window.addEventListener('resize', handleResize);
+      window.addEventListener('resize', handleResize)
     }
-  };
+  }
 
   const handleResize = () => {
     if (status !== 'open' || options?.disableWindowResize) {
-      return;
+      return
     }
-    setModalHeight(modalRef.current?.clientHeight || 0);
-  };
+    setModalHeight(modalRef.current?.clientHeight || 0)
+  }
 
   // Control on modal status change.
   useEffect(() => {
     if (activeOverlayInstance === 'modal' && status === 'open') {
-      onIn();
+      onIn()
     }
     if (status === 'closing') {
-      onOutClose();
+      onOutClose()
     }
-  }, [status]);
+  }, [status])
 
   // Control on canvas status change.
   useEffect(() => {
     // fade out modal if canvas has been opened.
     if (canvasStatus === 'open' && status === 'open') {
-      onOut();
+      onOut()
     }
     // fade in modal if its open & canvas is closing.
     if (canvasStatus === 'closing') {
       if (status === 'open') {
-        onIn();
+        onIn()
       }
     }
-  }, [canvasStatus]);
+  }, [canvasStatus])
 
   // Control dim external overlay change.
   useEffect(() => {
     // fade out modal if external overlay has been opened.
     if (externalOverlayStatus === 'open' && status === 'open') {
-      onOut();
+      onOut()
     }
     // fade in modal if its open & external overlay is closing.
     if (
       externalOverlayStatus === 'closing' &&
       activeOverlayInstance === 'modal'
     ) {
-      onIn();
+      onIn()
     }
-  }, [externalOverlayStatus]);
+  }, [externalOverlayStatus])
 
   // Resize modal on status or resize change.
-  useEffect(() => handleResize(), [modalResizeCounter, status]);
+  useEffect(() => handleResize(), [modalResizeCounter, status])
 
   // Resize modal on window size change.
   useEffect(() => {
-    windowResize();
+    windowResize()
     return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  });
+      window.removeEventListener('resize', handleResize)
+    }
+  })
 
   // Update the modal's content ref as they are initialised.
   useEffect(() => {
-    setModalRef(modalRef);
-    setModalHeightRef(heightRef);
-  }, [modalRef?.current, heightRef?.current]);
+    setModalRef(modalRef)
+    setModalHeightRef(heightRef)
+  }, [modalRef?.current, heightRef?.current])
 
-  const ActiveModal: FC | null = modals?.[key] || null;
+  const ActiveModal: FC | null = modals?.[key] || null
 
   return status === 'closed' ? null : status !== 'replacing' ? (
     <ModalContainer
@@ -170,12 +170,12 @@ export const Modal = ({
           type="button"
           className="close"
           onClick={() => {
-            setModalStatus('closing');
+            setModalStatus('closing')
           }}
         >
           &nbsp;
         </button>
       </div>
     </ModalContainer>
-  ) : null;
-};
+  ) : null
+}

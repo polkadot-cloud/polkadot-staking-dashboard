@@ -1,27 +1,23 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
-import { usePlugins } from 'contexts/Plugins';
-import { usePrompt } from 'contexts/Prompt';
-import { Title } from 'library/Prompt/Title';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
-import {
-  ButtonPrimary,
-  ButtonPrimaryInvert,
-  ButtonSecondary,
-} from 'ui-buttons';
-import type { TipProps } from './types';
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
+import { usePlugins } from 'contexts/Plugins'
+import { usePrompt } from 'contexts/Prompt'
+import { Title } from 'library/Prompt/Title'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
+import { ButtonPrimary, ButtonPrimaryInvert, ButtonSecondary } from 'ui-buttons'
+import type { TipProps } from './types'
 
 export const Tip = ({ title, description, page }: TipProps) => {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { togglePlugin } = usePlugins();
-  const { closePrompt } = usePrompt();
+  const { t } = useTranslation()
+  const navigate = useNavigate()
+  const { togglePlugin } = usePlugins()
+  const { closePrompt } = usePrompt()
 
-  const [disabling, setDisabling] = useState<boolean>(false);
+  const [disabling, setDisabling] = useState<boolean>(false)
 
   return disabling ? (
     <>
@@ -35,8 +31,8 @@ export const Tip = ({ title, description, page }: TipProps) => {
             marginRight
             text={t('module.disableTips', { ns: 'tips' })}
             onClick={() => {
-              togglePlugin('tips');
-              closePrompt();
+              togglePlugin('tips')
+              closePrompt()
             }}
           />
           <ButtonPrimaryInvert
@@ -64,8 +60,8 @@ export const Tip = ({ title, description, page }: TipProps) => {
                 ns: 'base',
               })}`}
               onClick={() => {
-                closePrompt();
-                navigate(`/${page}`);
+                closePrompt()
+                navigate(`/${page}`)
               }}
               iconRight={faAngleRight}
               iconTransform="shrink-1"
@@ -75,11 +71,11 @@ export const Tip = ({ title, description, page }: TipProps) => {
             marginRight
             text={t('module.disableTips', { ns: 'tips' })}
             onClick={() => {
-              setDisabling(true);
+              setDisabling(true)
             }}
           />
         </div>
       </div>
     </>
-  );
-};
+  )
+}

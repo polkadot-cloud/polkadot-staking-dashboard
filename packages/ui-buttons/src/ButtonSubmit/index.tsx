@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classNames from 'classnames';
-import commonClasses from '../common.module.scss';
-import { onMouseHandlers } from '../util';
-import classes from './index.module.scss';
-import type { ButtonSubmitProps } from './types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import classNames from 'classnames'
+import commonClasses from '../common.module.scss'
+import { onMouseHandlers } from '../util'
+import classes from './index.module.scss'
+import type { ButtonSubmitProps } from './types'
 
 /**
  * @name ButtonSubmit
@@ -36,7 +36,7 @@ export const ButtonSubmit = (props: ButtonSubmitProps): JSX.Element => {
     onMouseOver,
     onMouseMove,
     onMouseOut,
-  } = props;
+  } = props
 
   const buttonClasses = classNames(
     commonClasses.btnCore,
@@ -54,7 +54,7 @@ export const ButtonSubmit = (props: ButtonSubmitProps): JSX.Element => {
       [classes.btnSubmitPulse]: pulse,
     },
     className
-  );
+  )
 
   return (
     <button
@@ -80,5 +80,5 @@ export const ButtonSubmit = (props: ButtonSubmitProps): JSX.Element => {
         />
       )}
     </button>
-  );
-};
+  )
+}

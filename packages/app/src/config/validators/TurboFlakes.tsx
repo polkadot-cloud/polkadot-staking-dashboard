@@ -7,6 +7,6 @@ const TurboFlakes = () => (
       fill="#fff"
     />
   </svg>
-);
+)
 
-export default TurboFlakes;
+export default TurboFlakes

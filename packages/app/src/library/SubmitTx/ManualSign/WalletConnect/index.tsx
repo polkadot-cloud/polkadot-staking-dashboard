@@ -1,17 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faSquarePen } from '@fortawesome/free-solid-svg-icons';
-import { appendOrEmpty } from '@w3ux/utils';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useTxMeta } from 'contexts/TxMeta';
-import { useWalletConnect } from 'contexts/WalletConnect';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge';
-import type { SubmitProps } from 'library/SubmitTx/types';
-import { type ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ButtonSubmit } from 'ui-buttons';
+import { faSquarePen } from '@fortawesome/free-solid-svg-icons'
+import { appendOrEmpty } from '@w3ux/utils'
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useTxMeta } from 'contexts/TxMeta'
+import { useWalletConnect } from 'contexts/WalletConnect'
+import { EstimatedTxFee } from 'library/EstimatedTxFee'
+import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge'
+import type { SubmitProps } from 'library/SubmitTx/types'
+import { type ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ButtonSubmit } from 'ui-buttons'
 
 export const WalletConnect = ({
   uid,
@@ -24,51 +24,51 @@ export const WalletConnect = ({
   displayFor,
   notEnoughFunds,
 }: SubmitProps & {
-  buttons?: ReactNode[];
-  notEnoughFunds: boolean;
-  processing: boolean;
+  buttons?: ReactNode[]
+  notEnoughFunds: boolean
+  processing: boolean
 }) => {
-  const { t } = useTranslation('library');
-  const { getTxSubmission } = useTxMeta();
-  const { accountHasSigner } = useImportedAccounts();
+  const { t } = useTranslation('library')
+  const { getTxSubmission } = useTxMeta()
+  const { accountHasSigner } = useImportedAccounts()
   const { wcSessionActive, connectProvider, fetchAddresses } =
-    useWalletConnect();
+    useWalletConnect()
 
-  const txSubmission = getTxSubmission(uid);
-  const from = txSubmission?.from || null;
+  const txSubmission = getTxSubmission(uid)
+  const from = txSubmission?.from || null
 
   // The state under which submission is disabled.
-  const disabled = !valid || !accountHasSigner(submitAddress) || notEnoughFunds;
+  const disabled = !valid || !accountHasSigner(submitAddress) || notEnoughFunds
 
   // Format submit button based on whether signature currently exists or submission is ongoing.
-  let buttonOnClick: () => void;
-  let buttonDisabled: boolean;
-  let buttonPulse: boolean;
+  let buttonOnClick: () => void
+  let buttonDisabled: boolean
+  let buttonPulse: boolean
 
   const connectAndSubmit = async () => {
     // If Wallet Connect session is not active, re-connect.
     if (!wcSessionActive) {
-      await connectProvider();
+      await connectProvider()
     }
-    const wcAccounts = await fetchAddresses();
-    const accountExists = from && wcAccounts.includes(from);
+    const wcAccounts = await fetchAddresses()
+    const accountExists = from && wcAccounts.includes(from)
     if (!from || !accountExists) {
-      return;
+      return
     }
-    onSubmit();
-  };
-
-  if (processing) {
-    buttonOnClick = connectAndSubmit;
-    buttonDisabled = disabled;
-    buttonPulse = false;
-  } else {
-    buttonOnClick = connectAndSubmit;
-    buttonDisabled = disabled;
-    buttonPulse = !disabled;
+    onSubmit()
   }
 
-  const buttonText = processing ? submitText || '' : t('sign');
+  if (processing) {
+    buttonOnClick = connectAndSubmit
+    buttonDisabled = disabled
+    buttonPulse = false
+  } else {
+    buttonOnClick = connectAndSubmit
+    buttonDisabled = disabled
+    buttonPulse = !disabled
+  }
+
+  const buttonText = processing ? submitText || '' : t('sign')
 
   return (
     <div className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}>
@@ -99,5 +99,5 @@ export const WalletConnect = ({
         )}
       </div>
     </div>
-  );
-};
+  )
+}

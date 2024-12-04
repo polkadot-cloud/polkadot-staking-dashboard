@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ComponentBaseWithClassName } from '@w3ux/types';
-import type { ForwardedRef } from 'react';
-import { forwardRef } from 'react';
+import type { ComponentBaseWithClassName } from '@w3ux/types'
+import type { ForwardedRef } from 'react'
+import { forwardRef } from 'react'
 
 /**
  * @name ModalCard
@@ -22,5 +22,5 @@ export const ModalCard = forwardRef(
       {children}
     </div>
   )
-);
-ModalCard.displayName = 'ModalCard';
+)
+ModalCard.displayName = 'ModalCard'

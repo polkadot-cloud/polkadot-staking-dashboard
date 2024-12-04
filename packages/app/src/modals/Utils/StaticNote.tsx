@@ -1,15 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import type { AnyJson } from '@w3ux/types'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface StaticNoteProps {
-  value: string;
-  tKey: string;
-  valueKey: string;
-  deps?: AnyJson[];
+  value: string
+  tKey: string
+  valueKey: string
+  deps?: AnyJson[]
 }
 
 // Static notes store a single piece of text that is not updated after the initial render unless
@@ -20,14 +20,14 @@ export const StaticNote = ({
   valueKey,
   deps = [],
 }: StaticNoteProps) => {
-  const { t } = useTranslation('modals');
+  const { t } = useTranslation('modals')
 
   // store the next to be displayed.
-  const [staticText, setStaticText] = useState<string>(value);
+  const [staticText, setStaticText] = useState<string>(value)
 
   useEffect(() => {
-    setStaticText(value);
-  }, [...deps]);
+    setStaticText(value)
+  }, [...deps])
 
-  return <p>{t(tKey, { [valueKey]: staticText })}</p>;
-};
+  return <p>{t(tKey, { [valueKey]: staticText })}</p>
+}

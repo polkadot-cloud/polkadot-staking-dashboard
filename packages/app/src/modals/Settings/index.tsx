@@ -1,16 +1,16 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { usePlugins } from 'contexts/Plugins';
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
-import { Title } from 'library/Modal/Title';
-import { StatusButton } from 'library/StatusButton';
-import { useTranslation } from 'react-i18next';
-import { ContentWrapper } from '../Networks/Wrapper';
+import { usePlugins } from 'contexts/Plugins'
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
+import { Title } from 'library/Modal/Title'
+import { StatusButton } from 'library/StatusButton'
+import { useTranslation } from 'react-i18next'
+import { ContentWrapper } from '../Networks/Wrapper'
 
 export const Settings = () => {
-  const { plugins, togglePlugin } = usePlugins();
-  const { t } = useTranslation('modals');
+  const { plugins, togglePlugin } = usePlugins()
+  const { t } = useTranslation('modals')
 
   return (
     <>
@@ -44,5 +44,5 @@ export const Settings = () => {
         </ContentWrapper>
       </ModalPadding>
     </>
-  );
-};
+  )
+}

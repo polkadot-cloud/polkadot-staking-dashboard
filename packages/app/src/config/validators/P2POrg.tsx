@@ -22,6 +22,6 @@ const P2POrg = () => (
       d="M294 318a2 2 0 00-2 2v16a2 2 0 002 2h137a1 1 0 011 1v22a1 1 0 01-1 1H294a2 2 0 00-2 2v16a2 2 0 002 2h156a2 2 0 002-2v-60a2 2 0 00-2-2H294z"
     ></path>
   </svg>
-);
+)
 
-export default P2POrg;
+export default P2POrg

@@ -1,42 +1,42 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import LedgerSVG from '@w3ux/extension-assets/LedgerSquare.svg?react';
-import type { AnyJson } from '@w3ux/types';
-import { capitalizeFirstLetter } from '@w3ux/utils';
-import { useHelp } from 'contexts/Help';
-import { useLedgerHardware } from 'contexts/LedgerHardware';
-import { getLedgerApp } from 'contexts/LedgerHardware/Utils';
-import { useNetwork } from 'contexts/Network';
-import { usePrompt } from 'contexts/Prompt';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar';
-import { Heading } from 'library/Import/Heading';
-import { useTranslation } from 'react-i18next';
-import { Addresess } from './Addresses';
-import { Reset } from './Reset';
+import LedgerSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
+import type { AnyJson } from '@w3ux/types'
+import { capitalizeFirstLetter } from '@w3ux/utils'
+import { useHelp } from 'contexts/Help'
+import { useLedgerHardware } from 'contexts/LedgerHardware'
+import { getLedgerApp } from 'contexts/LedgerHardware/Utils'
+import { useNetwork } from 'contexts/Network'
+import { usePrompt } from 'contexts/Prompt'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar'
+import { Heading } from 'library/Import/Heading'
+import { useTranslation } from 'react-i18next'
+import { Addresess } from './Addresses'
+import { Reset } from './Reset'
 
 export const Manage = ({
   addresses,
   onGetAddress,
   removeLedgerAddress,
 }: AnyJson) => {
-  const { t } = useTranslation();
-  const { openHelp } = useHelp();
-  const { network } = useNetwork();
-  const { openPromptWith } = usePrompt();
-  const { replaceModal } = useOverlay().modal;
+  const { t } = useTranslation()
+  const { openHelp } = useHelp()
+  const { network } = useNetwork()
+  const { openPromptWith } = usePrompt()
+  const { replaceModal } = useOverlay().modal
   const { handleResetLedgerTask, getIsExecuting, getFeedback } =
-    useLedgerHardware();
-  const { Icon } = getLedgerApp(network);
-  const isExecuting = getIsExecuting();
+    useLedgerHardware()
+  const { Icon } = getLedgerApp(network)
+  const isExecuting = getIsExecuting()
 
   const fallbackMessage = `${t('ledgerAccounts', {
     ns: 'modals',
     count: addresses.length,
-  })}`;
-  const feedback = getFeedback();
-  const helpKey = feedback?.helpKey;
+  })}`
+  const feedback = getFeedback()
+  const helpKey = feedback?.helpKey
 
   return (
     <>
@@ -48,7 +48,7 @@ export const Manage = ({
           openPromptWith(
             <Reset removeLedgerAddress={removeLedgerAddress} />,
             'small'
-          );
+          )
         }}
         disabled={!addresses.length}
       />
@@ -80,5 +80,5 @@ export const Manage = ({
         }}
       />
     </>
-  );
-};
+  )
+}

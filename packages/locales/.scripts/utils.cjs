@@ -1,21 +1,21 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-const fs = require('fs');
-const { join } = require('path');
+const fs = require('fs')
+const { join } = require('path')
 
 // Project locale directory.
-const localeDir = join(__dirname, '..', 'src', 'resources');
+const localeDir = join(__dirname, '..', 'src', 'resources')
 
 // The suffixes of keys related to i18n functionality that should be ignored.
-const ignoreSuffixes = ['_one', '_two', '_few', '_many', '_other'];
+const ignoreSuffixes = ['_one', '_two', '_few', '_many', '_other']
 
 // Check if value is an object. Do not count arrays as objects.
-const isObject = (o) => (Array.isArray(o) ? false : typeof o === 'object');
+const isObject = (o) => (Array.isArray(o) ? false : typeof o === 'object')
 
 // Checks whether a key contains an ingore suffix.
 const endsWithIgnoreSuffix = (key) =>
-  ignoreSuffixes.some((i) => key.endsWith(i));
+  ignoreSuffixes.some((i) => key.endsWith(i))
 
 // Locale directories, ommitting `en` - the langauge to check missing keys against.
 const getDirectories = (source, omit) =>
@@ -23,66 +23,66 @@ const getDirectories = (source, omit) =>
     .readdirSync(source, { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
     .filter((v) => !omit.includes(v.name))
-    .map((dirent) => dirent.name);
+    .map((dirent) => dirent.name)
 
 // Order keys of a json object.
 const orderKeysAlphabetically = (o) =>
   Object.keys(o)
     .sort()
     .reduce((obj, key) => {
-      obj[key] = o[key];
-      return obj;
-    }, {});
+      obj[key] = o[key]
+      return obj
+    }, {})
 
 // Order json object by its keys.
 const orderJsonByKeys = (json) => {
   // order top level keys
-  json = orderKeysAlphabetically(json);
+  json = orderKeysAlphabetically(json)
   // order child objects if they are values.
-  const jsonOrdered = {};
+  const jsonOrdered = {}
   Object.entries(json).forEach(([k, v]) => {
     if (isObject(v)) {
-      jsonOrdered[k] = orderJsonByKeys(v);
+      jsonOrdered[k] = orderJsonByKeys(v)
     } else {
-      jsonOrdered[k] = v;
+      jsonOrdered[k] = v
     }
-  });
-  return jsonOrdered;
-};
+  })
+  return jsonOrdered
+}
 
 // Recursive function to get all keys of a locale object.
 const getDeepKeys = (obj) => {
-  let keys = [];
+  let keys = []
   for (const key in obj) {
-    let isSubstring = false;
+    let isSubstring = false
 
     // not number
     if (isNaN(key)) {
       // check if key includes any special substrings
       if (endsWithIgnoreSuffix(key)) {
-        isSubstring = true;
+        isSubstring = true
         // get the substring up to the last underscore
-        const rawKey = key.substring(0, key.lastIndexOf('_'));
+        const rawKey = key.substring(0, key.lastIndexOf('_'))
         // add the key to `keys` if it does not already exist
         if (!keys.includes(rawKey)) {
-          keys.push(rawKey);
+          keys.push(rawKey)
         }
       }
     }
     // full string, if not already added, go ahead and add
     if (!isSubstring) {
       if (!keys.includes(key)) {
-        keys.push(key);
+        keys.push(key)
       }
     }
     // if object, recursively get keys
     if (typeof obj[key] === 'object') {
-      const subkeys = getDeepKeys(obj[key]);
-      keys = keys.concat(subkeys.map((subkey) => `${key}.${subkey}`));
+      const subkeys = getDeepKeys(obj[key])
+      keys = keys.concat(subkeys.map((subkey) => `${key}.${subkey}`))
     }
   }
-  return keys;
-};
+  return keys
+}
 
 module.exports = {
   endsWithIgnoreSuffix,
@@ -93,4 +93,4 @@ module.exports = {
   localeDir,
   orderJsonByKeys,
   orderKeysAlphabetically,
-};
+}

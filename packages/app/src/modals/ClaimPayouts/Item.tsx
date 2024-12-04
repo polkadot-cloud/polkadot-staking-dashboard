@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useNetwork } from 'contexts/Network';
-import { useTranslation } from 'react-i18next';
-import { ButtonSubmit } from 'ui-buttons';
-import { planckToUnitBn } from 'utils';
-import type { ItemProps } from './types';
-import { getTotalPayout } from './Utils';
-import { ItemWrapper } from './Wrappers';
+import { useNetwork } from 'contexts/Network'
+import { useTranslation } from 'react-i18next'
+import { ButtonSubmit } from 'ui-buttons'
+import { planckToUnitBn } from 'utils'
+import type { ItemProps } from './types'
+import { getTotalPayout } from './Utils'
+import { ItemWrapper } from './Wrappers'
 
 export const Item = ({
   era,
@@ -15,13 +15,13 @@ export const Item = ({
   setPayouts,
   setSection,
 }: ItemProps) => {
-  const { t } = useTranslation('modals');
+  const { t } = useTranslation('modals')
   const {
     networkData: { units, unit },
-  } = useNetwork();
+  } = useNetwork()
 
-  const totalPayout = getTotalPayout(unclaimedPayout);
-  const numPayouts = Object.values(unclaimedPayout).length;
+  const totalPayout = getTotalPayout(unclaimedPayout)
+  const numPayouts = Object.values(unclaimedPayout).length
 
   return (
     <ItemWrapper>
@@ -53,13 +53,13 @@ export const Item = ({
                       ([v, [page]]) => [page, v]
                     ),
                   },
-                ]);
-                setSection(1);
+                ])
+                setSection(1)
               }}
             />
           </div>
         </section>
       </div>
     </ItemWrapper>
-  );
-};
+  )
+}

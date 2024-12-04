@@ -4,17 +4,17 @@
 import {
   faChevronLeft,
   faChevronRight,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Bytes } from '@polkadot-api/substrate-bindings';
-import { useApi } from 'contexts/Api';
-import { QRViewerWrapper } from 'library/Import/Wrappers';
-import { QrDisplayPayload } from 'library/QRCode/DisplayPayload';
-import { QrScanSignature } from 'library/QRCode/ScanSignature';
-import type { SignerPromptProps } from 'library/SubmitTx/types';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ButtonPrimary, ButtonSecondary } from 'ui-buttons';
+} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Bytes } from '@polkadot-api/substrate-bindings'
+import { useApi } from 'contexts/Api'
+import { QRViewerWrapper } from 'library/Import/Wrappers'
+import { QrDisplayPayload } from 'library/QRCode/DisplayPayload'
+import { QrScanSignature } from 'library/QRCode/ScanSignature'
+import type { SignerPromptProps } from 'library/SubmitTx/types'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 
 export const SignPrompt = ({
   submitAddress,
@@ -23,11 +23,11 @@ export const SignPrompt = ({
 }: SignerPromptProps) => {
   const {
     chainSpecs: { genesisHash },
-  } = useApi();
-  const { t } = useTranslation('library');
+  } = useApi()
+  const { t } = useTranslation('library')
 
   // Whether user is on sign or submit stage.
-  const [stage, setStage] = useState<number>(1);
+  const [stage, setStage] = useState<number>(1)
 
   return (
     <QRViewerWrapper>
@@ -59,7 +59,7 @@ export const SignPrompt = ({
           <QrScanSignature
             size={279}
             onScan={({ signature }) => {
-              onComplete('complete', signature);
+              onComplete('complete', signature)
             }}
           />
         </div>
@@ -80,7 +80,7 @@ export const SignPrompt = ({
               text={t('iHaveScanned')}
               lg
               onClick={() => {
-                setStage(2);
+                setStage(2)
               }}
               iconRight={faChevronRight}
               iconTransform="shrink-3"
@@ -91,11 +91,11 @@ export const SignPrompt = ({
             lg
             marginLeft
             onClick={() => {
-              onComplete('cancelled', null);
+              onComplete('cancelled', null)
             }}
           />
         </div>
       </div>
     </QRViewerWrapper>
-  );
-};
+  )
+}

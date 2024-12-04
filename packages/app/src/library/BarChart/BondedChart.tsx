@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import BigNumber from 'bignumber.js';
-import { useNetwork } from 'contexts/Network';
-import { BarSegment } from 'library/BarChart/BarSegment';
-import { LegendItem } from 'library/BarChart/LegendItem';
-import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
-import { useTranslation } from 'react-i18next';
-import type { BondedChartProps } from '../../pages/Nominate/Active/types';
+import BigNumber from 'bignumber.js'
+import { useNetwork } from 'contexts/Network'
+import { BarSegment } from 'library/BarChart/BarSegment'
+import { LegendItem } from 'library/BarChart/LegendItem'
+import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers'
+import { useTranslation } from 'react-i18next'
+import type { BondedChartProps } from '../../pages/Nominate/Active/types'
 
 export const BondedChart = ({
   active,
@@ -16,24 +16,24 @@ export const BondedChart = ({
   unlocked,
   inactive,
 }: BondedChartProps) => {
-  const { t } = useTranslation('library');
+  const { t } = useTranslation('library')
   const {
     networkData: { unit },
-  } = useNetwork();
-  const totalUnlocking = unlocking.plus(unlocked);
+  } = useNetwork()
+  const totalUnlocking = unlocking.plus(unlocked)
 
-  const MinimumLowerBound = 0.5;
-  const MinimumNoNZeroPercent = 13;
+  const MinimumLowerBound = 0.5
+  const MinimumNoNZeroPercent = 13
 
   // graph percentages
-  const graphTotal = active.plus(totalUnlocking).plus(free);
+  const graphTotal = active.plus(totalUnlocking).plus(free)
 
   const graphActive = active.isGreaterThan(0)
     ? BigNumber.max(
         active.dividedBy(graphTotal.multipliedBy(0.01)),
         active.isGreaterThan(MinimumLowerBound) ? MinimumNoNZeroPercent : 0
       )
-    : new BigNumber(0);
+    : new BigNumber(0)
 
   const graphUnlocking = totalUnlocking.isGreaterThan(0)
     ? BigNumber.max(
@@ -42,17 +42,17 @@ export const BondedChart = ({
           ? MinimumNoNZeroPercent
           : 0
       )
-    : new BigNumber(0);
+    : new BigNumber(0)
 
-  const freeToBond = free.decimalPlaces(3);
-  const remaining = new BigNumber(100).minus(graphActive).minus(graphUnlocking);
+  const freeToBond = free.decimalPlaces(3)
+  const remaining = new BigNumber(100).minus(graphActive).minus(graphUnlocking)
 
   const graphFree = remaining.isGreaterThan(0)
     ? BigNumber.max(
         remaining,
         freeToBond.isGreaterThan(MinimumLowerBound) ? MinimumNoNZeroPercent : 0
       )
-    : new BigNumber(0);
+    : new BigNumber(0)
 
   return (
     <BarChartWrapper
@@ -96,5 +96,5 @@ export const BondedChart = ({
         />
       </Bar>
     </BarChartWrapper>
-  );
-};
+  )
+}

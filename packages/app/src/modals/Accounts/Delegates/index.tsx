@@ -1,16 +1,16 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { isSupportedProxy } from 'config/proxies';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import type { ProxyDelegateWithBalance } from 'contexts/Proxies/types';
-import { AccountButton } from '../Account';
-import type { DelegatesProps } from '../types';
-import { DelegatesWrapper } from './Wrapper';
+import { isSupportedProxy } from 'config/proxies'
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import type { ProxyDelegateWithBalance } from 'contexts/Proxies/types'
+import { AccountButton } from '../Account'
+import type { DelegatesProps } from '../types'
+import { DelegatesWrapper } from './Wrapper'
 
 export const Delegates = ({ delegates, delegator }: DelegatesProps) => {
-  const { accounts } = useImportedAccounts();
-  const { getAccount } = useImportedAccounts();
+  const { accounts } = useImportedAccounts()
+  const { getAccount } = useImportedAccounts()
 
   // Filter delegates that are external or not imported. Default to empty array if there are no
   // delegates for this address.
@@ -19,7 +19,7 @@ export const Delegates = ({ delegates, delegator }: DelegatesProps) => {
       accounts.find(({ address }) => address === delegate) !== undefined &&
       isSupportedProxy(proxyType) &&
       getAccount(delegate || null)?.source !== 'external'
-  ) || []) as ProxyDelegateWithBalance[];
+  ) || []) as ProxyDelegateWithBalance[]
 
   return delegatesList.length ? (
     <DelegatesWrapper>
@@ -33,5 +33,5 @@ export const Delegates = ({ delegates, delegator }: DelegatesProps) => {
         />
       ))}
     </DelegatesWrapper>
-  ) : null;
-};
+  ) : null
+}

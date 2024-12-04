@@ -1,47 +1,47 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { CanvasFullScreenWrapper } from 'canvas/Wrappers';
-import { MaxEraRewardPointsEras } from 'consts';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useJoinPools } from 'contexts/Pools/JoinPools';
-import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
-import { useStaking } from 'contexts/Staking';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useEffect, useMemo, useState } from 'react';
-import { Header } from './Header';
-import { Nominations } from './Nominations';
-import { Overview } from './Overview';
-import { Preloader } from './Preloader';
-import { JoinPoolInterfaceWrapper } from './Wrappers';
+import { CanvasFullScreenWrapper } from 'canvas/Wrappers'
+import { MaxEraRewardPointsEras } from 'consts'
+import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { useJoinPools } from 'contexts/Pools/JoinPools'
+import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
+import { useStaking } from 'contexts/Staking'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { useEffect, useMemo, useState } from 'react'
+import { Header } from './Header'
+import { Nominations } from './Nominations'
+import { Overview } from './Overview'
+import { Preloader } from './Preloader'
+import { JoinPoolInterfaceWrapper } from './Wrappers'
 
 export const JoinPool = () => {
   const {
     config: { options },
-  } = useOverlay().canvas;
-  const { eraStakers } = useStaking();
-  const { poolsForJoin } = useJoinPools();
-  const { poolsMetaData, bondedPools } = useBondedPools();
-  const { getPoolRewardPoints, getPoolPerformanceTask } = usePoolPerformance();
+  } = useOverlay().canvas
+  const { eraStakers } = useStaking()
+  const { poolsForJoin } = useJoinPools()
+  const { poolsMetaData, bondedPools } = useBondedPools()
+  const { getPoolRewardPoints, getPoolPerformanceTask } = usePoolPerformance()
 
   // Get the provided pool id and performance batch key from options, if available.
-  const providedPool = options?.providedPool;
-  const providedPoolId = providedPool?.id || null;
+  const providedPool = options?.providedPool
+  const providedPoolId = providedPool?.id || null
   const performanceKey =
     providedPoolId && providedPool?.performanceBatchKey
       ? providedPool?.performanceBatchKey
-      : 'pool_join';
+      : 'pool_join'
 
   // Get the pool performance task to determine if performance data is ready.
-  const poolJoinPerformanceTask = getPoolPerformanceTask(performanceKey);
+  const poolJoinPerformanceTask = getPoolPerformanceTask(performanceKey)
 
-  const performanceDataReady = poolJoinPerformanceTask.status === 'synced';
+  const performanceDataReady = poolJoinPerformanceTask.status === 'synced'
 
   // Get performance data: Assumed to be fetched now.
-  const poolRewardPoints = getPoolRewardPoints(performanceKey);
+  const poolRewardPoints = getPoolRewardPoints(performanceKey)
 
   // The active canvas tab.
-  const [activeTab, setActiveTab] = useState<number>(0);
+  const [activeTab, setActiveTab] = useState<number>(0)
 
   // Filter bonded pools to only those that are open and that have active daily rewards for the last
   // `MaxEraRewardPointsEras` eras. The second filter checks if the pool is in `eraStakers` for the
@@ -52,15 +52,15 @@ export const JoinPool = () => {
         .filter((pool) => {
           // Fetch reward point data for the pool.
           const rawEraRewardPoints =
-            poolRewardPoints[pool.addresses.stash] || {};
-          const rewardPoints = Object.values(rawEraRewardPoints);
+            poolRewardPoints[pool.addresses.stash] || {}
+          const rewardPoints = Object.values(rawEraRewardPoints)
 
           // Ensure pool has been active for every era in performance data.
           const activeDaily =
             rewardPoints.every((points) => Number(points) > 0) &&
-            rewardPoints.length === MaxEraRewardPointsEras;
+            rewardPoints.length === MaxEraRewardPointsEras
 
-          return activeDaily;
+          return activeDaily
         })
         // Ensure the pool is currently in the active set of backers.
         .filter((pool) =>
@@ -69,7 +69,7 @@ export const JoinPool = () => {
           )
         ),
     [poolsForJoin, poolRewardPoints, performanceDataReady]
-  );
+  )
 
   const initialSelectedPoolId = useMemo(
     () =>
@@ -78,19 +78,19 @@ export const JoinPool = () => {
         ?.id ||
       0,
     []
-  );
+  )
 
   // The selected bonded pool id. Assigns a random id if one is not provided.
   const [selectedPoolId, setSelectedPoolId] = useState<number>(
     initialSelectedPoolId
-  );
+  )
 
   // The bonded pool to display. Use the provided `poolId`, or assign a random eligible filtered
   // pool otherwise. Re-fetches when the selected pool count is incremented.
   const bondedPool = useMemo(
     () => bondedPools.find(({ id }) => id === selectedPoolId),
     [selectedPoolId]
-  );
+  )
 
   // If syncing completes within the canvas, assign a selected pool.
   useEffect(() => {
@@ -98,9 +98,9 @@ export const JoinPool = () => {
       setSelectedPoolId(
         filteredBondedPools[(filteredBondedPools.length * Math.random()) << 0]
           ?.id || 0
-      );
+      )
     }
-  }, [performanceDataReady]);
+  }, [performanceDataReady])
 
   return (
     <CanvasFullScreenWrapper>
@@ -143,5 +143,5 @@ export const JoinPool = () => {
         </>
       )}
     </CanvasFullScreenWrapper>
-  );
-};
+  )
+}

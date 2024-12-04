@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { usePrompt } from 'contexts/Prompt';
-import { ContentWrapper, HeightWrapper, PromptWrapper } from './Wrappers';
+import { usePrompt } from 'contexts/Prompt'
+import { ContentWrapper, HeightWrapper, PromptWrapper } from './Wrappers'
 
 export const Prompt = () => {
   const {
@@ -11,10 +11,10 @@ export const Prompt = () => {
     closePrompt,
     Prompt: PromptInner,
     closeOnOutsideClick,
-  } = usePrompt();
+  } = usePrompt()
 
   if (status === 0) {
-    return null;
+    return null
   }
 
   return (
@@ -28,7 +28,7 @@ export const Prompt = () => {
           className="close"
           onClick={() => {
             if (closeOnOutsideClick) {
-              closePrompt();
+              closePrompt()
             }
           }}
         >
@@ -36,5 +36,5 @@ export const Prompt = () => {
         </button>
       </div>
     </PromptWrapper>
-  );
-};
+  )
+}

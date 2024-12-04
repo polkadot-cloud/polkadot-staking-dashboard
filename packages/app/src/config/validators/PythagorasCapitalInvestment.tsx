@@ -18,6 +18,6 @@ const PythagorasCapitalInvestment = () => (
       fill="none"
     />
   </svg>
-);
+)
 
-export default PythagorasCapitalInvestment;
+export default PythagorasCapitalInvestment

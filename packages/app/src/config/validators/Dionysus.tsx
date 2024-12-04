@@ -29,6 +29,6 @@ const Dionysus = () => (
       fill="#e3187d"
     />
   </svg>
-);
+)
 
-export default Dionysus;
+export default Dionysus

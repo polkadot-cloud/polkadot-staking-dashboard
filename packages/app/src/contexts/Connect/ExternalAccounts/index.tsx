@@ -4,51 +4,51 @@
 import type {
   ExternalAccount,
   ExternalAccountAddedBy,
-} from '@w3ux/react-connect-kit/types';
-import { ellipsisFn, formatAccountSs58 } from '@w3ux/utils';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useNetwork } from 'contexts/Network';
-import { createContext, useContext, type ReactNode } from 'react';
-import { defaultExternalAccountsContext } from './defaults';
+} from '@w3ux/react-connect-kit/types'
+import { ellipsisFn, formatAccountSs58 } from '@w3ux/utils'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useNetwork } from 'contexts/Network'
+import { createContext, useContext, type ReactNode } from 'react'
+import { defaultExternalAccountsContext } from './defaults'
 import type {
   AddExternalAccountResult,
   ExternalAccountImportType,
   ExternalAccountsContextInterface,
-} from './types';
+} from './types'
 import {
   addLocalExternalAccount,
   externalAccountExistsLocal,
   removeLocalExternalAccounts,
-} from './Utils';
+} from './Utils'
 
 export const ExternalAccountsContext =
   createContext<ExternalAccountsContextInterface>(
     defaultExternalAccountsContext
-  );
+  )
 
-export const useExternalAccounts = () => useContext(ExternalAccountsContext);
+export const useExternalAccounts = () => useContext(ExternalAccountsContext)
 
 export const ExternalAccountsProvider = ({
   children,
 }: {
-  children: ReactNode;
+  children: ReactNode
 }) => {
   const {
     network,
     networkData: { ss58 },
-  } = useNetwork();
-  const { activeAccount, setActiveAccount } = useActiveAccounts();
+  } = useNetwork()
+  const { activeAccount, setActiveAccount } = useActiveAccounts()
 
   // Adds an external account (non-wallet) to accounts.
   const addExternalAccount = (
     address: string,
     addedBy: ExternalAccountAddedBy
   ): AddExternalAccountResult | null => {
-    const formattedAddress = formatAccountSs58(address, ss58);
+    const formattedAddress = formatAccountSs58(address, ss58)
 
     // Address should be valid, but if not, return null early.
     if (!formattedAddress) {
-      return null;
+      return null
     }
 
     let newEntry = {
@@ -57,31 +57,31 @@ export const ExternalAccountsProvider = ({
       name: ellipsisFn(address),
       source: 'external',
       addedBy,
-    };
+    }
 
-    const existsLocal = externalAccountExistsLocal(newEntry.address, network);
+    const existsLocal = externalAccountExistsLocal(newEntry.address, network)
 
     // Whether the account needs to remain imported as a system account.
     const toSystem =
-      existsLocal && addedBy === 'system' && existsLocal.addedBy !== 'system';
+      existsLocal && addedBy === 'system' && existsLocal.addedBy !== 'system'
 
-    let isImported = true;
-    let importType: ExternalAccountImportType = 'new';
+    let isImported = true
+    let importType: ExternalAccountImportType = 'new'
 
     if (!existsLocal) {
       // Only add `user` accounts to localStorage.
       if (addedBy === 'user') {
-        addLocalExternalAccount(newEntry);
+        addLocalExternalAccount(newEntry)
       }
     } else if (toSystem) {
       // If account is being added by `system`, but is already imported, update it to be a system
       // account. `system` accounts are not persisted to local storage.
       //
       // update the entry to a system account.
-      newEntry = { ...newEntry, addedBy: 'system' };
-      importType = 'replace';
+      newEntry = { ...newEntry, addedBy: 'system' }
+      importType = 'replace'
     } else {
-      isImported = false;
+      isImported = false
     }
 
     return isImported
@@ -89,24 +89,24 @@ export const ExternalAccountsProvider = ({
           type: importType,
           account: newEntry,
         }
-      : null;
-  };
+      : null
+  }
 
   // Get any external accounts and remove from localStorage.
   const forgetExternalAccounts = (forget: ExternalAccount[]) => {
     if (!forget.length) {
-      return;
+      return
     }
     removeLocalExternalAccounts(
       network,
       forget.filter((i) => 'network' in i) as ExternalAccount[]
-    );
+    )
 
     // If the currently active account is being forgotten, disconnect.
     if (forget.find((a) => a.address === activeAccount) !== undefined) {
-      setActiveAccount(null);
+      setActiveAccount(null)
     }
-  };
+  }
 
   return (
     <ExternalAccountsContext.Provider
@@ -114,5 +114,5 @@ export const ExternalAccountsProvider = ({
     >
       {children}
     </ExternalAccountsContext.Provider>
-  );
-};
+  )
+}

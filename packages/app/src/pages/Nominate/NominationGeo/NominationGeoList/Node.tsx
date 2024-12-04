@@ -1,20 +1,20 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { RewardsByValidationNode } from '@polkawatch/ddp-client';
-import { motion } from 'framer-motion';
-import { Identity } from 'library/ListItem/Labels/Identity';
-import { RewardShare } from 'library/ListItem/Labels/RewardShare';
-import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
+import type { RewardsByValidationNode } from '@polkawatch/ddp-client'
+import { motion } from 'framer-motion'
+import { Identity } from 'library/ListItem/Labels/Identity'
+import { RewardShare } from 'library/ListItem/Labels/RewardShare'
+import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers'
 
 export const Node = ({
   node,
   rewardTotal,
 }: {
-  node: RewardsByValidationNode;
-  rewardTotal: number;
+  node: RewardsByValidationNode
+  rewardTotal: number
 }) => {
-  const rewardShare = Math.round((node.TokenRewards / rewardTotal) * 1000) / 10;
+  const rewardShare = Math.round((node.TokenRewards / rewardTotal) * 1000) / 10
 
   return (
     <motion.div
@@ -51,5 +51,5 @@ export const Node = ({
         </div>
       </Wrapper>
     </motion.div>
-  );
-};
+  )
+}

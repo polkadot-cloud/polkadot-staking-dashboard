@@ -1,37 +1,37 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useJoinPools } from 'contexts/Pools/JoinPools';
-import { usePoolPerformance } from 'contexts/Pools/PoolPerformance';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { CallToActionWrapper } from 'library/CallToAction';
-import { CallToActionLoader } from 'library/Loader/CallToAction';
-import { PoolSync } from 'library/PoolSync';
-import { StyledLoader } from 'library/PoolSync/Loader';
-import { useTranslation } from 'react-i18next';
-import { usePoolsTabs } from '../context';
-import type { NewMemberProps } from './types';
-import { useStatusButtons } from './useStatusButtons';
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useJoinPools } from 'contexts/Pools/JoinPools'
+import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { CallToActionWrapper } from 'library/CallToAction'
+import { CallToActionLoader } from 'library/Loader/CallToAction'
+import { PoolSync } from 'library/PoolSync'
+import { StyledLoader } from 'library/PoolSync/Loader'
+import { useTranslation } from 'react-i18next'
+import { usePoolsTabs } from '../context'
+import type { NewMemberProps } from './types'
+import { useStatusButtons } from './useStatusButtons'
 
 export const NewMember = ({ syncing }: NewMemberProps) => {
-  const { t } = useTranslation();
-  const { poolsForJoin } = useJoinPools();
-  const { setActiveTab } = usePoolsTabs();
-  const { openCanvas } = useOverlay().canvas;
-  const { startJoinPoolFetch } = useJoinPools();
-  const { getPoolPerformanceTask } = usePoolPerformance();
-  const { getJoinDisabled, getCreateDisabled } = useStatusButtons();
+  const { t } = useTranslation()
+  const { poolsForJoin } = useJoinPools()
+  const { setActiveTab } = usePoolsTabs()
+  const { openCanvas } = useOverlay().canvas
+  const { startJoinPoolFetch } = useJoinPools()
+  const { getPoolPerformanceTask } = usePoolPerformance()
+  const { getJoinDisabled, getCreateDisabled } = useStatusButtons()
 
   // Get the pool performance task to determine if performance data is ready.
-  const poolJoinPerformanceTask = getPoolPerformanceTask('pool_join');
+  const poolJoinPerformanceTask = getPoolPerformanceTask('pool_join')
 
   // Alias for create button disabled state.
-  const createDisabled = getCreateDisabled();
+  const createDisabled = getCreateDisabled()
 
   // Disable opening the canvas if data is not ready.
-  const joinButtonDisabled = getJoinDisabled() || !poolsForJoin.length;
+  const joinButtonDisabled = getJoinDisabled() || !poolsForJoin.length
 
   return (
     <CallToActionWrapper>
@@ -49,14 +49,14 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
                     onClick={() => {
                       // Start sync process, otherwise, open canvas.
                       if (poolJoinPerformanceTask.status === 'unsynced') {
-                        startJoinPoolFetch();
+                        startJoinPoolFetch()
                       }
 
                       openCanvas({
                         key: 'JoinPool',
                         options: {},
                         size: 'xl',
-                      });
+                      })
                     }}
                     disabled={joinButtonDisabled}
                   >
@@ -114,5 +114,5 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
         )}
       </div>
     </CallToActionWrapper>
-  );
-};
+  )
+}

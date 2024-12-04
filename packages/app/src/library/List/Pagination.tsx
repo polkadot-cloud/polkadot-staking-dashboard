@@ -1,10 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { PaginationWrapper } from '.';
-import type { PaginationProps } from './types';
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { PaginationWrapper } from '.'
+import type { PaginationProps } from './types'
 
 export const Pagination = ({
   page,
@@ -12,17 +12,17 @@ export const Pagination = ({
   setter,
   disabled = false,
 }: PaginationProps) => {
-  const { t } = useTranslation('library');
-  const [next, setNext] = useState<number>(page + 1 > total ? total : page + 1);
-  const [prev, setPrev] = useState<number>(page - 1 < 1 ? 1 : page - 1);
+  const { t } = useTranslation('library')
+  const [next, setNext] = useState<number>(page + 1 > total ? total : page + 1)
+  const [prev, setPrev] = useState<number>(page - 1 < 1 ? 1 : page - 1)
 
   useEffect(() => {
-    setNext(page + 1 > total ? total : page + 1);
-    setPrev(page - 1 < 1 ? 1 : page - 1);
-  }, [page, total]);
+    setNext(page + 1 > total ? total : page + 1)
+    setPrev(page - 1 < 1 ? 1 : page - 1)
+  }, [page, total])
 
-  const prevActive = page !== 1;
-  const nextActive = page !== total;
+  const prevActive = page !== 1
+  const nextActive = page !== total
 
   return (
     <PaginationWrapper $prev={prevActive} $next={nextActive}>
@@ -34,7 +34,7 @@ export const Pagination = ({
           type="button"
           className="prev"
           onClick={() => {
-            setter(prev);
+            setter(prev)
           }}
           disabled={disabled || !prevActive}
         >
@@ -44,7 +44,7 @@ export const Pagination = ({
           type="button"
           className="next"
           onClick={() => {
-            setter(next);
+            setter(next)
           }}
           disabled={disabled || !nextActive}
         >
@@ -52,5 +52,5 @@ export const Pagination = ({
         </button>
       </div>
     </PaginationWrapper>
-  );
-};
+  )
+}

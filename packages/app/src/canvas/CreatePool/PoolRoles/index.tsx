@@ -1,24 +1,24 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useSetup } from 'contexts/Setup';
-import type { PoolProgress } from 'contexts/Setup/types';
-import { Footer } from 'library/SetupSteps/Footer';
-import { Header } from 'library/SetupSteps/Header';
-import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import type { SetupStepProps } from 'library/SetupSteps/types';
-import { Roles } from 'pages/Pools/Roles';
-import { useEffect, useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
-import type { PoolRoles as PoolRolesInterface } from 'types';
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useSetup } from 'contexts/Setup'
+import type { PoolProgress } from 'contexts/Setup/types'
+import { Footer } from 'library/SetupSteps/Footer'
+import { Header } from 'library/SetupSteps/Header'
+import { MotionContainer } from 'library/SetupSteps/MotionContainer'
+import type { SetupStepProps } from 'library/SetupSteps/types'
+import { Roles } from 'pages/Pools/Roles'
+import { useEffect, useState } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
+import type { PoolRoles as PoolRolesInterface } from 'types'
 
 export const PoolRoles = ({ section }: SetupStepProps) => {
-  const { t } = useTranslation('pages');
-  const { activeAccount } = useActiveAccounts();
-  const { getPoolSetup, setActiveAccountSetup } = useSetup();
-  const setup = getPoolSetup(activeAccount);
-  const { progress } = setup;
+  const { t } = useTranslation('pages')
+  const { activeAccount } = useActiveAccounts()
+  const { getPoolSetup, setActiveAccountSetup } = useSetup()
+  const setup = getPoolSetup(activeAccount)
+  const { progress } = setup
 
   // if no roles in setup already, inject `activeAccount` to be
   // root and depositor roles.
@@ -27,27 +27,27 @@ export const PoolRoles = ({ section }: SetupStepProps) => {
     depositor: activeAccount,
     nominator: activeAccount,
     bouncer: activeAccount,
-  };
+  }
 
   // store local pool name for form control
   const [roles, setRoles] = useState<{ roles: PoolRolesInterface }>({
     roles: initialValue,
-  });
+  })
 
   // pool name valid
-  const [rolesValid, setRolesValid] = useState<boolean>(true);
+  const [rolesValid, setRolesValid] = useState<boolean>(true)
 
   // handler for updating pool roles
   const handleSetupUpdate = (value: PoolProgress) => {
-    setActiveAccountSetup('pool', value);
-  };
+    setActiveAccountSetup('pool', value)
+  }
 
   // update pool roles on account change
   useEffect(() => {
     setRoles({
       roles: initialValue,
-    });
-  }, [activeAccount]);
+    })
+  }, [activeAccount])
 
   // apply initial pool roles to setup progress
   useEffect(() => {
@@ -56,9 +56,9 @@ export const PoolRoles = ({ section }: SetupStepProps) => {
       setActiveAccountSetup('pool', {
         ...progress,
         roles: initialValue,
-      });
+      })
     }
-  }, [setup.section]);
+  }, [setup.section])
 
   return (
     <>
@@ -97,5 +97,5 @@ export const PoolRoles = ({ section }: SetupStepProps) => {
         <Footer complete={rolesValid} bondFor="pool" />
       </MotionContainer>
     </>
-  );
-};
+  )
+}

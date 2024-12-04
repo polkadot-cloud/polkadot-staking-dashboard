@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { ProxiesContextInterface } from './types';
+import type { ProxiesContextInterface } from './types'
 
 export const defaultProxiesContext: ProxiesContextInterface = {
   getDelegates: (a) => undefined,
@@ -10,4 +10,4 @@ export const defaultProxiesContext: ProxiesContextInterface = {
   getProxiedAccounts: (a) => [],
   handleDeclareDelegate: (a) => new Promise((resolve) => resolve([])),
   formatProxiesToDelegates: () => ({}),
-};
+}
