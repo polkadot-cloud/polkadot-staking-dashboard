@@ -69,10 +69,12 @@ export const useSubmitExtrinsic = ({
     } else {
       if (activeProxy && isProxySupported(tx, from)) {
         // Update submit address to active proxy account.
+        const real = from
         from = activeProxy
 
         // Check not a batch transactions.
         if (
+          real &&
           !(
             tx.decodedCall?.type === 'Utility' &&
             tx.decodedCall?.value.type === 'batch'
@@ -80,7 +82,7 @@ export const useSubmitExtrinsic = ({
         ) {
           // Not a batch transaction: wrap tx in proxy call. Proxy calls should already be wrapping
           // each tx within the batch via `useBatchCall`.
-          tx = new Proxy(network, from, tx).tx()
+          tx = new Proxy(network, real, tx).tx()
         }
       }
     }

@@ -5,14 +5,14 @@ import { Base } from 'api/base'
 import type { ChainId } from 'common-types'
 
 export class Proxy extends Base {
-  #who: string
+  #real: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   #proxiedTx: any
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  constructor(network: ChainId, who: string, proxiedTx: any) {
+  constructor(network: ChainId, real: string, proxiedTx: any) {
     super(network)
-    this.#who = who
+    this.#real = real
     this.#proxiedTx = proxiedTx
   }
 
@@ -21,7 +21,7 @@ export class Proxy extends Base {
       return this.unsafeApi.tx.Proxy.proxy({
         real: {
           type: 'Id',
-          value: this.#who,
+          value: this.#real,
         },
         force_proxy_type: undefined,
         call: this.#proxiedTx.decodedCall,
