@@ -37,8 +37,8 @@ export const useProxySupported = () => {
 
     const proxyDelegate = getProxyDelegate(delegator, activeProxy)
     const proxyType = proxyDelegate?.proxyType || ''
-    const pallet: string = (tx?.decodedCall?.type || '').toLowerCase()
-    const method: string = (tx?.decodedCall?.value?.type || '').toLowerCase()
+    const pallet: string = tx?.decodedCall?.type || ''
+    const method: string = tx?.decodedCall?.value?.type || ''
     const call = `${pallet}.${method}`
 
     // If a batch call, test if every inner call is a supported proxy call.

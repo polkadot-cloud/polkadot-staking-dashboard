@@ -96,7 +96,6 @@ export const AccountWrapper = styled.div`
           }
           .delegator {
             width: 1.1rem;
-            font-size: 1.9rem;
             z-index: 0;
 
             > div {
@@ -107,7 +106,6 @@ export const AccountWrapper = styled.div`
           }
           .identicon {
             z-index: 1;
-            font-size: 1.9rem;
           }
 
           /* svg theming */
