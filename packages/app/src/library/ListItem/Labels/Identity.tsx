@@ -1,28 +1,28 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Polkicon } from '@w3ux/react-polkicon';
-import { ellipsisFn } from '@w3ux/utils';
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { IdentityWrapper } from 'library/ListItem/Wrappers';
-import type { ReactNode } from 'react';
-import { useEffect, useState } from 'react';
-import { getIdentityDisplay } from '../../ValidatorList/ValidatorItem/Utils';
-import type { IdentityProps } from '../types';
+import { Polkicon } from '@w3ux/react-polkicon'
+import { ellipsisFn } from '@w3ux/utils'
+import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { IdentityWrapper } from 'library/ListItem/Wrappers'
+import type { ReactNode } from 'react'
+import { useEffect, useState } from 'react'
+import { getIdentityDisplay } from '../../ValidatorList/ValidatorItem/Utils'
+import type { IdentityProps } from '../types'
 
 export const Identity = ({ address }: IdentityProps) => {
   const { validatorIdentities, validatorSupers, validatorsFetched } =
-    useValidators();
+    useValidators()
 
   const [display, setDisplay] = useState<ReactNode>(
     getIdentityDisplay(validatorIdentities[address], validatorSupers[address])
-  );
+  )
 
   useEffect(() => {
     setDisplay(
       getIdentityDisplay(validatorIdentities[address], validatorSupers[address])
-    );
-  }, [validatorSupers, validatorIdentities, address]);
+    )
+  }, [validatorSupers, validatorIdentities, address])
 
   return (
     <IdentityWrapper
@@ -42,5 +42,5 @@ export const Identity = ({ address }: IdentityProps) => {
         )}
       </div>
     </IdentityWrapper>
-  );
-};
+  )
+}

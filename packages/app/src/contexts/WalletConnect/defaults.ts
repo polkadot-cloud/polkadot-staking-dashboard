@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { WalletConnectContextInterface } from './types';
+import type { WalletConnectContextInterface } from './types'
 
 export const defaultWalletConnect: WalletConnectContextInterface = {
   connectProvider: () => Promise.resolve(),
@@ -13,4 +13,4 @@ export const defaultWalletConnect: WalletConnectContextInterface = {
   wcSessionActive: false,
   fetchAddresses: () => Promise.resolve([]),
   signWcTx: (payload) => Promise.resolve({ signature: '0x' }),
-};
+}

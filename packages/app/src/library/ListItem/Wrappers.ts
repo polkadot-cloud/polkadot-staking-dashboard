@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { SmallFontSizeMaxWidth } from 'consts';
-import { motion } from 'framer-motion';
-import styled from 'styled-components';
+import { SmallFontSizeMaxWidth } from 'consts'
+import { motion } from 'framer-motion'
+import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   --height-top-row: 3.25rem;
@@ -87,7 +87,7 @@ export const Wrapper = styled.div`
       }
     }
   }
-`;
+`
 
 export const Labels = styled.div`
   display: flex;
@@ -181,7 +181,7 @@ export const Labels = styled.div`
       padding-right: 0.35rem;
     }
   }
-`;
+`
 
 export const IdentityWrapper = styled(motion.div)`
   display: flex;
@@ -224,11 +224,11 @@ export const IdentityWrapper = styled(motion.div)`
       top: -0.1rem;
     }
   }
-`;
+`
 
 export const ValidatorStatusWrapper = styled.div<{
-  $status: string;
-  $noMargin?: boolean;
+  $status: string
+  $noMargin?: boolean
 }>`
   margin-right: ${(props) => (props.$noMargin ? '0' : '0.35rem')};
   padding: 0 0.5rem;
@@ -244,10 +244,10 @@ export const ValidatorStatusWrapper = styled.div<{
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-`;
+`
 
 export const PoolStatusWrapper = styled.div<{
-  $status: string;
+  $status: string
 }>`
   h4,
   h5 {
@@ -281,7 +281,7 @@ export const PoolStatusWrapper = styled.div<{
       opacity: ${(props) => (props.$status === 'active' ? 1 : 0.6)};
     }
   }
-`;
+`
 
 export const SelectWrapper = styled.button`
   background: var(--background-input);
@@ -316,14 +316,14 @@ export const SelectWrapper = styled.button`
     justify-content: center;
     font-size: 1rem;
   }
-`;
+`
 
 export const Separator = styled.div`
   border-bottom: 1px solid var(--border-primary-color);
   width: 100%;
   height: 1px;
   opacity: 0.7;
-`;
+`
 
 export const TooltipTrigger = styled.div`
   z-index: 1;
@@ -336,7 +336,7 @@ export const TooltipTrigger = styled.div`
   &.as-button {
     cursor: pointer;
   }
-`;
+`
 
 export const ValidatorPulseWrapper = styled.div`
   border: 1px solid var(--grid-color-primary);
@@ -391,4 +391,4 @@ export const ValidatorPulseWrapper = styled.div`
       }
     }
   }
-`;
+`

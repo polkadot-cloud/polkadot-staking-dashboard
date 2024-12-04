@@ -1,19 +1,19 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Polkicon } from '@w3ux/react-polkicon';
-import { formatAccountSs58, isValidAddress } from '@w3ux/utils';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useNetwork } from 'contexts/Network';
-import { useOverlay } from 'kits/Overlay/Provider';
-import type { FormEvent } from 'react';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ButtonSecondary } from 'ui-buttons';
-import { AccountInputWrapper } from './Wrapper';
-import type { AccountInputProps } from './types';
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Polkicon } from '@w3ux/react-polkicon'
+import { formatAccountSs58, isValidAddress } from '@w3ux/utils'
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useNetwork } from 'contexts/Network'
+import { useOverlay } from 'kits/Overlay/Provider'
+import type { FormEvent } from 'react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ButtonSecondary } from 'ui-buttons'
+import { AccountInputWrapper } from './Wrapper'
+import type { AccountInputProps } from './types'
 
 export const AccountInput = ({
   successCallback,
@@ -27,141 +27,141 @@ export const AccountInput = ({
   initialValue = null,
   border = true,
 }: AccountInputProps) => {
-  const { t } = useTranslation('library');
+  const { t } = useTranslation('library')
 
   const {
     networkData: { ss58 },
-  } = useNetwork();
-  const { accounts } = useImportedAccounts();
-  const { setModalResize } = useOverlay().modal;
+  } = useNetwork()
+  const { accounts } = useImportedAccounts()
+  const { setModalResize } = useOverlay().modal
 
   // store current input value
-  const [value, setValue] = useState<string>(initialValue || '');
+  const [value, setValue] = useState<string>(initialValue || '')
 
   // store whether current input value is valid
-  const [valid, setValid] = useState<string | null>(null);
+  const [valid, setValid] = useState<string | null>(null)
 
   // store whether address was formatted (displays confirm prompt)
-  const [reformatted, setReformatted] = useState<boolean>(false);
+  const [reformatted, setReformatted] = useState<boolean>(false)
 
   // store whether the form is being submitted.
-  const [submitting, setSubmitting] = useState<boolean>(false);
+  const [submitting, setSubmitting] = useState<boolean>(false)
 
   // store whether account input is in success lock state.
-  const [successLock, setSuccessLocked] = useState<boolean>(locked);
+  const [successLock, setSuccessLocked] = useState<boolean>(locked)
 
   const handleChange = (e: FormEvent<HTMLInputElement>) => {
-    const newValue = e.currentTarget.value;
+    const newValue = e.currentTarget.value
     // set value on key change
-    setValue(newValue);
+    setValue(newValue)
 
     // reset reformatted if true - value has changed
     if (reformatted) {
-      setReformatted(false);
+      setReformatted(false)
     }
 
     // reset valid if empty value
     if (newValue === '') {
-      setValid(null);
-      return;
+      setValid(null)
+      return
     }
     // check address already imported
     const alreadyImported = accounts.find(
       (a) => a.address.toUpperCase() === newValue.toUpperCase()
-    );
+    )
     if (alreadyImported !== undefined && disallowAlreadyImported) {
-      setValid('already_imported');
-      return;
+      setValid('already_imported')
+      return
     }
     // check if valid address
-    setValid(isValidAddress(newValue) ? 'valid' : 'not_valid');
-  };
+    setValid(isValidAddress(newValue) ? 'valid' : 'not_valid')
+  }
 
   const handleImport = async () => {
     // reformat address if in wrong format
-    const addressFormatted = formatAccountSs58(value, ss58);
+    const addressFormatted = formatAccountSs58(value, ss58)
 
     if (!addressFormatted) {
-      setValid('not_valid');
-      return;
+      setValid('not_valid')
+      return
     }
 
     if (addressFormatted !== value) {
-      setValid('confirm_reformat');
-      setValue(addressFormatted);
-      setReformatted(true);
+      setValid('confirm_reformat')
+      setValue(addressFormatted)
+      setReformatted(true)
     } else {
       // handle successful import.
-      setSubmitting(true);
-      const result = await successCallback(value);
-      setSubmitting(false);
+      setSubmitting(true)
+      const result = await successCallback(value)
+      setSubmitting(false)
 
       // reset state on successful import.
       if (result && resetOnSuccess) {
-        resetInput();
+        resetInput()
       } else {
         // flag reset & lock state.
-        setSuccessLocked(true);
+        setSuccessLocked(true)
       }
     }
-  };
+  }
 
   // If initial value changes, update current input value.
   useEffect(() => {
-    setValue(initialValue || '');
-  }, [initialValue]);
+    setValue(initialValue || '')
+  }, [initialValue])
 
-  let label;
-  let labelClass;
-  const showSuccess = successLock && successLabel;
+  let label
+  let labelClass
+  const showSuccess = successLock && successLabel
 
   switch (valid) {
     case 'confirm_reformat':
-      label = t('confirmReformat');
-      labelClass = 'neutral';
+      label = t('confirmReformat')
+      labelClass = 'neutral'
 
-      break;
+      break
     case 'already_imported':
-      label = t('alreadyImported');
-      labelClass = 'danger';
-      break;
+      label = t('alreadyImported')
+      labelClass = 'danger'
+      break
     case 'not_valid':
-      label = t('invalid');
-      labelClass = 'danger';
-      break;
+      label = t('invalid')
+      labelClass = 'danger'
+      break
     case 'valid':
-      label = showSuccess ? successLabel : t('valid');
-      labelClass = showSuccess ? 'neutral' : 'success';
-      break;
+      label = showSuccess ? successLabel : t('valid')
+      labelClass = showSuccess ? 'neutral' : 'success'
+      break
     default:
-      label = showSuccess ? successLabel : defaultLabel;
-      labelClass = 'neutral';
-      break;
+      label = showSuccess ? successLabel : defaultLabel
+      labelClass = 'neutral'
+      break
   }
 
   const handleConfirm = () => {
-    setValid('valid');
-    setReformatted(false);
-    handleImport();
-  };
+    setValid('valid')
+    setReformatted(false)
+    handleImport()
+  }
 
   const resetInput = () => {
-    setReformatted(false);
-    setValue('');
-    setValid(null);
-    setModalResize();
-    setSuccessLocked(false);
+    setReformatted(false)
+    setValue('')
+    setValid(null)
+    setModalResize()
+    setSuccessLocked(false)
     if (resetCallback) {
-      resetCallback();
+      resetCallback()
     }
-  };
+  }
 
-  const className = [];
+  const className = []
   if (inactive) {
-    className.push('inactive');
+    className.push('inactive')
   }
   if (border) {
-    className.push('border');
+    className.push('border')
   }
 
   return (
@@ -217,5 +217,5 @@ export const AccountInput = ({
         </section>
       </div>
     </AccountInputWrapper>
-  );
-};
+  )
+}

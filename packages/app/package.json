@@ -35,7 +35,7 @@
     "@zondax/ledger-substrate": "^1.0.0",
     "bn.js": "^5.2.1",
     "buffer": "^6.0.3",
-    "chart.js": "^4.4.4",
+    "chart.js": "^4.4.7",
     "chroma-js": "^3.1.1",
     "compare-versions": "^6.1.1",
     "consts": "workspace:*",
@@ -52,7 +52,7 @@
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.13",
     "react-helmet": "^6.1.0",
-    "react-router-dom": "^6.23.1",
+    "react-router-dom": "^7.0.2",
     "react-scroll": "^1.9.0",
     "rxjs": "^7.8.1",
     "styled-components": "^6.1.13",
@@ -62,17 +62,17 @@
     "ui-structure": "workspace:*",
     "usehooks-ts": "^3.0.2",
     "utils": "workspace:*",
-    "viem": "^2.21.35",
+    "viem": "^2.21.53",
     "wagmi": "^2.12.25",
     "xxhash-wasm": "^1.0.2"
   },
   "devDependencies": {
-    "vite": "^5.2.12",
+    "vite": "^6.0.2",
     "vite-bundle-visualizer": "^1.2.1",
-    "vite-plugin-checker": "^0.7.0",
+    "vite-plugin-checker": "^0.8.0",
     "vite-plugin-eslint": "^1.8.1",
-    "vite-plugin-svgr": "^4.2.0",
-    "vite-tsconfig-paths": "^5.0.1",
-    "vitest": "^1.6.0"
+    "vite-plugin-svgr": "^4.3.0",
+    "vite-tsconfig-paths": "^5.1.3",
+    "vitest": "^2.1.8"
   }
 }

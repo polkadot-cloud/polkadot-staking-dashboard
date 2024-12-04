@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import classNames from 'classnames';
-import commonClasses from '../common.module.scss';
-import { onMouseHandlers } from '../util';
-import classes from './index.module.scss';
-import type { ButtonTabProps } from './types';
+import classNames from 'classnames'
+import commonClasses from '../common.module.scss'
+import { onMouseHandlers } from '../util'
+import classes from './index.module.scss'
+import type { ButtonTabProps } from './types'
 
 /**
  * @name ButtonTab
@@ -29,11 +29,11 @@ export const ButtonTab = (props: ButtonTabProps): JSX.Element => {
     onMouseOver,
     onMouseMove,
     onMouseOut,
-  } = props;
+  } = props
 
   const activeClass = colorSecondary
     ? classes.btnTabSecondaryColorActive
-    : classes.btnTabActive;
+    : classes.btnTabActive
 
   const buttonClasses = classNames(
     commonClasses.btnCore,
@@ -44,7 +44,7 @@ export const ButtonTab = (props: ButtonTabProps): JSX.Element => {
       [classes.btnTabSecondaryColor]: colorSecondary,
     },
     className
-  );
+  )
 
   return (
     <button
@@ -59,5 +59,5 @@ export const ButtonTab = (props: ButtonTabProps): JSX.Element => {
         {badge && <span className={classes.btnTabBadge}>{badge}</span>}
       </span>
     </button>
-  );
-};
+  )
+}

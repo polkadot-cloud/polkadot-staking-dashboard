@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { MaybeAddress } from 'types';
+import type { MaybeAddress } from 'types'
 
 export interface ActiveAccountProps {
-  address: MaybeAddress;
-  delegate?: MaybeAddress;
+  address: MaybeAddress
+  delegate?: MaybeAddress
 }

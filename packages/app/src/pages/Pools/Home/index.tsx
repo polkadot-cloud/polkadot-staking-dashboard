@@ -1,44 +1,44 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useNetwork } from 'contexts/Network';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useFavoritePools } from 'contexts/Pools/FavoritePools';
-import { CardWrapper } from 'library/Card/Wrappers';
-import { PoolList } from 'library/PoolList';
-import { PoolListProvider } from 'library/PoolList/context';
-import { StatBoxList } from 'library/StatBoxList';
-import { WithdrawPrompt } from 'library/WithdrawPrompt';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { PageRow, PageTitle, RowSection } from 'ui-structure';
-import { Roles } from '../Roles';
-import { ClosurePrompts } from './ClosurePrompts';
-import { PoolFavorites } from './Favorites';
-import { ManageBond } from './ManageBond';
-import { ManagePool } from './ManagePool';
-import { PoolStats } from './PoolStats';
-import { ActivePoolsStat } from './Stats/ActivePools';
-import { MinCreateBondStat } from './Stats/MinCreateBond';
-import { MinJoinBondStat } from './Stats/MinJoinBond';
-import { Status } from './Status';
-import { PoolsTabsProvider, usePoolsTabs } from './context';
+import { useNetwork } from 'contexts/Network'
+import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { useFavoritePools } from 'contexts/Pools/FavoritePools'
+import { CardWrapper } from 'library/Card/Wrappers'
+import { PoolList } from 'library/PoolList'
+import { PoolListProvider } from 'library/PoolList/context'
+import { StatBoxList } from 'library/StatBoxList'
+import { WithdrawPrompt } from 'library/WithdrawPrompt'
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { PageRow, PageTitle, RowSection } from 'ui-structure'
+import { Roles } from '../Roles'
+import { ClosurePrompts } from './ClosurePrompts'
+import { PoolFavorites } from './Favorites'
+import { ManageBond } from './ManageBond'
+import { ManagePool } from './ManagePool'
+import { PoolStats } from './PoolStats'
+import { ActivePoolsStat } from './Stats/ActivePools'
+import { MinCreateBondStat } from './Stats/MinCreateBond'
+import { MinJoinBondStat } from './Stats/MinJoinBond'
+import { Status } from './Status'
+import { PoolsTabsProvider, usePoolsTabs } from './context'
 
 export const HomeInner = () => {
-  const { t } = useTranslation('pages');
-  const { network } = useNetwork();
-  const { favorites } = useFavoritePools();
-  const { bondedPools } = useBondedPools();
-  const { activeTab, setActiveTab } = usePoolsTabs();
-  const { getPoolRoles, activePool } = useActivePool();
+  const { t } = useTranslation('pages')
+  const { network } = useNetwork()
+  const { favorites } = useFavoritePools()
+  const { bondedPools } = useBondedPools()
+  const { activeTab, setActiveTab } = usePoolsTabs()
+  const { getPoolRoles, activePool } = useActivePool()
 
-  const ROW_HEIGHT = 220;
+  const ROW_HEIGHT = 220
 
   // Go back to tab 0 on network change.
   useEffect(() => {
-    setActiveTab(0);
-  }, [network]);
+    setActiveTab(0)
+  }, [network])
 
   return (
     <>
@@ -115,11 +115,11 @@ export const HomeInner = () => {
       )}
       {activeTab === 2 && <PoolFavorites />}
     </>
-  );
-};
+  )
+}
 
 export const Home = () => (
   <PoolsTabsProvider>
     <HomeInner />
   </PoolsTabsProvider>
-);
+)

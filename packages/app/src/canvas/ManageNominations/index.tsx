@@ -1,88 +1,88 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { PoolNominate } from 'api/tx/poolNominate';
-import { StakingNominate } from 'api/tx/stakingNominate';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
-import { useBonded } from 'contexts/Bonded';
-import { useHelp } from 'contexts/Help';
-import { useNetwork } from 'contexts/Network';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { usePrompt } from 'contexts/Prompt';
-import { Notifications } from 'controllers/Notifications';
-import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { GenerateNominations } from 'library/GenerateNominations';
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { PoolNominate } from 'api/tx/poolNominate'
+import { StakingNominate } from 'api/tx/stakingNominate'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
+import { useBonded } from 'contexts/Bonded'
+import { useHelp } from 'contexts/Help'
+import { useNetwork } from 'contexts/Network'
+import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { usePrompt } from 'contexts/Prompt'
+import { Notifications } from 'controllers/Notifications'
+import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { GenerateNominations } from 'library/GenerateNominations'
 import type {
   NominationSelection,
   NominationSelectionWithResetCounter,
-} from 'library/GenerateNominations/types';
-import { SubmitTx } from 'library/SubmitTx';
-import { Subheading } from 'pages/Nominate/Wrappers';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ButtonHelp, ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons';
-import { CanvasFullScreenWrapper, CanvasSubmitTxFooter } from '../Wrappers';
-import { RevertPrompt } from './Prompts/RevertPrompt';
+} from 'library/GenerateNominations/types'
+import { SubmitTx } from 'library/SubmitTx'
+import { Subheading } from 'pages/Nominate/Wrappers'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ButtonHelp, ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
+import { CanvasFullScreenWrapper, CanvasSubmitTxFooter } from '../Wrappers'
+import { RevertPrompt } from './Prompts/RevertPrompt'
 
 export const ManageNominations = () => {
-  const { t } = useTranslation('library');
+  const { t } = useTranslation('library')
   const {
     closeCanvas,
     setCanvasStatus,
     config: { options },
-  } = useOverlay().canvas;
-  const { consts } = useApi();
-  const { openHelp } = useHelp();
-  const { network } = useNetwork();
-  const { activePool } = useActivePool();
-  const { getBondedAccount } = useBonded();
-  const { activeAccount } = useActiveAccounts();
-  const { updatePoolNominations } = useBondedPools();
-  const { openPromptWith, closePrompt } = usePrompt();
+  } = useOverlay().canvas
+  const { consts } = useApi()
+  const { openHelp } = useHelp()
+  const { network } = useNetwork()
+  const { activePool } = useActivePool()
+  const { getBondedAccount } = useBonded()
+  const { activeAccount } = useActiveAccounts()
+  const { updatePoolNominations } = useBondedPools()
+  const { openPromptWith, closePrompt } = usePrompt()
 
-  const { maxNominations } = consts;
-  const controller = getBondedAccount(activeAccount);
-  const bondFor = options?.bondFor || 'nominator';
-  const isPool = bondFor === 'pool';
-  const signingAccount = isPool ? activeAccount : controller;
+  const { maxNominations } = consts
+  const controller = getBondedAccount(activeAccount)
+  const bondFor = options?.bondFor || 'nominator'
+  const isPool = bondFor === 'pool'
+  const signingAccount = isPool ? activeAccount : controller
 
   // Valid to submit transaction.
-  const [valid, setValid] = useState<boolean>(false);
+  const [valid, setValid] = useState<boolean>(false)
 
   // Default nominators, from canvas options.
   const [defaultNominations, setDefaultNominations] =
     useState<NominationSelectionWithResetCounter>({
       nominations: [...(options?.nominated || [])],
       reset: 0,
-    });
+    })
 
   // Current nominator selection, defaults to defaultNominations.
   const [newNominations, setNewNominations] = useState<NominationSelection>({
     nominations: options?.nominated || [],
-  });
+  })
 
   // Handler for updating setup.
   const handleSetupUpdate = (value: NominationSelection) => {
-    setNewNominations(value);
-  };
+    setNewNominations(value)
+  }
 
   // Handler for reverting nomination updates.
   const handleRevertChanges = () => {
-    setNewNominations({ nominations: [...defaultNominations.nominations] });
+    setNewNominations({ nominations: [...defaultNominations.nominations] })
     setDefaultNominations({
       nominations: defaultNominations.nominations,
       reset: defaultNominations.reset + 1,
-    });
+    })
     Notifications.emit({
       title: t('nominationsReverted'),
       subtitle: t('revertedToActiveSelection'),
-    });
-    closePrompt();
-  };
+    })
+    closePrompt()
+  }
 
   // Check if default nominations match new ones.
   const nominationsMatch = () =>
@@ -90,12 +90,12 @@ export const ManageNominations = () => {
       defaultNominations.nominations.find((d) => d.address === n.address)
     ) &&
     newNominations.nominations.length > 0 &&
-    newNominations.nominations.length === defaultNominations.nominations.length;
+    newNominations.nominations.length === defaultNominations.nominations.length
 
   const getTx = () => {
-    const tx = null;
+    const tx = null
     if (!valid) {
-      return tx;
+      return tx
     }
     if (!isPool) {
       return new StakingNominate(
@@ -104,24 +104,24 @@ export const ManageNominations = () => {
           type: 'Id',
           value: nominee.address,
         }))
-      ).tx();
+      ).tx()
     }
     if (isPool && activePool) {
       return new PoolNominate(
         network,
         activePool.id,
         newNominations.nominations.map((nominee) => nominee.address)
-      ).tx();
+      ).tx()
     }
-    return tx;
-  };
+    return tx
+  }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: signingAccount,
     shouldSubmit: valid,
     callbackSubmit: () => {
-      setCanvasStatus('closing');
+      setCanvasStatus('closing')
     },
     callbackInBlock: () => {
       if (isPool && activePool) {
@@ -129,10 +129,10 @@ export const ManageNominations = () => {
         updatePoolNominations(
           activePool.id,
           newNominations.nominations.map((n) => n.address)
-        );
+        )
       }
     },
-  });
+  })
 
   // Valid if there are between 1 and `maxNominations` nominations.
   useEffect(() => {
@@ -142,8 +142,8 @@ export const ManageNominations = () => {
       ) &&
         newNominations.nominations.length > 0 &&
         !nominationsMatch()
-    );
-  }, [newNominations]);
+    )
+  }, [newNominations])
 
   return (
     <>
@@ -153,7 +153,7 @@ export const ManageNominations = () => {
             text={t('revertChanges', { ns: 'modals' })}
             lg
             onClick={() => {
-              openPromptWith(<RevertPrompt onRevert={handleRevertChanges} />);
+              openPromptWith(<RevertPrompt onRevert={handleRevertChanges} />)
             }}
             disabled={
               newNominations.nominations === defaultNominations.nominations
@@ -205,5 +205,5 @@ export const ManageNominations = () => {
         />
       </CanvasSubmitTxFooter>
     </>
-  );
-};
+  )
+}

@@ -54,6 +54,6 @@ const Stakepile = () => (
       strokeWidth="15"
     />
   </svg>
-);
+)
 
-export default Stakepile;
+export default Stakepile

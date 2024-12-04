@@ -1,68 +1,68 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types';
-import type { ValidatorPrefs } from 'contexts/Validators/types';
-import type { BondFor, MaybeAddress, MaybeString, PoolRoles } from 'types';
+import type { AnyJson } from '@w3ux/types'
+import type { ValidatorPrefs } from 'contexts/Validators/types'
+import type { BondFor, MaybeAddress, MaybeString, PoolRoles } from 'types'
 
 export type PayeeOptions =
   | 'Staked'
   | 'Stash'
   | 'Controller'
   | 'Account'
-  | 'None';
+  | 'None'
 
-export type NominatorSetups = Record<string, NominatorSetup>;
+export type NominatorSetups = Record<string, NominatorSetup>
 
 export interface NominatorSetup {
-  section: number;
-  progress: NominatorProgress;
+  section: number
+  progress: NominatorProgress
 }
 
 export interface NominatorProgress {
-  payee: PayeeConfig;
-  nominations: AnyJson[];
-  bond: MaybeString;
+  payee: PayeeConfig
+  nominations: AnyJson[]
+  bond: MaybeString
 }
 
 export interface PayeeConfig {
-  destination: PayeeOptions | null;
-  account: MaybeAddress;
+  destination: PayeeOptions | null
+  account: MaybeAddress
 }
 
 export type PayeeSubmit =
   | {
-      type: 'Account';
-      value: string;
+      type: 'Account'
+      value: string
     }
   | {
-      type: 'Staked' | 'Stash' | 'Controller' | 'None';
-      value?: undefined;
-    };
+      type: 'Staked' | 'Stash' | 'Controller' | 'None'
+      value?: undefined
+    }
 
-export type PoolSetups = Record<string, PoolSetup>;
+export type PoolSetups = Record<string, PoolSetup>
 
 export interface PoolSetup {
-  section: number;
-  progress: PoolProgress;
+  section: number
+  progress: PoolProgress
 }
 
 export interface PoolProgress {
-  metadata: string;
-  bond: string;
-  nominations: { address: string; prefs: ValidatorPrefs }[];
-  roles: PoolRoles | null;
+  metadata: string
+  bond: string
+  nominations: { address: string; prefs: ValidatorPrefs }[]
+  roles: PoolRoles | null
 }
 
 export interface SetupContextInterface {
-  removeSetupProgress: (t: BondFor, a: MaybeAddress) => void;
-  getNominatorSetupPercent: (a: MaybeAddress) => number;
-  getPoolSetupPercent: (a: MaybeAddress) => number;
+  removeSetupProgress: (t: BondFor, a: MaybeAddress) => void
+  getNominatorSetupPercent: (a: MaybeAddress) => number
+  getPoolSetupPercent: (a: MaybeAddress) => number
   setActiveAccountSetup: (
     t: BondFor,
     p: NominatorProgress | PoolProgress
-  ) => void;
-  setActiveAccountSetupSection: (t: BondFor, s: number) => void;
-  getNominatorSetup: (address: MaybeAddress) => NominatorSetup;
-  getPoolSetup: (address: MaybeAddress) => PoolSetup;
+  ) => void
+  setActiveAccountSetupSection: (t: BondFor, s: number) => void
+  getNominatorSetup: (address: MaybeAddress) => NominatorSetup
+  getPoolSetup: (address: MaybeAddress) => PoolSetup
 }

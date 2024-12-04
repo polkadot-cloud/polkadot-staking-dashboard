@@ -1,10 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { appendOrEmpty } from '@w3ux/utils';
-import type { ForwardedRef } from 'react';
-import { forwardRef } from 'react';
-import type { ModalFixedTitleProps } from '../types';
+import { appendOrEmpty } from '@w3ux/utils'
+import type { ForwardedRef } from 'react'
+import { forwardRef } from 'react'
+import type { ModalFixedTitleProps } from '../types'
 
 /**
  * @name ModalFixedTitle
@@ -23,5 +23,5 @@ export const ModalFixedTitle = forwardRef(
       {children}
     </div>
   )
-);
-ModalFixedTitle.displayName = 'ModalFixedTitle';
+)
+ModalFixedTitle.displayName = 'ModalFixedTitle'

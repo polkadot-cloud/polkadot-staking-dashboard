@@ -1,41 +1,41 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useSetup } from 'contexts/Setup';
-import type { PayeeOptions } from 'contexts/Setup/types';
-import { defaultPayee } from 'controllers/Balances/defaults';
-import { usePayeeConfig } from 'hooks/usePayeeConfig';
-import { Spacer } from 'library/Form/Wrappers';
-import { PayeeInput } from 'library/PayeeInput';
-import { SelectItems } from 'library/SelectItems';
-import { SelectItem } from 'library/SelectItems/Item';
-import { Footer } from 'library/SetupSteps/Footer';
-import { Header } from 'library/SetupSteps/Header';
-import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import type { SetupStepProps } from 'library/SetupSteps/types';
-import { Subheading } from 'pages/Nominate/Wrappers';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import type { MaybeAddress } from 'types';
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useSetup } from 'contexts/Setup'
+import type { PayeeOptions } from 'contexts/Setup/types'
+import { defaultPayee } from 'controllers/Balances/defaults'
+import { usePayeeConfig } from 'hooks/usePayeeConfig'
+import { Spacer } from 'library/Form/Wrappers'
+import { PayeeInput } from 'library/PayeeInput'
+import { SelectItems } from 'library/SelectItems'
+import { SelectItem } from 'library/SelectItems/Item'
+import { Footer } from 'library/SetupSteps/Footer'
+import { Header } from 'library/SetupSteps/Header'
+import { MotionContainer } from 'library/SetupSteps/MotionContainer'
+import type { SetupStepProps } from 'library/SetupSteps/types'
+import { Subheading } from 'pages/Nominate/Wrappers'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import type { MaybeAddress } from 'types'
 
 export const Payee = ({ section }: SetupStepProps) => {
-  const { t } = useTranslation('pages');
-  const { getPayeeItems } = usePayeeConfig();
-  const { activeAccount } = useActiveAccounts();
-  const { getNominatorSetup, setActiveAccountSetup } = useSetup();
+  const { t } = useTranslation('pages')
+  const { getPayeeItems } = usePayeeConfig()
+  const { activeAccount } = useActiveAccounts()
+  const { getNominatorSetup, setActiveAccountSetup } = useSetup()
 
-  const setup = getNominatorSetup(activeAccount);
-  const { progress } = setup;
-  const { payee } = progress;
+  const setup = getNominatorSetup(activeAccount)
+  const { progress } = setup
+  const { payee } = progress
 
   // Store the current user-inputted custom payout account.
-  const [account, setAccount] = useState<MaybeAddress>(payee.account);
+  const [account, setAccount] = useState<MaybeAddress>(payee.account)
 
   // determine whether this section is completed.
   const isComplete = () =>
     payee.destination !== null &&
-    !(payee.destination === 'Account' && payee.account === null);
+    !(payee.destination === 'Account' && payee.account === null)
 
   // update setup progress with payee config.
   const handleChangeDestination = (destination: PayeeOptions) => {
@@ -43,8 +43,8 @@ export const Payee = ({ section }: SetupStepProps) => {
     setActiveAccountSetup('nominator', {
       ...progress,
       payee: { destination, account },
-    });
-  };
+    })
+  }
 
   // update setup progress with payee account.
   const handleChangeAccount = (newAccount: MaybeAddress) => {
@@ -52,8 +52,8 @@ export const Payee = ({ section }: SetupStepProps) => {
     setActiveAccountSetup('nominator', {
       ...progress,
       payee: { ...payee, account: newAccount },
-    });
-  };
+    })
+  }
 
   // set initial payee value to `Staked` if not yet set.
   useEffect(() => {
@@ -61,9 +61,9 @@ export const Payee = ({ section }: SetupStepProps) => {
       setActiveAccountSetup('nominator', {
         ...progress,
         payee: defaultPayee,
-      });
+      })
     }
-  }, [activeAccount]);
+  }, [activeAccount])
 
   return (
     <>
@@ -102,5 +102,5 @@ export const Payee = ({ section }: SetupStepProps) => {
         <Footer complete={isComplete()} bondFor="nominator" />
       </MotionContainer>
     </>
-  );
-};
+  )
+}

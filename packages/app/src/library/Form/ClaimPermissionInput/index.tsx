@@ -1,19 +1,19 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ClaimPermission } from 'contexts/Pools/types';
-import { TabWrapper, TabsWrapper } from 'library/Filter/Wrappers';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import type { ClaimPermissionConfig } from '../types';
-import type { ClaimPermissionInputProps } from './types';
+import type { ClaimPermission } from 'contexts/Pools/types'
+import { TabWrapper, TabsWrapper } from 'library/Filter/Wrappers'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import type { ClaimPermissionConfig } from '../types'
+import type { ClaimPermissionInputProps } from './types'
 
 export const ClaimPermissionInput = ({
   current,
   onChange,
   disabled = false,
 }: ClaimPermissionInputProps) => {
-  const { t } = useTranslation('library');
+  const { t } = useTranslation('library')
 
   const claimPermissionConfig: ClaimPermissionConfig[] = [
     {
@@ -31,19 +31,19 @@ export const ClaimPermissionInput = ({
       value: 'Permissioned',
       description: t('permissionedSubtitle'),
     },
-  ];
+  ]
 
   // Updated claim permission value.
-  const [selected, setSelected] = useState<ClaimPermission>(current);
+  const [selected, setSelected] = useState<ClaimPermission>(current)
 
   const activeTab = claimPermissionConfig.find(
     ({ value }) => value === selected
-  );
+  )
 
   // Update selected value when current changes.
   useEffect(() => {
-    setSelected(current);
-  }, [current]);
+    setSelected(current)
+  }, [current])
 
   return (
     <>
@@ -59,8 +59,8 @@ export const ClaimPermissionInput = ({
             $active={value === selected}
             disabled={value === selected || disabled}
             onClick={() => {
-              setSelected(value);
-              onChange(value);
+              setSelected(value)
+              onChange(value)
             }}
             style={{ flexGrow: 1 }}
           >
@@ -84,5 +84,5 @@ export const ClaimPermissionInput = ({
         )}
       </div>
     </>
-  );
-};
+  )
+}

@@ -1,22 +1,22 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import { ParaValidator } from 'library/ListItem/Labels/ParaValidator';
-import { Quartile } from 'library/ListItem/Labels/Quartile';
-import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
-import { useList } from '../../List/context';
-import { Blocked } from '../../ListItem/Labels/Blocked';
-import { Commission } from '../../ListItem/Labels/Commission';
-import { CopyAddress } from '../../ListItem/Labels/CopyAddress';
-import { FavoriteValidator } from '../../ListItem/Labels/FavoriteValidator';
-import { Identity } from '../../ListItem/Labels/Identity';
-import { Metrics } from '../../ListItem/Labels/Metrics';
-import { NominationStatus } from '../../ListItem/Labels/NominationStatus';
-import { Select } from '../../ListItem/Labels/Select';
-import { Pulse } from './Pulse';
-import { getIdentityDisplay } from './Utils';
-import type { ValidatorItemProps } from './types';
+import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { ParaValidator } from 'library/ListItem/Labels/ParaValidator'
+import { Quartile } from 'library/ListItem/Labels/Quartile'
+import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers'
+import { useList } from '../../List/context'
+import { Blocked } from '../../ListItem/Labels/Blocked'
+import { Commission } from '../../ListItem/Labels/Commission'
+import { CopyAddress } from '../../ListItem/Labels/CopyAddress'
+import { FavoriteValidator } from '../../ListItem/Labels/FavoriteValidator'
+import { Identity } from '../../ListItem/Labels/Identity'
+import { Metrics } from '../../ListItem/Labels/Metrics'
+import { NominationStatus } from '../../ListItem/Labels/NominationStatus'
+import { Select } from '../../ListItem/Labels/Select'
+import { Pulse } from './Pulse'
+import { getIdentityDisplay } from './Utils'
+import type { ValidatorItemProps } from './types'
 
 export const Nomination = ({
   validator,
@@ -26,11 +26,11 @@ export const Nomination = ({
   displayFor,
   nominationStatus,
 }: ValidatorItemProps) => {
-  const { selectActive } = useList();
-  const { validatorIdentities, validatorSupers } = useValidators();
+  const { selectActive } = useList()
+  const { validatorIdentities, validatorSupers } = useValidators()
 
-  const { address, prefs } = validator;
-  const commission = prefs?.commission ?? null;
+  const { address, prefs } = validator
+  const commission = prefs?.commission ?? null
 
   return (
     <Wrapper>
@@ -77,5 +77,5 @@ export const Nomination = ({
         </div>
       </div>
     </Wrapper>
-  );
-};
+  )
+}

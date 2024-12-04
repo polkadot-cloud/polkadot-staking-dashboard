@@ -33,6 +33,6 @@ const VFValidierung = () => (
       stroke="#fff"
     />
   </svg>
-);
+)
 
-export default VFValidierung;
+export default VFValidierung

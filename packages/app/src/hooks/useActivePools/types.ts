@@ -6,13 +6,13 @@ import type {
   DetailActivePool,
   MaybeAddress,
   Nominations,
-} from 'types';
+} from 'types'
 
 export interface ActivePoolsProps {
-  who: MaybeAddress;
-  onCallback?: (detail: DetailActivePool) => Promise<void>;
+  who: MaybeAddress
+  onCallback?: (detail: DetailActivePool) => Promise<void>
 }
 
-export type ActivePoolsState = Record<string, ActivePool | null>;
+export type ActivePoolsState = Record<string, ActivePool | null>
 
-export type ActiveNominationsState = Record<string, Nominations>;
+export type ActiveNominationsState = Record<string, Nominations>

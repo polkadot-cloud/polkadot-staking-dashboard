@@ -1,61 +1,61 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
-import { useFastUnstake } from 'contexts/FastUnstake';
-import { useStaking } from 'contexts/Staking';
-import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTranslation } from 'react-i18next';
-import { useNominationStatus } from '../useNominationStatus';
+import type { AnyJson } from '@w3ux/types'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
+import { useFastUnstake } from 'contexts/FastUnstake'
+import { useStaking } from 'contexts/Staking'
+import { useTransferOptions } from 'contexts/TransferOptions'
+import { useTranslation } from 'react-i18next'
+import { useNominationStatus } from '../useNominationStatus'
 
 export const useUnstaking = () => {
-  const { t } = useTranslation('library');
-  const { consts, activeEra } = useApi();
-  const { inSetup } = useStaking();
-  const { activeAccount } = useActiveAccounts();
-  const { getTransferOptions } = useTransferOptions();
-  const { getNominationStatus } = useNominationStatus();
-  const { checking, head, isExposed, queueDeposit, meta } = useFastUnstake();
-  const { bondDuration } = consts;
-  const transferOptions = getTransferOptions(activeAccount).nominate;
-  const { nominees } = getNominationStatus(activeAccount, 'nominator');
+  const { t } = useTranslation('library')
+  const { consts, activeEra } = useApi()
+  const { inSetup } = useStaking()
+  const { activeAccount } = useActiveAccounts()
+  const { getTransferOptions } = useTransferOptions()
+  const { getNominationStatus } = useNominationStatus()
+  const { checking, head, isExposed, queueDeposit, meta } = useFastUnstake()
+  const { bondDuration } = consts
+  const transferOptions = getTransferOptions(activeAccount).nominate
+  const { nominees } = getNominationStatus(activeAccount, 'nominator')
 
   // determine if user is regular unstaking
-  const { active } = transferOptions;
+  const { active } = transferOptions
 
   // determine if user is fast unstaking.
   const inHead =
-    head?.stashes.find((s: AnyJson) => s[0] === activeAccount) ?? undefined;
-  const inQueue = queueDeposit?.deposit?.isGreaterThan(0) ?? false;
+    head?.stashes.find((s: AnyJson) => s[0] === activeAccount) ?? undefined
+  const inQueue = queueDeposit?.deposit?.isGreaterThan(0) ?? false
 
-  const registered = inHead || inQueue;
+  const registered = inHead || inQueue
 
   // determine unstake button
   const getFastUnstakeText = () => {
-    const { checked } = meta;
+    const { checked } = meta
     if (checking) {
       return `${t('fastUnstakeCheckingEras', {
         checked: checked.length,
         total: bondDuration.toString(),
-      })}...`;
+      })}...`
     }
     if (isExposed) {
-      const lastExposed = activeEra.index.minus(checked[0] || 0);
+      const lastExposed = activeEra.index.minus(checked[0] || 0)
       return t('fastUnstakeExposed', {
         count: lastExposed.toNumber(),
-      });
+      })
     }
     if (registered) {
-      return t('inQueue');
+      return t('inQueue')
     }
-    return t('fastUnstake');
-  };
+    return t('fastUnstake')
+  }
 
   return {
     getFastUnstakeText,
     isUnstaking: !inSetup() && !nominees.active.length && active.isZero(),
     isFastUnstaking: !!registered,
-  };
-};
+  }
+}

@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { FormEvent } from 'react';
-import { SearchInputWrapper } from '.';
-import type { SearchInputProps } from './types';
+import type { FormEvent } from 'react'
+import { SearchInputWrapper } from '.'
+import type { SearchInputProps } from './types'
 
 export const SearchInput = ({
   value,
@@ -19,4 +19,4 @@ export const SearchInput = ({
       onChange={(e: FormEvent<HTMLInputElement>) => handleChange(e)}
     />
   </SearchInputWrapper>
-);
+)

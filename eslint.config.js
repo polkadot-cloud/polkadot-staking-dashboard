@@ -1,15 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import pluginJs from '@eslint/js';
-import importPlugin from 'eslint-plugin-import';
-import preferArrowFunctions from 'eslint-plugin-prefer-arrow-functions';
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
-import react from 'eslint-plugin-react';
-import reactHooks from 'eslint-plugin-react-hooks';
-import unusedImports from 'eslint-plugin-unused-imports';
-import globals from 'globals';
-import tseslint from 'typescript-eslint';
+import pluginJs from '@eslint/js'
+import importPlugin from 'eslint-plugin-import'
+import preferArrowFunctions from 'eslint-plugin-prefer-arrow-functions'
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
+import react from 'eslint-plugin-react'
+import reactHooks from 'eslint-plugin-react-hooks'
+import unusedImports from 'eslint-plugin-unused-imports'
+import globals from 'globals'
+import tseslint from 'typescript-eslint'
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -84,6 +84,13 @@ export default [
       },
     },
     rules: {
+      // Prettier
+      'prettier/prettier': [
+        'error',
+        {
+          semi: false,
+        },
+      ],
       // Stylistic
       curly: 'error',
       'arrow-body-style': ['error', 'as-needed'],
@@ -105,7 +112,7 @@ export default [
           caughtErrors: 'none',
         },
       ],
-      semi: [2, 'always'],
+      semi: ['error', 'never'],
       'import/extensions': [
         'error',
         'ignorePackages',
@@ -145,4 +152,4 @@ export default [
       '@typescript-eslint/no-shadow': 'error',
     },
   },
-];
+]

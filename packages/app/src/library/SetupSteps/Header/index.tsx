@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useHelp } from 'contexts/Help';
-import { useSetup } from 'contexts/Setup';
-import { useTranslation } from 'react-i18next';
-import { ButtonHelp, ButtonSecondary } from 'ui-buttons';
-import type { HeaderProps } from '../types';
-import { Wrapper } from './Wrapper';
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useHelp } from 'contexts/Help'
+import { useSetup } from 'contexts/Setup'
+import { useTranslation } from 'react-i18next'
+import { ButtonHelp, ButtonSecondary } from 'ui-buttons'
+import type { HeaderProps } from '../types'
+import { Wrapper } from './Wrapper'
 
 export const Header = ({
   title,
@@ -16,16 +16,16 @@ export const Header = ({
   thisSection,
   bondFor,
 }: HeaderProps) => {
-  const { t } = useTranslation('library');
-  const { openHelp } = useHelp();
-  const { activeAccount } = useActiveAccounts();
+  const { t } = useTranslation('library')
+  const { openHelp } = useHelp()
+  const { activeAccount } = useActiveAccounts()
   const { getPoolSetup, getNominatorSetup, setActiveAccountSetupSection } =
-    useSetup();
+    useSetup()
 
   const setup =
     bondFor === 'nominator'
       ? getNominatorSetup(activeAccount)
-      : getPoolSetup(activeAccount);
+      : getPoolSetup(activeAccount)
 
   return (
     <Wrapper>
@@ -45,7 +45,7 @@ export const Header = ({
                 <ButtonSecondary
                   text={t('update')}
                   onClick={() => {
-                    setActiveAccountSetupSection(bondFor, thisSection);
+                    setActiveAccountSetupSection(bondFor, thisSection)
                   }}
                 />
               </span>
@@ -55,5 +55,5 @@ export const Header = ({
         )}
       </section>
     </Wrapper>
-  );
-};
+  )
+}

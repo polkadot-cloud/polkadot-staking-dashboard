@@ -1,15 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Base } from 'api/base';
-import type { ChainId } from 'common-types';
+import { Base } from 'api/base'
+import type { ChainId } from 'common-types'
 
 export class PoolPendingRewards extends Base {
-  #who: string;
+  #who: string
 
   constructor(network: ChainId, who: string) {
-    super(network);
-    this.#who = who;
+    super(network)
+    this.#who = who
   }
 
   async fetch() {
@@ -20,11 +20,11 @@ export class PoolPendingRewards extends Base {
           {
             at: 'best',
           }
-        );
-      return result;
+        )
+      return result
     } catch (e) {
       // Silently fail.
     }
-    return undefined;
+    return undefined
   }
 }

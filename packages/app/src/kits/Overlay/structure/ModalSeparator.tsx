@@ -5,4 +5,4 @@
  * @name ModalSeparator
  * @summary A line to separate the content.
  */
-export const ModalSeparator = () => <div className="modal-separator" />;
+export const ModalSeparator = () => <div className="modal-separator" />

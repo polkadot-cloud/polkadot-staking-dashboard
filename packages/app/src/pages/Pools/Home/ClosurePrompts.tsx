@@ -1,48 +1,45 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useNetwork } from 'contexts/Network';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useTheme } from 'contexts/Themes';
-import { useTransferOptions } from 'contexts/TransferOptions';
-import { useSyncing } from 'hooks/useSyncing';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { CardWrapper } from 'library/Card/Wrappers';
-import { useTranslation } from 'react-i18next';
-import { ButtonPrimary } from 'ui-buttons';
-import { ButtonRow, PageRow } from 'ui-structure';
+import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useNetwork } from 'contexts/Network'
+import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useTheme } from 'contexts/Themes'
+import { useTransferOptions } from 'contexts/TransferOptions'
+import { useSyncing } from 'hooks/useSyncing'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { CardWrapper } from 'library/Card/Wrappers'
+import { useTranslation } from 'react-i18next'
+import { ButtonPrimary } from 'ui-buttons'
+import { ButtonRow, PageRow } from 'ui-structure'
 
 export const ClosurePrompts = () => {
-  const { t } = useTranslation('pages');
-  const { mode } = useTheme();
-  const { openModal } = useOverlay().modal;
-  const { colors } = useNetwork().networkData;
-  const { activeAccount } = useActiveAccounts();
-  const { syncing } = useSyncing(['active-pools']);
-  const { getTransferOptions } = useTransferOptions();
+  const { t } = useTranslation('pages')
+  const { mode } = useTheme()
+  const { openModal } = useOverlay().modal
+  const { colors } = useNetwork().networkData
+  const { activeAccount } = useActiveAccounts()
+  const { syncing } = useSyncing(['active-pools'])
+  const { getTransferOptions } = useTransferOptions()
   const { isBonding, activePool, isDepositor, activePoolNominations } =
-    useActivePool();
+    useActivePool()
 
-  const { state, memberCounter } = activePool?.bondedPool || {};
-  const { active, totalUnlockChunks } = getTransferOptions(activeAccount).pool;
-  const targets = activePoolNominations?.targets ?? [];
-  const annuncementBorderColor = colors.secondary[mode];
+  const { state, memberCounter } = activePool?.bondedPool || {}
+  const { active, totalUnlockChunks } = getTransferOptions(activeAccount).pool
+  const targets = activePoolNominations?.targets ?? []
+  const annuncementBorderColor = colors.secondary[mode]
 
   // is the pool in a state for the depositor to close
   const depositorCanClose =
-    !syncing &&
-    isDepositor() &&
-    state === 'Destroying' &&
-    memberCounter === '1';
+    !syncing && isDepositor() && state === 'Destroying' && memberCounter === '1'
 
   // depositor needs to unbond funds
-  const depositorCanUnbond = active.toNumber() > 0 && !targets.length;
+  const depositorCanUnbond = active.toNumber() > 0 && !targets.length
 
   // depositor can withdraw & close pool
   const depositorCanWithdraw =
-    active.toNumber() === 0 && totalUnlockChunks === 0 && !targets.length;
+    active.toNumber() === 0 && totalUnlockChunks === 0 && !targets.length
 
   return (
     state === 'Destroying' &&
@@ -102,5 +99,5 @@ export const ClosurePrompts = () => {
         </CardWrapper>
       </PageRow>
     )
-  );
-};
+  )
+}

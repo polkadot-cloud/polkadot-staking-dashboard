@@ -12,7 +12,7 @@
     "test": "npm run test --workspaces --if-present"
   },
   "devDependencies": {
-    "@eslint/js": "^9.15.0",
+    "@eslint/js": "^9.16.0",
     "@ledgerhq/logs": "^6.12.0",
     "@types/chroma-js": "^2.4.4",
     "@types/react": "^18.3.3",
@@ -22,7 +22,7 @@
     "@typescript-eslint/parser": "^8.16.0",
     "@vitejs/plugin-react-swc": "^3.7.0",
     "@w3ux/types": "^1.0.0",
-    "eslint": "^9.15.0",
+    "eslint": "^9.16.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.3",
     "eslint-plugin-import": "^2.31.0",
@@ -31,7 +31,7 @@
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-unused-imports": "^4.1.4",
-    "globals": "^15.12.0",
+    "globals": "^15.13.0",
     "prettier": "^3.4.1",
     "prettier-plugin-organize-imports": "^4.1.0",
     "sass": "1.77.6",
@@ -45,14 +45,14 @@
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
     "i18next": "^24.0.0",
-    "react-i18next": "^15.1.1"
+    "react-i18next": "^15.1.3"
   },
   "packageManager": "yarn@4.1.1",
   "prettier": {
     "arrowParens": "always",
     "trailingComma": "es5",
     "tabWidth": 2,
-    "semi": true,
+    "semi": false,
     "singleQuote": true,
     "endOfLine": "auto",
     "plugins": [

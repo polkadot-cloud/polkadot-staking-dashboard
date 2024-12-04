@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { LedgerHardwareContextInterface } from './types';
+import type { LedgerHardwareContextInterface } from './types'
 
 export const defaultFeedback = {
   message: null,
   helpKey: null,
-};
+}
 
 export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   transportResponse: null,
@@ -31,4 +31,4 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
     new Promise((resolve) => resolve()),
   handleResetLedgerTask: () => {},
   runtimesInconsistent: false,
-};
+}

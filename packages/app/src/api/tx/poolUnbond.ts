@@ -1,17 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Base } from 'api/base';
-import type { ChainId } from 'common-types';
+import { Base } from 'api/base'
+import type { ChainId } from 'common-types'
 
 export class PoolUnbond extends Base {
-  #who: string;
-  #bond: bigint;
+  #who: string
+  #bond: bigint
 
   constructor(network: ChainId, who: string, bond: bigint) {
-    super(network);
-    this.#who = who;
-    this.#bond = bond;
+    super(network)
+    this.#who = who
+    this.#bond = bond
   }
 
   tx() {
@@ -22,9 +22,9 @@ export class PoolUnbond extends Base {
           value: this.#who,
         },
         unbonding_points: this.#bond,
-      });
+      })
     } catch (e) {
-      return null;
+      return null
     }
   }
 }

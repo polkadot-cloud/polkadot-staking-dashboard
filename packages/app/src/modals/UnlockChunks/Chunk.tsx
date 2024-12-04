@@ -1,53 +1,53 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useTimeLeft } from '@w3ux/hooks';
-import BigNumber from 'bignumber.js';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
-import { useNetwork } from 'contexts/Network';
-import { fromUnixTime } from 'date-fns';
-import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft';
-import { useUnstaking } from 'hooks/useUnstaking';
-import { Countdown } from 'library/Countdown';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ButtonSubmit } from 'ui-buttons';
-import { formatTimeleft, planckToUnitBn } from 'utils';
-import { ChunkWrapper } from './Wrappers';
-import type { ChunkProps } from './types';
+import { useTimeLeft } from '@w3ux/hooks'
+import BigNumber from 'bignumber.js'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
+import { fromUnixTime } from 'date-fns'
+import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
+import { useUnstaking } from 'hooks/useUnstaking'
+import { Countdown } from 'library/Countdown'
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ButtonSubmit } from 'ui-buttons'
+import { formatTimeleft, planckToUnitBn } from 'utils'
+import { ChunkWrapper } from './Wrappers'
+import type { ChunkProps } from './types'
 
 export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
-  const { t, i18n } = useTranslation('modals');
+  const { t, i18n } = useTranslation('modals')
 
-  const { activeEra } = useApi();
+  const { activeEra } = useApi()
   const {
     networkData: { units, unit },
     network,
-  } = useNetwork();
-  const { isFastUnstaking } = useUnstaking();
-  const { activeAccount } = useActiveAccounts();
-  const { erasToSeconds } = useErasToTimeLeft();
+  } = useNetwork()
+  const { isFastUnstaking } = useUnstaking()
+  const { activeAccount } = useActiveAccounts()
+  const { erasToSeconds } = useErasToTimeLeft()
 
   const { timeleft, setFromNow } = useTimeLeft({
     depsTimeleft: [network],
     depsFormat: [i18n.resolvedLanguage],
-  });
+  })
 
-  const isStaking = bondFor === 'nominator';
-  const { era, value } = chunk;
-  const left = new BigNumber(era).minus(activeEra.index);
-  const start = activeEra.start.multipliedBy(0.001);
-  const erasDuration = erasToSeconds(left);
+  const isStaking = bondFor === 'nominator'
+  const { era, value } = chunk
+  const left = new BigNumber(era).minus(activeEra.index)
+  const start = activeEra.start.multipliedBy(0.001)
+  const erasDuration = erasToSeconds(left)
 
-  const dateFrom = fromUnixTime(start.toNumber());
-  const dateTo = fromUnixTime(start.plus(erasDuration).toNumber());
-  const formatted = formatTimeleft(t, timeleft.raw);
+  const dateFrom = fromUnixTime(start.toNumber())
+  const dateTo = fromUnixTime(start.plus(erasDuration).toNumber())
+  const formatted = formatTimeleft(t, timeleft.raw)
 
   // reset timer on account or network change.
   useEffect(() => {
-    setFromNow(dateFrom, dateTo);
-  }, [activeAccount, network]);
+    setFromNow(dateFrom, dateTo)
+  }, [activeAccount, network])
 
   return (
     <ChunkWrapper>
@@ -78,5 +78,5 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
         ) : null}
       </div>
     </ChunkWrapper>
-  );
-};
+  )
+}

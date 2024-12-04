@@ -1,83 +1,83 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { camelize } from '@w3ux/utils';
-import { HelpConfig } from 'config/help';
-import { useHelp } from 'contexts/Help';
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { camelize } from '@w3ux/utils'
+import { HelpConfig } from 'config/help'
+import { useHelp } from 'contexts/Help'
 import type {
   DefinitionWithKeys,
   ExternalItems,
   HelpItem,
-} from 'contexts/Help/types';
-import { useAnimation } from 'framer-motion';
-import { useFillVariables } from 'hooks/useFillVariables';
-import { CanvasContainer } from 'kits/Overlay/structure/CanvasContainer';
-import { CanvasScroll } from 'kits/Overlay/structure/CanvasScroll';
-import { ModalContent } from 'kits/Overlay/structure/ModalContent';
-import { DefaultLocale } from 'locales';
-import { useCallback, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ButtonPrimaryInvert } from 'ui-buttons';
-import { ActiveDefinition } from './Items/ActiveDefinition';
-import { Definition } from './Items/Definition';
-import { External } from './Items/External';
+} from 'contexts/Help/types'
+import { useAnimation } from 'framer-motion'
+import { useFillVariables } from 'hooks/useFillVariables'
+import { CanvasContainer } from 'kits/Overlay/structure/CanvasContainer'
+import { CanvasScroll } from 'kits/Overlay/structure/CanvasScroll'
+import { ModalContent } from 'kits/Overlay/structure/ModalContent'
+import { DefaultLocale } from 'locales'
+import { useCallback, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ButtonPrimaryInvert } from 'ui-buttons'
+import { ActiveDefinition } from './Items/ActiveDefinition'
+import { Definition } from './Items/Definition'
+import { External } from './Items/External'
 
 export const Help = () => {
-  const { t, i18n } = useTranslation('help');
-  const controls = useAnimation();
-  const { fillVariables } = useFillVariables();
-  const { setStatus, status, definition, closeHelp } = useHelp();
+  const { t, i18n } = useTranslation('help')
+  const controls = useAnimation()
+  const { fillVariables } = useFillVariables()
+  const { setStatus, status, definition, closeHelp } = useHelp()
 
   const onFadeIn = useCallback(async () => {
-    await controls.start('visible');
-  }, []);
+    await controls.start('visible')
+  }, [])
 
   const onFadeOut = useCallback(async () => {
-    await controls.start('hidden');
-    setStatus('closed');
-  }, []);
+    await controls.start('hidden')
+    setStatus('closed')
+  }, [])
 
   // control canvas fade.
   useEffect(() => {
     if (status === 'open') {
-      onFadeIn();
+      onFadeIn()
     }
     if (status === 'closing') {
-      onFadeOut();
+      onFadeOut()
     }
-  }, [status]);
+  }, [status])
 
   // render early if help not open
   if (status === 'closed') {
-    return null;
+    return null
   }
 
-  let meta: HelpItem | undefined;
+  let meta: HelpItem | undefined
 
   if (definition) {
     // get items for active category
     meta = Object.values(HelpConfig).find((c) =>
       c?.definitions?.find((d) => d === definition)
-    );
+    )
   } else {
     // get all items
-    let definitions: string[] = [];
-    let external: ExternalItems = [];
+    let definitions: string[] = []
+    let external: ExternalItems = []
 
     Object.values(HelpConfig).forEach((c) => {
-      definitions = definitions.concat([...(c.definitions || [])]);
-      external = external.concat([...(c.external || [])]);
-    });
-    meta = { definitions, external };
+      definitions = definitions.concat([...(c.definitions || [])])
+      external = external.concat([...(c.external || [])])
+    })
+    meta = { definitions, external }
   }
 
-  let definitions = meta?.definitions ?? [];
+  let definitions = meta?.definitions ?? []
 
   const activeDefinitions = definitions
     .filter((d) => d !== definition)
     .map((d) => {
-      const localeKey = camelize(d);
+      const localeKey = camelize(d)
 
       return fillVariables(
         {
@@ -89,24 +89,24 @@ export const Help = () => {
           ),
         },
         ['title', 'description']
-      );
-    });
+      )
+    })
 
   // get active definiton
   const activeRecord = definition
     ? definitions.find((d) => d === definition)
-    : null;
+    : null
 
-  let activeDefinition: DefinitionWithKeys | null = null;
+  let activeDefinition: DefinitionWithKeys | null = null
   if (activeRecord) {
-    const localeKey = camelize(activeRecord);
+    const localeKey = camelize(activeRecord)
 
-    const title = t(`definitions.${localeKey}.0`);
+    const title = t(`definitions.${localeKey}.0`)
     const description = i18n.getResource(
       i18n.resolvedLanguage ?? DefaultLocale,
       'help',
       `definitions.${localeKey}.1`
-    );
+    )
 
     activeDefinition = fillVariables(
       {
@@ -114,25 +114,25 @@ export const Help = () => {
         description,
       },
       ['title', 'description']
-    );
+    )
 
     // filter active definition
-    definitions = definitions.filter((d: string) => d !== definition);
+    definitions = definitions.filter((d: string) => d !== definition)
   }
 
   // accumulate external resources
-  const externals = meta?.external ?? [];
+  const externals = meta?.external ?? []
   const activeExternals = externals.map((e) => {
-    const localeKey = e[0];
-    const url = e[1];
-    const website = e[2];
+    const localeKey = e[0]
+    const url = e[1]
+    const website = e[2]
 
     return {
       title: t(`externals.${localeKey}`),
       url,
       website,
-    };
-  });
+    }
+  })
 
   return (
     <CanvasContainer
@@ -214,5 +214,5 @@ export const Help = () => {
         &nbsp;
       </button>
     </CanvasContainer>
-  );
-};
+  )
+}

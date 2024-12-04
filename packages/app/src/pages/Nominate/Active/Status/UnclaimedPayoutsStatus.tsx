@@ -1,29 +1,29 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCircleDown } from '@fortawesome/free-solid-svg-icons';
-import { minDecimalPlaces } from '@w3ux/utils';
-import BigNumber from 'bignumber.js';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useNetwork } from 'contexts/Network';
-import { usePayouts } from 'contexts/Payouts';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { Stat } from 'library/Stat';
-import { useTranslation } from 'react-i18next';
-import { planckToUnitBn } from 'utils';
+import { faCircleDown } from '@fortawesome/free-solid-svg-icons'
+import { minDecimalPlaces } from '@w3ux/utils'
+import BigNumber from 'bignumber.js'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useNetwork } from 'contexts/Network'
+import { usePayouts } from 'contexts/Payouts'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { Stat } from 'library/Stat'
+import { useTranslation } from 'react-i18next'
+import { planckToUnitBn } from 'utils'
 
 export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   const {
     networkData: { units },
-  } = useNetwork();
-  const { isReady } = useApi();
-  const { openModal } = useOverlay().modal;
-  const { unclaimedPayouts } = usePayouts();
-  const { activeAccount } = useActiveAccounts();
-  const { isReadOnlyAccount } = useImportedAccounts();
+  } = useNetwork()
+  const { isReady } = useApi()
+  const { openModal } = useOverlay().modal
+  const { unclaimedPayouts } = usePayouts()
+  const { activeAccount } = useActiveAccounts()
+  const { isReadOnlyAccount } = useImportedAccounts()
 
   const totalUnclaimed = Object.values(unclaimedPayouts || {}).reduce(
     (total, paginatedValidators) =>
@@ -31,7 +31,7 @@ export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
         .reduce((amount, [, value]) => amount.plus(value), new BigNumber(0))
         .plus(total),
     new BigNumber(0)
-  );
+  )
 
   return (
     <Stat
@@ -68,5 +68,5 @@ export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
           : undefined
       }
     />
-  );
-};
+  )
+}

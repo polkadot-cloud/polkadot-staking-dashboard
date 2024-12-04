@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { FilterItem, FiltersContextInterface } from './types';
+import type { FilterItem, FiltersContextInterface } from './types'
 
 export const defaultFiltersInterface: FiltersContextInterface = {
   getFilters: (type, group) => [],
@@ -17,18 +17,18 @@ export const defaultFiltersInterface: FiltersContextInterface = {
   clearSearchTerm: (g) => {},
   applyFilters: (type, g, l, f) => {},
   applyOrder: (g, l, f) => {},
-};
+}
 
 export const defaultIncludes: FilterItem[] = [
   {
     key: 'pools',
     filters: ['active'],
   },
-];
+]
 
 export const defaultExcludes: FilterItem[] = [
   {
     key: 'pools',
     filters: ['locked', 'destroying'],
   },
-];
+]

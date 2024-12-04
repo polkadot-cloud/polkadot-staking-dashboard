@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCircle } from '@fortawesome/free-regular-svg-icons';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Wrapper } from './Wrapper';
-import type { StatusButtonProps } from './types';
+import { faCircle } from '@fortawesome/free-regular-svg-icons'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Wrapper } from './Wrapper'
+import type { StatusButtonProps } from './types'
 
 export const StatusButton = ({
   checked,
@@ -15,7 +15,7 @@ export const StatusButton = ({
   <Wrapper
     onClick={() => {
       if (onClick !== undefined) {
-        onClick();
+        onClick()
       }
     }}
   >
@@ -27,4 +27,4 @@ export const StatusButton = ({
     </section>
     <section>{label}</section>
   </Wrapper>
-);
+)

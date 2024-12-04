@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { ImportedAccountsContextInterface } from './types';
+import type { ImportedAccountsContextInterface } from './types'
 
 export const defaultImportedAccountsContext: ImportedAccountsContextInterface =
   {
@@ -11,4 +11,4 @@ export const defaultImportedAccountsContext: ImportedAccountsContextInterface =
     isReadOnlyAccount: (address) => false,
     accountHasSigner: (address) => false,
     requiresManualSign: (address) => false,
-  };
+  }

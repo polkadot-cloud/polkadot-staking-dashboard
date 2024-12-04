@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCheck, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState } from 'react';
-import type { ActionItemProps } from './types';
-import { Wrapper } from './Wrapper';
+import { faCheck, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useEffect, useState } from 'react'
+import type { ActionItemProps } from './types'
+import { Wrapper } from './Wrapper'
 
 /**
  * @name ActionItem
@@ -21,9 +21,9 @@ export const ActionItem = ({
   inactive = false,
   inlineButton,
 }: ActionItemProps) => {
-  const [toggle, setToggle] = useState<boolean | undefined>(toggled);
+  const [toggle, setToggle] = useState<boolean | undefined>(toggled)
 
-  useEffect(() => setToggle(toggled), [toggled]);
+  useEffect(() => setToggle(toggled), [toggled])
   return (
     <Wrapper
       style={{
@@ -40,9 +40,9 @@ export const ActionItem = ({
           disabled={disabled}
           onClick={() => {
             if (typeof onToggle === 'function') {
-              onToggle(!toggle);
+              onToggle(!toggle)
             }
-            setToggle(!toggle);
+            setToggle(!toggle)
           }}
         >
           {toggle && <FontAwesomeIcon icon={faCheck} transform="shrink-3" />}
@@ -51,5 +51,5 @@ export const ActionItem = ({
       {text}
       {inlineButton && <span>{inlineButton}</span>}
     </Wrapper>
-  );
-};
+  )
+}

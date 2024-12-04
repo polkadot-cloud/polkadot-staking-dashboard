@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { TooltipContextInterface } from './types';
+import type { TooltipContextInterface } from './types'
 
 export const defaultTooltipContext: TooltipContextInterface = {
   openTooltip: () => {},
@@ -14,4 +14,4 @@ export const defaultTooltipContext: TooltipContextInterface = {
   show: 0,
   position: [0, 0],
   text: '',
-};
+}

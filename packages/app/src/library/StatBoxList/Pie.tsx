@@ -1,32 +1,32 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Odometer } from '@w3ux/react-odometer';
-import type { AnyJson } from '@w3ux/types';
-import BigNumber from 'bignumber.js';
-import { useHelp } from 'contexts/Help';
-import { SimplePie } from 'library/SimplePie';
-import { useEffect, useState } from 'react';
-import { ButtonHelp } from 'ui-buttons';
-import { StatBox } from './Item';
-import type { PieProps } from './types';
+import { Odometer } from '@w3ux/react-odometer'
+import type { AnyJson } from '@w3ux/types'
+import BigNumber from 'bignumber.js'
+import { useHelp } from 'contexts/Help'
+import { SimplePie } from 'library/SimplePie'
+import { useEffect, useState } from 'react'
+import { ButtonHelp } from 'ui-buttons'
+import { StatBox } from './Item'
+import type { PieProps } from './types'
 
 export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
-  const help = helpKey !== undefined;
-  const showTotal = !!stat?.total;
-  const { openHelp } = useHelp();
+  const help = helpKey !== undefined
+  const showTotal = !!stat?.total
+  const { openHelp } = useHelp()
 
   const [values, setValues] = useState<AnyJson>({
     value: Number(stat?.value || 0),
     total: Number(stat?.total || 0),
-  });
+  })
 
   useEffect(() => {
     setValues({
       value: Number(stat?.value || 0),
       total: Number(stat?.total || 0),
-    });
-  }, [stat]);
+    })
+  }, [stat])
 
   return (
     <StatBox>
@@ -75,5 +75,5 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
         </div>
       </div>
     </StatBox>
-  );
-};
+  )
+}

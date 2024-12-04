@@ -1,19 +1,19 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCopy } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Odometer } from '@w3ux/react-odometer';
-import { Polkicon } from '@w3ux/react-polkicon';
-import type { AnyJson } from '@w3ux/types';
-import { applyWidthAsPadding, minDecimalPlaces } from '@w3ux/utils';
-import { useHelp } from 'contexts/Help';
-import { useNetwork } from 'contexts/Network';
-import { Notifications } from 'controllers/Notifications';
-import { Fragment, useEffect, useLayoutEffect, useRef } from 'react';
-import { ButtonHelp, ButtonPrimary, ButtonSecondary } from 'ui-buttons';
-import { Wrapper } from './Wrapper';
-import type { StatAddress, StatProps } from './types';
+import { faCopy } from '@fortawesome/free-regular-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Odometer } from '@w3ux/react-odometer'
+import { Polkicon } from '@w3ux/react-polkicon'
+import type { AnyJson } from '@w3ux/types'
+import { applyWidthAsPadding, minDecimalPlaces } from '@w3ux/utils'
+import { useHelp } from 'contexts/Help'
+import { useNetwork } from 'contexts/Network'
+import { Notifications } from 'controllers/Notifications'
+import { Fragment, useEffect, useLayoutEffect, useRef } from 'react'
+import { ButtonHelp, ButtonPrimary, ButtonSecondary } from 'ui-buttons'
+import { Wrapper } from './Wrapper'
+import type { StatAddress, StatProps } from './types'
 
 export const Stat = ({
   label,
@@ -28,34 +28,34 @@ export const Stat = ({
 }: StatProps) => {
   const {
     brand: { token: Token },
-  } = useNetwork().networkData;
-  const { openHelp } = useHelp();
+  } = useNetwork().networkData
+  const { openHelp } = useHelp()
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const subjectRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null)
+  const subjectRef = useRef<HTMLDivElement>(null)
 
   const handleAdjustLayout = () => {
-    applyWidthAsPadding(subjectRef, containerRef);
-  };
+    applyWidthAsPadding(subjectRef, containerRef)
+  }
 
   useLayoutEffect(() => {
-    handleAdjustLayout();
-  });
+    handleAdjustLayout()
+  })
 
   useEffect(() => {
-    window.addEventListener('resize', handleAdjustLayout);
+    window.addEventListener('resize', handleAdjustLayout)
     return () => {
-      window.removeEventListener('resize', handleAdjustLayout);
-    };
-  }, []);
+      window.removeEventListener('resize', handleAdjustLayout)
+    }
+  }, [])
 
-  const Button = buttonType === 'primary' ? ButtonPrimary : ButtonSecondary;
+  const Button = buttonType === 'primary' ? ButtonPrimary : ButtonSecondary
 
-  let display;
+  let display
   switch (type) {
     case 'address':
-      display = stat.display;
-      break;
+      display = stat.display
+      break
     case 'odometer':
       display = (
         <h2>
@@ -73,10 +73,10 @@ export const Stat = ({
           />
           {stat?.unit ? stat.unit : null}
         </h2>
-      );
-      break;
+      )
+      break
     default:
-      display = stat;
+      display = stat
   }
 
   return (
@@ -94,8 +94,8 @@ export const Stat = ({
             type="button"
             className="btn"
             onClick={() => {
-              Notifications.emit(copy.notification);
-              navigator.clipboard.writeText(copy.content);
+              Notifications.emit(copy.notification)
+              navigator.clipboard.writeText(copy.content)
             }}
           >
             <FontAwesomeIcon icon={faCopy} transform="shrink-4" />
@@ -140,5 +140,5 @@ export const Stat = ({
         </div>
       </div>
     </Wrapper>
-  );
-};
+  )
+}

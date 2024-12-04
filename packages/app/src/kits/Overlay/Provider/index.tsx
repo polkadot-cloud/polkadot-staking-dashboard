@@ -1,15 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import { setStateWithRef } from '@w3ux/utils';
-import type { ReactNode, RefObject } from 'react';
-import { createContext, useContext, useRef, useState } from 'react';
+import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import { setStateWithRef } from '@w3ux/utils'
+import type { ReactNode, RefObject } from 'react'
+import { createContext, useContext, useRef, useState } from 'react'
 import {
   defaultCanvasConfig,
   defaultModalConfig,
   defaultOverlayContext,
-} from './defaults';
+} from './defaults'
 import type {
   ActiveOverlayInstance,
   CanvasConfig,
@@ -18,83 +18,83 @@ import type {
   ModalStatus,
   OverlayContextInterface,
   OverlayInstanceDirection,
-} from './types';
+} from './types'
 
 export const OverlayContext = createContext<OverlayContextInterface>(
   defaultOverlayContext
-);
+)
 
-export const useOverlay = () => useContext(OverlayContext);
+export const useOverlay = () => useContext(OverlayContext)
 
 export const OverlayProvider = ({ children }: { children: ReactNode }) => {
   // Store the modal status.
   const [openOverlayInstances, setOpenOverlayInstancesState] =
-    useState<number>(0);
+    useState<number>(0)
 
   const setOpenOverlayInstances = (
     direction: OverlayInstanceDirection,
     instanceType: 'modal' | 'canvas'
   ) => {
     if (direction === 'inc') {
-      setOpenOverlayInstancesState(openOverlayInstances + 1);
-      setActiveOverlayInstance(instanceType);
+      setOpenOverlayInstancesState(openOverlayInstances + 1)
+      setActiveOverlayInstance(instanceType)
     } else {
-      setOpenOverlayInstancesState(Math.max(openOverlayInstances - 1, 0));
+      setOpenOverlayInstancesState(Math.max(openOverlayInstances - 1, 0))
     }
-  };
+  }
 
   // Store the currently active overlay instance.
   const [activeOverlayInstance, setActiveOverlayInstance] =
-    useState<ActiveOverlayInstance>(null);
+    useState<ActiveOverlayInstance>(null)
 
   // Store the modal status.
-  const [modalStatus, setModalStatusState] = useState<ModalStatus>('closed');
-  const modalStatusRef = useRef(modalStatus);
+  const [modalStatus, setModalStatusState] = useState<ModalStatus>('closed')
+  const modalStatusRef = useRef(modalStatus)
 
   // Store modal configuration.
   const [modalConfig, setModalConfigState] =
-    useState<ModalConfig>(defaultModalConfig);
-  const modalConfigRef = useRef(modalConfig);
+    useState<ModalConfig>(defaultModalConfig)
+  const modalConfigRef = useRef(modalConfig)
 
   // Store the modal's current height.
-  const [modalHeight, setModalHeightState] = useState<number>(0);
+  const [modalHeight, setModalHeightState] = useState<number>(0)
 
   // Store the modal's resize counter.
-  const [modalResizeCounter, setModalResizeCounterState] = useState<number>(0);
+  const [modalResizeCounter, setModalResizeCounterState] = useState<number>(0)
 
   // Store the ref to the modal height container. Used for controlling whether height is transitionable.
-  const [modalRef, setModalRef] = useState<RefObject<HTMLDivElement>>();
+  const [modalRef, setModalRef] = useState<RefObject<HTMLDivElement>>()
 
   // Store the ref to the modal height container. Used for controlling whether height is transitionable.
   const [modalHeightRef, setModalHeightRef] =
-    useState<RefObject<HTMLDivElement>>();
+    useState<RefObject<HTMLDivElement>>()
 
   // The maximum allowed height for the modal.
-  const modalMaxHeight = window.innerHeight * 0.8;
+  const modalMaxHeight = window.innerHeight * 0.8
 
   const setModalConfig = (config: ModalConfig) => {
-    setStateWithRef(config, setModalConfigState, modalConfigRef);
-  };
+    setStateWithRef(config, setModalConfigState, modalConfigRef)
+  }
 
   const setModalStatus = (newStatus: ModalStatus) => {
-    setStateWithRef(newStatus, setModalStatusState, modalStatusRef);
-  };
+    setStateWithRef(newStatus, setModalStatusState, modalStatusRef)
+  }
 
   const openModal = ({ key, size = 'lg', options = {} }: ModalConfig) => {
     if (canvasStatus !== 'closed') {
-      return;
+      return
     }
 
-    setModalConfig({ key, size, options });
-    setModalStatus('opening');
+    setModalConfig({ key, size, options })
+    setModalStatus('opening')
     if (!options?.replacing) {
-      setOpenOverlayInstances('inc', 'modal');
+      setOpenOverlayInstances('inc', 'modal')
     }
-  };
+  }
 
   // Closes one modal and opens another.
   const replaceModal = ({ key, size = 'lg', options = {} }: ModalConfig) => {
-    setModalStatus('replacing');
+    setModalStatus('replacing')
     setTimeout(() => {
       openModal({
         key,
@@ -103,64 +103,64 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
           ...options,
           replacing: true,
         },
-      });
-    }, 10);
-  };
+      })
+    }, 10)
+  }
 
   const setModalHeight = (height: number, transition = true) => {
     if (modalStatusRef.current === 'closed') {
-      return;
+      return
     }
 
     // Ensure transition class is removed if not transitioning. Otherwise, ensure class exists.
     if (transition) {
-      transitionOn();
+      transitionOn()
     } else {
-      transitionOff();
+      transitionOff()
     }
 
     // Limit maximum height to 80% of window height, or 90% if window width <= 600.
     const maxHeight =
       window.innerWidth <= 600
         ? window.innerHeight * 0.9
-        : window.innerHeight * 0.8;
+        : window.innerHeight * 0.8
     if (height > maxHeight) {
-      height = maxHeight;
+      height = maxHeight
     }
 
     // Update height state.
-    setModalHeightState(height);
+    setModalHeightState(height)
 
     // If transitioning, remove after enough time to finish transition.
     if (transition) {
-      setTimeout(() => transitionOff(), 500);
+      setTimeout(() => transitionOff(), 500)
     }
-  };
+  }
 
   // Increments modal resize to trigger a height transition.
   const setModalResize = () => {
-    transitionOn();
-    setModalResizeCounterState(modalResizeCounter + 1);
-    setTimeout(() => transitionOff(), 500);
-  };
+    transitionOn()
+    setModalResizeCounterState(modalResizeCounter + 1)
+    setTimeout(() => transitionOff(), 500)
+  }
 
   // Helper to set the transition height class of the modal.
   const transitionOn = () =>
-    modalHeightRef?.current?.classList.add('transition-height');
+    modalHeightRef?.current?.classList.add('transition-height')
 
   // Helper to remove the transition height class of the modal.
   const transitionOff = () =>
-    modalHeightRef?.current?.classList.remove('transition-height');
+    modalHeightRef?.current?.classList.remove('transition-height')
 
   // Store canvas status
-  const [canvasStatus, setCanvasStatus] = useState<CanvasStatus>('closed');
+  const [canvasStatus, setCanvasStatus] = useState<CanvasStatus>('closed')
 
   // Store config options of the canvas.
   const [canvasConfig, setCanvasConfig] = useState<CanvasConfig>({
     key: '',
     scroll: true,
     options: {},
-  });
+  })
 
   // Open the canvas.
   const openCanvas = ({
@@ -169,38 +169,38 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
     scroll = true,
     options,
   }: CanvasConfig) => {
-    setCanvasStatus('open');
-    setOpenOverlayInstances('inc', 'canvas');
+    setCanvasStatus('open')
+    setOpenOverlayInstances('inc', 'canvas')
     setCanvasConfig({
       key,
       size,
       scroll,
       options: options || {},
-    });
-  };
+    })
+  }
 
   // Close the canvas.
   const closeCanvas = () => {
-    setCanvasStatus('closing');
-  };
+    setCanvasStatus('closing')
+  }
 
   // Update modal height and open modal once refs are initialised.
   useEffectIgnoreInitial(() => {
-    const height = modalRef?.current?.clientHeight || 0;
+    const height = modalRef?.current?.clientHeight || 0
     if (modalStatusRef.current === 'opening') {
-      setModalHeight(height, false);
+      setModalHeight(height, false)
       if (height > 0) {
-        setModalStatus('open');
+        setModalStatus('open')
       }
     }
-  }, [modalStatusRef.current, modalRef?.current]);
+  }, [modalStatusRef.current, modalRef?.current])
 
   // When canvas fade out completes, reset config.
   useEffectIgnoreInitial(() => {
     if (canvasStatus === 'closed') {
-      setCanvasConfig(defaultCanvasConfig);
+      setCanvasConfig(defaultCanvasConfig)
     }
-  }, [canvasStatus]);
+  }, [canvasStatus])
 
   return (
     <OverlayContext.Provider
@@ -234,5 +234,5 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
     >
       {children}
     </OverlayContext.Provider>
-  );
-};
+  )
+}

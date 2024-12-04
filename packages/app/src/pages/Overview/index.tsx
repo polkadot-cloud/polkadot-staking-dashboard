@@ -1,24 +1,24 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { CardWrapper } from 'library/Card/Wrappers';
-import { PluginLabel } from 'library/PluginLabel';
-import { StatBoxList } from 'library/StatBoxList';
-import { useTranslation } from 'react-i18next';
-import { PageHeading, PageRow, PageTitle, RowSection } from 'ui-structure';
-import { BalanceChart } from './AccountBalance/BalanceChart';
-import { BalanceLinks } from './AccountBalance/BalanceLinks';
-import { AccountControls } from './AccountControls';
-import { NetworkStats } from './NetworkSats';
-import { Payouts } from './Payouts';
-import { StakeStatus } from './StakeStatus';
-import { ActiveEraStat } from './Stats/ActiveEraTimeLeft';
-import { AverageRewardRateStat } from './Stats/AveragelRewardRate';
-import { SupplyStakedStat } from './Stats/SupplyStaked';
+import { CardWrapper } from 'library/Card/Wrappers'
+import { PluginLabel } from 'library/PluginLabel'
+import { StatBoxList } from 'library/StatBoxList'
+import { useTranslation } from 'react-i18next'
+import { PageHeading, PageRow, PageTitle, RowSection } from 'ui-structure'
+import { BalanceChart } from './AccountBalance/BalanceChart'
+import { BalanceLinks } from './AccountBalance/BalanceLinks'
+import { AccountControls } from './AccountControls'
+import { NetworkStats } from './NetworkSats'
+import { Payouts } from './Payouts'
+import { StakeStatus } from './StakeStatus'
+import { ActiveEraStat } from './Stats/ActiveEraTimeLeft'
+import { AverageRewardRateStat } from './Stats/AveragelRewardRate'
+import { SupplyStakedStat } from './Stats/SupplyStaked'
 
 export const Overview = () => {
-  const { t } = useTranslation('pages');
-  const PAYOUTS_HEIGHT = 380;
+  const { t } = useTranslation('pages')
+  const PAYOUTS_HEIGHT = 380
 
   return (
     <>
@@ -54,5 +54,5 @@ export const Overview = () => {
         <NetworkStats />
       </PageRow>
     </>
-  );
-};
+  )
+}

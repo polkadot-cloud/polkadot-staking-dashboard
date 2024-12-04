@@ -1,33 +1,33 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ValidatorEntry } from '@w3ux/validator-assets';
-import { useCommunity } from 'contexts/Community';
-import { useNetwork } from 'contexts/Network';
-import { useEffect, useState } from 'react';
-import { PageRow } from 'ui-structure';
-import { Item } from './Item';
-import { ItemsWrapper } from './Wrappers';
-import { useCommunitySections } from './context';
+import type { ValidatorEntry } from '@w3ux/validator-assets'
+import { useCommunity } from 'contexts/Community'
+import { useNetwork } from 'contexts/Network'
+import { useEffect, useState } from 'react'
+import { PageRow } from 'ui-structure'
+import { Item } from './Item'
+import { ItemsWrapper } from './Wrappers'
+import { useCommunitySections } from './context'
 
 export const List = () => {
-  const { network } = useNetwork();
-  const { scrollPos } = useCommunitySections();
-  const { validatorCommunity } = useCommunity();
+  const { network } = useNetwork()
+  const { scrollPos } = useCommunitySections()
+  const { validatorCommunity } = useCommunity()
 
   const [entityItems, setEntityItems] = useState<ValidatorEntry[]>(
     validatorCommunity.filter((v) => v.validators[network] !== undefined)
-  );
+  )
 
   useEffect(() => {
     setEntityItems(
       validatorCommunity.filter((v) => v.validators[network] !== undefined)
-    );
-  }, [network]);
+    )
+  }, [network])
 
   useEffect(() => {
-    window.scrollTo(0, scrollPos);
-  }, [scrollPos]);
+    window.scrollTo(0, scrollPos)
+  }, [scrollPos])
 
   const container = {
     hidden: { opacity: 0 },
@@ -38,7 +38,7 @@ export const List = () => {
         staggerChildren: scrollPos ? 0 : 0.025,
       },
     },
-  };
+  }
 
   return (
     <PageRow yMargin>
@@ -48,5 +48,5 @@ export const List = () => {
         ))}
       </ItemsWrapper>
     </PageRow>
-  );
-};
+  )
+}

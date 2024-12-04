@@ -1,9 +1,9 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonHelp, ButtonMonoInvert, ButtonPrimaryInvert } from 'ui-buttons';
-import type { HardwareStatusBarProps } from './types';
-import { Wrapper } from './Wrapper';
+import { ButtonHelp, ButtonMonoInvert, ButtonPrimaryInvert } from 'ui-buttons'
+import type { HardwareStatusBarProps } from './types'
+import { Wrapper } from './Wrapper'
 
 export const HardwareStatusBar = ({
   handleCancel,
@@ -16,7 +16,7 @@ export const HardwareStatusBar = ({
   t: { tDone, tCancel },
   text,
 }: HardwareStatusBarProps) => {
-  const { helpKey, handleHelp } = help || {};
+  const { helpKey, handleHelp } = help || {}
 
   return (
     <Wrapper
@@ -51,7 +51,7 @@ export const HardwareStatusBar = ({
                   marginLeft
                   onClick={() => {
                     if (typeof handleHelp === 'function' && helpKey) {
-                      handleHelp(helpKey);
+                      handleHelp(helpKey)
                     }
                   }}
                   background="secondary"
@@ -73,7 +73,7 @@ export const HardwareStatusBar = ({
               text={tDone}
               onClick={() => {
                 if (typeof handleDone === 'function') {
-                  handleDone();
+                  handleDone()
                 }
               }}
             />
@@ -81,5 +81,5 @@ export const HardwareStatusBar = ({
         </section>
       </div>
     </Wrapper>
-  );
-};
+  )
+}

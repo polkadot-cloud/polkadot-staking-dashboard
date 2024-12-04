@@ -1,26 +1,26 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { IconProp } from '@fortawesome/fontawesome-svg-core';
+import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import {
   faArrowDown,
   faArrowRightFromBracket,
   faRedoAlt,
   faStop,
-} from '@fortawesome/free-solid-svg-icons';
-import type { PayeeOptions } from 'contexts/Setup/types';
-import { useTranslation } from 'react-i18next';
+} from '@fortawesome/free-solid-svg-icons'
+import type { PayeeOptions } from 'contexts/Setup/types'
+import { useTranslation } from 'react-i18next'
 
 export interface PayeeItem {
-  icon: IconProp;
-  value: PayeeOptions;
-  title: string;
-  activeTitle: string;
-  subtitle: string;
+  icon: IconProp
+  value: PayeeOptions
+  title: string
+  activeTitle: string
+  subtitle: string
 }
 
 export const usePayeeConfig = () => {
-  const { t } = useTranslation('base');
+  const { t } = useTranslation('base')
   const getPayeeItems = (extended?: boolean): PayeeItem[] => {
     let items: PayeeItem[] = [
       {
@@ -44,7 +44,7 @@ export const usePayeeConfig = () => {
         subtitle: t('payee.account.subtitle'),
         icon: faArrowRightFromBracket,
       },
-    ];
+    ]
 
     if (extended) {
       items = items.concat([
@@ -55,11 +55,11 @@ export const usePayeeConfig = () => {
           subtitle: t('payee.none.subtitle'),
           icon: faStop,
         },
-      ]);
+      ])
     }
 
-    return items;
-  };
+    return items
+  }
 
-  return { getPayeeItems };
-};
+  return { getPayeeItems }
+}

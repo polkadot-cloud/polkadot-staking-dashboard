@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types';
-import BigNumber from 'bignumber.js';
+import type { AnyJson } from '@w3ux/types'
+import BigNumber from 'bignumber.js'
 import {
   BarElement,
   CategoryScale,
@@ -13,21 +13,21 @@ import {
   PointElement,
   Title,
   Tooltip,
-} from 'chart.js';
-import type { AnyApi } from 'common-types';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useBalances } from 'contexts/Balances';
-import { useNetwork } from 'contexts/Network';
-import { useStaking } from 'contexts/Staking';
-import { useTheme } from 'contexts/Themes';
-import { format, fromUnixTime } from 'date-fns';
-import { useSyncing } from 'hooks/useSyncing';
-import { DefaultLocale, locales } from 'locales';
-import { Bar } from 'react-chartjs-2';
-import { useTranslation } from 'react-i18next';
-import graphColors from 'styles/graphs/index.json';
-import type { PayoutBarProps } from './types';
-import { formatRewardsForGraphs } from './Utils';
+} from 'chart.js'
+import type { AnyApi } from 'common-types'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useBalances } from 'contexts/Balances'
+import { useNetwork } from 'contexts/Network'
+import { useStaking } from 'contexts/Staking'
+import { useTheme } from 'contexts/Themes'
+import { format, fromUnixTime } from 'date-fns'
+import { useSyncing } from 'hooks/useSyncing'
+import { DefaultLocale, locales } from 'locales'
+import { Bar } from 'react-chartjs-2'
+import { useTranslation } from 'react-i18next'
+import graphColors from 'styles/graphs/index.json'
+import type { PayoutBarProps } from './types'
+import { formatRewardsForGraphs } from './Utils'
 
 ChartJS.register(
   CategoryScale,
@@ -38,30 +38,30 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend
-);
+)
 
 export const PayoutBar = ({
   days,
   height,
   data: { payouts, poolClaims, unclaimedPayouts },
 }: PayoutBarProps) => {
-  const { i18n, t } = useTranslation('library');
-  const { mode } = useTheme();
-  const { inSetup } = useStaking();
-  const { getPoolMembership } = useBalances();
-  const { syncing } = useSyncing(['balances']);
-  const { activeAccount } = useActiveAccounts();
+  const { i18n, t } = useTranslation('library')
+  const { mode } = useTheme()
+  const { inSetup } = useStaking()
+  const { getPoolMembership } = useBalances()
+  const { syncing } = useSyncing(['balances'])
+  const { activeAccount } = useActiveAccounts()
 
-  const membership = getPoolMembership(activeAccount);
-  const { unit, units, colors } = useNetwork().networkData;
-  const notStaking = !syncing && inSetup() && !membership;
+  const membership = getPoolMembership(activeAccount)
+  const { unit, units, colors } = useNetwork().networkData
+  const notStaking = !syncing && inSetup() && !membership
 
   // remove slashes from payouts (graph does not support negative values).
-  const payoutsNoSlash = payouts?.filter((p) => p.event_id !== 'Slashed') || [];
+  const payoutsNoSlash = payouts?.filter((p) => p.event_id !== 'Slashed') || []
 
   // remove slashes from unclaimed payouts.
   const unclaimedPayoutsNoSlash =
-    unclaimedPayouts?.filter((p) => p.event_id !== 'Slashed') || [];
+    unclaimedPayouts?.filter((p) => p.event_id !== 'Slashed') || []
 
   // get formatted rewards data for graph.
   const { allPayouts, allPoolClaims, allUnclaimedPayouts } =
@@ -72,31 +72,31 @@ export const PayoutBar = ({
       payoutsNoSlash,
       poolClaims,
       unclaimedPayoutsNoSlash
-    );
+    )
 
-  const { p: graphPayouts } = allPayouts;
-  const { p: graphUnclaimedPayouts } = allUnclaimedPayouts;
-  const { p: graphPoolClaims } = allPoolClaims;
+  const { p: graphPayouts } = allPayouts
+  const { p: graphUnclaimedPayouts } = allUnclaimedPayouts
+  const { p: graphPoolClaims } = allPoolClaims
 
   // determine color for payouts
   const colorPayouts = notStaking
     ? colors.transparent[mode]
-    : colors.primary[mode];
+    : colors.primary[mode]
 
   // determine color for poolClaims
   const colorPoolClaims = notStaking
     ? colors.transparent[mode]
-    : colors.secondary[mode];
+    : colors.secondary[mode]
 
   // Bar border radius
-  const borderRadius = 4;
+  const borderRadius = 4
 
   const data = {
     labels: graphPayouts.map((item: AnyApi) => {
       const dateObj = format(fromUnixTime(item.block_timestamp), 'do MMM', {
         locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
-      });
-      return `${dateObj}`;
+      })
+      return `${dateObj}`
     }),
 
     datasets: [
@@ -128,7 +128,7 @@ export const PayoutBar = ({
         borderRadius,
       },
     ],
-  };
+  }
 
   const options = {
     responsive: true,
@@ -189,7 +189,7 @@ export const PayoutBar = ({
         },
       },
     },
-  };
+  }
 
   return (
     <div
@@ -199,5 +199,5 @@ export const PayoutBar = ({
     >
       <Bar options={options} data={data} />
     </div>
-  );
-};
+  )
+}

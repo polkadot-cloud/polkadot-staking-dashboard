@@ -1,23 +1,23 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useAnimation } from 'framer-motion';
-import type { FC } from 'react';
-import { useEffect } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
-import { useOverlay } from './Provider';
-import type { CanvasProps } from './Provider/types';
-import { CanvasContainer } from './structure/CanvasContainer';
-import { CanvasContent } from './structure/CanvasContent';
-import { CanvasScroll } from './structure/CanvasScroll';
-import { ModalContent } from './structure/ModalContent';
+import { useAnimation } from 'framer-motion'
+import type { FC } from 'react'
+import { useEffect } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
+import { useOverlay } from './Provider'
+import type { CanvasProps } from './Provider/types'
+import { CanvasContainer } from './structure/CanvasContainer'
+import { CanvasContent } from './structure/CanvasContent'
+import { CanvasScroll } from './structure/CanvasScroll'
+import { ModalContent } from './structure/ModalContent'
 
 export const Canvas = ({
   canvas,
   externalOverlayStatus,
   fallback: Fallback,
 }: CanvasProps) => {
-  const controls = useAnimation();
+  const controls = useAnimation()
   const {
     setOpenOverlayInstances,
     activeOverlayInstance,
@@ -28,49 +28,49 @@ export const Canvas = ({
       setCanvasStatus,
       config: { key, size, scroll },
     },
-  } = useOverlay();
+  } = useOverlay()
 
   const onIn = async () => {
-    await controls.start('visible');
-  };
+    await controls.start('visible')
+  }
 
   const onOut = async (closing: boolean) => {
     if (closing) {
-      setOpenOverlayInstances('dec', 'canvas');
-      setActiveOverlayInstance(modalStatus === 'open' ? 'modal' : null);
+      setOpenOverlayInstances('dec', 'canvas')
+      setActiveOverlayInstance(modalStatus === 'open' ? 'modal' : null)
     }
-    await controls.start('hidden');
+    await controls.start('hidden')
 
     if (closing) {
-      setCanvasStatus('closed');
+      setCanvasStatus('closed')
     }
-  };
+  }
 
   // Control dim help status change.
   useEffect(() => {
     if (externalOverlayStatus === 'open' && status === 'open') {
-      onOut(false);
+      onOut(false)
     }
 
     if (externalOverlayStatus === 'closing') {
       if (activeOverlayInstance === 'canvas') {
-        setCanvasStatus('open');
-        onIn();
+        setCanvasStatus('open')
+        onIn()
       }
     }
-  }, [externalOverlayStatus]);
+  }, [externalOverlayStatus])
 
   // Control fade in and out on opening and closing states.
   useEffect(() => {
     if (status === 'open') {
-      onIn();
+      onIn()
     }
     if (status === 'closing') {
-      onOut(true);
+      onOut(true)
     }
-  }, [status]);
+  }, [status])
 
-  const ActiveCanvas: FC | null = canvas?.[key] || null;
+  const ActiveCanvas: FC | null = canvas?.[key] || null
 
   return status === 'closed' ? null : (
     <CanvasContainer
@@ -100,5 +100,5 @@ export const Canvas = ({
         </ModalContent>
       </CanvasScroll>
     </CanvasContainer>
-  );
-};
+  )
+}

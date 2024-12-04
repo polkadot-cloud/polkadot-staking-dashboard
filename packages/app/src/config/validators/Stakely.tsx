@@ -11,6 +11,6 @@ const Stakely = () => (
       fillRule="evenodd"
     />
   </svg>
-);
+)
 
-export default Stakely;
+export default Stakely

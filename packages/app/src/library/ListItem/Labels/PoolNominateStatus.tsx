@@ -1,27 +1,27 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { capitalizeFirstLetter } from '@w3ux/utils';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useStaking } from 'contexts/Staking';
-import { PoolStatusWrapper } from 'library/ListItem/Wrappers';
-import type { Pool } from 'library/Pool/types';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { capitalizeFirstLetter } from '@w3ux/utils'
+import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { useStaking } from 'contexts/Staking'
+import { PoolStatusWrapper } from 'library/ListItem/Wrappers'
+import type { Pool } from 'library/Pool/types'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export const PoolNominateStatus = ({ pool }: { pool: Pool }) => {
-  const { t } = useTranslation('library');
-  const { getPoolNominationStatusCode, poolsNominations } = useBondedPools();
-  const { eraStakers, getNominationsStatusFromTargets } = useStaking();
-  const { addresses } = pool;
+  const { t } = useTranslation('library')
+  const { getPoolNominationStatusCode, poolsNominations } = useBondedPools()
+  const { eraStakers, getNominationsStatusFromTargets } = useStaking()
+  const { addresses } = pool
 
   // get pool targets from nominations meta batch
-  const nominations = poolsNominations[pool.id];
-  const targets = nominations?.targets || [];
+  const nominations = poolsNominations[pool.id]
+  const targets = nominations?.targets || []
 
   // store nomination status in state
   const [nominationsStatus, setNominationsStatus] =
-    useState<Record<string, string>>();
+    useState<Record<string, string>>()
 
   // update pool nomination status as nominations metadata becomes available.
   // we cannot add effect dependencies here as this needs to trigger
@@ -29,8 +29,8 @@ export const PoolNominateStatus = ({ pool }: { pool: Pool }) => {
   const handleNominationsStatus = () => {
     setNominationsStatus(
       getNominationsStatusFromTargets(addresses.stash, targets)
-    );
-  };
+    )
+  }
 
   // recalculate nominations status as app syncs
   useEffect(() => {
@@ -39,20 +39,20 @@ export const PoolNominateStatus = ({ pool }: { pool: Pool }) => {
       nominationsStatus === null &&
       eraStakers.stakers.length
     ) {
-      handleNominationsStatus();
+      handleNominationsStatus()
     }
-  });
+  })
 
   // metadata has changed, which means pool items may have been added.
   // recalculate nominations status
   useEffect(() => {
-    handleNominationsStatus();
-  }, [pool, eraStakers.stakers.length, Object.keys(poolsNominations).length]);
+    handleNominationsStatus()
+  }, [pool, eraStakers.stakers.length, Object.keys(poolsNominations).length])
 
   // determine nominations status and display
   const nominationStatus = getPoolNominationStatusCode(
     nominationsStatus || null
-  );
+  )
 
   return (
     <PoolStatusWrapper $status={nominationStatus}>
@@ -66,5 +66,5 @@ export const PoolNominateStatus = ({ pool }: { pool: Pool }) => {
         </span>
       </h4>
     </PoolStatusWrapper>
-  );
-};
+  )
+}

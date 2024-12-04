@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import classNames from 'classnames';
-import commonClasses from '../common.module.scss';
-import { onMouseHandlers } from '../util';
-import classes from './index.module.scss';
-import type { ButtonHelpProps } from './types';
+import classNames from 'classnames'
+import commonClasses from '../common.module.scss'
+import { onMouseHandlers } from '../util'
+import classes from './index.module.scss'
+import type { ButtonHelpProps } from './types'
 
 /**
  * @name ButtonHelp
@@ -30,7 +30,7 @@ export const ButtonHelp = (props: ButtonHelpProps): JSX.Element => {
     onMouseOut,
     outline = false,
     background = 'primary',
-  } = props;
+  } = props
 
   const buttonClasses = classNames(
     commonClasses.btnCore,
@@ -46,7 +46,7 @@ export const ButtonHelp = (props: ButtonHelpProps): JSX.Element => {
       [commonClasses.btnDisabled]: disabled,
     },
     className
-  );
+  )
 
   return (
     <button
@@ -66,5 +66,5 @@ export const ButtonHelp = (props: ButtonHelpProps): JSX.Element => {
         <path d="M32 15c-2.5 0-4.5 2-4.5 4.5s2 4.5 4.5 4.5 4.5-2 4.5-4.5-2-4.5-4.5-4.5zm0 14.5c-2.5 0-4.5 2-4.5 4.5v12c0 2.5 2 4.5 4.5 4.5s4.5-2 4.5-4.5V34c0-2.5-2-4.5-4.5-4.5z" />
       </svg>
     </button>
-  );
-};
+  )
+}

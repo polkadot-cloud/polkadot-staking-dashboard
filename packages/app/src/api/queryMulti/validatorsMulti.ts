@@ -1,15 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Base } from 'api/base';
-import type { ChainId } from 'common-types';
+import { Base } from 'api/base'
+import type { ChainId } from 'common-types'
 
 export class ValidatorsMulti extends Base {
-  #addresses: [string][];
+  #addresses: [string][]
 
   constructor(network: ChainId, addresses: [string][]) {
-    super(network);
-    this.#addresses = addresses;
+    super(network)
+    this.#addresses = addresses
   }
 
   async fetch() {
@@ -17,12 +17,12 @@ export class ValidatorsMulti extends Base {
       const result = await this.unsafeApi.query.Staking.Validators.getValues(
         this.#addresses,
         { at: 'best' }
-      );
-      return result;
+      )
+      return result
     } catch (e) {
       // Silently fail.
     }
 
-    return null;
+    return null
   }
 }

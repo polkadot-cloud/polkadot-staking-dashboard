@@ -1,29 +1,29 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faBan, faCheck } from '@fortawesome/free-solid-svg-icons';
-import { useFilters } from 'contexts/Filters';
-import { useValidatorFilters } from 'hooks/useValidatorFilters';
-import { Container } from 'library/Filter/Container';
-import { Item } from 'library/Filter/Item';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { faBan, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { useFilters } from 'contexts/Filters'
+import { useValidatorFilters } from 'hooks/useValidatorFilters'
+import { Container } from 'library/Filter/Container'
+import { Item } from 'library/Filter/Item'
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export const FilterBadges = () => {
-  const { t } = useTranslation('library');
-  const { getFilters, getOrder, toggleFilter } = useFilters();
+  const { t } = useTranslation('library')
+  const { getFilters, getOrder, toggleFilter } = useFilters()
   const { includesToLabels, excludesToLabels, ordersToLabels } =
-    useValidatorFilters();
+    useValidatorFilters()
 
-  const includes = getFilters('include', 'validators');
-  const excludes = getFilters('exclude', 'validators');
-  const hasFilters = includes?.length || excludes?.length;
-  const order = getOrder('validators');
+  const includes = getFilters('include', 'validators')
+  const excludes = getFilters('exclude', 'validators')
+  const hasFilters = includes?.length || excludes?.length
+  const order = getOrder('validators')
 
   // scroll to top of the window on every filter.
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [includes, excludes]);
+    window.scrollTo(0, 0)
+  }, [includes, excludes])
 
   return (
     <Container>
@@ -43,7 +43,7 @@ export const FilterBadges = () => {
             label={includesToLabels[e]}
             icon={faCheck}
             onClick={() => {
-              toggleFilter('include', 'validators', e);
+              toggleFilter('include', 'validators', e)
             }}
           />
         ))}
@@ -54,11 +54,11 @@ export const FilterBadges = () => {
             icon={faBan}
             transform="shrink-2"
             onClick={() => {
-              toggleFilter('exclude', 'validators', e);
+              toggleFilter('exclude', 'validators', e)
             }}
           />
         ))}
       </div>
     </Container>
-  );
-};
+  )
+}

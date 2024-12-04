@@ -1,23 +1,23 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faGlasses } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import LedgerSVG from '@w3ux/extension-assets/LedgerSquare.svg?react';
-import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react';
-import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react';
-import { ExtensionIcons } from '@w3ux/extension-assets/util';
-import { Polkicon } from '@w3ux/react-polkicon';
-import { ellipsisFn } from '@w3ux/utils';
-import BigNumber from 'bignumber.js';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useNetwork } from 'contexts/Network';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { useTranslation } from 'react-i18next';
-import { planckToUnitBn } from 'utils';
-import { AccountWrapper } from './Wrappers';
-import type { AccountItemProps } from './types';
+import { faGlasses } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import LedgerSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
+import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
+import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
+import { ExtensionIcons } from '@w3ux/extension-assets/util'
+import { Polkicon } from '@w3ux/react-polkicon'
+import { ellipsisFn } from '@w3ux/utils'
+import BigNumber from 'bignumber.js'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useNetwork } from 'contexts/Network'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { useTranslation } from 'react-i18next'
+import { planckToUnitBn } from 'utils'
+import { AccountWrapper } from './Wrappers'
+import type { AccountItemProps } from './types'
 
 export const AccountButton = ({
   label,
@@ -27,24 +27,24 @@ export const AccountButton = ({
   noBorder = false,
   transferrableBalance,
 }: AccountItemProps) => {
-  const { t } = useTranslation('modals');
-  const { getAccount } = useImportedAccounts();
+  const { t } = useTranslation('modals')
+  const { getAccount } = useImportedAccounts()
   const {
     activeProxy,
     activeAccount,
     setActiveAccount,
     setActiveProxy,
     activeProxyType,
-  } = useActiveAccounts();
-  const { setModalStatus } = useOverlay().modal;
-  const { units, unit } = useNetwork().networkData;
+  } = useActiveAccounts()
+  const { setModalStatus } = useOverlay().modal
+  const { units, unit } = useNetwork().networkData
 
   // Accumulate account data.
-  const meta = getAccount(address || '');
+  const meta = getAccount(address || '')
 
-  const imported = !!meta;
-  const connectTo = delegator || address || '';
-  const connectProxy = delegator ? address || null : '';
+  const imported = !!meta
+  const connectTo = delegator || address || ''
+  const connectProxy = delegator ? address || null : ''
 
   // Determine account source icon.
   const Icon =
@@ -54,7 +54,7 @@ export const AccountButton = ({
         ? PolkadotVaultSVG
         : meta?.source === 'wallet_connect'
           ? WalletConnectSVG
-          : ExtensionIcons[meta?.source || ''] || undefined;
+          : ExtensionIcons[meta?.source || ''] || undefined
 
   // Determine if this account is active (active account or proxy).
   const isActive =
@@ -63,17 +63,17 @@ export const AccountButton = ({
       !activeProxy) ||
     (connectProxy === activeProxy &&
       proxyType === activeProxyType &&
-      activeProxy);
+      activeProxy)
 
   // Handle account click. Handles both active account and active proxy.
   const handleClick = () => {
     if (!imported) {
-      return;
+      return
     }
-    setActiveAccount(getAccount(connectTo)?.address || null);
-    setActiveProxy(proxyType ? { address: connectProxy, proxyType } : null);
-    setModalStatus('closing');
-  };
+    setActiveAccount(getAccount(connectTo)?.address || null)
+    setActiveProxy(proxyType ? { address: connectProxy, proxyType } : null)
+    setModalStatus('closing')
+  }
 
   return (
     <AccountWrapper className={isActive ? 'active' : undefined}>
@@ -138,5 +138,5 @@ export const AccountButton = ({
         </section>
       </div>
     </AccountWrapper>
-  );
-};
+  )
+}

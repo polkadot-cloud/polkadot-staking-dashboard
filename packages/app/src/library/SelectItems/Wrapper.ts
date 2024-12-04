@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components';
+import styled from 'styled-components'
 
-export const TwoThreshold = 800;
-export const ThreeRowThreshold = 1300;
+export const TwoThreshold = 800
+export const ThreeRowThreshold = 1300
 
-const TwoThresholdMin = TwoThreshold + 1;
-const ThreeRowThresholdMin = ThreeRowThreshold + 1;
+const TwoThresholdMin = TwoThreshold + 1
+const ThreeRowThresholdMin = ThreeRowThreshold + 1
 
 // The outer container of select items.
 // Removes the outer padding for 2 and 3 row layouts.
@@ -48,13 +48,13 @@ export const SelectItemsWrapper = styled.div`
       }
     }
   }
-`;
+`
 
 // Item and surrounding padded area.
 export const Wrapper = styled.div<{
-  $selected?: boolean;
-  $grow: boolean;
-  $hoverBorder: boolean;
+  $selected?: boolean
+  $grow: boolean
+  $hoverBorder: boolean
 }>`
   padding: 0.6rem;
   width: 100%;
@@ -158,4 +158,4 @@ export const Wrapper = styled.div<{
       }
     }
   }
-`;
+`

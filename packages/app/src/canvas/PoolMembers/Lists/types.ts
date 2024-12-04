@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export interface MembersListProps {
-  pagination: boolean;
-  batchKey: string;
-  selectToggleable?: boolean;
+  pagination: boolean
+  batchKey: string
+  selectToggleable?: boolean
 }
 
 export type FetchpageMembersListProps = MembersListProps & {
-  memberCount: string;
-};
+  memberCount: string
+}

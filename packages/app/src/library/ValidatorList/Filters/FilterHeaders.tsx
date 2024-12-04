@@ -4,22 +4,22 @@
 import {
   faArrowDownWideShort,
   faFilterCircleXmark,
-} from '@fortawesome/free-solid-svg-icons';
-import { useFilters } from 'contexts/Filters';
-import { usePrompt } from 'contexts/Prompt';
-import { useTranslation } from 'react-i18next';
-import { ButtonPrimaryInvert, ButtonSecondary } from 'ui-buttons';
-import { FilterValidators } from '../FilterValidators';
-import { OrderValidators } from '../OrderValidators';
+} from '@fortawesome/free-solid-svg-icons'
+import { useFilters } from 'contexts/Filters'
+import { usePrompt } from 'contexts/Prompt'
+import { useTranslation } from 'react-i18next'
+import { ButtonPrimaryInvert, ButtonSecondary } from 'ui-buttons'
+import { FilterValidators } from '../FilterValidators'
+import { OrderValidators } from '../OrderValidators'
 
 export const FilterHeaders = () => {
-  const { t } = useTranslation('library');
-  const { openPromptWith } = usePrompt();
-  const { resetFilters, getFilters } = useFilters();
+  const { t } = useTranslation('library')
+  const { openPromptWith } = usePrompt()
+  const { resetFilters, getFilters } = useFilters()
 
-  const includes = getFilters('include', 'validators');
-  const excludes = getFilters('exclude', 'validators');
-  const hasFilters = includes?.length || excludes?.length;
+  const includes = getFilters('include', 'validators')
+  const excludes = getFilters('exclude', 'validators')
+  const hasFilters = includes?.length || excludes?.length
 
   return (
     <div
@@ -33,7 +33,7 @@ export const FilterHeaders = () => {
         marginRight
         iconLeft={faArrowDownWideShort}
         onClick={() => {
-          openPromptWith(<OrderValidators />);
+          openPromptWith(<OrderValidators />)
         }}
       />
       <ButtonPrimaryInvert
@@ -41,17 +41,17 @@ export const FilterHeaders = () => {
         marginRight
         iconLeft={faFilterCircleXmark}
         onClick={() => {
-          openPromptWith(<FilterValidators />);
+          openPromptWith(<FilterValidators />)
         }}
       />
       <ButtonSecondary
         text={t('clear')}
         onClick={() => {
-          resetFilters('include', 'validators');
-          resetFilters('exclude', 'validators');
+          resetFilters('include', 'validators')
+          resetFilters('exclude', 'validators')
         }}
         disabled={!hasFilters}
       />
     </div>
-  );
-};
+  )
+}

@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { PayoutsContextInterface } from './types';
+import type { PayoutsContextInterface } from './types'
 
-export const MaxSupportedPayoutEras = 7;
+export const MaxSupportedPayoutEras = 7
 
 export const defaultPayoutsContext: PayoutsContextInterface = {
   payoutsSynced: 'unsynced',
   unclaimedPayouts: null,
   removeEraPayout: (era, validator) => {},
-};
+}

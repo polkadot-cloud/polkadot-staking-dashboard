@@ -1,15 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Base } from 'api/base';
-import type { ChainId } from 'common-types';
-import type { ClaimPermission } from 'contexts/Pools/types';
-import { defaultClaimPermission } from 'controllers/ActivePools/defaults';
+import { Base } from 'api/base'
+import type { ChainId } from 'common-types'
+import type { ClaimPermission } from 'contexts/Pools/types'
+import { defaultClaimPermission } from 'controllers/ActivePools/defaults'
 
 export class JoinPool extends Base {
-  #poolId: number;
-  #bond: bigint;
-  #claimPermission: ClaimPermission;
+  #poolId: number
+  #bond: bigint
+  #claimPermission: ClaimPermission
 
   constructor(
     network: ChainId,
@@ -17,10 +17,10 @@ export class JoinPool extends Base {
     bond: bigint,
     claimPermission: ClaimPermission
   ) {
-    super(network);
-    this.#poolId = poolId;
-    this.#bond = bond;
-    this.#claimPermission = claimPermission;
+    super(network)
+    this.#poolId = poolId
+    this.#bond = bond
+    this.#claimPermission = claimPermission
   }
 
   tx() {
@@ -30,22 +30,22 @@ export class JoinPool extends Base {
           amount: this.#bond,
           pool_id: this.#poolId,
         }),
-      ];
+      ]
 
       if (this.#claimPermission !== defaultClaimPermission) {
         txs.push(
           this.unsafeApi.tx.NominationPools.set_claim_permission({
             permission: { type: this.#claimPermission, value: undefined },
           })
-        );
+        )
       }
 
       if (txs.length === 1) {
-        return txs[0];
+        return txs[0]
       }
-      return txs;
+      return txs
     } catch (e) {
-      return null;
+      return null
     }
   }
 }

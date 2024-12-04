@@ -1,16 +1,16 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useAverageRewardRate } from 'hooks/useAverageRewardRate';
-import { Text } from 'library/StatBoxList/Text';
-import { useTranslation } from 'react-i18next';
+import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
+import { Text } from 'library/StatBoxList/Text'
+import { useTranslation } from 'react-i18next'
 
 export const AverageRewardRateStat = () => {
-  const { t } = useTranslation('pages');
-  const { getAverageRewardRate } = useAverageRewardRate();
+  const { t } = useTranslation('pages')
+  const { getAverageRewardRate } = useAverageRewardRate()
   // Get the compounded Average Reward Rate.
   const { avgRateBeforeCommission, avgRateAfterCommission } =
-    getAverageRewardRate(false);
+    getAverageRewardRate(false)
 
   const params = {
     label: `${t('overview.averageRewardRate')}`,
@@ -21,7 +21,7 @@ export const AverageRewardRateStat = () => {
     helpKey: 'Average Reward Rate',
 
     primary: true,
-  };
+  }
 
-  return <Text {...params} />;
-};
+  return <Text {...params} />
+}

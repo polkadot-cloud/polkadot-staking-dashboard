@@ -1,33 +1,33 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { setStateWithRef } from '@w3ux/utils';
-import { useNetwork } from 'contexts/Network';
-import type { ReactNode } from 'react';
-import { createContext, useContext, useRef, useState } from 'react';
-import type { MaybeAddress } from 'types';
-import { defaultActiveAccountsContext } from './defaults';
-import type { ActiveAccountsContextInterface, ActiveProxy } from './types';
+import { setStateWithRef } from '@w3ux/utils'
+import { useNetwork } from 'contexts/Network'
+import type { ReactNode } from 'react'
+import { createContext, useContext, useRef, useState } from 'react'
+import type { MaybeAddress } from 'types'
+import { defaultActiveAccountsContext } from './defaults'
+import type { ActiveAccountsContextInterface, ActiveProxy } from './types'
 
 export const ActiveAccountsContext =
-  createContext<ActiveAccountsContextInterface>(defaultActiveAccountsContext);
+  createContext<ActiveAccountsContextInterface>(defaultActiveAccountsContext)
 
-export const useActiveAccounts = () => useContext(ActiveAccountsContext);
+export const useActiveAccounts = () => useContext(ActiveAccountsContext)
 
 export const ActiveAccountsProvider = ({
   children,
 }: {
-  children: ReactNode;
+  children: ReactNode
 }) => {
-  const { network } = useNetwork();
+  const { network } = useNetwork()
 
   // Store the currently active account.
-  const [activeAccount, setActiveAccountState] = useState<MaybeAddress>(null);
-  const activeAccountRef = useRef<string | null>(activeAccount);
+  const [activeAccount, setActiveAccountState] = useState<MaybeAddress>(null)
+  const activeAccountRef = useRef<string | null>(activeAccount)
 
   // Store the active proxy account.
-  const [activeProxy, setActiveProxyState] = useState<ActiveProxy>(null);
-  const activeProxyRef = useRef(activeProxy);
+  const [activeProxy, setActiveProxyState] = useState<ActiveProxy>(null)
+  const activeProxyRef = useRef(activeProxy)
 
   // Setter for the active proxy account.
   const setActiveProxy = (newActiveProxy: ActiveProxy, updateLocal = true) => {
@@ -36,13 +36,13 @@ export const ActiveAccountsProvider = ({
         localStorage.setItem(
           `${network}_active_proxy`,
           JSON.stringify(newActiveProxy)
-        );
+        )
       } else {
-        localStorage.removeItem(`${network}_active_proxy`);
+        localStorage.removeItem(`${network}_active_proxy`)
       }
     }
-    setStateWithRef(newActiveProxy, setActiveProxyState, activeProxyRef);
-  };
+    setStateWithRef(newActiveProxy, setActiveProxyState, activeProxyRef)
+  }
 
   // Setter for the active account.
   const setActiveAccount = (
@@ -51,17 +51,17 @@ export const ActiveAccountsProvider = ({
   ) => {
     if (updateLocalStorage) {
       if (newActiveAccount === null) {
-        localStorage.removeItem(`${network}_active_account`);
+        localStorage.removeItem(`${network}_active_account`)
       } else {
-        localStorage.setItem(`${network}_active_account`, newActiveAccount);
+        localStorage.setItem(`${network}_active_account`, newActiveAccount)
       }
     }
 
-    setStateWithRef(newActiveAccount, setActiveAccountState, activeAccountRef);
-  };
+    setStateWithRef(newActiveAccount, setActiveAccountState, activeAccountRef)
+  }
 
   // Getter for the active account.
-  const getActiveAccount = () => activeAccountRef.current;
+  const getActiveAccount = () => activeAccountRef.current
 
   return (
     <ActiveAccountsContext.Provider
@@ -77,5 +77,5 @@ export const ActiveAccountsProvider = ({
     >
       {children}
     </ActiveAccountsContext.Provider>
-  );
-};
+  )
+}

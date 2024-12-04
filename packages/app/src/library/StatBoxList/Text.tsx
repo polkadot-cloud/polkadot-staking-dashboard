@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useHelp } from 'contexts/Help';
-import { ButtonHelp } from 'ui-buttons';
-import { StatBox } from './Item';
-import { TextTitleWrapper } from './Wrapper';
-import type { TextProps } from './types';
+import { useHelp } from 'contexts/Help'
+import { ButtonHelp } from 'ui-buttons'
+import { StatBox } from './Item'
+import { TextTitleWrapper } from './Wrapper'
+import type { TextProps } from './types'
 
 export const Text = ({
   label,
@@ -14,8 +14,8 @@ export const Text = ({
   helpKey,
   primary,
 }: TextProps) => {
-  const help = helpKey !== undefined;
-  const { openHelp } = useHelp();
+  const help = helpKey !== undefined
+  const { openHelp } = useHelp()
   return (
     <StatBox>
       <div className="content chart">
@@ -33,5 +33,5 @@ export const Text = ({
         </div>
       </div>
     </StatBox>
-  );
-};
+  )
+}

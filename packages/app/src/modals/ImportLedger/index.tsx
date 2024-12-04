@@ -1,35 +1,35 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import type { AnyJson } from '@w3ux/types';
-import { ellipsisFn, setStateWithRef } from '@w3ux/utils';
-import { useLedgerHardware } from 'contexts/LedgerHardware';
+import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import type { AnyJson } from '@w3ux/types'
+import { ellipsisFn, setStateWithRef } from '@w3ux/utils'
+import { useLedgerHardware } from 'contexts/LedgerHardware'
 import {
   getLedgerApp,
   getLocalLedgerAddresses,
-} from 'contexts/LedgerHardware/Utils';
+} from 'contexts/LedgerHardware/Utils'
 import type {
   LedgerAddress,
   LedgerResponse,
-} from 'contexts/LedgerHardware/types';
-import { useNetwork } from 'contexts/Network';
-import { Notifications } from 'controllers/Notifications';
-import { useOverlay } from 'kits/Overlay/Provider';
-import type { FC } from 'react';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { registerSaEvent } from 'utils';
-import { Manage } from './Manage';
-import { Splash } from './Splash';
+} from 'contexts/LedgerHardware/types'
+import { useNetwork } from 'contexts/Network'
+import { Notifications } from 'controllers/Notifications'
+import { useOverlay } from 'kits/Overlay/Provider'
+import type { FC } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { registerSaEvent } from 'utils'
+import { Manage } from './Manage'
+import { Splash } from './Splash'
 
 export const ImportLedger: FC = () => {
-  const { t } = useTranslation('modals');
+  const { t } = useTranslation('modals')
   const {
     network,
     networkData: { ss58 },
-  } = useNetwork();
-  const { setModalResize } = useOverlay().modal;
+  } = useNetwork()
+  const { setModalResize } = useOverlay().modal
   const {
     transportResponse,
     resetStatusCode,
@@ -37,53 +37,53 @@ export const ImportLedger: FC = () => {
     getStatusCode,
     handleUnmount,
     handleGetAddress,
-  } = useLedgerHardware();
-  const { txMetadataChainId } = getLedgerApp(network);
+  } = useLedgerHardware()
+  const { txMetadataChainId } = getLedgerApp(network)
 
   // Store addresses retreived from Ledger device. Defaults to local addresses.
   const [addresses, setAddresses] = useState<LedgerAddress[]>(
     getLocalLedgerAddresses(network)
-  );
-  const addressesRef = useRef(addresses);
+  )
+  const addressesRef = useRef(addresses)
 
   // Gets the next non-imported address index.
   const getNextAddressIndex = () => {
     if (!addressesRef.current.length) {
-      return 0;
+      return 0
     }
-    return addressesRef.current[addressesRef.current.length - 1].index + 1;
-  };
+    return addressesRef.current[addressesRef.current.length - 1].index + 1
+  }
 
   const onGetAddress = async () => {
-    await handleGetAddress(txMetadataChainId, getNextAddressIndex(), ss58);
-  };
+    await handleGetAddress(txMetadataChainId, getNextAddressIndex(), ss58)
+  }
 
   const removeLedgerAddress = (address: string) => {
-    let newLedgerAddresses = getLocalLedgerAddresses();
+    let newLedgerAddresses = getLocalLedgerAddresses()
 
     newLedgerAddresses = newLedgerAddresses.filter((a) => {
       if (a.address !== address) {
-        return true;
+        return true
       }
       if (a.network !== network) {
-        return true;
+        return true
       }
-      return false;
-    });
+      return false
+    })
     if (!newLedgerAddresses.length) {
-      localStorage.removeItem('ledger_addresses');
+      localStorage.removeItem('ledger_addresses')
     } else {
       localStorage.setItem(
         'ledger_addresses',
         JSON.stringify(newLedgerAddresses)
-      );
+      )
     }
     setStateWithRef(
       newLedgerAddresses.filter((a: LedgerAddress) => a.network === network),
       setAddresses,
       addressesRef
-    );
-  };
+    )
+  }
 
   // refresh imported ledger accounts on network change.
   useEffect(() => {
@@ -91,17 +91,17 @@ export const ImportLedger: FC = () => {
       getLocalLedgerAddresses(network),
       setAddresses,
       addressesRef
-    );
-  }, [network]);
+    )
+  }, [network])
 
   // Handle new Ledger status report.
   const handleLedgerStatusResponse = (response: LedgerResponse) => {
     if (!response) {
-      return;
+      return
     }
 
-    const { ack, statusCode, body, options } = response;
-    setStatusCode(ack, statusCode);
+    const { ack, statusCode, body, options } = response
+    setStatusCode(ack, statusCode)
 
     if (statusCode === 'ReceivedAddress') {
       const newAddress = body.map(({ pubKey, address }: LedgerAddress) => ({
@@ -110,30 +110,30 @@ export const ImportLedger: FC = () => {
         address,
         name: ellipsisFn(address),
         network,
-      }));
+      }))
 
       // update the full list of local ledger addresses with new entry.
       const newAddresses = getLocalLedgerAddresses()
         .filter((a: AnyJson) => {
           if (a.address !== newAddress[0].address) {
-            return true;
+            return true
           }
           if (a.network !== network) {
-            return true;
+            return true
           }
-          return false;
+          return false
         })
-        .concat(newAddress);
-      localStorage.setItem('ledger_addresses', JSON.stringify(newAddresses));
+        .concat(newAddress)
+      localStorage.setItem('ledger_addresses', JSON.stringify(newAddresses))
 
       // store only those accounts on the current network in state.
       setStateWithRef(
         newAddresses.filter((a) => a.network === network),
         setAddresses,
         addressesRef
-      );
-      resetStatusCode();
-      registerSaEvent(`${network.toLowerCase()}_ledger_account_fetched`);
+      )
+      resetStatusCode()
+      registerSaEvent(`${network.toLowerCase()}_ledger_account_fetched`)
 
       // trigger notification.
       Notifications.emit({
@@ -141,27 +141,27 @@ export const ImportLedger: FC = () => {
         subtitle: t('ledgerFetchedAccount', {
           account: ellipsisFn(newAddress[0].address),
         }),
-      });
+      })
     }
-  };
+  }
 
   // Resize modal on content change.
   useEffect(() => {
-    setModalResize();
-  }, [getStatusCode(), addressesRef.current]);
+    setModalResize()
+  }, [getStatusCode(), addressesRef.current])
 
   // Listen for new Ledger status reports.
   useEffectIgnoreInitial(() => {
-    handleLedgerStatusResponse(transportResponse);
-  }, [transportResponse]);
+    handleLedgerStatusResponse(transportResponse)
+  }, [transportResponse])
 
   // Tidy up context state when this component is no longer mounted.
   useEffect(
     () => () => {
-      handleUnmount();
+      handleUnmount()
     },
     []
-  );
+  )
 
   return !addressesRef.current.length ? (
     <Splash onGetAddress={onGetAddress} />
@@ -171,5 +171,5 @@ export const ImportLedger: FC = () => {
       removeLedgerAddress={removeLedgerAddress}
       onGetAddress={onGetAddress}
     />
-  );
-};
+  )
+}

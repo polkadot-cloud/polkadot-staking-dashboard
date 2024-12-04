@@ -1,10 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Background } from './Background';
-import { Canvas } from './Canvas';
-import { Modal } from './Modal';
-import type { OverlayProps } from './Provider/types';
+import { Background } from './Background'
+import { Canvas } from './Canvas'
+import { Modal } from './Modal'
+import type { OverlayProps } from './Provider/types'
 
 export const Overlay = ({
   modals = {},
@@ -25,4 +25,4 @@ export const Overlay = ({
       externalOverlayStatus={externalOverlayStatus}
     />
   </>
-);
+)

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export interface StatusButtonProps {
-  checked: boolean;
-  label: string;
-  onClick: () => void;
+  checked: boolean
+  label: string
+  onClick: () => void
 }

@@ -1,65 +1,65 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faRefresh } from '@fortawesome/free-solid-svg-icons';
-import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react';
-import { useWcAccounts } from '@w3ux/react-connect-kit';
-import { Polkicon } from '@w3ux/react-polkicon';
-import type { AnyJson } from '@w3ux/types';
-import { useApi } from 'contexts/Api';
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import { useNetwork } from 'contexts/Network';
-import { usePrompt } from 'contexts/Prompt';
-import { useWalletConnect } from 'contexts/WalletConnect';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { HardwareAddress } from 'library/Hardware/HardwareAddress';
-import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar';
-import { Heading } from 'library/Import/Heading';
-import { NoAccounts } from 'library/Import/NoAccounts';
-import { AddressesWrapper } from 'library/Import/Wrappers';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ButtonPrimary, ButtonText } from 'ui-buttons';
+import { faRefresh } from '@fortawesome/free-solid-svg-icons'
+import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
+import { useWcAccounts } from '@w3ux/react-connect-kit'
+import { Polkicon } from '@w3ux/react-polkicon'
+import type { AnyJson } from '@w3ux/types'
+import { useApi } from 'contexts/Api'
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
+import { useNetwork } from 'contexts/Network'
+import { usePrompt } from 'contexts/Prompt'
+import { useWalletConnect } from 'contexts/WalletConnect'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { HardwareAddress } from 'library/Hardware/HardwareAddress'
+import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar'
+import { Heading } from 'library/Import/Heading'
+import { NoAccounts } from 'library/Import/NoAccounts'
+import { AddressesWrapper } from 'library/Import/Wrappers'
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ButtonPrimary, ButtonText } from 'ui-buttons'
 
 export const ImportWalletConnect = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   const { addWcAccount, getWcAccounts, wcAccountExists, renameWcAccount } =
-    useWcAccounts();
-  const { isReady } = useApi();
-  const { network } = useNetwork();
-  const { status: promptStatus } = usePrompt();
-  const { replaceModal, setModalResize } = useOverlay().modal;
-  const { wcInitialized, fetchAddresses } = useWalletConnect();
-  const { renameOtherAccount, addOtherAccounts } = useOtherAccounts();
+    useWcAccounts()
+  const { isReady } = useApi()
+  const { network } = useNetwork()
+  const { status: promptStatus } = usePrompt()
+  const { replaceModal, setModalResize } = useOverlay().modal
+  const { wcInitialized, fetchAddresses } = useWalletConnect()
+  const { renameOtherAccount, addOtherAccounts } = useOtherAccounts()
 
-  const wcAccounts = getWcAccounts(network);
+  const wcAccounts = getWcAccounts(network)
 
   const renameHandler = (address: string, newName: string) => {
-    renameWcAccount(network, address, newName);
-    renameOtherAccount(address, newName);
-  };
+    renameWcAccount(network, address, newName)
+    renameOtherAccount(address, newName)
+  }
 
   // Handle wallet account importing.
   const handleImportAddresses = async () => {
     if (!wcInitialized || !isReady) {
-      return;
+      return
     }
 
     // Fetch wallet connect accounts.
-    const filteredAccounts = await fetchAddresses();
+    const filteredAccounts = await fetchAddresses()
 
     // Save accounts to local storage.
     filteredAccounts.forEach((address) => {
-      const account = addWcAccount(network, address, wcAccounts.length);
+      const account = addWcAccount(network, address, wcAccounts.length)
       if (account) {
-        addOtherAccounts([account]);
+        addOtherAccounts([account])
       }
-    });
-  };
+    })
+  }
 
   useEffect(() => {
-    setModalResize();
-  }, [JSON.stringify(wcAccounts)]);
+    setModalResize()
+  }, [JSON.stringify(wcAccounts)])
 
   return wcAccounts.length === 0 ? (
     <NoAccounts
@@ -128,5 +128,5 @@ export const ImportWalletConnect = () => {
         }}
       />
     </>
-  );
-};
+  )
+}

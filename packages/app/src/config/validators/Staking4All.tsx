@@ -21,6 +21,6 @@ const Staking4All = () => (
       fill="#fc9f9b"
     />
   </svg>
-);
+)
 
-export default Staking4All;
+export default Staking4All

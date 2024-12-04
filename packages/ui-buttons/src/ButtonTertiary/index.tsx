@@ -1,12 +1,12 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classNames from 'classnames';
-import commonClasses from '../common.module.scss';
-import { onMouseHandlers } from '../util';
-import classes from './index.module.scss';
-import type { ButtonTertiaryProps } from './types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import classNames from 'classnames'
+import commonClasses from '../common.module.scss'
+import { onMouseHandlers } from '../util'
+import classes from './index.module.scss'
+import type { ButtonTertiaryProps } from './types'
 
 /**
  * @name ButtonTertiary
@@ -33,7 +33,7 @@ export const ButtonTertiary = (props: ButtonTertiaryProps): JSX.Element => {
     onMouseOver,
     onMouseMove,
     onMouseOut,
-  } = props;
+  } = props
 
   const buttonClasses = classNames(
     commonClasses.btnCore,
@@ -48,7 +48,7 @@ export const ButtonTertiary = (props: ButtonTertiaryProps): JSX.Element => {
       [commonClasses.btnActiveTransforms]: !disabled,
     },
     className
-  );
+  )
 
   return (
     <button
@@ -74,5 +74,5 @@ export const ButtonTertiary = (props: ButtonTertiaryProps): JSX.Element => {
         />
       )}
     </button>
-  );
-};
+  )
+}

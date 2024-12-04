@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faCircle } from '@fortawesome/free-regular-svg-icons';
-import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Wrapper } from './Wrapper';
-import type { SelectItemProps } from './types';
+import { faCircle } from '@fortawesome/free-regular-svg-icons'
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Wrapper } from './Wrapper'
+import type { SelectItemProps } from './types'
 
 export const SelectItem = ({
   title,
@@ -47,4 +47,4 @@ export const SelectItem = ({
       </button>
     </div>
   </Wrapper>
-);
+)

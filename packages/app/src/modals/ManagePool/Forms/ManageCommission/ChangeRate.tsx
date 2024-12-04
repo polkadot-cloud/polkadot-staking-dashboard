@@ -1,45 +1,45 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import BigNumber from 'bignumber.js';
-import { useApi } from 'contexts/Api';
-import { intervalToDuration } from 'date-fns';
-import { MinDelayInput } from 'library/Form/MinDelayInput';
-import { StyledSlider } from 'library/StyledSlider';
-import { SliderWrapper } from 'modals/ManagePool/Wrappers';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import type { ChangeRateInput } from '../types';
-import { usePoolCommission } from './provider';
+import BigNumber from 'bignumber.js'
+import { useApi } from 'contexts/Api'
+import { intervalToDuration } from 'date-fns'
+import { MinDelayInput } from 'library/Form/MinDelayInput'
+import { StyledSlider } from 'library/StyledSlider'
+import { SliderWrapper } from 'modals/ManagePool/Wrappers'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import type { ChangeRateInput } from '../types'
+import { usePoolCommission } from './provider'
 
 export const ChangeRate = ({
   invalidMaxIncrease,
   invalidMinDelay,
 }: {
-  invalidMaxIncrease: boolean;
-  invalidMinDelay: boolean;
+  invalidMaxIncrease: boolean
+  invalidMinDelay: boolean
 }) => {
-  const { t } = useTranslation('modals');
-  const { consts } = useApi();
+  const { t } = useTranslation('modals')
+  const { consts } = useApi()
   const { getEnabled, getInitial, getCurrent, setChangeRate } =
-    usePoolCommission();
+    usePoolCommission()
 
-  const { expectedBlockTime } = consts;
+  const { expectedBlockTime } = consts
 
   // Get the current change rate value.
-  const changeRate = getCurrent('change_rate');
+  const changeRate = getCurrent('change_rate')
 
   // Convert a block number into an estimated change rate duration.
   const minDelayToInput = (delay: number) => {
-    const milliseconds = expectedBlockTime.multipliedBy(delay);
+    const milliseconds = expectedBlockTime.multipliedBy(delay)
     const end = milliseconds.isZero()
       ? 0
-      : milliseconds.integerValue().toNumber();
+      : milliseconds.integerValue().toNumber()
 
     const { years, months, days, hours, minutes } = intervalToDuration({
       start: 0,
       end,
-    });
+    })
 
     return {
       years: years || 0,
@@ -47,19 +47,19 @@ export const ChangeRate = ({
       days: days || 0,
       hours: hours || 0,
       minutes: minutes || 0,
-    };
-  };
+    }
+  }
 
   // Convert the estimated change duration into a block number
   const inputToMinDelay = (input: ChangeRateInput) => {
-    const { years, months, days, hours, minutes } = input;
+    const { years, months, days, hours, minutes } = input
 
     // calculate number of seconds from changeRateInput
-    const yearsSeconds = new BigNumber(years).multipliedBy(31536000);
-    const monthsSeconds = new BigNumber(months).multipliedBy(2628288);
-    const daysSeconds = new BigNumber(days).multipliedBy(86400);
-    const hoursSeconds = new BigNumber(hours).multipliedBy(3600);
-    const minutesSeconds = new BigNumber(minutes).multipliedBy(60);
+    const yearsSeconds = new BigNumber(years).multipliedBy(31536000)
+    const monthsSeconds = new BigNumber(months).multipliedBy(2628288)
+    const daysSeconds = new BigNumber(days).multipliedBy(86400)
+    const hoursSeconds = new BigNumber(hours).multipliedBy(3600)
+    const minutesSeconds = new BigNumber(minutes).multipliedBy(60)
 
     return yearsSeconds
       .plus(monthsSeconds)
@@ -68,67 +68,67 @@ export const ChangeRate = ({
       .plus(minutesSeconds)
       .dividedBy(expectedBlockTime.dividedBy(1000))
       .integerValue()
-      .toNumber();
-  };
+      .toNumber()
+  }
 
   // Store the change rate value in input format.
   const [changeRateInput, setChangeRateInput] = useState<ChangeRateInput>(
     minDelayToInput(changeRate.minDelay)
-  );
+  )
 
   // Handle an update to the change rate input.
   const handleChangeRateInput = (field: string, value: number) => {
     const newChangeRateInput = {
       ...changeRateInput,
       [field]: value,
-    };
-    setChangeRateInput(newChangeRateInput);
+    }
+    setChangeRateInput(newChangeRateInput)
     setChangeRate({
       ...changeRate,
       minDelay: inputToMinDelay(newChangeRateInput),
-    });
-  };
+    })
+  }
 
   // Determine whether the change rate values have been updated.
   const maxIncreaseUpdated =
-    changeRate.maxIncrease !== getInitial('change_rate').maxIncrease;
+    changeRate.maxIncrease !== getInitial('change_rate').maxIncrease
 
   const minDelayUpdated =
-    changeRate.minDelay !== getInitial('change_rate').minDelay;
+    changeRate.minDelay !== getInitial('change_rate').minDelay
 
   // Determine the max increase feedback to display.
   const maxIncreaseFeedback = (() => {
     if (!maxIncreaseUpdated) {
-      return undefined;
+      return undefined
     }
     if (invalidMaxIncrease) {
       return {
         text: t('aboveExisting'),
         label: 'danger',
-      };
+      }
     }
     return {
       text: t('updated'),
       label: 'neutral',
-    };
-  })();
+    }
+  })()
 
   // Determine the min delay feedback to display.
   const minDelayFeedback = (() => {
     if (!minDelayUpdated) {
-      return undefined;
+      return undefined
     }
     if (invalidMinDelay) {
       return {
         text: t('belowExisting'),
         label: 'danger',
-      };
+      }
     }
     return {
       text: t('updated'),
       label: 'neutral',
-    };
-  })();
+    }
+  })()
 
   return (
     getEnabled('change_rate') && (
@@ -148,7 +148,7 @@ export const ChangeRate = ({
               setChangeRate({
                 ...changeRate,
                 maxIncrease: val,
-              });
+              })
             }
           }}
         />
@@ -200,5 +200,5 @@ export const ChangeRate = ({
         </p>
       </SliderWrapper>
     )
-  );
-};
+  )
+}

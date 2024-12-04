@@ -1,33 +1,33 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faQrcode } from '@fortawesome/free-solid-svg-icons';
-import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react';
-import { useVaultAccounts } from '@w3ux/react-connect-kit';
-import { Polkicon } from '@w3ux/react-polkicon';
-import type { AnyJson } from '@w3ux/types';
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import { useNetwork } from 'contexts/Network';
-import { usePrompt } from 'contexts/Prompt';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { HardwareAddress } from 'library/Hardware/HardwareAddress';
-import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar';
-import { Confirm } from 'library/Import/Confirm';
-import { Heading } from 'library/Import/Heading';
-import { NoAccounts } from 'library/Import/NoAccounts';
-import { Remove } from 'library/Import/Remove';
-import { AddressesWrapper } from 'library/Import/Wrappers';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ButtonPrimary, ButtonText } from 'ui-buttons';
-import { Reader } from './Reader';
+import { faQrcode } from '@fortawesome/free-solid-svg-icons'
+import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
+import { useVaultAccounts } from '@w3ux/react-connect-kit'
+import { Polkicon } from '@w3ux/react-polkicon'
+import type { AnyJson } from '@w3ux/types'
+import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
+import { useNetwork } from 'contexts/Network'
+import { usePrompt } from 'contexts/Prompt'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { HardwareAddress } from 'library/Hardware/HardwareAddress'
+import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar'
+import { Confirm } from 'library/Import/Confirm'
+import { Heading } from 'library/Import/Heading'
+import { NoAccounts } from 'library/Import/NoAccounts'
+import { Remove } from 'library/Import/Remove'
+import { AddressesWrapper } from 'library/Import/Wrappers'
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ButtonPrimary, ButtonText } from 'ui-buttons'
+import { Reader } from './Reader'
 
 export const ImportVault = () => {
-  const { t } = useTranslation();
-  const { network } = useNetwork();
-  const { replaceModal } = useOverlay().modal;
-  const { renameOtherAccount } = useOtherAccounts();
-  const { openPromptWith, status: promptStatus } = usePrompt();
+  const { t } = useTranslation()
+  const { network } = useNetwork()
+  const { replaceModal } = useOverlay().modal
+  const { renameOtherAccount } = useOtherAccounts()
+  const { openPromptWith, status: promptStatus } = usePrompt()
 
   const {
     addVaultAccount,
@@ -36,16 +36,16 @@ export const ImportVault = () => {
     vaultAccountExists,
     renameVaultAccount,
     removeVaultAccount,
-  } = useVaultAccounts();
-  const { setModalResize } = useOverlay().modal;
-  const source = 'vault';
+  } = useVaultAccounts()
+  const { setModalResize } = useOverlay().modal
+  const source = 'vault'
 
-  const vaultAccounts = getVaultAccounts(network);
+  const vaultAccounts = getVaultAccounts(network)
 
   const renameHandler = (address: string, newName: string) => {
-    renameVaultAccount(network, address, newName);
-    renameOtherAccount(address, newName);
-  };
+    renameVaultAccount(network, address, newName)
+    renameOtherAccount(address, newName)
+  }
 
   const openConfirmHandler = (address: string, index: number) => {
     openPromptWith(
@@ -56,8 +56,8 @@ export const ImportVault = () => {
         source={source}
       />,
       'small'
-    );
-  };
+    )
+  }
 
   const openRemoveHandler = (address: string) => {
     openPromptWith(
@@ -68,12 +68,12 @@ export const ImportVault = () => {
         source={source}
       />,
       'small'
-    );
-  };
+    )
+  }
 
   useEffect(() => {
-    setModalResize();
-  }, [JSON.stringify(vaultAccounts)]);
+    setModalResize()
+  }, [JSON.stringify(vaultAccounts)])
 
   return vaultAccounts.length === 0 ? (
     <NoAccounts
@@ -87,7 +87,7 @@ export const ImportVault = () => {
           text={t('importAccount', { ns: 'modals' })}
           disabled={promptStatus !== 0}
           onClick={() => {
-            openPromptWith(<Reader />, 'small');
+            openPromptWith(<Reader />, 'small')
           }}
         />
       </div>
@@ -122,7 +122,7 @@ export const ImportVault = () => {
             text={t('importAnotherAccount', { ns: 'modals' })}
             disabled={promptStatus !== 0}
             onClick={() => {
-              openPromptWith(<Reader />, 'small');
+              openPromptWith(<Reader />, 'small')
             }}
           />
         </div>
@@ -144,5 +144,5 @@ export const ImportVault = () => {
         }}
       />
     </>
-  );
-};
+  )
+}

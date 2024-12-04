@@ -5,22 +5,22 @@ import type {
   NotificationEventAddDetail,
   NotificationEventDismissDetail,
   NotificationText,
-} from './types';
+} from './types'
 
 // A class to manage notifications.
 //
 // Designed to emit notifications to subscribers to the `notification` event.
 export class Notifications {
   // Store how long a notification should remain displayed for.
-  private static displayDuration = 3000;
+  private static displayDuration = 3000
 
   // Store the notification indexes.
-  private static indexes: number[] = [];
+  private static indexes: number[] = []
 
   // Emit a new notification to all subscribed elements.
   static emit({ title, subtitle }: NotificationText) {
-    const index = (this.indexes[this.indexes.length - 1] || 0) + 1;
-    this.indexes.push(index);
+    const index = (this.indexes[this.indexes.length - 1] || 0) + 1
+    this.indexes.push(index)
 
     // Create type-safe event detail.
     const addDetail: NotificationEventAddDetail = {
@@ -28,13 +28,13 @@ export class Notifications {
       index,
       title,
       subtitle,
-    };
+    }
 
     document.dispatchEvent(
       new CustomEvent('notification', {
         detail: addDetail,
       })
-    );
+    )
 
     // After a period of time, dismiss the notification.
     setTimeout(() => {
@@ -42,13 +42,13 @@ export class Notifications {
       const dismissDetail: NotificationEventDismissDetail = {
         task: 'dismiss',
         index,
-      };
+      }
 
       document.dispatchEvent(
         new CustomEvent('notification', {
           detail: dismissDetail,
         })
-      );
-    }, this.displayDuration);
+      )
+    }, this.displayDuration)
   }
 }

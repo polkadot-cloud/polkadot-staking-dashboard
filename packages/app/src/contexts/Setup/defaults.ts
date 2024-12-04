@@ -6,7 +6,7 @@ import type {
   NominatorProgress,
   PoolProgress,
   SetupContextInterface,
-} from './types';
+} from './types'
 
 export const defaultNominatorProgress: NominatorProgress = {
   payee: {
@@ -15,14 +15,14 @@ export const defaultNominatorProgress: NominatorProgress = {
   },
   nominations: [],
   bond: '',
-};
+}
 
 export const defaultPoolProgress: PoolProgress = {
   metadata: '',
   bond: '',
   nominations: [],
   roles: null,
-};
+}
 
 export const defaultSetupContext: SetupContextInterface = {
   removeSetupProgress: (a, b) => {},
@@ -38,4 +38,4 @@ export const defaultSetupContext: SetupContextInterface = {
     section: 1,
     progress: defaultPoolProgress,
   }),
-};
+}

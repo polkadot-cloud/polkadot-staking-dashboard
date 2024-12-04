@@ -1,31 +1,31 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { useNetwork } from 'contexts/Network';
-import { useOverlay } from 'kits/Overlay/Provider';
-import { CallToActionWrapper } from 'library/CallToAction';
-import { CallToActionLoader } from 'library/Loader/CallToAction';
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
-import { registerSaEvent } from 'utils';
-import type { NewNominatorProps } from '../types';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useNetwork } from 'contexts/Network'
+import { useOverlay } from 'kits/Overlay/Provider'
+import { CallToActionWrapper } from 'library/CallToAction'
+import { CallToActionLoader } from 'library/Loader/CallToAction'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
+import { registerSaEvent } from 'utils'
+import type { NewNominatorProps } from '../types'
 
 export const NewNominator = ({ syncing }: NewNominatorProps) => {
-  const { t } = useTranslation();
-  const { isReady } = useApi();
-  const navigate = useNavigate();
-  const { network } = useNetwork();
-  const { openCanvas } = useOverlay().canvas;
-  const { activeAccount } = useActiveAccounts();
-  const { isReadOnlyAccount } = useImportedAccounts();
+  const { t } = useTranslation()
+  const { isReady } = useApi()
+  const navigate = useNavigate()
+  const { network } = useNetwork()
+  const { openCanvas } = useOverlay().canvas
+  const { activeAccount } = useActiveAccounts()
+  const { isReadOnlyAccount } = useImportedAccounts()
 
   const nominateButtonDisabled =
-    !isReady || !activeAccount || isReadOnlyAccount(activeAccount);
+    !isReady || !activeAccount || isReadOnlyAccount(activeAccount)
 
   return (
     <CallToActionWrapper>
@@ -43,13 +43,13 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
                     onClick={() => {
                       registerSaEvent(
                         `${network.toLowerCase()}_nominate_setup_button_pressed`
-                      );
+                      )
 
                       openCanvas({
                         key: 'NominatorSetup',
                         options: {},
                         size: 'xl',
-                      });
+                      })
                     }}
                     disabled={nominateButtonDisabled}
                   >
@@ -75,5 +75,5 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
         )}
       </div>
     </CallToActionWrapper>
-  );
-};
+  )
+}

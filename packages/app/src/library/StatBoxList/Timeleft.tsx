@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useHelp } from 'contexts/Help';
-import { Countdown } from 'library/Countdown';
-import { SimplePie } from 'library/SimplePie';
-import { ButtonHelp } from 'ui-buttons';
-import { StatBox } from './Item';
-import { TimeLeftWrapper } from './Wrapper';
-import type { TimeleftProps } from './types';
+import { useHelp } from 'contexts/Help'
+import { Countdown } from 'library/Countdown'
+import { SimplePie } from 'library/SimplePie'
+import { ButtonHelp } from 'ui-buttons'
+import { StatBox } from './Item'
+import { TimeLeftWrapper } from './Wrapper'
+import type { TimeleftProps } from './types'
 
 export const Timeleft = ({
   label,
@@ -16,8 +16,8 @@ export const Timeleft = ({
   tooltip,
   helpKey,
 }: TimeleftProps) => {
-  const help = helpKey !== undefined;
-  const { openHelp } = useHelp();
+  const help = helpKey !== undefined
+  const { openHelp } = useHelp()
 
   return (
     <StatBox>
@@ -56,5 +56,5 @@ export const Timeleft = ({
         </div>
       </div>
     </StatBox>
-  );
-};
+  )
+}

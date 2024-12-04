@@ -156,6 +156,6 @@ const Crifferent = () => (
       strokeWidth="8"
     />
   </svg>
-);
+)
 
-export default Crifferent;
+export default Crifferent

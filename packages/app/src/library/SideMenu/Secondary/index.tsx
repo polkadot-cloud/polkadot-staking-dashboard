@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { SecondaryProps } from '../types';
-import { IconWrapper, MinimisedWrapper, Wrapper } from './Wrappers';
+import type { SecondaryProps } from '../types'
+import { IconWrapper, MinimisedWrapper, Wrapper } from './Wrappers'
 
 export const Secondary = ({
   action,
@@ -12,15 +12,15 @@ export const Secondary = ({
   minimised,
   onClick,
 }: SecondaryProps) => {
-  const { Svg, size } = icon || {};
+  const { Svg, size } = icon || {}
 
-  const StyledWrapper = minimised ? MinimisedWrapper : Wrapper;
+  const StyledWrapper = minimised ? MinimisedWrapper : Wrapper
 
   return (
     <StyledWrapper
       className={classes ? classes.join(' ') : undefined}
       onClick={() => {
-        onClick();
+        onClick()
       }}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
@@ -43,5 +43,5 @@ export const Secondary = ({
         </>
       )}
     </StyledWrapper>
-  );
-};
+  )
+}

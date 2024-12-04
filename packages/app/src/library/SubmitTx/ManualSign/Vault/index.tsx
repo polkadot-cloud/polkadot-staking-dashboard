@@ -1,16 +1,16 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faSquarePen } from '@fortawesome/free-solid-svg-icons';
-import { appendOrEmpty } from '@w3ux/utils';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
-import { usePrompt } from 'contexts/Prompt';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge';
-import type { ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ButtonSubmit } from 'ui-buttons';
-import type { SubmitProps } from '../../types';
+import { faSquarePen } from '@fortawesome/free-solid-svg-icons'
+import { appendOrEmpty } from '@w3ux/utils'
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { usePrompt } from 'contexts/Prompt'
+import { EstimatedTxFee } from 'library/EstimatedTxFee'
+import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge'
+import type { ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ButtonSubmit } from 'ui-buttons'
+import type { SubmitProps } from '../../types'
 
 export const Vault = ({
   uid,
@@ -23,31 +23,31 @@ export const Vault = ({
   displayFor,
   notEnoughFunds,
 }: SubmitProps & {
-  buttons?: ReactNode[];
-  notEnoughFunds: boolean;
-  processing: boolean;
+  buttons?: ReactNode[]
+  notEnoughFunds: boolean
+  processing: boolean
 }) => {
-  const { t } = useTranslation('library');
-  const { status: promptStatus } = usePrompt();
-  const { accountHasSigner } = useImportedAccounts();
+  const { t } = useTranslation('library')
+  const { status: promptStatus } = usePrompt()
+  const { accountHasSigner } = useImportedAccounts()
 
   // The state under which submission is disabled.
   const disabled =
-    processing || !valid || !accountHasSigner(submitAddress) || notEnoughFunds;
+    processing || !valid || !accountHasSigner(submitAddress) || notEnoughFunds
 
   // Format submit button based on whether signature currently exists or submission is ongoing.
-  let buttonText: string;
-  let buttonDisabled: boolean;
-  let buttonPulse: boolean;
+  let buttonText: string
+  let buttonDisabled: boolean
+  let buttonPulse: boolean
 
   if (processing) {
-    buttonText = submitText || '';
-    buttonDisabled = disabled;
-    buttonPulse = !(!valid || promptStatus !== 0);
+    buttonText = submitText || ''
+    buttonDisabled = disabled
+    buttonPulse = !(!valid || promptStatus !== 0)
   } else {
-    buttonText = t('sign');
-    buttonDisabled = disabled || promptStatus !== 0;
-    buttonPulse = !disabled || promptStatus === 0;
+    buttonText = t('sign')
+    buttonDisabled = disabled || promptStatus !== 0
+    buttonPulse = !disabled || promptStatus === 0
   }
 
   return (
@@ -79,5 +79,5 @@ export const Vault = ({
         )}
       </div>
     </div>
-  );
-};
+  )
+}

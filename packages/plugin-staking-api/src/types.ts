@@ -5,22 +5,22 @@ import type {
   ApolloError,
   ApolloQueryResult,
   OperationVariables,
-} from '@apollo/client';
+} from '@apollo/client'
 
 export interface TokenPrice {
-  price: number;
-  change: number;
+  price: number
+  change: number
 }
 
 export type TokenPriceResult = {
-  tokenPrice: TokenPrice;
-} | null;
+  tokenPrice: TokenPrice
+} | null
 
 export interface UseTokenPriceResult {
-  loading: boolean;
-  error: ApolloError | undefined;
-  data: TokenPriceResult;
+  loading: boolean
+  error: ApolloError | undefined
+  data: TokenPriceResult
   refetch: (
     variables?: Partial<OperationVariables> | undefined
-  ) => Promise<ApolloQueryResult<unknown>>;
+  ) => Promise<ApolloQueryResult<unknown>>
 }

@@ -1,60 +1,60 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useEffectIgnoreInitial } from '@w3ux/hooks';
-import type { Sync } from '@w3ux/types';
-import { mergeDeep, setStateWithRef } from '@w3ux/utils';
-import BigNumber from 'bignumber.js';
-import { MaxEraRewardPointsEras } from 'consts';
-import { useApi } from 'contexts/Api';
-import { useNetwork } from 'contexts/Network';
-import { useStaking } from 'contexts/Staking';
-import { useValidators } from 'contexts/Validators/ValidatorEntries';
-import type { ReactNode } from 'react';
-import { createContext, useContext, useRef, useState } from 'react';
+import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import type { Sync } from '@w3ux/types'
+import { mergeDeep, setStateWithRef } from '@w3ux/utils'
+import BigNumber from 'bignumber.js'
+import { MaxEraRewardPointsEras } from 'consts'
+import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
+import { useStaking } from 'contexts/Staking'
+import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import type { ReactNode } from 'react'
+import { createContext, useContext, useRef, useState } from 'react'
 import type {
   PoolPerformanceTasks,
   PoolRewardPoints,
   PoolRewardPointsKey,
   PoolRewardPointsMap,
-} from 'types';
-import Worker from 'workers/poolPerformance?worker';
+} from 'types'
+import Worker from 'workers/poolPerformance?worker'
 import {
   defaultPoolPerformanceContext,
   defaultPoolPerformanceTask,
-} from './defaults';
-import type { PoolPerformanceContextInterface } from './types';
+} from './defaults'
+import type { PoolPerformanceContextInterface } from './types'
 
-const worker = new Worker();
+const worker = new Worker()
 
 export const PoolPerformanceContext =
-  createContext<PoolPerformanceContextInterface>(defaultPoolPerformanceContext);
+  createContext<PoolPerformanceContextInterface>(defaultPoolPerformanceContext)
 
-export const usePoolPerformance = () => useContext(PoolPerformanceContext);
+export const usePoolPerformance = () => useContext(PoolPerformanceContext)
 
 export const PoolPerformanceProvider = ({
   children,
 }: {
-  children: ReactNode;
+  children: ReactNode
 }) => {
-  const { network } = useNetwork();
-  const { isReady, activeEra } = useApi();
-  const { getPagedErasStakers } = useStaking();
-  const { erasRewardPoints } = useValidators();
+  const { network } = useNetwork()
+  const { isReady, activeEra } = useApi()
+  const { getPagedErasStakers } = useStaking()
+  const { erasRewardPoints } = useValidators()
 
   // Store  pool performance task data under a given key as it is being fetched . NOTE: Requires a
   // ref to be accessed in `processEra` before re-render.
-  const [tasks, setTasks] = useState<PoolPerformanceTasks>({});
-  const tasksRef = useRef(tasks);
+  const [tasks, setTasks] = useState<PoolPerformanceTasks>({})
+  const tasksRef = useRef(tasks)
 
   // Store pool performance data. NOTE: Requires a ref to update state with current data.
   const [poolRewardPoints, setPoolRewardPointsState] =
-    useState<PoolRewardPointsMap>({});
-  const poolRewardPointsRef = useRef(poolRewardPoints);
+    useState<PoolRewardPointsMap>({})
+  const poolRewardPointsRef = useRef(poolRewardPoints)
 
   // Gets a batch of pool reward points, or returns an empty object otherwise.
   const getPoolRewardPoints = (key: PoolRewardPointsKey) =>
-    poolRewardPoints?.[key] || {};
+    poolRewardPoints?.[key] || {}
 
   // Sets a batch of pool reward points.
   const setPoolRewardPoints = (
@@ -64,18 +64,18 @@ export const PoolPerformanceProvider = ({
     const newRewardPoints = {
       ...poolRewardPointsRef.current,
       [key]: batch,
-    };
+    }
 
     setStateWithRef(
       newRewardPoints,
       setPoolRewardPointsState,
       poolRewardPointsRef
-    );
-  };
+    )
+  }
 
   // Gets whether pool performance data is being fetched under a given key.
   const getPoolPerformanceTask = (key: PoolRewardPointsKey) =>
-    tasks[key] || defaultPoolPerformanceTask;
+    tasks[key] || defaultPoolPerformanceTask
 
   // Sets a pool performance task under a given key.
   const setNewPoolPerformanceTask = (
@@ -85,7 +85,7 @@ export const PoolPerformanceProvider = ({
     currentEra: BigNumber,
     endEra: BigNumber
   ) => {
-    const startEra = activeEra.index;
+    const startEra = activeEra.index
 
     setStateWithRef(
       {
@@ -94,7 +94,7 @@ export const PoolPerformanceProvider = ({
       },
       setTasks,
       tasksRef
-    );
+    )
 
     // Reset pool reward points for the given key.
     if (status === 'syncing') {
@@ -105,14 +105,14 @@ export const PoolPerformanceProvider = ({
         },
         setPoolRewardPointsState,
         poolRewardPointsRef
-      );
+      )
     }
-  };
+  }
 
   // Set current era for performance fetched key.
   const updateTaskCurrentEra = (key: PoolRewardPointsKey, era: BigNumber) => {
     if (!getPoolPerformanceTask(key)) {
-      return;
+      return
     }
     setStateWithRef(
       {
@@ -121,8 +121,8 @@ export const PoolPerformanceProvider = ({
       },
       setTasks,
       tasksRef
-    );
-  };
+    )
+  }
 
   // Updates an existing performance fetched key with a new status.
   const updatePoolPerformanceTask = (
@@ -130,7 +130,7 @@ export const PoolPerformanceProvider = ({
     status: Sync
   ) => {
     if (!getPoolPerformanceTask(key)) {
-      return;
+      return
     }
     setStateWithRef(
       {
@@ -139,8 +139,8 @@ export const PoolPerformanceProvider = ({
       },
       setTasks,
       tasksRef
-    );
-  };
+    )
+  }
 
   // Start fetching pool performance data, starting from the current era.
   const startPoolRewardPointsFetch = async (
@@ -155,38 +155,38 @@ export const PoolPerformanceProvider = ({
         addresses,
         activeEra.index,
         activeEra.index
-      );
-      return;
+      )
+      return
     }
 
     // If the addresses have not changed for this key, exit early.
-    const current = getPoolPerformanceTask(key);
+    const current = getPoolPerformanceTask(key)
     if (current.addresses.toString() === addresses.toString()) {
-      return;
+      return
     }
 
-    const currentEra = BigNumber.max(activeEra.index.minus(1));
+    const currentEra = BigNumber.max(activeEra.index.minus(1))
     const endEra = BigNumber.max(
       activeEra.index.minus(MaxEraRewardPointsEras),
       1
-    );
+    )
     // Set as syncing and start processing.
-    setNewPoolPerformanceTask(key, 'syncing', addresses, currentEra, endEra);
+    setNewPoolPerformanceTask(key, 'syncing', addresses, currentEra, endEra)
 
     // Start processing from the previous active era.
-    processEra(key, currentEra);
-  };
+    processEra(key, currentEra)
+  }
 
   // Get era data and send to worker.
   const processEra = async (key: PoolRewardPointsKey, era: BigNumber) => {
     if (!isReady) {
-      return;
+      return
     }
     // NOTE: This will not make any difference on the first run.
-    updateTaskCurrentEra(key, era);
+    updateTaskCurrentEra(key, era)
 
-    const exposures = await getPagedErasStakers(era.toString());
-    const addresses = tasksRef.current[key]?.addresses || [];
+    const exposures = await getPagedErasStakers(era.toString())
+    const addresses = tasksRef.current[key]?.addresses || []
 
     worker.postMessage({
       task: 'processNominationPoolsRewardData',
@@ -195,46 +195,46 @@ export const PoolPerformanceProvider = ({
       exposures,
       addresses,
       erasRewardPoints,
-    });
-  };
+    })
+  }
 
   // Handle worker message on completed exposure check.
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
-      const { data } = message;
-      const { task, key, addresses } = data;
+      const { data } = message
+      const { task, key, addresses } = data
 
       if (task !== 'processNominationPoolsRewardData') {
-        return;
+        return
       }
 
       // If addresses for the given key have changed or been removed, ignore the result.
-      const current = getPoolPerformanceTask(key);
+      const current = getPoolPerformanceTask(key)
 
       if (current.addresses.toString() !== addresses.toString()) {
-        return;
+        return
       }
 
       // Update state with new data.
       setPoolRewardPoints(
         key,
         mergeDeep(getPoolRewardPoints(key), data.poolRewardData)
-      );
+      )
 
       if (current.currentEra.isEqualTo(current.endEra)) {
-        updatePoolPerformanceTask(key, 'synced');
+        updatePoolPerformanceTask(key, 'synced')
       } else {
-        const nextEra = BigNumber.max(current.currentEra.minus(1), 1);
-        processEra(key, nextEra);
+        const nextEra = BigNumber.max(current.currentEra.minus(1), 1)
+        processEra(key, nextEra)
       }
     }
-  };
+  }
 
   // Reset state data on network change.
   useEffectIgnoreInitial(() => {
-    setStateWithRef({}, setPoolRewardPointsState, poolRewardPointsRef);
-    setStateWithRef({}, setTasks, tasksRef);
-  }, [network]);
+    setStateWithRef({}, setPoolRewardPointsState, poolRewardPointsRef)
+    setStateWithRef({}, setTasks, tasksRef)
+  }, [network])
 
   return (
     <PoolPerformanceContext.Provider
@@ -248,5 +248,5 @@ export const PoolPerformanceProvider = ({
     >
       {children}
     </PoolPerformanceContext.Provider>
-  );
-};
+  )
+}

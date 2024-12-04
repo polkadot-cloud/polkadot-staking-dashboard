@@ -1,33 +1,33 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useHelp } from 'contexts/Help';
-import { useNetwork } from 'contexts/Network';
-import { useStaking } from 'contexts/Staking';
-import { CardHeaderWrapper } from 'library/Card/Wrappers';
-import { Header, List, Wrapper as ListWrapper } from 'library/List';
-import { MotionContainer } from 'library/List/MotionContainer';
-import { ButtonHelp, ButtonPrimaryInvert } from 'ui-buttons';
-import { Separator } from 'ui-structure';
-import type { NomninationGeoListProps } from '../types';
-import { Node } from './Node';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useHelp } from 'contexts/Help'
+import { useNetwork } from 'contexts/Network'
+import { useStaking } from 'contexts/Staking'
+import { CardHeaderWrapper } from 'library/Card/Wrappers'
+import { Header, List, Wrapper as ListWrapper } from 'library/List'
+import { MotionContainer } from 'library/List/MotionContainer'
+import { ButtonHelp, ButtonPrimaryInvert } from 'ui-buttons'
+import { Separator } from 'ui-structure'
+import type { NomninationGeoListProps } from '../types'
+import { Node } from './Node'
 
 export const NominationGeoList = ({ title, data }: NomninationGeoListProps) => {
-  const { network } = useNetwork();
-  const { openHelp } = useHelp();
-  const { isNominating } = useStaking();
-  const { activeAccount } = useActiveAccounts();
+  const { network } = useNetwork()
+  const { openHelp } = useHelp()
+  const { isNominating } = useStaking()
+  const { activeAccount } = useActiveAccounts()
 
   if (!data?.nodeDistributionDetail) {
-    return null;
+    return null
   }
 
   const rewardTotal = data.nodeDistributionDetail.reduce(
     (acc, n) => acc + n.TokenRewards,
     0
-  );
+  )
   return (
     <>
       <ListWrapper>
@@ -81,5 +81,5 @@ export const NominationGeoList = ({ title, data }: NomninationGeoListProps) => {
         />
       </section>
     </>
-  );
-};
+  )
+}

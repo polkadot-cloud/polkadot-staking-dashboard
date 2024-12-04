@@ -1,69 +1,69 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useSize } from '@w3ux/hooks';
-import type { AnyApi, PageProps } from 'common-types';
-import { MaxPayoutDays } from 'consts';
-import { useHelp } from 'contexts/Help';
-import { usePlugins } from 'contexts/Plugins';
-import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
-import { Subscan } from 'controllers/Subscan';
-import { useSubscanData } from 'hooks/useSubscanData';
-import { useSyncing } from 'hooks/useSyncing';
-import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
-import { PayoutBar } from 'library/Graphs/PayoutBar';
-import { PayoutLine } from 'library/Graphs/PayoutLine';
-import { formatSize } from 'library/Graphs/Utils';
-import { GraphWrapper } from 'library/Graphs/Wrapper';
-import { PluginLabel } from 'library/PluginLabel';
-import { StatBoxList } from 'library/StatBoxList';
-import { StatusLabel } from 'library/StatusLabel';
-import { DefaultLocale, locales } from 'locales';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ButtonHelp } from 'ui-buttons';
-import { PageRow, PageTitle } from 'ui-structure';
-import { PayoutList } from './PayoutList';
-import { LastEraPayoutStat } from './Stats/LastEraPayout';
+import { useSize } from '@w3ux/hooks'
+import type { AnyApi, PageProps } from 'common-types'
+import { MaxPayoutDays } from 'consts'
+import { useHelp } from 'contexts/Help'
+import { usePlugins } from 'contexts/Plugins'
+import { useStaking } from 'contexts/Staking'
+import { useUi } from 'contexts/UI'
+import { Subscan } from 'controllers/Subscan'
+import { useSubscanData } from 'hooks/useSubscanData'
+import { useSyncing } from 'hooks/useSyncing'
+import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
+import { PayoutBar } from 'library/Graphs/PayoutBar'
+import { PayoutLine } from 'library/Graphs/PayoutLine'
+import { formatSize } from 'library/Graphs/Utils'
+import { GraphWrapper } from 'library/Graphs/Wrapper'
+import { PluginLabel } from 'library/PluginLabel'
+import { StatBoxList } from 'library/StatBoxList'
+import { StatusLabel } from 'library/StatusLabel'
+import { DefaultLocale, locales } from 'locales'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ButtonHelp } from 'ui-buttons'
+import { PageRow, PageTitle } from 'ui-structure'
+import { PayoutList } from './PayoutList'
+import { LastEraPayoutStat } from './Stats/LastEraPayout'
 
 export const Payouts = ({ page: { key } }: PageProps) => {
-  const { i18n, t } = useTranslation();
-  const { openHelp } = useHelp();
-  const { plugins } = usePlugins();
-  const { inSetup } = useStaking();
-  const { syncing } = useSyncing();
-  const { containerRefs } = useUi();
+  const { i18n, t } = useTranslation()
+  const { openHelp } = useHelp()
+  const { plugins } = usePlugins()
+  const { inSetup } = useStaking()
+  const { syncing } = useSyncing()
+  const { containerRefs } = useUi()
   const { getData, injectBlockTimestamp } = useSubscanData([
     'payouts',
     'unclaimedPayouts',
     'poolClaims',
-  ]);
-  const notStaking = !syncing && inSetup();
+  ])
+  const notStaking = !syncing && inSetup()
 
-  const [payoutsList, setPayoutLists] = useState<AnyApi>([]);
+  const [payoutsList, setPayoutLists] = useState<AnyApi>([])
 
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null)
   const size = useSize(ref, {
     outerElement: containerRefs?.mainInterface,
-  });
-  const { width, height, minHeight } = formatSize(size, 280);
+  })
+  const { width, height, minHeight } = formatSize(size, 280)
 
   // Get data safely from subscan hook.
-  const data = getData(['payouts', 'unclaimedPayouts', 'poolClaims']);
+  const data = getData(['payouts', 'unclaimedPayouts', 'poolClaims'])
 
   // Inject `block_timestamp` for unclaimed payouts.
-  data['unclaimedPayouts'] = injectBlockTimestamp(data?.unclaimedPayouts || []);
+  data['unclaimedPayouts'] = injectBlockTimestamp(data?.unclaimedPayouts || [])
 
   const payoutsFromDate = Subscan.payoutsFromDate(
     (data?.payouts || []).concat(data?.poolClaims || []),
     locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
-  );
+  )
 
   const payoutsToDate = Subscan.payoutsToDate(
     (data?.payouts || []).concat(data?.poolClaims || []),
     locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
-  );
+  )
 
   useEffect(() => {
     // filter zero rewards and order via block timestamp, most recent first.
@@ -71,11 +71,11 @@ export const Payouts = ({ page: { key } }: PageProps) => {
       Subscan.removeNonZeroAmountAndSort(
         (data?.payouts || []).concat(data?.poolClaims || [])
       )
-    );
+    )
   }, [
     JSON.stringify(data?.payouts || {}),
     JSON.stringify(data?.poolClaims || {}),
-  ]);
+  ])
 
   return (
     <>
@@ -155,5 +155,5 @@ export const Payouts = ({ page: { key } }: PageProps) => {
         </PageRow>
       )}
     </>
-  );
-};
+  )
+}

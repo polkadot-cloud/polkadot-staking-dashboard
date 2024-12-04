@@ -1,15 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Base } from 'api/base';
-import type { ChainId } from 'common-types';
+import { Base } from 'api/base'
+import type { ChainId } from 'common-types'
 
 export class ErasRewardPoints extends Base {
-  #era: number;
+  #era: number
 
   constructor(network: ChainId, era: number) {
-    super(network);
-    this.#era = era;
+    super(network)
+    this.#era = era
   }
 
   async fetch() {
@@ -20,12 +20,12 @@ export class ErasRewardPoints extends Base {
           {
             at: 'best',
           }
-        );
-      return result;
+        )
+      return result
     } catch (e) {
       // Silently fail.
     }
 
-    return [];
+    return []
   }
 }

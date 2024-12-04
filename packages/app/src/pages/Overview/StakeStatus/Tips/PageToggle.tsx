@@ -4,12 +4,12 @@
 import {
   faChevronCircleLeft,
   faChevronCircleRight,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSyncing } from 'hooks/useSyncing';
-import { useTranslation } from 'react-i18next';
-import { PageToggleWrapper } from './Wrappers';
-import type { PageToggleProps } from './types';
+} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSyncing } from 'hooks/useSyncing'
+import { useTranslation } from 'react-i18next'
+import { PageToggleWrapper } from './Wrappers'
+import type { PageToggleProps } from './types'
 
 export const PageToggle = ({
   start,
@@ -19,11 +19,11 @@ export const PageToggle = ({
   totalItems,
   setPageHandler,
 }: PageToggleProps) => {
-  const { t } = useTranslation();
-  const { syncing } = useSyncing(['initialization']);
+  const { t } = useTranslation()
+  const { syncing } = useSyncing(['initialization'])
 
-  totalItems = syncing ? 1 : totalItems;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  totalItems = syncing ? 1 : totalItems
+  const totalPages = Math.ceil(totalItems / itemsPerPage)
 
   return (
     <PageToggleWrapper>
@@ -31,7 +31,7 @@ export const PageToggle = ({
         type="button"
         disabled={totalPages === 1 || page === 1}
         onClick={() => {
-          setPageHandler(page - 1);
+          setPageHandler(page - 1)
         }}
       >
         <FontAwesomeIcon
@@ -55,7 +55,7 @@ export const PageToggle = ({
         type="button"
         disabled={totalPages === 1 || page === totalPages}
         onClick={() => {
-          setPageHandler(page + 1);
+          setPageHandler(page + 1)
         }}
       >
         <FontAwesomeIcon
@@ -65,5 +65,5 @@ export const PageToggle = ({
         />
       </button>
     </PageToggleWrapper>
-  );
-};
+  )
+}

@@ -1,10 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ReactElement } from 'react';
-import { memo, useCallback } from 'react';
-import { QrScan } from './Scan.js';
-import type { ScanSignatureProps } from './types.js';
+import type { ReactElement } from 'react'
+import { memo, useCallback } from 'react'
+import { QrScan } from './Scan.js'
+import type { ScanSignatureProps } from './types.js'
 
 const ScanSignature = ({
   className,
@@ -17,7 +17,7 @@ const ScanSignature = ({
     (signature: string | null) =>
       signature && onScan({ signature: `0x${signature}` }),
     [onScan]
-  );
+  )
 
   return (
     <QrScan
@@ -27,7 +27,7 @@ const ScanSignature = ({
       size={size}
       style={style}
     />
-  );
-};
+  )
+}
 
-export const QrScanSignature = memo(ScanSignature);
+export const QrScanSignature = memo(ScanSignature)

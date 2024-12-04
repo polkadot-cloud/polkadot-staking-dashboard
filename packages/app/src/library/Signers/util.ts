@@ -1,10 +1,10 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { V15 } from '@polkadot-api/substrate-bindings';
-import { mergeUint8 } from 'polkadot-api/utils';
+import type { V15 } from '@polkadot-api/substrate-bindings'
+import { mergeUint8 } from 'polkadot-api/utils'
 
-const CheckMetadataHash = 'CheckMetadataHash';
+const CheckMetadataHash = 'CheckMetadataHash'
 
 export const getExtraSignedExtensions = (
   v15: V15,
@@ -12,32 +12,32 @@ export const getExtraSignedExtensions = (
   signedExtensions: Record<
     string,
     {
-      identifier: string;
-      value: Uint8Array;
-      additionalSigned: Uint8Array;
+      identifier: string
+      value: Uint8Array
+      additionalSigned: Uint8Array
     }
   >,
   checkMetadataHash = false
 ): {
-  extra: Uint8Array[];
-  additionalSigned: Uint8Array[];
+  extra: Uint8Array[]
+  additionalSigned: Uint8Array[]
 } => {
   // NOTE: Assuming `CheckMetadataHash` signed extension exists in metadata. Could introduce
   // error here for `useSubmitExtrinsic` to handle.
-  const extra: Uint8Array[] = [];
-  const additionalSigned: Uint8Array[] = [];
+  const extra: Uint8Array[] = []
+  const additionalSigned: Uint8Array[] = []
   v15.extrinsic.signedExtensions.map(({ identifier }) => {
     if (checkMetadataHash && identifier === CheckMetadataHash) {
-      extra.push(Uint8Array.from([1]));
-      additionalSigned.push(mergeUint8(Uint8Array.from([1]), digest));
-      return;
+      extra.push(Uint8Array.from([1]))
+      additionalSigned.push(mergeUint8(Uint8Array.from([1]), digest))
+      return
     }
-    const signedExtension = signedExtensions[identifier];
+    const signedExtension = signedExtensions[identifier]
     if (signedExtension) {
-      extra.push(signedExtension.value);
-      additionalSigned.push(signedExtension.additionalSigned);
+      extra.push(signedExtension.value)
+      additionalSigned.push(signedExtension.additionalSigned)
     }
-  });
+  })
 
-  return { extra, additionalSigned };
-};
+  return { extra, additionalSigned }
+}

@@ -1,17 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { DiscordSupportUrl } from 'consts';
-import DiscordOutlineSvg from 'img/discord_outline.svg?react';
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding';
-import { Title } from 'library/Modal/Title';
-import { useTranslation } from 'react-i18next';
-import { SupportWrapper } from './Wrapper';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { DiscordSupportUrl } from 'consts'
+import DiscordOutlineSvg from 'img/discord_outline.svg?react'
+import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
+import { Title } from 'library/Modal/Title'
+import { useTranslation } from 'react-i18next'
+import { SupportWrapper } from './Wrapper'
 
 export const DiscordSupport = () => {
-  const { t } = useTranslation('modals');
+  const { t } = useTranslation('modals')
   return (
     <>
       <Title />
@@ -28,5 +28,5 @@ export const DiscordSupport = () => {
         </SupportWrapper>
       </ModalPadding>
     </>
-  );
-};
+  )
+}

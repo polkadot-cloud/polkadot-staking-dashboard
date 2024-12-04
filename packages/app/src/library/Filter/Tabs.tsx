@@ -1,20 +1,20 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useFilters } from 'contexts/Filters';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import type { PoolTab } from 'types';
-import { TabsWrapper, TabWrapper } from './Wrappers';
-import type { FilterTabsProps } from './types';
+import { useFilters } from 'contexts/Filters'
+import { useBondedPools } from 'contexts/Pools/BondedPools'
+import type { PoolTab } from 'types'
+import { TabsWrapper, TabWrapper } from './Wrappers'
+import type { FilterTabsProps } from './types'
 
 export const Tabs = ({ config }: FilterTabsProps) => {
-  const { resetFilters, setMultiFilters } = useFilters();
-  const { poolListActiveTab, setPoolListActiveTab } = useBondedPools();
+  const { resetFilters, setMultiFilters } = useFilters()
+  const { poolListActiveTab, setPoolListActiveTab } = useBondedPools()
 
   return (
     <TabsWrapper>
       {config.map((c, i) => {
-        const label = c.label as PoolTab;
+        const label = c.label as PoolTab
 
         return (
           <TabWrapper
@@ -23,24 +23,24 @@ export const Tabs = ({ config }: FilterTabsProps) => {
             disabled={label === poolListActiveTab}
             onClick={() => {
               if (c.includes?.length) {
-                setMultiFilters('include', 'pools', c.includes, true);
+                setMultiFilters('include', 'pools', c.includes, true)
               } else {
-                resetFilters('include', 'pools');
+                resetFilters('include', 'pools')
               }
 
               if (c.excludes?.length) {
-                setMultiFilters('exclude', 'pools', c.excludes, true);
+                setMultiFilters('exclude', 'pools', c.excludes, true)
               } else {
-                resetFilters('exclude', 'pools');
+                resetFilters('exclude', 'pools')
               }
 
-              setPoolListActiveTab(label);
+              setPoolListActiveTab(label)
             }}
           >
             {label}
           </TabWrapper>
-        );
+        )
       })}
     </TabsWrapper>
-  );
-};
+  )
+}

@@ -1,36 +1,36 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useApi } from 'contexts/Api';
-import { useSetup } from 'contexts/Setup';
-import { Footer } from 'library/SetupSteps/Footer';
-import { Header } from 'library/SetupSteps/Header';
-import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import { Subheading } from 'pages/Nominate/Wrappers';
-import { useTranslation } from 'react-i18next';
-import { GenerateNominations } from '../GenerateNominations';
-import type { NominationsProps } from './types';
+import type { AnyJson } from '@w3ux/types'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
+import { useSetup } from 'contexts/Setup'
+import { Footer } from 'library/SetupSteps/Footer'
+import { Header } from 'library/SetupSteps/Header'
+import { MotionContainer } from 'library/SetupSteps/MotionContainer'
+import { Subheading } from 'pages/Nominate/Wrappers'
+import { useTranslation } from 'react-i18next'
+import { GenerateNominations } from '../GenerateNominations'
+import type { NominationsProps } from './types'
 
 export const Nominate = ({ bondFor, section }: NominationsProps) => {
-  const { t } = useTranslation('library');
-  const { consts } = useApi();
-  const { activeAccount } = useActiveAccounts();
-  const { getNominatorSetup, getPoolSetup, setActiveAccountSetup } = useSetup();
+  const { t } = useTranslation('library')
+  const { consts } = useApi()
+  const { activeAccount } = useActiveAccounts()
+  const { getNominatorSetup, getPoolSetup, setActiveAccountSetup } = useSetup()
 
   const setup =
     bondFor === 'nominator'
       ? getNominatorSetup(activeAccount)
-      : getPoolSetup(activeAccount);
+      : getPoolSetup(activeAccount)
 
-  const { progress } = setup;
-  const { maxNominations } = consts;
+  const { progress } = setup
+  const { maxNominations } = consts
 
   // Handler for updating setup.
   const handleSetupUpdate = (value: AnyJson) => {
-    setActiveAccountSetup(bondFor, value);
-  };
+    setActiveAccountSetup(bondFor, value)
+  }
 
   return (
     <>
@@ -69,5 +69,5 @@ export const Nominate = ({ bondFor, section }: NominationsProps) => {
         <Footer complete={progress.nominations.length > 0} bondFor={bondFor} />
       </MotionContainer>
     </>
-  );
-};
+  )
+}

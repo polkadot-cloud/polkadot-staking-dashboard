@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ComponentBase } from '@w3ux/types';
-import classes from './index.module.scss';
+import type { ComponentBase } from '@w3ux/types'
+import classes from './index.module.scss'
 
 export type EntryProps = ComponentBase & {
-  mode: 'light' | 'dark';
-  theme: string;
-};
+  mode: 'light' | 'dark'
+  theme: string
+}
 
 /**
  * @name Entry
@@ -20,4 +20,4 @@ export const Entry = ({ children, style, mode, theme }: EntryProps) => (
   >
     {children}
   </div>
-);
+)

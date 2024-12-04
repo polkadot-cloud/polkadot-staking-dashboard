@@ -1,17 +1,17 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import BigNumber from 'bignumber.js';
-import type { Networks, SystemChain } from 'common-types';
-import PolkadotTokenSVG from 'config/tokens/svg/DOT.svg?react';
-import KusamaTokenSVG from 'config/tokens/svg/KSM.svg?react';
-import WestendTokenSVG from 'config/tokens/svg/WND.svg?react';
-import KusamaIconSVG from 'img/kusama_icon.svg?react';
-import KusamaInlineSVG from 'img/kusama_inline.svg?react';
-import PolkadotIconSVG from 'img/polkadot_icon.svg?react';
-import PolkadotInlineSVG from 'img/polkadot_inline.svg?react';
-import WestendIconSVG from 'img/westend_icon.svg?react';
-import WestendInlineSVG from 'img/westend_inline.svg?react';
+import BigNumber from 'bignumber.js'
+import type { Networks, SystemChain } from 'common-types'
+import PolkadotTokenSVG from 'config/tokens/svg/DOT.svg?react'
+import KusamaTokenSVG from 'config/tokens/svg/KSM.svg?react'
+import WestendTokenSVG from 'config/tokens/svg/WND.svg?react'
+import KusamaIconSVG from 'img/kusama_icon.svg?react'
+import KusamaInlineSVG from 'img/kusama_inline.svg?react'
+import PolkadotIconSVG from 'img/polkadot_icon.svg?react'
+import PolkadotInlineSVG from 'img/polkadot_inline.svg?react'
+import WestendIconSVG from 'img/westend_icon.svg?react'
+import WestendInlineSVG from 'img/westend_inline.svg?react'
 
 export const NetworkList: Networks = {
   polkadot: {
@@ -181,7 +181,7 @@ export const NetworkList: Networks = {
     defaultFeeReserve: 0.1,
     maxExposurePageSize: new BigNumber(64),
   },
-};
+}
 
 export const SystemChainList: Record<string, SystemChain> = {
   'people-polkadot': {
@@ -232,4 +232,4 @@ export const SystemChainList: Record<string, SystemChain> = {
     },
     relayChain: 'westend',
   },
-};
+}
