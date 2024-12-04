@@ -36,6 +36,8 @@
       "controllerAccount": "Controller 账户",
       "controllerNotImported": "尚未导入Controller帐户。如果无法访问该帐户,请立即设置新帐户。否则,请将该账户导入扩展之一",
       "earningRewards": "挣取收益中",
+      "fullCommissionValidatorSubtitle": "您将不会从收取 100% 佣金的验证者那里获得质押奖励。请考虑更新您的提名。",
+      "fullCommissionValidatorTitle": "您有一个 100% 佣金的提名",
       "inactiveNominations": "非活跃提名人",
       "manage": "管理",
       "minimumToEarnRewards": "最低收益抵押额",

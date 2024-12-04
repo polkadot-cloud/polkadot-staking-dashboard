@@ -18,6 +18,7 @@ import { WithdrawPrompt } from 'library/WithdrawPrompt'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
 import { PageRow, RowSection } from 'ui-structure'
+import { CommissionPrompt } from './CommissionPrompt'
 import { ManageBond } from './ManageBond'
 import { ActiveNominatorsStat } from './Stats/ActiveNominators'
 import { MinimumActiveStakeStat } from './Stats/MinimumActiveStake'
@@ -46,7 +47,7 @@ export const Active = () => {
         <MinimumNominatorBondStat />
         <MinimumActiveStakeStat />
       </StatBoxList>
-
+      <CommissionPrompt />
       <WithdrawPrompt bondFor="nominator" />
 
       <UnstakePrompts />

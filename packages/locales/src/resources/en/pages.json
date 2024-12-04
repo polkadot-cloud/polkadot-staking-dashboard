@@ -37,6 +37,8 @@
       "controllerAccount": "Controller Account",
       "controllerNotImported": "You have not imported your controller account. If you have lost access to your controller account, set a new one now. Otherwise, import the controller into one of your active extensions.",
       "earningRewards": "Earning Rewards",
+      "fullCommissionValidatorSubtitle": "You will not receive staking rewards from validators who charge 100% commission. Consider updating your nominations.",
+      "fullCommissionValidatorTitle": "You Have a Nomination with 100% Commission",
       "inactiveNominations": "Inactive Nominations",
       "manage": "Manage",
       "minimumToEarnRewards": "Minimum To Earn Rewards",
