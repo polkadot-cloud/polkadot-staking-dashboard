@@ -2,14 +2,17 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import { Bond } from 'canvas/CreatePool/Bond'
-import { PoolName } from 'canvas/CreatePool/PoolName'
-import { PoolRoles } from 'canvas/CreatePool/PoolRoles'
-import { Summary } from 'canvas/CreatePool/Summary'
-import { CanvasFullScreenWrapper, CanvasTitleWrapper } from 'canvas/Wrappers'
 import { useOverlay } from 'kits/Overlay/Provider'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { Nominate } from 'library/SetupSteps/Nominate'
+import { Bond } from 'overlay/canvas/CreatePool/Bond'
+import { PoolName } from 'overlay/canvas/CreatePool/PoolName'
+import { PoolRoles } from 'overlay/canvas/CreatePool/PoolRoles'
+import { Summary } from 'overlay/canvas/CreatePool/Summary'
+import {
+  CanvasFullScreenWrapper,
+  CanvasTitleWrapper,
+} from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { Element } from 'react-scroll'
 import { ButtonPrimary } from 'ui-buttons'

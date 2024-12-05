@@ -3,7 +3,7 @@
 
 import { AccountInput } from 'library/AccountInput'
 import { StyledSlider } from 'library/StyledSlider'
-import { SliderWrapper } from 'modals/ManagePool/Wrappers'
+import { SliderWrapper } from 'overlay/modals/ManagePool/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { usePoolCommission } from './provider'
 

@@ -1,17 +1,15 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { unitToPlanck } from '@w3ux/utils'
-import { StakingChill } from 'api/tx/stakingChill'
-import { StakingUnbond } from 'api/tx/stakingUnbond'
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { planckToUnit, unitToPlanck } from '@w3ux/utils'
+import { PoolUnbond } from 'api/tx/poolUnbond'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
-import { useBalances } from 'contexts/Balances'
-import { useBonded } from 'contexts/Bonded'
 import { useNetwork } from 'contexts/Network'
+import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { getUnixTime } from 'date-fns'
-import { useBatchCall } from 'hooks/useBatchCall'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -20,34 +18,37 @@ import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings'
 import { ActionItem } from 'library/ActionItem'
 import { Warning } from 'library/Form/Warning'
-import { Close } from 'library/Modal/Close'
 import { SubmitTx } from 'library/SubmitTx'
-import { StaticNote } from 'modals/Utils/StaticNote'
-import { useEffect, useState } from 'react'
+import { StaticNote } from 'overlay/modals/Utils/StaticNote'
+import { useEffect, useState, type Dispatch, type SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ButtonSubmitInvert } from 'ui-buttons'
 import { planckToUnitBn, timeleftAsString } from 'utils'
 
-export const Unstake = () => {
+export const LeavePool = ({
+  setSection,
+  onResize,
+}: {
+  setSection: Dispatch<SetStateAction<number>>
+  onResize: () => void
+}) => {
   const { t } = useTranslation('modals')
+  const { consts } = useApi()
   const {
     network,
     networkData: { units, unit },
   } = useNetwork()
-  const { consts } = useApi()
-  const { newBatchCall } = useBatchCall()
-  const { getBondedAccount } = useBonded()
-  const { getNominations } = useBalances()
-  const { activeAccount } = useActiveAccounts()
+  const { activePool } = useActivePool()
   const { erasToSeconds } = useErasToTimeLeft()
+  const { activeAccount } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const { getTransferOptions } = useTransferOptions()
   const { setModalStatus, setModalResize } = useOverlay().modal
 
-  const controller = getBondedAccount(activeAccount)
-  const nominations = getNominations(activeAccount)
-  const { bondDuration } = consts
   const allTransferOptions = getTransferOptions(activeAccount)
-  const { active } = allTransferOptions.nominate
+  const { active: activeBn } = allTransferOptions.pool
+  const { bondDuration } = consts
+  const pendingRewards = activePool?.pendingRewards || 0n
 
   const bondDurationFormatted = timeleftAsString(
     t,
@@ -56,8 +57,10 @@ export const Unstake = () => {
     true
   )
 
+  const pendingRewardsUnit = planckToUnit(pendingRewards, units)
+
   // convert BigNumber values to number
-  const freeToUnbond = planckToUnitBn(active, units)
+  const freeToUnbond = planckToUnitBn(activeBn, units)
 
   // local bond value
   const [bond, setBond] = useState<{ bond: string }>({
@@ -80,24 +83,21 @@ export const Unstake = () => {
   useEffect(() => setModalResize(), [bond])
 
   const getTx = () => {
-    const tx = null
+    let tx = null
     if (!activeAccount) {
       return tx
     }
-    const bondToSubmit = unitToPlanck(String(!bondValid ? 0 : bond.bond), units)
-    if (bondToSubmit == 0n) {
-      return new StakingChill(network).tx()
-    }
-    const txs = [
-      new StakingChill(network).tx(),
-      new StakingUnbond(network, bondToSubmit).tx(),
-    ]
-    return newBatchCall(txs, controller)
+    tx = new PoolUnbond(
+      network,
+      activeAccount,
+      unitToPlanck(!bondValid ? 0 : bond.bond, units)
+    ).tx()
+    return tx
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: controller,
+    from: activeAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       setModalStatus('closing')
@@ -106,15 +106,19 @@ export const Unstake = () => {
 
   const warnings = getSignerWarnings(
     activeAccount,
-    true,
+    false,
     submitExtrinsic.proxySupported
   )
 
+  if (pendingRewards > 0) {
+    warnings.push(
+      `${t('unbondingWithdraw')} ${pendingRewardsUnit.toString()} ${unit}.`
+    )
+  }
+
   return (
     <>
-      <Close />
-      <ModalPadding>
-        <h2 className="title unbounded">{t('unstake')} </h2>
+      <ModalPadding horizontalOnly>
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
             {warnings.map((text, i) => (
@@ -122,19 +126,7 @@ export const Unstake = () => {
             ))}
           </ModalWarnings>
         ) : null}
-        {freeToUnbond.isGreaterThan(0) ? (
-          <ActionItem
-            text={t('unstakeUnbond', {
-              bond: freeToUnbond.toFormat(),
-              unit,
-            })}
-          />
-        ) : null}
-        {nominations.length > 0 && (
-          <ActionItem
-            text={t('unstakeStopNominating', { count: nominations.length })}
-          />
-        )}
+        <ActionItem text={`${t('unbond')} ${freeToUnbond} ${unit}`} />
         <StaticNote
           value={bondDurationFormatted}
           tKey="onceUnbonding"
@@ -142,7 +134,20 @@ export const Unstake = () => {
           deps={[bondDuration]}
         />
       </ModalPadding>
-      <SubmitTx fromController valid={bondValid} {...submitExtrinsic} />
+      <SubmitTx
+        valid={bondValid}
+        buttons={[
+          <ButtonSubmitInvert
+            key="button_back"
+            text={t('back')}
+            iconLeft={faChevronLeft}
+            iconTransform="shrink-1"
+            onClick={() => setSection(0)}
+          />,
+        ]}
+        onResize={onResize}
+        {...submitExtrinsic}
+      />
     </>
   )
 }

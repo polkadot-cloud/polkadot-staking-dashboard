@@ -1,51 +1,53 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Polkicon } from '@w3ux/react-polkicon'
-import { ellipsisFn, rmCommas, unitToPlanck } from '@w3ux/utils'
-import { PoolUnbond } from 'api/tx/poolUnbond'
-import BigNumber from 'bignumber.js'
+import { unitToPlanck } from '@w3ux/utils'
+import { StakingChill } from 'api/tx/stakingChill'
+import { StakingUnbond } from 'api/tx/stakingUnbond'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
+import { useBalances } from 'contexts/Balances'
+import { useBonded } from 'contexts/Bonded'
 import { useNetwork } from 'contexts/Network'
-import type { PoolMembership } from 'contexts/Pools/types'
-import { usePrompt } from 'contexts/Prompt'
+import { useTransferOptions } from 'contexts/TransferOptions'
 import { getUnixTime } from 'date-fns'
+import { useBatchCall } from 'hooks/useBatchCall'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
-import { ModalNotes } from 'kits/Overlay/structure/ModalNotes'
+import { useOverlay } from 'kits/Overlay/Provider'
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
 import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings'
+import { ActionItem } from 'library/ActionItem'
 import { Warning } from 'library/Form/Warning'
-import { Title } from 'library/Prompt/Title'
+import { Close } from 'library/Modal/Close'
 import { SubmitTx } from 'library/SubmitTx'
-import { StaticNote } from 'modals/Utils/StaticNote'
+import { StaticNote } from 'overlay/modals/Utils/StaticNote'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { planckToUnitBn, timeleftAsString } from 'utils'
 
-export const UnbondMember = ({
-  who,
-  member,
-}: {
-  who: string
-  member: PoolMembership
-}) => {
+export const Unstake = () => {
   const { t } = useTranslation('modals')
-  const { consts } = useApi()
   const {
     network,
     networkData: { units, unit },
   } = useNetwork()
-  const { closePrompt } = usePrompt()
+  const { consts } = useApi()
+  const { newBatchCall } = useBatchCall()
+  const { getBondedAccount } = useBonded()
+  const { getNominations } = useBalances()
   const { activeAccount } = useActiveAccounts()
   const { erasToSeconds } = useErasToTimeLeft()
   const { getSignerWarnings } = useSignerWarnings()
+  const { getTransferOptions } = useTransferOptions()
+  const { setModalStatus, setModalResize } = useOverlay().modal
 
+  const controller = getBondedAccount(activeAccount)
+  const nominations = getNominations(activeAccount)
   const { bondDuration } = consts
-  const { points } = member
-  const freeToUnbond = planckToUnitBn(new BigNumber(rmCommas(points)), units)
+  const allTransferOptions = getTransferOptions(activeAccount)
+  const { active } = allTransferOptions.nominate
 
   const bondDurationFormatted = timeleftAsString(
     t,
@@ -53,6 +55,9 @@ export const UnbondMember = ({
     erasToSeconds(bondDuration),
     true
   )
+
+  // convert BigNumber values to number
+  const freeToUnbond = planckToUnitBn(active, units)
 
   // local bond value
   const [bond, setBond] = useState<{ bond: string }>({
@@ -71,38 +76,45 @@ export const UnbondMember = ({
     setBondValid(isValid)
   }, [freeToUnbond.toString(), isValid])
 
+  // modal resize on form update
+  useEffect(() => setModalResize(), [bond])
+
   const getTx = () => {
-    let tx = null
+    const tx = null
     if (!activeAccount) {
       return tx
     }
-    tx = new PoolUnbond(
-      network,
-      who,
-      unitToPlanck(!bondValid ? 0 : bond.bond, units)
-    ).tx()
-    return tx
+    const bondToSubmit = unitToPlanck(String(!bondValid ? 0 : bond.bond), units)
+    if (bondToSubmit == 0n) {
+      return new StakingChill(network).tx()
+    }
+    const txs = [
+      new StakingChill(network).tx(),
+      new StakingUnbond(network, bondToSubmit).tx(),
+    ]
+    return newBatchCall(txs, controller)
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
-    from: activeAccount,
+    from: controller,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
-      closePrompt()
+      setModalStatus('closing')
     },
   })
 
   const warnings = getSignerWarnings(
     activeAccount,
-    false,
+    true,
     submitExtrinsic.proxySupported
   )
 
   return (
     <>
-      <Title title={t('unbondPoolMember')} />
+      <Close />
       <ModalPadding>
+        <h2 className="title unbounded">{t('unstake')} </h2>
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
             {warnings.map((text, i) => (
@@ -110,21 +122,27 @@ export const UnbondMember = ({
             ))}
           </ModalWarnings>
         ) : null}
-        <h3 style={{ display: 'flex', alignItems: 'center' }}>
-          <Polkicon address={who} transform="grow-3" />
-          &nbsp; {ellipsisFn(who, 7)}
-        </h3>
-        <ModalNotes>
-          <p>{t('amountWillBeUnbonded', { bond: bond.bond, unit })}</p>
-          <StaticNote
-            value={bondDurationFormatted}
-            tKey="onceUnbondingPoolMember"
-            valueKey="bondDurationFormatted"
-            deps={[bondDuration]}
+        {freeToUnbond.isGreaterThan(0) ? (
+          <ActionItem
+            text={t('unstakeUnbond', {
+              bond: freeToUnbond.toFormat(),
+              unit,
+            })}
           />
-        </ModalNotes>
+        ) : null}
+        {nominations.length > 0 && (
+          <ActionItem
+            text={t('unstakeStopNominating', { count: nominations.length })}
+          />
+        )}
+        <StaticNote
+          value={bondDurationFormatted}
+          tKey="onceUnbonding"
+          valueKey="bondDurationFormatted"
+          deps={[bondDuration]}
+        />
       </ModalPadding>
-      <SubmitTx noMargin valid={bondValid} {...submitExtrinsic} />
+      <SubmitTx fromController valid={bondValid} {...submitExtrinsic} />
     </>
   )
 }

@@ -1,13 +1,13 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { CanvasFullScreenWrapper } from 'canvas/Wrappers'
 import { MaxEraRewardPointsEras } from 'consts'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useJoinPools } from 'contexts/Pools/JoinPools'
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
 import { useStaking } from 'contexts/Staking'
 import { useOverlay } from 'kits/Overlay/Provider'
+import { CanvasFullScreenWrapper } from 'overlay/canvas/Wrappers'
 import { useEffect, useMemo, useState } from 'react'
 import { Header } from './Header'
 import { Nominations } from './Nominations'

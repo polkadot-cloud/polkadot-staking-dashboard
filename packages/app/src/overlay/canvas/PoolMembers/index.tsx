@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import { Members } from 'canvas/PoolMembers/Members'
-import { CanvasFullScreenWrapper } from 'canvas/Wrappers'
 import { useOverlay } from 'kits/Overlay/Provider'
+import { Members } from 'overlay/canvas/PoolMembers/Members'
+import { CanvasFullScreenWrapper } from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
 
