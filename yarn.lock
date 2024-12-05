@@ -4744,6 +4744,7 @@ __metadata:
     "@w3ux/react-polkicon": "npm:^2.0.1-alpha.0"
     "@w3ux/validator-assets": "npm:^0.2.0"
     "@zondax/ledger-substrate": "npm:^1.0.0"
+    assets: "workspace:*"
     bn.js: "npm:^5.2.1"
     buffer: "npm:^6.0.3"
     chart.js: "npm:^4.4.7"
@@ -4904,6 +4905,12 @@ __metadata:
   checksum: 10c0/bbbcb117ac6480138f8c93cf7f535614282dea9dc828f540cdece85e3c665e8f78958b96afac52f29ff883c72638e6a87d469ecc9fe5bc902df03ed24a55dba8
   languageName: node
   linkType: hard
+
+"assets@workspace:*, assets@workspace:packages/assets":
+  version: 0.0.0-use.local
+  resolution: "assets@workspace:packages/assets"
+  languageName: unknown
+  linkType: soft
 
 "async-mutex@npm:^0.2.6":
   version: 0.2.6
