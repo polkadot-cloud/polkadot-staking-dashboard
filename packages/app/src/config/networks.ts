@@ -5,13 +5,13 @@ import KusamaIconSVG from 'assets/svg/kusamaIcon.svg?react'
 import KusamaInlineSVG from 'assets/svg/kusamaInline.svg?react'
 import PolkadotIconSVG from 'assets/svg/polkadotIcon.svg?react'
 import PolkadotInlineSVG from 'assets/svg/polkadotInline.svg?react'
+import PolkadotTokenSVG from 'assets/svg/token/dot.svg?react'
+import KusamaTokenSVG from 'assets/svg/token/ksm.svg?react'
+import WestendTokenSVG from 'assets/svg/token/wnd.svg?react'
 import WestendIconSVG from 'assets/svg/westendIcon.svg?react'
 import WestendInlineSVG from 'assets/svg/westendInline.svg?react'
 import BigNumber from 'bignumber.js'
 import type { Networks, SystemChain } from 'common-types'
-import PolkadotTokenSVG from 'config/tokens/svg/DOT.svg?react'
-import KusamaTokenSVG from 'config/tokens/svg/KSM.svg?react'
-import WestendTokenSVG from 'config/tokens/svg/WND.svg?react'
 
 export const NetworkList: Networks = {
   polkadot: {

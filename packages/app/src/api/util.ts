@@ -3,7 +3,7 @@
 
 import type { ApiChainType } from 'api/types'
 import type { AnyApi, ChainId } from 'common-types'
-import { NetworkList, SystemChainList } from './networks'
+import { NetworkList, SystemChainList } from 'config/networks'
 
 // Get the light client metadata for the given chain type and network.
 export const getLightClientMetadata = (

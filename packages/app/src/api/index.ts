@@ -3,7 +3,6 @@
 
 import type { ChainId } from 'common-types'
 import { NetworkList, SystemChainList } from 'config/networks'
-import { getLightClientMetadata } from 'config/util'
 import { Subscriptions } from 'controllers/Subscriptions'
 import type { PolkadotClient } from 'polkadot-api'
 import { createClient } from 'polkadot-api'
@@ -19,6 +18,7 @@ import type {
   PapiChainSpec,
   PapiReadyEvent,
 } from './types'
+import { getLightClientMetadata } from './util'
 
 export class Api {
   // The network name associated with this Api instance
