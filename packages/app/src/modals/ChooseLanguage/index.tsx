@@ -1,7 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import LanguageSVG from 'img/language.svg?react'
+import LanguageSVG from 'assets/svg/language.svg?react'
 import { useOverlay } from 'kits/Overlay/Provider'
 import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
 import { Title } from 'library/Modal/Title'

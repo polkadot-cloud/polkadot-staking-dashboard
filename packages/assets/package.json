@@ -1,11 +1,13 @@
 {
-  "name": "styles",
+  "name": "assets",
   "version": "1.0.0",
   "license": "GPL-3.0-only",
   "type": "module",
-  "main": "src/",
   "scripts": {
     "clear": "rm -rf build dist",
     "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
+  },
+  "exports": {
+    "./svg/*": "./src/svg/*"
   }
 }
