@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { rmCommas } from '@w3ux/utils'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { createContext, useContext, useEffect, useState } from 'react'
@@ -29,16 +28,14 @@ export const PoolCommissionProvider = ({
   const bondedPool = getBondedPool(poolId)
 
   // Get initial commission value from the bonded pool commission config.
-  const initialCommission = Number(
-    (bondedPool?.commission?.current?.[0] || '0%').slice(0, -1)
-  )
+  const initialCommission = Number(bondedPool?.commission?.current?.[0] || '0')
 
   // Get initial payee value from the bonded pool commission config.
   const initialPayee = bondedPool?.commission?.current?.[1] || null
 
   // Get initial maximum commission value from the bonded pool commission config.
   const initialMaxCommission = Number(
-    (bondedPool?.commission?.max || '100').toString().slice(0, -1)
+    (bondedPool?.commission?.max || '100').toString()
   )
 
   // Get initial change rate value from the bonded pool commission config.
@@ -46,8 +43,8 @@ export const PoolCommissionProvider = ({
     const raw = bondedPool?.commission?.changeRate
     return raw
       ? {
-          maxIncrease: Number(raw.maxIncrease.slice(0, -1)),
-          minDelay: Number(rmCommas(raw.minDelay)),
+          maxIncrease: Number(raw.maxIncrease),
+          minDelay: Number(raw.minDelay),
         }
       : {
           maxIncrease: 100,
