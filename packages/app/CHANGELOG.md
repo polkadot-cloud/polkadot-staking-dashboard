@@ -1,5 +1,33 @@
 # Changelog
 
+## 1.0.0 (2024-12-07)
+
+
+### Features
+
+* Add 100% validator commission prompt. ([#2358](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2358)) ([01294ae](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/01294aed9a437a26fe5543f8abb48ae5a0023cec))
+* **fix:** Ensure unclaimed payouts are ints ([#2336](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2336)) ([9b59277](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/9b59277365ae06a88ad9f8ce8d70de113169717d))
+* **fix:** Fix prettier organize imports, lint. ([#2340](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2340)) ([441caf7](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/441caf7069b7d9a59116c05a88e82748e7b31388))
+* init `ui-structure`, `consts`, `styles` packages, migrate Structure kit ([#2330](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2330)) ([6d15f49](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6d15f49460315940ec7a2502a2dca238f72c401f))
+* Init monorepo, `app` and `ui-buttons` packages ([#2327](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2327)) ([09c8daa](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/09c8daa701596e65143799497c1116242358560f))
+* Init Staking API GraphQL Plugin, discontinue Binance Spot ([#2332](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2332)) ([297b1d4](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/297b1d463a770fcd213d9e9083e85446ce6fa834))
+* **light client:** Use wss boot nodes only ([#2345](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2345)) ([02e778d](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/02e778d1731c405cb9ff955b49fc6a91645f3cdc))
+* **refactor:** Add assets package, move svgs to package ([#2361](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2361)) ([15c08b1](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/15c08b1f224cad6578575eae67cc03fe0947d938))
+* **refactor:** Locales to package, fixes and structural improvements. ([#2338](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2338)) ([b9efa04](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b9efa04f90839b13d6276c2209229d6adfe330f4))
+* **refactor:** Migrate to ESLint 9 ([#2342](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2342)) ([43db0c0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/43db0c0259de34f7ce989de4b7596011e8a22000))
+* **refactor:** Pool rewards to controller, pool types to `types` package ([#2344](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2344)) ([437ffe4](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/437ffe4cca9ac23fe412cec68f59ee095f1e195f))
+* **refactor:** Remove semi ([#2356](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2356)) ([4c10b19](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/4c10b192612f557128b3eb23af68a24a993f41e7))
+* **refactor:** Rm `useSize` hook, `lodash` deps ([#2341](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2341)) ([a03169b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a03169bab77b74f1d2dc1b16aef7405babb30185))
+* Refetch token price if online status is true ([#2337](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2337)) ([c87a8f2](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/c87a8f2d6cff43b72c817c170fa83ced6d2786b9))
+* Support options refresh with Discord and Mail ([#2331](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2331)) ([0700594](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/07005940dc45a1921d530e18c5c49efd0f4c4d61))
+
+
+### Bug Fixes
+
+* Manage pools formatting error ([#2363](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2363)) ([eedef20](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/eedef2048720e31f6bf51d5bc36239eeb071f6bf))
+* Proxy support logic for Polkadot API ([#2359](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2359)) ([a6a37f1](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a6a37f1ff061d82de42a54dcd504f6b80b62e739))
+* theme Selectable buttons ([#2334](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2334)) ([20b33e5](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/20b33e5ef485dde1b2d92f57ddf3044e7add9afe))
+
 ## [1.7.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/v1.6.0...v1.7.0) (2024-11-08)
 
 
