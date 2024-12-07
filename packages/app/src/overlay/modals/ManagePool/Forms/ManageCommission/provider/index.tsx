@@ -38,7 +38,7 @@ export const PoolCommissionProvider = ({
 
   // Get initial maximum commission value from the bonded pool commission config.
   const initialMaxCommission = Number(
-    (bondedPool?.commission?.max || '100%').slice(0, -1)
+    (bondedPool?.commission?.max || '100').toString().slice(0, -1)
   )
 
   // Get initial change rate value from the bonded pool commission config.
