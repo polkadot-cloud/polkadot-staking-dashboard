@@ -169,7 +169,7 @@ export class Subscan {
         poolId: entry.pool_id,
       }))
       .reverse()
-      .splice(0, result.list.length - 1)
+      .splice(0, result.list.length)
   }
 
   // Fetch a pool's era points from Subscan.
