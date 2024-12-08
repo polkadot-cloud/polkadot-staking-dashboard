@@ -10,7 +10,7 @@ export const usePoolCommission = () => {
 
   const getCurrentCommission = (id: number): number =>
     Math.min(
-      Number(getBondedPool(id)?.commission?.current?.[0]?.slice(0, -1) || 0),
+      Number(getBondedPool(id)?.commission?.current?.[0] || 0),
       globalMaxCommission
     )
 
