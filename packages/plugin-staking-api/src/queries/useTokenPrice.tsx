@@ -5,7 +5,7 @@ import type { ApolloError } from '@apollo/client'
 import { gql, useQuery } from '@apollo/client'
 import type { TokenPriceResult, UseTokenPriceResult } from '../types'
 
-const TOKEN_PRICE_QUERY = gql`
+const QUERY = gql`
   query TokenPrice($ticker: String!) {
     tokenPrice(ticker: $ticker) {
       price
@@ -19,7 +19,7 @@ export const useTokenPrice = ({
 }: {
   ticker: string
 }): UseTokenPriceResult => {
-  const { loading, error, data, refetch } = useQuery(TOKEN_PRICE_QUERY, {
+  const { loading, error, data, refetch } = useQuery(QUERY, {
     variables: { ticker },
   })
   return { loading, error, data, refetch }

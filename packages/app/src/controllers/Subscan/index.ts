@@ -6,6 +6,7 @@ import { format, fromUnixTime, getUnixTime, subDays } from 'date-fns'
 import { poolMembersPerPage } from 'library/List/defaults'
 import type { PoolMember } from 'types'
 import type {
+  PayoutsAndClaims,
   SubscanData,
   SubscanEraPoints,
   SubscanPayout,
@@ -255,7 +256,7 @@ export class Subscan {
   }
 
   // Take non-zero rewards in most-recent order.
-  static removeNonZeroAmountAndSort = (payouts: SubscanPayout[]) => {
+  static removeNonZeroAmountAndSort = (payouts: PayoutsAndClaims) => {
     const list = payouts
       .filter((p) => Number(p.amount) > 0)
       .sort((a, b) => b.block_timestamp - a.block_timestamp)
@@ -269,11 +270,11 @@ export class Subscan {
   }
 
   // Calculate the earliest date of a payout list.
-  static payoutsFromDate = (payouts: SubscanPayout[], locale: Locale) => {
+  static payoutsFromDate = (payouts: PayoutsAndClaims, locale: Locale) => {
     if (!payouts.length) {
       return undefined
     }
-    const filtered = this.removeNonZeroAmountAndSort(payouts || [])
+    const filtered = this.removeNonZeroAmountAndSort(payouts)
     if (!filtered.length) {
       return undefined
     }
@@ -287,7 +288,7 @@ export class Subscan {
   }
 
   // Calculate the latest date of a payout list.
-  static payoutsToDate = (payouts: SubscanPayout[], locale: Locale) => {
+  static payoutsToDate = (payouts: PayoutsAndClaims, locale: Locale) => {
     if (!payouts.length) {
       return undefined
     }

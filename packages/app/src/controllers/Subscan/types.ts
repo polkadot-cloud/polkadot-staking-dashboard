@@ -5,7 +5,13 @@ export type PayoutType = 'payouts' | 'unclaimedPayouts' | 'poolClaims'
 
 export type SubscanData = Partial<Record<PayoutType, SubscanResult>>
 
-export type SubscanPayoutData = Partial<Record<PayoutType, SubscanPayout[]>>
+export interface SubscanPayoutData {
+  payouts: SubscanPayout[]
+  unclaimedPayouts: SubscanPayout[]
+  poolClaims: SubscanPoolClaim[]
+}
+
+export type PayoutsAndClaims = (SubscanPayout | SubscanPoolClaim)[]
 
 export type SubscanRequestBody =
   | RewardSlashRequestBody

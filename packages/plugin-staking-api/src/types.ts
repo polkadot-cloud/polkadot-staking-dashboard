@@ -16,11 +16,18 @@ export type TokenPriceResult = {
   tokenPrice: TokenPrice
 } | null
 
-export interface UseTokenPriceResult {
+interface Query {
   loading: boolean
   error: ApolloError | undefined
-  data: TokenPriceResult
   refetch: (
     variables?: Partial<OperationVariables> | undefined
   ) => Promise<ApolloQueryResult<unknown>>
+}
+
+export type UseTokenPriceResult = Query & {
+  data: TokenPriceResult
+}
+
+export type AllRewardsResult = Query & {
+  data: unknown
 }

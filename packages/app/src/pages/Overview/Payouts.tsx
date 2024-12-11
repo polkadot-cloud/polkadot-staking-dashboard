@@ -35,18 +35,13 @@ export const Payouts = () => {
   const { syncing } = useSyncing()
   const { plugins } = usePlugins()
   const { containerRefs } = useUi()
-  const { getData, injectBlockTimestamp } = useSubscanData([
-    'payouts',
-    'unclaimedPayouts',
-    'poolClaims',
-  ])
+  let { unclaimedPayouts } = useSubscanData()
+  const { payouts, poolClaims, injectBlockTimestamp } = useSubscanData()
+
   const notStaking = !syncing && inSetup()
 
-  // Get data safely from subscan hook.
-  const data = getData(['payouts', 'unclaimedPayouts', 'poolClaims'])
-
   // Inject `block_timestamp` for unclaimed payouts.
-  data['unclaimedPayouts'] = injectBlockTimestamp(data?.unclaimedPayouts || [])
+  unclaimedPayouts = injectBlockTimestamp(unclaimedPayouts)
 
   // Ref to the graph container.
   const graphInnerRef = useRef<HTMLDivElement>(null)
@@ -62,9 +57,9 @@ export const Payouts = () => {
     new Date(),
     14,
     units,
-    data.payouts,
-    data.poolClaims,
-    data.unclaimedPayouts
+    payouts,
+    poolClaims,
+    unclaimedPayouts
   )
   let formatFrom = new Date()
   let formatTo = new Date()
@@ -130,9 +125,18 @@ export const Payouts = () => {
             transition: 'opacity 0.5s',
           }}
         >
-          <PayoutBar days={19} height="150px" data={data} />
+          <PayoutBar
+            days={19}
+            height="150px"
+            data={{ payouts, unclaimedPayouts, poolClaims }}
+          />
           <div style={{ marginTop: '3rem' }}>
-            <PayoutLine days={19} average={10} height="65px" data={data} />
+            <PayoutLine
+              days={19}
+              average={10}
+              height="65px"
+              data={{ payouts, unclaimedPayouts, poolClaims }}
+            />
           </div>
         </GraphWrapper>
       </div>

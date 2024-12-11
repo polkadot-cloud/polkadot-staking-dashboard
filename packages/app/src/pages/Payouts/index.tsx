@@ -9,6 +9,7 @@ import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { Subscan } from 'controllers/Subscan'
+import type { PayoutsAndClaims } from 'controllers/Subscan/types'
 import { useSubscanData } from 'hooks/useSubscanData'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
@@ -34,11 +35,8 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   const { inSetup } = useStaking()
   const { syncing } = useSyncing()
   const { containerRefs } = useUi()
-  const { getData, injectBlockTimestamp } = useSubscanData([
-    'payouts',
-    'unclaimedPayouts',
-    'poolClaims',
-  ])
+  let { unclaimedPayouts } = useSubscanData()
+  const { payouts, poolClaims, injectBlockTimestamp } = useSubscanData()
   const notStaking = !syncing && inSetup()
 
   const [payoutsList, setPayoutLists] = useState<AnyApi>([])
@@ -49,33 +47,23 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   })
   const { width, height, minHeight } = formatSize(size, 280)
 
-  // Get data safely from subscan hook.
-  const data = getData(['payouts', 'unclaimedPayouts', 'poolClaims'])
-
   // Inject `block_timestamp` for unclaimed payouts.
-  data['unclaimedPayouts'] = injectBlockTimestamp(data?.unclaimedPayouts || [])
+  unclaimedPayouts = injectBlockTimestamp(unclaimedPayouts)
 
+  const payoutsAndClaims = (payouts as PayoutsAndClaims).concat(poolClaims)
   const payoutsFromDate = Subscan.payoutsFromDate(
-    (data?.payouts || []).concat(data?.poolClaims || []),
+    payoutsAndClaims,
     locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
   )
-
   const payoutsToDate = Subscan.payoutsToDate(
-    (data?.payouts || []).concat(data?.poolClaims || []),
+    payoutsAndClaims,
     locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
   )
 
   useEffect(() => {
     // filter zero rewards and order via block timestamp, most recent first.
-    setPayoutLists(
-      Subscan.removeNonZeroAmountAndSort(
-        (data?.payouts || []).concat(data?.poolClaims || [])
-      )
-    )
-  }, [
-    JSON.stringify(data?.payouts || {}),
-    JSON.stringify(data?.poolClaims || {}),
-  ])
+    setPayoutLists(Subscan.removeNonZeroAmountAndSort(payoutsAndClaims))
+  }, [JSON.stringify(payouts), JSON.stringify(poolClaims)])
 
   return (
     <>
@@ -132,12 +120,16 @@ export const Payouts = ({ page: { key } }: PageProps) => {
                 transition: 'opacity 0.5s',
               }}
             >
-              <PayoutBar days={MaxPayoutDays} height="165px" data={data} />
+              <PayoutBar
+                days={MaxPayoutDays}
+                height="165px"
+                data={{ payouts, unclaimedPayouts, poolClaims }}
+              />
               <PayoutLine
                 days={MaxPayoutDays}
                 average={10}
                 height="65px"
-                data={data}
+                data={{ payouts, unclaimedPayouts, poolClaims }}
               />
             </GraphWrapper>
           </div>
