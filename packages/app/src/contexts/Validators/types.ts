@@ -84,3 +84,11 @@ export interface ValidatorEraPointHistory {
   rank?: number
   quartile?: number
 }
+
+export interface LocalValidatorExposure {
+  staked: string
+  total: string
+  share: string
+  isValidator: boolean
+  exposedPage: number
+}

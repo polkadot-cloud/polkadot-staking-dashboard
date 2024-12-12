@@ -7,17 +7,3 @@ export interface PayoutsContextInterface {
   unclaimedRewards: UnclaimedRewards
   setUnclaimedRewards: (unclaimedRewards: UnclaimedRewards) => void
 }
-
-// Record<era, EraUnclaimedPayouts>
-export type UnclaimedPayouts = Record<string, EraUnclaimedPayouts> | null
-
-// Record<validator, [page, amount]>
-export type EraUnclaimedPayouts = Record<string, [number, string]>
-
-export interface LocalValidatorExposure {
-  staked: string
-  total: string
-  share: string
-  isValidator: boolean
-  exposedPage: number
-}
