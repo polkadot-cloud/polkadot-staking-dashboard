@@ -9,10 +9,13 @@ import { useHelp } from 'contexts/Help'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
-import { Subscan } from 'controllers/Subscan'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
-import { formatSize } from 'library/Graphs/Utils'
+import {
+  formatSize,
+  getPayoutsFromDate,
+  getPayoutsToDate,
+} from 'library/Graphs/Utils'
 import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { PluginLabel } from 'library/PluginLabel'
 import { StatBoxList } from 'library/StatBoxList'
@@ -51,11 +54,11 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   })
   const { width, height, minHeight } = formatSize(size, 280)
 
-  const payoutsFromDate = Subscan.payoutsFromDate(
+  const payoutsFromDate = getPayoutsFromDate(
     payoutsList,
     locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
   )
-  const payoutsToDate = Subscan.payoutsToDate(
+  const payoutsToDate = getPayoutsToDate(
     payoutsList,
     locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
   )

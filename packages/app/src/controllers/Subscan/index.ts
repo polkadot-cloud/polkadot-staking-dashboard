@@ -1,16 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { Locale } from 'date-fns'
-import { format, fromUnixTime, getUnixTime, subDays } from 'date-fns'
 import { poolMembersPerPage } from 'library/List/defaults'
-import type { NominatorReward } from 'plugin-staking-api/src/types'
 import type { PoolMember } from 'types'
 import type {
-  PayoutsAndClaims,
   SubscanData,
   SubscanEraPoints,
-  SubscanPayout,
   SubscanPoolClaim,
   SubscanPoolClaimRaw,
   SubscanPoolMember,
@@ -28,9 +23,6 @@ export class Subscan {
 
   // Total amount of requests that can be made in 1 second.
   static TOTAL_REQUESTS_PER_SECOND = 5
-
-  // Maximum amount of payout days supported.
-  static MAX_PAYOUT_DAYS = 60
 
   // The network to use for Subscan API calls.
   static network: string
@@ -55,93 +47,21 @@ export class Subscan {
   static handleFetchPayouts = async (address: string): Promise<void> => {
     try {
       if (!this.payoutData[address]) {
-        const results = await Promise.all([
-          this.fetchNominatorPayouts(address),
-          this.fetchPoolClaims(address),
-        ])
-        const { payouts, unclaimedPayouts } = results[0]
-        const poolClaims = results[1]
-
-        // Persist results to class.
+        const poolClaims = await this.fetchPoolClaims(address)
         this.payoutData[address] = {
-          payouts,
-          unclaimedPayouts,
           poolClaims,
         }
 
         document.dispatchEvent(
           new CustomEvent('subscan-data-updated', {
             detail: {
-              keys: ['payouts', 'unclaimedPayouts', 'poolClaims'],
+              keys: ['poolClaims'],
             },
           })
         )
       }
     } catch (e) {
       // Silently fail request.
-    }
-  }
-
-  // Fetch nominator payouts from Subscan. NOTE: Payouts with a `block_timestamp` of 0 are
-  // unclaimed.
-  static fetchNominatorPayouts = async (
-    address: string
-  ): Promise<{
-    payouts: NominatorReward[]
-    unclaimedPayouts: NominatorReward[]
-  }> => {
-    try {
-      const result = await this.makeRequest(this.ENDPOINTS.rewardSlash, {
-        address,
-        is_stash: true,
-        row: 100,
-        page: 0,
-      })
-
-      let payouts =
-        result?.list?.filter(
-          ({ block_timestamp }: SubscanPayout) => block_timestamp !== 0
-        ) || []
-
-      let unclaimedPayouts =
-        result?.list?.filter((l: SubscanPayout) => l.block_timestamp === 0) ||
-        []
-      // Further filter unclaimed payouts to ensure that payout records of `stash` and
-      // `validator_stash` are not repeated for an era. NOTE: This was introduced to remove errornous
-      // data where there were duplicated payout records (with different amounts) for a stash -
-      // validator - era record. from Subscan.
-      unclaimedPayouts = unclaimedPayouts.filter(
-        (u: SubscanPayout) =>
-          !payouts
-            .find(
-              (p: SubscanPayout) =>
-                p.stash === u.stash &&
-                p.validator_stash === u.validator_stash &&
-                p.era === u.era
-            )
-            .map((p: SubscanPayout) => ({
-              era: p.era,
-              reward: p.amount,
-              claimed: false,
-              timestamp: p.block_timestamp,
-              validator: p.validator_stash,
-              type: 'nominator',
-            }))
-      )
-
-      payouts = payouts.map((p: SubscanPayout) => ({
-        era: p.era,
-        reward: p.amount,
-        claimed: true,
-        timestamp: p.block_timestamp,
-        validator: p.validator_stash,
-        type: 'nominator',
-      }))
-
-      return { payouts, unclaimedPayouts }
-    } catch (e) {
-      // Silently fail request and return empty records.
-      return { payouts: [], unclaimedPayouts: [] }
     }
   }
 
@@ -259,70 +179,6 @@ export class Subscan {
   // Resets all received data from class.
   static resetData = () => {
     this.payoutData = {}
-  }
-
-  // Remove unclaimed payouts and dispatch update event.
-  static removeUnclaimedPayouts = (address: string, eraPayouts: string[]) => {
-    const newUnclaimedPayouts = (this.payoutData[address]?.unclaimedPayouts ||
-      []) as NominatorReward[]
-
-    eraPayouts.forEach(([era]) => {
-      newUnclaimedPayouts.filter((u) => String(u.era) !== era)
-    })
-    this.payoutData[address].unclaimedPayouts = newUnclaimedPayouts
-
-    document.dispatchEvent(
-      new CustomEvent('subscan-data-updated', {
-        detail: {
-          keys: ['unclaimedPayouts'],
-        },
-      })
-    )
-  }
-
-  // Take non-zero rewards in most-recent order.
-  static removeNonZeroAmountAndSort = (payouts: PayoutsAndClaims) => {
-    const list = payouts
-      .filter((p) => Number(p.reward) > 0)
-      .sort((a, b) => b.timestamp - a.timestamp)
-
-    // Calculates from the current date.
-    const fromTimestamp = getUnixTime(subDays(new Date(), this.MAX_PAYOUT_DAYS))
-    // Ensure payouts not older than `MAX_PAYOUT_DAYS` are returned.
-    return list.filter(({ timestamp }) => timestamp >= fromTimestamp)
-  }
-
-  // Calculate the earliest date of a payout list.
-  static payoutsFromDate = (payouts: PayoutsAndClaims, locale: Locale) => {
-    if (!payouts.length) {
-      return undefined
-    }
-    const filtered = this.removeNonZeroAmountAndSort(payouts)
-    if (!filtered.length) {
-      return undefined
-    }
-    return format(
-      fromUnixTime(filtered[filtered.length - 1].timestamp),
-      'do MMM',
-      {
-        locale,
-      }
-    )
-  }
-
-  // Calculate the latest date of a payout list.
-  static payoutsToDate = (payouts: PayoutsAndClaims, locale: Locale) => {
-    if (!payouts.length) {
-      return undefined
-    }
-    const filtered = this.removeNonZeroAmountAndSort(payouts || [])
-    if (!filtered.length) {
-      return undefined
-    }
-
-    return format(fromUnixTime(filtered[0].timestamp), 'do MMM', {
-      locale,
-    })
   }
 
   // Get the public Subscan endpoint.

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { CardWrapper } from 'library/Card/Wrappers'
-import { PluginLabel } from 'library/PluginLabel'
 import { StatBoxList } from 'library/StatBoxList'
 import { useTranslation } from 'react-i18next'
 import { PageHeading, PageRow, PageTitle, RowSection } from 'ui-structure'
@@ -45,7 +44,6 @@ export const Overview = () => {
         </RowSection>
         <RowSection hLast vLast>
           <CardWrapper style={{ minHeight: PAYOUTS_HEIGHT }}>
-            <PluginLabel plugin="subscan" />
             <Payouts />
           </CardWrapper>
         </RowSection>

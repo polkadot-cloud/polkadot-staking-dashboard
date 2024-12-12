@@ -6,11 +6,11 @@ import { MaxPayoutDays } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
-import { Subscan } from 'controllers/Subscan'
 import type { PayoutsAndClaims } from 'controllers/Subscan/types'
 import { useSubscanData } from 'hooks/useSubscanData'
 import { PayoutBar } from 'library/Graphs/PayoutBar'
 import { PayoutLine } from 'library/Graphs/PayoutLine'
+import { removeNonZeroAmountAndSort } from 'library/Graphs/Utils'
 import { ApolloProvider, client, useRewards } from 'plugin-staking-api'
 import type { NominatorReward } from 'plugin-staking-api/src/types'
 import { useEffect } from 'react'
@@ -48,7 +48,7 @@ export const ActiveGraphInner = ({
     const payoutsList = (allRewards as PayoutsAndClaims).concat(
       poolClaims
     ) as PayoutsAndClaims
-    setPayoutLists(Subscan.removeNonZeroAmountAndSort(payoutsList))
+    setPayoutLists(removeNonZeroAmountAndSort(payoutsList))
   }, [JSON.stringify(payouts), JSON.stringify(poolClaims)])
 
   return (
