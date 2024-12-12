@@ -6,7 +6,6 @@ import type { UnclaimedRewards } from 'plugin-staking-api/src/types'
 
 export interface PayoutsContextInterface {
   payoutsSynced: Sync
-  removeEraPayout: (era: string, validator: string) => void
   unclaimedRewards: UnclaimedRewards
   setUnclaimedRewards: (unclaimedRewards: UnclaimedRewards) => void
 }

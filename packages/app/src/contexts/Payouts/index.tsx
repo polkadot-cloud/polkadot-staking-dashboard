@@ -346,43 +346,6 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
     })
   }
 
-  // Removes a payout from `unclaimedPayouts` based on an era and validator record.
-  const removeEraPayout = (era: string, validator: string) => {
-    if (!unclaimedPayouts) {
-      return
-    }
-
-    // Delete the payout from local storage.
-    const localPayouts = localStorage.getItem(`${network}_unclaimed_payouts`)
-    if (localPayouts && activeAccount) {
-      const parsed = JSON.parse(localPayouts)
-
-      if (parsed?.[activeAccount]?.[era]?.[validator]) {
-        delete parsed[activeAccount][era][validator]
-
-        // Delete the era if it has no more payouts.
-        if (Object.keys(parsed[activeAccount][era]).length === 0) {
-          delete parsed[activeAccount][era]
-        }
-
-        // Delete the active account if it has no more eras.
-        if (Object.keys(parsed[activeAccount]).length === 0) {
-          delete parsed[activeAccount]
-        }
-      }
-      localStorage.setItem(
-        `${network}_unclaimed_payouts`,
-        JSON.stringify(parsed)
-      )
-    }
-
-    // Remove the payout from state.
-    const newUnclaimedPayouts = { ...unclaimedPayouts }
-    delete newUnclaimedPayouts[era][validator]
-
-    setUnclaimedPayouts(newUnclaimedPayouts)
-  }
-
   // Fetch payouts if active account is nominating.
   useEffect(() => {
     if (!activeEra.index.isZero()) {
@@ -409,7 +372,6 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
     <PayoutsContext.Provider
       value={{
         payoutsSynced: payoutsSyncedRef.current,
-        removeEraPayout,
         unclaimedRewards,
         setUnclaimedRewards,
       }}

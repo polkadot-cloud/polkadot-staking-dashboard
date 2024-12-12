@@ -36,10 +36,10 @@ export const Forms = forwardRef(
       networkData: { units, unit },
     } = useNetwork()
     const { newBatchCall } = useBatchCall()
-    const { removeEraPayout } = usePayouts()
     const { setModalStatus } = useOverlay().modal
     const { activeAccount } = useActiveAccounts()
     const { getSignerWarnings } = useSignerWarnings()
+    const { unclaimedRewards, setUnclaimedRewards } = usePayouts()
 
     // Get the total payout amount.
     const totalPayout =
@@ -114,20 +114,20 @@ export const Forms = forwardRef(
       },
       callbackInBlock: () => {
         if (payouts && activeAccount) {
-          // Remove Subscan unclaimed payout record(s) if they exist.
+          // Deduct unclaimed payout value from state value
           const eraPayouts: string[] = []
           payouts.forEach(({ era }) => {
             eraPayouts.push(String(era))
           })
-          // TODO: Deduct unclaimed payout value from state value
-          // Subscan.removeUnclaimedPayouts(activeAccount, eraPayouts)
-
-          // Deduct from `unclaimedPayouts` in Payouts context.
-          payouts.forEach(({ era, paginatedValidators }) => {
-            for (const v of paginatedValidators || []) {
-              removeEraPayout(era, v[1])
-            }
-          })
+          const newUnclaimedRewards = {
+            total: new BigNumber(unclaimedRewards.total)
+              .minus(totalPayout)
+              .toString(),
+            entries: unclaimedRewards.entries.filter(
+              (entry) => !eraPayouts.includes(String(entry.era))
+            ),
+          }
+          setUnclaimedRewards(newUnclaimedRewards)
         }
         // Reset active form payouts for this modal.
         setPayouts([])
