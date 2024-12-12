@@ -19,7 +19,7 @@ import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'
 import type { NominatorReward } from 'plugin-staking-api/src/types'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { planckToUnitBn } from 'utils'
 import { ActiveGraph } from './ActiveGraph'
@@ -68,10 +68,6 @@ export const Payouts = () => {
       locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
     }
   }
-
-  useEffect(() => {
-    setLastReward(undefined)
-  }, [activeAccount])
 
   return (
     <>
@@ -131,7 +127,7 @@ export const Payouts = () => {
               setLastReward={setLastReward}
             />
           ) : (
-            <InactiveGraph />
+            <InactiveGraph setLastReward={setLastReward} />
           )}
         </GraphWrapper>
       </div>

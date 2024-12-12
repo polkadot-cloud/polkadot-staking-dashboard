@@ -3,25 +3,37 @@
 
 import { PayoutBar } from 'library/Graphs/PayoutBar'
 import { PayoutLine } from 'library/Graphs/PayoutLine'
+import type { NominatorReward } from 'plugin-staking-api/src/types'
+import { useEffect } from 'react'
 
-export const InactiveGraph = () => (
-  <>
-    <PayoutBar
-      days={19}
-      height="150px"
-      data={{ payouts: [], unclaimedPayouts: [], poolClaims: [] }}
-      nominating={false}
-      inPool={false}
-    />
-    <div style={{ marginTop: '3rem' }}>
-      <PayoutLine
+export const InactiveGraph = ({
+  setLastReward,
+}: {
+  setLastReward: (reward: NominatorReward | undefined) => void
+}) => {
+  useEffect(() => {
+    setLastReward(undefined)
+  }, [])
+
+  return (
+    <>
+      <PayoutBar
         days={19}
-        average={10}
-        height="65px"
+        height="150px"
         data={{ payouts: [], unclaimedPayouts: [], poolClaims: [] }}
         nominating={false}
         inPool={false}
       />
-    </div>
-  </>
-)
+      <div style={{ marginTop: '3rem' }}>
+        <PayoutLine
+          days={19}
+          average={10}
+          height="65px"
+          data={{ payouts: [], unclaimedPayouts: [], poolClaims: [] }}
+          nominating={false}
+          inPool={false}
+        />
+      </div>
+    </>
+  )
+}
