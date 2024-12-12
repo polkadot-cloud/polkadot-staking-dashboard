@@ -109,18 +109,8 @@ export const PayoutListInner = ({
         <MotionContainer>
           {listPayouts.map((p: AnyApi, index: number) => {
             const label =
-              p.event_id === 'PaidOut'
-                ? t('payouts.poolClaim')
-                : p.event_id === 'Rewarded'
-                  ? t('payouts.payout')
-                  : p.event_id
-
-            const labelClass =
-              p.event_id === 'PaidOut'
-                ? 'claim'
-                : p.event_id === 'Rewarded'
-                  ? 'reward'
-                  : undefined
+              p.type === 'pool' ? t('payouts.poolClaim') : t('payouts.payout')
+            const labelClass = p.type === 'pool' ? 'claim' : 'reward'
 
             // get validator if it exists
             const validator = validators.find(
@@ -158,7 +148,7 @@ export const PayoutListInner = ({
                         <div>
                           <h4 className={labelClass}>
                             <>
-                              {p.event_id === 'Slashed' ? '-' : '+'}
+                              +
                               {planckToUnitBn(
                                 new BigNumber(p.amount),
                                 units
@@ -196,7 +186,7 @@ export const PayoutListInner = ({
                         <div>
                           <h5>
                             {formatDistance(
-                              fromUnixTime(p.block_timestamp),
+                              fromUnixTime(p.timestamp),
                               new Date(),
                               {
                                 addSuffix: true,

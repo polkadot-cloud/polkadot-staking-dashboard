@@ -3,8 +3,11 @@
 
 import { useSize } from '@w3ux/hooks'
 import { Odometer } from '@w3ux/react-odometer'
+import type { AnyJson } from '@w3ux/types'
 import { minDecimalPlaces } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
@@ -19,11 +22,12 @@ import { formatRewardsForGraphs, formatSize } from 'library/Graphs/Utils'
 import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'
+import { ApolloProvider, client, useRewards } from 'plugin-staking-api'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { planckToUnitBn } from 'utils'
 
-export const Payouts = () => {
+export const PayoutsInner = () => {
   const { i18n, t } = useTranslation('pages')
   const {
     networkData: {
@@ -31,17 +35,29 @@ export const Payouts = () => {
       brand: { token: Token },
     },
   } = useNetwork()
+  const { activeEra } = useApi()
   const { inSetup } = useStaking()
   const { syncing } = useSyncing()
   const { plugins } = usePlugins()
+  const { network } = useNetwork()
   const { containerRefs } = useUi()
-  let { unclaimedPayouts } = useSubscanData()
-  const { payouts, poolClaims, injectBlockTimestamp } = useSubscanData()
+  const { poolClaims } = useSubscanData()
+  const { activeAccount } = useActiveAccounts()
+
+  const { data } = useRewards({
+    chain: network,
+    who: activeAccount || '',
+    fromEra: Math.max(activeEra.index.minus(1).toNumber(), 0),
+  })
+
+  const allRewards = data?.allRewards ?? []
+  const payouts =
+    allRewards.filter((reward: AnyJson) => reward.claimed === true) ?? []
+
+  const unclaimedPayouts =
+    allRewards.filter((reward: AnyJson) => reward.claimed === false) ?? []
 
   const notStaking = !syncing && inSetup()
-
-  // Inject `block_timestamp` for unclaimed payouts.
-  unclaimedPayouts = injectBlockTimestamp(unclaimedPayouts)
 
   // Ref to the graph container.
   const graphInnerRef = useRef<HTMLDivElement>(null)
@@ -65,9 +81,7 @@ export const Payouts = () => {
   let formatTo = new Date()
   let formatOpts = {}
   if (lastReward !== null) {
-    formatFrom = fromUnixTime(
-      lastReward?.block_timestamp ?? getUnixTime(new Date())
-    )
+    formatFrom = fromUnixTime(lastReward?.timestamp ?? getUnixTime(new Date()))
     formatTo = new Date()
     formatOpts = {
       addSuffix: true,
@@ -143,3 +157,9 @@ export const Payouts = () => {
     </>
   )
 }
+
+export const Payouts = () => (
+  <ApolloProvider client={client}>
+    <PayoutsInner />
+  </ApolloProvider>
+)

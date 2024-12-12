@@ -59,9 +59,6 @@ export const PayoutLine = ({
   const notStaking = !syncing && inSetup() && !poolMembership
   const inPoolOnly = !syncing && inSetup() && !!poolMembership
 
-  // remove slashes from payouts (graph does not support negative values).
-  const payoutsNoSlash = payouts?.filter((p) => p.event_id !== 'Slashed') || []
-
   // define the most recent date that we will show on the graph.
   const fromDate = new Date()
 
@@ -69,7 +66,7 @@ export const PayoutLine = ({
     fromDate,
     days,
     units,
-    payoutsNoSlash,
+    payouts,
     poolClaims,
     [] // Note: we are not using `unclaimedPayouts` here.
   )
@@ -155,7 +152,7 @@ export const PayoutLine = ({
     datasets: [
       {
         label: t('payout'),
-        data: combinedPayouts.map((item: AnyApi) => item?.amount ?? 0),
+        data: combinedPayouts.map((item: AnyApi) => item.reward.toFixed(5)),
         borderColor: color,
         pointStyle: undefined,
         pointRadius: 0,

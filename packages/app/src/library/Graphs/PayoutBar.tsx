@@ -56,22 +56,15 @@ export const PayoutBar = ({
   const { unit, units, colors } = useNetwork().networkData
   const notStaking = !syncing && inSetup() && !membership
 
-  // remove slashes from payouts (graph does not support negative values).
-  const payoutsNoSlash = payouts?.filter((p) => p.event_id !== 'Slashed') || []
-
-  // remove slashes from unclaimed payouts.
-  const unclaimedPayoutsNoSlash =
-    unclaimedPayouts?.filter((p) => p.event_id !== 'Slashed') || []
-
   // get formatted rewards data for graph.
   const { allPayouts, allPoolClaims, allUnclaimedPayouts } =
     formatRewardsForGraphs(
       new Date(),
       days,
       units,
-      payoutsNoSlash,
+      payouts,
       poolClaims,
-      unclaimedPayoutsNoSlash
+      unclaimedPayouts
     )
 
   const { p: graphPayouts } = allPayouts
@@ -93,7 +86,7 @@ export const PayoutBar = ({
 
   const data = {
     labels: graphPayouts.map((item: AnyApi) => {
-      const dateObj = format(fromUnixTime(item.block_timestamp), 'do MMM', {
+      const dateObj = format(fromUnixTime(item.timestamp), 'do MMM', {
         locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
       })
       return `${dateObj}`
@@ -103,7 +96,7 @@ export const PayoutBar = ({
       {
         order: 1,
         label: t('payout'),
-        data: graphPayouts.map((item: AnyApi) => item.amount),
+        data: graphPayouts.map((item: AnyApi) => item.reward.toFixed(5)),
         borderColor: colorPayouts,
         backgroundColor: colorPayouts,
         pointRadius: 0,
@@ -112,7 +105,7 @@ export const PayoutBar = ({
       {
         order: 2,
         label: t('poolClaim'),
-        data: graphPoolClaims.map((item: AnyApi) => item.amount),
+        data: graphPoolClaims.map((item: AnyApi) => item.reward.toFixed(5)),
         borderColor: colorPoolClaims,
         backgroundColor: colorPoolClaims,
         pointRadius: 0,
@@ -120,7 +113,9 @@ export const PayoutBar = ({
       },
       {
         order: 3,
-        data: graphUnclaimedPayouts.map((item: AnyApi) => item.amount),
+        data: graphUnclaimedPayouts.map((item: AnyApi) =>
+          item.reward.toFixed(5)
+        ),
         label: t('unclaimedPayouts'),
         borderColor: colorPayouts,
         backgroundColor: colors.pending[mode],

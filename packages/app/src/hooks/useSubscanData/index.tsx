@@ -5,12 +5,9 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { usePlugins } from 'contexts/Plugins'
 import { Subscan } from 'controllers/Subscan'
-import type {
-  PayoutType,
-  SubscanPayout,
-  SubscanPoolClaim,
-} from 'controllers/Subscan/types'
+import type { PayoutType, SubscanPoolClaim } from 'controllers/Subscan/types'
 import { isCustomEvent } from 'controllers/utils'
+import type { NominatorReward } from 'plugin-staking-api/src/types'
 import { useEffect, useRef, useState } from 'react'
 import { useEventListener } from 'usehooks-ts'
 import { useErasToTimeLeft } from '../useErasToTimeLeft'
@@ -22,10 +19,12 @@ export const useSubscanData = () => {
   const { activeAccount } = useActiveAccounts()
 
   // Store payouts data for the active account.
-  const [payouts, setPayouts] = useState<SubscanPayout[]>([])
+  const [payouts, setPayouts] = useState<NominatorReward[]>([])
 
   // Store unclaimed payouts data for the active account.
-  const [unclaimedPayouts, setUnclaimedPayouts] = useState<SubscanPayout[]>([])
+  const [unclaimedPayouts, setUnclaimedPayouts] = useState<NominatorReward[]>(
+    []
+  )
 
   // Store pool claims data for the active account.
   const [poolClaims, setPoolClaims] = useState<SubscanPoolClaim[]>([])
@@ -40,14 +39,14 @@ export const useSubscanData = () => {
       if (receivedKeys.includes('payouts')) {
         setPayouts(
           (Subscan.payoutData[activeAccount]?.['payouts'] ||
-            []) as SubscanPayout[]
+            []) as NominatorReward[]
         )
       }
 
       if (receivedKeys.includes('unclaimedPayouts')) {
         setUnclaimedPayouts(
           (Subscan.payoutData[activeAccount]?.['unclaimedPayouts'] ||
-            []) as SubscanPayout[]
+            []) as NominatorReward[]
         )
       }
 
@@ -68,14 +67,14 @@ export const useSubscanData = () => {
     documentRef
   )
 
-  // Inject block_timestamp for unclaimed payouts. We take the timestamp of the start of the
+  // Inject timestamp for unclaimed payouts. We take the timestamp of the start of the
   // following payout era - this is the time payouts become available to claim by validators.
-  const injectBlockTimestamp = (entries: SubscanPayout[]) => {
+  const injectBlockTimestamp = (entries: NominatorReward[]) => {
     if (!entries) {
       return entries
     }
     entries.forEach((p) => {
-      p.block_timestamp = activeEra.start
+      p.timestamp = activeEra.start
         .multipliedBy(0.001)
         .minus(erasToSeconds(activeEra.index.minus(p.era).minus(1)))
         .toNumber()
@@ -88,11 +87,11 @@ export const useSubscanData = () => {
     if (activeAccount) {
       setPayouts(
         (Subscan.payoutData[activeAccount]?.['payouts'] ||
-          []) as SubscanPayout[]
+          []) as NominatorReward[]
       )
       setUnclaimedPayouts(
         (Subscan.payoutData[activeAccount]?.['unclaimedPayouts'] ||
-          []) as SubscanPayout[]
+          []) as NominatorReward[]
       )
       setPoolClaims(
         (Subscan.payoutData[activeAccount]?.['poolClaims'] ||

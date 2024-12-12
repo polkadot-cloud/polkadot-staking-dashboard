@@ -4,6 +4,7 @@
 import type { Locale } from 'date-fns'
 import { format, fromUnixTime, getUnixTime, subDays } from 'date-fns'
 import { poolMembersPerPage } from 'library/List/defaults'
+import type { NominatorReward } from 'plugin-staking-api/src/types'
 import type { PoolMember } from 'types'
 import type {
   PayoutsAndClaims,
@@ -11,6 +12,7 @@ import type {
   SubscanEraPoints,
   SubscanPayout,
   SubscanPoolClaim,
+  SubscanPoolClaimRaw,
   SubscanPoolMember,
   SubscanRequestBody,
 } from './types'
@@ -85,8 +87,8 @@ export class Subscan {
   static fetchNominatorPayouts = async (
     address: string
   ): Promise<{
-    payouts: SubscanPayout[]
-    unclaimedPayouts: SubscanPayout[]
+    payouts: NominatorReward[]
+    unclaimedPayouts: NominatorReward[]
   }> => {
     try {
       const result = await this.makeRequest(this.ENDPOINTS.rewardSlash, {
@@ -96,7 +98,7 @@ export class Subscan {
         page: 0,
       })
 
-      const payouts =
+      let payouts =
         result?.list?.filter(
           ({ block_timestamp }: SubscanPayout) => block_timestamp !== 0
         ) || []
@@ -104,20 +106,37 @@ export class Subscan {
       let unclaimedPayouts =
         result?.list?.filter((l: SubscanPayout) => l.block_timestamp === 0) ||
         []
-
       // Further filter unclaimed payouts to ensure that payout records of `stash` and
       // `validator_stash` are not repeated for an era. NOTE: This was introduced to remove errornous
       // data where there were duplicated payout records (with different amounts) for a stash -
       // validator - era record. from Subscan.
       unclaimedPayouts = unclaimedPayouts.filter(
         (u: SubscanPayout) =>
-          !payouts.find(
-            (p: SubscanPayout) =>
-              p.stash === u.stash &&
-              p.validator_stash === u.validator_stash &&
-              p.era === u.era
-          )
+          !payouts
+            .find(
+              (p: SubscanPayout) =>
+                p.stash === u.stash &&
+                p.validator_stash === u.validator_stash &&
+                p.era === u.era
+            )
+            .map((p: SubscanPayout) => ({
+              era: p.era,
+              reward: p.amount,
+              claimed: false,
+              timestamp: p.block_timestamp,
+              validator: p.validator_stash,
+              type: 'nominator',
+            }))
       )
+
+      payouts = payouts.map((p: SubscanPayout) => ({
+        era: p.era,
+        reward: p.amount,
+        claimed: true,
+        timestamp: p.block_timestamp,
+        validator: p.validator_stash,
+        type: 'nominator',
+      }))
 
       return { payouts, unclaimedPayouts }
     } catch (e) {
@@ -140,9 +159,15 @@ export class Subscan {
         return []
       }
       // Remove claims with a `block_timestamp`.
-      const poolClaims = result.list.filter(
-        (l: SubscanPoolClaim) => l.block_timestamp !== 0
-      )
+      const poolClaims = result.list
+        .filter((l: SubscanPoolClaimRaw) => l.block_timestamp !== 0)
+        .map((l: SubscanPoolClaimRaw) => ({
+          ...l,
+          reward: l.amount,
+          timestamp: l.block_timestamp,
+          type: 'pool',
+        }))
+
       return poolClaims
     } catch (e) {
       // Silently fail request and return empty record.
@@ -239,7 +264,7 @@ export class Subscan {
   // Remove unclaimed payouts and dispatch update event.
   static removeUnclaimedPayouts = (address: string, eraPayouts: string[]) => {
     const newUnclaimedPayouts = (this.payoutData[address]?.unclaimedPayouts ||
-      []) as SubscanPayout[]
+      []) as NominatorReward[]
 
     eraPayouts.forEach(([era]) => {
       newUnclaimedPayouts.filter((u) => String(u.era) !== era)
@@ -258,15 +283,13 @@ export class Subscan {
   // Take non-zero rewards in most-recent order.
   static removeNonZeroAmountAndSort = (payouts: PayoutsAndClaims) => {
     const list = payouts
-      .filter((p) => Number(p.amount) > 0)
-      .sort((a, b) => b.block_timestamp - a.block_timestamp)
+      .filter((p) => Number(p.reward) > 0)
+      .sort((a, b) => b.timestamp - a.timestamp)
 
     // Calculates from the current date.
     const fromTimestamp = getUnixTime(subDays(new Date(), this.MAX_PAYOUT_DAYS))
     // Ensure payouts not older than `MAX_PAYOUT_DAYS` are returned.
-    return list.filter(
-      ({ block_timestamp }) => block_timestamp >= fromTimestamp
-    )
+    return list.filter(({ timestamp }) => timestamp >= fromTimestamp)
   }
 
   // Calculate the earliest date of a payout list.
@@ -279,7 +302,7 @@ export class Subscan {
       return undefined
     }
     return format(
-      fromUnixTime(filtered[filtered.length - 1].block_timestamp),
+      fromUnixTime(filtered[filtered.length - 1].timestamp),
       'do MMM',
       {
         locale,
@@ -297,7 +320,7 @@ export class Subscan {
       return undefined
     }
 
-    return format(fromUnixTime(filtered[0].block_timestamp), 'do MMM', {
+    return format(fromUnixTime(filtered[0].timestamp), 'do MMM', {
       locale,
     })
   }

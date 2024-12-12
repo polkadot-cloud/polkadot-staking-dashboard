@@ -29,5 +29,16 @@ export type UseTokenPriceResult = Query & {
 }
 
 export type AllRewardsResult = Query & {
-  data: unknown
+  data: {
+    allRewards: NominatorReward[]
+  }
+}
+
+export interface NominatorReward {
+  era: number
+  reward: number
+  claimed: boolean
+  timestamp: number
+  validator: string
+  type: string
 }

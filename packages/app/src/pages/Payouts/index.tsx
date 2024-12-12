@@ -47,7 +47,7 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   })
   const { width, height, minHeight } = formatSize(size, 280)
 
-  // Inject `block_timestamp` for unclaimed payouts.
+  // Inject `timestamp` for unclaimed payouts.
   unclaimedPayouts = injectBlockTimestamp(unclaimedPayouts)
 
   const payoutsAndClaims = (payouts as PayoutsAndClaims).concat(poolClaims)
