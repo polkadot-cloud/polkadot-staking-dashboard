@@ -16,7 +16,7 @@ import type { ActivePayout } from './types'
 
 export const ClaimPayouts = () => {
   const { t } = useTranslation('modals')
-  const { unclaimedPayouts } = usePayouts()
+  const { unclaimedRewards } = usePayouts()
   const { setModalHeight, modalMaxHeight } = useOverlay().modal
 
   // Active modal section.
@@ -51,7 +51,7 @@ export const ClaimPayouts = () => {
   // Resize modal on state change.
   useEffect(() => {
     onResize()
-  }, [unclaimedPayouts, section])
+  }, [unclaimedRewards.total, section])
 
   // Resize this modal on window resize.
   useEffect(() => {

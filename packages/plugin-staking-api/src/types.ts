@@ -34,6 +34,12 @@ export type AllRewardsResult = Query & {
   }
 }
 
+export type UnclaimedRewardsResult = Query & {
+  data: {
+    unclaimedRewards: UnclaimedRewards
+  }
+}
+
 export interface NominatorReward {
   era: number
   reward: number
@@ -41,4 +47,20 @@ export interface NominatorReward {
   timestamp: number
   validator: string
   type: string
+}
+
+export interface UnclaimedRewards {
+  total: string
+  entries: EraUnclaimedReward[]
+}
+export interface EraUnclaimedReward {
+  era: number
+  reward: string
+  validators: ValidatorUnclaimedReward[]
+}
+
+export interface ValidatorUnclaimedReward {
+  validator: string
+  reward: string
+  page: number | null
 }

@@ -7,6 +7,8 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
+import { usePlugins } from 'contexts/Plugins'
+import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { Notifications } from 'controllers/Notifications'
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary'
@@ -31,33 +33,38 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom'
+import { StakingApi } from 'StakingApi'
 import { Body, Main } from 'ui-structure'
 
 const RouterInner = () => {
   const { t } = useTranslation()
   const { network } = useNetwork()
+  const { inSetup } = useStaking()
   const { pathname } = useLocation()
   const { setContainerRefs } = useUi()
+  const { pluginEnabled } = usePlugins()
   const { accounts } = useImportedAccounts()
   const { accountsInitialised } = useOtherAccounts()
   const { activeAccount, setActiveAccount } = useActiveAccounts()
+  const nominating = !inSetup()
+  const stakingApiEnabled = pluginEnabled('staking_api')
 
   // References to outer container.
   const mainInterfaceRef = useRef<HTMLDivElement>(null)
 
-  // Scroll to top of the window on every page change or network change.
+  // Scroll to top of the window on every page change or network change
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [pathname, network])
 
-  // Set container references to UI context and make available throughout app.
+  // Set container references to UI context and make available throughout app
   useEffect(() => {
     setContainerRefs({
       mainInterface: mainInterfaceRef,
     })
   }, [])
 
-  // Open default account modal if url var present and accounts initialised.
+  // Open default account modal if url var present and accounts initialised
   useEffect(() => {
     if (accountsInitialised) {
       const aUrl = extractUrlValue('a')
@@ -79,6 +86,7 @@ const RouterInner = () => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
+      {stakingApiEnabled && nominating && <StakingApi />}
       <NotificationPrompts />
       <Body>
         <Help />

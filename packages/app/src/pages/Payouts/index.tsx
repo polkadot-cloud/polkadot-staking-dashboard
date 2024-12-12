@@ -39,11 +39,11 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   const { getPoolMembership } = useBalances()
   const { activeAccount } = useActiveAccounts()
 
-  const notStaking = !syncing && inSetup()
   const membership = getPoolMembership(activeAccount)
   const nominating = !inSetup()
   const inPool = membership !== null
   const staking = nominating || inPool
+  const notStaking = !syncing && !staking
 
   const [payoutsList, setPayoutLists] = useState<AnyApi[]>([])
 

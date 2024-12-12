@@ -9,6 +9,7 @@ import { PayoutBar } from 'library/Graphs/PayoutBar'
 import { PayoutLine } from 'library/Graphs/PayoutLine'
 import { ApolloProvider, client, useRewards } from 'plugin-staking-api'
 import type { NominatorReward } from 'plugin-staking-api/src/types'
+import { useEffect } from 'react'
 
 export const ActiveGraphInner = ({
   nominating,
@@ -39,7 +40,9 @@ export const ActiveGraphInner = ({
     allRewards.filter((reward: NominatorReward) => reward.claimed === false) ??
     []
 
-  setLastReward(payouts[0])
+  useEffect(() => {
+    setLastReward(payouts[0])
+  }, [JSON.stringify(payouts[0])])
 
   return (
     <>

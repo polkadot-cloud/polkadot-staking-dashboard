@@ -2,11 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { Sync } from '@w3ux/types'
+import type { UnclaimedRewards } from 'plugin-staking-api/src/types'
 
 export interface PayoutsContextInterface {
   payoutsSynced: Sync
-  unclaimedPayouts: UnclaimedPayouts
   removeEraPayout: (era: string, validator: string) => void
+  unclaimedRewards: UnclaimedRewards
+  setUnclaimedRewards: (unclaimedRewards: UnclaimedRewards) => void
 }
 
 // Record<era, EraUnclaimedPayouts>

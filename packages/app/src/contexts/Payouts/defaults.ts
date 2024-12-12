@@ -8,6 +8,15 @@ export const MaxSupportedPayoutEras = 7
 
 export const defaultPayoutsContext: PayoutsContextInterface = {
   payoutsSynced: 'unsynced',
-  unclaimedPayouts: null,
   removeEraPayout: (era, validator) => {},
+  unclaimedRewards: {
+    total: '0',
+    entries: [],
+  },
+  setUnclaimedRewards: (unclaimedRewards) => {},
+}
+
+export const defaultUnclaimedRewards = {
+  total: '0',
+  entries: [],
 }

@@ -2,13 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import type { EraUnclaimedPayouts } from 'contexts/Payouts/types'
+import type { ValidatorUnclaimedReward } from 'plugin-staking-api/src/types'
 
 export const getTotalPayout = (
-  unclaimedPayout: EraUnclaimedPayouts
+  validators: ValidatorUnclaimedReward[]
 ): BigNumber =>
-  Object.values(unclaimedPayout).reduce(
-    (acc: BigNumber, paginatedValidator: [number, string]) =>
-      acc.plus(paginatedValidator[1]),
+  validators.reduce(
+    (acc: BigNumber, { reward }: ValidatorUnclaimedReward) => acc.plus(reward),
     new BigNumber(0)
   )

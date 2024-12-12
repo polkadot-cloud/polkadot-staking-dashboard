@@ -14,6 +14,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
+import type { UnclaimedRewards } from 'plugin-staking-api/src/types'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { perbillToPercent } from 'utils'
@@ -45,6 +46,12 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
   const { activeAccount } = useActiveAccounts()
   const { isNominating, fetchEraStakers } = useStaking()
   const { maxExposurePageSize } = consts
+
+  // Store pending nominator reward total & individual entries.
+  const [unclaimedRewards, setUnclaimedRewards] = useState<UnclaimedRewards>({
+    total: '0',
+    entries: [],
+  })
 
   // Store active accont's payout state.
   const [unclaimedPayouts, setUnclaimedPayouts] =
@@ -184,7 +191,7 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
     }
 
     // Unclaimed rewards by validator. Record<validator, eras[]>.
-    const unclaimedRewards: Record<string, string[]> = {}
+    const newUnclaimedRewards: Record<string, string[]> = {}
 
     // Refer to new `ClaimedRewards` storage item and calculate unclaimed rewards from that and
     // `exposedPage` stored locally in exposure data.
@@ -213,10 +220,10 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
       // Add to `unclaimedRewards` if payout page has not yet been claimed.
       if (exposedPage) {
         if (!pages.includes(exposedPage)) {
-          if (unclaimedRewards?.[validator]) {
-            unclaimedRewards[validator].push(era)
+          if (newUnclaimedRewards?.[validator]) {
+            newUnclaimedRewards[validator].push(era)
           } else {
-            unclaimedRewards[validator] = [era]
+            newUnclaimedRewards[validator] = [era]
           }
         }
       }
@@ -226,7 +233,7 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
     const unclaimedByEra: Record<string, string[]> = {}
     erasToCheck.forEach((era) => {
       const eraValidators: string[] = []
-      Object.entries(unclaimedRewards).forEach(([validator, eras]) => {
+      Object.entries(newUnclaimedRewards).forEach(([validator, eras]) => {
         if (eras.includes(era)) {
           eraValidators.push(validator)
         }
@@ -401,9 +408,10 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
   return (
     <PayoutsContext.Provider
       value={{
-        unclaimedPayouts,
         payoutsSynced: payoutsSyncedRef.current,
         removeEraPayout,
+        unclaimedRewards,
+        setUnclaimedRewards,
       }}
     >
       {children}

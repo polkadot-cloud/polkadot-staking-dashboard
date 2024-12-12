@@ -11,7 +11,7 @@ import { ItemWrapper } from './Wrappers'
 
 export const Item = ({
   era,
-  unclaimedPayout,
+  validators,
   setPayouts,
   setSection,
 }: ItemProps) => {
@@ -20,8 +20,8 @@ export const Item = ({
     networkData: { units, unit },
   } = useNetwork()
 
-  const totalPayout = getTotalPayout(unclaimedPayout)
-  const numPayouts = Object.values(unclaimedPayout).length
+  const totalPayout = getTotalPayout(validators)
+  const numPayouts = validators.length
 
   return (
     <ItemWrapper>
@@ -49,8 +49,8 @@ export const Item = ({
                   {
                     era,
                     payout: totalPayout.toString(),
-                    paginatedValidators: Object.entries(unclaimedPayout).map(
-                      ([v, [page]]) => [page, v]
+                    paginatedValidators: validators.map(
+                      ({ page, validator }) => [page || 0, validator]
                     ),
                   },
                 ])
