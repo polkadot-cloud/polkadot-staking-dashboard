@@ -17,7 +17,6 @@ import {
   getPayoutsToDate,
 } from 'library/Graphs/Utils'
 import { GraphWrapper } from 'library/Graphs/Wrapper'
-import { PluginLabel } from 'library/PluginLabel'
 import { StatBoxList } from 'library/StatBoxList'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'
@@ -77,7 +76,6 @@ export const Payouts = ({ page: { key } }: PageProps) => {
       </StatBoxList>
       <PageRow>
         <CardWrapper>
-          <PluginLabel plugin="subscan" />
           <CardHeaderWrapper>
             <h4>
               {t('payouts.payoutHistory', { ns: 'pages' })}
