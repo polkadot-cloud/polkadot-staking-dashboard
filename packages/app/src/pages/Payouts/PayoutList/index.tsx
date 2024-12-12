@@ -113,9 +113,7 @@ export const PayoutListInner = ({
             const labelClass = p.type === 'pool' ? 'claim' : 'reward'
 
             // get validator if it exists
-            const validator = validators.find(
-              (v) => v.address === p.validator_stash
-            )
+            const validator = validators.find((v) => v.address === p.validator)
 
             // get pool if it exists
             const pool = bondedPools.find(({ id }) => id === p.pool_id)
@@ -150,7 +148,7 @@ export const PayoutListInner = ({
                             <>
                               +
                               {planckToUnitBn(
-                                new BigNumber(p.amount),
+                                new BigNumber(p.reward),
                                 units
                               ).toString()}{' '}
                               {unit}
@@ -167,9 +165,9 @@ export const PayoutListInner = ({
                         <div>
                           {label === t('payouts.payout') &&
                             (batchIndex > 0 ? (
-                              <Identity address={p.validator_stash} />
+                              <Identity address={p.validator} />
                             ) : (
-                              <div>{ellipsisFn(p.validator_stash)}</div>
+                              <div>{ellipsisFn(p.validator)}</div>
                             ))}
                           {label === t('payouts.poolClaim') &&
                             (pool ? (

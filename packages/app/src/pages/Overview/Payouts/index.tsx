@@ -17,8 +17,6 @@ import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns'
 import { useSubscanData } from 'hooks/useSubscanData'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardHeaderWrapper } from 'library/Card/Wrappers'
-import { PayoutBar } from 'library/Graphs/PayoutBar'
-import { PayoutLine } from 'library/Graphs/PayoutLine'
 import { formatRewardsForGraphs, formatSize } from 'library/Graphs/Utils'
 import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { StatusLabel } from 'library/StatusLabel'
@@ -27,6 +25,8 @@ import { ApolloProvider, client, useRewards } from 'plugin-staking-api'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { planckToUnitBn } from 'utils'
+import { ActiveGraph } from './ActiveGraph'
+import { InactiveGraph } from './InactiveGraph'
 
 export const PayoutsInner = () => {
   const { i18n, t } = useTranslation('pages')
@@ -49,6 +49,8 @@ export const PayoutsInner = () => {
   const membership = getPoolMembership(activeAccount)
   const nominating = !inSetup()
   const inPool = membership !== null
+  const staking = nominating || inPool
+  const notStaking = !syncing && !staking
 
   const { data } = useRewards({
     chain: network,
@@ -62,8 +64,6 @@ export const PayoutsInner = () => {
 
   const unclaimedPayouts =
     allRewards.filter((reward: AnyJson) => reward.claimed === false) ?? []
-
-  const notStaking = !syncing && inSetup()
 
   // Ref to the graph container.
   const graphInnerRef = useRef<HTMLDivElement>(null)
@@ -145,23 +145,15 @@ export const PayoutsInner = () => {
             transition: 'opacity 0.5s',
           }}
         >
-          <PayoutBar
-            days={19}
-            height="150px"
-            data={{ payouts, unclaimedPayouts, poolClaims }}
-            nominating={nominating}
-            inPool={inPool}
-          />
-          <div style={{ marginTop: '3rem' }}>
-            <PayoutLine
-              days={19}
-              average={10}
-              height="65px"
-              data={{ payouts, unclaimedPayouts, poolClaims }}
+          {staking ? (
+            <ActiveGraph
               nominating={nominating}
               inPool={inPool}
+              lineMarginTop="3rem"
             />
-          </div>
+          ) : (
+            <InactiveGraph />
+          )}
         </GraphWrapper>
       </div>
     </>
