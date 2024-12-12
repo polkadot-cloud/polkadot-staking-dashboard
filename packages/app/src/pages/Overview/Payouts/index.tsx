@@ -39,9 +39,9 @@ export const PayoutsInner = () => {
   const { activeEra } = useApi()
   const { inSetup } = useStaking()
   const { syncing } = useSyncing()
-  const { plugins } = usePlugins()
   const { network } = useNetwork()
   const { containerRefs } = useUi()
+  const { pluginEnabled } = usePlugins()
   const { poolClaims } = useSubscanData()
   const { getPoolMembership } = useBalances()
   const { activeAccount } = useActiveAccounts()
@@ -122,11 +122,11 @@ export const PayoutsInner = () => {
         </h2>
       </CardHeaderWrapper>
       <div className="inner" ref={graphInnerRef} style={{ minHeight }}>
-        {!plugins.includes('subscan') ? (
+        {!pluginEnabled('staking_api') ? (
           <StatusLabel
             status="active_service"
-            statusFor="subscan"
-            title={t('overview.subscanDisabled')}
+            statusFor="staking_api"
+            title={t('common.stakingApiDisabled')}
             topOffset="37%"
           />
         ) : (
@@ -145,7 +145,7 @@ export const PayoutsInner = () => {
             transition: 'opacity 0.5s',
           }}
         >
-          {staking ? (
+          {staking && pluginEnabled('staking_api') ? (
             <ActiveGraph
               nominating={nominating}
               inPool={inPool}

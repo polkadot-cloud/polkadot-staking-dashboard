@@ -53,9 +53,6 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
       Subscan.resetData()
     } else if (isReady && !activeEra.index.isZero()) {
       Subscan.network = network
-      if (activeAccount) {
-        Subscan.handleFetchPayouts(activeAccount)
-      }
     }
   }, [plugins.includes('subscan'), isReady, network, activeAccount, activeEra])
 

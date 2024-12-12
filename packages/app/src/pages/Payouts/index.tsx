@@ -18,7 +18,7 @@ import { PluginLabel } from 'library/PluginLabel'
 import { StatBoxList } from 'library/StatBoxList'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
 import { PageRow, PageTitle } from 'ui-structure'
@@ -30,10 +30,10 @@ import { LastEraPayoutStat } from './Stats/LastEraPayout'
 export const Payouts = ({ page: { key } }: PageProps) => {
   const { i18n, t } = useTranslation()
   const { openHelp } = useHelp()
-  const { plugins } = usePlugins()
   const { inSetup } = useStaking()
   const { syncing } = useSyncing()
   const { containerRefs } = useUi()
+  const { pluginEnabled } = usePlugins()
   const { getPoolMembership } = useBalances()
   const { activeAccount } = useActiveAccounts()
 
@@ -59,6 +59,12 @@ export const Payouts = ({ page: { key } }: PageProps) => {
     payoutsList,
     locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
   )
+
+  useEffect(() => {
+    if (!pluginEnabled('staking_api')) {
+      setPayoutLists([])
+    }
+  }, [pluginEnabled('staking_api')])
 
   return (
     <>
@@ -91,11 +97,11 @@ export const Payouts = ({ page: { key } }: PageProps) => {
             </h2>
           </CardHeaderWrapper>
           <div ref={ref} className="inner" style={{ minHeight }}>
-            {!plugins.includes('subscan') ? (
+            {!pluginEnabled('staking_api') ? (
               <StatusLabel
                 status="active_service"
-                statusFor="subscan"
-                title={t('payouts.subscanDisabled', { ns: 'pages' })}
+                statusFor="staking_api"
+                title={t('common.stakingApiDisabled', { ns: 'pages' })}
                 topOffset="30%"
               />
             ) : (
@@ -115,7 +121,7 @@ export const Payouts = ({ page: { key } }: PageProps) => {
                 transition: 'opacity 0.5s',
               }}
             >
-              {staking ? (
+              {staking && pluginEnabled('staking_api') ? (
                 <ActiveGraph
                   nominating={nominating}
                   inPool={inPool}

@@ -1,5 +1,8 @@
 {
   "pages": {
+    "common": {
+      "stakingApiDisabled": "Staking API Disabled"
+    },
     "community": {
       "bio": "Bio",
       "connecting": "Connecting",
