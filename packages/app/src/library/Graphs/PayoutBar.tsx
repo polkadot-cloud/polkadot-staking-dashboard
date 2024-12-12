@@ -15,13 +15,9 @@ import {
   Tooltip,
 } from 'chart.js'
 import type { AnyApi } from 'common-types'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
-import { useStaking } from 'contexts/Staking'
 import { useTheme } from 'contexts/Themes'
 import { format, fromUnixTime } from 'date-fns'
-import { useSyncing } from 'hooks/useSyncing'
 import { DefaultLocale, locales } from 'locales'
 import { Bar } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
@@ -44,17 +40,13 @@ export const PayoutBar = ({
   days,
   height,
   data: { payouts, poolClaims, unclaimedPayouts },
+  nominating,
+  inPool,
 }: PayoutBarProps) => {
   const { i18n, t } = useTranslation('library')
   const { mode } = useTheme()
-  const { inSetup } = useStaking()
-  const { getPoolMembership } = useBalances()
-  const { syncing } = useSyncing(['balances'])
-  const { activeAccount } = useActiveAccounts()
-
-  const membership = getPoolMembership(activeAccount)
   const { unit, units, colors } = useNetwork().networkData
-  const notStaking = !syncing && inSetup() && !membership
+  const staking = nominating || inPool
 
   // get formatted rewards data for graph.
   const { allPayouts, allPoolClaims, allUnclaimedPayouts } =
@@ -72,12 +64,12 @@ export const PayoutBar = ({
   const { p: graphPoolClaims } = allPoolClaims
 
   // determine color for payouts
-  const colorPayouts = notStaking
+  const colorPayouts = !staking
     ? colors.transparent[mode]
     : colors.primary[mode]
 
   // determine color for poolClaims
-  const colorPoolClaims = notStaking
+  const colorPoolClaims = !staking
     ? colors.transparent[mode]
     : colors.secondary[mode]
 

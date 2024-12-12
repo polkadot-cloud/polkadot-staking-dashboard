@@ -23,6 +23,8 @@ export interface PayoutBarProps {
   days: number
   height: string
   data: GraphPayoutData
+  nominating: boolean
+  inPool: boolean
 }
 
 export interface PayoutLineProps {
@@ -31,6 +33,8 @@ export interface PayoutLineProps {
   height: string
   background?: string
   data: GraphPayoutData
+  nominating: boolean
+  inPool: boolean
 }
 
 export interface GraphPayoutData {

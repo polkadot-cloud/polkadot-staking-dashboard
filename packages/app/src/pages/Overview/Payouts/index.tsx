@@ -8,6 +8,7 @@ import { minDecimalPlaces } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
+import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
@@ -42,7 +43,12 @@ export const PayoutsInner = () => {
   const { network } = useNetwork()
   const { containerRefs } = useUi()
   const { poolClaims } = useSubscanData()
+  const { getPoolMembership } = useBalances()
   const { activeAccount } = useActiveAccounts()
+
+  const membership = getPoolMembership(activeAccount)
+  const nominating = !inSetup()
+  const inPool = membership !== null
 
   const { data } = useRewards({
     chain: network,
@@ -143,6 +149,8 @@ export const PayoutsInner = () => {
             days={19}
             height="150px"
             data={{ payouts, unclaimedPayouts, poolClaims }}
+            nominating={nominating}
+            inPool={inPool}
           />
           <div style={{ marginTop: '3rem' }}>
             <PayoutLine
@@ -150,6 +158,8 @@ export const PayoutsInner = () => {
               average={10}
               height="65px"
               data={{ payouts, unclaimedPayouts, poolClaims }}
+              nominating={nominating}
+              inPool={inPool}
             />
           </div>
         </GraphWrapper>

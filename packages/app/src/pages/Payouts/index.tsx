@@ -4,6 +4,8 @@
 import { useSize } from '@w3ux/hooks'
 import type { AnyApi, PageProps } from 'common-types'
 import { MaxPayoutDays } from 'consts'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useBalances } from 'contexts/Balances'
 import { useHelp } from 'contexts/Help'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
@@ -35,9 +37,15 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   const { inSetup } = useStaking()
   const { syncing } = useSyncing()
   const { containerRefs } = useUi()
+  const { getPoolMembership } = useBalances()
   let { unclaimedPayouts } = useSubscanData()
+  const { activeAccount } = useActiveAccounts()
   const { payouts, poolClaims, injectBlockTimestamp } = useSubscanData()
+
   const notStaking = !syncing && inSetup()
+  const membership = getPoolMembership(activeAccount)
+  const nominating = !inSetup()
+  const inPool = membership !== null
 
   const [payoutsList, setPayoutLists] = useState<AnyApi>([])
 
@@ -124,12 +132,16 @@ export const Payouts = ({ page: { key } }: PageProps) => {
                 days={MaxPayoutDays}
                 height="165px"
                 data={{ payouts, unclaimedPayouts, poolClaims }}
+                nominating={nominating}
+                inPool={inPool}
               />
               <PayoutLine
                 days={MaxPayoutDays}
                 average={10}
                 height="65px"
                 data={{ payouts, unclaimedPayouts, poolClaims }}
+                nominating={nominating}
+                inPool={inPool}
               />
             </GraphWrapper>
           </div>

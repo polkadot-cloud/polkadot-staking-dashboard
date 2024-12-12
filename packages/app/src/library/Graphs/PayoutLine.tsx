@@ -14,12 +14,8 @@ import {
   Tooltip,
 } from 'chart.js'
 import type { AnyApi } from 'common-types'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
-import { useStaking } from 'contexts/Staking'
 import { useTheme } from 'contexts/Themes'
-import { useSyncing } from 'hooks/useSyncing'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import graphColors from 'styles/graphs/index.json'
@@ -46,18 +42,15 @@ export const PayoutLine = ({
   height,
   background,
   data: { payouts, poolClaims },
+  nominating,
+  inPool,
 }: PayoutLineProps) => {
   const { t } = useTranslation('library')
   const { mode } = useTheme()
-  const { inSetup } = useStaking()
-  const { syncing } = useSyncing(['balances'])
-  const { getPoolMembership } = useBalances()
-  const { activeAccount } = useActiveAccounts()
+  const staking = nominating || inPool
 
   const { unit, units, colors } = useNetwork().networkData
-  const poolMembership = getPoolMembership(activeAccount)
-  const notStaking = !syncing && inSetup() && !poolMembership
-  const inPoolOnly = !syncing && inSetup() && !!poolMembership
+  const inPoolOnly = !nominating && inPool
 
   // define the most recent date that we will show on the graph.
   const fromDate = new Date()
@@ -86,7 +79,7 @@ export const PayoutLine = ({
   )
 
   // determine color for payouts
-  const color = notStaking
+  const color = !staking
     ? colors.primary[mode]
     : !inPoolOnly
       ? colors.primary[mode]
