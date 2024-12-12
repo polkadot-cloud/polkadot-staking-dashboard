@@ -14,10 +14,12 @@ export const ActiveGraphInner = ({
   nominating,
   inPool,
   lineMarginTop,
+  setLastReward,
 }: {
   nominating: boolean
   inPool: boolean
   lineMarginTop: string
+  setLastReward: (reward: NominatorReward | undefined) => void
 }) => {
   const { activeEra } = useApi()
   const { network } = useNetwork()
@@ -36,6 +38,8 @@ export const ActiveGraphInner = ({
   const unclaimedPayouts =
     allRewards.filter((reward: NominatorReward) => reward.claimed === false) ??
     []
+
+  setLastReward(payouts[0])
 
   return (
     <>
@@ -64,6 +68,7 @@ export const ActiveGraph = (props: {
   nominating: boolean
   inPool: boolean
   lineMarginTop: string
+  setLastReward: (reward: NominatorReward | undefined) => void
 }) => (
   <ApolloProvider client={client}>
     <ActiveGraphInner {...props} />

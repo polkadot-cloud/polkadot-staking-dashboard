@@ -3,32 +3,29 @@
 
 import { useSize } from '@w3ux/hooks'
 import { Odometer } from '@w3ux/react-odometer'
-import type { AnyJson } from '@w3ux/types'
 import { minDecimalPlaces } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns'
-import { useSubscanData } from 'hooks/useSubscanData'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardHeaderWrapper } from 'library/Card/Wrappers'
-import { formatRewardsForGraphs, formatSize } from 'library/Graphs/Utils'
+import { formatSize } from 'library/Graphs/Utils'
 import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'
-import { ApolloProvider, client, useRewards } from 'plugin-staking-api'
-import { useRef } from 'react'
+import type { NominatorReward } from 'plugin-staking-api/src/types'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { planckToUnitBn } from 'utils'
 import { ActiveGraph } from './ActiveGraph'
 import { InactiveGraph } from './InactiveGraph'
 
-export const PayoutsInner = () => {
+export const Payouts = () => {
   const { i18n, t } = useTranslation('pages')
   const {
     networkData: {
@@ -36,13 +33,10 @@ export const PayoutsInner = () => {
       brand: { token: Token },
     },
   } = useNetwork()
-  const { activeEra } = useApi()
   const { inSetup } = useStaking()
   const { syncing } = useSyncing()
-  const { network } = useNetwork()
   const { containerRefs } = useUi()
   const { pluginEnabled } = usePlugins()
-  const { poolClaims } = useSubscanData()
   const { getPoolMembership } = useBalances()
   const { activeAccount } = useActiveAccounts()
 
@@ -52,18 +46,7 @@ export const PayoutsInner = () => {
   const staking = nominating || inPool
   const notStaking = !syncing && !staking
 
-  const { data } = useRewards({
-    chain: network,
-    who: activeAccount || '',
-    fromEra: Math.max(activeEra.index.minus(1).toNumber(), 0),
-  })
-
-  const allRewards = data?.allRewards ?? []
-  const payouts =
-    allRewards.filter((reward: AnyJson) => reward.claimed === true) ?? []
-
-  const unclaimedPayouts =
-    allRewards.filter((reward: AnyJson) => reward.claimed === false) ?? []
+  const [lastReward, setLastReward] = useState<NominatorReward>()
 
   // Ref to the graph container.
   const graphInnerRef = useRef<HTMLDivElement>(null)
@@ -74,26 +57,21 @@ export const PayoutsInner = () => {
   })
   const { width, height, minHeight } = formatSize(size, 260)
 
-  // Get the last reward with its timestmap.
-  const { lastReward } = formatRewardsForGraphs(
-    new Date(),
-    14,
-    units,
-    payouts,
-    poolClaims,
-    unclaimedPayouts
-  )
   let formatFrom = new Date()
   let formatTo = new Date()
   let formatOpts = {}
-  if (lastReward !== null) {
-    formatFrom = fromUnixTime(lastReward?.timestamp ?? getUnixTime(new Date()))
+  if (lastReward !== undefined) {
+    formatFrom = fromUnixTime(lastReward.timestamp ?? getUnixTime(new Date()))
     formatTo = new Date()
     formatOpts = {
       addSuffix: true,
       locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
     }
   }
+
+  useEffect(() => {
+    setLastReward(undefined)
+  }, [activeAccount])
 
   return (
     <>
@@ -103,17 +81,17 @@ export const PayoutsInner = () => {
           <Token className="networkIcon" />
           <Odometer
             value={minDecimalPlaces(
-              lastReward === null
+              lastReward === undefined
                 ? '0'
                 : planckToUnitBn(
-                    new BigNumber(lastReward.amount),
+                    new BigNumber(lastReward?.reward || 0),
                     units
                   ).toFormat(),
               2
             )}
           />
           <span className="note">
-            {lastReward === null ? (
+            {lastReward === undefined ? (
               ''
             ) : (
               <>&nbsp;{formatDistance(formatFrom, formatTo, formatOpts)}</>
@@ -150,6 +128,7 @@ export const PayoutsInner = () => {
               nominating={nominating}
               inPool={inPool}
               lineMarginTop="3rem"
+              setLastReward={setLastReward}
             />
           ) : (
             <InactiveGraph />
@@ -159,9 +138,3 @@ export const PayoutsInner = () => {
     </>
   )
 }
-
-export const Payouts = () => (
-  <ApolloProvider client={client}>
-    <PayoutsInner />
-  </ApolloProvider>
-)
