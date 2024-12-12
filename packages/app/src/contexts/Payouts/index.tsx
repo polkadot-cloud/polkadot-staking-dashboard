@@ -371,7 +371,6 @@ export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
   return (
     <PayoutsContext.Provider
       value={{
-        payoutsSynced: payoutsSyncedRef.current,
         unclaimedRewards,
         setUnclaimedRewards,
       }}

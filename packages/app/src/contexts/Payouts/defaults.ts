@@ -7,7 +7,6 @@ import type { PayoutsContextInterface } from './types'
 export const MaxSupportedPayoutEras = 7
 
 export const defaultPayoutsContext: PayoutsContextInterface = {
-  payoutsSynced: 'unsynced',
   unclaimedRewards: {
     total: '0',
     entries: [],
