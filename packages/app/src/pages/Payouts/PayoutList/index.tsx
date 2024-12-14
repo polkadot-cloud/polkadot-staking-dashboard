@@ -40,30 +40,28 @@ export const PayoutListInner = ({
   const {
     networkData: { units, unit, colors },
   } = useNetwork()
-  const { listFormat, setListFormat } = usePayoutList()
   const { validators } = useValidators()
   const { bondedPools } = useBondedPools()
+  const { listFormat, setListFormat } = usePayoutList()
 
-  // current page
   const [page, setPage] = useState<number>(1)
 
-  // manipulated list (ordering, filtering) of payouts
+  // Manipulated list (ordering, filtering) of payouts
   const [payouts, setPayouts] = useState<AnyApi>(initialPayouts)
 
-  // is this the initial fetch
+  // Whether still in initial fetch
   const [fetched, setFetched] = useState<boolean>(false)
 
-  // pagination
   const totalPages = Math.ceil(payouts.length / payoutsPerPage)
   const pageEnd = page * payoutsPerPage - 1
   const pageStart = pageEnd - (payoutsPerPage - 1)
 
-  // refetch list when list changes
+  // Refetch list when list changes
   useEffect(() => {
     setFetched(false)
   }, [initialPayouts])
 
-  // configure list when network is ready to fetch
+  // Configure list when network is ready to fetch
   useEffect(() => {
     if (isReady && !activeEra.index.isZero() && !fetched) {
       setPayouts(initialPayouts)
@@ -71,13 +69,8 @@ export const PayoutListInner = ({
     }
   }, [isReady, fetched, activeEra.index])
 
-  // get list items to render
-  let listPayouts = []
-
-  // get throttled subset or entire list
-  listPayouts = payouts.slice(pageStart).slice(0, payoutsPerPage)
-
-  if (!payouts.length) {
+  const listPayouts = payouts.slice(pageStart).slice(0, payoutsPerPage)
+  if (!listPayouts.length) {
     return null
   }
 
@@ -111,11 +104,7 @@ export const PayoutListInner = ({
             const label =
               p.type === 'pool' ? t('payouts.poolClaim') : t('payouts.payout')
             const labelClass = p.type === 'pool' ? 'claim' : 'reward'
-
-            // get validator if it exists
             const validator = validators.find((v) => v.address === p.validator)
-
-            // get pool if it exists
             const pool = bondedPools.find(({ id }) => id === p.pool_id)
 
             const batchIndex = validator

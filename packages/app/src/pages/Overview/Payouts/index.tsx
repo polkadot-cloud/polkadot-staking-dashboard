@@ -48,10 +48,10 @@ export const Payouts = () => {
 
   const [lastReward, setLastReward] = useState<NominatorReward>()
 
-  // Ref to the graph container.
+  // Ref to the graph container
   const graphInnerRef = useRef<HTMLDivElement>(null)
 
-  // Get the size of the graph container.
+  // Get the size of the graph container
   const size = useSize(graphInnerRef, {
     outerElement: containerRefs?.mainInterface,
   })

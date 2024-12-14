@@ -15,15 +15,17 @@ import { ApolloProvider, client, useRewards } from 'plugin-staking-api'
 import type { NominatorReward } from 'plugin-staking-api/types'
 import { useEffect } from 'react'
 
+interface Props {
+  nominating: boolean
+  inPool: boolean
+  setPayoutLists: (payouts: AnyApi[]) => void
+}
+
 export const ActiveGraphInner = ({
   nominating,
   inPool,
   setPayoutLists,
-}: {
-  nominating: boolean
-  inPool: boolean
-  setPayoutLists: (payouts: AnyApi[]) => void
-}) => {
+}: Props) => {
   const { activeEra } = useApi()
   const { network } = useNetwork()
   const { poolClaims } = useSubscanData()
@@ -44,7 +46,7 @@ export const ActiveGraphInner = ({
     []
 
   useEffect(() => {
-    // filter zero rewards and order via timestamp, most recent first.
+    // filter zero rewards and order via timestamp, most recent first
     const payoutsList = (allRewards as PayoutsAndClaims).concat(
       poolClaims
     ) as PayoutsAndClaims
@@ -72,11 +74,7 @@ export const ActiveGraphInner = ({
   )
 }
 
-export const ActiveGraph = (props: {
-  nominating: boolean
-  inPool: boolean
-  setPayoutLists: (payouts: AnyApi[]) => void
-}) => (
+export const ActiveGraph = (props: Props) => (
   <ApolloProvider client={client}>
     <ActiveGraphInner {...props} />
   </ApolloProvider>
