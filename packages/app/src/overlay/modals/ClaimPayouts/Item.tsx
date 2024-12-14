@@ -19,7 +19,6 @@ export const Item = ({
   const {
     networkData: { units, unit },
   } = useNetwork()
-
   const totalPayout = getTotalPayout(validators)
   const numPayouts = validators.length
 
@@ -39,7 +38,6 @@ export const Item = ({
             {planckToUnitBn(totalPayout, units).toString()} {unit}
           </h2>
         </section>
-
         <section>
           <div>
             <ButtonSubmit
