@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import type { ValidatorUnclaimedReward } from 'plugin-staking-api/src/types'
+import type { ValidatorUnclaimedReward } from 'plugin-staking-api/types'
 
 export const getTotalPayout = (
   validators: ValidatorUnclaimedReward[]

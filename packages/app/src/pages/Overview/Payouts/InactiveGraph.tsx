@@ -3,7 +3,7 @@
 
 import { PayoutBar } from 'library/Graphs/PayoutBar'
 import { PayoutLine } from 'library/Graphs/PayoutLine'
-import type { NominatorReward } from 'plugin-staking-api/src/types'
+import type { NominatorReward } from 'plugin-staking-api/types'
 import { useEffect } from 'react'
 
 export const InactiveGraph = ({

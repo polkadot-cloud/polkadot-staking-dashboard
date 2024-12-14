@@ -8,7 +8,7 @@ import { useSubscanData } from 'hooks/useSubscanData'
 import { PayoutBar } from 'library/Graphs/PayoutBar'
 import { PayoutLine } from 'library/Graphs/PayoutLine'
 import { ApolloProvider, client, useRewards } from 'plugin-staking-api'
-import type { NominatorReward } from 'plugin-staking-api/src/types'
+import type { NominatorReward } from 'plugin-staking-api/types'
 import { useEffect } from 'react'
 
 export const ActiveGraphInner = ({

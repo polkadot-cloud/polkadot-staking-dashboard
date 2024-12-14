@@ -17,7 +17,7 @@ import {
   startOfDay,
   subDays,
 } from 'date-fns'
-import type { NominatorReward } from 'plugin-staking-api/src/types'
+import type { NominatorReward } from 'plugin-staking-api/types'
 import { planckToUnitBn } from 'utils'
 import type { PayoutDayCursor } from './types'
 

@@ -4,7 +4,7 @@
 import type BigNumber from 'bignumber.js'
 import type { AnyApi } from 'common-types'
 import type { SubscanPoolClaim } from 'controllers/Subscan/types'
-import type { NominatorReward } from 'plugin-staking-api/src/types'
+import type { NominatorReward } from 'plugin-staking-api/types'
 
 export interface BondedProps {
   active: BigNumber
