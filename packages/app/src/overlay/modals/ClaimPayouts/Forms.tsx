@@ -41,15 +41,14 @@ export const Forms = forwardRef(
     const { getSignerWarnings } = useSignerWarnings()
     const { unclaimedRewards, setUnclaimedRewards } = usePayouts()
 
-    // Get the total payout amount.
+    // Get the total payout amount
     const totalPayout =
       payouts?.reduce(
         (total: BigNumber, cur: ActivePayout) => total.plus(cur.payout),
         new BigNumber(0)
       ) || new BigNumber(0)
 
-    // Get the total number of validators to payout (the same validator can repeat for separate
-    // eras).
+    // Get the total number of validators per payout per era
     const totalPayoutValidators =
       payouts?.reduce(
         (prev, { paginatedValidators }) =>
@@ -57,9 +56,13 @@ export const Forms = forwardRef(
         0
       ) || 0
 
+    const [valid, setValid] = useState<boolean>(
+      totalPayout.isGreaterThan(0) && totalPayoutValidators > 0
+    )
+
     const getCalls = () => {
-      const calls = payouts?.reduce(
-        (acc: AnyApi[], { era, paginatedValidators }) => {
+      const calls =
+        payouts?.reduce((acc: AnyApi[], { era, paginatedValidators }) => {
           if (!paginatedValidators.length) {
             return acc
           }
@@ -75,23 +78,9 @@ export const Forms = forwardRef(
             }
           })
           return acc
-        },
-        []
-      )
-
-      return calls || []
+        }, []) || []
+      return calls
     }
-
-    // Store whether form is valid to submit transaction.
-    const [valid, setValid] = useState<boolean>(
-      totalPayout.isGreaterThan(0) && totalPayoutValidators > 0
-    )
-
-    // Ensure payouts value is valid.
-    useEffect(
-      () => setValid(totalPayout.isGreaterThan(0) && totalPayoutValidators > 0),
-      [payouts]
-    )
 
     const getTx = () => {
       const tx = null
@@ -99,7 +88,6 @@ export const Forms = forwardRef(
       if (!valid || !calls.length) {
         return tx
       }
-
       return calls.length === 1
         ? calls.pop()
         : newBatchCall(calls, activeAccount)
@@ -129,7 +117,7 @@ export const Forms = forwardRef(
           }
           setUnclaimedRewards(newUnclaimedRewards)
         }
-        // Reset active form payouts for this modal.
+        // Reset active form payouts for this modal
         setPayouts([])
       },
     })
@@ -138,6 +126,12 @@ export const Forms = forwardRef(
       activeAccount,
       false,
       submitExtrinsic.proxySupported
+    )
+
+    // Ensure payouts value is valid
+    useEffect(
+      () => setValid(totalPayout.isGreaterThan(0) && totalPayoutValidators > 0),
+      [payouts]
     )
 
     return (
