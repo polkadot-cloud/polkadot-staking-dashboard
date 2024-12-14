@@ -4,15 +4,12 @@
 
 import type { PayoutsContextInterface } from './types'
 
-export const defaultPayoutsContext: PayoutsContextInterface = {
-  unclaimedRewards: {
-    total: '0',
-    entries: [],
-  },
-  setUnclaimedRewards: (unclaimedRewards) => {},
-}
-
 export const defaultUnclaimedRewards = {
   total: '0',
   entries: [],
+}
+
+export const defaultPayoutsContext: PayoutsContextInterface = {
+  unclaimedRewards: defaultUnclaimedRewards,
+  setUnclaimedRewards: (unclaimedRewards) => {},
 }
