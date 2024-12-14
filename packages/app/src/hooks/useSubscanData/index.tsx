@@ -18,7 +18,7 @@ export const useSubscanData = () => {
   const { erasToSeconds } = useErasToTimeLeft()
   const { activeAccount } = useActiveAccounts()
 
-  // Store pool claims data for the active account.
+  // Store pool claims data for the active account
   const [poolClaims, setPoolClaims] = useState<SubscanPoolClaim[]>([])
 
   // Listen for updated data callback. When there are new data, fetch the updated values directly
@@ -27,7 +27,6 @@ export const useSubscanData = () => {
     // NOTE: Subscan has to be enabled to continue.
     if (isCustomEvent(e) && pluginEnabled('subscan') && activeAccount) {
       const { keys: receivedKeys }: { keys: PayoutType[] } = e.detail
-
       if (receivedKeys.includes('poolClaims')) {
         setPoolClaims(
           (Subscan.payoutData[activeAccount]?.['poolClaims'] ||
@@ -37,7 +36,7 @@ export const useSubscanData = () => {
     }
   }
 
-  // Listen for new subscan data updates.
+  // Listen for new subscan data updates
   const documentRef = useRef<Document>(document)
   useEventListener(
     'subscan-data-updated',
@@ -49,9 +48,6 @@ export const useSubscanData = () => {
   // following payout era - this is the time payouts become available to claim by validators
   // NOTE: Not currently being used
   const injectBlockTimestamp = (entries: NominatorReward[]) => {
-    if (!entries) {
-      return entries
-    }
     entries.forEach((p) => {
       p.timestamp = activeEra.start
         .multipliedBy(0.001)
@@ -61,7 +57,7 @@ export const useSubscanData = () => {
     return entries
   }
 
-  // Populate state on initial render if data is already available.
+  // Populate state on initial render if data is already available
   useEffect(() => {
     if (activeAccount) {
       setPoolClaims(
