@@ -88,7 +88,7 @@ export const PayoutBar = ({
       {
         order: 1,
         label: t('payout'),
-        data: graphPayouts.map((item: AnyApi) => item.reward.toFixed(5)),
+        data: graphPayouts.map((item: AnyApi) => item.reward),
         borderColor: colorPayouts,
         backgroundColor: colorPayouts,
         pointRadius: 0,
@@ -97,7 +97,7 @@ export const PayoutBar = ({
       {
         order: 2,
         label: t('poolClaim'),
-        data: graphPoolClaims.map((item: AnyApi) => item.reward.toFixed(5)),
+        data: graphPoolClaims.map((item: AnyApi) => item.reward),
         borderColor: colorPoolClaims,
         backgroundColor: colorPoolClaims,
         pointRadius: 0,
