@@ -13,37 +13,31 @@ import type {
 } from './types'
 
 export class Subscan {
-  // List of endpoints to be used for Subscan API calls.
+  // List of endpoints to be used for Subscan API calls
   static ENDPOINTS = {
     eraStat: '/api/scan/staking/era_stat',
     poolMembers: '/api/scan/nomination_pool/pool/members',
     poolRewards: '/api/scan/nomination_pool/rewards',
-    rewardSlash: '/api/v2/scan/account/reward_slash',
   }
 
-  // Total amount of requests that can be made in 1 second.
-  static TOTAL_REQUESTS_PER_SECOND = 5
-
-  // The network to use for Subscan API calls.
+  // The network to use for Subscan API calls
   static network: string
 
-  // Subscan payout data, keyed by address.
+  // Subscan payout data, keyed by address
   static payoutData: Record<string, SubscanData> = {}
 
-  // Subscan pool data, keyed by `<network>-<poolId>-<key1>-<key2>...`.
+  // Subscan pool data, keyed by `<network>-<poolId>-<key1>-<key2>...`
   static poolData: Record<string, PoolMember[]> = {}
 
-  // Subscan era points data, keyed by `<network>-<address>-<era>`.
+  // Subscan era points data, keyed by `<network>-<address>-<era>`
   static eraPointsData: Record<string, SubscanEraPoints[]> = {}
 
-  // Set the network to use for Subscan API calls.
-  //
-  // Effects the endpoint being used. Should be updated on network change in the UI.
+  // Set the network to use for Subscan API calls
   set network(network: string) {
     Subscan.network = network
   }
 
-  // Handle fetching the various types of payout and set state in one render.
+  // Handle fetching pool claims and set state in one render
   static handleFetchPayouts = async (address: string): Promise<void> => {
     try {
       if (!this.payoutData[address]) {
@@ -51,7 +45,6 @@ export class Subscan {
         this.payoutData[address] = {
           poolClaims,
         }
-
         document.dispatchEvent(
           new CustomEvent('subscan-data-updated', {
             detail: {
@@ -61,7 +54,7 @@ export class Subscan {
         )
       }
     } catch (e) {
-      // Silently fail request.
+      // Silently fail request
     }
   }
 
@@ -78,7 +71,7 @@ export class Subscan {
       if (!result?.list) {
         return []
       }
-      // Remove claims with a `block_timestamp`.
+      // Remove claims with a `block_timestamp`
       const poolClaims = result.list
         .filter((l: SubscanPoolClaimRaw) => l.block_timestamp !== 0)
         .map((l: SubscanPoolClaimRaw) => ({
@@ -87,15 +80,13 @@ export class Subscan {
           timestamp: l.block_timestamp,
           type: 'pool',
         }))
-
       return poolClaims
     } catch (e) {
-      // Silently fail request and return empty record.
       return []
     }
   }
 
-  // Fetch a page of pool members from Subscan.
+  // Fetch a page of pool members from Subscan
   static fetchPoolMembers = async (
     poolId: number,
     page: number

@@ -18,14 +18,6 @@ export const useSubscanData = () => {
   const { erasToSeconds } = useErasToTimeLeft()
   const { activeAccount } = useActiveAccounts()
 
-  // Store payouts data for the active account.
-  const [payouts, setPayouts] = useState<NominatorReward[]>([])
-
-  // Store unclaimed payouts data for the active account.
-  const [unclaimedPayouts, setUnclaimedPayouts] = useState<NominatorReward[]>(
-    []
-  )
-
   // Store pool claims data for the active account.
   const [poolClaims, setPoolClaims] = useState<SubscanPoolClaim[]>([])
 
@@ -35,20 +27,6 @@ export const useSubscanData = () => {
     // NOTE: Subscan has to be enabled to continue.
     if (isCustomEvent(e) && pluginEnabled('subscan') && activeAccount) {
       const { keys: receivedKeys }: { keys: PayoutType[] } = e.detail
-
-      if (receivedKeys.includes('payouts')) {
-        setPayouts(
-          (Subscan.payoutData[activeAccount]?.['payouts'] ||
-            []) as NominatorReward[]
-        )
-      }
-
-      if (receivedKeys.includes('unclaimedPayouts')) {
-        setUnclaimedPayouts(
-          (Subscan.payoutData[activeAccount]?.['unclaimedPayouts'] ||
-            []) as NominatorReward[]
-        )
-      }
 
       if (receivedKeys.includes('poolClaims')) {
         setPoolClaims(
@@ -68,7 +46,8 @@ export const useSubscanData = () => {
   )
 
   // Inject timestamp for unclaimed payouts. We take the timestamp of the start of the
-  // following payout era - this is the time payouts become available to claim by validators.
+  // following payout era - this is the time payouts become available to claim by validators
+  // NOTE: Not currently being used
   const injectBlockTimestamp = (entries: NominatorReward[]) => {
     if (!entries) {
       return entries
@@ -85,14 +64,6 @@ export const useSubscanData = () => {
   // Populate state on initial render if data is already available.
   useEffect(() => {
     if (activeAccount) {
-      setPayouts(
-        (Subscan.payoutData[activeAccount]?.['payouts'] ||
-          []) as NominatorReward[]
-      )
-      setUnclaimedPayouts(
-        (Subscan.payoutData[activeAccount]?.['unclaimedPayouts'] ||
-          []) as NominatorReward[]
-      )
       setPoolClaims(
         (Subscan.payoutData[activeAccount]?.['poolClaims'] ||
           []) as SubscanPoolClaim[]
@@ -101,8 +72,6 @@ export const useSubscanData = () => {
   }, [activeAccount])
 
   return {
-    payouts,
-    unclaimedPayouts,
     poolClaims,
     injectBlockTimestamp,
   }
