@@ -1,22 +1,24 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePayouts } from 'contexts/Payouts'
 import { ApolloProvider, client, useUnclaimedRewards } from 'plugin-staking-api'
 import { useEffect } from 'react'
 
-const Inner = () => {
+interface Props {
+  activeAccount: string
+}
+
+const Inner = ({ activeAccount }: Props) => {
   const { activeEra } = useApi()
   const { network } = useNetwork()
   const { setUnclaimedRewards } = usePayouts()
-  const { activeAccount } = useActiveAccounts()
 
   const { data, loading, error } = useUnclaimedRewards({
     chain: network,
-    who: activeAccount || '',
+    who: activeAccount,
     fromEra: Math.max(activeEra.index.minus(1).toNumber(), 0),
   })
 
@@ -29,8 +31,8 @@ const Inner = () => {
   return null
 }
 
-export const StakingApi = () => (
+export const StakingApi = (props: Props) => (
   <ApolloProvider client={client}>
-    <Inner />
+    <Inner {...props} />
   </ApolloProvider>
 )

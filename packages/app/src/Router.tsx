@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { PagesConfig } from 'config/pages'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
@@ -37,6 +38,7 @@ const RouterInner = () => {
   const { pathname } = useLocation()
   const { setContainerRefs } = useUi()
   const { pluginEnabled } = usePlugins()
+  const { activeAccount } = useActiveAccounts()
 
   // References to outer container
   const mainInterfaceRef = useRef<HTMLDivElement>(null)
@@ -58,7 +60,9 @@ const RouterInner = () => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
-      {pluginEnabled('staking_api') && !inSetup() && <StakingApi />}
+      {pluginEnabled('staking_api') && !inSetup() && activeAccount && (
+        <StakingApi activeAccount={activeAccount} />
+      )}
       <NotificationPrompts />
       <Body>
         <Help />
