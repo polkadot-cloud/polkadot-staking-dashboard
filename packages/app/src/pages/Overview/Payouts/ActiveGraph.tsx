@@ -11,17 +11,18 @@ import { ApolloProvider, client, useRewards } from 'plugin-staking-api'
 import type { NominatorReward } from 'plugin-staking-api/types'
 import { useEffect } from 'react'
 
+interface Props {
+  nominating: boolean
+  inPool: boolean
+  lineMarginTop: string
+  setLastReward: (reward: NominatorReward | undefined) => void
+}
 export const ActiveGraphInner = ({
   nominating,
   inPool,
   lineMarginTop,
   setLastReward,
-}: {
-  nominating: boolean
-  inPool: boolean
-  lineMarginTop: string
-  setLastReward: (reward: NominatorReward | undefined) => void
-}) => {
+}: Props) => {
   const { activeEra } = useApi()
   const { network } = useNetwork()
   const { poolClaims } = useSubscanData()
@@ -67,12 +68,7 @@ export const ActiveGraphInner = ({
   )
 }
 
-export const ActiveGraph = (props: {
-  nominating: boolean
-  inPool: boolean
-  lineMarginTop: string
-  setLastReward: (reward: NominatorReward | undefined) => void
-}) => (
+export const ActiveGraph = (props: Props) => (
   <ApolloProvider client={client}>
     <ActiveGraphInner {...props} />
   </ApolloProvider>
