@@ -8,13 +8,12 @@ import { usePayouts } from 'contexts/Payouts'
 import { ApolloProvider, client, useUnclaimedRewards } from 'plugin-staking-api'
 import { useEffect } from 'react'
 
-export const StakingApiInner = () => {
+const Inner = () => {
   const { activeEra } = useApi()
   const { network } = useNetwork()
   const { setUnclaimedRewards } = usePayouts()
   const { activeAccount } = useActiveAccounts()
 
-  // Fetch and store unclaimed rewards
   const { data, loading, error } = useUnclaimedRewards({
     chain: network,
     who: activeAccount || '',
@@ -32,6 +31,6 @@ export const StakingApiInner = () => {
 
 export const StakingApi = () => (
   <ApolloProvider client={client}>
-    <StakingApiInner />
+    <Inner />
   </ApolloProvider>
 )
