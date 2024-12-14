@@ -10,7 +10,7 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export const useAccountFromUrl = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('library')
   const { accounts } = useImportedAccounts()
   const { accountsInitialised } = useOtherAccounts()
   const { activeAccount, setActiveAccount } = useActiveAccounts()
@@ -18,17 +18,15 @@ export const useAccountFromUrl = () => {
   // Set active account if url var present and accounts initialised
   useEffect(() => {
     if (accountsInitialised) {
-      const aUrl = extractUrlValue('a')
-      if (aUrl) {
-        const account = accounts.find((a) => a.address === aUrl)
-        if (account && aUrl !== activeAccount) {
-          setActiveAccount(account.address || null)
+      const val = extractUrlValue('a')
+      if (val) {
+        const account = accounts.find((a) => a.address === val)
+        if (account && activeAccount !== val) {
+          setActiveAccount(account.address)
 
           Notifications.emit({
-            title: t('accountConnected', { ns: 'library' }),
-            subtitle: `${t('connectedTo', { ns: 'library' })} ${
-              account.name || aUrl
-            }.`,
+            title: t('accountConnected'),
+            subtitle: `${t('connectedTo')} ${account.name}.`,
           })
         }
       }
