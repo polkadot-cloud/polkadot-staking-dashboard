@@ -112,7 +112,6 @@ export const Payouts = ({ page: { key } }: PageProps) => {
                 topOffset="30%"
               />
             )}
-
             <GraphWrapper
               style={{
                 height: `${height}px`,

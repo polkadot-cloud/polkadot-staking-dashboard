@@ -34,12 +34,6 @@ export type AllRewardsResult = Query & {
   }
 }
 
-export type UnclaimedRewardsResult = Query & {
-  data: {
-    unclaimedRewards: UnclaimedRewards
-  }
-}
-
 export interface NominatorReward {
   era: number
   reward: number
@@ -47,6 +41,12 @@ export interface NominatorReward {
   timestamp: number
   validator: string
   type: string
+}
+
+export type UnclaimedRewardsResult = Query & {
+  data: {
+    unclaimedRewards: UnclaimedRewards
+  }
 }
 
 export interface UnclaimedRewards {
