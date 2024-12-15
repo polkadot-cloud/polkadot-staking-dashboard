@@ -130,7 +130,7 @@ export const calculatePayoutAverages = (
   }
 
   // create moving average value over `avgDays` past days, if any
-  let payoutsAverages = []
+  let payoutsAverages: { reward: number; timestamp: number }[] = []
   for (let i = 0; i < payouts.length; i++) {
     // average period end.
     const end = Math.max(0, i - avgDays)
@@ -152,8 +152,15 @@ export const calculatePayoutAverages = (
       total = payouts[i].reward
     }
 
+    // If on last reward and is a zero (current era still processing), use previous reward to
+    // prevent misleading dip
+    const reward =
+      i === payouts.length - 1 && payouts[i].reward === 0
+        ? payoutsAverages[i - 1].reward
+        : total / num
+
     payoutsAverages.push({
-      reward: total / num,
+      reward,
       timestamp: payouts[i].timestamp,
     })
   }
