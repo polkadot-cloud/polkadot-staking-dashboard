@@ -4,10 +4,6 @@
 
 <!-- markdown-link-check-enable -->
 
-> #### 📢 17/06/2024: Repository Migration
->
-> This repository was previously at `paritytech/polkadot-staking-dashboard`. As of 17/06/2024, Polkadot Staking Dashboard lives at `polkadot-cloud/polkadot-staking-dashboard`.
-
 # Polkadot Staking Dashboard
 
 <img width="1479" alt="Screenshot 2024-10-06 at 13 56 44" src="https://github.com/user-attachments/assets/d8edbbae-3cf0-4330-bac3-280e74f5d3cc">
@@ -42,3 +38,9 @@ staking.polkadot.cloud/#/overview?n=kusama&l=cn
 
 - 29/06/2023: [[Video] Polkadot Decoded 2023: The Next Step of the Polkadot UX Journey](https://www.youtube.com/watch?v=s78SZZ_ZA64)
 - 30/06/2022: [[Video] Polkadot Decoded 2022: Polkadot Staking Dashboard Demo](https://youtu.be/H1WGu6mf1Ls)
+
+
+## Repository Transfer History
+
+**17/06/2024:** Moved from `paritytech/polkadot-staking-dashboard`.
+
