@@ -8,6 +8,7 @@ import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePayouts } from 'contexts/Payouts'
+import { usePlugins } from 'contexts/Plugins'
 import { useOverlay } from 'kits/Overlay/Provider'
 import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
@@ -22,6 +23,7 @@ export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
   const {
     unclaimedRewards: { total },
   } = usePayouts()
+  const { pluginEnabled } = usePlugins()
   const { activeAccount } = useActiveAccounts()
   const { isReadOnlyAccount } = useImportedAccounts()
 
@@ -38,7 +40,7 @@ export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
       }}
       dimmed={dimmed}
       buttons={
-        total !== '0'
+        total !== '0' && pluginEnabled('staking_api')
           ? [
               {
                 title: t('claim', { ns: 'modals' }),
