@@ -43,6 +43,10 @@ export const MigrateProvider = ({ children }: { children: ReactNode }) => {
     if (isReady && !syncing && !done) {
       // Carry out migrations if local version is different to current version.
       if (localAppVersion !== version) {
+        // Added in 1.8.0
+        //
+        // Reset local plugins data.
+        localStorage.removeItem('plugins')
         // Added in 1.4.3
         //
         // Remove local era stakers data and locale data. Paged rewards are now active and local
