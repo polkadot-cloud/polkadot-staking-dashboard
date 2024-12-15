@@ -1,11 +1,11 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { EraUnclaimedPayouts } from 'contexts/Payouts/types'
+import type { ValidatorUnclaimedReward } from 'plugin-staking-api/types'
 
 export interface ItemProps {
   era: string
-  unclaimedPayout: EraUnclaimedPayouts
+  validators: ValidatorUnclaimedReward[]
   setSection: (v: number) => void
   setPayouts: (payout: ActivePayout[] | null) => void
 }

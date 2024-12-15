@@ -4,12 +4,12 @@
 import type { AnyJson } from '@w3ux/types'
 import { planckToUnit, rmCommas } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import type { LocalValidatorExposure } from 'contexts/Payouts/types'
 import type {
   ActiveAccountStaker,
   ExposureOther,
   Staker,
 } from 'contexts/Staking/types'
+import type { LocalValidatorExposure } from 'contexts/Validators/types'
 import type { ProcessEraForExposureArgs, ProcessExposuresArgs } from './types'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

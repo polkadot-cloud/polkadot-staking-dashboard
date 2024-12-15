@@ -2,17 +2,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCircleDown } from '@fortawesome/free-solid-svg-icons'
-import { minDecimalPlaces } from '@w3ux/utils'
-import BigNumber from 'bignumber.js'
+import { minDecimalPlaces, planckToUnit } from '@w3ux/utils'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePayouts } from 'contexts/Payouts'
+import { usePlugins } from 'contexts/Plugins'
 import { useOverlay } from 'kits/Overlay/Provider'
 import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
-import { planckToUnitBn } from 'utils'
 
 export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
   const { t } = useTranslation()
@@ -21,17 +20,12 @@ export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
   } = useNetwork()
   const { isReady } = useApi()
   const { openModal } = useOverlay().modal
-  const { unclaimedPayouts } = usePayouts()
+  const {
+    unclaimedRewards: { total },
+  } = usePayouts()
+  const { pluginEnabled } = usePlugins()
   const { activeAccount } = useActiveAccounts()
   const { isReadOnlyAccount } = useImportedAccounts()
-
-  const totalUnclaimed = Object.values(unclaimedPayouts || {}).reduce(
-    (total, paginatedValidators) =>
-      Object.values(paginatedValidators)
-        .reduce((amount, [, value]) => amount.plus(value), new BigNumber(0))
-        .plus(total),
-    new BigNumber(0)
-  )
 
   return (
     <Stat
@@ -39,15 +33,14 @@ export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
       helpKey="Payout"
       type="odometer"
       stat={{
-        value: minDecimalPlaces(
-          planckToUnitBn(totalUnclaimed, units).toFormat(),
-          2
-        ),
+        value:
+          total === '0'
+            ? '0.00'
+            : minDecimalPlaces(planckToUnit(total, units), 2),
       }}
       dimmed={dimmed}
       buttons={
-        Object.keys(unclaimedPayouts || {}).length > 0 &&
-        !totalUnclaimed.isZero()
+        total !== '0' && pluginEnabled('staking_api')
           ? [
               {
                 title: t('claim', { ns: 'modals' }),

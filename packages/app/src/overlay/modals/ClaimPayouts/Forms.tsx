@@ -5,10 +5,10 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { planckToUnit } from '@w3ux/utils'
 import { PayoutStakersByPage } from 'api/tx/payoutStakersByPage'
 import BigNumber from 'bignumber.js'
+import type { AnyApi } from 'common-types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePayouts } from 'contexts/Payouts'
-import { Subscan } from 'controllers/Subscan'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -36,20 +36,19 @@ export const Forms = forwardRef(
       networkData: { units, unit },
     } = useNetwork()
     const { newBatchCall } = useBatchCall()
-    const { removeEraPayout } = usePayouts()
     const { setModalStatus } = useOverlay().modal
     const { activeAccount } = useActiveAccounts()
     const { getSignerWarnings } = useSignerWarnings()
+    const { unclaimedRewards, setUnclaimedRewards } = usePayouts()
 
-    // Get the total payout amount.
+    // Get the total payout amount
     const totalPayout =
       payouts?.reduce(
         (total: BigNumber, cur: ActivePayout) => total.plus(cur.payout),
         new BigNumber(0)
       ) || new BigNumber(0)
 
-    // Get the total number of validators to payout (the same validator can repeat for separate
-    // eras).
+    // Get the total number of validators per payout per era
     const totalPayoutValidators =
       payouts?.reduce(
         (prev, { paginatedValidators }) =>
@@ -57,33 +56,31 @@ export const Forms = forwardRef(
         0
       ) || 0
 
-    const getCalls = () => {
-      const calls = payouts?.reduce((acc, { era, paginatedValidators }) => {
-        if (!paginatedValidators) {
-          return acc
-        }
-        paginatedValidators.forEach(([page, v]) => {
-          const tx = new PayoutStakersByPage(network, v, Number(era), page).tx()
-
-          if (tx) {
-            acc.push()
-          }
-        })
-        return acc
-      }, [])
-      return calls || []
-    }
-
-    // Store whether form is valid to submit transaction.
     const [valid, setValid] = useState<boolean>(
       totalPayout.isGreaterThan(0) && totalPayoutValidators > 0
     )
 
-    // Ensure payouts value is valid.
-    useEffect(
-      () => setValid(totalPayout.isGreaterThan(0) && totalPayoutValidators > 0),
-      [payouts]
-    )
+    const getCalls = () => {
+      const calls =
+        payouts?.reduce((acc: AnyApi[], { era, paginatedValidators }) => {
+          if (!paginatedValidators.length) {
+            return acc
+          }
+          paginatedValidators.forEach(([page, v]) => {
+            const tx = new PayoutStakersByPage(
+              network,
+              v,
+              Number(era),
+              page
+            ).tx()
+            if (tx) {
+              acc.push(tx)
+            }
+          })
+          return acc
+        }, []) || []
+      return calls
+    }
 
     const getTx = () => {
       const tx = null
@@ -91,7 +88,6 @@ export const Forms = forwardRef(
       if (!valid || !calls.length) {
         return tx
       }
-
       return calls.length === 1
         ? calls.pop()
         : newBatchCall(calls, activeAccount)
@@ -106,21 +102,22 @@ export const Forms = forwardRef(
       },
       callbackInBlock: () => {
         if (payouts && activeAccount) {
-          // Remove Subscan unclaimed payout record(s) if they exist.
+          // Deduct unclaimed payout value from state value
           const eraPayouts: string[] = []
           payouts.forEach(({ era }) => {
             eraPayouts.push(String(era))
           })
-          Subscan.removeUnclaimedPayouts(activeAccount, eraPayouts)
-
-          // Deduct from `unclaimedPayouts` in Payouts context.
-          payouts.forEach(({ era, paginatedValidators }) => {
-            for (const v of paginatedValidators || []) {
-              removeEraPayout(era, v[1])
-            }
-          })
+          const newUnclaimedRewards = {
+            total: new BigNumber(unclaimedRewards.total)
+              .minus(totalPayout)
+              .toString(),
+            entries: unclaimedRewards.entries.filter(
+              (entry) => !eraPayouts.includes(String(entry.era))
+            ),
+          }
+          setUnclaimedRewards(newUnclaimedRewards)
         }
-        // Reset active form payouts for this modal.
+        // Reset active form payouts for this modal
         setPayouts([])
       },
     })
@@ -129,6 +126,12 @@ export const Forms = forwardRef(
       activeAccount,
       false,
       submitExtrinsic.proxySupported
+    )
+
+    // Ensure payouts value is valid
+    useEffect(
+      () => setValid(totalPayout.isGreaterThan(0) && totalPayoutValidators > 0),
+      [payouts]
     )
 
     return (

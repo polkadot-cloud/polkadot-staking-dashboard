@@ -3,20 +3,20 @@
 
 import { useSize } from '@w3ux/hooks'
 import type { AnyApi, PageProps } from 'common-types'
-import { MaxPayoutDays } from 'consts'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useBalances } from 'contexts/Balances'
 import { useHelp } from 'contexts/Help'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
-import { Subscan } from 'controllers/Subscan'
-import { useSubscanData } from 'hooks/useSubscanData'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
-import { PayoutBar } from 'library/Graphs/PayoutBar'
-import { PayoutLine } from 'library/Graphs/PayoutLine'
-import { formatSize } from 'library/Graphs/Utils'
+import {
+  formatSize,
+  getPayoutsFromDate,
+  getPayoutsToDate,
+} from 'library/Graphs/Utils'
 import { GraphWrapper } from 'library/Graphs/Wrapper'
-import { PluginLabel } from 'library/PluginLabel'
 import { StatBoxList } from 'library/StatBoxList'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'
@@ -24,24 +24,28 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
 import { PageRow, PageTitle } from 'ui-structure'
+import { ActiveGraph } from './ActiveGraph'
+import { InactiveGraph } from './InactiveGraph'
 import { PayoutList } from './PayoutList'
 import { LastEraPayoutStat } from './Stats/LastEraPayout'
 
 export const Payouts = ({ page: { key } }: PageProps) => {
   const { i18n, t } = useTranslation()
   const { openHelp } = useHelp()
-  const { plugins } = usePlugins()
   const { inSetup } = useStaking()
   const { syncing } = useSyncing()
   const { containerRefs } = useUi()
-  const { getData, injectBlockTimestamp } = useSubscanData([
-    'payouts',
-    'unclaimedPayouts',
-    'poolClaims',
-  ])
-  const notStaking = !syncing && inSetup()
+  const { pluginEnabled } = usePlugins()
+  const { getPoolMembership } = useBalances()
+  const { activeAccount } = useActiveAccounts()
 
-  const [payoutsList, setPayoutLists] = useState<AnyApi>([])
+  const membership = getPoolMembership(activeAccount)
+  const nominating = !inSetup()
+  const inPool = membership !== null
+  const staking = nominating || inPool
+  const notStaking = !syncing && !staking
+
+  const [payoutsList, setPayoutLists] = useState<AnyApi[]>([])
 
   const ref = useRef<HTMLDivElement>(null)
   const size = useSize(ref, {
@@ -49,33 +53,20 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   })
   const { width, height, minHeight } = formatSize(size, 280)
 
-  // Get data safely from subscan hook.
-  const data = getData(['payouts', 'unclaimedPayouts', 'poolClaims'])
-
-  // Inject `block_timestamp` for unclaimed payouts.
-  data['unclaimedPayouts'] = injectBlockTimestamp(data?.unclaimedPayouts || [])
-
-  const payoutsFromDate = Subscan.payoutsFromDate(
-    (data?.payouts || []).concat(data?.poolClaims || []),
+  const payoutsFromDate = getPayoutsFromDate(
+    payoutsList,
     locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
   )
-
-  const payoutsToDate = Subscan.payoutsToDate(
-    (data?.payouts || []).concat(data?.poolClaims || []),
+  const payoutsToDate = getPayoutsToDate(
+    payoutsList,
     locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
   )
 
   useEffect(() => {
-    // filter zero rewards and order via block timestamp, most recent first.
-    setPayoutLists(
-      Subscan.removeNonZeroAmountAndSort(
-        (data?.payouts || []).concat(data?.poolClaims || [])
-      )
-    )
-  }, [
-    JSON.stringify(data?.payouts || {}),
-    JSON.stringify(data?.poolClaims || {}),
-  ])
+    if (!pluginEnabled('staking_api')) {
+      setPayoutLists([])
+    }
+  }, [pluginEnabled('staking_api')])
 
   return (
     <>
@@ -85,7 +76,6 @@ export const Payouts = ({ page: { key } }: PageProps) => {
       </StatBoxList>
       <PageRow>
         <CardWrapper>
-          <PluginLabel plugin="subscan" />
           <CardHeaderWrapper>
             <h4>
               {t('payouts.payoutHistory', { ns: 'pages' })}
@@ -108,11 +98,11 @@ export const Payouts = ({ page: { key } }: PageProps) => {
             </h2>
           </CardHeaderWrapper>
           <div ref={ref} className="inner" style={{ minHeight }}>
-            {!plugins.includes('subscan') ? (
+            {!pluginEnabled('staking_api') ? (
               <StatusLabel
                 status="active_service"
-                statusFor="subscan"
-                title={t('payouts.subscanDisabled', { ns: 'pages' })}
+                statusFor="staking_api"
+                title={t('common.stakingApiDisabled', { ns: 'pages' })}
                 topOffset="30%"
               />
             ) : (
@@ -122,7 +112,6 @@ export const Payouts = ({ page: { key } }: PageProps) => {
                 topOffset="30%"
               />
             )}
-
             <GraphWrapper
               style={{
                 height: `${height}px`,
@@ -132,13 +121,15 @@ export const Payouts = ({ page: { key } }: PageProps) => {
                 transition: 'opacity 0.5s',
               }}
             >
-              <PayoutBar days={MaxPayoutDays} height="165px" data={data} />
-              <PayoutLine
-                days={MaxPayoutDays}
-                average={10}
-                height="65px"
-                data={data}
-              />
+              {staking && pluginEnabled('staking_api') ? (
+                <ActiveGraph
+                  nominating={nominating}
+                  inPool={inPool}
+                  setPayoutLists={setPayoutLists}
+                />
+              ) : (
+                <InactiveGraph />
+              )}
             </GraphWrapper>
           </div>
         </CardWrapper>

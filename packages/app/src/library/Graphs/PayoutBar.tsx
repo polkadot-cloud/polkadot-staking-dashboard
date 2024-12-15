@@ -1,8 +1,8 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyJson } from '@w3ux/types'
 import BigNumber from 'bignumber.js'
+import type { TooltipItem } from 'chart.js'
 import {
   BarElement,
   CategoryScale,
@@ -14,14 +14,9 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import type { AnyApi } from 'common-types'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
-import { useStaking } from 'contexts/Staking'
 import { useTheme } from 'contexts/Themes'
 import { format, fromUnixTime } from 'date-fns'
-import { useSyncing } from 'hooks/useSyncing'
 import { DefaultLocale, locales } from 'locales'
 import { Bar } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
@@ -44,56 +39,43 @@ export const PayoutBar = ({
   days,
   height,
   data: { payouts, poolClaims, unclaimedPayouts },
+  nominating,
+  inPool,
 }: PayoutBarProps) => {
   const { i18n, t } = useTranslation('library')
   const { mode } = useTheme()
-  const { inSetup } = useStaking()
-  const { getPoolMembership } = useBalances()
-  const { syncing } = useSyncing(['balances'])
-  const { activeAccount } = useActiveAccounts()
-
-  const membership = getPoolMembership(activeAccount)
   const { unit, units, colors } = useNetwork().networkData
-  const notStaking = !syncing && inSetup() && !membership
+  const staking = nominating || inPool
 
-  // remove slashes from payouts (graph does not support negative values).
-  const payoutsNoSlash = payouts?.filter((p) => p.event_id !== 'Slashed') || []
-
-  // remove slashes from unclaimed payouts.
-  const unclaimedPayoutsNoSlash =
-    unclaimedPayouts?.filter((p) => p.event_id !== 'Slashed') || []
-
-  // get formatted rewards data for graph.
+  // Get formatted rewards data
   const { allPayouts, allPoolClaims, allUnclaimedPayouts } =
     formatRewardsForGraphs(
       new Date(),
       days,
       units,
-      payoutsNoSlash,
+      payouts,
       poolClaims,
-      unclaimedPayoutsNoSlash
+      unclaimedPayouts
     )
-
   const { p: graphPayouts } = allPayouts
   const { p: graphUnclaimedPayouts } = allUnclaimedPayouts
   const { p: graphPoolClaims } = allPoolClaims
 
-  // determine color for payouts
-  const colorPayouts = notStaking
+  // Determine color for payouts
+  const colorPayouts = !staking
     ? colors.transparent[mode]
     : colors.primary[mode]
 
-  // determine color for poolClaims
-  const colorPoolClaims = notStaking
+  // Determine color for poolClaims
+  const colorPoolClaims = !staking
     ? colors.transparent[mode]
     : colors.secondary[mode]
 
-  // Bar border radius
   const borderRadius = 4
-
+  const pointRadius = 0
   const data = {
-    labels: graphPayouts.map((item: AnyApi) => {
-      const dateObj = format(fromUnixTime(item.block_timestamp), 'do MMM', {
+    labels: graphPayouts.map(({ timestamp }: { timestamp: number }) => {
+      const dateObj = format(fromUnixTime(timestamp), 'do MMM', {
         locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
       })
       return `${dateObj}`
@@ -103,28 +85,30 @@ export const PayoutBar = ({
       {
         order: 1,
         label: t('payout'),
-        data: graphPayouts.map((item: AnyApi) => item.amount),
+        data: graphPayouts.map(({ reward }: { reward: string }) => reward),
         borderColor: colorPayouts,
         backgroundColor: colorPayouts,
-        pointRadius: 0,
+        pointRadius,
         borderRadius,
       },
       {
         order: 2,
         label: t('poolClaim'),
-        data: graphPoolClaims.map((item: AnyApi) => item.amount),
+        data: graphPoolClaims.map(({ reward }: { reward: string }) => reward),
         borderColor: colorPoolClaims,
         backgroundColor: colorPoolClaims,
-        pointRadius: 0,
+        pointRadius,
         borderRadius,
       },
       {
         order: 3,
-        data: graphUnclaimedPayouts.map((item: AnyApi) => item.amount),
+        data: graphUnclaimedPayouts.map(
+          ({ reward }: { reward: string }) => reward
+        ),
         label: t('unclaimedPayouts'),
         borderColor: colorPayouts,
         backgroundColor: colors.pending[mode],
-        pointRadius: 0,
+        pointRadius,
         borderRadius,
       },
     ],
@@ -180,10 +164,10 @@ export const PayoutBar = ({
         },
         callbacks: {
           title: () => [],
-          label: (context: AnyJson) =>
-            `${
-              context.dataset.order === 3 ? `${t('pending')}: ` : ''
-            }${new BigNumber(context.parsed.y)
+          label: ({ dataset, parsed }: TooltipItem<'bar'>) =>
+            `${dataset.order === 3 ? `${t('pending')}: ` : ''}${new BigNumber(
+              parsed.y
+            )
               .decimalPlaces(units)
               .toFormat()} ${unit}`,
         },
