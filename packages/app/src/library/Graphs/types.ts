@@ -3,7 +3,8 @@
 
 import type BigNumber from 'bignumber.js'
 import type { AnyApi } from 'common-types'
-import type { SubscanPayoutData } from 'controllers/Subscan/types'
+import type { SubscanPoolClaim } from 'controllers/Subscan/types'
+import type { NominatorReward } from 'plugin-staking-api/types'
 
 export interface BondedProps {
   active: BigNumber
@@ -21,7 +22,9 @@ export interface EraPointsProps {
 export interface PayoutBarProps {
   days: number
   height: string
-  data: SubscanPayoutData
+  data: GraphPayoutData
+  nominating: boolean
+  inPool: boolean
 }
 
 export interface PayoutLineProps {
@@ -29,7 +32,15 @@ export interface PayoutLineProps {
   average: number
   height: string
   background?: string
-  data: SubscanPayoutData
+  data: GraphPayoutData
+  nominating: boolean
+  inPool: boolean
+}
+
+export interface GraphPayoutData {
+  payouts: NominatorReward[]
+  unclaimedPayouts: NominatorReward[]
+  poolClaims: SubscanPoolClaim[]
 }
 
 export interface CardHeaderWrapperProps {
@@ -42,8 +53,7 @@ export interface CardWrapperProps {
 }
 
 export interface PayoutDayCursor {
-  amount: BigNumber
-  event_id: string
+  reward: BigNumber
 }
 
 export interface GeoDonutProps {

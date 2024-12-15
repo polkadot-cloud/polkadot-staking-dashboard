@@ -8,6 +8,10 @@
     "clear": "rm -rf build tsconfig.tsbuildinfo dist",
     "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
   },
+  "exports": {
+    ".": "./src/index.tsx",
+    "./types": "./src/types.ts"
+  },
   "dependencies": {
     "@apollo/client": "^3.11.10",
     "graphql": "^16.9.0"

@@ -27,7 +27,6 @@ export const StatusLabel = ({
   const { inSetup } = useStaking()
   const { getPoolMembership } = useBalances()
   const { activeAccount } = useActiveAccounts()
-
   const membership = getPoolMembership(activeAccount)
 
   // syncing or not staking

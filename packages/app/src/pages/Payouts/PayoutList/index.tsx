@@ -40,30 +40,28 @@ export const PayoutListInner = ({
   const {
     networkData: { units, unit, colors },
   } = useNetwork()
-  const { listFormat, setListFormat } = usePayoutList()
   const { validators } = useValidators()
   const { bondedPools } = useBondedPools()
+  const { listFormat, setListFormat } = usePayoutList()
 
-  // current page
   const [page, setPage] = useState<number>(1)
 
-  // manipulated list (ordering, filtering) of payouts
+  // Manipulated list (ordering, filtering) of payouts
   const [payouts, setPayouts] = useState<AnyApi>(initialPayouts)
 
-  // is this the initial fetch
+  // Whether still in initial fetch
   const [fetched, setFetched] = useState<boolean>(false)
 
-  // pagination
   const totalPages = Math.ceil(payouts.length / payoutsPerPage)
   const pageEnd = page * payoutsPerPage - 1
   const pageStart = pageEnd - (payoutsPerPage - 1)
 
-  // refetch list when list changes
+  // Refetch list when list changes
   useEffect(() => {
     setFetched(false)
   }, [initialPayouts])
 
-  // configure list when network is ready to fetch
+  // Configure list when network is ready to fetch
   useEffect(() => {
     if (isReady && !activeEra.index.isZero() && !fetched) {
       setPayouts(initialPayouts)
@@ -71,13 +69,8 @@ export const PayoutListInner = ({
     }
   }, [isReady, fetched, activeEra.index])
 
-  // get list items to render
-  let listPayouts = []
-
-  // get throttled subset or entire list
-  listPayouts = payouts.slice(pageStart).slice(0, payoutsPerPage)
-
-  if (!payouts.length) {
+  const listPayouts = payouts.slice(pageStart).slice(0, payoutsPerPage)
+  if (!listPayouts.length) {
     return null
   }
 
@@ -109,25 +102,9 @@ export const PayoutListInner = ({
         <MotionContainer>
           {listPayouts.map((p: AnyApi, index: number) => {
             const label =
-              p.event_id === 'PaidOut'
-                ? t('payouts.poolClaim')
-                : p.event_id === 'Rewarded'
-                  ? t('payouts.payout')
-                  : p.event_id
-
-            const labelClass =
-              p.event_id === 'PaidOut'
-                ? 'claim'
-                : p.event_id === 'Rewarded'
-                  ? 'reward'
-                  : undefined
-
-            // get validator if it exists
-            const validator = validators.find(
-              (v) => v.address === p.validator_stash
-            )
-
-            // get pool if it exists
+              p.type === 'pool' ? t('payouts.poolClaim') : t('payouts.payout')
+            const labelClass = p.type === 'pool' ? 'claim' : 'reward'
+            const validator = validators.find((v) => v.address === p.validator)
             const pool = bondedPools.find(({ id }) => id === p.pool_id)
 
             const batchIndex = validator
@@ -158,9 +135,9 @@ export const PayoutListInner = ({
                         <div>
                           <h4 className={labelClass}>
                             <>
-                              {p.event_id === 'Slashed' ? '-' : '+'}
+                              +
                               {planckToUnitBn(
-                                new BigNumber(p.amount),
+                                new BigNumber(p.reward),
                                 units
                               ).toString()}{' '}
                               {unit}
@@ -177,9 +154,9 @@ export const PayoutListInner = ({
                         <div>
                           {label === t('payouts.payout') &&
                             (batchIndex > 0 ? (
-                              <Identity address={p.validator_stash} />
+                              <Identity address={p.validator} />
                             ) : (
-                              <div>{ellipsisFn(p.validator_stash)}</div>
+                              <div>{ellipsisFn(p.validator)}</div>
                             ))}
                           {label === t('payouts.poolClaim') &&
                             (pool ? (
@@ -196,7 +173,7 @@ export const PayoutListInner = ({
                         <div>
                           <h5>
                             {formatDistance(
-                              fromUnixTime(p.block_timestamp),
+                              fromUnixTime(p.timestamp),
                               new Date(),
                               {
                                 addSuffix: true,
