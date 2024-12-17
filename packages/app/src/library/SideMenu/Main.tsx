@@ -9,6 +9,7 @@ import { useBalances } from 'contexts/Balances'
 import { useBonded } from 'contexts/Bonded'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
+import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useSetup } from 'contexts/Setup'
 import type { SetupContextInterface } from 'contexts/Setup/types'
 import { useStaking } from 'contexts/Staking'
@@ -26,12 +27,13 @@ export const Main = () => {
   const { t, i18n } = useTranslation('base')
   const { syncing } = useSyncing()
   const { pathname } = useLocation()
+  const { inPool } = useActivePool()
   const { networkData } = useNetwork()
+  const { getNominations } = useBalances()
   const { getBondedAccount } = useBonded()
   const { accounts } = useImportedAccounts()
   const { formatWithPrefs } = useValidators()
   const { activeAccount } = useActiveAccounts()
-  const { getPoolMembership, getNominations } = useBalances()
   const {
     getPoolSetupPercent,
     getNominatorSetupPercent,
@@ -39,7 +41,6 @@ export const Main = () => {
   const { sideMenuMinimised }: UIContextInterface = useUi()
   const { inSetup: inNominatorSetup, addressDifferentToStash } = useStaking()
 
-  const membership = getPoolMembership(activeAccount)
   const controller = getBondedAccount(activeAccount)
   const controllerDifferentToStash = addressDifferentToStash(controller)
 
@@ -99,9 +100,8 @@ export const Main = () => {
 
       if (uri === `${import.meta.env.BASE_URL}pools`) {
         // configure Pools action
-        const inPool = membership
 
-        if (inPool) {
+        if (inPool()) {
           pages[i].action = {
             type: 'text',
             status: 'success',
@@ -122,7 +122,7 @@ export const Main = () => {
     accounts,
     controllerDifferentToStash,
     syncing,
-    membership,
+    inPool(),
     inNominatorSetup(),
     getNominatorSetupPercent(activeAccount),
     getPoolSetupPercent(activeAccount),

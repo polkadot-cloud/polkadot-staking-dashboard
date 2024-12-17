@@ -19,6 +19,7 @@ export const defaultPoolNominations = {
 }
 
 export const defaultActivePoolContext: ActivePoolContextState = {
+  inPool: () => false,
   isBonding: () => false,
   isNominator: () => false,
   isOwner: () => false,

@@ -12,6 +12,6 @@
     "strictPropertyInitialization": false,
     "noUnusedLocals": true
   },
-  "include": ["packages/**/*", "env.d.ts", "eslint.config.js"],
+  "include": ["packages/**/*", "**/*.d.ts", "eslint.config.js"],
   "exclude": ["**/*/node_modules", "**/*/dist", "**/*/lottie"]
 }

@@ -8,7 +8,6 @@ import { TipsConfig } from 'config/tips'
 import { TipsThresholdMedium, TipsThresholdSmall } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
-import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
@@ -30,15 +29,14 @@ export const Tips = () => {
   const {
     stakingMetrics: { minNominatorBond },
   } = useApi()
+  const { inPool } = useActivePool()
   const { isOwner } = useActivePool()
   const { isNominating } = useStaking()
-  const { getPoolMembership } = useBalances()
   const { activeAccount } = useActiveAccounts()
   const { fillVariables } = useFillVariables()
   const { syncing } = useSyncing(['initialization'])
   const { feeReserve, getTransferOptions } = useTransferOptions()
 
-  const membership = getPoolMembership(activeAccount)
   const transferOptions = getTransferOptions(activeAccount)
 
   // multiple tips per row is currently turned off.
@@ -101,7 +99,7 @@ export const Tips = () => {
   const segments: AnyJson = []
   if (!activeAccount) {
     segments.push(1)
-  } else if (!isNominating() && !membership) {
+  } else if (!isNominating() && !inPool()) {
     if (
       transferOptions.freeBalance
         .minus(feeReserve)
@@ -116,7 +114,7 @@ export const Tips = () => {
     if (isNominating()) {
       segments.push(5)
     }
-    if (membership) {
+    if (inPool()) {
       if (!isOwner()) {
         segments.push(6)
       } else {

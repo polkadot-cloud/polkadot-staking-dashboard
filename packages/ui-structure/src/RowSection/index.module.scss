@@ -62,12 +62,17 @@
   }
 }
 
+.rowNoHPadding {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
 .rowSecondaryWrapperLast {
   @media (min-width: $page-width-medium-threshold) {
     padding-right: 0.75rem;
   }
 }
 
-.rowSSectionVLast {
+.rowSectionVLast {
   order: 1;
 }
