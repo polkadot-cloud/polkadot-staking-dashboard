@@ -67,7 +67,7 @@ export const ClosurePrompts = () => {
                 }
                 onClick={() =>
                   openModal({
-                    key: 'Unbond',
+                    key: 'LeavePool',
                     options: { bondFor: 'pool' },
                     size: 'sm',
                   })
