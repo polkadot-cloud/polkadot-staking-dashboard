@@ -15,31 +15,33 @@ export const StakeStatus = () => {
   const { plugins } = usePlugins()
   const { inPool } = useActivePool()
   const { inSetup } = useStaking()
+
   const showTips = plugins.includes('tips')
+  const notStaking = !inPool() && inSetup()
+  const showNominate = notStaking || !inSetup()
+  const showMembership = notStaking || inPool()
 
   return (
     <CardWrapper style={{ padding: 0 }}>
       <StatusWrapper $borderBottom={showTips}>
-        <RowSection secondary>
-          <section
-            style={{
-              transition: 'opacity 0.2s',
-              opacity: inPool() ? 'var(--opacity-disabled)' : 1,
-            }}
+        {showNominate && (
+          <RowSection secondary={showMembership} standalone={!showMembership}>
+            <section>
+              <NominationStatus showButtons={false} />
+            </section>
+          </RowSection>
+        )}
+        {showMembership && (
+          <RowSection
+            hLast={showNominate}
+            vLast={showNominate}
+            standalone={!showNominate}
           >
-            <NominationStatus showButtons={false} />
-          </section>
-        </RowSection>
-        <RowSection hLast vLast>
-          <section
-            style={{
-              transition: 'opacity 0.2s',
-              opacity: !inSetup() ? 'var(--opacity-disabled)' : 1,
-            }}
-          >
-            <MembershipStatus showButtons={false} />
-          </section>
-        </RowSection>
+            <section>
+              <MembershipStatus showButtons={false} />
+            </section>
+          </RowSection>
+        )}
       </StatusWrapper>
 
       {showTips ? <Tips /> : null}

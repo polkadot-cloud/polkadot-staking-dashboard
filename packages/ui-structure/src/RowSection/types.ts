@@ -10,4 +10,6 @@ export type RowSectionProps = ComponentBase & {
   hLast?: boolean
   // `true` means the secondary element and  false means the primary one.
   secondary?: boolean
+  // `true` means row is hostiing only a singular element.
+  standalone?: boolean
 }

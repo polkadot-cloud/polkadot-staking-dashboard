@@ -15,6 +15,7 @@ export const RowSection = ({
   vLast,
   hLast,
   secondary,
+  standalone,
 }: RowSectionProps) => {
   const mainClass = secondary
     ? classes.rowSecondaryWrapper
@@ -31,12 +32,13 @@ export const RowSection = ({
       : classes.rowPrimaryWrapperLast
   }
 
-  const buttonClasses = classNames(mainClass, hClass, {
-    [classes.rowSSectionVLast]: vLast,
+  const rowClasses = classNames(mainClass, hClass, {
+    [classes.rowSectionVLast]: vLast,
+    [classes.rowNoHPadding]: standalone,
   })
 
   return (
-    <div className={buttonClasses} style={style}>
+    <div className={rowClasses} style={style}>
       {children}
     </div>
   )
