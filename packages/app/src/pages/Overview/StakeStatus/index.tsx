@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { usePlugins } from 'contexts/Plugins'
+import { useStaking } from 'contexts/Staking'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { NominationStatus } from 'pages/Nominate/Active/Status/NominationStatus'
 import { MembershipStatus } from 'pages/Pools/Status/MembershipStatus'
@@ -11,6 +12,7 @@ import { StatusWrapper } from './Wrappers'
 
 export const StakeStatus = () => {
   const { plugins } = usePlugins()
+  const { isNominating } = useStaking()
   const showTips = plugins.includes('tips')
 
   return (
@@ -22,7 +24,9 @@ export const StakeStatus = () => {
           </section>
         </RowSection>
         <RowSection hLast vLast>
-          <section>
+          <section
+            style={{ opacity: isNominating() ? 'var(--opacity-disabled)' : 1 }}
+          >
             <MembershipStatus showButtons={false} />
           </section>
         </RowSection>

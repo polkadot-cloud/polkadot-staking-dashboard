@@ -145,8 +145,6 @@ export const CallToActionWrapper = styled.div`
             }
 
             &.disabled {
-              opacity: 0.5;
-
               &:hover {
                 filter: none;
               }
@@ -197,12 +195,13 @@ export const CallToActionWrapper = styled.div`
               margin-left: 0.75rem;
             }
 
-            &:disabled {
-              cursor: default;
-            }
-
             > svg {
               margin: 0 0.75rem;
+            }
+
+            &:disabled {
+              opacity: var(--opacity-disabled);
+              cursor: default;
             }
           }
 
@@ -210,6 +209,11 @@ export const CallToActionWrapper = styled.div`
             > button {
               cursor: default;
             }
+          }
+
+          &:disabled {
+            opacity: var(--opacity-disabled);
+            cursor: default;
           }
         }
       }
