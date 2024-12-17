@@ -7,6 +7,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
+import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useOverlay } from 'kits/Overlay/Provider'
 import { CallToActionWrapper } from 'library/CallToAction'
 import { CallToActionLoader } from 'library/Loader/CallToAction'
@@ -20,12 +21,13 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
   const { isReady } = useApi()
   const navigate = useNavigate()
   const { network } = useNetwork()
+  const { inPool } = useActivePool()
   const { openCanvas } = useOverlay().canvas
   const { activeAccount } = useActiveAccounts()
   const { isReadOnlyAccount } = useImportedAccounts()
 
   const nominateButtonDisabled =
-    !isReady || !activeAccount || isReadOnlyAccount(activeAccount)
+    !isReady || !activeAccount || isReadOnlyAccount(activeAccount) || inPool()
 
   return (
     <CallToActionWrapper>

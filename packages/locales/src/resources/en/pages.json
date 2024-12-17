@@ -1,8 +1,6 @@
 {
   "pages": {
-    "common": {
-      "stakingApiDisabled": "Staking API Disabled"
-    },
+    "common": { "stakingApiDisabled": "Staking API Disabled" },
     "community": {
       "bio": "Bio",
       "connecting": "Connecting",
@@ -30,6 +28,7 @@
     "nominate": {
       "activeNominations": "Active Nominations",
       "addressCopied": "Address Copied to Clipboard",
+      "alreadyInPool": "Cannot Nominate: Already in Pool",
       "automaticallyBonded": "Automatically bond payouts to your existing staked balance.",
       "back": "Back",
       "bond": "Bond",
@@ -145,6 +144,7 @@
       "addressCopied": "Address Copied to Clipboard",
       "addressInvalid": "Address Invalid",
       "allPools": "All Pools",
+      "alreadyNominating": "Cannot Join Pool: Already Nominating",
       "assigned": "Assigned",
       "assignedToAnyAccount": " Your <b>Root</b>, <b>Nominator</b> and <b>Bouncer</b> roles can be assigned to any account.",
       "availableToClaim": "The outstanding amount of {{unit}} available to claim by pool members.",

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNetwork } from 'contexts/Network'
 import { useJoinPools } from 'contexts/Pools/JoinPools'
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
+import { useStaking } from 'contexts/Staking'
 import { useOverlay } from 'kits/Overlay/Provider'
 import { CallToActionWrapper } from 'library/CallToAction'
 import { CallToActionLoader } from 'library/Loader/CallToAction'
@@ -20,6 +21,7 @@ import { useStatusButtons } from './useStatusButtons'
 export const NewMember = ({ syncing }: NewMemberProps) => {
   const { t } = useTranslation()
   const { network } = useNetwork()
+  const { inSetup } = useStaking()
   const { poolsForJoin } = useJoinPools()
   const { setActiveTab } = usePoolsTabs()
   const { openCanvas } = useOverlay().canvas
@@ -30,11 +32,12 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
   // Get the pool performance task to determine if performance data is ready.
   const poolJoinPerformanceTask = getPoolPerformanceTask('pool_join')
 
-  // Alias for create button disabled state.
-  const createDisabled = getCreateDisabled()
+  // Alias for create button disabled state
+  const createDisabled = getCreateDisabled() || !inSetup()
 
   // Disable opening the canvas if data is not ready.
-  const joinButtonDisabled = getJoinDisabled() || !poolsForJoin.length
+  const joinButtonDisabled =
+    getJoinDisabled() || !poolsForJoin.length || !inSetup()
 
   return (
     <CallToActionWrapper>
@@ -46,7 +49,7 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
             <section className="fixedWidth">
               <div className="buttons">
                 <div
-                  className={`button primary standalone${getJoinDisabled() ? ` disabled` : ``}${poolJoinPerformanceTask.status === 'synced' ? ` pulse` : ``}`}
+                  className={`button primary standalone${joinButtonDisabled ? ` disabled` : ``}${poolJoinPerformanceTask.status === 'synced' ? ` pulse` : ``}`}
                 >
                   <button
                     onClick={() => {

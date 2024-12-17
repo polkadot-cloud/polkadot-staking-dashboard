@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useSyncing } from 'hooks/useSyncing'
@@ -15,31 +14,29 @@ import { RewardsStatus } from './RewardsStatus'
 import type { StatusProps } from './types'
 
 export const Status = ({ height }: StatusProps) => {
-  const { activePool } = useActivePool()
-  const { getPoolMembership } = useBalances()
   const { poolMembersipSyncing } = useSyncing()
   const { activeAccount } = useActiveAccounts()
+  const { activePool, inPool } = useActivePool()
   const { isReadOnlyAccount } = useImportedAccounts()
 
-  const membership = getPoolMembership(activeAccount)
   const syncing = poolMembersipSyncing()
 
   return (
     <CardWrapper
       height={height}
-      className={!syncing && !activePool && !membership ? 'prompt' : undefined}
+      className={!syncing && !activePool && !inPool() ? 'prompt' : undefined}
     >
       <MembershipStatus />
       <Separator />
-      <RewardsStatus dimmed={membership === null} />
+      <RewardsStatus dimmed={inPool() === null} />
       {!syncing ? (
-        activePool && !!membership ? (
+        activePool && inPool() ? (
           <>
             <Separator />
             <PoolStatus />
           </>
         ) : (
-          membership === null &&
+          !inPool() &&
           !isReadOnlyAccount(activeAccount) && <NewMember syncing={syncing} />
         )
       ) : (
