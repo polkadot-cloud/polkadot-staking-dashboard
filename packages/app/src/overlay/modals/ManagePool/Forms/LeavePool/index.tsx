@@ -58,18 +58,13 @@ export const LeavePool = ({
     erasToSeconds(bondDuration),
     true
   )
-
+  const freeToUnbond = planckToUnitBn(activeBn, units)
   const pendingRewardsUnit = planckToUnit(pendingRewards, units)
 
-  // Convert BigNumber values to number
-  const freeToUnbond = planckToUnitBn(activeBn, units)
+  const [paramsValid, setParamsValid] = useState<boolean>(false)
 
-  // Bond valid
-  const [pointsValid, setPointsValid] = useState<boolean>(false)
-
-  // Update bond value on task change
   useEffect(() => {
-    setPointsValid(BigInt(membership?.points || 0) > 0 && !!activePool?.id)
+    setParamsValid(BigInt(membership?.points || 0) > 0 && !!activePool?.id)
   }, [freeToUnbond.toString()])
 
   const getTx = () => {
@@ -84,7 +79,7 @@ export const LeavePool = ({
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
-    shouldSubmit: pointsValid,
+    shouldSubmit: paramsValid,
     callbackSubmit: () => {
       setModalStatus('closing')
     },
@@ -112,7 +107,9 @@ export const LeavePool = ({
             ))}
           </ModalWarnings>
         ) : null}
-        <ActionItem text={`${t('unbond')} ${freeToUnbond} ${unit}`} />
+        <ActionItem
+          text={`${t('unbond')} ${freeToUnbond.toString()} ${unit}`}
+        />
         <StaticNote
           value={bondDurationFormatted}
           tKey="onceUnbonding"
@@ -121,7 +118,7 @@ export const LeavePool = ({
         />
       </ModalPadding>
       <SubmitTx
-        valid={pointsValid}
+        valid={paramsValid}
         buttons={[
           <ButtonSubmitInvert
             key="button_back"

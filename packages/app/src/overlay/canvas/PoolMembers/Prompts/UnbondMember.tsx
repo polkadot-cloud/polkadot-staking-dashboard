@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Polkicon } from '@w3ux/react-polkicon'
-import { ellipsisFn, rmCommas, unitToPlanck } from '@w3ux/utils'
+import { ellipsisFn, rmCommas } from '@w3ux/utils'
 import { PoolUnbond } from 'api/tx/poolUnbond'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
@@ -43,10 +43,9 @@ export const UnbondMember = ({
   const { erasToSeconds } = useErasToTimeLeft()
   const { getSignerWarnings } = useSignerWarnings()
 
-  const { bondDuration } = consts
   const { points } = member
+  const { bondDuration } = consts
   const freeToUnbond = planckToUnitBn(new BigNumber(rmCommas(points)), units)
-
   const bondDurationFormatted = timeleftAsString(
     t,
     getUnixTime(new Date()) + 1,
@@ -54,40 +53,25 @@ export const UnbondMember = ({
     true
   )
 
-  // local bond value
-  const [bond, setBond] = useState<{ bond: string }>({
-    bond: freeToUnbond.toString(),
-  })
+  const [paramsValid, setParamsValid] = useState<boolean>(false)
 
-  // bond valid
-  const [bondValid, setBondValid] = useState<boolean>(false)
-
-  // unbond all validation
-  const isValid = (() => freeToUnbond.isGreaterThan(0))()
-
-  // update bond value on task change
   useEffect(() => {
-    setBond({ bond: freeToUnbond.toString() })
-    setBondValid(isValid)
-  }, [freeToUnbond.toString(), isValid])
+    setParamsValid(BigInt(points) > 0)
+  }, [freeToUnbond.toString()])
 
   const getTx = () => {
     let tx = null
     if (!activeAccount) {
       return tx
     }
-    tx = new PoolUnbond(
-      network,
-      who,
-      unitToPlanck(!bondValid ? 0 : bond.bond, units)
-    ).tx()
+    tx = new PoolUnbond(network, who, BigInt(points)).tx()
     return tx
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
-    shouldSubmit: bondValid,
+    shouldSubmit: paramsValid,
     callbackSubmit: () => {
       closePrompt()
     },
@@ -115,7 +99,9 @@ export const UnbondMember = ({
           &nbsp; {ellipsisFn(who, 7)}
         </h3>
         <ModalNotes>
-          <p>{t('amountWillBeUnbonded', { bond: bond.bond, unit })}</p>
+          <p>
+            {t('amountWillBeUnbonded', { bond: freeToUnbond.toString(), unit })}
+          </p>
           <StaticNote
             value={bondDurationFormatted}
             tKey="onceUnbondingPoolMember"
@@ -124,7 +110,7 @@ export const UnbondMember = ({
           />
         </ModalNotes>
       </ModalPadding>
-      <SubmitTx noMargin valid={bondValid} {...submitExtrinsic} />
+      <SubmitTx noMargin valid={paramsValid} {...submitExtrinsic} />
     </>
   )
 }
