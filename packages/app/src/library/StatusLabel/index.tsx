@@ -3,10 +3,9 @@
 
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBalances } from 'contexts/Balances'
 import { useHelp } from 'contexts/Help'
 import { usePlugins } from 'contexts/Plugins'
+import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useSyncing } from 'hooks/useSyncing'
 import { ButtonHelp } from 'ui-buttons'
@@ -25,13 +24,11 @@ export const StatusLabel = ({
   const { syncing } = useSyncing()
   const { plugins } = usePlugins()
   const { inSetup } = useStaking()
-  const { getPoolMembership } = useBalances()
-  const { activeAccount } = useActiveAccounts()
-  const membership = getPoolMembership(activeAccount)
+  const { inPool } = useActivePool()
 
   // syncing or not staking
   if (status === 'sync_or_setup') {
-    if (syncing || !inSetup() || membership !== null) {
+    if (syncing || !inSetup() || inPool()) {
       return null
     }
   }

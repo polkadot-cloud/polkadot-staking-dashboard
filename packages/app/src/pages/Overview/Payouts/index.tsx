@@ -5,10 +5,9 @@ import { useSize } from '@w3ux/hooks'
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
+import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns'
@@ -36,14 +35,10 @@ export const Payouts = () => {
   const { inSetup } = useStaking()
   const { syncing } = useSyncing()
   const { containerRefs } = useUi()
+  const { inPool } = useActivePool()
   const { pluginEnabled } = usePlugins()
-  const { getPoolMembership } = useBalances()
-  const { activeAccount } = useActiveAccounts()
 
-  const membership = getPoolMembership(activeAccount)
-  const nominating = !inSetup()
-  const inPool = membership !== null
-  const staking = nominating || inPool
+  const staking = !inSetup() || inPool
   const notStaking = !syncing && !staking
 
   const [lastReward, setLastReward] = useState<NominatorReward>()
@@ -121,8 +116,8 @@ export const Payouts = () => {
         >
           {staking && pluginEnabled('staking_api') ? (
             <ActiveGraph
-              nominating={nominating}
-              inPool={inPool}
+              nominating={!inSetup()}
+              inPool={inPool()}
               lineMarginTop="3rem"
               setLastReward={setLastReward}
             />

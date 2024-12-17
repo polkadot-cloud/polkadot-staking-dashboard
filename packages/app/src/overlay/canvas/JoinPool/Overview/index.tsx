@@ -4,7 +4,7 @@
 import { JoinForm } from './JoinForm'
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBalances } from 'contexts/Balances'
+import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { GraphLayoutWrapper } from '../Wrappers'
 import type { OverviewSectionProps } from '../types'
@@ -14,8 +14,8 @@ import { Roles } from './Roles'
 import { Stats } from './Stats'
 
 export const Overview = (props: OverviewSectionProps) => {
-  const { isNominating } = useStaking()
-  const { getPoolMembership } = useBalances()
+  const { inSetup } = useStaking()
+  const { inPool } = useActivePool()
   const { activeAccount } = useActiveAccounts()
 
   const {
@@ -23,10 +23,7 @@ export const Overview = (props: OverviewSectionProps) => {
   } = props
 
   const showJoinForm =
-    activeAccount !== null &&
-    state === 'Open' &&
-    getPoolMembership(activeAccount) === null &&
-    !isNominating()
+    activeAccount !== null && state === 'Open' && !inPool() && !inSetup()
 
   return (
     <>

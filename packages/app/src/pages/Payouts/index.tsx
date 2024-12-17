@@ -3,10 +3,9 @@
 
 import { useSize } from '@w3ux/hooks'
 import type { AnyApi, PageProps } from 'common-types'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBalances } from 'contexts/Balances'
 import { useHelp } from 'contexts/Help'
 import { usePlugins } from 'contexts/Plugins'
+import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { useSyncing } from 'hooks/useSyncing'
@@ -35,13 +34,10 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   const { inSetup } = useStaking()
   const { syncing } = useSyncing()
   const { containerRefs } = useUi()
+  const { inPool } = useActivePool()
   const { pluginEnabled } = usePlugins()
-  const { getPoolMembership } = useBalances()
-  const { activeAccount } = useActiveAccounts()
 
-  const membership = getPoolMembership(activeAccount)
   const nominating = !inSetup()
-  const inPool = membership !== null
   const staking = nominating || inPool
   const notStaking = !syncing && !staking
 
@@ -124,7 +120,7 @@ export const Payouts = ({ page: { key } }: PageProps) => {
               {staking && pluginEnabled('staking_api') ? (
                 <ActiveGraph
                   nominating={nominating}
-                  inPool={inPool}
+                  inPool={inPool()}
                   setPayoutLists={setPayoutLists}
                 />
               ) : (
