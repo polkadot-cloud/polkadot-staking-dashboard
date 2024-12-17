@@ -27,7 +27,7 @@
     "nominate": {
       "activeNominations": "活跃提名人",
       "addressCopied": "地址已复制到剪贴板",
-      "alreadyInPool": "无法提名：已在候选池中",
+      "alreadyInPool": "无需提名：已在提名池中",
       "automaticallyBonded": "将自动质押收益到现有的质押余额中",
       "back": "返回",
       "bond": "质押",
