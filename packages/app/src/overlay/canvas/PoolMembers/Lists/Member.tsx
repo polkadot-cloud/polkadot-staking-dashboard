@@ -56,15 +56,6 @@ export const Member = ({
 
   const menuItems: AnyJson[] = []
 
-  menuItems.push({
-    icon: <FontAwesomeIcon icon={faUnlockAlt} transform="shrink-3" />,
-    wrap: null,
-    title: `${t('pools.withdrawFunds', { ns: 'pages' })}`,
-    cb: () => {
-      openPromptWith(<UnbondMember who={who} member={member} />)
-    },
-  })
-
   if (member && (canUnbondBlocked || canUnbondDestroying)) {
     const { points, unbondingEras } = member
 
@@ -72,7 +63,7 @@ export const Member = ({
       menuItems.push({
         icon: <FontAwesomeIcon icon={faUnlockAlt} transform="shrink-3" />,
         wrap: null,
-        title: `${t('pools.unbondFunds', { ns: 'pages' })}`,
+        title: `${t('pools.withdrawFunds', { ns: 'pages' })}`,
         cb: () => {
           openPromptWith(<UnbondMember who={who} member={member} />)
         },
