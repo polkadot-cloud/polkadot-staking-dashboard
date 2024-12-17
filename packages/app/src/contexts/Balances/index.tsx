@@ -16,7 +16,7 @@ import { useActiveBalances } from 'hooks/useActiveBalances'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useRef } from 'react'
-import type { MaybeAddress } from 'types'
+import type { ActivePoolItem, MaybeAddress } from 'types'
 import { useEventListener } from 'usehooks-ts'
 import * as defaults from './defaults'
 import type { BalancesContextInterface } from './types'
@@ -61,12 +61,15 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
 
       // If a pool membership exists, let `ActivePools` know of pool membership to re-sync pool
       // details and nominations.
-      if (isReady && poolMembership) {
-        const { poolId } = poolMembership
-        const newPools = ActivePools.getformattedPoolItems(address).concat({
-          id: String(poolId),
-          addresses: { ...createPoolAccounts(Number(poolId)) },
-        })
+      if (isReady) {
+        let newPools: ActivePoolItem[] = []
+        if (poolMembership) {
+          const { poolId } = poolMembership
+          newPools = ActivePools.getformattedPoolItems(address).concat({
+            id: String(poolId),
+            addresses: { ...createPoolAccounts(Number(poolId)) },
+          })
+        }
 
         const peopleApi = Apis.getApi(`people-${network}` as SystemChainId)
         if (peopleApi) {
