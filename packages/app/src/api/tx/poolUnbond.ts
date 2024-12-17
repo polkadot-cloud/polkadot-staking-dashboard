@@ -6,12 +6,12 @@ import type { ChainId } from 'common-types'
 
 export class PoolUnbond extends Base {
   #who: string
-  #bond: bigint
+  #points: bigint
 
-  constructor(network: ChainId, who: string, bond: bigint) {
+  constructor(network: ChainId, who: string, points: bigint) {
     super(network)
     this.#who = who
-    this.#bond = bond
+    this.#points = points
   }
 
   tx() {
@@ -21,7 +21,7 @@ export class PoolUnbond extends Base {
           type: 'Id',
           value: this.#who,
         },
-        unbonding_points: this.#bond,
+        unbonding_points: this.#points,
       })
     } catch (e) {
       return null

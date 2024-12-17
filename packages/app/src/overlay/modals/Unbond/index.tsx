@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
+import { PoolBalanceToPoints } from 'api/runtimeApi/poolBalanceToPoints'
 import { PoolUnbond } from 'api/tx/poolUnbond'
 import { StakingUnbond } from 'api/tx/stakingUnbond'
 import BigNumber from 'bignumber.js'
@@ -82,16 +83,23 @@ export const Unbond = () => {
   const minCreateBond = planckToUnitBn(minCreateBondBn, units)
   const minNominatorBond = planckToUnitBn(minNominatorBondBn, units)
 
-  // local bond value
   const [bond, setBond] = useState<{ bond: string }>({
     bond: freeToUnbond.toString(),
   })
+  const [points, setPoints] = useState<bigint>(0n)
 
-  // bond valid
   const [bondValid, setBondValid] = useState<boolean>(false)
 
   // handler to set bond as a string
-  const handleSetBond = (newBond: { bond: BigNumber }) => {
+  const handleSetBond = async (newBond: { bond: BigNumber }) => {
+    if (isPooling && activePool) {
+      const balancePoints = await new PoolBalanceToPoints(
+        network,
+        activePool.id,
+        unitToPlanck(newBond.bond.toString(), units)
+      ).fetch()
+      setPoints(balancePoints)
+    }
     setBond({ bond: newBond.bond.toString() })
   }
 
@@ -114,7 +122,7 @@ export const Unbond = () => {
 
     const bondToSubmit = unitToPlanck(!bondValid ? 0 : bond.bond, units)
     if (isPooling) {
-      tx = new PoolUnbond(network, activeAccount, bondToSubmit).tx()
+      tx = new PoolUnbond(network, activeAccount, points).tx()
     } else if (isStaking) {
       tx = new StakingUnbond(network, bondToSubmit).tx()
     }
@@ -173,7 +181,7 @@ export const Unbond = () => {
     warnings.push(t('unbondErrorNoFunds', { unit }))
   }
 
-  // Update bond value on task change.
+  // Update bond value on task change
   useEffect(() => {
     handleSetBond({ bond: unbondToMin })
   }, [freeToUnbond.toString()])
