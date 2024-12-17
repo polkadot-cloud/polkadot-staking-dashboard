@@ -119,6 +119,9 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     return String(membership?.poolId || '') === p
   }
 
+  // Returns whether the active account is in a pool.
+  const inPool = () => !!membership
+
   // Returns whether the active account is the depositor of the active pool.
   const isDepositor = () => {
     const roles = activePool?.bondedPool?.roles
@@ -170,6 +173,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     <ActivePoolContext.Provider
       value={{
         isNominator,
+        inPool,
         isOwner,
         isMember,
         isDepositor,

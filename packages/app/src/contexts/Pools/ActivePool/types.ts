@@ -4,6 +4,7 @@
 import type { ActivePool, Nominations, PoolRoles, PoolUnlocking } from 'types'
 
 export interface ActivePoolContextState {
+  inPool: () => boolean
   isBonding: () => boolean
   isNominator: () => boolean
   isOwner: () => boolean
