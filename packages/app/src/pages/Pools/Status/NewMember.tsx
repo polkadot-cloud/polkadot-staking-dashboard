@@ -18,7 +18,7 @@ import { useStatusButtons } from './useStatusButtons'
 
 export const NewMember = ({ syncing }: NewMemberProps) => {
   const { t } = useTranslation()
-  const { isNominating } = useStaking()
+  const { inSetup } = useStaking()
   const { poolsForJoin } = useJoinPools()
   const { setActiveTab } = usePoolsTabs()
   const { openCanvas } = useOverlay().canvas
@@ -30,11 +30,11 @@ export const NewMember = ({ syncing }: NewMemberProps) => {
   const poolJoinPerformanceTask = getPoolPerformanceTask('pool_join')
 
   // Alias for create button disabled state
-  const createDisabled = getCreateDisabled() || isNominating()
+  const createDisabled = getCreateDisabled() || !inSetup()
 
   // Disable opening the canvas if data is not ready.
   const joinButtonDisabled =
-    getJoinDisabled() || !poolsForJoin.length || isNominating()
+    getJoinDisabled() || !poolsForJoin.length || !inSetup()
 
   return (
     <CallToActionWrapper>

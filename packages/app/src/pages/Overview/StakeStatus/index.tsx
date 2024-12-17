@@ -14,7 +14,7 @@ import { StatusWrapper } from './Wrappers'
 export const StakeStatus = () => {
   const { plugins } = usePlugins()
   const { inPool } = useActivePool()
-  const { isNominating } = useStaking()
+  const { inSetup } = useStaking()
   const showTips = plugins.includes('tips')
 
   return (
@@ -34,7 +34,7 @@ export const StakeStatus = () => {
           <section
             style={{
               transition: 'opacity 0.2s',
-              opacity: isNominating() ? 'var(--opacity-disabled)' : 1,
+              opacity: !inSetup() ? 'var(--opacity-disabled)' : 1,
             }}
           >
             <MembershipStatus showButtons={false} />
