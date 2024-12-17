@@ -12,6 +12,7 @@ import { useActivePools } from 'hooks/useActivePools'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useRef, useState } from 'react'
+import type { ActivePoolItem } from 'types'
 import { useApi } from '../../Api'
 import { defaultActivePoolContext, defaultPoolRoles } from './defaults'
 import type { ActivePoolContextState } from './types'
@@ -62,19 +63,21 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
 
   // Sync active pool subscriptions.
   const syncActivePools = async () => {
-    if (isReady && accountPoolId) {
-      const newActivePool = [
-        {
-          id: accountPoolId,
-          addresses: { ...createPoolAccounts(Number(accountPoolId)) },
-        },
-      ]
-
-      Syncs.dispatch('active-pools', 'syncing')
+    if (isReady) {
+      let newActivePool: ActivePoolItem[] = []
+      if (accountPoolId) {
+        newActivePool = [
+          {
+            id: accountPoolId,
+            addresses: { ...createPoolAccounts(Number(accountPoolId)) },
+          },
+        ]
+        Syncs.dispatch('active-pools', 'syncing')
+      } else {
+        // No active pools to sync. Mark as complete.
+        Syncs.dispatch('active-pools', 'complete')
+      }
       ActivePools.syncPools(network, activeAccount, newActivePool)
-    } else {
-      // No active pools to sync. Mark as complete.
-      Syncs.dispatch('active-pools', 'complete')
     }
   }
 
@@ -83,6 +86,9 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     const initialActivePoolId = membership?.poolId || null
     if (initialActivePoolId && !activePool) {
       setActivePoolId(String(initialActivePoolId))
+    }
+    if (activePool && !initialActivePoolId) {
+      setActivePoolId(null)
     }
   }
 
