@@ -2,10 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { planckToUnit, unitToPlanck } from '@w3ux/utils'
+import { planckToUnit } from '@w3ux/utils'
 import { PoolUnbond } from 'api/tx/poolUnbond'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
+import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useTransferOptions } from 'contexts/TransferOptions'
@@ -39,17 +40,18 @@ export const LeavePool = ({
     networkData: { units, unit },
   } = useNetwork()
   const { activePool } = useActivePool()
+  const { getPoolMembership } = useBalances()
   const { erasToSeconds } = useErasToTimeLeft()
+  const { setModalStatus } = useOverlay().modal
   const { activeAccount } = useActiveAccounts()
   const { getSignerWarnings } = useSignerWarnings()
   const { getTransferOptions } = useTransferOptions()
-  const { setModalStatus, setModalResize } = useOverlay().modal
 
   const allTransferOptions = getTransferOptions(activeAccount)
   const { active: activeBn } = allTransferOptions.pool
   const { bondDuration } = consts
   const pendingRewards = activePool?.pendingRewards || 0n
-
+  const membership = getPoolMembership(activeAccount)
   const bondDurationFormatted = timeleftAsString(
     t,
     getUnixTime(new Date()) + 1,
@@ -59,46 +61,30 @@ export const LeavePool = ({
 
   const pendingRewardsUnit = planckToUnit(pendingRewards, units)
 
-  // convert BigNumber values to number
+  // Convert BigNumber values to number
   const freeToUnbond = planckToUnitBn(activeBn, units)
 
-  // local bond value
-  const [bond, setBond] = useState<{ bond: string }>({
-    bond: freeToUnbond.toString(),
-  })
+  // Bond valid
+  const [pointsValid, setPointsValid] = useState<boolean>(false)
 
-  // bond valid
-  const [bondValid, setBondValid] = useState<boolean>(false)
-
-  // unbond all validation
-  const isValid = (() => freeToUnbond.isGreaterThan(0))()
-
-  // update bond value on task change
+  // Update bond value on task change
   useEffect(() => {
-    setBond({ bond: freeToUnbond.toString() })
-    setBondValid(isValid)
-  }, [freeToUnbond.toString(), isValid])
-
-  // modal resize on form update
-  useEffect(() => setModalResize(), [bond])
+    setPointsValid(BigInt(membership?.points || 0) > 0 && !!activePool?.id)
+  }, [freeToUnbond.toString()])
 
   const getTx = () => {
     let tx = null
-    if (!activeAccount) {
+    if (!activeAccount || !membership) {
       return tx
     }
-    tx = new PoolUnbond(
-      network,
-      activeAccount,
-      unitToPlanck(!bondValid ? 0 : bond.bond, units)
-    ).tx()
+    tx = new PoolUnbond(network, activeAccount, BigInt(membership.points)).tx()
     return tx
   }
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
-    shouldSubmit: bondValid,
+    shouldSubmit: pointsValid,
     callbackSubmit: () => {
       setModalStatus('closing')
     },
@@ -135,7 +121,7 @@ export const LeavePool = ({
         />
       </ModalPadding>
       <SubmitTx
-        valid={bondValid}
+        valid={pointsValid}
         buttons={[
           <ButtonSubmitInvert
             key="button_back"
