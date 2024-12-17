@@ -14,6 +14,7 @@ import { useUnstaking } from 'hooks/useUnstaking'
 import { useOverlay } from 'kits/Overlay/Provider'
 import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
+import { useActivePool } from '../../../../contexts/Pools/ActivePool'
 
 export const NominationStatus = ({
   showButtons = true,
@@ -23,19 +24,20 @@ export const NominationStatus = ({
   buttonType?: string
 }) => {
   const { t } = useTranslation('pages')
-  const { inSetup } = useStaking()
-  const { openModal } = useOverlay().modal
-  const { getBondedAccount } = useBonded()
-  const { syncing } = useSyncing(['initialization', 'era-stakers', 'balances'])
   const {
     isReady,
     networkMetrics: { fastUnstakeErasToCheckPerBlock },
   } = useApi()
+  const { inSetup } = useStaking()
+  const { inPool } = useActivePool()
+  const { openModal } = useOverlay().modal
+  const { getBondedAccount } = useBonded()
   const { activeAccount } = useActiveAccounts()
   const { checking, isExposed } = useFastUnstake()
   const { isReadOnlyAccount } = useImportedAccounts()
   const { getNominationStatus } = useNominationStatus()
   const { getFastUnstakeText, isUnstaking } = useUnstaking()
+  const { syncing } = useSyncing(['initialization', 'era-stakers', 'balances'])
 
   const fastUnstakeText = getFastUnstakeText()
   const controller = getBondedAccount(activeAccount)
@@ -65,7 +67,7 @@ export const NominationStatus = ({
     <Stat
       label={t('nominate.status')}
       helpKey="Nomination Status"
-      stat={nominationStatus.message}
+      stat={inPool() ? t('nominate.alreadyInPool') : nominationStatus.message}
       buttons={
         !showButtons || syncing
           ? []

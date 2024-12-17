@@ -1,8 +1,6 @@
 {
   "pages": {
-    "common": {
-      "stakingApiDisabled": "Staking API己断开"
-    },
+    "common": { "stakingApiDisabled": "Staking API己断开" },
     "community": {
       "bio": "简介",
       "connecting": "连接中",
@@ -29,6 +27,7 @@
     "nominate": {
       "activeNominations": "活跃提名人",
       "addressCopied": "地址已复制到剪贴板",
+      "alreadyInPool": "无法提名：已在候选池中",
       "automaticallyBonded": "将自动质押收益到现有的质押余额中",
       "back": "返回",
       "bond": "质押",
@@ -143,6 +142,7 @@
       "addressCopied": "地址已复制到剪贴板",
       "addressInvalid": "地址无效",
       "allPools": "所有提名池",
+      "alreadyNominating": "无法加入池：已提名",
       "assigned": "己分配",
       "assignedToAnyAccount": " 您的<b>主理人</b>、<b>提名人</b>和<b>守护人</b>角色可以分配给任何帐户。",
       "availableToClaim": "成员可申领的奖励{{unit}}金额",
