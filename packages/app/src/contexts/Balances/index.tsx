@@ -3,7 +3,6 @@
 
 import type { SystemChainId } from 'common-types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
 import { useBonded } from 'contexts/Bonded'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
@@ -28,7 +27,6 @@ export const BalancesContext = createContext<BalancesContextInterface>(
 export const useBalances = () => useContext(BalancesContext)
 
 export const BalancesProvider = ({ children }: { children: ReactNode }) => {
-  const { isReady } = useApi()
   const { network } = useNetwork()
   const { getBondedAccount } = useBonded()
   const { accounts } = useImportedAccounts()
@@ -61,20 +59,18 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
 
       // If a pool membership exists, let `ActivePools` know of pool membership to re-sync pool
       // details and nominations.
-      if (isReady) {
-        let newPools: ActivePoolItem[] = []
-        if (poolMembership) {
-          const { poolId } = poolMembership
-          newPools = ActivePools.getformattedPoolItems(address).concat({
-            id: String(poolId),
-            addresses: { ...createPoolAccounts(Number(poolId)) },
-          })
-        }
+      let newPools: ActivePoolItem[] = []
+      if (poolMembership) {
+        const { poolId } = poolMembership
+        newPools = ActivePools.getformattedPoolItems(address).concat({
+          id: String(poolId),
+          addresses: { ...createPoolAccounts(Number(poolId)) },
+        })
+      }
 
-        const peopleApi = Apis.getApi(`people-${network}` as SystemChainId)
-        if (peopleApi) {
-          ActivePools.syncPools(network, address, newPools)
-        }
+      const peopleApi = Apis.getApi(`people-${network}` as SystemChainId)
+      if (peopleApi) {
+        ActivePools.syncPools(network, address, newPools)
       }
     }
   }
