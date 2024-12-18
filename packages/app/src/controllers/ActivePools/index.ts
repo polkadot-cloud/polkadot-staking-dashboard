@@ -155,7 +155,7 @@ export class ActivePools {
     )
   }
 
-  // Checks if event detailis a valid `new-active-pool` event.
+  // Checks if event detail is a valid new active pool event.
   static isValidNewActivePool = (
     event: CustomEvent
   ): event is CustomEvent<DetailActivePool> =>

@@ -89,7 +89,8 @@ export interface PoolMember {
 
 export interface DetailActivePool {
   address: string
-  pool: ActivePool
+  pool: ActivePoolItem
+  activePool: ActivePool
   nominations: Nominations
 }
 

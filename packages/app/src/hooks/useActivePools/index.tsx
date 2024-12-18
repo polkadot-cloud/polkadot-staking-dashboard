@@ -32,13 +32,13 @@ export const useActivePools = ({ onCallback, who }: ActivePoolsProps) => {
   // Handle report of new active pool data.
   const newActivePoolCallback = async (e: Event) => {
     if (isCustomEvent(e) && ActivePools.isValidNewActivePool(e)) {
-      const { address, pool, nominations } = e.detail
-      const { id } = pool
+      const { address, activePool, nominations } = e.detail
+      const { id } = activePool
 
       // Persist to active pools state for the specified account.
       if (address === who) {
         const newActivePools = { ...activePoolsRef.current }
-        newActivePools[id] = pool
+        newActivePools[id] = activePool
         setStateWithRef(newActivePools, setActivePools, activePoolsRef)
 
         const newPoolNominations = { ...poolNominationsRef.current }
