@@ -15,13 +15,13 @@ import type {
 } from 'types'
 
 export class ActivePools {
-  // Pool ids that are being subscribed to. Keyed by address.
+  // Pool ids that are being subscribed to. Keyed by address
   static pools: Record<string, ActivePoolItem[]> = {}
 
   // Map from an address to its associated pool ids
   static addressToPool: Record<string, string> = {}
 
-  // Subscribes to new pools and unsubscribes from removed pools.
+  // Subscribes to new pools and unsubscribes from removed pools
   static syncPools = async (
     network: NetworkId,
     address: MaybeAddress,
@@ -36,22 +36,18 @@ export class ActivePools {
 
     const currentPool = this.addressToPool[address]
 
-    // Determine new pools that need to be subscribed to.
+    // Determine new pools that need to be subscribed to
     const updatedPool = newPools.find((newPool) => currentPool === newPool.id)
       ? false
       : newPools[0]
 
     if (updatedPool) {
       this.pools[address] = newPools
-
-      // Subscribe to and add new pool data.
       Subscriptions.set(
         network,
         `activePool-${address}-${updatedPool.id}`,
         new ActivePoolAccount(network, address, updatedPool)
       )
-
-      // Add pool id to address mapping.
       this.addressToPool[address] = updatedPool.id
     } else {
       // Status: Pools Synced Completed.
@@ -59,21 +55,17 @@ export class ActivePools {
     }
   }
 
-  // Remove pools that no longer exist.
+  // Remove pools that no longer exist
   static handleRemovedPools = (network: ChainId, address: string): void => {
     const currentPool = this.addressToPool[address]
-
     if (currentPool) {
-      // Unsubscribe from removed pool subscription.
       Subscriptions.remove(network, `activePool-${address}-${currentPool}`)
-
-      // Remove pool from class.
       delete this.addressToPool[address]
       delete this.pools[address]
     }
   }
 
-  // Gets pool for a provided address.
+  // Gets pool for a provided address
   static getPool = (
     network: NetworkId,
     address: MaybeAddress
@@ -89,7 +81,7 @@ export class ActivePools {
     return activePoolAccount?.pool || undefined
   }
 
-  // Gets active pool for a provided address.
+  // Gets active pool for a provided address
   static getActivePool = (
     network: NetworkId,
     address: MaybeAddress
@@ -110,7 +102,7 @@ export class ActivePools {
     return { [poolId]: activePool?.activePool || null }
   }
 
-  // Gets active pool nominations for a provided address.
+  // Gets active pool nominations for a provided address
   static getPoolNominations = (
     network: NetworkId,
     address: MaybeAddress
@@ -129,7 +121,7 @@ export class ActivePools {
     }
   }
 
-  // Gets all active pools for a provided network.
+  // Gets all active pools for a provided network
   static getAllActivePools = (network: NetworkId) =>
     Object.fromEntries(
       Object.entries(this.addressToPool).map(([addr, poolId]) => {
@@ -142,7 +134,7 @@ export class ActivePools {
       })
     )
 
-  // Format pools into active pool items (id and addresses only).
+  // Format pools into active pool items (id and addresses only)
   static getformattedPoolItems = (address: MaybeAddress): ActivePoolItem[] => {
     if (!address) {
       return []
@@ -155,12 +147,13 @@ export class ActivePools {
     )
   }
 
-  // Checks if event detailis a valid `new-active-pool` event.
+  // Checks if event detailis a valid `new-active-pool` event
   static isValidNewActivePool = (
     event: CustomEvent
   ): event is CustomEvent<DetailActivePool> =>
     event.detail &&
-    event.detail.address &&
-    event.detail.pool &&
-    event.detail.nominations
+    event.detail.removed !== undefined &&
+    event.detail.address !== undefined &&
+    event.detail.pool !== undefined &&
+    event.detail.nominations !== undefined
 }

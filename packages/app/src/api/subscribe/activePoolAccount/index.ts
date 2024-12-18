@@ -11,22 +11,22 @@ import { combineLatest, type Subscription } from 'rxjs'
 import type { ActivePool, ActivePoolItem, Nominations, PoolRoles } from 'types'
 
 export class ActivePoolAccount implements Unsubscribable {
-  // The associated network for this instance.
+  // The associated network for this instance
   #network: ChainId
 
-  // Active subscription.
+  // Active subscription
   #sub: Subscription
 
   // Active pool item
   pool: ActivePoolItem
 
-  // Address associated with this pool.
+  // Address associated with this pool
   address: string
 
-  // Active pool of the address.
+  // Active pool of the address
   activePool: ActivePool | null
 
-  // Active pool nominations.
+  // Active pool nominations
   poolNominations: Nominations
 
   constructor(network: ChainId, address: string, pool: ActivePoolItem) {
@@ -83,11 +83,11 @@ export class ActivePoolAccount implements Unsubscribable {
 
       this.#sub = sub
     } catch (e) {
-      // Subscription failed.
+      // Subscription failed
     }
   }
 
-  // Handle active pool callback.
+  // Handle active pool callback
   handleActivePoolCallback = async (
     peopleApiId: SystemChainId,
     bondedPool: AnyApi,
@@ -97,38 +97,39 @@ export class ActivePoolAccount implements Unsubscribable {
     const balance = account.data
     const rewardAccountBalance = balance?.free.toString()
 
-    if (Apis.getClient(peopleApiId)) {
-      // Fetch identities for roles and expand `bondedPool` state to store them.
-      bondedPool.roleIdentities = await Identities.fetch(
-        peopleApiId,
-        this.getUniqueRoleAddresses(bondedPool.roles)
-      )
-    }
-
-    const bondedPoolFormatted = {
-      points: bondedPool.points.toString(),
-      memberCounter: bondedPool.member_counter.toString(),
-      roles: bondedPool.roles,
-      roleIdentities: bondedPool.roleIdentities,
-      state: bondedPool.state.type,
-    }
-
-    const rewardPoolFormatted = {
-      lastRecordedRewardCounter:
-        rewardPool.last_recorded_reward_counter.toString(),
-      lastRecordedTotalPayouts:
-        rewardPool.last_recorded_total_payouts.toString(),
-      totalCommissionClaimed: rewardPool.total_commission_claimed.toString(),
-      totalCommissionPending: rewardPool.total_commission_pending.toString(),
-      totalRewardsClaimed: rewardPool.total_rewards_claimed.toString(),
-    }
-
-    const pendingRewards =
-      (await new PoolPendingRewards(this.#network, this.address).fetch()) || 0n
-
     // Only persist the active pool to class state (and therefore dispatch an event) if both the
-    // bonded pool and reward pool are returned.
+    // bonded pool and reward pool are returned
     if (bondedPool && rewardPool) {
+      if (Apis.getClient(peopleApiId)) {
+        // Fetch identities for roles and expand `bondedPool` state to store them
+        bondedPool.roleIdentities = await Identities.fetch(
+          peopleApiId,
+          this.getUniqueRoleAddresses(bondedPool.roles)
+        )
+      }
+
+      const bondedPoolFormatted = {
+        points: bondedPool.points.toString(),
+        memberCounter: bondedPool.member_counter.toString(),
+        roles: bondedPool.roles,
+        roleIdentities: bondedPool.roleIdentities,
+        state: bondedPool.state.type,
+      }
+
+      const rewardPoolFormatted = {
+        lastRecordedRewardCounter:
+          rewardPool.last_recorded_reward_counter.toString(),
+        lastRecordedTotalPayouts:
+          rewardPool.last_recorded_total_payouts.toString(),
+        totalCommissionClaimed: rewardPool.total_commission_claimed.toString(),
+        totalCommissionPending: rewardPool.total_commission_pending.toString(),
+        totalRewardsClaimed: rewardPool.total_rewards_claimed.toString(),
+      }
+
+      const pendingRewards =
+        (await new PoolPendingRewards(this.#network, this.address).fetch()) ||
+        0n
+
       const newPool = {
         id: Number(this.pool.id),
         addresses: this.pool.addresses,
@@ -140,12 +141,12 @@ export class ActivePoolAccount implements Unsubscribable {
 
       this.activePool = newPool
     } else {
-      // Invalid pools were returned. To signal pool was synced, set active pool to `null`.
+      // Invalid pools were returned. To signal pool was synced, set active pool to `null`
       this.activePool = null
     }
   }
 
-  // Handle nominators callback.
+  // Handle nominators callback
   handleNominatorsCallback = (nominators: AnyApi): void => {
     const newNominations: Nominations = !nominators
       ? defaultPoolNominations
@@ -156,7 +157,7 @@ export class ActivePoolAccount implements Unsubscribable {
     this.poolNominations = newNominations
   }
 
-  // Gets unique role addresses from a bonded pool's `roles` record.
+  // Gets unique role addresses from a bonded pool's `roles` record
   getUniqueRoleAddresses = (roles: PoolRoles): string[] => {
     const roleAddresses: string[] = [
       ...new Set(Object.values(roles).filter((role) => role !== undefined)),
@@ -164,7 +165,7 @@ export class ActivePoolAccount implements Unsubscribable {
     return roleAddresses
   }
 
-  // Unsubscribe from class subscription.
+  // Unsubscribe from class subscription
   unsubscribe = (): void => {
     if (typeof this.#sub?.unsubscribe === 'function') {
       this.#sub.unsubscribe()
