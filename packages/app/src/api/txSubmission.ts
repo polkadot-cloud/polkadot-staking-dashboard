@@ -68,7 +68,6 @@ export class TxSubmission {
     tx: any,
     signer: PolkadotSigner,
     nonce: number,
-
     {
       onReady,
       onInBlock,
