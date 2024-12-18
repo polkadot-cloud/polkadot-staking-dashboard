@@ -36,7 +36,7 @@ export interface SignerPromptProps {
 
 export interface LedgerSubmitProps {
   onSubmit: () => void
-  processing: boolean
+  submitted: boolean
   displayFor?: DisplayFor
   disabled: boolean
   submitText?: string

@@ -13,7 +13,7 @@ import { ButtonSubmit } from 'ui-buttons'
 
 export const Submit = ({
   displayFor,
-  processing,
+  submitted,
   submitText,
   onSubmit,
   disabled,
@@ -30,7 +30,7 @@ export const Submit = ({
   }
 
   // Is the transaction ready to be submitted?
-  const txReady = integrityChecked || processing
+  const txReady = integrityChecked || submitted
 
   // Button `onClick` handler depends whether integrityChecked and whether tx has been submitted.
   const handleOnClick = !integrityChecked ? handleCheckRuntimeVersion : onSubmit

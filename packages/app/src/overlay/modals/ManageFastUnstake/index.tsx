@@ -101,7 +101,7 @@ export const ManageFastUnstake = () => {
     },
   })
 
-  const processing = getTxSubmission(submitExtrinsic.uid)?.processing || false
+  const submitted = getTxSubmission(submitExtrinsic.uid)?.submitted || false
 
   // warnings
   const warnings = getSignerWarnings(
@@ -200,7 +200,7 @@ export const ManageFastUnstake = () => {
           fromController
           valid={valid}
           submitText={
-            processing
+            submitted
               ? t('submitting')
               : t('fastUnstakeSubmit', {
                   context: isFastUnstaking ? 'cancel' : 'register',
