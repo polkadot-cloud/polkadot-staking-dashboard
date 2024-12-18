@@ -79,7 +79,7 @@ export class TxSubmission {
       onReady: () => void
       onInBlock: () => void
       onFinalized: () => void
-      onFailed: (err?: Error) => void
+      onFailed: (err: Error) => void
       onError: (type?: string) => void
     }
   ) {
