@@ -24,7 +24,14 @@ export class TxSubmission {
     if (tag) {
       this.uids = this.uids.filter((item) => item.tag !== tag)
     }
-    this.uids.push({ uid: newUid, processing: false, from, fee: 0n, tag })
+    this.uids.push({
+      uid: newUid,
+      processing: false,
+      pending: false,
+      from,
+      fee: 0n,
+      tag,
+    })
     this.dispatchEvent()
     return newUid
   }
@@ -41,6 +48,13 @@ export class TxSubmission {
     this.dispatchEvent()
   }
 
+  static setUidPending(id: number, newPending: boolean) {
+    this.uids = this.uids.map((item) =>
+      item.uid === id ? { ...item, pending: newPending } : item
+    )
+    this.dispatchEvent()
+  }
+
   static updateFee(uid: number, fee: bigint) {
     this.uids = this.uids.map((item) =>
       item.uid === uid ? { ...item, fee } : item
@@ -53,20 +67,23 @@ export class TxSubmission {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     tx: any,
     signer: PolkadotSigner,
+    nonce: number,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     { onReady, onInBlock, onFinalized, onFailed, onError }: any
   ) {
     try {
-      this.subs[uid] = tx.signSubmitAndWatch(signer).subscribe({
+      this.subs[uid] = tx.signSubmitAndWatch(signer, { nonce }).subscribe({
         next: (result: { type: string }) => {
           const eventType = result?.type
 
           if (eventType === 'broadcasted') {
+            this.setUidPending(uid, true)
             onReady()
           }
           if (eventType === 'txBestBlocksState') {
-            this.setUidProcessing(uid, false)
             onInBlock()
+            this.setUidProcessing(uid, false)
+            this.setUidPending(uid, false)
           }
           if (eventType === 'finalized') {
             onFinalized()
@@ -96,6 +113,7 @@ export class TxSubmission {
 
   static deleteTx(uid: number) {
     this.setUidProcessing(uid, false)
+    this.setUidPending(uid, false)
     this.removeUid(uid)
     this.removeSub(uid)
   }
@@ -108,5 +126,11 @@ export class TxSubmission {
         },
       })
     )
+  }
+
+  static pendingTxCount(from: string) {
+    return this.uids.filter(
+      (item) => item.from === from && item.pending === true
+    ).length
   }
 }

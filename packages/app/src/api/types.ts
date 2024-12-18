@@ -51,4 +51,5 @@ export type TxSubmissionItem = {
   fee: bigint
   from: MaybeAddress
   processing: boolean
+  pending: boolean
 }

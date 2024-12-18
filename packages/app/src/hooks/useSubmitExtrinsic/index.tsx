@@ -8,6 +8,7 @@ import { Proxy } from 'api/tx/proxy'
 import { TxSubmission } from 'api/txSubmission'
 import { DappName, ManualSigners } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { getLedgerApp } from 'contexts/LedgerHardware/Utils'
@@ -45,6 +46,7 @@ export const useSubmitExtrinsic = ({
     network,
     networkData: { units, unit },
   } = useNetwork()
+  const { getNonce } = useBalances()
   const { signWcTx } = useWalletConnect()
   const { activeProxy } = useActiveAccounts()
   const { extensionsStatus } = useExtensions()
@@ -186,8 +188,11 @@ export const useSubmitExtrinsic = ({
       return
     }
 
+    // Calculate correct nonce
+    const nonce = getNonce(from) + TxSubmission.pendingTxCount(from)
+
     // Submit the transaction
-    TxSubmission.addSub(uid, tx, signer, {
+    TxSubmission.addSub(uid, tx, signer, nonce, {
       onReady,
       onInBlock,
       onFinalized,
@@ -233,7 +238,6 @@ export const useSubmitExtrinsic = ({
   }
 
   const onFailed = (err: Error) => {
-    console.log(err)
     if (err instanceof InvalidTxError) {
       Notifications.emit({
         title: t('failed'),
