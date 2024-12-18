@@ -68,8 +68,20 @@ export class TxSubmission {
     tx: any,
     signer: PolkadotSigner,
     nonce: number,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    { onReady, onInBlock, onFinalized, onFailed, onError }: any
+
+    {
+      onReady,
+      onInBlock,
+      onFinalized,
+      onFailed,
+      onError,
+    }: {
+      onReady: () => void
+      onInBlock: () => void
+      onFinalized: () => void
+      onFailed: (err?: Error) => void
+      onError: (type?: string) => void
+    }
   ) {
     try {
       this.subs[uid] = tx.signSubmitAndWatch(signer, { nonce }).subscribe({
