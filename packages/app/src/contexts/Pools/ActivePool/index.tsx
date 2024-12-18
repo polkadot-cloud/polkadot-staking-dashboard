@@ -48,8 +48,8 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     ? getPoolNominations(accountPoolId)
     : null
 
-  // Sync active pool subscriptions
-  const syncActivePools = async () => {
+  // Sync active pool subscription
+  const syncActivePool = async () => {
     if (isReady) {
       let newActivePool: ActivePoolItem[] = []
       if (accountPoolId) {
@@ -122,10 +122,10 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   // Returns the unlock chunks of the active pool
   const getPoolUnlocking = () => membership?.unlocking || []
 
-  // Initialise subscriptions to all active pools of imported accounts
+  // Initialise subscriptions to the active account's active pool
   useEffectIgnoreInitial(() => {
     if (isReady) {
-      syncActivePools()
+      syncActivePool()
     }
   }, [network, isReady, membership])
 
