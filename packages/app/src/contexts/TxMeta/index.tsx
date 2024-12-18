@@ -16,7 +16,7 @@ export const TxMetaContext = createContext<TxMetaContextInterface>(
 export const useTxMeta = () => useContext(TxMetaContext)
 
 export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
-  // Store uids of transactions, along with their processing status.
+  // Store uids of transactions, along with their status.
   const [uids, setUids] = useState<TxSubmissionItem[]>([])
 
   const handleNewUidStatus = (e: Event) => {
