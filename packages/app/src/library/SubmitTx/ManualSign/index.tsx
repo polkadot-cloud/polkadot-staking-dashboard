@@ -12,7 +12,7 @@ import { WalletConnect } from './WalletConnect'
 export const ManualSign = (
   props: SubmitProps & {
     buttons?: ReactNode[]
-    processing: boolean
+    submitted: boolean
     notEnoughFunds: boolean
   }
 ) => {

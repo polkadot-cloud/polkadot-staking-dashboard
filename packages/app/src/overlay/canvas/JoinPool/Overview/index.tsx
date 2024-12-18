@@ -23,7 +23,7 @@ export const Overview = (props: OverviewSectionProps) => {
   } = props
 
   const showJoinForm =
-    activeAccount !== null && state === 'Open' && !inPool() && !inSetup()
+    activeAccount !== null && state === 'Open' && !inPool() && inSetup()
 
   return (
     <>
