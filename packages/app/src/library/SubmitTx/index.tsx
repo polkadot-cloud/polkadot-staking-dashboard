@@ -45,7 +45,7 @@ export const SubmitTx = ({
   const txSubmission = getTxSubmission(uid)
   const from = txSubmission?.from || null
   const fee = txSubmission?.fee || 0n
-  const processing = txSubmission?.processing || false
+  const submitted = txSubmission?.submitted || false
 
   const edReserved = getEdReserved(from, existentialDeposit)
   const { free, frozen } = getBalance(from)
@@ -74,7 +74,7 @@ export const SubmitTx = ({
   submitText =
     submitText ||
     `${
-      processing
+      submitted
         ? t('submitting', { ns: 'modals' })
         : t('submit', { ns: 'modals' })
     }`
@@ -100,7 +100,7 @@ export const SubmitTx = ({
           <ManualSign
             uid={uid}
             onSubmit={onSubmit}
-            processing={processing}
+            submitted={submitted}
             valid={valid}
             submitText={submitText}
             buttons={buttons}
@@ -112,7 +112,7 @@ export const SubmitTx = ({
           <Default
             uid={uid}
             onSubmit={onSubmit}
-            processing={processing}
+            submitted={submitted}
             valid={valid}
             submitText={submitText}
             buttons={buttons}

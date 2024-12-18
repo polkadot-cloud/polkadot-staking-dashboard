@@ -21,7 +21,7 @@ import { Submit } from './Submit'
 export const Ledger = ({
   uid,
   onSubmit,
-  processing,
+  submitted,
   valid,
   submitText,
   buttons,
@@ -31,7 +31,7 @@ export const Ledger = ({
 }: SubmitProps & {
   buttons?: ReactNode[]
   notEnoughFunds: boolean
-  processing: boolean
+  submitted: boolean
 }) => {
   const { t } = useTranslation('library')
   const {
@@ -78,7 +78,7 @@ export const Ledger = ({
   const disabled =
     !accountHasSigner(submitAddress) ||
     !valid ||
-    processing ||
+    submitted ||
     notEnoughFunds ||
     getIsExecuting()
 
@@ -88,7 +88,7 @@ export const Ledger = ({
   }, [
     integrityChecked,
     valid,
-    processing,
+    submitted,
     notEnoughFunds,
     getStatusCode(),
     getIsExecuting(),
@@ -157,7 +157,7 @@ export const Ledger = ({
           {buttons}
           <Submit
             displayFor={displayFor}
-            processing={processing}
+            submitted={submitted}
             submitText={submitText}
             onSubmit={onSubmit}
             disabled={disabled}

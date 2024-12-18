@@ -26,7 +26,7 @@ export class TxSubmission {
     }
     this.uids.push({
       uid: newUid,
-      processing: false,
+      submitted: false,
       pending: false,
       from,
       fee: 0n,
@@ -41,9 +41,9 @@ export class TxSubmission {
     this.dispatchEvent()
   }
 
-  static setUidProcessing(id: number, newProcessing: boolean) {
+  static setUidSubmitted(id: number, newSubmitted: boolean) {
     this.uids = this.uids.map((item) =>
-      item.uid === id ? { ...item, processing: newProcessing } : item
+      item.uid === id ? { ...item, submitted: newSubmitted } : item
     )
     this.dispatchEvent()
   }
@@ -82,7 +82,7 @@ export class TxSubmission {
           }
           if (eventType === 'txBestBlocksState') {
             onInBlock()
-            this.setUidProcessing(uid, false)
+            this.setUidSubmitted(uid, false)
             this.setUidPending(uid, false)
           }
           if (eventType === 'finalized') {
@@ -112,7 +112,7 @@ export class TxSubmission {
   }
 
   static deleteTx(uid: number) {
-    this.setUidProcessing(uid, false)
+    this.setUidSubmitted(uid, false)
     this.setUidPending(uid, false)
     this.removeUid(uid)
     this.removeSub(uid)

@@ -92,7 +92,7 @@ export const useSubmitExtrinsic = ({
 
   // Extrinsic submission handler.
   const onSubmit = async () => {
-    if (TxSubmission.getUid(uid)?.processing) {
+    if (TxSubmission.getUid(uid)?.submitted) {
       return
     }
     if (from === null) {
@@ -119,7 +119,7 @@ export const useSubmitExtrinsic = ({
     }
 
     // Pre-submission state updates
-    TxSubmission.setUidProcessing(uid, true)
+    TxSubmission.setUidSubmitted(uid, true)
 
     // Handle signed transaction
     let signer: PolkadotSigner | undefined
@@ -158,7 +158,7 @@ export const useSubmitExtrinsic = ({
             },
             closePrompt: () => closePrompt(),
             setSubmitting: (val: boolean) =>
-              TxSubmission.setUidProcessing(uid, val),
+              TxSubmission.setUidSubmitted(uid, val),
           }).getPolkadotSigner()
           break
 
