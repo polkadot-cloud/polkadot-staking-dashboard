@@ -15,13 +15,13 @@ import type {
 } from 'types'
 
 export class ActivePools {
-  // Pool ids that are being subscribed to. Keyed by address.
+  // Pool ids that are being subscribed to. Keyed by address
   static pools: Record<string, ActivePoolItem[]> = {}
 
   // Map from an address to its associated pool ids
   static addressToPool: Record<string, string> = {}
 
-  // Subscribes to new pools and unsubscribes from removed pools.
+  // Subscribes to new pools and unsubscribes from removed pools
   static syncPools = async (
     network: NetworkId,
     address: MaybeAddress,
@@ -31,49 +31,43 @@ export class ActivePools {
       return
     }
 
-    // Handle pools that have been removed.
+    // Handle pools that have been removed
     this.handleRemovedPools(network, address)
 
-    const currentPool = this.addressToPool[address]
-
-    // Determine new pools that need to be subscribed to.
-    const updatedPool = newPools.find((newPool) => currentPool === newPool.id)
+    // Determine new pools that need to be subscribed to
+    const updatedPool = newPools.find(
+      (newPool) => this.addressToPool[address] === newPool.id
+    )
       ? false
       : newPools[0]
 
     if (updatedPool) {
       this.pools[address] = newPools
-
-      // Subscribe to and add new pool data.
+      // Subscribe to and add new pool data
       Subscriptions.set(
         network,
         `activePool-${address}-${updatedPool.id}`,
         new ActivePoolAccount(network, address, updatedPool)
       )
-
-      // Add pool id to address mapping.
+      // Add pool id to address mapping
       this.addressToPool[address] = updatedPool.id
     } else {
-      // Status: Pools Synced Completed.
+      // Status: Pools Synced Completed
       Syncs.dispatch('active-pools', 'complete')
     }
   }
 
-  // Remove pools that no longer exist.
+  // Remove pools that no longer exist
   static handleRemovedPools = (network: ChainId, address: string): void => {
     const currentPool = this.addressToPool[address]
-
     if (currentPool) {
-      // Unsubscribe from removed pool subscription.
       Subscriptions.remove(network, `activePool-${address}-${currentPool}`)
-
-      // Remove pool from class.
       delete this.addressToPool[address]
       delete this.pools[address]
     }
   }
 
-  // Gets pool for a provided address.
+  // Gets pool for a provided address
   static getPool = (
     network: NetworkId,
     address: MaybeAddress
@@ -85,11 +79,10 @@ export class ActivePools {
       network,
       `activePool-${address}-${this.addressToPool[address]}`
     ) as ActivePoolAccount
-
     return activePoolAccount?.pool || undefined
   }
 
-  // Gets active pool for a provided address.
+  // Gets active pool for a provided address
   static getActivePool = (
     network: NetworkId,
     address: MaybeAddress
@@ -98,19 +91,20 @@ export class ActivePools {
       return {}
     }
     const poolId = this.addressToPool[address]
+    if (!poolId) {
+      return {}
+    }
     const activePool = Subscriptions.get(
       network,
       `activePool-${address}-${poolId}`
     ) as ActivePoolAccount
-
     if (!activePool) {
       return {}
     }
-
     return { [poolId]: activePool?.activePool || null }
   }
 
-  // Gets active pool nominations for a provided address.
+  // Gets active pool nominations for a provided address
   static getPoolNominations = (
     network: NetworkId,
     address: MaybeAddress
@@ -119,30 +113,19 @@ export class ActivePools {
       return {}
     }
     const poolId = this.addressToPool[address]
+    if (!poolId) {
+      return { poolId: defaultPoolNominations }
+    }
     const activePool = Subscriptions.get(
       network,
       `activePool-${address}-${poolId}`
     ) as ActivePoolAccount
-
     return {
       poolId: activePool?.poolNominations || defaultPoolNominations,
     }
   }
 
-  // Gets all active pools for a provided network.
-  static getAllActivePools = (network: NetworkId) =>
-    Object.fromEntries(
-      Object.entries(this.addressToPool).map(([addr, poolId]) => {
-        const activePoolAccount = Subscriptions.get(
-          network,
-          `activePool-${addr}-${poolId}`
-        ) as ActivePoolAccount
-
-        return [poolId, activePoolAccount?.activePool || null]
-      })
-    )
-
-  // Format pools into active pool items (id and addresses only).
+  // Format pools into active pool items (id and addresses only)
   static getformattedPoolItems = (address: MaybeAddress): ActivePoolItem[] => {
     if (!address) {
       return []
@@ -155,7 +138,7 @@ export class ActivePools {
     )
   }
 
-  // Checks if event detail is a valid new active pool event.
+  // Checks if event detail is a valid new active pool event
   static isValidNewActivePool = (
     event: CustomEvent
   ): event is CustomEvent<DetailActivePool> =>
