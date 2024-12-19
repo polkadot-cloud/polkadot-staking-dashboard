@@ -51,6 +51,7 @@ declare global {
       stakingMetrics: APIStakingMetrics
     }>
     'new-active-pool': CustomEvent<DetailActivePool>
+    'removed-active-pool': CustomEvent<{ address: string; poolId: string }>
     'new-pool-members-batch': CustomEvent<PoolMemberBatchEvent>
     'new-fast-unstake-config': CustomEvent<FastUnstakeConfigResult>
     'new-fast-unstake-deposit': CustomEvent<FastUnstakeQueueResult>

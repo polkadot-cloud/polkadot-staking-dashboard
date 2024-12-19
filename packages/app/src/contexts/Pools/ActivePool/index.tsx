@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
-import { setStateWithRef } from '@w3ux/utils'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
@@ -11,7 +10,7 @@ import { Syncs } from 'controllers/Syncs'
 import { useActivePools } from 'hooks/useActivePools'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
 import type { ReactNode } from 'react'
-import { createContext, useContext, useRef, useState } from 'react'
+import { createContext, useContext } from 'react'
 import type { ActivePoolItem } from 'types'
 import { useApi } from '../../Api'
 import { defaultActivePoolContext, defaultPoolRoles } from './defaults'
@@ -31,21 +30,10 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   const createPoolAccounts = useCreatePoolAccounts()
 
   const membership = getPoolMembership(activeAccount)
-
-  // Determine active pools to subscribe to. Dependencies of `activeAccount`, and `membership` mean
-  // that this object is only recalculated when these values change.
+  // Determine active pool to subscribe to based on the membership pool id
   const accountPoolId = membership?.poolId ? String(membership.poolId) : null
 
-  // Store the currently selected active pool for the UI. Should default to the membership pool if
-  // present. Used in event callback, therefore needs an accompanying ref.
-  const [activePoolId, setActivePoolIdState] = useState<string | null>(null)
-  const activePoolIdRef = useRef(activePoolId)
-
-  const setActivePoolId = (id: string | null) => {
-    setStateWithRef(id, setActivePoolIdState, activePoolIdRef)
-  }
-
-  // Only listen to the active account's active pools, otherwise return an empty array.
+  // Only listen to the active account's active pool
   const { getActivePool, getPoolNominations } = useActivePools({
     who: activeAccount,
     onCallback: async () => {
@@ -55,14 +43,13 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     },
   })
 
-  const activePool = activePoolId ? getActivePool(activePoolId) : null
-
-  const activePoolNominations = activePoolId
-    ? getPoolNominations(activePoolId)
+  const activePool = accountPoolId ? getActivePool(accountPoolId) : null
+  const activePoolNominations = accountPoolId
+    ? getPoolNominations(accountPoolId)
     : null
 
-  // Sync active pool subscriptions.
-  const syncActivePools = async () => {
+  // Sync active pool subscription
+  const syncActivePool = async () => {
     if (isReady) {
       let newActivePool: ActivePoolItem[] = []
       if (accountPoolId) {
@@ -81,27 +68,10 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  // Attempt to assign the default `activePoolId` if one is not currently active.
-  const assignActivePoolId = () => {
-    const initialActivePoolId = membership?.poolId || null
-    if (initialActivePoolId && !activePool) {
-      setActivePoolId(String(initialActivePoolId))
-    }
-    if (activePool && !initialActivePoolId) {
-      setActivePoolId(null)
-    }
-  }
-
-  // Reset `activePoolId`.
-  const resetActivePoolId = () => {
-    setStateWithRef(null, setActivePoolIdState, activePoolIdRef)
-  }
-
-  // Returns whether the active pool is being bonded to (essentially if there is indeed an
-  // activePool).
+  // Returns whether the active pool is being bonded to
   const isBonding = () => !!activePool
 
-  // Returns whether the active account is the nominator in the active pool.
+  // Returns whether the active account is the nominator in the active pool
   const isNominator = () => {
     const roles = activePool?.bondedPool?.roles
     if (!activeAccount || !roles) {
@@ -110,7 +80,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     return activeAccount === roles?.nominator
   }
 
-  // Returns whether the active account is the owner of the active pool.
+  // Returns whether the active account is the owner of the active pool
   const isOwner = () => {
     const roles = activePool?.bondedPool?.roles
     if (!activeAccount || !roles) {
@@ -119,7 +89,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     return activeAccount === roles?.root
   }
 
-  // Returns whether the active account is a member of the active pool.
+  // Returns whether the active account is a member of the active pool
   const isMember = () => {
     const p = activePool ? String(activePool.id) : '-1'
     return String(membership?.poolId || '') === p
@@ -128,7 +98,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
   // Returns whether the active account is in a pool.
   const inPool = () => !!membership
 
-  // Returns whether the active account is the depositor of the active pool.
+  // Returns whether the active account is the depositor of the active pool
   const isDepositor = () => {
     const roles = activePool?.bondedPool?.roles
     if (!activeAccount || !roles) {
@@ -137,7 +107,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     return activeAccount === roles?.depositor
   }
 
-  // Returns whether the active account is the depositor of the active pool.
+  // Returns whether the active account is the depositor of the active pool
   const isBouncer = () => {
     const roles = activePool?.bondedPool?.roles
     if (!activeAccount || !roles) {
@@ -146,34 +116,18 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
     return activeAccount === roles?.bouncer
   }
 
-  // Returns the active pool's roles or the default roles object.
+  // Returns the active pool's roles or the default roles object
   const getPoolRoles = () => activePool?.bondedPool?.roles || defaultPoolRoles
 
-  // Returns the unlock chunks of the active pool if `activeAccount` is a member of the pool.
-  const getPoolUnlocking = () => {
-    // exit early if the active pool is not membership pool
-    if (activePoolId !== String(membership?.poolId || -1)) {
-      return []
-    }
-    return membership?.unlocking || []
-  }
+  // Returns the unlock chunks of the active pool
+  const getPoolUnlocking = () => membership?.unlocking || []
 
-  // Initialise subscriptions to all active pools of imported accounts.
+  // Initialise subscriptions to the active account's active pool
   useEffectIgnoreInitial(() => {
     if (isReady) {
-      syncActivePools()
-      assignActivePoolId()
+      syncActivePool()
     }
   }, [network, isReady, membership])
-
-  // Reset on network change and component unmount. NOTE: ActivePools also unsubscribes on
-  // network change; this is handled by the Api instance.
-  useEffectIgnoreInitial(() => {
-    resetActivePoolId()
-    return () => {
-      resetActivePoolId()
-    }
-  }, [activeAccount, network])
 
   return (
     <ActivePoolContext.Provider
@@ -187,7 +141,6 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
         isBonding,
         getPoolUnlocking,
         getPoolRoles,
-        setActivePoolId,
         activePool,
         activePoolNominations,
       }}
