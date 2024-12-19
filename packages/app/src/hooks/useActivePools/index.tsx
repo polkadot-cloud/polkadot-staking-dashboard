@@ -43,6 +43,7 @@ export const useActivePools = ({ onCallback, who }: ActivePoolsProps) => {
 
         const newPoolNominations = { ...poolNominationsRef.current }
         newPoolNominations[id] = nominations
+
         setStateWithRef(
           newPoolNominations,
           setPoolNominations,
@@ -54,6 +55,25 @@ export const useActivePools = ({ onCallback, who }: ActivePoolsProps) => {
       if (typeof onCallback === 'function') {
         await onCallback(e.detail)
       }
+    }
+  }
+
+  // Handle report of removed active pool
+  const removedActivePoolCallback = (e: Event) => {
+    if (isCustomEvent(e) && ActivePools.isValidRemovedActivePool(e)) {
+      const { poolId } = e.detail
+      const newActivePools = { ...activePoolsRef.current }
+      delete newActivePools[poolId]
+
+      const newPoolNominations = { ...poolNominationsRef.current }
+      delete newPoolNominations[poolId]
+
+      setStateWithRef(newActivePools, setActivePools, activePoolsRef)
+      setStateWithRef(
+        newPoolNominations,
+        setPoolNominations,
+        poolNominationsRef
+      )
     }
   }
 
@@ -88,6 +108,11 @@ export const useActivePools = ({ onCallback, who }: ActivePoolsProps) => {
   // Listen for new active pool events.
   const documentRef = useRef<Document>(document)
   useEventListener('new-active-pool', newActivePoolCallback, documentRef)
+  useEventListener(
+    'removed-active-pool',
+    removedActivePoolCallback,
+    documentRef
+  )
 
   return {
     activePools,

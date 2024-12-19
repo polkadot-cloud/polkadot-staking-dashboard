@@ -94,6 +94,11 @@ export interface DetailActivePool {
   nominations: Nominations
 }
 
+export interface DetailRemovedPool {
+  address: string
+  poolId: number
+}
+
 export interface ActivePoolItem {
   id: string
   addresses: {

@@ -11,6 +11,7 @@ import type {
   AccountPoolNominations,
   ActivePoolItem,
   DetailActivePool,
+  DetailRemovedPool,
   MaybeAddress,
 } from 'types'
 
@@ -64,6 +65,14 @@ export class ActivePools {
       Subscriptions.remove(network, `activePool-${address}-${currentPool}`)
       delete this.addressToPool[address]
       delete this.pools[address]
+      document.dispatchEvent(
+        new CustomEvent('removed-active-pool', {
+          detail: {
+            address,
+            poolId: Number(currentPool),
+          },
+        })
+      )
     }
   }
 
@@ -138,12 +147,16 @@ export class ActivePools {
     )
   }
 
-  // Checks if event detail is a valid new active pool event
   static isValidNewActivePool = (
     event: CustomEvent
   ): event is CustomEvent<DetailActivePool> =>
     event.detail &&
-    event.detail.address &&
-    event.detail.pool &&
-    event.detail.nominations
+    'address' in event.detail &&
+    'pool' in event.detail &&
+    'nominations' in event.detail
+
+  static isValidRemovedActivePool = (
+    event: CustomEvent
+  ): event is CustomEvent<DetailRemovedPool> =>
+    event.detail && 'address' in event.detail && 'poolId' in event.detail
 }

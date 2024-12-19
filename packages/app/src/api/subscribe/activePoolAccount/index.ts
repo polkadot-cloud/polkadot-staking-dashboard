@@ -81,7 +81,6 @@ export class ActivePoolAccount implements Unsubscribable {
           )
         }
       })
-
       this.#sub = sub
     } catch (e) {
       // Subscription failed.
@@ -108,7 +107,6 @@ export class ActivePoolAccount implements Unsubscribable {
           this.getUniqueRoleAddresses(bondedPool.roles)
         )
       }
-
       const bondedPoolFormatted = {
         points: bondedPool.points.toString(),
         memberCounter: bondedPool.member_counter.toString(),
@@ -116,7 +114,6 @@ export class ActivePoolAccount implements Unsubscribable {
         roleIdentities: bondedPool.roleIdentities,
         state: bondedPool.state.type,
       }
-
       const rewardPoolFormatted = {
         lastRecordedRewardCounter:
           rewardPool.last_recorded_reward_counter.toString(),
@@ -126,11 +123,9 @@ export class ActivePoolAccount implements Unsubscribable {
         totalCommissionPending: rewardPool.total_commission_pending.toString(),
         totalRewardsClaimed: rewardPool.total_rewards_claimed.toString(),
       }
-
       const pendingRewards =
         (await new PoolPendingRewards(this.#network, this.address).fetch()) ||
         0n
-
       const newPool = {
         id: Number(this.pool.id),
         addresses: this.pool.addresses,
