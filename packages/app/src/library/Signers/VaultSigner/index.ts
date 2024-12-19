@@ -3,7 +3,11 @@
 
 import { createV4Tx, getSignBytes } from '@polkadot-api/signers-common'
 import type { V15 } from '@polkadot-api/substrate-bindings'
-import { Binary, decAnyMetadata } from '@polkadot-api/substrate-bindings'
+import {
+  Binary,
+  compact,
+  decAnyMetadata,
+} from '@polkadot-api/substrate-bindings'
 import type { PolkadotSigner } from 'polkadot-api'
 import { mergeUint8 } from 'polkadot-api/utils'
 import type {
@@ -59,7 +63,7 @@ export class VaultSigner {
       })
 
       // The byte length is required as a prefix here.
-      const prefix = new Uint8Array([callData.length * 4])
+      const prefix = compact.enc(callData.length)
       const toSign = mergeUint8(prefix, callData, ...extra, ...additionalSigned)
 
       // Start flow to sign QR Code here.
