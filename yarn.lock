@@ -4191,12 +4191,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@w3ux/validator-assets@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "@w3ux/validator-assets@npm:0.2.0"
+"@w3ux/validator-assets@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "@w3ux/validator-assets@npm:0.3.1"
   peerDependencies:
     react: ^18
-  checksum: 10c0/58c9a0f6b2093f3376e1963933eee2cb72eced7b3b473f75d7efbc6c2d674bd6b8c25ab92b114dba137c128db72bca54bc8a9ed557ef37ec65751a845e96b0d8
+  checksum: 10c0/1130d2be6debcb6589d635a890b331cb8047d497047df6c5e966a5f2edead6dc7ba1d59855ef595bcc3587691ae9ba1165375f44ef55e8191af0ef3643359e9d
   languageName: node
   linkType: hard
 
@@ -4772,7 +4772,7 @@ __metadata:
     "@w3ux/react-connect-kit": "npm:^2.1.1"
     "@w3ux/react-odometer": "npm:^1.1.0"
     "@w3ux/react-polkicon": "npm:^2.0.1-alpha.0"
-    "@w3ux/validator-assets": "npm:^0.2.0"
+    "@w3ux/validator-assets": "npm:^0.3.1"
     "@zondax/ledger-substrate": "npm:^1.0.0"
     assets: "workspace:*"
     bn.js: "npm:^5.2.1"
