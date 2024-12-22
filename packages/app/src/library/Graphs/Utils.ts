@@ -83,7 +83,7 @@ export const calculateDailyPayouts = (
     // get day difference between cursor and current payout
     const daysDiff = daysPassed(thisDay, curDay)
 
-    // handle new day.
+    // handle new day
     if (daysDiff > 0) {
       // add current payout cursor to dailyPayouts
       dailyPayouts.push({
@@ -116,10 +116,12 @@ export const calculateDailyPayouts = (
   }
 
   // return payout rewards as plain numbers
-  return dailyPayouts.map((q: RewardResult) => ({
+  const result = dailyPayouts.map((q: RewardResult) => ({
     ...q,
     reward: Number(q.reward.toString()),
   }))
+
+  return result
 }
 
 // Calculate average payouts per day
@@ -189,6 +191,10 @@ export const formatRewardsForGraphs = (
   poolClaims: PoolReward[],
   unclaimedPayouts: NominatorReward[]
 ) => {
+  // set the from date to the start of the next day
+  fromDate.setDate(fromDate.getDate() + 1)
+  fromDate.setHours(0, 0, 0, 0)
+
   // process nominator payouts
   const allPayouts = processPayouts(payouts, fromDate, days, units, 'nominate')
 
@@ -264,6 +270,11 @@ const processPayouts = (
   a = fillGapDays(a, averageFromDate)
   // reverse payouts: most recent last
   a = a.reverse()
+
+  // ensure payouts don't go beyond end of current day
+  p = p.filter(
+    ({ timestamp }: RewardResult) => timestamp < getUnixTime(fromDate)
+  )
 
   return { p, a }
 }
