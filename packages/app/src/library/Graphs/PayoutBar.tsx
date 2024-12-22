@@ -47,10 +47,15 @@ export const PayoutBar = ({
   const { unit, units, colors } = useNetwork().networkData
   const staking = nominating || inPool
 
+  // Set the from date to the start of the next day
+  const fromDate = new Date()
+  fromDate.setDate(fromDate.getDate())
+  fromDate.setHours(0, 0, 0, 0)
+
   // Get formatted rewards data
   const { allPayouts, allPoolClaims, allUnclaimedPayouts } =
     formatRewardsForGraphs(
-      new Date(),
+      fromDate,
       days,
       units,
       payouts,

@@ -36,7 +36,7 @@ export type AllRewardsResult = Query & {
 
 export interface NominatorReward {
   era: number
-  reward: number
+  reward: string
   claimed: boolean
   timestamp: number
   validator: string
