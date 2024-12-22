@@ -6,6 +6,7 @@ import { MaxPayoutDays } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
+import { getUnixTime } from 'date-fns'
 import { PayoutBar } from 'library/Graphs/PayoutBar'
 import { PayoutLine } from 'library/Graphs/PayoutLine'
 import { removeNonZeroAmountAndSort } from 'library/Graphs/Utils'
@@ -22,14 +23,12 @@ interface Props {
   nominating: boolean
   inPool: boolean
   setPayoutLists: (payouts: AnyApi[]) => void
-  poolRewardsFrom: number
 }
 
 export const ActiveGraphInner = ({
   nominating,
   inPool,
   setPayoutLists,
-  poolRewardsFrom,
 }: Props) => {
   const { activeEra } = useApi()
   const { network } = useNetwork()
@@ -40,10 +39,15 @@ export const ActiveGraphInner = ({
     who: activeAccount || '',
     fromEra: Math.max(activeEra.index.minus(1).toNumber(), 0),
   })
+
+  const fromDate = new Date()
+  fromDate.setDate(fromDate.getDate() - MaxPayoutDays)
+  fromDate.setHours(0, 0, 0, 0)
+
   const { data: poolRewardsData } = usePoolRewards({
     chain: network,
     who: activeAccount || '',
-    from: poolRewardsFrom,
+    from: getUnixTime(fromDate),
   })
 
   const allRewards = nominatorRewardsData?.allRewards ?? []

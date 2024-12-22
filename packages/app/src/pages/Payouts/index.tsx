@@ -4,12 +4,10 @@
 import { useSize } from '@w3ux/hooks'
 import type { PageProps } from 'common-types'
 import { useHelp } from 'contexts/Help'
-import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
-import { useFetchBlockNumber } from 'hooks/useFetchBlockNumber'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
 import {
@@ -37,10 +35,8 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   const { inSetup } = useStaking()
   const { syncing } = useSyncing()
   const { containerRefs } = useUi()
-  const { network } = useNetwork()
   const { inPool } = useActivePool()
   const { pluginEnabled } = usePlugins()
-  const blockNumber = useFetchBlockNumber(network)
 
   const nominating = !inSetup()
   const staking = nominating || inPool
@@ -122,12 +118,11 @@ export const Payouts = ({ page: { key } }: PageProps) => {
                 transition: 'opacity 0.5s',
               }}
             >
-              {staking && pluginEnabled('staking_api') && blockNumber > 0 ? (
+              {staking && pluginEnabled('staking_api') ? (
                 <ActiveGraph
                   nominating={nominating}
                   inPool={inPool()}
                   setPayoutLists={setPayoutLists}
-                  poolRewardsFrom={blockNumber}
                 />
               ) : (
                 <InactiveGraph />

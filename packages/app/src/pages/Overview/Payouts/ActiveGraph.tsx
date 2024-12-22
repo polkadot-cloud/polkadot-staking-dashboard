@@ -4,6 +4,7 @@
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
+import { getUnixTime } from 'date-fns'
 import { PayoutBar } from 'library/Graphs/PayoutBar'
 import { PayoutLine } from 'library/Graphs/PayoutLine'
 import {
@@ -24,14 +25,12 @@ interface Props {
   inPool: boolean
   lineMarginTop: string
   setLastReward: (reward: RewardResult | undefined) => void
-  poolRewardsFrom: number
 }
 export const ActiveGraphInner = ({
   nominating,
   inPool,
   lineMarginTop,
   setLastReward,
-  poolRewardsFrom,
 }: Props) => {
   const { activeEra } = useApi()
   const { network } = useNetwork()
@@ -42,10 +41,16 @@ export const ActiveGraphInner = ({
     who: activeAccount || '',
     fromEra: Math.max(activeEra.index.minus(1).toNumber(), 0),
   })
+
+  const days = 19
+  const fromDate = new Date()
+  fromDate.setDate(fromDate.getDate() - days)
+  fromDate.setHours(0, 0, 0, 0)
+
   const { data: poolRewardsData } = usePoolRewards({
     chain: network,
     who: activeAccount || '',
-    from: poolRewardsFrom,
+    from: getUnixTime(fromDate),
   })
 
   const nominatorRewards = nominatorRewardData?.allRewards ?? []
@@ -70,7 +75,7 @@ export const ActiveGraphInner = ({
   return (
     <>
       <PayoutBar
-        days={19}
+        days={days}
         height="150px"
         data={{ payouts, unclaimedPayouts, poolClaims }}
         nominating={nominating}
@@ -78,7 +83,7 @@ export const ActiveGraphInner = ({
       />
       <div style={{ marginTop: lineMarginTop }}>
         <PayoutLine
-          days={19}
+          days={days}
           average={10}
           height="65px"
           data={{ payouts, unclaimedPayouts, poolClaims }}

@@ -11,7 +11,6 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns'
-import { useFetchBlockNumber } from 'hooks/useFetchBlockNumber'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardHeaderWrapper } from 'library/Card/Wrappers'
 import { formatSize } from 'library/Graphs/Utils'
@@ -28,7 +27,6 @@ import { InactiveGraph } from './InactiveGraph'
 export const Payouts = () => {
   const { i18n, t } = useTranslation('pages')
   const {
-    network,
     networkData: {
       units,
       brand: { token: Token },
@@ -39,7 +37,6 @@ export const Payouts = () => {
   const { containerRefs } = useUi()
   const { inPool } = useActivePool()
   const { pluginEnabled } = usePlugins()
-  const blockNumber = useFetchBlockNumber(network)
 
   const staking = !inSetup() || inPool
   const notStaking = !syncing && !staking
@@ -116,13 +113,12 @@ export const Payouts = () => {
             transition: 'opacity 0.5s',
           }}
         >
-          {staking && pluginEnabled('staking_api') && blockNumber > 0 ? (
+          {staking && pluginEnabled('staking_api') ? (
             <ActiveGraph
               nominating={!inSetup()}
               inPool={inPool()}
               lineMarginTop="3rem"
               setLastReward={setLastReward}
-              poolRewardsFrom={blockNumber}
             />
           ) : (
             <InactiveGraph setLastReward={setLastReward} />
