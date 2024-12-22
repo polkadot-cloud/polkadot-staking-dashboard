@@ -25,7 +25,6 @@ import type { FastUnstakeQueueResult } from 'contexts/FastUnstake/types'
 import type { Theme } from 'contexts/Themes/types'
 import type { NotificationItem } from 'controllers/Notifications/types'
 import type { OnlineStatusEvent } from 'controllers/OnlineStatus/types'
-import type { PayoutType } from 'controllers/Subscan/types'
 import type { SyncEvent } from 'controllers/Syncs/types'
 import type { FC, FunctionComponent, SVGProps } from 'react'
 import type { DetailActivePool } from 'types'
@@ -60,7 +59,6 @@ declare global {
     'new-sync-status': CustomEvent<SyncEvent>
     'new-external-account': CustomEvent<{ address: string }>
     'new-account-balance': CustomEvent<ActiveBalance & { address: string }>
-    'subscan-data-updated': CustomEvent<{ keys: PayoutType[] }>
     'new-tx-uid-status': CustomEvent<{ uids: TxSubmissionItem[] }>
   }
 }

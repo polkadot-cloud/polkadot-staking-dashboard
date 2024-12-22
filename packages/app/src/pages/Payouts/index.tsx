@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useSize } from '@w3ux/hooks'
-import type { AnyApi, PageProps } from 'common-types'
+import type { PageProps } from 'common-types'
 import { useHelp } from 'contexts/Help'
 import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -19,6 +19,7 @@ import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { StatBoxList } from 'library/StatBoxList'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'
+import type { RewardResults } from 'plugin-staking-api/types'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
@@ -41,7 +42,7 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   const staking = nominating || inPool
   const notStaking = !syncing && !staking
 
-  const [payoutsList, setPayoutLists] = useState<AnyApi[]>([])
+  const [payoutsList, setPayoutLists] = useState<RewardResults>([])
 
   const ref = useRef<HTMLDivElement>(null)
   const size = useSize(ref, {

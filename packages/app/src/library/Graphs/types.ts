@@ -3,8 +3,7 @@
 
 import type BigNumber from 'bignumber.js'
 import type { AnyApi } from 'common-types'
-import type { SubscanPoolClaim } from 'controllers/Subscan/types'
-import type { NominatorReward } from 'plugin-staking-api/types'
+import type { NominatorReward, PoolReward } from 'plugin-staking-api/types'
 
 export interface BondedProps {
   active: BigNumber
@@ -40,7 +39,7 @@ export interface PayoutLineProps {
 export interface GraphPayoutData {
   payouts: NominatorReward[]
   unclaimedPayouts: NominatorReward[]
-  poolClaims: SubscanPoolClaim[]
+  poolClaims: PoolReward[]
 }
 
 export interface CardHeaderWrapperProps {
