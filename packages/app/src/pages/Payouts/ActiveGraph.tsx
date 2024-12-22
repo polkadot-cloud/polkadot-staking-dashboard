@@ -15,7 +15,7 @@ import {
   usePoolRewards,
   useRewards,
 } from 'plugin-staking-api'
-import type { NominatorReward, RewardResult } from 'plugin-staking-api/types'
+import type { NominatorReward, RewardResults } from 'plugin-staking-api/types'
 import { useEffect } from 'react'
 
 interface Props {
@@ -57,9 +57,9 @@ export const ActiveGraphInner = ({
 
   useEffect(() => {
     // filter zero rewards and order via timestamp, most recent first
-    const payoutsList = (allRewards as RewardResult).concat(
+    const payoutsList = (allRewards as RewardResults).concat(
       poolClaims
-    ) as RewardResult
+    ) as RewardResults
     setPayoutLists(removeNonZeroAmountAndSort(payoutsList))
   }, [JSON.stringify(payouts), JSON.stringify(poolClaims)])
 

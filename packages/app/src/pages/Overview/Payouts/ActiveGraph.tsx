@@ -12,14 +12,18 @@ import {
   usePoolRewards,
   useRewards,
 } from 'plugin-staking-api'
-import type { NominatorReward } from 'plugin-staking-api/types'
+import type {
+  NominatorReward,
+  RewardResult,
+  RewardResults,
+} from 'plugin-staking-api/types'
 import { useEffect } from 'react'
 
 interface Props {
   nominating: boolean
   inPool: boolean
   lineMarginTop: string
-  setLastReward: (reward: NominatorReward | undefined) => void
+  setLastReward: (reward: RewardResult | undefined) => void
   poolRewardsFrom: number
 }
 export const ActiveGraphInner = ({
@@ -44,19 +48,24 @@ export const ActiveGraphInner = ({
     from: poolRewardsFrom,
   })
 
-  const allRewards = nominatorRewardData?.allRewards ?? []
+  const nominatorRewards = nominatorRewardData?.allRewards ?? []
   const payouts =
-    allRewards.filter((reward: NominatorReward) => reward.claimed === true) ??
-    []
+    nominatorRewards.filter(
+      (reward: NominatorReward) => reward.claimed === true
+    ) ?? []
   const unclaimedPayouts =
-    allRewards.filter((reward: NominatorReward) => reward.claimed === false) ??
-    []
+    nominatorRewards.filter(
+      (reward: NominatorReward) => reward.claimed === false
+    ) ?? []
 
   const poolClaims = poolRewardsData?.poolRewards ?? []
+  const allRewards = (nominatorRewards as RewardResults)
+    .concat(poolClaims)
+    .sort((a, b) => b.timestamp - a.timestamp)
 
   useEffect(() => {
-    setLastReward(payouts[0])
-  }, [JSON.stringify(payouts[0])])
+    setLastReward(allRewards[0])
+  }, [JSON.stringify(allRewards[0])])
 
   return (
     <>

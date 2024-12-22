@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql, useQuery } from '@apollo/client'
-import type { PoolRewardResult } from '../types'
+import type { PoolRewardResults } from '../types'
 
 const QUERY = gql`
   query PoolRewards($chain: String!, $who: String!, $from: Int!) {
@@ -23,7 +23,7 @@ export const usePoolRewards = ({
   chain: string
   who: string
   from: number
-}): PoolRewardResult => {
+}): PoolRewardResults => {
   const { loading, error, data, refetch } = useQuery(QUERY, {
     variables: { chain, who, from },
   })

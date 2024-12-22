@@ -18,7 +18,7 @@ import { formatSize } from 'library/Graphs/Utils'
 import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'
-import type { NominatorReward } from 'plugin-staking-api/types'
+import type { RewardResult } from 'plugin-staking-api/types'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { planckToUnitBn } from 'utils'
@@ -44,8 +44,7 @@ export const Payouts = () => {
   const staking = !inSetup() || inPool
   const notStaking = !syncing && !staking
 
-  const [lastReward, setLastReward] = useState<NominatorReward>()
-
+  const [lastReward, setLastReward] = useState<RewardResult>()
   // Ref to the graph container
   const graphInnerRef = useRef<HTMLDivElement>(null)
 

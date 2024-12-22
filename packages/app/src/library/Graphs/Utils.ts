@@ -16,7 +16,7 @@ import {
   startOfDay,
   subDays,
 } from 'date-fns'
-import type { NominatorReward, RewardResult } from 'plugin-staking-api/types'
+import type { NominatorReward, RewardResults } from 'plugin-staking-api/types'
 import { planckToUnitBn } from 'utils'
 import type { PayoutDayCursor } from './types'
 
@@ -500,7 +500,7 @@ export const formatSize = (
 })
 
 // Take non-zero rewards in most-recent order
-export const removeNonZeroAmountAndSort = (payouts: RewardResult) => {
+export const removeNonZeroAmountAndSort = (payouts: RewardResults) => {
   const list = payouts
     .filter((p) => Number(p.reward) > 0)
     .sort((a, b) => b.timestamp - a.timestamp)
@@ -512,7 +512,7 @@ export const removeNonZeroAmountAndSort = (payouts: RewardResult) => {
 }
 
 // Calculate the earliest date of a payout list
-export const getPayoutsFromDate = (payouts: RewardResult, locale: Locale) => {
+export const getPayoutsFromDate = (payouts: RewardResults, locale: Locale) => {
   if (!payouts.length) {
     return undefined
   }
@@ -530,7 +530,7 @@ export const getPayoutsFromDate = (payouts: RewardResult, locale: Locale) => {
 }
 
 // Calculate the latest date of a payout list
-export const getPayoutsToDate = (payouts: RewardResult, locale: Locale) => {
+export const getPayoutsToDate = (payouts: RewardResults, locale: Locale) => {
   if (!payouts.length) {
     return undefined
   }

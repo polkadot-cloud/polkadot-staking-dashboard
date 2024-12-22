@@ -16,7 +16,9 @@ export const useFetchBlockNumber = (network: NetworkId) => {
   }
 
   useEffect(() => {
-    fetchPoolRewardsFrom()
+    if (isReady) {
+      fetchPoolRewardsFrom()
+    }
   }, [isReady, network])
 
   return blockNumber

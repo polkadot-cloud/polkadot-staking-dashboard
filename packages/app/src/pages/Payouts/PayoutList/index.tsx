@@ -24,7 +24,7 @@ import { isPoolReward } from 'plugin-staking-api'
 import type {
   NominatorReward,
   PoolReward,
-  RewardResult,
+  RewardResults,
 } from 'plugin-staking-api/types'
 import { Component, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -53,7 +53,7 @@ export const PayoutListInner = ({
   const [page, setPage] = useState<number>(1)
 
   // Manipulated list (ordering, filtering) of payouts
-  const [payouts, setPayouts] = useState<RewardResult>(initialPayouts)
+  const [payouts, setPayouts] = useState<RewardResults>(initialPayouts)
 
   // Whether still in initial fetch
   const [fetched, setFetched] = useState<boolean>(false)

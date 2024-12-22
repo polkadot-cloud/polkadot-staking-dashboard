@@ -48,7 +48,7 @@ export type UnclaimedRewardsResult = Query & {
     unclaimedRewards: UnclaimedRewards
   }
 }
-export type PoolRewardResult = Query & {
+export type PoolRewardResults = Query & {
   data: {
     poolRewards: PoolReward[]
   }
@@ -79,4 +79,5 @@ export interface PoolReward {
 
 export type PayoutsAndClaims = (NominatorReward | PoolReward)[]
 
-export type RewardResult = (NominatorReward | PoolReward)[]
+export type RewardResult = NominatorReward | PoolReward
+export type RewardResults = RewardResult[]

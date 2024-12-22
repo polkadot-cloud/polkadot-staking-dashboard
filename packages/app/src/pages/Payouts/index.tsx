@@ -21,7 +21,7 @@ import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { StatBoxList } from 'library/StatBoxList'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'
-import type { RewardResult } from 'plugin-staking-api/types'
+import type { RewardResults } from 'plugin-staking-api/types'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
@@ -46,7 +46,7 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   const staking = nominating || inPool
   const notStaking = !syncing && !staking
 
-  const [payoutsList, setPayoutLists] = useState<RewardResult>([])
+  const [payoutsList, setPayoutLists] = useState<RewardResults>([])
 
   const ref = useRef<HTMLDivElement>(null)
   const size = useSize(ref, {
@@ -62,7 +62,6 @@ export const Payouts = ({ page: { key } }: PageProps) => {
     payoutsList,
     locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
   )
-  console.log(payoutsList)
 
   useEffect(() => {
     if (!pluginEnabled('staking_api')) {
