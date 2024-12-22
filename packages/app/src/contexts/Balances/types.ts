@@ -32,9 +32,9 @@ export interface ActiveBalance {
 }
 
 export interface Balances {
-  nonce?: number
-  balance?: Balance
-  locks?: BalanceLock[]
+  nonce: number
+  balance: Balance
+  locks: BalanceLock[]
 }
 
 export interface BalanceLocks {

@@ -107,7 +107,9 @@ export class Api {
   // Dynamically load and connect to Substrate Connect
   async initScProvider() {
     // Initialise light client
-    const smoldot = startFromWorker(new SmWorker())
+    const smoldot = startFromWorker(new SmWorker(), {
+      forbidWs: import.meta.env.MODE === 'production',
+    })
     const smMetadata = getLightClientMetadata(this.#chainType, this.network)
     const { chainSpec: relayChainSpec } = await smMetadata.relay.fn()
 

@@ -4,10 +4,7 @@
 import { poolMembersPerPage } from 'library/List/defaults'
 import type { PoolMember } from 'types'
 import type {
-  SubscanData,
   SubscanEraPoints,
-  SubscanPoolClaim,
-  SubscanPoolClaimRaw,
   SubscanPoolMember,
   SubscanRequestBody,
 } from './types'
@@ -17,14 +14,10 @@ export class Subscan {
   static ENDPOINTS = {
     eraStat: '/api/scan/staking/era_stat',
     poolMembers: '/api/scan/nomination_pool/pool/members',
-    poolRewards: '/api/scan/nomination_pool/rewards',
   }
 
   // The network to use for Subscan API calls
   static network: string
-
-  // Subscan payout data, keyed by address
-  static payoutData: Record<string, SubscanData> = {}
 
   // Subscan pool data, keyed by `<network>-<poolId>-<key1>-<key2>...`
   static poolData: Record<string, PoolMember[]> = {}
@@ -35,55 +28,6 @@ export class Subscan {
   // Set the network to use for Subscan API calls
   set network(network: string) {
     Subscan.network = network
-  }
-
-  // Handle fetching pool claims and set state in one render
-  static handleFetchPayouts = async (address: string): Promise<void> => {
-    try {
-      if (!this.payoutData[address]) {
-        const poolClaims = await this.fetchPoolClaims(address)
-        this.payoutData[address] = {
-          poolClaims,
-        }
-        document.dispatchEvent(
-          new CustomEvent('subscan-data-updated', {
-            detail: {
-              keys: ['poolClaims'],
-            },
-          })
-        )
-      }
-    } catch (e) {
-      // Silently fail request
-    }
-  }
-
-  // Fetch pool claims from Subscan, ensuring no payouts have block_timestamp of 0.
-  static fetchPoolClaims = async (
-    address: string
-  ): Promise<SubscanPoolClaim[]> => {
-    try {
-      const result = await this.makeRequest(this.ENDPOINTS.poolRewards, {
-        address,
-        row: 100,
-        page: 0,
-      })
-      if (!result?.list) {
-        return []
-      }
-      // Remove claims with a `block_timestamp`
-      const poolClaims = result.list
-        .filter((l: SubscanPoolClaimRaw) => l.block_timestamp !== 0)
-        .map((l: SubscanPoolClaimRaw) => ({
-          ...l,
-          reward: l.amount,
-          timestamp: l.block_timestamp,
-          type: 'pool',
-        }))
-      return poolClaims
-    } catch (e) {
-      return []
-    }
   }
 
   // Fetch a page of pool members from Subscan
@@ -164,11 +108,6 @@ export class Subscan {
       this.eraPointsData[dataKey] = result
       return result
     }
-  }
-
-  // Resets all received data from class.
-  static resetData = () => {
-    this.payoutData = {}
   }
 
   // Get the public Subscan endpoint.

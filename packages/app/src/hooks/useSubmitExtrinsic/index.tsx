@@ -8,6 +8,7 @@ import { Proxy } from 'api/tx/proxy'
 import { TxSubmission } from 'api/txSubmission'
 import { DappName, ManualSigners } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { getLedgerApp } from 'contexts/LedgerHardware/Utils'
@@ -45,6 +46,7 @@ export const useSubmitExtrinsic = ({
     network,
     networkData: { units, unit },
   } = useNetwork()
+  const { getNonce } = useBalances()
   const { signWcTx } = useWalletConnect()
   const { activeProxy } = useActiveAccounts()
   const { extensionsStatus } = useExtensions()
@@ -57,7 +59,7 @@ export const useSubmitExtrinsic = ({
   const [uid, setUid] = useState<number>(0)
 
   // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account. If
-  // already wrapped, update `from` address and return.
+  // already wrapped, update `from` address and return
   if (tx) {
     if (
       tx.decodedCall?.type === 'Proxy' &&
@@ -68,11 +70,11 @@ export const useSubmitExtrinsic = ({
       }
     } else {
       if (activeProxy && isProxySupported(tx, from)) {
-        // Update submit address to active proxy account.
+        // Update submit address to active proxy account
         const real = from
         from = activeProxy
 
-        // Check not a batch transactions.
+        // Check not a batch transactions
         if (
           real &&
           !(
@@ -81,7 +83,7 @@ export const useSubmitExtrinsic = ({
           )
         ) {
           // Not a batch transaction: wrap tx in proxy call. Proxy calls should already be wrapping
-          // each tx within the batch via `useBatchCall`.
+          // each tx within the batch via `useBatchCall`
           tx = new Proxy(network, real, tx).tx()
         }
       }
@@ -90,7 +92,7 @@ export const useSubmitExtrinsic = ({
 
   // Extrinsic submission handler.
   const onSubmit = async () => {
-    if (TxSubmission.getUid(uid)?.processing) {
+    if (TxSubmission.getUid(uid)?.submitted) {
       return
     }
     if (from === null) {
@@ -104,7 +106,7 @@ export const useSubmitExtrinsic = ({
     const { source } = account
     const isManualSigner = ManualSigners.includes(source)
 
-    // if `activeAccount` is imported from an extension, ensure it is enabled.
+    // if `activeAccount` is imported from an extension, ensure it is enabled
     if (!isManualSigner) {
       const isInstalled = Object.entries(extensionsStatus).find(
         ([id, status]) => id === source && status === 'connected'
@@ -112,64 +114,14 @@ export const useSubmitExtrinsic = ({
       if (!isInstalled || !window?.injectedWeb3?.[source]) {
         throw new Error(`${t('walletNotFound')}`)
       }
-      // summons extension popup if not already connected.
+      // summons extension popup if not already connected
       window.injectedWeb3[source].enable(DappName)
     }
 
-    const onReady = () => {
-      Notifications.emit({
-        title: t('pending'),
-        subtitle: t('transactionInitiated'),
-      })
-      if (callbackSubmit && typeof callbackSubmit === 'function') {
-        callbackSubmit()
-      }
-    }
-
-    const onInBlock = () => {
-      TxSubmission.setUidProcessing(uid, false)
-      Notifications.emit({
-        title: t('inBlock'),
-        subtitle: t('transactionInBlock'),
-      })
-      if (callbackInBlock && typeof callbackInBlock === 'function') {
-        callbackInBlock()
-      }
-    }
-
-    const onFinalizedEvent = () => {
-      TxSubmission.removeUid(uid)
-      Notifications.emit({
-        title: t('finalized'),
-        subtitle: t('transactionSuccessful'),
-      })
-    }
-
-    const onFailedTx = (err: Error) => {
-      TxSubmission.removeUid(uid)
-      if (err instanceof InvalidTxError) {
-        Notifications.emit({
-          title: t('failed'),
-          subtitle: t('errorWithTransaction'),
-        })
-      }
-    }
-
-    const onError = (type?: string) => {
-      TxSubmission.removeUid(uid)
-      if (type === 'ledger') {
-        handleResetLedgerTask()
-      }
-      Notifications.emit({
-        title: t('cancelled'),
-        subtitle: t('transactionCancelled'),
-      })
-    }
-
     // Pre-submission state updates
-    TxSubmission.setUidProcessing(uid, true)
+    TxSubmission.setUidSubmitted(uid, true)
 
-    // handle signed transaction.
+    // Handle signed transaction
     let signer: PolkadotSigner | undefined
     if (requiresManualSign(from)) {
       const pubKey = AccountId().enc(from)
@@ -177,7 +129,6 @@ export const useSubmitExtrinsic = ({
         decimals: units,
         tokenSymbol: unit,
       }
-
       switch (source) {
         case 'ledger':
           signer = await new LedgerSigner(
@@ -207,7 +158,7 @@ export const useSubmitExtrinsic = ({
             },
             closePrompt: () => closePrompt(),
             setSubmitting: (val: boolean) =>
-              TxSubmission.setUidProcessing(uid, val),
+              TxSubmission.setUidSubmitted(uid, val),
           }).getPolkadotSigner()
           break
 
@@ -215,8 +166,8 @@ export const useSubmitExtrinsic = ({
           signer = getPolkadotSignerFromPjs(
             from,
             signWcTx,
-            // Signing bytes not currently being used.
-            // FIXME: Can implement, albeit won't be used.
+            // Signing bytes not currently being used
+            // FIXME: Can implement, albeit won't be used
             async () => ({
               id: 0,
               signature: '0x',
@@ -225,63 +176,94 @@ export const useSubmitExtrinsic = ({
           break
       }
     } else {
-      // Get the polkadot signer for this account.
+      // Get the polkadot signer for this account
       const signerAccount = (await connectInjectedExtension(source))
         .getAccounts()
         .find((a) => from && a.address === formatAccountSs58(from, 42))
       signer = signerAccount?.polkadotSigner
     }
 
-    try {
-      const sub = tx.signSubmitAndWatch(signer)
-      sub.subscribe({
-        next: (result: { type: string }) => {
-          const eventType = result?.type
-
-          if (eventType === 'broadcasted') {
-            onReady()
-          }
-          if (eventType === 'txBestBlocksState') {
-            onInBlock()
-          }
-          if (eventType === 'finalized') {
-            onFinalizedEvent()
-            if (typeof sub?.unsubscribe === 'function') {
-              sub?.unsubscribe()
-            }
-          }
-        },
-        error: (err: Error) => {
-          onFailedTx(err)
-          if (typeof sub?.unsubscribe === 'function') {
-            sub?.unsubscribe()
-          }
-        },
-      })
-    } catch (e) {
+    if (!signer) {
       onError('default')
+      return
     }
+
+    // Calculate correct nonce
+    const nonce = getNonce(from) + TxSubmission.pendingTxCount(from)
+
+    // Submit the transaction
+    TxSubmission.addSub(uid, tx, signer, nonce, {
+      onReady,
+      onInBlock,
+      onFinalized,
+      onFailed,
+      onError,
+    })
   }
 
-  // Initialise tx submission.
+  // Initialise tx submission
   useEffect(() => {
-    // Add a new uid for this transaction.
+    // Add a new uid for this transaction
     if (uid === 0) {
       const newUid = TxSubmission.addUid({ from, tag })
       setUid(newUid)
     }
   }, [])
 
-  // Re-fetch tx fee if tx changes.
-  useEffect(() => {
-    const fetchTxFee = async () => {
-      if (!tx) {
-        return
-      }
+  const onReady = () => {
+    Notifications.emit({
+      title: t('pending'),
+      subtitle: t('transactionInitiated'),
+    })
+    if (callbackSubmit && typeof callbackSubmit === 'function') {
+      callbackSubmit()
+    }
+  }
 
+  const onInBlock = () => {
+    Notifications.emit({
+      title: t('inBlock'),
+      subtitle: t('transactionInBlock'),
+    })
+    if (callbackInBlock && typeof callbackInBlock === 'function') {
+      callbackInBlock()
+    }
+  }
+
+  const onFinalized = () => {
+    Notifications.emit({
+      title: t('finalized'),
+      subtitle: t('transactionSuccessful'),
+    })
+  }
+
+  const onFailed = (err: Error) => {
+    if (err instanceof InvalidTxError) {
+      Notifications.emit({
+        title: t('failed'),
+        subtitle: t('errorWithTransaction'),
+      })
+    }
+  }
+
+  const onError = (type?: string) => {
+    if (type === 'ledger') {
+      handleResetLedgerTask()
+    }
+    Notifications.emit({
+      title: t('cancelled'),
+      subtitle: t('transactionCancelled'),
+    })
+  }
+
+  // Re-fetch tx fee if tx changes
+  const fetchTxFee = async () => {
+    if (tx) {
       const partial_fee = (await tx?.getPaymentInfo(from))?.partial_fee || 0n
       TxSubmission.updateFee(uid, partial_fee)
     }
+  }
+  useEffect(() => {
     if (uid > 0) {
       fetchTxFee()
     }

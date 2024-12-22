@@ -33,14 +33,14 @@ export const useActiveBalances = ({
 }) => {
   const { network } = useNetwork()
 
-  // Ensure no account duplicates.
+  // Ensure no account duplicates
   const uniqueAccounts = [...new Set(accounts)]
 
-  // Store active account balances state. Requires ref for use in event listener callbacks.
+  // Store active account balances state. Requires ref for use in event listener callbacks
   const [activeBalances, setActiveBalances] = useState<ActiveBalancesState>({})
   const activeBalancesRef = useRef(activeBalances)
 
-  // Gets an active balance's balance.
+  // Gets an active balance's balance
   const getBalance = (address: MaybeAddress) => {
     if (address) {
       const maybeBalance = activeBalances[address]?.balances?.balance
@@ -51,7 +51,18 @@ export const useActiveBalances = ({
     return defaultBalance
   }
 
-  // Gets the largest lock balance, dictating the total amount of unavailable funds from locks.
+  // Gets an active balance's nonce
+  const getNonce = (address: MaybeAddress) => {
+    if (address) {
+      const maybeNonce = activeBalances[address]?.balances?.nonce
+      if (maybeNonce) {
+        return maybeNonce
+      }
+    }
+    return 0
+  }
+
+  // Gets the largest lock balance, dictating the total amount of unavailable funds from locks
   const getMaxLock = (locks: BalanceLock[]): BigNumber =>
     locks.reduce(
       (prev, current) =>
@@ -59,7 +70,7 @@ export const useActiveBalances = ({
       { amount: new BigNumber(0) }
     )?.amount || new BigNumber(0)
 
-  // Gets an active balance's locks.
+  // Gets an active balance's locks
   const getLocks = (address: MaybeAddress): BalanceLocks => {
     if (address) {
       const maybeLocks = activeBalances[address]?.balances?.locks
@@ -74,7 +85,7 @@ export const useActiveBalances = ({
     }
   }
 
-  // Gets a ledger for a stash address.
+  // Gets a ledger for a stash address
   const getLedger = (source: ActiveLedgerSource): Ledger => {
     if ('stash' in source) {
       const stash = source['stash']
@@ -93,7 +104,7 @@ export const useActiveBalances = ({
     return defaultLedger
   }
 
-  // Gets an active balance's payee.
+  // Gets an active balance's payee
   const getPayee = (address: MaybeAddress): PayeeConfig => {
     if (address) {
       const maybePayee = activeBalances[address]?.payee
@@ -104,7 +115,7 @@ export const useActiveBalances = ({
     return defaultPayee
   }
 
-  // Gets an active balance's pool membership.
+  // Gets an active balance's pool membership
   const getPoolMembership = (address: MaybeAddress): PoolMembership | null => {
     if (address) {
       const maybePoolMembership = activeBalances[address]?.poolMembership
@@ -115,7 +126,7 @@ export const useActiveBalances = ({
     return null
   }
 
-  // Gets the amount of balance reserved for existential deposit.
+  // Gets the amount of balance reserved for existential deposit
   const getEdReserved = (
     address: MaybeAddress,
     existentialDeposit: BigNumber
@@ -127,7 +138,7 @@ export const useActiveBalances = ({
     return new BigNumber(0)
   }
 
-  // Gets an active balance's nominations.
+  // Gets an active balance's nominations
   const getNominations = (address: MaybeAddress): Targets => {
     if (address) {
       const maybeNominations =
@@ -139,12 +150,12 @@ export const useActiveBalances = ({
     return []
   }
 
-  // Handle new account balance event being reported from `Balances`.
+  // Handle new account balance event being reported from `Balances`
   const newAccountBalancesCallback = (e: Event) => {
     if (isCustomEvent(e) && Balances.isValidNewAccountBalanceEvent(e)) {
       const { address, ...newBalances } = e.detail
 
-      // Only update state of active accounts.
+      // Only update state of active accounts
       if (uniqueAccounts.includes(address)) {
         setStateWithRef(
           { ...activeBalancesRef.current, [address]: newBalances },
@@ -155,17 +166,17 @@ export const useActiveBalances = ({
     }
   }
 
-  // Update account balances states on initial render.
+  // Update account balances states on initial render
   //
   // If `Balances` does not return an account balances record for an account, the balance
   // has not yet synced or the provided account is still `null`. In these cases a
-  // `new-account-balance` event will be emitted when the balance is ready to be sycned with the UI.
+  // `new-account-balance` event will be emitted when the balance is ready to be sycned with the UI
   useEffect(() => {
-    // Construct new active balances state.
+    // Construct new active balances state
     const newActiveBalances: ActiveBalancesState = {}
 
     for (const account of uniqueAccounts) {
-      // Adds an active balance record if it exists in `Balances`.
+      // Adds an active balance record if it exists in `Balances`
       if (account) {
         const accountBalances = Balances.getAccountBalances(network, account)
         if (accountBalances) {
@@ -173,16 +184,16 @@ export const useActiveBalances = ({
         }
       }
     }
-    // Commit new active balances to state.
+    // Commit new active balances to state
     setStateWithRef(newActiveBalances, setActiveBalances, activeBalancesRef)
   }, [JSON.stringify(uniqueAccounts)])
 
-  // Reset state when network changes.
+  // Reset state when network changes
   useEffectIgnoreInitial(() => {
     setStateWithRef({}, setActiveBalances, activeBalancesRef)
   }, [network])
 
-  // Listen for new account balance events.
+  // Listen for new account balance events
   const documentRef = useRef<Document>(document)
 
   useEventListener(
@@ -195,6 +206,7 @@ export const useActiveBalances = ({
     activeBalances,
     getLocks,
     getBalance,
+    getNonce,
     getLedger,
     getPayee,
     getPoolMembership,

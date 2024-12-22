@@ -13,7 +13,7 @@ import type { SubmitProps } from './types'
 export const Default = ({
   uid,
   onSubmit,
-  processing,
+  submitted,
   valid,
   submitText,
   buttons,
@@ -23,12 +23,12 @@ export const Default = ({
 }: SubmitProps & {
   buttons?: ReactNode[]
   notEnoughFunds: boolean
-  processing: boolean
+  submitted: boolean
 }) => {
   const { accountHasSigner } = useImportedAccounts()
 
   const disabled =
-    processing || !valid || !accountHasSigner(submitAddress) || notEnoughFunds
+    submitted || !valid || !accountHasSigner(submitAddress) || notEnoughFunds
 
   return (
     <>
