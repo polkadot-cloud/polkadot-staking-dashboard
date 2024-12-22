@@ -31,10 +31,10 @@ export const JoinPoolsProvider = ({ children }: { children: ReactNode }) => {
   const { getPoolPerformanceTask, startPoolRewardPointsFetch } =
     usePoolPerformance()
 
-  // Save the bonded pools subset for pool joining.
+  // Save the bonded pools subset for pool joining
   const [poolsForJoin, setPoolsToJoin] = useState<BondedPool[]>([])
 
-  // Start finding pools to join.
+  // Start finding pools to join
   const startJoinPoolFetch = () => {
     startPoolRewardPointsFetch(
       'pool_join',
@@ -42,7 +42,7 @@ export const JoinPoolsProvider = ({ children }: { children: ReactNode }) => {
     )
   }
 
-  // Trigger worker to calculate join pool performance data.
+  // Trigger worker to calculate join pool performance data
   useEffectIgnoreInitial(() => {
     if (
       isReady &&
@@ -51,38 +51,38 @@ export const JoinPoolsProvider = ({ children }: { children: ReactNode }) => {
       erasRewardPointsFetched === 'synced' &&
       getPoolPerformanceTask('pool_join')?.status === 'unsynced'
     ) {
-      // Generate a subset of pools to fetch performance data for. Start by only considering active pools.
+      // Generate a subset of pools to fetch performance data for. Start by only considering active pools
       const activeBondedPools = bondedPools.filter(
         ({ state }) => state === 'Open'
       )
 
       // Filter pools that do not have at least double the minimum stake to earn rewards, in points.
-      // NOTE: assumes that points are a 1:1 ratio between balance and points.
+      // NOTE: assumes that points are a 1:1 ratio between balance and points
       const rewardBondedPools = activeBondedPools.filter(({ points }) => {
         const pointsBn = new BigNumber(rmCommas(points))
         const threshold = minimumActiveStake.multipliedBy(2)
         return pointsBn.isGreaterThanOrEqualTo(threshold)
       })
 
-      // Order active bonded pools by member count.
+      // Order active bonded pools by member count
       const sortedBondedPools = rewardBondedPools.sort(
         (a, b) =>
           Number(rmCommas(a.memberCounter)) - Number(rmCommas(b.memberCounter))
       )
 
-      // Take lower third of sorted bonded pools to join.
+      // Take lower third of sorted bonded pools to join
       const lowerThirdBondedPools = sortedBondedPools.slice(
         0,
         Math.floor(sortedBondedPools.length / 3)
       )
 
-      // Shuffle the lower third of bonded pools to join, and select a random subset of them.
+      // Shuffle the lower third of bonded pools to join, and select a random subset of them
       const poolJoinSelection = shuffle(lowerThirdBondedPools).slice(
         0,
         MaxPoolsForJoin
       )
 
-      // Commit final pool selection to state.
+      // Commit final pool selection to state
       setPoolsToJoin(poolJoinSelection)
     }
   }, [

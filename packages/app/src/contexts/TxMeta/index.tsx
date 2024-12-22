@@ -16,7 +16,7 @@ export const TxMetaContext = createContext<TxMetaContextInterface>(
 export const useTxMeta = () => useContext(TxMetaContext)
 
 export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
-  // Store uids of transactions, along with their status.
+  // Store uids of transactions, along with their status
   const [uids, setUids] = useState<TxSubmissionItem[]>([])
 
   const handleNewUidStatus = (e: Event) => {
@@ -26,11 +26,11 @@ export const TxMetaProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  // Get a tx submission.
+  // Get a tx submission
   const getTxSubmission = (uid?: number) =>
     uids.find((item) => item.uid === uid)
 
-  // Get a tx submission by tag.
+  // Get a tx submission by tag
   const getTxSubmissionByTag = (tag?: string) =>
     uids.find((item) => item.tag === tag)
 

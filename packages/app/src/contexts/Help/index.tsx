@@ -19,13 +19,12 @@ export const HelpContext = createContext<HelpContextInterface>(
 export const useHelp = () => useContext(HelpContext)
 
 export const HelpProvider = ({ children }: HelpContextProps) => {
-  // help module state
   const [state, setState] = useState<HelpContextState>({
     status: 'closed',
     definition: null,
   })
 
-  // when fade out completes, reset active definition
+  // When fade out completes, reset active definition
   useEffectIgnoreInitial(() => {
     if (state.status === 'closed') {
       setState({

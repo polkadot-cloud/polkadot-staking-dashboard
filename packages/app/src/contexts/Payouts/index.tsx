@@ -14,7 +14,6 @@ export const PayoutsContext = createContext<PayoutsContextInterface>(
 export const usePayouts = () => useContext(PayoutsContext)
 
 export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
-  // Store pending nominator reward total & individual entries.
   const [unclaimedRewards, setUnclaimedRewards] = useState<UnclaimedRewards>({
     total: '0',
     entries: [],

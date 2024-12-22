@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export class OnlineStatus {
-  // Set up online / offline event listeners. Relays information to `document` for the UI to handle.
+  // Set up online / offline event listeners. Relays information to `document` for the UI to handle
   static initOnlineEvents() {
     window.addEventListener('offline', async () => {
       this.dispatchEvent(false)
@@ -12,7 +12,7 @@ export class OnlineStatus {
     })
   }
 
-  // Dispatch an `online-status` event.
+  // Dispatch an `online-status` event
   static dispatchEvent(online: boolean) {
     document.dispatchEvent(
       new CustomEvent('online-status', {

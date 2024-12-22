@@ -30,16 +30,16 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
   // groups along with their includes
   const [includes, setIncludes] = useState<FilterItems>(defaultIncludes)
 
-  // groups along with their excludes.
+  // groups along with their excludes
   const [excludes, setExcludes] = useState<FilterItems>(defaultExcludes)
 
-  // groups along with their order.
+  // groups along with their order
   const [orders, setOrders] = useState<FilterOrders>([])
 
-  // groups along with their search terms.
+  // groups along with their search terms
   const [searchTerms, setSearchTerms] = useState<FilterSearches>([])
 
-  // Get stored includes or excludes for a group.
+  // Get stored includes or excludes for a group
   const getFilters = (type: FilterType, group: string): string[] | null => {
     const current = type === 'exclude' ? excludes : includes
     return current.find((e) => e.key === group)?.filters || null
@@ -53,8 +53,8 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  // Toggle a filter for a group.
-  // Adds the group to `excludes` or `includes` if it does not already exist.
+  // Toggle a filter for a group
+  // Adds the group to `excludes` or `includes` if it does not already exist
   const toggleFilter = (t: FilterType, g: string, f: string) => {
     const current = t === 'exclude' ? excludes : includes
     const exists = getFilters(t, g)
@@ -85,16 +85,16 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
     setFilters(t, newFilters)
   }
 
-  // Sets an array of filters to a group.
+  // Sets an array of filters to a group
   const setMultiFilters = (
     t: FilterType,
     g: string,
     fs: string[],
     reset: boolean
   ) => {
-    // get the current filters from the group.
+    // get the current filters from the group
     const current = reset ? [] : t === 'exclude' ? excludes : includes
-    // check if filters currently exist in the group.
+    // check if filters currently exist in the group
     const exists = getFilters(t, g)
 
     if (!exists) {
@@ -106,7 +106,7 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
     let newFilters: FilterItems
     if (current.length) {
       newFilters = [...current].map((e) => {
-        // return groups we are not manipulating.
+        // return groups we are not manipulating
         if (e.key !== g) {
           return e
         }
@@ -124,21 +124,21 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
     setFilters(t, newFilters)
   }
 
-  // Get the current order of a list or null.
+  // Get the current order of a list or null
   const getOrder = (g: string) =>
     orders.find((o) => o.key === g)?.order || 'default'
 
-  // Sets an order key for a group.
+  // Sets an order key for a group
   const setOrder = (g: string, o: string) => {
     let newOrders = []
     if (o === 'default') {
       newOrders = [...orders].filter((order) => order.key !== g)
     } else if (orders.length) {
-      // Attempt to replace the order record if it exists.
+      // Attempt to replace the order record if it exists
       newOrders = [...orders].map((order) =>
         order.key !== g ? order : { ...order, order: o }
       )
-      // If order for this key does not exist, add it.
+      // If order for this key does not exist, add it
       if (newOrders.find(({ key }) => key === g) === undefined) {
         newOrders.push({ key: g, order: o })
       }
@@ -148,20 +148,20 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
     setOrders(newOrders)
   }
 
-  // Get the current search term of a list or null.
+  // Get the current search term of a list or null
   const getSearchTerm = (g: string) =>
     searchTerms.find((o) => o.key === g)?.searchTerm || null
 
-  // Sets an order key for a group.
+  // Sets an order key for a group
   const setSearchTerm = (g: string, t: string) => {
     let newSearchTerms = []
     if (orders.length) {
-      // Attempt to replace the search term if it exists.
+      // Attempt to replace the search term if it exists
       newSearchTerms = [...searchTerms].map((term) =>
         term.key !== g ? term : { ...term, searchTerm: t }
       )
 
-      // If search term for this key does not exist, add it.
+      // If search term for this key does not exist, add it
       if (newSearchTerms.find(({ key }) => key === g) === undefined) {
         newSearchTerms.push({ key: g, searchTerm: t })
       }

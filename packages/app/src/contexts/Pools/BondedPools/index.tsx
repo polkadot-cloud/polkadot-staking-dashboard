@@ -43,32 +43,32 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const createPoolAccounts = useCreatePoolAccounts()
   const { getNominationsStatusFromTargets } = useStaking()
 
-  // Store bonded pools. Used implicitly in callbacks, ref is also defined.
+  // Store bonded pools. Used implicitly in callbacks, ref is also defined
   const [bondedPools, setBondedPools] = useState<BondedPool[]>([])
   const bondedPoolsRef = useRef(bondedPools)
 
-  // Track the sync status of `bondedPools`.
+  // Track the sync status of `bondedPools`
   const bondedPoolsSynced = useRef<Sync>('unsynced')
 
-  // Store bonded pools metadata.
+  // Store bonded pools metadata
   const [poolsMetaData, setPoolsMetadata] = useState<Record<number, string>>({})
 
-  // Store bonded pools nominations.
+  // Store bonded pools nominations
   const [poolsNominations, setPoolsNominations] = useState<
     Record<number, PoolNominations>
   >({})
 
-  // Store pool list active tab. Defaults to `Active` tab.
+  // Store pool list active tab. Defaults to `Active` tab
   const [poolListActiveTab, setPoolListActiveTab] = useState<PoolTab>('Active')
 
-  // Fetch all bonded pool entries and their metadata.
+  // Fetch all bonded pool entries and their metadata
   const fetchBondedPools = async () => {
     if (bondedPoolsSynced.current !== 'unsynced') {
       return
     }
     bondedPoolsSynced.current = 'syncing'
 
-    // Get and format bonded pool entries.
+    // Get and format bonded pool entries
     const ids: number[] = []
     const idsMulti: [number][] = []
     const bondedPoolsEntries = (
@@ -85,7 +85,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 
     setStateWithRef(exposures, setBondedPools, bondedPoolsRef)
 
-    // Fetch pools metadata.
+    // Fetch pools metadata
     const metadataQuery = await new PoolMetadataMulti(network, idsMulti).fetch()
     setPoolsMetadata(
       Object.fromEntries(metadataQuery.map((m, i) => [ids[i], m]))
@@ -95,7 +95,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     Syncs.dispatch('bonded-pools', 'complete')
   }
 
-  // Fetches pool nominations and updates state.
+  // Fetches pool nominations and updates state
   const fetchPoolsNominations = async () => {
     const ids: number[] = []
     const stashes: [string][] = bondedPools.map(({ addresses, id }) => {
@@ -106,7 +106,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     setPoolsNominations(formatPoolsNominations(nominationsMulti, ids))
   }
 
-  // Format raw pool nominations data.
+  // Format raw pool nominations data
   const formatPoolsNominations = (raw: AnyJson, ids: number[]) =>
     Object.fromEntries(
       raw.map((nominator: AnyJson, i: number) => {
@@ -117,7 +117,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
       })
     )
 
-  // Queries a bonded pool and injects ID and addresses to a result.
+  // Queries a bonded pool and injects ID and addresses to a result
   const queryBondedPool = async (id: number) => {
     const bondedPool = new BondedPoolsEntries(network).fetchOne(id)
 
@@ -157,9 +157,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     return getPoolNominationStatusCode(nominationStatus)
   }
 
-  /*
-   * Determine bonded pool's current nomination statuse
-   */
+  // Determine bonded pool's current nomination statuse
   const getPoolNominationStatusCode = (statuses: NominationStatuses | null) => {
     let status = 'waiting'
 
@@ -177,9 +175,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     return status
   }
 
-  /*
-   *  Helper: to add addresses to pool record.
-   */
+  // Helper: to add addresses to pool record
   const getPoolWithAddresses = (id: number, pool: BondedPool) => ({
     ...pool,
     id,
@@ -189,15 +185,12 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
   const getBondedPool = (poolId: MaybePool) =>
     bondedPools.find((p) => String(p.id) === String(poolId)) ?? null
 
-  /*
-   * poolSearchFilter Iterates through the supplied list and refers to the meta batch of the list to
-   * filter those list items that match the search term. Returns the updated filtered list.
-   */
+  // poolSearchFilter Iterates through the supplied list and refers to the meta batch of the list to filter those list items that match the search term. Returns the updated filtered list
   const poolSearchFilter = (list: AnyJson, searchTerm: string) => {
     const filteredList: AnyJson = []
 
     for (const pool of list) {
-      // If pool metadata has not yet been synced, include the pool in results.
+      // If pool metadata has not yet been synced, include the pool in results
       if (!Object.values(poolsMetaData).length) {
         filteredList.push(pool)
         continue
@@ -262,8 +255,8 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     )
   }
 
-  // adds a record to bondedPools.
-  // currently only used when a new pool is created.
+  // adds a record to bondedPools
+  // currently only used when a new pool is created
   const addToBondedPools = (pool: BondedPool) => {
     if (!pool) {
       return
@@ -311,7 +304,7 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     setStateWithRef(newBondedPools, setBondedPools, bondedPoolsRef)
   }
 
-  // Clear existing state for network refresh.
+  // Clear existing state for network refresh
   useEffectIgnoreInitial(() => {
     bondedPoolsSynced.current = 'unsynced'
     Syncs.dispatch('bonded-pools', 'syncing')
@@ -320,14 +313,14 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
     setPoolsNominations({})
   }, [network])
 
-  // Initial setup for fetching bonded pools.
+  // Initial setup for fetching bonded pools
   useEffectIgnoreInitial(() => {
     if (isReady && lastPoolId) {
       fetchBondedPools()
     }
   }, [bondedPools, isReady, lastPoolId])
 
-  // Re-fetch bonded pools nominations when active era changes or when `bondedPools` update.
+  // Re-fetch bonded pools nominations when active era changes or when `bondedPools` update
   useEffectIgnoreInitial(() => {
     if (!activeEra.index.isZero() && bondedPools.length) {
       fetchPoolsNominations()

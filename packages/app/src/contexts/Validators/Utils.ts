@@ -11,7 +11,7 @@ import type {
   Validator,
 } from 'contexts/Validators/types'
 
-// Get favorite validators from local storage.
+// Get favorite validators from local storage
 export const getLocalFavorites = (network: NetworkId) => {
   const localFavourites = localStorage.getItem(`${network}_favorites`)
   return localFavourites !== null
@@ -19,7 +19,7 @@ export const getLocalFavorites = (network: NetworkId) => {
     : []
 }
 
-// Get local validator entries data for an era.
+// Get local validator entries data for an era
 export const getLocalEraValidators = (network: NetworkId, era: string) => {
   const data = localStorage.getItem(`${network}_validators`)
   const current = data ? (JSON.parse(data) as LocalValidatorEntriesData) : null
@@ -32,7 +32,7 @@ export const getLocalEraValidators = (network: NetworkId, era: string) => {
   return currentEra === era ? current : null
 }
 
-// Set local validator entries data for an era.
+// Set local validator entries data for an era
 export const setLocalEraValidators = (
   network: NetworkId,
   era: string,
@@ -49,7 +49,7 @@ export const setLocalEraValidators = (
   )
 }
 
-// Validate local exposure metadata, currently used for fast unstake only.
+// Validate local exposure metadata, currently used for fast unstake only
 export const validateLocalExposure = (
   localMeta: AnyJson,
   endEra: BigNumber
@@ -57,28 +57,28 @@ export const validateLocalExposure = (
   const localIsExposed = localMeta?.isExposed ?? null
   let localChecked = localMeta?.checked ?? null
 
-  // check types saved.
+  // check types saved
   if (typeof localIsExposed !== 'boolean' || !Array.isArray(localChecked)) {
     return null
   }
 
-  // check checked only contains numbers.
+  // check checked only contains numbers
   const checkedNumeric = localChecked.every((e) => typeof e === 'number')
   if (!checkedNumeric) {
     return null
   }
 
-  // remove any expired eras and sort highest first.
+  // remove any expired eras and sort highest first
   localChecked = localChecked
     .filter((e: number) => endEra.isLessThan(e))
     .sort((a: number, b: number) => b - a)
 
-  // if no remaining eras, invalid.
+  // if no remaining eras, invalid
   if (!localChecked.length) {
     return null
   }
 
-  // check if highest -> lowest are decremented, no missing eras.
+  // check if highest -> lowest are decremented, no missing eras
   let i = 0
   let prev = 0
   const noMissingEras = localChecked.every((e: number) => {
@@ -105,7 +105,7 @@ export const validateLocalExposure = (
   }
 }
 
-// Check if era reward points entry exists for an era.
+// Check if era reward points entry exists for an era
 export const hasLocalEraRewardPoints = (network: NetworkId, era: string) => {
   const current = JSON.parse(
     localStorage.getItem(`${network}_era_reward_points`) || '{}'
@@ -113,7 +113,7 @@ export const hasLocalEraRewardPoints = (network: NetworkId, era: string) => {
   return !!current?.[era]
 }
 
-// Get local era reward points entry for an era.
+// Get local era reward points entry for an era
 export const getLocalEraRewardPoints = (network: NetworkId, era: string) => {
   const current = JSON.parse(
     localStorage.getItem(`${network}_era_reward_points`) || '{}'
@@ -121,7 +121,7 @@ export const getLocalEraRewardPoints = (network: NetworkId, era: string) => {
   return current?.[era] || {}
 }
 
-// Set local era reward points entry for an era.
+// Set local era reward points entry for an era
 export const setLocalEraRewardPoints = (
   network: NetworkId,
   era: string,

@@ -7,22 +7,22 @@ import type {
   NotificationText,
 } from './types'
 
-// A class to manage notifications.
+// A class to manage notifications
 //
-// Designed to emit notifications to subscribers to the `notification` event.
+// Designed to emit notifications to subscribers to the `notification` event
 export class Notifications {
-  // Store how long a notification should remain displayed for.
+  // Store how long a notification should remain displayed for
   private static displayDuration = 3000
 
-  // Store the notification indexes.
+  // Store the notification indexes
   private static indexes: number[] = []
 
-  // Emit a new notification to all subscribed elements.
+  // Emit a new notification to all subscribed elements
   static emit({ title, subtitle }: NotificationText) {
     const index = (this.indexes[this.indexes.length - 1] || 0) + 1
     this.indexes.push(index)
 
-    // Create type-safe event detail.
+    // Create type-safe event detail
     const addDetail: NotificationEventAddDetail = {
       task: 'add',
       index,
@@ -36,9 +36,9 @@ export class Notifications {
       })
     )
 
-    // After a period of time, dismiss the notification.
+    // After a period of time, dismiss the notification
     setTimeout(() => {
-      // Create type-safe event detail.
+      // Create type-safe event detail
       const dismissDetail: NotificationEventDismissDetail = {
         task: 'dismiss',
         index,

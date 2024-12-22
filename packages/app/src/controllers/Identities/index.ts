@@ -8,12 +8,12 @@ import type { AnyApi, ChainId } from 'common-types'
 
 export class Identities {
   static fetch = async (network: ChainId, addresses: string[]) => {
-    // Fetches identities for addresses.
+    // Fetches identities for addresses
     const fetchBase = async () => {
       const addressesMulti: [string][] = addresses.map((address) => [address])
       const result = await new IdentityOfMulti(network, addressesMulti).fetch()
 
-      // Take identity data (first index) of results.
+      // Take identity data (first index) of results
       const data =
         result?.map(
           (resultArray: AnyJson | null) => resultArray?.[0] || null
@@ -26,7 +26,7 @@ export class Identities {
       )
     }
 
-    // Fetch an array of super accounts and their identities.
+    // Fetch an array of super accounts and their identities
     const fetchSupers = async () => {
       const addressesMulti: [string][] = addresses.map((address) => [address])
       const supersRawMulti = await new SuperOfMulti(
@@ -51,7 +51,7 @@ export class Identities {
       const superIdentities =
         (await new IdentityOfMulti(network, superOfMulti).fetch()) || []
 
-      // Take identity data (first index) of results.
+      // Take identity data (first index) of results
       const data = superIdentities.map(
         (resultArray: AnyJson | null) => resultArray?.[0] || null
       )

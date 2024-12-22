@@ -5,7 +5,7 @@ import { rmCommas } from '@w3ux/utils'
 import type { AnyApi, NetworkId } from 'common-types'
 import type { Exposure, LocalExposure, LocalExposuresData } from './types'
 
-// Get local `erasStakers` entries for an era.
+// Get local `erasStakers` entries for an era
 export const getLocalEraExposures = (
   network: NetworkId,
   era: string,
@@ -26,7 +26,7 @@ export const getLocalEraExposures = (
   return null
 }
 
-// Set local stakers entries data for an era.
+// Set local stakers entries data for an era
 export const setLocalEraExposures = (
   network: NetworkId,
   era: string,
@@ -41,7 +41,7 @@ export const setLocalEraExposures = (
   )
 }
 
-// Humanise and remove commas from fetched exposures.
+// Humanise and remove commas from fetched exposures
 export const formatRawExposures = (exposures: AnyApi) =>
   exposures.map(([k, v]: AnyApi) => {
     const keys = k.toHuman()
@@ -60,7 +60,7 @@ export const formatRawExposures = (exposures: AnyApi) =>
     }
   })
 
-// Minify exposures data structure for local storage.
+// Minify exposures data structure for local storage
 const minifyExposures = (exposures: Exposure[]) =>
   exposures.map(({ keys, val: { others, own, total } }: AnyApi) => ({
     k: [keys[0], keys[1]],
@@ -71,7 +71,7 @@ const minifyExposures = (exposures: Exposure[]) =>
     },
   }))
 
-// Expand local exposure data into JSON format.
+// Expand local exposure data into JSON format
 const maxifyExposures = (exposures: LocalExposure[]) =>
   exposures.map(({ k, v }: AnyApi) => ({
     keys: [k[0], k[1]],

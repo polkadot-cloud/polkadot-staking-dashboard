@@ -17,13 +17,13 @@ export const UIContext = createContext<UIContextInterface>(
 export const useUi = () => useContext(UIContext)
 
 export const UIProvider = ({ children }: { children: ReactNode }) => {
-  // Side whether the side menu is open.
+  // Side whether the side menu is open
   const [sideMenuOpen, setSideMenu] = useState<boolean>(false)
 
-  // Store whether in Brave browser. Used for light client warning.
+  // Store whether in Brave browser. Used for light client warning
   const [isBraveBrowser, setIsBraveBrowser] = useState<boolean>(false)
 
-  // Store references for main app containers.
+  // Store references for main app containers
   const [containerRefs, setContainerRefsState] = useState<
     Record<string, MutableRefObject<HTMLDivElement | null>>
   >({})
@@ -33,7 +33,7 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
     setContainerRefsState(v)
   }
 
-  // Get side menu minimised state from local storage, default to false.
+  // Get side menu minimised state from local storage, default to false
   const [userSideMenuMinimised, setUserSideMenuMinimisedState] =
     useState<boolean>(
       localStorageOrDefault('side_menu_minimised', false, true) as boolean
@@ -44,14 +44,14 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
     setStateWithRef(v, setUserSideMenuMinimisedState, userSideMenuMinimisedRef)
   }
 
-  // Automatic side menu minimised.
+  // Automatic side menu minimised
   const [sideMenuMinimised, setSideMenuMinimised] = useState<boolean>(
     window.innerWidth <= PageWidthMediumThreshold
       ? true
       : userSideMenuMinimisedRef.current
   )
 
-  // Resize side menu callback.
+  // Resize side menu callback
   const resizeCallback = () => {
     if (window.innerWidth <= PageWidthMediumThreshold) {
       setSideMenuMinimised(false)
@@ -60,7 +60,7 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  // Resize event listener.
+  // Resize event listener
   useEffect(() => {
     ;(window.navigator as AnyJson)?.brave
       ?.isBrave()
@@ -74,7 +74,7 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [])
 
-  // Re-configure minimised on user change.
+  // Re-configure minimised on user change
   useEffectIgnoreInitial(() => {
     resizeCallback()
   }, [userSideMenuMinimised])

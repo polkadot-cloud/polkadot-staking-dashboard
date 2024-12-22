@@ -34,14 +34,14 @@ export const LedgerHardwareProvider = ({
   const { chainSpecs } = useApi()
   const { transactionVersion } = chainSpecs
 
-  // Store whether a Ledger device task is in progress.
+  // Store whether a Ledger device task is in progress
   const [isExecuting, setIsExecutingState] = useState<boolean>(false)
   const isExecutingRef = useRef(isExecuting)
   const getIsExecuting = () => isExecutingRef.current
   const setIsExecuting = (val: boolean) =>
     setStateWithRef(val, setIsExecutingState, isExecutingRef)
 
-  // Store the latest status code received from a Ledger device.
+  // Store the latest status code received from a Ledger device
   const [statusCode, setStatusCodeState] = useState<LedgerResponse | null>(null)
   const statusCodeRef = useRef<LedgerResponse | null>(statusCode)
   const getStatusCode = () => statusCodeRef.current
@@ -55,7 +55,7 @@ export const LedgerHardwareProvider = ({
   const resetStatusCode = () =>
     setStateWithRef(null, setStatusCodeState, statusCodeRef)
 
-  // Store the feedback message to display as the Ledger device is being interacted with.
+  // Store the feedback message to display as the Ledger device is being interacted with
   const [feedback, setFeedbackState] =
     useState<FeedbackMessage>(defaultFeedback)
   const feedbackRef = useRef(feedback)
@@ -65,7 +65,7 @@ export const LedgerHardwareProvider = ({
   const resetFeedback = () =>
     setStateWithRef(defaultFeedback, setFeedbackState, feedbackRef)
 
-  // Set feedback message and status code together.
+  // Set feedback message and status code together
   const setStatusFeedback = ({
     code,
     helpKey,
@@ -76,16 +76,16 @@ export const LedgerHardwareProvider = ({
   }
 
   // Stores whether the Ledger device version has been checked. Used when signing transactions, not
-  // when addresses are being imported.
+  // when addresses are being imported
   const [integrityChecked, setIntegrityChecked] = useState<boolean>(false)
 
-  // Store the latest successful device response.
+  // Store the latest successful device response
   const [transportResponse, setTransportResponse] = useState<AnyJson>(null)
 
-  // Whether the Ledger device metadata is for a different runtime.
+  // Whether the Ledger device metadata is for a different runtime
   const runtimesInconsistent = useRef<boolean>(false)
 
-  // Checks whether runtime version is inconsistent with device metadata.
+  // Checks whether runtime version is inconsistent with device metadata
   const checkRuntimeVersion = async (txMetadataChainId: string) => {
     try {
       setIsExecuting(true)
@@ -95,20 +95,20 @@ export const LedgerHardwareProvider = ({
       const minor = result?.minor || 0
       const patch = result?.major || 0
 
-      // The current version of the Polkadot Ledger app.
+      // The current version of the Polkadot Ledger app
       const currentSemVer = `${major}.${minor}.${patch}`
 
-      // The version the Generic Polkadot Ledger app was introduced.
+      // The version the Generic Polkadot Ledger app was introduced
       const genericLaunchSemVer = '100.0.5'
 
-      // Check if the current version is upgraded for the Generic Polkadot Ledger app.
+      // Check if the current version is upgraded for the Generic Polkadot Ledger app
       const isLegacy = compare(currentSemVer, genericLaunchSemVer, '<')
 
       setIsExecuting(false)
       resetFeedback()
 
       // If the current version is less than the transaction version, or the app is not the generic
-      // app, set the runtimesInconsistent flag.
+      // app, set the runtimesInconsistent flag
       if (major < transactionVersion || isLegacy) {
         runtimesInconsistent.current = true
       }
@@ -118,7 +118,7 @@ export const LedgerHardwareProvider = ({
     }
   }
 
-  // Gets an address from Ledger device.
+  // Gets an address from Ledger device
   const handleGetAddress = async (
     txMetadataChainId: string,
     accountIndex: number,
@@ -145,7 +145,7 @@ export const LedgerHardwareProvider = ({
     }
   }
 
-  // Signs a payload on Ledger device.
+  // Signs a payload on Ledger device
   const handleSignTx = async (
     txMetadataChainId: string,
     uid: number,
@@ -176,11 +176,11 @@ export const LedgerHardwareProvider = ({
     }
   }
 
-  // Handles errors that occur during device calls.
+  // Handles errors that occur during device calls
   const handleErrors = (err: unknown) => {
-    // Update feedback and status code state based on error received.
+    // Update feedback and status code state based on error received
     switch (getLedgerErrorType(String(err))) {
-      // Occurs when the device does not respond to a request within the timeout period.
+      // Occurs when the device does not respond to a request within the timeout period
       case 'timeout':
         setStatusFeedback({
           message: t('ledgerRequestTimeout'),
@@ -188,28 +188,28 @@ export const LedgerHardwareProvider = ({
           code: 'DeviceTimeout',
         })
         break
-      // Occurs when a method in a all is not supported by the device.
+      // Occurs when a method in a all is not supported by the device
       case 'methodNotSupported':
         setStatusFeedback({
           message: t('methodNotSupported'),
           code: 'MethodNotSupported',
         })
         break
-      // Occurs when one or more of nested calls being signed does not support nesting.
+      // Occurs when one or more of nested calls being signed does not support nesting
       case 'nestingNotSupported':
         setStatusFeedback({
           message: t('missingNesting'),
           code: 'NestingNotSupported',
         })
         break
-      // Cccurs when the device is not connected.
+      // Cccurs when the device is not connected
       case 'deviceNotConnected':
         setStatusFeedback({
           message: t('connectLedgerToContinue'),
           code: 'DeviceNotConnected',
         })
         break
-      // Occurs when tx was approved outside of active channel.
+      // Occurs when tx was approved outside of active channel
       case 'outsideActiveChannel':
         setStatusFeedback({
           message: t('queuedTransactionRejected'),
@@ -217,21 +217,21 @@ export const LedgerHardwareProvider = ({
           code: 'WrongTransaction',
         })
         break
-      // Occurs when the device is already in use.
+      // Occurs when the device is already in use
       case 'deviceBusy':
         setStatusFeedback({
           message: t('ledgerDeviceBusy'),
           code: 'DeviceBusy',
         })
         break
-      // Occurs when the device is locked.
+      // Occurs when the device is locked
       case 'deviceLocked':
         setStatusFeedback({
           message: t('unlockLedgerToContinue'),
           code: 'DeviceLocked',
         })
         break
-      // Occurs when the app (e.g. Polkadot) is not open.
+      // Occurs when the app (e.g. Polkadot) is not open
       case 'appNotOpen':
         setStatusFeedback({
           message: t('openAppOnLedger'),
@@ -239,14 +239,14 @@ export const LedgerHardwareProvider = ({
           code: 'TransactionRejected',
         })
         break
-      // Occurs when submitted extrinsic(s) are not supported.
+      // Occurs when submitted extrinsic(s) are not supported
       case 'txVersionNotSupported':
         setStatusFeedback({
           message: t('txVersionNotSupported'),
           code: 'TransactionVersionNotSupported',
         })
         break
-      // Occurs when a user rejects a transaction.
+      // Occurs when a user rejects a transaction
       case 'transactionRejected':
         setStatusFeedback({
           message: t('transactionRejectedPending'),
@@ -254,19 +254,19 @@ export const LedgerHardwareProvider = ({
           code: 'AppNotOpen',
         })
         break
-      // Handle all other errors.
+      // Handle all other errors
       default:
         setFeedback(t('openAppOnLedger'), 'Open App On Ledger')
         setStatusCode('failure', 'AppNotOpen')
     }
 
-    // Reset refs.
+    // Reset refs
     runtimesInconsistent.current = false
-    // Reset state.
+    // Reset state
     setIsExecuting(false)
   }
 
-  // Helper to reset ledger state when a task is completed or cancelled.
+  // Helper to reset ledger state when a task is completed or cancelled
   const handleResetLedgerTask = () => {
     setIsExecuting(false)
     resetStatusCode()
@@ -275,7 +275,7 @@ export const LedgerHardwareProvider = ({
     runtimesInconsistent.current = false
   }
 
-  // Helper to reset ledger state when the a overlay connecting to the Ledger device unmounts.
+  // Helper to reset ledger state when the a overlay connecting to the Ledger device unmounts
   const handleUnmount = () => {
     Ledger.unmount()
     handleResetLedgerTask()

@@ -25,11 +25,11 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
   const { isReady, activeEra } = useApi()
   const { activeAccount } = useActiveAccounts()
 
-  // Store the currently active plugins.
+  // Store the currently active plugins
   const [plugins, setPlugins] = useState<Plugin[]>(getAvailablePlugins())
   const pluginsRef = useRef(plugins)
 
-  // Toggle a plugin.
+  // Toggle a plugin
   const togglePlugin = (key: Plugin) => {
     let localPlugins = [...plugins]
     const found = localPlugins.find((p) => p === key)
@@ -44,10 +44,10 @@ export const PluginsProvider = ({ children }: { children: ReactNode }) => {
     setStateWithRef(localPlugins, setPlugins, pluginsRef)
   }
 
-  // Check if a plugin is currently enabled.
+  // Check if a plugin is currently enabled
   const pluginEnabled = (key: Plugin) => pluginsRef.current.includes(key)
 
-  // Reset payouts on Subscan plugin not enabled. Otherwise fetch payouts.
+  // Reset payouts on Subscan plugin not enabled. Otherwise fetch payouts
   useEffectIgnoreInitial(() => {
     if (plugins.includes('subscan')) {
       Subscan.network = network
