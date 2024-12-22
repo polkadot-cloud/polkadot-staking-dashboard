@@ -42,7 +42,7 @@ export const ActiveGraphInner = ({
     fromEra: Math.max(activeEra.index.minus(1).toNumber(), 0),
   })
 
-  const days = 19
+  const days = 30
   const fromDate = new Date()
   fromDate.setDate(fromDate.getDate() - days)
   fromDate.setHours(0, 0, 0, 0)
