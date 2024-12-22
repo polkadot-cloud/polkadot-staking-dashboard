@@ -5,7 +5,6 @@ import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ellipsisFn } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import type { AnyApi } from 'common-types'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
@@ -21,8 +20,15 @@ import { payoutsPerPage } from 'library/List/defaults'
 import { Identity } from 'library/ListItem/Labels/Identity'
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity'
 import { DefaultLocale, locales } from 'locales'
+import { isPoolReward } from 'plugin-staking-api'
+import type {
+  NominatorReward,
+  PoolReward,
+  RewardResults,
+} from 'plugin-staking-api/types'
 import { Component, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { BondedPool } from 'types'
 import { planckToUnitBn } from 'utils'
 import { ItemWrapper } from '../Wrappers'
 import type { PayoutListProps } from '../types'
@@ -47,7 +53,7 @@ export const PayoutListInner = ({
   const [page, setPage] = useState<number>(1)
 
   // Manipulated list (ordering, filtering) of payouts
-  const [payouts, setPayouts] = useState<AnyApi>(initialPayouts)
+  const [payouts, setPayouts] = useState<RewardResults>(initialPayouts)
 
   // Whether still in initial fetch
   const [fetched, setFetched] = useState<boolean>(false)
@@ -100,18 +106,31 @@ export const PayoutListInner = ({
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
         <MotionContainer>
-          {listPayouts.map((p: AnyApi, index: number) => {
-            const label =
-              p.type === 'pool' ? t('payouts.poolClaim') : t('payouts.payout')
-            const labelClass = p.type === 'pool' ? 'claim' : 'reward'
-            const validator = validators.find((v) => v.address === p.validator)
-            const pool = bondedPools.find(({ id }) => id === p.pool_id)
+          {listPayouts.map((p: NominatorReward | PoolReward, index: number) => {
+            const poolReward = isPoolReward(p)
+            const record = poolReward
+              ? (p as PoolReward)
+              : (p as NominatorReward)
 
-            const batchIndex = validator
-              ? validators.indexOf(validator)
-              : pool
-                ? bondedPools.indexOf(pool)
-                : 0
+            const label = poolReward
+              ? t('payouts.poolClaim')
+              : t('payouts.payout')
+
+            const labelClass = poolReward ? 'claim' : 'reward'
+
+            let batchIndex
+            let pool: BondedPool | undefined
+            if (poolReward) {
+              const item = p as PoolReward
+              pool = bondedPools.find(({ id }) => id === item.poolId)
+              batchIndex = pool ? bondedPools.indexOf(pool) : 0
+            } else {
+              const item = p as NominatorReward
+              const validator = validators.find(
+                (v) => v.address === item.validator
+              )
+              batchIndex = validator ? validators.indexOf(validator) : 0
+            }
 
             return (
               <motion.div
@@ -137,7 +156,7 @@ export const PayoutListInner = ({
                             <>
                               +
                               {planckToUnitBn(
-                                new BigNumber(p.reward),
+                                new BigNumber(record.reward),
                                 units
                               ).toString()}{' '}
                               {unit}
@@ -152,20 +171,17 @@ export const PayoutListInner = ({
                     <div className="row">
                       <div>
                         <div>
-                          {label === t('payouts.payout') &&
-                            (batchIndex > 0 ? (
-                              <Identity address={p.validator} />
-                            ) : (
-                              <div>{ellipsisFn(p.validator)}</div>
-                            ))}
-                          {label === t('payouts.poolClaim') &&
-                            (pool ? (
-                              <PoolIdentity pool={pool} />
-                            ) : (
-                              <h4>
-                                {t('payouts.fromPool')} {p.pool_id}
-                              </h4>
-                            ))}
+                          {!poolReward ? (
+                            <NominatorIdentity
+                              batchIndex={batchIndex}
+                              address={(record as NominatorReward).validator}
+                            />
+                          ) : (
+                            <PoolClaim
+                              pool={pool}
+                              poolId={(record as PoolReward).poolId}
+                            />
+                          )}
                           {label === t('payouts.slashed') && (
                             <h4>{t('payouts.deductedFromBond')}</h4>
                           )}
@@ -173,7 +189,7 @@ export const PayoutListInner = ({
                         <div>
                           <h5>
                             {formatDistance(
-                              fromUnixTime(p.timestamp),
+                              fromUnixTime(record.timestamp),
                               new Date(),
                               {
                                 addSuffix: true,
@@ -203,6 +219,36 @@ export const PayoutList = (props: PayoutListProps) => (
     <PayoutListShouldUpdate {...props} />
   </PayoutListProvider>
 )
+
+export const NominatorIdentity = ({
+  batchIndex,
+  address,
+}: {
+  batchIndex: number
+  address: string
+}) =>
+  batchIndex > 0 ? (
+    <Identity address={address} />
+  ) : (
+    <div>{ellipsisFn(address)}</div>
+  )
+
+export const PoolClaim = ({
+  pool,
+  poolId,
+}: {
+  pool: BondedPool | undefined
+  poolId: number
+}) => {
+  const { t } = useTranslation('pages')
+  return pool ? (
+    <PoolIdentity pool={pool} />
+  ) : (
+    <h4>
+      {t('payouts.fromPool')} {poolId}
+    </h4>
+  )
+}
 
 export class PayoutListShouldUpdate extends Component {
   static contextType = StakingContext

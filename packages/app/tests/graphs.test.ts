@@ -13,14 +13,20 @@ import { expect, test } from 'vitest'
 // payouts that were made 2, 3 and 4 days ago.
 const mockPayouts = [
   {
+    who: '',
+    poolId: 0,
     reward: '10000000000',
     timestamp: getUnixTime(subDays(new Date(), 2)),
   },
   {
+    who: '',
+    poolId: 0,
     reward: '15000000000',
     timestamp: getUnixTime(subDays(new Date(), 3)),
   },
   {
+    who: '',
+    poolId: 0,
     reward: '5000000000',
     timestamp: getUnixTime(subDays(new Date(), 4)),
   },

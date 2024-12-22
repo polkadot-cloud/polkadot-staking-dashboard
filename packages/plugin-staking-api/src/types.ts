@@ -36,7 +36,7 @@ export type AllRewardsResult = Query & {
 
 export interface NominatorReward {
   era: number
-  reward: number
+  reward: string
   claimed: boolean
   timestamp: number
   validator: string
@@ -46,6 +46,11 @@ export interface NominatorReward {
 export type UnclaimedRewardsResult = Query & {
   data: {
     unclaimedRewards: UnclaimedRewards
+  }
+}
+export type PoolRewardResults = Query & {
+  data: {
+    poolRewards: PoolReward[]
   }
 }
 
@@ -64,3 +69,15 @@ export interface ValidatorUnclaimedReward {
   reward: string
   page: number | null
 }
+
+export interface PoolReward {
+  reward: string
+  timestamp: number
+  who: string
+  poolId: number
+}
+
+export type PayoutsAndClaims = (NominatorReward | PoolReward)[]
+
+export type RewardResult = NominatorReward | PoolReward
+export type RewardResults = RewardResult[]
