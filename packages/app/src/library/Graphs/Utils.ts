@@ -239,6 +239,10 @@ const processPayouts = (
 
   // Calculate payouts per day from the current day
   let p = calculateDailyPayouts(normalised, fromDate, days, units, subject)
+  // Ensure payouts don't go beyond end of current day
+  p = p.filter(
+    ({ timestamp }: RewardResult) => timestamp < getUnixTime(fromDate)
+  )
   // Pre-fill payouts if max days have not been reached
   p = p.concat(prefillMissingDays(p, fromDate, days))
   // Fill in gap days between payouts with zero values
@@ -265,17 +269,16 @@ const processPayouts = (
     units,
     subject
   )
+  // Ensure averages don't go beyond end of current day
+  a = a.filter(
+    ({ timestamp }: RewardResult) => timestamp < getUnixTime(fromDate)
+  )
   // Prefill payouts if we are missing the earlier dates
   a = a.concat(prefillMissingDays(a, averageFromDate, avgDays))
   // Fill in gap days between payouts with zero values
   a = fillGapDays(a, averageFromDate)
   // Reverse payouts: most recent last
   a = a.reverse()
-
-  // Ensure payouts don't go beyond end of current day
-  p = p.filter(
-    ({ timestamp }: RewardResult) => timestamp < getUnixTime(fromDate)
-  )
 
   return { p, a }
 }
