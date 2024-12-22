@@ -40,12 +40,12 @@ export const ImportedAccountsProvider = ({
   const { otherAccounts } = useOtherAccounts()
   const { getExtensionAccounts } = useExtensionAccounts()
   const { setActiveAccount, setActiveProxy } = useActiveAccounts()
-  // Get the imported extension accounts formatted with the current network's ss58 prefix.
+  // Get the imported extension accounts formatted with the current network's ss58 prefix
   const extensionAccounts = getExtensionAccounts(ss58)
 
   const allAccounts = extensionAccounts.concat(otherAccounts)
 
-  // Stringify account addresses and account names to determine if they have changed. Ignore other properties including `signer` and `source`.
+  // Stringify account addresses and account names to determine if they have changed. Ignore other properties including `signer` and `source`
   const shallowAccountStringify = (accounts: ImportedAccount[]) => {
     const sorted = accounts.sort((a, b) => {
       if (a.address < b.address) {
@@ -63,18 +63,18 @@ export const ImportedAccountsProvider = ({
 
   const allAccountsStringified = shallowAccountStringify(allAccounts)
 
-  // Gets an account from `allAccounts`.
+  // Gets an account from `allAccounts`
   //
-  // Caches the function when imported accounts update.
+  // Caches the function when imported accounts update
   const getAccount = useCallback(
     (who: MaybeAddress) =>
       allAccounts.find(({ address }) => address === who) || null,
     [allAccountsStringified]
   )
 
-  // Checks if an address is a read-only account.
+  // Checks if an address is a read-only account
   //
-  // Caches the function when imported accounts update.
+  // Caches the function when imported accounts update
   const isReadOnlyAccount = useCallback(
     (who: MaybeAddress) => {
       const account = allAccounts.find(({ address }) => address === who) || {}
@@ -87,9 +87,9 @@ export const ImportedAccountsProvider = ({
     [allAccountsStringified]
   )
 
-  // Checks whether an account can sign transactions.
+  // Checks whether an account can sign transactions
   //
-  // Caches the function when imported accounts update.
+  // Caches the function when imported accounts update
   const accountHasSigner = useCallback(
     (address: MaybeAddress) =>
       allAccounts.find(
@@ -99,12 +99,12 @@ export const ImportedAccountsProvider = ({
     [allAccountsStringified]
   )
 
-  // Checks whether an account needs manual signing.
+  // Checks whether an account needs manual signing
   //
   // This is the case for accounts imported from hardware wallets, transactions of which cannot be
-  // automatically signed by a provided `signer` as is the case with web extensions.
+  // automatically signed by a provided `signer` as is the case with web extensions
   //
-  // Caches the function when imported accounts update.
+  // Caches the function when imported accounts update
   const requiresManualSign = useCallback(
     (address: MaybeAddress) =>
       allAccounts.find(
@@ -113,7 +113,7 @@ export const ImportedAccountsProvider = ({
     [allAccountsStringified]
   )
 
-  // Keep accounts in sync with `Balances`.
+  // Keep accounts in sync with `Balances`
   useEffectIgnoreInitial(() => {
     if (isReady) {
       Balances.syncAccounts(
@@ -123,7 +123,7 @@ export const ImportedAccountsProvider = ({
     }
   }, [isReady, allAccountsStringified])
 
-  // Re-sync the active account and active proxy on network change.
+  // Re-sync the active account and active proxy on network change
   useEffectIgnoreInitial(() => {
     const localActiveAccount = getActiveAccountLocal(network, ss58)
 

@@ -6,28 +6,28 @@ import type { SyncEvent, SyncID, SyncIDConfig, SyncStatus } from './types'
 
 export class Syncs {
   // List of all syncIds currently syncing. NOTE: `initialization` is added by default as the
-  // network always initializes from initial state.
+  // network always initializes from initial state
   static syncIds: SyncID[] = defaultSyncIds
 
-  // Dispatch all default syncId events as syncing.
+  // Dispatch all default syncId events as syncing
   static dispatchAllDefault = () => {
     this.syncIds.forEach((id) => this.dispatch(id, 'syncing'))
   }
 
-  // Dispatches a new sync event to the document.
+  // Dispatches a new sync event to the document
   static dispatch = (id: SyncID, status: SyncStatus) => {
     const detail: SyncEvent = {
       id,
       status,
     }
 
-    // Whether to dispatch the event.
+    // Whether to dispatch the event
     let dispatch = true
 
-    // Keep class syncIds up to date.
+    // Keep class syncIds up to date
     if (status === 'syncing') {
       if (this.syncIds.includes(id)) {
-        // Cancel event if already syncing.
+        // Cancel event if already syncing
         dispatch = false
       } else {
         this.syncIds.push(id)
@@ -38,7 +38,7 @@ export class Syncs {
       this.syncIds = this.syncIds.filter((syncId) => syncId !== id)
     }
 
-    // Dispatch event to UI.
+    // Dispatch event to UI
     if (dispatch) {
       document.dispatchEvent(
         new CustomEvent('new-sync-status', {
@@ -48,13 +48,13 @@ export class Syncs {
     }
   }
 
-  // Checks if event detailis a valid `new-sync-status` event.
+  // Checks if event detailis a valid `new-sync-status` event
   static isValidSyncStatus = (
     event: CustomEvent
   ): event is CustomEvent<SyncEvent> =>
     event.detail && event.detail.id && event.detail.status
 
-  // Gets SyncIDs from a given config.
+  // Gets SyncIDs from a given config
   static getIdsFromSyncConfig = (config: SyncIDConfig): SyncID[] | '*' => {
     if (config === '*' || !this.isSyncIdArray(config)) {
       return '*'
@@ -62,7 +62,7 @@ export class Syncs {
     return config
   }
 
-  // Checks if a sync config is just an array of syncIds.
+  // Checks if a sync config is just an array of syncIds
   static isSyncIdArray = (config: SyncIDConfig): config is SyncID[] =>
     Array.isArray(config) && config.every((item) => typeof item === 'string')
 }

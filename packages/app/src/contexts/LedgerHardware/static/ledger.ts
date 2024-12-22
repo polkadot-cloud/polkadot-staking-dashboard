@@ -7,13 +7,13 @@ import { withTimeout } from '@w3ux/utils'
 import { PolkadotGenericApp } from '@zondax/ledger-substrate'
 
 export class Ledger {
-  // The ledger device transport. `null` when not actively in use.
+  // The ledger device transport. `null` when not actively in use
   static transport: AnyJson | null
 
-  // Whether the device is currently paired.
+  // Whether the device is currently paired
   static isPaired = false
 
-  // Initialise ledger transport, initialise app, and return with device info.
+  // Initialise ledger transport, initialise app, and return with device info
   static initialise = async (txMetadataChainId: string) => {
     this.transport = await TransportWebHID.create()
     const app = new PolkadotGenericApp(Ledger.transport, txMetadataChainId)
@@ -21,21 +21,21 @@ export class Ledger {
     return { app, productName }
   }
 
-  // Ensure transport is closed.
+  // Ensure transport is closed
   static ensureClosed = async () => {
     if (this.transport?.device?.opened) {
       await this.transport?.close()
     }
   }
 
-  // Ensure transport is open.
+  // Ensure transport is open
   static ensureOpen = async () => {
     if (!this.transport?.device?.opened) {
       await this.transport?.open()
     }
   }
 
-  // Gets device runtime version.
+  // Gets device runtime version
   static getVersion = async (app: PolkadotGenericApp) => {
     await this.ensureOpen()
     const result = await withTimeout(3000, app.getVersion(), {
@@ -45,7 +45,7 @@ export class Ledger {
     return result
   }
 
-  // Gets an address from transport.
+  // Gets an address from transport
   static getAddress = async (
     app: PolkadotGenericApp,
     index: number,
@@ -66,7 +66,7 @@ export class Ledger {
     return result
   }
 
-  // Signs a payload on device.
+  // Signs a payload on device
   static signPayload = async (
     app: PolkadotGenericApp,
     index: number,
@@ -90,7 +90,7 @@ export class Ledger {
     return result
   }
 
-  // Reset ledger on unmount.
+  // Reset ledger on unmount
   static unmount = async () => {
     await this.transport?.close()
     this.transport = null

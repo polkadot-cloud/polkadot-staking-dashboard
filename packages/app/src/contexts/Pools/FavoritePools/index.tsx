@@ -20,16 +20,16 @@ export const FavoritePoolsProvider = ({
 }) => {
   const { network } = useNetwork()
 
-  // Get favorite pools from local storage.
+  // Get favorite pools from local storage
   const getLocalFavorites = () => {
     const localFavorites = localStorage.getItem(`${network}_favorite_pools`)
     return localFavorites !== null ? JSON.parse(localFavorites) : []
   }
 
-  // Stores the user's favorite pools.
+  // Stores the user's favorite pools
   const [favorites, setFavorites] = useState<string[]>(getLocalFavorites())
 
-  // Adds a favorite validator.
+  // Adds a favorite validator
   const addFavorite = (address: string) => {
     const newFavorites = Object.assign(favorites)
     if (!newFavorites.includes(address)) {
@@ -43,7 +43,7 @@ export const FavoritePoolsProvider = ({
     setFavorites([...newFavorites])
   }
 
-  // Removes a favorite pool if they exist.
+  // Removes a favorite pool if they exist
   const removeFavorite = (address: string) => {
     const newFavorites = Object.assign(favorites).filter(
       (validator: string) => validator !== address

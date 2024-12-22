@@ -43,7 +43,7 @@ export class Subscan {
     if (!result?.list) {
       return []
     }
-    // Format list and return.
+    // Format list and return
     return result.list
       .map((entry: SubscanPoolMember) => ({
         who: entry.account_display.address,
@@ -52,7 +52,7 @@ export class Subscan {
       .reverse()
   }
 
-  // Fetch a pool's era points from Subscan.
+  // Fetch a pool's era points from Subscan
   static fetchEraPoints = async (
     address: string,
     era: number
@@ -66,7 +66,7 @@ export class Subscan {
       return []
     }
 
-    // Format list to just contain reward points.
+    // Format list to just contain reward points
     const list = []
     for (let i = era; i > era - 100; i--) {
       list.push({
@@ -77,11 +77,11 @@ export class Subscan {
           )?.reward_point ?? 0,
       })
     }
-    // Removes last zero item and return.
+    // Removes last zero item and return
     return list.reverse().splice(0, list.length - 1)
   }
 
-  // Handle fetching pool members.
+  // Handle fetching pool members
   static handleFetchPoolMembers = async (poolId: number, page: number) => {
     const dataKey = `${this.network}-${poolId}-${page}-members}`
     const currentValue = this.poolData[dataKey]
@@ -96,7 +96,7 @@ export class Subscan {
     }
   }
 
-  // Handle fetching era point history.
+  // Handle fetching era point history
   static handleFetchEraPoints = async (address: string, era: number) => {
     const dataKey = `${this.network}-${address}-${era}}`
     const currentValue = this.eraPointsData[dataKey]
@@ -110,10 +110,10 @@ export class Subscan {
     }
   }
 
-  // Get the public Subscan endpoint.
+  // Get the public Subscan endpoint
   static getEndpoint = () => `https://${this.network}.api.subscan.io`
 
-  // Make a request to Subscan and return any data returned from the response.
+  // Make a request to Subscan and return any data returned from the response
   static makeRequest = async (endpoint: string, body: SubscanRequestBody) => {
     const res: Response = await fetch(this.getEndpoint() + endpoint, {
       headers: {

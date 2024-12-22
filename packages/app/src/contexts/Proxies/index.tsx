@@ -52,37 +52,37 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   const { addOrReplaceOtherAccount } = useOtherAccounts()
   const { activeProxy, setActiveProxy, activeAccount } = useActiveAccounts()
 
-  // Store the proxy accounts of each imported account.
+  // Store the proxy accounts of each imported account
   const [proxies, setProxies] = useState<Proxies>([])
   const proxiesRef = useRef(proxies)
 
-  // Store the last network proxies were synced on.
+  // Store the last network proxies were synced on
   const [lastSyncedNetwork, setLastSyncedNetwork] =
     useState<NetworkId>(defaultNetwork)
 
-  // Reformats proxies into a list of delegates.
+  // Reformats proxies into a list of delegates
   const formatProxiesToDelegates = () => {
-    // Reformat proxies into a list of delegates.
+    // Reformat proxies into a list of delegates
     const newDelegates: Delegates = {}
     for (const proxy of proxies) {
       const { delegator } = proxy
-      // checking if delegator is not null to keep types happy.
+      // checking if delegator is not null to keep types happy
       if (!delegator) {
         continue
       }
 
-      // get each delegate of this proxy record.
+      // get each delegate of this proxy record
       for (const { delegate, proxyType } of proxy.delegates) {
         const item = {
           delegator,
           proxyType,
         }
-        // check if this delegate exists in `newDelegates`.
+        // check if this delegate exists in `newDelegates`
         if (Object.keys(newDelegates).includes(delegate)) {
-          // append delegator to the existing delegate record if it exists.
+          // append delegator to the existing delegate record if it exists
           newDelegates[delegate].push(item)
         } else {
-          // create a new delegate record if it does not yet exist in `newDelegates`.
+          // create a new delegate record if it does not yet exist in `newDelegates`
           newDelegates[delegate] = [item]
         }
       }
@@ -92,9 +92,9 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 
   const delegates = formatProxiesToDelegates()
 
-  // Handle the syncing of accounts on accounts change.
+  // Handle the syncing of accounts on accounts change
   const handleSyncAccounts = () => {
-    // Sync removed accounts.
+    // Sync removed accounts
     const handleRemovedAccounts = () => {
       const removed = removedFrom(accounts, proxies, ['address']).map(
         ({ address }) => address
@@ -102,7 +102,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 
       removed?.forEach((address) => {
         // if delegates still exist for removed account, re-add the account as a read only system
-        // account.
+        // account
         if (delegates[address]) {
           const importResult = addExternalAccount(address, 'system')
           if (importResult) {
@@ -114,13 +114,13 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
       })
     }
 
-    // Sync added accounts.
+    // Sync added accounts
     const handleAddedAccounts = () => {
       addedTo(accounts, proxies, ['address'])?.map(({ address }) =>
         subscribeToProxies(address)
       )
     }
-    // Sync existing accounts.
+    // Sync existing accounts
     const handleExistingAccounts = () => {
       setStateWithRef(
         matchedProperties(accounts, proxies, ['address']),
@@ -129,14 +129,14 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
       )
     }
 
-    // Ensure that accounts from a previous network are not being synced.
+    // Ensure that accounts from a previous network are not being synced
     if (lastSyncedNetwork === network) {
       handleRemovedAccounts()
       handleAddedAccounts()
       handleExistingAccounts()
     }
 
-    // Update the last network proxies were synced on.
+    // Update the last network proxies were synced on
     setLastSyncedNetwork(network)
   }
 
@@ -148,11 +148,11 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
     )
   }
 
-  // Gets the delegates of the given account.
+  // Gets the delegates of the given account
   const getDelegates = (address: MaybeAddress): Proxy | undefined =>
     proxies.find(({ delegator }) => delegator === address) || undefined
 
-  // Gets delegators and proxy types for the given delegate address.
+  // Gets delegators and proxy types for the given delegate address
   const getProxiedAccounts = (address: MaybeAddress): ProxiedAccounts => {
     const delegate = delegates[address || '']
     if (!delegate) {
@@ -169,7 +169,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // Queries the chain to check if the given delegator & delegate pair is valid proxy. Used when a
-  // proxy account is being manually declared.
+  // proxy account is being manually declared
   const handleDeclareDelegate = async (delegator: string) => {
     const result = await new ProxiesQuery(network, delegator).fetch()
     const proxy = result[0] || []
@@ -194,7 +194,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
     return []
   }
 
-  // Gets the delegates and proxy type of an account, if any.
+  // Gets the delegates and proxy type of an account, if any
   const getProxyDelegate = (
     delegator: MaybeAddress,
     delegate: MaybeAddress
@@ -203,7 +203,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
       .find((p) => p.delegator === delegator)
       ?.delegates.find((d) => d.delegate === delegate) ?? null
 
-  // Handle account proxies events.
+  // Handle account proxies events
   const handleAccountProxies = (e: Event) => {
     if (isCustomEvent(e)) {
       const { address: eventAddress, proxies: eventProxies } = e.detail
@@ -228,7 +228,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
           proxiesRef
         )
       } else {
-        // no proxies: remove stale proxies if already in list.
+        // no proxies: remove stale proxies if already in list
         setStateWithRef(
           [...proxiesRef.current].filter(
             ({ delegator }) => delegator !== eventAddress
@@ -241,7 +241,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // If active proxy has not yet been set, check local storage `activeProxy` & set it as active
-  // proxy if it is the delegate of `activeAccount`.
+  // proxy if it is the delegate of `activeAccount`
   useEffectIgnoreInitial(() => {
     const localActiveProxy = localStorageOrDefault(
       `${network}_active_proxy`,
@@ -258,7 +258,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
     ) {
       try {
         const { address, proxyType } = JSON.parse(localActiveProxy)
-        // Add proxy address as external account if not imported.
+        // Add proxy address as external account if not imported
         if (!accounts.find((a) => a.address === address)) {
           const importResult = addExternalAccount(address, 'system')
           if (importResult) {
@@ -274,20 +274,20 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
           setActiveProxy({ address, proxyType })
         }
       } catch (e) {
-        // Corrupt local active proxy record. Remove it.
+        // Corrupt local active proxy record. Remove it
         localStorage.removeItem(`${network}_active_proxy`)
       }
     }
   }, [accounts, activeAccount, proxies, network])
 
-  // Subscribe new accounts to proxies, and remove accounts that are no longer imported.
+  // Subscribe new accounts to proxies, and remove accounts that are no longer imported
   useEffectIgnoreInitial(() => {
     if (isReady) {
       handleSyncAccounts()
     }
   }, [accounts, isReady])
 
-  // Reset active proxy state on network change & unmount.
+  // Reset active proxy state on network change & unmount
   useEffectIgnoreInitial(() => {
     setStateWithRef([], setProxies, proxiesRef)
     setActiveProxy(null, false)

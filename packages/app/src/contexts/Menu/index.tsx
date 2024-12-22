@@ -13,23 +13,23 @@ export const useMenu = () => useContext(MenuContext)
 
 export const MenuProvider = ({ children }: { children: ReactNode }) => {
   // Whether the menu is currently open. This initiates menu state but does not reflect whether the
-  // menu is being displayed.
+  // menu is being displayed
   const [open, setOpen] = useState<boolean>(false)
 
-  // Whether the menu is currently showing.
+  // Whether the menu is currently showing
   const [show, setShow] = useState<boolean>(false)
 
-  // The components to be displayed in the menu.
+  // The components to be displayed in the menu
   const [inner, setInner] = useState<ReactNode>(null)
 
-  // The menu position coordinates.
+  // The menu position coordinates
   const [position, setPosition] = useState<[number, number]>([0, 0])
 
-  // Padding from the window edge.
+  // Padding from the window edge
   const DocumentPadding = 20
 
   // Sets the menu position and opens it. Only succeeds if the menu has been instantiated and is not
-  // currently open.
+  // currently open
   const openMenu = (ev: MenuMouseEvent, newInner?: ReactNode) => {
     if (open) {
       return
@@ -46,25 +46,25 @@ export const MenuProvider = ({ children }: { children: ReactNode }) => {
     setOpen(true)
   }
 
-  // Hides the menu and closes.
+  // Hides the menu and closes
   const closeMenu = () => {
     setShow(false)
     setOpen(false)
   }
 
-  // Sets the inner JSX of the menu.
+  // Sets the inner JSX of the menu
   const setMenuInner = (newInner: ReactNode) => {
     setInner(newInner)
   }
 
-  // Adjusts menu position and shows the menu.
+  // Adjusts menu position and shows the menu
   const checkMenuPosition = (ref: RefObject<HTMLDivElement>) => {
     if (!ref?.current) {
       return
     }
 
     // Adjust menu position if it is leaking out of the window, otherwise keep it at the current
-    // position.
+    // position
     const bodyRect = document.body.getBoundingClientRect()
     const menuRect = ref.current.getBoundingClientRect()
     const hiddenRight = menuRect.right > bodyRect.right

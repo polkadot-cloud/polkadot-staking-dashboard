@@ -36,13 +36,13 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
   const { addExternalAccount } = useExternalAccounts()
   const { addOrReplaceOtherAccount } = useOtherAccounts()
 
-  // Bonded accounts state.
+  // Bonded accounts state
   const [bondedAccounts, setBondedAccounts] = useState<BondedAccount[]>([])
   const bondedAccountsRef = useRef(bondedAccounts)
 
-  // Handle the syncing of accounts on accounts change.
+  // Handle the syncing of accounts on accounts change
   const handleSyncAccounts = () => {
-    // Sync removed accounts.
+    // Sync removed accounts
     const handleRemovedAccounts = () => {
       const removed = removedFrom(accounts, bondedAccountsRef.current, [
         'address',
@@ -52,7 +52,7 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
         Subscriptions.remove(network, `bonded-${address}`)
       })
     }
-    // Sync added accounts.
+    // Sync added accounts
     const handleAddedAccounts = () => {
       const added = addedTo(accounts, bondedAccountsRef.current, ['address'])
 
@@ -67,7 +67,7 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
       }
     }
 
-    // Sync existing accounts.
+    // Sync existing accounts
     const handleExistingAccounts = () => {
       setStateWithRef(
         matchedProperties(accounts, bondedAccountsRef.current, ['address']),
@@ -84,7 +84,7 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
   const getBondedAccount = (address: MaybeAddress) =>
     bondedAccountsRef.current.find((a) => a.address === address)?.bonded || null
 
-  // Handle `polkadot-api` events.
+  // Handle `polkadot-api` events
   const handleNewBondedAccount = (e: Event) => {
     if (isCustomEvent(e)) {
       const { account } = e.detail
@@ -100,24 +100,24 @@ export const BondedProvider = ({ children }: { children: ReactNode }) => {
         }
       }
 
-      // Remove stale account if it's already in list.
+      // Remove stale account if it's already in list
       const newBonded = Object.values(bondedAccountsRef.current)
         .filter((a) => a.address !== address)
         .concat(account)
 
-      // Update bonded accounts state.
+      // Update bonded accounts state
       setStateWithRef(newBonded, setBondedAccounts, bondedAccountsRef)
     }
   }
 
-  // Handle accounts sync on connected accounts change.
+  // Handle accounts sync on connected accounts change
   useEffectIgnoreInitial(() => {
     if (isReady) {
       handleSyncAccounts()
     }
   }, [accounts, network, isReady])
 
-  // Handle new bonded account events.
+  // Handle new bonded account events
   useEventListener(
     'new-bonded-account',
     handleNewBondedAccount,

@@ -11,28 +11,28 @@ export class Balances {
   // Accounts that are being subscribed to.
   static accounts: string[] = []
 
-  // Subscribes new accounts and unsubscribes & removes removed accounts.
+  // Subscribes new accounts and unsubscribes & removes removed accounts
   static syncAccounts = async (
     network: NetworkId,
     newAccounts: string[]
   ): Promise<void> => {
-    // Handle accounts that have been removed.
+    // Handle accounts that have been removed
     this.handleRemovedAccounts(network, newAccounts)
 
-    // Determine new accounts that need to be subscribed to.
+    // Determine new accounts that need to be subscribed to
     const accountsAdded = newAccounts.filter(
       (account) => !this.accounts.includes(account)
     )
 
-    // Exit early if there are no new accounts to subscribe to.
+    // Exit early if there are no new accounts to subscribe to
     if (!accountsAdded.length) {
       return
     }
 
-    // Strart syncing if new accounts added.
+    // Strart syncing if new accounts added
     Syncs.dispatch('balances', 'syncing')
 
-    // Subscribe to and add new accounts data.
+    // Subscribe to and add new accounts data
     accountsAdded.forEach(async (address) => {
       this.accounts.push(address)
 
@@ -44,27 +44,27 @@ export class Balances {
     })
   }
 
-  // Remove accounts that no longer exist.
+  // Remove accounts that no longer exist
   static handleRemovedAccounts = (
     network: NetworkId,
     newAccounts: string[]
   ): void => {
-    // Determine removed accounts.
+    // Determine removed accounts
     const accountsRemoved = this.accounts.filter(
       (account) => !newAccounts.includes(account)
     )
-    // Unsubscribe from removed account subscriptions.
+    // Unsubscribe from removed account subscriptions
     accountsRemoved.forEach((account) => {
       Subscriptions.remove(network, `accountBalances-${account}`)
     })
 
-    // Remove removed accounts from class.
+    // Remove removed accounts from class
     this.accounts = this.accounts.filter(
       (account) => !accountsRemoved.includes(account)
     )
   }
 
-  // Gets an `AccountBalances` subscription from class members for the given address if it exists.
+  // Gets an `AccountBalances` subscription from class members for the given address if it exists
   static getAccountBalances = (
     network: NetworkId,
     address: string
@@ -74,7 +74,7 @@ export class Balances {
       `accountBalances-${address}`
     ) as AccountBalances
 
-    // Account info has not synced yet - exit early.
+    // Account info has not synced yet - exit early
     if (!accountBalances) {
       return undefined
     }
@@ -94,7 +94,7 @@ export class Balances {
   }
 
   // Checks if event detailis a valid `new-account-balance` event. Note that `ledger` may not exist
-  // and therefore cannot be tested.
+  // and therefore cannot be tested
   static isValidNewAccountBalanceEvent = (
     event: CustomEvent
   ): event is CustomEvent<ActiveBalance & { address: string }> =>

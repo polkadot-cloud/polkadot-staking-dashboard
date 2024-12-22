@@ -39,14 +39,14 @@ export const ExternalAccountsProvider = ({
   } = useNetwork()
   const { activeAccount, setActiveAccount } = useActiveAccounts()
 
-  // Adds an external account (non-wallet) to accounts.
+  // Adds an external account (non-wallet) to accounts
   const addExternalAccount = (
     address: string,
     addedBy: ExternalAccountAddedBy
   ): AddExternalAccountResult | null => {
     const formattedAddress = formatAccountSs58(address, ss58)
 
-    // Address should be valid, but if not, return null early.
+    // Address should be valid, but if not, return null early
     if (!formattedAddress) {
       return null
     }
@@ -61,7 +61,7 @@ export const ExternalAccountsProvider = ({
 
     const existsLocal = externalAccountExistsLocal(newEntry.address, network)
 
-    // Whether the account needs to remain imported as a system account.
+    // Whether the account needs to remain imported as a system account
     const toSystem =
       existsLocal && addedBy === 'system' && existsLocal.addedBy !== 'system'
 
@@ -69,15 +69,15 @@ export const ExternalAccountsProvider = ({
     let importType: ExternalAccountImportType = 'new'
 
     if (!existsLocal) {
-      // Only add `user` accounts to localStorage.
+      // Only add `user` accounts to localStorage
       if (addedBy === 'user') {
         addLocalExternalAccount(newEntry)
       }
     } else if (toSystem) {
       // If account is being added by `system`, but is already imported, update it to be a system
-      // account. `system` accounts are not persisted to local storage.
+      // account. `system` accounts are not persisted to local storage
       //
-      // update the entry to a system account.
+      // update the entry to a system account
       newEntry = { ...newEntry, addedBy: 'system' }
       importType = 'replace'
     } else {
@@ -92,7 +92,7 @@ export const ExternalAccountsProvider = ({
       : null
   }
 
-  // Get any external accounts and remove from localStorage.
+  // Get any external accounts and remove from localStorage
   const forgetExternalAccounts = (forget: ExternalAccount[]) => {
     if (!forget.length) {
       return
@@ -102,7 +102,7 @@ export const ExternalAccountsProvider = ({
       forget.filter((i) => 'network' in i) as ExternalAccount[]
     )
 
-    // If the currently active account is being forgotten, disconnect.
+    // If the currently active account is being forgotten, disconnect
     if (forget.find((a) => a.address === activeAccount) !== undefined) {
       setActiveAccount(null)
     }

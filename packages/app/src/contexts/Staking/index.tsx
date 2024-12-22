@@ -45,7 +45,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
   const { accounts: connectAccounts } = useImportedAccounts()
   const { activeAccount, getActiveAccount } = useActiveAccounts()
 
-  // Store eras stakers in state.
+  // Store eras stakers in state
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers)
   const eraStakersRef = useRef(eraStakers)
 
@@ -54,7 +54,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       const { data }: { data: ProcessExposuresResponse } = message
       const { task, networkName, era } = data
 
-      // ensure task matches, & era is still the same.
+      // Ensure task matches, & era is still the same
       if (
         task !== 'processExposures' ||
         networkName !== network ||
@@ -71,9 +71,9 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
         who,
       } = data
 
-      // check if account hasn't changed since worker started
+      // Check if account hasn't changed since worker started
       if (getActiveAccount() === who) {
-        // Syncing current eraStakers is now complete.
+        // Syncing current eraStakers is now complete
         Syncs.dispatch('era-stakers', 'complete')
 
         setStateWithRef(
@@ -91,7 +91,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  // Fetches erasStakers exposures for an era, and saves to `localStorage`.
+  // Fetches erasStakers exposures for an era, and saves to `localStorage`
   const fetchEraStakers = async (era: string) => {
     if (!isReady || activeEra.index.isZero()) {
       return []
@@ -110,7 +110,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
       exposures = await getPagedErasStakers(era)
     }
 
-    // For resource limitation concerns, only store the current era in local storage.
+    // For resource limitation concerns, only store the current era in local storage
     if (era === activeEra.index.toString()) {
       setLocalEraExposures(network, era, exposures)
     }
@@ -118,7 +118,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     return exposures
   }
 
-  // Fetches the active nominator set and metadata around it.
+  // Fetches the active nominator set and metadata around it
   const fetchActiveEraStakers = async () => {
     if (!isReady || activeEra.index.isZero()) {
       return
@@ -128,7 +128,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 
     const exposures = await fetchEraStakers(activeEra.index.toString())
 
-    // worker to calculate stats
+    // Worker to calculate stats
     worker.postMessage({
       era: activeEra.index.toString(),
       networkName: network,
@@ -139,7 +139,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     })
   }
 
-  // Gets the nomination statuses of passed in nominations.
+  // Gets the nomination statuses of passed in nominations
   const getNominationsStatusFromTargets = (
     who: MaybeAddress,
     fromTargets: string[]
@@ -169,60 +169,60 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     return statuses
   }
 
-  // Helper function to determine whether the controller account is the same as the stash account.
+  // Helper function to determine whether the controller account is the same as the stash account
   const addressDifferentToStash = (address: MaybeAddress) => {
-    // check if controller is imported.
+    // Check if controller is imported
     if (!connectAccounts.find((acc) => acc.address === address)) {
       return false
     }
     return address !== activeAccount && activeAccount !== null
   }
 
-  // Helper function to determine whether the controller account has been imported.
+  // Helper function to determine whether the controller account has been imported
   const getControllerNotImported = (address: MaybeAddress) => {
     if (address === null || !activeAccount) {
       return false
     }
-    // check if controller is imported
+    // Check if controller is imported
     const exists = connectAccounts.find((a) => a.address === address)
     if (exists === undefined) {
       return true
     }
-    // controller account exists. If it is a read-only account, then controller is imported.
+    // Controller account exists. If it is a read-only account, then controller is imported
     if (Object.prototype.hasOwnProperty.call(exists, 'addedBy')) {
       if ((exists as ExternalAccount).addedBy === 'user') {
         return false
       }
     }
-    // if the controller is a Ledger account, then it can act as a signer.
+    // if the controller is a Ledger account, then it can act as a signer
     if (exists.source === 'ledger') {
       return false
     }
-    // if a `signer` does not exist on the account, then controller is not imported.
+    // if a `signer` does not exist on the account, then controller is not imported
     return !Object.prototype.hasOwnProperty.call(exists, 'signer')
   }
 
-  // Helper function to determine whether the active account.
+  // Helper function to determine whether the active account
   const hasController = () => getBondedAccount(activeAccount) !== null
 
-  // Helper function to determine whether the active account is bonding, or is yet to start.
+  // Helper function to determine whether the active account is bonding, or is yet to start
   const isBonding = () =>
     hasController() &&
     getLedger({ stash: activeAccount }).active.isGreaterThan(0)
 
-  // Helper function to determine whether the active account.
+  // Helper function to determine whether the active account
   const isUnlocking = () =>
     hasController() && getLedger({ stash: activeAccount }).unlocking.length
 
-  // Helper function to determine whether the active account is nominating, or is yet to start.
+  // Helper function to determine whether the active account is nominating, or is yet to start
   const isNominating = () => getNominations(activeAccount).length > 0
 
-  // Helper function to determine whether the active account is nominating, or is yet to start.
+  // Helper function to determine whether the active account is nominating, or is yet to start
   const inSetup = () =>
     !activeAccount ||
     (!hasController() && !isBonding() && !isNominating() && !isUnlocking())
 
-  // Fetch eras stakers from storage.
+  // Fetch eras stakers from storage
   const getPagedErasStakers = async (era: string) => {
     const overview = await new ErasStakersOverview(network).fetch(Number(era))
     const validators: Record<string, AnyJson> = overview.reduce(
@@ -243,10 +243,10 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     const result: Exposure[] = []
     let i = 0
     for (const pages of pagedResults) {
-      // NOTE: Only one page is fetched for each validator for now.
+      // NOTE: Only one page is fetched for each validator for now
       const page = pages[0]
 
-      // NOTE: Some pages turn up as undefined - might be worth exploring further.
+      // NOTE: Some pages turn up as undefined - might be worth exploring further
       if (!page) {
         continue
       }
@@ -283,7 +283,7 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [apiStatus])
 
-  // handle syncing with eraStakers.
+  // Handle syncing with eraStakers
   useEffectIgnoreInitial(() => {
     if (isReady) {
       fetchActiveEraStakers()

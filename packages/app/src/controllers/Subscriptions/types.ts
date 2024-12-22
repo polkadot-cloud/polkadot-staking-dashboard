@@ -14,7 +14,7 @@ import type { PoolMembers } from 'api/subscribe/poolMembers'
 import type { PoolsConfig } from 'api/subscribe/poolsConfig'
 import type { StakingMetrics } from 'api/subscribe/stakingMetrics'
 
-// Define all possible subscription classes.
+// Define all possible subscription classes
 export type Subscription =
   | AccountBalances
   | AccountProxies
@@ -29,11 +29,10 @@ export type Subscription =
   | PoolMembers
   | StakingMetrics
 
-// the record of subscriptions, keyed by tabId.
+// the record of keyed subscriptions
 export type ChainSubscriptions = Record<string, Subscription>
 
-// Abstract class that ensures all subscription classes have an unsubscribe method.
+// Abstract class that ensures all subscription classes have an unsubscribe method
 export abstract class Unsubscribable {
-  // Unsubscribe from unsubs present in this class.
   abstract unsubscribe: () => void
 }
