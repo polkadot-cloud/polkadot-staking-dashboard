@@ -4,10 +4,14 @@
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
-import { useSubscanData } from 'hooks/useSubscanData'
 import { PayoutBar } from 'library/Graphs/PayoutBar'
 import { PayoutLine } from 'library/Graphs/PayoutLine'
-import { ApolloProvider, client, useRewards } from 'plugin-staking-api'
+import {
+  ApolloProvider,
+  client,
+  usePoolRewards,
+  useRewards,
+} from 'plugin-staking-api'
 import type { NominatorReward } from 'plugin-staking-api/types'
 import { useEffect } from 'react'
 
@@ -16,30 +20,39 @@ interface Props {
   inPool: boolean
   lineMarginTop: string
   setLastReward: (reward: NominatorReward | undefined) => void
+  poolRewardsFrom: number
 }
 export const ActiveGraphInner = ({
   nominating,
   inPool,
   lineMarginTop,
   setLastReward,
+  poolRewardsFrom,
 }: Props) => {
   const { activeEra } = useApi()
   const { network } = useNetwork()
-  const { poolClaims } = useSubscanData()
   const { activeAccount } = useActiveAccounts()
 
-  const { data } = useRewards({
+  const { data: nominatorRewardData } = useRewards({
     chain: network,
     who: activeAccount || '',
     fromEra: Math.max(activeEra.index.minus(1).toNumber(), 0),
   })
-  const allRewards = data?.allRewards ?? []
+  const { data: poolRewardsData } = usePoolRewards({
+    chain: network,
+    who: activeAccount || '',
+    from: poolRewardsFrom,
+  })
+
+  const allRewards = nominatorRewardData?.allRewards ?? []
   const payouts =
     allRewards.filter((reward: NominatorReward) => reward.claimed === true) ??
     []
   const unclaimedPayouts =
     allRewards.filter((reward: NominatorReward) => reward.claimed === false) ??
     []
+
+  const poolClaims = poolRewardsData?.poolRewards ?? []
 
   useEffect(() => {
     setLastReward(payouts[0])

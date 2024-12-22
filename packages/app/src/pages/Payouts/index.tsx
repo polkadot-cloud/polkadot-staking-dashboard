@@ -2,12 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useSize } from '@w3ux/hooks'
-import type { AnyApi, PageProps } from 'common-types'
+import type { PageProps } from 'common-types'
 import { useHelp } from 'contexts/Help'
+import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
+import { useFetchBlockNumber } from 'hooks/useFetchBlockNumber'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
 import {
@@ -19,6 +21,7 @@ import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { StatBoxList } from 'library/StatBoxList'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'
+import type { RewardResult } from 'plugin-staking-api/types'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
@@ -34,14 +37,16 @@ export const Payouts = ({ page: { key } }: PageProps) => {
   const { inSetup } = useStaking()
   const { syncing } = useSyncing()
   const { containerRefs } = useUi()
+  const { network } = useNetwork()
   const { inPool } = useActivePool()
   const { pluginEnabled } = usePlugins()
+  const blockNumber = useFetchBlockNumber(network)
 
   const nominating = !inSetup()
   const staking = nominating || inPool
   const notStaking = !syncing && !staking
 
-  const [payoutsList, setPayoutLists] = useState<AnyApi[]>([])
+  const [payoutsList, setPayoutLists] = useState<RewardResult>([])
 
   const ref = useRef<HTMLDivElement>(null)
   const size = useSize(ref, {
@@ -57,6 +62,7 @@ export const Payouts = ({ page: { key } }: PageProps) => {
     payoutsList,
     locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
   )
+  console.log(payoutsList)
 
   useEffect(() => {
     if (!pluginEnabled('staking_api')) {
@@ -117,11 +123,12 @@ export const Payouts = ({ page: { key } }: PageProps) => {
                 transition: 'opacity 0.5s',
               }}
             >
-              {staking && pluginEnabled('staking_api') ? (
+              {staking && pluginEnabled('staking_api') && blockNumber > 0 ? (
                 <ActiveGraph
                   nominating={nominating}
                   inPool={inPool()}
                   setPayoutLists={setPayoutLists}
+                  poolRewardsFrom={blockNumber}
                 />
               ) : (
                 <InactiveGraph />

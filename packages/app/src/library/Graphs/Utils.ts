@@ -5,7 +5,6 @@ import type { AnyJson } from '@w3ux/types'
 import BigNumber from 'bignumber.js'
 import type { AnyApi } from 'common-types'
 import { MaxPayoutDays } from 'consts'
-import type { PayoutsAndClaims } from 'controllers/Subscan/types'
 import type { Locale } from 'date-fns'
 import {
   addDays,
@@ -17,7 +16,7 @@ import {
   startOfDay,
   subDays,
 } from 'date-fns'
-import type { NominatorReward } from 'plugin-staking-api/types'
+import type { NominatorReward, RewardResult } from 'plugin-staking-api/types'
 import { planckToUnitBn } from 'utils'
 import type { PayoutDayCursor } from './types'
 
@@ -501,7 +500,7 @@ export const formatSize = (
 })
 
 // Take non-zero rewards in most-recent order
-export const removeNonZeroAmountAndSort = (payouts: PayoutsAndClaims) => {
+export const removeNonZeroAmountAndSort = (payouts: RewardResult) => {
   const list = payouts
     .filter((p) => Number(p.reward) > 0)
     .sort((a, b) => b.timestamp - a.timestamp)
@@ -513,10 +512,7 @@ export const removeNonZeroAmountAndSort = (payouts: PayoutsAndClaims) => {
 }
 
 // Calculate the earliest date of a payout list
-export const getPayoutsFromDate = (
-  payouts: PayoutsAndClaims,
-  locale: Locale
-) => {
+export const getPayoutsFromDate = (payouts: RewardResult, locale: Locale) => {
   if (!payouts.length) {
     return undefined
   }
@@ -534,7 +530,7 @@ export const getPayoutsFromDate = (
 }
 
 // Calculate the latest date of a payout list
-export const getPayoutsToDate = (payouts: PayoutsAndClaims, locale: Locale) => {
+export const getPayoutsToDate = (payouts: RewardResult, locale: Locale) => {
   if (!payouts.length) {
     return undefined
   }
