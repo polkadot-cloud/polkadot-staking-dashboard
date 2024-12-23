@@ -7,7 +7,7 @@ import { Number } from 'library/StatBoxList/Number'
 import { useTranslation } from 'react-i18next'
 import { planckToUnitBn } from 'utils'
 
-export const MinJoinBondStat = () => {
+export const MinJoinBond = () => {
   const { t } = useTranslation('pages')
   const {
     networkData: { units, unit },
