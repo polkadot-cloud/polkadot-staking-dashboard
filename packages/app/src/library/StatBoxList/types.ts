@@ -42,7 +42,7 @@ export interface TimeleftProps {
     value2: number
   }
   tooltip?: string
-  helpKey: string
+  helpKey?: string
 }
 
 export type TimeLeftRaw = TimeLeftRawItem[]
