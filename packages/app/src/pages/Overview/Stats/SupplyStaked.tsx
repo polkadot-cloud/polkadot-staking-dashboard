@@ -8,7 +8,7 @@ import { Pie } from 'library/StatBoxList/Pie'
 import { useTranslation } from 'react-i18next'
 import { planckToUnitBn } from 'utils'
 
-export const SupplyStakedStat = () => {
+export const SupplyStaked = () => {
   const { t } = useTranslation('pages')
   const {
     networkMetrics,

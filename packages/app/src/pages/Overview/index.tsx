@@ -11,9 +11,9 @@ import { AccountControls } from './AccountControls'
 import { NetworkStats } from './NetworkSats'
 import { Payouts } from './Payouts'
 import { StakeStatus } from './StakeStatus'
-import { ActiveEraStat } from './Stats/ActiveEraTimeLeft'
-import { AverageRewardRateStat } from './Stats/AveragelRewardRate'
-import { SupplyStakedStat } from './Stats/SupplyStaked'
+import { AverageRewardRate } from './Stats/AveragelRewardRate'
+import { NextRewards } from './Stats/NextRewards'
+import { SupplyStaked } from './Stats/SupplyStaked'
 
 export const Overview = () => {
   const { t } = useTranslation('pages')
@@ -28,9 +28,9 @@ export const Overview = () => {
         </PageHeading>
       </PageRow>
       <StatBoxList>
-        <AverageRewardRateStat />
-        <SupplyStakedStat />
-        <ActiveEraStat />
+        <AverageRewardRate />
+        <SupplyStaked />
+        <NextRewards />
       </StatBoxList>
       <PageRow>
         <StakeStatus />

@@ -13,36 +13,35 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { formatTimeleft } from 'utils'
 
-export const ActiveEraStat = () => {
+export const NextRewards = () => {
   const { t, i18n } = useTranslation('pages')
   const { activeEra } = useApi()
   const { network } = useNetwork()
   const { get: getEraTimeleft } = useEraTimeLeft()
-
-  const { percentSurpassed, percentRemaining } = getEraTimeleft()
-
   const { timeleft, setFromNow } = useTimeLeft({
     depsTimeleft: [network],
     depsFormat: [i18n.resolvedLanguage],
   })
-
   const timeleftResult = getEraTimeleft()
   const dateFrom = fromUnixTime(Date.now() / 1000)
   const formatted = formatTimeleft(t, timeleft.raw)
   const dateTo = secondsFromNow(timeleftResult.timeleft.toNumber())
-  const dateToUnix = getUnixTime(dateTo)
 
-  // re-set timer on era change (also covers network change).
+  // Reset timer on era change (also covers network change)
   useEffect(() => {
     setFromNow(dateFrom, dateTo)
-  }, [activeEra, dateToUnix])
+  }, [activeEra, getUnixTime(dateTo)])
 
   const params = {
     label: t('overview.nextRewardDistribution'),
     timeleft: formatted,
     graph: {
-      value1: activeEra.index.isZero() ? 0 : percentSurpassed.toNumber(),
-      value2: activeEra.index.isZero() ? 100 : percentRemaining.toNumber(),
+      value1: activeEra.index.isZero()
+        ? 0
+        : timeleftResult.percentSurpassed.toNumber(),
+      value2: activeEra.index.isZero()
+        ? 100
+        : timeleftResult.percentRemaining.toNumber(),
     },
     tooltip: `Era ${new BigNumber(activeEra.index).toFormat()}`,
   }

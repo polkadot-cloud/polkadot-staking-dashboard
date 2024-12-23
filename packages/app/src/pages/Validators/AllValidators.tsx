@@ -8,9 +8,9 @@ import { StatBoxList } from 'library/StatBoxList'
 import { ValidatorList } from 'library/ValidatorList'
 import { useTranslation } from 'react-i18next'
 import { PageRow } from 'ui-structure'
-import { ActiveValidatorsStat } from './Stats/ActiveValidators'
-import { AverageCommissionStat } from './Stats/AverageCommission'
-import { TotalValidatorsStat } from './Stats/TotalValidators'
+import { ActiveValidators } from './Stats/ActiveValidators'
+import { AverageCommission } from './Stats/AverageCommission'
+import { TotalValidators } from './Stats/TotalValidators'
 
 export const AllValidators = () => {
   const { t } = useTranslation('pages')
@@ -20,9 +20,9 @@ export const AllValidators = () => {
   return (
     <>
       <StatBoxList>
-        <ActiveValidatorsStat />
-        <TotalValidatorsStat />
-        <AverageCommissionStat />
+        <ActiveValidators />
+        <TotalValidators />
+        <AverageCommission />
       </StatBoxList>
       <PageRow>
         <CardWrapper>

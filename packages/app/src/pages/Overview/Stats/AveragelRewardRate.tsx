@@ -5,7 +5,7 @@ import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { Text } from 'library/StatBoxList/Text'
 import { useTranslation } from 'react-i18next'
 
-export const AverageRewardRateStat = () => {
+export const AverageRewardRate = () => {
   const { t } = useTranslation('pages')
   const { getAverageRewardRate } = useAverageRewardRate()
   // Get the compounded Average Reward Rate.

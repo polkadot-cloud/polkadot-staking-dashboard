@@ -7,7 +7,7 @@ import { Number } from 'library/StatBoxList/Number'
 import { useTranslation } from 'react-i18next'
 import { planckToUnitBn } from 'utils'
 
-export const LastEraPayoutStat = () => {
+export const LastEraPayout = () => {
   const { t } = useTranslation('pages')
   const { unit, units } = useNetwork().networkData
   const { lastReward } = useApi().stakingMetrics
