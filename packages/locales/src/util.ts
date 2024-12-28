@@ -110,7 +110,7 @@ export const changeLanguage = async (lng: string, i18next: i18n) => {
 export const loadLngAsync = async (lng: string) => {
   const resources = await Promise.all(
     lngNamespaces.map(async (namespace) => {
-      const json = await import(`./${lng}/${namespace}.json`)
+      const json = await import(`./resources/${lng}/${namespace}.json`)
       return json
     })
   )
