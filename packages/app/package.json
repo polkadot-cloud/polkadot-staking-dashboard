@@ -68,7 +68,7 @@
     "xxhash-wasm": "^1.0.2"
   },
   "devDependencies": {
-    "vite": "^6.0.2",
+    "vite": "^6.0.6",
     "vite-bundle-visualizer": "^1.2.1",
     "vite-plugin-checker": "^0.8.0",
     "vite-plugin-eslint": "^1.8.1",
