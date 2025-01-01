@@ -44,9 +44,9 @@ export const ManageFastUnstake = () => {
   const { getSignerWarnings } = useSignerWarnings()
   const { setModalResize, setModalStatus } = useOverlay().modal
   const { feeReserve, getTransferOptions } = useTransferOptions()
-  const { isExposed, counterForQueue, queueDeposit, meta } = useFastUnstake()
+  const { isExposed, counterForQueue, queueDeposit, lastExposed } =
+    useFastUnstake()
 
-  const { checked } = meta
   const controller = getBondedAccount(activeAccount)
   const allTransferOptions = getTransferOptions(activeAccount)
   const { nominate, transferrableBalance } = allTransferOptions
@@ -130,9 +130,10 @@ export const ManageFastUnstake = () => {
   }
 
   // manage last exposed
-  const lastExposedAgo = !isExposed
-    ? new BigNumber(0)
-    : activeEra.index.minus(checked[0] || 0)
+  const lastExposedAgo =
+    !isExposed || !lastExposed
+      ? new BigNumber(0)
+      : activeEra.index.minus(lastExposed.toString())
 
   const erasRemaining = BigNumber.max(1, bondDuration.minus(lastExposedAgo))
 

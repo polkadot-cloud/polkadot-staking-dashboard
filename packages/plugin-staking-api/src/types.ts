@@ -54,6 +54,18 @@ export type PoolRewardResults = Query & {
   }
 }
 
+export type FastUnstakeStatus =
+  | 'UNSUPPORTED_CHAIN'
+  | 'NOT_PROCESSED'
+  | 'NOT_EXPOSED'
+  | 'EXPOSED'
+
+export type CanFastUnstakeResult = Query & {
+  data: {
+    status: FastUnstakeStatus
+  }
+}
+
 export interface UnclaimedRewards {
   total: string
   entries: EraUnclaimedReward[]
