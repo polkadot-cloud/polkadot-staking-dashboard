@@ -32,17 +32,17 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   const { network } = useNetwork()
   const { activeAccount } = useActiveAccounts()
 
-  // store fast unstake status
+  // Store fast unstake status
   const [fastUnstakeStatus, setFastUnstakeStatus] =
     useState<FastUnstakeResult | null>(null)
 
-  // store fastUnstake queue deposit for user
+  // Store fastUnstake queue deposit for user
   const [queueDeposit, setQueueDeposit] = useState<FastUnstakeQueueDeposit>()
 
-  // store fastUnstake head
+  // Store fastUnstake head
   const [head, setHead] = useState<FastUnstakeHead | undefined>()
 
-  // store fastUnstake counter for queue
+  // Store fastUnstake counter for queue
   const [counterForQueue, setCounterForQueue] = useState<number | undefined>()
 
   // Reset state on active account change
@@ -74,7 +74,6 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [isReady])
 
-  // subscribe to fastUnstake queue
   const subscribeToFastUnstakeMeta = async () => {
     const api = Apis.getApi(network)
     if (!api) {
@@ -87,7 +86,6 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
     )
   }
 
-  // Handle fast unstake meta events
   const handleNewFastUnstakeConfig = (e: Event) => {
     if (isCustomEvent(e)) {
       const { head: eventHead, counterForQueue: eventCounterForQueue } =
@@ -97,7 +95,6 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  // Handle fast unstake deposit events
   const handleNewFastUnstakeDeposit = (e: Event) => {
     if (isCustomEvent(e)) {
       const { address, deposit } = e.detail

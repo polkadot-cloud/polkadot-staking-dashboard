@@ -39,7 +39,6 @@ export const NominationStatus = ({
   const { getFastUnstakeText, isUnstaking } = useUnstaking()
   const { syncing } = useSyncing(['initialization', 'era-stakers', 'balances'])
 
-  const fastUnstakeText = getFastUnstakeText()
   const controller = getBondedAccount(activeAccount)
   const nominationStatus = getNominationStatus(activeAccount, 'nominator')
   // Determine whether to display fast unstake button or regular unstake button.
@@ -50,7 +49,7 @@ export const NominationStatus = ({
     !exposed
       ? {
           disabled: isReadOnlyAccount(controller),
-          title: fastUnstakeText,
+          title: getFastUnstakeText(),
           icon: faBolt,
           onClick: () => {
             openModal({ key: 'ManageFastUnstake', size: 'sm' })
