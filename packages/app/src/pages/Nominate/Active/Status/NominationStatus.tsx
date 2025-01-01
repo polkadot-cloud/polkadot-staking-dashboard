@@ -33,23 +33,23 @@ export const NominationStatus = ({
   const { openModal } = useOverlay().modal
   const { getBondedAccount } = useBonded()
   const { activeAccount } = useActiveAccounts()
-  const { checking, isExposed } = useFastUnstake()
   const { isReadOnlyAccount } = useImportedAccounts()
   const { getNominationStatus } = useNominationStatus()
+  const { exposed, fastUnstakeStatus } = useFastUnstake()
   const { getFastUnstakeText, isUnstaking } = useUnstaking()
   const { syncing } = useSyncing(['initialization', 'era-stakers', 'balances'])
 
   const fastUnstakeText = getFastUnstakeText()
   const controller = getBondedAccount(activeAccount)
   const nominationStatus = getNominationStatus(activeAccount, 'nominator')
-
   // Determine whether to display fast unstake button or regular unstake button.
   const unstakeButton =
     fastUnstakeErasToCheckPerBlock > 0 &&
     !nominationStatus.nominees.active.length &&
-    (checking || !isExposed)
+    fastUnstakeStatus !== null &&
+    !exposed
       ? {
-          disabled: checking || isReadOnlyAccount(controller),
+          disabled: isReadOnlyAccount(controller),
           title: fastUnstakeText,
           icon: faBolt,
           onClick: () => {

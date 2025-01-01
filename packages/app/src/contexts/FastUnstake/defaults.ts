@@ -5,11 +5,10 @@
 import type { FastUnstakeContextInterface } from './types'
 
 export const defaultFastUnstakeContext: FastUnstakeContextInterface = {
-  checking: false,
-  isExposed: null,
+  exposed: false,
   head: undefined,
   queueDeposit: undefined,
   counterForQueue: undefined,
+  fastUnstakeStatus: null,
   setFastUnstakeStatus: (status) => {},
-  lastExposed: null,
 }

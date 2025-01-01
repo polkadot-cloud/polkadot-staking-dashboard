@@ -11,7 +11,7 @@ import { useNetwork } from 'contexts/Network'
 import { Apis } from 'controllers/Apis'
 import { Subscriptions } from 'controllers/Subscriptions'
 import { isCustomEvent } from 'controllers/utils'
-import type { FastUnstakeStatus } from 'plugin-staking-api/types'
+import type { FastUnstakeResult } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { useEventListener } from 'usehooks-ts'
@@ -34,7 +34,7 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
 
   // store fast unstake status
   const [fastUnstakeStatus, setFastUnstakeStatus] =
-    useState<FastUnstakeStatus | null>(null)
+    useState<FastUnstakeResult | null>(null)
 
   // store fastUnstake queue deposit for user
   const [queueDeposit, setQueueDeposit] = useState<FastUnstakeQueueDeposit>()
@@ -120,15 +120,14 @@ export const FastUnstakeProvider = ({ children }: { children: ReactNode }) => {
   return (
     <FastUnstakeContext.Provider
       value={{
-        // TODO: Implement from Staking API
-        checking: false,
+        exposed:
+          !!fastUnstakeStatus?.lastExposed &&
+          fastUnstakeStatus?.status === 'EXPOSED',
         queueDeposit,
         head,
         counterForQueue,
         setFastUnstakeStatus,
-        isExposed: fastUnstakeStatus === 'EXPOSED',
-        // TODO: Implement from Staking API
-        lastExposed: null,
+        fastUnstakeStatus,
       }}
     >
       {children}

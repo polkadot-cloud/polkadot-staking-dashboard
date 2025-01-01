@@ -3,16 +3,15 @@
 
 import type { FastUnstakeHead } from 'api/subscribe/fastUnstakeConfig/types'
 import type BigNumber from 'bignumber.js'
-import type { FastUnstakeStatus } from 'plugin-staking-api/types'
+import type { FastUnstakeResult } from 'plugin-staking-api/types'
 
 export interface FastUnstakeContextInterface {
-  checking: boolean
-  isExposed: boolean | null
+  exposed: boolean
   queueDeposit: FastUnstakeQueueDeposit | undefined
   head: FastUnstakeHead | undefined
   counterForQueue: number | undefined
-  setFastUnstakeStatus: (status: FastUnstakeStatus | null) => void
-  lastExposed: bigint | null
+  fastUnstakeStatus: FastUnstakeResult | null
+  setFastUnstakeStatus: (status: FastUnstakeResult | null) => void
 }
 
 export interface FastUnstakeQueueDeposit {

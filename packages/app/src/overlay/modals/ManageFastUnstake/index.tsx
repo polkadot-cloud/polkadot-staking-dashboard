@@ -44,7 +44,7 @@ export const ManageFastUnstake = () => {
   const { getSignerWarnings } = useSignerWarnings()
   const { setModalResize, setModalStatus } = useOverlay().modal
   const { feeReserve, getTransferOptions } = useTransferOptions()
-  const { isExposed, counterForQueue, queueDeposit, lastExposed } =
+  const { counterForQueue, queueDeposit, fastUnstakeStatus, exposed } =
     useFastUnstake()
 
   const controller = getBondedAccount(activeAccount)
@@ -63,12 +63,12 @@ export const ManageFastUnstake = () => {
       fastUnstakeErasToCheckPerBlock > 0 &&
         ((!isFastUnstaking &&
           enoughForDeposit &&
-          isExposed === false &&
+          fastUnstakeStatus?.status === 'NOT_EXPOSED' &&
           totalUnlockChunks === 0) ||
           isFastUnstaking)
     )
   }, [
-    isExposed,
+    fastUnstakeStatus?.status,
     fastUnstakeErasToCheckPerBlock,
     totalUnlockChunks,
     isFastUnstaking,
@@ -77,7 +77,10 @@ export const ManageFastUnstake = () => {
     feeReserve,
   ])
 
-  useEffect(() => setModalResize(), [isExposed, queueDeposit, isFastUnstaking])
+  useEffect(
+    () => setModalResize(),
+    [fastUnstakeStatus?.status, queueDeposit, isFastUnstaking]
+  )
 
   const getTx = () => {
     let tx = null
@@ -131,9 +134,9 @@ export const ManageFastUnstake = () => {
 
   // manage last exposed
   const lastExposedAgo =
-    !isExposed || !lastExposed
+    !exposed || !fastUnstakeStatus?.lastExposed
       ? new BigNumber(0)
-      : activeEra.index.minus(lastExposed.toString())
+      : activeEra.index.minus(fastUnstakeStatus.lastExposed.toString())
 
   const erasRemaining = BigNumber.max(1, bondDuration.minus(lastExposedAgo))
 
@@ -152,7 +155,7 @@ export const ManageFastUnstake = () => {
           </ModalWarnings>
         ) : null}
 
-        {isExposed ? (
+        {exposed ? (
           <>
             <ActionItem
               text={t('fastUnstakeExposedAgo', {
@@ -196,7 +199,7 @@ export const ManageFastUnstake = () => {
           </>
         )}
       </ModalPadding>
-      {!isExposed ? (
+      {!exposed ? (
         <SubmitTx
           fromController
           valid={valid}

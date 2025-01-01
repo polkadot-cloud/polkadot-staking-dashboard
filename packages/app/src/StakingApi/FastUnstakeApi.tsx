@@ -15,10 +15,10 @@ export const FastUnstakeApi = ({ activeAccount, network }: Props) => {
 
   // Update fast unstake status on active account change. Must be bonding
   useEffect(() => {
-    if (!loading && !error && data?.status) {
-      setFastUnstakeStatus(data.status)
+    if (!loading && !error && data?.canFastUnstake) {
+      setFastUnstakeStatus(data.canFastUnstake)
     }
-  }, [activeAccount])
+  }, [JSON.stringify(data?.canFastUnstake)])
 
   return null
 }

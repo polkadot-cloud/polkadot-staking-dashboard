@@ -15,8 +15,8 @@ export const useUnstaking = () => {
   const { activeAccount } = useActiveAccounts()
   const { getTransferOptions } = useTransferOptions()
   const { getNominationStatus } = useNominationStatus()
-  const { checking, head, isExposed, queueDeposit, lastExposed } =
-    useFastUnstake()
+  const { head, queueDeposit, fastUnstakeStatus, exposed } = useFastUnstake()
+
   const transferOptions = getTransferOptions(activeAccount).nominate
   const { nominees } = getNominationStatus(activeAccount, 'nominator')
 
@@ -32,12 +32,9 @@ export const useUnstaking = () => {
 
   // determine unstake button
   const getFastUnstakeText = () => {
-    if (checking) {
-      return `${t('fastUnstakeCheckingEras')}...`
-    }
-    if (isExposed && lastExposed) {
+    if (exposed && fastUnstakeStatus?.lastExposed) {
       return t('fastUnstakeExposed', {
-        count: Number(lastExposed),
+        count: Number(fastUnstakeStatus.lastExposed),
       })
     }
     if (registered) {

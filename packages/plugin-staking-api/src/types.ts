@@ -60,9 +60,14 @@ export type FastUnstakeStatus =
   | 'NOT_EXPOSED'
   | 'EXPOSED'
 
+export interface FastUnstakeResult {
+  status: FastUnstakeStatus
+  lastExposed?: number
+}
+
 export type CanFastUnstakeResult = Query & {
   data: {
-    status: FastUnstakeStatus
+    canFastUnstake: FastUnstakeResult
   }
 }
 
