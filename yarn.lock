@@ -4788,7 +4788,7 @@ __metadata:
     plugin-staking-api: "workspace:*"
     polkadot-api: "npm:^1.8.0"
     qrcode-generator: "npm:1.4.4"
-    rc-slider: "npm:^11.1.6"
+    rc-slider: "npm:^11.1.8"
     react: "npm:^18.3.1"
     react-chartjs-2: "npm:^5.2.0"
     react-dom: "npm:^18.2.0"
@@ -9764,9 +9764,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rc-slider@npm:^11.1.6":
-  version: 11.1.7
-  resolution: "rc-slider@npm:11.1.7"
+"rc-slider@npm:^11.1.8":
+  version: 11.1.8
+  resolution: "rc-slider@npm:11.1.8"
   dependencies:
     "@babel/runtime": "npm:^7.10.1"
     classnames: "npm:^2.2.5"
@@ -9774,7 +9774,7 @@ __metadata:
   peerDependencies:
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
-  checksum: 10c0/ddb870a8f9982565c3ab4e7ece12a224c4d6f1983a0760d516561fa8963c2bc6d9e25bed6b87cad007b3d4962194398e1490231d0b5ab062262c0ea0ba734b85
+  checksum: 10c0/b202599abf85e21234c2cababe9c6f908aa7fcdde9eca413ef96b209838f3b1a33292d1a1bbe571b84bf46f8a5d28d5c1a070f331bddc0504101e9e2a75cf422
   languageName: node
   linkType: hard
 
