@@ -25,7 +25,7 @@
     "@polkadot-api/substrate-bindings": "^0.11.0",
     "@polkadot/util": "^13.2.3",
     "@polkawatch/ddp-client": "^2.0.20",
-    "@substrate/connect": "^2.0.1",
+    "@substrate/connect": "^2.1.1",
     "@w3ux/extension-assets": "^1.0.0",
     "@w3ux/factories": "^1.0.0",
     "@w3ux/react-connect-kit": "^2.1.1",

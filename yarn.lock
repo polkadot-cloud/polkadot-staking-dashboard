@@ -3402,10 +3402,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@substrate/connect-known-chains@npm:^1.1.5, @substrate/connect-known-chains@npm:^1.8.0":
+"@substrate/connect-known-chains@npm:^1.1.5":
   version: 1.8.0
   resolution: "@substrate/connect-known-chains@npm:1.8.0"
   checksum: 10c0/9315ca8f6a7bfc2d06176c217be68a81109e32da6a90cda8f0827c8101fee6aa696264953c06646c2c450bf3adbae481df0ca1ea1988533c127a03fcec67827c
+  languageName: node
+  linkType: hard
+
+"@substrate/connect-known-chains@npm:^1.8.1":
+  version: 1.8.1
+  resolution: "@substrate/connect-known-chains@npm:1.8.1"
+  checksum: 10c0/08bf9e0cb594ffea7919a96c6156bcde878556e5065b20212a87f21dd36cbecb749d755d0f36ae6a20fec4f684103ea26db01b0157224f99e50ceb8004a0fc99
   languageName: node
   linkType: hard
 
@@ -3421,15 +3428,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@substrate/connect@npm:^2.0.1":
-  version: 2.1.0
-  resolution: "@substrate/connect@npm:2.1.0"
+"@substrate/connect@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "@substrate/connect@npm:2.1.1"
   dependencies:
     "@substrate/connect-extension-protocol": "npm:^2.2.1"
-    "@substrate/connect-known-chains": "npm:^1.8.0"
+    "@substrate/connect-known-chains": "npm:^1.8.1"
     "@substrate/smoldot-discovery": "npm:^2.0.1"
     smoldot: "npm:^2.0.34"
-  checksum: 10c0/2a754d5c553a99e20fecb5f57c74f7a589a0ae6ea70c7a7e19f31d9f546b019d827d32945c21164db9934c17b09f415821e73aca5e11f8c27e0651406c99c836
+  checksum: 10c0/1dfb0adcac1904709b82e53b34c9a4aa891bcf03a430921d1683613ea2b9156e3e347001903f6984669f10b89a4dd997c4a3de6509d02610da7e5f89d4181ffa
   languageName: node
   linkType: hard
 
@@ -4766,7 +4773,7 @@ __metadata:
     "@polkadot-api/substrate-bindings": "npm:^0.11.0"
     "@polkadot/util": "npm:^13.2.3"
     "@polkawatch/ddp-client": "npm:^2.0.20"
-    "@substrate/connect": "npm:^2.0.1"
+    "@substrate/connect": "npm:^2.1.1"
     "@w3ux/extension-assets": "npm:^1.0.0"
     "@w3ux/factories": "npm:^1.0.0"
     "@w3ux/react-connect-kit": "npm:^2.1.1"
