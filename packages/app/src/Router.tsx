@@ -81,7 +81,7 @@ const RouterInner = () => {
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
       {pluginEnabled('staking_api') && !inSetup() && activeAccount && (
-        <StakingApi activeAccount={activeAccount} />
+        <StakingApi activeAccount={activeAccount} network={network} />
       )}
       <NotificationPrompts />
       <Body>
