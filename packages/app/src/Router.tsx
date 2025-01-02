@@ -13,9 +13,9 @@ import { useAccountFromUrl } from 'hooks/useAccountFromUrl'
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary'
 import { Headers } from 'library/Headers'
 import { Help } from 'library/Help'
+import { MainFooter } from 'library/MainFooter'
+import { Disclaimer } from 'library/MainFooter/Disclaimer'
 import { Menu } from 'library/Menu'
-import { NetworkBar } from 'library/NetworkBar'
-import { Disclaimer } from 'library/NetworkBar/Disclaimer'
 import { NotificationPrompts } from 'library/NotificationPrompts'
 import { Offline } from 'library/Offline'
 import { PageWithTitle } from 'library/PageWithTitle'
@@ -109,9 +109,9 @@ const RouterInner = () => {
               />
             </Routes>
           </ErrorBoundary>
+          <MainFooter />
         </Main>
       </Body>
-      <NetworkBar />
       <Offline />
     </ErrorBoundary>
   )

@@ -1,10 +1,11 @@
 /* Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 SPDX-License-Identifier: GPL-3.0-only */
 
-.page {
+.footer {
   display: flex;
   flex-direction: column;
-  padding-bottom: 0.75rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  margin: 0 auto;
 }

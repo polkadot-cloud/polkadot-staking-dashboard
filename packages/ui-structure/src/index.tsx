@@ -4,6 +4,7 @@
 export * from './Body'
 export * from './ButtonRow'
 export * from './Entry'
+export * from './Footer'
 export * from './Main'
 export * from './Page'
 export * from './PageHeading'
