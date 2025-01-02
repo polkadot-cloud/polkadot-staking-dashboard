@@ -3,24 +3,15 @@
 
 import type { FastUnstakeHead } from 'api/subscribe/fastUnstakeConfig/types'
 import type BigNumber from 'bignumber.js'
-import type { MaybeAddress } from 'types'
-
-export interface LocalMeta {
-  isExposed: boolean
-  checked: number[]
-}
-export interface MetaInterface {
-  checked: number[]
-}
+import type { FastUnstakeResult } from 'plugin-staking-api/types'
 
 export interface FastUnstakeContextInterface {
-  getLocalkey: (address: MaybeAddress) => string
-  checking: boolean
-  meta: MetaInterface
-  isExposed: boolean | null
+  exposed: boolean
   queueDeposit: FastUnstakeQueueDeposit | undefined
   head: FastUnstakeHead | undefined
   counterForQueue: number | undefined
+  fastUnstakeStatus: FastUnstakeResult | null
+  setFastUnstakeStatus: (status: FastUnstakeResult | null) => void
 }
 
 export interface FastUnstakeQueueDeposit {
