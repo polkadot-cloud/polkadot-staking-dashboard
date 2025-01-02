@@ -2,18 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
 import { usePayouts } from 'contexts/Payouts'
-import { ApolloProvider, client, useUnclaimedRewards } from 'plugin-staking-api'
+import { useUnclaimedRewards } from 'plugin-staking-api'
 import { useEffect } from 'react'
+import type { Props } from './types'
 
-interface Props {
-  activeAccount: string
-}
-
-const Inner = ({ activeAccount }: Props) => {
+export const UnclaimedRewardsApi = ({ activeAccount, network }: Props) => {
   const { activeEra } = useApi()
-  const { network } = useNetwork()
   const { setUnclaimedRewards } = usePayouts()
 
   const { data, loading, error } = useUnclaimedRewards({
@@ -22,6 +17,7 @@ const Inner = ({ activeAccount }: Props) => {
     fromEra: Math.max(activeEra.index.minus(1).toNumber(), 0),
   })
 
+  // Update unclaimed rewards on total change
   useEffect(() => {
     if (!loading && !error && data?.unclaimedRewards) {
       setUnclaimedRewards(data?.unclaimedRewards)
@@ -30,9 +26,3 @@ const Inner = ({ activeAccount }: Props) => {
 
   return null
 }
-
-export const StakingApi = (props: Props) => (
-  <ApolloProvider client={client}>
-    <Inner {...props} />
-  </ApolloProvider>
-)
