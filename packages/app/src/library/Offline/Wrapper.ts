@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   background: var(--accent-color-primary);
   border: 0.5px solid var(--border-primary-color);
   position: fixed;
-  bottom: 3.8rem;
+  bottom: 1rem;
   right: 1rem;
   z-index: 999;
   padding: 0.75rem 1.15rem;

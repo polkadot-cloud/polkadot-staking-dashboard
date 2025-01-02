@@ -51,19 +51,19 @@ export const TokenPriceInner = () => {
   return (
     <>
       <div className="stat">
+        1 {unit} /{' '}
+        {new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        }).format(price)}
+      </div>
+      <div className="stat">
         <span
           className={`change${change < 0 ? ' neg' : change > 0 ? ' pos' : ''}`}
         >
           {change < 0 ? '' : change > 0 ? '+' : ''}
           {change}%
         </span>
-      </div>
-      <div className="stat">
-        1 {unit} /{' '}
-        {new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: 'USD',
-        }).format(price)}
       </div>
     </>
   )

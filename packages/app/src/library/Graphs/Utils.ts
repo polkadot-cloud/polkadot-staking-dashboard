@@ -126,7 +126,7 @@ export const calculateDailyPayouts = (
 
 // Calculate average payouts per day
 export const calculatePayoutAverages = (
-  payouts: RewardResults,
+  payouts: AnyJson,
   fromDate: Date,
   days: number,
   avgDays: number
@@ -162,7 +162,7 @@ export const calculatePayoutAverages = (
     // If on last reward and is a zero (current era still processing), use previous reward to
     // prevent misleading dip
     const reward =
-      i === payouts.length - 1 && payouts[i].reward === '0'
+      i === payouts.length - 1 && payouts[i].reward === 0
         ? payoutsAverages[i - 1].reward
         : total / num
 
@@ -299,7 +299,7 @@ const getPreMaxDaysPayouts = (
       daysPassed(fromUnixTime(p.timestamp), fromDate) > days &&
       daysPassed(fromUnixTime(p.timestamp), fromDate) <= days + avgDays
   )
-// Combine payouts and pool claims.
+// Combine payouts and pool claims
 //
 // Combines payouts and pool claims into daily records
 export const combineRewards = (
@@ -383,7 +383,7 @@ export const combineRewards = (
   return rewards
 }
 
-// Get latest reward.
+// Get latest reward
 //
 // Gets the latest reward from pool claims and nominator payouts
 export const getLatestReward = (
