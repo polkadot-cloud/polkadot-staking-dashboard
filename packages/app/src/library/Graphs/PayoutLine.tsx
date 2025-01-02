@@ -141,7 +141,7 @@ export const PayoutLine = ({
     datasets: [
       {
         label: t('payout'),
-        data: combinedPayouts.map(({ reward }) => reward),
+        data: combinedPayouts.map(({ reward }: { reward: number }) => reward),
         borderColor: color,
         pointStyle: undefined,
         pointRadius: 0,
