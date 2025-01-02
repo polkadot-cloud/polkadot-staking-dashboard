@@ -48,8 +48,8 @@ export const Active = () => {
         <MinimumActiveStake />
       </StatBoxList>
       <CommissionPrompt />
-      <WithdrawPrompt bondFor="nominator" />
 
+      {!isFastUnstaking && <WithdrawPrompt bondFor="nominator" />}
       <UnstakePrompts />
       <PageRow>
         <RowSection secondary vLast>
