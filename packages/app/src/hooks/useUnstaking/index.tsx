@@ -3,7 +3,6 @@
 
 import type { AnyJson } from '@w3ux/types'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
 import { useFastUnstake } from 'contexts/FastUnstake'
 import { useStaking } from 'contexts/Staking'
 import { useTransferOptions } from 'contexts/TransferOptions'
@@ -12,13 +11,12 @@ import { useNominationStatus } from '../useNominationStatus'
 
 export const useUnstaking = () => {
   const { t } = useTranslation('library')
-  const { consts, activeEra } = useApi()
   const { inSetup } = useStaking()
   const { activeAccount } = useActiveAccounts()
   const { getTransferOptions } = useTransferOptions()
   const { getNominationStatus } = useNominationStatus()
-  const { checking, head, isExposed, queueDeposit, meta } = useFastUnstake()
-  const { bondDuration } = consts
+  const { head, queueDeposit, fastUnstakeStatus, exposed } = useFastUnstake()
+
   const transferOptions = getTransferOptions(activeAccount).nominate
   const { nominees } = getNominationStatus(activeAccount, 'nominator')
 
@@ -34,17 +32,9 @@ export const useUnstaking = () => {
 
   // determine unstake button
   const getFastUnstakeText = () => {
-    const { checked } = meta
-    if (checking) {
-      return `${t('fastUnstakeCheckingEras', {
-        checked: checked.length,
-        total: bondDuration.toString(),
-      })}...`
-    }
-    if (isExposed) {
-      const lastExposed = activeEra.index.minus(checked[0] || 0)
+    if (exposed && fastUnstakeStatus?.lastExposed) {
       return t('fastUnstakeExposed', {
-        count: lastExposed.toNumber(),
+        count: Number(fastUnstakeStatus.lastExposed),
       })
     }
     if (registered) {
