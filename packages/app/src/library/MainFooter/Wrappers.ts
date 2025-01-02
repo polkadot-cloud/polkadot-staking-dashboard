@@ -1,33 +1,25 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PageWidthMediumThreshold } from 'consts'
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   --network-bar-font-size: 0.9rem;
 
-  background: var(--background-app-footer);
   color: var(--text-color-secondary);
   font-size: var(--network-bar-font-size);
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  bottom: 0px;
-  left: 0px;
   overflow: hidden;
   z-index: 6;
   backdrop-filter: blur(4px);
-  position: relative;
   padding-top: 0.15rem;
+  padding-bottom: 1.25rem;
   width: 100%;
+  margin: 0 auto;
 
-  @media (min-width: ${PageWidthMediumThreshold + 1}px) {
-    position: fixed;
-  }
-
-  .network_icon {
-    margin: 0 0 0 1.25rem;
+  .icon {
     width: 1.5rem;
     height: 1.5rem;
   }
@@ -58,10 +50,14 @@ export const Summary = styled.div`
   }
   p {
     font-size: var(--network-bar-font-size);
-    border-left: 1px solid var(--accent-color-transparent);
+    border-left: 1px solid var(--text-color-secondary);
     margin: 0.25rem 0.5rem 0.25rem 0.15rem;
     padding-left: 0.5rem;
     line-height: 1.3rem;
+
+    &:first-child {
+      border-left: none;
+    }
   }
   .stat {
     margin: 0 0.25rem;
@@ -92,7 +88,6 @@ export const Summary = styled.div`
       display: flex;
       align-items: center;
       flex-flow: row-reverse wrap;
-      padding-right: 0.75rem;
 
       button {
         font-size: var(--network-bar-font-size);

@@ -24,7 +24,7 @@ export const Wrapper = styled.div<MinimisedProps>`
       : `${SideMenuMaximisedWidth}px`};
   padding: ${(props) =>
     props.$minimised ? `0.5rem 1rem 0.5rem 1rem` : `0rem 1rem 1rem 1rem`};
-  margin: 0.75rem 0 3.35rem 0rem;
+  margin: 0.75rem 0;
 
   &::-webkit-scrollbar {
     display: none;
