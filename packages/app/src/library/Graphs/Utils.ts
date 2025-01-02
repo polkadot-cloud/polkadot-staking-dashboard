@@ -126,7 +126,7 @@ export const calculateDailyPayouts = (
 
 // Calculate average payouts per day
 export const calculatePayoutAverages = (
-  payouts: RewardResults,
+  payouts: AnyJson,
   fromDate: Date,
   days: number,
   avgDays: number
@@ -162,7 +162,7 @@ export const calculatePayoutAverages = (
     // If on last reward and is a zero (current era still processing), use previous reward to
     // prevent misleading dip
     const reward =
-      i === payouts.length - 1 && payouts[i].reward === '0'
+      i === payouts.length - 1 && payouts[i].reward === 0
         ? payoutsAverages[i - 1].reward
         : total / num
 
