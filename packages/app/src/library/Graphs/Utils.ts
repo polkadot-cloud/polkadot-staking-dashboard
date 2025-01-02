@@ -299,7 +299,7 @@ const getPreMaxDaysPayouts = (
       daysPassed(fromUnixTime(p.timestamp), fromDate) > days &&
       daysPassed(fromUnixTime(p.timestamp), fromDate) <= days + avgDays
   )
-// Combine payouts and pool claims.
+// Combine payouts and pool claims
 //
 // Combines payouts and pool claims into daily records
 export const combineRewards = (
@@ -383,7 +383,7 @@ export const combineRewards = (
   return rewards
 }
 
-// Get latest reward.
+// Get latest reward
 //
 // Gets the latest reward from pool claims and nominator payouts
 export const getLatestReward = (
