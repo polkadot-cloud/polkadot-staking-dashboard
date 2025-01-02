@@ -44,7 +44,7 @@
     "bignumber.js": "^9.1.2",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
-    "i18next": "^24.0.0",
+    "i18next": "^24.2.0",
     "react-i18next": "^15.4.0"
   },
   "packageManager": "yarn@4.1.1",
