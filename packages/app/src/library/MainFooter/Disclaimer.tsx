@@ -67,7 +67,7 @@ export const Disclaimer = () => (
         acts or your use of the dashboard or Content.
       </p>
       <p>
-        as between you and the Web3 entities, your sole and exclusive remedy if
+        As between you and the Web3 entities, your sole and exclusive remedy if
         you are not satisfied with the dashboard or content or have suffered
         loss or damage as a result of the dashboard, content or third party acts
         is to cease using the dashboard.
