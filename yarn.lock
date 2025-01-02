@@ -4811,14 +4811,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zondax/ledger-substrate@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@zondax/ledger-substrate@npm:1.0.0"
+"@zondax/ledger-substrate@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@zondax/ledger-substrate@npm:1.0.1"
   dependencies:
     "@ledgerhq/hw-transport": "npm:6.31.2"
     "@zondax/ledger-js": "npm:^0.11.0"
     axios: "npm:^1.7.4"
-  checksum: 10c0/e3e25d28dbb768b48e5a5e0dff46d71c6061691f8706092728de7b0751c402f14bc5406230240a55297caa8bb2ddee02fc711fc37a10a53333dc5f7d18fd557f
+  checksum: 10c0/82e91c790fd30e12b31386b2bd2e19e6d7fcc6de66fd311171e689cba238eae1250c460f9946693faf3900ad46882afe6819c6f2213cdee149c98672f3e7115b
   languageName: node
   linkType: hard
 
@@ -4980,7 +4980,7 @@ __metadata:
     "@w3ux/react-odometer": "npm:^1.1.0"
     "@w3ux/react-polkicon": "npm:^2.0.1-alpha.0"
     "@w3ux/validator-assets": "npm:^0.3.1"
-    "@zondax/ledger-substrate": "npm:^1.0.0"
+    "@zondax/ledger-substrate": "npm:^1.0.1"
     assets: "workspace:*"
     bn.js: "npm:^5.2.1"
     buffer: "npm:^6.0.3"
