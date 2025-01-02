@@ -9,8 +9,7 @@ import type {
   ExposureOther,
   Staker,
 } from 'contexts/Staking/types'
-import type { LocalValidatorExposure } from 'contexts/Validators/types'
-import type { ProcessEraForExposureArgs, ProcessExposuresArgs } from './types'
+import type { ProcessExposuresArgs } from './types'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const ctx: Worker = self as any
@@ -24,96 +23,10 @@ ctx.addEventListener('message', (event: AnyJson) => {
     case 'processExposures':
       message = processExposures(data as ProcessExposuresArgs)
       break
-    case 'processEraForExposure':
-      message = processEraForExposure(data as ProcessEraForExposureArgs)
-      break
     default:
   }
   postMessage({ task, ...message })
 })
-
-// Process era exposures and return if an account was exposed, along with the validator they backed.
-const processEraForExposure = (data: ProcessEraForExposureArgs) => {
-  const {
-    era,
-    maxExposurePageSize,
-    exposures,
-    exitOnExposed,
-    task,
-    networkName,
-    who,
-  } = data
-  let exposed = false
-
-  // If exposed, the validator that was backed.
-  const exposedValidators: Record<string, LocalValidatorExposure> = {}
-
-  // Check exposed as validator or nominator.
-  exposures.every(({ keys, val }) => {
-    const validator = keys[1]
-    const others = val?.others ?? []
-    const own = val?.own || '0'
-    const total = val?.total || '0'
-    const isValidator = validator === who
-
-    if (isValidator) {
-      const share = new BigNumber(own).isZero()
-        ? '0'
-        : new BigNumber(own).dividedBy(total).toString()
-
-      exposedValidators[validator] = {
-        staked: own,
-        total,
-        share,
-        isValidator,
-        // Validator is paid regardless of page. Default to page 1.
-        exposedPage: 1,
-      }
-
-      exposed = true
-      if (exitOnExposed) {
-        return false
-      }
-    }
-
-    const inOthers = others.find((o) => o.who === who)
-
-    if (inOthers) {
-      const index = others.findIndex((o) => o.who === who)
-      const exposedPage = Math.floor(index / Number(maxExposurePageSize))
-
-      const share =
-        new BigNumber(inOthers.value).isZero() || total === '0'
-          ? '0'
-          : new BigNumber(inOthers.value).dividedBy(total).toString()
-
-      exposedValidators[validator] = {
-        staked: inOthers.value,
-        total,
-        share,
-        isValidator,
-        exposedPage,
-      }
-      exposed = true
-      if (exitOnExposed) {
-        return false
-      }
-    }
-
-    return true
-  })
-
-  return {
-    networkName,
-    era,
-    exposed,
-    exposedValidators: Object.keys(exposedValidators).length
-      ? exposedValidators
-      : null,
-    task,
-    who,
-  }
-}
 
 // process exposures.
 //
