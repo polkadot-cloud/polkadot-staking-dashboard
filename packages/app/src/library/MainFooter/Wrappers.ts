@@ -50,10 +50,14 @@ export const Summary = styled.div`
   }
   p {
     font-size: var(--network-bar-font-size);
-    border-left: 1px solid var(--accent-color-transparent);
+    border-left: 1px solid var(--text-color-secondary);
     margin: 0.25rem 0.5rem 0.25rem 0.15rem;
     padding-left: 0.5rem;
     line-height: 1.3rem;
+
+    &:first-child {
+      border-left: none;
+    }
   }
   .stat {
     margin: 0 0.25rem;
