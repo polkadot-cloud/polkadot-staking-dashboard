@@ -19,7 +19,7 @@ export const PromptProvider = ({ children }: { children: ReactNode }) => {
     onClosePrompt: null,
   })
 
-  // Whether prompt can be closed by clicking outside on container.
+  // Whether prompt can be closed by clicking outside on container
   const [closeOnOutsideClick, setCloseOnOutsideClick] = useState(false)
 
   const setPrompt = (Prompt: Prompt) => {

@@ -6,7 +6,7 @@ import { useApi } from 'contexts/Api'
 import { Pie } from 'library/StatBoxList/Pie'
 import { useTranslation } from 'react-i18next'
 
-export const TotalValidatorsStat = () => {
+export const TotalValidators = () => {
   const { t } = useTranslation('pages')
   const {
     stakingMetrics: { totalValidators, maxValidatorsCount },

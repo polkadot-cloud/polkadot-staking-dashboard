@@ -5,7 +5,7 @@ import { useApi } from 'contexts/Api'
 import { Number } from 'library/StatBoxList/Number'
 import { useTranslation } from 'react-i18next'
 
-export const ActivePoolsStat = () => {
+export const ActivePoolCount = () => {
   const { t } = useTranslation('pages')
   const { counterForBondedPools } = useApi().poolsConfig
 

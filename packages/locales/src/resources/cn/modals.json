@@ -161,7 +161,6 @@
     "noVaultAccountsImported": "尚未导入任何Polkadot Vault帐户",
     "nominateFavorites": "提名收藏夹中的验证人",
     "nominating": "提名中",
-    "nominatingAndInPool": "己在提名并提名池中",
     "nomination": "{{count}} 个提名",
     "nominator": "提名人",
     "nominatorStake": "提名人抵押",

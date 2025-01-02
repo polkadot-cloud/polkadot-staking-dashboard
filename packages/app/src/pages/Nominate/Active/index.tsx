@@ -20,9 +20,9 @@ import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
 import { PageRow, RowSection } from 'ui-structure'
 import { CommissionPrompt } from './CommissionPrompt'
 import { ManageBond } from './ManageBond'
-import { ActiveNominatorsStat } from './Stats/ActiveNominators'
-import { MinimumActiveStakeStat } from './Stats/MinimumActiveStake'
-import { MinimumNominatorBondStat } from './Stats/MinimumNominatorBond'
+import { ActiveNominators } from './Stats/ActiveNominators'
+import { MinimumActiveStake } from './Stats/MinimumActiveStake'
+import { MinimumNominatorBond } from './Stats/MinimumNominatorBond'
 import { Status } from './Status'
 import { UnstakePrompts } from './UnstakePrompts'
 
@@ -43,13 +43,13 @@ export const Active = () => {
   return (
     <>
       <StatBoxList>
-        <ActiveNominatorsStat />
-        <MinimumNominatorBondStat />
-        <MinimumActiveStakeStat />
+        <ActiveNominators />
+        <MinimumNominatorBond />
+        <MinimumActiveStake />
       </StatBoxList>
       <CommissionPrompt />
-      <WithdrawPrompt bondFor="nominator" />
 
+      {!isFastUnstaking && <WithdrawPrompt bondFor="nominator" />}
       <UnstakePrompts />
       <PageRow>
         <RowSection secondary vLast>

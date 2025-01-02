@@ -16,7 +16,7 @@ export const CommunityContext = createContext<CommunityContextInterface>(
 export const useCommunity = () => useContext(CommunityContext)
 
 export const CommunityProvider = ({ children }: { children: ReactNode }) => {
-  // Stores a randomised validator community dataset.
+  // Stores a randomised validator community dataset
   const [validatorCommunity] = useState<ValidatorEntry[]>([
     ...shuffle(ValidatorCommunity),
   ])

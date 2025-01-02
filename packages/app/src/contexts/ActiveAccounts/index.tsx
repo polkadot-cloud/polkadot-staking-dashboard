@@ -21,15 +21,15 @@ export const ActiveAccountsProvider = ({
 }) => {
   const { network } = useNetwork()
 
-  // Store the currently active account.
+  // Store the currently active account
   const [activeAccount, setActiveAccountState] = useState<MaybeAddress>(null)
   const activeAccountRef = useRef<string | null>(activeAccount)
 
-  // Store the active proxy account.
+  // Store the active proxy account
   const [activeProxy, setActiveProxyState] = useState<ActiveProxy>(null)
   const activeProxyRef = useRef(activeProxy)
 
-  // Setter for the active proxy account.
+  // Setter for the active proxy account
   const setActiveProxy = (newActiveProxy: ActiveProxy, updateLocal = true) => {
     if (updateLocal) {
       if (newActiveProxy) {
@@ -44,7 +44,7 @@ export const ActiveAccountsProvider = ({
     setStateWithRef(newActiveProxy, setActiveProxyState, activeProxyRef)
   }
 
-  // Setter for the active account.
+  // Setter for the active account
   const setActiveAccount = (
     newActiveAccount: MaybeAddress,
     updateLocalStorage = true
@@ -60,7 +60,7 @@ export const ActiveAccountsProvider = ({
     setStateWithRef(newActiveAccount, setActiveAccountState, activeAccountRef)
   }
 
-  // Getter for the active account.
+  // Getter for the active account
   const getActiveAccount = () => activeAccountRef.current
 
   return (

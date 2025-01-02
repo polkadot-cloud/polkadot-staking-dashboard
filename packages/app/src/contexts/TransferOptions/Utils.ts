@@ -6,7 +6,7 @@ import { unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import type { NetworkId } from 'common-types'
 
-// Get the local storage record for an account reserve balance.
+// Get the local storage record for an account reserve balance
 export const getLocalFeeReserve = (
   address: MaybeAddress,
   defaultReserve: number,
@@ -19,7 +19,7 @@ export const getLocalFeeReserve = (
   )
 }
 
-// Sets the local storage record fro an account reserve balance.
+// Sets the local storage record fro an account reserve balance
 export const setLocalFeeReserve = (
   address: MaybeAddress,
   amount: BigNumber,

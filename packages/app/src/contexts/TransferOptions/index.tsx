@@ -35,41 +35,41 @@ export const TransferOptionsProvider = ({
   const { existentialDeposit } = consts
   const membership = getPoolMembership(activeAccount)
 
-  // A user-configurable reserve amount to be used to pay for transaction fees.
+  // A user-configurable reserve amount to be used to pay for transaction fees
   const [feeReserve, setFeeReserve] = useState<BigNumber>(
     getLocalFeeReserve(activeAccount, defaultFeeReserve, { network, units })
   )
 
   // Calculates various balances for an account pertaining to free balance, nominating and pools.
   // Gets balance numbers from `useBalances` state, which only takes the active accounts from
-  // `Balances`.
+  // `Balances`
   const getTransferOptions = (address: MaybeAddress): TransferOptions => {
     const { maxLock } = getLocks(address)
     const { free, frozen } = getBalance(address)
     const { active, total, unlocking } = getLedger({ stash: address })
 
     // Calculate a forced amount of free balance that needs to be reserved to keep the account
-    // alive. Deducts `locks` from free balance reserve needed.
+    // alive. Deducts `locks` from free balance reserve needed
     const edReserved = BigNumber.max(existentialDeposit.minus(maxLock), 0)
 
-    // Total free balance after `edReserved` is subtracted.
+    // Total free balance after `edReserved` is subtracted
     const freeMinusReserve = BigNumber.max(
       free.minus(edReserved).minus(feeReserve),
       0
     )
-    // Free balance that can be transferred.
+    // Free balance that can be transferred
     const transferrableBalance = BigNumber.max(
       freeMinusReserve.minus(frozen),
       0
     )
-    // Free balance to pay for tx fees. Does not factor `feeReserve`.
+    // Free balance to pay for tx fees. Does not factor `feeReserve`
     const balanceTxFees = BigNumber.max(free.minus(edReserved).minus(frozen), 0)
     // Total amount unlocking and unlocked.
     const { totalUnlocking, totalUnlocked } = getUnlocking(
       unlocking,
       activeEra.index
     )
-    // Free balance to stake after `total` (total staked) ledger amount.
+    // Free balance to stake after `total` (total staked) ledger amount
     const freeBalance = BigNumber.max(freeMinusReserve.minus(total), 0)
 
     const nominatorBalances = () => {
@@ -113,7 +113,7 @@ export const TransferOptionsProvider = ({
     }
   }
 
-  // Updates account's reserve amount in state and in local storage.
+  // Updates account's reserve amount in state and in local storage
   const setFeeReserveBalance = (amount: BigNumber) => {
     if (!activeAccount) {
       return
@@ -122,11 +122,11 @@ export const TransferOptionsProvider = ({
     setFeeReserve(amount)
   }
 
-  // Gets a feeReserve from local storage for an account, or the default value otherwise.
+  // Gets a feeReserve from local storage for an account, or the default value otherwise
   const getFeeReserve = (address: MaybeAddress): BigNumber =>
     getLocalFeeReserve(address, defaultFeeReserve, { network, units })
 
-  // Update an account's reserve amount on account or network change.
+  // Update an account's reserve amount on account or network change
   useEffectIgnoreInitial(() => {
     setFeeReserve(
       getLocalFeeReserve(activeAccount, defaultFeeReserve, { network, units })

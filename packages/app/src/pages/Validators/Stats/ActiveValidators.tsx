@@ -7,7 +7,7 @@ import { useStaking } from 'contexts/Staking'
 import { Pie } from 'library/StatBoxList/Pie'
 import { useTranslation } from 'react-i18next'
 
-export const ActiveValidatorsStat = () => {
+export const ActiveValidators = () => {
   const { t } = useTranslation('pages')
   const {
     eraStakers: { activeValidators },

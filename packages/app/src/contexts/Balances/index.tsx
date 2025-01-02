@@ -36,7 +36,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   const { activeAccount, activeProxy } = useActiveAccounts()
   const controller = getBondedAccount(activeAccount)
 
-  // Listen to balance updates for the active account, active proxy and controller.
+  // Listen to balance updates for the active account, active proxy and controller
   const {
     activeBalances,
     getLocks,
@@ -50,17 +50,17 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     accounts: [activeAccount, activeProxy, controller],
   })
 
-  // Check all accounts have been synced. App-wide syncing state for all accounts.
+  // Check all accounts have been synced. App-wide syncing state for all accounts
   const newAccountBalancesCallback = (e: Event) => {
     if (isCustomEvent(e) && Balances.isValidNewAccountBalanceEvent(e)) {
-      // Update whether all account balances have been synced.
+      // Update whether all account balances have been synced
       checkBalancesSynced()
 
       const { address, ...newBalances } = e.detail
       const { poolMembership } = newBalances
 
       // If a pool membership exists, let `ActivePools` know of pool membership to re-sync pool
-      // details and nominations.
+      // details and nominations
       if (isReady) {
         let newPools: ActivePoolItem[] = []
         if (poolMembership) {
@@ -79,7 +79,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  // Check whether all accounts have been synced and update state accordingly.
+  // Check whether all accounts have been synced and update state accordingly
   const checkBalancesSynced = () => {
     if (Object.keys(Balances.accounts).length === accounts.length) {
       Syncs.dispatch('balances', 'complete')
@@ -87,7 +87,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // Gets an account's nonce directly from `BalanceController`. Used at the time of building a
-  // payload.
+  // payload
   const getNonce = (address: MaybeAddress) => {
     if (address) {
       const accountBalances = Balances.getAccountBalances(network, address)
@@ -101,14 +101,14 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
 
   const documentRef = useRef<Document>(document)
 
-  // Listen for new account balance events.
+  // Listen for new account balance events
   useEventListener(
     'new-account-balance',
     newAccountBalancesCallback,
     documentRef
   )
 
-  // If no accounts are imported, set balances synced to true.
+  // If no accounts are imported, set balances synced to true
   useEffect(() => {
     if (!accounts.length) {
       Syncs.dispatch('balances', 'complete')

@@ -27,7 +27,7 @@ import { PageRow, PageTitle } from 'ui-structure'
 import { ActiveGraph } from './ActiveGraph'
 import { InactiveGraph } from './InactiveGraph'
 import { PayoutList } from './PayoutList'
-import { LastEraPayoutStat } from './Stats/LastEraPayout'
+import { LastEraPayout } from './Stats/LastEraPayout'
 
 export const Payouts = ({ page: { key } }: PageProps) => {
   const { i18n, t } = useTranslation()
@@ -69,7 +69,7 @@ export const Payouts = ({ page: { key } }: PageProps) => {
     <>
       <PageTitle title={t(key, { ns: 'base' })} />
       <StatBoxList>
-        <LastEraPayoutStat />
+        <LastEraPayout />
       </StatBoxList>
       <PageRow>
         <CardWrapper>

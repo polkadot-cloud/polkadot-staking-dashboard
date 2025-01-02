@@ -30,14 +30,14 @@ export const FavoriteValidatorsProvider = ({
   } = useNetwork()
   const { fetchValidatorPrefs } = useValidators()
 
-  // Stores the user's favorite validators.
+  // Stores the user's favorite validators
   const [favorites, setFavorites] = useState<string[]>(getLocalFavorites(name))
 
-  // Stores the user's favorites validators as list.
+  // Stores the user's favorites validators as list
   const [favoritesList, setFavoritesList] = useState<Validator[] | null>(null)
 
   const fetchFavoriteList = async () => {
-    // fetch preferences
+    // Fetch preferences
     const favoritesWithPrefs = await fetchValidatorPrefs(
       [...favorites].map((address) => ({
         address,
@@ -46,7 +46,7 @@ export const FavoriteValidatorsProvider = ({
     setFavoritesList(favoritesWithPrefs || [])
   }
 
-  // Adds a favorite validator.
+  // Adds a favorite validator
   const addFavorite = (address: string) => {
     const newFavorites = Object.assign(favorites)
     if (!newFavorites.includes(address)) {
@@ -57,7 +57,7 @@ export const FavoriteValidatorsProvider = ({
     setFavorites([...newFavorites])
   }
 
-  // Removes a favorite validator if they exist.
+  // Removes a favorite validator if they exist
   const removeFavorite = (address: string) => {
     const newFavorites = Object.assign(favorites).filter(
       (validator: string) => validator !== address

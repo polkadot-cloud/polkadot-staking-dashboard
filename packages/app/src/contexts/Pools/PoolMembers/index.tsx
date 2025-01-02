@@ -30,21 +30,21 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
   const { pluginEnabled } = usePlugins()
   const { activeAccount } = useActiveAccounts()
 
-  // Store pool members from Subscan api.
+  // Store pool members from Subscan api
   const [poolMembersApi, setPoolMembersApi] = useState<PoolMember[]>([])
 
-  // Store whether pool members from api have been fetched.
+  // Store whether pool members from api have been fetched
   const fetchedPoolMembersApi = useRef<Sync>('unsynced')
 
-  // Stores the meta data batches for pool member lists.
+  // Stores the meta data batches for pool member lists
   const [poolMembersMetaBatches, setPoolMembersMetaBatch] =
     useState<AnyMetaBatch>({})
   const poolMembersMetaBatchesRef = useRef(poolMembersMetaBatches)
 
-  // Stores the meta batch subscription keys for pool lists.
+  // Stores the meta batch subscription keys for pool lists
   const poolMembersSubs = useRef<string[]>([])
 
-  // Update poolMembersApi fetched status.
+  // Update poolMembersApi fetched status
   const setFetchedPoolMembersApi = (status: Sync) => {
     fetchedPoolMembersApi.current = status
   }
@@ -61,7 +61,7 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
   }, [activeAccount])
 
   // Initial setup for fetching members if Subscan is not enabled. Ensure poolMembers are reset if
-  // subscan is disabled.
+  // subscan is disabled
   useEffectIgnoreInitial(() => {
     if (pluginEnabled('subscan')) {
       setPoolMembersApi([])
@@ -142,18 +142,18 @@ export const PoolMembersProvider = ({ children }: { children: ReactNode }) => {
       new PoolMembers(network, key, addresses)
     )
 
-    // Record key.
+    // Record key
     poolMembersSubs.current.push(key)
   }
 
-  // Removes a member from the member list and updates state. Requires subscan to be enabled.
+  // Removes a member from the member list and updates state. Requires subscan to be enabled
   const removePoolMember = (who: MaybeAddress) => {
     if (pluginEnabled('subscan')) {
       setPoolMembersApi(poolMembersApi.filter((p) => p.who !== who) ?? [])
     }
   }
 
-  // Handle new pool members batch event.
+  // Handle new pool members batch event
   const handleNewPoolMembersBatch = (e: Event) => {
     if (isCustomEvent(e)) {
       const { key, poolMembers } = e.detail

@@ -7,7 +7,7 @@ import { useStaking } from 'contexts/Staking'
 import { Pie } from 'library/StatBoxList/Pie'
 import { useTranslation } from 'react-i18next'
 
-export const ActiveNominatorsStat = () => {
+export const ActiveNominators = () => {
   const { t } = useTranslation('pages')
   const {
     stakingMetrics: { counterForNominators },

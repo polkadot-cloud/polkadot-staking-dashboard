@@ -49,9 +49,7 @@
       "second_one": "second",
       "second_other": "seconds"
     },
-    "title_kusama": "Kusama Staking Dashboard",
-    "title_polkadot": "Polkadot Staking Dashboard",
-    "title_westend": "Westend Staking Dashboard",
+    "title": "Polkadot Staking Dashboard",
     "validators": "Validators"
   }
 }

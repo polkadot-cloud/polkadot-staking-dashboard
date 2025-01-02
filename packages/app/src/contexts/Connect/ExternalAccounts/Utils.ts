@@ -5,7 +5,7 @@ import type { ExternalAccount } from '@w3ux/react-connect-kit/types'
 import { localStorageOrDefault } from '@w3ux/utils'
 import type { NetworkId } from 'common-types'
 
-// Check whether an external account exists in local storage.
+// Check whether an external account exists in local storage
 export const externalAccountExistsLocal = (
   address: string,
   network: NetworkId
@@ -14,7 +14,7 @@ export const externalAccountExistsLocal = (
     (l) => l.address === address && l.network === network
   )
 
-// Gets local external accounts from local storage. Ensure that only `user` accounts are returned.
+// Gets local external accounts from local storage. Ensure that only `user` accounts are returned
 export const getLocalExternalAccounts = (network?: NetworkId) => {
   let localAccounts = localStorageOrDefault(
     'external_accounts',
@@ -29,7 +29,7 @@ export const getLocalExternalAccounts = (network?: NetworkId) => {
   return localAccounts
 }
 
-// Adds a local external account to local storage.
+// Adds a local external account to local storage
 export const addLocalExternalAccount = (account: ExternalAccount) => {
   localStorage.setItem(
     'external_accounts',
@@ -37,7 +37,7 @@ export const addLocalExternalAccount = (account: ExternalAccount) => {
   )
 }
 
-// Updates a local external account with the provided `addedBy` property.
+// Updates a local external account with the provided `addedBy` property
 export const updateLocalExternalAccount = (entry: ExternalAccount) => {
   localStorage.setItem(
     'external_accounts',
@@ -49,7 +49,7 @@ export const updateLocalExternalAccount = (entry: ExternalAccount) => {
   )
 }
 
-// Removes supplied external cccounts from local storage.
+// Removes supplied external cccounts from local storage
 export const removeLocalExternalAccounts = (
   network: NetworkId,
   accounts: ExternalAccount[]

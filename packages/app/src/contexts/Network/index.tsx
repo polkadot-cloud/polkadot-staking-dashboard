@@ -17,7 +17,7 @@ export const NetworkContext = createContext<NetworkContextInterface>(
 export const useNetwork = () => useContext(NetworkContext)
 
 export const NetworkProvider = ({ children }: { children: ReactNode }) => {
-  // Get the initial network and prepare meta tags if necessary.
+  // Get the initial network and prepare meta tags if necessary
   const getInitialNetwork = () => {
     const urlNetworkRaw = extractUrlValue('n')
 
@@ -25,7 +25,7 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
       (n) => n.name === urlNetworkRaw
     )
 
-    // use network from url if valid.
+    // use network from url if valid
     if (urlNetworkValid) {
       const urlNetwork = urlNetworkRaw as NetworkId
 
@@ -33,7 +33,7 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
         return urlNetwork
       }
     }
-    // fallback to localStorage network if there.
+    // fallback to localStorage network if there
     const localNetwork: NetworkId = localStorage.getItem('network') as NetworkId
 
     const localNetworkValid = !!Object.values(NetworkList).find(
@@ -42,15 +42,15 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
 
     const initialNetwork = localNetworkValid ? localNetwork : defaultNetwork
 
-    // Commit initial to local storage.
+    // Commit initial to local storage
     localStorage.setItem('network', initialNetwork)
 
     return initialNetwork
   }
 
-  // handle network switching.
+  // handle network switching
   const switchNetwork = async (name: NetworkId): Promise<void> => {
-    // Disconnect from current APIs before switching network.
+    // Disconnect from current APIs before switching network
     await Promise.all([
       await Apis.destroy(network.name),
       await Apis.destroy(`people-${network.name}`),
@@ -61,11 +61,11 @@ export const NetworkProvider = ({ children }: { children: ReactNode }) => {
       meta: NetworkList[name],
     })
 
-    // update url `n` if needed.
+    // update url `n` if needed
     varToUrlHash('n', name, false)
   }
 
-  // Store the initial active network.
+  // Store the initial active network
   const initialNetwork = getInitialNetwork()
 
   const [network, setNetwork] = useState<NetworkState>({
