@@ -781,46 +781,46 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/fontawesome-common-types@npm:6.7.1":
-  version: 6.7.1
-  resolution: "@fortawesome/fontawesome-common-types@npm:6.7.1"
-  checksum: 10c0/0345b896ad8df26fb823893ce0a405dd513e9ef34878dd7b94fbbbabe370379bf680a32199bcaaf7346acbcd2a10bf0072e305829b49e5d9b0bf1c5315d07c96
+"@fortawesome/fontawesome-common-types@npm:6.7.2":
+  version: 6.7.2
+  resolution: "@fortawesome/fontawesome-common-types@npm:6.7.2"
+  checksum: 10c0/0785df560542d9c08a0ba07bb7a39902274a3cd65c018672eb2520a99efccce18bdb7f7f4b1c6089763bc5627bf0f0837c3af963a8427eaeb535bd57c820a723
   languageName: node
   linkType: hard
 
-"@fortawesome/fontawesome-svg-core@npm:^6.5.2":
-  version: 6.7.1
-  resolution: "@fortawesome/fontawesome-svg-core@npm:6.7.1"
+"@fortawesome/fontawesome-svg-core@npm:^6.7.2":
+  version: 6.7.2
+  resolution: "@fortawesome/fontawesome-svg-core@npm:6.7.2"
   dependencies:
-    "@fortawesome/fontawesome-common-types": "npm:6.7.1"
-  checksum: 10c0/7a1dc40fc5ef380eb0f83d89dfcb26dc5b49f6a6545970e46e413d81dfa9764006a056cfcd49c2e8113dbd2c95d429db873710424a150e4a923b2496e11707ca
+    "@fortawesome/fontawesome-common-types": "npm:6.7.2"
+  checksum: 10c0/9e4e2992b341d2d11cd6ab8cf001e2cb9be4266ce200b307d15c0618e7d2cf11c1c4c67a1f95f3cc70feed2380fa66672132c32078674d5f9cb2cb0b7703f3ac
   languageName: node
   linkType: hard
 
-"@fortawesome/free-brands-svg-icons@npm:^6.5.2":
-  version: 6.7.1
-  resolution: "@fortawesome/free-brands-svg-icons@npm:6.7.1"
+"@fortawesome/free-brands-svg-icons@npm:^6.7.2":
+  version: 6.7.2
+  resolution: "@fortawesome/free-brands-svg-icons@npm:6.7.2"
   dependencies:
-    "@fortawesome/fontawesome-common-types": "npm:6.7.1"
-  checksum: 10c0/bd140ed872582300f7ed4b2af9348791cae38217ee0685ea34c135b00ce8db07da17b518464162a29d371f2f7177d3051b02535ca6b560bb15981ef34ef8e112
+    "@fortawesome/fontawesome-common-types": "npm:6.7.2"
+  checksum: 10c0/054af882f3416d4a04dfe0f8db8f1ac645d07709a019e95368ae796c1aeee5929dfaf023e5568438a600e1bc1496e6e7270659d2be91b50531fdbd724034b22c
   languageName: node
   linkType: hard
 
-"@fortawesome/free-regular-svg-icons@npm:^6.5.2":
-  version: 6.7.1
-  resolution: "@fortawesome/free-regular-svg-icons@npm:6.7.1"
+"@fortawesome/free-regular-svg-icons@npm:^6.7.2":
+  version: 6.7.2
+  resolution: "@fortawesome/free-regular-svg-icons@npm:6.7.2"
   dependencies:
-    "@fortawesome/fontawesome-common-types": "npm:6.7.1"
-  checksum: 10c0/6d770622cd6519835d8557a0a562c5f2f877527bb65671a6136a558ce61024bf7baaeb8e29420f29da4893b815c3af8173c6f45064bbcc040db613998d77502e
+    "@fortawesome/fontawesome-common-types": "npm:6.7.2"
+  checksum: 10c0/3a334cb0c837170f7b14759ddc8ef2a821b8d2c59b23a7b852d7e3fb16b066dd5fe8649e47bc1ef91764c78a78f51d1c0c8c5b8567e1680eeb21e8afdc70f5f7
   languageName: node
   linkType: hard
 
-"@fortawesome/free-solid-svg-icons@npm:^6.5.2":
-  version: 6.7.1
-  resolution: "@fortawesome/free-solid-svg-icons@npm:6.7.1"
+"@fortawesome/free-solid-svg-icons@npm:^6.7.2":
+  version: 6.7.2
+  resolution: "@fortawesome/free-solid-svg-icons@npm:6.7.2"
   dependencies:
-    "@fortawesome/fontawesome-common-types": "npm:6.7.1"
-  checksum: 10c0/9b6e6ba383dfc456020b77a600edcccaf8131ebd472038bd6b6f2425f011c8c63c0a6049d798dc120512b9c5332043eb46bb815d9d55c56ebdf8ecc94afb0184
+    "@fortawesome/fontawesome-common-types": "npm:6.7.2"
+  checksum: 10c0/e900f3bb7b7d821421f11439ff78cd2b3c98ca31e848e1afebf7caa578d29a31fb6cf8ef283d4df342de777126a71fcbb154dd395b9d9ab6914a40a86df81413
   languageName: node
   linkType: hard
 
@@ -3395,14 +3395,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@substrate/connect-extension-protocol@npm:^2.0.0, @substrate/connect-extension-protocol@npm:^2.2.1":
+"@substrate/connect-extension-protocol@npm:^2.0.0":
   version: 2.2.1
   resolution: "@substrate/connect-extension-protocol@npm:2.2.1"
   checksum: 10c0/5e066c1cbdfe9d4cae6bc85dd0adbe62832af08733b0fe6dab4aee05520ef0f85c3b892e58ba59c83a0d70a3587e16e91f61265e961e978a721dfddd6eb8b1f4
   languageName: node
   linkType: hard
 
-"@substrate/connect-known-chains@npm:^1.1.5, @substrate/connect-known-chains@npm:^1.8.0":
+"@substrate/connect-known-chains@npm:^1.1.5":
   version: 1.8.0
   resolution: "@substrate/connect-known-chains@npm:1.8.0"
   checksum: 10c0/9315ca8f6a7bfc2d06176c217be68a81109e32da6a90cda8f0827c8101fee6aa696264953c06646c2c450bf3adbae481df0ca1ea1988533c127a03fcec67827c
@@ -3421,25 +3421,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@substrate/connect@npm:^2.0.1":
-  version: 2.1.0
-  resolution: "@substrate/connect@npm:2.1.0"
-  dependencies:
-    "@substrate/connect-extension-protocol": "npm:^2.2.1"
-    "@substrate/connect-known-chains": "npm:^1.8.0"
-    "@substrate/smoldot-discovery": "npm:^2.0.1"
-    smoldot: "npm:^2.0.34"
-  checksum: 10c0/2a754d5c553a99e20fecb5f57c74f7a589a0ae6ea70c7a7e19f31d9f546b019d827d32945c21164db9934c17b09f415821e73aca5e11f8c27e0651406c99c836
-  languageName: node
-  linkType: hard
-
-"@substrate/discovery@npm:^0.2.1":
-  version: 0.2.1
-  resolution: "@substrate/discovery@npm:0.2.1"
-  checksum: 10c0/91b101d7cde80a29dfb38fb4b22d92559d1f49f1c6141896f715dab1169f9ee03ce6e8e493c01705cad73d4d82f07b5e6c26d7e5bfea3f9912e2cb7b070b7252
-  languageName: node
-  linkType: hard
-
 "@substrate/light-client-extension-helpers@npm:^1.0.0":
   version: 1.0.0
   resolution: "@substrate/light-client-extension-helpers@npm:1.0.0"
@@ -3454,15 +3435,6 @@ __metadata:
   peerDependencies:
     smoldot: 2.x
   checksum: 10c0/41b692c4f8ec8ee5e67f7c184ea0556c92d2755401efd20c9ee440d0d1d76e00972b76c92514cc6850855a55bbf062b301f1188eeb3b926a7fc1adb914298e94
-  languageName: node
-  linkType: hard
-
-"@substrate/smoldot-discovery@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "@substrate/smoldot-discovery@npm:2.0.1"
-  dependencies:
-    "@substrate/discovery": "npm:^0.2.1"
-  checksum: 10c0/81ef9af7d7398b7b53a28487054636d26b65ae3804c6d3465e488248629d94e9c9ded09a0f5c2a3b72ff6feef4efb8409df8c94b79b2adb0028360e69c7b71da
   languageName: node
   linkType: hard
 
@@ -4755,10 +4727,10 @@ __metadata:
   resolution: "app@workspace:packages/app"
   dependencies:
     "@dotlottie/player-component": "npm:^2.7.12"
-    "@fortawesome/fontawesome-svg-core": "npm:^6.5.2"
-    "@fortawesome/free-brands-svg-icons": "npm:^6.5.2"
-    "@fortawesome/free-regular-svg-icons": "npm:^6.5.2"
-    "@fortawesome/free-solid-svg-icons": "npm:^6.5.2"
+    "@fortawesome/fontawesome-svg-core": "npm:^6.7.2"
+    "@fortawesome/free-brands-svg-icons": "npm:^6.7.2"
+    "@fortawesome/free-regular-svg-icons": "npm:^6.7.2"
+    "@fortawesome/free-solid-svg-icons": "npm:^6.7.2"
     "@fortawesome/react-fontawesome": "npm:^0.2.2"
     "@ledgerhq/hw-transport-webhid": "npm:^6.29.2"
     "@polkadot-api/merkleize-metadata": "npm:^1.1.12"
@@ -4766,7 +4738,6 @@ __metadata:
     "@polkadot-api/substrate-bindings": "npm:^0.11.0"
     "@polkadot/util": "npm:^13.2.3"
     "@polkawatch/ddp-client": "npm:^2.0.20"
-    "@substrate/connect": "npm:^2.0.1"
     "@w3ux/extension-assets": "npm:^1.0.0"
     "@w3ux/factories": "npm:^1.0.0"
     "@w3ux/react-connect-kit": "npm:^2.1.1"
@@ -10671,7 +10642,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"smoldot@npm:2.0.34, smoldot@npm:^2.0.34":
+"smoldot@npm:2.0.34":
   version: 2.0.34
   resolution: "smoldot@npm:2.0.34"
   dependencies:
