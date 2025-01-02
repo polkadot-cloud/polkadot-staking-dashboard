@@ -5012,7 +5012,7 @@ __metadata:
     qrcode-generator: "npm:1.4.4"
     rc-slider: "npm:^11.1.6"
     react: "npm:^18.3.1"
-    react-chartjs-2: "npm:^5.3.0"
+    react-chartjs-2: "npm:^5.2.0"
     react-dom: "npm:^18.2.0"
     react-error-boundary: "npm:^4.0.13"
     react-helmet: "npm:^6.1.0"
@@ -5026,8 +5026,8 @@ __metadata:
     ui-structure: "workspace:*"
     usehooks-ts: "npm:^3.0.2"
     utils: "workspace:*"
-    viem: "npm:^2.21.53"
-    vite: "npm:^6.0.6"
+    viem: "npm:^2.22.1"
+    vite: "npm:^6.0.2"
     vite-bundle-visualizer: "npm:^1.2.1"
     vite-plugin-checker: "npm:^0.8.0"
     vite-plugin-eslint: "npm:^1.8.1"
@@ -10119,7 +10119,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-chartjs-2@npm:^5.3.0":
+"react-chartjs-2@npm:^5.2.0":
   version: 5.3.0
   resolution: "react-chartjs-2@npm:5.3.0"
   peerDependencies:
@@ -12447,7 +12447,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^6.0.6":
+"vite@npm:^6.0.2":
   version: 6.0.6
   resolution: "vite@npm:6.0.6"
   dependencies:
