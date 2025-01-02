@@ -4,6 +4,8 @@ SPDX-License-Identifier: GPL-3.0-only */
 .footer {
   display: flex;
   flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  margin: 0 auto;
 }

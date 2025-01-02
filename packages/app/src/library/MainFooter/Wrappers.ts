@@ -14,7 +14,6 @@ export const Wrapper = styled.div`
   overflow: hidden;
   z-index: 6;
   backdrop-filter: blur(4px);
-  position: relative;
   padding-top: 0.15rem;
   padding-bottom: 1.25rem;
   width: 100%;
