@@ -5012,7 +5012,7 @@ __metadata:
     qrcode-generator: "npm:1.4.4"
     rc-slider: "npm:^11.1.6"
     react: "npm:^18.3.1"
-    react-chartjs-2: "npm:^5.3.0"
+    react-chartjs-2: "npm:^5.2.0"
     react-dom: "npm:^18.2.0"
     react-error-boundary: "npm:^4.0.13"
     react-helmet: "npm:^6.1.0"
@@ -5026,8 +5026,8 @@ __metadata:
     ui-structure: "workspace:*"
     usehooks-ts: "npm:^3.0.2"
     utils: "workspace:*"
-    viem: "npm:^2.21.53"
-    vite: "npm:^6.0.6"
+    viem: "npm:^2.22.1"
+    vite: "npm:^6.0.2"
     vite-bundle-visualizer: "npm:^1.2.1"
     vite-plugin-checker: "npm:^0.8.0"
     vite-plugin-eslint: "npm:^1.8.1"
@@ -7578,10 +7578,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql@npm:^16.9.0":
-  version: 16.9.0
-  resolution: "graphql@npm:16.9.0"
-  checksum: 10c0/a8850f077ff767377237d1f8b1da2ec70aeb7623cdf1dfc9e1c7ae93accc0c8149c85abe68923be9871a2934b1bce5a2496f846d4d56e1cfb03eaaa7ddba9b6a
+"graphql@npm:^16.10.0":
+  version: 16.10.0
+  resolution: "graphql@npm:16.10.0"
+  checksum: 10c0/303730675538c8bd6c76b447dc6f03e61242e2d2596b408c34759666ec4877409e5593a7a0467d590ac5407b8c663b093b599556a77f24f281abea69ddc53de6
   languageName: node
   linkType: hard
 
@@ -9748,7 +9748,7 @@ __metadata:
   resolution: "plugin-staking-api@workspace:packages/plugin-staking-api"
   dependencies:
     "@apollo/client": "npm:^3.12.4"
-    graphql: "npm:^16.9.0"
+    graphql: "npm:^16.10.0"
   languageName: unknown
   linkType: soft
 
@@ -10119,7 +10119,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-chartjs-2@npm:^5.3.0":
+"react-chartjs-2@npm:^5.2.0":
   version: 5.3.0
   resolution: "react-chartjs-2@npm:5.3.0"
   peerDependencies:
@@ -12447,7 +12447,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^6.0.6":
+"vite@npm:^6.0.2":
   version: 6.0.6
   resolution: "vite@npm:6.0.6"
   dependencies:
