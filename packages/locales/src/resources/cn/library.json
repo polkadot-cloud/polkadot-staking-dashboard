@@ -80,7 +80,6 @@
     "exclude": "不含",
     "failed": "失败",
     "fastUnstake": "快速解除抵押",
-    "fastUnstakeCheckingEras": "正在查验 {{total}} Eras中的 {{checked}}",
     "fastUnstakeExposed": "在 {{count}} Era前己被显示",
     "favorite": "收藏夹",
     "favoritePoolAdded": "己添加提名池",
