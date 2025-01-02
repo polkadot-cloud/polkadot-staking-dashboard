@@ -48,7 +48,7 @@
     "qrcode-generator": "1.4.4",
     "rc-slider": "^11.1.6",
     "react": "^18.3.1",
-    "react-chartjs-2": "^5.2.0",
+    "react-chartjs-2": "^5.3.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.13",
     "react-helmet": "^6.1.0",
@@ -67,7 +67,7 @@
     "xxhash-wasm": "^1.0.2"
   },
   "devDependencies": {
-    "vite": "^6.0.2",
+    "vite": "^6.0.6",
     "vite-bundle-visualizer": "^1.2.1",
     "vite-plugin-checker": "^0.8.0",
     "vite-plugin-eslint": "^1.8.1",
