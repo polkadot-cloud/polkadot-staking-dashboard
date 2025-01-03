@@ -3,9 +3,9 @@
 
 import { faPlug, faWallet } from '@fortawesome/free-solid-svg-icons'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useOverlay } from 'kits/Overlay/Provider'
 import { useTranslation } from 'react-i18next'
 import { ButtonText } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
 import { ConnectedAccount, HeadingWrapper } from './Wrappers'
 
 export const Connect = () => {

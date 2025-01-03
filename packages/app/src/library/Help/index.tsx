@@ -12,13 +12,15 @@ import type {
 } from 'contexts/Help/types'
 import { useAnimation } from 'framer-motion'
 import { useFillVariables } from 'hooks/useFillVariables'
-import { CanvasContainer } from 'kits/Overlay/structure/CanvasContainer'
-import { CanvasScroll } from 'kits/Overlay/structure/CanvasScroll'
-import { ModalContent } from 'kits/Overlay/structure/ModalContent'
 import { DefaultLocale } from 'locales'
 import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimaryInvert } from 'ui-buttons'
+import {
+  CanvasContainer,
+  CanvasScroll,
+  ModalContent,
+} from 'ui-overlay/structure'
 import { ActiveDefinition } from './Items/ActiveDefinition'
 import { Definition } from './Items/Definition'
 import { External } from './Items/External'

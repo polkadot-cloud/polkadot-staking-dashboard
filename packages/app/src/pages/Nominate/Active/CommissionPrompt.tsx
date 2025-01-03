@@ -13,10 +13,10 @@ import { useStaking } from 'contexts/Staking'
 import { useTheme } from 'contexts/Themes'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
-import { useOverlay } from 'kits/Overlay/Provider'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
 import { ButtonRow, PageRow } from 'ui-structure'
 
 export const CommissionPrompt = () => {

@@ -3,13 +3,15 @@
 
 import { setStateWithRef } from '@w3ux/utils'
 import { usePayouts } from 'contexts/Payouts'
-import { useOverlay } from 'kits/Overlay/Provider'
-import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle'
-import { ModalMotionTwoSection } from 'kits/Overlay/structure/ModalMotionTwoSection'
-import { ModalSection } from 'kits/Overlay/structure/ModalSection'
 import { Title } from 'library/Modal/Title'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useOverlay } from 'ui-overlay'
+import {
+  ModalFixedTitle,
+  ModalMotionTwoSection,
+  ModalSection,
+} from 'ui-overlay/structure'
 import { Forms } from './Forms'
 import { Overview } from './Overview'
 import type { ActivePayout } from './types'

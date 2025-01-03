@@ -16,7 +16,7 @@ import 'styles/theme/index.scss'
 import 'styles/theme/theme.scss'
 
 // Library styles.
-import 'kits/Overlay/index.scss'
+import 'ui-overlay/css'
 
 const rootElement = document.getElementById('root')
 if (!rootElement) {

@@ -10,15 +10,17 @@ import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
-import { useOverlay } from 'kits/Overlay/Provider'
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
-import { ModalSeparator } from 'kits/Overlay/structure/ModalSeparator'
-import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings'
 import { Warning } from 'library/Form/Warning'
 import { Close } from 'library/Modal/Close'
 import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useOverlay } from 'ui-overlay'
+import {
+  ModalPadding,
+  ModalSeparator,
+  ModalWarnings,
+} from 'ui-overlay/structure'
 
 export const StopNominations = () => {
   const { t } = useTranslation('modals')

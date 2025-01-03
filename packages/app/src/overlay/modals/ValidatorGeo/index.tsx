@@ -10,7 +10,6 @@ import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useUi } from 'contexts/UI'
 import { PolkaWatch } from 'controllers/PolkaWatch'
-import { useOverlay } from 'kits/Overlay/Provider'
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
 import { GeoDonut } from 'library/Graphs/GeoDonut'
 import { formatSize } from 'library/Graphs/Utils'
@@ -21,6 +20,7 @@ import { StatusLabel } from 'library/StatusLabel'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
 
 export const ValidatorGeo = () => {
   const { t } = useTranslation('modals')

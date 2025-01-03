@@ -11,9 +11,9 @@ import { useStaking } from 'contexts/Staking'
 import { useNominationStatus } from 'hooks/useNominationStatus'
 import { useSyncing } from 'hooks/useSyncing'
 import { useUnstaking } from 'hooks/useUnstaking'
-import { useOverlay } from 'kits/Overlay/Provider'
 import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
+import { useOverlay } from 'ui-overlay'
 import { useActivePool } from '../../../../contexts/Pools/ActivePool'
 
 export const NominationStatus = ({

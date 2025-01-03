@@ -6,10 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { AnyJson } from '@w3ux/types'
 import CrossSVG from 'assets/svg/cross.svg?react'
 import { useHelp } from 'contexts/Help'
-import { useOverlay } from 'kits/Overlay/Provider'
 import type { FunctionComponent, SVGProps } from 'react'
 import type { CSSProperties } from 'styled-components'
 import { ButtonHelp } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
 import { TitleWrapper } from './Wrappers'
 
 interface TitleProps {

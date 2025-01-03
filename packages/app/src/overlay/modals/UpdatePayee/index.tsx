@@ -11,9 +11,6 @@ import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
-import { useOverlay } from 'kits/Overlay/Provider'
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
-import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings'
 import { Warning } from 'library/Form/Warning'
 import { Title } from 'library/Modal/Title'
 import { PayeeInput } from 'library/PayeeInput'
@@ -23,6 +20,8 @@ import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { MaybeAddress } from 'types'
+import { useOverlay } from 'ui-overlay'
+import { ModalPadding, ModalWarnings } from 'ui-overlay/structure'
 
 export const UpdatePayee = () => {
   const { t } = useTranslation('modals')

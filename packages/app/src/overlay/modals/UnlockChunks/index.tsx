@@ -7,13 +7,15 @@ import { useBalances } from 'contexts/Balances'
 import type { UnlockChunk } from 'contexts/Balances/types'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useOverlay } from 'kits/Overlay/Provider'
-import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle'
-import { ModalMotionTwoSection } from 'kits/Overlay/structure/ModalMotionTwoSection'
-import { ModalSection } from 'kits/Overlay/structure/ModalSection'
 import { Title } from 'library/Modal/Title'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useOverlay } from 'ui-overlay'
+import {
+  ModalFixedTitle,
+  ModalMotionTwoSection,
+  ModalSection,
+} from 'ui-overlay/structure'
 import { Forms } from './Forms'
 import { Overview } from './Overview'
 
