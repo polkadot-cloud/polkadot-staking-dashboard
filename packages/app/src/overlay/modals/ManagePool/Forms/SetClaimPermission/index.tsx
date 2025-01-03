@@ -86,7 +86,7 @@ export const SetClaimPermission = ({
     <>
       <ModalPadding horizontalOnly>
         {warnings.length > 0 ? (
-          <ModalWarnings withMargin>
+          <ModalWarnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}

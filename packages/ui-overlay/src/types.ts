@@ -54,8 +54,3 @@ export type ModalSectionProps = ComponentBase & {
   // the type of window (tab | carousel).
   type: 'tab' | 'carousel'
 }
-
-export type ModalWarningsProps = ComponentBase & {
-  // whether there is margin on top.
-  withMargin?: boolean
-}

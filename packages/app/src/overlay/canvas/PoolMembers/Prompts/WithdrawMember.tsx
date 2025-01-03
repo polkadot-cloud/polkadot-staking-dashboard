@@ -97,7 +97,7 @@ export const WithdrawMember = ({
       <Title title={t('withdrawPoolMember')} />
       <ModalPadding>
         {warnings.length > 0 ? (
-          <ModalWarnings withMargin>
+          <ModalWarnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}

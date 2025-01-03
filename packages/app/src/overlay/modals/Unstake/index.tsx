@@ -115,7 +115,7 @@ export const Unstake = () => {
       <ModalPadding>
         <h2 className="title unbounded">{t('unstake')} </h2>
         {warnings.length > 0 ? (
-          <ModalWarnings withMargin>
+          <ModalWarnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}

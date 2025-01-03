@@ -88,7 +88,7 @@ export const ClaimReward = () => {
           {claimType === 'bond' ? t('compound') : t('withdraw')} {t('rewards')}
         </h2>
         {warnings.length > 0 ? (
-          <ModalWarnings withMargin>
+          <ModalWarnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}

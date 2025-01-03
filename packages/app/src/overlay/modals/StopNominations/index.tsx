@@ -16,11 +16,7 @@ import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
-import {
-  ModalPadding,
-  ModalSeparator,
-  ModalWarnings,
-} from 'ui-overlay/structure'
+import { ModalPadding, ModalWarnings } from 'ui-overlay/structure'
 
 export const StopNominations = () => {
   const { t } = useTranslation('modals')
@@ -102,7 +98,6 @@ export const StopNominations = () => {
         <h2 className="title unbounded">
           {t('stop')} {t('allNominations')}
         </h2>
-        <ModalSeparator />
         {warnings.length ? (
           <ModalWarnings>
             {warnings.map((text, i) => (

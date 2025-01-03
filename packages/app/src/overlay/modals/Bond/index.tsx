@@ -149,7 +149,7 @@ export const Bond = () => {
       <ModalPadding>
         <h2 className="title unbounded">{t('addToBond')}</h2>
         {pendingRewards > 0n && bondFor === 'pool' ? (
-          <ModalWarnings withMargin>
+          <ModalWarnings>
             <Warning
               text={`${t('bondingWithdraw')} ${pendingRewardsUnit} ${unit}.`}
             />
