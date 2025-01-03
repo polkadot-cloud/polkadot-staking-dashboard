@@ -1,7 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-export * from './CanvasCard'
 export * from './CanvasContainer'
 export * from './CanvasContent'
 export * from './CanvasScroll'

@@ -38,48 +38,6 @@
   }
 }
 
-/* Component styles */
-
-.modal-canvas-card {
-  background: var(--background-floating-card);
-  border-radius: 1.5rem;
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 1.25rem;
-  padding: 1rem;
-  width: 100%;
-
-  h2 {
-    color: var(--text-color-primary);
-    padding: 0 0.75rem;
-    margin: 0.5rem 0;
-    width: 100%;
-  }
-}
-
-.modal-canvas {
-  @include modal-position;
-
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 0 3rem;
-  position: fixed;
-  z-index: 10;
-
-  /* click anywhere behind modal content to close */
-  .close {
-    @include modal-position;
-
-    z-index: 8;
-    cursor: default;
-  }
-}
-
 .modal-canvas-content {
   width: 100%;
   min-height: 100vh;

@@ -7,10 +7,6 @@ import { forwardRef } from 'react'
 import type { ModalPaddingProps } from '../../types'
 import classes from './index.module.scss'
 
-/**
- * @name ModalPadding
- * @summary Generic wrapper for modal container padding.
- */
 export const ModalPadding = forwardRef(
   (
     { children, style, verticalOnly, horizontalOnly }: ModalPaddingProps,
@@ -20,7 +16,6 @@ export const ModalPadding = forwardRef(
       [classes.verticalOnly]: verticalOnly,
       [classes.horizontalOnly]: horizontalOnly,
     })
-
     return (
       <div ref={ref} className={allClasses} style={style}>
         {children}
