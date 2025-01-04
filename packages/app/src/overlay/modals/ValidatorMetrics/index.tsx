@@ -25,7 +25,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
 import { useOverlay } from 'ui-overlay'
-import { ModalPadding } from 'ui-overlay/structure'
+import { ModalAddressHeader, ModalPadding } from 'ui-overlay/structure'
 import { planckToUnitBn } from 'utils'
 
 export const ValidatorMetrics = () => {
@@ -94,13 +94,13 @@ export const ValidatorMetrics = () => {
   return (
     <>
       <Title title={t('validatorMetrics')} />
-      <div className="header">
+      <ModalAddressHeader>
         <Polkicon address={address} fontSize="2.75rem" />
         <h2>
           &nbsp;&nbsp;
           {identity === null ? ellipsisFn(address) : identity}
         </h2>
-      </div>
+      </ModalAddressHeader>
 
       <ModalPadding horizontalOnly>
         <StatsWrapper>
@@ -118,8 +118,7 @@ export const ValidatorMetrics = () => {
         </StatsWrapper>
       </ModalPadding>
       <div
-        className="body"
-        style={{ position: 'relative', marginTop: '0.5rem' }}
+        style={{ position: 'relative', marginTop: '0.5rem', padding: '1rem' }}
       >
         <PluginLabel plugin="subscan" />
         <CardWrapper

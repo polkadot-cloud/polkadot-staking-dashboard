@@ -37,21 +37,6 @@
   &.dimmed {
     opacity: 0;
   }
-
-  a {
-    color: var(--accent-color-primary);
-  }
-
-  .header {
-    display: flex;
-    align-items: center;
-    padding: 1rem 1rem 0;
-    width: 100%;
-  }
-
-  .body {
-    padding: 1rem;
-  }
 }
 
 .modal-connect-item {

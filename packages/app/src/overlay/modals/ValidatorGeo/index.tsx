@@ -21,6 +21,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
 import { useOverlay } from 'ui-overlay'
+import { ModalAddressHeader } from 'ui-overlay/structure'
 
 export const ValidatorGeo = () => {
   const { t } = useTranslation('modals')
@@ -70,16 +71,15 @@ export const ValidatorGeo = () => {
   return (
     <>
       <Title title={t('validatorDecentralization')} />
-      <div className="header">
+      <ModalAddressHeader>
         <Polkicon address={address} fontSize="2.75rem" />
         <h2>
           &nbsp;&nbsp;
           {identity === null ? ellipsisFn(address) : identity}
         </h2>
-      </div>
+      </ModalAddressHeader>
       <div
-        className="body"
-        style={{ position: 'relative', marginTop: '0.5rem' }}
+        style={{ position: 'relative', marginTop: '0.5rem', padding: '1rem' }}
       >
         <PluginLabel plugin="polkawatch" />
         <CardWrapper
