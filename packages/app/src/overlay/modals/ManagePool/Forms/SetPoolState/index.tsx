@@ -9,9 +9,6 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
-import { useOverlay } from 'kits/Overlay/Provider'
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
-import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings'
 import { ActionItem } from 'library/ActionItem'
 import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
@@ -19,6 +16,8 @@ import type { Dispatch, SetStateAction } from 'react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonSubmitInvert } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
+import { ModalPadding, ModalWarnings } from 'ui-overlay/structure'
 
 export const SetPoolState = ({
   setSection,
@@ -139,7 +138,7 @@ export const SetPoolState = ({
     <>
       <ModalPadding horizontalOnly>
         {warnings.length > 0 ? (
-          <ModalWarnings withMargin>
+          <ModalWarnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}

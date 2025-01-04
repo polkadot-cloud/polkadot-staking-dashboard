@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useHelp } from 'contexts/Help'
-import { Overlay } from 'kits/Overlay'
 import { ErrorFallbackModal } from 'library/ErrorBoundary'
+import { Overlay } from 'ui-overlay'
 import { CreatePool } from './canvas/CreatePool'
 import { JoinPool } from './canvas/JoinPool'
 import { ManageNominations } from './canvas/ManageNominations'

@@ -3,14 +3,17 @@
 
 import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useOverlay } from 'kits/Overlay/Provider'
-import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle'
-import { ModalMotionTwoSection } from 'kits/Overlay/structure/ModalMotionTwoSection'
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
-import { ModalSection } from 'kits/Overlay/structure/ModalSection'
 import { Title } from 'library/Modal/Title'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useOverlay } from 'ui-overlay'
+import {
+  ModalFixedTitle,
+  ModalMulti,
+  ModalMultiTwo,
+  ModalPadding,
+  ModalSection,
+} from 'ui-overlay/structure'
 import { Forms } from './Forms'
 import { Tasks } from './Tasks'
 
@@ -68,7 +71,7 @@ export const ManagePool = () => {
       <ModalFixedTitle ref={headerRef}>
         <Title title={`${t('managePool')}`} fixed />
       </ModalFixedTitle>
-      <ModalMotionTwoSection
+      <ModalMultiTwo
         style={{
           maxHeight: modalMaxHeight - (headerRef.current?.clientHeight || 0),
         }}
@@ -87,13 +90,13 @@ export const ManagePool = () => {
           },
         }}
       >
-        <div className="section">
+        <ModalMulti>
           <ModalPadding horizontalOnly>
             <Tasks setSection={setSection} setTask={setTask} ref={tasksRef} />
           </ModalPadding>
-        </div>
+        </ModalMulti>
 
-        <div className="section">
+        <ModalMulti>
           <Forms
             onResize={onResize}
             setSection={setSection}
@@ -102,8 +105,8 @@ export const ManagePool = () => {
             ref={formsRef}
             incrementCalculateHeight={incrementCalculateHeight}
           />
-        </div>
-      </ModalMotionTwoSection>
+        </ModalMulti>
+      </ModalMultiTwo>
     </ModalSection>
   )
 }

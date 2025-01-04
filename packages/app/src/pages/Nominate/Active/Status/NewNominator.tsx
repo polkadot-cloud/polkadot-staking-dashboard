@@ -7,11 +7,11 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useOverlay } from 'kits/Overlay/Provider'
 import { CallToActionWrapper } from 'library/CallToAction'
 import { CallToActionLoader } from 'library/Loader/CallToAction'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
+import { useOverlay } from 'ui-overlay'
 import type { NewNominatorProps } from '../types'
 
 export const NewNominator = ({ syncing }: NewNominatorProps) => {

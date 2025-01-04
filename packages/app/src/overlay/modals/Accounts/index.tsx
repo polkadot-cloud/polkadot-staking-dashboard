@@ -9,14 +9,13 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useProxies } from 'contexts/Proxies'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useActiveBalances } from 'hooks/useActiveBalances'
-import { useOverlay } from 'kits/Overlay/Provider'
-import { ModalCustomHeader } from 'kits/Overlay/structure/ModalCustomHeader'
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
 import { ActionItem } from 'library/ActionItem'
 import { Fragment, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { MaybeAddress } from 'types'
 import { ButtonPrimaryInvert, ButtonText } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
+import { ModalCustomHeader, ModalPadding } from 'ui-overlay/structure'
 import { AccountButton } from './Account'
 import { Delegates } from './Delegates'
 import { AccountSeparator, AccountWrapper } from './Wrappers'
@@ -167,7 +166,7 @@ export const Accounts = () => {
   return (
     <ModalPadding>
       <ModalCustomHeader>
-        <div className="first">
+        <div>
           <h1>{t('accounts')}</h1>
           <ButtonPrimaryInvert
             text={t('goToConnect')}

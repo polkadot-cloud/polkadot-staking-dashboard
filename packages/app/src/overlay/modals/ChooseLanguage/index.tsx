@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import LanguageSVG from 'assets/svg/language.svg?react'
-import { useOverlay } from 'kits/Overlay/Provider'
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
 import { Title } from 'library/Modal/Title'
 import { changeLanguage, locales } from 'locales'
 import { useTranslation } from 'react-i18next'
+import { useOverlay } from 'ui-overlay'
+import { ModalPadding } from 'ui-overlay/structure'
 import { ContentWrapper, LocaleButton } from './Wrapper'
 
 export const ChooseLanguage = () => {

@@ -7,18 +7,21 @@ import type { ExtensionArrayListItem } from '@w3ux/extension-assets/util'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useExtensions } from '@w3ux/react-connect-kit'
 import type { AnyFunction } from '@w3ux/types'
-import { useOverlay } from 'kits/Overlay/Provider'
-import { ModalCustomHeader } from 'kits/Overlay/structure/ModalCustomHeader'
-import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle'
-import { ModalMotionThreeSection } from 'kits/Overlay/structure/ModalMotionThreeSection'
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
-import { ModalSection } from 'kits/Overlay/structure/ModalSection'
 import { ActionItem } from 'library/ActionItem'
 import { Close } from 'library/Modal/Close'
 import { SelectItems } from 'library/SelectItems'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimaryInvert, ButtonTab } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
+import {
+  ModalCustomHeader,
+  ModalFixedTitle,
+  ModalMulti,
+  ModalMultiThree,
+  ModalPadding,
+  ModalSection,
+} from 'ui-overlay/structure'
 import { Extension } from './Extension'
 import { Ledger } from './Ledger'
 import { Proxies } from './Proxies'
@@ -156,7 +159,7 @@ export const Connect = () => {
       <Close />
       <ModalFixedTitle ref={headerRef} withStyle>
         <ModalCustomHeader>
-          <div className="first">
+          <div>
             <h1>{t('connect')}</h1>
             <ButtonPrimaryInvert
               text={t('goToAccounts')}
@@ -186,7 +189,7 @@ export const Connect = () => {
         </ModalCustomHeader>
       </ModalFixedTitle>
 
-      <ModalMotionThreeSection
+      <ModalMultiThree
         style={{
           maxHeight: modalMaxHeight - (headerRef.current?.clientHeight || 0),
         }}
@@ -210,7 +213,7 @@ export const Connect = () => {
           },
         }}
       >
-        <div className="section">
+        <ModalMulti>
           <ModalPadding horizontalOnly ref={homeRef}>
             {ConnectCombinedJSX}
             {!inMobileWallet && (
@@ -231,18 +234,18 @@ export const Connect = () => {
               </>
             )}
           </ModalPadding>
-        </div>
-        <div className="section">
+        </ModalMulti>
+        <ModalMulti>
           <ModalPadding horizontalOnly ref={readOnlyRef}>
             <ReadOnly setInputOpen={setReadOnlyOpen} inputOpen={readOnlyOpen} />
           </ModalPadding>
-        </div>
-        <div className="section">
+        </ModalMulti>
+        <ModalMulti>
           <ModalPadding horizontalOnly ref={proxiesRef}>
             <Proxies setInputOpen={setNewProxyOpen} inputOpen={newProxyOpen} />
           </ModalPadding>
-        </div>
-      </ModalMotionThreeSection>
+        </ModalMulti>
+      </ModalMultiThree>
     </ModalSection>
   )
 }

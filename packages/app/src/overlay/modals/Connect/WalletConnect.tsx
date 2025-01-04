@@ -4,12 +4,11 @@
 import { faExternalLinkAlt, faLink } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
-import { useOverlay } from 'kits/Overlay/Provider'
-import { ModalConnectItem } from 'kits/Overlay/structure/ModalConnectItem'
-import { ModalHardwareItem } from 'kits/Overlay/structure/ModalHardwareItem'
 import type { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimaryInvert, ButtonText } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
+import { ConnectItem, HardwareItem } from './Wrappers'
 
 export const WalletConnect = (): ReactElement => {
   const { t } = useTranslation('modals')
@@ -17,8 +16,8 @@ export const WalletConnect = (): ReactElement => {
   const url = 'reown.com'
 
   return (
-    <ModalConnectItem>
-      <ModalHardwareItem>
+    <ConnectItem>
+      <HardwareItem>
         <div className="body">
           <div className="row">
             <WalletConnectSVG className="logo" />
@@ -52,7 +51,7 @@ export const WalletConnect = (): ReactElement => {
             <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
           </a>
         </div>
-      </ModalHardwareItem>
-    </ModalConnectItem>
+      </HardwareItem>
+    </ConnectItem>
   )
 }

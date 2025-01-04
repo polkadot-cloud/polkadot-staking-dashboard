@@ -5,18 +5,15 @@ import { App } from 'App'
 import { createRoot } from 'react-dom/client'
 import { version } from '../package.json'
 
-// Network styles.
+// Network styles
 import 'styles/accents/kusama-relay.css'
 import 'styles/accents/polkadot-relay.css'
 import 'styles/accents/westend-relay.css'
 
-// App styles.
+// App styles
 import 'styles/fonts/font.scss'
 import 'styles/theme/index.scss'
 import 'styles/theme/theme.scss'
-
-// Library styles.
-import 'kits/Overlay/index.scss'
 
 const rootElement = document.getElementById('root')
 if (!rootElement) {
@@ -24,7 +21,7 @@ if (!rootElement) {
 }
 
 // Refresh local storage language resources if in development, or if new app version is present.
-// This ensures all language keys are up to date.
+// This ensures all language keys are up to date
 if (
   localStorage.getItem('app_version') !== version ||
   import.meta.env.MODE === 'development'

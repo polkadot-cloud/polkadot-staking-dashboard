@@ -13,8 +13,6 @@ import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { Subscan } from 'controllers/Subscan'
-import { useOverlay } from 'kits/Overlay/Provider'
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
 import { EraPoints as EraPointsGraph } from 'library/Graphs/EraPoints'
 import { formatSize } from 'library/Graphs/Utils'
@@ -26,6 +24,8 @@ import { StatusLabel } from 'library/StatusLabel'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
+import { ModalAddressHeader, ModalPadding } from 'ui-overlay/structure'
 import { planckToUnitBn } from 'utils'
 
 export const ValidatorMetrics = () => {
@@ -94,13 +94,13 @@ export const ValidatorMetrics = () => {
   return (
     <>
       <Title title={t('validatorMetrics')} />
-      <div className="header">
+      <ModalAddressHeader>
         <Polkicon address={address} fontSize="2.75rem" />
         <h2>
           &nbsp;&nbsp;
           {identity === null ? ellipsisFn(address) : identity}
         </h2>
-      </div>
+      </ModalAddressHeader>
 
       <ModalPadding horizontalOnly>
         <StatsWrapper>
@@ -118,8 +118,7 @@ export const ValidatorMetrics = () => {
         </StatsWrapper>
       </ModalPadding>
       <div
-        className="body"
-        style={{ position: 'relative', marginTop: '0.5rem' }}
+        style={{ position: 'relative', marginTop: '0.5rem', padding: '1rem' }}
       >
         <PluginLabel plugin="subscan" />
         <CardWrapper

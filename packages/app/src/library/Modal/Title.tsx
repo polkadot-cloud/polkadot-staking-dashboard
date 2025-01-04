@@ -6,10 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { AnyJson } from '@w3ux/types'
 import CrossSVG from 'assets/svg/cross.svg?react'
 import { useHelp } from 'contexts/Help'
-import { useOverlay } from 'kits/Overlay/Provider'
 import type { FunctionComponent, SVGProps } from 'react'
 import type { CSSProperties } from 'styled-components'
 import { ButtonHelp } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
+import { ModalTitle } from 'ui-overlay/structure'
 import { TitleWrapper } from './Wrappers'
 
 interface TitleProps {
@@ -29,8 +30,8 @@ export const Title = ({
   Svg,
   style,
 }: TitleProps) => {
-  const { setModalStatus } = useOverlay().modal
   const { openHelp } = useHelp()
+  const { setModalStatus } = useOverlay().modal
 
   const graphic = Svg ? (
     <Svg style={{ width: '1.5rem', height: '1.5rem' }} />
@@ -43,12 +44,12 @@ export const Title = ({
       <div>
         {graphic}
         {title && (
-          <h2>
+          <ModalTitle>
             {title}
             {helpKey ? (
               <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
             ) : null}
-          </h2>
+          </ModalTitle>
         )}
       </div>
       <div>

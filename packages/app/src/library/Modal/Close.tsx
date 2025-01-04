@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import CrossSVG from 'assets/svg/cross.svg?react'
-import { useOverlay } from 'kits/Overlay/Provider'
+import { useOverlay } from 'ui-overlay'
 import { CloseWrapper } from './Wrappers'
 
 export const Close = () => {

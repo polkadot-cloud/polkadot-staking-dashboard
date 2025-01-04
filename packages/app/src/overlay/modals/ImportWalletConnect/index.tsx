@@ -11,7 +11,6 @@ import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
 import { useWalletConnect } from 'contexts/WalletConnect'
-import { useOverlay } from 'kits/Overlay/Provider'
 import { HardwareAddress } from 'library/Hardware/HardwareAddress'
 import { HardwareStatusBar } from 'library/Hardware/HardwareStatusBar'
 import { Heading } from 'library/Import/Heading'
@@ -20,6 +19,7 @@ import { AddressesWrapper } from 'library/Import/Wrappers'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary, ButtonText } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
 
 export const ImportWalletConnect = () => {
   const { t } = useTranslation()

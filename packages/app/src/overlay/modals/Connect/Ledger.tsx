@@ -8,10 +8,9 @@ import LedgerLogoSVG from '@w3ux/extension-assets/Ledger.svg?react'
 import { inChrome } from '@w3ux/utils'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
-import { useOverlay } from 'kits/Overlay/Provider'
-import { ModalConnectItem } from 'kits/Overlay/structure/ModalConnectItem'
-import { ModalHardwareItem } from 'kits/Overlay/structure/ModalHardwareItem'
 import { ButtonHelp, ButtonPrimaryInvert, ButtonText } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
+import { ConnectItem, HardwareItem } from './Wrappers'
 
 export const Ledger = () => {
   const { openHelp } = useHelp()
@@ -25,8 +24,8 @@ export const Ledger = () => {
   }
 
   return (
-    <ModalConnectItem>
-      <ModalHardwareItem>
+    <ConnectItem>
+      <HardwareItem>
         <div className="body">
           <div className="status">
             <ButtonHelp onClick={() => openHelp('Ledger Hardware Wallets')} />
@@ -63,7 +62,7 @@ export const Ledger = () => {
             <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
           </a>
         </div>
-      </ModalHardwareItem>
-    </ModalConnectItem>
+      </HardwareItem>
+    </ConnectItem>
   )
 }

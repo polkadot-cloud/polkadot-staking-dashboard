@@ -44,8 +44,8 @@ import { UIProvider } from 'contexts/UI'
 import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidators'
 import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries'
 import { WalletConnectProvider } from 'contexts/WalletConnect'
-import { OverlayProvider } from 'kits/Overlay/Provider'
 import { ThemedRouter } from 'Themes'
+import { OverlayProvider } from 'ui-overlay'
 
 export const Providers = () => {
   const {
