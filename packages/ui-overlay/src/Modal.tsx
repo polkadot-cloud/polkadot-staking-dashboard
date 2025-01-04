@@ -158,7 +158,7 @@ export const Modal = ({
           overflow,
         }}
       >
-        <ModalCard ref={modalRef} className={dimmed ? 'dimmed' : undefined}>
+        <ModalCard ref={modalRef} dimmed={dimmed}>
           <ErrorBoundary FallbackComponent={Fallback || null}>
             {ActiveModal && <ActiveModal />}
           </ErrorBoundary>

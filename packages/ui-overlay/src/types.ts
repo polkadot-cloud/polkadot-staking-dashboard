@@ -16,6 +16,10 @@ export type ModalConnectItemProps = ComponentBase & {
   canConnect?: boolean
 }
 
+export type ModalCardProps = ComponentBase & {
+  // whether the card is dimmed.
+  dimmed?: boolean
+}
 export type ModalContentProps = ModalAnimationProps & {
   // include canvas styling.
   canvas?: boolean

@@ -30,15 +30,6 @@
   }
 }
 
-.modal-card {
-  background: var(--background-modal);
-  transition: opacity 0.15s;
-
-  &.dimmed {
-    opacity: 0;
-  }
-}
-
 .modal-connect-item {
   padding: 0.5rem;
   flex-grow: 0;
