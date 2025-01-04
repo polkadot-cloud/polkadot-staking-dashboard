@@ -12,8 +12,8 @@ import { determinePoolDisplay } from 'contexts/Pools/util'
 import { CanvasTitleWrapper } from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
+import { PageTitleTabs } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import { PageTitleTabs } from 'ui-structure'
 import type { JoinPoolHeaderProps } from './types'
 
 export const Header = ({

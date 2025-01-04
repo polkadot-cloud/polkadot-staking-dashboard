@@ -12,7 +12,7 @@ import { PoolListProvider } from 'library/PoolList/context'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
-import { PageRow } from 'ui-structure'
+import { PageRow } from 'ui-core/base'
 
 export const PoolFavorites = () => {
   const { t } = useTranslation('pages')

@@ -3,7 +3,7 @@
 
 import classNames from 'classnames'
 import { ButtonTab } from 'ui-buttons'
-import type { PageTitleProps, PageTitleTabProps } from '../types'
+import type { PageTitleProps, PageTitleTabProps } from '../../types'
 import classes from './index.module.scss'
 
 /**
