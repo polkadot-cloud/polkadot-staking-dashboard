@@ -9,8 +9,8 @@ import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 import {
   ModalFixedTitle,
-  ModalMotionTwoSection,
   ModalMulti,
+  ModalMultiTwo,
   ModalSection,
 } from 'ui-overlay/structure'
 import { Forms } from './Forms'
@@ -72,7 +72,7 @@ export const ClaimPayouts = () => {
       <ModalFixedTitle ref={headerRef}>
         <Title title={t('claimPayouts')} fixed />
       </ModalFixedTitle>
-      <ModalMotionTwoSection
+      <ModalMultiTwo
         style={{
           maxHeight: modalMaxHeight - (headerRef.current?.clientHeight || 0),
         }}
@@ -107,7 +107,7 @@ export const ClaimPayouts = () => {
             onResize={onResize}
           />
         </ModalMulti>
-      </ModalMotionTwoSection>
+      </ModalMultiTwo>
     </ModalSection>
   )
 }

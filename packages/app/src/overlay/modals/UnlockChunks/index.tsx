@@ -13,8 +13,8 @@ import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 import {
   ModalFixedTitle,
-  ModalMotionTwoSection,
   ModalMulti,
+  ModalMultiTwo,
   ModalSection,
 } from 'ui-overlay/structure'
 import { Forms } from './Forms'
@@ -106,7 +106,7 @@ export const UnlockChunks = () => {
       <ModalFixedTitle ref={headerRef}>
         <Title title={t('unlocks')} fixed />
       </ModalFixedTitle>
-      <ModalMotionTwoSection
+      <ModalMultiTwo
         style={{
           maxHeight: modalMaxHeight - (headerRef.current?.clientHeight || 0),
         }}
@@ -145,7 +145,7 @@ export const UnlockChunks = () => {
             onResize={onResize}
           />
         </ModalMulti>
-      </ModalMotionTwoSection>
+      </ModalMultiTwo>
     </ModalSection>
   )
 }

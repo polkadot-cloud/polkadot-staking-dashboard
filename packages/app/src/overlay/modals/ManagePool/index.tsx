@@ -9,8 +9,8 @@ import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 import {
   ModalFixedTitle,
-  ModalMotionTwoSection,
   ModalMulti,
+  ModalMultiTwo,
   ModalPadding,
   ModalSection,
 } from 'ui-overlay/structure'
@@ -71,7 +71,7 @@ export const ManagePool = () => {
       <ModalFixedTitle ref={headerRef}>
         <Title title={`${t('managePool')}`} fixed />
       </ModalFixedTitle>
-      <ModalMotionTwoSection
+      <ModalMultiTwo
         style={{
           maxHeight: modalMaxHeight - (headerRef.current?.clientHeight || 0),
         }}
@@ -106,7 +106,7 @@ export const ManagePool = () => {
             incrementCalculateHeight={incrementCalculateHeight}
           />
         </ModalMulti>
-      </ModalMotionTwoSection>
+      </ModalMultiTwo>
     </ModalSection>
   )
 }

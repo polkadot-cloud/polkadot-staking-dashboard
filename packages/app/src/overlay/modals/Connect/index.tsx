@@ -17,8 +17,8 @@ import { useOverlay } from 'ui-overlay'
 import {
   ModalCustomHeader,
   ModalFixedTitle,
-  ModalMotionThreeSection,
   ModalMulti,
+  ModalMultiThree,
   ModalPadding,
   ModalSection,
 } from 'ui-overlay/structure'
@@ -189,7 +189,7 @@ export const Connect = () => {
         </ModalCustomHeader>
       </ModalFixedTitle>
 
-      <ModalMotionThreeSection
+      <ModalMultiThree
         style={{
           maxHeight: modalMaxHeight - (headerRef.current?.clientHeight || 0),
         }}
@@ -245,7 +245,7 @@ export const Connect = () => {
             <Proxies setInputOpen={setNewProxyOpen} inputOpen={newProxyOpen} />
           </ModalPadding>
         </ModalMulti>
-      </ModalMotionThreeSection>
+      </ModalMultiThree>
     </ModalSection>
   )
 }

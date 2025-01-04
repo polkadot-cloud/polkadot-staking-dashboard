@@ -1,35 +1,6 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-/* Mixins */
-
-@mixin modal-motion-sections {
-  display: flex;
-  height: auto;
-  position: relative;
-  overflow: hidden auto;
-}
-
-@mixin modal-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: inherit transparent;
-
-  ::-webkit-scrollbar {
-    width: 0.1rem;
-  }
-
-  ::-webkit-scrollbar-track {
-    background-color: transparent;
-    border: 0;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: transparent; /* color of the scroll thumb */
-    border-radius: 2rem; /* roundness of the scroll thumb */
-    border: 0.1rem solid transparent; /* creates padding around scroll thumb */
-  }
-}
-
 .modal-connect-item {
   padding: 0.5rem;
   flex-grow: 0;
@@ -200,23 +171,5 @@
       top: 0.9rem;
       right: 0.9rem;
     }
-  }
-}
-
-.modal-motion-three-sections {
-  @include modal-motion-sections;
-  width: 300%;
-  > div {
-    flex-basis: 33.33%;
-    min-width: 33.33%;
-  }
-}
-
-.modal-motion-two-sections {
-  @include modal-motion-sections;
-  width: 200%;
-  > div {
-    flex-basis: 50%;
-    min-width: 50%;
   }
 }

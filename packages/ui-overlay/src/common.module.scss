@@ -25,3 +25,11 @@
     border: 0.1rem solid transparent; /* creates padding around scroll thumb */
   }
 }
+
+.modalMulti {
+  display: flex;
+  height: auto;
+  position: relative;
+  overflow: hidden auto;
+
+}
