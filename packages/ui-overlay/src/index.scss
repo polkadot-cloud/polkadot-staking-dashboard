@@ -8,38 +8,9 @@
   position: relative;
   padding: 5rem 0;
 
-  > .buttons {
-    width: 100%;
-    display: flex;
-    flex-flow: row wrap;
-    margin-bottom: 2rem;
-    position: relative;
-
-    > button {
-      border: 1px solid var(--accent-color-primary);
-      color: var(--accent-color-primary);
-      border-radius: 1.5rem;
-      padding: 0.4rem 0.8rem;
-
-      > svg {
-        margin-right: 0.5rem;
-      }
-    }
-  }
-
   &.canvas {
     padding: 0;
     min-height: 100vh;
-  }
-
-  h1 {
-    font-family: Poppins700, sans-serif;
-    margin-bottom: 1.75rem;
-  }
-
-  h3 {
-    font-family: InterSemiBold, sans-serif;
-    margin: 2rem 0.5rem 1rem;
   }
 }
 

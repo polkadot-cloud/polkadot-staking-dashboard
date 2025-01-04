@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { ButtonSubmit } from 'ui-buttons'
 import { useOverlay } from 'ui-overlay'
 import { ModalPadding } from 'ui-overlay/structure'
+import { ButtonRow } from 'ui-structure'
 
 export const DismissTips = () => {
   const { t } = useTranslation('tips')
@@ -27,7 +28,7 @@ export const DismissTips = () => {
             <h4>{t('module.dismissResult')}</h4>
             <h4>{t('module.reEnable')}</h4>
           </div>
-          <div className="buttons">
+          <ButtonRow>
             <ButtonSubmit
               marginRight
               text={t('module.disableTips')}
@@ -36,7 +37,7 @@ export const DismissTips = () => {
                 setModalStatus('closing')
               }}
             />
-          </div>
+          </ButtonRow>
         </div>
       </ModalPadding>
     </>
