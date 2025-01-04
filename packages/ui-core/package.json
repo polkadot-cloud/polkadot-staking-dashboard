@@ -1,0 +1,18 @@
+{
+  "name": "ui-core",
+  "version": "1.0.0",
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "scripts": {
+    "clear": "rm -rf build tsconfig.tsbuildinfo dist",
+    "reset": "yarn run clear &&  rm -rf node_modules yarn.lock && yarn"
+  },
+  "dependencies": {
+    "@fortawesome/react-fontawesome": "^0.2.2"
+  },
+  "exports": {
+    "./types": "./src/types.ts",
+    "./base": "./src/base/index.tsx",
+    "./overlay": "./src/overlay/index.tsx"
+  }
+}

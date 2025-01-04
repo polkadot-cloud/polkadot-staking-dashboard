@@ -19,8 +19,8 @@ import 'rc-slider/assets/index.css'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimaryInvert } from 'ui-buttons'
+import { ModalPadding } from 'ui-core/overlay'
 import { useOverlay } from 'ui-overlay'
-import { ModalPadding } from 'ui-overlay/structure'
 import { planckToUnitBn } from 'utils'
 
 export const UpdateReserve = () => {

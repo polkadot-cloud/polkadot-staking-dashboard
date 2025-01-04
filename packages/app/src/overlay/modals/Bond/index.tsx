@@ -18,8 +18,8 @@ import { Close } from 'library/Modal/Close'
 import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ModalPadding, ModalTitle, ModalWarnings } from 'ui-core/overlay'
 import { useOverlay } from 'ui-overlay'
-import { ModalPadding, ModalTitle, ModalWarnings } from 'ui-overlay/structure'
 import { planckToUnitBn } from 'utils'
 
 export const Bond = () => {

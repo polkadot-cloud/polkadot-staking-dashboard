@@ -7,7 +7,7 @@ import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimaryInvert } from 'ui-buttons'
-import { Separator } from 'ui-structure'
+import { Separator } from 'ui-core/base'
 import { MoreWrapper } from '../Wrappers'
 
 export const BalanceLinks = () => {

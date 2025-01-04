@@ -10,7 +10,7 @@ import { CardHeaderWrapper } from 'library/Card/Wrappers'
 import { Header, List, Wrapper as ListWrapper } from 'library/List'
 import { MotionContainer } from 'library/List/MotionContainer'
 import { ButtonHelp, ButtonPrimaryInvert } from 'ui-buttons'
-import { Separator } from 'ui-structure'
+import { Separator } from 'ui-core/base'
 import type { NomninationGeoListProps } from '../types'
 import { Node } from './Node'
 

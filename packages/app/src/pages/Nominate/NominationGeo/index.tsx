@@ -25,7 +25,7 @@ import { GraphWrapper } from 'library/Graphs/Wrapper'
 import { PluginLabel } from 'library/PluginLabel'
 import { StatusLabel } from 'library/StatusLabel'
 import { ButtonHelp } from 'ui-buttons'
-import { PageRow } from 'ui-structure'
+import { PageRow } from 'ui-core/base'
 import { NominationGeoList } from './NominationGeoList'
 import { GraphsWrapper } from './Wrappers'
 

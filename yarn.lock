@@ -5020,8 +5020,8 @@ __metadata:
     styles: "workspace:*"
     types: "workspace:*"
     ui-buttons: "workspace:*"
+    ui-core: "workspace:*"
     ui-overlay: "workspace:*"
-    ui-structure: "workspace:*"
     usehooks-ts: "npm:^3.0.2"
     utils: "workspace:*"
     viem: "npm:^2.22.1"
@@ -11922,17 +11922,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"ui-overlay@workspace:*, ui-overlay@workspace:packages/ui-overlay":
+"ui-core@workspace:*, ui-core@workspace:packages/ui-core":
   version: 0.0.0-use.local
-  resolution: "ui-overlay@workspace:packages/ui-overlay"
+  resolution: "ui-core@workspace:packages/ui-core"
+  dependencies:
+    "@fortawesome/react-fontawesome": "npm:^0.2.2"
   languageName: unknown
   linkType: soft
 
-"ui-structure@workspace:*, ui-structure@workspace:packages/ui-structure":
+"ui-overlay@workspace:*, ui-overlay@workspace:packages/ui-overlay":
   version: 0.0.0-use.local
-  resolution: "ui-structure@workspace:packages/ui-structure"
+  resolution: "ui-overlay@workspace:packages/ui-overlay"
   dependencies:
-    "@fortawesome/react-fontawesome": "npm:^0.2.2"
+    ui-core: "workspace:*"
   languageName: unknown
   linkType: soft
 

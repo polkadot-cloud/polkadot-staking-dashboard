@@ -10,6 +10,6 @@
     "packages/plugin-staking-api": {},
     "packages/types": {},
     "packages/ui-buttons": {},
-    "packages/ui-structure": {}
+    "packages/ui-core": {}
   }
 }

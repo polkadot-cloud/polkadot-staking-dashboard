@@ -15,8 +15,8 @@ import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import type { BondFor } from 'types'
 import { ButtonPrimary } from 'ui-buttons'
+import { ButtonRow, PageRow } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import { ButtonRow, PageRow } from 'ui-structure'
 import { timeleftAsString } from 'utils'
 
 export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {

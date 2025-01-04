@@ -3,7 +3,7 @@
 
 import type { PageProps } from 'common-types'
 import { useTranslation } from 'react-i18next'
-import { PageTitle } from 'ui-structure'
+import { PageTitle } from 'ui-core/base'
 import { Entity } from './Entity'
 import { List } from './List'
 import { Wrapper } from './Wrappers'
