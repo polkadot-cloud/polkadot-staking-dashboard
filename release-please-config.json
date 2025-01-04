@@ -2,14 +2,15 @@
   "last-release-sha": "99cfade027ce6ca81d0a14657d6bdd1b05406ad8",
   "include-component-in-tag": true,
   "packages": {
-    "packages/app": {},
-    "packages/assets": {},
+    "packages/ui-core": {},
+    "packages/types": {},
     "packages/consts": {},
+    "packages/assets": {},
     "packages/locales": {},
     "packages/styles": {},
     "packages/plugin-staking-api": {},
-    "packages/types": {},
+    "packages/ui-overlay": {},
     "packages/ui-buttons": {},
-    "packages/ui-core": {}
+    "packages/app": {}
   }
 }

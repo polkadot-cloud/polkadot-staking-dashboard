@@ -3,7 +3,7 @@
 
 import { useAnimation } from 'framer-motion'
 import { useEffect } from 'react'
-import { OverlayBackground } from '../../ui-core/src/overlay/OverlayBackground'
+import { Backdrop } from 'ui-core/overlay'
 import { useOverlay } from './Provider'
 import type { CanvasStatus } from './Provider/types'
 
@@ -39,7 +39,7 @@ export const Background = ({
   return modalStatus === 'closed' &&
     canvasStatus === 'closed' &&
     externalOverlayStatus === 'closed' ? null : (
-    <OverlayBackground
+    <Backdrop
       blur={
         canvasStatus === 'open' || externalOverlayStatus === 'open'
           ? '1.4rem'

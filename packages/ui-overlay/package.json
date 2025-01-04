@@ -12,7 +12,6 @@
   },
   "exports": {
     ".": "./src/index.tsx",
-    "./types": "./src/types.ts",
-    "./css": "./src/index.scss"
+    "./types": "./src/types.ts"
   }
 }

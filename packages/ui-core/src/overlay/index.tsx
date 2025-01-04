@@ -1,6 +1,7 @@
 // Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+export * from './Backdrop'
 export * from './CanvasContainer'
 export * from './CanvasContent'
 export * from './CanvasScroll'
@@ -20,4 +21,3 @@ export * from './ModalScroll'
 export * from './ModalSection'
 export * from './ModalTitle'
 export * from './ModalWarnings'
-export * from './OverlayBackground'

@@ -7,15 +7,8 @@ import type { ModalOverlayProps } from '../../../../ui-overlay/src/types'
 import commonClasses from '../common.module.scss'
 import classes from './index.module.scss'
 
-export const OverlayBackground = ({
-  children,
-  blur,
-  ...rest
-}: ModalOverlayProps) => {
-  const allClasses = classNames(
-    commonClasses.fixedPosition,
-    classes.overlayBackground
-  )
+export const Backdrop = ({ children, blur, ...rest }: ModalOverlayProps) => {
+  const allClasses = classNames(commonClasses.fixedPosition, classes.backdrop)
   return (
     <motion.div
       style={blur ? { backdropFilter: `blur(${blur})` } : undefined}
