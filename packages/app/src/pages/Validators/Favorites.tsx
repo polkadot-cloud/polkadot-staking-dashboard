@@ -7,7 +7,7 @@ import { CardWrapper } from 'library/Card/Wrappers'
 import { ListStatusHeader } from 'library/List'
 import { ValidatorList } from 'library/ValidatorList'
 import { useTranslation } from 'react-i18next'
-import { PageRow } from 'ui-structure'
+import { PageRow } from 'ui-core/base'
 
 export const ValidatorFavorites = () => {
   const { t } = useTranslation('pages')

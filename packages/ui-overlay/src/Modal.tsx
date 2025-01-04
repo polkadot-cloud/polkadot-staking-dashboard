@@ -5,11 +5,11 @@ import { useAnimation } from 'framer-motion'
 import type { FC } from 'react'
 import { useEffect, useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
+import { ModalCard } from '../../ui-core/src/overlay/ModalCard'
+import { ModalContainer } from '../../ui-core/src/overlay/ModalContainer'
+import { ModalScroll } from '../../ui-core/src/overlay/ModalScroll'
 import { useOverlay } from './Provider'
 import type { ModalProps } from './Provider/types'
-import { ModalCard } from './structure/ModalCard'
-import { ModalContainer } from './structure/ModalContainer'
-import { ModalScroll } from './structure/ModalScroll'
 
 export const Modal = ({
   modals,
@@ -149,6 +149,7 @@ export const Modal = ({
         },
       }}
       style={{ opacity: status === 'opening' ? 0 : 1 }}
+      onClose={() => setModalStatus('closing')}
     >
       <ModalScroll
         ref={heightRef}

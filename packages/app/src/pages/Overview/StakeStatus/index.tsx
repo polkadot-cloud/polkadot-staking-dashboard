@@ -7,7 +7,7 @@ import { useStaking } from 'contexts/Staking'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { NominationStatus } from 'pages/Nominate/Active/Status/NominationStatus'
 import { MembershipStatus } from 'pages/Pools/Status/MembershipStatus'
-import { RowSection } from 'ui-structure'
+import { RowSection } from 'ui-core/base'
 import { Tips } from './Tips'
 import { StatusWrapper } from './Wrappers'
 

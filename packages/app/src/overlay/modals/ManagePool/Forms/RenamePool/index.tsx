@@ -17,8 +17,8 @@ import type { Dispatch, FormEvent, SetStateAction } from 'react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonSubmitInvert } from 'ui-buttons'
+import { ModalPadding, ModalWarnings } from 'ui-core/overlay'
 import { useOverlay } from 'ui-overlay'
-import { ModalPadding, ModalWarnings } from 'ui-overlay/structure'
 
 export const RenamePool = ({
   setSection,

@@ -18,8 +18,8 @@ import { BondedChart } from 'library/BarChart/BondedChart'
 import { CardHeaderWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
+import { ButtonRow } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import { ButtonRow } from 'ui-structure'
 import { planckToUnitBn } from 'utils'
 
 export const ManageBond = () => {

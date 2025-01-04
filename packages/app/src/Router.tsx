@@ -7,7 +7,6 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { usePrompt } from 'contexts/Prompt'
-import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { useAccountFromUrl } from 'hooks/useAccountFromUrl'
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary'
@@ -33,12 +32,11 @@ import {
   useLocation,
 } from 'react-router-dom'
 import { StakingApi } from 'StakingApi'
-import { Body, Main } from 'ui-structure'
+import { Body, Main } from 'ui-core/base'
 import { registerLastVisited, registerSaEvent } from 'utils'
 
 const RouterInner = () => {
   const { network } = useNetwork()
-  const { inSetup } = useStaking()
   const { setContainerRefs } = useUi()
   const { openPromptWith } = usePrompt()
   const { pluginEnabled } = usePlugins()
@@ -80,7 +78,7 @@ const RouterInner = () => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
-      {pluginEnabled('staking_api') && !inSetup() && activeAccount && (
+      {pluginEnabled('staking_api') && activeAccount && (
         <StakingApi activeAccount={activeAccount} network={network} />
       )}
       <NotificationPrompts />

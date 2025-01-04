@@ -5,7 +5,7 @@ import { usePlugins } from 'contexts/Plugins'
 import { Title } from 'library/Modal/Title'
 import { StatusButton } from 'library/StatusButton'
 import { useTranslation } from 'react-i18next'
-import { ModalPadding } from 'ui-overlay/structure'
+import { ModalPadding } from 'ui-core/overlay'
 import { ContentWrapper } from '../Networks/Wrapper'
 
 export const Settings = () => {

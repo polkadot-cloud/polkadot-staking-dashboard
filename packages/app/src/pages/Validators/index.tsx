@@ -4,7 +4,7 @@
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { PageTitle } from 'ui-structure'
+import { PageTitle } from 'ui-core/base'
 import { AllValidators } from './AllValidators'
 import { ValidatorFavorites } from './Favorites'
 import { ValidatorsTabsProvider, useValidatorsTabs } from './context'

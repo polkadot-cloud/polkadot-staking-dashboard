@@ -10,7 +10,6 @@ import type { Props } from './types'
 export const UnclaimedRewardsApi = ({ activeAccount, network }: Props) => {
   const { activeEra } = useApi()
   const { setUnclaimedRewards } = usePayouts()
-
   const { data, loading, error } = useUnclaimedRewards({
     chain: network,
     who: activeAccount,

@@ -4,7 +4,7 @@
 import type { UnclaimedRewards } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useState } from 'react'
-import { defaultPayoutsContext } from './defaults'
+import { defaultPayoutsContext, defaultUnclaimedRewards } from './defaults'
 import type { PayoutsContextInterface } from './types'
 
 export const PayoutsContext = createContext<PayoutsContextInterface>(
@@ -14,10 +14,9 @@ export const PayoutsContext = createContext<PayoutsContextInterface>(
 export const usePayouts = () => useContext(PayoutsContext)
 
 export const PayoutsProvider = ({ children }: { children: ReactNode }) => {
-  const [unclaimedRewards, setUnclaimedRewards] = useState<UnclaimedRewards>({
-    total: '0',
-    entries: [],
-  })
+  const [unclaimedRewards, setUnclaimedRewards] = useState<UnclaimedRewards>(
+    defaultUnclaimedRewards
+  )
 
   return (
     <PayoutsContext.Provider

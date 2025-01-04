@@ -11,8 +11,8 @@ import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
+import { ButtonRow, PageRow } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import { ButtonRow, PageRow } from 'ui-structure'
 
 export const ClosurePrompts = () => {
   const { t } = useTranslation('pages')

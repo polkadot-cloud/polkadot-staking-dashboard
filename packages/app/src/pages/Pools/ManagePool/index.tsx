@@ -9,8 +9,8 @@ import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
 import { Nominations } from 'library/Nominations'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
+import { PageRow } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import { PageRow } from 'ui-structure'
 
 export const ManagePool = () => {
   const { t } = useTranslation()

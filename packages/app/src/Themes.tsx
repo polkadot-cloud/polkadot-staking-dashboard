@@ -6,7 +6,7 @@ import { useNetwork } from 'contexts/Network'
 import { useTheme } from 'contexts/Themes'
 import { useEffect } from 'react'
 import { ThemeProvider } from 'styled-components'
-import { Entry } from 'ui-structure'
+import { Entry } from 'ui-core/base'
 
 // light / dark `mode` added to styled-components provider
 export const ThemedRouter = () => {

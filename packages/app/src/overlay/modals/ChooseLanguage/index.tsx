@@ -5,8 +5,8 @@ import LanguageSVG from 'assets/svg/language.svg?react'
 import { Title } from 'library/Modal/Title'
 import { changeLanguage, locales } from 'locales'
 import { useTranslation } from 'react-i18next'
+import { ModalPadding } from 'ui-core/overlay'
 import { useOverlay } from 'ui-overlay'
-import { ModalPadding } from 'ui-overlay/structure'
 import { ContentWrapper, LocaleButton } from './Wrapper'
 
 export const ChooseLanguage = () => {
