@@ -5,9 +5,17 @@ import classNames from 'classnames'
 import type { ModalNotesProps } from '../../../../ui-overlay/src/types'
 import classes from './index.module.scss'
 
-export const ModalNotes = ({ children, withPadding }: ModalNotesProps) => {
+export const ModalNotes = ({
+  children,
+  style,
+  withPadding,
+}: ModalNotesProps) => {
   const allClasses = classNames(classes.modalNotes, {
     [classes.withPadding]: withPadding,
   })
-  return <div className={allClasses}>{children}</div>
+  return (
+    <div className={allClasses} style={style}>
+      {children}
+    </div>
+  )
 }

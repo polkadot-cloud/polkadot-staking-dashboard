@@ -4,6 +4,8 @@
 import type { ComponentBase } from '@w3ux/types'
 import classes from './index.module.scss'
 
-export const CanvasContent = ({ children }: ComponentBase) => (
-  <div className={classes.canvasContent}>{children}</div>
+export const CanvasContent = ({ children, style }: ComponentBase) => (
+  <div className={classes.canvasContent} style={style}>
+    {children}
+  </div>
 )

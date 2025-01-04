@@ -9,14 +9,14 @@ import classes from './index.module.scss'
 
 export const ModalCard = forwardRef(
   (
-    { children, dimmed }: ModalCardProps,
+    { children, dimmed, style }: ModalCardProps,
     ref?: ForwardedRef<HTMLDivElement | null>
   ) => {
     const allClasses = classNames(classes.modalCard, {
       [classes.dimmed]: dimmed,
     })
     return (
-      <div ref={ref} className={allClasses}>
+      <div ref={ref} className={allClasses} style={style}>
         {children}
       </div>
     )

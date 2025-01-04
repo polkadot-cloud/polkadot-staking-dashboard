@@ -4,6 +4,8 @@
 import type { ComponentBase } from '@w3ux/types'
 import classes from './index.module.scss'
 
-export const ModalAddressHeader = ({ children }: ComponentBase) => (
-  <div className={classes.modalAddressHeader}>{children}</div>
+export const ModalAddressHeader = ({ children, style }: ComponentBase) => (
+  <div className={classes.modalAddressHeader} style={style}>
+    {children}
+  </div>
 )

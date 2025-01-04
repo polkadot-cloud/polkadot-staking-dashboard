@@ -7,7 +7,11 @@ import { motion } from 'framer-motion'
 import commonClasses from '../common.module.scss'
 import classes from './index.module.scss'
 
-export const ModalMulti = ({ children }: ComponentBase) => {
+export const ModalMulti = ({ children, style }: ComponentBase) => {
   const allClasses = classNames(commonClasses.scrollBar, classes.multi)
-  return <motion.div className={allClasses}>{children}</motion.div>
+  return (
+    <motion.div className={allClasses} style={style}>
+      {children}
+    </motion.div>
+  )
 }

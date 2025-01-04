@@ -4,6 +4,8 @@
 import type { ComponentBase } from '@w3ux/types'
 import classes from './index.module.scss'
 
-export const ModalTitle = ({ children }: ComponentBase) => (
-  <h2 className={`${classes.modalTitle}`}>{children}</h2>
+export const ModalTitle = ({ children, style }: ComponentBase) => (
+  <h2 className={`${classes.modalTitle}`} style={style}>
+    {children}
+  </h2>
 )

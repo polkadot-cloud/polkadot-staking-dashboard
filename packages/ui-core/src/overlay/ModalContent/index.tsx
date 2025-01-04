@@ -6,9 +6,17 @@ import { motion } from 'framer-motion'
 import type { ModalContentProps } from '../../../../ui-overlay/src/types'
 import classes from './index.module.scss'
 
-export const ModalContent = ({ children, canvas }: ModalContentProps) => {
+export const ModalContent = ({
+  children,
+  canvas,
+  style,
+}: ModalContentProps) => {
   const allClasses = classNames(classes.modalContent, {
     [classes.canvas]: canvas,
   })
-  return <motion.div className={allClasses}>{children}</motion.div>
+  return (
+    <motion.div className={allClasses} style={style}>
+      {children}
+    </motion.div>
+  )
 }
