@@ -159,7 +159,7 @@ export const Connect = () => {
       <Close />
       <ModalFixedTitle ref={headerRef} withStyle>
         <ModalCustomHeader>
-          <div className="first">
+          <div>
             <h1>{t('connect')}</h1>
             <ButtonPrimaryInvert
               text={t('goToAccounts')}

@@ -1,0 +1,24 @@
+// Copyright 2024 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+.customHeader {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 0.5rem;
+  position: relative;
+  > div:first-child {
+    display: flex;
+    flex-grow: 1;
+    > h1 {
+      color: var(--text-color-primary);
+      font-size: 1.4rem;
+      font-family: Poppins700, sans-serif;
+      font-weight: 700;
+      padding: 0 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+  }
+}

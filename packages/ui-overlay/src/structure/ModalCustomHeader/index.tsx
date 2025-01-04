@@ -2,13 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ComponentBase } from '@w3ux/types'
+import classes from './index.module.scss'
 
-/**
- * @name ModalCustomHeader
- * @summary The header section along with the title.
- */
 export const ModalCustomHeader = ({ children, style }: ComponentBase) => (
-  <div className="modal-custom-header" style={style}>
+  <div className={classes.customHeader} style={style}>
     {children}
   </div>
 )

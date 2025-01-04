@@ -166,7 +166,7 @@ export const Accounts = () => {
   return (
     <ModalPadding>
       <ModalCustomHeader>
-        <div className="first">
+        <div>
           <h1>{t('accounts')}</h1>
           <ButtonPrimaryInvert
             text={t('goToConnect')}
