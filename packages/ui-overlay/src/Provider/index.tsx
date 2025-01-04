@@ -145,12 +145,19 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // Helper to set the transition height class of the modal.
-  const transitionOn = () =>
-    modalHeightRef?.current?.classList.add('transition-height')
+  const transitionOn = () => {
+    if (modalHeightRef?.current) {
+      modalHeightRef.current.style.transition =
+        'height 0.5s cubic-bezier(0.1, 1, 0.2, 1)'
+    }
+  }
 
   // Helper to remove the transition height class of the modal.
-  const transitionOff = () =>
-    modalHeightRef?.current?.classList.remove('transition-height')
+  const transitionOff = () => {
+    if (modalHeightRef?.current) {
+      modalHeightRef.current.style.transition = 'height 0s'
+    }
+  }
 
   // Store canvas status
   const [canvasStatus, setCanvasStatus] = useState<CanvasStatus>('closed')
