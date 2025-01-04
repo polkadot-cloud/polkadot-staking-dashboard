@@ -205,10 +205,9 @@
 
 .modal-motion-three-sections {
   @include modal-motion-sections;
-
   width: 300%;
 
-  > .section {
+  > div {
     @include modal-scrollbar;
 
     border-radius: 1rem;
@@ -224,10 +223,9 @@
 
 .modal-motion-two-sections {
   @include modal-motion-sections;
-
   width: 200%;
 
-  > .section {
+  > div {
     @include modal-scrollbar;
 
     border-radius: 1rem;

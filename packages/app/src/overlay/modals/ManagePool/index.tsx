@@ -89,13 +89,13 @@ export const ManagePool = () => {
           },
         }}
       >
-        <div className="section">
+        <div>
           <ModalPadding horizontalOnly>
             <Tasks setSection={setSection} setTask={setTask} ref={tasksRef} />
           </ModalPadding>
         </div>
 
-        <div className="section">
+        <div>
           <Forms
             onResize={onResize}
             setSection={setSection}

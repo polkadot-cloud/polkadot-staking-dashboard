@@ -124,7 +124,7 @@ export const UnlockChunks = () => {
           },
         }}
       >
-        <div className="section">
+        <div>
           <Overview
             unlocking={unlocking}
             bondFor={bondFor}
@@ -134,7 +134,7 @@ export const UnlockChunks = () => {
             ref={overviewRef}
           />
         </div>
-        <div className="section">
+        <div>
           <Forms
             incrementCalculateHeight={incrementCalculateHeight}
             setSection={setSection}

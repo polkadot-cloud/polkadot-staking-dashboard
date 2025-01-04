@@ -212,7 +212,7 @@ export const Connect = () => {
           },
         }}
       >
-        <div className="section">
+        <div>
           <ModalPadding horizontalOnly ref={homeRef}>
             {ConnectCombinedJSX}
             {!inMobileWallet && (
@@ -234,12 +234,12 @@ export const Connect = () => {
             )}
           </ModalPadding>
         </div>
-        <div className="section">
+        <div>
           <ModalPadding horizontalOnly ref={readOnlyRef}>
             <ReadOnly setInputOpen={setReadOnlyOpen} inputOpen={readOnlyOpen} />
           </ModalPadding>
         </div>
-        <div className="section">
+        <div>
           <ModalPadding horizontalOnly ref={proxiesRef}>
             <Proxies setInputOpen={setNewProxyOpen} inputOpen={newProxyOpen} />
           </ModalPadding>

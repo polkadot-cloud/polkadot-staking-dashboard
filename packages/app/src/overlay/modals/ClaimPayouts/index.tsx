@@ -90,14 +90,14 @@ export const ClaimPayouts = () => {
           },
         }}
       >
-        <div className="section">
+        <div>
           <Overview
             setSection={setSection}
             setPayouts={setPayouts}
             ref={overviewRef}
           />
         </div>
-        <div className="section">
+        <div>
           <Forms
             ref={formsRef}
             payouts={payouts}
