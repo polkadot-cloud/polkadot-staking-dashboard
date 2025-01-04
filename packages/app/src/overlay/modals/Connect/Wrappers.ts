@@ -243,3 +243,82 @@ export const ManualAccount = styled.div`
     font-size: 1rem;
   }
 `
+
+export const ConnectItem = styled.div`
+  padding: 0.5rem;
+  flex-grow: 0;
+  width: 50%;
+
+  @media (max-width: 800px) {
+    width: 100%;
+  }
+
+  &.can-connect {
+    > .inner {
+      transition: transform 0.15s;
+
+      &:hover {
+        transform: scale(1.015);
+      }
+    }
+  }
+
+  .foot {
+    padding: 0.85rem;
+
+    .link {
+      color: var(--text-color-secondary);
+      transition: color 0.15s;
+
+      &:hover {
+        color: var(--accent-color-primary);
+      }
+
+      > svg {
+        margin-left: 0.35rem;
+        margin-top: 0.3rem;
+      }
+    }
+  }
+`
+
+export const HardwareItem = styled.div`
+  background: var(--button-primary-background);
+  border-radius: 1rem;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+
+  .body {
+    padding: 0.5rem 0.85rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .row {
+      display: flex;
+      justify-content: center;
+
+      p {
+        margin-bottom: 0;
+      }
+
+      &.margin {
+        margin-top: 0.75rem;
+      }
+
+      .logo {
+        color: var(--text-color-secondary);
+        height: 3rem;
+        margin: 0.75rem 0.5rem 0.5rem;
+      }
+    }
+
+    .status {
+      position: absolute;
+      top: 0.9rem;
+      right: 0.9rem;
+    }
+  }
+`

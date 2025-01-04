@@ -89,6 +89,16 @@ export const DefinitionWrapper = styled(motion.div)`
   }
 `
 
+export const HelpTitle = styled.h1`
+  font-family: Poppins700, sans-serif;
+  margin: 1.75rem 0;
+`
+
+export const HelpSubtitle = styled.h3`
+  font-family: InterSemiBold, sans-serif;
+  margin: 2rem 0.5rem 1rem;
+`
+
 export const ItemWrapper = styled(motion.div)<{
   width: string | number
 }>`

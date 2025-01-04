@@ -14,16 +14,19 @@ import { useTxMeta } from 'contexts/TxMeta'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { useUnstaking } from 'hooks/useUnstaking'
-import { useOverlay } from 'kits/Overlay/Provider'
-import { ModalNotes } from 'kits/Overlay/structure/ModalNotes'
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
-import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings'
 import { ActionItem } from 'library/ActionItem'
 import { Warning } from 'library/Form/Warning'
 import { Close } from 'library/Modal/Close'
 import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useOverlay } from 'ui-overlay'
+import {
+  ModalNotes,
+  ModalPadding,
+  ModalTitle,
+  ModalWarnings,
+} from 'ui-overlay/structure'
 import { planckToUnitBn } from 'utils'
 
 export const ManageFastUnstake = () => {
@@ -144,11 +147,9 @@ export const ManageFastUnstake = () => {
     <>
       <Close />
       <ModalPadding>
-        <h2 className="title unbounded">
-          {t('fastUnstake', { context: 'title' })}
-        </h2>
+        <ModalTitle>{t('fastUnstake', { context: 'title' })}</ModalTitle>
         {warnings.length > 0 ? (
-          <ModalWarnings withMargin>
+          <ModalWarnings>
             {warnings.map((text, i) => (
               <Warning key={`warning_${i}`} text={text} />
             ))}

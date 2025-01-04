@@ -11,10 +11,9 @@ import { ExtensionIcons } from '@w3ux/extension-assets/util'
 import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
 import { localStorageOrDefault } from '@w3ux/utils'
 import { Notifications } from 'controllers/Notifications'
-import { ModalConnectItem } from 'kits/Overlay/structure/ModalConnectItem'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ExtensionInner } from './Wrappers'
+import { ConnectItem, ExtensionInner } from './Wrappers'
 import type { ExtensionProps } from './types'
 
 export const Extension = ({ meta, size, flag }: ExtensionProps) => {
@@ -98,7 +97,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const disabled = !isInstalled
 
   return (
-    <ModalConnectItem canConnect={canConnect}>
+    <ConnectItem className={canConnect ? 'can-connect' : ''}>
       <ExtensionInner>
         <div>
           <div className="body">
@@ -137,6 +136,6 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
           </div>
         </div>
       </ExtensionInner>
-    </ModalConnectItem>
+    </ConnectItem>
   )
 }

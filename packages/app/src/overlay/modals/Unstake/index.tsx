@@ -15,9 +15,6 @@ import { useBatchCall } from 'hooks/useBatchCall'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
-import { useOverlay } from 'kits/Overlay/Provider'
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
-import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings'
 import { ActionItem } from 'library/ActionItem'
 import { Warning } from 'library/Form/Warning'
 import { Close } from 'library/Modal/Close'
@@ -25,6 +22,8 @@ import { SubmitTx } from 'library/SubmitTx'
 import { StaticNote } from 'overlay/modals/Utils/StaticNote'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useOverlay } from 'ui-overlay'
+import { ModalPadding, ModalTitle, ModalWarnings } from 'ui-overlay/structure'
 import { planckToUnitBn, timeleftAsString } from 'utils'
 
 export const Unstake = () => {
@@ -114,9 +113,9 @@ export const Unstake = () => {
     <>
       <Close />
       <ModalPadding>
-        <h2 className="title unbounded">{t('unstake')} </h2>
+        <ModalTitle>{t('unstake')} </ModalTitle>
         {warnings.length > 0 ? (
-          <ModalWarnings withMargin>
+          <ModalWarnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}

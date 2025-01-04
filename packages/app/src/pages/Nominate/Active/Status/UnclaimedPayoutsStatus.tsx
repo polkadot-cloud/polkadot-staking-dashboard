@@ -9,9 +9,9 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePayouts } from 'contexts/Payouts'
 import { usePlugins } from 'contexts/Plugins'
-import { useOverlay } from 'kits/Overlay/Provider'
 import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
+import { useOverlay } from 'ui-overlay'
 
 export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
   const { t } = useTranslation()

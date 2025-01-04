@@ -5,11 +5,11 @@ import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons'
 import { useHelp } from 'contexts/Help'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { useOverlay } from 'kits/Overlay/Provider'
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers'
 import { Nominations } from 'library/Nominations'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
 import { PageRow } from 'ui-structure'
 
 export const ManagePool = () => {

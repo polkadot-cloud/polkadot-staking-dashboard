@@ -3,11 +3,10 @@
 
 import BigNumber from 'bignumber.js'
 import { usePayouts } from 'contexts/Payouts'
-import { ModalNotes } from 'kits/Overlay/structure/ModalNotes'
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
 import type { Ref } from 'react'
 import { Fragment, forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ModalNotes, ModalPadding } from 'ui-overlay/structure'
 import { Item } from './Item'
 import type { OverviewProps } from './types'
 import { ContentWrapper } from './Wrappers'

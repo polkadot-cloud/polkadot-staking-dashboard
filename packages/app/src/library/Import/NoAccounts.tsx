@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { useOverlay } from 'kits/Overlay/Provider'
 import type { FunctionComponent, ReactNode, SVGProps } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonSecondary } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
 import { NoAccountsWrapper } from './Wrappers'
 
 export const NoAccounts = ({

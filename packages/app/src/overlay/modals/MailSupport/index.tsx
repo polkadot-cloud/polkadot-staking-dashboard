@@ -3,9 +3,9 @@
 
 import MailSVG from 'assets/svg/mail.svg?react'
 import { MailSupportAddress } from 'consts'
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
 import { Title } from 'library/Modal/Title'
 import { useTranslation } from 'react-i18next'
+import { ModalPadding } from 'ui-overlay/structure'
 import { SupportWrapper } from './Wrapper'
 
 export const MailSupport = () => {

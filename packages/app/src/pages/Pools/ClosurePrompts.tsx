@@ -8,10 +8,10 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useTheme } from 'contexts/Themes'
 import { useTransferOptions } from 'contexts/TransferOptions'
 import { useSyncing } from 'hooks/useSyncing'
-import { useOverlay } from 'kits/Overlay/Provider'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
 import { ButtonRow, PageRow } from 'ui-structure'
 
 export const ClosurePrompts = () => {

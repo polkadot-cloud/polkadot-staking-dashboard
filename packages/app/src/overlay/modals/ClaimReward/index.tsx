@@ -9,15 +9,14 @@ import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
-import { useOverlay } from 'kits/Overlay/Provider'
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
-import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings'
 import { ActionItem } from 'library/ActionItem'
 import { Warning } from 'library/Form/Warning'
 import { Close } from 'library/Modal/Close'
 import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useOverlay } from 'ui-overlay'
+import { ModalPadding, ModalTitle, ModalWarnings } from 'ui-overlay/structure'
 
 export const ClaimReward = () => {
   const { t } = useTranslation('modals')
@@ -85,11 +84,11 @@ export const ClaimReward = () => {
     <>
       <Close />
       <ModalPadding>
-        <h2 className="title unbounded">
+        <ModalTitle>
           {claimType === 'bond' ? t('compound') : t('withdraw')} {t('rewards')}
-        </h2>
+        </ModalTitle>
         {warnings.length > 0 ? (
-          <ModalWarnings withMargin>
+          <ModalWarnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}

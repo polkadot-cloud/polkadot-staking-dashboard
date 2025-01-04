@@ -3,13 +3,16 @@
 
 import { setStateWithRef } from '@w3ux/utils'
 import { usePayouts } from 'contexts/Payouts'
-import { useOverlay } from 'kits/Overlay/Provider'
-import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle'
-import { ModalMotionTwoSection } from 'kits/Overlay/structure/ModalMotionTwoSection'
-import { ModalSection } from 'kits/Overlay/structure/ModalSection'
 import { Title } from 'library/Modal/Title'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useOverlay } from 'ui-overlay'
+import {
+  ModalFixedTitle,
+  ModalMulti,
+  ModalMultiTwo,
+  ModalSection,
+} from 'ui-overlay/structure'
 import { Forms } from './Forms'
 import { Overview } from './Overview'
 import type { ActivePayout } from './types'
@@ -69,7 +72,7 @@ export const ClaimPayouts = () => {
       <ModalFixedTitle ref={headerRef}>
         <Title title={t('claimPayouts')} fixed />
       </ModalFixedTitle>
-      <ModalMotionTwoSection
+      <ModalMultiTwo
         style={{
           maxHeight: modalMaxHeight - (headerRef.current?.clientHeight || 0),
         }}
@@ -88,14 +91,14 @@ export const ClaimPayouts = () => {
           },
         }}
       >
-        <div className="section">
+        <ModalMulti>
           <Overview
             setSection={setSection}
             setPayouts={setPayouts}
             ref={overviewRef}
           />
-        </div>
-        <div className="section">
+        </ModalMulti>
+        <ModalMulti>
           <Forms
             ref={formsRef}
             payouts={payouts}
@@ -103,8 +106,8 @@ export const ClaimPayouts = () => {
             setSection={setSection}
             onResize={onResize}
           />
-        </div>
-      </ModalMotionTwoSection>
+        </ModalMulti>
+      </ModalMultiTwo>
     </ModalSection>
   )
 }

@@ -12,16 +12,19 @@ import type {
 } from 'contexts/Help/types'
 import { useAnimation } from 'framer-motion'
 import { useFillVariables } from 'hooks/useFillVariables'
-import { CanvasContainer } from 'kits/Overlay/structure/CanvasContainer'
-import { CanvasScroll } from 'kits/Overlay/structure/CanvasScroll'
-import { ModalContent } from 'kits/Overlay/structure/ModalContent'
 import { DefaultLocale } from 'locales'
 import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimaryInvert } from 'ui-buttons'
+import {
+  CanvasContainer,
+  CanvasScroll,
+  ModalContent,
+} from 'ui-overlay/structure'
 import { ActiveDefinition } from './Items/ActiveDefinition'
 import { Definition } from './Items/Definition'
 import { External } from './Items/External'
+import { HelpSubtitle, HelpTitle } from './Wrappers'
 
 export const Help = () => {
   const { t, i18n } = useTranslation('help')
@@ -168,11 +171,11 @@ export const Help = () => {
               onClick={() => closeHelp()}
             />
           </div>
-          <h1>
+          <HelpTitle>
             {activeDefinition
               ? `${activeDefinition.title}`
               : `${t('modal.helpResources')}`}
-          </h1>
+          </HelpTitle>
 
           {activeDefinition !== null && (
             <ActiveDefinition description={activeDefinition?.description} />
@@ -180,10 +183,10 @@ export const Help = () => {
 
           {definitions.length > 0 && (
             <>
-              <h3>
+              <HelpSubtitle>
                 {activeDefinition ? `${t('modal.related')} ` : ''}
                 {t('modal.definitions')}
-              </h3>
+              </HelpSubtitle>
               {activeDefinitions.map((item, index: number) => (
                 <Definition
                   key={`def_${index}`}
@@ -196,7 +199,7 @@ export const Help = () => {
 
           {activeExternals.length > 0 && (
             <>
-              <h3>{t('modal.articles')}</h3>
+              <HelpSubtitle>{t('modal.articles')}</HelpSubtitle>
               {activeExternals.map((item, index: number) => (
                 <External
                   key={`ext_${index}`}

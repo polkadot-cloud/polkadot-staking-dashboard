@@ -10,15 +10,13 @@ import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
-import { useOverlay } from 'kits/Overlay/Provider'
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
-import { ModalSeparator } from 'kits/Overlay/structure/ModalSeparator'
-import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings'
 import { Warning } from 'library/Form/Warning'
 import { Close } from 'library/Modal/Close'
 import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useOverlay } from 'ui-overlay'
+import { ModalPadding, ModalTitle, ModalWarnings } from 'ui-overlay/structure'
 
 export const StopNominations = () => {
   const { t } = useTranslation('modals')
@@ -97,10 +95,9 @@ export const StopNominations = () => {
     <>
       <Close />
       <ModalPadding>
-        <h2 className="title unbounded">
+        <ModalTitle>
           {t('stop')} {t('allNominations')}
-        </h2>
-        <ModalSeparator />
+        </ModalTitle>
         {warnings.length ? (
           <ModalWarnings>
             {warnings.map((text, i) => (

@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { usePlugins } from 'contexts/Plugins'
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
 import { Title } from 'library/Modal/Title'
 import { StatusButton } from 'library/StatusButton'
 import { useTranslation } from 'react-i18next'
+import { ModalPadding } from 'ui-overlay/structure'
 import { ContentWrapper } from '../Networks/Wrapper'
 
 export const Settings = () => {

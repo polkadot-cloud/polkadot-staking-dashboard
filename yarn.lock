@@ -5003,7 +5003,6 @@ __metadata:
     chroma-js: "npm:^3.1.1"
     compare-versions: "npm:^6.1.1"
     consts: "workspace:*"
-    framer-motion: "npm:^11.11.1"
     html5-qrcode: "npm:^2.3.8"
     i18next-browser-languagedetector: "npm:^8.0.2"
     locales: "workspace:*"
@@ -5011,10 +5010,8 @@ __metadata:
     polkadot-api: "npm:^1.8.0"
     qrcode-generator: "npm:1.4.4"
     rc-slider: "npm:^11.1.6"
-    react: "npm:^18.3.1"
     react-chartjs-2: "npm:^5.2.0"
     react-dom: "npm:^18.2.0"
-    react-error-boundary: "npm:^4.0.13"
     react-helmet: "npm:^6.1.0"
     react-router-dom: "npm:^7.1.1"
     react-scroll: "npm:^1.9.0"
@@ -5023,6 +5020,7 @@ __metadata:
     styles: "workspace:*"
     types: "workspace:*"
     ui-buttons: "workspace:*"
+    ui-overlay: "workspace:*"
     ui-structure: "workspace:*"
     usehooks-ts: "npm:^3.0.2"
     utils: "workspace:*"
@@ -9819,10 +9817,13 @@ __metadata:
     eslint-plugin-react: "npm:^7.37.2"
     eslint-plugin-react-hooks: "npm:^5.1.0"
     eslint-plugin-unused-imports: "npm:^4.1.4"
+    framer-motion: "npm:^11.11.1"
     globals: "npm:^15.13.0"
     i18next: "npm:^24.2.0"
     prettier: "npm:^3.4.2"
     prettier-plugin-organize-imports: "npm:^4.1.0"
+    react: "npm:^18.3.1"
+    react-error-boundary: "npm:^4.0.13"
     react-i18next: "npm:^15.4.0"
     sass: "npm:1.77.6"
     typescript: "npm:^5.7.2"
@@ -11918,6 +11919,12 @@ __metadata:
   resolution: "ui-buttons@workspace:packages/ui-buttons"
   dependencies:
     "@fortawesome/react-fontawesome": "npm:^0.2.2"
+  languageName: unknown
+  linkType: soft
+
+"ui-overlay@workspace:*, ui-overlay@workspace:packages/ui-overlay":
+  version: 0.0.0-use.local
+  resolution: "ui-overlay@workspace:packages/ui-overlay"
   languageName: unknown
   linkType: soft
 

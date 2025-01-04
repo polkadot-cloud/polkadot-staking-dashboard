@@ -14,15 +14,13 @@ import { getUnixTime } from 'date-fns'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
-import { ModalNotes } from 'kits/Overlay/structure/ModalNotes'
-import { ModalPadding } from 'kits/Overlay/structure/ModalPadding'
-import { ModalWarnings } from 'kits/Overlay/structure/ModalWarnings'
 import { Warning } from 'library/Form/Warning'
 import { Title } from 'library/Prompt/Title'
 import { SubmitTx } from 'library/SubmitTx'
 import { StaticNote } from 'overlay/modals/Utils/StaticNote'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ModalNotes, ModalPadding, ModalWarnings } from 'ui-overlay/structure'
 import { planckToUnitBn, timeleftAsString } from 'utils'
 
 export const UnbondMember = ({
@@ -88,7 +86,7 @@ export const UnbondMember = ({
       <Title title={t('unbondPoolMember')} />
       <ModalPadding>
         {warnings.length > 0 ? (
-          <ModalWarnings withMargin>
+          <ModalWarnings>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}

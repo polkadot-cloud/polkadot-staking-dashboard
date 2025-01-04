@@ -9,10 +9,10 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { determinePoolDisplay } from 'contexts/Pools/util'
-import { useOverlay } from 'kits/Overlay/Provider'
 import { CanvasTitleWrapper } from 'overlay/canvas/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
 import { PageTitleTabs } from 'ui-structure'
 import type { JoinPoolHeaderProps } from './types'
 

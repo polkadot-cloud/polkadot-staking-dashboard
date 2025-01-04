@@ -7,10 +7,10 @@ import type { AnyFunction } from '@w3ux/types'
 import { useHelp } from 'contexts/Help'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { useTheme } from 'contexts/Themes'
-import { useOverlay } from 'kits/Overlay/Provider'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonSecondary } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
 import { SplashWrapper } from './Wrappers'
 
 export const Splash = ({ onGetAddress }: AnyFunction) => {

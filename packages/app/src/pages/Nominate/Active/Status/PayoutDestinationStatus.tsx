@@ -9,9 +9,9 @@ import { useStaking } from 'contexts/Staking'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
 import { useSyncing } from 'hooks/useSyncing'
 import { useUnstaking } from 'hooks/useUnstaking'
-import { useOverlay } from 'kits/Overlay/Provider'
 import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
+import { useOverlay } from 'ui-overlay'
 
 export const PayoutDestinationStatus = () => {
   const { t } = useTranslation('pages')

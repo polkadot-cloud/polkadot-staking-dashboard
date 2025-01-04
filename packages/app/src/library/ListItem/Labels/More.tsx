@@ -4,9 +4,9 @@
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { usePoolPerformance } from 'contexts/Pools/PoolPerformance'
-import { useOverlay } from 'kits/Overlay/Provider'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
+import { useOverlay } from 'ui-overlay'
 
 export const More = ({
   pool,

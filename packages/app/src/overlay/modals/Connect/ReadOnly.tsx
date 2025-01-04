@@ -13,10 +13,10 @@ import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useHelp } from 'contexts/Help'
-import { useOverlay } from 'kits/Overlay/Provider'
 import { AccountInput } from 'library/AccountInput'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonMonoInvert, ButtonSecondary } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
 import {
   ActionWithButton,
   ManualAccount,

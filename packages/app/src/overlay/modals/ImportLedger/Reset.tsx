@@ -9,10 +9,10 @@ import { getLocalLedgerAddresses } from 'contexts/LedgerHardware/Utils'
 import type { LedgerAddress } from 'contexts/LedgerHardware/types'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
-import { useOverlay } from 'kits/Overlay/Provider'
 import { ConfirmWrapper } from 'library/Import/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { ButtonMono, ButtonMonoInvert } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
 import { registerSaEvent } from 'utils'
 
 export const Reset = ({ removeLedgerAddress }: AnyJson) => {

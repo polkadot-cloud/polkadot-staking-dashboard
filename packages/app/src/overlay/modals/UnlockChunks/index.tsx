@@ -7,13 +7,16 @@ import { useBalances } from 'contexts/Balances'
 import type { UnlockChunk } from 'contexts/Balances/types'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useOverlay } from 'kits/Overlay/Provider'
-import { ModalFixedTitle } from 'kits/Overlay/structure/ModalFixedTitle'
-import { ModalMotionTwoSection } from 'kits/Overlay/structure/ModalMotionTwoSection'
-import { ModalSection } from 'kits/Overlay/structure/ModalSection'
 import { Title } from 'library/Modal/Title'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useOverlay } from 'ui-overlay'
+import {
+  ModalFixedTitle,
+  ModalMulti,
+  ModalMultiTwo,
+  ModalSection,
+} from 'ui-overlay/structure'
 import { Forms } from './Forms'
 import { Overview } from './Overview'
 
@@ -103,7 +106,7 @@ export const UnlockChunks = () => {
       <ModalFixedTitle ref={headerRef}>
         <Title title={t('unlocks')} fixed />
       </ModalFixedTitle>
-      <ModalMotionTwoSection
+      <ModalMultiTwo
         style={{
           maxHeight: modalMaxHeight - (headerRef.current?.clientHeight || 0),
         }}
@@ -122,7 +125,7 @@ export const UnlockChunks = () => {
           },
         }}
       >
-        <div className="section">
+        <ModalMulti>
           <Overview
             unlocking={unlocking}
             bondFor={bondFor}
@@ -131,8 +134,8 @@ export const UnlockChunks = () => {
             setTask={setTask}
             ref={overviewRef}
           />
-        </div>
-        <div className="section">
+        </ModalMulti>
+        <ModalMulti>
           <Forms
             incrementCalculateHeight={incrementCalculateHeight}
             setSection={setSection}
@@ -141,8 +144,8 @@ export const UnlockChunks = () => {
             ref={formsRef}
             onResize={onResize}
           />
-        </div>
-      </ModalMotionTwoSection>
+        </ModalMulti>
+      </ModalMultiTwo>
     </ModalSection>
   )
 }

@@ -14,7 +14,6 @@ import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { usePrompt } from 'contexts/Prompt'
 import { Notifications } from 'controllers/Notifications'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
-import { useOverlay } from 'kits/Overlay/Provider'
 import { GenerateNominations } from 'library/GenerateNominations'
 import type {
   NominationSelection,
@@ -25,6 +24,7 @@ import { Subheading } from 'pages/Nominate/Wrappers'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimary, ButtonPrimaryInvert } from 'ui-buttons'
+import { useOverlay } from 'ui-overlay'
 import { CanvasFullScreenWrapper, CanvasSubmitTxFooter } from '../Wrappers'
 import { RevertPrompt } from './Prompts/RevertPrompt'
 
