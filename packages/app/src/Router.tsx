@@ -5,7 +5,6 @@ import { PagesConfig } from 'config/pages'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
-import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { useAccountFromUrl } from 'hooks/useAccountFromUrl'
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary'
@@ -34,7 +33,6 @@ import { Body, Main } from 'ui-core/base'
 
 const RouterInner = () => {
   const { network } = useNetwork()
-  const { inSetup } = useStaking()
   const { pathname } = useLocation()
   const { setContainerRefs } = useUi()
   const { pluginEnabled } = usePlugins()
@@ -60,7 +58,7 @@ const RouterInner = () => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
-      {pluginEnabled('staking_api') && !inSetup() && activeAccount && (
+      {pluginEnabled('staking_api') && activeAccount && (
         <StakingApi activeAccount={activeAccount} network={network} />
       )}
       <NotificationPrompts />
