@@ -240,18 +240,3 @@
     flex-grow: 1;
   }
 }
-
-.modal-carousel {
-  display: flex;
-  flex-flow: column wrap;
-  padding: 0;
-  position: relative;
-  overflow: hidden auto;
-  width: 100%;
-}
-
-.modal-tabs {
-  width: 100%;
-  display: flex;
-  margin: 1.25rem 0 0.25rem;
-}
