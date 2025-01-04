@@ -11933,6 +11933,8 @@ __metadata:
 "ui-overlay@workspace:*, ui-overlay@workspace:packages/ui-overlay":
   version: 0.0.0-use.local
   resolution: "ui-overlay@workspace:packages/ui-overlay"
+  dependencies:
+    ui-core: "workspace:*"
   languageName: unknown
   linkType: soft
 

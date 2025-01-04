@@ -20,7 +20,7 @@ import { SubmitTx } from 'library/SubmitTx'
 import { StaticNote } from 'overlay/modals/Utils/StaticNote'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ModalNotes, ModalPadding, ModalWarnings } from 'ui-overlay/structure'
+import { ModalNotes, ModalPadding, ModalWarnings } from 'ui-core/overlay'
 import { planckToUnitBn, timeleftAsString } from 'utils'
 
 export const UnbondMember = ({

@@ -13,7 +13,6 @@ import { SelectItems } from 'library/SelectItems'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimaryInvert, ButtonTab } from 'ui-buttons'
-import { useOverlay } from 'ui-overlay'
 import {
   ModalCustomHeader,
   ModalFixedTitle,
@@ -21,7 +20,8 @@ import {
   ModalMultiThree,
   ModalPadding,
   ModalSection,
-} from 'ui-overlay/structure'
+} from 'ui-core/overlay'
+import { useOverlay } from 'ui-overlay'
 import { Extension } from './Extension'
 import { Ledger } from './Ledger'
 import { Proxies } from './Proxies'

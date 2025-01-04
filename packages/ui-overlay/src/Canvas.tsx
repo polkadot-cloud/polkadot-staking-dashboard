@@ -5,12 +5,12 @@ import { useAnimation } from 'framer-motion'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
+import { CanvasContainer } from '../../ui-core/src/overlay/CanvasContainer'
+import { CanvasContent } from '../../ui-core/src/overlay/CanvasContent'
+import { CanvasScroll } from '../../ui-core/src/overlay/CanvasScroll'
+import { ModalContent } from '../../ui-core/src/overlay/ModalContent'
 import { useOverlay } from './Provider'
 import type { CanvasProps } from './Provider/types'
-import { CanvasContainer } from './structure/CanvasContainer'
-import { CanvasContent } from './structure/CanvasContent'
-import { CanvasScroll } from './structure/CanvasScroll'
-import { ModalContent } from './structure/ModalContent'
 
 export const Canvas = ({
   canvas,

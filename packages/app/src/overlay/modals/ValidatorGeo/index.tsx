@@ -20,8 +20,8 @@ import { StatusLabel } from 'library/StatusLabel'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp } from 'ui-buttons'
+import { ModalAddressHeader } from 'ui-core/overlay'
 import { useOverlay } from 'ui-overlay'
-import { ModalAddressHeader } from 'ui-overlay/structure'
 
 export const ValidatorGeo = () => {
   const { t } = useTranslation('modals')

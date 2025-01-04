@@ -20,13 +20,13 @@ import { Close } from 'library/Modal/Close'
 import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useOverlay } from 'ui-overlay'
 import {
   ModalNotes,
   ModalPadding,
   ModalTitle,
   ModalWarnings,
-} from 'ui-overlay/structure'
+} from 'ui-core/overlay'
+import { useOverlay } from 'ui-overlay'
 import { planckToUnitBn } from 'utils'
 
 export const ManageFastUnstake = () => {

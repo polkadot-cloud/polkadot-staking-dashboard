@@ -4,7 +4,7 @@
 import classNames from 'classnames'
 import type { ForwardedRef } from 'react'
 import { forwardRef } from 'react'
-import type { ModalScrollProps } from '../../types'
+import type { ModalScrollProps } from '../../../../ui-overlay/src/types'
 import commonClasses from '../common.module.scss'
 import classes from './index.module.scss'
 

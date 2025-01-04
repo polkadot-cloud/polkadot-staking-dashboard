@@ -3,15 +3,12 @@
 
 import classNames from 'classnames'
 import { motion } from 'framer-motion'
-import type { ModalAnimationProps } from '../../types'
+import type { ModalAnimationProps } from '../../../../ui-overlay/src/types'
 import commonClasses from '../common.module.scss'
 import classes from './index.module.scss'
 
-export const CanvasContainer = ({ children, ...rest }: ModalAnimationProps) => {
-  const allClasses = classNames(
-    commonClasses.fixedPosition,
-    classes.canvasContainer
-  )
+export const ModalMultiThree = ({ children, ...rest }: ModalAnimationProps) => {
+  const allClasses = classNames(commonClasses.modalMulti, classes.multiThree)
   return (
     <motion.div className={allClasses} {...rest}>
       {children}

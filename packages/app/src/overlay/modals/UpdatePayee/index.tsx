@@ -20,8 +20,8 @@ import { SubmitTx } from 'library/SubmitTx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { MaybeAddress } from 'types'
+import { ModalPadding, ModalWarnings } from 'ui-core/overlay'
 import { useOverlay } from 'ui-overlay'
-import { ModalPadding, ModalWarnings } from 'ui-overlay/structure'
 
 export const UpdatePayee = () => {
   const { t } = useTranslation('modals')

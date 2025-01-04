@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Title } from 'library/Modal/Title'
+import { ModalPadding } from 'ui-core/overlay'
 import { useOverlay } from 'ui-overlay'
-import { ModalPadding } from 'ui-overlay/structure'
 import { Wrapper } from './Wrapper'
 
 export const Bio = () => {

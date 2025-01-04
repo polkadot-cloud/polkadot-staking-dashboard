@@ -6,14 +6,14 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { Title } from 'library/Modal/Title'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useOverlay } from 'ui-overlay'
 import {
   ModalFixedTitle,
   ModalMulti,
   ModalMultiTwo,
   ModalPadding,
   ModalSection,
-} from 'ui-overlay/structure'
+} from 'ui-core/overlay'
+import { useOverlay } from 'ui-overlay'
 import { Forms } from './Forms'
 import { Tasks } from './Tasks'
 

@@ -15,8 +15,8 @@ import { Title } from 'library/Modal/Title'
 import { useEffect } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { ButtonTertiary } from 'ui-buttons'
+import { ModalPadding } from 'ui-core/overlay'
 import { useOverlay } from 'ui-overlay'
-import { ModalPadding } from 'ui-overlay/structure'
 import { ProvidersPrompt } from './ProvidersPrompt'
 import {
   BraveWarning,

@@ -12,6 +12,7 @@
   },
   "exports": {
     "./types": "./src/types.ts",
-    "./base": "./src/base/index.tsx"
+    "./base": "./src/base/index.tsx",
+    "./overlay": "./src/overlay/index.tsx"
   }
 }

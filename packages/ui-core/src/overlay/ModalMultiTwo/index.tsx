@@ -3,7 +3,7 @@
 
 import classNames from 'classnames'
 import { motion } from 'framer-motion'
-import type { ModalAnimationProps } from '../../types'
+import type { ModalAnimationProps } from '../../../../ui-overlay/src/types'
 import commonClasses from '../common.module.scss'
 import classes from './index.module.scss'
 

@@ -19,7 +19,7 @@ import { SubmitTx } from 'library/SubmitTx'
 import type { RefObject } from 'react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ModalNotes, ModalPadding, ModalWarnings } from 'ui-overlay/structure'
+import { ModalNotes, ModalPadding, ModalWarnings } from 'ui-core/overlay'
 import { planckToUnitBn } from 'utils'
 
 export const WithdrawMember = ({
