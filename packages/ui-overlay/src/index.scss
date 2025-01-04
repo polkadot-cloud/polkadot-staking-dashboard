@@ -162,24 +162,6 @@
   }
 }
 
-.modal-footer {
-  display: flex;
-  align-items: center;
-  width: 100%;
-
-  h3 {
-    color: var(--text-color-secondary);
-    opacity: 0.5;
-    position: relative;
-    top: 1.25rem;
-
-    &.active {
-      color: var(--accent-color-primary);
-      opacity: 1;
-    }
-  }
-}
-
 .modal-hardware-item {
   background: var(--button-primary-background);
   border-radius: 1rem;
@@ -256,19 +238,6 @@
     height: auto;
     overflow: hidden auto;
     flex-grow: 1;
-  }
-}
-
-.modal-notes {
-  width: 100%;
-  padding: 0;
-
-  &.with-padding {
-    padding: 0.75rem 0;
-  }
-
-  > p {
-    color: var(--text-color-secondary);
   }
 }
 
