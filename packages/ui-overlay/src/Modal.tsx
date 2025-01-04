@@ -140,42 +140,31 @@ export const Modal = ({
       }}
       style={{ opacity: status === 'opening' ? 0 : 1 }}
     >
-      <div>
-        <ModalScroll
-          ref={heightRef}
-          size={size}
-          style={{
-            height: modalHeight,
-            overflow: options?.disableScroll
-              ? 'hidden'
-              : modalHeight >= modalMaxHeight
-                ? 'scroll'
-                : 'hidden',
-          }}
+      <ModalScroll
+        ref={heightRef}
+        size={size}
+        style={{
+          height: modalHeight,
+          overflow: options?.disableScroll
+            ? 'hidden'
+            : modalHeight >= modalMaxHeight
+              ? 'scroll'
+              : 'hidden',
+        }}
+      >
+        <ModalCard
+          ref={modalRef}
+          className={
+            externalOverlayStatus === 'open' || canvasStatus === 'open'
+              ? 'dimmed'
+              : undefined
+          }
         >
-          <ModalCard
-            ref={modalRef}
-            className={
-              externalOverlayStatus === 'open' || canvasStatus === 'open'
-                ? 'dimmed'
-                : undefined
-            }
-          >
-            <ErrorBoundary FallbackComponent={Fallback || null}>
-              {ActiveModal && <ActiveModal />}
-            </ErrorBoundary>
-          </ModalCard>
-        </ModalScroll>
-        <button
-          type="button"
-          className="close"
-          onClick={() => {
-            setModalStatus('closing')
-          }}
-        >
-          &nbsp;
-        </button>
-      </div>
+          <ErrorBoundary FallbackComponent={Fallback || null}>
+            {ActiveModal && <ActiveModal />}
+          </ErrorBoundary>
+        </ModalCard>
+      </ModalScroll>
     </ModalContainer>
   ) : null
 }
