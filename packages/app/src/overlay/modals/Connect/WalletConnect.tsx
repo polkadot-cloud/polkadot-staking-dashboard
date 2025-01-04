@@ -8,8 +8,7 @@ import type { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimaryInvert, ButtonText } from 'ui-buttons'
 import { useOverlay } from 'ui-overlay'
-import { ModalHardwareItem } from 'ui-overlay/structure'
-import { ConnectItem } from './Wrappers'
+import { ConnectItem, HardwareItem } from './Wrappers'
 
 export const WalletConnect = (): ReactElement => {
   const { t } = useTranslation('modals')
@@ -18,7 +17,7 @@ export const WalletConnect = (): ReactElement => {
 
   return (
     <ConnectItem>
-      <ModalHardwareItem>
+      <HardwareItem>
         <div className="body">
           <div className="row">
             <WalletConnectSVG className="logo" />
@@ -52,7 +51,7 @@ export const WalletConnect = (): ReactElement => {
             <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
           </a>
         </div>
-      </ModalHardwareItem>
+      </HardwareItem>
     </ConnectItem>
   )
 }

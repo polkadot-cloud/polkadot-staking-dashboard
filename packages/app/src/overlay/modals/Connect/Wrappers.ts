@@ -281,3 +281,44 @@ export const ConnectItem = styled.div`
     }
   }
 `
+
+export const HardwareItem = styled.div`
+  background: var(--button-primary-background);
+  border-radius: 1rem;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+
+  .body {
+    padding: 0.5rem 0.85rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .row {
+      display: flex;
+      justify-content: center;
+
+      p {
+        margin-bottom: 0;
+      }
+
+      &.margin {
+        margin-top: 0.75rem;
+      }
+
+      .logo {
+        color: var(--text-color-secondary);
+        height: 3rem;
+        margin: 0.75rem 0.5rem 0.5rem;
+      }
+    }
+
+    .status {
+      position: absolute;
+      top: 0.9rem;
+      right: 0.9rem;
+    }
+  }
+`

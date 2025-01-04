@@ -9,8 +9,7 @@ import type { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimaryInvert, ButtonText } from 'ui-buttons'
 import { useOverlay } from 'ui-overlay'
-import { ModalHardwareItem } from 'ui-overlay/structure'
-import { ConnectItem } from './Wrappers'
+import { ConnectItem, HardwareItem } from './Wrappers'
 
 export const Vault = (): ReactElement => {
   const { t } = useTranslation('modals')
@@ -20,7 +19,7 @@ export const Vault = (): ReactElement => {
 
   return (
     <ConnectItem>
-      <ModalHardwareItem>
+      <HardwareItem>
         <div className="body">
           <div className="status">
             <ButtonHelp onClick={() => openHelp('Polkadot Vault')} />
@@ -62,7 +61,7 @@ export const Vault = (): ReactElement => {
             <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
           </a>
         </div>
-      </ModalHardwareItem>
+      </HardwareItem>
     </ConnectItem>
   )
 }
