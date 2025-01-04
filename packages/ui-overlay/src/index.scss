@@ -71,26 +71,5 @@
       }
     }
   }
-
-  .close-modal {
-    position: absolute;
-    top: 0;
-    right: 1.5rem;
-    opacity: 0.25;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
 }
 
-.modal-fixed-title {
-  width: 100%;
-  background: transparent;
-  padding: 1rem 0 0;
-
-  &.with-style {
-    background: var(--background-default);
-    padding: 1rem 1rem 0;
-  }
-}
