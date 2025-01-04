@@ -10,7 +10,8 @@ import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { ButtonHelp, ButtonPrimaryInvert, ButtonText } from 'ui-buttons'
 import { useOverlay } from 'ui-overlay'
-import { ModalConnectItem, ModalHardwareItem } from 'ui-overlay/structure'
+import { ModalHardwareItem } from 'ui-overlay/structure'
+import { ConnectItem } from './Wrappers'
 
 export const Ledger = () => {
   const { openHelp } = useHelp()
@@ -24,7 +25,7 @@ export const Ledger = () => {
   }
 
   return (
-    <ModalConnectItem>
+    <ConnectItem>
       <ModalHardwareItem>
         <div className="body">
           <div className="status">
@@ -63,6 +64,6 @@ export const Ledger = () => {
           </a>
         </div>
       </ModalHardwareItem>
-    </ModalConnectItem>
+    </ConnectItem>
   )
 }

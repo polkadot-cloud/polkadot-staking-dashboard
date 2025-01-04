@@ -11,11 +11,6 @@ export type CanvasScrollProps = ModalAnimationProps & {
   size?: 'lg' | 'xl'
 }
 
-export type ModalConnectItemProps = ComponentBase & {
-  // whether the item can be connected to.
-  canConnect?: boolean
-}
-
 export type ModalCardProps = ComponentBase & {
   // whether the card is dimmed.
   dimmed?: boolean

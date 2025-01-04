@@ -243,3 +243,41 @@ export const ManualAccount = styled.div`
     font-size: 1rem;
   }
 `
+
+export const ConnectItem = styled.div`
+  padding: 0.5rem;
+  flex-grow: 0;
+  width: 50%;
+
+  @media (max-width: 800px) {
+    width: 100%;
+  }
+
+  &.can-connect {
+    > .inner {
+      transition: transform 0.15s;
+
+      &:hover {
+        transform: scale(1.015);
+      }
+    }
+  }
+
+  .foot {
+    padding: 0.85rem;
+
+    .link {
+      color: var(--text-color-secondary);
+      transition: color 0.15s;
+
+      &:hover {
+        color: var(--accent-color-primary);
+      }
+
+      > svg {
+        margin-left: 0.35rem;
+        margin-top: 0.3rem;
+      }
+    }
+  }
+`

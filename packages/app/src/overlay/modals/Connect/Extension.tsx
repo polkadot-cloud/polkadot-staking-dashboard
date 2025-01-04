@@ -13,8 +13,7 @@ import { localStorageOrDefault } from '@w3ux/utils'
 import { Notifications } from 'controllers/Notifications'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ModalConnectItem } from 'ui-overlay/structure'
-import { ExtensionInner } from './Wrappers'
+import { ConnectItem, ExtensionInner } from './Wrappers'
 import type { ExtensionProps } from './types'
 
 export const Extension = ({ meta, size, flag }: ExtensionProps) => {
@@ -98,7 +97,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const disabled = !isInstalled
 
   return (
-    <ModalConnectItem canConnect={canConnect}>
+    <ConnectItem className={canConnect ? 'can-connect' : ''}>
       <ExtensionInner>
         <div>
           <div className="body">
@@ -137,6 +136,6 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
           </div>
         </div>
       </ExtensionInner>
-    </ModalConnectItem>
+    </ConnectItem>
   )
 }

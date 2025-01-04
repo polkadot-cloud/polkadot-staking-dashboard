@@ -9,7 +9,8 @@ import type { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonHelp, ButtonPrimaryInvert, ButtonText } from 'ui-buttons'
 import { useOverlay } from 'ui-overlay'
-import { ModalConnectItem, ModalHardwareItem } from 'ui-overlay/structure'
+import { ModalHardwareItem } from 'ui-overlay/structure'
+import { ConnectItem } from './Wrappers'
 
 export const Vault = (): ReactElement => {
   const { t } = useTranslation('modals')
@@ -18,7 +19,7 @@ export const Vault = (): ReactElement => {
   const url = 'signer.parity.io'
 
   return (
-    <ModalConnectItem>
+    <ConnectItem>
       <ModalHardwareItem>
         <div className="body">
           <div className="status">
@@ -62,6 +63,6 @@ export const Vault = (): ReactElement => {
           </a>
         </div>
       </ModalHardwareItem>
-    </ModalConnectItem>
+    </ConnectItem>
   )
 }
