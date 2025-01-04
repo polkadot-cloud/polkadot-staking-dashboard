@@ -18,6 +18,7 @@ import {
   ModalCustomHeader,
   ModalFixedTitle,
   ModalMotionThreeSection,
+  ModalMulti,
   ModalPadding,
   ModalSection,
 } from 'ui-overlay/structure'
@@ -212,7 +213,7 @@ export const Connect = () => {
           },
         }}
       >
-        <div>
+        <ModalMulti>
           <ModalPadding horizontalOnly ref={homeRef}>
             {ConnectCombinedJSX}
             {!inMobileWallet && (
@@ -233,17 +234,17 @@ export const Connect = () => {
               </>
             )}
           </ModalPadding>
-        </div>
-        <div>
+        </ModalMulti>
+        <ModalMulti>
           <ModalPadding horizontalOnly ref={readOnlyRef}>
             <ReadOnly setInputOpen={setReadOnlyOpen} inputOpen={readOnlyOpen} />
           </ModalPadding>
-        </div>
-        <div>
+        </ModalMulti>
+        <ModalMulti>
           <ModalPadding horizontalOnly ref={proxiesRef}>
             <Proxies setInputOpen={setNewProxyOpen} inputOpen={newProxyOpen} />
           </ModalPadding>
-        </div>
+        </ModalMulti>
       </ModalMotionThreeSection>
     </ModalSection>
   )

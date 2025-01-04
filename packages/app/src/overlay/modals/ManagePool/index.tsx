@@ -10,6 +10,7 @@ import { useOverlay } from 'ui-overlay'
 import {
   ModalFixedTitle,
   ModalMotionTwoSection,
+  ModalMulti,
   ModalPadding,
   ModalSection,
 } from 'ui-overlay/structure'
@@ -89,13 +90,13 @@ export const ManagePool = () => {
           },
         }}
       >
-        <div>
+        <ModalMulti>
           <ModalPadding horizontalOnly>
             <Tasks setSection={setSection} setTask={setTask} ref={tasksRef} />
           </ModalPadding>
-        </div>
+        </ModalMulti>
 
-        <div>
+        <ModalMulti>
           <Forms
             onResize={onResize}
             setSection={setSection}
@@ -104,7 +105,7 @@ export const ManagePool = () => {
             ref={formsRef}
             incrementCalculateHeight={incrementCalculateHeight}
           />
-        </div>
+        </ModalMulti>
       </ModalMotionTwoSection>
     </ModalSection>
   )

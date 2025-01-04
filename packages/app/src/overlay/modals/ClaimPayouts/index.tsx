@@ -10,6 +10,7 @@ import { useOverlay } from 'ui-overlay'
 import {
   ModalFixedTitle,
   ModalMotionTwoSection,
+  ModalMulti,
   ModalSection,
 } from 'ui-overlay/structure'
 import { Forms } from './Forms'
@@ -90,14 +91,14 @@ export const ClaimPayouts = () => {
           },
         }}
       >
-        <div>
+        <ModalMulti>
           <Overview
             setSection={setSection}
             setPayouts={setPayouts}
             ref={overviewRef}
           />
-        </div>
-        <div>
+        </ModalMulti>
+        <ModalMulti>
           <Forms
             ref={formsRef}
             payouts={payouts}
@@ -105,7 +106,7 @@ export const ClaimPayouts = () => {
             setSection={setSection}
             onResize={onResize}
           />
-        </div>
+        </ModalMulti>
       </ModalMotionTwoSection>
     </ModalSection>
   )

@@ -206,35 +206,17 @@
 .modal-motion-three-sections {
   @include modal-motion-sections;
   width: 300%;
-
   > div {
-    @include modal-scrollbar;
-
-    border-radius: 1rem;
-    display: flex;
-    flex-direction: column;
     flex-basis: 33.33%;
     min-width: 33.33%;
-    height: auto;
-    overflow: hidden auto;
-    flex-grow: 1;
   }
 }
 
 .modal-motion-two-sections {
   @include modal-motion-sections;
   width: 200%;
-
   > div {
-    @include modal-scrollbar;
-
-    border-radius: 1rem;
-    display: flex;
-    flex-direction: column;
     flex-basis: 50%;
     min-width: 50%;
-    height: auto;
-    overflow: hidden auto;
-    flex-grow: 1;
   }
 }

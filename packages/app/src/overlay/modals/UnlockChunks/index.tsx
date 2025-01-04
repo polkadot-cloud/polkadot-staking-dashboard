@@ -14,6 +14,7 @@ import { useOverlay } from 'ui-overlay'
 import {
   ModalFixedTitle,
   ModalMotionTwoSection,
+  ModalMulti,
   ModalSection,
 } from 'ui-overlay/structure'
 import { Forms } from './Forms'
@@ -124,7 +125,7 @@ export const UnlockChunks = () => {
           },
         }}
       >
-        <div>
+        <ModalMulti>
           <Overview
             unlocking={unlocking}
             bondFor={bondFor}
@@ -133,8 +134,8 @@ export const UnlockChunks = () => {
             setTask={setTask}
             ref={overviewRef}
           />
-        </div>
-        <div>
+        </ModalMulti>
+        <ModalMulti>
           <Forms
             incrementCalculateHeight={incrementCalculateHeight}
             setSection={setSection}
@@ -143,7 +144,7 @@ export const UnlockChunks = () => {
             ref={formsRef}
             onResize={onResize}
           />
-        </div>
+        </ModalMulti>
       </ModalMotionTwoSection>
     </ModalSection>
   )
