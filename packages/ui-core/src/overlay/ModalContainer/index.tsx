@@ -3,15 +3,15 @@
 
 import classNames from 'classnames'
 import { motion } from 'framer-motion'
-import { useOverlay } from '../../../../ui-overlay/src/Provider'
-import type { ModalAnimationProps } from '../../../../ui-overlay/src/types'
 import commonClasses from '../common.module.scss'
+import type { ModalContainerProps } from '../types'
 import classes from './index.module.scss'
 
-export const ModalContainer = ({ children, ...rest }: ModalAnimationProps) => {
-  const {
-    modal: { setModalStatus },
-  } = useOverlay()
+export const ModalContainer = ({
+  children,
+  onClose,
+  ...rest
+}: ModalContainerProps) => {
   const allClasses = classNames(
     commonClasses.fixedPosition,
     classes.modalContainer
@@ -23,7 +23,7 @@ export const ModalContainer = ({ children, ...rest }: ModalAnimationProps) => {
         <button
           type="button"
           className={classes.close}
-          onClick={() => setModalStatus('closing')}
+          onClick={() => onClose()}
         >
           &nbsp;
         </button>

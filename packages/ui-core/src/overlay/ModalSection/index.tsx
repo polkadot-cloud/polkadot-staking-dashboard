@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import classNames from 'classnames'
-import type { ModalSectionProps } from '../../../../ui-overlay/src/types'
+import type { ModalSectionProps } from '../types'
 import classes from './index.module.scss'
 
 export const ModalSection = ({ children, style, type }: ModalSectionProps) => {

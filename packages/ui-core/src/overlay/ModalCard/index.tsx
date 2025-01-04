@@ -4,7 +4,7 @@
 import classNames from 'classnames'
 import type { ForwardedRef } from 'react'
 import { forwardRef } from 'react'
-import type { ModalCardProps } from '../../../../ui-overlay/src/types'
+import type { ModalCardProps } from '../types'
 import classes from './index.module.scss'
 
 export const ModalCard = forwardRef(

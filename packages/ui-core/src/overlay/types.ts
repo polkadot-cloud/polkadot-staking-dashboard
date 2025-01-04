@@ -41,3 +41,7 @@ export type ModalScrollProps = ComponentBase & {
 export type ModalSectionProps = ComponentBase & {
   type: 'tab' | 'carousel'
 }
+
+export type ModalContainerProps = ModalAnimationProps & {
+  onClose: () => void
+}

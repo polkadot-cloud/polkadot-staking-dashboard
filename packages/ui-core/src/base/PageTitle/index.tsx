@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import { useEffect, useRef, useState } from 'react'
 import { ButtonSecondary } from 'ui-buttons'
 import { PageTitleTabs } from 'ui-core/base'
-import type { PageTitleProps } from '../../types'
+import type { PageTitleProps } from '../types'
 import classes from './index.module.scss'
 
 /**

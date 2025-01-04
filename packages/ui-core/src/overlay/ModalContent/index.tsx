@@ -3,7 +3,7 @@
 
 import classNames from 'classnames'
 import { motion } from 'framer-motion'
-import type { ModalContentProps } from '../../../../ui-overlay/src/types'
+import type { ModalContentProps } from '../types'
 import classes from './index.module.scss'
 
 export const ModalContent = ({

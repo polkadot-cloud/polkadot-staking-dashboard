@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { motion } from 'framer-motion'
-import type { CanvasScrollProps } from '../../../../ui-overlay/src/types'
+import type { CanvasScrollProps } from '../types'
 import classes from './index.module.scss'
 
 export const CanvasScroll = ({

@@ -4,7 +4,7 @@
 import classNames from 'classnames'
 import type { ForwardedRef } from 'react'
 import { forwardRef } from 'react'
-import type { ModalPaddingProps } from '../../../../ui-overlay/src/types'
+import type { ModalPaddingProps } from '../types'
 import classes from './index.module.scss'
 
 export const ModalPadding = forwardRef(

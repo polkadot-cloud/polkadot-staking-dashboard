@@ -3,8 +3,8 @@
 
 import classNames from 'classnames'
 import { motion } from 'framer-motion'
-import type { ModalOverlayProps } from '../../../../ui-overlay/src/types'
 import commonClasses from '../common.module.scss'
+import type { ModalOverlayProps } from '../types'
 import classes from './index.module.scss'
 
 export const Backdrop = ({ children, blur, ...rest }: ModalOverlayProps) => {
